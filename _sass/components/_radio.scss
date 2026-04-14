@@ -10,7 +10,19 @@
 // ==============================================
 
 .nds-form-container.nds-radio-container:not([hidden]) {
-    --nds-input-size: 16px;
+    // ==============================================
+    // PUBLIC API — private ← public aliases (alert pattern).
+    // Consumers override --nds-input-size / --radio-* here.
+    // ==============================================
+
+    // Size
+    --_nds-input-size: var(--nds-input-size, 16px);
+
+    // Colour — tile (outer fill / inner dot colour via the border trick)
+    // and tile-border (outer 1px shadow ring).
+    --_radio-tile-bg:     var(--radio-tile-bg,     var(--background-default));
+    --_radio-tile-border: var(--radio-tile-border, var(--controls-control-border));
+
     display: flex;
     gap: var(--spacing-md);
     flex-direction: row-reverse;
@@ -21,26 +33,13 @@
     &>.nds-form-header .nds-label {
         color: var(--text-display);
         font-size: var(--nds-text-md-FS);
-        line-height: var(--nds-input-size);
+        line-height: var(--_nds-input-size);
         font-weight: 500;
-        /* height: var(--nds-input-size); */
     }
 
-    &.nds-md * {
-        --nds-input-size: 20px;
-    }
-
-    &.nds-lg * {
-        --nds-input-size: 24px;
-    }
-
-    &.nds-md {
-        gap: var(--spacing-lg);
-    }
-
-    &.nds-lg {
-        gap: var(--spacing-xl);
-    }
+    // Size variants override the PUBLIC token.
+    &.nds-md { --nds-input-size: 20px; gap: var(--spacing-lg); }
+    &.nds-lg { --nds-input-size: 24px; gap: var(--spacing-xl); }
 
     .nds-form-control {
         min-width: unset;
@@ -49,9 +48,9 @@
         height: fit-content;
         padding: 0;
         border: 0;
-        border-radius: var(--radius-sm);
         box-shadow: unset;
         background-color: unset !important;
+        position: relative;
 
         &.focused:focus-visible {
             outline: 2px solid var(--colors-base-black) !important;
@@ -59,8 +58,24 @@
             box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
         }
 
+        // Ripple — wrapper pseudo so input's ::after is free for the tile.
         &::before {
-            display: none;
+            content: "";
+            position: absolute;
+            inset: 50% auto auto 50%;
+            width:  var(--_nds-input-size);
+            height: var(--_nds-input-size);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--controls-control-ripple-effect);
+            transition: width var(--nds-transition), height var(--nds-transition);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        &:has(input[type="radio"]:not(:disabled):hover)::before {
+            width:  calc(var(--_nds-input-size) * 2);
+            height: calc(var(--_nds-input-size) * 2);
         }
     }
 }
@@ -159,137 +174,98 @@
 // RADIO INPUT
 // ==============================================
 
-.nds-form-control input[type="radio"] {
-    width: var(--nds-input-size);
-    height: var(--nds-input-size);
-    z-index: 2;
+.nds-radio-container .nds-form-control input[type="radio"] {
+    width:  var(--_nds-input-size);
+    height: var(--_nds-input-size);
     appearance: none;
-    border-radius: 50%;
     position: relative;
+    z-index: 1;
 
-    &:not(:disabled) {
-        cursor: pointer;
-    }
+    &:not(:disabled) { cursor: pointer; }
 
-    // Ripple effect on hover
-    &:not(:disabled)::before {
-        content: '';
-        position: absolute;
-        width: var(--nds-input-size);
-        height: var(--nds-input-size);
-        bottom: 50%;
-        left: 50%;
-        border-radius: 50%;
-        transform: translate(-50%, 50%);
-        background-color: var(--controls-control-ripple-effect);
-        transition: width var(--nds-transition), height var(--nds-transition);
-        z-index: -1;
-        pointer-events: none;
-        user-select: none;
-    }
-
-    &:not(:disabled):hover::before {
-        width: calc(var(--nds-input-size) * 2);
-        height: calc(var(--nds-input-size) * 2);
-    }
-
-    // Base radio appearance
+    // Single-pseudo tile. Unchecked: flat disc with a 1px outer outline.
+    // Checked: 3-band ring via `border: Npx white` creating the gap between
+    // outer shadow + bg and an inner coloured dot.
     &::after {
+        --_radio-tile-bg:     var(--radio-tile-bg,     var(--background-default));
+        --_radio-tile-border: var(--radio-tile-border, var(--controls-control-border));
+
         content: "";
+        position: absolute;
+        inset: 0;
         border-radius: 50%;
-        width: 100%;
-        height: 100%;
-        display: block;
-        background-color: var(--background-default);
-        color: var(--background-default) !important;
-        border: 1px solid transparent;
-        box-shadow: 0 0 0 1px var(--controls-control-border);
+        background-color: var(--_radio-tile-bg);
+        box-shadow: 0 0 0 1px var(--_radio-tile-border);
         z-index: 1;
     }
 
     // ==============================================
-    // CHECKED STATE
+    // CHECKED STATE — bg + outer shadow colour match via var() reference.
+    // Border-width (the white inner ring) grows with size variants.
     // ==============================================
 
     &:checked::after {
+        --radio-tile-bg:     var(--controls-control-primary-checked);
+        --radio-tile-border: var(--radio-tile-bg);
+
         border: 3px solid var(--background-default);
-        background-color: var(--controls-control-primary-checked);
-        color: var(--controls-control-primary-checked);
-        box-shadow: 0 0 0 1px var(--controls-control-primary-checked);
-        border-color: var(--background-default);
     }
 
-    // Size-specific border thickness
-    .nds-md &:checked::after {
-        border: 4px solid var(--background-default);
+    .nds-md &:checked::after { border-width: 4px; }
+    .nds-lg &:checked::after { border-width: 5px; }
+
+    &:checked:not(:disabled) {
+        &:hover::after  { --radio-tile-bg: var(--controls-control-primary-hovered); }
+        &:active::after { --radio-tile-bg: var(--controls-control-primary-pressed); }
     }
 
-    .nds-lg &:checked::after {
-        border: 5px solid var(--background-default);
+    // Unchecked hover / pressed — bg stays default; only outer outline shifts
+    // on the neutral scale (matches switch / checkbox pattern).
+    &:not(:checked, :disabled) {
+        &:hover::after  { --radio-tile-border: var(--controls-control-neutral-hovered); }
+        &:active::after { --radio-tile-border: var(--controls-control-neutral-pressed); }
     }
 
-    // Hover states for checked radio
-    &:checked:hover::after {
-        background-color: var(--controls-control-primary-hovered);
-        color: var(--controls-control-primary-hovered);
-        box-shadow: 0 0 0 1px var(--controls-control-primary-hovered);
-        border-color: var(--background-default);
-    }
+    // Neutral variant — swaps only the checked bg scale; border follows.
+    &.nds-neutral:checked {
+        &::after         { --radio-tile-bg: var(--radio-neutral-checked); }
 
-    // Active states for checked radio
-    &:checked:active::after {
-        background-color: var(--controls-control-primary-pressed);
-        color: var(--controls-control-primary-pressed);
-        box-shadow: 0 0 0 1px var(--controls-control-primary-pressed);
-        border-color: var(--background-default);
-    }
-
-    // Active state for unchecked radio
-    &:not(:checked):active::after {
-        background-color: var(--controls-control-pressed);
-        color: var(--controls-control-pressed);
-    }
-
-    // ==============================================
-    // NEUTRAL VARIANT
-    // ==============================================
-
-    &.nds-neutral {
-        &:checked::after {
-            background-color: var(--radio-neutral-checked);
-            color: var(--radio-neutral-checked);
-            box-shadow: 0 0 0 1px var(--radio-neutral-checked);
-            border-color: var(--background-default);
-        }
-
-        &:checked:hover::after {
-            background-color: var(--radio-neutral-hovered);
-            color: var(--radio-neutral-hovered);
-            box-shadow: 0 0 0 1px var(--radio-neutral-hovered);
-            border-color: var(--background-default);
-        }
-
-        &:checked:active::after {
-            background-color: var(--radio-neutral-pressed);
-            color: var(--radio-neutral-pressed);
-            box-shadow: 0 0 0 1px var(--radio-neutral-pressed);
-            border-color: var(--background-default);
+        &:not(:disabled) {
+            &:hover::after  { --radio-tile-bg: var(--radio-neutral-hovered); }
+            &:active::after { --radio-tile-bg: var(--radio-neutral-pressed); }
         }
     }
 
     // ==============================================
-    // DISABLED STATE
+    // DISABLED STATE — overrides at ::after so they beat checked/neutral.
     // ==============================================
+
+    &:disabled::after {
+        --radio-tile-bg:     var(--background-default);
+        --radio-tile-border: var(--border-disabled);
+    }
 
     &:checked:disabled::after {
-        background-color: var(--background-disabled) !important;
-        color: var(--control-disabled) !important;
-        box-shadow: 0 0 0 1px var(--background-disabled) !important;
+        --radio-tile-bg:     var(--control-disabled);
+        --radio-tile-border: var(--border-disabled);
     }
+}
 
-    &:not(:checked):disabled::after {
-        background-color: var(--background-default) !important;
-        box-shadow: 0 0 0 1px var(--background-disabled) !important;
+// ==============================================
+// READONLY STATE — forms.js syncs data-state on the container. Pointer
+// events are killed by the shared rule in _forms.scss. The outer outline
+// takes on the disabled colour; the inner dot (when checked) stays on
+// the brand colour.
+// ==============================================
+
+.nds-radio-container[data-state~="readonly"] .nds-form-control input[type="radio"] {
+    &,
+    &.nds-neutral {
+        &::after,
+        &:hover::after,
+        &:active::after {
+            --radio-tile-border: var(--border-disabled);
+        }
     }
 }
 

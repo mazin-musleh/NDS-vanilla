@@ -50,14 +50,27 @@ direction: ltr
                 data-toggler='["indeterminate", ".nds-check", "stateToggle", "prop"]'>
                 <span class="nds-label">Indeterminate</span>
               </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
-                data-toggler='["data-required", ".nds-check-container", "requiredToggle", "attr"]'>
-                <span class="nds-label">Required</span>
-              </button>
-              <button class="nds-btn nds-subtle demo-toggle-btn"
-                data-toggler='["disabled", ".nds-check-container", "disabledToggle", "data-state"]'>
-                <span class="nds-label">Disabled</span>
-              </button>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="nds-label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="nds-label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <button class="nds-btn nds-subtle demo-toggle-btn"
                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                 <span class="nds-label">Remove bg</span>

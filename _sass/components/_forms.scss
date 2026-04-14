@@ -125,31 +125,37 @@
         }
     }
 
-    // Readonly state
-    &[data-state~="readonly"] .nds-form-control {
-        border-color: var(--border-neutral-primary);
+    // Readonly state — non-interactive across every form type. The label
+    // toggles checkbox/radio/switch via `for=`, so killing pointer events on
+    // the whole container is the only reliable way to prevent value changes.
+    &[data-state~="readonly"] {
+        pointer-events: none;
 
-        background-color: transparent;
-
-        color: var(--form-field-text-readonly);
-
-        ::-webkit-input-placeholder {
-            color: var(--form-field-text-placeholder);
-        }
-
-        &:hover {
+        .nds-form-control {
             border-color: var(--border-neutral-primary);
-
+            background-color: transparent;
             color: var(--form-field-text-readonly);
 
             ::-webkit-input-placeholder {
                 color: var(--form-field-text-placeholder);
             }
+
+            &:hover {
+                border-color: var(--border-neutral-primary);
+                color: var(--form-field-text-readonly);
+
+                ::-webkit-input-placeholder {
+                    color: var(--form-field-text-placeholder);
+                }
+            }
         }
     }
 
-    // Disabled state
+    // Disabled state — same non-interactivity rationale as readonly above.
     &[data-state~="disabled"] {
+        pointer-events: none;
+        user-select: none;
+
         .nds-form-header .nds-label,
         .nds-form-header .nds-info {
             color: var(--text-default-disabled);
@@ -157,14 +163,8 @@
 
         .nds-form-control {
             background-color: transparent;
-
             color: var(--text-default-disabled);
-
             border-color: var(--border-disabled);
-
-            pointer-events: none;
-
-            user-select: none;
 
             ::-webkit-input-placeholder {
                 color: var(--text-default-disabled);

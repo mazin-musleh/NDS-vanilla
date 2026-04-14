@@ -196,6 +196,10 @@
     // Switch-specific (defaults to shared controls tokens)
     --switch-primary-hovered: var(--controls-control-primary-hovered);
     --switch-primary-pressed: var(--controls-control-primary-pressed);
+    --switch-neutral-default: var(--colors-neutral-950);
+    --switch-neutral-checked: var(--controls-control-neutral-checked);
+    --switch-neutral-hovered: var(--controls-control-neutral-hovered);
+    --switch-neutral-pressed: var(--controls-control-neutral-pressed);
 
     // Radio-specific (defaults to shared controls tokens)
     --radio-neutral-checked: var(--controls-control-neutral-checked);

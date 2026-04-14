@@ -10,11 +10,22 @@
 // ==============================================
 
 .nds-form-container.nds-switch-container:not([hidden]) {
-    --nds-input-size: 20px;
-    --switch-width: 48px;
-    --switch-height: 24px;
-    --thumb-size: 16px;
-    --thumb-offset: 4px;
+    // ==============================================
+    // PUBLIC API — private ← public aliases (alert pattern).
+    // Consumers override --switch-* / --nds-input-size here.
+    // ==============================================
+
+    // Size
+    --_nds-input-size: var(--nds-input-size, 20px);
+    --_switch-width:   var(--switch-width,   48px);
+    --_switch-height:  var(--switch-height,  24px);
+    --_switch-thumb-size:     var(--switch-thumb-size,     16px);
+    --_switch-thumb-offset:   var(--switch-thumb-offset,   4px);
+
+    // Colour
+    --_switch-track-bg:     var(--switch-track-bg,     var(--background-default));
+    --_switch-track-border: var(--switch-track-border, var(--switch-neutral-default));
+    --_switch-thumb-bg:     var(--switch-thumb-bg,     var(--switch-neutral-default));
 
     display: flex;
     gap: var(--spacing-lg);
@@ -27,27 +38,26 @@
     .nds-form-header .nds-label {
         color: var(--text-display);
         font-size: var(--nds-text-md-FS);
-        line-height: calc(var(--nds-input-size) + 4px);
+        line-height: calc(var(--_nds-input-size) + 4px);
         font-weight: 500;
-        /* height: calc(var(--nds-input-size) + 4px); */
     }
 
-    // Size variants
+    // Size variants override PUBLIC tokens; private aliases re-resolve.
     &.nds-sm {
         --nds-input-size: 16px;
-        --switch-width: 36px;
-        --switch-height: 18px;
-        --thumb-size: 12px;
-        --thumb-offset: 2px;
+        --switch-width:   36px;
+        --switch-height:  18px;
+        --switch-thumb-size:     12px;
+        --switch-thumb-offset:    2px;
         gap: var(--spacing-md);
     }
 
     &.nds-lg {
         --nds-input-size: 24px;
-        --switch-width: 56px;
-        --switch-height: 28px;
-        --thumb-size: 20px;
-        --thumb-offset: 4px;
+        --switch-width:   56px;
+        --switch-height:  28px;
+        --switch-thumb-size:     20px;
+        --switch-thumb-offset:    4px;
         gap: var(--spacing-xl);
     }
 
@@ -71,6 +81,22 @@
 
         &::before {
             display: none;
+        }
+    }
+
+    // DISABLED — matches _forms.scss convention; forms.js syncs data-state
+    // on the container when the input is disabled.
+    &[data-state~="disabled"] {
+        --switch-track-bg:     var(--background-default);
+        --switch-track-border: var(--control-disabled);
+        --switch-thumb-bg:     var(--control-disabled);
+
+        .nds-switch-track { cursor: not-allowed; }
+
+        .nds-switch-input:checked + .nds-switch-track {
+            --switch-track-bg:     var(--control-disabled);
+            --switch-track-border: var(--switch-track-bg);
+            --switch-thumb-bg:     var(--controls-control-icon-disabled);
         }
     }
 }
@@ -138,18 +164,17 @@
 .nds-switch {
     position: relative;
     display: inline-block;
-    width: var(--switch-width);
-    height: var(--switch-height);
+    width:  var(--_switch-width);
+    height: var(--_switch-height);
     user-select: none;
 
-    // Ripple effect on hover
+    // Ripple — centred halo that expands on hover.
     &::before {
         content: '';
         position: absolute;
-        inset-inline-start: 50%;
-        inset-block-start: 50%;
-        width: var(--switch-width);
-        height: var(--switch-height);
+        inset: 50% auto auto 50%;
+        width:  var(--_switch-width);
+        height: var(--_switch-height);
         border-radius: 9999px;
         transform: translate(50%, -50%);
         background-color: var(--controls-control-ripple-effect);
@@ -163,12 +188,12 @@
     }
 
     &:hover::before {
-        width: calc(var(--switch-width) + var(--spacing-lg));
-        height: calc(var(--switch-height) + var(--spacing-lg));
+        width:  calc(var(--_switch-width)  + var(--spacing-lg));
+        height: calc(var(--_switch-height) + var(--spacing-lg));
     }
 
     // ==============================================
-    // SWITCH INPUT (HIDDEN CHECKBOX)
+    // INPUT / TRACK / THUMB — read private aliases defined on the container.
     // ==============================================
 
     .nds-switch-input {
@@ -179,46 +204,36 @@
         margin: 0;
         cursor: pointer;
 
-        &:focus+.nds-switch-track {
+        &:focus + .nds-switch-track {
             outline: 2px solid var(--focus-outline);
             outline-offset: 2px;
         }
-
-        &:disabled {
-            cursor: not-allowed;
-
-            &+.nds-switch-track {
-                opacity: 0.5;
-                cursor: not-allowed;
-            }
-        }
     }
 
-    // ==============================================
-    // SWITCH TRACK
-    // ==============================================
-
     .nds-switch-track {
+        // Private alias redeclared here so state overrides at this scope
+        // (sibling-combinator from the input) re-resolve.
+        --_switch-track-bg:     var(--switch-track-bg,     var(--background-default));
+        --_switch-track-border: var(--switch-track-border, var(--switch-neutral-default));
+
         position: absolute;
         inset: 0;
         cursor: pointer;
-        background-color: var(--controls-switch-track-background, var(--background-white));
-        border: 1px solid var(--controls-control-neutral-checked);
+        background-color: var(--_switch-track-bg);
+        border: 1px solid var(--_switch-track-border);
         border-radius: 9999px;
         z-index: 2;
     }
 
-    // ==============================================
-    // SWITCH THUMB
-    // ==============================================
-
     .nds-switch-thumb {
+        --_switch-thumb-bg: var(--switch-thumb-bg, var(--switch-neutral-default));
+
         position: absolute;
         inset-block-start: 50%;
-        inset-inline-start: var(--thumb-offset);
-        width: var(--thumb-size);
-        height: var(--thumb-size);
-        background-color: var(--controls-control-neutral-checked);
+        inset-inline-start: var(--_switch-thumb-offset);
+        width:  var(--_switch-thumb-size);
+        height: var(--_switch-thumb-size);
+        background-color: var(--_switch-thumb-bg);
         border-radius: 9999px;
         transform: translateY(-50%);
         box-shadow: var(--shadow-sm);
@@ -226,64 +241,46 @@
     }
 
     // ==============================================
-    // ACTIVE STATE (PRESSED)
+    // STATE TINTS — descendant selectors (same shape as checkbox).
+    // Overrides land on elements where the private alias is redeclared.
     // ==============================================
 
-    .nds-switch-track:active .nds-switch-thumb {
-        width: calc(var(--thumb-size) + 6px);
+    // Unchecked hover / pressed — border + thumb shift on neutral scale;
+    // track bg stays at default.
+    .nds-switch-input:not(:disabled, :checked) + .nds-switch-track:hover {
+        --switch-track-border: var(--controls-control-neutral-hovered);
+        --switch-thumb-bg:     var(--controls-control-neutral-hovered);
+    }
+    .nds-switch-input:not(:disabled, :checked) + .nds-switch-track:active {
+        --switch-track-border: var(--controls-control-neutral-pressed);
+        --switch-thumb-bg:     var(--controls-control-neutral-pressed);
     }
 
-    // ==============================================
-    // HOVER STATE (UNCHECKED)
-    // ==============================================
-
-    .nds-switch-input:not(:disabled):not(:checked)+.nds-switch-track:hover {
-        border-color: var(--controls-control-hovered);
-    }
-
-    // ==============================================
-    // CHECKED STATE
-    // ==============================================
-
-    .nds-switch-input:checked+.nds-switch-track {
-        background-color: var(--controls-control-primary-checked);
-        border-color: var(--controls-control-primary-checked);
+    // Checked — primary defaults; border follows bg via var(), so hover /
+    // pressed only override --switch-track-bg.
+    .nds-switch-input:checked + .nds-switch-track {
+        --switch-track-bg:     var(--controls-control-primary-checked);
+        --switch-track-border: var(--switch-track-bg);
+        --switch-thumb-bg:     var(--colors-base-white);
 
         .nds-switch-thumb {
-            background-color: var(--colors-base-white);
             inset-inline-start: unset;
-            inset-inline-end: var(--thumb-offset);
+            inset-inline-end: var(--_switch-thumb-offset);
         }
     }
+    .nds-switch-input:not(:disabled):checked + .nds-switch-track:hover  { --switch-track-bg: var(--switch-primary-hovered); }
+    .nds-switch-input:not(:disabled):checked + .nds-switch-track:active { --switch-track-bg: var(--switch-primary-pressed); }
 
-    // Checked hover state
-    .nds-switch-input:not(:disabled):checked+.nds-switch-track:hover {
-        background-color: var(--switch-primary-hovered);
-        border-color: var(--switch-primary-hovered);
+    // Neutral variant — swaps the three checked bg values only.
+    &.nds-neutral {
+        .nds-switch-input:checked + .nds-switch-track                          { --switch-track-bg: var(--switch-neutral-checked); }
+        .nds-switch-input:not(:disabled):checked + .nds-switch-track:hover     { --switch-track-bg: var(--switch-neutral-hovered); }
+        .nds-switch-input:not(:disabled):checked + .nds-switch-track:active    { --switch-track-bg: var(--switch-neutral-pressed); }
     }
 
-    // ==============================================
-    // NEUTRAL VARIANT
-    // ==============================================
-
-    &.nds-neutral .nds-switch-input:checked+.nds-switch-track {
-        background-color: var(--controls-control-neutral-checked);
-        border-color: var(--controls-control-neutral-checked);
-    }
-
-    // Neutral checked hover state
-    &.nds-neutral .nds-switch-input:not(:disabled):checked+.nds-switch-track:hover {
-        background-color: var(--controls-control-neutral-hovered);
-        border-color: var(--controls-control-neutral-hovered);
-    }
-
-    // ==============================================
-    // DISABLED STATE
-    // ==============================================
-
-    &:has(:disabled) .nds-switch-track {
-        opacity: 0.5;
-        cursor: not-allowed;
+    // Thumb widens slightly while pressed.
+    .nds-switch-track:active .nds-switch-thumb {
+        width: calc(var(--_switch-thumb-size) + 6px);
     }
 }
 

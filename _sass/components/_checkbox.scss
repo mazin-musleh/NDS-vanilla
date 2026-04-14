@@ -10,7 +10,16 @@
 // ==============================================
 
 .nds-form-container.nds-check-container:not([hidden]) {
-    --nds-input-size: 16px;
+    // ==============================================
+    // PUBLIC API — consumers override these tokens on this element. Defaults
+    // are provided inline at the read sites via var(--token, fallback).
+    //
+    // --nds-input-size         size (16/20/24)
+    // --checkbox-tile-bg       tile fill
+    // --checkbox-tile-border   tile 1px outline
+    // --checkbox-glyph-bg      tick / dash glyph colour
+    // ==============================================
+
     display: flex;
     gap: var(--spacing-md);
     flex-direction: row-reverse;
@@ -21,26 +30,14 @@
     &>.nds-form-header .nds-label {
         color: var(--text-display);
         font-size: var(--nds-text-md-FS);
-        line-height: var(--nds-input-size);
+        line-height: var(--nds-input-size, 16px);
         font-weight: 500;
-      /*   height: var(--nds-input-size); */
     }
 
-    &.nds-md * {
-        --nds-input-size: 20px;
-    }
-
-    &.nds-lg * {
-        --nds-input-size: 24px;
-    }
-
-    &.nds-md {
-        gap: var(--spacing-lg);
-    }
-
-    &.nds-lg {
-        gap: var(--spacing-xl);
-    }
+    // Size variants override the PUBLIC token; private alias re-resolves
+    // on the container and inherits down to descendants.
+    &.nds-md { --nds-input-size: 20px; gap: var(--spacing-lg); }
+    &.nds-lg { --nds-input-size: 24px; gap: var(--spacing-xl); }
 
     .nds-form-control {
         min-width: unset;
@@ -49,9 +46,9 @@
         height: fit-content;
         padding: 0;
         border: 0;
-        border-radius: var(--radius-xs);
         box-shadow: unset;
         background-color: unset !important;
+        position: relative;
 
         &.focused:focus-visible {
             outline: 2px solid var(--colors-base-black) !important;
@@ -59,10 +56,28 @@
             box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
         }
 
+        // Ripple — wrapper pseudo so input's ::before/::after are free for
+        // the tile and the masked glyph.
         &::before {
-            display: none;
+            content: "";
+            position: absolute;
+            inset: 50% auto auto 50%;
+            width:  var(--nds-input-size, 16px);
+            height: var(--nds-input-size, 16px);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--controls-control-ripple-effect);
+            transition: width var(--nds-transition), height var(--nds-transition);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        &:has(input[type="checkbox"]:not(:disabled):hover)::before {
+            width:  calc(var(--nds-input-size, 16px) * 2);
+            height: calc(var(--nds-input-size, 16px) * 2);
         }
     }
+
 }
 
 // ==============================================
@@ -159,155 +174,138 @@
 // CHECKBOX INPUT
 // ==============================================
 
-.nds-form-control input[type="checkbox"] {
-    width: var(--nds-input-size);
-    height: var(--nds-input-size);
-    z-index: 2;
+.nds-check-container .nds-form-control input[type="checkbox"] {
+    width:  var(--nds-input-size, 16px);
+    height: var(--nds-input-size, 16px);
     appearance: none;
-    border-radius: var(--radius-xs);
     position: relative;
+    z-index: 1;
 
-    &:not(:disabled) {
-        cursor: pointer;
-    }
+    &:not(:disabled) { cursor: pointer; }
 
-    // Ripple effect on hover
-    &:not(:disabled)::before {
-        content: '';
-        position: absolute;
-        width: var(--nds-input-size);
-        height: var(--nds-input-size);
-        bottom: 50%;
-        left: 50%;
-        border-radius: 50%;
-        transform: translate(-50%, 50%);
-        background-color: var(--controls-control-ripple-effect);
-        transition: width var(--nds-transition), height var(--nds-transition);
-        z-index: -1;
-        pointer-events: none;
-        user-select: none;
-    }
-
-    &:not(:disabled):hover::before {
-        width: calc(var(--nds-input-size) * 2);
-        height: calc(var(--nds-input-size) * 2);
-    }
-
-    // Base checkbox appearance
+    &::before,
     &::after {
         content: "";
-        border-radius: var(--radius-xs);
-        width: 100%;
-        height: 100%;
-        display: block;
-        background-color: var(--background-default);
-        color: var(--colors-base-white) !important;
-        border: 1px solid transparent;
-        border-radius: var(--radius-xs);
-        box-shadow: 0 0 0 1px var(--controls-control-border);
-        z-index: 1;
-        justify-content: center;
-        align-content: center;
-        align-items: center;
         position: absolute;
-        top: 50%;
-        left: 50%;
-        border: unset !important;
-        background-color: var(--background-default);
-        color: var(--colors-base-white);
-        transform: translate(-50%, -50%);
+        inset: 0;
+        border-radius: var(--radius-xs);
+    }
+
+    // TILE — reads public token; state rules override it on the same element.
+    &::before {
+        background-color: var(--checkbox-tile-bg, var(--background-default));
+        box-shadow: 0 0 0 1px var(--checkbox-tile-border, var(--controls-control-border));
+        z-index: 1;
+    }
+
+    // GLYPH — masked icon. Paints through the mask alpha.
+    &::after {
+        background: var(--checkbox-glyph-bg, var(--background-default));
+        mask: center / 80% no-repeat;
         z-index: 2;
     }
 
-
     // ==============================================
-    // CHECKED STATE
-    // ==============================================
-
-    &:is(:checked, :indeterminate)::after {
-        content: "";
-        width: var(--nds-input-size);
-        height: var(--nds-input-size);
-        background-color: var(--controls-control-primary-checked);
-        background-image: var(--nds-icon-tick-02);
-        background-size: 70% 70%;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: var(--colors-base-white);
-        box-shadow: 0 0 0 1px var(--controls-control-primary-checked);
-        border-color: var(--background-default);
-    }
-
-    // Hover states for checked checkbox
-    &:is(:checked, :indeterminate):hover::after {
-        background-color: var(--checkbox-primary-hovered);
-        color: var(--checkbox-primary-hovered);
-        box-shadow: 0 0 0 1px var(--checkbox-primary-hovered);
-        border-color: var(--background-default);
-    }
-
-    // Active states for checked checkbox
-    &:is(:checked, :indeterminate):active::after {
-        background-color: var(--checkbox-primary-pressed);
-        color: var(--checkbox-primary-pressed);
-        box-shadow: 0 0 0 1px var(--checkbox-primary-pressed);
-        border-color: var(--background-default);
-    }
-
-    // Active state for unchecked checkbox
-    &:not(:checked, :indeterminate):active::after {
-        background-color: var(--controls-control-pressed);
-        color: var(--controls-control-pressed);
-    }
-
-    // ==============================================
-    // NEUTRAL VARIANT
+    // STATE TINTS — every state writes PUBLIC tokens on the pseudo that
+    // redeclares the private alias. Border follows bg when checked.
     // ==============================================
 
+    &:is(:checked, :indeterminate) {
+        &::before {
+            --checkbox-tile-bg:     var(--controls-control-primary-checked);
+            --checkbox-tile-border: var(--checkbox-tile-bg);
+        }
+        &::after {
+            --checkbox-glyph-bg: var(--icon-oncolor);
+            mask-image: var(--nds-icon-checkmark);
+        }
+
+        &:not(:disabled) {
+            &:hover::before  { --checkbox-tile-bg: var(--checkbox-primary-hovered); }
+            &:active::before { --checkbox-tile-bg: var(--checkbox-primary-pressed); }
+        }
+    }
+
+    &:indeterminate::after { mask-image: var(--nds-icon-dash); }
+
+    // Unchecked hover / pressed — bg stays default; only border shifts on
+    // the neutral scale (same pattern as switch).
+    &:not(:checked, :indeterminate, :disabled) {
+        &:hover::before  { --checkbox-tile-border: var(--controls-control-neutral-hovered); }
+        &:active::before { --checkbox-tile-border: var(--controls-control-neutral-pressed); }
+    }
+
+    // Neutral variant — overrides only the checked bg scale; border follows.
+    &.nds-neutral:is(:checked, :indeterminate) {
+        &::before { --checkbox-tile-bg: var(--controls-control-neutral-checked); }
+
+        &:not(:disabled) {
+            &:hover::before  { --checkbox-tile-bg: var(--controls-control-neutral-hovered); }
+            &:active::before { --checkbox-tile-bg: var(--controls-control-neutral-pressed); }
+        }
+    }
+
+    // ==============================================
+    // DISABLED STATE — overrides at same scope (::before / ::after) so they
+    // beat the checked/neutral rules on specificity.
+    // ==============================================
+
+    &:disabled::before {
+        --checkbox-tile-border: var(--background-disabled);
+    }
+
+    &:is(:checked, :indeterminate):disabled {
+        &::before {
+            --checkbox-tile-bg:     var(--background-disabled);
+            --checkbox-tile-border: var(--checkbox-tile-bg);
+        }
+        &::after { --checkbox-glyph-bg: var(--controls-control-icon-disabled); }
+    }
+}
+
+// ==============================================
+// READONLY STATE — forms.js syncs data-state on the container.
+// Inverted checked colours: tile bg stays default, border + glyph take on
+// the brand colour. Hover/pressed locked to the inverted colours.
+// ==============================================
+
+// Pointer-events are killed container-wide by the shared readonly rule in
+// _forms.scss — applies to all form containers uniformly.
+.nds-check-container[data-state~="readonly"] .nds-form-control input[type="checkbox"] {
+
+    // Tile border muted across every state (unchecked tile-bg stays at the
+    // fallback default — no explicit override needed).
+    &::before,
+    &:hover::before,
+    &:active::before {
+        --checkbox-tile-border: var(--background-disabled);
+    }
+
+    // When checked, revert the checked rule's primary tile-bg back to default
+    // so the tile reads as "outlined" rather than filled. &.nds-neutral path
+    // needed to out-specify the neutral checked rule.
+    &,
     &.nds-neutral {
-        &:is(:checked, :indeterminate)::after {
-            background-color: var(--controls-control-neutral-checked);
-            color: var(--controls-control-neutral-checked);
-            box-shadow: 0 0 0 1px var(--controls-control-neutral-checked);
-            border-color: var(--background-default);
-        }
-
-        &:is(:checked, :indeterminate):hover::after {
-            background-color: var(--controls-control-neutral-hovered);
-            color: var(--controls-control-neutral-hovered);
-            box-shadow: 0 0 0 1px var(--controls-control-neutral-hovered);
-            border-color: var(--background-default);
-        }
-
-        &:is(:checked, :indeterminate):active::after {
-            background-color: var(--controls-control-neutral-pressed);
-            color: var(--controls-control-neutral-pressed);
-            box-shadow: 0 0 0 1px var(--controls-control-neutral-pressed);
-            border-color: var(--background-default);
+        &:is(:checked, :indeterminate) {
+            &::before,
+            &:hover::before,
+            &:active::before {
+                --checkbox-tile-bg: var(--background-default);
+            }
         }
     }
 
-    // ==============================================
-    // INDETERMINATE STATE
-    // ==============================================
-
-    &:indeterminate::after {
-        background-image: var(--nds-icon-remove-01);
+    // Glyph — takes on the brand colour when checked / indeterminate.
+    &:is(:checked, :indeterminate)::after {
+        --checkbox-glyph-bg: var(--controls-control-primary-checked);
     }
 
-    // ==============================================
-    // DISABLED STATE
-    // ==============================================
+    &.nds-neutral:is(:checked, :indeterminate)::after {
+        --checkbox-glyph-bg: var(--controls-control-neutral-checked);
 
-    &:is(:checked, :indeterminate):disabled::after {
-        background-color: var(--background-disabled) !important;
-        color: var(--control-disabled) !important;
-        box-shadow: 0 0 0 1px var(--background-disabled) !important;
-    }
-
-    &:not(:checked):disabled::after {
-        background-color: var(--background-default) !important;
-        box-shadow: 0 0 0 1px var(--background-disabled) !important;
+        @include dark {
+            --checkbox-glyph-bg: var(--icon-oncolor);
+        }
     }
 }
 
