@@ -24,7 +24,10 @@
     const _lang = (document.documentElement.lang || 'en').split('-')[0].toLowerCase();
     NDS.lang = _lang;
     NDS.isArabic = _lang === 'ar';
-    NDS.isRTL = document.documentElement.dir === 'rtl';
+    // Live getter so runtime direction toggles (e.g. language switcher) stay correct.
+    Object.defineProperty(NDS, 'isRTL', {
+        get() { return document.documentElement.dir === 'rtl'; }
+    });
 
     // ── Debounce ─────────────────────────────────────────────────────
     // Usage: const fn = NDS.debounce(handler, 150)
