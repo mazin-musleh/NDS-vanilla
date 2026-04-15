@@ -166,6 +166,9 @@
 - label: "Utilities"
   has_sub: true
   children:
+    - label: "Divider"
+      url: "/utilities/divider"
+      href: "/utilities/divider.html"
     - label: "Expandable Content"
       url: "/utilities/expandable-content"
       href: "/utilities/expandable-content.html"

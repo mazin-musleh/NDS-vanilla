@@ -284,6 +284,13 @@
   tags: ["CSS"]
   url: "/utilities/truncate-text.html"
 
+- title: "Divider"
+  description: "Horizontal or vertical rule with optional centered label"
+  icon: '<i class="hgi hgi-stroke hgi-minus-sign"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/divider.html"
+
 - title: "Expandable Content"
   description: "Show more/less toggle for long content blocks"
   icon: '<i class="hgi hgi-stroke hgi-arrow-expand-02"></i>'

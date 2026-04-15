@@ -30,56 +30,63 @@
    DIVIDERS
    ======================================== */
 
-hr {
+// Unified divider: empty → single line; with content → text between flanking lines.
+// Uses logical props so it adapts automatically to writing-mode.
+.nds-divider {
     --_divider: var(--divider, var(--spacing-xs));
-    opacity: .10;
+    --_divider-size: var(--divider-size, 2px);
+
+    margin-block: var(--_divider);
+    flex-shrink: 0;
     border: 0;
-    border-top: 1px solid;
-    margin: var(--_divider) 0;
+    border-block-start: var(--_divider-size) solid var(--divider-color);
+
+    // Reset hr-specific defaults when the class is used on <hr>.
+    width: auto;
+    opacity: 1;
     color: inherit;
-    width: 100%;
 
-    &.nds-md {
-        --divider: var(--spacing-md);
+    // With content: flex row with flanking lines via pseudo-elements.
+    // (Pseudo-elements don't render on <hr>, so this branch is for <div>/<span>.)
+    &:not(:empty) {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        color: var(--text-secondary-paragraph);
+        font-size: var(--nds-text-sm-FS);
+        line-height: var(--nds-text-sm-LH);
+        border-block-start: 0;
+
+        &::before,
+        &::after {
+            content: '';
+            flex: 1;
+            border-block-start: var(--_divider-size) solid var(--divider-color);
+        }
     }
 
-    &.nds-lg {
-        --divider: var(--spacing-lg);
-    }
+    &.nds-md { --divider: var(--spacing-md); }
+    &.nds-lg { --divider: var(--spacing-lg); }
+    &.nds-xl { --divider: var(--spacing-xl); }
+    &.nds-2xl { --divider: var(--spacing-2xl); }
+    &.nds-3xl { --divider: var(--spacing-3xl); }
+    &.nds-4xl { --divider: var(--spacing-4xl); }
 
-    &.nds-xl {
-        --divider: var(--spacing-xl);
-    }
+    // Vertical modifier: flips the rule to a vertical line via writing-mode
+    // and stretches to the flex parent's cross axis so it is actually visible.
+    &.nds-vertical {
+        writing-mode: vertical-rl;
+        align-self: stretch;
+        margin-block: 0;
+        margin-inline: var(--_divider);
 
-    &.nds-2xl {
-        --divider: var(--spacing-2xl);
-    }
-
-    &.nds-3xl {
-        --divider: var(--spacing-3xl);
-    }
-
-    &.nds-4xl {
-        --divider: var(--spacing-4xl);
-    }
-
-}
-
-.nds-divider-text {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-    color: var(--text-secondary-paragraph);
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
-
-    &::before,
-    &::after {
-        content: '';
-        flex: 1;
-        border-top: 1px solid var(--border-neutral-primary);
+        &:not(:empty)::before,
+        &:not(:empty)::after {
+            min-height: 16px;
+        }
     }
 }
+
 
 /* ========================================
    MINIMAL LAYOUT
@@ -212,8 +219,8 @@ body.nds-minimal[style*="--bg-img"] {
         margin-block-end: 0;
     }
 
-    & :not(nav, .nds-drawer-scroll, .nds-drawer-list li)>ul,
-    & :not(nav, .nds-drawer-scroll, .nds-drawer-list li )>ol {
+    & :not(nav, .nds-scroll-more, .nds-drawer-scroll, .nds-drawer-list li)>ul,
+    & :not(nav, .nds-scroll-more, .nds-drawer-scroll, .nds-drawer-list li )>ol {
 
         &.nds-divided li {
             border-bottom: 1px solid var(--divider-color);
@@ -233,10 +240,10 @@ body.nds-minimal[style*="--bg-img"] {
         }
     }
 
-    :is(p, ul, ol, .nds-table-wrapper, .nds-table, .nds-tabs, .nds-code, .nds-definition-list) {
+    :is(p, ul, ol, .nds-table-wrapper, .nds-table, .nds-tabs, .nds-code, .nds-definition-list):not(.nds-scroll-more-content) {
         margin-block-end: 1rem;
 
-        &:last-child {
+        &:is(:last-child, :has(+ .nds-divider), :has(+ hr)) {
             margin-block-end: 0;
         }
     }
