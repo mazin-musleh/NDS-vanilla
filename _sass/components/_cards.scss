@@ -10,6 +10,26 @@
 // ==============================================
 
 .nds-card {
+  // Reset public tokens so parent cards don't bleed into nested child cards.
+  --card-bg: initial;
+  --card-bg-hover: initial;
+  --card-border: initial;
+  --card-border-hover: initial;
+  --card-border-active: initial;
+  --card-padding: initial;
+  --card-gap: initial;
+  --card-text: initial;
+  --card-title: initial;
+  --card-subtitle: initial;
+  --card-number: initial;
+  --card-rating: initial;
+  --card-width: initial;
+  --card-width-min: initial;
+  --card-width-max: initial;
+  --icon-color: initial;
+  --icon-bg-color: initial;
+  --avatar-color: initial;
+
   // Internal custom properties with external fallbacks
   --_card-bg: var(--card-bg, var(--background-card));
   --_card-bg-hover: var(--card-bg-hover, var(--background-card-hovered));
