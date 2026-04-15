@@ -15,9 +15,11 @@
         <span id="nds-weatherInfo" class="nds-text-icon" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
             data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
         -->
+        {% if site.theme_switcher %}
         <button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode">
             <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
         </button>
+        {% endif %}
     </div>
 </div>
 <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
