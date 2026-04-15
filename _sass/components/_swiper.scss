@@ -17,6 +17,10 @@
     --swiper-peek: var(--peek, 0px);
     --swiper-padding: var(--padding, 0);
 
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+
     position: relative;
     width: 100%;
     direction: inherit;
@@ -69,8 +73,6 @@
 
 
     .nds-swiper:not(.nds-hero) & {
-        padding-block-end: var(--spacing-xl);
-        margin-block-end: calc(var(--spacing-xl) / 2 * -1);
         padding-inline: max(2px, var(--swiper-padding)); //2px min for shadow
     }
 
@@ -122,6 +124,11 @@
 
     .nds-swiper:not(.nds-hero) &:last-child {
         padding-inline-end: 2px;
+    }
+    
+    .nds-swiper:not(.nds-hero) &:has(.nds-card.nds-shadow) {
+        padding-inline: 3px;
+        padding-block: 3px 6px;
     }
 
     // Card within slide should fill height
@@ -231,9 +238,14 @@
 .nds-swiper-navigation {
     display: flex;
     justify-content: space-between;
-    margin-inline: calc(var(--nds-viewport-padding) + var(--spacing-xl));
-    margin-top: var(--spacing-md);
+    width: 100%;
+    --_nav-padding: var(--spacing-lg);
+    padding-inline: var(--_nav-padding);
     gap: var(--spacing-xl);
+
+    .nds-max-width & {
+        --_nav-padding: max(calc(var(--nds-viewport-padding) + var(--spacing-lg)) , calc((100% - var(--nds-content-MaxWidth)) / 2));
+    }
 
     .nds-swiper-buttons {
         display: flex;
