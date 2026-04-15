@@ -204,11 +204,15 @@ direction: ltr
                                 data-toggler='["nds-divided", ".nds-scroll-more", "scrollMoreCardsDivider"]'>
                                 <span class="nds-label">Divider</span>
                             </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["nds-snap", ".nds-scroll-more", "scrollMoreCardsSnap"]'>
+                                <span class="nds-label">Snap</span>
+                            </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-scroll-more" style="--scroll-gap: var(--spacing-md);">
+                            <div class="nds-scroll-more nds-snap" style="--scroll-gap: var(--spacing-md);">
                                 <div class="nds-scroll-more-content nds-grid" style="--max-col: 6; --min-width: 280px;">
                                     {% for service in site.data.content.services limit:6 %}
                                     <div class="nds-card nds-stroke">
@@ -256,7 +260,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-scroll-more" style="--scroll-gap: var(--spacing-md);">
+<div class="nds-scroll-more nds-snap" style="--scroll-gap: var(--spacing-md);">
   <div class="nds-scroll-more-content nds-grid" style="--max-col: 6; --min-width: 280px;">
     {% raw %}{% for service in site.data.content.services limit:6 %}{% endraw %}
     <div class="nds-card nds-stroke">
@@ -381,7 +385,6 @@ direction: ltr
                     <li>Do not use Scroll More when a "Show all" affordance is enough and pagination is not needed. Use <a class="nds-color" href="{{ 'utilities/expandable-content' | relative_url }}">Expandable Content</a> instead</li>
                     <li>Keep the first child uniform in size when you expect item-aware paging. The step is computed from the first child; uneven sizes still work but the "one page at a time" feel is weaker</li>
                     <li>If children have borders, outlines, or shadows that get clipped by the overflow container, apply inline padding to <code class="nds-inline-code lang-html">.nds-scroll-more-content</code> to reserve breathing room</li>
-                    <li>Pair with icons that point in the direction of flow. The icon rotates automatically based on axis and state, so an arrow-down icon reads as down, left, or right depending on context</li>
                 </ul>
             </div>
 
@@ -391,6 +394,7 @@ direction: ltr
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Reveals a <code class="nds-inline-code lang-html">.nds-divider</code> child element between content and button when overflow is present</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-snap</code></td><td>Applies CSS scroll-snap so each direct child's leading edge aligns with the scroll container. Good for card tracks and large items</td></tr>
                     </tbody>
                 </table>
             </div>

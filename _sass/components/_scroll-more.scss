@@ -24,6 +24,17 @@
     --_scroll-gap:        var(--scroll-gap, 0);
     --_scroll-divider:    var(--scroll-divider, var(--divider-color));
 
+    // Mask tokens (consumed by .nds-scroll-more-content's mask-image).
+    --_fade-start: var(--_scroll-fade);
+    --_fade-end:   var(--_scroll-fade);
+    --_dir-start:  left;   // RTL default: inline-start = right → "to left" fades right edge
+    --_dir-end:    right;
+
+    @include ltr {
+        --_dir-start: right;
+        --_dir-end:   left;
+    }
+
     position: relative;
     display: flex;
     flex-direction: column;
@@ -56,65 +67,53 @@
     -ms-overflow-style: none;
 }
 
+// Opt-in: snap each child's leading edge to the scroll container.
+// Makes button clicks and free-scroll land on item boundaries (useful for cards).
+.nds-scroll-more.nds-snap[data-axis="vertical"] > .nds-scroll-more-content {
+    scroll-snap-type: y mandatory;
+}
+
+.nds-scroll-more.nds-snap[data-axis="horizontal"] > .nds-scroll-more-content {
+    scroll-snap-type: x mandatory;
+}
+
+.nds-scroll-more.nds-snap > .nds-scroll-more-content > * {
+    scroll-snap-align: start;
+}
+
+// Snap mode: items are always flush with the start edge, so the start-edge
+// fade would clip them. Collapse it while there's still content to scroll into.
+.nds-scroll-more.nds-snap { --_fade-start: 0px; }
+
+// …except at the end, where the start-edge fade returns as a "scroll back" cue.
+.nds-scroll-more.nds-snap[data-state~="at-end"] { --_fade-start: var(--_scroll-fade); }
+
 // ==============================================
-// VERTICAL MASK
+// MASK (both axes) — driven by --_fade-start / --_fade-end / --_dir-*.
+// State zeroes the appropriate edge distance; gradient direction flips via vars.
 // ==============================================
 
+// Vertical: single gradient, 4 stops, edges collapse at 0.
 .nds-scroll-more[data-axis="vertical"][data-state~="has-more"] > .nds-scroll-more-content {
     mask-image: linear-gradient(to bottom,
         transparent 0%,
-        black var(--mask-fade-distance),
-        black calc(100% - var(--mask-fade-distance)),
+        black var(--_fade-start),
+        black calc(100% - var(--_fade-end)),
         transparent 100%);
 }
 
-.nds-scroll-more[data-axis="vertical"][data-state~="has-more"][data-state~="at-start"] > .nds-scroll-more-content {
-    mask-image: linear-gradient(to bottom,
-        black calc(100% - var(--mask-fade-distance)),
-        transparent 100%);
-}
-
-.nds-scroll-more[data-axis="vertical"][data-state~="has-more"][data-state~="at-end"] > .nds-scroll-more-content {
-    mask-image: linear-gradient(to bottom,
-        transparent 0%,
-        black var(--mask-fade-distance));
-}
-
-// ==============================================
-// HORIZONTAL MASK (intersect composite for dual-edge fade)
-// ==============================================
-
+// Horizontal: two gradients intersected; direction vars handle RTL/LTR in one rule.
 .nds-scroll-more[data-axis="horizontal"][data-state~="has-more"] > .nds-scroll-more-content {
     mask-composite: intersect;
     -webkit-mask-composite: source-in;
     mask-image:
-        linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
-        linear-gradient(to left,  transparent 0%, black var(--mask-fade-distance));
+        linear-gradient(to var(--_dir-start), transparent 0%, black var(--_fade-start)),
+        linear-gradient(to var(--_dir-end),   transparent 0%, black var(--_fade-end));
 }
 
-.nds-scroll-more[data-axis="horizontal"][data-state~="has-more"][data-state~="at-start"] > .nds-scroll-more-content {
-    mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
-}
-
-.nds-scroll-more[data-axis="horizontal"][data-state~="has-more"][data-state~="at-end"] > .nds-scroll-more-content {
-    mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
-}
-
-@include ltr {
-    .nds-scroll-more[data-axis="horizontal"][data-state~="has-more"] > .nds-scroll-more-content {
-        mask-image:
-            linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
-            linear-gradient(to left,  transparent 0%, black var(--mask-fade-distance));
-    }
-
-    .nds-scroll-more[data-axis="horizontal"][data-state~="has-more"][data-state~="at-start"] > .nds-scroll-more-content {
-        mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
-    }
-
-    .nds-scroll-more[data-axis="horizontal"][data-state~="has-more"][data-state~="at-end"] > .nds-scroll-more-content {
-        mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
-    }
-}
+// Collapse the relevant edge at scroll boundaries.
+.nds-scroll-more[data-state~="at-start"] { --_fade-start: 0px; }
+.nds-scroll-more[data-state~="at-end"]   { --_fade-end:   0px; }
 
 // ==============================================
 // SHOW-MORE BUTTON
