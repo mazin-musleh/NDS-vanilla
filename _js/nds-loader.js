@@ -77,6 +77,11 @@
             init: () => NDS.Drawer?.init?.(),
         },
         {
+            name: 'scrollMore',
+            selector: '.nds-scroll-more',
+            init: () => NDS.ScrollMore?.init?.(),
+        },
+        {
             name: 'progress',
             selector: '.nds-progress-circle, .nds-progress-bar',
             init: () => NDS.Progress?.init?.(),

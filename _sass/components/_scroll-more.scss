@@ -1,0 +1,189 @@
+@use '../mixins' as *;
+
+// ==============================================
+// SCROLL MORE
+// General-purpose overflow wrapper with edge mask-fade
+// and a full-width / full-height show-more button.
+// Axis (vertical/horizontal) is auto-detected by JS.
+// State (data-axis + data-state) lives on the wrapper,
+// so all rules target children via attribute + combinator.
+// ==============================================
+
+.nds-scroll-more {
+    // Reset public tokens so nested wrappers don't inherit from a parent.
+    --scroll-fade: initial;
+    --scroll-max-height: initial;
+    --scroll-max-width: initial;
+    --scroll-gap: initial;
+    --scroll-divider: initial;
+
+    // Internal tokens with external fallbacks
+    --_scroll-fade:       var(--scroll-fade, 48px);
+    --_scroll-max-height: var(--scroll-max-height, none);
+    --_scroll-max-width:  var(--scroll-max-width, none);
+    --_scroll-gap:        var(--scroll-gap, 0);
+    --_scroll-divider:    var(--scroll-divider, var(--divider-color));
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    gap: var(--_scroll-gap);
+    max-block-size: var(--_scroll-max-height);
+    max-inline-size: var(--_scroll-max-width);
+
+    &[data-axis="horizontal"] {
+        flex-direction: row;
+    }
+}
+
+.nds-scroll-more-content {
+    // Bridge to the name used by the mask gradients below.
+    --mask-fade-distance: var(--_scroll-fade);
+
+    overflow: auto;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+
+    // No default padding declaration: authors set --scroll-padding on the wrapper
+    // (or apply padding inline on this element) when they need breathing room.
+    // Leaving it off preserves the project's own resets for <ul>, <ol>, etc.
+
+    &::-webkit-scrollbar { display: none; }
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+// ==============================================
+// VERTICAL MASK
+// ==============================================
+
+.nds-scroll-more[data-axis="vertical"][data-state~="has-more"] > .nds-scroll-more-content {
+    mask-image: linear-gradient(to bottom,
+        transparent 0%,
+        black var(--mask-fade-distance),
+        black calc(100% - var(--mask-fade-distance)),
+        transparent 100%);
+}
+
+.nds-scroll-more[data-axis="vertical"][data-state~="has-more"][data-state~="at-start"] > .nds-scroll-more-content {
+    mask-image: linear-gradient(to bottom,
+        black calc(100% - var(--mask-fade-distance)),
+        transparent 100%);
+}
+
+.nds-scroll-more[data-axis="vertical"][data-state~="has-more"][data-state~="at-end"] > .nds-scroll-more-content {
+    mask-image: linear-gradient(to bottom,
+        transparent 0%,
+        black var(--mask-fade-distance));
+}
+
+// ==============================================
+// HORIZONTAL MASK (intersect composite for dual-edge fade)
+// ==============================================
+
+.nds-scroll-more[data-axis="horizontal"][data-state~="has-more"] > .nds-scroll-more-content {
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+    mask-image:
+        linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
+        linear-gradient(to left,  transparent 0%, black var(--mask-fade-distance));
+}
+
+.nds-scroll-more[data-axis="horizontal"][data-state~="has-more"][data-state~="at-start"] > .nds-scroll-more-content {
+    mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
+}
+
+.nds-scroll-more[data-axis="horizontal"][data-state~="has-more"][data-state~="at-end"] > .nds-scroll-more-content {
+    mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
+}
+
+@include ltr {
+    .nds-scroll-more[data-axis="horizontal"][data-state~="has-more"] > .nds-scroll-more-content {
+        mask-image:
+            linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
+            linear-gradient(to left,  transparent 0%, black var(--mask-fade-distance));
+    }
+
+    .nds-scroll-more[data-axis="horizontal"][data-state~="has-more"][data-state~="at-start"] > .nds-scroll-more-content {
+        mask-image: linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
+    }
+
+    .nds-scroll-more[data-axis="horizontal"][data-state~="has-more"][data-state~="at-end"] > .nds-scroll-more-content {
+        mask-image: linear-gradient(to right, transparent 0%, black var(--mask-fade-distance));
+    }
+}
+
+// ==============================================
+// SHOW-MORE BUTTON
+// Visuals come from .nds-btn (.nds-subtle.nds-md).
+// This class adds layout-only rules so it reserves space.
+// ==============================================
+
+.nds-scroll-more-btn {
+    display: none;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+
+    i {
+        transition: transform var(--nds-transition);
+        transform: rotate(var(--_icon-rotate, 0deg));
+    }
+}
+
+.nds-scroll-more[data-state~="has-more"] > .nds-scroll-more-btn {
+    display: inline-flex;
+}
+
+// Vertical: button spans full width below content
+.nds-scroll-more[data-axis="vertical"] > .nds-scroll-more-btn {
+    width: 100% !important;
+}
+
+// Optional .nds-divider child — shown only when the wrapper opts in via
+// .nds-divided AND overflow is actually present.
+.nds-scroll-more > .nds-divider {
+    display: none;
+    border-block-start-color: var(--_scroll-divider);
+}
+
+.nds-scroll-more.nds-divided[data-state~="has-more"] > .nds-divider {
+    display: block;
+}
+
+// Horizontal: flip the divider to a vertical rule via writing-mode.
+.nds-scroll-more[data-axis="horizontal"] > .nds-divider {
+    writing-mode: vertical-rl;
+}
+
+// Icon rotation per axis + state. The <i> reads --_icon-rotate (set above),
+// so each rule only redefines that one variable — no stacked transforms.
+.nds-scroll-more[data-axis="vertical"][data-state~="at-end"] > .nds-scroll-more-btn {
+    --_icon-rotate: 180deg;
+}
+
+// Horizontal: rotate the entire button so icon + label read vertically.
+.nds-scroll-more[data-axis="horizontal"] > .nds-scroll-more-btn {
+    align-self: stretch;
+    height: auto !important;
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    --_icon-rotate: 90deg;
+
+    @include ltr {
+        writing-mode: vertical-lr;
+        --_icon-rotate: -90deg;
+    }
+}
+
+.nds-scroll-more[data-axis="horizontal"][data-state~="at-end"] > .nds-scroll-more-btn {
+    --_icon-rotate: -90deg;
+
+    @include ltr {
+        --_icon-rotate: 90deg;
+    }
+}
+

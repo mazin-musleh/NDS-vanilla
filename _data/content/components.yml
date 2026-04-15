@@ -134,6 +134,13 @@
   tags: ["JS", "CSS"]
   url: "/components/rating.html"
 
+- title: "Scroll More"
+  description: "Overflow wrapper with edge mask-fade and sticky show-more button"
+  icon: '<i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/scroll-more.html"
+
 - title: "Stepper"
   description: "Sequential step indicators for multi-stage workflows"
   icon: '<i class="hgi hgi-stroke hgi-right-to-left-list-number"></i>'
