@@ -83,9 +83,9 @@ Read source files to build a complete understanding of the component. **The sour
 - `standard-page.md`: front matter template (new pages)
 - `layout/section.md`: section hierarchy and tiers (new pages or adding sections)
 - `playground.md`: existing demo HTML if available
-- Icon class lookup: **NEVER guess icon class names.** Two icon mechanisms exist — pick the right one per usage:
-  - **Content icons (font)** (`<i class="hgi hgi-stroke hgi-NAME">`): renders via the local HGI font (loaded when `use_hgi_font: true`). Verify each NAME exists in `_sass/_hgiRoundedStroke.scss` — that is the authoritative list of glyphs the shipped font actually contains.
-  - **UI icons (mask)** (`<i class="nds-icon nds-hgi-NAME" aria-hidden="true">`): only for names in `UI_ICONS` of `scripts/generate-icons-scss.mjs`. Used by chrome, pseudo-elements, JS-injected. To add a new UI icon, run `/add-nds-icon NAME`.
+- Icon class lookup: **NEVER guess icon class names.** Plausible-sounding names frequently don't exist in the shipped font.
+  - **Always use content icons** for every `<i>` you add on a doc page (Built-in Features list, inline decorations, copy buttons, etc.): `<i class="hgi hgi-stroke hgi-NAME">`. The authoritative glyph list is `_sass/_hgiRoundedStroke.scss`. Verify names with the anchored pattern in Phase 5 ("Icon Verification") BEFORE emitting HTML.
+  - **Never introduce UI icons** (`<i class="nds-icon nds-hgi-NAME" aria-hidden="true">`) when authoring a doc page. They are reserved for chrome and pseudo-elements. The only time `nds-icon nds-hgi-*` may appear in your output is inside a code tab that copies the component's own live demo verbatim (e.g. a modal's close button icon the component itself renders). Do not substitute one mechanism for the other.
 - **Additional reference pages** for complex components: `components/chart.md` (API-heavy with options reference), `components/cards.md` (builder-style multi-dropmenu demos). Judge whether the component's complexity warrants reading these.
 
 ---
@@ -208,6 +208,28 @@ Modal, drawer, and dropmenu need a **trigger button** + hidden component markup 
 
 Demo-wiring JS goes in `_js/nds-showcase.js`, NOT the component's own JS file. For components that require JS to render (charts, programmatic alerts), use a page-level `<script>` wrapped in `DOMContentLoaded`. For toggle logic beyond class/attr swapping, use inline `<script>` inside the demo card.
 
+### Icon Verification (MANDATORY before writing any `<i>` tag)
+
+Plausible-sounding names often don't exist. Before emitting HTML for Built-in Features or anywhere else, verify every HGI font icon name:
+
+```bash
+# One grep, all icons, anchored pattern (colon required — don't drop it):
+grep -E "\.hgi-(name1|name2|name3|name4|name5|name6):" _sass/_hgiRoundedStroke.scss
+```
+
+- Any name NOT printed by that command **does not exist** and must be replaced.
+- Do NOT use unanchored `grep "hgi-NAME"` — it gives false matches against unrelated class fragments.
+- To find a replacement for a missing name, browse candidates by topic:
+  ```bash
+  grep -E "\.hgi-TOPIC" _sass/_hgiRoundedStroke.scss | head -20
+  # TOPIC examples: resize, size, scale, arrow, toggle, text, color
+  ```
+- For UI icons (`nds-hgi-NAME`), apply the same discipline to `UI_ICONS` in `scripts/generate-icons-scss.mjs`.
+
+Run this check once, covering every icon on the page. If you revise the page and add new icons, re-run.
+
+**Content icons only.** Doc pages author only `hgi hgi-stroke hgi-NAME`. Never add `nds-icon nds-hgi-NAME` yourself. The only place `nds-icon` may appear in your output is inside a code tab that verbatim copies a component's own live demo where the component itself uses one. If you catch an `nds-icon nds-hgi-*` you wrote by hand (Built-in Features, inline decoration, anywhere else), replace it with the equivalent `hgi hgi-stroke hgi-NAME`.
+
 ### Built-in Features Section
 
 Its own section (NOT inside Usage Guidelines). Uses `nds-definition-list` grid with icons. Get the HTML pattern from `alert.md`.
@@ -219,7 +241,14 @@ Its own section (NOT inside Usage Guidelines). Uses `nds-definition-list` grid w
   - **Internal mechanisms are not**: CSS selectors (`:has()`), DOM detection techniques, CSS positioning strategies (`fixed positioning`), internal state tracking. The developer never touches these.
   - **Mention code references only when the developer writes or calls them**: `data-state="active"` (developer sets this in HTML) is useful. `aria-expanded` (auto-applied by JS) is noise.
   - Example shift: "Automatically detects viewport boundaries and adjusts positioning" becomes "Menus stay fully visible regardless of trigger position, flipping direction near screen edges."
-- Verify icon names against `_sass/_hgiRoundedStroke.scss` (font glyphs). **NEVER guess.** Use `<i class="hgi hgi-stroke hgi-NAME">` for content icons; use `<i class="nds-icon nds-hgi-NAME" aria-hidden="true">` only if NAME is in `UI_ICONS` of `scripts/generate-icons-scss.mjs`.
+- **Verify every icon name BEFORE emitting the HTML.** Names that sound plausible (`hgi-text-size`, `hgi-file-check`, etc.) often don't exist in the shipped font. Grep the font file directly with the anchored pattern below. Do NOT use unanchored `grep "hgi-NAME"` — it matches substrings in unrelated lines and gives false positives.
+
+  ```bash
+  # Run once with ALL icons you plan to use in the Built-in Features + any other <i> tags:
+  grep -E "\.hgi-(name1|name2|name3|name4|name5|name6):" _sass/_hgiRoundedStroke.scss
+  ```
+
+  Each found line reports one OK icon. Any name NOT in the output doesn't exist and must be replaced before writing the HTML. For a missing name, browse candidates with `grep -E "\.hgi-TOPIC" _sass/_hgiRoundedStroke.scss | head -20` (e.g. TOPIC = `resize|size|scale` for sizing concepts) and pick a real one. For UI icons (`nds-hgi-NAME`), check `UI_ICONS` in `scripts/generate-icons-scss.mjs` the same way.
 - Aim for an **even number** of items (4, 6, 8) for the 2-column grid
 - For components with JS: include "Auto-initialization" (first item) and "Programmatic Control" (last item)
 
