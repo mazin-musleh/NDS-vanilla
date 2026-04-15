@@ -1,7 +1,7 @@
 ---
 layout: home
 title: "NDS - Vanilla National Design System"
-description: "An open-source vanilla implementation of Saudi Arabia's National Design System. 53 components in plain HTML, CSS, and JavaScript with zero dependencies."
+description: "An open-source vanilla implementation of Saudi Arabia's National Design System. 55 components in plain HTML, CSS, and JavaScript with zero dependencies."
 
 lang: en
 direction: ltr
@@ -193,7 +193,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Components</h2>
-            <p class="nds-section-description">53 components, each with markup, styling, and JavaScript behavior. All built from scratch.</p>
+            <p class="nds-section-description">{{ site.data.content.components | size }} components, each with markup, styling, and JavaScript behavior. All built from scratch.</p>
         </div>
         <div class="nds-form-container nds-search-box" data-filter-target="components_list">
             <div class="nds-search-content">
