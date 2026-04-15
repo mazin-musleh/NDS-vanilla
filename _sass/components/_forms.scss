@@ -584,3 +584,119 @@ fieldset {
 .nds-toggle-password.show i {
     --nds-icon: var(--nds-icon-eye);
 }
+
+// ==============================================
+// SHARED FORM GROUP (checkbox / radio / switch groups)
+// All three group classes also carry .nds-form-group in HTML.
+// ==============================================
+
+.nds-form-group {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-xl);
+    column-gap: var(--spacing-4xl);
+
+    &:has(>.nds-label) {
+        .nds-form-container {
+            padding-inline-start: var(--spacing-md);
+        }
+    }
+
+    &.nds-rowView {
+        flex-direction: row;
+        flex-wrap: wrap;
+        > .nds-feedback { flex-basis: 100%; width: 100%; }
+    }
+
+    &:is([data-required], [data-min-checked], .nds-required) {
+        > .nds-label::after { content: " *"; color: var(--controls-control-text-error); }
+    }
+
+    &[data-state~="disabled"] {
+        opacity: 0.5;
+        pointer-events: none;
+        .nds-form-container { pointer-events: none; }
+    }
+
+    &[data-status] > .nds-feedback { display: flex; }
+    &[data-status="error"]   > .nds-feedback { color: var(--text-error); }
+    &[data-status="success"] > .nds-feedback { color: var(--text-success); }
+    &[data-status="warning"] > .nds-feedback { color: var(--text-warning); }
+    &[data-status="info"]    > .nds-feedback { color: var(--text-info); }
+}
+
+// ==============================================
+// SHARED SELECTION-CONTROL CONTAINER (checkbox / radio / switch)
+// ==============================================
+
+.nds-check-container,
+.nds-radio-container,
+.nds-switch-container {
+    &.nds-form-container:not([hidden]) {
+        flex-direction: row-reverse;
+        width: fit-content;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+
+        .nds-form-header .nds-label {
+            color: var(--text-display);
+            font-weight: 500;
+        }
+
+        .nds-form-control {
+            min-width: unset;
+            min-height: unset;
+            width: fit-content;
+            height: fit-content;
+            padding: 0;
+            border: 0;
+            box-shadow: unset;
+            background-color: unset !important;
+            position: relative;
+        }
+    }
+}
+
+// Shared ripple (checkbox + radio)
+.nds-check-container,
+.nds-radio-container {
+    &.nds-form-container:not([hidden]) .nds-form-control {
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 50% auto auto 50%;
+            width:  var(--nds-input-size, 16px);
+            height: var(--nds-input-size, 16px);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--controls-control-ripple-effect);
+            transition: width var(--nds-transition), height var(--nds-transition);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        &:has(input:not(:disabled):hover)::before {
+            width:  calc(var(--nds-input-size, 16px) * 2);
+            height: calc(var(--nds-input-size, 16px) * 2);
+        }
+    }
+}
+
+// ==============================================
+// SHARED RESPONSIVE (checkbox / radio / switch)
+// ==============================================
+
+@include mobile {
+    .nds-check-container,
+    .nds-radio-container,
+    .nds-switch-container {
+        gap: var(--spacing-sm);
+        &.nds-md { gap: var(--spacing-md); }
+        &.nds-lg { gap: var(--spacing-lg); }
+    }
+
+    .nds-form-group:is(.nds-check-group, .nds-radio-group, .nds-switch-group) {
+        row-gap: var(--spacing-lg);
+        column-gap: var(--spacing-4xl);
+    }
+}

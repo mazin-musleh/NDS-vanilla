@@ -650,7 +650,10 @@
             if (formContainer) {
                 hasValue ? NDS.State.add(formContainer, 'filled') : NDS.State.remove(formContainer, 'filled');
                 input.disabled ? NDS.State.add(formContainer, 'disabled') : NDS.State.remove(formContainer, 'disabled');
-                input.readOnly ? NDS.State.add(formContainer, 'readonly') : NDS.State.remove(formContainer, 'readonly');
+                // Skip readonly sync for select-input — its readonly prevents typing, not interaction
+                if (!input.classList.contains('nds-select-input')) {
+                    input.readOnly ? NDS.State.add(formContainer, 'readonly') : NDS.State.remove(formContainer, 'readonly');
+                }
                 // Skip required propagation for radios/checkboxes — managed at group level
                 if (input.type !== 'radio' && input.type !== 'checkbox') {
                     formContainer.toggleAttribute('data-required', input.required);

@@ -1,5 +1,5 @@
 /**
- * NDS Checkbox Component - SCSS Version
+ * NDS Checkbox Component
  * Multi-selection input controls with clear visual states and accessibility support
  */
 
@@ -10,165 +10,29 @@
 // ==============================================
 
 .nds-form-container.nds-check-container:not([hidden]) {
-    // ==============================================
-    // PUBLIC API — consumers override these tokens on this element. Defaults
-    // are provided inline at the read sites via var(--token, fallback).
-    //
-    // --nds-input-size         size (16/20/24)
-    // --checkbox-tile-bg       tile fill
-    // --checkbox-tile-border   tile 1px outline
-    // --checkbox-glyph-bg      tick / dash glyph colour
-    // ==============================================
+    // Public API token: --nds-input-size (16/20/24)
+    // Public colour tokens read inline: --checkbox-tile-bg, --checkbox-tile-border, --checkbox-glyph-bg
 
-    display: flex;
-    gap: var(--spacing-md);
-    flex-direction: row-reverse;
-    width: fit-content;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-
-    &>.nds-form-header .nds-label {
-        color: var(--text-display);
-        font-size: var(--nds-text-md-FS);
-        line-height: var(--nds-input-size, 16px);
-        font-weight: 500;
-    }
-
-    // Size variants override the PUBLIC token; private alias re-resolves
-    // on the container and inherits down to descendants.
+    // Size variants override the PUBLIC token
     &.nds-md { --nds-input-size: 20px; gap: var(--spacing-lg); }
     &.nds-lg { --nds-input-size: 24px; gap: var(--spacing-xl); }
 
-    .nds-form-control {
-        min-width: unset;
-        min-height: unset;
-        width: fit-content;
-        height: fit-content;
-        padding: 0;
-        border: 0;
-        box-shadow: unset;
-        background-color: unset !important;
-        position: relative;
-
-        &.focused:focus-visible {
-            outline: 2px solid var(--colors-base-black) !important;
-            outline-offset: -2px !important;
-            box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
-        }
-
-        // Ripple — wrapper pseudo so input's ::before/::after are free for
-        // the tile and the masked glyph.
-        &::before {
-            content: "";
-            position: absolute;
-            inset: 50% auto auto 50%;
-            width:  var(--nds-input-size, 16px);
-            height: var(--nds-input-size, 16px);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            background-color: var(--controls-control-ripple-effect);
-            transition: width var(--nds-transition), height var(--nds-transition);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        &:has(input[type="checkbox"]:not(:disabled):hover)::before {
-            width:  calc(var(--nds-input-size, 16px) * 2);
-            height: calc(var(--nds-input-size, 16px) * 2);
-        }
+    &>.nds-form-header .nds-label {
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-input-size, 16px);
     }
 
+    .nds-form-control.focused:focus-visible {
+        outline: 2px solid var(--colors-base-black) !important;
+        outline-offset: -2px !important;
+        box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
+    }
 }
 
 // ==============================================
-// CHECKBOX GROUP
+// CHECKBOX GROUP — only component-specific overrides
+// (shared group rules live in _forms.scss on .nds-form-group)
 // ==============================================
-
-.nds-check-group {
-    row-gap: var(--spacing-xl);
-    column-gap: var(--spacing-4xl);
-    display: flex;
-    flex-direction: column;
-
-    &:has(>.nds-label){
-        .nds-form-container{
-            padding-inline-start: var(--spacing-md);
-        }
-    }
-    &.nds-rowView {
-        flex-direction: row;
-        flex-wrap: wrap;
-
-        // Force feedback to new line in row layout
-        > .nds-feedback {
-            flex-basis: 100%;
-            width: 100%;
-        }
-    }
-
-    // ==============================================
-    // REQUIRED INDICATOR (data-required attribute)
-    // ==============================================
-
-    // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
-    &:is([data-required], [data-min-checked], .nds-required) {
-        > .nds-label::after {
-            content: " *";
-            color: var(--controls-control-text-error);
-        }
-    }
-
-    // ==============================================
-    // GROUP STATE (data-state attribute)
-    // ==============================================
-
-    // Disabled state - disable all checkboxes in group
-    &[data-state~="disabled"] {
-        opacity: 0.5;
-        pointer-events: none;
-
-        .nds-form-container {
-            pointer-events: none;
-        }
-    }
-
-    // ==============================================
-    // GROUP VALIDATION (data-status attribute)
-    // ==============================================
-
-    // Show feedback when group has status
-    &[data-status] > .nds-feedback {
-        display: flex;
-    }
-
-    // Error state
-    &[data-status="error"] {
-        > .nds-feedback {
-            color: var(--text-error);
-        }
-    }
-
-    // Success state
-    &[data-status="success"] {
-        > .nds-feedback {
-            color: var(--text-success);
-        }
-    }
-
-    // Warning state
-    &[data-status="warning"] {
-        > .nds-feedback {
-            color: var(--text-warning);
-        }
-    }
-
-    // Info state
-    &[data-status="info"] {
-        > .nds-feedback {
-            color: var(--text-info);
-        }
-    }
-}
 
 // ==============================================
 // CHECKBOX INPUT
@@ -206,8 +70,7 @@
     }
 
     // ==============================================
-    // STATE TINTS — every state writes PUBLIC tokens on the pseudo that
-    // redeclares the private alias. Border follows bg when checked.
+    // STATE TINTS
     // ==============================================
 
     &:is(:checked, :indeterminate) {
@@ -228,14 +91,13 @@
 
     &:indeterminate::after { mask-image: var(--nds-icon-dash); }
 
-    // Unchecked hover / pressed — bg stays default; only border shifts on
-    // the neutral scale (same pattern as switch).
+    // Unchecked hover / pressed
     &:not(:checked, :indeterminate, :disabled) {
         &:hover::before  { --checkbox-tile-border: var(--controls-control-neutral-hovered); }
         &:active::before { --checkbox-tile-border: var(--controls-control-neutral-pressed); }
     }
 
-    // Neutral variant — overrides only the checked bg scale; border follows.
+    // Neutral variant
     &.nds-neutral:is(:checked, :indeterminate) {
         &::before { --checkbox-tile-bg: var(--controls-control-neutral-checked); }
 
@@ -246,8 +108,7 @@
     }
 
     // ==============================================
-    // DISABLED STATE — overrides at same scope (::before / ::after) so they
-    // beat the checked/neutral rules on specificity.
+    // DISABLED STATE
     // ==============================================
 
     &:disabled::before {
@@ -264,26 +125,17 @@
 }
 
 // ==============================================
-// READONLY STATE — forms.js syncs data-state on the container.
-// Inverted checked colours: tile bg stays default, border + glyph take on
-// the brand colour. Hover/pressed locked to the inverted colours.
+// READONLY STATE
 // ==============================================
 
-// Pointer-events are killed container-wide by the shared readonly rule in
-// _forms.scss — applies to all form containers uniformly.
 .nds-check-container[data-state~="readonly"] .nds-form-control input[type="checkbox"] {
 
-    // Tile border muted across every state (unchecked tile-bg stays at the
-    // fallback default — no explicit override needed).
     &::before,
     &:hover::before,
     &:active::before {
         --checkbox-tile-border: var(--background-disabled);
     }
 
-    // When checked, revert the checked rule's primary tile-bg back to default
-    // so the tile reads as "outlined" rather than filled. &.nds-neutral path
-    // needed to out-specify the neutral checked rule.
     &,
     &.nds-neutral {
         &:is(:checked, :indeterminate) {
@@ -295,7 +147,6 @@
         }
     }
 
-    // Glyph — takes on the brand colour when checked / indeterminate.
     &:is(:checked, :indeterminate)::after {
         --checkbox-glyph-bg: var(--controls-control-primary-checked);
     }
@@ -305,34 +156,6 @@
 
         @include dark {
             --checkbox-glyph-bg: var(--icon-oncolor);
-        }
-    }
-}
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-    .nds-check-container {
-        // Mobile-specific adjustments
-        gap: var(--spacing-sm);
-
-        &.nds-md {
-            gap: var(--spacing-md);
-        }
-
-        &.nds-lg {
-            gap: var(--spacing-lg);
-        }
-    }
-
-    .nds-check-group {
-        row-gap: var(--spacing-lg);
-        column-gap: var(--spacing-4xl);
-
-        &.nds-rowView {
-            flex-wrap: wrap;
         }
     }
 }

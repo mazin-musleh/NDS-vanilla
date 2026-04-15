@@ -1,5 +1,5 @@
 /**
- * NDS Radio Button Component - SCSS Version
+ * NDS Radio Button Component
  * Single-selection input controls for mutually exclusive options with clear visual feedback
  */
 
@@ -10,173 +10,37 @@
 // ==============================================
 
 .nds-form-container.nds-radio-container:not([hidden]) {
-    // ==============================================
-    // PUBLIC API — private ← public aliases (alert pattern).
-    // Consumers override --nds-input-size / --radio-* here.
-    // ==============================================
-
-    // Size
-    --_nds-input-size: var(--nds-input-size, 16px);
-
-    // Colour — tile (outer fill / inner dot colour via the border trick)
-    // and tile-border (outer 1px shadow ring).
-    --_radio-tile-bg:     var(--radio-tile-bg,     var(--background-default));
-    --_radio-tile-border: var(--radio-tile-border, var(--controls-control-border));
-
-    display: flex;
-    gap: var(--spacing-md);
-    flex-direction: row-reverse;
-    width: fit-content;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-
-    &>.nds-form-header .nds-label {
-        color: var(--text-display);
-        font-size: var(--nds-text-md-FS);
-        line-height: var(--_nds-input-size);
-        font-weight: 500;
-    }
+    // Public API token: --nds-input-size (16/20/24)
+    // Public colour tokens read inline: --radio-tile-bg, --radio-tile-border
 
     // Size variants override the PUBLIC token.
     &.nds-md { --nds-input-size: 20px; gap: var(--spacing-lg); }
     &.nds-lg { --nds-input-size: 24px; gap: var(--spacing-xl); }
 
-    .nds-form-control {
-        min-width: unset;
-        min-height: unset;
-        width: fit-content;
-        height: fit-content;
-        padding: 0;
-        border: 0;
-        box-shadow: unset;
-        background-color: unset !important;
-        position: relative;
+    &>.nds-form-header .nds-label {
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-input-size, 16px);
+    }
 
-        &.focused:focus-visible {
-            outline: 2px solid var(--colors-base-black) !important;
-            outline-offset: -2px !important;
-            box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
-        }
-
-        // Ripple — wrapper pseudo so input's ::after is free for the tile.
-        &::before {
-            content: "";
-            position: absolute;
-            inset: 50% auto auto 50%;
-            width:  var(--_nds-input-size);
-            height: var(--_nds-input-size);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            background-color: var(--controls-control-ripple-effect);
-            transition: width var(--nds-transition), height var(--nds-transition);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        &:has(input[type="radio"]:not(:disabled):hover)::before {
-            width:  calc(var(--_nds-input-size) * 2);
-            height: calc(var(--_nds-input-size) * 2);
-        }
+    .nds-form-control.focused:focus-visible {
+        outline: 2px solid var(--colors-base-black) !important;
+        outline-offset: -2px !important;
+        box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
     }
 }
 
 // ==============================================
-// RADIO GROUP
+// RADIO GROUP — only component-specific overrides
+// (shared group rules live in _forms.scss on .nds-form-group)
 // ==============================================
-
-.nds-radio-group {
-    row-gap: var(--spacing-xl);
-    column-gap: var(--spacing-4xl);
-    display: flex;
-    flex-direction: column;
-    &:has(>.nds-label){
-        .nds-form-container{
-            padding-inline-start: var(--spacing-md);
-        }
-    }
-
-    &.nds-rowView {
-        flex-direction: row;
-        flex-wrap: wrap;
-
-        // Force feedback to new line in row layout
-        > .nds-feedback {
-            flex-basis: 100%;
-            width: 100%;
-        }
-    }
-
-    // ==============================================
-    // REQUIRED INDICATOR (data-required attribute)
-    // ==============================================
-
-    // Auto-add required indicator when group has data-required or nds-required class
-    &:is([data-required], .nds-required) {
-        > .nds-label::after {
-            content: " *";
-            color: var(--controls-control-text-error);
-        }
-    }
-
-    // ==============================================
-    // GROUP STATE (data-state attribute)
-    // ==============================================
-
-    // Disabled state - disable all radios in group
-    &[data-state~="disabled"] {
-        opacity: 0.5;
-        pointer-events: none;
-
-        .nds-form-container {
-            pointer-events: none;
-        }
-    }
-
-    // ==============================================
-    // GROUP VALIDATION (data-status attribute)
-    // ==============================================
-
-    // Show feedback when group has status
-    &[data-status] > .nds-feedback {
-        display: flex;
-    }
-
-    // Error state
-    &[data-status="error"] {
-        > .nds-feedback {
-            color: var(--text-error);
-        }
-    }
-
-    // Success state
-    &[data-status="success"] {
-        > .nds-feedback {
-            color: var(--text-success);
-        }
-    }
-
-    // Warning state
-    &[data-status="warning"] {
-        > .nds-feedback {
-            color: var(--text-warning);
-        }
-    }
-
-    // Info state
-    &[data-status="info"] {
-        > .nds-feedback {
-            color: var(--text-info);
-        }
-    }
-}
 
 // ==============================================
 // RADIO INPUT
 // ==============================================
 
 .nds-radio-container .nds-form-control input[type="radio"] {
-    width:  var(--_nds-input-size);
-    height: var(--_nds-input-size);
+    width:  var(--nds-input-size, 16px);
+    height: var(--nds-input-size, 16px);
     appearance: none;
     position: relative;
     z-index: 1;
@@ -184,8 +48,7 @@
     &:not(:disabled) { cursor: pointer; }
 
     // Single-pseudo tile. Unchecked: flat disc with a 1px outer outline.
-    // Checked: 3-band ring via `border: Npx white` creating the gap between
-    // outer shadow + bg and an inner coloured dot.
+    // Checked: 3-band ring via `border: Npx white` creating the gap.
     &::after {
         --_radio-tile-bg:     var(--radio-tile-bg,     var(--background-default));
         --_radio-tile-border: var(--radio-tile-border, var(--controls-control-border));
@@ -200,8 +63,7 @@
     }
 
     // ==============================================
-    // CHECKED STATE — bg + outer shadow colour match via var() reference.
-    // Border-width (the white inner ring) grows with size variants.
+    // CHECKED STATE
     // ==============================================
 
     &:checked::after {
@@ -219,14 +81,13 @@
         &:active::after { --radio-tile-bg: var(--controls-control-primary-pressed); }
     }
 
-    // Unchecked hover / pressed — bg stays default; only outer outline shifts
-    // on the neutral scale (matches switch / checkbox pattern).
+    // Unchecked hover / pressed
     &:not(:checked, :disabled) {
         &:hover::after  { --radio-tile-border: var(--controls-control-neutral-hovered); }
         &:active::after { --radio-tile-border: var(--controls-control-neutral-pressed); }
     }
 
-    // Neutral variant — swaps only the checked bg scale; border follows.
+    // Neutral variant
     &.nds-neutral:checked {
         &::after         { --radio-tile-bg: var(--radio-neutral-checked); }
 
@@ -237,7 +98,7 @@
     }
 
     // ==============================================
-    // DISABLED STATE — overrides at ::after so they beat checked/neutral.
+    // DISABLED STATE
     // ==============================================
 
     &:disabled::after {
@@ -252,10 +113,7 @@
 }
 
 // ==============================================
-// READONLY STATE — forms.js syncs data-state on the container. Pointer
-// events are killed by the shared rule in _forms.scss. The outer outline
-// takes on the disabled colour; the inner dot (when checked) stays on
-// the brand colour.
+// READONLY STATE
 // ==============================================
 
 .nds-radio-container[data-state~="readonly"] .nds-form-control input[type="radio"] {
@@ -265,34 +123,6 @@
         &:hover::after,
         &:active::after {
             --radio-tile-border: var(--border-disabled);
-        }
-    }
-}
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-    .nds-radio-container {
-        // Mobile-specific adjustments
-        gap: var(--spacing-sm);
-
-        &.nds-md {
-            gap: var(--spacing-md);
-        }
-
-        &.nds-lg {
-            gap: var(--spacing-lg);
-        }
-    }
-
-    .nds-radio-group {
-        row-gap: var(--spacing-lg);
-        column-gap: var(--spacing-4xl);
-
-        &.nds-rowView {
-            flex-wrap: wrap;
         }
     }
 }

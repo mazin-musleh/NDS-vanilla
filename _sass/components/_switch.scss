@@ -1,5 +1,5 @@
 /**
- * NDS Switch Component - SCSS Version
+ * NDS Switch Component
  * Toggle switches for binary choices with clear visual feedback and accessibility support
  */
 
@@ -10,36 +10,19 @@
 // ==============================================
 
 .nds-form-container.nds-switch-container:not([hidden]) {
-    // ==============================================
-    // PUBLIC API — private ← public aliases (alert pattern).
-    // Consumers override --switch-* / --nds-input-size here.
-    // ==============================================
-
-    // Size
+    // Private ← public aliases for size (switch has unique track/thumb dimensions)
     --_nds-input-size: var(--nds-input-size, 20px);
     --_switch-width:   var(--switch-width,   48px);
     --_switch-height:  var(--switch-height,  24px);
     --_switch-thumb-size:     var(--switch-thumb-size,     16px);
     --_switch-thumb-offset:   var(--switch-thumb-offset,   4px);
 
-    // Colour
-    --_switch-track-bg:     var(--switch-track-bg,     var(--background-default));
-    --_switch-track-border: var(--switch-track-border, var(--switch-neutral-default));
-    --_switch-thumb-bg:     var(--switch-thumb-bg,     var(--switch-neutral-default));
-
-    display: flex;
     gap: var(--spacing-lg);
-    flex-direction: row-reverse;
-    width: fit-content;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
 
     // Label styling
     .nds-form-header .nds-label {
-        color: var(--text-display);
         font-size: var(--nds-text-md-FS);
         line-height: calc(var(--_nds-input-size) + 4px);
-        font-weight: 500;
     }
 
     // Size variants override PUBLIC tokens; private aliases re-resolve.
@@ -61,16 +44,9 @@
         gap: var(--spacing-xl);
     }
 
-    // Form control reset
+    // Form control — switch-specific overrides on top of shared reset
     .nds-form-control {
-        min-width: unset;
-        min-height: unset;
-        width: fit-content;
-        height: fit-content;
-        padding: 0;
-        border: 0;
         border-radius: var(--radius-sm);
-        box-shadow: unset;
         background-color: transparent !important;
 
         &.focused:focus-visible {
@@ -84,8 +60,7 @@
         }
     }
 
-    // DISABLED — matches _forms.scss convention; forms.js syncs data-state
-    // on the container when the input is disabled.
+    // DISABLED — forms.js syncs data-state on the container.
     &[data-state~="disabled"] {
         --switch-track-bg:     var(--background-default);
         --switch-track-border: var(--control-disabled);
@@ -102,59 +77,12 @@
 }
 
 // ==============================================
-// SWITCH GROUP
+// SWITCH GROUP — only component-specific override
+// (shared group rules live in _forms.scss on .nds-form-group)
 // ==============================================
 
 .nds-switch-group {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--spacing-xl);
     column-gap: var(--spacing-6xl);
-
-    &.nds-rowView {
-        flex-direction: row;
-        flex-wrap: wrap;
-
-        .nds-feedback {
-            flex-basis: 100%;
-            width: 100%;
-        }
-    }
-
-    // Required indicator
-    &:is([data-required], [data-min-checked], .nds-required) {
-        >.nds-label::after {
-            content: " *";
-            color: var(--controls-control-text-error);
-        }
-    }
-
-    // Disabled state
-    &[data-state~="disabled"] {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    // Validation feedback
-    &[data-status]>.nds-feedback {
-        display: flex;
-    }
-
-    &[data-status="error"]>.nds-feedback {
-        color: var(--text-error);
-    }
-
-    &[data-status="success"]>.nds-feedback {
-        color: var(--text-success);
-    }
-
-    &[data-status="warning"]>.nds-feedback {
-        color: var(--text-warning);
-    }
-
-    &[data-status="info"]>.nds-feedback {
-        color: var(--text-info);
-    }
 }
 
 // ==============================================
@@ -193,7 +121,7 @@
     }
 
     // ==============================================
-    // INPUT / TRACK / THUMB — read private aliases defined on the container.
+    // INPUT / TRACK / THUMB
     // ==============================================
 
     .nds-switch-input {
@@ -211,8 +139,6 @@
     }
 
     .nds-switch-track {
-        // Private alias redeclared here so state overrides at this scope
-        // (sibling-combinator from the input) re-resolve.
         --_switch-track-bg:     var(--switch-track-bg,     var(--background-default));
         --_switch-track-border: var(--switch-track-border, var(--switch-neutral-default));
 
@@ -241,12 +167,10 @@
     }
 
     // ==============================================
-    // STATE TINTS — descendant selectors (same shape as checkbox).
-    // Overrides land on elements where the private alias is redeclared.
+    // STATE TINTS
     // ==============================================
 
-    // Unchecked hover / pressed — border + thumb shift on neutral scale;
-    // track bg stays at default.
+    // Unchecked hover / pressed
     .nds-switch-input:not(:disabled, :checked) + .nds-switch-track:hover {
         --switch-track-border: var(--controls-control-neutral-hovered);
         --switch-thumb-bg:     var(--controls-control-neutral-hovered);
@@ -256,8 +180,7 @@
         --switch-thumb-bg:     var(--controls-control-neutral-pressed);
     }
 
-    // Checked — primary defaults; border follows bg via var(), so hover /
-    // pressed only override --switch-track-bg.
+    // Checked
     .nds-switch-input:checked + .nds-switch-track {
         --switch-track-bg:     var(--controls-control-primary-checked);
         --switch-track-border: var(--switch-track-bg);
@@ -271,7 +194,7 @@
     .nds-switch-input:not(:disabled):checked + .nds-switch-track:hover  { --switch-track-bg: var(--switch-primary-hovered); }
     .nds-switch-input:not(:disabled):checked + .nds-switch-track:active { --switch-track-bg: var(--switch-primary-pressed); }
 
-    // Neutral variant — swaps the three checked bg values only.
+    // Neutral variant
     &.nds-neutral {
         .nds-switch-input:checked + .nds-switch-track                          { --switch-track-bg: var(--switch-neutral-checked); }
         .nds-switch-input:not(:disabled):checked + .nds-switch-track:hover     { --switch-track-bg: var(--switch-neutral-hovered); }
@@ -281,24 +204,5 @@
     // Thumb widens slightly while pressed.
     .nds-switch-track:active .nds-switch-thumb {
         width: calc(var(--_switch-thumb-size) + 6px);
-    }
-}
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-    .nds-form-container.nds-switch-container {
-        gap: var(--spacing-sm);
-
-        &.nds-lg {
-            gap: var(--spacing-lg);
-        }
-    }
-
-    .nds-switch-group {
-        row-gap: var(--spacing-lg);
-        column-gap: var(--spacing-4xl);
     }
 }

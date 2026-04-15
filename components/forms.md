@@ -26,6 +26,10 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
                       <span class="nds-label">Required</span>
@@ -150,6 +154,10 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
                       <span class="nds-label">Required</span>
@@ -326,6 +334,10 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
                       <span class="nds-label">Required</span>
@@ -482,6 +494,10 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
                       <span class="nds-label">Required</span>
@@ -615,6 +631,10 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
                       <span class="nds-label">Required</span>
@@ -741,6 +761,10 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
                       <span class="nds-label">Required</span>
@@ -875,6 +899,10 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
                       <span class="nds-label">Required</span>
@@ -990,6 +1018,10 @@ direction: ltr
                 </button>
                 <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
                       <span class="nds-label">Required</span>
