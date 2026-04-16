@@ -455,6 +455,7 @@
         const is = document.body.classList.contains('nds-minimal');
         if (should !== is) {
             document.body.classList.toggle('nds-minimal', should);
+            if (DOM.minimal) DOM.minimal.toggleAttribute('hidden', !should);
             state.invalidateCache();
             managePABPlacement();
             return true;

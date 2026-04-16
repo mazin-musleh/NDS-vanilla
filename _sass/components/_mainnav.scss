@@ -282,10 +282,8 @@
                 padding-top: var(--spacing-2xl);
                 padding-bottom: var(--spacing-2xl);
                 width: 100%;
-
-                @include mobile {
-                    padding-top: 0;
-                    padding-bottom: 0;
+                .nds-search-box{
+                    max-width: 800px;
                 }
             }
         }

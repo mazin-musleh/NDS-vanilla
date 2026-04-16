@@ -120,6 +120,15 @@
             this.updatePeekStyles();
 
             this.container.setAttribute('data-swiper-initialized', 'true');
+
+            // Reveal pagination/nav buttons that were hidden in markup to avoid
+            // a flash of unstyled controls before init. Skip when there's
+            // nothing to navigate to (single-slide / fits-in-view).
+            if (this.slides.length > this.slidesPerView) {
+                if (this.pagination) this.pagination.removeAttribute('hidden');
+                if (this.prevBtn) this.prevBtn.removeAttribute('hidden');
+                if (this.nextBtn) this.nextBtn.removeAttribute('hidden');
+            }
         }
 
         setupContentObserver() {

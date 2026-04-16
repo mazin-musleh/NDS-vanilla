@@ -51,9 +51,11 @@
     color: var(--text-oncolor-primary);
 }
 
-.nds-swiper-wrapper {
+
+:is(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
     display: flex;
     height: 100%;
+    width: 100%;
 }
 
 /* ── Content ── */

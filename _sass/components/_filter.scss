@@ -38,7 +38,7 @@
     align-items: center;
 
     >.nds-label {
-        font-size: var(--nds-text-lg-FS);
+        font-size: var(--nds-text-clamp-lg-FS);
         font-weight: 500;
     }
 }
@@ -112,7 +112,7 @@
         align-items: center;
 
         >.nds-label {
-            font-size: var(--nds-text-lg-FS);
+            font-size: var(--nds-text-clamp-lg-FS);
             font-weight: 500;
             color: var(--text-default);
         }
