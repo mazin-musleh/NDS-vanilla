@@ -13,6 +13,7 @@
 
   // State
   let activeModal = null;
+  let initAC = null;
 
   /**
    * Simple focus trap handler
@@ -129,6 +130,13 @@
       return;
     }
 
+    // Scope all document-level listeners to an AbortController so any future re-init
+    // (e.g., NDS.Init.initializeComponent('modal') after removing the init marker)
+    // detaches the prior batch atomically instead of stacking listeners.
+    if (initAC) initAC.abort();
+    initAC = new AbortController();
+    const { signal } = initAC;
+
     // Trigger buttons
     document.addEventListener('click', (e) => {
       const trigger = e.target.closest('[data-modal-target]');
@@ -137,7 +145,7 @@
         const targetId = trigger.getAttribute('data-modal-target');
         open(targetId);
       }
-    });
+    }, { signal });
 
     // Close buttons
     document.addEventListener('click', (e) => {
@@ -145,7 +153,7 @@
         e.stopPropagation();
         close();
       }
-    });
+    }, { signal });
 
     // ESC key handling is now in backdrop, but keep this for additional modal-specific behavior
     document.addEventListener('keydown', (e) => {
@@ -153,7 +161,7 @@
         e.preventDefault();
         close();
       }
-    });
+    }, { signal });
 
     document.body.setAttribute('data-nds-modal-initialized', 'true');
   }
