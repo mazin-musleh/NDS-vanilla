@@ -38,8 +38,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-numbers-format-1" id="tab-numbers-format-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -95,8 +95,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-numbers-prefix-1" id="tab-numbers-prefix-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -175,8 +175,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-numbers-counter-1" id="tab-numbers-counter-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -236,8 +236,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-numbers-attrs-1" id="tab-numbers-attrs-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -341,8 +341,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-numbers-cards-1" id="tab-numbers-cards-1">
                                 <span class="nds-tab-label">HTML</span>

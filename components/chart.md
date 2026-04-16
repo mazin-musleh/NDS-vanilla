@@ -61,8 +61,8 @@ direction: ltr
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chart-bar-html" id="tab-chart-bar-html">
                                         <span class="nds-tab-label">HTML</span>
@@ -180,8 +180,8 @@ NDS.Chart.create('#my-chart', {
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chart-line-html" id="tab-chart-line-html">
                                         <span class="nds-tab-label">HTML</span>
@@ -282,8 +282,8 @@ NDS.Chart.create('#my-chart', {
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chart-pie-html" id="tab-chart-pie-html">
                                         <span class="nds-tab-label">HTML</span>
@@ -379,8 +379,8 @@ NDS.Chart.create('#my-chart', {
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chart-donut-html" id="tab-chart-donut-html">
                                         <span class="nds-tab-label">HTML</span>
@@ -465,8 +465,8 @@ NDS.Chart.create('#my-chart', {
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chart-html-1" id="tab-chart-html-1">
                                         <span class="nds-tab-label">HTML</span>
@@ -525,8 +525,8 @@ NDS.Chart.create('#my-chart', {
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chart-theme-html" id="tab-chart-theme-html">
                                         <span class="nds-tab-label">HTML</span>

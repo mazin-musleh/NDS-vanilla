@@ -107,14 +107,14 @@ direction: ltr
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-accordion-basic-1" id="tab-accordion-basic-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -288,14 +288,14 @@ direction: ltr
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-accordion-icon-1" id="tab-accordion-icon-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">

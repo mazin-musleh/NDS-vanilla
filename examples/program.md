@@ -169,8 +169,8 @@ layout_class: nds-cardView
 <section id="programDetails" class="nds-content-section nds-ghost">
     <div class="nds-section-body">
         <div class="nds-tabs nds-divided nds-lg" id="programTabs">
-            <div class="nds-tab-list-container">
-                <nav class="nds-tab-list" role="tablist" aria-label="Program details navigation">
+            <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Program details navigation">
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                         aria-controls="panel-objectives" id="tab-objectives" tabindex="0">
                         <span class="nds-label">Objectives</span>
@@ -193,7 +193,7 @@ layout_class: nds-cardView
                     </button>
                 </nav>
                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-                    <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="nds-tab-content">

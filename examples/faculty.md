@@ -61,8 +61,8 @@ sidemenu_mode: top
 <section id="facultyTabs" class="nds-content-section nds-ghost">
     <div class="nds-section-body">
         <div class="nds-tabs nds-divided nds-lg">
-            <div class="nds-tab-list-container">
-                <nav class="nds-tab-list" role="tablist" aria-label="Faculty member information">
+            <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Faculty member information">
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-cv"
                         id="tab-cv" tabindex="0">
                         <span class="nds-label">Biography</span>
@@ -89,7 +89,7 @@ sidemenu_mode: top
                     </button>
                 </nav>
                 <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-                    <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="nds-tab-content">

@@ -120,8 +120,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier1" id="tab-tier1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -222,8 +222,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier2" id="tab-tier2">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -333,8 +333,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier3" id="tab-tier3">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -458,8 +458,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-float" id="tab-float">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -584,8 +584,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dual" id="tab-dual">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -705,8 +705,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-nowrap" id="tab-nowrap">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -826,8 +826,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier4" id="tab-tier4">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -984,8 +984,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier5" id="tab-tier5">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -1134,8 +1134,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier6" id="tab-tier6">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
@@ -1249,8 +1249,8 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-contentblock" id="tab-contentblock">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>

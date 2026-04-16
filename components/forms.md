@@ -90,8 +90,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-text-input-1" id="tab-text-input-1">
                     <span class="nds-tab-label">HTML</span>
@@ -273,8 +273,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-prefix-suffix-1" id="tab-prefix-suffix-1">
                     <span class="nds-tab-label">HTML</span>
@@ -433,8 +433,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-number-input-1" id="tab-number-input-1">
                     <span class="nds-tab-label">HTML</span>
@@ -563,8 +563,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-search-input-1" id="tab-search-input-1">
                     <span class="nds-tab-label">HTML</span>
@@ -696,8 +696,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-email-input-1" id="tab-email-input-1">
                     <span class="nds-tab-label">HTML</span>
@@ -830,8 +830,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-password-input-1" id="tab-password-input-1">
                     <span class="nds-tab-label">HTML</span>
@@ -959,8 +959,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-textarea-1" id="tab-textarea-1">
                     <span class="nds-tab-label">HTML</span>
@@ -1097,8 +1097,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-select-1" id="tab-select-1">
                     <span class="nds-tab-label">HTML</span>
@@ -1207,8 +1207,8 @@ direction: ltr
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-status-api-html" id="tab-status-api-html">
                     <span class="nds-tab-label">HTML</span>
@@ -1332,8 +1332,8 @@ var status = NDS.Forms.getStatus(field);
           </div>
           <div class="demo-code">
             <div class="nds-tabs nds-code nds-divided" hidden>
-              <div class="nds-tab-list-container">
-                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                     aria-controls="panel-permanent-html" id="tab-permanent-html">
                     <span class="nds-tab-label">HTML</span>

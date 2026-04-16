@@ -46,8 +46,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-basic-1" id="tab-basic-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -119,8 +119,8 @@ NDS.Alert.create({
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-linenums-1" id="tab-linenums-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -211,8 +211,8 @@ async function handleFormSubmit(form) {
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-expandable-1" id="tab-expandable-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -272,8 +272,8 @@ async function handleFormSubmit(form) {
                     <div class="state-demo">
                         <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="demo-panel-single-1" id="demo-tab-single-1">
                                         <span class="nds-tab-label">HTML</span>
@@ -302,8 +302,8 @@ async function handleFormSubmit(form) {
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-singletab-1" id="tab-singletab-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -321,8 +321,8 @@ async function handleFormSubmit(form) {
                             <code class="lang-html code">
 <div class="demo-code">
 <div class="nds-tabs nds-code nds-divided">
-  <div class="nds-tab-list-container">
-    <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+  <div class="nds-tab-list-container nds-scroll-more">
+    <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
       <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
         aria-controls="panel-id" id="tab-id">
         <span class="nds-tab-label">HTML</span>
@@ -360,8 +360,8 @@ async function handleFormSubmit(form) {
                     <div class="state-demo">
                         <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="demo-panel-multi-html" id="demo-tab-multi-html">
                                         <span class="nds-tab-label">HTML</span>
@@ -439,8 +439,8 @@ NDS.Alert.create({
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-multitab-1" id="tab-multitab-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -459,8 +459,8 @@ NDS.Alert.create({
                                 <code class="lang-html code">
 <div class="demo-code">
 <div class="nds-tabs nds-code nds-divided">
-  <div class="nds-tab-list-container">
-    <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+  <div class="nds-tab-list-container nds-scroll-more">
+    <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
       <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
         aria-controls="panel-html" id="tab-html">
         <span class="nds-tab-label">HTML</span>
@@ -520,8 +520,8 @@ NDS.Alert.create({
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-hidden-1" id="tab-hidden-1">
                                 <span class="nds-tab-label">HTML</span>

@@ -2,7 +2,7 @@
 layout: page
 title: Tabs
 hero_title: Tabs - National Design System
-hero_description: Organize content into switchable panels with horizontal or vertical tab navigation, overflow scrolling, and card view styling
+hero_description: Group related content into a single surface where users switch between views without leaving the page
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard Tabs</h2>
-            <p class="nds-section-description">Text-only tab navigation with overflow scrolling, vertical layout, and card view options</p>
+            <p class="nds-section-description">The default text-only tab strip. Reach for this when labels alone are enough to distinguish the panels and you want the broadest layout flexibility across vertical, divider, and card views.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -57,8 +57,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="nds-tabs" id="tabs-standard-1" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list" role="tablist" aria-label="Basic tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-tabs-standard-home" id="tab-tabs-standard-home" tabindex="0" data-label="Home">
                                         <span class="nds-label">Home</span>
@@ -101,7 +101,7 @@ direction: ltr
                                         <span class="nds-label">Settings</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -218,14 +218,14 @@ direction: ltr
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-tabs-standard-code-1" id="tab-tabs-standard-code-1">
                                     <span class="nds-label">HTML</span>
                                 </button>
                             </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="nds-tab-content">
@@ -239,8 +239,8 @@ direction: ltr
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
 <div class="nds-tabs" hidden>
-    <div class="nds-tab-list-container">
-        <nav class="nds-tab-list" role="tablist" aria-label="Basic tab navigation">
+    <div class="nds-tab-list-container nds-scroll-more">
+        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation">
             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                 aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home">
                 <span class="nds-label">Home</span>
@@ -284,7 +284,7 @@ direction: ltr
             </button>
         </nav>
         <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
     </div>
     <div class="nds-tab-content">
@@ -459,8 +459,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="nds-tabs" id="tabs-icons-1" hidden>
-                            <div class="nds-tab-list-container">
-                                <nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-tabs-icons-dashboard" id="tab-tabs-icons-dashboard" tabindex="0">
                                         <i class="hgi hgi-stroke hgi-home-05"></i>
@@ -477,7 +477,7 @@ direction: ltr
                                         <span class="nds-label">Settings</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -507,14 +507,14 @@ direction: ltr
                     </div>
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container">
-                            <nav class="nds-tab-list" role="tablist" aria-label="Tab navigation">
+                        <div class="nds-tab-list-container nds-scroll-more">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                     aria-controls="panel-tabs-icons-code-1" id="tab-tabs-icons-code-1">
                                     <span class="nds-label">HTML</span>
                                 </button>
                             </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="nds-tab-content">
@@ -528,8 +528,8 @@ direction: ltr
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
 <div class="nds-tabs" hidden>
-    <div class="nds-tab-list-container">
-        <nav class="nds-tab-list" role="tablist" aria-label="Icon tab navigation">
+    <div class="nds-tab-list-container nds-scroll-more">
+        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation">
             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                 aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0">
                 <i class="hgi hgi-stroke hgi-home-05"></i>
@@ -547,7 +547,7 @@ direction: ltr
             </button>
         </nav>
         <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
     </div>
     <div class="nds-tab-content">
@@ -631,7 +631,7 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
+                        <i class="hgi hgi-stroke hgi-access"></i>
                         <span class="nds-label">High Contrast and Reduced Motion</span>
                     </span>
                     <p class="nds-item-desc">Enhanced borders appear in high-contrast mode, and all transitions are disabled when the user prefers reduced motion.</p>
@@ -727,9 +727,9 @@ direction: ltr
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">--mask-fade-distance</code></td>
+                            <td><code class="nds-inline-code lang-html">--scroll-fade</code></td>
                             <td>48px</td>
-                            <td>Width of the gradient fade at the edges of an overflowing tab list</td>
+                            <td>Width of the gradient fade at the edges of an overflowing tab list (set on the inner <code class="nds-inline-code lang-html">.nds-scroll-more</code>)</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--btn-indicator-size</code></td>

@@ -103,8 +103,8 @@ direction: ltr
           </div>
           <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+            <div class="nds-tab-list-container nds-scroll-more">
+              <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-checkbox-single-1" id="tab-checkbox-single-1">
                   <span class="nds-tab-label">HTML</span>
@@ -252,8 +252,8 @@ direction: ltr
           </div>
           <div class="demo-code">
           <div class="nds-tabs nds-code nds-divided" hidden>
-            <div class="nds-tab-list-container">
-              <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+            <div class="nds-tab-list-container nds-scroll-more">
+              <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                   aria-controls="panel-checkbox-validation-1" id="tab-checkbox-validation-1">
                   <span class="nds-tab-label">HTML</span>

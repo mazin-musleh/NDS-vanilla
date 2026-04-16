@@ -38,8 +38,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-expandable-basic-1" id="tab-expandable-basic-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -134,8 +134,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-expandable-card-1" id="tab-expandable-card-1">
                                 <span class="nds-tab-label">HTML</span>
@@ -222,8 +222,8 @@ direction: ltr
                 </div>
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided" hidden>
-                    <div class="nds-tab-list-container">
-                        <nav class="nds-tab-list oneRowContent" role="tablist" aria-label="Tab navigation">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                 aria-controls="panel-expandable-sync-1" id="tab-expandable-sync-1">
                                 <span class="nds-tab-label">HTML</span>

@@ -17,8 +17,8 @@ sidemenu_mode: false
     <div class="nds-section-body">
         <div class="nds-info-content">
             <div class="nds-tabs">
-                <div class="nds-tab-list-container">
-                    <nav class="nds-tab-list" role="tablist" aria-label="Service tab navigation">
+                <div class="nds-tab-list-container nds-scroll-more">
+                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Service tab navigation">
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                             aria-controls="panel-1" id="tab-1">
                             <span class="nds-label">Steps</span>
@@ -33,7 +33,7 @@ sidemenu_mode: false
                         </button>
                     </nav>
                     <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="nds-tab-content">

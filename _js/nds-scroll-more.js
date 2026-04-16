@@ -129,9 +129,9 @@
         const btn = wrapper.querySelector(CONFIG.selectors.btn);
 
         // Auto-inject a separator between the content and the show-more button
-        // so authors don't have to. Visibility is driven by .nds-divided +
-        // has-more state in CSS.
-        if (btn && !wrapper.querySelector(':scope > .nds-divider')) {
+        // so authors opting in via .nds-divided don't have to. Visibility is
+        // still gated by has-more state in CSS.
+        if (btn && wrapper.classList.contains('nds-divided') && !wrapper.querySelector(':scope > .nds-divider')) {
             const divider = document.createElement('div');
             divider.className = 'nds-divider';
             wrapper.insertBefore(divider, btn);

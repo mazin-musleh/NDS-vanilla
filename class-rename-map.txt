@@ -209,6 +209,12 @@ Drawer / Scroll-More
 .nds-show-more (in drawer)  → move inside .nds-scroll-more (sibling of .nds-scroll-more-content)
 .nds-scroll-more (in drawer) → add .nds-divided for separator above show-more button
 
+Tabs / Scroll-More
+------------------
+.nds-tab-list-container     → .nds-tab-list-container + .nds-scroll-more   (co-classed on the same element; container adds `isolation: isolate` for the rail's stacking context, scroll-more adds overflow/mask/show-more)
+.nds-tab-list               → .nds-tab-list + .nds-scroll-more-content   (co-classed on the nav)
+.nds-hgi-arrow-left-01      → .nds-hgi-arrow-down-01   (only inside .nds-show-more; scroll-more rotates per axis + RTL + at-end)
+
 Icon Classes (hgi font → nds-icon mask-image)
 ----------------------------------------------
 <i class="hgi hgi-stroke hgi-NAME">        → <i class="nds-icon nds-hgi-NAME" aria-hidden="true">  (chrome/structural only)
