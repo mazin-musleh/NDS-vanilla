@@ -467,13 +467,16 @@
     // COPY FUNCTIONALITY
     // ==============================================
 
+    let _copyButtonsAC = null;
     function initializeCopyButtons() {
+        if (_copyButtonsAC) _copyButtonsAC.abort();
+        _copyButtonsAC = new AbortController();
         document.addEventListener('click', function(e) {
             const copyBtn = e.target.closest('.copy-btn');
             if (copyBtn) {
                 handleCopyClick(copyBtn);
             }
-        });
+        }, { signal: _copyButtonsAC.signal });
     }
 
     function handleCopyClick(button) {

@@ -32,7 +32,7 @@
  * - data-error-message: Custom error message (overrides language defaults)
  */
 
-NDS.Userfeedback = (() => {
+NDS.UserFeedback = (() => {
     'use strict';
 
     // Helper function to generate cookie name for current page
@@ -198,19 +198,23 @@ NDS.Userfeedback = (() => {
                 if (textarea) textarea.value = '';
             }
 
+            // Scope all listeners to an AbortController so a future destroy/reinit can detach atomically
+            feedbackComponent._ndsUfAC = new AbortController();
+            const _ufSignal = feedbackComponent._ndsUfAC.signal;
+
             // Add click handlers to answer buttons
             answerButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     const answer = this.getAttribute('data-answer');
                     showDetails(answer);
-                });
+                }, { signal: _ufSignal });
             });
 
             // Add click handler to close button
             if (closeButton) {
                 closeButton.addEventListener('click', function () {
                     resetFeedback();
-                });
+                }, { signal: _ufSignal });
             }
 
             // Handle form submission to show success message
@@ -228,7 +232,7 @@ NDS.Userfeedback = (() => {
                     }
 
                     showStatus('success');
-                });
+                }, { signal: _ufSignal });
             }
 
             // Mark as initialized

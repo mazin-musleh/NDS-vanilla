@@ -13,6 +13,7 @@
                 return;
             }
 
+            this._ac = new AbortController();
             this.init();
         }
 
@@ -26,8 +27,12 @@
                 item.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.handleShare(item);
-                });
+                }, { signal: this._ac.signal });
             });
+        }
+
+        destroy() {
+            if (this._ac) this._ac.abort();
         }
 
         handleShare(clickedItem) {

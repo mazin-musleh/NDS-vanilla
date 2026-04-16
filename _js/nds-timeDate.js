@@ -198,7 +198,7 @@
         window.updateDate = updateDate;
         window.updateClock = updateClock;
         window.getHijriDate = getHijriDate;
-        NDS.Timedate = {
+        NDS.TimeDate = {
             init: initializeTimeDate
         };
     }

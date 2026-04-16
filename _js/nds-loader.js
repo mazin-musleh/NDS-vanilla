@@ -13,7 +13,7 @@
     //
     // All components live under the NDS.* namespace (e.g. NDS.Modal, NDS.Accordion)
     // Form sub-systems are grouped: NDS.Forms, NDS.Upload, NDS.OTP
-    // Core utilities: NDS.theme, NDS.debounce, NDS.onDOMAdd, etc.
+    // Core utilities: NDS.Theme, NDS.debounce, NDS.onDOMAdd, etc.
     // Only exception: window.NDSInitConfig (pre-boot config, set before bundle loads)
     const COMPONENTS = [
         {
@@ -109,22 +109,22 @@
         {
             name: 'datePicker',
             selector: '.nds-date-input',
-            init: () => NDS.Datepicker?.init?.(),
+            init: () => NDS.DatePicker?.init?.(),
         },
         {
             name: 'cityWeather',
             selector: '#nds-weatherInfo, #nds-cityName',
-            init: () => NDS.Cityweather?.init?.(),
+            init: () => NDS.CityWeather?.init?.(),
         },
         {
             name: 'timeDate',
             selector: '#nds-date, #nds-realTimeClock',
-            init: () => NDS.Timedate?.init?.(),
+            init: () => NDS.TimeDate?.init?.(),
         },
         {
             name: 'fontLoading',
             selector: null,
-            init: () => NDS.Fontloading?.init?.(),
+            init: () => NDS.FontLoading?.init?.(),
             universal: true,
         },
         {
@@ -185,7 +185,7 @@
         {
             name: 'userFeedback',
             selector: '.nds-user-feedback',
-            init: () => NDS.Userfeedback?.init?.(),
+            init: () => NDS.UserFeedback?.init?.(),
         },
         {
             name: 'chart',

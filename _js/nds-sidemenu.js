@@ -206,7 +206,15 @@
             return cachedRect;
         };
 
-        const scrollHandler = () => invalidate();
+        let scrollTicking = false;
+        const scrollHandler = () => {
+            if (scrollTicking) return;
+            scrollTicking = true;
+            requestAnimationFrame(() => {
+                invalidate();
+                scrollTicking = false;
+            });
+        };
         const mousemoveHandler = (e) => {
             if (ticking) return;
             ticking = true;

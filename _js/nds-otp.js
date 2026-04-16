@@ -220,6 +220,8 @@
     function initOtpGroup(group) {
         if (!group || group._ndsOtpInit) return;
         group._ndsOtpInit = true;
+        group._ndsOtpAC = new AbortController();
+        var signal = group._ndsOtpAC.signal;
 
         var inputs = getOtpInputs(group);
         if (!inputs.length) return;
@@ -227,12 +229,12 @@
         inputs.forEach(function (input) {
             input.addEventListener('beforeinput', function (e) {
                 handleBeforeInput(e, group, input, inputs);
-            });
-            input.addEventListener('input', function (e) { handleInput(e, group); });
-            input.addEventListener('paste', function (e) { handlePaste(e, group); });
-            input.addEventListener('keydown', function (e) { handleKeydown(e, group); });
-            input.addEventListener('click', function (e) { handleClick(e, group); });
-            input.addEventListener('focus', handleFocus);
+            }, { signal: signal });
+            input.addEventListener('input', function (e) { handleInput(e, group); }, { signal: signal });
+            input.addEventListener('paste', function (e) { handlePaste(e, group); }, { signal: signal });
+            input.addEventListener('keydown', function (e) { handleKeydown(e, group); }, { signal: signal });
+            input.addEventListener('click', function (e) { handleClick(e, group); }, { signal: signal });
+            input.addEventListener('focus', handleFocus, { signal: signal });
         });
 
         // Restore autofocus — browser native autofocus may be lost due to staggered init

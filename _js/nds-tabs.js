@@ -39,6 +39,7 @@
                 return;
             }
 
+            this._ac = new AbortController();
             this.currentTabIndex = this.findActiveTabIndex();
             this.init();
         }
@@ -123,7 +124,7 @@
                     }
                 };
                 requestAnimationFrame(animate);
-            }, { passive: false });
+            }, { passive: false, signal: this._ac.signal });
 
             // Drag scroll.
             const handleMouseMove = (e) => {
@@ -155,7 +156,7 @@
                 Object.assign(this.tabList.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
                 document.addEventListener('mousemove', handleMouseMove);
                 document.addEventListener('mouseup', handleMouseUp);
-            });
+            }, { signal: this._ac.signal });
         }
 
         // ==============================================
@@ -182,11 +183,11 @@
                     if (!this.isVertical && this.needsScroll()) {
                         setTimeout(() => this.scrollToTarget(tab), 10);
                     }
-                });
-                tab.addEventListener('focus', () => this.handleTabFocus(index));
+                }, { signal: this._ac.signal });
+                tab.addEventListener('focus', () => this.handleTabFocus(index), { signal: this._ac.signal });
             });
 
-            this.tabList.addEventListener('keydown', (e) => this.handleKeyDown(e));
+            this.tabList.addEventListener('keydown', (e) => this.handleKeyDown(e), { signal: this._ac.signal });
         }
 
         handleKeyDown(e) {
@@ -317,10 +318,7 @@
         switchTo(index) { this.switchToTab(index); }
 
         destroy() {
-            // Clone-replace to remove all event listeners on tabs and tab-list.
-            this.tabs.forEach(tab => tab.replaceWith(tab.cloneNode(true)));
-            this.tabList.replaceWith(this.tabList.cloneNode(true));
-            // Clear the init guard and instance ref so reinit() picks this container up again.
+            if (this._ac) this._ac.abort();
             this.tabsContainer.removeAttribute('data-nds-tabs-initialized');
             delete this.tabsContainer.ndsTabs;
         }

@@ -45,3 +45,4 @@ notes.txt
 
 # Claude workspace
 .claude/workspace/
+.claude/audit-reports/

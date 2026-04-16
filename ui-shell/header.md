@@ -191,17 +191,17 @@ header
                     <tbody>
                         <tr>
                             <td><code class="nds-inline-code lang-html">#nds-date</code></td>
-                            <td><code class="nds-inline-code lang-js">NDS.Timedate</code></td>
+                            <td><code class="nds-inline-code lang-js">NDS.TimeDate</code></td>
                             <td>Displays the current date. Set <code class="nds-inline-code lang-html">data-calendar="hijri"</code> for the Islamic calendar or <code class="nds-inline-code lang-html">data-calendar="gregorian"</code> for the Gregorian calendar. Fetches Hijri dates from the Aladhan API with a 24-hour local cache. Defaults to Hijri for Arabic pages and Gregorian for English.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">#nds-realTimeClock</code></td>
-                            <td><code class="nds-inline-code lang-js">NDS.Timedate</code></td>
+                            <td><code class="nds-inline-code lang-js">NDS.TimeDate</code></td>
                             <td>Live clock that updates every second in 12-hour AM/PM format.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">#nds-cityName</code> + <code class="nds-inline-code lang-html">#nds-weatherInfo</code></td>
-                            <td><code class="nds-inline-code lang-js">NDS.Cityweather</code></td>
+                            <td><code class="nds-inline-code lang-js">NDS.CityWeather</code></td>
                             <td>Displays the city name and current weather side by side. City is reverse-geocoded via the Nominatim API (30-day cache), weather is fetched from Open-Meteo (15-minute cache). Set <code class="nds-inline-code lang-html">data-latitude</code> and <code class="nds-inline-code lang-html">data-longitude</code> on <code class="nds-inline-code lang-html">#nds-weatherInfo</code> to configure the location (defaults to Riyadh). Both elements must be present: they share coordinates and initialize together as a single widget.</td>
                         </tr>
                     </tbody>
@@ -602,10 +602,10 @@ NDS.Mainnav.init();
 // element IDs are present on the page.
 
 // Re-initialize date and clock widgets
-NDS.Timedate.init();
+NDS.TimeDate.init();
 
 // Re-initialize city and weather widgets
-NDS.Cityweather.init();
+NDS.CityWeather.init();
 
 // Manually refresh individual widgets
 window.updateDate();       // refresh date display

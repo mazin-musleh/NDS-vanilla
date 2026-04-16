@@ -78,5 +78,5 @@
 
     // Public API
     window.NDS = window.NDS || {};
-    NDS.theme = { get: getTheme, set: setTheme, toggle };
+    NDS.Theme = { get: getTheme, set: setTheme, toggle };
 })();

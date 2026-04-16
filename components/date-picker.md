@@ -135,7 +135,7 @@ direction: ltr
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Initializes automatically via the forms system when a <code class="nds-inline-code lang-html">.nds-date-input</code> is found inside <code class="nds-inline-code lang-html">.nds-form-control</code>. Calendar dropdown is created lazily on first click. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Datepicker.reinit()</code>.</p>
+          <p class="nds-item-desc">Initializes automatically via the forms system when a <code class="nds-inline-code lang-html">.nds-date-input</code> is found inside <code class="nds-inline-code lang-html">.nds-form-control</code>. Calendar dropdown is created lazily on first click. For dynamic content, call <code class="nds-inline-code lang-js">NDS.DatePicker.reinit()</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -208,20 +208,20 @@ direction: ltr
                 <code class="lang-javascript code">
 // Auto-initializes via nds-forms.js on any .nds-date-input
 // No manual init needed. For dynamic content:
-NDS.Datepicker.reinit();
+NDS.DatePicker.reinit();
 
 // Format a Gregorian date as DD/MM/YYYY
-NDS.Datepicker.CalendarConfig.gregorian.formatDate(new Date());
+NDS.DatePicker.CalendarConfig.gregorian.formatDate(new Date());
 
 // Convert between Gregorian and Hijri
-NDS.Datepicker.CalendarConfig.hijri.gregorianToHijri(new Date());
+NDS.DatePicker.CalendarConfig.hijri.gregorianToHijri(new Date());
 // Returns: { day, month, year }
 
-NDS.Datepicker.CalendarConfig.hijri.hijriToGregorian(1447, 9, 1);
+NDS.DatePicker.CalendarConfig.hijri.hijriToGregorian(1447, 9, 1);
 // Returns: Date object
 
 // Create a Hijri date object
-NDS.Datepicker.createHijriDate(1, 9, 1447);
+NDS.DatePicker.createHijriDate(1, 9, 1447);
 
 // Read the converted date (opposite calendar) from the input
 var input = document.querySelector('.nds-date-input');

@@ -6,6 +6,8 @@
 (function () {
     'use strict';
 
+    let _stepperControlsAC = null;
+
     class NDSStepper {
         constructor(element) {
             this.element = element;
@@ -152,39 +154,38 @@
 
 
         setupControls() {
-            // Global event delegation for stepper controls
-            if (!window.ndsStepperControlsSetup) {
-                document.addEventListener('click', (e) => {
-                    const control = e.target.closest('[data-stepper-control]');
-                    if (!control) return;
+            // Global event delegation — one-time module-level binding with abortable signal
+            if (_stepperControlsAC) return;
+            _stepperControlsAC = new AbortController();
+            document.addEventListener('click', (e) => {
+                const control = e.target.closest('[data-stepper-control]');
+                if (!control) return;
 
-                    e.preventDefault();
-                    const action = control.dataset.stepperControl;
-                    const value = control.dataset.stepperValue;
+                e.preventDefault();
+                const action = control.dataset.stepperControl;
+                const value = control.dataset.stepperValue;
 
-                    // Find the target stepper with enhanced targeting
-                    let targetStepper;
-                    const targetId = control.dataset.stepperTarget;
+                // Find the target stepper with enhanced targeting
+                let targetStepper;
+                const targetId = control.dataset.stepperTarget;
 
-                    if (targetId) {
-                        // Explicit targeting with data-stepper-target
-                        targetStepper = document.getElementById(targetId);
-                    } else {
-                        // Fallback: closest stepper or first stepper on page
-                        targetStepper = control.closest('.nds-stepper') || document.querySelector('.nds-stepper');
-                    }
+                if (targetId) {
+                    // Explicit targeting with data-stepper-target
+                    targetStepper = document.getElementById(targetId);
+                } else {
+                    // Fallback: closest stepper or first stepper on page
+                    targetStepper = control.closest('.nds-stepper') || document.querySelector('.nds-stepper');
+                }
 
-                    const stepperInstance = targetStepper?.ndsStepper;
-                    if (!stepperInstance) return;
+                const stepperInstance = targetStepper?.ndsStepper;
+                if (!stepperInstance) return;
 
-                    switch (action) {
-                        case 'next': stepperInstance.next(); break;
-                        case 'previous': stepperInstance.previous(); break;
-                        case 'goto': stepperInstance.goTo(parseInt(value)); break;
-                    }
-                });
-                window.ndsStepperControlsSetup = true;
-            }
+                switch (action) {
+                    case 'next': stepperInstance.next(); break;
+                    case 'previous': stepperInstance.previous(); break;
+                    case 'goto': stepperInstance.goTo(parseInt(value)); break;
+                }
+            }, { signal: _stepperControlsAC.signal });
         }
 
         dispatchEvent() {

@@ -530,6 +530,7 @@
     }
 
     // Global click handler for manual pagination (not auto-pagination)
+    const _paginationGlobalAC = new AbortController();
     document.addEventListener('click', (e) => {
         // Check if click is on a pagination item or dropdown menu item
         const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a');
@@ -609,7 +610,7 @@
                 scrollToContent(pagination);
             }
         }
-    });
+    }, { signal: _paginationGlobalAC.signal });
 
     // Refresh auto-pagination for a specific content container (used by filters)
     function refreshAutoPagination(contentContainer) {
