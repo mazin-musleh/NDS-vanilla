@@ -54,11 +54,11 @@
                 const isExpanded = button.getAttribute('aria-expanded') === 'true';
                 
                 if (isExpanded) {
-                    collapse.dataset.state = 'open';
-                    button.dataset.state = 'open';
+                    NDS.State.set(collapse, 'open');
+                    NDS.State.set(button, 'open');
                 } else {
-                    delete collapse.dataset.state;
-                    delete button.dataset.state;
+                    NDS.State.clear(collapse);
+                    NDS.State.clear(button);
                     button.setAttribute('aria-expanded', 'false');
                 }
             });
@@ -167,14 +167,14 @@
 
             // Update button state immediately
             button.setAttribute('aria-expanded', 'true');
-            button.dataset.state = 'open';
+            NDS.State.set(button, 'open');
 
             // Set collapse to opening, then open after animation
-            collapse.dataset.state = 'opening';
+            NDS.State.set(collapse, 'opening');
 
             // Animate and dispatch event after
             this.animateShow(collapse, () => {
-                collapse.dataset.state = 'open';
+                NDS.State.set(collapse, 'open');
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, true);
             });
@@ -198,13 +198,13 @@
 
             // Update button state immediately
             button.setAttribute('aria-expanded', 'false');
-            delete button.dataset.state;
+            NDS.State.clear(button);
 
             // Set collapse to closing, then remove after animation
-            collapse.dataset.state = 'closing';
+            NDS.State.set(collapse, 'closing');
 
             this.animateHide(collapse, () => {
-                delete collapse.dataset.state;
+                NDS.State.clear(collapse);
 
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, false);
@@ -236,7 +236,7 @@
 
             // Fallback in case transitionend doesn't fire
             setTimeout(() => {
-                if (collapse.dataset.state === 'opening') {
+                if (NDS.State.has(collapse, 'opening')) {
                     handleTransitionEnd();
                 }
             }, this.getTransitionDuration());
@@ -259,7 +259,7 @@
 
             // Fallback in case transitionend doesn't fire
             setTimeout(() => {
-                if (collapse.dataset.state === 'closing') {
+                if (NDS.State.has(collapse, 'closing')) {
                     handleTransitionEnd();
                 }
             }, this.getTransitionDuration());
