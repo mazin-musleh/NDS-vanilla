@@ -77,13 +77,6 @@
     // ==============================================
     // UTILITY HELPERS
     // ==============================================
-    const throttle = (fn, ms) => {
-        let wait;
-        return (...args) => {
-            if (!wait) { fn(...args); wait = true; setTimeout(() => wait = false, ms); }
-        };
-    };
-
     const afterDelay = (duration, callback) => {
         duration === 0 ? callback() : setTimeout(callback, duration);
     };
