@@ -335,7 +335,7 @@
             this.el.setAttribute('data-chart-type', this.opts.type);
 
             const { type } = this.opts;
-            this._isRTL = typeof NDS !== 'undefined' && NDS.isRTL;
+            this._isRTL = NDS.isRTL;
 
             const hasAxes = type === 'bar' || type === 'line';
             const yTitle = this.opts.yaxis?.title;

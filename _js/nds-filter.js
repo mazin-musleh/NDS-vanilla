@@ -137,20 +137,18 @@
          * Handle standard form submission
          */
         handleFormSubmit(e) {
-            // Validate form if NDS.Forms is available
-            if (window.NDS && window.NDS.Forms && window.NDS.Forms.validateForm) {
-                const result = NDS.Forms.validateForm(this.filterContainer, {
-                    showMessages: true,
-                    focusFirst: true
-                });
+            // Validate form via NDS.Forms
+            const result = NDS.Forms.validateForm(this.filterContainer, {
+                showMessages: true,
+                focusFirst: true
+            });
 
-                if (!result.valid) {
-                    e.preventDefault();
-                    this.filterContainer.dispatchEvent(new CustomEvent('nds:formInvalid', {
-                        detail: { invalidFields: result.invalidFields, errors: result.errors }
-                    }));
-                    return;
-                }
+            if (!result.valid) {
+                e.preventDefault();
+                this.filterContainer.dispatchEvent(new CustomEvent('nds:formInvalid', {
+                    detail: { invalidFields: result.invalidFields, errors: result.errors }
+                }));
+                return;
             }
 
             // Dispatch preventable event
@@ -1081,7 +1079,7 @@
             const inputs = element.querySelectorAll('input[type="checkbox"], input[type="radio"], .nds-switch-input');
 
             // Always set up the DOM observer, even with 0 inputs (handles cascading/async filters)
-            if (!element._ndsFilterObserver && typeof NDS !== 'undefined' && NDS.onDOMAdd) {
+            if (!element._ndsFilterObserver) {
                 element._ndsFilterObserver = true;
                 NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
                     if (nodes.some(n => element.contains(n))) {

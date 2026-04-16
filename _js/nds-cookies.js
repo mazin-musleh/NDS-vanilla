@@ -192,20 +192,15 @@
 
     function ndsShowMessage(message, variant = 'success', title = '') {
         // Use NDSAlert toast API for notifications
-        if (typeof NDS.Alert !== 'undefined') {
-            NDS.Alert.create({
-                variant: variant,
-                title: title,
-                description: message,
-                display: 'toast',
-                position: 'bottom',
-                duration: 4000,
-                closable: true
-            });
-        } else {
-            // Fallback if NDSAlert is not loaded yet
-            console.log('[NDS Cookies]', title, message);
-        }
+        NDS.Alert.create({
+            variant: variant,
+            title: title,
+            description: message,
+            display: 'toast',
+            position: 'bottom',
+            duration: 4000,
+            closable: true
+        });
     }
 
 

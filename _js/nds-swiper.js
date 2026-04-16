@@ -7,6 +7,10 @@
 (function () {
     'use strict';
 
+    // Fallback used only if --nds-content-MaxWidth is undefined at runtime.
+    // Should match the CSS default; any mismatch indicates a token-source drift.
+    const CONTENT_MAX_WIDTH_FALLBACK = 1280;
+
     // ==============================================
     // UTILITIES
     // ==============================================
@@ -242,7 +246,7 @@
             const parent = this.container.parentElement;
             const parentHasMaxWidth = parent?.classList.contains('nds-max-width');
             const styles = getComputedStyle(document.documentElement);
-            const contentMaxWidth = parseInt(styles.getPropertyValue('--nds-content-MaxWidth')) || 1280;
+            const contentMaxWidth = parseInt(styles.getPropertyValue('--nds-content-MaxWidth')) || CONTENT_MAX_WIDTH_FALLBACK;
             const viewportPadding = parseInt(styles.getPropertyValue('--nds-viewport-padding')) || 32;
             const parentWidth = parent?.clientWidth || 0;
 

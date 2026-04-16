@@ -2,6 +2,11 @@
 (() => {
     'use strict';
 
+    // Fallback values used only if corresponding CSS custom properties are undefined at runtime.
+    // These should match the CSS defaults; any mismatch indicates a token-source drift.
+    const MINIMAL_NAV_BP_FALLBACK = 768;
+    const CONTENT_MAX_WIDTH_FALLBACK = 1280;
+
     // ==============================================
     // DOM REFERENCES
     // ==============================================
@@ -41,7 +46,7 @@
             if (!this._css) {
                 const styles = getComputedStyle(document.documentElement);
                 this._css = {
-                    minimalBp: parseInt(styles.getPropertyValue('--nds-minimal-nav-bp')) || 768,
+                    minimalBp: parseInt(styles.getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BP_FALLBACK,
                     speed: (parseFloat(styles.getPropertyValue('--nds-transition-speed')) || 0.2) * 1000,
                     isRTL: NDS.isRTL
                 };
@@ -438,7 +443,7 @@
         }
 
         const { padding, gap, visibleCount } = _containerLayoutCache;
-        const constraint = Math.min(navW, containerW || 1280);
+        const constraint = Math.min(navW, containerW || CONTENT_MAX_WIDTH_FALLBACK);
         const used = brandW + secW + minW + showMoreW + padding + (gap * Math.max(0, visibleCount - 1));
         const available = constraint - used;
         const newMax = available > 0 ? `${available}px` : '';
