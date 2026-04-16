@@ -210,14 +210,23 @@
                     update();
                     const sync = () => {
                         if (!placeholder.isConnected) {
-                            window.removeEventListener('scroll', sync);
+                            window.removeEventListener('scroll', throttledSync);
                             placeholder._scrollSync = null;
                             return;
                         }
                         if (window.scrollY < 200) update();
                     };
-                    window.addEventListener('scroll', sync, { passive: true });
-                    placeholder._scrollSync = sync;
+                    let ticking = false;
+                    const throttledSync = () => {
+                        if (ticking) return;
+                        ticking = true;
+                        requestAnimationFrame(() => {
+                            ticking = false;
+                            sync();
+                        });
+                    };
+                    window.addEventListener('scroll', throttledSync, { passive: true });
+                    placeholder._scrollSync = throttledSync;
                 }
             }
 
