@@ -1074,6 +1074,12 @@
                 toggleDropdown();
             });
 
+            // Scoped AbortController so per-option listeners can be detached as a group
+            // if initCustomSelectDropdown is re-run on the same select element.
+            if (selectInput._ndsOptionsAC) selectInput._ndsOptionsAC.abort();
+            selectInput._ndsOptionsAC = new AbortController();
+            var optionsSignal = selectInput._ndsOptionsAC.signal;
+
             options.forEach(function(option) {
                 option.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1082,7 +1088,7 @@
                     var text = optionText ? optionText.textContent : value;
                     selectValue(value, text);
                     selectInput.focus();
-                });
+                }, { signal: optionsSignal });
 
                 option.addEventListener('keydown', function(e) {
                     var currentIndex = Array.from(options).indexOf(this);
@@ -1110,7 +1116,7 @@
                             selectInput.focus();
                             break;
                     }
-                });
+                }, { signal: optionsSignal });
             });
 
             selectInput.addEventListener('keydown', function(e) {

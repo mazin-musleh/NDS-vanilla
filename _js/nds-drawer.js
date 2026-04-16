@@ -214,6 +214,10 @@
     }
 
     function initToggles(drawer) {
+        if (drawer._togglesAC) drawer._togglesAC.abort();
+        drawer._togglesAC = new AbortController();
+        const { signal } = drawer._togglesAC;
+
         drawer.querySelectorAll('.nds-drawer-list > li').forEach(li => {
             const submenu = li.querySelector(':scope > ul');
             if (!submenu) return;
@@ -235,7 +239,7 @@
                     e.preventDefault();
                     toggleSubmenu(button);
                 }
-            });
+            }, { signal });
         });
     }
 
@@ -319,6 +323,12 @@
         if (drawer._resizeHandler) {
             window.removeEventListener('resize', drawer._resizeHandler);
             delete drawer._resizeHandler;
+        }
+
+        // Abort all submenu-toggle listeners attached in initToggles
+        if (drawer._togglesAC) {
+            drawer._togglesAC.abort();
+            delete drawer._togglesAC;
         }
 
         // Clean up stored width

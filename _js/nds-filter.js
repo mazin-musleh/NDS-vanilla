@@ -78,6 +78,7 @@
 
             this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
+            this._ac = new AbortController();
             this.init();
         }
 
@@ -557,6 +558,7 @@
 
         setupActionButtons() {
             const actionButtons = this.filterContainer.querySelectorAll('[data-filter-action]');
+            const { signal } = this._ac;
 
             actionButtons.forEach(button => {
                 const action = button.getAttribute('data-filter-action');
@@ -595,20 +597,20 @@
                             // Standard client-side filtering mode
                             e.preventDefault();
                             this.applyFilters();
-                        });
+                        }, { signal });
                         break;
                     case 'clear':
                         button.addEventListener('click', (e) => {
                             e.preventDefault();
                             e.stopPropagation();
                             this.clearDropmenuFilters();
-                        });
+                        }, { signal });
                         break;
                     case 'reset':
                         button.addEventListener('click', (e) => {
                             e.preventDefault();
                             this.reset();
-                        });
+                        }, { signal });
                         break;
                 }
             });
@@ -1856,6 +1858,7 @@
         }
 
         destroy() {
+            this._ac.abort();
             this.items.forEach(item => this.showItem(item));
             this.filterContainer.removeAttribute('data-nds-filter-initialized');
         }
