@@ -827,9 +827,12 @@
             document.addEventListener('mouseup', dragUp);
         });
 
-        // Dropdown hover tracking
+        // Dropdown hover tracking — per-element guard prevents stacking when
+        // trackDropdowns() re-runs on DOM mutations (runs on every onDOMAdd/Remove).
         const trackDropdowns = () => {
             document.querySelectorAll('.nds-dropdown-menu').forEach(menu => {
+                if (menu._ndsHoverTracked) return;
+                menu._ndsHoverTracked = true;
                 menu.addEventListener('mouseenter', () => state.isMouseOverDropdown = true);
                 menu.addEventListener('mouseleave', () => state.isMouseOverDropdown = false);
             });
