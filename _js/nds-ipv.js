@@ -377,12 +377,19 @@
         }
 
         attachGlobalEvents() {
+            // Scope listeners to an AbortController so any future reinit (currently blocked by
+            // the data-nds-ipv-initialized guard at L455, but defense-in-depth) detaches the
+            // prior batch atomically instead of stacking on document.
+            if (this._ac) this._ac.abort();
+            this._ac = new AbortController();
+            const { signal } = this._ac;
+
             if (this.el.overlay) {
-                this.el.overlay.addEventListener('wheel', (e) => this.handleWheel(e), { passive: false });
+                this.el.overlay.addEventListener('wheel', (e) => this.handleWheel(e), { passive: false, signal });
             }
-            document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-            document.addEventListener('mouseup', () => this.handleMouseUp());
-            document.addEventListener('keydown', (e) => this.handleKeydown(e));
+            document.addEventListener('mousemove', (e) => this.handleMouseMove(e), { signal });
+            document.addEventListener('mouseup', () => this.handleMouseUp(), { signal });
+            document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal });
         }
 
         // Static factory method
