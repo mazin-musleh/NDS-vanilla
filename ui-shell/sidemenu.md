@@ -36,20 +36,20 @@ aside.nds-sidemenu
 &#9474;   &#9492;&#9472;&#9472; span.nds-label.nds-truncate (toggle label, hidden on desktop)
 &#9474;
 &#9492;&#9472;&#9472; nav.nds-drawer.nds-divided.nds-full-height
-    &#9500;&#9472;&#9472; div.nds-drawer-scroll
-    &#9474;   &#9492;&#9472;&#9472; ul.nds-drawer-list
-    &#9474;       &#9500;&#9472;&#9472; li (flat link)
-    &#9474;       &#9474;   &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
-    &#9474;       &#9474;       &#9492;&#9472;&#9472; span.nds-label
-    &#9474;       &#9492;&#9472;&#9472; li (accordion group)
-    &#9474;           &#9500;&#9472;&#9472; button.nds-btn.nds-subtle.nds-menu-btn.nds-indicator
-    &#9474;           &#9474;   &#9492;&#9472;&#9472; span.nds-label
-    &#9474;           &#9492;&#9472;&#9472; ul (submenu)
-    &#9474;               &#9492;&#9472;&#9472; li
-    &#9474;                   &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
-    &#9474;                       &#9492;&#9472;&#9472; span.nds-label
-    &#9492;&#9472;&#9472; button.nds-show-more.nds-btn.nds-subtle
-        &#9492;&#9472;&#9472; i.hgi.hgi-stroke.hgi-arrow-down-01
+    &#9492;&#9472;&#9472; div.nds-scroll-more.nds-divided
+        &#9500;&#9472;&#9472; ul.nds-drawer-list.nds-scroll-more-content
+        &#9474;   &#9500;&#9472;&#9472; li (flat link)
+        &#9474;   &#9474;   &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
+        &#9474;   &#9474;       &#9492;&#9472;&#9472; span.nds-label
+        &#9474;   &#9492;&#9472;&#9472; li (accordion group)
+        &#9474;       &#9500;&#9472;&#9472; button.nds-btn.nds-subtle.nds-menu-btn.nds-indicator
+        &#9474;       &#9474;   &#9492;&#9472;&#9472; span.nds-label
+        &#9474;       &#9492;&#9472;&#9472; ul (submenu)
+        &#9474;           &#9492;&#9472;&#9472; li
+        &#9474;               &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
+        &#9474;                   &#9492;&#9472;&#9472; span.nds-label
+        &#9492;&#9472;&#9472; button.nds-show-more.nds-btn.nds-subtle
+            &#9492;&#9472;&#9472; i.hgi.hgi-stroke.hgi-arrow-down-01
                                 </code>
                             </div>
                         </div>
@@ -97,8 +97,8 @@ aside.nds-sidemenu
     &lt;span class="nds-label nds-truncate" hidden&gt;Side menu&lt;/span&gt;
   &lt;/button&gt;
   &lt;nav class="nds-drawer nds-divided nds-full-height" hidden&gt;
-    &lt;div class="nds-drawer-scroll"&gt;
-      &lt;ul class="nds-drawer-list"&gt;
+    &lt;div class="nds-scroll-more nds-divided"&gt;
+      &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
         &lt;!-- Flat link --&gt;
         &lt;li data-state="active"&gt;
           &lt;a class="nds-btn nds-subtle nds-indicator" href="/"&gt;
@@ -147,10 +147,10 @@ aside.nds-sidemenu
           &lt;/ul&gt;
         &lt;/li&gt;
       &lt;/ul&gt;
+      &lt;button class="nds-show-more nds-btn nds-subtle"&gt;
+        &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
     &lt;/div&gt;
-    &lt;button class="nds-show-more nds-btn nds-subtle"&gt;
-      &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;/button&gt;
   &lt;/nav&gt;
 &lt;/aside&gt;
                                         </code>
@@ -515,8 +515,9 @@ NDS.Sidemenu.init();
 // In top submenu mode, body scroll locks while open.
 
 // ── Drawer overflow ─────────────────────────────────
-// In top submenu mode, calls NDS.Drawer.checkOverflow()
-// after opening to show/hide the "show more" scroll indicator.
+// Handled automatically by the .nds-scroll-more wrapper
+// inside the drawer (shows/hides the "show more" button
+// and edge mask-fade via its own ResizeObserver).
 </code>
                     </div>
                 </div>

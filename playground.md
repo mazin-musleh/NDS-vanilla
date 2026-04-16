@@ -152,7 +152,7 @@ direction: ltr
                 </div>
 
             </div>
-            <button class="nds-btn nds-subtle nds-md nds-scroll-more-btn" type="button" aria-label="Show more">
+            <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
                 <span class="nds-label">Show more</span>
                 <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
             </button>
@@ -174,7 +174,7 @@ direction: ltr
                     <li>List item number {{ n }}</li>
                     {% endfor %}
                 </ul>
-                <button class="nds-btn nds-subtle nds-md nds-scroll-more-btn" type="button" aria-label="Show more">
+                <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
                     <span class="nds-label">Show more</span>
                     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>

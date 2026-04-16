@@ -43,8 +43,7 @@ direction: ltr
                                     <li>Khamis Mushait</li>
                                     <li>Hail</li>
                                 </ul>
-                                <div class="nds-divider"></div>
-                                <button class="nds-btn nds-subtle nds-md nds-scroll-more-btn" type="button" aria-label="Show more">
+                                <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
                                     <span class="nds-label">Show more</span>
                                     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
@@ -85,8 +84,7 @@ direction: ltr
     <li>Khamis Mushait</li>
     <li>Hail</li>
   </ul>
-  <div class="nds-divider"></div>
-  <button class="nds-btn nds-subtle nds-md nds-scroll-more-btn" type="button" aria-label="Show more">
+  <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
     <span class="nds-label">Show more</span>
     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
   </button>
@@ -134,8 +132,7 @@ direction: ltr
                                     <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Tourism</span></button>
                                     <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Utilities</span></button>
                                 </div>
-                                <div class="nds-divider"></div>
-                                <button class="nds-btn nds-subtle nds-md nds-scroll-more-btn" type="button" aria-label="Show more">
+                                <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
                                     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -172,8 +169,7 @@ direction: ltr
     <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Tourism</span></button>
     <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Utilities</span></button>
   </div>
-  <div class="nds-divider"></div>
-  <button class="nds-btn nds-subtle nds-md nds-scroll-more-btn" type="button" aria-label="Show more">
+  <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
   </button>
 </div>
@@ -232,8 +228,7 @@ direction: ltr
                                     </div>
                                     {% endfor %}
                                 </div>
-                                <div class="nds-divider"></div>
-                                <button class="nds-btn nds-subtle nds-md nds-scroll-more-btn" type="button" aria-label="Show more">
+                                <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
                                     <span class="nds-label">Show more</span>
                                     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
@@ -280,8 +275,7 @@ direction: ltr
     </div>
     {% raw %}{% endfor %}{% endraw %}
   </div>
-  <div class="nds-divider"></div>
-  <button class="nds-btn nds-subtle nds-md nds-scroll-more-btn" type="button" aria-label="Show more">
+  <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
     <span class="nds-label">Show more</span>
     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
   </button>
@@ -393,7 +387,7 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Reveals a <code class="nds-inline-code lang-html">.nds-divider</code> child element between content and button when overflow is present</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Renders a hairline separator between the content and the show-more button when overflow is present. No child element required</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-snap</code></td><td>Applies CSS scroll-snap so each direct child's leading edge aligns with the scroll container. Good for card tracks and large items</td></tr>
                     </tbody>
                 </table>

@@ -121,7 +121,6 @@
 
         const onOpened = () => {
             removeState(animTarget, 'opening');
-            if (isTopMode && NDS.Drawer) NDS.Drawer.checkOverflow(animTarget);
             animTarget.removeEventListener('transitionend', onOpened);
         };
         animTarget.addEventListener('transitionend', onOpened);

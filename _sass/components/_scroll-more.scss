@@ -121,7 +121,7 @@
 // This class adds layout-only rules so it reserves space.
 // ==============================================
 
-.nds-scroll-more-btn {
+.nds-scroll-more > .nds-show-more {
     display: none;
     flex-shrink: 0;
     justify-content: center;
@@ -133,17 +133,17 @@
     }
 }
 
-.nds-scroll-more[data-state~="has-more"] > .nds-scroll-more-btn {
+.nds-scroll-more[data-state~="has-more"] > .nds-show-more {
     display: inline-flex;
 }
 
 // Vertical: button spans full width below content
-.nds-scroll-more[data-axis="vertical"] > .nds-scroll-more-btn {
+.nds-scroll-more[data-axis="vertical"] > .nds-show-more {
     width: 100% !important;
 }
 
-// Optional .nds-divider child — shown only when the wrapper opts in via
-// .nds-divided AND overflow is actually present.
+// Optional .nds-divider child (auto-injected by the JS) — shown only when the
+// wrapper opts in via .nds-divided AND overflow is actually present.
 .nds-scroll-more > .nds-divider {
     display: none;
     border-block-start-color: var(--_scroll-divider);
@@ -160,12 +160,12 @@
 
 // Icon rotation per axis + state. The <i> reads --_icon-rotate (set above),
 // so each rule only redefines that one variable — no stacked transforms.
-.nds-scroll-more[data-axis="vertical"][data-state~="at-end"] > .nds-scroll-more-btn {
+.nds-scroll-more[data-axis="vertical"][data-state~="at-end"] > .nds-show-more {
     --_icon-rotate: 180deg;
 }
 
 // Horizontal: rotate the entire button so icon + label read vertically.
-.nds-scroll-more[data-axis="horizontal"] > .nds-scroll-more-btn {
+.nds-scroll-more[data-axis="horizontal"] > .nds-show-more {
     align-self: stretch;
     height: auto !important;
     writing-mode: vertical-rl;
@@ -178,7 +178,7 @@
     }
 }
 
-.nds-scroll-more[data-axis="horizontal"][data-state~="at-end"] > .nds-scroll-more-btn {
+.nds-scroll-more[data-axis="horizontal"][data-state~="at-end"] > .nds-show-more {
     --_icon-rotate: -90deg;
 
     @include ltr {

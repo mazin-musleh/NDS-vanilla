@@ -6,8 +6,8 @@
     <nav class="nds-drawer nds-divided nds-full-height" hidden>
         {%- assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" -%}
         {%- assign sidemenu_items = site.data.sidemenu[sidemenu_data_file] -%}
-        <div class="nds-drawer-scroll">
-            <ul class="nds-drawer-list">
+        <div class="nds-scroll-more nds-divided">
+            <ul class="nds-drawer-list nds-scroll-more-content">
                 {%- for item in sidemenu_items %}
                 {%- if item.has_sub %}
                 <li>
@@ -35,9 +35,9 @@
                 {%- endif %}
                 {%- endfor %}
             </ul>
+            <button class="nds-show-more nds-btn nds-subtle">
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
         </div>
-        <button class="nds-show-more nds-btn nds-subtle">
-            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-        </button>
     </nav>
 </aside>

@@ -24,9 +24,6 @@
     --_transition: var(--drawer-transition, var(--nds-transition));
     --_max-height: var(--drawer-max-height, 400px);
 
-    // Gradient mask custom properties
-    --mask-fade-distance: 48px;
-
     &:not([hidden]) {
         display: flex;
         flex-direction: column;
@@ -272,53 +269,41 @@
 }
 
 // ==============================================
-// CONSTRAINED MODE (hasMore)
-// Auto-enabled when nds-drawer-scroll is present
+// CONSTRAINED MODE
+// Auto-enabled when a .nds-scroll-more wrapper is present
 // ==============================================
 
-// Auto-constrained when has scroll container
-.nds-drawer:has(.nds-drawer-scroll) {
+.nds-drawer:has(> .nds-scroll-more) {
     position: relative;
     max-height: var(--_max-height);
 }
 
-.nds-drawer-scroll {
-    overflow-y: auto;
-    overflow-x: hidden;
-   /*  overscroll-behavior: contain; */
+// Map drawer tokens to scroll-more tokens so drawer authors can keep
+// using --drawer-max-height. Scroll-more owns the actual overflow/mask layout.
+.nds-drawer > .nds-scroll-more {
+    --scroll-max-height: var(--drawer-max-height, 400px);
+    --scroll-fade: 48px;
+
+    // Drawer is a flex column; let the scroll wrapper fill it so fit mode
+    // (height: 100%) and max-height constraints resolve correctly.
     flex: 1;
     min-height: 0;
-
-    // Fade effect at bottom when scrollable
-    [data-state~="has-more"]:not([data-state~="at-end"]) & {
-        mask-image: linear-gradient(to bottom, black calc(100% - var(--mask-fade-distance)), transparent 100%);
-    }
 }
 
 // ==============================================
-// MORE BUTTON (Scroll indicator)
+// MORE BUTTON (drawer-specific theming only)
+// Layout/visibility/icon-rotation come from .nds-scroll-more > .nds-show-more
+// The separator above the button is rendered by scroll-more's .nds-divided
+// pattern (border on the button, shown only when has-more).
 // ==============================================
 
 .nds-drawer .nds-show-more {
     --btn-height: var(--drawer-btn-height);
-    width: 100% !important;
-    border-block-start: 1px solid var(--_divider);
-    justify-content: center;
-    display: none;
-
-    i {
-        transition: transform var(--_transition);
-    }
 }
 
-// Show more button when drawer has scrollable content
-.nds-drawer[data-state~="has-more"] .nds-show-more {
-    display: flex;
-}
-
-// Rotate icon when scrolled to end
-.nds-drawer[data-state~="at-end"] .nds-show-more i {
-    transform: rotate(180deg);
+// Separator color matches the drawer's divider token.
+.nds-drawer > .nds-scroll-more {
+    --scroll-divider: var(--_divider);
 }
 
 // ==============================================

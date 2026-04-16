@@ -202,6 +202,13 @@ Grid Custom Properties (renamed)
 --------------------------------
 --col-width → --min-width   (on .nds-grid, minimum column width inside minmax())
 
+Drawer / Scroll-More
+--------------------
+.nds-drawer-scroll          → (removed, use .nds-scroll-more inside .nds-drawer)
+.nds-drawer-list            → .nds-drawer-list + .nds-scroll-more-content
+.nds-show-more (in drawer)  → move inside .nds-scroll-more (sibling of .nds-scroll-more-content)
+.nds-scroll-more (in drawer) → add .nds-divided for separator above show-more button
+
 Icon Classes (hgi font → nds-icon mask-image)
 ----------------------------------------------
 <i class="hgi hgi-stroke hgi-NAME">        → <i class="nds-icon nds-hgi-NAME" aria-hidden="true">  (chrome/structural only)

@@ -13,7 +13,7 @@
         selectors: {
             wrapper: '.nds-scroll-more',
             content: '.nds-scroll-more-content',
-            btn: '.nds-scroll-more-btn'
+            btn: '.nds-show-more'
         },
         overflow: {
             hasMore: 'has-more',
@@ -45,15 +45,8 @@
         if (!axis) {
             wrapper.removeAttribute('data-axis');
             removeState(wrapper, CONFIG.overflow.hasMore, CONFIG.overflow.atStart, CONFIG.overflow.atEnd);
-            wrapper._maxScroll = 0;
             return;
         }
-
-        // Cache maxScroll so the scroll hot path skips the layout read.
-        // Refreshed here on init and on every ResizeObserver tick.
-        wrapper._maxScroll = axis === 'vertical'
-            ? content.scrollHeight - content.clientHeight
-            : content.scrollWidth - content.clientWidth;
 
         wrapper.setAttribute('data-axis', axis);
         addState(wrapper, CONFIG.overflow.hasMore);
@@ -68,7 +61,12 @@
 
         // Horizontal: scrollLeft can be negative in RTL; normalize.
         const pos = axis === 'vertical' ? content.scrollTop : Math.abs(content.scrollLeft);
-        const maxScroll = wrapper._maxScroll || 0;
+        // Read max-scroll fresh each time — cached values go stale when the
+        // content or viewport resizes between ResizeObserver ticks (e.g. sticky
+        // nav collapse as hero leaves the viewport on sidemenu pages).
+        const maxScroll = axis === 'vertical'
+            ? content.scrollHeight - content.clientHeight
+            : content.scrollWidth - content.clientWidth;
 
         const atStart = pos <= CONFIG.scrollThreshold;
         const atEnd = maxScroll - pos <= CONFIG.scrollThreshold;
@@ -130,6 +128,15 @@
         wrapper._content = content;
         const btn = wrapper.querySelector(CONFIG.selectors.btn);
 
+        // Auto-inject a separator between the content and the show-more button
+        // so authors don't have to. Visibility is driven by .nds-divided +
+        // has-more state in CSS.
+        if (btn && !wrapper.querySelector(':scope > .nds-divider')) {
+            const divider = document.createElement('div');
+            divider.className = 'nds-divider';
+            wrapper.insertBefore(divider, btn);
+        }
+
         checkOverflow(wrapper);
 
         let ticking = false;
@@ -163,7 +170,6 @@
             delete wrapper._offResizeObs;
         }
         delete wrapper._content;
-        delete wrapper._maxScroll;
         delete wrapper._ndsScrollMoreInitialized;
     }
 

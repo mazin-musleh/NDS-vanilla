@@ -10,9 +10,7 @@
     const CONFIG = {
         selectors: {
             drawer: '.nds-drawer',
-            list: '.nds-drawer-list',
-            scroll: '.nds-drawer-scroll',
-            moreBtn: '.nds-show-more'
+            list: '.nds-drawer-list'
         },
         states: {
             open: 'open',
@@ -21,13 +19,7 @@
             closed: '',
             active: 'active'
         },
-        overflow: {
-            hasMore: 'has-more',
-            atEnd: 'at-end'
-        },
         breakpoints: NDS.breakpoints,
-        scrollThreshold: 1,
-        scrollAmount: 0.8,
         transitionDuration: 250
     };
 
@@ -94,7 +86,7 @@
             removeState(element, ...TRANSITION_STATES);
             addState(element, state);
         } else {
-            // Empty state = clear transition states, keep others (e.g. has-more)
+            // Empty state = clear transition + active states, keep others
             removeState(element, ...TRANSITION_STATES, 'active');
         }
     }
@@ -248,85 +240,6 @@
     }
 
     // ==============================================
-    // HAS-MORE OVERFLOW DETECTION
-    // ==============================================
-
-    function checkOverflow(drawer) {
-        const scrollContainer = drawer.querySelector(CONFIG.selectors.scroll);
-        if (!scrollContainer) return;
-
-        const hasOverflow = scrollContainer.scrollHeight > scrollContainer.clientHeight;
-        if (hasOverflow) addState(drawer, CONFIG.overflow.hasMore); else removeState(drawer, CONFIG.overflow.hasMore);
-
-        if (hasOverflow) {
-            checkScrollPosition(drawer, scrollContainer);
-        } else {
-            removeState(drawer, CONFIG.overflow.atEnd);
-        }
-    }
-
-    function checkScrollPosition(drawer, scrollContainer) {
-        scrollContainer = scrollContainer || drawer.querySelector(CONFIG.selectors.scroll);
-        if (!scrollContainer) return;
-
-        const isAtEnd = scrollContainer.scrollHeight - scrollContainer.scrollTop
-            <= scrollContainer.clientHeight + CONFIG.scrollThreshold;
-        if (isAtEnd) addState(drawer, CONFIG.overflow.atEnd); else removeState(drawer, CONFIG.overflow.atEnd);
-    }
-
-    function scrollDrawer(drawer) {
-        const scrollContainer = drawer.querySelector(CONFIG.selectors.scroll);
-        if (!scrollContainer) return;
-
-        const isAtEnd = hasState(drawer, CONFIG.overflow.atEnd);
-        scrollContainer.scrollTo({
-            top: isAtEnd ? 0 : scrollContainer.scrollTop + scrollContainer.clientHeight * CONFIG.scrollAmount,
-            behavior: 'smooth'
-        });
-    }
-
-    function initHasMore(drawer) {
-        const scrollContainer = drawer.querySelector(CONFIG.selectors.scroll);
-        if (!scrollContainer) return;
-
-        const moreBtn = drawer.querySelector(CONFIG.selectors.moreBtn);
-
-        // Skip init-time overflow check for topSubMenu drawers on mobile (checked on open instead)
-        // On desktop topSubMenu is inactive, so treat as a regular side menu
-        const isTopSubMenu = drawer.closest('.nds-sidemenu.nds-top');
-        const isDesktop = window.matchMedia(CONFIG.breakpoints.desktop).matches;
-        if (!isTopSubMenu || isDesktop) {
-            checkOverflow(drawer);
-        }
-
-        let ticking = false;
-        scrollContainer.addEventListener('scroll', () => {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                checkScrollPosition(drawer, scrollContainer);
-                ticking = false;
-            });
-        }, { passive: true });
-
-        if (moreBtn) {
-            moreBtn.addEventListener('click', () => scrollDrawer(drawer));
-        }
-
-        // Re-check overflow when submenus are shown/hidden (scrollHeight changes)
-        drawer.addEventListener('nds:drawer:shown', () => checkOverflow(drawer));
-        drawer.addEventListener('nds:drawer:hidden', () => checkOverflow(drawer));
-
-        // For topSubMenu on mobile: only run ResizeObserver overflow check when drawer is open
-        drawer._offResizeObs = NDS.onElementResize(scrollContainer, () => {
-            if (isTopSubMenu && !window.matchMedia(CONFIG.breakpoints.desktop).matches) {
-                if (!hasState(drawer.parentElement, 'open')) return;
-            }
-            checkOverflow(drawer);
-        });
-    }
-
-    // ==============================================
     // ACTIVE STATE MANAGEMENT
     // ==============================================
 
@@ -382,7 +295,6 @@
         initResponsiveState(drawer);
         initToggles(drawer);
         initActiveStates(drawer);
-        initHasMore(drawer);
 
         // Store initial window width to detect width-only changes
         drawer._previousWidth = window.innerWidth;
@@ -403,12 +315,6 @@
     }
 
     function destroyDrawer(drawer) {
-        // Clean up overflow ResizeObserver
-        if (drawer._offResizeObs) {
-            drawer._offResizeObs();
-            delete drawer._offResizeObs;
-        }
-
         // Clean up resize handler
         if (drawer._resizeHandler) {
             window.removeEventListener('resize', drawer._resizeHandler);
@@ -429,8 +335,7 @@
         reinit: initAllDrawers,
         initDrawer,
         destroy: destroyDrawer,
-        toggle: toggleSubmenu,
-        checkOverflow
+        toggle: toggleSubmenu
     };
 
 })();

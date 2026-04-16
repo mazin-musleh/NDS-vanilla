@@ -56,8 +56,8 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <nav class="nds-drawer" hidden>
-                                <div class="nds-drawer-scroll">
-                                    <ul class="nds-drawer-list">
+                                <div class="nds-scroll-more nds-divided">
+                                    <ul class="nds-drawer-list nds-scroll-more-content">
                                         <li data-state="active">
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
@@ -145,8 +145,8 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <nav class="nds-drawer" hidden>
-  <div class="nds-drawer-scroll">
-    <ul class="nds-drawer-list">
+  <div class="nds-scroll-more nds-divided">
+    <ul class="nds-drawer-list nds-scroll-more-content">
       <li data-state="active">
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
@@ -245,8 +245,8 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <nav class="nds-drawer nds-divided" data-always-open-on="tablet" hidden>
-                                <div class="nds-drawer-scroll">
-                                    <ul class="nds-drawer-list">
+                                <div class="nds-scroll-more nds-divided">
+                                    <ul class="nds-drawer-list nds-scroll-more-content">
                                         <li>
                                             <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
                                                 <span class="nds-label">Components</span>
@@ -307,8 +307,8 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <nav class="nds-drawer nds-divided" data-always-open-on="tablet" hidden>
-  <div class="nds-drawer-scroll">
-    <ul class="nds-drawer-list">
+  <div class="nds-scroll-more nds-divided">
+    <ul class="nds-drawer-list nds-scroll-more-content">
       <li>
         <button class="nds-btn nds-subtle nds-menu-btn nds-indicator">
           <span class="nds-label">Components</span>
@@ -380,8 +380,8 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;" hidden>
-                                <div class="nds-drawer-scroll">
-                                    <ul class="nds-drawer-list">
+                                <div class="nds-scroll-more nds-divided">
+                                    <ul class="nds-drawer-list nds-scroll-more-content">
                                         <li>
                                             <a href="#" class="nds-btn nds-subtle nds-indicator">
                                                 <span class="nds-featured-icon nds-sm">
@@ -431,11 +431,11 @@ direction: ltr
                                             </a>
                                         </li>
                                     </ul>
+                                    <button class="nds-show-more nds-btn nds-subtle">
+                                        <span class="nds-label">Show more</span>
+                                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                    </button>
                                 </div>
-                                <button class="nds-show-more nds-btn nds-subtle">
-                                    <span class="nds-label">Show more</span>
-                                    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
                             </nav>
                         </div>
                     </div>
@@ -460,8 +460,8 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 <nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;" hidden>
-  <div class="nds-drawer-scroll">
-    <ul class="nds-drawer-list">
+  <div class="nds-scroll-more nds-divided">
+    <ul class="nds-drawer-list nds-scroll-more-content">
       <li>
         <a href="#" class="nds-btn nds-subtle nds-indicator">
           <span class="nds-featured-icon nds-sm">
@@ -511,11 +511,11 @@ direction: ltr
         </a>
       </li>
     </ul>
+    <button class="nds-show-more nds-btn nds-subtle">
+      <span class="nds-label">Show more</span>
+      <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+    </button>
   </div>
-  <button class="nds-show-more nds-btn nds-subtle">
-    <span class="nds-label">Show more</span>
-    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-  </button>
 </nav>
                                         </code>
                                     </div>
@@ -555,8 +555,8 @@ direction: ltr
                                     <h4>Latest Updates</h4>
                                     <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
                                         style="--drawer-max-height:100%; --drawer-truncate:2;">
-                                        <div class="nds-drawer-scroll">
-                                            <ul class="nds-drawer-list">
+                                        <div class="nds-scroll-more nds-divided">
+                                            <ul class="nds-drawer-list nds-scroll-more-content">
                                                 <li>
                                                     <button class="nds-btn nds-subtle nds-indicator">
                                                         <span class="nds-label nds-truncate">New digital identity verification system now available</span>
@@ -590,18 +590,18 @@ direction: ltr
                                                     </button>
                                                 </li>
                                             </ul>
+                                            <button class="nds-show-more nds-btn nds-subtle">
+                                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                            </button>
                                         </div>
-                                        <button class="nds-show-more nds-btn nds-subtle">
-                                            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                        </button>
                                     </nav>
                                 </div>
                                 <div class="nds-flex nds-col" style="--align: start;--gap: 0;">
                                     <h4>Quick Links</h4>
                                     <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
                                         style="--drawer-max-height:100%; --drawer-truncate:2;">
-                                        <div class="nds-drawer-scroll">
-                                            <ul class="nds-drawer-list">
+                                        <div class="nds-scroll-more nds-divided">
+                                            <ul class="nds-drawer-list nds-scroll-more-content">
                                                 <li>
                                                     <a class="nds-btn nds-subtle nds-indicator" href="#">
                                                         <span class="nds-featured-icon nds-sm">
@@ -657,10 +657,10 @@ direction: ltr
                                                     </a>
                                                 </li>
                                             </ul>
+                                            <button class="nds-show-more nds-btn nds-subtle">
+                                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                            </button>
                                         </div>
-                                        <button class="nds-show-more nds-btn nds-subtle">
-                                            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                        </button>
                                     </nav>
                                 </div>
                             </div>
@@ -691,8 +691,8 @@ direction: ltr
     <h4>Latest Updates</h4>
     <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
       style="--drawer-max-height:100%; --drawer-truncate:2;">
-      <div class="nds-drawer-scroll">
-        <ul class="nds-drawer-list">
+      <div class="nds-scroll-more nds-divided">
+        <ul class="nds-drawer-list nds-scroll-more-content">
           <li>
             <button class="nds-btn nds-subtle nds-indicator">
               <span class="nds-label nds-truncate">New digital identity verification system now available</span>
@@ -726,18 +726,18 @@ direction: ltr
             </button>
           </li>
         </ul>
+        <button class="nds-show-more nds-btn nds-subtle">
+          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
       </div>
-      <button class="nds-show-more nds-btn nds-subtle">
-        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-      </button>
     </nav>
   </div>
   <div class="nds-flex nds-col" style="--align: start;--gap: 0;">
     <h4>Quick Links</h4>
     <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
       style="--drawer-max-height:100%; --drawer-truncate:2;">
-      <div class="nds-drawer-scroll">
-        <ul class="nds-drawer-list">
+      <div class="nds-scroll-more nds-divided">
+        <ul class="nds-drawer-list nds-scroll-more-content">
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
               <span class="nds-featured-icon nds-sm">
@@ -793,10 +793,10 @@ direction: ltr
             </a>
           </li>
         </ul>
+        <button class="nds-show-more nds-btn nds-subtle">
+          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
       </div>
-      <button class="nds-show-more nds-btn nds-subtle">
-        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-      </button>
     </nav>
   </div>
 </div>
@@ -930,10 +930,6 @@ NDS.Drawer.initDrawer(drawerEl);      // Single drawer element
 // Pass the parent button element (does nothing in always-open mode)
 const menuBtn = drawer.querySelector('.nds-menu-btn');
 NDS.Drawer.toggle(menuBtn);
-
-// ── Overflow ────────────────────────────────────────
-// Recalculate scroll state and show/hide the more button
-NDS.Drawer.checkOverflow(drawerEl);
 
 // ── Destroy ─────────────────────────────────────────
 // Removes event listeners, resize observers, and stored state
