@@ -993,7 +993,10 @@
 
                 if (isOpen) {
                     updateSelectedOptions();
-                    // Measure with fixed + hidden to avoid extending the page
+                    // Staged measurement (JSD-06 exempt): stage the dropdown off-screen
+                    // via fixed+hidden so it can be measured without extending the page,
+                    // then read offsetHeight/getBoundingClientRect. The read depends on
+                    // the write, so "batch reads before writes" doesn't apply here.
                     dropdown.style.cssText = 'visibility:hidden;position:fixed;top:0;left:0;';
                     dropdown.removeAttribute('hidden');
 
