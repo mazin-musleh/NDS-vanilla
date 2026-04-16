@@ -706,18 +706,14 @@
         _setupMutationObserver() {
             let lastDropboxState = NDS.State.has(this.container, 'dropbox');
 
-            this._observer = new MutationObserver(() => {
+            NDS.onAttrChange('.nds-file-upload', ['data-state'], (hits) => {
+                if (!hits.includes(this.container)) return;
                 const currentDropboxState = NDS.State.has(this.container, 'dropbox');
                 if (currentDropboxState !== lastDropboxState) {
                     this._removeDragAndDrop();
                     this._initDragAndDrop();
                     lastDropboxState = currentDropboxState;
                 }
-            });
-
-            this._observer.observe(this.container, {
-                attributes: true,
-                attributeFilter: ['data-state']
             });
         }
 

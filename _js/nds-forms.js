@@ -1658,7 +1658,8 @@
                 feedbackParent.classList.toggle('show', hasContent);
             }
 
-            // Observe changes
+            // Observe content changes. Core's NDS.onAttrChange is attribute-only;
+            // there is no shared content-mutation pool yet, so use a scoped MutationObserver here.
             var observer = new MutationObserver(function() {
                 var hasContent = msgElement.textContent.trim() !== '';
                 feedbackPlaceholder.classList.toggle('show', hasContent);

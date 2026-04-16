@@ -129,64 +129,60 @@
             return Math.round(value);
         };
 
-        let remaining = 0;
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting || entry.target.hasAttribute('data-animated')) return;
+        const startCounter = (entry) => {
+            if (!entry.isIntersecting || entry.target.hasAttribute('data-animated')) return;
 
-                const el = entry.target;
-                obs.unobserve(el);
-                if (--remaining <= 0) obs.disconnect();
+            const el = entry.target;
+            const off = el._ndsCounterOff;
+            if (off) off();
+            delete el._ndsCounterOff;
 
-                const config = counterConfigs.get(el);
-                if (!config) return;
+            const config = counterConfigs.get(el);
+            if (!config) return;
 
-                const { cfg, start, duration, formatNumber, preFormattedTarget } = config;
-                const animDuration = prefersReducedMotion ? 0 : duration;
+            const { cfg, start, duration, formatNumber, preFormattedTarget } = config;
+            const animDuration = prefersReducedMotion ? 0 : duration;
 
-                if (animDuration === 0) {
+            if (animDuration === 0) {
+                updateText(el, cfg, preFormattedTarget);
+                el.setAttribute('data-animated', 'true');
+                return;
+            }
+
+            const startTime = performance.now();
+            const formattedCache = new Map();
+            let lastCacheKey = null;
+
+            function updateCounter(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / animDuration, 1);
+
+                if (progress < 1) {
+                    const currentValue = start + (cfg.target - start) * progress;
+                    const cacheKey = getCacheKey(currentValue, cfg.target, cfg.decimals);
+
+                    if (cacheKey !== lastCacheKey) {
+                        lastCacheKey = cacheKey;
+                        if (!formattedCache.has(cacheKey)) {
+                            formattedCache.set(cacheKey, formatNumber(cacheKey));
+                        }
+                        updateText(el, cfg, formattedCache.get(cacheKey));
+                    }
+
+                    requestAnimationFrame(updateCounter);
+                } else {
                     updateText(el, cfg, preFormattedTarget);
                     el.setAttribute('data-animated', 'true');
-                    return;
+                    formattedCache.clear();
                 }
+            }
 
-                const startTime = performance.now();
-                const formattedCache = new Map();
-                let lastCacheKey = null;
-
-                function updateCounter(now) {
-                    const elapsed = now - startTime;
-                    const progress = Math.min(elapsed / animDuration, 1);
-
-                    if (progress < 1) {
-                        const currentValue = start + (cfg.target - start) * progress;
-                        const cacheKey = getCacheKey(currentValue, cfg.target, cfg.decimals);
-
-                        if (cacheKey !== lastCacheKey) {
-                            lastCacheKey = cacheKey;
-                            if (!formattedCache.has(cacheKey)) {
-                                formattedCache.set(cacheKey, formatNumber(cacheKey));
-                            }
-                            updateText(el, cfg, formattedCache.get(cacheKey));
-                        }
-
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        updateText(el, cfg, preFormattedTarget);
-                        el.setAttribute('data-animated', 'true');
-                        formattedCache.clear();
-                    }
-                }
-
-                requestAnimationFrame(updateCounter);
-            });
-        }, { threshold: 0.5 });
+            requestAnimationFrame(updateCounter);
+        };
 
         counters.forEach(counter => {
-            if (counterConfigs.has(counter)) {
-                remaining++;
-                observer.observe(counter);
-            }
+            if (!counterConfigs.has(counter)) return;
+            counter._ndsCounterOff = NDS.onIntersect(counter, startCounter, { threshold: 0.5 });
         });
     }
 

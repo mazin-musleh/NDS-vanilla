@@ -1742,24 +1742,13 @@
         // Setup language observer
         setupLanguageObserver: function () {
             var self = this;
-            var languageObserver = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
-                        if (self.state.isInitialized) {
-                            self.renderWeekdays();
-                            self.renderButtonLabels();
-                            self.updateDropdowns();
-                        }
-                    }
-                });
+            NDS.onAttrChange('html', ['lang'], function () {
+                if (self.state.isInitialized) {
+                    self.renderWeekdays();
+                    self.renderButtonLabels();
+                    self.updateDropdowns();
+                }
             });
-
-            languageObserver.observe(document.documentElement, {
-                attributes: true,
-                attributeFilter: ['lang']
-            });
-
-            this.observers.push(languageObserver);
         },
 
         // Reset button states

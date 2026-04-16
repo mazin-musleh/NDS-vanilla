@@ -80,15 +80,6 @@
     // ── Tooltip data store ──────────────────────────────────────────
     const tipData = new WeakMap();
 
-    // ── Shared ResizeObserver ────────────────────────────────────────
-    const resizeCallbacks = new WeakMap();
-    const sharedRO = new ResizeObserver(entries => {
-        for (const entry of entries) {
-            const cb = resizeCallbacks.get(entry.target);
-            if (cb) cb();
-        }
-    });
-
     // ── Default options ─────────────────────────────────────────────
 
     const PIE_BASE = {
@@ -161,8 +152,7 @@
 
         destroy() {
             this._ac.abort();
-            sharedRO.unobserve(this.el);
-            resizeCallbacks.delete(this.el);
+            if (this._offResize) { this._offResize(); this._offResize = null; }
             this.el.innerHTML = '';
             delete this.el.ndsChart;
         }
@@ -208,7 +198,7 @@
         // ── ResizeObserver ────────────────────────────────────────
 
         _setupResize() {
-            resizeCallbacks.set(this.el, () => {
+            this._offResize = NDS.onElementResize(this.el, () => {
                 const w = this.el.clientWidth;
                 if (w && w !== this._lastW) {
                     this._lastW = w;
@@ -221,7 +211,6 @@
                     }
                 }
             });
-            sharedRO.observe(this.el);
         }
 
         // ── Layout helpers ────────────────────────────────────────
