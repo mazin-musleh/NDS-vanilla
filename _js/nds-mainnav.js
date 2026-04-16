@@ -755,16 +755,22 @@
         });
 
         // Scroll handling
-        const onScroll = throttle(() => {
-            if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
-            overflow.checkEnd();
-        }, 32);
+        let scrollTicking = false;
+        const onScroll = () => {
+            if (scrollTicking) return;
+            scrollTicking = true;
+            requestAnimationFrame(() => {
+                scrollTicking = false;
+                if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
+                overflow.checkEnd();
+            });
+        };
         DOM.primary.addEventListener('scroll', onScroll, { passive: true });
 
         if ('onscrollend' in DOM.primary) {
             DOM.primary.addEventListener('scrollend', () => {
                 if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
-                setTimeout(() => overflow.checkEnd(), 10);
+                requestAnimationFrame(() => overflow.checkEnd());
             });
         }
 
