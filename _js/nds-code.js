@@ -516,10 +516,10 @@
     }
 
     function showCopyFeedback(button) {
-        button.dataset.status = 'success';
+        NDS.Status.set(button, 'success');
 
         setTimeout(function() {
-            delete button.dataset.status;
+            NDS.Status.clear(button);
         }, 2000);
     }
 

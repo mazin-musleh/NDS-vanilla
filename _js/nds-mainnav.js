@@ -732,6 +732,11 @@
     function setupInteractions() {
         if (!DOM.primary) return;
 
+        // Scope all listeners attached in this function to a single AbortController
+        // so teardown can detach them atomically if setupInteractions is ever re-run.
+        const _interactionsAC = new AbortController();
+        const _interactionsSignal = _interactionsAC.signal;
+
         // Show More button
         const clickTarget = DOM.collapseContent || DOM.primary;
         clickTarget.addEventListener('click', (e) => {
@@ -763,13 +768,13 @@
                 overflow.checkEnd();
             });
         };
-        DOM.primary.addEventListener('scroll', onScroll, { passive: true });
+        DOM.primary.addEventListener('scroll', onScroll, { passive: true, signal: _interactionsSignal });
 
         if ('onscrollend' in DOM.primary) {
             DOM.primary.addEventListener('scrollend', () => {
                 if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
                 requestAnimationFrame(() => overflow.checkEnd());
-            });
+            }, { signal: _interactionsSignal });
         }
 
         // Wheel scroll conversion (vertical → horizontal)
@@ -800,7 +805,7 @@
                 else { scrolling = false; DOM.primary.style.scrollBehavior = 'smooth'; }
             };
             requestAnimationFrame(step);
-        }, { passive: false });
+        }, { passive: false, signal: _interactionsSignal });
 
         // Drag scrolling
         let drag = { active: false, startX: 0, scrollLeft: 0 };

@@ -11,6 +11,14 @@
     // Should match the CSS default; any mismatch indicates a token-source drift.
     const CONTENT_MAX_WIDTH_FALLBACK = 1280;
 
+    // Slide-count breakpoints (viewport-width thresholds). Kept as numeric literals
+    // because calculateSlidesPerView receives a numeric `width` argument and does
+    // direct numeric comparison, not a matchMedia query. These must mirror the
+    // NDS.breakpoints definitions: SLIDES_MAX_WIDTH ↔ NDS.breakpoints.desktop
+    // (min-width: 960px), SLIDES_MID_WIDTH ↔ NDS.breakpoints.tablet (min-width: 600px).
+    const SLIDES_MAX_WIDTH = 960;
+    const SLIDES_MID_WIDTH = 600;
+
     // ==============================================
     // UTILITIES
     // ==============================================
@@ -84,8 +92,8 @@
             const mid = parseInt(this.container.getAttribute('slides-mid')) || 1;
             const min = parseInt(this.container.getAttribute('slides-min')) || 1;
 
-            if (width >= 960) return max;
-            if (width > 600) return mid;
+            if (width >= SLIDES_MAX_WIDTH) return max;
+            if (width > SLIDES_MID_WIDTH) return mid;
             return min;
         }
 
