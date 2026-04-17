@@ -30,18 +30,20 @@ tr[data-nds-empty-placeholder] > td {
   text-align: center;
   vertical-align: middle;
 
-  .nds-icon {
+  > i {
     display: block;
     margin-inline: auto;
     margin-block-end: var(--spacing-md);
   }
 }
 
-// Shared child styling for both placeholder forms.
+// Shared child styling for both placeholder forms. Target <i> by position so
+// author overrides via data-empty-icon (e.g. "hgi hgi-stroke hgi-NAME") still
+// pick up color + size even when they omit the .nds-icon class.
 :is(.nds-empty-placeholder, tr[data-nds-empty-placeholder] > td) {
-  .nds-icon {
+  > i {
     color: var(--text-primary-paragraph);
-    font-size: var(--nds-display-lg-FS);
+    font-size: var(--nds-display-md-FS);
   }
 
   .nds-empty-message {

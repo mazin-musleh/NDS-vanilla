@@ -8,6 +8,9 @@
  *   <tbody class="nds-empty"></tbody>
  *
  * Override the default message with data-empty-message="..." on the container.
+ * Override the default icon with data-empty-icon="..." — the value is written
+ * straight onto the placeholder's <i> className, so any icon system works
+ * (e.g. "nds-icon nds-hgi-search-01" or "hgi hgi-stroke hgi-notification-off-01").
  */
 (() => {
   'use strict';
@@ -17,7 +20,7 @@
     en: 'No content to show',
   };
   const PLACEHOLDER_ATTR = 'data-nds-empty-placeholder';
-  const observers = new WeakMap();
+  const DEFAULT_ICON_CLASS = 'nds-icon nds-hgi-desert';
 
   function pickLang() {
     return NDS.isArabic ? 'ar' : 'en';
@@ -26,6 +29,11 @@
   function getMessage(container) {
     const custom = container.getAttribute('data-empty-message');
     return custom && custom.trim() ? custom : STRINGS[pickLang()];
+  }
+
+  function getIconClass(container) {
+    const custom = container.getAttribute('data-empty-icon');
+    return custom && custom.trim() ? custom.trim() : DEFAULT_ICON_CLASS;
   }
 
   function isPlaceholder(el) {
@@ -69,9 +77,9 @@
     return (firstRow && firstRow.children.length) || 1;
   }
 
-  function buildInner(message) {
+  function buildInner(message, iconClass) {
     const icon = document.createElement('i');
-    icon.className = 'nds-icon nds-hgi-desert';
+    icon.className = iconClass;
     icon.setAttribute('aria-hidden', 'true');
     const span = document.createElement('span');
     span.className = 'nds-empty-message';
@@ -79,57 +87,58 @@
     return [icon, span];
   }
 
-  function buildListItem(message) {
+  function buildListItem(message, iconClass) {
     const li = document.createElement('li');
     li.className = 'nds-empty-placeholder';
     li.setAttribute(PLACEHOLDER_ATTR, '');
-    buildInner(message).forEach(n => li.appendChild(n));
+    buildInner(message, iconClass).forEach(n => li.appendChild(n));
     return li;
   }
 
-  function buildRow(colspan, message) {
+  function buildRow(colspan, message, iconClass) {
     const tr = document.createElement('tr');
     tr.setAttribute(PLACEHOLDER_ATTR, '');
     const td = document.createElement('td');
     td.colSpan = colspan;
-    buildInner(message).forEach(n => td.appendChild(n));
+    buildInner(message, iconClass).forEach(n => td.appendChild(n));
     tr.appendChild(td);
     return tr;
   }
 
-  function buildDiv(message) {
+  function buildDiv(message, iconClass) {
     const div = document.createElement('div');
     div.className = 'nds-empty-placeholder';
     div.setAttribute(PLACEHOLDER_ATTR, '');
-    buildInner(message).forEach(n => div.appendChild(n));
+    buildInner(message, iconClass).forEach(n => div.appendChild(n));
     return div;
   }
 
   function inject(container) {
     const message = getMessage(container);
+    const iconClass = getIconClass(container);
     const tag = container.tagName;
 
     if (tag === 'UL' || tag === 'OL') {
-      container.appendChild(buildListItem(message));
+      container.appendChild(buildListItem(message, iconClass));
       return;
     }
     if (tag === 'TBODY') {
-      container.appendChild(buildRow(colspanFor(container.closest('table') || container), message));
+      container.appendChild(buildRow(colspanFor(container.closest('table') || container), message, iconClass));
       return;
     }
     if (tag === 'TABLE') {
       const existingTbody = container.querySelector(':scope > tbody:not([' + PLACEHOLDER_ATTR + '])');
       if (existingTbody) {
-        existingTbody.appendChild(buildRow(colspanFor(container), message));
+        existingTbody.appendChild(buildRow(colspanFor(container), message, iconClass));
         return;
       }
       const tbody = document.createElement('tbody');
       tbody.setAttribute(PLACEHOLDER_ATTR, '');
-      tbody.appendChild(buildRow(colspanFor(container), message));
+      tbody.appendChild(buildRow(colspanFor(container), message, iconClass));
       container.appendChild(tbody);
       return;
     }
-    container.appendChild(buildDiv(message));
+    container.appendChild(buildDiv(message, iconClass));
   }
 
   function evaluate(container) {
@@ -151,26 +160,24 @@
     if (span) span.textContent = getMessage(container);
   }
 
-  function attach(container) {
-    if (observers.has(container)) return;
-    const subtree = container.tagName === 'TABLE';
-    // Local per-container MutationObserver — the shared NDS.onDOMAdd/onDOMRemove
-    // pool cannot cover add-AND-remove detection here because it matches via
-    // selectors like '.nds-empty > *' which use the '>' combinator. That
-    // combinator requires a parent context, which removed nodes no longer have
-    // (parentNode is null after detachment). A per-container childList observer
-    // sees removals directly without relying on detached-node selector matching.
-    const obs = new MutationObserver(() => evaluate(container));
-    obs.observe(container, { childList: true, subtree });
-    observers.set(container, obs);
-    evaluate(container);
+  function refreshIcon(container) {
+    const ph = findPlaceholder(container);
+    if (!ph) return;
+    const icon = ph.querySelector('i');
+    if (icon) icon.className = getIconClass(container);
   }
 
   const NDSEmpty = {
     init() {
-      document.querySelectorAll('.nds-empty').forEach(attach);
-      NDS.onDOMAdd('.nds-empty', hits => hits.forEach(attach));
-      NDS.onAttrChange('.nds-empty', ['data-empty-message'], hits => hits.forEach(refreshMessage));
+      document.querySelectorAll('.nds-empty').forEach(evaluate);
+      NDS.onDOMAdd('.nds-empty', hits => hits.forEach(evaluate));
+      NDS.onChildrenChange('.nds-empty', hits => hits.forEach(evaluate));
+      NDS.onChildrenChange('table.nds-empty > tbody', hits => {
+        hits.forEach(tb => evaluate(tb.parentElement));
+      });
+      NDS.onAttrChange('.nds-empty', ['data-empty-message', 'data-empty-icon'], hits => {
+        hits.forEach(c => { refreshMessage(c); refreshIcon(c); });
+      });
     },
     refresh: evaluate,
   };

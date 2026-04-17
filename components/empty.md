@@ -171,23 +171,24 @@ direction: ltr
     </div>
 </section>
 
-<!-- Custom Message -->
+<!-- Customization -->
 <section id="emptyCustom" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Custom Message</h2>
-            <p class="nds-section-description">Use <code class="nds-inline-code lang-html">data-empty-message</code> to replace the default text. Updating the attribute at runtime updates the rendered message in place.</p>
+            <h2 class="nds-section-title">Custom Message &amp; Icon</h2>
+            <p class="nds-section-description">Override the default text with <code class="nds-inline-code lang-html">data-empty-message</code> and the default glyph with <code class="nds-inline-code lang-html">data-empty-icon</code>. Either attribute updates its rendered element in place when the value changes at runtime.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Search With No Results</div>
+                        <div class="demo-label">Notifications Empty</div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-empty"
-                                data-empty-message="No results match your search"
+                                data-empty-message="You have no new notifications"
+                                data-empty-icon="hgi hgi-stroke hgi-notification-off-01"
                                 style="min-height: 280px; border: 1px dashed var(--divider-color); border-radius: var(--radius-md);"></div>
                         </div>
                     </div>
@@ -210,7 +211,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-empty" data-empty-message="No results match your search"></div>
+<div class="nds-empty"
+     data-empty-message="You have no new notifications"
+     data-empty-icon="hgi hgi-stroke hgi-notification-off-01"></div>
                                     </code>
                                 </div>
                             </div>
@@ -407,6 +410,10 @@ li.remove();</code>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-empty-message</code></td>
                             <td>Set on the <code class="nds-inline-code lang-html">.nds-empty</code> container to override the default text. Any non-empty string wins over the built-in Arabic or English default. Changing the value at runtime updates the rendered message in place.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-empty-icon</code></td>
+                            <td>Set on the <code class="nds-inline-code lang-html">.nds-empty</code> container to override the default icon. Value is the full <code class="nds-inline-code lang-html">class</code> string applied to the placeholder's <code class="nds-inline-code lang-html">&lt;i&gt;</code>. Use any icon system: UI icon (<code class="nds-inline-code lang-html">nds-icon nds-hgi-search-01</code>) or content-font icon (<code class="nds-inline-code lang-html">hgi hgi-stroke hgi-notification-off-01</code>). Changing the value at runtime updates the rendered icon in place.</td>
                         </tr>
                     </tbody>
                 </table>

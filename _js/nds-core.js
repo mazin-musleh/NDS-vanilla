@@ -114,8 +114,13 @@
     // Single MutationObserver on body, selector-based dispatch
     // Usage: NDS.onDOMAdd('.selector', nodes => { ... })
     //        NDS.onDOMRemove('.selector', nodes => { ... })
+    //        NDS.onChildrenChange('.selector', parents => { ... })
+    //          Fires when a matched element's direct children change. Matches
+    //          on mutation.target (the parent, still attached), so selectors
+    //          with '>' combinators work and child removals are detected
+    //          cleanly (removed nodes have parentNode === null by callback time).
     const domBus = (() => {
-        const addSubs = [], removeSubs = [];
+        const addSubs = [], removeSubs = [], childrenSubs = [];
         let started = false;
 
         function dispatch(nodes, subs) {
@@ -130,13 +135,22 @@
             }
         }
 
+        function dispatchParents(parents, subs) {
+            for (let s = 0; s < subs.length; s++) {
+                const hits = [];
+                parents.forEach(p => { if (p.matches(subs[s].sel)) hits.push(p); });
+                if (hits.length) subs[s].fn(hits);
+            }
+        }
+
         function start() {
             if (started || !document.body) return;
             started = true;
             new MutationObserver(mutations => {
-                const added = [], removed = [];
+                const added = [], removed = [], parents = new Set();
                 for (let i = 0; i < mutations.length; i++) {
                     const m = mutations[i];
+                    if (m.target && m.target.nodeType === 1) parents.add(m.target);
                     for (let j = 0; j < m.addedNodes.length; j++)
                         if (m.addedNodes[j].nodeType === 1) added.push(m.addedNodes[j]);
                     for (let j = 0; j < m.removedNodes.length; j++)
@@ -144,14 +158,16 @@
                 }
                 if (added.length) dispatch(added, addSubs);
                 if (removed.length) dispatch(removed, removeSubs);
+                if (parents.size && childrenSubs.length) dispatchParents(parents, childrenSubs);
             }).observe(document.body, { childList: true, subtree: true });
         }
 
-        return { addSubs, removeSubs, start };
+        return { addSubs, removeSubs, childrenSubs, start };
     })();
 
-    NDS.onDOMAdd = (sel, fn) => { domBus.addSubs.push({ sel, fn }); domBus.start(); };
-    NDS.onDOMRemove = (sel, fn) => { domBus.removeSubs.push({ sel, fn }); domBus.start(); };
+    NDS.onDOMAdd         = (sel, fn) => { domBus.addSubs.push({ sel, fn });      domBus.start(); };
+    NDS.onDOMRemove      = (sel, fn) => { domBus.removeSubs.push({ sel, fn });   domBus.start(); };
+    NDS.onChildrenChange = (sel, fn) => { domBus.childrenSubs.push({ sel, fn }); domBus.start(); };
 
     // ── Attribute Change Observer ────────────────────────────────────
     // Single MutationObserver on body for attribute changes, selector-based dispatch
