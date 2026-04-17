@@ -80,7 +80,6 @@ secondary_nav:
     icon: "nds-hgi-search-01"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     custom_class: "nds-icon-only nds-search nds-PAB"
-
     template: "mainnav-search.html"
     type: "dropdown"
 
@@ -89,7 +88,6 @@ secondary_nav:
     custom_class: "nds-icon-only nds-PAB"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
     badge: "3"
-
     template: "mainnav-standard.html"
     type: "dropdown"
     content_class: "nds-fit"

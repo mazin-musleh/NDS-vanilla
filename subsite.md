@@ -22,8 +22,8 @@ direction: rtl              # ltr | rtl
 
 # === Site Overrides ===
 # siteTitle: Custom Site Title
-# dga_registration_url: https://...
-# dga_registration_number: "20240520402"
+# dga_registration_url: https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/YOUR-CERT-ID
+# dga_registration_number: "YOUR-DGA-NUMBER"
 
 # === Custom Assets ===
 # custom_css:

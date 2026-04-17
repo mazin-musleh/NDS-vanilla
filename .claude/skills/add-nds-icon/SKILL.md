@@ -1,7 +1,7 @@
 ---
 name: add-nds-icon
 description: Add an HGI icon, a raw SVG, or a Figma icon to the inline UI-icon set so it renders as mask-image via `.nds-icon.nds-hgi-{name}`. Use when components or chrome need a new icon that must paint immediately (no font wait, no FOUT). Triggers on "add HGI icon", "inline this SVG as an icon", and "add icon from Figma". Content/demo pages should keep using `<i class="hgi hgi-stroke hgi-NAME">` — the local HGI font handles those automatically.
-argument-hint: "<icon-name> [--from-figma <figma-url>] [--from-svg]"
+argument-hint: "<icon-name> (--stdin | --file <path>) [--class <selector>]"
 ---
 
 # Add UI Icon
@@ -27,7 +27,7 @@ user-duotone                   → Duotone + Rounded
 
 Each variant becomes its own token/alias — don't try to combine styles via modifier classes.
 
-Source per variant is independent of the name. Any variant (including the default Stroke+Rounded) can come from npm (Source A), Figma (Source C), or raw SVG (Source B). The npm free package happens to ship only Stroke+Rounded, so other variants most often come from Figma — but that's a supply constraint, not a naming rule.
+Source per variant is independent of the name. Any variant can come from Figma (Source B) or raw SVG (Source A).
 
 ## Custom (non-HGI) icons — use a different class
 
@@ -48,27 +48,25 @@ Suggested name prefixes: `brand-*`, `logo-*`, `illus-*`. Pick something that sig
 
 ## Routing: pick the source of the SVG
 
-### Source A — HGI icon name (most common)
+The script accepts SVGs via stdin or file path — there is no auto-download mode. Every icon starts from raw `<svg>…</svg>` markup that you (or the user) provide.
 
-User says e.g. `/add-nds-icon star-circle` or "add the HGI flame icon". The name is kebab-case as shown on hugeicons.com.
+### Source A — raw SVG (pasted, saved, or downloaded from hugeicons.com)
 
-```bash
-node scripts/add-icon.mjs <name>
-```
-
-This pulls the path data from `@hugeicons/core-free-icons` and appends. On failure (missing name), the script exits with `missing icon in @hugeicons/core-free-icons: …`. Suggest the user pick a different name, paste the SVG directly (Source B), or extract from Figma (Source C).
-
-### Source B — raw SVG the user pasted
-
-User pastes `<svg>…</svg>` markup into the chat and asks to turn it into a UI icon. Write the markup to a temp file and pipe via stdin:
+User pastes `<svg>…</svg>` markup into the chat, saves it to a file, or downloads it from hugeicons.com. Two equivalent ways to run the script:
 
 ```bash
-node scripts/add-icon.mjs <name> --stdin < /tmp/<name>.svg
+# via stdin
+node scripts/add-icon.mjs <name> --stdin < path/to/icon.svg
+
+# via a file path
+node scripts/add-icon.mjs <name> --file path/to/icon.svg
 ```
 
-The name is chosen by the user (or suggested by you in kebab-case).
+The name is chosen by the user (kebab-case, matching hugeicons.com when applicable).
 
-### Source C — Figma link or current Figma selection
+For HGI icons specifically, grab the SVG from https://hugeicons.com/icons/<name>-stroke-rounded (click the download/copy SVG button).
+
+### Source B — Figma link or current Figma selection
 
 User provides a Figma URL like `https://www.figma.com/design/…?node-id=3509-301549`, or says "import the selected Figma node" (no nodeId — MCP uses the active selection).
 

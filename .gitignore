@@ -4,7 +4,6 @@ _site/
 .jekyll-metadata
 .bundle/
 vendor/
-Gemfile.lock
 node_modules/
 *.gem
 *.rbc
@@ -41,8 +40,9 @@ Desktop.ini
 # Backup files
 *.backup
 *.bak
-notes.txt
 
-# Claude workspace
+# Claude Code — ship shared skills, ignore local state
+.claude/settings.json
+.claude/settings.local.json
 .claude/workspace/
 .claude/audit-reports/

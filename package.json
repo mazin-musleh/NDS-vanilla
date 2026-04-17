@@ -1,7 +1,7 @@
 {
   "name": "nds-jekyll-site",
   "version": "1.0.0",
-  "description": "National Design System Jekyll Site",
+  "description": "Vanilla HTML/CSS/JS implementation of Saudi Arabia's National Design System. 56 components, RTL/LTR native, zero dependencies.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,12 +14,25 @@
   "keywords": [
     "jekyll",
     "design-system",
-    "arabic"
+    "arabic",
+    "rtl",
+    "saudi-arabia",
+    "vanilla-js",
+    "accessibility",
+    "dga",
+    "nds"
   ],
   "author": "Mazin Musleh",
-  "license": "ISC",
+  "license": "MIT",
+  "homepage": "https://mazin-musleh.github.io/NDS-vanilla/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mazin-musleh/NDS-vanilla.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mazin-musleh/NDS-vanilla/issues"
+  },
   "devDependencies": {
-    "@hugeicons/core-free-icons": "^4.1.1",
     "terser": "^5.43.1"
   }
 }

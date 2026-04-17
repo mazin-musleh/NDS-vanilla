@@ -1,0 +1,57 @@
+name: Feature request
+description: Suggest a new component, enhancement, example page, or documentation improvement.
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement. If you're proposing a new component, please include a link to the DGA Figma specification so we can match the implementation exactly.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of request
+      options:
+        - New component
+        - Enhancement to an existing component
+        - New example page
+        - Documentation improvement
+        - Tooling / build / developer experience
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do? What's missing or painful about the current state?
+      placeholder: I'm building a government services portal and need a file-viewer component that supports PDF preview in RTL.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: If you have an idea for how this should work, describe it here.
+    validations:
+      required: false
+
+  - type: input
+    id: figma
+    attributes:
+      label: DGA Figma reference
+      description: If this is a new component or enhancement that corresponds to a DGA specification, link to the Figma frame.
+      placeholder: https://www.figma.com/@sdga
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you've tried or thought about.
+    validations:
+      required: false

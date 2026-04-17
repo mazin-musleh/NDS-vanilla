@@ -1,6 +1,6 @@
 title: National Design System
 description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
-baseurl: "/_site"
+baseurl: "/NDS-vanilla"
 
 # HGI icon font from CDN: loads the font site-wide when true so any
 # `<i class="hgi hgi-stroke hgi-NAME">` markup in content/demo/doc pages renders.
@@ -46,6 +46,8 @@ sass:
 # Custom settings
 author: Mazin Musleh
 author_profile: https://www.linkedin.com/in/mazin-musleh/
+license: MIT
+repository_url: https://github.com/mazin-musleh/NDS-vanilla
 
 # Language settings (RTL/LTR switching only)
 lang: en
@@ -55,9 +57,9 @@ dir: ltr
 city_latitude: 24.7136
 city_longitude: 46.6753
 
-# DGA Registration
-dga_registration_number: 20240520402
-dga_registration_url: https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990
+# DGA Registration — replace with your real registration when deploying
+dga_registration_number: "00000000000"
+dga_registration_url: "#"
 
 # Digital Stamp Content (multilingual)
 digital_stamp:
@@ -108,13 +110,19 @@ exclude:
   - .jekyll-cache
   - CLAUDE.md
   - .claude
+  - .github
   - package.json
   - package-lock.json
   - scripts
-  - notes.txt
   - nul
   - NUL
   - standard-page.md
   - subsite.md
   - class-rename-map.txt
+  - README.md
+  - CONTRIBUTING.md
+  - CODE_OF_CONDUCT.md
+  - SECURITY.md
+  - CHANGELOG.md
+  - LICENSE
 

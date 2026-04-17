@@ -1,0 +1,85 @@
+name: Release template zip
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to build (e.g. v1.0.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Node dependencies (Terser)
+        run: npm install
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+
+      - name: Resolve tag name
+        id: tag
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "name=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Assemble template package
+        run: |
+          set -eux
+          TAG="${{ steps.tag.outputs.name }}"
+          STAGE="nds-template-${TAG}"
+          mkdir -p "$STAGE"
+          cp -r _site "$STAGE/site"
+          mkdir -p "$STAGE/assets"
+          cp -r assets/css assets/js assets/img assets/icon assets/font "$STAGE/assets/" 2>/dev/null || true
+          cp README.md LICENSE CHANGELOG.md "$STAGE/" 2>/dev/null || true
+          zip -r "nds-template-${TAG}.zip" "$STAGE"
+
+      - name: Extract release notes
+        id: notes
+        run: |
+          TAG="${{ steps.tag.outputs.name }}"
+          VERSION="${TAG#v}"
+          awk -v ver="$VERSION" '
+            /^## \[/ {
+              if (capture) exit
+              if ($0 ~ "\\[" ver "\\]") { capture=1; next }
+            }
+            capture { print }
+          ' CHANGELOG.md > release_notes.md
+          if [ ! -s release_notes.md ]; then
+            echo "Initial release of NDS vanilla template." > release_notes.md
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.name }}
+          name: ${{ steps.tag.outputs.name }}
+          body_path: release_notes.md
+          files: nds-template-${{ steps.tag.outputs.name }}.zip
+          draft: false
+          prerelease: ${{ contains(steps.tag.outputs.name, '-') }}

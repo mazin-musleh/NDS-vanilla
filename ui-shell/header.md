@@ -280,8 +280,8 @@ header
       &lt;div&gt;
         &lt;span&gt;Registered on Digital Government Authority: &lt;/span&gt;
         &lt;a class="nds-digitalStamp-registration nds-primary nds-underline"
-            href="https://raqmi.dga.gov.sa/platforms/DigitalStamp/ShowCertificate/4990"
-            target="_blank"&gt;20240520402&lt;/a&gt;
+            href="#"
+            target="_blank"&gt;00000000000&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;

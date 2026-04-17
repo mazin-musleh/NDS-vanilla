@@ -329,7 +329,7 @@ Proposal 3 of N: DELETE rule
 
 ### Application
 
-For each proposal the user accepts, edit this file (`c:\Projects\NDS-dev\.claude\skills\code-audit\SKILL.md`) — and only this file — to apply the change:
+For each proposal the user accepts, edit this file (`.claude/skills/code-audit/SKILL.md`) — and only this file — to apply the change:
 
 - **ADD**: insert the new rule in the correct rule-group table, keeping IDs sequential.
 - **NARROW / REFINE**: edit the "What to detect" column, not the rule's identity. Do not change its ID.

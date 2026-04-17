@@ -130,15 +130,17 @@ class JSProcessor
         # Now compress the clean bundle with Terser
         final_content = compress_with_terser(bundle_content)
 
-        # Add build date and author comment at the start
-        build_date = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+        # Header comment (no timestamp — keeps git diffs stable on rebuild)
         project_title = @config['title'] || 'National Design System'
         author_name = @config['author'] || 'Unknown'
         author_profile = @config['author_profile'] || ''
+        license = @config['license'] || 'MIT'
+        repo_url = @config['repository_url'] || 'https://github.com/mazin-musleh/NDS-vanilla'
 
-        header_comment = "/*\n"
+        header_comment = "/*!\n"
         header_comment += " * #{project_title}\n"
-        header_comment += " * Generated on: #{build_date}\n"
+        header_comment += " * License: #{license}\n"
+        header_comment += " * Repository: #{repo_url}\n"
         header_comment += " * Author: #{author_name}\n"
         header_comment += " * Profile: #{author_profile}\n" unless author_profile.empty?
         header_comment += " */\n"
@@ -173,15 +175,17 @@ class JSProcessor
       begin
         compressed_content = compress_with_terser(original_content)
 
-        # Add build date and author comment at the start
-        build_date = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+        # Header comment (no timestamp — keeps git diffs stable on rebuild)
         project_title = @config['title'] || 'National Design System'
         author_name = @config['author'] || 'Unknown'
         author_profile = @config['author_profile'] || ''
+        license = @config['license'] || 'MIT'
+        repo_url = @config['repository_url'] || 'https://github.com/mazin-musleh/NDS-vanilla'
 
-        header_comment = "/*\n"
+        header_comment = "/*!\n"
         header_comment += " * #{project_title}\n"
-        header_comment += " * Generated on: #{build_date}\n"
+        header_comment += " * License: #{license}\n"
+        header_comment += " * Repository: #{repo_url}\n"
         header_comment += " * Author: #{author_name}\n"
         header_comment += " * Profile: #{author_profile}\n" unless author_profile.empty?
         header_comment += " */\n"

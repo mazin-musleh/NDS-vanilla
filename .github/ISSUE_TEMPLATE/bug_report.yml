@@ -1,0 +1,79 @@
+name: Bug report
+description: Report a problem with a component, layout, or the documentation site.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. Please fill in every field — most bugs are direction- or browser-specific, and these details let us reproduce faster.
+
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: Which component is affected? (e.g. `Dropmenu`, `Date Picker`, `Main Navigation`). Use `n/a` if the bug is layout- or site-wide.
+      placeholder: e.g. Dropmenu
+    validations:
+      required: true
+
+  - type: dropdown
+    id: direction
+    attributes:
+      label: Text direction
+      description: Does the bug happen in RTL, LTR, or both?
+      options:
+        - RTL (Arabic)
+        - LTR (English)
+        - Both
+        - Not applicable
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser + version + OS
+      description: e.g. Chrome 124 on Windows 11, Safari 17.4 on iOS 17, Firefox 125 on macOS 14
+      placeholder: Chrome 124 on Windows 11
+    validations:
+      required: true
+
+  - type: input
+    id: repro-url
+    attributes:
+      label: Reproduction URL
+      description: A live demo page on https://mazin-musleh.github.io/NDS-vanilla/ that shows the problem, if possible.
+      placeholder: https://mazin-musleh.github.io/NDS-vanilla/components/dropmenu.html
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Exact steps a maintainer can follow to see the bug.
+      placeholder: |
+        1. Open the reproduction URL
+        2. Click the filter dropdown
+        3. Press Escape
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs. actual behavior
+      placeholder: |
+        Expected: the dropdown closes and focus returns to the trigger button.
+        Actual: the dropdown closes but focus moves to the page body.
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Screenshots, console errors, video, or anything else that helps.
+    validations:
+      required: false

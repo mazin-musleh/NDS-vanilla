@@ -434,7 +434,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-external">
+                        <a href="https://github.com/mazin-musleh/NDS-vanilla/releases/latest" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
                             <span class="nds-label">Download Template</span>
                         </a>
                     </div>
@@ -454,7 +454,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-external">
+                        <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
                             <span class="nds-label">View Repository</span>
                         </a>
                     </div>
@@ -474,7 +474,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-primary nds-external">
+                        <a href="https://github.com/mazin-musleh/NDS-vanilla/issues" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
                             <span class="nds-label">Open Issues</span>
                         </a>
                     </div>

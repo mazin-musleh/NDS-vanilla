@@ -4,8 +4,11 @@
 # Only loaded on pages that use showcase components
 ---
 /*!
- * National Design System - Showcase
- * Generated on: {{ site.time | date: '%Y-%m-%d %H:%M:%S' }}
+ * National Design System — Showcase
+ * License: {{ site.license }}
+ * Repository: {{ site.repository_url }}
+ * Author: {{ site.author }}
+ * Profile: {{ site.author_profile }}
  */
 
 @use 'showcase';
