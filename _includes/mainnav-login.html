@@ -110,8 +110,16 @@
         emailInput.addEventListener('input', function () { NDS.Forms.clearStatus(emailField); });
         passInput.addEventListener('input', function () { NDS.Forms.clearStatus(passField); });
 
-        // Check cookie on load
-        if (document.cookie.indexOf('nds_auth=true') !== -1) setAuth(true);
+        // Cookie check must wait until the whole nav (incl. .nds-auth items
+        // that come after this template in source order) is in the DOM.
+        function checkAuthCookie() {
+            if (document.cookie.indexOf('nds_auth=true') !== -1) setAuth(true);
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', checkAuthCookie);
+        } else {
+            checkAuthCookie();
+        }
 
         // Login
         var loginBtn = document.getElementById('loginSubmitBtn');
