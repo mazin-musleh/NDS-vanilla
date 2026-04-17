@@ -79,6 +79,13 @@
   tags: ["JS", "CSS"]
   url: "/components/dropmenu.html"
 
+- title: "Empty"
+  description: "Parent-adaptive placeholder for containers with no content"
+  icon: '<i class="hgi hgi-stroke hgi-desert"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/empty.html"
+
 - title: "Featured Icons"
   description: "Decorative icon containers with shape and color options"
   icon: '<i class="hgi hgi-stroke hgi-star"></i>'

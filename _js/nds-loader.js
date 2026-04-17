@@ -192,6 +192,11 @@
             selector: '.nds-chart',
             init: () => NDS.Chart?.init?.(),
         },
+        {
+            name: 'empty',
+            selector: '.nds-empty',
+            init: () => NDS.Empty?.init?.(),
+        },
     ].map((component, index) => ({
         ...component,
         priority: index + 1  // Auto-assign priority based on array order

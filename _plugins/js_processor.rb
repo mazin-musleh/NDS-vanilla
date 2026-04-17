@@ -38,7 +38,7 @@ class JSProcessor
     @source_dir = '_js'
     @output_dir = 'assets/js'
     @bundles = {
-      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js','nds-date-picker.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-share.js', 'nds-cookies.js', 'nds-numbers.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-tables.js', 'nds-stepper.js', 'nds-progress.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-upload.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-pagination.js', 'nds-ipv.js', 'nds-backdrop.js', 'nds-modal.js', 'nds-alert.js', 'nds-feedback.js', 'nds-filter.js', 'nds-user-feedback.js', 'nds-sideinfo.js', 'nds-autocomplete.js', 'nds-chart.js', 'nds-loader.js']
+      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js','nds-date-picker.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-share.js', 'nds-cookies.js', 'nds-numbers.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-tables.js', 'nds-stepper.js', 'nds-progress.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-upload.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-pagination.js', 'nds-ipv.js', 'nds-backdrop.js', 'nds-modal.js', 'nds-alert.js', 'nds-feedback.js', 'nds-filter.js', 'nds-user-feedback.js', 'nds-sideinfo.js', 'nds-autocomplete.js', 'nds-chart.js', 'nds-empty.js', 'nds-loader.js']
     }
 
     # Load config from _config.yml

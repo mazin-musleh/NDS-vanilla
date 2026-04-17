@@ -182,3 +182,54 @@ direction: ltr
         </div>
     </div>
 </section>
+
+<section id="empty-demo" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Empty state (nds-empty)</h2>
+            <p class="nds-section-description">Drop <code>nds-empty</code> on any container; JS fills it when empty.</p>
+        </div>
+        <div class="nds-section-body" style="display:grid; gap:24px; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));">
+
+            <div>
+                <h3>Generic div</h3>
+                <div class="nds-empty" style="min-height:200px; border:1px dashed var(--divider-color); border-radius:12px;"></div>
+            </div>
+
+            <div>
+                <h3>Unordered list</h3>
+                <ul class="nds-empty" style="min-height:200px; border:1px dashed var(--divider-color); border-radius:12px; margin:0; padding:0;"></ul>
+            </div>
+
+            <div>
+                <h3>Table (no tbody, colspan 3)</h3>
+                <table class="nds-empty nds-table" style="width:100%; border:1px dashed var(--divider-color); border-radius:12px;">
+                    <thead><tr><th>A</th><th>B</th><th>C</th></tr></thead>
+                </table>
+            </div>
+
+            <div>
+                <h3>Empty tbody (colspan 2)</h3>
+                <table class="nds-table" style="width:100%; border:1px dashed var(--divider-color); border-radius:12px;">
+                    <thead><tr><th>X</th><th>Y</th></tr></thead>
+                    <tbody class="nds-empty"></tbody>
+                </table>
+            </div>
+
+            <div>
+                <h3>Custom message (Arabic)</h3>
+                <div class="nds-empty" data-empty-message="لم يتم العثور على نتائج" style="min-height:200px; border:1px dashed var(--divider-color); border-radius:12px;"></div>
+            </div>
+
+            <div>
+                <h3>Dynamic — toggle content</h3>
+                <ul id="nds-empty-demo-toggle" class="nds-empty" style="min-height:200px; border:1px dashed var(--divider-color); border-radius:12px; margin:0; padding:0;"></ul>
+                <div style="display:flex; gap:8px; margin-top:8px;">
+                    <button class="nds-btn nds-subtle nds-sm" type="button" onclick="document.getElementById('nds-empty-demo-toggle').appendChild(Object.assign(document.createElement('li'),{textContent:'Added ' + Date.now()}))">Add item</button>
+                    <button class="nds-btn nds-subtle nds-sm" type="button" onclick="{const u=document.getElementById('nds-empty-demo-toggle'); const real=[...u.children].filter(c=>!c.hasAttribute('data-nds-empty-placeholder')); if(real[0]) real[0].remove();}">Remove item</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
