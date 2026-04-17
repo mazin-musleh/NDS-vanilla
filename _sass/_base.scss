@@ -34,7 +34,7 @@
 // Uses logical props so it adapts automatically to writing-mode.
 .nds-divider {
     --_divider: var(--divider, var(--spacing-xs));
-    --_divider-size: var(--divider-size, 2px);
+    --_divider-size: var(--divider-size, 1px);
 
     margin-block: var(--_divider);
     flex-shrink: 0;

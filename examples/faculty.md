@@ -24,7 +24,7 @@ sidemenu_mode: top
         </div>
 
         <div class="nds-section-body">
-            <dl class="nds-definition-list nds-tableView nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
+            <dl class="nds-definition-list nds-tableView-lg nds-divided" style="--max-col:4;--mid-col:2;--min-col:2;">
                 <div class="nds-definition-item">
                     <dt>
                         <i class="hgi hgi-stroke hgi-school"></i>

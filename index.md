@@ -218,7 +218,7 @@ direction: ltr
                         <div class="nds-dropmenu-scroll">
                             <div data-filter="category" data-filter-legend="Category"
                                 data-filter-type="checkbox" data-no-auto-close></div>
-                            <hr class="nds-dropmenu-divider">
+                            <hr class="nds-divider">
                             <div data-filter="tech" data-filter-legend="Technology"
                                 data-filter-type="checkbox" data-no-auto-close></div>
                         </div>
