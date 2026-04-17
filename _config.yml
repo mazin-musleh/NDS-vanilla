@@ -8,7 +8,7 @@ baseurl: "/NDS-vanilla"
 use_hgi_font: true
 
 # Set to true to show the dark/light theme toggle button in the topbar.
-theme_switcher: false
+theme_switcher: true
 
 # Jekyll server settings
 port: 4002

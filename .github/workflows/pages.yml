@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   build:
+    # Pages won't provision on private repos (free tier). Skip until public.
+    if: github.event.repository.visibility == 'public'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -52,6 +54,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event.repository.visibility == 'public'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -6,7 +6,7 @@
 [![Issues](https://img.shields.io/github/issues/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/issues)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
 
-An open-source vanilla implementation of Saudi Arabia's National Design System — 56 components in plain HTML, CSS, and JavaScript with zero runtime dependencies.
+An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero external dependencies.
 
 ### → [**Live demo & full documentation**](https://mazin-musleh.github.io/NDS-vanilla/)
 
@@ -19,14 +19,26 @@ Quick links:
 
 ---
 
+## Who is this for?
+
+> **Important:** The default visual identity — design tokens, colors, logos, and the digital-stamp component — is **exclusive to Saudi Arabia government entities**. Any non-government use must replace these with the adopting organization's own identity before deploying. See [Attribution & disclaimer](#attribution--disclaimer) below.
+
+- **Government and public-sector teams** building digital services that need to follow the official DGA design specifications.
+- **Agencies and contractors** delivering Saudi government or semi-government sites on deadlines, without framework overhead.
+- **Arabic-first and bilingual teams** — RTL/LTR are native from day one; no separate stylesheet, no overrides.
+- **Teams avoiding framework lock-in** — plain HTML, CSS, and JavaScript that drops into any stack (PHP, .NET, Java, Node, Rails, or static hosting).
+- **Startups and indie builders** wanting a clean, production-grade starting point. Replace the DGA brand tokens and logos with your own to use on any non-government project.
+- **Students and fresh graduates** learning core HTML, CSS, and vanilla JavaScript from a readable production-grade codebase.
+- **Teachers and trainers** using real components, page templates, and patterns as study cases for web-development courses, bootcamps, or workshops.
+
 ## How should I use this?
 
 | Your goal | What to do |
 |---|---|
 | **Try the demo** | Visit the [live site](https://mazin-musleh.github.io/NDS-vanilla/) — no setup needed. |
-| **Run it locally** | `git clone` and follow the Quick start below. |
-| **Adopt as a template** | **Fork** (linked to upstream, can pull updates) or **download the [release zip](https://github.com/mazin-musleh/NDS-vanilla/releases/latest)** (no Git needed). |
-| **Report a bug** | [Open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose). |
+| **Build a site using NDS** | Download the [release zip](https://github.com/mazin-musleh/NDS-vanilla/releases/latest) — compiled HTML, CSS, and JavaScript ready to drop into your project. No Git or build step. |
+| **Extend or customize NDS itself** | Fork the repo so your copy stays linked to upstream, then clone your fork and follow the Quick start below. Pull future updates with `git pull upstream main`. |
+| **Report a bug or request a feature** | [Open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose). |
 
 ## Quick start
 
@@ -106,7 +118,14 @@ Report vulnerabilities privately via the [Security tab](https://github.com/mazin
 
 Based on the public Saudi DGA design specifications published on Figma. This is an independent community implementation. **Not affiliated with, endorsed by, or maintained by the Digital Government Authority (DGA) or the Government of Saudi Arabia.**
 
-Government logos (DGA, Saudi Vision 2030, palm-swords emblem) included in `assets/img/` for template demonstration are trademarks of their respective owners. Replace them with your organization's marks before deploying under your own brand.
+**The default visual identity is reserved for Saudi Arabia government entities.** If you are not a Saudi government organization, you must replace the following before deploying:
+
+- **Logos and marks** — `assets/img/dga-logo.svg`, `dga-logo-icon.svg`, `2030-vision.svg`, and `palm_swords.svg` are official government trademarks.
+- **Design tokens** — the default color, typography, and spacing tokens in `_sass/` are the DGA-defined identity; re-theme them to your own brand via the 3-tier token system.
+- **Digital-stamp component** — the DGA digital-stamp in the top bar is a Saudi government compliance feature; remove it or replace with your own equivalent.
+- **Copy** — `.gov.sa` email domains, "Digital Government Authority" labels, and Saudi-specific demo content throughout `_data/` and demo pages.
+
+Keeping these defaults on a non-government site misrepresents your project as an official Saudi government service, which is not permitted.
 
 ## Author
 

@@ -300,12 +300,15 @@
 // CARD FORM SECTION
 // ==============================================
 
+// Form wrapper inside a card — matches card's own flex-column layout so
+// wrapping .nds-card-content / .nds-card-actions in a <form class="nds-form">
+// doesn't break the card's vertical rhythm.
+.nds-card > .nds-form:not([hidden]),
 .nds-card-form:not([hidden]) {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: var(--_card-gap);
-
 }
 
 

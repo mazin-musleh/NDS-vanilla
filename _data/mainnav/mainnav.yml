@@ -103,8 +103,8 @@ secondary_nav:
     icon: "nds-icon-avatar"
     custom_class: "nds-icon-only nds-guest"
     template: "mainnav-login.html"
-    type: "dropdown"
-    content_class: "nds-fit"
+    type: "modal"
+    content_class: "nds-sm"
 
   - label: "Ahmed"
     icon: "nds-icon-avatar"
@@ -117,11 +117,6 @@ secondary_nav:
     type: "dropdown"
     content_class: "nds-fit"
     attr: "hidden"
-
-  - label: "Toggle theme"
-    icon: "nds-hgi-moon-02"
-    custom_class: "nds-icon-only"
-    id: "ndsThemeToggle"
 
   - label: "English"
     icon: "nds-hgi-translation"
