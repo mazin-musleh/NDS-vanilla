@@ -39,10 +39,14 @@
                 ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
                 : [];
 
+            // Snapshot insertion order for sort-reset ("Default" / "Relevance")
+            this._originalOrder = [...this.items];
+
             // Filter criteria storage - dynamic structure
             this.criteria = {
                 search: '',
-                filters: {}  // { filterName: [selectedValues] }
+                filters: {},  // { filterName: [selectedValues] }
+                sort: { key: null, dir: 'asc' }
             };
 
             // Filter inputs storage - dynamic structure
@@ -54,10 +58,16 @@
                 dropmenu: null
             };
 
-            // Form submission mode detection
-            this.isFormMode = filterContainer.tagName === 'FORM' &&
-                              filterContainer.hasAttribute('data-filter-submit');
-            this.isAjaxMode = this.isFormMode && filterContainer.hasAttribute('data-ajax');
+            // Form submission mode detection.
+            // .nds-filter is always a pure anchor; form mode is driven by a separate
+            // <form data-filter-target="X" data-filter-submit> element linked via the
+            // same target id. Add data-ajax on that form for AJAX submission.
+            this.submissionForm = this.targetId
+                ? document.querySelector(`form[data-filter-target="${this.targetId}"][data-filter-submit]`)
+                : null;
+
+            this.isFormMode = !!this.submissionForm;
+            this.isAjaxMode = this.isFormMode && this.submissionForm.hasAttribute('data-ajax');
 
             // Hidden inputs container for form mode
             this.hiddenInputsContainer = null;
@@ -76,6 +86,16 @@
                 ? document.querySelector(`.nds-auto-fill[data-filter-target="${this.targetId}"]`)
                 : null;
 
+            // Resolve search-query slot via data-filter-target linking (same pattern as
+            // .nds-filter-applied / .nds-search-box). When present, the search keyword is
+            // routed into this slot instead of the applied-chips row.
+            this.searchQuerySlot = this.targetId
+                ? document.querySelector(
+                    `[data-filter-query][data-filter-target="${this.targetId}"],`
+                    + ` [data-filter-target="${this.targetId}"] [data-filter-query]`
+                )
+                : null;
+
             this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
             this._ac = new AbortController();
@@ -90,10 +110,45 @@
             return el.getAttribute('data-filter-value') || el.textContent.trim();
         }
 
+        /**
+         * Find all elements matching `selector` that belong to this filter instance.
+         * Matches either descendants of the .nds-filter container OR any elements
+         * across the document linked via data-filter-target. Elements inside the
+         * target container (e.g. <span data-filter> markers on cards) are excluded.
+         *
+         * Multi-selectors ("a, b, c") are handled correctly — the target scope is
+         * applied to each comma-separated branch, not just the last one.
+         */
+        queryAll(selector) {
+            const inside = Array.from(this.filterContainer.querySelectorAll(selector));
+            let matches = inside;
+
+            if (this.targetId) {
+                const parts = selector.split(',').map(s => s.trim()).filter(Boolean);
+                const scoped = parts.flatMap(p => [
+                    `${p}[data-filter-target="${this.targetId}"]`,
+                    `[data-filter-target="${this.targetId}"] ${p}`
+                ]).join(', ');
+                const external = Array.from(document.querySelectorAll(scoped));
+                matches = Array.from(new Set([...inside, ...external]));
+            }
+
+            if (this.targetContainer) {
+                matches = matches.filter(el => !this.targetContainer.contains(el));
+            }
+
+            return matches;
+        }
+
+        query(selector) {
+            return this.queryAll(selector)[0] || null;
+        }
+
         init() {
             this.setupFilterElements();
             this.setupResetButton();
             this.setupActionButtons();
+            this.setupSortButtons();
             this.setupChipStyle();
             this.applyUrlParams();
 
@@ -101,6 +156,9 @@
             if (this.isFormMode) {
                 this.setupFormSubmission();
             }
+
+            // Populate filter-count slots on first load even without URL params
+            this.updateFilterCount();
         }
 
         setupChipStyle() {
@@ -117,14 +175,14 @@
          * Setup form submission handlers
          */
         setupFormSubmission() {
-            // Create hidden inputs container
+            // Create hidden inputs container inside the form that will be submitted
             this.hiddenInputsContainer = document.createElement('div');
             this.hiddenInputsContainer.className = 'nds-filter-hidden-inputs';
             this.hiddenInputsContainer.style.display = 'none';
-            this.filterContainer.appendChild(this.hiddenInputsContainer);
+            this.submissionForm.appendChild(this.hiddenInputsContainer);
 
             // Handle form submission
-            this.filterContainer.addEventListener('submit', (e) => {
+            this.submissionForm.addEventListener('submit', (e) => {
                 if (this.isAjaxMode) {
                     e.preventDefault();
                     this.handleAjaxSubmit();
@@ -138,8 +196,8 @@
          * Handle standard form submission
          */
         handleFormSubmit(e) {
-            // Validate form via NDS.Forms
-            const result = NDS.Forms.validateForm(this.filterContainer, {
+            // Validate the submission form (may differ from the anchor)
+            const result = NDS.Forms.validateForm(this.submissionForm, {
                 showMessages: true,
                 focusFirst: true
             });
@@ -156,7 +214,7 @@
             const submitEvent = new CustomEvent('nds:filterFormSubmit', {
                 detail: {
                     criteria: this.criteria,
-                    form: this.filterContainer
+                    form: this.submissionForm
                 },
                 cancelable: true
             });
@@ -197,7 +255,7 @@
             const ajaxEvent = new CustomEvent('nds:filterFormAjax', {
                 detail: {
                     criteria: this.criteria,
-                    form: this.filterContainer,
+                    form: this.submissionForm,
                     hiddenInputsContainer: this.hiddenInputsContainer
                 },
                 cancelable: true
@@ -218,9 +276,9 @@
                 this.targetContainer.classList.add('nds-loading');
             }
 
-            // Build request URL and options
-            const method = this.filterContainer.method.toUpperCase() || 'GET';
-            let action = this.filterContainer.action || window.location.href;
+            // Build request URL and options (read from the submission form)
+            const method = this.submissionForm.method.toUpperCase() || 'GET';
+            let action = this.submissionForm.action || window.location.href;
 
             // Handle # or empty action - use current page URL without hash
             if (!action || action === '#' || action.endsWith('#')) {
@@ -233,8 +291,9 @@
                 headers: {}
             };
 
-            // Collect form data
-            const formData = new FormData(this.filterContainer);
+            // Collect form data from the submission form (respects HTML `form="id"`
+            // attribute on scattered inputs associated with this form).
+            const formData = new FormData(this.submissionForm);
 
             if (method === 'GET') {
                 // Build query string from form data
@@ -334,6 +393,13 @@
                         detail: eventDetail
                     }));
 
+                    // JSON developers render inside the complete-event handler and may set
+                    // data-total-count on the target container there — re-run the count so
+                    // the slots reflect their updates.
+                    if (isJson) {
+                        this.updateFilterCount();
+                    }
+
                     // Clear success state after 3 seconds
                     setTimeout(() => {
                         NDS.Status.clear(this.filterContainer);
@@ -421,15 +487,11 @@
             const params = new URLSearchParams(window.location.search);
             let hasParams = false;
 
-            // Get the custom search param name
+            // Each filter reads its own input's `name` as the URL key. Multi-filter
+            // pages are responsible for using distinct input names; there is no
+            // automatic URL namespacing.
             const searchParamName = this.getSearchInputName();
-
-            // Apply search param (try custom name first, then fallback to 'search')
-            let searchParam = params.get(searchParamName);
-            if (!searchParam && searchParamName !== 'search') {
-                // Fallback to 'search' for backward compatibility
-                searchParam = params.get('search');
-            }
+            const searchParam = params.get(searchParamName);
 
             if (searchParam) {
                 const sanitized = this.sanitizeInput(searchParam);
@@ -452,11 +514,19 @@
                 hasParams = true;
             }
 
-            // Apply dynamic filter params
-            for (const [key, value] of params.entries()) {
-                if (key === searchParamName || key === 'search') continue;
+            // Apply sort params
+            const sortKey = params.get('sort');
+            if (sortKey) {
+                const sortDir = params.get('dir') || 'asc';
+                // Defer to the end so the DOM reorder happens after filter inputs are set
+                this._pendingSort = { key: sortKey, dir: sortDir };
+                hasParams = true;
+            }
 
-                // Check if we have inputs for this filter
+            // Apply dynamic filter params — plain input names as URL keys
+            for (const [key, value] of params.entries()) {
+                if (key === searchParamName || key === 'sort' || key === 'dir') continue;
+
                 if (this.filterInputs[key]) {
                     const values = value.split(',').map(v => this.sanitizeInput(v).trim());
                     const filterData = this.filterInputs[key];
@@ -482,6 +552,13 @@
                     this.updateAppliedChips();
                 } else {
                     this.applyFilters();
+                }
+
+                // Apply sort last so DOM reorder happens after filter visibility is settled
+                if (this._pendingSort) {
+                    const { key, dir } = this._pendingSort;
+                    this._pendingSort = null;
+                    this.applySort(key, dir);
                 }
             }
         }
@@ -526,8 +603,9 @@
             const params = new URLSearchParams(window.location.search);
             const searchParamName = this.getSearchInputName();
 
-            // Managed param keys: search + all known filter names
-            const managedKeys = new Set([searchParamName, 'search']);
+            // Managed param keys: this filter's own search + filter names + sort/dir.
+            // Other filters' params (distinct names) are left untouched.
+            const managedKeys = new Set([searchParamName, 'sort', 'dir']);
             for (const key of Object.keys(this.filterInputs)) {
                 managedKeys.add(key);
             }
@@ -549,6 +627,14 @@
                 }
             }
 
+            // Add sort params
+            if (this.criteria.sort && this.criteria.sort.key) {
+                params.set('sort', this.criteria.sort.key);
+                if (this.criteria.sort.dir && this.criteria.sort.dir !== 'asc') {
+                    params.set('dir', this.criteria.sort.dir);
+                }
+            }
+
             const newUrl = params.toString()
                 ? `${window.location.pathname}?${params.toString()}`
                 : window.location.pathname;
@@ -557,7 +643,7 @@
         }
 
         setupActionButtons() {
-            const actionButtons = this.filterContainer.querySelectorAll('[data-filter-action]');
+            const actionButtons = this.queryAll('[data-filter-action]');
             const { signal } = this._ac;
 
             actionButtons.forEach(button => {
@@ -569,9 +655,14 @@
                         const labelEl = button.querySelector('.nds-label');
                         this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
 
-                        // Change button type to submit if in form mode
+                        // In form mode, turn the apply button into a submit for the
+                        // submission form — works whether the button is inside the form
+                        // or externally associated via HTML's `form="id"` attribute.
                         if (this.isFormMode && button.type !== 'submit') {
                             button.type = 'submit';
+                        }
+                        if (this.isFormMode && this.submissionForm.id && button.form !== this.submissionForm) {
+                            button.setAttribute('form', this.submissionForm.id);
                         }
 
                         button.addEventListener('click', (e) => {
@@ -587,10 +678,13 @@
                                 }
                             }
 
-                            // In form mode, let form submission handle it
+                            // In form mode, update hidden inputs then trigger submission.
+                            // We submit programmatically so it works even if the button
+                            // isn't natively form-associated.
                             if (this.isFormMode) {
-                                // Update hidden inputs before form submission
+                                e.preventDefault();
                                 this.updateHiddenInputs();
+                                this.submitForm();
                                 return;
                             }
 
@@ -614,6 +708,107 @@
                         break;
                 }
             });
+        }
+
+        // ==============================================
+        // SORT
+        // ==============================================
+
+        setupSortButtons() {
+            const buttons = this.queryAll('[data-sort]');
+            const { signal } = this._ac;
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const key = button.getAttribute('data-sort') || '';
+                    const dir = button.getAttribute('data-sort-dir') || 'asc';
+                    // Empty key resets to original DOM order (e.g. "Default" / "Relevance")
+                    this.applySort(key, dir);
+                }, { signal });
+            });
+        }
+
+        applySort(key, dir = 'asc') {
+            const container = this.targetContainer;
+            if (!container || !this.items.length) return;
+
+            this.criteria.sort = { key: key || null, dir };
+
+            let ordered;
+            if (key) {
+                // Detect value type from the data-sort-<key> attribute on items
+                const attr = `data-sort-${key}`;
+                const sampleValues = this.items.map(i => i.getAttribute(attr)).filter(v => v !== null && v !== '');
+                const isNumeric = sampleValues.length > 0 && sampleValues.every(v => !isNaN(parseFloat(v)) && isFinite(v));
+                const isDate = !isNumeric && sampleValues.length > 0 && sampleValues.every(v => !isNaN(Date.parse(v)));
+
+                ordered = [...this.items].sort((a, b) => {
+                    const av = a.getAttribute(attr) || '';
+                    const bv = b.getAttribute(attr) || '';
+                    let cmp;
+                    if (isNumeric) cmp = parseFloat(av) - parseFloat(bv);
+                    else if (isDate) cmp = Date.parse(av) - Date.parse(bv);
+                    else cmp = av.localeCompare(bv);
+                    return dir === 'desc' ? -cmp : cmp;
+                });
+            } else {
+                // Restore original insertion order
+                ordered = this._originalOrder ? [...this._originalOrder] : [...this.items];
+            }
+
+            // Re-append in chosen order (preserves listeners and element state)
+            ordered.forEach(item => container.appendChild(item));
+            this.items = ordered;
+
+            this.updateSortButtonState();
+            this.updateUrlParams();
+
+            // Synchronous pagination refresh — bypasses the 50ms setTimeout in
+            // updatePagination() that would otherwise leave pagination-hidden
+            // items sitting at the wrong DOM positions (visible as gaps) until
+            // the deferred refresh caught up.
+            if (NDS.Pagination && NDS.Pagination.refresh) {
+                const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
+                                     this.targetContainer.parentElement?.closest('.nds-paged-content');
+                NDS.Pagination.refresh(pagedContent || this.targetContainer);
+            }
+
+            this.dispatchFilterEvent();
+        }
+
+        updateSortButtonState() {
+            const activeKey = this.criteria.sort.key;
+            const activeDir = this.criteria.sort.dir;
+
+            const sortButtons = this.queryAll('[data-sort]');
+            sortButtons.forEach(btn => {
+                const key = btn.getAttribute('data-sort') || '';
+                const dir = btn.getAttribute('data-sort-dir') || 'asc';
+                const active = key === (activeKey || '') && (!activeKey || dir === activeDir);
+                btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+                if (active) NDS.State.set(btn, 'selected');
+                else NDS.State.remove(btn, 'selected');
+            });
+
+            // Reflect the active sort on the dropmenu trigger icon. Instead of
+            // hardcoding icon classes, mirror whatever icon the active sort button
+            // uses — so authors can bring any icon set (NDS inline, HGI font, or
+            // custom classes) without JS changes.
+            if (sortButtons.length === 0) return;
+            const dropmenu = sortButtons[0].closest('.nds-dropmenu');
+            const triggerIcon = dropmenu?.querySelector('.nds-dropmenu-trigger > i, .nds-dropmenu-trigger .nds-icon, .nds-dropmenu-trigger .hgi');
+            if (!triggerIcon) return;
+
+            // Find the currently-active sort button (or fall back to the "reset"
+            // button with empty data-sort, so the trigger shows its neutral icon)
+            const activeBtn = sortButtons.find(btn => {
+                const key = btn.getAttribute('data-sort') || '';
+                const dir = btn.getAttribute('data-sort-dir') || 'asc';
+                return key === (activeKey || '') && (!activeKey || dir === activeDir);
+            }) || sortButtons.find(btn => !btn.getAttribute('data-sort'));
+
+            const sourceIcon = activeBtn?.querySelector('i.nds-icon, i.hgi, i');
+            if (sourceIcon) triggerIcon.className = sourceIcon.className;
         }
 
         getActiveFilterCount() {
@@ -649,10 +844,13 @@
         }
 
         updateFilterButtonLabel() {
-            const filterBtn = this.filterContainer.querySelector(
-                '.nds-filter-btn, [data-filter-btn], .filter-btn'
-            );
+            // Cache the button ref on first call; this method fires on every
+            // filter change, so we avoid re-walking the DOM each time.
+            if (this.filterButtonEl === undefined) {
+                this.filterButtonEl = this.query('.nds-filter-btn, [data-filter-btn], .filter-btn');
+            }
 
+            const filterBtn = this.filterButtonEl;
             if (!filterBtn) return;
 
             if (!this.filterButtonBaseLabel) {
@@ -677,6 +875,10 @@
         }
 
         updateAppliedChips() {
+            // Refresh filter-count slots (query + count) regardless of whether
+            // an applied-chips container exists on this page.
+            this.updateFilterCount();
+
             const appliedContainer = this.appliedContainer;
             if (!appliedContainer) return;
 
@@ -691,7 +893,10 @@
             // Clear chips container
             chipsContainer.innerHTML = '';
 
-            const hasFilters = this.criteria.search ||
+            // When a [data-filter-query] slot is present, the search keyword is routed
+            // into that slot (via updateFilterCount) instead of rendering as a chip here.
+            const searchInChips = !!(this.criteria.search && !this.searchQuerySlot);
+            const hasFilters = searchInChips ||
                 Object.values(this.criteria.filters).some(arr => arr.length > 0);
 
             if (!hasFilters) {
@@ -709,8 +914,8 @@
                 autoFillContainer.setAttribute('hidden', '');
             }
 
-            // Add search chip
-            if (this.criteria.search) {
+            // Add search chip (skipped when routed to [data-filter-query])
+            if (searchInChips) {
                 const searchChip = this.createFilterChip('search', this.criteria.search, () => {
                     this.removeSearchFilter();
                 });
@@ -728,6 +933,43 @@
                     chipsContainer.appendChild(chip);
                 });
             }
+        }
+
+        updateFilterCount() {
+            // Query slot — quoted keyword; empty when no search
+            if (this.searchQuerySlot) {
+                const q = this.criteria.search || '';
+                this.searchQuerySlot.textContent = q ? '\u201C' + q + '\u201D' : '';
+            }
+
+            // Count slot resolution via data-filter-target linking
+            const countSlot = this.targetId
+                ? document.querySelector(
+                    `[data-filter-count][data-filter-target="${this.targetId}"],`
+                    + ` [data-filter-target="${this.targetId}"] [data-filter-count]`
+                )
+                : null;
+            if (!countSlot || !this.targetContainer) return;
+
+            // Count source priority:
+            //   1. Server-provided: data-total-count on the target container
+            //      (for SSR pages or JSON-AJAX developers)
+            //   2. DOM enumeration: visible (non-filtered-out) items
+            const totalAttr = this.targetContainer.getAttribute('data-total-count');
+            if (totalAttr !== null && totalAttr !== '') {
+                countSlot.textContent = parseInt(totalAttr, 10) || 0;
+                return;
+            }
+
+            // Count from the cached item list (refreshed on init and after AJAX
+            // injection) so transient UI like the no-results alert — which also
+            // carries .nds-card — isn't counted as a result. `item.hidden` is
+            // pagination-driven for non-current-page items; those are still matches.
+            let visible = 0;
+            for (const item of this.items) {
+                if (!NDS.State.has(item, 'filtered-out')) visible++;
+            }
+            countSlot.textContent = visible;
         }
 
         createFilterChip(type, value, onRemove, displayLabel) {
@@ -805,7 +1047,9 @@
         }
 
         setupFilterElements() {
-            const filterElements = this.filterContainer.querySelectorAll('[data-filter]');
+            // queryAll already excludes elements inside the target container
+            // (e.g. <span data-filter> markers on cards).
+            const filterElements = this.queryAll('[data-filter]');
 
             filterElements.forEach(element => {
                 const filterName = element.getAttribute('data-filter');
@@ -831,45 +1075,19 @@
                         this.setupDynamicFilter(element, filterName, filterType);
                     }
                 } else {
-                    // Skip data markers inside the target container (e.g. <span data-filter="x"> in cards)
-                    const isDataMarker = this.targetContainer && this.targetContainer.contains(element);
-                    if (!isDataMarker) {
-                        this.setupManualFilter(element, filterName);
-                    }
+                    this.setupManualFilter(element, filterName);
                 }
             });
 
-            // Auto-detect direct search input
+            // Auto-detect direct search input (anywhere linked to this filter).
+            // Merges what was previously two branches (inside filter, then external search-box).
             if (!this.searchInputs.direct) {
-                const allSearchInputs = this.filterContainer.querySelectorAll(
-                    'input.nds-search-input, input[name="search"], input[type="search"]'
-                );
+                const candidates = this.queryAll('input.nds-search-input, input[name="search"], input[type="search"]');
 
-                for (const input of allSearchInputs) {
-                    // Skip inputs opted out via data-filter-ignore
+                for (const input of candidates) {
                     if (input.hasAttribute('data-filter-ignore') || input.closest('[data-filter-ignore]')) continue;
-                    if (!input.closest('.nds-dropmenu-menu')) {
-                        const wrapper = input.closest('.nds-form-control') || input.parentElement;
-                        const clearBtn = wrapper?.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
+                    if (input.closest('.nds-dropmenu-menu')) continue;
 
-                        this.searchInputs.direct = {
-                            input: input,
-                            clearBtn: clearBtn,
-                            element: wrapper || input
-                        };
-
-                        this.setupDirectSearch(input, clearBtn);
-                        break;
-                    }
-                }
-            }
-
-            // Auto-detect external search input (linked by data-filter-target)
-            if (!this.searchInputs.direct && this.searchBoxElement) {
-                const input = this.searchBoxElement.querySelector(
-                    'input.nds-search-input, input[name="search"], input[type="search"]'
-                );
-                if (input && !input.hasAttribute('data-filter-ignore') && !input.closest('[data-filter-ignore]')) {
                     const wrapper = input.closest('.nds-form-control') || input.parentElement;
                     const clearBtn = wrapper?.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
 
@@ -880,6 +1098,7 @@
                     };
 
                     this.setupDirectSearch(input, clearBtn);
+                    break;
                 }
             }
         }
@@ -1041,18 +1260,18 @@
          * Submit the form (only called from user actions, not programmatically)
          */
         submitForm() {
+            if (!this.submissionForm) return;
+
             // Dismiss any feedback in filter container
             if (NDS.Feedback) {
                 NDS.Feedback.dismissAll(this.filterContainer);
             }
 
-
-            // Trigger form submission
-            if (this.filterContainer.requestSubmit) {
-                this.filterContainer.requestSubmit();
+            // Trigger form submission on the actual form element
+            if (this.submissionForm.requestSubmit) {
+                this.submissionForm.requestSubmit();
             } else {
-                // Fallback for older browsers
-                this.filterContainer.submit();
+                this.submissionForm.submit();
             }
         }
 
@@ -1274,9 +1493,16 @@
                 container.innerHTML = '';
             }
 
-            // Add nds-check-group class for groups (multiple inputs)
-            if (values.length > 1 && !fieldset.classList.contains('nds-check-group')) {
-                fieldset.classList.add('nds-check-group');
+            // Add group class for groups (multiple inputs) — match input type
+            if (values.length > 1) {
+                const groupClass = inputType === 'radio'
+                    ? 'nds-radio-group'
+                    : inputType === 'switch'
+                        ? 'nds-switch-group'
+                        : 'nds-check-group';
+                if (!fieldset.classList.contains(groupClass)) {
+                    fieldset.classList.add(groupClass);
+                }
             }
 
             // Add data-no-auto-close if in dropmenu
@@ -1295,7 +1521,9 @@
                 const formContainer = document.createElement('div');
                 formContainer.className = inputType === 'switch'
                     ? 'nds-form-container nds-switch-container'
-                    : 'nds-form-container nds-check-container';
+                    : inputType === 'radio'
+                        ? 'nds-form-container nds-radio-container'
+                        : 'nds-form-container nds-check-container';
 
                 const formHeader = document.createElement('div');
                 formHeader.className = 'nds-form-header';
@@ -1416,11 +1644,7 @@
                 }
 
                 // Dismiss no-results alert if exists
-                const alertId = `nds-filter-no-results-${this.targetId}`;
-                const existingAlert = document.getElementById(alertId);
-                if (existingAlert && NDS.Alert) {
-                    NDS.Alert.dismiss(existingAlert);
-                }
+                this.dismissNoResultsAlert();
 
                 this.updateUrlParams();
                 this.updateFilterButtonLabel();
@@ -1468,36 +1692,69 @@
         updateNoResultsAlert(visibleCount) {
             if (!this.targetContainer) return;
 
-            const alertId = `nds-filter-no-results-${this.targetId}`;
-
             if (visibleCount === 0) {
-                if (!document.getElementById(alertId) && NDS.Alert) {
-                    const isArabic = NDS.isArabic;
-                    const self = this;
-                    NDS.Alert.create({
-                        variant: 'warning',
-                        description: isArabic ? 'لا توجد نتائج لمعايير التصفية الحالية' : 'No result for current filter criteria',
-                        target: this.targetContainer,
-                        title: isArabic ? 'لا توجد نتائج' : 'No Result',
-                        id: alertId,
-                        closable: false,
-                        actions: [
-                            {
-                                label: isArabic ? 'مسح التصفية' : 'Clear Filter',
-                                variant: 'neutral',
-                                onClick: () => {
-                                    self.reset();
-                                }
-                            }
-                        ]
-                    });
-                }
+                this.showNoResultsAlert();
             } else {
-                const existingAlert = document.getElementById(alertId);
-                if (existingAlert) {
-                    NDS.Alert.dismiss(existingAlert);
-                }
+                this.dismissNoResultsAlert();
             }
+        }
+
+        showNoResultsAlert() {
+            const alertId = `nds-filter-no-results-${this.targetId}`;
+            if (document.getElementById(alertId) || !NDS.Alert) return;
+
+            const isArabic = NDS.isArabic;
+            const self = this;
+
+            // If the target container is a <table>/<tbody>, wrap the alert in a
+            // full-width <tr><td colspan=N> so it spans the table instead of
+            // collapsing into a single cell.
+            let insertTarget = this.targetContainer;
+            const tag = this.targetContainer.tagName;
+            if (tag === 'TBODY' || tag === 'TABLE') {
+                const tbody = tag === 'TBODY'
+                    ? this.targetContainer
+                    : (this.targetContainer.querySelector('tbody') || this.targetContainer);
+                const table = tbody.closest('table') || tbody;
+                const headerRow = table.querySelector('tr');
+                const colspan = headerRow ? headerRow.querySelectorAll('th, td').length : 1;
+
+                const row = document.createElement('tr');
+                row.className = 'nds-filter-no-results-row';
+                const cell = document.createElement('td');
+                if (colspan > 1) cell.setAttribute('colspan', colspan);
+                row.appendChild(cell);
+                tbody.appendChild(row);
+                insertTarget = cell;
+            }
+
+            NDS.Alert.create({
+                variant: 'warning',
+                description: isArabic ? 'لا توجد نتائج لمعايير التصفية الحالية' : 'No result for current filter criteria',
+                target: insertTarget,
+                title: isArabic ? 'لا توجد نتائج' : 'No Result',
+                id: alertId,
+                closable: false,
+                actions: [
+                    {
+                        label: isArabic ? 'مسح التصفية' : 'Clear Filter',
+                        variant: 'neutral',
+                        onClick: () => {
+                            self.reset();
+                        }
+                    }
+                ]
+            });
+        }
+
+        dismissNoResultsAlert() {
+            const alertId = `nds-filter-no-results-${this.targetId}`;
+            const existingAlert = document.getElementById(alertId);
+            if (!existingAlert) return;
+
+            const tableRow = existingAlert.closest('tr.nds-filter-no-results-row');
+            if (NDS.Alert) NDS.Alert.dismiss(existingAlert);
+            if (tableRow && tableRow.isConnected) tableRow.remove();
         }
 
         itemMatchesCriteria(item) {
@@ -1646,6 +1903,16 @@
                 this.criteria.filters[filterName] = [];
             }
 
+            // Clear sort and restore original DOM order
+            if (this.criteria.sort && this.criteria.sort.key) {
+                this.criteria.sort = { key: null, dir: 'asc' };
+                if (this._originalOrder && this.targetContainer) {
+                    this._originalOrder.forEach(item => this.targetContainer.appendChild(item));
+                    this.items = [...this._originalOrder];
+                }
+                this.updateSortButtonState();
+            }
+
             // Clear hidden inputs and form state if in form mode
             if (this.isFormMode) {
                 this.clearHiddenInputs();
@@ -1661,11 +1928,7 @@
             this.clear();
             this.items.forEach(item => this.showItem(item));
 
-            const alertId = `nds-filter-no-results-${this.targetId}`;
-            const existingAlert = document.getElementById(alertId);
-            if (existingAlert && NDS.Alert) {
-                NDS.Alert.dismiss(existingAlert);
-            }
+            this.dismissNoResultsAlert();
 
             // Dismiss any feedback in filter container
             if (NDS.Feedback) {
@@ -1781,7 +2044,7 @@
                 : [];
 
             // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
-            const filterElements = this.filterContainer.querySelectorAll('[data-filter-type]');
+            const filterElements = this.queryAll('[data-filter-type]');
             filterElements.forEach(element => {
                 if (element.hasAttribute('data-filter-values')) return;
 
