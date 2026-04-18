@@ -44,10 +44,58 @@
 }
 
 // ==============================================
-// FORM SUBMISSION MODE
+// SECTION SEARCH WRAPPER
+// Layout for search box + filter row composition inside a section head
 // ==============================================
 
-.nds-filter[data-filter-submit] {
+.nds-section-search {
+    >.nds-search-box {
+        max-width: 100%;
+        padding: 0;
+        margin-bottom: var(--spacing-5xl);
+    }
+
+    .nds-filter-row {
+        display: flex;
+        width: 100%;
+        flex: 1;
+        flex-direction: row-reverse;
+        gap: var(--spacing-lg);
+        align-items: flex-start;
+    }
+}
+
+// ==============================================
+// FILTER COUNT (heading + result count inside filter row)
+// ==============================================
+
+.nds-filter .nds-filter-count:not([hidden]) {
+    flex: 1 1 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    min-width: 0;
+    align-items: center;
+
+    >.nds-section-title {
+        width: 100%;
+        --section-title-FS: var(--nds-display-clamp-sm-FS);
+        --section-title-MB: var(--nds-display-clamp-sm-MB);
+    }
+
+    >.nds-label {
+        font-size: var(--nds-text-md-FS);
+        font-weight: 500;
+        color: var(--text-secondary-paragraph);
+    }
+}
+
+// ==============================================
+// FORM SUBMISSION MODE
+// States are set on .nds-filter (the anchor) by nds-filter.js during submission
+// ==============================================
+
+.nds-filter {
 
     // Submitting state
     &[data-state~="submitting"] {
@@ -75,12 +123,12 @@
             border-color: var(--border-error);
         }
     }
+}
 
-    // Hidden inputs container (should always be hidden)
-    .nds-filter-hidden-inputs {
-        display: none !important;
-        visibility: hidden !important;
-    }
+// Hidden inputs container lives inside the submission form; always invisible
+.nds-filter-hidden-inputs {
+    display: none !important;
+    visibility: hidden !important;
 }
 
 

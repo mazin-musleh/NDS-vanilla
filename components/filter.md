@@ -1173,8 +1173,8 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-content-block">
-                                <p>Add <code class="nds-inline-code lang-html">data-filter-submit</code> and <code class="nds-inline-code lang-html">data-ajax</code> attributes to a form element. Set the <code class="nds-inline-code lang-html">action</code> attribute to the API endpoint URL.</p>
-                                <p>HTML responses are automatically injected into the target container. For JSON responses, listen for the <code class="nds-inline-code lang-js">nds:filterFormComplete</code> event and render the data yourself.</p>
+                                <p>Add a separate <code class="nds-inline-code lang-html">&lt;form&gt;</code> element with <code class="nds-inline-code lang-html">data-filter-target</code> linking it to the filter anchor, plus <code class="nds-inline-code lang-html">data-filter-submit</code> and <code class="nds-inline-code lang-html">data-ajax</code> attributes. Set the <code class="nds-inline-code lang-html">action</code> attribute to the API endpoint URL.</p>
+                                <p><code class="nds-inline-code lang-html">.nds-filter</code> stays a pure anchor — the form drives submission. HTML responses are automatically injected into the target container. For JSON responses, listen for the <code class="nds-inline-code lang-js">nds:filterFormComplete</code> event and render the data yourself.</p>
                             </div>
                         </div>
                     </div>
@@ -1202,59 +1202,63 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-<!-- Search Box (linked by data-filter-target) -->
-<div class="nds-form-container nds-search-box" data-filter-target="results"
-  data-url="https://api.example.com/search"
-  data-name="Title" data-query-param="searchKeyword">
-  <div class="nds-search-content">
-    <div class="nds-form-control">
-      <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-      <input type="text" class="nds-search-input"
-        name="search" placeholder="Search...">
-    </div>
-    <button class="nds-btn nds-primary nds-search-btn"
-      type="button">
-      <span class="nds-label">Search</span>
-    </button>
-    <!-- AJAX Filter (form mode) -->
-    <form class="nds-dropmenu nds-filter" data-filter-target="results"
-      data-filter-submit data-ajax
-      method="GET" action="https://api.example.com/search">
-      <button class="nds-btn nds-neutral nds-dropmenu-trigger">
-        <i class="hgi hgi-stroke hgi-filter"></i>
-        <span class="nds-label">Filter</span>
+<!-- Submission form: separate element linked via data-filter-target -->
+<form id="resultsForm" data-filter-target="results"
+  data-filter-submit data-ajax
+  method="GET" action="https://api.example.com/search">
+
+  <!-- Search Box (linked by data-filter-target) -->
+  <div class="nds-form-container nds-search-box" data-filter-target="results">
+    <div class="nds-search-content">
+      <div class="nds-form-control">
+        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+        <input type="text" class="nds-search-input"
+          name="search" placeholder="Search...">
+      </div>
+      <button class="nds-btn nds-primary nds-search-btn"
+        type="submit">
+        <span class="nds-label">Search</span>
       </button>
-      <div class="nds-dropmenu-menu" hidden>
-        <div class="nds-dropmenu-scroll">
-          <div data-filter="category"
-            data-filter-type="checkbox"
-            data-filter-legend="Category"
-            data-filter-values='{"news":"News","services":"Services","events":"Events"}'
-            data-no-auto-close>
-          </div>
-        </div>
-        <div class="nds-dropmenu-footer">
-          <hr class="nds-divider">
-          <div class="nds-dropmenu-action nds-grid">
-            <button class="nds-btn nds-secondary nds-dropmenu-item"
-              type="button" data-filter-action="clear"
+
+      <!-- Filter anchor (pure marker, not the form) -->
+      <div class="nds-dropmenu nds-filter" data-filter-target="results">
+        <button class="nds-btn nds-neutral nds-dropmenu-trigger"
+          type="button">
+          <i class="hgi hgi-stroke hgi-filter"></i>
+          <span class="nds-label">Filter</span>
+        </button>
+        <div class="nds-dropmenu-menu" hidden>
+          <div class="nds-dropmenu-scroll">
+            <div data-filter="category"
+              data-filter-type="checkbox"
+              data-filter-legend="Category"
+              data-filter-values='{"news":"News","services":"Services","events":"Events"}'
               data-no-auto-close>
-              <span class="nds-label">Reset</span>
-            </button>
-            <button class="nds-btn nds-primary nds-dropmenu-item"
-              type="submit" data-filter-action="apply">
-              <span class="nds-label">Apply</span>
-            </button>
+            </div>
+          </div>
+          <div class="nds-dropmenu-footer">
+            <hr class="nds-divider">
+            <div class="nds-dropmenu-action nds-grid">
+              <button class="nds-btn nds-secondary nds-dropmenu-item"
+                type="button" data-filter-action="clear"
+                data-no-auto-close>
+                <span class="nds-label">Reset</span>
+              </button>
+              <button class="nds-btn nds-primary nds-dropmenu-item"
+                data-filter-action="apply">
+                <span class="nds-label">Apply</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </form>
+    </div>
+    <div class="nds-filter-applied" data-filter-target="results" hidden>
+      <span class="nds-label">Applied Filters:</span>
+      <div class="nds-chips"></div>
+    </div>
   </div>
-  <div class="nds-filter-applied" data-filter-target="results" hidden>
-    <span class="nds-label">Applied Filters:</span>
-    <div class="nds-chips"></div>
-  </div>
-</div>
+</form>
 
 <div id="results">
   <!-- HTML response will be injected here -->
@@ -1271,18 +1275,20 @@ NDS.Filter.whenReady('#apiFilter', (filter) => {
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-<!-- AJAX form: JSON response handled via event -->
-<form class="nds-dropmenu nds-filter" id="myFilter"
-  data-filter-target="results"
+<!-- AJAX form: JSON response handled via event on the .nds-filter anchor -->
+<form id="resultsForm" data-filter-target="results"
   data-filter-submit data-ajax
   method="GET" action="https://api.example.com/search">
-  <!-- same filter structure -->
+
+  <div class="nds-filter" data-filter-target="results">
+    <!-- filter controls -->
+  </div>
 </form>
 
 <div id="results"></div>
 
 <script>
-    document.getElementById('myFilter')
+    document.querySelector('.nds-filter[data-filter-target="results"]')
         .addEventListener('nds:filterFormComplete', (e) => {
             const { success, isJson, data } = e.detail;
 
@@ -1480,14 +1486,29 @@ filterForm.addEventListener('nds:filterFormAjax', (e) => {
             <div class="nds-content-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
 
-                <h4>Filter Container</h4>
+                <h4>Filter Anchor (<code class="nds-inline-code lang-html">.nds-filter</code>)</h4>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-target</code></td><td>ID of the container holding filterable items</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-submit</code></td><td>Enable form submission mode instead of client-side filtering</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-ajax</code></td><td>Use AJAX instead of page navigation for form submission (requires <code class="nds-inline-code lang-html">data-filter-submit</code>)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-ignore</code></td><td>Place on a search input (or its ancestor) to prevent the filter from auto-detecting and hijacking it. Useful when a server-side search input lives inside <code class="nds-inline-code lang-html">.nds-filter</code> but should not be used for client-side text filtering.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-target</code></td><td>ID of the container holding filterable items. Also used to link the anchor to its submission form, search box, applied-chips row, query/count slots, and filter controls.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Submission Form (separate <code class="nds-inline-code lang-html">&lt;form data-filter-target&gt;</code>)</h4>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-target</code></td><td>Must match the anchor's target id to activate form mode for that filter instance.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-submit</code></td><td>Marks this form as the submission form (enables form mode instead of client-side filtering).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-ajax</code></td><td>Use AJAX instead of page navigation (requires <code class="nds-inline-code lang-html">data-filter-submit</code>).</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Search Input Opt-Out</h4>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-ignore</code></td><td>Place on a search input (or its ancestor) to prevent the filter from auto-detecting and hijacking it. Useful when a server-side search input lives inside the filter scope but should not be used for client-side text filtering.</td></tr>
                     </tbody>
                 </table>
 
