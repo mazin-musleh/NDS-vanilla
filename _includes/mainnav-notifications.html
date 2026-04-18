@@ -1,5 +1,5 @@
 <div class="nds-column">
-    <nav class="nds-drawer" style="--drawer-max-height: 40svh; width: 400px; max-width: 100%;" hidden>
+    <nav class="nds-drawer" style="--drawer-max-height: 40svh; min-width: 40vw; max-width: 100%;" hidden>
         <div class="nds-scroll-more nds-divided">
             <ul class="nds-drawer-list nds-scroll-more-content">
                 {%- assign notifications = site.data.content.notifications | sort: "timestamp" | reverse %}
