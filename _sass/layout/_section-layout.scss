@@ -56,6 +56,7 @@
     font-size: var(--_section-title-FS);
     line-height: var(--_section-title-LH);
     margin-top: 0;
+    flex-wrap: wrap;
 
     .nds-center &,
     &.nds-center {
@@ -239,6 +240,11 @@
         flex-direction: column;
         flex-wrap: wrap;
         --btn-width: 100%;
+
+        &.nds-rowView {
+            flex-direction: row;
+            --btn-width: unset;
+        }
     }
 
     >.nds-section-head:has(>.nds-section-action)~.nds-section-action {

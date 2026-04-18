@@ -26,6 +26,12 @@
     --dropmenu-min-width: 250px;
 }
 
+// Result-count line (e.g. "0 Result(s) found") — pairs with [data-filter-count]
+.nds-results-count {
+    color: var(--text-secondary-paragraph);
+}
+
+
 // ==============================================
 // APPLIED FILTERS (standalone)
 // ==============================================
@@ -36,57 +42,11 @@
     gap: var(--spacing-md);
     min-width: 0;
     align-items: center;
+    order: 2;
 
     >.nds-label {
         font-size: var(--nds-text-clamp-lg-FS);
         font-weight: 500;
-    }
-}
-
-// ==============================================
-// SECTION SEARCH WRAPPER
-// Layout for search box + filter row composition inside a section head
-// ==============================================
-
-.nds-section-search {
-    >.nds-search-box {
-        max-width: 100%;
-        padding: 0;
-        margin-bottom: var(--spacing-5xl);
-    }
-
-    .nds-filter-row {
-        display: flex;
-        width: 100%;
-        flex: 1;
-        flex-direction: row-reverse;
-        gap: var(--spacing-lg);
-        align-items: flex-start;
-    }
-}
-
-// ==============================================
-// FILTER COUNT (heading + result count inside filter row)
-// ==============================================
-
-.nds-filter .nds-filter-count:not([hidden]) {
-    flex: 1 1 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
-    min-width: 0;
-    align-items: center;
-
-    >.nds-section-title {
-        width: 100%;
-        --section-title-FS: var(--nds-display-clamp-sm-FS);
-        --section-title-MB: var(--nds-display-clamp-sm-MB);
-    }
-
-    >.nds-label {
-        font-size: var(--nds-text-md-FS);
-        font-weight: 500;
-        color: var(--text-secondary-paragraph);
     }
 }
 
@@ -141,6 +101,10 @@
     align-items: flex-start;
     flex-direction: column;
     width: 100%;
+
+    @include mobile {
+        gap: var(--spacing-md);
+    }
 
     .nds-search-content {
         display: flex;
