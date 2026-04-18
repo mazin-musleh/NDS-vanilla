@@ -42,7 +42,8 @@
     gap: var(--spacing-md);
     min-width: 0;
     align-items: center;
-    order: 2;
+    flex: 1 1 100%;
+    min-width: 0;
 
     >.nds-label {
         font-size: var(--nds-text-clamp-lg-FS);

@@ -37,64 +37,63 @@ exclude_showcase: false
         </div>
 
         <div class="nds-section-head">
-            <div class="nds-section-action nds-minimal nds-rowView nds-nowrap">
-                <div class="nds-dropmenu nds-filter" data-filter-target="search_results_content">
-                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
-                        <span class="nds-label">Filter</span>
-                    </button>
-                    <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
-                        <div class="nds-dropmenu-scroll">
-                            <div data-filter="category" data-filter-legend="Category"
-                                data-filter-type="checkbox" data-no-auto-close></div>
-                        </div>
-                        <div class="nds-dropmenu-footer">
-                            <hr class="nds-divider">
-                            <div class="nds-dropmenu-action nds-grid">
-                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                    data-filter-action="clear" data-no-auto-close>
-                                    <span class="nds-label">Reset</span>
-                                </button>
-                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                    data-filter-action="apply">
-                                    <span class="nds-label">Filter</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nds-dropmenu">
-                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button">
-                        <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
-                        <span class="nds-label">Sort</span>
-                    </button>
-                    <div class="nds-dropmenu-menu" hidden>
-                        <div class="nds-dropmenu-scroll">
-                            <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort data-filter-target="search_results_content">
-                                <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
-                                <span class="nds-label">Most Relevant</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-dir="asc" data-filter-target="search_results_content">
-                                <i class="nds-icon nds-hgi-sort-by-up-02" aria-hidden="true"></i>
-                                <span class="nds-label">A–Z</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-dir="desc" data-filter-target="search_results_content">
-                                <i class="nds-icon nds-hgi-sort-by-down-02" aria-hidden="true"></i>
-                                <span class="nds-label">Z–A</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <h2 class="nds-section-title">Search results <span data-filter-query data-filter-target="search_results_content"></span></h2>
             <p class="nds-section-description nds-results-count"><span data-filter-count data-filter-target="search_results_content">0</span> Result(s) found</p>
-            <div class="nds-filter-applied" data-filter-target="search_results_content" hidden>
-                <span class="nds-label">Applied Filters:</span>
-                <div class="nds-chips"></div>
+        </div>
+        <div class="nds-section-action">
+            <div class="nds-dropmenu nds-filter" data-filter-target="search_results_content">
+                <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
+                    <i class="hgi hgi-stroke hgi-filter"></i>
+                    <span class="nds-label">Filter</span>
+                </button>
+                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
+                    <div class="nds-dropmenu-scroll">
+                        <div data-filter="category" data-filter-legend="Category"
+                            data-filter-type="checkbox" data-no-auto-close></div>
+                    </div>
+                    <div class="nds-dropmenu-footer">
+                        <hr class="nds-divider">
+                        <div class="nds-dropmenu-action nds-grid">
+                            <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                data-filter-action="clear" data-no-auto-close>
+                                <span class="nds-label">Reset</span>
+                            </button>
+                            <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                data-filter-action="apply">
+                                <span class="nds-label">Filter</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nds-dropmenu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button">
+                    <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
+                    <span class="nds-label">Sort</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                    <div class="nds-dropmenu-scroll">
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort data-filter-target="search_results_content">
+                            <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
+                            <span class="nds-label">Most Relevant</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-dir="asc" data-filter-target="search_results_content">
+                            <i class="nds-icon nds-hgi-sort-by-up-02" aria-hidden="true"></i>
+                            <span class="nds-label">A–Z</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-dir="desc" data-filter-target="search_results_content">
+                            <i class="nds-icon nds-hgi-sort-by-down-02" aria-hidden="true"></i>
+                            <span class="nds-label">Z–A</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-
+        <div class="nds-filter-applied" data-filter-target="search_results_content" hidden>
+            <span class="nds-label">Applied Filters:</span>
+            <div class="nds-chips"></div>
+        </div>
         <div class="nds-section-body">
             <div id="search_results_content" class="nds-paged-content nds-grid" hidden
                 style="--per-page: 10; --max-col: 1; --mid-col: 1; --min-col: 1;">
@@ -108,7 +107,7 @@ exclude_showcase: false
                         <div class="nds-card-tags">
                             {% for label in item.labels %}
                             <span class="nds-tag nds-gray nds-sm">
-                                <span class="nds-label"{% if forloop.first %} data-filter="category"{% endif %}>{{ label }}</span>
+                                <span class="nds-label" {% if forloop.first %} data-filter="category" {% endif %}>{{ label }}</span>
                             </span>
                             {% endfor %}
                         </div>

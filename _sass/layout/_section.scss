@@ -109,6 +109,7 @@
         transform: translateY(calc(var(--nds-sideinfo-top, -180px) + var(--spacing-3xl)));
         margin-bottom: calc(var(--nds-sideinfo-top, -180px) + var(--spacing-3xl));
         height: fit-content;
+        --card-width: 100%;
 
         @include tablet(max) {
             top: unset;
@@ -116,7 +117,6 @@
             --nds-sideinfo-width: 100%;
             margin-bottom: unset;
             padding-inline: var(--spacing-xl);
-            --card-width: 100%;
         }
 
         .nds-definition-list {
