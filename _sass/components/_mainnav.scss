@@ -270,13 +270,17 @@
         overflow-y: clip;
         padding-bottom: 1rem; // fix shadow flicker
 
+        // Dropdown-content is a positioned container only — scrolling is the
+        // consumer's responsibility. Wrap long content in <div class="nds-scroll-more">
+        // (or use a drawer which already wraps one). Leaving scroll to the
+        // consumer avoids the double-scroll footgun when internal components
+        // (drawer, scroll-more) manage their own overflow.
         >.nds-dropdown-content {
             background: var(--_nav-menu-bg);
             transform: translate(0, -100%);
             transition: transform var(--nds-transition);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
             box-shadow: var(--shadow-md);
-            max-height: 50svh;
 
             >.nds-content-wrapper {
                 padding-top: var(--spacing-2xl);
@@ -308,8 +312,10 @@
         overflow: unset;
         padding-bottom: unset !important;
 
+        // Allow nested popovers (dropmenus, tooltips) to escape the clip.
+        // No scroll here — consumer owns it via .nds-scroll-more.
         .nds-dropdown-content {
-            overflow-y: auto;
+            overflow: visible;
         }
     }
 
@@ -496,13 +502,6 @@ body:not(.nds-minimal) .nds-main-nav {
         position: absolute !important;
         inset-inline: auto 0;
         white-space: nowrap;
-
-        >.nds-dropdown-content {
-            max-height: 60svh;
-            overflow-y: auto;
-        }
-
-
     }
 }
 
@@ -795,8 +794,6 @@ body.nds-minimal .nds-main-nav {
             inset-inline: 0;
             z-index: var(--_nav-z-secondary-dropdown);
             /* Above all navigation */
-            max-height: 45svh;
-            overflow-y: clip;
 
             .nds-dropdown-content {
                 background-color: var(--background-nav);
@@ -819,8 +816,6 @@ body.nds-minimal .nds-main-nav {
     position: fixed !important;
     inset-inline: 0;
     z-index: var(--_nav-z-dropdown);
-    max-height: 40svh;
-    overflow-y: clip;
 
     .nds-dropdown-content {
         margin-inline: 0;
