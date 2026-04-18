@@ -3,7 +3,7 @@ layout: page
 title: Empty
 hero_title: Empty - National Design System
 hero_description: A drop-in placeholder that fills empty containers with an icon and a localized message, adapting its markup to match the parent element.
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -45,7 +45,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-empty"></div>
+&lt;div class="nds-empty"&gt;&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<ul class="nds-empty"></ul>
+&lt;ul class="nds-empty"&gt;&lt;/ul&gt;
                                     </code>
                                 </div>
                             </div>
@@ -151,15 +151,15 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<table class="nds-empty nds-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Updated</th>
-    </tr>
-  </thead>
-</table>
+&lt;table class="nds-empty nds-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+      &lt;th&gt;Updated&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+&lt;/table&gt;
                                     </code>
                                 </div>
                             </div>
@@ -211,9 +211,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-empty"
+&lt;div class="nds-empty"
      data-empty-message="You have no new notifications"
-     data-empty-icon="hgi hgi-stroke hgi-notification-off-01"></div>
+     data-empty-icon="hgi hgi-stroke hgi-notification-off-01"&gt;&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -274,7 +274,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<ul id="reactive-list" class="nds-empty"></ul>
+&lt;ul id="reactive-list" class="nds-empty"&gt;&lt;/ul&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-empty-dynamic-js"
@@ -444,11 +444,11 @@ const table = document.querySelector('#my-table');
 NDS.Empty.refresh(table);
 
 // ── Localization ─────────────────────────────────────
-// Default message language is picked from <html lang="...">
+// Default message language is picked from &lt;html lang="..."&gt;
 // via NDS.isArabic. To override for a single instance, set
 // data-empty-message on the element itself.
 //
-//   <div class="nds-empty" data-empty-message="No items yet"></div>
+//   &lt;div class="nds-empty" data-empty-message="No items yet"&gt;&lt;/div&gt;
 //
 // Changing data-empty-message at runtime updates the rendered
 // placeholder automatically:

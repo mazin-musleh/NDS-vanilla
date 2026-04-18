@@ -3,7 +3,7 @@ layout: page
 title: Section
 hero_title: Section Layout - National Design System
 hero_description: A structured container for organizing page content into titled blocks with optional actions, images, color themes, and full-width breakout areas.
-breadcrumb: ["Layout"]
+breadcrumb: [["Layout", "/layout"]]
 lang: en
 direction: ltr
 ---
@@ -135,13 +135,13 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section">
-    <h2 class="nds-section-title">Section Title</h2>
-    <p class="nds-section-description">Section description goes here. Used for simple sections with only a title and content.</p>
-    <div class="nds-section-body">
-        <p>Section content area.</p>
-    </div>
-</section>
+&lt;section class="nds-content-section"&gt;
+    &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
+    &lt;p class="nds-section-description"&gt;Section description goes here. Used for simple sections with only a title and content.&lt;/p&gt;
+    &lt;div class="nds-section-body"&gt;
+        &lt;p&gt;Section content area.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>
@@ -237,17 +237,17 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Section Title</h2>
-            <p class="nds-section-description">Description text wrapped with content inside a section wrapper.</p>
-        </div>
-        <div class="nds-section-body">
-            <p>Section content area.</p>
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section"&gt;
+    &lt;div class="nds-section-wrapper"&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;Description text wrapped with content inside a section wrapper.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-body"&gt;
+            &lt;p&gt;Section content area.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>
@@ -348,22 +348,22 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Latest News</h2>
-            <p class="nds-section-description">Stay up to date with the latest updates and announcements.</p>
-        </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-primary">
-                <span class="nds-label">View All</span>
-            </a>
-        </div>
-        <div class="nds-section-body">
-            <p>News cards or content goes here.</p>
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section"&gt;
+    &lt;div class="nds-section-wrapper"&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;h2 class="nds-section-title"&gt;Latest News&lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;Stay up to date with the latest updates and announcements.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-action"&gt;
+            &lt;a href="#" class="nds-btn nds-primary"&gt;
+                &lt;span class="nds-label"&gt;View All&lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-body"&gt;
+            &lt;p&gt;News cards or content goes here.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>
@@ -473,23 +473,23 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <div class="nds-section-action">
-                <a href="#" class="nds-btn nds-primary" aria-label="View All">
-                    <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
-                    <span class="nds-label">View All</span>
-                </a>
-            </div>
-            <h2 class="nds-section-title">Section Title</h2>
-            <p class="nds-section-description">The action button floats to the inline-end corner while the title and description text wrap around it naturally. This creates a compact layout without the action taking its own flex row.</p>
-        </div>
-        <div class="nds-section-body">
-            <p>Section content area.</p>
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section"&gt;
+    &lt;div class="nds-section-wrapper"&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;div class="nds-section-action"&gt;
+                &lt;a href="#" class="nds-btn nds-primary" aria-label="View All"&gt;
+                    &lt;i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;span class="nds-label"&gt;View All&lt;/span&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;The action button floats to the inline-end corner while the title and description text wrap around it naturally. This creates a compact layout without the action taking its own flex row.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-body"&gt;
+            &lt;p&gt;Section content area.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>
@@ -599,31 +599,31 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section nds-ghost">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <div class="nds-section-action">
-                <a href="#" class="nds-btn nds-subtle">
-                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-                    <span class="nds-label">Share</span>
-                </a>
-            </div>
-            <h2 class="nds-section-title">Section Title</h2>
-            <p class="nds-section-description">Float action in the head, standard action outside for secondary controls.</p>
-        </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-primary">
-                <span class="nds-label">View All</span>
-            </a>
-            <a href="#" class="nds-btn nds-secondary-outline">
-                <span class="nds-label">Download</span>
-            </a>
-        </div>
-        <div class="nds-section-body">
-            <p>Section content area.</p>
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section nds-ghost"&gt;
+    &lt;div class="nds-section-wrapper"&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;div class="nds-section-action"&gt;
+                &lt;a href="#" class="nds-btn nds-subtle"&gt;
+                    &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;span class="nds-label"&gt;Share&lt;/span&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;Float action in the head, standard action outside for secondary controls.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-action"&gt;
+            &lt;a href="#" class="nds-btn nds-primary"&gt;
+                &lt;span class="nds-label"&gt;View All&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a href="#" class="nds-btn nds-secondary-outline"&gt;
+                &lt;span class="nds-label"&gt;Download&lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-body"&gt;
+            &lt;p&gt;Section content area.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>
@@ -720,22 +720,22 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Section Title</h2>
-            <p class="nds-section-description">The action stays inline on all breakpoints.</p>
-        </div>
-        <div class="nds-section-action nds-nowrap">
-            <a href="#" class="nds-btn nds-primary nds-sm">
-                <span class="nds-label">Action</span>
-            </a>
-        </div>
-        <div class="nds-section-body">
-            <p>Resize the browser to mobile width. The action stays beside the head.</p>
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section"&gt;
+    &lt;div class="nds-section-wrapper"&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;The action stays inline on all breakpoints.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-action nds-nowrap"&gt;
+            &lt;a href="#" class="nds-btn nds-primary nds-sm"&gt;
+                &lt;span class="nds-label"&gt;Action&lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-body"&gt;
+            &lt;p&gt;Resize the browser to mobile width. The action stays beside the head.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>
@@ -841,27 +841,27 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-image">
-            <div class="nds-avatar">
-                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-            </div>
-        </div>
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Faculty Profile</h2>
-            <p class="nds-section-description">Professor of Computer Science, College of Engineering.</p>
-        </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-primary">
-                <span class="nds-label">Contact</span>
-            </a>
-        </div>
-        <div class="nds-section-body">
-            <p>Profile details and content goes here.</p>
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section"&gt;
+    &lt;div class="nds-section-wrapper"&gt;
+        &lt;div class="nds-section-image"&gt;
+            &lt;div class="nds-avatar"&gt;
+                &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;h2 class="nds-section-title"&gt;Faculty Profile&lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;Professor of Computer Science, College of Engineering.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-action"&gt;
+            &lt;a href="#" class="nds-btn nds-primary"&gt;
+                &lt;span class="nds-label"&gt;Contact&lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-body"&gt;
+            &lt;p&gt;Profile details and content goes here.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>
@@ -1000,54 +1000,54 @@ section.nds-content-section          (responsive padding for content constrainin
                                 </div>
                                 <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Related Services</h2>
-            <p class="nds-section-description">Explore other government digital services that may be relevant to you.</p>
-        </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-primary">
-                <span class="nds-label">View All</span>
-            </a>
-        </div>
-    </div>
-    <div class="nds-section-body nds-max-width">
-        <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
-            <div class="nds-swiper-wrapper">
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-user-id-verification"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title nds-truncate">Identity Verification</h3>
-                                <span class="nds-card-description nds-truncate">Verify your national identity and obtain digital certificates.</span>
-                            </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="#" class="nds-btn nds-secondary-outline nds-lg"><span class="nds-label">Details</span></a>
-                            <a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon"><span class="nds-label">Get Started</span></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- more slides... -->
-            </div>
-            <div class="nds-swiper-navigation">
-                <div class="nds-swiper-buttons">
-                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"></button>
-                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"></button>
-                </div>
-                <div class="nds-swiper-pagination"></div>
-            </div>
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section"&gt;
+    &lt;div class="nds-section-wrapper"&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;h2 class="nds-section-title"&gt;Related Services&lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;Explore other government digital services that may be relevant to you.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-action"&gt;
+            &lt;a href="#" class="nds-btn nds-primary"&gt;
+                &lt;span class="nds-label"&gt;View All&lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-section-body nds-max-width"&gt;
+        &lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden&gt;
+            &lt;div class="nds-swiper-wrapper"&gt;
+                &lt;div class="nds-swiper-slide"&gt;
+                    &lt;div class="nds-card nds-stroke"&gt;
+                        &lt;div class="nds-card-header"&gt;
+                            &lt;div class="nds-card-featured-icon"&gt;
+                                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
+                                    &lt;i class="hgi hgi-stroke hgi-user-id-verification"&gt;&lt;/i&gt;
+                                &lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="nds-card-content"&gt;
+                            &lt;div class="nds-card-text"&gt;
+                                &lt;h3 class="nds-card-title nds-truncate"&gt;Identity Verification&lt;/h3&gt;
+                                &lt;span class="nds-card-description nds-truncate"&gt;Verify your national identity and obtain digital certificates.&lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="nds-card-actions"&gt;
+                            &lt;a href="#" class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Details&lt;/span&gt;&lt;/a&gt;
+                            &lt;a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon"&gt;&lt;span class="nds-label"&gt;Get Started&lt;/span&gt;&lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;!-- more slides... --&gt;
+            &lt;/div&gt;
+            &lt;div class="nds-swiper-navigation"&gt;
+                &lt;div class="nds-swiper-buttons"&gt;
+                    &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
+                    &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
+                &lt;/div&gt;
+                &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                                 </div>
                             </div>
@@ -1149,22 +1149,22 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section nds-horizontal">
-    <div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Side by Side</h2>
-            <p class="nds-section-description">Head and content are displayed in a horizontal grid on desktop screens.</p>
-            <div class="nds-section-action">
-                <a href="#" class="nds-btn nds-primary">
-                    <span class="nds-label">View All</span>
-                </a>
-            </div>
-        </div>
-        <div class="nds-section-body">
-            <img src="https://placehold.co/600x400/e2e8f0/475569?text=Content+Image" alt="Placeholder image" style="border-radius: var(--radius-lg); width: 100%;">
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section nds-horizontal"&gt;
+    &lt;div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;"&gt;
+        &lt;div class="nds-section-head"&gt;
+            &lt;h2 class="nds-section-title"&gt;Side by Side&lt;/h2&gt;
+            &lt;p class="nds-section-description"&gt;Head and content are displayed in a horizontal grid on desktop screens.&lt;/p&gt;
+            &lt;div class="nds-section-action"&gt;
+                &lt;a href="#" class="nds-btn nds-primary"&gt;
+                    &lt;span class="nds-label"&gt;View All&lt;/span&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-section-body"&gt;
+            &lt;img src="https://placehold.co/600x400/e2e8f0/475569?text=Content+Image" alt="Placeholder image" style="border-radius: var(--radius-lg); width: 100%;"&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>
@@ -1264,25 +1264,25 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<section class="nds-content-section">
-    <div class="nds-section-body">
-        <div class="nds-content-block">
-            <h3 class="nds-block-title">Block Title</h3>
-            <p>First paragraph of content inside the block.</p>
-            <p>Second paragraph to demonstrate spacing.</p>
-        </div>
-        <div class="nds-content-block">
-            <h3 class="nds-block-title">Another Block</h3>
-            <ul>
-                <li>List items work inside content blocks</li>
-                <li>With automatic padding and spacing</li>
-            </ul>
-        </div>
-        <div class="nds-content-block">
-            <p>Blocks without a title work too. The title is optional.</p>
-        </div>
-    </div>
-</section>
+&lt;section class="nds-content-section"&gt;
+    &lt;div class="nds-section-body"&gt;
+        &lt;div class="nds-content-block"&gt;
+            &lt;h3 class="nds-block-title"&gt;Block Title&lt;/h3&gt;
+            &lt;p&gt;First paragraph of content inside the block.&lt;/p&gt;
+            &lt;p&gt;Second paragraph to demonstrate spacing.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-content-block"&gt;
+            &lt;h3 class="nds-block-title"&gt;Another Block&lt;/h3&gt;
+            &lt;ul&gt;
+                &lt;li&gt;List items work inside content blocks&lt;/li&gt;
+                &lt;li&gt;With automatic padding and spacing&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-content-block"&gt;
+            &lt;p&gt;Blocks without a title work too. The title is optional.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
 </code>
                             </div>
                         </div>

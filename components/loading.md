@@ -3,7 +3,7 @@ layout: page
 title: Loading
 hero_title: Loading Component - National Design System
 hero_description: A versatile loading spinner for indicating loading states across any element
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -87,14 +87,14 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div data-state="loading">
-  <p>Content is dimmed while loading</p>
-</div>
+&lt;div data-state="loading"&gt;
+  &lt;p&gt;Content is dimmed while loading&lt;/p&gt;
+&lt;/div&gt;
 
-<!-- Or use class toggle -->
-<div class="nds-loading">
-  <p>Content is dimmed while loading</p>
-</div>
+&lt;!-- Or use class toggle --&gt;
+&lt;div class="nds-loading"&gt;
+  &lt;p&gt;Content is dimmed while loading&lt;/p&gt;
+&lt;/div&gt;
                                 </code>
                             </div>
                         </div>
@@ -164,9 +164,9 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <div class="nds-loading nds-oncolor">
+                                    &lt;div class="nds-loading nds-oncolor"&gt;
                                     Content hidden while loading
-                                    </div>
+                                    &lt;/div&gt;
                                 </code>
                             </div>
                         </div>
@@ -257,13 +257,13 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-                                    <div class="nds-loading nds-xxs">...</div>  <!-- 20px -->
-                                    <div class="nds-loading nds-xs">...</div>   <!-- 24px -->
-                                    <div class="nds-loading nds-sm">...</div>   <!-- 28px -->
-                                    <div class="nds-loading">...</div>         <!-- 32px (default) -->
-                                    <div class="nds-loading nds-lg">...</div>   <!-- 36px -->
-                                    <div class="nds-loading nds-xl">...</div>   <!-- 40px -->
-                                    <div class="nds-loading nds-2xl">...</div>  <!-- 44px -->
+                                    &lt;div class="nds-loading nds-xxs"&gt;...&lt;/div&gt;  &lt;!-- 20px --&gt;
+                                    &lt;div class="nds-loading nds-xs"&gt;...&lt;/div&gt;   &lt;!-- 24px --&gt;
+                                    &lt;div class="nds-loading nds-sm"&gt;...&lt;/div&gt;   &lt;!-- 28px --&gt;
+                                    &lt;div class="nds-loading"&gt;...&lt;/div&gt;         &lt;!-- 32px (default) --&gt;
+                                    &lt;div class="nds-loading nds-lg"&gt;...&lt;/div&gt;   &lt;!-- 36px --&gt;
+                                    &lt;div class="nds-loading nds-xl"&gt;...&lt;/div&gt;   &lt;!-- 40px --&gt;
+                                    &lt;div class="nds-loading nds-2xl"&gt;...&lt;/div&gt;  &lt;!-- 44px --&gt;
                                 </code>
                             </div>
                         </div>

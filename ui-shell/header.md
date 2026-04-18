@@ -3,7 +3,7 @@ layout: page
 title: Header
 hero_title: Header - National Design System
 hero_description: The site header combines a topbar, navigation bar, and DGA digital stamp into a single responsive shell that handles branding, page links, dropdown menus, and utility actions across all screen sizes.
-breadcrumb: ["UI Shell"]
+breadcrumb: [["UI Shell", "/ui-shell"]]
 lang: en
 direction: ltr
 ---

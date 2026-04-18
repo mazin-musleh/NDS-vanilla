@@ -3,7 +3,7 @@ layout: page
 title: Alert
 hero_title: Alert - National Design System
 hero_description: Alert notifications for displaying important messages, warnings, and feedback to users
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -108,22 +108,22 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-alert nds-card" data-status="success" role="alert">
-  <span class="nds-feedback nds-alert-icon nds-outline">
-    <span class="nds-feedback-icon">
-      <i class="nds-icon" aria-hidden="true"></i>
-    </span>
-  </span>
-  <div class="nds-alert-content">
-    <div class="nds-alert-text">
-      <span class="nds-alert-title">Success</span>
-      <p class="nds-alert-description">Operation completed successfully!</p>
-    </div>
-  </div>
-  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-  </button>
-</div>
+&lt;div class="nds-alert nds-card" data-status="success" role="alert"&gt;
+  &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
+    &lt;span class="nds-feedback-icon"&gt;
+      &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;div class="nds-alert-content"&gt;
+    &lt;div class="nds-alert-text"&gt;
+      &lt;span class="nds-alert-title"&gt;Success&lt;/span&gt;
+      &lt;p class="nds-alert-description"&gt;Operation completed successfully!&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert"&gt;
+    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-variants-js"
@@ -247,25 +247,25 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-alert nds-card nds-inline" data-status="critical" role="alert">
-  <span class="nds-feedback nds-alert-icon">
-    <span class="nds-feedback-icon">
-      <i class="nds-icon" aria-hidden="true"></i>
-    </span>
-  </span>
-  <div class="nds-alert-content">
-    <div class="nds-alert-text">
-      <span class="nds-alert-title">Important:</span>
-      <p class="nds-alert-description">This is a very important banner message that requires attention.</p>
-    </div>
-    <div class="nds-alert-actions">
-      <a href="#" class="nds-link">Learn More</a>
-    </div>
-  </div>
-  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-  </button>
-</div>
+&lt;div class="nds-alert nds-card nds-inline" data-status="critical" role="alert"&gt;
+  &lt;span class="nds-feedback nds-alert-icon"&gt;
+    &lt;span class="nds-feedback-icon"&gt;
+      &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;div class="nds-alert-content"&gt;
+    &lt;div class="nds-alert-text"&gt;
+      &lt;span class="nds-alert-title"&gt;Important:&lt;/span&gt;
+      &lt;p class="nds-alert-description"&gt;This is a very important banner message that requires attention.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-alert-actions"&gt;
+      &lt;a href="#" class="nds-link"&gt;Learn More&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert"&gt;
+    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-inline-js"
@@ -374,30 +374,30 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-alert nds-card" data-status="info" role="alert">
-  <span class="nds-feedback nds-alert-icon nds-outline">
-    <span class="nds-feedback-icon">
-      <i class="nds-icon" aria-hidden="true"></i>
-    </span>
-  </span>
-  <div class="nds-alert-content">
-    <div class="nds-alert-text">
-      <span class="nds-alert-title">Update Available</span>
-      <p class="nds-alert-description">A new version is available. Would you like to update now?</p>
-    </div>
-    <div class="nds-alert-actions">
-      <button class="nds-btn nds-primary nds-sm">
-        <span class="nds-label">Update Now</span>
-      </button>
-      <button class="nds-btn nds-subtle nds-sm">
-        <span class="nds-label">Later</span>
-      </button>
-    </div>
-  </div>
-  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-  </button>
-</div>
+&lt;div class="nds-alert nds-card" data-status="info" role="alert"&gt;
+  &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
+    &lt;span class="nds-feedback-icon"&gt;
+      &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;div class="nds-alert-content"&gt;
+    &lt;div class="nds-alert-text"&gt;
+      &lt;span class="nds-alert-title"&gt;Update Available&lt;/span&gt;
+      &lt;p class="nds-alert-description"&gt;A new version is available. Would you like to update now?&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-alert-actions"&gt;
+      &lt;button class="nds-btn nds-primary nds-sm"&gt;
+        &lt;span class="nds-label"&gt;Update Now&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-sm"&gt;
+        &lt;span class="nds-label"&gt;Later&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert"&gt;
+    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-actions-js"
@@ -413,7 +413,7 @@ direction: ltr
     description: 'A new version is available. Would you like to update now?',
     target: '#alert-container',
     actions: [
-        { label: 'Update Now', class: 'nds-btn nds-primary nds-sm', onClick: () => handleUpdate() },
+        { label: 'Update Now', class: 'nds-btn nds-primary nds-sm', onClick: () =&gt; handleUpdate() },
         { label: 'Later', class: 'nds-btn nds-subtle nds-sm', dismiss: true }
     ]
 });</code>
@@ -510,30 +510,30 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-alert-placeholder" data-position="top">
-  <div class="nds-alert nds-card nds-toast nds-shadow" data-status="success" role="alert" data-toast-state="show">
-    <span class="nds-feedback nds-alert-icon nds-outline">
-      <span class="nds-feedback-icon">
-        <i class="nds-icon" aria-hidden="true"></i>
-      </span>
-    </span>
-    <div class="nds-alert-content">
-      <div class="nds-alert-text">
-        <span class="nds-alert-title">Success</span>
-        <p class="nds-alert-description">Changes saved successfully!</p>
-      </div>
-    </div>
-    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close nds-progress" aria-label="Close alert" style="--progress-duration: 4000ms;">
-      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      <div class="nds-progress-circle">
-        <svg width="100%" height="100%" viewBox="0 0 24 24">
-          <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-          <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
-        </svg>
-      </div>
-    </button>
-  </div>
-</div>
+&lt;div class="nds-alert-placeholder" data-position="top"&gt;
+  &lt;div class="nds-alert nds-card nds-toast nds-shadow" data-status="success" role="alert" data-toast-state="show"&gt;
+    &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
+      &lt;span class="nds-feedback-icon"&gt;
+        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+    &lt;/span&gt;
+    &lt;div class="nds-alert-content"&gt;
+      &lt;div class="nds-alert-text"&gt;
+        &lt;span class="nds-alert-title"&gt;Success&lt;/span&gt;
+        &lt;p class="nds-alert-description"&gt;Changes saved successfully!&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close nds-progress" aria-label="Close alert" style="--progress-duration: 4000ms;"&gt;
+      &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;div class="nds-progress-circle"&gt;
+        &lt;svg width="100%" height="100%" viewBox="0 0 24 24"&gt;
+          &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"&gt;&lt;/circle&gt;
+          &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"&gt;&lt;/circle&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-toast-js"
@@ -706,7 +706,7 @@ const alert = NDS.Alert.create({
         {
             label: 'Retry',
             class: 'nds-btn nds-primary nds-sm',  // Custom classes (overrides variant/size)
-            onClick: (el) => {},  // Callback, receives the alert element
+            onClick: (el) =&gt; {},  // Callback, receives the alert element
             dismiss: false,       // Auto-dismiss after click (default: false)
             href: '/url',         // Render as &lt;a&gt; link instead of &lt;button&gt; (optional)
             target: '_blank'      // Link target attribute (optional, requires href)

@@ -3,7 +3,7 @@ layout: page
 title: Expandable Content
 hero_title: Expandable Content - National Design System
 hero_description: Height-constrained containers that reveal additional content on demand, with automatic overflow detection and a toggle button that appears only when content exceeds the limit
-breadcrumb: ["Utilities", "Expandable Content"]
+breadcrumb: [["Utilities", "/utilities"], "Expandable Content"]
 lang: en
 direction: ltr
 ---
@@ -56,15 +56,15 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<div class="nds-expandable" style="--max-height: 200px;">
-    <div class="nds-expandable-content">
-        <p>The National Digital Transformation Strategy outlines a comprehensive framework for modernizing government services across all sectors. The initiative focuses on three core pillars: citizen experience, operational efficiency, and data-driven decision making.</p>
-        <p>All government entities are required to adopt the unified design system for public-facing digital platforms. This ensures a consistent and accessible experience for citizens regardless of which ministry or agency they interact with. The system supports both Arabic and English interfaces with full right-to-left layout compliance.</p>
-        <p>Integration with the national identity platform enables single sign-on across all digital services. Citizens authenticate once and gain access to their complete service portfolio, including document requests, permit applications, appointment scheduling, and payment processing.</p>
-        <p>Accessibility standards follow international WCAG 2.1 AA guidelines adapted for the Arabic language context. All components are tested for screen reader compatibility, keyboard navigation, color contrast compliance, and support for reduced motion preferences.</p>
-        <p>Performance benchmarks require all pages to achieve a Lighthouse score of 90 or above. This includes optimized asset delivery, lazy loading for below-the-fold content, and efficient caching strategies for frequently accessed service endpoints.</p>
-    </div>
-</div>
+&lt;div class="nds-expandable" style="--max-height: 200px;"&gt;
+    &lt;div class="nds-expandable-content"&gt;
+        &lt;p&gt;The National Digital Transformation Strategy outlines a comprehensive framework for modernizing government services across all sectors. The initiative focuses on three core pillars: citizen experience, operational efficiency, and data-driven decision making.&lt;/p&gt;
+        &lt;p&gt;All government entities are required to adopt the unified design system for public-facing digital platforms. This ensures a consistent and accessible experience for citizens regardless of which ministry or agency they interact with. The system supports both Arabic and English interfaces with full right-to-left layout compliance.&lt;/p&gt;
+        &lt;p&gt;Integration with the national identity platform enables single sign-on across all digital services. Citizens authenticate once and gain access to their complete service portfolio, including document requests, permit applications, appointment scheduling, and payment processing.&lt;/p&gt;
+        &lt;p&gt;Accessibility standards follow international WCAG 2.1 AA guidelines adapted for the Arabic language context. All components are tested for screen reader compatibility, keyboard navigation, color contrast compliance, and support for reduced motion preferences.&lt;/p&gt;
+        &lt;p&gt;Performance benchmarks require all pages to achieve a Lighthouse score of 90 or above. This includes optimized asset delivery, lazy loading for below-the-fold content, and efficient caching strategies for frequently accessed service endpoints.&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                 </code>
                             </div>
                         </div>
@@ -152,21 +152,21 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<div class="nds-card nds-stroke nds-expandable">
-    <div class="nds-expandable-content" style="--max-height:200px">
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <h3 class="nds-card-title">Ministry Services Documentation</h3>
-                <p class="nds-card-description">Complete documentation and guidelines for
+&lt;div class="nds-card nds-stroke nds-expandable"&gt;
+    &lt;div class="nds-expandable-content" style="--max-height:200px"&gt;
+        &lt;div class="nds-card-content"&gt;
+            &lt;div class="nds-card-text"&gt;
+                &lt;h3 class="nds-card-title"&gt;Ministry Services Documentation&lt;/h3&gt;
+                &lt;p class="nds-card-description"&gt;Complete documentation and guidelines for
                     all ministry digital services including API references, implementation
                     guides, best practices for developers, integration specifications,
                     security protocols, and compliance requirements for government
                     applications. This comprehensive resource covers everything from basic
-                    setup to advanced configurations.</p>
-            </div>
-        </div>
-    </div>
-</div>
+                    setup to advanced configurations.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                 </code>
                             </div>
                         </div>
@@ -240,28 +240,28 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<div class="nds-expand-all nds-grid" style="--max-col:2;">
-    <div class="nds-card nds-stroke nds-expandable">
-        <div class="nds-expandable-content" style="--max-height: 80px;">
-            <div class="nds-card-content">
-                <div class="nds-card-text">
-                    <h3 class="nds-card-title">Digital Identity Standards</h3>
-                    <p class="nds-card-description">Comprehensive guidelines for implementing digital identity verification across government platforms, including biometric authentication protocols, single sign-on integration, and multi-factor authentication requirements for all public-facing services.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="nds-card nds-stroke nds-expandable">
-        <div class="nds-expandable-content" style="--max-height: 80px;">
-            <div class="nds-card-content">
-                <div class="nds-card-text">
-                    <h3 class="nds-card-title">Data Classification Policy</h3>
-                    <p class="nds-card-description">Standards for categorizing, handling, and protecting government data assets including classification levels, access control matrices, encryption requirements, and retention schedules for sensitive and public information.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-expand-all nds-grid" style="--max-col:2;"&gt;
+    &lt;div class="nds-card nds-stroke nds-expandable"&gt;
+        &lt;div class="nds-expandable-content" style="--max-height: 80px;"&gt;
+            &lt;div class="nds-card-content"&gt;
+                &lt;div class="nds-card-text"&gt;
+                    &lt;h3 class="nds-card-title"&gt;Digital Identity Standards&lt;/h3&gt;
+                    &lt;p class="nds-card-description"&gt;Comprehensive guidelines for implementing digital identity verification across government platforms, including biometric authentication protocols, single sign-on integration, and multi-factor authentication requirements for all public-facing services.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card nds-stroke nds-expandable"&gt;
+        &lt;div class="nds-expandable-content" style="--max-height: 80px;"&gt;
+            &lt;div class="nds-card-content"&gt;
+                &lt;div class="nds-card-text"&gt;
+                    &lt;h3 class="nds-card-title"&gt;Data Classification Policy&lt;/h3&gt;
+                    &lt;p class="nds-card-description"&gt;Standards for categorizing, handling, and protecting government data assets including classification levels, access control matrices, encryption requirements, and retention schedules for sensitive and public information.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                 </code>
                             </div>
                         </div>
@@ -405,14 +405,14 @@ const state = expandable.getState();
 
 // ── Events ──────────────────────────────────────────
 // Both events bubble and carry the same detail shape
-document.addEventListener('nds:expandable:expanded', (e) => {
+document.addEventListener('nds:expandable:expanded', (e) =&gt; {
     // e.detail.container  — the .nds-expandable element
     // e.detail.content    — the .nds-expandable-content element
     // e.detail.button     — the toggle button element
     // e.detail.isExpanded — true
 });
 
-document.addEventListener('nds:expandable:collapsed', (e) => {
+document.addEventListener('nds:expandable:collapsed', (e) =&gt; {
     // e.detail.container  — the .nds-expandable element
     // e.detail.content    — the .nds-expandable-content element
     // e.detail.button     — the toggle button element

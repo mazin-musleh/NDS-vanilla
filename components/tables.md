@@ -3,7 +3,7 @@ layout: page
 title: Tables
 hero_title: Tables - National Design System
 hero_description: Structured data presentation with built-in sorting, row selection, responsive scrolling, and pagination for datasets of any size
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -75,42 +75,42 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<table class="nds-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Ahmed Al-Rashidi</td>
-      <td>ahmed.rashidi@gov.sa</td>
-      <td>Senior Developer</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>Fatima Al-Harbi</td>
-      <td>fatima.harbi@gov.sa</td>
-      <td>UX Designer</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>Sara Al-Dosari</td>
-      <td>sara.dosari@gov.sa</td>
-      <td>Marketing Lead</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>Layla Al-Qahtani</td>
-      <td>layla.qahtani@gov.sa</td>
-      <td>HR Specialist</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
-    </tr>
-  </tbody>
-</table>
+&lt;table class="nds-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Email&lt;/th&gt;
+      &lt;th&gt;Role&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ahmed Al-Rashidi&lt;/td&gt;
+      &lt;td&gt;ahmed.rashidi@gov.sa&lt;/td&gt;
+      &lt;td&gt;Senior Developer&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Fatima Al-Harbi&lt;/td&gt;
+      &lt;td&gt;fatima.harbi@gov.sa&lt;/td&gt;
+      &lt;td&gt;UX Designer&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sara Al-Dosari&lt;/td&gt;
+      &lt;td&gt;sara.dosari@gov.sa&lt;/td&gt;
+      &lt;td&gt;Marketing Lead&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Layla Al-Qahtani&lt;/td&gt;
+      &lt;td&gt;layla.qahtani@gov.sa&lt;/td&gt;
+      &lt;td&gt;HR Specialist&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
                                 </code>
                             </div>
                         </div>
@@ -230,63 +230,63 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<table class="nds-table nds-sortable">
-  <thead>
-    <tr>
-      <th>
-        <div class="nds-col-header">
-          <span class="nds-label">Department</span>
-          <div class="nds-col-actions">
-            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
-          </div>
-        </div>
-      </th>
-      <th data-state="sorted-asc">
-        <div class="nds-col-header">
-          <span class="nds-label">Employees</span>
-          <div class="nds-col-actions">
-            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
-          </div>
-        </div>
-      </th>
-      <th>
-        <div class="nds-col-header">
-          <span class="nds-label">Budget</span>
-          <div class="nds-col-actions">
-            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
-          </div>
-        </div>
-      </th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Information Technology</td>
-      <td>25</td>
-      <td>5,625,000 SAR</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>Human Resources</td>
-      <td>12</td>
-      <td>3,000,000 SAR</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>Sales</td>
-      <td>18</td>
-      <td>4,500,000 SAR</td>
-      <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Under Review</span></span></td>
-    </tr>
-    <tr>
-      <td>Marketing</td>
-      <td>8</td>
-      <td>2,250,000 SAR</td>
-      <td><span class="nds-tag nds-sm" data-status="info"><span class="nds-label">Planning</span></span></td>
-    </tr>
-  </tbody>
-</table>
+&lt;table class="nds-table nds-sortable"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;
+        &lt;div class="nds-col-header"&gt;
+          &lt;span class="nds-label"&gt;Department&lt;/span&gt;
+          &lt;div class="nds-col-actions"&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/th&gt;
+      &lt;th data-state="sorted-asc"&gt;
+        &lt;div class="nds-col-header"&gt;
+          &lt;span class="nds-label"&gt;Employees&lt;/span&gt;
+          &lt;div class="nds-col-actions"&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/th&gt;
+      &lt;th&gt;
+        &lt;div class="nds-col-header"&gt;
+          &lt;span class="nds-label"&gt;Budget&lt;/span&gt;
+          &lt;div class="nds-col-actions"&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Information Technology&lt;/td&gt;
+      &lt;td&gt;25&lt;/td&gt;
+      &lt;td&gt;5,625,000 SAR&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Human Resources&lt;/td&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;3,000,000 SAR&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Sales&lt;/td&gt;
+      &lt;td&gt;18&lt;/td&gt;
+      &lt;td&gt;4,500,000 SAR&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="warning"&gt;&lt;span class="nds-label"&gt;Under Review&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Marketing&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;2,250,000 SAR&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="info"&gt;&lt;span class="nds-label"&gt;Planning&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
                                 </code>
                             </div>
                         </div>
@@ -442,103 +442,103 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<table class="nds-table">
-  <thead>
-    <tr>
-      <th>Ticket ID</th>
-      <th>Customer</th>
-      <th>Issue Type</th>
-      <th>Priority</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <div class="ticket-id">
-          <span class="ticket-number">#TK-001</span>
-        </div>
-      </td>
-      <td>Omar Al-Ahmad</td>
-      <td>Login Issue</td>
-      <td>
-        <span class="nds-tag nds-gray nds-sm">
-          <span class="nds-label">Low</span>
-        </span>
-      </td>
-      <td>
-        <span class="nds-feedback" data-status="success">
-          <span class="nds-feedback-icon">
-            <i class="nds-icon" aria-hidden="true"></i>
-          </span>
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="ticket-id">
-          <span class="ticket-number">#TK-002</span>
-        </div>
-      </td>
-      <td>Layla Al-Mansouri</td>
-      <td>Performance</td>
-      <td>
-        <span class="nds-tag nds-yellow nds-sm">
-          <span class="nds-label">Medium</span>
-        </span>
-      </td>
-      <td>
-        <span class="nds-feedback" data-status="warning">
-          <span class="nds-feedback-icon">
-            <i class="nds-icon" aria-hidden="true"></i>
-          </span>
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="ticket-id">
-          <span class="ticket-number">#TK-003</span>
-        </div>
-      </td>
-      <td>Yusuf Al-Kindi</td>
-      <td>Data Loss</td>
-      <td>
-        <span class="nds-tag nds-red nds-sm">
-          <span class="nds-label">High</span>
-        </span>
-      </td>
-      <td>
-        <span class="nds-feedback" data-status="error">
-          <span class="nds-feedback-icon">
-            <i class="nds-icon" aria-hidden="true"></i>
-          </span>
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <div class="ticket-id">
-          <span class="ticket-number">#TK-004</span>
-        </div>
-      </td>
-      <td>Aisha Al-Farisi</td>
-      <td>Feature Request</td>
-      <td>
-        <span class="nds-tag nds-gray nds-sm">
-          <span class="nds-label">Low</span>
-        </span>
-      </td>
-      <td>
-        <span class="nds-feedback" data-status="info">
-          <span class="nds-feedback-icon">
-            <i class="nds-icon" aria-hidden="true"></i>
-          </span>
-        </span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+&lt;table class="nds-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Ticket ID&lt;/th&gt;
+      &lt;th&gt;Customer&lt;/th&gt;
+      &lt;th&gt;Issue Type&lt;/th&gt;
+      &lt;th&gt;Priority&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div class="ticket-id"&gt;
+          &lt;span class="ticket-number"&gt;#TK-001&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Omar Al-Ahmad&lt;/td&gt;
+      &lt;td&gt;Login Issue&lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-tag nds-gray nds-sm"&gt;
+          &lt;span class="nds-label"&gt;Low&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-feedback" data-status="success"&gt;
+          &lt;span class="nds-feedback-icon"&gt;
+            &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+          &lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div class="ticket-id"&gt;
+          &lt;span class="ticket-number"&gt;#TK-002&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Layla Al-Mansouri&lt;/td&gt;
+      &lt;td&gt;Performance&lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-tag nds-yellow nds-sm"&gt;
+          &lt;span class="nds-label"&gt;Medium&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-feedback" data-status="warning"&gt;
+          &lt;span class="nds-feedback-icon"&gt;
+            &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+          &lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div class="ticket-id"&gt;
+          &lt;span class="ticket-number"&gt;#TK-003&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Yusuf Al-Kindi&lt;/td&gt;
+      &lt;td&gt;Data Loss&lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-tag nds-red nds-sm"&gt;
+          &lt;span class="nds-label"&gt;High&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-feedback" data-status="error"&gt;
+          &lt;span class="nds-feedback-icon"&gt;
+            &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+          &lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div class="ticket-id"&gt;
+          &lt;span class="ticket-number"&gt;#TK-004&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Aisha Al-Farisi&lt;/td&gt;
+      &lt;td&gt;Feature Request&lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-tag nds-gray nds-sm"&gt;
+          &lt;span class="nds-label"&gt;Low&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-feedback" data-status="info"&gt;
+          &lt;span class="nds-feedback-icon"&gt;
+            &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+          &lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
                                 </code>
                             </div>
                         </div>
@@ -672,77 +672,77 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<table class="nds-table">
-  <thead>
-    <tr>
-      <th>
-        <div class="nds-form-container nds-check-container">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select all rows">
-          </div>
-        </div>
-      </th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Department</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <div class="nds-form-container nds-check-container">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select Hassan Al-Mukhtar">
-          </div>
-        </div>
-      </td>
-      <td>Hassan Al-Mukhtar</td>
-      <td>hassan.almukhtar@moi.gov.sa</td>
-      <td>Engineering</td>
-      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr data-state="selected">
-      <td>
-        <div class="nds-form-container nds-check-container">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" checked aria-label="Select Nadia Al-Khatib">
-          </div>
-        </div>
-      </td>
-      <td>Nadia Al-Khatib</td>
-      <td>nadia.alkhatib@moi.gov.sa</td>
-      <td>Design</td>
-      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>
-        <div class="nds-form-container nds-check-container">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" aria-label="Select Tariq Al-Sudairi">
-          </div>
-        </div>
-      </td>
-      <td>Tariq Al-Sudairi</td>
-      <td>tariq.alsudairi@moi.gov.sa</td>
-      <td>Marketing</td>
-      <td><span class="nds-tag nds-yellow nds-sm"><span class="nds-label">Pending</span></span></td>
-    </tr>
-    <tr data-state="selected">
-      <td>
-        <div class="nds-form-container nds-check-container">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-check" checked aria-label="Select Zara Al-Habib">
-          </div>
-        </div>
-      </td>
-      <td>Zara Al-Habib</td>
-      <td>zara.alhabib@moi.gov.sa</td>
-      <td>Sales</td>
-      <td><span class="nds-tag nds-gray nds-sm"><span class="nds-label">On Leave</span></span></td>
-    </tr>
-  </tbody>
-</table>
+&lt;table class="nds-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;
+        &lt;div class="nds-form-container nds-check-container"&gt;
+          &lt;div class="nds-form-control"&gt;
+            &lt;input type="checkbox" class="nds-check" aria-label="Select all rows"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/th&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Email&lt;/th&gt;
+      &lt;th&gt;Department&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div class="nds-form-container nds-check-container"&gt;
+          &lt;div class="nds-form-control"&gt;
+            &lt;input type="checkbox" class="nds-check" aria-label="Select Hassan Al-Mukhtar"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Hassan Al-Mukhtar&lt;/td&gt;
+      &lt;td&gt;hassan.almukhtar@moi.gov.sa&lt;/td&gt;
+      &lt;td&gt;Engineering&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-green nds-sm"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr data-state="selected"&gt;
+      &lt;td&gt;
+        &lt;div class="nds-form-container nds-check-container"&gt;
+          &lt;div class="nds-form-control"&gt;
+            &lt;input type="checkbox" class="nds-check" checked aria-label="Select Nadia Al-Khatib"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Nadia Al-Khatib&lt;/td&gt;
+      &lt;td&gt;nadia.alkhatib@moi.gov.sa&lt;/td&gt;
+      &lt;td&gt;Design&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-green nds-sm"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div class="nds-form-container nds-check-container"&gt;
+          &lt;div class="nds-form-control"&gt;
+            &lt;input type="checkbox" class="nds-check" aria-label="Select Tariq Al-Sudairi"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Tariq Al-Sudairi&lt;/td&gt;
+      &lt;td&gt;tariq.alsudairi@moi.gov.sa&lt;/td&gt;
+      &lt;td&gt;Marketing&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-yellow nds-sm"&gt;&lt;span class="nds-label"&gt;Pending&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr data-state="selected"&gt;
+      &lt;td&gt;
+        &lt;div class="nds-form-container nds-check-container"&gt;
+          &lt;div class="nds-form-control"&gt;
+            &lt;input type="checkbox" class="nds-check" checked aria-label="Select Zara Al-Habib"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Zara Al-Habib&lt;/td&gt;
+      &lt;td&gt;zara.alhabib@moi.gov.sa&lt;/td&gt;
+      &lt;td&gt;Sales&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-gray nds-sm"&gt;&lt;span class="nds-label"&gt;On Leave&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
                                 </code>
                             </div>
                         </div>
@@ -837,42 +837,42 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<table class="nds-table nds-center">
-  <thead>
-    <tr>
-      <th>Quarter</th>
-      <th>Revenue</th>
-      <th>Growth</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Q1 2024</td>
-      <td>2,450,000 SAR</td>
-      <td>+12%</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
-    </tr>
-    <tr>
-      <td>Q2 2024</td>
-      <td>2,780,000 SAR</td>
-      <td>+13.5%</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
-    </tr>
-    <tr>
-      <td>Q3 2024</td>
-      <td>2,610,000 SAR</td>
-      <td>-6.1%</td>
-      <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">At Risk</span></span></td>
-    </tr>
-    <tr>
-      <td>Q4 2024</td>
-      <td>3,100,000 SAR</td>
-      <td>+18.8%</td>
-      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
-    </tr>
-  </tbody>
-</table>
+&lt;table class="nds-table nds-center"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Quarter&lt;/th&gt;
+      &lt;th&gt;Revenue&lt;/th&gt;
+      &lt;th&gt;Growth&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Q1 2024&lt;/td&gt;
+      &lt;td&gt;2,450,000 SAR&lt;/td&gt;
+      &lt;td&gt;+12%&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;On Track&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Q2 2024&lt;/td&gt;
+      &lt;td&gt;2,780,000 SAR&lt;/td&gt;
+      &lt;td&gt;+13.5%&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;On Track&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Q3 2024&lt;/td&gt;
+      &lt;td&gt;2,610,000 SAR&lt;/td&gt;
+      &lt;td&gt;-6.1%&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="warning"&gt;&lt;span class="nds-label"&gt;At Risk&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Q4 2024&lt;/td&gt;
+      &lt;td&gt;3,100,000 SAR&lt;/td&gt;
+      &lt;td&gt;+18.8%&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;On Track&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
                                 </code>
                             </div>
                         </div>
@@ -960,36 +960,36 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-<table class="nds-table" data-state="loading">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Department</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Loading...</td>
-      <td>Loading...</td>
-      <td>Loading...</td>
-      <td>Loading...</td>
-    </tr>
-    <tr>
-      <td>Loading...</td>
-      <td>Loading...</td>
-      <td>Loading...</td>
-      <td>Loading...</td>
-    </tr>
-    <tr>
-      <td>Loading...</td>
-      <td>Loading...</td>
-      <td>Loading...</td>
-      <td>Loading...</td>
-    </tr>
-  </tbody>
-</table>
+&lt;table class="nds-table" data-state="loading"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Email&lt;/th&gt;
+      &lt;th&gt;Department&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+      &lt;td&gt;Loading...&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
                             </code>
                         </div>
                     </div>
@@ -1077,70 +1077,70 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<table class="nds-table" style="--max-width: 600px;">
-  <thead>
-    <tr>
-      <th>Employee ID</th>
-      <th>Full Name</th>
-      <th>Email Address</th>
-      <th>Department</th>
-      <th>Position</th>
-      <th>Start Date</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>EMP-001</td>
-      <td>Ahmed Al-Rashidi</td>
-      <td>ahmed.rashidi@gov.sa</td>
-      <td>Engineering</td>
-      <td>Senior Developer</td>
-      <td>2023-01-15</td>
-      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>EMP-002</td>
-      <td>Fatima Al-Harbi</td>
-      <td>fatima.harbi@gov.sa</td>
-      <td>Design</td>
-      <td>UX Designer</td>
-      <td>2023-02-15</td>
-      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>EMP-003</td>
-      <td>Sara Al-Dosari</td>
-      <td>sara.dosari@gov.sa</td>
-      <td>Marketing</td>
-      <td>Marketing Lead</td>
-      <td>2023-03-15</td>
-      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
-    </tr>
-    <tr>
-      <td>EMP-004</td>
-      <td>Layla Al-Qahtani</td>
-      <td>layla.qahtani@gov.sa</td>
-      <td>Human Resources</td>
-      <td>HR Specialist</td>
-      <td>2023-04-15</td>
-      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Active</span></span></td>
-    </tr>
-  </tbody>
-</table>
+&lt;table class="nds-table" style="--max-width: 600px;"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Employee ID&lt;/th&gt;
+      &lt;th&gt;Full Name&lt;/th&gt;
+      &lt;th&gt;Email Address&lt;/th&gt;
+      &lt;th&gt;Department&lt;/th&gt;
+      &lt;th&gt;Position&lt;/th&gt;
+      &lt;th&gt;Start Date&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EMP-001&lt;/td&gt;
+      &lt;td&gt;Ahmed Al-Rashidi&lt;/td&gt;
+      &lt;td&gt;ahmed.rashidi@gov.sa&lt;/td&gt;
+      &lt;td&gt;Engineering&lt;/td&gt;
+      &lt;td&gt;Senior Developer&lt;/td&gt;
+      &lt;td&gt;2023-01-15&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-green nds-sm"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EMP-002&lt;/td&gt;
+      &lt;td&gt;Fatima Al-Harbi&lt;/td&gt;
+      &lt;td&gt;fatima.harbi@gov.sa&lt;/td&gt;
+      &lt;td&gt;Design&lt;/td&gt;
+      &lt;td&gt;UX Designer&lt;/td&gt;
+      &lt;td&gt;2023-02-15&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-green nds-sm"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EMP-003&lt;/td&gt;
+      &lt;td&gt;Sara Al-Dosari&lt;/td&gt;
+      &lt;td&gt;sara.dosari@gov.sa&lt;/td&gt;
+      &lt;td&gt;Marketing&lt;/td&gt;
+      &lt;td&gt;Marketing Lead&lt;/td&gt;
+      &lt;td&gt;2023-03-15&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-green nds-sm"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EMP-004&lt;/td&gt;
+      &lt;td&gt;Layla Al-Qahtani&lt;/td&gt;
+      &lt;td&gt;layla.qahtani@gov.sa&lt;/td&gt;
+      &lt;td&gt;Human Resources&lt;/td&gt;
+      &lt;td&gt;HR Specialist&lt;/td&gt;
+      &lt;td&gt;2023-04-15&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-green nds-sm"&gt;&lt;span class="nds-label"&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-<!-- All nds-table elements are responsive by default -->
-<!-- JS auto-wraps in nds-table-wrapper with scroll detection -->
-<!-- Add class="nds-table nds-mask" to opt into gradient fade masks on overflow edges -->
+&lt;!-- All nds-table elements are responsive by default --&gt;
+&lt;!-- JS auto-wraps in nds-table-wrapper with scroll detection --&gt;
+&lt;!-- Add class="nds-table nds-mask" to opt into gradient fade masks on overflow edges --&gt;
 
-<!-- --max-width: constrains the wrapper width -->
-<!-- style="--max-width: 600px;" - Fixed pixel width -->
-<!-- style="--max-width: 80%;"   - Percentage of parent -->
-<!-- No --max-width              - Full width (100%) -->
+&lt;!-- --max-width: constrains the wrapper width --&gt;
+&lt;!-- style="--max-width: 600px;" - Fixed pixel width --&gt;
+&lt;!-- style="--max-width: 80%;"   - Percentage of parent --&gt;
+&lt;!-- No --max-width              - Full width (100%) --&gt;
 
-<!-- --min-width: locks the table's minimum width (cells won't shrink below this) -->
-<!-- style="--min-width: 900px;" - Explicit minimum width -->
-<!-- No --min-width              - Auto-calculated from content (default) -->
+&lt;!-- --min-width: locks the table's minimum width (cells won't shrink below this) --&gt;
+&lt;!-- style="--min-width: 900px;" - Explicit minimum width --&gt;
+&lt;!-- No --min-width              - Auto-calculated from content (default) --&gt;
                                 </code>
                             </div>
                         </div>
@@ -1287,115 +1287,115 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<!-- Filter bar above table -->
-<div class="nds-filter" data-filter-target="paginatedTableBody">
-  <div class="nds-dropmenu">
-    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-      <i class="hgi hgi-stroke hgi-filter"></i>
-      <span class="nds-label">Filter</span>
-    </button>
-    <div class="nds-dropmenu-menu" hidden>
-      <div class="nds-dropmenu-scroll">
-        <div data-filter="system" data-filter-type="checkbox"
+&lt;!-- Filter bar above table --&gt;
+&lt;div class="nds-filter" data-filter-target="paginatedTableBody"&gt;
+  &lt;div class="nds-dropmenu"&gt;
+    &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
+      &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
+      &lt;div class="nds-dropmenu-scroll"&gt;
+        &lt;div data-filter="system" data-filter-type="checkbox"
           data-filter-legend="System"
-          data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
-          data-no-auto-close>
-        </div>
-        <hr class="nds-divider">
-        <div data-filter="popularity" data-filter-type="radio"
+          data-filter-values='{"Identity &amp; Records":"Identity &amp; Records","Transport &amp; Vehicles":"Transport &amp; Vehicles","Healthcare &amp; Social":"Healthcare &amp; Social","Business &amp; Finance":"Business &amp; Finance","Education &amp; Justice":"Education &amp; Justice"}'
+          data-no-auto-close&gt;
+        &lt;/div&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;div data-filter="popularity" data-filter-type="radio"
           data-filter-legend="Popularity"
           data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
-          data-no-auto-close>
-        </div>
-      </div>
-      <div class="nds-dropmenu-footer">
-        <hr class="nds-divider">
-        <div class="nds-dropmenu-action nds-grid">
-          <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-            data-filter-action="clear" data-no-auto-close>
-            <span class="nds-label">Reset</span>
-          </button>
-          <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-            data-filter-action="apply">
-            <span class="nds-label">Filter</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="nds-filter-applied" hidden>
-    <span class="nds-label">Applied Filters:</span>
-    <div class="nds-chips"></div>
-  </div>
-</div>
+          data-no-auto-close&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-dropmenu-footer"&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+          &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+            data-filter-action="clear" data-no-auto-close&gt;
+            &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+            data-filter-action="apply"&gt;
+            &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-filter-applied" hidden&gt;
+    &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
+    &lt;div class="nds-chips"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 
-<div class="nds-paged-content" style="--per-page: 5;" hidden>
-  <table class="nds-table nds-compact nds-sortable">
-    <thead>
-      <tr>
-        <th>
-          <div class="nds-col-header">
-            <span class="nds-label">#</span>
-            <div class="nds-col-actions">
-              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
-            </div>
-          </div>
-        </th>
-        <th>
-          <div class="nds-col-header">
-            <span class="nds-label">Service</span>
-            <div class="nds-col-actions">
-              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
-            </div>
-          </div>
-        </th>
-        <th>
-          <div class="nds-col-header">
-            <span class="nds-label">System</span>
-            <div class="nds-col-actions">
-              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
-            </div>
-          </div>
-        </th>
-        <th>Popularity</th>
-      </tr>
-    </thead>
-    <tbody id="paginatedTableBody" data-filter-items="tr">
-      <tr class="nds-page-item">
-        <td>1</td>
-        <td>Identity Verification</td>
-        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
-      </tr>
-      <tr class="nds-page-item">
-        <td>2</td>
-        <td>Passport Renewal</td>
-        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
-      </tr>
-      <tr class="nds-page-item">
-        <td>3</td>
-        <td>Birth Certificate Request</td>
-        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-sm" data-status="neutral"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span></td>
-      </tr>
-      <tr class="nds-page-item">
-        <td>4</td>
-        <td>Marriage Contract Registration</td>
-        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Identity & Records</span></span></td>
-        <td><span class="nds-tag nds-sm" data-status="neutral"><span class="nds-label" data-filter="popularity" data-filter-value="standard">Standard</span></span></td>
-      </tr>
-      <tr class="nds-page-item">
-        <td>5</td>
-        <td>Driver's License Services</td>
-        <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="system">Transport & Vehicles</span></span></td>
-        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label" data-filter="popularity" data-filter-value="most_used">Most Used</span></span></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<!-- Auto-pagination nav placed right after the content wrapper -->
-<nav class="nds-pagination" data-auto-pagination aria-label="Table pagination"></nav>
+&lt;div class="nds-paged-content" style="--per-page: 5;" hidden&gt;
+  &lt;table class="nds-table nds-compact nds-sortable"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;
+          &lt;div class="nds-col-header"&gt;
+            &lt;span class="nds-label"&gt;#&lt;/span&gt;
+            &lt;div class="nds-col-actions"&gt;
+              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/th&gt;
+        &lt;th&gt;
+          &lt;div class="nds-col-header"&gt;
+            &lt;span class="nds-label"&gt;Service&lt;/span&gt;
+            &lt;div class="nds-col-actions"&gt;
+              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/th&gt;
+        &lt;th&gt;
+          &lt;div class="nds-col-header"&gt;
+            &lt;span class="nds-label"&gt;System&lt;/span&gt;
+            &lt;div class="nds-col-actions"&gt;
+              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/th&gt;
+        &lt;th&gt;Popularity&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody id="paginatedTableBody" data-filter-items="tr"&gt;
+      &lt;tr class="nds-page-item"&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;Identity Verification&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-blue nds-sm"&gt;&lt;span class="nds-label" data-filter="system"&gt;Identity &amp; Records&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label" data-filter="popularity" data-filter-value="most_used"&gt;Most Used&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class="nds-page-item"&gt;
+        &lt;td&gt;2&lt;/td&gt;
+        &lt;td&gt;Passport Renewal&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-blue nds-sm"&gt;&lt;span class="nds-label" data-filter="system"&gt;Identity &amp; Records&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label" data-filter="popularity" data-filter-value="most_used"&gt;Most Used&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class="nds-page-item"&gt;
+        &lt;td&gt;3&lt;/td&gt;
+        &lt;td&gt;Birth Certificate Request&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-blue nds-sm"&gt;&lt;span class="nds-label" data-filter="system"&gt;Identity &amp; Records&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="neutral"&gt;&lt;span class="nds-label" data-filter="popularity" data-filter-value="standard"&gt;Standard&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class="nds-page-item"&gt;
+        &lt;td&gt;4&lt;/td&gt;
+        &lt;td&gt;Marriage Contract Registration&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-blue nds-sm"&gt;&lt;span class="nds-label" data-filter="system"&gt;Identity &amp; Records&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="neutral"&gt;&lt;span class="nds-label" data-filter="popularity" data-filter-value="standard"&gt;Standard&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class="nds-page-item"&gt;
+        &lt;td&gt;5&lt;/td&gt;
+        &lt;td&gt;Driver's License Services&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-blue nds-sm"&gt;&lt;span class="nds-label" data-filter="system"&gt;Transport &amp; Vehicles&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label" data-filter="popularity" data-filter-value="most_used"&gt;Most Used&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+&lt;!-- Auto-pagination nav placed right after the content wrapper --&gt;
+&lt;nav class="nds-pagination" data-auto-pagination aria-label="Table pagination"&gt;&lt;/nav&gt;
                                 </code>
                             </div>
                         </div>
@@ -1585,7 +1585,7 @@ responsive.destroy();          // Remove wrapper event listeners
 
 // ── Custom events ────────────────────────────────────
 // Fires when a column is sorted
-table.addEventListener('nds:table:sort', (e) => {
+table.addEventListener('nds:table:sort', (e) =&gt; {
     e.detail.columnIndex;  // Sorted column index
     e.detail.direction;    // 'asc', 'desc', or null (reset)
     e.detail.table;        // The &lt;table&gt; element
@@ -1593,7 +1593,7 @@ table.addEventListener('nds:table:sort', (e) => {
 });
 
 // Fires when row selection changes
-table.addEventListener('nds:table:selection', (e) => {
+table.addEventListener('nds:table:selection', (e) =&gt; {
     e.detail.selectedCount;    // Number of selected rows
     e.detail.totalCount;       // Total number of selectable rows
     e.detail.selectedRows;     // Array of selected &lt;tr&gt; elements

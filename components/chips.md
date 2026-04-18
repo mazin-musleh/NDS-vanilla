@@ -3,7 +3,7 @@ layout: page
 title: Chips
 hero_title: Chips - National Design System
 hero_description: Interactive elements for selections, filtering, and categorization
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -117,9 +117,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<button class="nds-chip nds-primary nds-rounded">
-  <span class="nds-label">Label</span>
-</button>
+&lt;button class="nds-chip nds-primary nds-rounded"&gt;
+  &lt;span class="nds-label"&gt;Label&lt;/span&gt;
+&lt;/button&gt;
                                     </code>
                                 </div>
                             </div>
@@ -187,17 +187,17 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-chips">
-  <button class="nds-chip nds-primary nds-rounded" data-state="selected">
-    <span class="nds-label">All</span>
-  </button>
-  <button class="nds-chip nds-neutral nds-rounded">
-    <span class="nds-label">Category A</span>
-  </button>
-  <button class="nds-chip nds-neutral nds-rounded">
-    <span class="nds-label">Category B</span>
-  </button>
-</div>
+&lt;div class="nds-chips"&gt;
+  &lt;button class="nds-chip nds-primary nds-rounded" data-state="selected"&gt;
+    &lt;span class="nds-label"&gt;All&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;button class="nds-chip nds-neutral nds-rounded"&gt;
+    &lt;span class="nds-label"&gt;Category A&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;button class="nds-chip nds-neutral nds-rounded"&gt;
+    &lt;span class="nds-label"&gt;Category B&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>

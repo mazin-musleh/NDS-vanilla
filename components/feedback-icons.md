@@ -3,7 +3,7 @@ layout: page
 title: Feedback Icons
 hero_title: Feedback Icons - National Design System
 hero_description: Status icons and inline messages for communicating validation results, system states, and contextual hints
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -113,11 +113,11 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-feedback" data-status="success">
-  <span class="nds-feedback-icon">
-    <i class="nds-icon" aria-hidden="true"></i>
-  </span>
-</span>
+&lt;span class="nds-feedback" data-status="success"&gt;
+  &lt;span class="nds-feedback-icon"&gt;
+    &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/span&gt;
+&lt;/span&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-js-1"
@@ -249,12 +249,12 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-feedback nds-sm" data-status="error">
-  <span class="nds-feedback-icon">
-    <i class="nds-icon" aria-hidden="true"></i>
-  </span>
-  <span class="nds-feedback-message">This field is required</span>
-</span>
+&lt;span class="nds-feedback nds-sm" data-status="error"&gt;
+  &lt;span class="nds-feedback-icon"&gt;
+    &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/span&gt;
+  &lt;span class="nds-feedback-message"&gt;This field is required&lt;/span&gt;
+&lt;/span&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-js-1"

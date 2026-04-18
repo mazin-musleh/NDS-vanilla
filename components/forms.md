@@ -3,7 +3,7 @@ layout: page
 title: Forms
 hero_title: Forms - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -108,22 +108,22 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="text-input-1">
-      <span class="nds-label">Full Name</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <input type="text" id="text-input-1" class="nds-input" placeholder="Enter your full name...">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="text-input-1"&gt;
+      &lt;span class="nds-label"&gt;Full Name&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;input type="text" id="text-input-1" class="nds-input" placeholder="Enter your full name..."&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                     </code>
                   </div>
                 </div>
@@ -291,19 +291,19 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="prefix-suffix-1">
-      <span class="nds-label">Label</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <div class="nds-form-action nds-prefix"><span class="nds-btn nds-subtle"><span class="nds-label">Prefix</span></span></div>
-    <input type="text" id="prefix-suffix-1" class="nds-input" placeholder="Entered text">
-    <div class="nds-form-action nds-suffix"><span class="nds-btn nds-subtle"><span class="nds-label">Suffix</span></span></div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="prefix-suffix-1"&gt;
+      &lt;span class="nds-label"&gt;Label&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;div class="nds-form-action nds-prefix"&gt;&lt;span class="nds-btn nds-subtle"&gt;&lt;span class="nds-label"&gt;Prefix&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;input type="text" id="prefix-suffix-1" class="nds-input" placeholder="Entered text"&gt;
+    &lt;div class="nds-form-action nds-suffix"&gt;&lt;span class="nds-btn nds-subtle"&gt;&lt;span class="nds-label"&gt;Suffix&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                     </code>
                   </div>
                 </div>
@@ -451,19 +451,19 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container" style="--form-width: 160px">
-  <div class="nds-form-header">
-    <label for="number-input-1">
-      <span class="nds-label">Quantity</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <div class="nds-form-action nds-prefix"><button class="nds-btn nds-secondary nds-number-increment" type="button" aria-label="Increase value"><i class="hgi hgi-stroke hgi-add-01"></i></button></div>
-    <input type="text" id="number-input-1" class="nds-input nds-center" inputmode="numeric" value="1" min="0" max="1000" step="1" placeholder="0">
-    <div class="nds-form-action nds-suffix"><button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"><i class="hgi hgi-stroke hgi-minus-sign"></i></button></div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container" style="--form-width: 160px"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="number-input-1"&gt;
+      &lt;span class="nds-label"&gt;Quantity&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;div class="nds-form-action nds-prefix"&gt;&lt;button class="nds-btn nds-secondary nds-number-increment" type="button" aria-label="Increase value"&gt;&lt;i class="hgi hgi-stroke hgi-add-01"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
+    &lt;input type="text" id="number-input-1" class="nds-input nds-center" inputmode="numeric" value="1" min="0" max="1000" step="1" placeholder="0"&gt;
+    &lt;div class="nds-form-action nds-suffix"&gt;&lt;button class="nds-btn nds-secondary nds-number-decrement" type="button" aria-label="Decrease value"&gt;&lt;i class="hgi hgi-stroke hgi-minus-sign"&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                     </code>
                   </div>
                 </div>
@@ -581,26 +581,26 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="search-input-1">
-      <span class="nds-label">Search Services</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-    <input type="text" id="search-input-1" class="nds-search-input" name="search" placeholder="Search services...">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-      <button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input">
-        <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="search-input-1"&gt;
+      &lt;span class="nds-label"&gt;Search Services&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;input type="text" id="search-input-1" class="nds-search-input" name="search" placeholder="Search services..."&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear search" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-voice-input" type="button" aria-label="Voice input"&gt;
+        &lt;i class="nds-icon nds-hgi-mic-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                     </code>
                   </div>
                 </div>
@@ -714,23 +714,23 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="email-input-1">
-      <span class="nds-label">Email Address</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-    <input type="email" id="email-input-1" class="nds-input" placeholder="Enter your email...">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="email-input-1"&gt;
+      &lt;span class="nds-label"&gt;Email Address&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;i class="nds-icon nds-hgi-mail-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;input type="email" id="email-input-1" class="nds-input" placeholder="Enter your email..."&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear email" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                     </code>
                   </div>
                 </div>
@@ -848,27 +848,27 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="password-input-1">
-      <span class="nds-label">Password</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-        <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-      </button>
-    </div>
-    <input type="password" id="password-input-1" class="nds-input" placeholder="Enter password...">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="password-input-1"&gt;
+      &lt;span class="nds-label"&gt;Password&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password"&gt;
+        &lt;i class="nds-icon nds-hgi-view-off" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;input type="password" id="password-input-1" class="nds-input" placeholder="Enter password..."&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                     </code>
                   </div>
                 </div>
@@ -977,17 +977,17 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container nds-textarea">
-  <div class="nds-form-header">
-    <label for="textarea-1">
-      <span class="nds-label">Message</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <textarea id="textarea-1" class="nds-textarea" placeholder="Enter your message..." rows="4"></textarea>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container nds-textarea"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="textarea-1"&gt;
+      &lt;span class="nds-label"&gt;Message&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;textarea id="textarea-1" class="nds-textarea" placeholder="Enter your message..." rows="4"&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                     </code>
                   </div>
                 </div>
@@ -1115,34 +1115,34 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container nds-select">
-  <div class="nds-form-header">
-    <label for="select-input-1">
-      <span class="nds-label">Region</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <input type="text" id="select-input-1" class="nds-input nds-select-input" placeholder="Choose an option..." readonly>
-    <input type="hidden" name="selectValue" class="nds-select-value">
-    <div class="nds-select-dropdown" hidden>
-      <div class="nds-select-options">
-        <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="">
-          <span class="nds-option-text">Choose an option...</span>
-        </button>
-        <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option1">
-          <span class="nds-option-text">Option 1</span>
-        </button>
-        <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option2">
-          <span class="nds-option-text">Option 2</span>
-        </button>
-        <button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3">
-          <span class="nds-option-text">Option 3</span>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container nds-select"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="select-input-1"&gt;
+      &lt;span class="nds-label"&gt;Region&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;input type="text" id="select-input-1" class="nds-input nds-select-input" placeholder="Choose an option..." readonly&gt;
+    &lt;input type="hidden" name="selectValue" class="nds-select-value"&gt;
+    &lt;div class="nds-select-dropdown" hidden&gt;
+      &lt;div class="nds-select-options"&gt;
+        &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value=""&gt;
+          &lt;span class="nds-option-text"&gt;Choose an option...&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option1"&gt;
+          &lt;span class="nds-option-text"&gt;Option 1&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option2"&gt;
+          &lt;span class="nds-option-text"&gt;Option 2&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;button type="button" class="nds-btn nds-subtle nds-select-option" data-value="option3"&gt;
+          &lt;span class="nds-option-text"&gt;Option 3&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                     </code>
                   </div>
                 </div>
@@ -1229,22 +1229,22 @@ direction: ltr
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container" id="national-id-field">
-  <div class="nds-form-header">
-    <label for="national-id">
-      <span class="nds-label">National ID</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <input type="text" id="national-id" class="nds-input" placeholder="Enter your national ID...">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container" id="national-id-field"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="national-id"&gt;
+      &lt;span class="nds-label"&gt;National ID&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;input type="text" id="national-id" class="nds-input" placeholder="Enter your national ID..."&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                   </code>
                   </div>
                 </div>
@@ -1354,30 +1354,30 @@ var status = NDS.Forms.getStatus(field);
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
-<div class="nds-form-container">
-  <div class="nds-form-header">
-    <label for="username">
-      <span class="nds-label">Username</span>
-      <span class="nds-info">Permanent tip shows again after error is cleared</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <input type="text" id="username" class="nds-input" placeholder="Enter username...">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target>
-    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
-      <span class="nds-feedback-icon">
-        <i class="nds-icon" aria-hidden="true"></i>
-      </span>
-      <span class="nds-feedback-message">Use 3-20 characters, letters and numbers only</span>
-    </span>
-  </div>
-</div>
+&lt;div class="nds-form-container"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="username"&gt;
+      &lt;span class="nds-label"&gt;Username&lt;/span&gt;
+      &lt;span class="nds-info"&gt;Permanent tip shows again after error is cleared&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;input type="text" id="username" class="nds-input" placeholder="Enter username..."&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target&gt;
+    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
+      &lt;span class="nds-feedback-icon"&gt;
+        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+      &lt;span class="nds-feedback-message"&gt;Use 3-20 characters, letters and numbers only&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                   </code>
                   </div>
                 </div>

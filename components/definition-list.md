@@ -3,7 +3,7 @@ layout: page
 title: Definition List
 hero_title: Definition List - National Design System
 hero_description: Semantic term-definition component for displaying structured information with optional icons and multiple layout modes
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -136,36 +136,36 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<dl class="nds-definition-list">
-  <div class="nds-definition-item">
-    <dt>
-      <i class="hgi hgi-stroke hgi-user-account"></i>
-      <span class="nds-label">Full Name</span>
-    </dt>
-    <dd>Mohammed Al-Harbi</dd>
-  </div>
-  <div class="nds-definition-item">
-    <dt>
-      <i class="hgi hgi-stroke hgi-building-02"></i>
-      <span class="nds-label">Organization</span>
-    </dt>
-    <dd>Digital Services Department</dd>
-  </div>
-  <div class="nds-definition-item">
-    <dt>
-      <i class="hgi hgi-stroke hgi-briefcase-02"></i>
-      <span class="nds-label">Position</span>
-    </dt>
-    <dd>Senior Developer</dd>
-  </div>
-  <div class="nds-definition-item">
-    <dt>
-      <i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i>
-      <span class="nds-label">Location</span>
-    </dt>
-    <dd>Riyadh</dd>
-  </div>
-</dl>
+&lt;dl class="nds-definition-list"&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;dt&gt;
+      &lt;i class="hgi hgi-stroke hgi-user-account"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Full Name&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd&gt;Mohammed Al-Harbi&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;dt&gt;
+      &lt;i class="hgi hgi-stroke hgi-building-02"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Organization&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd&gt;Digital Services Department&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;dt&gt;
+      &lt;i class="hgi hgi-stroke hgi-briefcase-02"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Position&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd&gt;Senior Developer&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;dt&gt;
+      &lt;i class="nds-icon nds-hgi-location-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Location&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd&gt;Riyadh&lt;/dd&gt;
+  &lt;/div&gt;
+&lt;/dl&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -272,36 +272,36 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap:24px; --col-gap:32px;">
-  <div class="nds-definition-item">
-    <span class="nds-item-title">
-      <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-      <span class="nds-label">Accessibility</span>
-    </span>
-    <p class="nds-item-desc">WCAG 2.1 compliant with full keyboard navigation and screen reader support.</p>
-  </div>
-  <div class="nds-definition-item">
-    <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-shield-01"></i>
-      <span class="nds-label">Security</span>
-    </span>
-    <p class="nds-item-desc">Built-in XSS protection and content security policy headers.</p>
-  </div>
-  <div class="nds-definition-item">
-    <span class="nds-item-title">
-      <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-      <span class="nds-label">Performance</span>
-    </span>
-    <p class="nds-item-desc">Lazy loading and staggered initialization for fast page loads.</p>
-  </div>
-  <div class="nds-definition-item">
-    <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-star"></i>
-      <span class="nds-label">Theming</span>
-    </span>
-    <p class="nds-item-desc">CSS custom properties for full visual customization without overrides.</p>
-  </div>
-</div>
+&lt;div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap:24px; --col-gap:32px;"&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;span class="nds-item-title"&gt;
+      &lt;i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Accessibility&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;p class="nds-item-desc"&gt;WCAG 2.1 compliant with full keyboard navigation and screen reader support.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;span class="nds-item-title"&gt;
+      &lt;i class="hgi hgi-stroke hgi-shield-01"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Security&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;p class="nds-item-desc"&gt;Built-in XSS protection and content security policy headers.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;span class="nds-item-title"&gt;
+      &lt;i class="nds-icon nds-hgi-clock-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Performance&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;p class="nds-item-desc"&gt;Lazy loading and staggered initialization for fast page loads.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;span class="nds-item-title"&gt;
+      &lt;i class="hgi hgi-stroke hgi-star"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Theming&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;p class="nds-item-desc"&gt;CSS custom properties for full visual customization without overrides.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>

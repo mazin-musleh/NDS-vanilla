@@ -3,7 +3,7 @@ layout: page
 title: Breadcrumb
 hero_title: Breadcrumb - National Design System
 hero_description: Navigation component showing the current page's location within the site hierarchy
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -56,13 +56,13 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
-  <ol class="nds-breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li><a href="#">Components</a></li>
-    <li aria-current="page">Breadcrumb</li>
-  </ol>
-</nav>
+&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;ol class="nds-breadcrumb"&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Components&lt;/a&gt;&lt;/li&gt;
+    &lt;li aria-current="page"&gt;Breadcrumb&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
                                     </code>
                                 </div>
                             </div>
@@ -121,12 +121,12 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
-  <ol class="nds-breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li aria-current="page">Components</li>
-  </ol>
-</nav>
+&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;ol class="nds-breadcrumb"&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li aria-current="page"&gt;Components&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
                                     </code>
                                 </div>
                             </div>
@@ -186,13 +186,13 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
-  <ol class="nds-breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li><a href="#">Components</a></li>
-    <li class="nds-truncate" aria-current="page">Very Long Page Title</li>
-  </ol>
-</nav>
+&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;ol class="nds-breadcrumb"&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Components&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="nds-truncate" aria-current="page"&gt;Very Long Page Title&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
                                     </code>
                                 </div>
                             </div>
@@ -259,18 +259,18 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<!-- Write the full breadcrumb. JS collapses 5+ levels automatically -->
-<nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
-  <ol class="nds-breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li><a href="#">Services</a></li>
-    <li><a href="#">Category</a></li>
-    <li><a href="#">Subcategory</a></li>
-    <li><a href="#">Section</a></li>
-    <li><a href="#">Parent</a></li>
-    <li aria-current="page">Current Page</li>
-  </ol>
-</nav>
+&lt;!-- Write the full breadcrumb. JS collapses 5+ levels automatically --&gt;
+&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;ol class="nds-breadcrumb"&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Services&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Category&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Subcategory&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Section&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Parent&lt;/a&gt;&lt;/li&gt;
+    &lt;li aria-current="page"&gt;Current Page&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
                                         </code>
                                     </div>
                                 </div>

@@ -4,7 +4,7 @@ title: Swiper
 hero_title: Swiper - National Design System
 hero_description: "A responsive carousel/slider component with CSS scroll-snap, RTL/LTR support, and keyboard
 navigation"
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -111,19 +111,19 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <div class="nds-swiper">
-                                    <div class="nds-swiper-wrapper">
-                                        <div class="nds-swiper-slide">
-                                            <!-- Slide content -->
-                                        </div>
-                                        <div class="nds-swiper-slide">
-                                            <!-- Slide content -->
-                                        </div>
-                                    </div>
-                                    <div class="nds-swiper-pagination"></div>
-                                    <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-prev nds-swiper-button-prev" aria-label="Previous slide"></button>
-                                    <button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-next nds-swiper-button-next" aria-label="Next slide"></button>
-                                </div>
+                                &lt;div class="nds-swiper"&gt;
+                                    &lt;div class="nds-swiper-wrapper"&gt;
+                                        &lt;div class="nds-swiper-slide"&gt;
+                                            &lt;!-- Slide content --&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class="nds-swiper-slide"&gt;
+                                            &lt;!-- Slide content --&gt;
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+                                    &lt;button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-prev nds-swiper-button-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
+                                    &lt;button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-next nds-swiper-button-next" aria-label="Next slide"&gt;&lt;/button&gt;
+                                &lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -210,21 +210,21 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <div class="nds-swiper">
-                                    <div class="nds-swiper-wrapper">
-                                        <div class="nds-swiper-slide">
-                                            <img data-src="image1.jpg" alt="Description"
-                                                style="width: 100%; height: 450px; object-fit: cover;">
-                                        </div>
-                                        <div class="nds-swiper-slide">
-                                            <img data-src="image2.jpg" data-srcset="small.jpg 600w, large.jpg 1200w" alt="Description">
-                                        </div>
-                                        <!-- More slides... -->
-                                    </div>
-                                    <div class="nds-swiper-pagination"></div>
-                                    <button class="nds-prev nds-swiper-button-prev" aria-label="Previous slide">...</button>
-                                    <button class="nds-next nds-swiper-button-next" aria-label="Next slide">...</button>
-                                </div>
+                                &lt;div class="nds-swiper"&gt;
+                                    &lt;div class="nds-swiper-wrapper"&gt;
+                                        &lt;div class="nds-swiper-slide"&gt;
+                                            &lt;img data-src="image1.jpg" alt="Description"
+                                                style="width: 100%; height: 450px; object-fit: cover;"&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class="nds-swiper-slide"&gt;
+                                            &lt;img data-src="image2.jpg" data-srcset="small.jpg 600w, large.jpg 1200w" alt="Description"&gt;
+                                        &lt;/div&gt;
+                                        &lt;!-- More slides... --&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+                                    &lt;button class="nds-prev nds-swiper-button-prev" aria-label="Previous slide"&gt;...&lt;/button&gt;
+                                    &lt;button class="nds-next nds-swiper-button-next" aria-label="Next slide"&gt;...&lt;/button&gt;
+                                &lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -340,26 +340,26 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1">
-                                    <div class="nds-swiper-wrapper">
-                                        <div class="nds-swiper-slide">
-                                            <div class="nds-card nds-stroke nds-shadow">
-                                                <div class="nds-card-content">
-                                                    <h4 class="nds-card-title">Card 1</h4>
-                                                    <p class="nds-card-description">Content</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- More slides... -->
-                                    </div>
-                                    <div class="nds-swiper-navigation">
-                                        <div class="nds-swiper-buttons">
-                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"></button>
-                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"></button>
-                                        </div>
-                                        <div class="nds-swiper-pagination"></div>
-                                    </div>
-                                </div>
+                                &lt;div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1"&gt;
+                                    &lt;div class="nds-swiper-wrapper"&gt;
+                                        &lt;div class="nds-swiper-slide"&gt;
+                                            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                                                &lt;div class="nds-card-content"&gt;
+                                                    &lt;h4 class="nds-card-title"&gt;Card 1&lt;/h4&gt;
+                                                    &lt;p class="nds-card-description"&gt;Content&lt;/p&gt;
+                                                &lt;/div&gt;
+                                            &lt;/div&gt;
+                                        &lt;/div&gt;
+                                        &lt;!-- More slides... --&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="nds-swiper-navigation"&gt;
+                                        &lt;div class="nds-swiper-buttons"&gt;
+                                            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
+                                            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -474,21 +474,21 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
-                                    <div class="nds-swiper-wrapper">
-                                        <div class="nds-swiper-slide">
-                                            <!-- Slide content -->
-                                        </div>
-                                        <!-- More slides... -->
-                                    </div>
-                                    <div class="nds-swiper-navigation">
-                                        <div class="nds-swiper-buttons">
-                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"></button>
-                                            <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"></button>
-                                        </div>
-                                        <div class="nds-swiper-pagination"></div>
-                                    </div>
-                                </div>
+                                &lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
+                                    &lt;div class="nds-swiper-wrapper"&gt;
+                                        &lt;div class="nds-swiper-slide"&gt;
+                                            &lt;!-- Slide content --&gt;
+                                        &lt;/div&gt;
+                                        &lt;!-- More slides... --&gt;
+                                    &lt;/div&gt;
+                                    &lt;div class="nds-swiper-navigation"&gt;
+                                        &lt;div class="nds-swiper-buttons"&gt;
+                                            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
+                                            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
+                                        &lt;/div&gt;
+                                        &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+                                    &lt;/div&gt;
+                                &lt;/div&gt;
                             </code>
                         </div>
                     </div>

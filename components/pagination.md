@@ -3,7 +3,7 @@ layout: page
 title: Pagination
 hero_title: Pagination - National Design System
 hero_description: Navigate large data sets with numbered page controls, or automatically split grids, lists, and tables into pages with built-in content management
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -110,45 +110,45 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<nav class="nds-pagination" aria-label="Pagination">
-    <ul class="nds-pagination-list">
-        <li class="nds-pagination-item nds-pagination-prev">
-            <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page" disabled>
-                <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" data-state="active" aria-current="page" aria-label="Page 1">
-                <span class="nds-label">1</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2">
-                <span class="nds-label">2</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3">
-                <span class="nds-label">3</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4">
-                <span class="nds-label">4</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 5">
-                <span class="nds-label">5</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item nds-pagination-next">
-            <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page">
-                <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
-            </button>
-        </li>
-    </ul>
-</nav>
+&lt;nav class="nds-pagination" aria-label="Pagination"&gt;
+    &lt;ul class="nds-pagination-list"&gt;
+        &lt;li class="nds-pagination-item nds-pagination-prev"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page" disabled&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" data-state="active" aria-current="page" aria-label="Page 1"&gt;
+                &lt;span class="nds-label"&gt;1&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2"&gt;
+                &lt;span class="nds-label"&gt;2&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3"&gt;
+                &lt;span class="nds-label"&gt;3&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4"&gt;
+                &lt;span class="nds-label"&gt;4&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 5"&gt;
+                &lt;span class="nds-label"&gt;5&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item nds-pagination-next"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page"&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
                                     </code>
                                 </div>
                             </div>
@@ -224,7 +224,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<nav class="nds-pagination" data-total-pages="8" data-active-page="1" aria-label="Pagination"></nav>
+&lt;nav class="nds-pagination" data-total-pages="8" data-active-page="1" aria-label="Pagination"&gt;&lt;/nav&gt;
                                     </code>
                                 </div>
                             </div>
@@ -363,70 +363,70 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<nav class="nds-pagination" aria-label="Pagination">
-    <ul class="nds-pagination-list">
-        <li class="nds-pagination-item nds-pagination-prev">
-            <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page">
-                <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 1">
-                <span class="nds-label">1</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2">
-                <span class="nds-label">2</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3">
-                <span class="nds-label">3</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4">
-                <span class="nds-label">4</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" data-state="active" aria-current="page" aria-label="Page 5">
-                <span class="nds-label">5</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 6">
-                <span class="nds-label">6</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 7">
-                <span class="nds-label">7</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 8">
-                <span class="nds-label">8</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 9">
-                <span class="nds-label">9</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item">
-            <button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 10">
-                <span class="nds-label">10</span>
-            </button>
-        </li>
-        <li class="nds-pagination-item nds-pagination-next">
-            <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page">
-                <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
-            </button>
-        </li>
-    </ul>
-</nav>
+&lt;nav class="nds-pagination" aria-label="Pagination"&gt;
+    &lt;ul class="nds-pagination-list"&gt;
+        &lt;li class="nds-pagination-item nds-pagination-prev"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page"&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 1"&gt;
+                &lt;span class="nds-label"&gt;1&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 2"&gt;
+                &lt;span class="nds-label"&gt;2&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 3"&gt;
+                &lt;span class="nds-label"&gt;3&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 4"&gt;
+                &lt;span class="nds-label"&gt;4&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" data-state="active" aria-current="page" aria-label="Page 5"&gt;
+                &lt;span class="nds-label"&gt;5&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 6"&gt;
+                &lt;span class="nds-label"&gt;6&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 7"&gt;
+                &lt;span class="nds-label"&gt;7&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 8"&gt;
+                &lt;span class="nds-label"&gt;8&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 9"&gt;
+                &lt;span class="nds-label"&gt;9&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-indicator" aria-label="Page 10"&gt;
+                &lt;span class="nds-label"&gt;10&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+        &lt;li class="nds-pagination-item nds-pagination-next"&gt;
+            &lt;button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page"&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;/button&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -527,30 +527,30 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-paged-content nds-grid" hidden
-    style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;">
-    <div class="nds-page-item nds-card nds-stroke">Card 1</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 2</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 3</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 4</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 5</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 6</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 7</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 8</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 9</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 10</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 11</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 12</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 13</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 14</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 15</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 16</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 17</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 18</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 19</div>
-    <div class="nds-page-item nds-card nds-stroke">Card 20</div>
-</div>
-<nav class="nds-pagination" data-auto-pagination aria-label="Pagination"></nav>
+&lt;div class="nds-paged-content nds-grid" hidden
+    style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;"&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 1&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 2&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 3&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 4&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 5&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 6&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 7&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 8&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 9&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 10&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 11&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 12&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 13&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 14&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 15&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 16&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 17&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 18&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 19&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 20&lt;/div&gt;
+&lt;/div&gt;
+&lt;nav class="nds-pagination" data-auto-pagination aria-label="Pagination"&gt;&lt;/nav&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -673,127 +673,127 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-paged-content" style="--per-page: 5;" hidden>
-    <table class="nds-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Service</th>
-                <th>Description</th>
-                <th>System</th>
-                <th>Most Used</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="nds-page-item">
-                <td>1</td>
-                <td>Identity Verification</td>
-                <td>Verify your national identity and obtain digital certificates</td>
-                <td>Identity &amp; Records</td>
-                <td>Yes</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>2</td>
-                <td>Passport Renewal</td>
-                <td>Renew your passport online with expedited processing</td>
-                <td>Identity &amp; Records</td>
-                <td>Yes</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>3</td>
-                <td>Birth Certificate Request</td>
-                <td>Request official birth certificates and family documentation</td>
-                <td>Identity &amp; Records</td>
-                <td>&#8212;</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>4</td>
-                <td>Marriage Contract Registration</td>
-                <td>Register marriage contracts and obtain official certificates</td>
-                <td>Identity &amp; Records</td>
-                <td>&#8212;</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>5</td>
-                <td>Driver's License Services</td>
-                <td>Apply for, renew, or update your driving license</td>
-                <td>Transport &amp; Vehicles</td>
-                <td>Yes</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>6</td>
-                <td>Vehicle Registration</td>
-                <td>Register new vehicles, transfer ownership, or renew registration</td>
-                <td>Transport &amp; Vehicles</td>
-                <td>Yes</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>7</td>
-                <td>Visa Application</td>
-                <td>Apply for entry visas for visitors, workers, or family members</td>
-                <td>Transport &amp; Vehicles</td>
-                <td>&#8212;</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>8</td>
-                <td>Health Insurance Enrollment</td>
-                <td>Enroll in government health insurance plans</td>
-                <td>Healthcare &amp; Social</td>
-                <td>Yes</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>9</td>
-                <td>Medical Appointment Booking</td>
-                <td>Schedule appointments at government healthcare facilities</td>
-                <td>Healthcare &amp; Social</td>
-                <td>Yes</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>10</td>
-                <td>Employment Certificate</td>
-                <td>Request official employment certificates and salary statements</td>
-                <td>Healthcare &amp; Social</td>
-                <td>Yes</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>11</td>
-                <td>Work Permit Processing</td>
-                <td>Apply for work permits and employment authorization</td>
-                <td>Healthcare &amp; Social</td>
-                <td>&#8212;</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>12</td>
-                <td>Retirement Benefits Application</td>
-                <td>Apply for retirement pensions and social security benefits</td>
-                <td>Healthcare &amp; Social</td>
-                <td>&#8212;</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>13</td>
-                <td>Tax Declaration Filing</td>
-                <td>Submit your annual tax returns and manage tax obligations</td>
-                <td>Business &amp; Finance</td>
-                <td>Yes</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>14</td>
-                <td>VAT Registration</td>
-                <td>Register for VAT and manage value-added tax compliance</td>
-                <td>Business &amp; Finance</td>
-                <td>&#8212;</td>
-            </tr>
-            <tr class="nds-page-item">
-                <td>15</td>
-                <td>Business License Application</td>
-                <td>Apply for commercial licenses and business permits</td>
-                <td>Business &amp; Finance</td>
-                <td>&#8212;</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<nav class="nds-pagination" data-auto-pagination></nav>
+&lt;div class="nds-paged-content" style="--per-page: 5;" hidden&gt;
+    &lt;table class="nds-table"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;#&lt;/th&gt;
+                &lt;th&gt;Service&lt;/th&gt;
+                &lt;th&gt;Description&lt;/th&gt;
+                &lt;th&gt;System&lt;/th&gt;
+                &lt;th&gt;Most Used&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;1&lt;/td&gt;
+                &lt;td&gt;Identity Verification&lt;/td&gt;
+                &lt;td&gt;Verify your national identity and obtain digital certificates&lt;/td&gt;
+                &lt;td&gt;Identity &amp; Records&lt;/td&gt;
+                &lt;td&gt;Yes&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;2&lt;/td&gt;
+                &lt;td&gt;Passport Renewal&lt;/td&gt;
+                &lt;td&gt;Renew your passport online with expedited processing&lt;/td&gt;
+                &lt;td&gt;Identity &amp; Records&lt;/td&gt;
+                &lt;td&gt;Yes&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;3&lt;/td&gt;
+                &lt;td&gt;Birth Certificate Request&lt;/td&gt;
+                &lt;td&gt;Request official birth certificates and family documentation&lt;/td&gt;
+                &lt;td&gt;Identity &amp; Records&lt;/td&gt;
+                &lt;td&gt;&#8212;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;4&lt;/td&gt;
+                &lt;td&gt;Marriage Contract Registration&lt;/td&gt;
+                &lt;td&gt;Register marriage contracts and obtain official certificates&lt;/td&gt;
+                &lt;td&gt;Identity &amp; Records&lt;/td&gt;
+                &lt;td&gt;&#8212;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;5&lt;/td&gt;
+                &lt;td&gt;Driver's License Services&lt;/td&gt;
+                &lt;td&gt;Apply for, renew, or update your driving license&lt;/td&gt;
+                &lt;td&gt;Transport &amp; Vehicles&lt;/td&gt;
+                &lt;td&gt;Yes&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;6&lt;/td&gt;
+                &lt;td&gt;Vehicle Registration&lt;/td&gt;
+                &lt;td&gt;Register new vehicles, transfer ownership, or renew registration&lt;/td&gt;
+                &lt;td&gt;Transport &amp; Vehicles&lt;/td&gt;
+                &lt;td&gt;Yes&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;7&lt;/td&gt;
+                &lt;td&gt;Visa Application&lt;/td&gt;
+                &lt;td&gt;Apply for entry visas for visitors, workers, or family members&lt;/td&gt;
+                &lt;td&gt;Transport &amp; Vehicles&lt;/td&gt;
+                &lt;td&gt;&#8212;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;8&lt;/td&gt;
+                &lt;td&gt;Health Insurance Enrollment&lt;/td&gt;
+                &lt;td&gt;Enroll in government health insurance plans&lt;/td&gt;
+                &lt;td&gt;Healthcare &amp; Social&lt;/td&gt;
+                &lt;td&gt;Yes&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;9&lt;/td&gt;
+                &lt;td&gt;Medical Appointment Booking&lt;/td&gt;
+                &lt;td&gt;Schedule appointments at government healthcare facilities&lt;/td&gt;
+                &lt;td&gt;Healthcare &amp; Social&lt;/td&gt;
+                &lt;td&gt;Yes&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;10&lt;/td&gt;
+                &lt;td&gt;Employment Certificate&lt;/td&gt;
+                &lt;td&gt;Request official employment certificates and salary statements&lt;/td&gt;
+                &lt;td&gt;Healthcare &amp; Social&lt;/td&gt;
+                &lt;td&gt;Yes&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;11&lt;/td&gt;
+                &lt;td&gt;Work Permit Processing&lt;/td&gt;
+                &lt;td&gt;Apply for work permits and employment authorization&lt;/td&gt;
+                &lt;td&gt;Healthcare &amp; Social&lt;/td&gt;
+                &lt;td&gt;&#8212;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;12&lt;/td&gt;
+                &lt;td&gt;Retirement Benefits Application&lt;/td&gt;
+                &lt;td&gt;Apply for retirement pensions and social security benefits&lt;/td&gt;
+                &lt;td&gt;Healthcare &amp; Social&lt;/td&gt;
+                &lt;td&gt;&#8212;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;13&lt;/td&gt;
+                &lt;td&gt;Tax Declaration Filing&lt;/td&gt;
+                &lt;td&gt;Submit your annual tax returns and manage tax obligations&lt;/td&gt;
+                &lt;td&gt;Business &amp; Finance&lt;/td&gt;
+                &lt;td&gt;Yes&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;14&lt;/td&gt;
+                &lt;td&gt;VAT Registration&lt;/td&gt;
+                &lt;td&gt;Register for VAT and manage value-added tax compliance&lt;/td&gt;
+                &lt;td&gt;Business &amp; Finance&lt;/td&gt;
+                &lt;td&gt;&#8212;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr class="nds-page-item"&gt;
+                &lt;td&gt;15&lt;/td&gt;
+                &lt;td&gt;Business License Application&lt;/td&gt;
+                &lt;td&gt;Apply for commercial licenses and business permits&lt;/td&gt;
+                &lt;td&gt;Business &amp; Finance&lt;/td&gt;
+                &lt;td&gt;&#8212;&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+&lt;nav class="nds-pagination" data-auto-pagination&gt;&lt;/nav&gt;
                                         </code>
                                     </div>
                                 </div>

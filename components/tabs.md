@@ -3,7 +3,7 @@ layout: page
 title: Tabs
 hero_title: Tabs - National Design System
 hero_description: Group related content into a single surface where users switch between views without leaving the page
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -238,166 +238,166 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-<div class="nds-tabs" hidden>
-    <div class="nds-tab-list-container nds-scroll-more">
-        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation">
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home">
-                <span class="nds-label">Home</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+&lt;div class="nds-tabs" hidden&gt;
+    &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
+        &lt;nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation"&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home"&gt;
+                &lt;span class="nds-label"&gt;Home&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                 aria-controls="panel-services" id="tab-services" tabindex="-1"
-                data-label="Services">
-                <span class="nds-label">Services</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-about" id="tab-about" tabindex="-1">
-                <span class="nds-label">About</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-contact" id="tab-contact" tabindex="-1">
-                <span class="nds-label">Contact</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-support" id="tab-support" tabindex="-1">
-                <span class="nds-label">Support</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-resources" id="tab-resources" tabindex="-1">
-                <span class="nds-label">Resources</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-documentation" id="tab-documentation" tabindex="-1">
-                <span class="nds-label">Documentation</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-news" id="tab-news" tabindex="-1">
-                <span class="nds-label">News</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-feedback" id="tab-feedback" tabindex="-1">
-                <span class="nds-label">Feedback</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-settings" id="tab-settings" tabindex="-1">
-                <span class="nds-label">Settings</span>
-            </button>
-        </nav>
-        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-        </button>
-    </div>
-    <div class="nds-tab-content">
-        <div class="nds-tab-panel" role="tabpanel" id="panel-home" aria-labelledby="tab-home"
-            tabindex="0">
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Welcome</h3>
-                <p>Welcome to our platform. Here you'll find the latest updates and important
-                    information about our services and offerings.</p>
-                <p>This is the main dashboard where users can quickly access key features and get an
-                    overview of their account status.</p>
-            </div>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Getting Started</h3>
-                <p>Explore the available services, review your recent activity, or configure your
-                    account preferences from the tabs above.</p>
-                <ul>
-                    <li>Browse available government services</li>
-                    <li>Track your application status</li>
-                    <li>Manage your profile and notifications</li>
-                </ul>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-services"
-            aria-labelledby="tab-services" aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Our Services</h3>
-                <p>We offer a comprehensive range of digital government services designed to make your
-                    life easier.</p>
-                <ul>
-                    <li>Document Processing</li>
-                    <li>Online Applications</li>
-                    <li>Digital Certificates</li>
-                    <li>Support Services</li>
-                </ul>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-about" aria-labelledby="tab-about"
-            aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">About Us</h3>
-                <p>The National Design System is part of Saudi Arabia's digital transformation
+                data-label="Services"&gt;
+                &lt;span class="nds-label"&gt;Services&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-about" id="tab-about" tabindex="-1"&gt;
+                &lt;span class="nds-label"&gt;About&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-contact" id="tab-contact" tabindex="-1"&gt;
+                &lt;span class="nds-label"&gt;Contact&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-support" id="tab-support" tabindex="-1"&gt;
+                &lt;span class="nds-label"&gt;Support&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-resources" id="tab-resources" tabindex="-1"&gt;
+                &lt;span class="nds-label"&gt;Resources&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-documentation" id="tab-documentation" tabindex="-1"&gt;
+                &lt;span class="nds-label"&gt;Documentation&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-news" id="tab-news" tabindex="-1"&gt;
+                &lt;span class="nds-label"&gt;News&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-feedback" id="tab-feedback" tabindex="-1"&gt;
+                &lt;span class="nds-label"&gt;Feedback&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-settings" id="tab-settings" tabindex="-1"&gt;
+                &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/nav&gt;
+        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"&gt;
+            &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-tab-content"&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-home" aria-labelledby="tab-home"
+            tabindex="0"&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Welcome&lt;/h3&gt;
+                &lt;p&gt;Welcome to our platform. Here you'll find the latest updates and important
+                    information about our services and offerings.&lt;/p&gt;
+                &lt;p&gt;This is the main dashboard where users can quickly access key features and get an
+                    overview of their account status.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Getting Started&lt;/h3&gt;
+                &lt;p&gt;Explore the available services, review your recent activity, or configure your
+                    account preferences from the tabs above.&lt;/p&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;Browse available government services&lt;/li&gt;
+                    &lt;li&gt;Track your application status&lt;/li&gt;
+                    &lt;li&gt;Manage your profile and notifications&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-services"
+            aria-labelledby="tab-services" aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Our Services&lt;/h3&gt;
+                &lt;p&gt;We offer a comprehensive range of digital government services designed to make your
+                    life easier.&lt;/p&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;Document Processing&lt;/li&gt;
+                    &lt;li&gt;Online Applications&lt;/li&gt;
+                    &lt;li&gt;Digital Certificates&lt;/li&gt;
+                    &lt;li&gt;Support Services&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-about" aria-labelledby="tab-about"
+            aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;About Us&lt;/h3&gt;
+                &lt;p&gt;The National Design System is part of Saudi Arabia's digital transformation
                     initiative, providing consistent and accessible user experiences across all
-                    government digital services.</p>
-                <p>Our mission is to create unified, user-friendly interfaces that serve citizens
-                    efficiently and effectively.</p>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-contact" aria-labelledby="tab-contact"
-            aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Contact Information</h3>
-                <p>Get in touch with us through the following channels:</p>
-                <p><strong>Email:</strong> support@nds.gov.sa</p>
-                <p><strong>Phone:</strong> 920-000-000</p>
-                <p><strong>Address:</strong> National Design System, Riyadh, Saudi Arabia</p>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-support" aria-labelledby="tab-support"
-            aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Support Center</h3>
-                <p>Find help and assistance with our comprehensive support resources.</p>
-                <ul>
-                    <li>Technical Documentation</li>
-                    <li>FAQ Section</li>
-                    <li>Live Chat Support</li>
-                    <li>Video Tutorials</li>
-                </ul>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-resources"
-            aria-labelledby="tab-resources" aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Resources</h3>
-                <p>Access downloadable resources and tools for developers and designers.</p>
-                <p>Browse our collection of design assets, code snippets, and implementation guides.</p>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-documentation"
-            aria-labelledby="tab-documentation" aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Documentation</h3>
-                <p>Comprehensive documentation for the National Design System components and guidelines.</p>
-                <p>Learn how to implement and customize components according to government standards.</p>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-news" aria-labelledby="tab-news"
-            aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Latest News</h3>
-                <p>Stay updated with the latest announcements and updates from the design system team.</p>
-                <p>New component releases, feature updates, and important notices are published here.</p>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-feedback"
-            aria-labelledby="tab-feedback" aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Feedback</h3>
-                <p>We value your feedback and suggestions for improving the design system.</p>
-                <p>Submit your ideas, report issues, or share your experience with our components.</p>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-settings"
-            aria-labelledby="tab-settings" aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Settings</h3>
-                <p>Configure your preferences and customize your experience with the design system.</p>
-                <p>Adjust theme settings, language preferences, and accessibility options.</p>
-            </div>
-        </div>
-    </div>
-</div>
+                    government digital services.&lt;/p&gt;
+                &lt;p&gt;Our mission is to create unified, user-friendly interfaces that serve citizens
+                    efficiently and effectively.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-contact" aria-labelledby="tab-contact"
+            aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Contact Information&lt;/h3&gt;
+                &lt;p&gt;Get in touch with us through the following channels:&lt;/p&gt;
+                &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; support@nds.gov.sa&lt;/p&gt;
+                &lt;p&gt;&lt;strong&gt;Phone:&lt;/strong&gt; 920-000-000&lt;/p&gt;
+                &lt;p&gt;&lt;strong&gt;Address:&lt;/strong&gt; National Design System, Riyadh, Saudi Arabia&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-support" aria-labelledby="tab-support"
+            aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Support Center&lt;/h3&gt;
+                &lt;p&gt;Find help and assistance with our comprehensive support resources.&lt;/p&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;Technical Documentation&lt;/li&gt;
+                    &lt;li&gt;FAQ Section&lt;/li&gt;
+                    &lt;li&gt;Live Chat Support&lt;/li&gt;
+                    &lt;li&gt;Video Tutorials&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-resources"
+            aria-labelledby="tab-resources" aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Resources&lt;/h3&gt;
+                &lt;p&gt;Access downloadable resources and tools for developers and designers.&lt;/p&gt;
+                &lt;p&gt;Browse our collection of design assets, code snippets, and implementation guides.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-documentation"
+            aria-labelledby="tab-documentation" aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Documentation&lt;/h3&gt;
+                &lt;p&gt;Comprehensive documentation for the National Design System components and guidelines.&lt;/p&gt;
+                &lt;p&gt;Learn how to implement and customize components according to government standards.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-news" aria-labelledby="tab-news"
+            aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Latest News&lt;/h3&gt;
+                &lt;p&gt;Stay updated with the latest announcements and updates from the design system team.&lt;/p&gt;
+                &lt;p&gt;New component releases, feature updates, and important notices are published here.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-feedback"
+            aria-labelledby="tab-feedback" aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Feedback&lt;/h3&gt;
+                &lt;p&gt;We value your feedback and suggestions for improving the design system.&lt;/p&gt;
+                &lt;p&gt;Submit your ideas, report issues, or share your experience with our components.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-settings"
+            aria-labelledby="tab-settings" aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Settings&lt;/h3&gt;
+                &lt;p&gt;Configure your preferences and customize your experience with the design system.&lt;/p&gt;
+                &lt;p&gt;Adjust theme settings, language preferences, and accessibility options.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -527,53 +527,53 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-<div class="nds-tabs" hidden>
-    <div class="nds-tab-list-container nds-scroll-more">
-        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation">
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0">
-                <i class="hgi hgi-stroke hgi-home-05"></i>
-                <span class="nds-label">Dashboard</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-analytics" id="tab-analytics" tabindex="-1">
-                <i class="hgi hgi-stroke hgi-analytics-01"></i>
-                <span class="nds-label">Analytics</span>
-            </button>
-            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-settings" id="tab-settings" tabindex="-1">
-                <i class="hgi hgi-stroke hgi-settings-01"></i>
-                <span class="nds-label">Settings</span>
-            </button>
-        </nav>
-        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-        </button>
-    </div>
-    <div class="nds-tab-content">
-        <div class="nds-tab-panel" role="tabpanel" id="panel-dashboard"
-            aria-labelledby="tab-dashboard" tabindex="0">
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Dashboard</h3>
-                <p>Your main dashboard with key metrics and quick access to important features.</p>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-analytics"
-            aria-labelledby="tab-analytics" aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Analytics</h3>
-                <p>Configure your analytics preferences and data visualization options.</p>
-            </div>
-        </div>
-        <div class="nds-tab-panel" role="tabpanel" id="panel-settings"
-            aria-labelledby="tab-settings" aria-hidden="true" tabindex="-1" hidden>
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">Settings</h3>
-                <p>Configure your preferences and manage your account settings.</p>
-            </div>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-tabs" hidden&gt;
+    &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
+        &lt;nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation"&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0"&gt;
+                &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
+                &lt;span class="nds-label"&gt;Dashboard&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-analytics" id="tab-analytics" tabindex="-1"&gt;
+                &lt;i class="hgi hgi-stroke hgi-analytics-01"&gt;&lt;/i&gt;
+                &lt;span class="nds-label"&gt;Analytics&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                aria-controls="panel-settings" id="tab-settings" tabindex="-1"&gt;
+                &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
+                &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/nav&gt;
+        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"&gt;
+            &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-tab-content"&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-dashboard"
+            aria-labelledby="tab-dashboard" tabindex="0"&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Dashboard&lt;/h3&gt;
+                &lt;p&gt;Your main dashboard with key metrics and quick access to important features.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-analytics"
+            aria-labelledby="tab-analytics" aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Analytics&lt;/h3&gt;
+                &lt;p&gt;Configure your analytics preferences and data visualization options.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-tab-panel" role="tabpanel" id="panel-settings"
+            aria-labelledby="tab-settings" aria-hidden="true" tabindex="-1" hidden&gt;
+            &lt;div class="nds-content-block"&gt;
+                &lt;h3 class="nds-block-title"&gt;Settings&lt;/h3&gt;
+                &lt;p&gt;Configure your preferences and manage your account settings.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -768,7 +768,7 @@ tabs.destroy();                 // Remove all event listeners and clean up
 
 // ── Custom Event ────────────────────────────────────
 // Dispatched on the .nds-tabs container element, bubbles up
-document.addEventListener('nds:tab:change', (e) => {
+document.addEventListener('nds:tab:change', (e) =&gt; {
     e.detail.tabIndex;          // New active tab index (number)
     e.detail.tab;               // New active tab button element
     e.detail.panel;             // New active panel element

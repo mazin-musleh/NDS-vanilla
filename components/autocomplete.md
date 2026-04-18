@@ -3,7 +3,7 @@ layout: page
 title: Autocomplete
 hero_title: Autocomplete - National Design System
 hero_description: Remote typeahead search input with keyboard navigation, result highlighting, and debounced API fetching
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -77,25 +77,25 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<div class="nds-form-container" data-url="/api/services" data-name="Title">
-  <div class="nds-form-header">
-    <label for="autocomplete-1">
-      <span class="nds-label">Search services</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-    <input type="text" id="autocomplete-1" autocomplete="on"
-      placeholder="Type to search...">
-    <div class="nds-form-action">
-      <button class="nds-btn nds-subtle nds-clear" type="button"
-        aria-label="Clear input" hidden>
-        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container" data-url="/api/services" data-name="Title"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="autocomplete-1"&gt;
+      &lt;span class="nds-label"&gt;Search services&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;input type="text" id="autocomplete-1" autocomplete="on"
+      placeholder="Type to search..."&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button"
+        aria-label="Clear input" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                   </code>
                 </div>
               </div>

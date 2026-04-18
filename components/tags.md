@@ -3,7 +3,7 @@ layout: page
 title: Tags
 hero_title: Tags - National Design System
 hero_description: Compact labels for categorization, status indicators, and metadata display
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -114,9 +114,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-tag nds-gray">
-  <span class="nds-label">Label</span>
-</span>
+&lt;span class="nds-tag nds-gray"&gt;
+  &lt;span class="nds-label"&gt;Label&lt;/span&gt;
+&lt;/span&gt;
                                     </code>
                                 </div>
                             </div>
@@ -230,9 +230,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-tag" data-status="neutral">
-  <span class="nds-label">Status</span>
-</span>
+&lt;span class="nds-tag" data-status="neutral"&gt;
+  &lt;span class="nds-label"&gt;Status&lt;/span&gt;
+&lt;/span&gt;
                                     </code>
                                 </div>
                             </div>
@@ -321,9 +321,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-tag nds-oncolor">
-  <span class="nds-label">On Color</span>
-</span>
+&lt;span class="nds-tag nds-oncolor"&gt;
+  &lt;span class="nds-label"&gt;On Color&lt;/span&gt;
+&lt;/span&gt;
                                     </code>
                                 </div>
                             </div>
@@ -437,9 +437,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-tag nds-gray nds-icon-only">
-  <i class="hgi hgi-stroke hgi-tag-01"></i>
-</span>
+&lt;span class="nds-tag nds-gray nds-icon-only"&gt;
+  &lt;i class="hgi hgi-stroke hgi-tag-01"&gt;&lt;/i&gt;
+&lt;/span&gt;
                                     </code>
                                 </div>
                             </div>

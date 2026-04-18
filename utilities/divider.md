@@ -3,7 +3,7 @@ layout: page
 title: Divider
 hero_title: Divider - National Design System
 hero_description: A utility for separating sections of content with a horizontal or vertical rule, optionally framing a label, and adapting to the parent's writing direction.
-breadcrumb: ["Utilities"]
+breadcrumb: [["Utilities", "/utilities"]]
 lang: en
 direction: ltr
 ---
@@ -94,9 +94,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<p>Content above the divider.</p>
-<div class="nds-divider"></div>
-<p>Content below the divider.</p>
+&lt;p&gt;Content above the divider.&lt;/p&gt;
+&lt;div class="nds-divider"&gt;&lt;/div&gt;
+&lt;p&gt;Content below the divider.&lt;/p&gt;
                                     </code>
                                 </div>
                             </div>
@@ -171,33 +171,33 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-dropmenu">
-  <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-    <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
-    <span class="nds-label">Actions</span>
-  </button>
-  <div class="nds-dropmenu-menu" hidden>
-    <div class="nds-dropmenu-scroll">
-      <button class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-edit-02"></i>
-        <span class="nds-label">Edit</span>
-      </button>
-      <button class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-copy-01"></i>
-        <span class="nds-label">Duplicate</span>
-      </button>
-      <button class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-        <span class="nds-label">Share</span>
-      </button>
-      <hr class="nds-divider">
-      <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
-        <i class="hgi hgi-stroke hgi-delete-02"></i>
-        <span class="nds-label">Delete</span>
-      </button>
-    </div>
-  </div>
-</div>
+&lt;div class="nds-dropmenu"&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"&gt;
+    &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="nds-label"&gt;Actions&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
+    &lt;div class="nds-dropmenu-scroll"&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="hgi hgi-stroke hgi-edit-02"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Edit&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Duplicate&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Share&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;hr class="nds-divider"&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive"&gt;
+        &lt;i class="hgi hgi-stroke hgi-delete-02"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Delete&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -261,22 +261,22 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-flex nds-row" style="--gap: var(--spacing-md); --justify: center;">
-  <div>
-    <strong>125K</strong>
-    <span>Services</span>
-  </div>
-  <div class="nds-divider nds-vertical" style="--divider-size: 3px;"></div>
-  <div>
-    <strong>4.8</strong>
-    <span>Rating</span>
-  </div>
-  <div class="nds-divider nds-vertical" style="--divider-size: 3px;"></div>
-  <div>
-    <strong>23K</strong>
-    <span>Reviews</span>
-  </div>
-</div>
+&lt;div class="nds-flex nds-row" style="--gap: var(--spacing-md); --justify: center;"&gt;
+  &lt;div&gt;
+    &lt;strong&gt;125K&lt;/strong&gt;
+    &lt;span&gt;Services&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-divider nds-vertical" style="--divider-size: 3px;"&gt;&lt;/div&gt;
+  &lt;div&gt;
+    &lt;strong&gt;4.8&lt;/strong&gt;
+    &lt;span&gt;Rating&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-divider nds-vertical" style="--divider-size: 3px;"&gt;&lt;/div&gt;
+  &lt;div&gt;
+    &lt;strong&gt;23K&lt;/strong&gt;
+    &lt;span&gt;Reviews&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -343,25 +343,25 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-card nds-shadow nds-stroke" style="--card-width: 400px;">
-  <div class="nds-card-content">
-    <div class="nds-card-text nds-center">
-      <h3 class="nds-card-title">Sign in with National Single Sign-On</h3>
-      <p class="nds-card-description">Use the credentials from your Nafath account to access the services provided by the university.</p>
-    </div>
-    <div class="nds-card-actions nds-row">
-      <a href="#" class="nds-btn nds-primary nds-lg nds-full">
-        <span class="nds-label">Continue with Nafath</span>
-      </a>
-    </div>
-    <div class="nds-divider">or</div>
-    <div class="nds-card-actions nds-row">
-      <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full">
-        <span class="nds-label">Sign in with University ID</span>
-      </button>
-    </div>
-  </div>
-</div>
+&lt;div class="nds-card nds-shadow nds-stroke" style="--card-width: 400px;"&gt;
+  &lt;div class="nds-card-content"&gt;
+    &lt;div class="nds-card-text nds-center"&gt;
+      &lt;h3 class="nds-card-title"&gt;Sign in with National Single Sign-On&lt;/h3&gt;
+      &lt;p class="nds-card-description"&gt;Use the credentials from your Nafath account to access the services provided by the university.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card-actions nds-row"&gt;
+      &lt;a href="#" class="nds-btn nds-primary nds-lg nds-full"&gt;
+        &lt;span class="nds-label"&gt;Continue with Nafath&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-divider"&gt;or&lt;/div&gt;
+    &lt;div class="nds-card-actions nds-row"&gt;
+      &lt;button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full"&gt;
+        &lt;span class="nds-label"&gt;Sign in with University ID&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>

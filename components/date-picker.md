@@ -3,7 +3,7 @@ layout: page
 title: Date Picker
 hero_title: Date Picker - National Design System
 hero_description: Interactive calendar component for selecting dates with support for both Gregorian and Hijri calendars
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -91,24 +91,24 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<div class="nds-form-container nds-date-picker">
-  <div class="nds-form-header">
-    <label for="date-picker-1">
-      <span class="nds-label">Select date</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <div class="nds-form-action">
-      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
-        aria-label="Calendar Toggler">
-        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-      </button>
-    </div>
-    <input type="text" id="date-picker-1" class="nds-input nds-date-input"
-      placeholder="DD/MM/YYYY" data-year-before="40" data-year-after="5">
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</div>
+&lt;div class="nds-form-container nds-date-picker"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="date-picker-1"&gt;
+      &lt;span class="nds-label"&gt;Select date&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle"
+        aria-label="Calendar Toggler"&gt;
+        &lt;i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;input type="text" id="date-picker-1" class="nds-input nds-date-input"
+      placeholder="DD/MM/YYYY" data-year-before="40" data-year-after="5"&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
                   </code>
                 </div>
               </div>

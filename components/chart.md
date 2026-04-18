@@ -3,7 +3,7 @@ layout: page
 title: Chart
 hero_title: Chart - National Design System
 hero_description: Visualize data with bar, line, pie, and donut charts that render as pure SVG with built-in theming, tooltips, and responsive sizing
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -82,7 +82,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div id="my-chart" class="nds-chart"></div>
+&lt;div id="my-chart" class="nds-chart"&gt;&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-bar-js"
@@ -109,8 +109,8 @@ NDS.Chart.create('#my-chart', {
   },
   dataLabels: { show: true, format: '%' }, // Show values above bars (suffix)
   grid:    { show: true },             // Horizontal gridlines
-  yaxis:   { show: true, title: '' },  // Y-axis labels & title
-  xaxis:   { show: true, title: '' },  // X-axis labels & title
+  yaxis:   { show: true, title: '' },  // Y-axis labels &amp; title
+  xaxis:   { show: true, title: '' },  // X-axis labels &amp; title
   legend:  { show: true, position: 'top' },
   tooltip: { show: true },
   // colors: ['#1B8354', '#54C08A'],   // Optional palette override
@@ -201,7 +201,7 @@ NDS.Chart.create('#my-chart', {
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div id="my-chart" class="nds-chart"></div>
+&lt;div id="my-chart" class="nds-chart"&gt;&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-line-js"
@@ -303,7 +303,7 @@ NDS.Chart.create('#my-chart', {
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div id="my-chart" class="nds-chart"></div>
+&lt;div id="my-chart" class="nds-chart"&gt;&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-pie-js"
@@ -400,7 +400,7 @@ NDS.Chart.create('#my-chart', {
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div id="my-chart" class="nds-chart"></div>
+&lt;div id="my-chart" class="nds-chart"&gt;&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-donut-js"
@@ -482,11 +482,11 @@ NDS.Chart.create('#my-chart', {
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-chart"
+&lt;div class="nds-chart"
   data-chart-type="bar"
   data-chart-series='[{"name":"Q1","data":[30,40,35]},{"name":"Q2","data":[50,30,45]}]'
-  data-chart-labels='["Jan","Feb","Mar"]'>
-</div>
+  data-chart-labels='["Jan","Feb","Mar"]'&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -546,7 +546,7 @@ NDS.Chart.create('#my-chart', {
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div id="my-chart" class="nds-chart my-chart"></div>
+&lt;div id="my-chart" class="nds-chart my-chart"&gt;&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-theme-css"

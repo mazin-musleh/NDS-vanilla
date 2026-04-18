@@ -3,7 +3,7 @@ layout: page
 title: Image Popup Viewer
 hero_title: Image Popup Viewer - National Design System
 hero_description: A full-screen image viewer for inspecting photos and illustrations with zoom, pan, and gallery navigation
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -79,35 +79,35 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-ipv-gallery nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;">
-    <div class="nds-ipv-image-card">
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400"
+&lt;div class="nds-ipv-gallery nds-grid" style="--max-col:4;--mid-col:2;--min-col:1;"&gt;
+    &lt;div class="nds-ipv-image-card"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400"
             data-ipv-full="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=2000"
-            alt="Mountain Landscape" class="nds-ipv-thumbnail">
-        <div class="nds-ipv-image-title">Mountain Landscape</div>
-    </div>
+            alt="Mountain Landscape" class="nds-ipv-thumbnail"&gt;
+        &lt;div class="nds-ipv-image-title"&gt;Mountain Landscape&lt;/div&gt;
+    &lt;/div&gt;
 
-    <div class="nds-ipv-image-card">
-        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400"
+    &lt;div class="nds-ipv-image-card"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400"
             data-ipv-full="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=2000"
-            alt="Forest Road" class="nds-ipv-thumbnail">
-        <div class="nds-ipv-image-title">Forest Road</div>
-    </div>
+            alt="Forest Road" class="nds-ipv-thumbnail"&gt;
+        &lt;div class="nds-ipv-image-title"&gt;Forest Road&lt;/div&gt;
+    &lt;/div&gt;
 
-    <div class="nds-ipv-image-card">
-        <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400"
+    &lt;div class="nds-ipv-image-card"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400"
             data-ipv-full="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=2000"
-            alt="Ocean View" class="nds-ipv-thumbnail">
-        <div class="nds-ipv-image-title">Ocean View</div>
-    </div>
+            alt="Ocean View" class="nds-ipv-thumbnail"&gt;
+        &lt;div class="nds-ipv-image-title"&gt;Ocean View&lt;/div&gt;
+    &lt;/div&gt;
 
-    <div class="nds-ipv-image-card">
-        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400"
+    &lt;div class="nds-ipv-image-card"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400"
             data-ipv-full="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=2000"
-            alt="Valley Sunrise" class="nds-ipv-thumbnail">
-        <div class="nds-ipv-image-title">Valley Sunrise</div>
-    </div>
-</div>
+            alt="Valley Sunrise" class="nds-ipv-thumbnail"&gt;
+        &lt;div class="nds-ipv-image-title"&gt;Valley Sunrise&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>

@@ -3,7 +3,7 @@ layout: page
 title: Dropmenu
 hero_title: Dropmenu - National Design System
 hero_description: A toggle-activated menu for presenting actions, navigation links, or filter controls in a compact overlay
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -78,33 +78,33 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-dropmenu">
-  <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-    <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
-    <span class="nds-label">Actions</span>
-  </button>
-  <div class="nds-dropmenu-menu" hidden>
-    <div class="nds-dropmenu-scroll">
-      <button class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-edit-02"></i>
-        <span class="nds-label">Edit</span>
-      </button>
-      <button class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-copy-01"></i>
-        <span class="nds-label">Duplicate</span>
-      </button>
-      <button class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-        <span class="nds-label">Share</span>
-      </button>
-      <hr class="nds-divider">
-      <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
-        <i class="hgi hgi-stroke hgi-delete-02"></i>
-        <span class="nds-label">Delete</span>
-      </button>
-    </div>
-  </div>
-</div>
+&lt;div class="nds-dropmenu"&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"&gt;
+    &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="nds-label"&gt;Actions&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
+    &lt;div class="nds-dropmenu-scroll"&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="hgi hgi-stroke hgi-edit-02"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Edit&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Duplicate&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Share&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;hr class="nds-divider"&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive"&gt;
+        &lt;i class="hgi hgi-stroke hgi-delete-02"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Delete&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -187,33 +187,33 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-dropmenu">
-  <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-    <span class="nds-label">Account</span>
-    <i class="hgi hgi-stroke hgi-user-circle"></i>
-  </button>
-  <div class="nds-dropmenu-menu" hidden>
-    <div class="nds-dropmenu-scroll">
-      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-user-account"></i>
-        <span class="nds-label">Profile</span>
-      </a>
-      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-settings-01"></i>
-        <span class="nds-label">Settings</span>
-      </a>
-      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-help-circle"></i>
-        <span class="nds-label">Help</span>
-      </a>
-      <hr class="nds-divider">
-      <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-        <i class="hgi hgi-stroke hgi-logout-01"></i>
-        <span class="nds-label">Sign out</span>
-      </a>
-    </div>
-  </div>
-</div>
+&lt;div class="nds-dropmenu"&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"&gt;
+    &lt;span class="nds-label"&gt;Account&lt;/span&gt;
+    &lt;i class="hgi hgi-stroke hgi-user-circle"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
+    &lt;div class="nds-dropmenu-scroll"&gt;
+      &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="hgi hgi-stroke hgi-user-account"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Profile&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="hgi hgi-stroke hgi-help-circle"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Help&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;hr class="nds-divider"&gt;
+      &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+        &lt;i class="hgi hgi-stroke hgi-logout-01"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Sign out&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -391,67 +391,67 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-dropmenu">
-  <button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger">
-    <i class="hgi hgi-stroke hgi-settings-02"></i>
-    <span class="nds-label">Settings</span>
-  </button>
-  <div class="nds-dropmenu-menu" hidden style="min-width: 220px;">
-    <div class="nds-dropmenu-scroll">
-      <!-- data-no-auto-close keeps menu open on interaction -->
-      <fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
-        data-no-auto-close>
-        <legend class="nds-label">Notifications</legend>
-        <div class="nds-form-container nds-switch-container">
-          <div class="nds-form-header">
-            <label for="setting-email">
-              <span class="nds-label">Email</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <div class="nds-switch">
-              <input type="checkbox" id="setting-email"
-                class="nds-switch-input" checked>
-              <div class="nds-switch-track">
-                <div class="nds-switch-thumb"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- more switches... -->
-      </fieldset>
-      <hr class="nds-divider">
-      <fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
-        data-no-auto-close>
-        <legend class="nds-label">Display</legend>
-        <div class="nds-form-container nds-check-container">
-          <div class="nds-form-header">
-            <label for="setting-compact">
-              <span class="nds-label">Compact view</span>
-            </label>
-          </div>
-          <div class="nds-form-control">
-            <input type="checkbox" id="setting-compact" class="nds-check">
-          </div>
-        </div>
-        <!-- more checkboxes... -->
-      </fieldset>
-    </div>
-    <div class="nds-dropmenu-footer">
-      <hr class="nds-divider">
-      <div class="nds-dropmenu-action nds-grid">
-        <button class="nds-btn nds-secondary nds-dropmenu-item"
-          type="button" data-no-auto-close>
-          <span class="nds-label">Reset</span>
-        </button>
-        <button class="nds-btn nds-primary nds-dropmenu-item"
-          type="button">
-          <span class="nds-label">Save</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+&lt;div class="nds-dropmenu"&gt;
+  &lt;button class="nds-btn nds-neutral nds-menu-btn nds-dropmenu-trigger"&gt;
+    &lt;i class="hgi hgi-stroke hgi-settings-02"&gt;&lt;/i&gt;
+    &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="nds-dropmenu-menu" hidden style="min-width: 220px;"&gt;
+    &lt;div class="nds-dropmenu-scroll"&gt;
+      &lt;!-- data-no-auto-close keeps menu open on interaction --&gt;
+      &lt;fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
+        data-no-auto-close&gt;
+        &lt;legend class="nds-label"&gt;Notifications&lt;/legend&gt;
+        &lt;div class="nds-form-container nds-switch-container"&gt;
+          &lt;div class="nds-form-header"&gt;
+            &lt;label for="setting-email"&gt;
+              &lt;span class="nds-label"&gt;Email&lt;/span&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class="nds-form-control"&gt;
+            &lt;div class="nds-switch"&gt;
+              &lt;input type="checkbox" id="setting-email"
+                class="nds-switch-input" checked&gt;
+              &lt;div class="nds-switch-track"&gt;
+                &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- more switches... --&gt;
+      &lt;/fieldset&gt;
+      &lt;hr class="nds-divider"&gt;
+      &lt;fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
+        data-no-auto-close&gt;
+        &lt;legend class="nds-label"&gt;Display&lt;/legend&gt;
+        &lt;div class="nds-form-container nds-check-container"&gt;
+          &lt;div class="nds-form-header"&gt;
+            &lt;label for="setting-compact"&gt;
+              &lt;span class="nds-label"&gt;Compact view&lt;/span&gt;
+            &lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class="nds-form-control"&gt;
+            &lt;input type="checkbox" id="setting-compact" class="nds-check"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- more checkboxes... --&gt;
+      &lt;/fieldset&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-dropmenu-footer"&gt;
+      &lt;hr class="nds-divider"&gt;
+      &lt;div class="nds-dropmenu-action nds-grid"&gt;
+        &lt;button class="nds-btn nds-secondary nds-dropmenu-item"
+          type="button" data-no-auto-close&gt;
+          &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;button class="nds-btn nds-primary nds-dropmenu-item"
+          type="button"&gt;
+          &lt;span class="nds-label"&gt;Save&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -605,54 +605,54 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<table class="nds-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Role</th>
-      <th>Status</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Nora Al-Zahrani</td>
-      <td>Administrator</td>
-      <td>
-        <span class="nds-tag nds-sm" data-status="success">
-          <span class="nds-label">Active</span>
-        </span>
-      </td>
-      <td>
-        <div class="nds-dropmenu">
-          <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger"
-            aria-label="Row actions">
-            <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
-          </button>
-          <div class="nds-dropmenu-menu" hidden>
-            <div class="nds-dropmenu-scroll">
-              <button class="nds-btn nds-subtle nds-dropmenu-item">
-                <i class="hgi hgi-stroke hgi-edit-02"></i>
-                <span class="nds-label">Edit</span>
-              </button>
-              <button class="nds-btn nds-subtle nds-dropmenu-item">
-                <i class="hgi hgi-stroke hgi-copy-01"></i>
-                <span class="nds-label">Duplicate</span>
-              </button>
-              <hr class="nds-divider">
-              <button class="nds-btn nds-subtle nds-dropmenu-item
-                nds-destructive">
-                <i class="hgi hgi-stroke hgi-delete-02"></i>
-                <span class="nds-label">Delete</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </td>
-    </tr>
-    <!-- more rows... -->
-  </tbody>
-</table>
+&lt;table class="nds-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Role&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Nora Al-Zahrani&lt;/td&gt;
+      &lt;td&gt;Administrator&lt;/td&gt;
+      &lt;td&gt;
+        &lt;span class="nds-tag nds-sm" data-status="success"&gt;
+          &lt;span class="nds-label"&gt;Active&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/td&gt;
+      &lt;td&gt;
+        &lt;div class="nds-dropmenu"&gt;
+          &lt;button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger"
+            aria-label="Row actions"&gt;
+            &lt;i class="hgi hgi-stroke hgi-more-horizontal-circle-01"&gt;&lt;/i&gt;
+          &lt;/button&gt;
+          &lt;div class="nds-dropmenu-menu" hidden&gt;
+            &lt;div class="nds-dropmenu-scroll"&gt;
+              &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+                &lt;i class="hgi hgi-stroke hgi-edit-02"&gt;&lt;/i&gt;
+                &lt;span class="nds-label"&gt;Edit&lt;/span&gt;
+              &lt;/button&gt;
+              &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+                &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+                &lt;span class="nds-label"&gt;Duplicate&lt;/span&gt;
+              &lt;/button&gt;
+              &lt;hr class="nds-divider"&gt;
+              &lt;button class="nds-btn nds-subtle nds-dropmenu-item
+                nds-destructive"&gt;
+                &lt;i class="hgi hgi-stroke hgi-delete-02"&gt;&lt;/i&gt;
+                &lt;span class="nds-label"&gt;Delete&lt;/span&gt;
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;!-- more rows... --&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -856,12 +856,12 @@ instance.destroy(); // Remove listeners and replace the DOM node (external refer
 
 // ── Events ─────────────────────────────────────────────────
 // Listen for state changes
-document.addEventListener('nds:dropmenu:opened', (e) => {
+document.addEventListener('nds:dropmenu:opened', (e) =&gt; {
     // e.detail: { dropmenu, trigger, menu, isOpen }
     console.log('Menu opened:', e.detail.dropmenu);
 });
 
-document.addEventListener('nds:dropmenu:closed', (e) => {
+document.addEventListener('nds:dropmenu:closed', (e) =&gt; {
     // e.detail: { dropmenu, trigger, menu, isOpen }
     console.log('Menu closed:', e.detail.dropmenu);
 });

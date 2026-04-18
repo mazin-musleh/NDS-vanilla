@@ -3,7 +3,7 @@ layout: page
 title: Footer
 hero_title: Footer - National Design System
 hero_description: A site-wide footer that organizes secondary navigation, contact links, social media, mobile app downloads, legal notices, and partner logos into a responsive multi-column layout.
-breadcrumb: ["UI Shell"]
+breadcrumb: [["UI Shell", "/ui-shell"]]
 lang: en
 direction: ltr
 ---
@@ -31,31 +31,31 @@ direction: ltr
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
 footer.nds-footer.nds-content-wrapper
-&#9500;&#9472;&#9472; nav.nds-footer-drawer.nds-drawer.nds-divided
-&#9474;   &#9492;&#9472;&#9472; ul.nds-drawer-list.nds-footer-content
-&#9474;       &#9500;&#9472;&#9472; li (link column)
-&#9474;       &#9474;   &#9500;&#9472;&#9472; button.nds-list-header.nds-btn (column heading)
-&#9474;       &#9474;   &#9492;&#9472;&#9472; ul (column links)
-&#9474;       &#9474;       &#9492;&#9472;&#9472; li > a.nds-btn.nds-subtle.nds-indicator
-&#9474;       &#9500;&#9472;&#9472; li (social icons column)
-&#9474;       &#9474;   &#9500;&#9472;&#9472; button.nds-list-header.nds-btn (column heading)
-&#9474;       &#9474;   &#9492;&#9472;&#9472; ul > li.nds-footer-social-wrapper
-&#9474;       &#9474;       &#9492;&#9472;&#9472; div.nds-footer-social-icons
-&#9474;       &#9474;           &#9492;&#9472;&#9472; a.nds-btn.nds-secondary-outline.nds-icon-only
-&#9474;       &#9492;&#9472;&#9472; li.nds-footer-app-item (mobile apps column)
-&#9474;           &#9500;&#9472;&#9472; button.nds-list-header.nds-btn (column heading)
-&#9474;           &#9492;&#9472;&#9472; ul > li.nds-footer-apps-wrapper
-&#9474;               &#9492;&#9472;&#9472; div.nds-footer-mobile-app-icons
-&#9474;                   &#9492;&#9472;&#9472; a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only
-&#9474;
-&#9500;&#9472;&#9472; hr.nds-divider.nds-lg
-&#9474;
-&#9492;&#9472;&#9472; div.nds-footer-bottom
-    &#9500;&#9472;&#9472; div.nds-footer-copyright
-    &#9474;   &#9500;&#9472;&#9472; div.nds-footer-links (legal links with separators)
-    &#9474;   &#9492;&#9472;&#9472; div.nds-footer-copy-right (copyright text)
-    &#9492;&#9472;&#9472; div.nds-footer-logos
-        &#9492;&#9472;&#9472; a > img (partner/government logos)
+&amp;#9500;&amp;#9472;&amp;#9472; nav.nds-footer-drawer.nds-drawer.nds-divided
+&amp;#9474;   &amp;#9492;&amp;#9472;&amp;#9472; ul.nds-drawer-list.nds-footer-content
+&amp;#9474;       &amp;#9500;&amp;#9472;&amp;#9472; li (link column)
+&amp;#9474;       &amp;#9474;   &amp;#9500;&amp;#9472;&amp;#9472; button.nds-list-header.nds-btn (column heading)
+&amp;#9474;       &amp;#9474;   &amp;#9492;&amp;#9472;&amp;#9472; ul (column links)
+&amp;#9474;       &amp;#9474;       &amp;#9492;&amp;#9472;&amp;#9472; li &gt; a.nds-btn.nds-subtle.nds-indicator
+&amp;#9474;       &amp;#9500;&amp;#9472;&amp;#9472; li (social icons column)
+&amp;#9474;       &amp;#9474;   &amp;#9500;&amp;#9472;&amp;#9472; button.nds-list-header.nds-btn (column heading)
+&amp;#9474;       &amp;#9474;   &amp;#9492;&amp;#9472;&amp;#9472; ul &gt; li.nds-footer-social-wrapper
+&amp;#9474;       &amp;#9474;       &amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-social-icons
+&amp;#9474;       &amp;#9474;           &amp;#9492;&amp;#9472;&amp;#9472; a.nds-btn.nds-secondary-outline.nds-icon-only
+&amp;#9474;       &amp;#9492;&amp;#9472;&amp;#9472; li.nds-footer-app-item (mobile apps column)
+&amp;#9474;           &amp;#9500;&amp;#9472;&amp;#9472; button.nds-list-header.nds-btn (column heading)
+&amp;#9474;           &amp;#9492;&amp;#9472;&amp;#9472; ul &gt; li.nds-footer-apps-wrapper
+&amp;#9474;               &amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-mobile-app-icons
+&amp;#9474;                   &amp;#9492;&amp;#9472;&amp;#9472; a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only
+&amp;#9474;
+&amp;#9500;&amp;#9472;&amp;#9472; hr.nds-divider.nds-lg
+&amp;#9474;
+&amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-bottom
+    &amp;#9500;&amp;#9472;&amp;#9472; div.nds-footer-copyright
+    &amp;#9474;   &amp;#9500;&amp;#9472;&amp;#9472; div.nds-footer-links (legal links with separators)
+    &amp;#9474;   &amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-copy-right (copyright text)
+    &amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-logos
+        &amp;#9492;&amp;#9472;&amp;#9472; a &gt; img (partner/government logos)
                                 </code>
                             </div>
                         </div>

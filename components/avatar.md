@@ -3,7 +3,7 @@ layout: page
 title: Avatar
 hero_title: Avatar - National Design System
 hero_description: Avatars represent users or entities with initials, icons, or images in various sizes and shapes
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -92,9 +92,9 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-html code"><div class="nds-avatar nds-lg">
-  <span class="nds-label">AB</span>
-</div></code>
+                                    <code class="lang-html code">&lt;div class="nds-avatar nds-lg"&gt;
+  &lt;span class="nds-label"&gt;AB&lt;/span&gt;
+&lt;/div&gt;</code>
                                 </div>
                             </div>
                         </div>
@@ -189,9 +189,9 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-html code"><div class="nds-avatar nds-lg">
-  <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-</div></code>
+                                    <code class="lang-html code">&lt;div class="nds-avatar nds-lg"&gt;
+  &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/div&gt;</code>
                                 </div>
                             </div>
                         </div>
@@ -290,9 +290,9 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-html code"><div class="nds-avatar nds-lg">
-  <img src="path/to/avatar.jpg" alt="User Avatar">
-</div></code>
+                                    <code class="lang-html code">&lt;div class="nds-avatar nds-lg"&gt;
+  &lt;img src="path/to/avatar.jpg" alt="User Avatar"&gt;
+&lt;/div&gt;</code>
                                 </div>
                             </div>
                         </div>
@@ -387,9 +387,9 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-html code"><a href="/user/profile" class="nds-avatar nds-lg">
-  <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-</a></code>
+                                    <code class="lang-html code">&lt;a href="/user/profile" class="nds-avatar nds-lg"&gt;
+  &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/a&gt;</code>
                                 </div>
                             </div>
                         </div>
@@ -503,24 +503,24 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-dropmenu">
-    <button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu">
-        <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-    </button>
-    <div class="nds-dropmenu-menu" hidden>
-        <div class="nds-dropmenu-scroll">
-            <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                <span class="nds-label">Profile</span>
-            </a>
-            <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                <span class="nds-label">Settings</span>
-            </a>
-            <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
-                <span class="nds-label">Sign out</span>
-            </a>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-dropmenu"&gt;
+    &lt;button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu"&gt;
+        &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
+        &lt;div class="nds-dropmenu-scroll"&gt;
+            &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+                &lt;span class="nds-label"&gt;Profile&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+                &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
+                &lt;span class="nds-label"&gt;Sign out&lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -638,26 +638,26 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-avatar-group nds-stacked nds-md">
-    <div class="nds-avatar">
-        <img src="path/to/avatar1.jpg" alt="User 1">
-    </div>
-    <div class="nds-avatar">
-        <img src="path/to/avatar2.jpg" alt="User 2">
-    </div>
-    <div class="nds-avatar">
-        <img src="path/to/avatar3.jpg" alt="User 3">
-    </div>
-    <div class="nds-avatar">
-        <img src="path/to/avatar4.jpg" alt="User 4">
-    </div>
-    <div class="nds-avatar">
-        <img src="path/to/avatar5.jpg" alt="User 5">
-    </div>
-    <div class="nds-avatar">
-        <span class="nds-label">+99</span>
-    </div>
-</div>
+&lt;div class="nds-avatar-group nds-stacked nds-md"&gt;
+    &lt;div class="nds-avatar"&gt;
+        &lt;img src="path/to/avatar1.jpg" alt="User 1"&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-avatar"&gt;
+        &lt;img src="path/to/avatar2.jpg" alt="User 2"&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-avatar"&gt;
+        &lt;img src="path/to/avatar3.jpg" alt="User 3"&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-avatar"&gt;
+        &lt;img src="path/to/avatar4.jpg" alt="User 4"&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-avatar"&gt;
+        &lt;img src="path/to/avatar5.jpg" alt="User 5"&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-avatar"&gt;
+        &lt;span class="nds-label"&gt;+99&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>

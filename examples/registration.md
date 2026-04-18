@@ -8,7 +8,7 @@ hero_image: assets/img/riyadhcenter.webp
 bg_opacity_top: 60%
 bg_opacity_bottom: 90%
 exclude_showcase: true
-breadcrumb: ["Examples"]
+breadcrumb: [["Examples", "/examples"]]
 ---
 {% assign brand_logo = page.brandLogo | default: site.brandLogo %}
 {% assign brand_width = page.headerBrandW | default: site.headerBrandW %}

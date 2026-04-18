@@ -3,7 +3,7 @@ layout: page
 title: Scroll More
 hero_title: Scroll More - National Design System
 hero_description: A general-purpose overflow wrapper that auto-detects its scroll axis, fades the edges of clipped content, and shows a sticky button to paginate through the rest.
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -69,26 +69,26 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-scroll-more" style="--scroll-max-height: 240px;">
-  <ul class="nds-scroll-more-content nds-list">
-    <li>Riyadh</li>
-    <li>Jeddah</li>
-    <li>Mecca</li>
-    <li>Medina</li>
-    <li>Dammam</li>
-    <li>Khobar</li>
-    <li>Taif</li>
-    <li>Tabuk</li>
-    <li>Abha</li>
-    <li>Buraydah</li>
-    <li>Khamis Mushait</li>
-    <li>Hail</li>
-  </ul>
-  <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-    <span class="nds-label">Show more</span>
-    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-  </button>
-</div>
+&lt;div class="nds-scroll-more" style="--scroll-max-height: 240px;"&gt;
+  &lt;ul class="nds-scroll-more-content nds-list"&gt;
+    &lt;li&gt;Riyadh&lt;/li&gt;
+    &lt;li&gt;Jeddah&lt;/li&gt;
+    &lt;li&gt;Mecca&lt;/li&gt;
+    &lt;li&gt;Medina&lt;/li&gt;
+    &lt;li&gt;Dammam&lt;/li&gt;
+    &lt;li&gt;Khobar&lt;/li&gt;
+    &lt;li&gt;Taif&lt;/li&gt;
+    &lt;li&gt;Tabuk&lt;/li&gt;
+    &lt;li&gt;Abha&lt;/li&gt;
+    &lt;li&gt;Buraydah&lt;/li&gt;
+    &lt;li&gt;Khamis Mushait&lt;/li&gt;
+    &lt;li&gt;Hail&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
+    &lt;span class="nds-label"&gt;Show more&lt;/span&gt;
+    &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -157,22 +157,22 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-scroll-more" style="--scroll-max-width: 480px;">
-  <div class="nds-scroll-more-content nds-flex">
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">All</span></button>
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Healthcare</span></button>
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Education</span></button>
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Transport</span></button>
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Housing</span></button>
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Employment</span></button>
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Commercial</span></button>
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Tourism</span></button>
-    <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Utilities</span></button>
-  </div>
-  <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-  </button>
-</div>
+&lt;div class="nds-scroll-more" style="--scroll-max-width: 480px;"&gt;
+  &lt;div class="nds-scroll-more-content nds-flex"&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;All&lt;/span&gt;&lt;/button&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Healthcare&lt;/span&gt;&lt;/button&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Education&lt;/span&gt;&lt;/button&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Transport&lt;/span&gt;&lt;/button&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Housing&lt;/span&gt;&lt;/button&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Employment&lt;/span&gt;&lt;/button&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Commercial&lt;/span&gt;&lt;/button&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Tourism&lt;/span&gt;&lt;/button&gt;
+    &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Utilities&lt;/span&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
+    &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -255,31 +255,31 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-scroll-more nds-snap" style="--scroll-gap: var(--spacing-md);">
-  <div class="nds-scroll-more-content nds-grid" style="--max-col: 6; --min-width: 280px;">
+&lt;div class="nds-scroll-more nds-snap" style="--scroll-gap: var(--spacing-md);"&gt;
+  &lt;div class="nds-scroll-more-content nds-grid" style="--max-col: 6; --min-width: 280px;"&gt;
     {% raw %}{% for service in site.data.content.services limit:6 %}{% endraw %}
-    <div class="nds-card nds-stroke">
-      <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-          <span class="nds-featured-icon nds-circle nds-xl">
+    &lt;div class="nds-card nds-stroke"&gt;
+      &lt;div class="nds-card-header"&gt;
+        &lt;div class="nds-card-featured-icon"&gt;
+          &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
             {% raw %}{{ service.icon }}{% endraw %}
-          </span>
-        </div>
-      </div>
-      <div class="nds-card-content">
-        <div class="nds-card-text">
-          <h3 class="nds-card-title">{% raw %}{{ service.title }}{% endraw %}</h3>
-          <p class="nds-card-description">{% raw %}{{ service.description }}{% endraw %}</p>
-        </div>
-      </div>
-    </div>
+          &lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-card-content"&gt;
+        &lt;div class="nds-card-text"&gt;
+          &lt;h3 class="nds-card-title"&gt;{% raw %}{{ service.title }}{% endraw %}&lt;/h3&gt;
+          &lt;p class="nds-card-description"&gt;{% raw %}{{ service.description }}{% endraw %}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
     {% raw %}{% endfor %}{% endraw %}
-  </div>
-  <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
-    <span class="nds-label">Show more</span>
-    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-  </button>
-</div>
+  &lt;/div&gt;
+  &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
+    &lt;span class="nds-label"&gt;Show more&lt;/span&gt;
+    &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>

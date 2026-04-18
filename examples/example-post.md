@@ -11,7 +11,7 @@ date: 2025-01-15
 author: "Digital Government Authority"
 lang: en
 direction: ltr
-breadcrumb: ["Examples"]
+breadcrumb: [["Examples", "/examples"]]
 ---
 
 <section class="nds-content-section">

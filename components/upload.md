@@ -3,7 +3,7 @@ layout: page
 title: File Upload
 hero_title: File Upload - National Design System
 hero_description: Drag-and-drop file upload with built-in validation, progress tracking, and a full JavaScript API for custom upload workflows
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -153,72 +153,72 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-form-container nds-file-upload" data-state="dropbox">
-  <div class="nds-form-header">
-    <label for="fileUploadInput">
-      <span class="nds-label">Upload files</span>
-      <span class="nds-info">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</span>
-    </label>
-  </div>
+&lt;div class="nds-form-container nds-file-upload" data-state="dropbox"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="fileUploadInput"&gt;
+      &lt;span class="nds-label"&gt;Upload files&lt;/span&gt;
+      &lt;span class="nds-info"&gt;Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
 
-  <div class="nds-form-control">
-    <input type="file" id="fileUploadInput" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt" class="nds-file-input" />
-    <div class="nds-upload-zone">
-      <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon"></i>
-      <div class="nds-upload-text">
-        <span class="nds-drop-hint">Drag and drop files here to upload</span>
-      </div>
-      <div class="nds-upload-hint">Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.</div>
-    </div>
+  &lt;div class="nds-form-control"&gt;
+    &lt;input type="file" id="fileUploadInput" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt" class="nds-file-input" /&gt;
+    &lt;div class="nds-upload-zone"&gt;
+      &lt;i class="hgi hgi-stroke hgi-file-upload nds-upload-icon"&gt;&lt;/i&gt;
+      &lt;div class="nds-upload-text"&gt;
+        &lt;span class="nds-drop-hint"&gt;Drag and drop files here to upload&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-upload-hint"&gt;Maximum file size allowed is 2MB, supported file formats include .jpg, .png, and .pdf.&lt;/div&gt;
+    &lt;/div&gt;
 
-    <div class="nds-form-action">
-      <button type="button" class="nds-btn nds-secondary nds-md nds-browse-btn">
-        <i class="hgi hgi-stroke hgi-folder-01"></i>
-        <span class="nds-label">Browse Files</span>
-      </button>
-    </div>
-  </div>
+    &lt;div class="nds-form-action"&gt;
+      &lt;button type="button" class="nds-btn nds-secondary nds-md nds-browse-btn"&gt;
+        &lt;i class="hgi hgi-stroke hgi-folder-01"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Browse Files&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
 
-  <div class="nds-file-list"></div>
-  <div class="nds-form-footer"></div>
+  &lt;div class="nds-file-list"&gt;&lt;/div&gt;
+  &lt;div class="nds-form-footer"&gt;&lt;/div&gt;
 
-  <!-- Hidden template for file items -->
-  <div class="nds-file-item-template" style="display: none;">
-    <div class="nds-file-item">
-      <span class="nds-feedback">
-        <span class="nds-feedback-icon">
-          <i class="nds-icon" aria-hidden="true"></i>
-        </span>
-      </span>
+  &lt;!-- Hidden template for file items --&gt;
+  &lt;div class="nds-file-item-template" style="display: none;"&gt;
+    &lt;div class="nds-file-item"&gt;
+      &lt;span class="nds-feedback"&gt;
+        &lt;span class="nds-feedback-icon"&gt;
+          &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;/span&gt;
+      &lt;/span&gt;
 
-      <div class="nds-progress-circle" style="--progress-size: 24px; --progress-value: 0;">
-        <svg width="24" height="24" viewBox="0 0 24 24">
-          <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
-          <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
-            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-        </svg>
-        <div class="nds-progress-info">
-          <span class="nds-progress-percentage">
-            <span class="nds-progress-number"></span>
-          </span>
-        </div>
-      </div>
+      &lt;div class="nds-progress-circle" style="--progress-size: 24px; --progress-value: 0;"&gt;
+        &lt;svg width="24" height="24" viewBox="0 0 24 24"&gt;
+          &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" /&gt;
+          &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3"
+            stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" /&gt;
+        &lt;/svg&gt;
+        &lt;div class="nds-progress-info"&gt;
+          &lt;span class="nds-progress-percentage"&gt;
+            &lt;span class="nds-progress-number"&gt;&lt;/span&gt;
+          &lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
 
-      <div class="nds-file-info">
-        <div class="nds-file-name nds-truncate"></div>
-        <div class="nds-file-error">
-          <span class="nds-error-message"></span>
-        </div>
-      </div>
+      &lt;div class="nds-file-info"&gt;
+        &lt;div class="nds-file-name nds-truncate"&gt;&lt;/div&gt;
+        &lt;div class="nds-file-error"&gt;
+          &lt;span class="nds-error-message"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
 
-      <div class="nds-file-actions">
-        <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file" aria-label="Remove file">
-          <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+      &lt;div class="nds-file-actions"&gt;
+        &lt;button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file" aria-label="Remove file"&gt;
+          &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -413,7 +413,7 @@ upload.destroy();                       // Remove listeners, abort uploads, clea
 
 // ── Intercept uploads for custom headers ────────────
 const el = document.querySelector('.nds-file-upload');
-el.addEventListener('nds:upload:beforeUpload', (e) => {
+el.addEventListener('nds:upload:beforeUpload', (e) =&gt; {
     e.detail.xhr.setRequestHeader('Authorization', 'Bearer ' + token);
     e.detail.formData.append('folder', 'documents');
     // e.preventDefault() cancels the upload

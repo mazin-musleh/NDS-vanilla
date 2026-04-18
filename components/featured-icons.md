@@ -3,7 +3,7 @@ layout: page
 title: Featured Icons
 hero_title: Featured Icons - National Design System
 hero_description: Colored icon containers that draw attention to features, statuses, and categories across cards, lists, and page sections
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -124,9 +124,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<span class="nds-featured-icon">
-  <i class="hgi hgi-stroke hgi-stars"></i>
-</span>
+&lt;span class="nds-featured-icon"&gt;
+  &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
+&lt;/span&gt;
                                     </code>
                                 </div>
                             </div>

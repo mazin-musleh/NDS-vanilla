@@ -3,7 +3,7 @@ layout: page
 title: Checkbox
 hero_title: Checkbox - National Design System
 hero_description: Multi-selection input controls with clear visual states and accessibility support
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -121,17 +121,17 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<div class="nds-form-container nds-check-container" data-required>
-  <div class="nds-form-header" data-feedback-target>
-    <label for="checkbox-single">
-      <span class="nds-label">I agree to the terms and conditions</span>
-      <span class="nds-info">You must accept our terms to continue</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <input type="checkbox" id="checkbox-single" name="agreement" value="accepted" class="nds-check" required>
-  </div>
-</div>
+&lt;div class="nds-form-container nds-check-container" data-required&gt;
+  &lt;div class="nds-form-header" data-feedback-target&gt;
+    &lt;label for="checkbox-single"&gt;
+      &lt;span class="nds-label"&gt;I agree to the terms and conditions&lt;/span&gt;
+      &lt;span class="nds-info"&gt;You must accept our terms to continue&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;input type="checkbox" id="checkbox-single" name="agreement" value="accepted" class="nds-check" required&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                   </code>
                 </div>
               </div>
@@ -270,70 +270,70 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<fieldset class="nds-form-group nds-check-group" data-min-checked="2" data-max-checked="4">
-  <legend class="nds-label">Select 2-4 interests</legend>
-  <div class="nds-form-container nds-check-container">
-    <div class="nds-form-header">
-      <label for="checkbox1">
-        <span class="nds-label">Technology</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="checkbox" id="checkbox1" name="interests" value="technology" class="nds-check">
-    </div>
-  </div>
-  <div class="nds-form-container nds-check-container">
-    <div class="nds-form-header">
-      <label for="checkbox2">
-        <span class="nds-label">Sports</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="checkbox" id="checkbox2" name="interests" value="sports" class="nds-check">
-    </div>
-  </div>
-  <div class="nds-form-container nds-check-container">
-    <div class="nds-form-header">
-      <label for="checkbox3">
-        <span class="nds-label">Entertainment</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="checkbox" id="checkbox3" name="interests" value="entertainment" class="nds-check">
-    </div>
-  </div>
-  <div class="nds-form-container nds-check-container">
-    <div class="nds-form-header">
-      <label for="checkbox4">
-        <span class="nds-label">Education</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="checkbox" id="checkbox4" name="interests" value="education" class="nds-check">
-    </div>
-  </div>
-  <div class="nds-form-container nds-check-container">
-    <div class="nds-form-header">
-      <label for="checkbox5">
-        <span class="nds-label">Travel</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="checkbox" id="checkbox5" name="interests" value="travel" class="nds-check">
-    </div>
-  </div>
-  <div class="nds-form-container nds-check-container">
-    <div class="nds-form-header">
-      <label for="checkbox6">
-        <span class="nds-label">Food</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="checkbox" id="checkbox6" name="interests" value="food" class="nds-check">
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</fieldset>
+&lt;fieldset class="nds-form-group nds-check-group" data-min-checked="2" data-max-checked="4"&gt;
+  &lt;legend class="nds-label"&gt;Select 2-4 interests&lt;/legend&gt;
+  &lt;div class="nds-form-container nds-check-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="checkbox1"&gt;
+        &lt;span class="nds-label"&gt;Technology&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="checkbox" id="checkbox1" name="interests" value="technology" class="nds-check"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-check-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="checkbox2"&gt;
+        &lt;span class="nds-label"&gt;Sports&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="checkbox" id="checkbox2" name="interests" value="sports" class="nds-check"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-check-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="checkbox3"&gt;
+        &lt;span class="nds-label"&gt;Entertainment&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="checkbox" id="checkbox3" name="interests" value="entertainment" class="nds-check"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-check-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="checkbox4"&gt;
+        &lt;span class="nds-label"&gt;Education&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="checkbox" id="checkbox4" name="interests" value="education" class="nds-check"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-check-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="checkbox5"&gt;
+        &lt;span class="nds-label"&gt;Travel&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="checkbox" id="checkbox5" name="interests" value="travel" class="nds-check"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-check-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="checkbox6"&gt;
+        &lt;span class="nds-label"&gt;Food&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="checkbox" id="checkbox6" name="interests" value="food" class="nds-check"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/fieldset&gt;
                   </code>
                 </div>
               </div>

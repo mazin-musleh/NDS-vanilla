@@ -3,7 +3,7 @@ layout: page
 title: Code
 hero_title: Code Block - National Design System
 hero_description: Code display component with syntax highlighting, copy functionality, and line numbers
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -33,12 +33,12 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<div class="nds-card nds-stroke">
-  <div class="nds-card-content">
-    <h3 class="nds-card-title">Card Title</h3>
-    <p class="nds-card-description">Card description text</p>
-  </div>
-</div>
+&lt;div class="nds-card nds-stroke"&gt;
+  &lt;div class="nds-card-content"&gt;
+    &lt;h3 class="nds-card-title"&gt;Card Title&lt;/h3&gt;
+    &lt;p class="nds-card-description"&gt;Card description text&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                 </code>
                             </div>
                         </div>
@@ -63,18 +63,18 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-<div class="nds-code nds-expandable">
-  <div class="nds-code-action">
-    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-      <i class="hgi hgi-stroke hgi-copy-01"></i>
-    </button>
-  </div>
-  <div class="nds-expandable-content">
-    <code class="lang-html code">
-      <!-- Your code here -->
-    </code>
-  </div>
-</div>
+&lt;div class="nds-code nds-expandable"&gt;
+  &lt;div class="nds-code-action"&gt;
+    &lt;button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example"&gt;
+      &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-expandable-content"&gt;
+    &lt;code class="lang-html code"&gt;
+      &lt;!-- Your code here --&gt;
+    &lt;/code&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -136,18 +136,18 @@ NDS.Alert.create({
                                 </button>
                             </div>
                             <code class="lang-html code">
-<div class="nds-code nds-expandable">
-  <div class="nds-code-action">
-    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-      <i class="hgi hgi-stroke hgi-copy-01"></i>
-    </button>
-  </div>
-  <div class="nds-expandable-content">
-    <code class="lang-javascript line-numbers">
+&lt;div class="nds-code nds-expandable"&gt;
+  &lt;div class="nds-code-action"&gt;
+    &lt;button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example"&gt;
+      &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-expandable-content"&gt;
+    &lt;code class="lang-javascript line-numbers"&gt;
       // Your code here
-    </code>
-  </div>
-</div>
+    &lt;/code&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -228,19 +228,19 @@ async function handleFormSubmit(form) {
                                 </button>
                             </div>
                             <code class="lang-html code">
-<div class="nds-code nds-expandable">
-  <div class="nds-code-action">
-    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-      <i class="hgi hgi-stroke hgi-copy-01"></i>
-    </button>
-  </div>
-  <div class="nds-expandable-content">
-      <code class="lang-javascript line-numbers">
+&lt;div class="nds-code nds-expandable"&gt;
+  &lt;div class="nds-code-action"&gt;
+    &lt;button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example"&gt;
+      &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-expandable-content"&gt;
+      &lt;code class="lang-javascript line-numbers"&gt;
     // Long code content here
     // Will collapse with "Show More" button
-  </code>
-  </div>
-</div>
+  &lt;/code&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -289,10 +289,10 @@ async function handleFormSubmit(form) {
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<button class="nds-btn nds-primary nds-lg">
-  <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
-  <span class="nds-label">Button Text</span>
-</button>
+&lt;button class="nds-btn nds-primary nds-lg"&gt;
+  &lt;i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;span class="nds-label"&gt;Button Text&lt;/span&gt;
+&lt;/button&gt;
                                     </code>
                                 </div>
                             </div>
@@ -319,31 +319,31 @@ async function handleFormSubmit(form) {
                                 </button>
                             </div>
                             <code class="lang-html code">
-<div class="demo-code">
-<div class="nds-tabs nds-code nds-divided">
-  <div class="nds-tab-list-container nds-scroll-more">
-    <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
-      <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-        aria-controls="panel-id" id="tab-id">
-        <span class="nds-tab-label">HTML</span>
-      </button>
-    </nav>
-  </div>
-  <div class="nds-tab-content">
-    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-id"
-      aria-labelledby="tab-id">
-      <div class="nds-code-action">
-        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-          <i class="hgi hgi-stroke hgi-copy-01"></i>
-        </button>
-      </div>
-      <code class="lang-html code">
-        <!-- Your code here -->
-      </code>
-    </div>
-  </div>
-</div>
-</div>
+&lt;div class="demo-code"&gt;
+&lt;div class="nds-tabs nds-code nds-divided"&gt;
+  &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
+    &lt;nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation"&gt;
+      &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+        aria-controls="panel-id" id="tab-id"&gt;
+        &lt;span class="nds-tab-label"&gt;HTML&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-tab-content"&gt;
+    &lt;div class="nds-tab-panel code-example" role="tabpanel" id="panel-id"
+      aria-labelledby="tab-id"&gt;
+      &lt;div class="nds-code-action"&gt;
+        &lt;button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example"&gt;
+          &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+      &lt;code class="lang-html code"&gt;
+        &lt;!-- Your code here --&gt;
+      &lt;/code&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -385,19 +385,19 @@ async function handleFormSubmit(form) {
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-alert nds-card" data-status="success">
-  <span class="nds-feedback nds-alert-icon nds-outline">
-    <span class="nds-feedback-icon">
-      <i class="nds-icon" aria-hidden="true"></i>
-    </span>
-  </span>
-  <div class="nds-alert-content">
-    <div class="nds-alert-text">
-      <span class="nds-alert-title">Success</span>
-      <p class="nds-alert-description">Operation completed.</p>
-    </div>
-  </div>
-</div>
+&lt;div class="nds-alert nds-card" data-status="success"&gt;
+  &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
+    &lt;span class="nds-feedback-icon"&gt;
+      &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;div class="nds-alert-content"&gt;
+    &lt;div class="nds-alert-text"&gt;
+      &lt;span class="nds-alert-title"&gt;Success&lt;/span&gt;
+      &lt;p class="nds-alert-description"&gt;Operation completed.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="demo-panel-multi-js"
@@ -457,46 +457,46 @@ NDS.Alert.create({
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-<div class="demo-code">
-<div class="nds-tabs nds-code nds-divided">
-  <div class="nds-tab-list-container nds-scroll-more">
-    <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
-      <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-        aria-controls="panel-html" id="tab-html">
-        <span class="nds-tab-label">HTML</span>
-      </button>
-      <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-        aria-controls="panel-js" id="tab-js">
-        <span class="nds-tab-label">JavaScript</span>
-      </button>
-    </nav>
-  </div>
-  <div class="nds-tab-content">
-    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-html"
-      aria-labelledby="tab-html">
-      <div class="nds-code-action">
-        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-          <i class="hgi hgi-stroke hgi-copy-01"></i>
-        </button>
-      </div>
-      <code class="lang-html code">
-        <!-- HTML code here -->
-      </code>
-    </div>
-    <div class="nds-tab-panel code-example" role="tabpanel" id="panel-js"
-      aria-labelledby="tab-js" hidden>
-      <div class="nds-code-action">
-        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-          <i class="hgi hgi-stroke hgi-copy-01"></i>
-        </button>
-      </div>
-      <code class="lang-javascript code">
+&lt;div class="demo-code"&gt;
+&lt;div class="nds-tabs nds-code nds-divided"&gt;
+  &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
+    &lt;nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation"&gt;
+      &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+        aria-controls="panel-html" id="tab-html"&gt;
+        &lt;span class="nds-tab-label"&gt;HTML&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+        aria-controls="panel-js" id="tab-js"&gt;
+        &lt;span class="nds-tab-label"&gt;JavaScript&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-tab-content"&gt;
+    &lt;div class="nds-tab-panel code-example" role="tabpanel" id="panel-html"
+      aria-labelledby="tab-html"&gt;
+      &lt;div class="nds-code-action"&gt;
+        &lt;button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example"&gt;
+          &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+      &lt;code class="lang-html code"&gt;
+        &lt;!-- HTML code here --&gt;
+      &lt;/code&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-tab-panel code-example" role="tabpanel" id="panel-js"
+      aria-labelledby="tab-js" hidden&gt;
+      &lt;div class="nds-code-action"&gt;
+        &lt;button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example"&gt;
+          &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+      &lt;code class="lang-javascript code"&gt;
         // JavaScript code here
-      </code>
-    </div>
-  </div>
-</div>
-</div>
+      &lt;/code&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
                                 </code>
                             </div>
                         </div>
@@ -537,12 +537,12 @@ NDS.Alert.create({
                                 </button>
                             </div>
                             <code class="lang-html code">
-<!-- Inside a .nds-demo-card, add hidden attribute -->
-<div class="demo-code">
-<div class="nds-tabs nds-code nds-divided" hidden>
-  <!-- Tab structure same as above -->
-</div>
-</div>
+&lt;!-- Inside a .nds-demo-card, add hidden attribute --&gt;
+&lt;div class="demo-code"&gt;
+&lt;div class="nds-tabs nds-code nds-divided" hidden&gt;
+  &lt;!-- Tab structure same as above --&gt;
+&lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>

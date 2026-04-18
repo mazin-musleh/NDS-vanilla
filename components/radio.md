@@ -3,7 +3,7 @@ layout: page
 title: Radio Button
 hero_title: Radio Button - National Design System
 hero_description: Single-selection input controls for mutually exclusive options with clear visual feedback
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -134,43 +134,43 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<fieldset class="nds-form-group nds-radio-group" data-required>
-  <legend class="nds-label">Select your plan</legend>
-  <div class="nds-form-container nds-radio-container">
-    <div class="nds-form-header">
-      <label for="radio1">
-        <span class="nds-label">Basic</span>
-        <span class="nds-info">Core features for individuals</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="radio" id="radio1" name="plan" value="basic" class="nds-radio">
-    </div>
-  </div>
-  <div class="nds-form-container nds-radio-container">
-    <div class="nds-form-header">
-      <label for="radio2">
-        <span class="nds-label">Professional</span>
-        <span class="nds-info">Advanced tools for teams</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="radio" id="radio2" name="plan" value="pro" class="nds-radio">
-    </div>
-  </div>
-  <div class="nds-form-container nds-radio-container">
-    <div class="nds-form-header">
-      <label for="radio3">
-        <span class="nds-label">Enterprise</span>
-        <span class="nds-info">Full access with dedicated support</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <input type="radio" id="radio3" name="plan" value="enterprise" class="nds-radio">
-    </div>
-  </div>
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</fieldset>
+&lt;fieldset class="nds-form-group nds-radio-group" data-required&gt;
+  &lt;legend class="nds-label"&gt;Select your plan&lt;/legend&gt;
+  &lt;div class="nds-form-container nds-radio-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="radio1"&gt;
+        &lt;span class="nds-label"&gt;Basic&lt;/span&gt;
+        &lt;span class="nds-info"&gt;Core features for individuals&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="radio" id="radio1" name="plan" value="basic" class="nds-radio"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-radio-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="radio2"&gt;
+        &lt;span class="nds-label"&gt;Professional&lt;/span&gt;
+        &lt;span class="nds-info"&gt;Advanced tools for teams&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="radio" id="radio2" name="plan" value="pro" class="nds-radio"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-radio-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="radio3"&gt;
+        &lt;span class="nds-label"&gt;Enterprise&lt;/span&gt;
+        &lt;span class="nds-info"&gt;Full access with dedicated support&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;input type="radio" id="radio3" name="plan" value="enterprise" class="nds-radio"&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/fieldset&gt;
                   </code>
                 </div>
               </div>

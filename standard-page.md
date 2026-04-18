@@ -15,7 +15,7 @@ hero_description: Brief description of this page
 # heroaction: heroaction             # data file for hero tags & actions
 
 # === Navigation ===
-breadcrumb: ["Components"]     # or: [["Parent", "/url"], "Child"]
+breadcrumb: [["Components", "/components"]]     # or mix linked + label: [["Parent", "/url"], "Child"]
 # breadcrumb_root: Home        # override root label (default: Home / الرئيسية)
 # breadcrumb_root_url: /       # override root URL
 # sidemenu_mode:               # omit = default slider | top = top dropdown | false = hidden

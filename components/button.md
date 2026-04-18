@@ -3,7 +3,7 @@ layout: page
 title: Button
 hero_title: Button - National Design System
 hero_description: Interactive controls for actions, navigation, and form submissions
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -117,9 +117,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<button class="nds-btn nds-primary">
-  <span class="nds-label">Button</span>
-</button>
+&lt;button class="nds-btn nds-primary"&gt;
+  &lt;span class="nds-label"&gt;Button&lt;/span&gt;
+&lt;/button&gt;
                                     </code>
                                 </div>
                             </div>
@@ -236,9 +236,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<button class="nds-btn nds-primary nds-destructive">
-  <span class="nds-label">Delete</span>
-</button>
+&lt;button class="nds-btn nds-primary nds-destructive"&gt;
+  &lt;span class="nds-label"&gt;Delete&lt;/span&gt;
+&lt;/button&gt;
                                     </code>
                                 </div>
                             </div>
@@ -397,10 +397,10 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<button class="nds-btn nds-primary">
-  <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
-  <span class="nds-label">Add Item</span>
-</button>
+&lt;button class="nds-btn nds-primary"&gt;
+  &lt;i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;span class="nds-label"&gt;Add Item&lt;/span&gt;
+&lt;/button&gt;
                                     </code>
                                 </div>
                             </div>
@@ -525,9 +525,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<button class="nds-btn nds-secondary-outline nds-menu-btn">
-  <span class="nds-label">Options</span>
-</button>
+&lt;button class="nds-btn nds-secondary-outline nds-menu-btn"&gt;
+  &lt;span class="nds-label"&gt;Options&lt;/span&gt;
+&lt;/button&gt;
                                     </code>
                                 </div>
                             </div>
@@ -637,11 +637,11 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-btn-group">
-  <button class="nds-btn nds-secondary-outline nds-lg"><span class="nds-label">Left</span></button>
-  <button class="nds-btn nds-secondary-outline nds-lg"><span class="nds-label">Center</span></button>
-  <button class="nds-btn nds-secondary-outline nds-lg"><span class="nds-label">Right</span></button>
-</div>
+&lt;div class="nds-btn-group"&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Left&lt;/span&gt;&lt;/button&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Center&lt;/span&gt;&lt;/button&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Right&lt;/span&gt;&lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -768,18 +768,18 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<button class="nds-btn nds-primary nds-icon-only nds-progress"
+&lt;button class="nds-btn nds-primary nds-icon-only nds-progress"
         style="--progress-duration: 4000ms;"
-        aria-label="Close">
-  <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-  <div class="nds-progress-circle" hidden>
-    <svg width="100%" height="100%" viewBox="0 0 24 24">
-      <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-      <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-              stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
-    </svg>
-  </div>
-</button>
+        aria-label="Close"&gt;
+  &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;div class="nds-progress-circle" hidden&gt;
+    &lt;svg width="100%" height="100%" viewBox="0 0 24 24"&gt;
+      &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"&gt;&lt;/circle&gt;
+      &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+              stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"&gt;&lt;/circle&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -907,18 +907,18 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<button class="nds-btn nds-primary nds-icon-only nds-progress nds-progress-static"
+&lt;button class="nds-btn nds-primary nds-icon-only nds-progress nds-progress-static"
         style="--progress-value: 25;"
-        aria-label="Upload">
-  <i class="hgi hgi-stroke hgi-upload-02"></i>
-  <div class="nds-progress-circle" hidden>
-    <svg width="100%" height="100%" viewBox="0 0 24 24">
-      <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
-      <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-              stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
-    </svg>
-  </div>
-</button>
+        aria-label="Upload"&gt;
+  &lt;i class="hgi hgi-stroke hgi-upload-02"&gt;&lt;/i&gt;
+  &lt;div class="nds-progress-circle" hidden&gt;
+    &lt;svg width="100%" height="100%" viewBox="0 0 24 24"&gt;
+      &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"&gt;&lt;/circle&gt;
+      &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+              stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"&gt;&lt;/circle&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+&lt;/button&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -1001,10 +1001,10 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<button class="nds-btn nds-secondary">
-  <i class="hgi hgi-stroke hgi-copy-01"></i>
-  <span class="nds-label">Copy Link</span>
-</button>
+&lt;button class="nds-btn nds-secondary"&gt;
+  &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+  &lt;span class="nds-label"&gt;Copy Link&lt;/span&gt;
+&lt;/button&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-status-js"
@@ -1018,11 +1018,11 @@ direction: ltr
 // Set status with auto-reset after 2 seconds
 function copyAction(button) {
     button.dataset.status = 'success';
-    setTimeout(() => delete button.dataset.status, 2000);
+    setTimeout(() =&gt; delete button.dataset.status, 2000);
 }
 
 const btn = document.querySelector('.nds-btn');
-btn.addEventListener('click', () => copyAction(btn));
+btn.addEventListener('click', () =&gt; copyAction(btn));
                                     </code>
                                 </div>
                             </div>
@@ -1084,11 +1084,11 @@ btn.addEventListener('click', () => copyAction(btn));
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<button class="nds-btn nds-icon-only nds-subtle">
-  <i class="hgi hgi-stroke hgi-notification-03">
-    <span class="nds-badge">3</span>
-  </i>
-</button>
+&lt;button class="nds-btn nds-icon-only nds-subtle"&gt;
+  &lt;i class="hgi hgi-stroke hgi-notification-03"&gt;
+    &lt;span class="nds-badge"&gt;3&lt;/span&gt;
+  &lt;/i&gt;
+&lt;/button&gt;
                                     </code>
                                 </div>
                             </div>

@@ -3,7 +3,7 @@ layout: page
 title: Grid
 hero_title: Grid System - National Design System
 hero_description: A responsive CSS grid for arranging content into auto-fit or explicit column layouts, with per-breakpoint column counts, custom track templates, and adaptive gap scaling.
-breadcrumb: ["Layout"]
+breadcrumb: [["Layout", "/layout"]]
 lang: en
 direction: ltr
 ---
@@ -52,14 +52,14 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-grid" style="--max-col: 3;">
-    <div class="nds-card nds-stroke">1</div>
-    <div class="nds-card nds-stroke">2</div>
-    <div class="nds-card nds-stroke">3</div>
-    <div class="nds-card nds-stroke">4</div>
-    <div class="nds-card nds-stroke">5</div>
-    <div class="nds-card nds-stroke">6</div>
-</div>
+&lt;div class="nds-grid" style="--max-col: 3;"&gt;
+    &lt;div class="nds-card nds-stroke"&gt;1&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;2&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;3&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;4&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;5&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;6&lt;/div&gt;
+&lt;/div&gt;
 </code>
                             </div>
                         </div>
@@ -101,14 +101,14 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-grid" style="--min-width: 200px;">
-    <div class="nds-card nds-stroke">1</div>
-    <div class="nds-card nds-stroke">2</div>
-    <div class="nds-card nds-stroke">3</div>
-    <div class="nds-card nds-stroke">4</div>
-    <div class="nds-card nds-stroke">5</div>
-    <div class="nds-card nds-stroke">6</div>
-</div>
+&lt;div class="nds-grid" style="--min-width: 200px;"&gt;
+    &lt;div class="nds-card nds-stroke"&gt;1&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;2&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;3&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;4&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;5&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;6&lt;/div&gt;
+&lt;/div&gt;
 </code>
                             </div>
                         </div>
@@ -160,10 +160,10 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-grid" style="--max-track: 3fr 1fr; --mid-track: 2fr 1fr; --min-track: 1fr;">
-    <div class="nds-card nds-stroke">Primary</div>
-    <div class="nds-card nds-stroke">Secondary</div>
-</div>
+&lt;div class="nds-grid" style="--max-track: 3fr 1fr; --mid-track: 2fr 1fr; --min-track: 1fr;"&gt;
+    &lt;div class="nds-card nds-stroke"&gt;Primary&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;Secondary&lt;/div&gt;
+&lt;/div&gt;
 </code>
                             </div>
                         </div>
@@ -202,12 +202,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<!-- Auto-fit at large, forced single column at medium and below -->
-<div class="nds-grid" style="--mid-track: 1fr;">
-    <div class="nds-card nds-stroke">A</div>
-    <div class="nds-card nds-stroke">B</div>
-    <div class="nds-card nds-stroke">C</div>
-</div>
+&lt;!-- Auto-fit at large, forced single column at medium and below --&gt;
+&lt;div class="nds-grid" style="--mid-track: 1fr;"&gt;
+    &lt;div class="nds-card nds-stroke"&gt;A&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;B&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;C&lt;/div&gt;
+&lt;/div&gt;
 </code>
                             </div>
                         </div>
@@ -261,12 +261,12 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
-    <div class="nds-card nds-stroke">A</div>
-    <div class="nds-card nds-stroke">B</div>
-    <div class="nds-card nds-stroke">C</div>
-    <div class="nds-card nds-stroke">D</div>
-</div>
+&lt;div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;"&gt;
+    &lt;div class="nds-card nds-stroke"&gt;A&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;B&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;C&lt;/div&gt;
+    &lt;div class="nds-card nds-stroke"&gt;D&lt;/div&gt;
+&lt;/div&gt;
 </code>
                             </div>
                         </div>
@@ -357,36 +357,36 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<!-- Custom gap and fixed column count -->
-<div class="nds-grid" style="--max-col: 3; --gap: var(--spacing-md); --row-gap: var(--spacing-xl);">
-    <div>...</div>
-    <div>...</div>
-    <div>...</div>
-</div>
+&lt;!-- Custom gap and fixed column count --&gt;
+&lt;div class="nds-grid" style="--max-col: 3; --gap: var(--spacing-md); --row-gap: var(--spacing-xl);"&gt;
+    &lt;div&gt;...&lt;/div&gt;
+    &lt;div&gt;...&lt;/div&gt;
+    &lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
 
-<!-- Minimum column width (auto-wraps when items can't fit at 250px) -->
-<div class="nds-grid" style="--min-width: 250px;">
-    <div>...</div>
-    <div>...</div>
-    <div>...</div>
-</div>
+&lt;!-- Minimum column width (auto-wraps when items can't fit at 250px) --&gt;
+&lt;div class="nds-grid" style="--min-width: 250px;"&gt;
+    &lt;div&gt;...&lt;/div&gt;
+    &lt;div&gt;...&lt;/div&gt;
+    &lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
 
-<!-- Responsive: 4 cols large, 2 cols medium, 1 col small -->
-<div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
-    <div>...</div>
-    <div>...</div>
-</div>
+&lt;!-- Responsive: 4 cols large, 2 cols medium, 1 col small --&gt;
+&lt;div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;"&gt;
+    &lt;div&gt;...&lt;/div&gt;
+    &lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
 
-<!-- Explicit track template with responsive collapse -->
-<div class="nds-grid" style="--max-track: 3fr 1fr; --min-track: 1fr;">
-    <div>Primary</div>
-    <div>Secondary</div>
-</div>
+&lt;!-- Explicit track template with responsive collapse --&gt;
+&lt;div class="nds-grid" style="--max-track: 3fr 1fr; --min-track: 1fr;"&gt;
+    &lt;div&gt;Primary&lt;/div&gt;
+    &lt;div&gt;Secondary&lt;/div&gt;
+&lt;/div&gt;
 
-<!-- Centered grid items -->
-<div class="nds-grid nds-center">
-    <div>...</div>
-</div>
+&lt;!-- Centered grid items --&gt;
+&lt;div class="nds-grid nds-center"&gt;
+    &lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
 </code>
                             </div>
                         </div>

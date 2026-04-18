@@ -3,7 +3,7 @@ layout: page
 title: OTP Input
 hero_title: OTP Input - National Design System
 hero_description: One-time password input component for verification codes with automatic focus management, paste support, and RTL-aware keyboard navigation
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -97,32 +97,32 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<fieldset class="nds-form-group nds-otp-group">
-  <legend><span class="nds-label">Verification Code</span></legend>
-  <div class="nds-otp">
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-  </div>
-  <input type="hidden" class="nds-otp-value" name="otp">
-</fieldset>
+&lt;fieldset class="nds-form-group nds-otp-group"&gt;
+  &lt;legend&gt;&lt;span class="nds-label"&gt;Verification Code&lt;/span&gt;&lt;/legend&gt;
+  &lt;div class="nds-otp"&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;input type="hidden" class="nds-otp-value" name="otp"&gt;
+&lt;/fieldset&gt;
                                     </code>
                                 </div>
                             </div>
@@ -233,43 +233,43 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<fieldset class="nds-form-group nds-otp-group">
-  <legend><span class="nds-label">Verification Code</span></legend>
-  <div class="nds-otp">
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-    <span class="nds-otp-separator"></span>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-  </div>
-  <input type="hidden" class="nds-otp-value" name="otp">
-</fieldset>
+&lt;fieldset class="nds-form-group nds-otp-group"&gt;
+  &lt;legend&gt;&lt;span class="nds-label"&gt;Verification Code&lt;/span&gt;&lt;/legend&gt;
+  &lt;div class="nds-otp"&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="nds-otp-separator"&gt;&lt;/span&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;input type="hidden" class="nds-otp-value" name="otp"&gt;
+&lt;/fieldset&gt;
                                     </code>
                                 </div>
                             </div>
@@ -380,33 +380,33 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<fieldset class="nds-form-group nds-otp-group" id="my-otp">
-  <legend><span class="nds-label">Enter code 1234</span></legend>
-  <div class="nds-otp">
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-    <div class="nds-form-container nds-otp-container">
-      <div class="nds-form-control">
-        <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
-      </div>
-    </div>
-  </div>
-  <input type="hidden" class="nds-otp-value" name="otp">
-  <div class="nds-form-footer" data-feedback-target hidden></div>
-</fieldset>
+&lt;fieldset class="nds-form-group nds-otp-group" id="my-otp"&gt;
+  &lt;legend&gt;&lt;span class="nds-label"&gt;Enter code 1234&lt;/span&gt;&lt;/legend&gt;
+  &lt;div class="nds-otp"&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-otp-container"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;input type="hidden" class="nds-otp-value" name="otp"&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/fieldset&gt;
                                     </code>
                                 </div>
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-otp-validate-2"

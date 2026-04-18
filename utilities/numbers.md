@@ -3,7 +3,7 @@ layout: page
 title: Numbers
 hero_title: Numbers Formatting & Counter - National Design System
 hero_description: Utilities for formatting large numbers with locale separators and animating counter values on scroll
-breadcrumb: ["Utilities", "Numbers"]
+breadcrumb: [["Utilities", "/utilities"], "Numbers"]
 lang: en
 direction: ltr
 ---
@@ -56,18 +56,18 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-<span class="nds-number-format">1500000</span>
-<!-- Renders: 1,500,000 -->
+&lt;span class="nds-number-format"&gt;1500000&lt;/span&gt;
+&lt;!-- Renders: 1,500,000 --&gt;
 
-<span class="nds-number-format">42850.75</span>
-<!-- Renders: 42,850.75 -->
+&lt;span class="nds-number-format"&gt;42850.75&lt;/span&gt;
+&lt;!-- Renders: 42,850.75 --&gt;
 
-<!-- Signs are preserved -->
-<span class="nds-number-format">+2500</span>
-<!-- Renders: +2,500 -->
+&lt;!-- Signs are preserved --&gt;
+&lt;span class="nds-number-format"&gt;+2500&lt;/span&gt;
+&lt;!-- Renders: +2,500 --&gt;
 
-<span class="nds-number-format">-1200</span>
-<!-- Renders: -1,200 -->
+&lt;span class="nds-number-format"&gt;-1200&lt;/span&gt;
+&lt;!-- Renders: -1,200 --&gt;
                             </code>
                         </div>
                     </div>
@@ -113,18 +113,18 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                <!-- With currency via data attribute -->
-                                <span class="nds-number-format" data-currency="SAR">25000</span>
-                                <!-- Renders: [SAR icon] 25,000 -->
+                                &lt;!-- With currency via data attribute --&gt;
+                                &lt;span class="nds-number-format" data-currency="SAR"&gt;25000&lt;/span&gt;
+                                &lt;!-- Renders: [SAR icon] 25,000 --&gt;
 
-                                <span class="nds-number-format" data-currency="USD">99999.99</span>
-                                <!-- Renders: $ 99,999.99 -->
+                                &lt;span class="nds-number-format" data-currency="USD"&gt;99999.99&lt;/span&gt;
+                                &lt;!-- Renders: $ 99,999.99 --&gt;
 
-                                <span class="nds-number-format" data-currency="EUR">75000</span>
-                                <!-- Renders: € 75,000 -->
+                                &lt;span class="nds-number-format" data-currency="EUR"&gt;75000&lt;/span&gt;
+                                &lt;!-- Renders: € 75,000 --&gt;
 
-                                <span class="nds-number-format">1500000 users</span>
-                                <!-- Renders: 1,500,000 users -->
+                                &lt;span class="nds-number-format"&gt;1500000 users&lt;/span&gt;
+                                &lt;!-- Renders: 1,500,000 users --&gt;
                             </code>
                         </div>
                     </div>
@@ -193,14 +193,14 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-<span class="nds-counter-value nds-number-format"
-    data-target="1250">0</span>
+&lt;span class="nds-counter-value nds-number-format"
+    data-target="1250"&gt;0&lt;/span&gt;
 
-<span class="nds-counter-value nds-number-format"
-    data-target="98.6%">0</span>
+&lt;span class="nds-counter-value nds-number-format"
+    data-target="98.6%"&gt;0&lt;/span&gt;
 
-<span class="nds-counter-value nds-number-format"
-    data-target="50000">0</span>
+&lt;span class="nds-counter-value nds-number-format"
+    data-target="50000"&gt;0&lt;/span&gt;
                             </code>
                         </div>
                     </div>
@@ -254,19 +254,19 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-<!-- With currency and custom duration -->
-<span class="nds-counter-value nds-number-format"
+&lt;!-- With currency and custom duration --&gt;
+&lt;span class="nds-counter-value nds-number-format"
     data-currency="SAR" data-target="75,000"
-    data-duration="2000">0</span>
+    data-duration="2000"&gt;0&lt;/span&gt;
 
-<!-- Custom start value -->
-<span class="nds-counter-value nds-number-format"
+&lt;!-- Custom start value --&gt;
+&lt;span class="nds-counter-value nds-number-format"
     data-target="500" data-start="100"
-    data-duration="1500">0</span>
+    data-duration="1500"&gt;0&lt;/span&gt;
 
-<!-- Explicit decimal places -->
-<span class="nds-counter-value nds-number-format"
-    data-target="3.14159" data-decimals="2">0</span>
+&lt;!-- Explicit decimal places --&gt;
+&lt;span class="nds-counter-value nds-number-format"
+    data-target="3.14159" data-decimals="2"&gt;0&lt;/span&gt;
                             </code>
                         </div>
                     </div>
@@ -359,56 +359,56 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-<div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
-    <div class="nds-card nds-statistic nds-stroke">
-        <div class="nds-card-header">
-            <div class="nds-card-featured-icon">
-                <span class="nds-featured-icon nds-circle nds-xl">
-                    <i class="hgi hgi-stroke hgi-award-03"></i>
-                </span>
-            </div>
-        </div>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-number nds-counter-value nds-number-format"
-                    data-target="128">0</span>
-                <p class="nds-card-description">Projects completed this quarter</p>
-            </div>
-        </div>
-    </div>
-    <div class="nds-card nds-statistic nds-stroke">
-        <div class="nds-card-header">
-            <div class="nds-card-featured-icon">
-                <span class="nds-featured-icon nds-circle nds-xl">
-                    <i class="hgi hgi-stroke hgi-user-group"></i>
-                </span>
-            </div>
-        </div>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-number nds-counter-value nds-number-format"
-                    data-target="15400">0</span>
-                <p class="nds-card-description">Active users this month</p>
-            </div>
-        </div>
-    </div>
-    <div class="nds-card nds-statistic nds-stroke">
-        <div class="nds-card-header">
-            <div class="nds-card-featured-icon">
-                <span class="nds-featured-icon nds-circle nds-xl">
-                    <i class="hgi hgi-stroke hgi-chart-line-data-02"></i>
-                </span>
-            </div>
-        </div>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-number nds-counter-value nds-number-format"
-                    data-target="98.2%" data-decimals="1">0</span>
-                <p class="nds-card-description">System uptime</p>
-            </div>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;"&gt;
+    &lt;div class="nds-card nds-statistic nds-stroke"&gt;
+        &lt;div class="nds-card-header"&gt;
+            &lt;div class="nds-card-featured-icon"&gt;
+                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
+                    &lt;i class="hgi hgi-stroke hgi-award-03"&gt;&lt;/i&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-card-content"&gt;
+            &lt;div class="nds-card-text"&gt;
+                &lt;span class="nds-card-number nds-counter-value nds-number-format"
+                    data-target="128"&gt;0&lt;/span&gt;
+                &lt;p class="nds-card-description"&gt;Projects completed this quarter&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card nds-statistic nds-stroke"&gt;
+        &lt;div class="nds-card-header"&gt;
+            &lt;div class="nds-card-featured-icon"&gt;
+                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
+                    &lt;i class="hgi hgi-stroke hgi-user-group"&gt;&lt;/i&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-card-content"&gt;
+            &lt;div class="nds-card-text"&gt;
+                &lt;span class="nds-card-number nds-counter-value nds-number-format"
+                    data-target="15400"&gt;0&lt;/span&gt;
+                &lt;p class="nds-card-description"&gt;Active users this month&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card nds-statistic nds-stroke"&gt;
+        &lt;div class="nds-card-header"&gt;
+            &lt;div class="nds-card-featured-icon"&gt;
+                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
+                    &lt;i class="hgi hgi-stroke hgi-chart-line-data-02"&gt;&lt;/i&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-card-content"&gt;
+            &lt;div class="nds-card-text"&gt;
+                &lt;span class="nds-card-number nds-counter-value nds-number-format"
+                    data-target="98.2%" data-decimals="1"&gt;0&lt;/span&gt;
+                &lt;p class="nds-card-description"&gt;System uptime&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>

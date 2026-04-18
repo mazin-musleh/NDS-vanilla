@@ -3,7 +3,7 @@ layout: page
 title: Rating
 hero_title: Rating - National Design System
 hero_description: A star-based input and display component for collecting user feedback or showing aggregate scores across reviews, products, and services
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -85,13 +85,13 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-rating nds-md" data-rating="3.5">
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-star"></span>
-</div>
+&lt;div class="nds-rating nds-md" data-rating="3.5"&gt;
+    &lt;span class="nds-rating-star"&gt;&lt;/span&gt;
+    &lt;span class="nds-rating-star"&gt;&lt;/span&gt;
+    &lt;span class="nds-rating-star"&gt;&lt;/span&gt;
+    &lt;span class="nds-rating-star"&gt;&lt;/span&gt;
+    &lt;span class="nds-rating-star"&gt;&lt;/span&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -183,13 +183,13 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-rating nds-md" data-rating="2.5">
-    <button class="nds-rating-star" type="button" aria-label="1 star"></button>
-    <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
-    <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
-    <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
-    <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
-</div>
+&lt;div class="nds-rating nds-md" data-rating="2.5"&gt;
+    &lt;button class="nds-rating-star" type="button" aria-label="1 star"&gt;&lt;/button&gt;
+    &lt;button class="nds-rating-star" type="button" aria-label="2 stars"&gt;&lt;/button&gt;
+    &lt;button class="nds-rating-star" type="button" aria-label="3 stars"&gt;&lt;/button&gt;
+    &lt;button class="nds-rating-star" type="button" aria-label="4 stars"&gt;&lt;/button&gt;
+    &lt;button class="nds-rating-star" type="button" aria-label="5 stars"&gt;&lt;/button&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -279,38 +279,38 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-dropmenu nds-rating-dropmenu">
-    <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button">
-        <div class="nds-rating nds-xs" data-rating="4.5">
-            <span class="nds-rating-star" aria-hidden="true"></span>
-            <span class="nds-rating-star" aria-hidden="true"></span>
-            <span class="nds-rating-star" aria-hidden="true"></span>
-            <span class="nds-rating-star" aria-hidden="true"></span>
-            <span class="nds-rating-star" aria-hidden="true"></span>
-        </div>
-        <span class="nds-label"><span class="nds-total-rate">4.5</span> - (<span class="nds-total-votes">18</span>) Votes</span>
-    </button>
-    <div class="nds-dropmenu-menu" hidden="">
-        <div class="nds-dropmenu-item" data-no-auto-close>
-            <span class="nds-label">Rate this service</span>
-            <div class="nds-rating" data-rating="0">
-                <button class="nds-rating-star" type="button" aria-label="1 star"></button>
-                <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
-                <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
-                <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
-                <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
-            </div>
-        </div>
-        <div class="nds-dropmenu-footer">
-            <hr class="nds-divider nds-lg">
-            <div class="nds-dropmenu-action nds-grid">
-                <button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close>
-                    <span class="nds-label">Vote</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-dropmenu nds-rating-dropmenu"&gt;
+    &lt;button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button"&gt;
+        &lt;div class="nds-rating nds-xs" data-rating="4.5"&gt;
+            &lt;span class="nds-rating-star" aria-hidden="true"&gt;&lt;/span&gt;
+            &lt;span class="nds-rating-star" aria-hidden="true"&gt;&lt;/span&gt;
+            &lt;span class="nds-rating-star" aria-hidden="true"&gt;&lt;/span&gt;
+            &lt;span class="nds-rating-star" aria-hidden="true"&gt;&lt;/span&gt;
+            &lt;span class="nds-rating-star" aria-hidden="true"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;span class="nds-label"&gt;&lt;span class="nds-total-rate"&gt;4.5&lt;/span&gt; - (&lt;span class="nds-total-votes"&gt;18&lt;/span&gt;) Votes&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="nds-dropmenu-menu" hidden=""&gt;
+        &lt;div class="nds-dropmenu-item" data-no-auto-close&gt;
+            &lt;span class="nds-label"&gt;Rate this service&lt;/span&gt;
+            &lt;div class="nds-rating" data-rating="0"&gt;
+                &lt;button class="nds-rating-star" type="button" aria-label="1 star"&gt;&lt;/button&gt;
+                &lt;button class="nds-rating-star" type="button" aria-label="2 stars"&gt;&lt;/button&gt;
+                &lt;button class="nds-rating-star" type="button" aria-label="3 stars"&gt;&lt;/button&gt;
+                &lt;button class="nds-rating-star" type="button" aria-label="4 stars"&gt;&lt;/button&gt;
+                &lt;button class="nds-rating-star" type="button" aria-label="5 stars"&gt;&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-dropmenu-footer"&gt;
+            &lt;hr class="nds-divider nds-lg"&gt;
+            &lt;div class="nds-dropmenu-action nds-grid"&gt;
+                &lt;button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close&gt;
+                    &lt;span class="nds-label"&gt;Vote&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -531,7 +531,7 @@ el.ndsRating.isDisabled();             // Returns boolean
 // ── Events ──────────────────────────────────────────
 // Fires on the .nds-rating element when the value changes
 // Bubbles, so you can listen on a parent container
-document.addEventListener('ratingChange', (e) => {
+document.addEventListener('ratingChange', (e) =&gt; {
     e.detail.rating;    // New rating value (number)
     e.detail.element;   // The .nds-rating element
 });

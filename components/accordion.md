@@ -3,7 +3,7 @@ layout: page
 title: Accordion
 hero_title: Accordion - National Design System
 hero_description: Collapsible content panels for organizing information in a space-efficient manner
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -127,53 +127,53 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-accordion nds-lg" id="my-accordion">
-    <div class="nds-accordion-item">
-        <h3 class="nds-accordion-header" id="heading-1">
-            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="true" aria-controls="collapse-1">
-                <span class="nds-accordion-title">Getting Started</span>
-            </button>
-        </h3>
-        <div class="nds-accordion-collapse" id="collapse-1" aria-labelledby="heading-1">
-            <div class="nds-accordion-content">
-                <div class="nds-accordion-body">
-                    <p>Overview of the service and how to begin.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="nds-accordion-item">
-        <h3 class="nds-accordion-header" id="heading-2">
-            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="false" aria-controls="collapse-2">
-                <span class="nds-accordion-title">Requirements</span>
-            </button>
-        </h3>
-        <div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2">
-            <div class="nds-accordion-content">
-                <div class="nds-accordion-body">
-                    <p>Documents and eligibility criteria needed.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="nds-accordion-item">
-        <h3 class="nds-accordion-header" id="heading-3">
-            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="false" aria-controls="collapse-3">
-                <span class="nds-accordion-title">Fees & Processing</span>
-            </button>
-        </h3>
-        <div class="nds-accordion-collapse" id="collapse-3" aria-labelledby="heading-3">
-            <div class="nds-accordion-content">
-                <div class="nds-accordion-body">
-                    <p>Fee schedule and expected processing times.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-accordion nds-lg" id="my-accordion"&gt;
+    &lt;div class="nds-accordion-item"&gt;
+        &lt;h3 class="nds-accordion-header" id="heading-1"&gt;
+            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="true" aria-controls="collapse-1"&gt;
+                &lt;span class="nds-accordion-title"&gt;Getting Started&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/h3&gt;
+        &lt;div class="nds-accordion-collapse" id="collapse-1" aria-labelledby="heading-1"&gt;
+            &lt;div class="nds-accordion-content"&gt;
+                &lt;div class="nds-accordion-body"&gt;
+                    &lt;p&gt;Overview of the service and how to begin.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-accordion-item"&gt;
+        &lt;h3 class="nds-accordion-header" id="heading-2"&gt;
+            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="false" aria-controls="collapse-2"&gt;
+                &lt;span class="nds-accordion-title"&gt;Requirements&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/h3&gt;
+        &lt;div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2"&gt;
+            &lt;div class="nds-accordion-content"&gt;
+                &lt;div class="nds-accordion-body"&gt;
+                    &lt;p&gt;Documents and eligibility criteria needed.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-accordion-item"&gt;
+        &lt;h3 class="nds-accordion-header" id="heading-3"&gt;
+            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="false" aria-controls="collapse-3"&gt;
+                &lt;span class="nds-accordion-title"&gt;Fees &amp; Processing&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/h3&gt;
+        &lt;div class="nds-accordion-collapse" id="collapse-3" aria-labelledby="heading-3"&gt;
+            &lt;div class="nds-accordion-content"&gt;
+                &lt;div class="nds-accordion-body"&gt;
+                    &lt;p&gt;Fee schedule and expected processing times.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -308,56 +308,56 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<div class="nds-accordion nds-lg" id="icon-accordion">
-    <div class="nds-accordion-item">
-        <h3 class="nds-accordion-header" id="icon-heading-1">
-            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="true" aria-controls="icon-collapse-1">
-                <i class="hgi hgi-stroke hgi-home-01 nds-accordion-leading-icon"></i>
-                <span class="nds-accordion-title">Housing</span>
-            </button>
-        </h3>
-        <div class="nds-accordion-collapse" id="icon-collapse-1" aria-labelledby="icon-heading-1">
-            <div class="nds-accordion-content">
-                <div class="nds-accordion-body">
-                    <p>Browse housing programs and check eligibility.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="nds-accordion-item">
-        <h3 class="nds-accordion-header" id="icon-heading-2">
-            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="false" aria-controls="icon-collapse-2">
-                <i class="hgi hgi-stroke hgi-graduation-scroll nds-accordion-leading-icon"></i>
-                <span class="nds-accordion-title">Education</span>
-            </button>
-        </h3>
-        <div class="nds-accordion-collapse" id="icon-collapse-2" aria-labelledby="icon-heading-2">
-            <div class="nds-accordion-content">
-                <div class="nds-accordion-body">
-                    <p>Scholarships, transcripts, and certification exams.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="nds-accordion-item">
-        <h3 class="nds-accordion-header" id="icon-heading-3">
-            <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="false" aria-controls="icon-collapse-3">
-                <i class="hgi hgi-stroke hgi-car-01 nds-accordion-leading-icon"></i>
-                <span class="nds-accordion-title">Vehicles</span>
-            </button>
-        </h3>
-        <div class="nds-accordion-collapse" id="icon-collapse-3" aria-labelledby="icon-heading-3">
-            <div class="nds-accordion-content">
-                <div class="nds-accordion-body">
-                    <p>Registration renewal, fines, and driving tests.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-accordion nds-lg" id="icon-accordion"&gt;
+    &lt;div class="nds-accordion-item"&gt;
+        &lt;h3 class="nds-accordion-header" id="icon-heading-1"&gt;
+            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="true" aria-controls="icon-collapse-1"&gt;
+                &lt;i class="hgi hgi-stroke hgi-home-01 nds-accordion-leading-icon"&gt;&lt;/i&gt;
+                &lt;span class="nds-accordion-title"&gt;Housing&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/h3&gt;
+        &lt;div class="nds-accordion-collapse" id="icon-collapse-1" aria-labelledby="icon-heading-1"&gt;
+            &lt;div class="nds-accordion-content"&gt;
+                &lt;div class="nds-accordion-body"&gt;
+                    &lt;p&gt;Browse housing programs and check eligibility.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-accordion-item"&gt;
+        &lt;h3 class="nds-accordion-header" id="icon-heading-2"&gt;
+            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="false" aria-controls="icon-collapse-2"&gt;
+                &lt;i class="hgi hgi-stroke hgi-graduation-scroll nds-accordion-leading-icon"&gt;&lt;/i&gt;
+                &lt;span class="nds-accordion-title"&gt;Education&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/h3&gt;
+        &lt;div class="nds-accordion-collapse" id="icon-collapse-2" aria-labelledby="icon-heading-2"&gt;
+            &lt;div class="nds-accordion-content"&gt;
+                &lt;div class="nds-accordion-body"&gt;
+                    &lt;p&gt;Scholarships, transcripts, and certification exams.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-accordion-item"&gt;
+        &lt;h3 class="nds-accordion-header" id="icon-heading-3"&gt;
+            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
+                aria-expanded="false" aria-controls="icon-collapse-3"&gt;
+                &lt;i class="hgi hgi-stroke hgi-car-01 nds-accordion-leading-icon"&gt;&lt;/i&gt;
+                &lt;span class="nds-accordion-title"&gt;Vehicles&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/h3&gt;
+        &lt;div class="nds-accordion-collapse" id="icon-collapse-3" aria-labelledby="icon-heading-3"&gt;
+            &lt;div class="nds-accordion-content"&gt;
+                &lt;div class="nds-accordion-body"&gt;
+                    &lt;p&gt;Registration renewal, fines, and driving tests.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -480,12 +480,12 @@ const existing = document.querySelector('#my-accordion').ndsAccordion;
 instance.destroy();
 
 // Custom events (both bubble, same detail shape)
-document.addEventListener('nds:accordion:shown', (e) => {
+document.addEventListener('nds:accordion:shown', (e) =&gt; {
     // e.detail: {index, button, collapse, accordion}
     console.log('Opened item:', e.detail.index);
 });
 
-document.addEventListener('nds:accordion:hidden', (e) => {
+document.addEventListener('nds:accordion:hidden', (e) =&gt; {
     console.log('Closed item:', e.detail.index);
 });
                         </code>

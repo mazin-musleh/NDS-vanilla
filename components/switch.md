@@ -3,7 +3,7 @@ layout: page
 title: Switch
 hero_title: Switch - National Design System
 hero_description: Toggle switches for binary choices with clear visual feedback and accessibility support
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -96,22 +96,22 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<div class="nds-form-container nds-switch-container">
-  <div class="nds-form-header" data-feedback-target>
-    <label for="switch-1">
-      <span class="nds-label">Enable notifications</span>
-      <span class="nds-info">Receive push notifications for important updates</span>
-    </label>
-  </div>
-  <div class="nds-form-control">
-    <div class="nds-switch">
-      <input type="checkbox" id="switch-1" name="notifications" value="enabled" class="nds-switch-input">
-      <div class="nds-switch-track">
-        <div class="nds-switch-thumb"></div>
-      </div>
-    </div>
-  </div>
-</div>
+&lt;div class="nds-form-container nds-switch-container"&gt;
+  &lt;div class="nds-form-header" data-feedback-target&gt;
+    &lt;label for="switch-1"&gt;
+      &lt;span class="nds-label"&gt;Enable notifications&lt;/span&gt;
+      &lt;span class="nds-info"&gt;Receive push notifications for important updates&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;div class="nds-switch"&gt;
+      &lt;input type="checkbox" id="switch-1" name="notifications" value="enabled" class="nds-switch-input"&gt;
+      &lt;div class="nds-switch-track"&gt;
+        &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                   </code>
                 </div>
               </div>
@@ -244,55 +244,55 @@ direction: ltr
                 </div>
                 <div class="nds-expandable-content">
                   <code class="lang-html code">
-<fieldset class="nds-form-group nds-switch-group">
-  <legend class="nds-label">Notification preferences</legend>
-  <div class="nds-form-container nds-switch-container">
-    <div class="nds-form-header">
-      <label for="switch1">
-        <span class="nds-label">Email alerts</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <div class="nds-switch">
-        <input type="checkbox" id="switch1" name="notifications" value="email" class="nds-switch-input">
-        <div class="nds-switch-track">
-          <div class="nds-switch-thumb"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="nds-form-container nds-switch-container">
-    <div class="nds-form-header">
-      <label for="switch2">
-        <span class="nds-label">Push notifications</span>
-        <span class="nds-info">Instant alerts on your device</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <div class="nds-switch">
-        <input type="checkbox" id="switch2" name="notifications" value="push" checked class="nds-switch-input">
-        <div class="nds-switch-track">
-          <div class="nds-switch-thumb"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="nds-form-container nds-switch-container">
-    <div class="nds-form-header">
-      <label for="switch3">
-        <span class="nds-label">SMS alerts</span>
-      </label>
-    </div>
-    <div class="nds-form-control">
-      <div class="nds-switch">
-        <input type="checkbox" id="switch3" name="notifications" value="sms" class="nds-switch-input">
-        <div class="nds-switch-track">
-          <div class="nds-switch-thumb"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</fieldset>
+&lt;fieldset class="nds-form-group nds-switch-group"&gt;
+  &lt;legend class="nds-label"&gt;Notification preferences&lt;/legend&gt;
+  &lt;div class="nds-form-container nds-switch-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="switch1"&gt;
+        &lt;span class="nds-label"&gt;Email alerts&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;div class="nds-switch"&gt;
+        &lt;input type="checkbox" id="switch1" name="notifications" value="email" class="nds-switch-input"&gt;
+        &lt;div class="nds-switch-track"&gt;
+          &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-switch-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="switch2"&gt;
+        &lt;span class="nds-label"&gt;Push notifications&lt;/span&gt;
+        &lt;span class="nds-info"&gt;Instant alerts on your device&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;div class="nds-switch"&gt;
+        &lt;input type="checkbox" id="switch2" name="notifications" value="push" checked class="nds-switch-input"&gt;
+        &lt;div class="nds-switch-track"&gt;
+          &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-container nds-switch-container"&gt;
+    &lt;div class="nds-form-header"&gt;
+      &lt;label for="switch3"&gt;
+        &lt;span class="nds-label"&gt;SMS alerts&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-control"&gt;
+      &lt;div class="nds-switch"&gt;
+        &lt;input type="checkbox" id="switch3" name="notifications" value="sms" class="nds-switch-input"&gt;
+        &lt;div class="nds-switch-track"&gt;
+          &lt;div class="nds-switch-thumb"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/fieldset&gt;
                   </code>
                 </div>
               </div>

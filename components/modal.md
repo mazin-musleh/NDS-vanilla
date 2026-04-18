@@ -4,7 +4,7 @@ sidemenu_mode: top
 title: Modal
 hero_title: Modal - National Design System
 hero_description: Focuses the user on a single task or decision by overlaying a dialog that must be addressed before continuing
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -124,57 +124,57 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-<!-- Trigger Button -->
-<button class="nds-btn nds-primary nds-lg" data-modal-target="modal-basic-demo">
-  <span class="nds-label">Open Modal</span>
-</button>
+&lt;!-- Trigger Button --&gt;
+&lt;button class="nds-btn nds-primary nds-lg" data-modal-target="modal-basic-demo"&gt;
+  &lt;span class="nds-label"&gt;Open Modal&lt;/span&gt;
+&lt;/button&gt;
 
-<!-- Modal Dialog -->
-<div id="modal-basic-demo" class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
-    aria-hidden="true" hidden>
-  <div class="nds-card-header">
-    <span class="nds-featured-icon nds-circle" data-status="neutral">
-      <i class="nds-icon nds-hgi-information-circle" aria-hidden="true"></i>
-    </span>
-    <button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal">
-      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-    </button>
-  </div>
-  <div class="nds-card-content">
-    <div class="nds-card-text">
-      <h3 class="nds-card-title" id="modal-basic-title">Confirm Action</h3>
-      <p class="nds-card-description">Are you sure you want to proceed with this action?
-          This cannot be undone.</p>
-    </div>
-    <div class="nds-form-container nds-textarea">
-      <div class="nds-form-header">
-        <label for="textareaInput">
-          <span class="nds-label">Textarea</span>
-        </label>
-      </div>
-      <div class="nds-form-control">
-        <textarea id="textareaInput" class="nds-textarea"
-            placeholder="Enter your message..." rows="4"></textarea>
-      </div>
-      <div class="nds-form-footer">
-        <span class="nds-feedback nds-outline nds-sm">
-          <span class="nds-feedback-icon">
-            <i class="nds-icon" aria-hidden="true"></i>
-          </span>
-          <span class="msg"></span>
-        </span>
-      </div>
-    </div>
-  </div>
-  <div class="nds-card-actions">
-    <button class="nds-btn nds-primary nds-lg" data-modal-close>
-      <span class="nds-label">Confirm</span>
-    </button>
-    <button class="nds-btn nds-secondary-outline nds-lg" data-modal-close>
-      <span class="nds-label">Cancel</span>
-    </button>
-  </div>
-</div>
+&lt;!-- Modal Dialog --&gt;
+&lt;div id="modal-basic-demo" class="nds-modal nds-card nds-stroke" role="dialog" aria-labelledby="modal-basic-title"
+    aria-hidden="true" hidden&gt;
+  &lt;div class="nds-card-header"&gt;
+    &lt;span class="nds-featured-icon nds-circle" data-status="neutral"&gt;
+      &lt;i class="nds-icon nds-hgi-information-circle" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;button class="nds-close nds-modal-close nds-btn nds-subtle" aria-label="Close modal"&gt;
+      &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-card-content"&gt;
+    &lt;div class="nds-card-text"&gt;
+      &lt;h3 class="nds-card-title" id="modal-basic-title"&gt;Confirm Action&lt;/h3&gt;
+      &lt;p class="nds-card-description"&gt;Are you sure you want to proceed with this action?
+          This cannot be undone.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-form-container nds-textarea"&gt;
+      &lt;div class="nds-form-header"&gt;
+        &lt;label for="textareaInput"&gt;
+          &lt;span class="nds-label"&gt;Textarea&lt;/span&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;textarea id="textareaInput" class="nds-textarea"
+            placeholder="Enter your message..." rows="4"&gt;&lt;/textarea&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-form-footer"&gt;
+        &lt;span class="nds-feedback nds-outline nds-sm"&gt;
+          &lt;span class="nds-feedback-icon"&gt;
+            &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+          &lt;/span&gt;
+          &lt;span class="msg"&gt;&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-card-actions"&gt;
+    &lt;button class="nds-btn nds-primary nds-lg" data-modal-close&gt;
+      &lt;span class="nds-label"&gt;Confirm&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="nds-btn nds-secondary-outline nds-lg" data-modal-close&gt;
+      &lt;span class="nds-label"&gt;Cancel&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -367,11 +367,11 @@ NDS.Modal.init();
 // Fired on the modal element, bubbles up to document
 const modal = document.getElementById('modal-id');
 
-modal.addEventListener('nds-modal-opened', (e) => {
+modal.addEventListener('nds-modal-opened', (e) =&gt; {
     // Modal is now visible
 });
 
-modal.addEventListener('nds-modal-closed', (e) => {
+modal.addEventListener('nds-modal-closed', (e) =&gt; {
     // Modal is now hidden, reset forms or clean up
     modal.querySelector('form')?.reset();
 });

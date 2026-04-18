@@ -3,7 +3,7 @@ layout: page
 title: Progress
 hero_title: Progress - National Design System
 hero_description: Circular and linear indicators for visualizing completion rates, upload status, and task progress across dashboards, forms, and workflows
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -121,23 +121,23 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-progress-circle nds-lg" data-value="75">
-  <svg width="120" height="120" viewBox="0 0 24 24">
-    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-      stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-  </svg>
-  <div class="nds-progress-info">
-    <span class="nds-feedback nds-sm">
-      <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-    </span>
-    <span class="nds-progress-percentage">
-      <span class="nds-progress-number"></span>
-      <span class="nds-progress-symbol">%</span>
-    </span>
-    <span class="nds-progress-text">Active users</span>
-  </div>
-</div>
+&lt;div class="nds-progress-circle nds-lg" data-value="75"&gt;
+  &lt;svg width="120" height="120" viewBox="0 0 24 24"&gt;
+    &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" /&gt;
+    &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+      stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" /&gt;
+  &lt;/svg&gt;
+  &lt;div class="nds-progress-info"&gt;
+    &lt;span class="nds-feedback nds-sm"&gt;
+      &lt;span class="nds-feedback-icon"&gt;&lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;span class="nds-progress-percentage"&gt;
+      &lt;span class="nds-progress-number"&gt;&lt;/span&gt;
+      &lt;span class="nds-progress-symbol"&gt;%&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;span class="nds-progress-text"&gt;Active users&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -260,20 +260,20 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-progress-circle nds-lg" data-num="3.75" data-max="5">
-  <svg width="120" height="120" viewBox="0 0 24 24">
-    <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
-    <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
-      stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
-  </svg>
-  <div class="nds-progress-info">
-    <span class="nds-progress-out-of">
-      <span class="nds-progress-number"></span>
-      <span class="nds-progress-of"></span>
-    </span>
-    <span class="nds-progress-text">SGPA</span>
-  </div>
-</div>
+&lt;div class="nds-progress-circle nds-lg" data-num="3.75" data-max="5"&gt;
+  &lt;svg width="120" height="120" viewBox="0 0 24 24"&gt;
+    &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" /&gt;
+    &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
+      stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" /&gt;
+  &lt;/svg&gt;
+  &lt;div class="nds-progress-info"&gt;
+    &lt;span class="nds-progress-out-of"&gt;
+      &lt;span class="nds-progress-number"&gt;&lt;/span&gt;
+      &lt;span class="nds-progress-of"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+    &lt;span class="nds-progress-text"&gt;SGPA&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -384,16 +384,16 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-<div class="nds-progress-bar nds-lg" data-value="65">
-  <span class="nds-progress-label">Uploading document.pdf</span>
-  <div class="nds-progress-track">
-    <div class="nds-progress-fill"></div>
-  </div>
-  <span class="nds-feedback nds-sm">
-    <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-    <span class="nds-feedback-message">Processing your file...</span>
-  </span>
-</div>
+&lt;div class="nds-progress-bar nds-lg" data-value="65"&gt;
+  &lt;span class="nds-progress-label"&gt;Uploading document.pdf&lt;/span&gt;
+  &lt;div class="nds-progress-track"&gt;
+    &lt;div class="nds-progress-fill"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;span class="nds-feedback nds-sm"&gt;
+    &lt;span class="nds-feedback-icon"&gt;&lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/span&gt;
+    &lt;span class="nds-feedback-message"&gt;Processing your file...&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>

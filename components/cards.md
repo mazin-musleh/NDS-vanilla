@@ -3,7 +3,7 @@ layout: page
 title: Cards
 hero_title: Cards - National Design System
 hero_description: Flexible content containers with support for images, icons, tags, ratings, and actions
-breadcrumb: ["Components"]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
@@ -226,28 +226,28 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-<div class="nds-card nds-stroke">
-    <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle nds-lg">
-                <i class="hgi hgi-stroke hgi-stars"></i>
-            </span>
-        </div>
-    </div>
-    <div class="nds-card-content">
-        <div class="nds-card-text">
-            <h3 class="nds-card-title">Card Title</h3>
-            <p class="nds-card-description">Short description of this card content goes here.</p>
-        </div>
-        <div class="nds-card-meta">
-            <div class="nds-card-tags">
-                <span class="nds-tag nds-blue nds-sm">
-                    <span class="nds-label">Category</span>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-card nds-stroke"&gt;
+    &lt;div class="nds-card-header"&gt;
+        &lt;div class="nds-card-featured-icon"&gt;
+            &lt;span class="nds-featured-icon nds-circle nds-lg"&gt;
+                &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
+            &lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card-content"&gt;
+        &lt;div class="nds-card-text"&gt;
+            &lt;h3 class="nds-card-title"&gt;Card Title&lt;/h3&gt;
+            &lt;p class="nds-card-description"&gt;Short description of this card content goes here.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-card-meta"&gt;
+            &lt;div class="nds-card-tags"&gt;
+                &lt;span class="nds-tag nds-blue nds-sm"&gt;
+                    &lt;span class="nds-label"&gt;Category&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -361,21 +361,21 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-<div class="nds-card nds-stroke nds-statistic">
-    <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle nds-xl">
-                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-            </span>
-        </div>
-    </div>
-    <div class="nds-card-content">
-        <div class="nds-card-text">
-            <span class="nds-card-number nds-counter-value nds-number-format" data-target="125847">0</span>
-            <p class="nds-card-description">Active Users</p>
-        </div>
-    </div>
-</div>
+&lt;div class="nds-card nds-stroke nds-statistic"&gt;
+    &lt;div class="nds-card-header"&gt;
+        &lt;div class="nds-card-featured-icon"&gt;
+            &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
+                &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card-content"&gt;
+        &lt;div class="nds-card-text"&gt;
+            &lt;span class="nds-card-number nds-counter-value nds-number-format" data-target="125847"&gt;0&lt;/span&gt;
+            &lt;p class="nds-card-description"&gt;Active Users&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                                 </code>
                             </div>
                         </div>
@@ -499,24 +499,24 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-<div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2; width: fit-content;">
-    <div class="nds-card nds-stroke nds-statistic">
-        <div class="nds-card-header">
-            <div class="nds-card-featured-icon">
-                <span class="nds-featured-icon nds-circle nds-xl">
-                    <i class="hgi hgi-stroke hgi-user-multiple"></i>
-                </span>
-            </div>
-        </div>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-number nds-counter-value nds-number-format" data-target="125847">0</span>
-                <p class="nds-card-description">Active Users</p>
-            </div>
-        </div>
-    </div>
-    <!-- Additional cards... -->
-</div>
+&lt;div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2; width: fit-content;"&gt;
+    &lt;div class="nds-card nds-stroke nds-statistic"&gt;
+        &lt;div class="nds-card-header"&gt;
+            &lt;div class="nds-card-featured-icon"&gt;
+                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
+                    &lt;i class="hgi hgi-stroke hgi-user-multiple"&gt;&lt;/i&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-card-content"&gt;
+            &lt;div class="nds-card-text"&gt;
+                &lt;span class="nds-card-number nds-counter-value nds-number-format" data-target="125847"&gt;0&lt;/span&gt;
+                &lt;p class="nds-card-description"&gt;Active Users&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- Additional cards... --&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
