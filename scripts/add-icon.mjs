@@ -1,11 +1,13 @@
 #!/usr/bin/env node
-// Append a single UI icon to _sass/_icons.scss.
+// Register a single UI icon in _sass/_icons.scss.
 //
 //   node scripts/add-icon.mjs <name> --stdin             # read raw <svg>...</svg> from stdin
 //   node scripts/add-icon.mjs <name> --file <path>       # read raw <svg>...</svg> from a file
 //   node scripts/add-icon.mjs <name> --class <selector>  # custom alias class (default: nds-hgi-<name>)
 //
-// The SCSS file is the source of truth — this only appends, never rewrites.
+// Handles URL-encoding of the SVG for data URIs and inserts the token/alias
+// at the alphabetically correct position in its section. The SCSS file is
+// hand-editable — this script preserves existing structure.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -78,35 +80,66 @@ const uri = `data:image/svg+xml;utf8,${urlEncodeSvg(svg)}`;
 const tokenLine = `  --nds-icon-${name}: url("${uri}");`;
 const aliasLine = `.${aliasClass} { --nds-icon: var(--nds-icon-${name}); }`;
 
-let file = fs.readFileSync(OUT, 'utf8');
-
+const file = fs.readFileSync(OUT, 'utf8');
 if (file.includes(`--nds-icon-${name}:`)) {
   console.log(`already present, skipped: ${name}`);
   process.exit(0);
 }
 
-// Insert token line before the closing `}` of the :root block.
-const rootEnd = file.indexOf('}', file.indexOf(':root {'));
-if (rootEnd === -1) {
-  console.error('could not locate :root { ... } block in _icons.scss');
-  process.exit(1);
-}
-file = file.slice(0, rootEnd) + tokenLine + '\n' + file.slice(rootEnd);
+const lines = file.split('\n');
 
-// HGI aliases land before the "// Mirrored aliases" comment; custom aliases
-// (those passing --class) land at the end of the file in the custom section.
-const anchor = customClass ? '// Custom (non-HGI) icon aliases' : '// Mirrored aliases';
-const anchorIdx = file.indexOf(anchor);
-if (anchorIdx !== -1) {
-  if (customClass) {
-    file = file.replace(/\s*$/, '') + '\n' + aliasLine + '\n';
-  } else {
-    const lineStart = file.lastIndexOf('\n', anchorIdx) + 1;
-    file = file.slice(0, lineStart) + aliasLine + '\n' + file.slice(lineStart);
-  }
+// --- Insert token alphabetically inside :root { ... } ---
+const tokenRe = /^  --nds-icon-([a-z0-9-]+):/;
+const rootIdx = lines.findIndex(l => l.trim() === ':root {');
+let rootEnd = rootIdx;
+while (rootEnd < lines.length && lines[rootEnd].trim() !== '}') rootEnd++;
+
+let tokenInsertAt = -1;
+for (let i = rootIdx + 1; i < rootEnd; i++) {
+  const m = lines[i].match(tokenRe);
+  if (m && m[1].localeCompare(name) > 0) { tokenInsertAt = i; break; }
+}
+if (tokenInsertAt === -1) tokenInsertAt = rootEnd;
+lines.splice(tokenInsertAt, 0, tokenLine);
+
+// --- Insert alias alphabetically in HGI or custom section ---
+// HGI section: contiguous .nds-hgi-* lines before the "// Mirrored aliases" comment.
+// Custom section: contiguous .nds-*-* lines after the "// Custom (non-HGI) icon aliases" comment,
+//                 before the "// DIRECTION-AWARE" block or EOF.
+const mirroredIdx = lines.findIndex(l => l.trim().startsWith('// Mirrored aliases'));
+const customHeaderIdx = lines.findIndex(l => l.trim().startsWith('// Custom (non-HGI) icon aliases'));
+const arrowFlipIdx = lines.findIndex((l, i) => l.trim().startsWith('// ==') && lines[i + 1]?.includes('DIRECTION-AWARE'));
+
+let sectionStart, sectionEnd, sortKey, lineRe;
+if (customClass) {
+  sortKey = aliasClass;
+  lineRe = /^\.([a-z][a-z0-9-]*)\s*\{\s*--nds-icon:/;
+  sectionStart = customHeaderIdx !== -1 ? customHeaderIdx + 1 : lines.length;
+  sectionEnd = arrowFlipIdx !== -1 ? arrowFlipIdx : lines.length;
+  // Skip consecutive comment lines at the top of the section
+  while (sectionStart < sectionEnd && lines[sectionStart].trim().startsWith('//')) sectionStart++;
 } else {
-  file = file.replace(/\s*$/, '') + '\n' + aliasLine + '\n';
+  sortKey = name;
+  lineRe = /^\.nds-hgi-([a-z0-9-]+)\s*\{\s*--nds-icon:/;
+  // HGI section starts at the first .nds-hgi-* line in the file
+  sectionStart = lines.findIndex(l => /^\.nds-hgi-/.test(l));
+  if (sectionStart === -1) sectionStart = 0;
+  sectionEnd = mirroredIdx !== -1 ? mirroredIdx : lines.length;
 }
 
-fs.writeFileSync(OUT, file);
+let aliasInsertAt = -1;
+for (let i = sectionStart; i < sectionEnd; i++) {
+  const m = lines[i].match(lineRe);
+  if (m && m[1].localeCompare(sortKey) > 0) { aliasInsertAt = i; break; }
+}
+if (aliasInsertAt === -1) {
+  // No later alias found; insert after the last matching line in this section
+  for (let i = sectionEnd - 1; i >= sectionStart; i--) {
+    if (lineRe.test(lines[i])) { aliasInsertAt = i + 1; break; }
+  }
+  if (aliasInsertAt === -1) aliasInsertAt = sectionEnd;
+}
+lines.splice(aliasInsertAt, 0, aliasLine);
+
+fs.writeFileSync(OUT, lines.join('\n'));
 console.log(`added: ${name}`);

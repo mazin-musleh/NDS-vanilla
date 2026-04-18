@@ -6,7 +6,11 @@ argument-hint: "<icon-name> (--stdin | --file <path>) [--class <selector>]"
 
 # Add UI Icon
 
-Appends one `--nds-icon-{name}` token and one `.nds-hgi-{name}` alias to `_sass/_icons.scss`. The SCSS file is the source of truth and hand-editable; this skill only appends.
+Registers one `--nds-icon-{name}` token and one alias (`.nds-hgi-{name}` by default) in `_sass/_icons.scss`.
+
+The script handles URL-encoding of the data URI AND inserts the new token/alias at the alphabetically correct position in its section (`:root` tokens, HGI alias block, or custom alias block). The file is hand-editable.
+
+**After running the script, double-check**: run `git diff _sass/_icons.scss` and confirm the new lines landed alphabetically within their section. If the script got confused (e.g. section markers were renamed), hand-move the inserted lines to the right spot.
 
 ## Naming convention for style/type variants
 
@@ -87,12 +91,13 @@ If the Figma node is a frame with multiple children (background rects, labels, e
 ## After any source
 
 1. The script prints `added: {name}` (or `already present, skipped: {name}`).
-2. Tell the user to use it in markup / `_js` / YAML:
+2. **Double-check placement**: run `git diff _sass/_icons.scss` and verify the new token landed in alphabetical order inside `:root { ... }`, and the alias landed alphabetically inside its section (HGI block before `// Mirrored aliases`, or custom block between `// Custom (non-HGI) icon aliases` and `// DIRECTION-AWARE`). Hand-move if the script mis-placed them.
+3. Tell the user to use it in markup / `_js` / YAML:
    ```html
    <i class="nds-icon nds-hgi-{name}" aria-hidden="true"></i>
    ```
-3. Mention the `--nds-icon-{name}` token for component-scoped overrides.
-4. Remind them to hard-reload the browser (or restart `jekyll serve` if SCSS caching is stale).
+4. Mention the `--nds-icon-{name}` token for component-scoped overrides.
+5. Remind them to hard-reload the browser (or restart `jekyll serve` if SCSS caching is stale).
 
 ## Do NOT
 
