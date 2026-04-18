@@ -14,7 +14,9 @@
   --_menu-padding: var(--menu-padding, var(--spacing-md, 8px));
   --_dropmenu-offset: var(--spacing-xs, 4px);
   --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
+  --_dropmenu-width: var(--dropmenu-width, min-content);
   --_dropmenu-min-width: var(--dropmenu-min-width, 150px);
+  --_dropmenu-max-width: var(--dropmenu-max-width, calc(100vw - 16px));
   --divider: var(--_menu-padding);
 
   position: relative;
@@ -24,6 +26,10 @@
     overflow: hidden;
     overflow-y: auto;
     max-height: 400px;
+    // Stop scroll momentum from chaining to the page when the inner
+    // scroll hits its end — otherwise the page-scroll listener closes
+    // the menu as soon as the user hits top or bottom.
+    overscroll-behavior: contain;
   }
   
 
@@ -33,10 +39,11 @@
 
   &-menu {
     display: none;
-    position: absolute;
+    position: fixed;
     z-index: 5;
+    width: var(--_dropmenu-width);
     min-width: var(--_dropmenu-min-width);
-    margin-top: var(--_dropmenu-offset);
+    max-width: var(--_dropmenu-max-width);
     padding: var(--_menu-padding);
     list-style: none;
     background-color: var(--background-menu);
@@ -103,30 +110,7 @@
   }
 
   // ==============================================
-  // 5. POSITION VARIANTS (JS-calculated, direction-aware)
-  // ==============================================
-
-  // Vertical: open upward
-  &[data-position-vertical="top"] .nds-dropmenu-menu {
-    top: auto;
-    margin-top: 0;
-    margin-bottom: var(--_dropmenu-offset);
-  }
-
-  // Horizontal: left edge aligns with trigger → extends right
-  &[data-position-horizontal="left"] .nds-dropmenu-menu {
-    left: 0;
-    right: auto;
-  }
-
-  // Horizontal: right edge aligns with trigger → extends left
-  &[data-position-horizontal="right"] .nds-dropmenu-menu {
-    right: 0;
-    left: auto;
-  }
-
-  // ==============================================
-  // 7. INNER COMPONENTS
+  // 5. INNER COMPONENTS
   // ==============================================
 
   // Form controls inside dropdown
@@ -150,7 +134,7 @@
   }
 
   // ==============================================
-  // 8. RESPONSIVE
+  // 6. RESPONSIVE
   // ==============================================
 
   @include mobile {
@@ -161,7 +145,7 @@
 }
 
 // ==============================================
-// 10. ACCESSIBILITY
+// 7. ACCESSIBILITY
 // ==============================================
 
 @media (prefers-reduced-motion: reduce) {

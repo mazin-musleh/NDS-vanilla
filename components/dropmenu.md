@@ -464,6 +464,207 @@ direction: ltr
     </div>
 </section>
 
+<!-- Dropmenu Inside Table -->
+<section id="dropmenuInTable" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Dropmenu Inside Table</h2>
+            <p class="nds-section-description">Row-level action menus work inside tables without being clipped by the table's rounded corners or overflow boundary. The menu auto-detects the clipping ancestor and switches to viewport-anchored positioning; scroll or resize dismisses the menu.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nora Al-Zahrani</td>
+                                        <td>Administrator</td>
+                                        <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
+                                        <td>
+                                            <div class="nds-dropmenu">
+                                                <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
+                                                    <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
+                                                </button>
+                                                <div class="nds-dropmenu-menu" hidden>
+                                                    <div class="nds-dropmenu-scroll">
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                            <span class="nds-label">Edit</span>
+                                                        </button>
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                                            <span class="nds-label">Duplicate</span>
+                                                        </button>
+                                                        <hr class="nds-divider">
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
+                                                            <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                            <span class="nds-label">Delete</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Yousef Al-Harbi</td>
+                                        <td>Editor</td>
+                                        <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Away</span></span></td>
+                                        <td>
+                                            <div class="nds-dropmenu">
+                                                <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
+                                                    <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
+                                                </button>
+                                                <div class="nds-dropmenu-menu" hidden>
+                                                    <div class="nds-dropmenu-scroll">
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                            <span class="nds-label">Edit</span>
+                                                        </button>
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                                            <span class="nds-label">Duplicate</span>
+                                                        </button>
+                                                        <hr class="nds-divider">
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
+                                                            <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                            <span class="nds-label">Delete</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Layla Al-Qahtani</td>
+                                        <td>Viewer</td>
+                                        <td><span class="nds-tag nds-sm" data-status="error"><span class="nds-label">Offline</span></span></td>
+                                        <td>
+                                            <div class="nds-dropmenu">
+                                                <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
+                                                    <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
+                                                </button>
+                                                <div class="nds-dropmenu-menu" hidden>
+                                                    <div class="nds-dropmenu-scroll">
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                            <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                                            <span class="nds-label">Edit</span>
+                                                        </button>
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                                            <span class="nds-label">Duplicate</span>
+                                                        </button>
+                                                        <hr class="nds-divider">
+                                                        <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
+                                                            <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                                            <span class="nds-label">Delete</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-dropmenu-table-1" id="tab-dropmenu-table-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                    id="panel-dropmenu-table-1" aria-labelledby="tab-dropmenu-table-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
+<table class="nds-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Nora Al-Zahrani</td>
+      <td>Administrator</td>
+      <td>
+        <span class="nds-tag nds-sm" data-status="success">
+          <span class="nds-label">Active</span>
+        </span>
+      </td>
+      <td>
+        <div class="nds-dropmenu">
+          <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger"
+            aria-label="Row actions">
+            <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
+          </button>
+          <div class="nds-dropmenu-menu" hidden>
+            <div class="nds-dropmenu-scroll">
+              <button class="nds-btn nds-subtle nds-dropmenu-item">
+                <i class="hgi hgi-stroke hgi-edit-02"></i>
+                <span class="nds-label">Edit</span>
+              </button>
+              <button class="nds-btn nds-subtle nds-dropmenu-item">
+                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <span class="nds-label">Duplicate</span>
+              </button>
+              <hr class="nds-divider">
+              <button class="nds-btn nds-subtle nds-dropmenu-item
+                nds-destructive">
+                <i class="hgi hgi-stroke hgi-delete-02"></i>
+                <span class="nds-label">Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <!-- more rows... -->
+  </tbody>
+</table>
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="dropmenuFeatures" class="nds-content-section">
     <div class="nds-section-wrapper">
