@@ -191,7 +191,6 @@
         toggleBtn.classList.remove('nds-peek');
         setTimeout(() => toggleBtn.classList.add('nds-peek'), 1500);
 
-        let ticking = false;
         const threshold = 60;
         let cachedRect = null;
         let rectTimer = null;
@@ -206,27 +205,14 @@
             return cachedRect;
         };
 
-        let scrollTicking = false;
-        const scrollHandler = () => {
-            if (scrollTicking) return;
-            scrollTicking = true;
-            requestAnimationFrame(() => {
-                invalidate();
-                scrollTicking = false;
-            });
-        };
-        const mousemoveHandler = (e) => {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                const rect = getRect();
-                const cx = rect.left + rect.width / 2;
-                const cy = rect.top + rect.height / 2;
-                const dist = Math.sqrt((e.clientX - cx) ** 2 + (e.clientY - cy) ** 2);
-                toggleBtn.classList.toggle('nds-peek', dist > threshold);
-                ticking = false;
-            });
-        };
+        const scrollHandler = NDS.rafThrottle(invalidate);
+        const mousemoveHandler = NDS.rafThrottle((e) => {
+            const rect = getRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dist = Math.sqrt((e.clientX - cx) ** 2 + (e.clientY - cy) ** 2);
+            toggleBtn.classList.toggle('nds-peek', dist > threshold);
+        });
 
         window.addEventListener('scroll', scrollHandler, { passive: true });
         NDS.onResize(invalidate);

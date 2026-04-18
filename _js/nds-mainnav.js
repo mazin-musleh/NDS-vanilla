@@ -758,16 +758,10 @@
         });
 
         // Scroll handling
-        let scrollTicking = false;
-        const onScroll = () => {
-            if (scrollTicking) return;
-            scrollTicking = true;
-            requestAnimationFrame(() => {
-                scrollTicking = false;
-                if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
-                overflow.checkEnd();
-            });
-        };
+        const onScroll = NDS.rafThrottle(() => {
+            if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
+            overflow.checkEnd();
+        });
         DOM.primary.addEventListener('scroll', onScroll, { passive: true, signal: _interactionsSignal });
 
         if ('onscrollend' in DOM.primary) {

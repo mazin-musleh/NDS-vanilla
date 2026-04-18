@@ -366,17 +366,10 @@
         // ==============================================
 
         setupScrollSync() {
-            let ticking = false;
-            this.wrapper.addEventListener('scroll', () => {
-                if (!ticking) {
-                    requestAnimationFrame(() => {
-                        this.detectCurrentSlide();
-                        this.updateState();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            }, { passive: true });
+            this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => {
+                this.detectCurrentSlide();
+                this.updateState();
+            }), { passive: true });
         }
 
         detectCurrentSlide() {

@@ -526,16 +526,7 @@
 
         setupEventListeners() {
             // Scroll event listener with requestAnimationFrame throttling
-            let scrollTicking = false;
-            this.wrapper.addEventListener('scroll', () => {
-                if (!scrollTicking) {
-                    window.requestAnimationFrame(() => {
-                        this.handleScroll();
-                        scrollTicking = false;
-                    });
-                    scrollTicking = true;
-                }
-            });
+            this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => this.handleScroll()));
 
             // Watch table and wrapper for size changes
             const checkTable = NDS.debounce(() => this.checkTableWidth(), 100);

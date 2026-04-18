@@ -1021,8 +1021,8 @@
         // Cleanup on close - Clear all cache
         cleanup: function () {
             // Remove event listeners for calendar-specific elements
-            var handlers = ['todayBtn', 'clearBtn', 'prevBtn', 'nextBtn', 'dropdownClick'];
-            var elements = ['todayBtn', 'clearBtn', 'prevBtn', 'nextBtn', 'dropdown'];
+            var handlers = ['todayBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'dropdownClick'];
+            var elements = ['todayBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'dropdown'];
 
             for (var i = 0; i < handlers.length; i++) {
                 if (this.handlers[handlers[i]] && this.elements[elements[i]]) {
@@ -1215,21 +1215,18 @@
             var self = this;
 
             if (this.elements.todayBtn) {
-                this.elements.todayBtn.addEventListener('click', function () {
-                    self.selectToday();
-                });
+                this.handlers.todayBtn = function () { self.selectToday(); };
+                this.elements.todayBtn.addEventListener('click', this.handlers.todayBtn);
             }
 
             if (this.elements.clearBtn) {
-                this.elements.clearBtn.addEventListener('click', function () {
-                    self.clearSelection();
-                });
+                this.handlers.clearBtn = function () { self.clearSelection(); };
+                this.elements.clearBtn.addEventListener('click', this.handlers.clearBtn);
             }
 
             if (this.elements.saveBtn) {
-                this.elements.saveBtn.addEventListener('click', function () {
-                    self.saveAndClose();
-                });
+                this.handlers.saveBtn = function () { self.saveAndClose(); };
+                this.elements.saveBtn.addEventListener('click', this.handlers.saveBtn);
             }
         },
 

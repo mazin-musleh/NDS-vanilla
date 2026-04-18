@@ -216,15 +216,7 @@
                         }
                         if (window.scrollY < 200) update();
                     };
-                    let ticking = false;
-                    const throttledSync = () => {
-                        if (ticking) return;
-                        ticking = true;
-                        requestAnimationFrame(() => {
-                            ticking = false;
-                            sync();
-                        });
-                    };
+                    const throttledSync = NDS.rafThrottle(sync);
                     window.addEventListener('scroll', throttledSync, { passive: true });
                     placeholder._scrollSync = throttledSync;
                 }

@@ -36,6 +36,18 @@
         return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
     };
 
+    // ── RAF Throttle ─────────────────────────────────────────────────
+    // Single-in-flight requestAnimationFrame throttle for scroll/mousemove handlers
+    // Usage: el.addEventListener('scroll', NDS.rafThrottle(handler), { passive: true })
+    NDS.rafThrottle = fn => {
+        let ticking = false;
+        return (...args) => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => { ticking = false; fn(...args); });
+        };
+    };
+
     // ── Window Resize Bus ────────────────────────────────────────────
     // Single listener, 150ms debounce, fan-out to subscribers
     // Usage: const off = NDS.onResize(handler)

@@ -139,15 +139,7 @@
 
         checkOverflow(wrapper);
 
-        let ticking = false;
-        content.addEventListener('scroll', () => {
-            if (ticking) return;
-            ticking = true;
-            requestAnimationFrame(() => {
-                checkScrollPosition(wrapper);
-                ticking = false;
-            });
-        }, { passive: true });
+        content.addEventListener('scroll', NDS.rafThrottle(() => checkScrollPosition(wrapper)), { passive: true });
 
         if (btn) {
             btn.addEventListener('click', () => scrollStep(wrapper));
