@@ -180,6 +180,8 @@ $breakpoints-range: (
 
     -webkit-box-shadow: 0 0 0 1000px #{$bg} inset !important;
     box-shadow: 0 0 0 1000px #{$bg} inset !important;
+    -webkit-text-fill-color: #{$text} !important;
+    caret-color: #{$text};
     background-clip: padding-box;
 
     /* avoid "flash" on load in some WebKit builds */
@@ -189,6 +191,7 @@ $breakpoints-range: (
   // Firefox
   &:-moz-autofill {
     box-shadow: 0 0 0 1000px #{$bg} inset !important;
+    color: #{$text} !important;
     background-clip: padding-box;
   }
 
