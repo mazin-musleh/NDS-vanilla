@@ -21,15 +21,13 @@ Quick links:
 
 ## Who is this for?
 
-> **Important:** The default visual identity — design tokens, colors, logos, and the digital-stamp component — is **exclusive to Saudi Arabia government entities**. Any non-government use must replace these with the adopting organization's own identity before deploying. See [Attribution & disclaimer](#attribution--disclaimer) below.
-
 - **Government and public-sector teams** building digital services that need to follow the official DGA design specifications.
 - **Agencies and contractors** delivering Saudi government or semi-government sites on deadlines, without framework overhead.
-- **Arabic-first and bilingual teams** — RTL/LTR are native from day one; no separate stylesheet, no overrides.
-- **Teams avoiding framework lock-in** — plain HTML, CSS, and JavaScript that drops into any stack (PHP, .NET, Java, Node, Rails, or static hosting).
-- **Startups and indie builders** wanting a clean, production-grade starting point. Replace the DGA brand tokens and logos with your own to use on any non-government project.
+- **Freelancers** shipping client sites quickly with a polished component library and page templates out of the box.
 - **Students and fresh graduates** learning core HTML, CSS, and vanilla JavaScript from a readable production-grade codebase.
 - **Teachers and trainers** using real components, page templates, and patterns as study cases for web-development courses, bootcamps, or workshops.
+
+> **Important:** The default visual identity — design tokens, colors, logos, and the digital-stamp component — is **exclusive to Saudi Arabia government entities**. Any non-government use must replace these with the adopting organization's own identity before deploying. See [Attribution & disclaimer](#attribution--disclaimer) below.
 
 ## How should I use this?
 
