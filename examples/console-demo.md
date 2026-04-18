@@ -271,7 +271,7 @@ hideFeedback: true
                             <div class="nds-col-header">
                                 <span class="nds-label">Reference</span>
                                 <div class="nds-col-actions">
-                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
                                 </div>
                             </div>
                         </th>
@@ -279,7 +279,7 @@ hideFeedback: true
                             <div class="nds-col-header">
                                 <span class="nds-label">Service</span>
                                 <div class="nds-col-actions">
-                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
                                 </div>
                             </div>
                         </th>
@@ -287,7 +287,7 @@ hideFeedback: true
                             <div class="nds-col-header">
                                 <span class="nds-label">Category</span>
                                 <div class="nds-col-actions">
-                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
                                 </div>
                             </div>
                         </th>
@@ -295,7 +295,7 @@ hideFeedback: true
                             <div class="nds-col-header">
                                 <span class="nds-label">Amount</span>
                                 <div class="nds-col-actions">
-                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
                                 </div>
                             </div>
                         </th>
@@ -303,7 +303,7 @@ hideFeedback: true
                             <div class="nds-col-header">
                                 <span class="nds-label">Date</span>
                                 <div class="nds-col-actions">
-                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="hgi hgi-stroke hgi-sorting-05 nds-sort-icon"></i></button>
+                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
                                 </div>
                             </div>
                         </th>
@@ -349,13 +349,31 @@ hideFeedback: true
                             {% endif %}
                         </td>
                         <td class="actions-column">
-                            <div class="table-actions">
-                                <button class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="View transaction details">
-                                    <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
+                            <div class="nds-dropmenu">
+                                <button class="nds-btn nds-subtle nds-sm nds-icon-only nds-dropmenu-trigger" aria-label="Row actions">
+                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
                                 </button>
-                                <button class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Download receipt">
-                                    <i class="hgi hgi-stroke hgi-download-04"></i>
-                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                            <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
+                                            <span class="nds-label">View details</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                            <i class="hgi hgi-stroke hgi-download-04"></i>
+                                            <span class="nds-label">Download receipt</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                            <span class="nds-label">Copy reference</span>
+                                        </button>
+                                        <hr class="nds-divider">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive">
+                                            <i class="hgi hgi-stroke hgi-delete-02"></i>
+                                            <span class="nds-label">Delete</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
