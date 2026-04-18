@@ -272,46 +272,32 @@
         }
 
         open() {
-            // Cancel any pending close cleanup on this instance
             this._closeCancelled = true;
 
-            // Close any other open dropmenus
             document.querySelectorAll('.nds-dropmenu[data-state~="open"]').forEach(el => {
-                if (el !== this.dropmenu && el.ndsDropmenu) {
-                    el.ndsDropmenu.close();
-                }
+                if (el !== this.dropmenu && el.ndsDropmenu) el.ndsDropmenu.close();
             });
 
-            // Clear stale close states before opening
             removeState(this.dropmenu, 'closing');
-
             this.isOpen = true;
 
-            // Step 1: Set vertical position (only needs trigger rect, no menu)
-            this.adjustVerticalPosition();
-
-            // Step 2: 'open' + 'opening' → display: block at opacity 0
             addState(this.dropmenu, 'open', 'opening');
             addState(this.trigger, 'open');
             this.trigger.setAttribute('aria-expanded', 'true');
             this.menu.setAttribute('aria-hidden', 'false');
 
-            // Step 3: Set horizontal position (needs menu width)
-            this.adjustHorizontalPosition();
+            this.applyPosition();
 
-            // Step 4: Scroll just enough so the menu's bottom edge is visible
-            const menuRect = this.menu.getBoundingClientRect();
-            if (menuRect.bottom > window.innerHeight) {
-                window.scrollBy({ top: menuRect.bottom - window.innerHeight + 20, behavior: 'smooth' });
-            } else if (menuRect.top < 0) {
-                window.scrollBy({ top: menuRect.top - 20, behavior: 'smooth' });
-            }
+            // Close on external scroll/resize. Ignore scrolls inside the menu
+            // itself so filters/scrollable content keep working.
+            this._onScroll = (e) => {
+                if (e?.target?.nodeType && this.menu.contains(e.target)) return;
+                this.close();
+            };
+            document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
+            this._unsubResize = NDS.onResize(() => this.close());
 
-            // Step 5: Next frame → remove 'opening' → transition fires
-            requestAnimationFrame(() => {
-                removeState(this.dropmenu, 'opening');
-            });
-
+            requestAnimationFrame(() => removeState(this.dropmenu, 'opening'));
             this.emitEvent('nds:dropmenu:opened');
         }
 
@@ -319,13 +305,16 @@
             this.isOpen = false;
             this._closeCancelled = false;
 
-            // Move focus out before hiding to prevent aria-hidden warning
-            if (this.menu.contains(document.activeElement)) {
-                this.trigger.focus();
-            }
+            if (this.menu.contains(document.activeElement)) this.trigger.focus();
 
             addState(this.dropmenu, 'closing');
             this.trigger.setAttribute('aria-expanded', 'false');
+
+            if (this._onScroll) {
+                document.removeEventListener('scroll', this._onScroll, { capture: true });
+                this._onScroll = null;
+            }
+            if (this._unsubResize) { this._unsubResize(); this._unsubResize = null; }
 
             let done = false;
             const cleanup = () => {
@@ -335,68 +324,75 @@
                 removeState(this.dropmenu, 'open', 'opening', 'closing');
                 removeState(this.trigger, 'open');
                 this.dropmenu.removeAttribute('data-position-vertical');
-                this.dropmenu.removeAttribute('data-position-horizontal');
-                this.menu.style.top = '';
-                this.menu.style.bottom = '';
+                this.menu.style.cssText = '';
+                const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
+                if (scroll) scroll.style.maxHeight = '';
                 this.menu.setAttribute('aria-hidden', 'true');
                 this.menu.removeEventListener('transitionend', onEnd);
                 this.emitEvent('nds:dropmenu:closed');
             };
 
-            const onEnd = (e) => {
-                if (e.target === this.menu) cleanup();
-            };
+            const onEnd = (e) => { if (e.target === this.menu) cleanup(); };
 
             this.menu.addEventListener('transitionend', onEnd);
-            setTimeout(cleanup, 200); // Fallback
+            setTimeout(cleanup, 200);
         }
 
         // ==============================================
         // POSITION CALCULATION
         // ==============================================
 
-        /** Vertical position — uses trigger height for precise placement */
-        adjustVerticalPosition() {
-            this.dropmenu.removeAttribute('data-position-vertical');
-            this.menu.style.top = '';
-            this.menu.style.bottom = '';
+        /**
+         * Viewport-pixel placement; menu is `position: fixed` so it escapes
+         * any clipping ancestor (tables, modals, cards). Vertical flips up
+         * when below is tight; horizontal prefers trigger-edge alignment
+         * (RTL-aware) then clamps to the viewport.
+         */
+        applyPosition() {
+            const tr = this.trigger.getBoundingClientRect();
+            const doc = document.documentElement;
+            const vw = doc.clientWidth, vh = doc.clientHeight;
+            const gap = 4, pad = 8;
 
-            const triggerRect = this.trigger.getBoundingClientRect();
-            const triggerHeight = this.trigger.offsetHeight;
-            const vh = window.innerHeight;
+            // Treat the sticky mainnav as the top edge so the menu can't
+            // open behind it.
+            const nav = document.querySelector('.nds-main-nav');
+            const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
+            const topEdge = Math.max(pad, navBottom + 16);
 
-            const spaceBelow = vh - triggerRect.bottom;
-            const spaceAbove = triggerRect.top;
+            const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
+            if (scroll) scroll.style.maxHeight = '';
 
-            if (spaceBelow < spaceAbove && spaceBelow < 200) {
-                this.dropmenu.setAttribute('data-position-vertical', 'top');
-                this.menu.style.bottom = triggerHeight + 'px';
-            } else {
-                this.menu.style.top = triggerHeight + 'px';
-            }
-        }
+            // Lock width in px. fit-content/max-content are unreliable for
+            // position:fixed + block when children use flex/grid or width:100%.
+            this.menu.style.width = '';
+            const w = Math.min(this.menu.offsetWidth, vw - pad * 2);
+            this.menu.style.width = w + 'px';
 
-        /** Horizontal position — needs menu width, runs after display:block */
-        adjustHorizontalPosition() {
-            this.dropmenu.removeAttribute('data-position-horizontal');
+            const mr = this.menu.getBoundingClientRect();
+            const spaceBelow = vh - tr.bottom - gap - pad;
+            const spaceAbove = tr.top - gap - topEdge;
+            // Flip up when space below is tight AND above has more room.
+            const flipUp = spaceBelow < 400 && spaceAbove > spaceBelow;
+            const available = flipUp ? spaceAbove : spaceBelow;
 
-            const menuRect = this.menu.getBoundingClientRect();
-            const triggerRect = this.trigger.getBoundingClientRect();
-            const vw = window.innerWidth;
-            const cr = this.contentLayout?.getBoundingClientRect();
-            const boundsLeft = Math.max(cr?.left ?? 0, 0);
-            const boundsRight = Math.min(cr?.right ?? vw, vw);
-
-            const menuWidth = menuRect.width;
-            let hPos = this.isRTL ? 'right' : 'left';
-
-            if (hPos === 'left') {
-                if ((triggerRect.left + menuWidth) > boundsRight) hPos = 'right';
-            } else {
-                if ((triggerRect.right - menuWidth) < boundsLeft) hPos = 'left';
+            if (scroll && mr.height > available) {
+                const chrome = mr.height - scroll.getBoundingClientRect().height;
+                scroll.style.maxHeight = Math.max(80, available - chrome) + 'px';
             }
 
-            this.dropmenu.setAttribute('data-position-horizontal', hPos);
+            const mr2 = this.menu.getBoundingClientRect();
+            if (flipUp) this.dropmenu.setAttribute('data-position-vertical', 'top');
+            else this.dropmenu.removeAttribute('data-position-vertical');
+
+            let top = flipUp ? tr.top - mr2.height - gap : tr.bottom + gap;
+            top = Math.max(topEdge, Math.min(top, vh - mr2.height - pad));
+
+            let leftPx = this.isRTL ? tr.right - mr2.width : tr.left;
+            leftPx = Math.max(pad, Math.min(leftPx, vw - mr2.width - pad));
+
+            this.menu.style.top = top + 'px';
+            this.menu.style.left = leftPx + 'px';
         }
 
         // ==============================================
