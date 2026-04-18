@@ -153,16 +153,9 @@
         text-shadow: 0px -0px 2px rgb(0 0 0);
     }
 
-
-    // Icon flip for LTR
-    i {
-        font-size: var(--nds-text-lg-FS);
-
-        @include ltr {
-            transform: scale(-1);
-        }
-    }
-
+    // Arrow glyph comes from the shared `.nds-prev` / `.nds-next` button
+    // modifiers in _buttons.scss (pseudo-element, direction-aware). Apply
+    // those classes to the button element; no inner `<i>` is required.
 }
 
 .nds-swiper-button-prev {
