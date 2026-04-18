@@ -145,107 +145,59 @@
   }
 
   // ==============================================
-  // COLOR VARIANTS (using data-status attribute)
+  // COLOR VARIANTS (.nds-color fills the card backdrop)
+  // The base --alert-stripe / --alert-icon-bg tokens are set globally
+  // via [data-status="..."] rules at the bottom of this file.
+  // Card-backdrop tokens stay scoped here because card tokens are
+  // shared across components — only the `.nds-color` opt-in should
+  // apply them to the alert's card.
   // ==============================================
 
-  // Success variant
-  &[data-status="success"] {
-    --alert-stripe: var(--background-success);
-    --alert-icon-bg: var(--background-success-light);
-
-    @include dark {
-      --alert-icon-bg: var(--alpha-success-10);
-    }
-
-    &.nds-color {
+  &.nds-color {
+    &[data-status="success"] {
       --card-bg: var(--background-success-25);
       --card-border: var(--border-success-light);
       --card-title: var(--text-success);
-
       @include dark {
         --card-bg: var(--alpha-success-10);
         --card-border: var(--border-success-light);
       }
     }
-  }
 
-  // Info variant
-  &[data-status="info"] {
-    --alert-stripe: var(--background-info);
-    --alert-icon-bg: var(--background-info-light);
-
-    @include dark {
-      --alert-icon-bg: var(--alpha-info-10);
-    }
-
-    &.nds-color {
+    &[data-status="info"] {
       --card-bg: var(--background-info-25);
       --card-border: var(--border-info-light);
       --card-title: var(--text-info);
-
       @include dark {
         --card-bg: var(--alpha-info-10);
         --card-border: var(--border-info-light);
       }
     }
-  }
 
-  // Warning variant
-  &[data-status="warning"] {
-    --alert-stripe: var(--background-warning);
-    --alert-icon-bg: var(--background-warning-light);
-
-    @include dark {
-      --alert-icon-bg: var(--alpha-warning-10);
-    }
-
-    &.nds-color {
+    &[data-status="warning"] {
       --card-bg: var(--background-warning-25);
       --card-border: var(--border-warning-light);
       --card-title: var(--text-warning);
-
       @include dark {
         --card-bg: var(--alpha-warning-10);
         --card-border: var(--border-warning-light);
       }
     }
-  }
 
-  // Error / Critical variant
-  &:is([data-status="error"], [data-status="critical"]) {
-    --alert-stripe: var(--background-error);
-    --alert-icon-bg: var(--background-error-light);
-
-    @include dark {
-      --alert-icon-bg: var(--alpha-error-10);
-    }
-
-    &.nds-color {
+    &:is([data-status="error"], [data-status="critical"]) {
       --card-bg: var(--background-error-25);
       --card-border: var(--border-error-light);
       --card-title: var(--text-error);
-
       @include dark {
         --card-bg: var(--alpha-error-10);
         --card-border: var(--border-error-light);
       }
     }
-  }
 
-  // Neutral variant
-  &[data-status="neutral"] {
-    --alert-stripe: var(--border-neutral-light);
-    --alert-icon-bg: var(--background-neutral-light);
-
-    @include dark {
-      --alert-icon-bg: var(--alpha-white-10);
-    }
-
-    &.nds-color {
+    &[data-status="neutral"] {
       --card-bg: var(--background-neutral-light);
       --card-border: var(--border-neutral-secondary);
       --card-title: var(--text-default);
-
       @include dark {
         --card-bg: var(--alpha-white-10);
         --card-border: var(--border-neutral-light);
@@ -386,6 +338,44 @@
       inset-inline-end: auto;
     }
   }
+}
+
+// ==============================================
+// INHERITED STATUS — alert-private tokens cascade from any ancestor
+// with [data-status]. Mirrors the featured-icon / feedback-icon
+// pattern. --alert-stripe / --alert-icon-bg are only consumed by
+// .nds-alert, so setting them broadly is safe. The .nds-color and
+// .nds-inline variants inside .nds-alert override these where needed.
+// ==============================================
+
+[data-status="success"] {
+  --alert-stripe: var(--background-success);
+  --alert-icon-bg: var(--background-success-light);
+  @include dark { --alert-icon-bg: var(--alpha-success-10); }
+}
+
+[data-status="info"] {
+  --alert-stripe: var(--background-info);
+  --alert-icon-bg: var(--background-info-light);
+  @include dark { --alert-icon-bg: var(--alpha-info-10); }
+}
+
+[data-status="warning"] {
+  --alert-stripe: var(--background-warning);
+  --alert-icon-bg: var(--background-warning-light);
+  @include dark { --alert-icon-bg: var(--alpha-warning-10); }
+}
+
+:is([data-status="error"], [data-status="critical"]) {
+  --alert-stripe: var(--background-error);
+  --alert-icon-bg: var(--background-error-light);
+  @include dark { --alert-icon-bg: var(--alpha-error-10); }
+}
+
+[data-status="neutral"] {
+  --alert-stripe: var(--border-neutral-light);
+  --alert-icon-bg: var(--background-neutral-light);
+  @include dark { --alert-icon-bg: var(--alpha-white-10); }
 }
 
 // ==============================================

@@ -25,61 +25,20 @@
     }
 
     // ==============================================
-    // STATUS-BASED STYLING (from self or parent)
+    // TEXT COLOR (scoped to .nds-feedback — `color` inherits to every
+    // descendant, so it must not be set on the ancestor `[data-status]`)
     // ==============================================
 
-    &[data-status="error"],
-    [data-status="error"] & {
-        color: var(--text-error);
+    &[data-status="error"],   [data-status="error"] &   { color: var(--text-error); }
+    &[data-status="success"], [data-status="success"] & { color: var(--text-success); }
+    &[data-status="warning"], [data-status="warning"] & { color: var(--text-warning); }
+    &[data-status="info"],    [data-status="info"] &    { color: var(--text-info); }
 
-        .nds-feedback-icon {
-            --feedback-bg: var(--background-error);
-            --feedback-color: var(--icon-error);
-            --feedback-ring: var(--icon-error-ring);
-        }
-    }
-
-    &[data-status="success"],
-    [data-status="success"] & {
-        color: var(--text-success);
-
-        .nds-feedback-icon {
-            --feedback-bg: var(--background-success);
-            --feedback-color: var(--icon-success);
-            --feedback-ring: var(--icon-success-ring);
-        }
-    }
-
-    &[data-status="warning"],
-    [data-status="warning"] & {
-        color: var(--text-warning);
-
-        .nds-feedback-icon {
-            --feedback-bg: var(--background-warning);
-            --feedback-color: var(--icon-warning);
-            --feedback-ring: var(--icon-warning-ring);
-        }
-    }
-
-    &[data-status="info"],
-    [data-status="info"] & {
-        color: var(--text-info);
-
-        .nds-feedback-icon {
-            --feedback-bg: var(--background-info);
-            --feedback-color: var(--icon-info);
-            --feedback-ring: var(--icon-info-ring);
-        }
-    }
-
+    // Neutral dark-mode tweaks depend on .nds-outline modifier, so they
+    // stay scoped inside .nds-feedback rather than on the generic
+    // [data-status="neutral"] rule below.
     &[data-status="neutral"],
     [data-status="neutral"] & {
-        .nds-feedback-icon {
-            --feedback-bg: var(--icon-neutral);
-            --feedback-color: var(--icon-neutral);
-            --feedback-ring: var(--icon-neutral-ring);
-        }
-
         &:not(.nds-outline) .nds-feedback-icon {
             @include dark {
                 --feedback-ring: var(--colors-neutral-900);
@@ -110,6 +69,51 @@
     .nds-feedback-message {
         flex: 1;
     }
+}
+
+// ==============================================
+// INHERITED STATUS — feedback-icon tokens cascade from any ancestor
+// with [data-status]. Mirrors the featured-icon pattern.
+// --feedback-* tokens are only consumed by .nds-feedback-icon (verified),
+// so setting them broadly is safe. The nested `.nds-feedback-icon
+// .nds-icon` rule scopes the `--nds-icon` shape swap to feedback chips
+// only (`--nds-icon` is universal and would bleed if set bare).
+// ==============================================
+
+[data-status="error"] {
+    --feedback-bg: var(--background-error);
+    --feedback-color: var(--icon-error);
+    --feedback-ring: var(--icon-error-ring);
+
+    .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-cancel-circle); }
+}
+
+[data-status="success"] {
+    --feedback-bg: var(--background-success);
+    --feedback-color: var(--icon-success);
+    --feedback-ring: var(--icon-success-ring);
+
+    .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-checkmark-circle-02); }
+}
+
+[data-status="warning"] {
+    --feedback-bg: var(--background-warning);
+    --feedback-color: var(--icon-warning);
+    --feedback-ring: var(--icon-warning-ring);
+
+    .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-alert-circle); }
+}
+
+[data-status="info"] {
+    --feedback-bg: var(--background-info);
+    --feedback-color: var(--icon-info);
+    --feedback-ring: var(--icon-info-ring);
+}
+
+[data-status="neutral"] {
+    --feedback-bg: var(--icon-neutral);
+    --feedback-color: var(--icon-neutral);
+    --feedback-ring: var(--icon-neutral-ring);
 }
 
 // ==============================================
@@ -169,27 +173,9 @@
         box-shadow: 0 0 0 4px var(--_feedback-ring);
     }
 
-    // ==============================================
-    // ICON CONTENT BY STATUS (auto-set via self or parent)
-    // ==============================================
-
-    // Default icon (information-circle)
+    // Default icon (information-circle) — status-specific shapes are
+    // set in the [data-status="..."] blocks above.
     .nds-icon {
         --nds-icon: var(--nds-icon-information-circle);
-    }
-
-    // Success icon
-    [data-status="success"] & .nds-icon {
-        --nds-icon: var(--nds-icon-checkmark-circle-02);
-    }
-
-    // Warning icon
-    [data-status="warning"] & .nds-icon {
-        --nds-icon: var(--nds-icon-alert-circle);
-    }
-
-    // Error icon
-    [data-status="error"] & .nds-icon {
-        --nds-icon: var(--nds-icon-cancel-circle);
     }
 }

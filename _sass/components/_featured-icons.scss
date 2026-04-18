@@ -54,40 +54,10 @@
     --nds-icon-size: 56px;
   }
 
-  // ==============================================
-  // FEATURED ICON COLOR VARIANTS (data-status)
-  // Brand is the default (no attribute needed)
-  // ==============================================
-
-  &[data-status="success"] {
-    --icon-bg-color: var(--featuredicons-background-success-light);
-    --icon-color: var(--featuredicons-icon-success);
-    --dark-bg-color: var(--background-success);
-  }
-
-  &[data-status="info"] {
-    --icon-bg-color: var(--featuredicons-background-info-light);
-    --icon-color: var(--featuredicons-icon-info);
-    --dark-bg-color: var(--background-info);
-  }
-
-  &[data-status="warning"] {
-    --icon-bg-color: var(--featuredicons-background-warning-light);
-    --icon-color: var(--featuredicons-icon-warning);
-    --dark-bg-color: var(--background-warning);
-  }
-
-  &[data-status="error"] {
-    --icon-bg-color: var(--featuredicons-background-error-light);
-    --icon-color: var(--featuredicons-icon-error);
-    --dark-bg-color: var(--background-error);
-  }
-
-  &[data-status="neutral"] {
-    --icon-bg-color: var(--featuredicons-background-default-light);
-    --icon-color: var(--featuredicons-icon-neutral);
-    --dark-bg-color: var(--background-default);
-  }
+  // Brand is the default (no attribute needed). All other status color
+  // variants are handled by the global `[data-status="..."]` rules below,
+  // which cascade through `--icon-bg-color` / `--icon-color` — whether
+  // the status is on the featured icon itself or on any ancestor.
 
   // ==============================================
   // FEATURED ICON STYLE VARIANTS
@@ -121,3 +91,41 @@
   }
 }
 
+// ==============================================
+// INHERITED STATUS
+// Any ancestor with [data-status] cascades matching tokens to featured
+// icons nested inside. The icon's own [data-status] wins via higher
+// specificity in the direct rules above.
+// --icon-bg-color / --icon-color are only consumed by .nds-featured-icon
+// (and forwarded through cards), so this is safe to apply broadly.
+// ==============================================
+
+[data-status="success"] {
+  --icon-bg-color: var(--featuredicons-background-success-light);
+  --icon-color: var(--featuredicons-icon-success);
+  --dark-bg-color: var(--background-success);
+}
+
+[data-status="info"] {
+  --icon-bg-color: var(--featuredicons-background-info-light);
+  --icon-color: var(--featuredicons-icon-info);
+  --dark-bg-color: var(--background-info);
+}
+
+[data-status="warning"] {
+  --icon-bg-color: var(--featuredicons-background-warning-light);
+  --icon-color: var(--featuredicons-icon-warning);
+  --dark-bg-color: var(--background-warning);
+}
+
+:is([data-status="error"], [data-status="critical"]) {
+  --icon-bg-color: var(--featuredicons-background-error-light);
+  --icon-color: var(--featuredicons-icon-error);
+  --dark-bg-color: var(--background-error);
+}
+
+[data-status="neutral"] {
+  --icon-bg-color: var(--featuredicons-background-default-light);
+  --icon-color: var(--featuredicons-icon-neutral);
+  --dark-bg-color: var(--background-default);
+}
