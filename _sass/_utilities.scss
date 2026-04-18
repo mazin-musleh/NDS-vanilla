@@ -118,7 +118,7 @@ $all-spacers: $spacers;
     width: var(--_number-icon-size);
     height: var(--_number-icon-size);
     background: currentColor;
-    mask: url('../icon/saudi-riyal.svg') no-repeat center / contain;
+    mask: var(--nds-icon-riyal) no-repeat center / contain;
   }
   &[data-currency="USD"]::after {
     content: "$";
