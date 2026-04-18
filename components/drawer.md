@@ -2,7 +2,7 @@
 layout: page
 title: Drawer
 hero_title: Drawer - National Design System
-hero_description: Vertical navigation drawer with nested accordion menus, responsive state control, and overflow handling
+hero_description: A vertical list container for sidebar navigation, submenus, quick links, and inline notifications, with compact or expanded layouts that adapt across breakpoints.
 breadcrumb: ["Components"]
 lang: en
 direction: ltr
@@ -433,7 +433,7 @@ direction: ltr
                                     </ul>
                                     <button class="nds-show-more nds-btn nds-subtle">
                                         <span class="nds-label">Show more</span>
-                                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                        <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
                                     </button>
                                 </div>
                             </nav>
@@ -513,7 +513,7 @@ direction: ltr
     </ul>
     <button class="nds-show-more nds-btn nds-subtle">
       <span class="nds-label">Show more</span>
-      <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+      <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
     </button>
   </div>
 </nav>
@@ -591,7 +591,7 @@ direction: ltr
                                                 </li>
                                             </ul>
                                             <button class="nds-show-more nds-btn nds-subtle">
-                                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                                <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
                                             </button>
                                         </div>
                                     </nav>
@@ -608,7 +608,7 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Services Portal</span>
-                                                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                                        <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -617,7 +617,7 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Laws and Regulations</span>
-                                                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+                                                        <i class="hgi hgi-stroke hgi-link-square-02"></i>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -626,7 +626,7 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Careers</span>
-                                                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                                        <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -635,7 +635,7 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Open Data</span>
-                                                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+                                                        <i class="hgi hgi-stroke hgi-link-square-02"></i>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -644,7 +644,7 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Media Center</span>
-                                                        <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                                        <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -653,12 +653,12 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Contact Directory</span>
-                                                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+                                                        <i class="hgi hgi-stroke hgi-link-square-02"></i>
                                                     </a>
                                                 </li>
                                             </ul>
                                             <button class="nds-show-more nds-btn nds-subtle">
-                                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                                <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
                                             </button>
                                         </div>
                                     </nav>
@@ -727,7 +727,7 @@ direction: ltr
           </li>
         </ul>
         <button class="nds-show-more nds-btn nds-subtle">
-          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+          <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
         </button>
       </div>
     </nav>
@@ -744,7 +744,7 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Services Portal</span>
-              <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+              <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
             </a>
           </li>
           <li>
@@ -753,7 +753,7 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Laws and Regulations</span>
-              <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+              <i class="hgi hgi-stroke hgi-link-square-02"></i>
             </a>
           </li>
           <li>
@@ -762,7 +762,7 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Careers</span>
-              <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+              <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
             </a>
           </li>
           <li>
@@ -771,7 +771,7 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Open Data</span>
-              <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+              <i class="hgi hgi-stroke hgi-link-square-02"></i>
             </a>
           </li>
           <li>
@@ -780,7 +780,7 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Media Center</span>
-              <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+              <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
             </a>
           </li>
           <li>
@@ -789,16 +789,251 @@ direction: ltr
                 <i class="hgi hgi-stroke hgi-link-02"></i>
               </span>
               <span class="nds-label nds-truncate">Contact Directory</span>
-              <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+              <i class="hgi hgi-stroke hgi-link-square-02"></i>
             </a>
           </li>
         </ul>
         <button class="nds-show-more nds-btn nds-subtle">
-          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+          <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
         </button>
       </div>
     </nav>
   </div>
+</div>
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Rich List Items (Notifications-style) -->
+<section id="drawerRichItems" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Rich List Items</h2>
+            <p class="nds-section-description">List items with icon, title, status tag, and a description on a second row. Status on the <code class="nds-inline-code lang-html">&lt;li data-status&gt;</code> cascades to the featured icon and tag automatically.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Notifications with status cascade</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-flex nds-col" style="--gap: 0; width: 420px; max-width: 100%;">
+                            <nav class="nds-drawer" style="--drawer-max-height: 360px;" hidden>
+                                <div class="nds-scroll-more nds-divided">
+                                    <ul class="nds-drawer-list nds-scroll-more-content">
+                                        <li data-status="success">
+                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                <span class="nds-featured-icon nds-sm">
+                                                    <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
+                                                </span>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-label nds-truncate">Document Approved</span>
+                                                        <span class="nds-tag nds-sm" data-status="success">
+                                                            <span class="nds-label">success</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="nds-description">Your business license application has been reviewed and approved by the licensing authority.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li data-status="warning">
+                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                <span class="nds-featured-icon nds-sm">
+                                                    <i class="hgi hgi-stroke hgi-alert-02"></i>
+                                                </span>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-label nds-truncate">Payment Overdue</span>
+                                                        <span class="nds-tag nds-sm" data-status="warning">
+                                                            <span class="nds-label">warning</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="nds-description">Your annual business registration fee of 1,200 SAR is past due. Complete payment to avoid service suspension.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li data-status="info">
+                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                <span class="nds-featured-icon nds-sm">
+                                                    <i class="hgi hgi-stroke hgi-notification-02"></i>
+                                                </span>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-label nds-truncate">System Maintenance</span>
+                                                        <span class="nds-tag nds-sm" data-status="info">
+                                                            <span class="nds-label">info</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="nds-description">Scheduled maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be unavailable.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li data-status="error">
+                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                <span class="nds-featured-icon nds-sm">
+                                                    <i class="hgi hgi-stroke hgi-shield-01"></i>
+                                                </span>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-label nds-truncate">Login Attempt Blocked</span>
+                                                        <span class="nds-tag nds-sm" data-status="error">
+                                                            <span class="nds-label">error</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="nds-description">An unauthorized login attempt was detected from an unrecognized device. Your account has been temporarily locked.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li data-status="info">
+                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                <span class="nds-featured-icon nds-sm">
+                                                    <i class="hgi hgi-stroke hgi-mail-01"></i>
+                                                </span>
+                                                <span class="nds-drawer-item">
+                                                    <span class="nds-drawer-item-head">
+                                                        <span class="nds-label nds-truncate">New Message Received</span>
+                                                        <span class="nds-tag nds-sm" data-status="info">
+                                                            <span class="nds-label">info</span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="nds-description">You have a new message from the Ministry of Commerce regarding your trade license renewal.</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                            <hr class="nds-divider">
+                            <a href="#" class="nds-btn nds-subtle nds-full">
+                                <i class="hgi hgi-stroke hgi-notification-02"></i>
+                                <span class="nds-label">View all notifications</span>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-drawer-rich-1" id="tab-drawer-rich-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                    id="panel-drawer-rich-1" aria-labelledby="tab-drawer-rich-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
+<div class="nds-flex nds-col" style="--gap: 0;">
+  <nav class="nds-drawer" style="--drawer-max-height: 360px;" hidden>
+    <div class="nds-scroll-more nds-divided">
+      <ul class="nds-drawer-list nds-scroll-more-content">
+        <li data-status="success">
+          <a href="#" class="nds-btn nds-subtle nds-indicator">
+            <span class="nds-featured-icon nds-sm">
+              <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
+            </span>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label nds-truncate">Document Approved</span>
+                <span class="nds-tag nds-sm" data-status="success">
+                  <span class="nds-label">success</span>
+                </span>
+              </span>
+              <span class="nds-description">Your business license application has been reviewed and approved by the licensing authority.</span>
+            </span>
+          </a>
+        </li>
+        <li data-status="warning">
+          <a href="#" class="nds-btn nds-subtle nds-indicator">
+            <span class="nds-featured-icon nds-sm">
+              <i class="hgi hgi-stroke hgi-alert-02"></i>
+            </span>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label nds-truncate">Payment Overdue</span>
+                <span class="nds-tag nds-sm" data-status="warning">
+                  <span class="nds-label">warning</span>
+                </span>
+              </span>
+              <span class="nds-description">Your annual business registration fee of 1,200 SAR is past due. Complete payment to avoid service suspension.</span>
+            </span>
+          </a>
+        </li>
+        <li data-status="info">
+          <a href="#" class="nds-btn nds-subtle nds-indicator">
+            <span class="nds-featured-icon nds-sm">
+              <i class="hgi hgi-stroke hgi-notification-02"></i>
+            </span>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label nds-truncate">System Maintenance</span>
+                <span class="nds-tag nds-sm" data-status="info">
+                  <span class="nds-label">info</span>
+                </span>
+              </span>
+              <span class="nds-description">Scheduled maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be unavailable.</span>
+            </span>
+          </a>
+        </li>
+        <li data-status="error">
+          <a href="#" class="nds-btn nds-subtle nds-indicator">
+            <span class="nds-featured-icon nds-sm">
+              <i class="hgi hgi-stroke hgi-shield-01"></i>
+            </span>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label nds-truncate">Login Attempt Blocked</span>
+                <span class="nds-tag nds-sm" data-status="error">
+                  <span class="nds-label">error</span>
+                </span>
+              </span>
+              <span class="nds-description">An unauthorized login attempt was detected from an unrecognized device. Your account has been temporarily locked.</span>
+            </span>
+          </a>
+        </li>
+        <li data-status="info">
+          <a href="#" class="nds-btn nds-subtle nds-indicator">
+            <span class="nds-featured-icon nds-sm">
+              <i class="hgi hgi-stroke hgi-mail-01"></i>
+            </span>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label nds-truncate">New Message Received</span>
+                <span class="nds-tag nds-sm" data-status="info">
+                  <span class="nds-label">info</span>
+                </span>
+              </span>
+              <span class="nds-description">You have a new message from the Ministry of Commerce regarding your trade license renewal.</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <hr class="nds-divider">
+  <a href="#" class="nds-btn nds-subtle nds-full">
+    <i class="hgi hgi-stroke hgi-notification-02"></i>
+    <span class="nds-label">View all notifications</span>
+  </a>
 </div>
                                         </code>
                                     </div>
@@ -876,12 +1111,58 @@ direction: ltr
         <div class="nds-section-body">
 
             <div class="nds-content-block">
-                <h3 class="nds-block-title">When to Use</h3>
+                <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Use drawers for <strong>sidebar navigation</strong> with nested menu structures. The accordion behavior keeps the interface clean by closing siblings automatically</li>
-                    <li>Use <strong>fit mode</strong> for equal-height drawer cards inside grid layouts</li>
-                    <li>Works equally well for <strong>flat link lists</strong> like quick links, updates, and promotional items without nested menus</li>
+                    <li>Use drawers for <strong>sidebar navigation</strong> with nested menu structures. The accordion behavior keeps the interface tidy by closing siblings automatically when a new submenu opens.</li>
+                    <li>Works equally well for <strong>flat link lists</strong> like quick links, latest updates, promotional items, or related resources where no nesting is needed.</li>
+                    <li>Use the <strong>Rich List Items</strong> layout for inline notification feeds, activity lists, or any list where each row needs an icon, title, status tag, and a supporting description line.</li>
+                    <li>Do not use a drawer for top-level page navigation. Use the <a class="nds-color" href="{{ 'ui-shell/header' | relative_url }}">Header</a> instead, which is built to host primary nav, search, and user controls.</li>
+                    <li>Do not use a drawer for compact action menus attached to a single trigger. Use the <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a>, which handles positioning and dismissal for overlay menus.</li>
+                    <li>Reach for <strong><code class="nds-inline-code lang-html">nds-fit</code></strong> when the drawer sits in a grid column that should match the height of sibling cards. Combine with <code class="nds-inline-code lang-html">nds-card</code> and <code class="nds-inline-code lang-html">nds-stroke</code> for a framed block.</li>
+                    <li>Add <strong><code class="nds-inline-code lang-html">nds-divided</code></strong> when rows carry multi-line content (descriptions, timestamps, tags). Leave it off for dense flat link lists where the indicator alone is enough visual separation.</li>
+                    <li>Keep nesting to a maximum of <strong>two levels</strong>. The component animates and tracks state for two levels only; deeper trees become hard to scan and hit edge cases in the expand/collapse logic.</li>
+                    <li>Mark the current page with <code class="nds-inline-code lang-html">data-state="active"</code> on the deepest <code class="nds-inline-code lang-html">&lt;li&gt;</code>. The drawer automatically opens all ancestor submenus on load so users land with the active path revealed.</li>
+                    <li>Constrain long lists by setting <code class="nds-inline-code lang-html">--drawer-max-height</code> on the <code class="nds-inline-code lang-html">&lt;nav&gt;</code> and wrapping the list in <code class="nds-inline-code lang-html">.nds-scroll-more</code>. The fade mask and show-more button appear only when content actually overflows.</li>
+                    <li>Apply <code class="nds-inline-code lang-html">nds-oncolor</code> when the drawer sits on a dark or tinted surface. It rebalances dividers and indicators so rows remain legible without touching text colors.</li>
                 </ul>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-sm</code></td>
+                            <td>Compact size with tighter indentation (<code class="nds-inline-code lang-html">--spacing-lg</code>) and a 2px active indicator.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-lg</code></td>
+                            <td>Roomier size with wider indentation (<code class="nds-inline-code lang-html">--spacing-2xl</code>) and a 4px active indicator.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-divided</code></td>
+                            <td>Adds horizontal divider lines between list items. Useful for rows with multi-line content.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-fit</code></td>
+                            <td>Stretches the drawer to fill its parent height for equal-height columns in grid layouts.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-oncolor</code></td>
+                            <td>Rebalances dividers and indicators for use on dark or colored backgrounds.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-card</code></td>
+                            <td>Displays the drawer as a card-width block, letting it sit alongside other cards in a grid.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="nds-content-block">
@@ -905,6 +1186,81 @@ direction: ltr
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-always-open-on</code></td>
                             <td>Set on drawer only. Locks all submenus open and disables interaction at the matching breakpoint. Arrows hidden, buttons non-clickable. Below that breakpoint, reverts to normal accordion. Same values as <code class="nds-inline-code lang-html">data-open-on</code>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-content-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-gap</code></td>
+                            <td><code class="nds-inline-code lang-html">0px</code></td>
+                            <td>Vertical spacing between list items.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-indent</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td>
+                            <td>Submenu indentation. Increases with <code class="nds-inline-code lang-html">nds-sm</code> and <code class="nds-inline-code lang-html">nds-lg</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-divider</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--divider-color)</code></td>
+                            <td>Color of the divider lines when <code class="nds-inline-code lang-html">nds-divided</code> is applied.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-indicator-width</code></td>
+                            <td><code class="nds-inline-code lang-html">5px</code></td>
+                            <td>Thickness of the active/hover indicator bar. Overridden by <code class="nds-inline-code lang-html">nds-sm</code> (2px) and <code class="nds-inline-code lang-html">nds-lg</code> (4px).</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-indicator</code></td>
+                            <td><code class="nds-inline-code lang-html">transparent</code></td>
+                            <td>Default indicator color for inactive items.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-indicator-active</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--background-primary)</code></td>
+                            <td>Indicator color for the active item (<code class="nds-inline-code lang-html">data-state="active"</code>).</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-indicator-hover</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--colors-neutral-400)</code></td>
+                            <td>Indicator color on hover.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-truncate</code></td>
+                            <td><code class="nds-inline-code lang-html">1</code></td>
+                            <td>Maximum number of visible lines per label before truncation.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-transition</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--nds-transition)</code></td>
+                            <td>Animation timing for submenu expand and collapse.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-max-height</code></td>
+                            <td><code class="nds-inline-code lang-html">400px</code></td>
+                            <td>Maximum height before scroll overflow activates (requires <code class="nds-inline-code lang-html">.nds-scroll-more</code> wrapper).</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-btn-height</code></td>
+                            <td><code class="nds-inline-code lang-html">fit-content</code></td>
+                            <td>Height applied to each row button. Set to <code class="nds-inline-code lang-html">100%</code> when <code class="nds-inline-code lang-html">nds-fit</code> is used.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-btn-gap</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td>
+                            <td>Gap between the icon, label, and trailing content inside a row.</td>
                         </tr>
                     </tbody>
                 </table>
