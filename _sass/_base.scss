@@ -165,6 +165,22 @@ body.nds-minimal[style*="--bg-img"] {
 }
 
 /* ========================================
+   DESCRIPTION — universal secondary text
+   Companion to .nds-label. Used anywhere a small, de-emphasised
+   paragraph-ish line is needed (cards, drawer items, menus, etc.).
+   Layout (width, flow) is left to the hosting component.
+   ======================================== */
+
+.nds-description {
+    font-size: var(--nds-text-sm-FS);
+    line-height: var(--nds-text-sm-LH);
+    color: var(--text-secondary-paragraph);
+    font-weight: 400;
+    white-space: normal;
+    text-align: start;
+}
+
+/* ========================================
    USER CARD
    ======================================== */
 

@@ -185,6 +185,43 @@
 }
 
 // ==============================================
+// RICH LIST ITEM — title + description + optional accessory
+// Button adopts a 2-row layout when it contains an
+// `.nds-drawer-item` wrapper. Accessory (tag, badge, etc.) stays
+// inline with the title on row 1; `.nds-description` spans the
+// full button width on row 2.
+// ==============================================
+
+.nds-drawer-list > li > .nds-btn:has(> .nds-drawer-item) {
+    height: auto;
+    min-height: 0;
+    align-items: flex-start;
+    padding-block: var(--spacing-md);
+}
+
+.nds-drawer-list .nds-drawer-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    flex: 1;
+    min-width: 0;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.nds-drawer-list .nds-drawer-item-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    width: 100%;
+}
+
+.nds-drawer-list .nds-description {
+    width: 100%;
+}
+
+// ==============================================
 // SUBMENU - CSS :has() DETECTION
 // ==============================================
 
