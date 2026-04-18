@@ -1,0 +1,66 @@
+# Example pages catalog for examples index listing
+# Categories: Service (citizen-facing service pages), Form (standalone flows), Content (editorial), Dashboard (data views)
+# Tags: DGA (official DGA design system pages), plus features/components demonstrated
+
+- title: "Service Page"
+  description: "Government digital service with side info, breadcrumbs, and structured content layout."
+  icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'
+  category: "Service"
+  tags: ["DGA", "Tabs", "Side Info", "Rating"]
+  url: "/examples/service.html"
+
+- title: "Services List"
+  description: "Filterable government services catalog with search and category filters."
+  icon: '<i class="hgi hgi-stroke hgi-grid-view"></i>'
+  category: "Service"
+  tags: ["Filter", "Search", "Pagination"]
+  url: "/examples/services-list.html"
+
+- title: "Search Results"
+  description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
+  icon: '<i class="hgi hgi-stroke hgi-search-01"></i>'
+  category: "Service"
+  tags: ["DGA", "Search", "Filter", "Pagination"]
+  url: "/examples/search-results.html"
+
+- title: "Registration"
+  description: "Multi-step form with validation, OTP, file upload, and Hijri date selection."
+  icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
+  category: "Form"
+  tags: ["Stepper", "OTP", "Upload", "Date Picker"]
+  url: "/examples/registration.html"
+
+- title: "404 Page"
+  description: "Custom error page with illustration and back-to-home action."
+  icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
+  category: "Service"
+  tags: ["DGA", "Empty State"]
+  url: "/examples/404.html"
+
+- title: "Post"
+  description: "Article layout with hero image, author metadata, and rich content."
+  icon: '<i class="hgi hgi-stroke hgi-news"></i>'
+  category: "Content"
+  tags: ["Article", "Hero"]
+  url: "/examples/example-post.html"
+
+- title: "Faculty Profile"
+  description: "Faculty member page with profile, tabbed content, and structured academic information."
+  icon: '<i class="hgi hgi-stroke hgi-school"></i>'
+  category: "Content"
+  tags: ["Tabs", "Avatar", "Definition List"]
+  url: "/examples/faculty.html"
+
+- title: "Academic Program"
+  description: "Degree program page with expandable content, curriculum, and admission information."
+  icon: '<i class="hgi hgi-stroke hgi-mortarboard-02"></i>'
+  category: "Content"
+  tags: ["Expandable", "Accordion"]
+  url: "/examples/program.html"
+
+- title: "Console"
+  description: "Admin console with charts, transactions, team directory, and notifications."
+  icon: '<i class="hgi hgi-stroke hgi-dashboard-browsing"></i>'
+  category: "Dashboard"
+  tags: ["Charts", "Tables", "Stats"]
+  url: "/examples/console-demo.html"
