@@ -277,10 +277,7 @@
 // ── Accessibility ─────────────────────────────────────────────
 
 @include reduced-motion {
-    .nds-chart-bar,
-    .nds-chart-slice,
-    .nds-chart-dot,
-    .nds-chart-tooltip {
+    :is(.nds-chart-bar, .nds-chart-slice, .nds-chart-dot, .nds-chart-tooltip) {
         transition: none;
     }
 }
