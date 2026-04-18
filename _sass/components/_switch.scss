@@ -104,15 +104,12 @@
         width:  var(--_switch-width);
         height: var(--_switch-height);
         border-radius: 9999px;
-        transform: translate(50%, -50%);
+        transform: translate(-50%, -50%);
         background-color: var(--controls-control-ripple-effect);
         transition: var(--nds-transition);
         z-index: 1;
         pointer-events: none;
 
-        @include ltr {
-            transform: translate(-50%, -50%);
-        }
     }
 
     &:hover::before {
