@@ -2,6 +2,8 @@
 // JS-injected icons. Content/demo pages use the HGI font instead.
 // Append new icons via `node scripts/add-icon.mjs <name>`, or edit by hand.
 
+@use 'mixins' as *;
+
 :root {
   --nds-icon-alert-circle: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Cpath d='M12 8V12' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Cpath d='M12.125 15.75H12M12.25 15.75C12.25 15.8881 12.1381 16 12 16C11.8619 16 11.75 15.8881 11.75 15.75C11.75 15.6119 11.8619 15.5 12 15.5C12.1381 15.5 12.25 15.6119 12.25 15.75Z' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E");
   --nds-icon-arrow-left-01: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E");
@@ -59,6 +61,7 @@
   --nds-icon-dash: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M2.75 12C2.75 11.3096 3.30964 10.75 4 10.75L20 10.75C20.6904 10.75 21.25 11.3096 21.25 12C21.25 12.6904 20.6904 13.25 20 13.25L4 13.25C3.30964 13.25 2.75 12.6904 2.75 12Z' fill='currentColor'/%3E%3C/svg%3E");
   --nds-icon-notification-02: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12.0002 1.25C16.5679 1.25 20.2751 4.94131 20.2751 9.5C20.2752 10.5604 20.3463 11.3606 20.834 12.08C20.9018 12.1785 20.9917 12.3019 21.09 12.4368C21.2607 12.6711 21.4566 12.9399 21.6052 13.1727C21.8674 13.5836 22.1236 14.0791 22.2117 14.6565C22.4991 16.5402 21.1744 17.7598 19.8552 18.3063C18.8725 18.7134 17.8106 19.0344 16.703 19.2693C16.1287 21.2896 14.2293 22.7499 11.9992 22.7499C9.76903 22.7499 7.86944 21.2894 7.29536 19.2689C6.1885 19.034 5.1273 18.7132 4.14519 18.3063C2.82597 17.7598 1.50132 16.5402 1.78867 14.6565C1.87675 14.0791 2.13295 13.5836 2.39519 13.1727C2.54377 12.9399 2.73965 12.6711 2.91039 12.4368C3.00869 12.3019 3.09866 12.1785 3.16646 12.0799C3.65408 11.3606 3.72521 10.5603 3.7253 9.49994C3.72534 4.94128 7.43245 1.25 12.0002 1.25ZM14.9631 19.5634C13.0146 19.8123 10.9837 19.8122 9.03517 19.5631C9.60668 20.5618 10.7127 21.2499 11.9992 21.2499C13.2856 21.2499 14.3916 20.562 14.9631 19.5634ZM12.0002 2.75C8.25617 2.75 5.2253 5.77442 5.2253 9.5C5.22521 10.5824 5.17182 11.7967 4.40628 12.9242C4.27823 13.1106 4.16789 13.2605 4.06337 13.4025C3.92465 13.591 3.79718 13.7642 3.65963 13.9797C3.44639 14.3138 3.31413 14.6034 3.27152 14.8827C3.13357 15.7871 3.71038 16.5026 4.71927 16.9205C8.99824 18.6932 15.0021 18.6932 19.2811 16.9206C20.29 16.5026 20.8668 15.7871 20.7288 14.8827C20.6862 14.6034 20.554 14.3138 20.3407 13.9797C20.2032 13.7642 20.0757 13.591 19.937 13.4025C19.8328 13.261 19.7224 13.1108 19.5965 12.9277C18.8286 11.7967 18.7752 10.5825 18.7751 9.50006C18.7751 5.77448 15.7442 2.75 12.0002 2.75Z' fill='currentColor'/%3E%3C/svg%3E");
   --nds-icon-desert: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M8 7L8 21' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Cpath d='M12 18L12 21' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Cpath d='M3 21H15' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Cpath d='M4 13V13.9596C4 14.8052 4 15.228 4.20108 15.5762C4.40216 15.9243 4.76839 16.1356 5.50083 16.5582L8 18' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Cpath d='M12 9V11.9596C12 12.8052 12 13.228 11.7989 13.5762C11.5978 13.9243 11.2316 14.1356 10.4992 14.5582L8 16' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Ccircle cx='18' cy='6' r='3' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E");
+  --nds-icon-sorting-05: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.56063 5.6857C3.69103 5.53896 3.85653 5.30857 4.00881 5.09651L4.0444 5.04693L4.04443 5.04689C4.11135 4.95366 4.18004 4.85797 4.25001 4.76188V9C4.25001 9.41421 4.5858 9.75 5.00001 9.75C5.41422 9.75 5.75001 9.41421 5.75001 9V4.76188C5.81999 4.85798 5.88869 4.95369 5.95561 5.04693L5.9912 5.09651C6.14349 5.30857 6.30898 5.53896 6.43939 5.6857C6.71454 5.99532 7.18859 6.02327 7.49821 5.74812C7.80783 5.47297 7.83578 4.99892 7.56063 4.6893C7.49442 4.6148 7.38163 4.46113 7.20958 4.22155L7.17181 4.16893C7.01993 3.95729 6.84051 3.70729 6.65551 3.46849C6.4578 3.21329 6.23274 2.94317 6.00475 2.73079C5.8907 2.62454 5.75733 2.51509 5.60951 2.42857C5.46898 2.34632 5.25684 2.25 5.00001 2.25C4.74317 2.25 4.53104 2.34632 4.39051 2.42857C4.24268 2.51509 4.10932 2.62454 3.99526 2.73079C3.76728 2.94317 3.54222 3.21329 3.34451 3.46849C3.1595 3.70729 2.98008 3.9573 2.82819 4.16895L2.79043 4.22155C2.61839 4.46113 2.5056 4.6148 2.43939 4.6893C2.16424 4.99892 2.19218 5.47297 2.5018 5.74812C2.81143 6.02327 3.28548 5.99532 3.56063 5.6857ZM11 5.25C10.5858 5.25 10.25 5.58579 10.25 6C10.25 6.41421 10.5858 6.75 11 6.75H21C21.4142 6.75 21.75 6.41421 21.75 6C21.75 5.58579 21.4142 5.25 21 5.25H11ZM11 9.25001C10.5858 9.25 10.25 9.58579 10.25 10C10.25 10.4142 10.5858 10.75 11 10.75L18 10.7501C18.4142 10.7501 18.75 10.4143 18.75 10.0001C18.75 9.58585 18.4142 9.25006 18 9.25005L11 9.25001ZM11 13.25C10.5858 13.25 10.25 13.5858 10.25 14C10.25 14.4142 10.5858 14.75 11 14.75H16C16.4142 14.75 16.75 14.4142 16.75 14C16.75 13.5858 16.4142 13.25 16 13.25H11ZM10.25 18C10.25 17.5858 10.5858 17.25 11 17.25H14C14.4142 17.25 14.75 17.5858 14.75 18C14.75 18.4142 14.4142 18.75 14 18.75H11C10.5858 18.75 10.25 18.4142 10.25 18ZM5.99119 18.9035C6.14347 18.6914 6.30897 18.461 6.43937 18.3143C6.71452 18.0047 7.18858 17.9767 7.4982 18.2519C7.80782 18.527 7.83576 19.0011 7.56061 19.3107C7.4944 19.3852 7.38161 19.5389 7.20957 19.7785L7.17181 19.8311C7.01992 20.0427 6.8405 20.2927 6.65549 20.5315C6.45778 20.7867 6.23272 21.0568 6.00474 21.2692C5.89068 21.3755 5.75732 21.4849 5.60949 21.5714C5.46896 21.6537 5.25683 21.75 4.99999 21.75C4.74316 21.75 4.53102 21.6537 4.39049 21.5714C4.24267 21.4849 4.1093 21.3755 3.99525 21.2692C3.76726 21.0568 3.5422 20.7867 3.34449 20.5315C3.15949 20.2927 2.98007 20.0427 2.82819 19.8311L2.79042 19.7785C2.61837 19.5389 2.50558 19.3852 2.43937 19.3107C2.16422 19.0011 2.19217 18.527 2.50179 18.2519C2.81141 17.9767 3.28546 18.0047 3.56061 18.3143C3.69102 18.461 3.85651 18.6914 4.0088 18.9035L4.04439 18.9531L4.04449 18.9532C4.11139 19.0464 4.18005 19.1421 4.24999 19.2381L4.24999 15C4.24999 14.5858 4.58578 14.25 4.99999 14.25C5.41421 14.25 5.74999 14.5858 5.74999 15L5.74999 19.2381C5.81985 19.1422 5.88844 19.0466 5.95526 18.9535L5.9556 18.9531L5.99119 18.9035Z' fill='currentColor'/%3E%3C/svg%3E");
 }
 
 .nds-icon {
@@ -133,6 +136,7 @@
 
 .nds-hgi-notification-02 { --nds-icon: var(--nds-icon-notification-02); }
 .nds-hgi-desert { --nds-icon: var(--nds-icon-desert); }
+.nds-hgi-sorting-05 { --nds-icon: var(--nds-icon-sorting-05); }
 // Mirrored aliases (reuse another icon's data URI with a CSS transform)
 .nds-hgi-arrow-right-01 { --nds-icon: var(--nds-icon-arrow-left-01); }
 .nds-hgi-arrow-right-01::before { transform: scaleX(-1); }
@@ -148,3 +152,31 @@
 .nds-icon-avatar    { --nds-icon: var(--nds-icon-avatar); }
 .nds-icon-checkmark { --nds-icon: var(--nds-icon-checkmark); }
 .nds-icon-dash      { --nds-icon: var(--nds-icon-dash); }
+
+// ==============================================
+// DIRECTION-AWARE ARROW FLIP
+// ==============================================
+// Arrow icons are direction-sensitive in NDS. RTL is the default, so the
+// natural glyph direction matches "forward" in RTL reading order. On LTR
+// pages, flip horizontally so the same class names keep their logical
+// meaning. Covers both the UI-icon system (.nds-hgi-*) and the HGI font
+// (.hgi-stroke/.hgi-solid .hgi-*).
+// Transform is on the element (not ::before) so component-scoped overrides
+// (swiper nav, pagination, etc.) compete by specificity instead of stacking.
+:is(
+    .nds-hgi-arrow-left-01,
+    .nds-hgi-arrow-left-02,
+    .nds-hgi-arrow-right-01,
+    .nds-hgi-arrow-right-02
+),
+:is(.hgi-stroke, .hgi-solid):is(
+    .hgi-arrow-left-01,
+    .hgi-arrow-left-02,
+    .hgi-arrow-right-01,
+    .hgi-arrow-right-02
+) {
+    @include ltr {
+        display: inline-block;
+        transform: scaleX(-1);
+    }
+}
