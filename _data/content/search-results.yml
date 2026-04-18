@@ -1,0 +1,59 @@
+- title: "Reservation of housing units under construction"
+  description: "Service description example to buy a plot to build your house; this requires documenting the sale and purchase process in the notarial offices or notary services to register the property in your name."
+  labels: ["Housing", "Reservation", "Property"]
+  url: "service.html"
+
+- title: "Residential plot allocation request"
+  description: "Apply for a subsidized residential plot under the national housing program and track your allocation status through the eligibility review stages."
+  labels: ["Housing", "Allocation", "Eligibility"]
+  url: "service.html"
+
+- title: "Housing mortgage subsidy"
+  description: "Submit your application for a monthly mortgage subsidy supporting first-time homebuyers purchasing a primary residence under the national housing initiative."
+  labels: ["Finance", "Mortgage", "Subsidy"]
+  url: "service.html"
+
+- title: "Ready-built housing unit purchase"
+  description: "Browse and reserve ready-to-move housing units delivered by approved developers, with financing options integrated directly into the purchase flow."
+  labels: ["Housing", "Purchase", "Financing"]
+  url: "service.html"
+
+- title: "Property deed transfer"
+  description: "Transfer the ownership of a registered property between seller and buyer with authenticated notarial documentation and updated title records."
+  labels: ["Legal", "Transfer", "Notary"]
+  url: "service.html"
+
+- title: "Building permit application"
+  description: "Request a construction permit for a residential or commercial building, including structural, electrical, and mechanical plan reviews by the licensing authority."
+  labels: ["Construction", "Permit", "Licensing"]
+  url: "service.html"
+
+- title: "Certificate of occupancy"
+  description: "Obtain the final occupancy certificate confirming a completed housing unit meets approved building codes and is ready for lawful residence."
+  labels: ["Construction", "Inspection", "Certificate"]
+  url: "service.html"
+
+- title: "Real estate valuation request"
+  description: "Request an official real estate valuation from accredited appraisers to support sale, purchase, mortgage, or inheritance distribution procedures."
+  labels: ["Valuation", "Appraisal", "Property"]
+  url: "service.html"
+
+- title: "Property tax clearance"
+  description: "Retrieve a tax clearance statement confirming that all property-related dues are settled before completing a sale or transfer transaction."
+  labels: ["Tax", "Clearance", "Property"]
+  url: "service.html"
+
+- title: "Land use change request"
+  description: "Submit a request to change the classified use of a parcel of land, including residential, commercial, or mixed-use reclassification reviews."
+  labels: ["Zoning", "Land Use", "Permit"]
+  url: "service.html"
+
+- title: "Homeowner association registration"
+  description: "Register a new homeowner association for a residential compound, including bylaws, board member declarations, and annual reporting obligations."
+  labels: ["Registration", "Association", "Housing"]
+  url: "service.html"
+
+- title: "Property inheritance distribution"
+  description: "File a request to distribute real estate among legal heirs according to an issued inheritance deed and update the property registry accordingly."
+  labels: ["Legal", "Inheritance", "Property"]
+  url: "service.html"

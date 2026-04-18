@@ -156,6 +156,29 @@ direction: ltr
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle nds-xl">
+                                    <i class="hgi hgi-stroke hgi-search-01"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <h3 class="nds-card-title">Search Results</h3>
+                                <p class="nds-card-description">Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list.</p>
+                            </div>
+                        </div>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/examples/search-results.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Page</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
                                     <i class="hgi hgi-stroke hgi-alert-02"></i>
                                 </span>
                             </div>
@@ -177,10 +200,10 @@ direction: ltr
             </div>
             <div class="nds-swiper-navigation">
                 <div class="nds-swiper-buttons">
-                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-prev"
-                        type="button" aria-label="Previous slide"><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>
-                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-swiper-button-next"
-                        type="button" aria-label="Next slide"><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>
+                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev"
+                        type="button" aria-label="Previous slide"></button>
+                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next"
+                        type="button" aria-label="Next slide"></button>
                 </div>
                 <div class="nds-swiper-pagination"></div>
             </div>

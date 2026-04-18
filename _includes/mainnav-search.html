@@ -1,20 +1,21 @@
 <div class="nds-content-wrapper">
-    <div class="nds-form-container nds-search-box">
+    <form class="nds-form-container nds-search-box" role="search" method="get"
+        action="{{ '/examples/search-results.html' | relative_url }}">
         <div class="nds-search-content">
             <div class="nds-form-control">
                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                 <input id="mainSearch" type="text" class="nds-search-input"
-                    name="search" placeholder="Search...">
+                    name="q" placeholder="Search...">
                 <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" hidden>
+                    <button type="button" class="nds-btn nds-subtle nds-clear" hidden>
                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
-                    <button class="nds-btn nds-subtle nds-voice-input">
+                    <button type="button" class="nds-btn nds-subtle nds-voice-input">
                         <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
-            <button class="nds-btn nds-primary">
+            <button type="submit" class="nds-btn nds-primary nds-search-btn">
                 <span class="nds-label">Search</span>
             </button>
         </div>
@@ -22,19 +23,19 @@
         <div class="nds-auto-fill" data-target="mainSearch">
             <span class="nds-label">Suggestions:</span>
             <div class="nds-chips">
-                <button class="nds-chip nds-neutral nds-rounded nds-item">
+                <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
                     <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
                     <span class="nds-label">Tag 1</span>
                 </button>
-                <button class="nds-chip nds-neutral nds-rounded nds-item">
+                <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
                     <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
                     <span class="nds-label">Tag 2</span>
                 </button>
-                <button class="nds-chip nds-neutral nds-rounded nds-item">
+                <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
                     <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
                     <span class="nds-label">Tag 3</span>
                 </button>
             </div>
         </div>
-    </div>
+    </form>
 </div>
