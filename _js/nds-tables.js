@@ -506,6 +506,7 @@
             const isRTL = NDS.isRTL;
 
             const tokens = ['has-more'];
+            if (this.table.classList.contains('nds-mask')) tokens.push('masked');
 
             if (isRTL) {
                 if (Math.abs(scrollLeft) <= 5) tokens.push('at-start');
@@ -580,6 +581,19 @@
             NDS.State.clear(this.wrapper);
             this.currentScrollState = null;
         }
+    }
+
+    // Global class-change observer so mask toggle reflects without a scroll event
+    if (!window.ndsTableClassObserverInitialized && NDS.onAttrChange) {
+        window.ndsTableClassObserverInitialized = true;
+        NDS.onAttrChange('.nds-table[data-nds-responsive-initialized]', ['class'], (hits) => {
+            hits.forEach(table => {
+                const responsive = table.ndsTableResponsive;
+                if (!responsive) return;
+                responsive.currentScrollState = null;
+                responsive.handleScroll();
+            });
+        });
     }
 
     // Global tab change handler (single listener for all responsive tables)

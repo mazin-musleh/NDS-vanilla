@@ -1006,7 +1006,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Table</h2>
-            <p class="nds-section-description">All tables are responsive by default. JS auto-wraps every <strong>nds-table</strong> in an nds-table-wrapper with horizontal scroll and gradient fade masks on overflow. Use <strong>--max-width</strong> to constrain wrapper width and <strong>--min-width</strong> to lock the table's minimum width. If <strong>--min-width</strong> is not set, the JS auto-calculates it from the table's natural content width so cells never shrink.</p>
+            <p class="nds-section-description">All tables are responsive by default. JS auto-wraps every <strong>nds-table</strong> in an nds-table-wrapper with horizontal scroll on overflow. Add <strong>nds-mask</strong> to opt into gradient fade masks on the overflow edges. Use <strong>--max-width</strong> to constrain wrapper width and <strong>--min-width</strong> to lock the table's minimum width. If <strong>--min-width</strong> is not set, the JS auto-calculates it from the table's natural content width so cells never shrink.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -1016,6 +1016,10 @@ direction: ltr
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
                             <span class="nds-label">Compact</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-mask", ".nds-table", "tableMask"]'>
+                            <span class="nds-label">Mask</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
@@ -1126,7 +1130,8 @@ direction: ltr
 </table>
 
 <!-- All nds-table elements are responsive by default -->
-<!-- JS auto-wraps in nds-table-wrapper with scroll detection + gradient masks -->
+<!-- JS auto-wraps in nds-table-wrapper with scroll detection -->
+<!-- Add class="nds-table nds-mask" to opt into gradient fade masks on overflow edges -->
 
 <!-- --max-width: constrains the wrapper width -->
 <!-- style="--max-width: 600px;" - Fixed pixel width -->
@@ -1416,7 +1421,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-table</code> on the page is automatically wrapped in a responsive scroll container with gradient fade masks.</p>
+                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-table</code> on the page is automatically wrapped in a responsive scroll container. Opt into gradient fade masks with <code class="nds-inline-code lang-html">nds-mask</code>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1437,7 +1442,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
                         <span class="nds-label">Scroll Awareness</span>
                     </span>
-                    <p class="nds-item-desc">Gradient masks appear on the overflow edges, updating as the user scrolls to indicate more content in either direction.</p>
+                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-mask</code> to fade the overflow edges with a gradient that updates as the user scrolls to indicate more content in either direction. The mask clips descendants to the wrapper, so avoid it on tables with dropmenus, tooltips, or other overflowing popovers.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1502,6 +1507,7 @@ direction: ltr
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-compact</code></td><td>Reduces row height to 48px. Override with <code class="nds-inline-code lang-html">--table-row-height</code> for custom values</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-mask</code></td><td>Applies gradient fade masks on the overflow edges when the table scrolls horizontally. Off by default. Note: mask clips descendants to the wrapper and breaks overflowing UI like dropmenus, tooltips, and popovers that escape table bounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sortable</code></td><td>Enables column sorting. Use <code class="nds-inline-code lang-html">nds-col-header</code> with <code class="nds-inline-code lang-html">nds-sort-btn nds-icon-only</code> inside sortable <code class="nds-inline-code lang-html">&lt;th&gt;</code> elements</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Center-aligns all cell content across the table</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-col-header</code></td><td>Flex container inside <code class="nds-inline-code lang-html">&lt;th&gt;</code> that holds the label and actions side by side</td></tr>

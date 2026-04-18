@@ -29,8 +29,8 @@
     }
 }
 
-// Scroll mask states (determined by JS)
-.nds-table-wrapper[data-state~="has-more"] {
+// Scroll mask states (determined by JS) — opt-in via .nds-mask on the table
+.nds-table-wrapper[data-state~="has-more"][data-state~="masked"] {
     mask-image:
         linear-gradient(to right, transparent 0%, black var(--mask-fade-distance)),
         linear-gradient(to left, transparent 0%, black var(--mask-fade-distance));
