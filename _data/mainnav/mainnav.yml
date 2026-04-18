@@ -87,17 +87,10 @@ secondary_nav:
     icon: "nds-hgi-notification-02"
     custom_class: "nds-icon-only nds-PAB"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
-    badge: "3"
-    template: "mainnav-standard.html"
+    badge: "5"
+    template: "mainnav-notifications.html"
     type: "dropdown"
     content_class: "nds-fit"
-    content_source: "notifications"
-    content_label: "title"
-    content_limit: 3
-    items:
-      - label: "View all notifications"
-        icon: "nds-hgi-notification-02"
-        url: "/notifications"
 
   - label: "Login"
     icon: "nds-icon-avatar"

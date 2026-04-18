@@ -1,0 +1,67 @@
+<div class="nds-column">
+    <nav class="nds-drawer" style="--drawer-max-height: 40svh; width: 400px; max-width: 100%;" hidden>
+        <div class="nds-scroll-more nds-divided">
+            <ul class="nds-drawer-list nds-scroll-more-content">
+                {%- assign notifications = site.data.content.notifications | sort: "timestamp" | reverse %}
+                {%- for entry in notifications limit:5 %}
+                <li data-status="{{ entry.type }}">
+                    {%- if forloop.first %}
+                    <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+                        <span class="nds-featured-icon nds-sm">
+                            {{ entry.icon }}
+                        </span>
+                        <span class="nds-drawer-item">
+                            <span class="nds-drawer-item-head">
+                                <span class="nds-label nds-truncate">{{ entry.title }}</span>
+                                <span class="nds-tag nds-sm" data-status="{{ entry.type }}">
+                                    <span class="nds-label">{{ entry.type }}</span>
+                                </span>
+                            </span>
+                            <span class="nds-description">{{ entry.message }}</span>
+                        </span>
+                    </button>
+                    <ul>
+                        <li>
+                            <div class="nds-flex nds-row">
+                                <a href="#" class="nds-btn nds-subtle nds-sm">
+                                    <i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Mark as read</span>
+                                </a>
+                                <a href="#" class="nds-btn nds-subtle nds-sm">
+                                    <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
+                                    <span class="nds-label">View</span>
+                                </a>
+                                <a href="#" class="nds-btn nds-destructive nds-sm">
+                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Dismiss</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                    {%- else %}
+                    <a href="#" class="nds-btn nds-subtle nds-indicator">
+                        <span class="nds-featured-icon nds-sm">
+                            {{ entry.icon }}
+                        </span>
+                        <span class="nds-drawer-item">
+                            <span class="nds-drawer-item-head">
+                                <span class="nds-label nds-truncate">{{ entry.title }}</span>
+                                <span class="nds-tag nds-sm" data-status="{{ entry.type }}">
+                                    <span class="nds-label">{{ entry.type }}</span>
+                                </span>
+                            </span>
+                            <span class="nds-description">{{ entry.message }}</span>
+                        </span>
+                    </a>
+                    {%- endif %}
+                </li>
+                {%- endfor %}
+            </ul>
+        </div>
+    </nav>
+    <hr class="nds-divider">
+    <a href="{{ '/notifications' | relative_url }}" class="nds-btn nds-subtle nds-full">
+        <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
+        <span class="nds-label">View all notifications</span>
+    </a>
+</div>
