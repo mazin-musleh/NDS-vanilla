@@ -1,12 +1,12 @@
 ---
 layout: page
 layout_class: nds-wSideInfo
-title: Contact us
+title: Contact Us Template
 hero_style: "nds-aside"
 hero_title: Contact us
 hero_description: Service description example To buy a plot to build your house, this requires documenting the sale and purchase process in the notarial offices or notary services to register the property in your name.
 breadcrumb:
-- ["Examples", "/examples"]
+- ["DGA Templates", "/templates"]
 lang: en
 direction: ltr
 sidemenu_mode: false
@@ -178,8 +178,8 @@ sidemenu_mode: false
                                     </div>
                                 </div>
                             </div>
-                            <input type="tel" id="contact-phone" name="phone" class="nds-input"
-                                placeholder="00 000 0000" autocomplete="tel-national" inputmode="tel" required>
+                            <input type="tel" id="contact-phone" name="phone" class="nds-input nds-phone"
+                                placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric" required>
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>

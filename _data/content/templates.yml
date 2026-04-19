@@ -1,0 +1,45 @@
+# Template pages catalog for templates index listing
+# Categories: Service (citizen-facing service pages), Form (standalone flows), Content (editorial), Dashboard (data views)
+# Tags: DGA (official DGA design system pages), plus features/components demonstrated
+
+- title: "Form Template"
+  description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
+  icon: '<i class="hgi hgi-stroke hgi-form"></i>'
+  category: "Form"
+  tags: ["DGA", "Forms", "Stepper", "Side Info", "Grid"]
+  url: "/templates/form-template.html"
+
+- title: "Service Page Template"
+  description: "Government digital service with side info, breadcrumbs, and structured content layout."
+  icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'
+  category: "Service"
+  tags: ["DGA", "Tabs", "Side Info", "Rating"]
+  url: "/templates/service-template.html"
+
+- title: "Contact Us Template"
+  description: "Contact page with two-column form, country-code prefix, select, textarea, file upload, and a side info card with emergency contacts."
+  icon: '<i class="hgi hgi-stroke hgi-mail-01"></i>'
+  category: "Service"
+  tags: ["DGA", "Forms", "Upload", "Side Info", "Grid"]
+  url: "/templates/contact-us-template.html"
+
+- title: "Help & Support Template"
+  description: "Help hub with a flat sub-hero and a responsive grid of support-channel cards, each with a featured icon, description, availability, and response time."
+  icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
+  category: "Content"
+  tags: ["DGA", "Grid", "Cards", "Featured Icons"]
+  url: "/templates/help-support-template.html"
+
+- title: "Search Template"
+  description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
+  icon: '<i class="hgi hgi-stroke hgi-search-01"></i>'
+  category: "Service"
+  tags: ["DGA", "Search", "Filter", "Pagination"]
+  url: "/templates/search-template.html"
+
+- title: "404 Template"
+  description: "Custom error page with illustration and back-to-home action."
+  icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
+  category: "Service"
+  tags: ["DGA", "Empty State"]
+  url: "/templates/404-template.html"

@@ -1,20 +1,6 @@
 # Example pages catalog for examples index listing
 # Categories: Service (citizen-facing service pages), Form (standalone flows), Content (editorial), Dashboard (data views)
-# Tags: DGA (official DGA design system pages), plus features/components demonstrated
-
-- title: "Service Page"
-  description: "Government digital service with side info, breadcrumbs, and structured content layout."
-  icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'
-  category: "Service"
-  tags: ["DGA", "Tabs", "Side Info", "Rating"]
-  url: "/examples/service.html"
-
-- title: "Contact"
-  description: "Contact page with two-column form, country-code prefix, select, textarea, file upload, and a side info card with emergency contacts."
-  icon: '<i class="hgi hgi-stroke hgi-mail-01"></i>'
-  category: "Service"
-  tags: ["DGA", "Forms", "Upload", "Side Info", "Grid"]
-  url: "/examples/contact.html"
+# Tags: features/components demonstrated. Official DGA templates live in _data/content/templates.yml.
 
 - title: "Services List"
   description: "Filterable government services catalog with search and category filters."
@@ -23,26 +9,12 @@
   tags: ["Filter", "Search", "Pagination"]
   url: "/examples/services-list.html"
 
-- title: "Search Results"
-  description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
-  icon: '<i class="hgi hgi-stroke hgi-search-01"></i>'
-  category: "Service"
-  tags: ["DGA", "Search", "Filter", "Pagination"]
-  url: "/examples/search-results.html"
-
 - title: "Registration"
   description: "Multi-step form with validation, OTP, file upload, and Hijri date selection."
   icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
   category: "Form"
   tags: ["Stepper", "OTP", "Upload", "Date Picker"]
   url: "/examples/registration.html"
-
-- title: "404 Page"
-  description: "Custom error page with illustration and back-to-home action."
-  icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
-  category: "Service"
-  tags: ["DGA", "Empty State"]
-  url: "/examples/404.html"
 
 - title: "Post"
   description: "Article layout with hero image, author metadata, and rich content."

@@ -1,10 +1,10 @@
 ---
 layout: page
-title: "Search Results"
+title: "Search Template"
 lang: en
 direction: ltr
 breadcrumb:
-- ["Examples", "/examples"]
+- ["DGA Templates", "/templates"]
 hero_title: "Search Results"
 hero_description: "Find services matching your query"
 layout_class:

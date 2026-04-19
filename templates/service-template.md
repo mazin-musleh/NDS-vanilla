@@ -1,12 +1,12 @@
 ---
 layout: page
 layout_class: nds-wSideInfo
-title: Government Digital Service
+title: Service Page Template
 hero_style: "nds-aside"
 hero_title: Government Digital Service
 hero_description: A comprehensive digital service platform showcasing National Design System components for government services delivery.
 breadcrumb:
-- ["Examples", "/examples"]
+- ["DGA Templates", "/templates"]
 - ["Services List", "/examples/services-list"]
 lang: en
 direction: ltr

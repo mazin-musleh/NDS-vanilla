@@ -103,7 +103,7 @@ Example pages use NDS section hierarchy (`nds-content-section` → `nds-section-
    - `icon` — verified `hgi hgi-stroke hgi-*` class wrapped in `<i>` (e.g. `'<i class="hgi hgi-stroke hgi-mail-01"></i>'`)
    - `category` — one of: `Service` (citizen-facing service pages), `Form` (standalone flows), `Content` (editorial), `Dashboard` (data views)
    - `tags` — array of labels; include `DGA` for official DGA design system pages, plus components/features demonstrated (e.g. `["DGA", "Forms", "Upload", "Grid"]`)
-   - `url` — absolute path ending in `.html` (e.g. `/examples/contact.html`)
+   - `url` — absolute path ending in `.html` (e.g. `/examples/services-list.html`)
 3. Set appropriate breadcrumb (e.g., `["Examples"]` or `["Examples", "/examples"]`)
 4. Build test: `bundle exec jekyll build`
 5. If the page needs YAML content that doesn't exist yet, use `/demo-content` to create it

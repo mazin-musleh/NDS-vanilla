@@ -40,7 +40,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="nds-card-actions">
-                        <a href="{{ '/examples/service.html' | relative_url }}" class="nds-btn nds-primary">
+                        <a href="{{ '/templates/service-template.html' | relative_url }}" class="nds-btn nds-primary">
                             <span class="nds-label">View Page</span>
                         </a>
                     </div>
@@ -145,7 +145,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="nds-card-actions">
-                        <a href="{{ '/examples/404.html' | relative_url }}" class="nds-btn nds-primary">
+                        <a href="{{ '/templates/404-template.html' | relative_url }}" class="nds-btn nds-primary">
                             <span class="nds-label">View Page</span>
                         </a>
                     </div>

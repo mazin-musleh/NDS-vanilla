@@ -26,10 +26,59 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Compliance Ready</h2>
-            <p class="nds-section-description">Components and page templates built to pass DGA compliance.</p>
+            <p class="nds-section-description">Official DGA page templates, assembled from NDS components and ready to ship.</p>
         </div>
         <div class="nds-section-body">
-            <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The project includes required page layouts as ready-to-use code, along with additional real-world examples.</p>
+            <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The templates below cover the most common government service screens. Copy a template, fill in your content, and ship.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="0">
+                <div class="nds-swiper-wrapper">
+                    {% for tpl in site.data.content.templates %}
+                    <div class="nds-swiper-slide">
+                        <div class="nds-card nds-stroke nds-shadow">
+                            <div class="nds-card-header">
+                                <div class="nds-card-featured-icon">
+                                    <span class="nds-featured-icon nds-circle nds-xl">
+                                        {{ tpl.icon }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <h3 class="nds-card-title">{{ tpl.title }}</h3>
+                                    <p class="nds-card-description">{{ tpl.description }}</p>
+                                </div>
+                            </div>
+                            {% if tpl.url %}
+                            <div class="nds-card-actions">
+                                <a href="{{ tpl.url | relative_url }}" class="nds-btn nds-primary">
+                                    <span class="nds-label">View Template</span>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="nds-swiper-navigation">
+                    <div class="nds-swiper-buttons">
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous template"></button>
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next template"></button>
+                    </div>
+                    <div class="nds-swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Real-World Examples -->
+<section id="examples" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Real-World Examples</h2>
+            <p class="nds-section-description">{{ site.data.content.examples | size }} composed pages showing NDS components working together in real government service contexts.</p>
         </div>
         <div class="nds-form-container nds-search-box" data-filter-target="examples_list">
             <div class="nds-search-content">
