@@ -44,6 +44,13 @@
   tags: ["DGA", "Accordion", "Cards"]
   url: "/templates/faq-template.html"
 
+- title: "e-Participation Template"
+  description: "Engagement topics hub with a sub-hero and a responsive 4-column grid of text-only navigation cards for citizen participation entry points."
+  icon: '<i class="hgi hgi-stroke hgi-user-group"></i>'
+  category: "Content"
+  tags: ["DGA", "Grid", "Cards"]
+  url: "/templates/e-participation-template.html"
+
 - title: "Search Template"
   description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
   icon: '<i class="hgi hgi-stroke hgi-search-01"></i>'

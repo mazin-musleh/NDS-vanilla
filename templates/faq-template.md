@@ -623,7 +623,7 @@ sidemenu_mode: false
 <section id="faqFeedback" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-card nds-stroke">
+            <div class="nds-card nds-stroke" style="--card-width: 100%;">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -638,7 +638,7 @@ sidemenu_mode: false
                     </div>
                 </div>
                 <div class="nds-card-actions">
-                    <a href="#contact-us" class="nds-btn nds-primary">
+                    <a href="{{ '/templates/contact-us-template' | relative_url }}" class="nds-btn nds-primary">
                         <span class="nds-label">Contact us</span>
                     </a>
                 </div>
