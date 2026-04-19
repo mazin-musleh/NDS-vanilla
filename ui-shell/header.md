@@ -24,8 +24,8 @@ direction: ltr
                     <div class="demo-container nds-noBg">
                         <div class="nds-code nds-expandable">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
@@ -99,8 +99,8 @@ header
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-topbar-1" aria-labelledby="tab-topbar-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -161,8 +161,8 @@ header
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-widgets-1" aria-labelledby="tab-widgets-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -236,8 +236,8 @@ header
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dga-stamp-1" aria-labelledby="tab-dga-stamp-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -323,8 +323,8 @@ header
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nav-bar-1" aria-labelledby="tab-nav-bar-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -565,8 +565,8 @@ header
                 <p>The header initializes automatically when <code class="nds-inline-code lang-html">.nds-main-nav</code> exists on the page. It is priority 1 in the loader (first to initialize). Toggle functions are exposed globally on <code class="nds-inline-code lang-js">window</code> for use in HTML <code class="nds-inline-code lang-html">onclick</code> attributes.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <div class="nds-expandable-content">

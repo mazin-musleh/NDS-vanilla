@@ -21,6 +21,27 @@ sidemenu_mode: false
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <h3 class="nds-card-title">Copy</h3>
+                            <p class="nds-card-description">One-click clipboard utility with checkmark feedback, visible label swap, and screen reader announcement for any value, target, or code block.</p>
+                        </div>
+                    </div>
+                    <div class="nds-card-actions">
+                        <a href="{{ '/utilities/copy.html' | relative_url }}" class="nds-btn nds-primary">
+                            <span class="nds-label">View Docs</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="nds-card nds-stroke">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
                                 <i class="hgi hgi-stroke hgi-text-wrap"></i>
                             </span>
                         </div>

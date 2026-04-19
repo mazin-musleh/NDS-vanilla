@@ -24,8 +24,8 @@ direction: ltr
                     <div class="demo-container nds-noBg">
                         <div class="nds-code nds-expandable">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
@@ -130,8 +130,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier1" aria-labelledby="tab-tier1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -232,8 +232,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier2" aria-labelledby="tab-tier2">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -343,8 +343,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier3" aria-labelledby="tab-tier3">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -468,8 +468,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-float" aria-labelledby="tab-float">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -594,8 +594,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-dual" aria-labelledby="tab-dual">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -715,8 +715,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nowrap" aria-labelledby="tab-nowrap">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -836,8 +836,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier4" aria-labelledby="tab-tier4">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -994,8 +994,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tier5" aria-labelledby="tab-tier5">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <div class="nds-expandable-content">
@@ -1144,8 +1144,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier6" aria-labelledby="tab-tier6">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -1259,8 +1259,8 @@ section.nds-content-section          (responsive padding for content constrainin
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-contentblock" aria-labelledby="tab-contentblock">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">

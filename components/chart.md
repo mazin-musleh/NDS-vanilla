@@ -77,8 +77,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-bar-html"
                                     aria-labelledby="tab-chart-bar-html">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -88,8 +88,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-bar-js"
                                     aria-labelledby="tab-chart-bar-js" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-js code">
@@ -196,8 +196,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-line-html"
                                     aria-labelledby="tab-chart-line-html">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -207,8 +207,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-line-js"
                                     aria-labelledby="tab-chart-line-js" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-js code">
@@ -298,8 +298,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-pie-html"
                                     aria-labelledby="tab-chart-pie-html">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -309,8 +309,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-pie-js"
                                     aria-labelledby="tab-chart-pie-js" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-js code">
@@ -395,8 +395,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-donut-html"
                                     aria-labelledby="tab-chart-donut-html">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -406,8 +406,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-donut-js"
                                     aria-labelledby="tab-chart-donut-js" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-js code">
@@ -477,8 +477,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-html-1"
                                     aria-labelledby="tab-chart-html-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -541,8 +541,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-theme-html"
                                     aria-labelledby="tab-chart-theme-html">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -552,8 +552,8 @@ NDS.Chart.create('#my-chart', {
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-theme-css"
                                     aria-labelledby="tab-chart-theme-css" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-css code">

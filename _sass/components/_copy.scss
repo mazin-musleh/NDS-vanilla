@@ -1,0 +1,24 @@
+/* ========================================
+   COPY COMPONENT
+   Shared styling for any `.nds-copy` driven by NDS.Copy
+   (code blocks, share dropmenu, contact info, inline tokens, …)
+   ======================================== */
+
+@use '../mixins' as *;
+
+.nds-copy {
+    .nds-label {
+        white-space: nowrap;
+    }
+
+    transition: color 150ms ease;
+
+    &[data-status="success"] {
+        color: var(--text-success);
+
+        .nds-icon {
+            transition: transform 150ms ease;
+            transform: scale(1.1);
+        }
+    }
+}

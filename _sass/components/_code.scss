@@ -43,14 +43,6 @@
     top: 0;
     inset-inline-end: 0;
     z-index: 2;
-
-    .copy-btn .nds-label {
-      white-space: nowrap;
-    }
-
-    .copy-btn[data-status="success"] i::before {
-      content: "㶦";
-    }
   }
 
   pre {

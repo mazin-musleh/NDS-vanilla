@@ -71,8 +71,8 @@ direction: ltr
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-autocomplete-1"
                 aria-labelledby="tab-autocomplete-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                    <i class="nds-icon nds-hgi-copy-01"></i>
                   </button>
                 </div>
                 <div class="nds-expandable-content">
@@ -186,8 +186,8 @@ direction: ltr
         <h3 class="nds-block-title">JavaScript API</h3>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">
-                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                  <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
                 </button>
               </div>
               <div class="nds-expandable-content">
@@ -237,8 +237,8 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
         <p>The component sends a GET request with the query as a URL parameter (e.g. <code class="nds-inline-code lang-html">/api/services?q=term</code>). The API handles filtering and returns JSON in one of these formats:</p>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">
-                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                  <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
                 </button>
               </div>
               <div class="nds-expandable-content">

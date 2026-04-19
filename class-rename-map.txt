@@ -87,6 +87,7 @@ Share Component
 .share-linkedin             → .nds-share-linkedin
 .share-whatsapp             → .nds-share-whatsapp
 .share-copy                 → .nds-share-copy
+.copy-btn                   → .nds-copy
 
 Content Layout Modifiers
 ------------------------

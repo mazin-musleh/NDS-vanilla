@@ -98,7 +98,7 @@
         },
         {
             name: 'copy',
-            selector: '.copy-btn',
+            selector: '.nds-copy',
             init: () => NDS.Copy?.init?.(),
         },
         {
@@ -108,7 +108,7 @@
         },
         {
             name: 'share',
-            selector: '#nds-sharePageBtn',
+            selector: '.nds-share',
             init: () => NDS.Share?.init?.(),
         },
         {

@@ -108,8 +108,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-1"
                                     aria-labelledby="tab-feedback-icon-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -123,8 +123,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-icon-js-1"
                                     aria-labelledby="tab-feedback-icon-js-1" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-javascript code">NDS.Feedback.create({
@@ -244,8 +244,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-1"
                                     aria-labelledby="tab-feedback-msg-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -260,8 +260,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-feedback-msg-js-1"
                                     aria-labelledby="tab-feedback-msg-js-1" hidden>
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-javascript code">NDS.Feedback.create({

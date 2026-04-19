@@ -364,7 +364,7 @@ hideFeedback: true
                                             <span class="nds-label">Download receipt</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                             <span class="nds-label">Copy reference</span>
                                         </button>
                                         <hr class="nds-divider">

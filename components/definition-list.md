@@ -130,8 +130,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
                                     id="panel-dl-icons-1" aria-labelledby="tab-dl-icons-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -266,8 +266,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
                                     id="panel-dl-generic-1" aria-labelledby="tab-dl-generic-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">

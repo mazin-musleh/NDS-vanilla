@@ -64,8 +64,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-scroll-more-vertical-1"
                                     aria-labelledby="tab-scroll-more-vertical-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -152,8 +152,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-scroll-more-horizontal-1"
                                     aria-labelledby="tab-scroll-more-horizontal-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -249,8 +249,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-scroll-more-cards-1"
                                     aria-labelledby="tab-scroll-more-cards-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -423,8 +423,8 @@ direction: ltr
                 <p>The <strong>NDS.ScrollMore</strong> API exposes initialization and teardown hooks. For dynamically added markup, call <strong>NDS.ScrollMore.init()</strong> to activate the new instances.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <div class="nds-expandable-content">

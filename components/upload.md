@@ -147,8 +147,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-upload-default-1"
                                     aria-labelledby="tab-upload-default-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -367,8 +367,8 @@ direction: ltr
                 <p>The <strong>NDS.Upload</strong> API provides static methods to access instances and instance methods to manage files, trigger uploads, and control the component state.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <div class="nds-expandable-content">

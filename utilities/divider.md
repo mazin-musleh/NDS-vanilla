@@ -89,8 +89,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-plain-1"
                                     aria-labelledby="tab-divider-plain-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -135,7 +135,7 @@ direction: ltr
                                             <span class="nds-label">Edit</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                             <span class="nds-label">Duplicate</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
@@ -166,8 +166,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-hr-1"
                                     aria-labelledby="tab-divider-hr-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -183,7 +183,7 @@ direction: ltr
         &lt;span class="nds-label"&gt;Edit&lt;/span&gt;
       &lt;/button&gt;
       &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
-        &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+        &lt;i class="nds-icon nds-hgi-copy-01"&gt;&lt;/i&gt;
         &lt;span class="nds-label"&gt;Duplicate&lt;/span&gt;
       &lt;/button&gt;
       &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
@@ -256,8 +256,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-vertical-1"
                                     aria-labelledby="tab-divider-vertical-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -338,8 +338,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-divider-text-1"
                                     aria-labelledby="tab-divider-text-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">

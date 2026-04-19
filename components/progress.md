@@ -116,8 +116,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-circle-1"
                                     aria-labelledby="tab-progress-circle-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -255,8 +255,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-outof-1"
                                     aria-labelledby="tab-progress-outof-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -379,8 +379,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-progress-bar-1"
                                     aria-labelledby="tab-progress-bar-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -555,8 +555,8 @@ direction: ltr
                 <p>The <strong>NDS.Progress</strong> API reads <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code>, and <code class="nds-inline-code lang-html">data-max</code> attributes on initialization and observes changes reactively. For dynamically added elements, call <code class="nds-inline-code lang-js">NDS.Progress.init()</code> to pick them up.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <div class="nds-expandable-content">

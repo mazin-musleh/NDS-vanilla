@@ -284,6 +284,13 @@
   url: "/layout/grid.html"
 
 # Utilities
+- title: "Copy"
+  description: "One-click clipboard copy with checkmark feedback and screen reader announcement"
+  icon: '<i class="hgi hgi-stroke hgi-copy-01"></i>'
+  category: "Utilities"
+  tags: ["JS"]
+  url: "/utilities/copy.html"
+
 - title: "Truncate Text"
   description: "Line-clamped overflow with expand/collapse toggle"
   icon: '<i class="hgi hgi-stroke hgi-text-wrap"></i>'

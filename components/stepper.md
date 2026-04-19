@@ -125,8 +125,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
                                     id="panel-stepper-horizontal-1" aria-labelledby="tab-stepper-horizontal-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -296,8 +296,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
                                     id="panel-stepper-vertical-1" aria-labelledby="tab-stepper-vertical-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -491,8 +491,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
                                     id="panel-stepper-radial-1" aria-labelledby="tab-stepper-radial-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -710,8 +710,8 @@ direction: ltr
                 <p>Steppers auto-initialize on page load. Access instances via <code class="nds-inline-code lang-js">NDS.Stepper.get(id)</code> or call convenience methods directly. The <code class="nds-inline-code lang-js">nds:stepper:change</code> event fires on every step change.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <div class="nds-expandable-content">

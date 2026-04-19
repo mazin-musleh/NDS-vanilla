@@ -85,8 +85,8 @@ direction: ltr
               <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-date-picker-1"
                 aria-labelledby="tab-date-picker-1">
                 <div class="nds-code-action">
-                  <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                    <i class="nds-icon nds-hgi-copy-01"></i>
                   </button>
                 </div>
                 <div class="nds-expandable-content">
@@ -200,8 +200,8 @@ direction: ltr
         <h3 class="nds-block-title">JavaScript API</h3>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">
-                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                  <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
                 </button>
               </div>
               <div class="nds-expandable-content">

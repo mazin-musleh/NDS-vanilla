@@ -175,6 +175,9 @@
 - label: "Utilities"
   has_sub: true
   children:
+    - label: "Copy"
+      url: "/utilities/copy"
+      href: "/utilities/copy.html"
     - label: "Divider"
       url: "/utilities/divider"
       href: "/utilities/divider.html"

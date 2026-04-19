@@ -106,8 +106,8 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1"
                             aria-labelledby="tab-basic-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -205,8 +205,8 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-images-1"
                             aria-labelledby="tab-images-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -335,8 +335,8 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-multi-1"
                             aria-labelledby="tab-multi-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -469,8 +469,8 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-peek-1"
                             aria-labelledby="tab-peek-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -637,8 +637,8 @@ direction: ltr
                 <p>All <code class="nds-inline-code lang-html">nds-swiper</code> elements initialize automatically. Access an instance via <code class="nds-inline-code lang-js">element._ndsSwiper</code>.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <div class="nds-expandable-content">

@@ -80,8 +80,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel"
                                     id="panel-rating-display-1" aria-labelledby="tab-rating-display-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -178,8 +178,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example" role="tabpanel"
                                     id="panel-rating-interactive-1" aria-labelledby="tab-rating-interactive-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -273,8 +273,8 @@ direction: ltr
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
                                     id="panel-rating-dropmenu-1" aria-labelledby="tab-rating-dropmenu-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -503,8 +503,8 @@ direction: ltr
                 <p>The <strong>NDS.Rating</strong> API initializes rating components and exposes instance methods on <code class="nds-inline-code lang-js">element.ndsRating</code>. For dynamically added ratings, call <code class="nds-inline-code lang-js">NDS.Rating.init()</code> or rely on automatic MutationObserver detection.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <div class="nds-expandable-content">

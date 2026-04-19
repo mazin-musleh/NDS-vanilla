@@ -50,9 +50,9 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-format-1"
                             aria-labelledby="tab-numbers-format-1">
                             <div class="nds-code-action">
-                                <button type="button" class="nds-btn nds-subtle copy-btn"
+                                <button type="button" class="nds-btn nds-subtle nds-copy"
                                     aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -107,9 +107,9 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-prefix-1"
                             aria-labelledby="tab-numbers-prefix-1">
                             <div class="nds-code-action">
-                                <button type="button" class="nds-btn nds-subtle copy-btn"
+                                <button type="button" class="nds-btn nds-subtle nds-copy"
                                     aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -187,9 +187,9 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-counter-1"
                             aria-labelledby="tab-numbers-counter-1">
                             <div class="nds-code-action">
-                                <button type="button" class="nds-btn nds-subtle copy-btn"
+                                <button type="button" class="nds-btn nds-subtle nds-copy"
                                     aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -248,9 +248,9 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-attrs-1"
                             aria-labelledby="tab-numbers-attrs-1">
                             <div class="nds-code-action">
-                                <button type="button" class="nds-btn nds-subtle copy-btn"
+                                <button type="button" class="nds-btn nds-subtle nds-copy"
                                     aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -353,9 +353,9 @@ direction: ltr
                         <div class="nds-tab-panel code-example" role="tabpanel" id="panel-numbers-cards-1"
                             aria-labelledby="tab-numbers-cards-1">
                             <div class="nds-code-action">
-                                <button type="button" class="nds-btn nds-subtle copy-btn"
+                                <button type="button" class="nds-btn nds-subtle nds-copy"
                                     aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <code class="lang-html code">
@@ -564,8 +564,8 @@ direction: ltr
                 <p>The <code class="nds-inline-code lang-js">NDS.Numbers</code> API provides methods to format numbers and trigger counter animations. Call <code class="nds-inline-code lang-js">NDS.Numbers.reinit()</code> after dynamically adding elements to the page.</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <code class="lang-javascript line-numbers">

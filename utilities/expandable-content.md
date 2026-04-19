@@ -50,8 +50,8 @@ direction: ltr
                         <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-expandable-basic-1"
                             aria-labelledby="tab-expandable-basic-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
@@ -146,8 +146,8 @@ direction: ltr
                         <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-expandable-card-1"
                             aria-labelledby="tab-expandable-card-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
@@ -234,8 +234,8 @@ direction: ltr
                         <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-expandable-sync-1"
                             aria-labelledby="tab-expandable-sync-1">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
@@ -369,8 +369,8 @@ direction: ltr
                 <p>The <strong>NDS.Expandable</strong> API provides methods to initialize containers, control expand/collapse state, and listen for state change events. Instances are accessible via <code class="nds-inline-code lang-js">element.ndsExpandable</code>.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
                     <div class="nds-expandable-content">

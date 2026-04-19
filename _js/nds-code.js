@@ -23,8 +23,6 @@
         inlineCodeElements.forEach(function(codeElement) {
             processInlineCodeElement(codeElement);
         });
-
-        initializeCopyButtons();
     }
 
     function processCodeElement(codeElement) {
@@ -461,19 +459,6 @@
         }
 
         return lines;
-    }
-
-    // ==============================================
-    // COPY FUNCTIONALITY
-    // ==============================================
-    // Copy buttons inside `.nds-code` are handled by the shared NDS.Copy
-    // delegate — it reads the nested <code> text and flashes data-status on
-    // success. Kept as a thin wrapper so NDS.Code.init can still bootstrap
-    // copy behavior when the code component initializes in isolation.
-    function initializeCopyButtons() {
-        if (NDS.Copy && typeof NDS.Copy.bind === 'function') {
-            NDS.Copy.bind('.copy-btn');
-        }
     }
 
     // ==============================================

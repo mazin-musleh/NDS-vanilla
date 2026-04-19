@@ -220,8 +220,8 @@ direction: ltr
                             <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-card-standard-1"
                                 aria-labelledby="tab-card-standard-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <div class="nds-expandable-content">
@@ -356,8 +356,8 @@ direction: ltr
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-card-statistic-1"
                                 aria-labelledby="tab-card-statistic-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <code class="lang-html code">
@@ -493,8 +493,8 @@ direction: ltr
                             <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-card-group-1"
                                 aria-labelledby="tab-card-group-1">
                                 <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                        <i class="nds-icon nds-hgi-copy-01"></i>
                                     </button>
                                 </div>
                                 <div class="nds-expandable-content">

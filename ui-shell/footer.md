@@ -24,8 +24,8 @@ direction: ltr
                     <div class="demo-container nds-noBg">
                         <div class="nds-code nds-expandable">
                             <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                    <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
@@ -91,8 +91,8 @@ footer.nds-footer.nds-content-wrapper
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-footer-column-1" aria-labelledby="tab-footer-column-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -225,8 +225,8 @@ footer.nds-footer.nds-content-wrapper
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-footer-social-1" aria-labelledby="tab-footer-social-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">
@@ -279,8 +279,8 @@ footer.nds-footer.nds-content-wrapper
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-footer-apps-1" aria-labelledby="tab-footer-apps-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
@@ -340,8 +340,8 @@ footer.nds-footer.nds-content-wrapper
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-footer-bottom-1" aria-labelledby="tab-footer-bottom-1">
                                     <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                                            <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <div class="nds-expandable-content">

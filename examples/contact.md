@@ -18,7 +18,7 @@ sidemenu_mode: false
                 <div class="nds-grid" style="--max-col:2;--mid-col:2;--min-col:1;--row-gap: var(--spacing-xl);">
 
                     <!-- First Name -->
-                    <div class="nds-form-container" data-required>
+                    <div class="nds-form-container nds-darker" data-required>
                         <div class="nds-form-header">
                             <label for="contact-first-name">
                                 <span class="nds-label">First Name</span>
@@ -37,7 +37,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Last Name -->
-                    <div class="nds-form-container" data-required>
+                    <div class="nds-form-container nds-darker" data-required>
                         <div class="nds-form-header">
                             <label for="contact-last-name">
                                 <span class="nds-label">Last Name</span>
@@ -56,7 +56,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Email -->
-                    <div class="nds-form-container" data-required>
+                    <div class="nds-form-container nds-darker" data-required>
                         <div class="nds-form-header">
                             <label for="contact-email">
                                 <span class="nds-label">Email</span>
@@ -75,13 +75,13 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Phone with country code prefix -->
-                    <div class="nds-form-container" data-required>
+                    <div class="nds-form-container nds-darker" data-required>
                         <div class="nds-form-header">
                             <label for="contact-phone">
                                 <span class="nds-label">Phone</span>
                             </label>
                         </div>
-                        <div class="nds-form-control">
+                        <div class="nds-form-control nds-ltr">
                             <div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
                                 <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">+966</span>
@@ -190,7 +190,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Subject -->
-                    <div class="nds-form-container">
+                    <div class="nds-form-container nds-darker">
                         <div class="nds-form-header">
                             <label for="contact-subject">
                                 <span class="nds-label">Subject</span>
@@ -209,7 +209,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Category -->
-                    <div class="nds-form-container nds-select">
+                    <div class="nds-form-container nds-darker nds-select">
                         <div class="nds-form-header">
                             <label for="contact-category">
                                 <span class="nds-label">Category</span>
@@ -243,7 +243,7 @@ sidemenu_mode: false
                     </div>
 
                     <!-- How Can We Help (textarea) -->
-                    <div class="nds-form-container nds-textarea">
+                    <div class="nds-form-container nds-darker nds-textarea">
                         <div class="nds-form-header">
                             <label for="contact-message">
                                 <span class="nds-label">How Can We Help?</span>
@@ -334,9 +334,9 @@ sidemenu_mode: false
                             <a href="tel:9200343222" class="nds-primary">
                                 <span class="nds-label">9200343222</span>
                             </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only copy-btn"
+                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
                                 data-copy="9200343222" aria-label="Copy phone number">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <i class="nds-icon nds-hgi-copy-01"></i>
                             </button>
                         </dd>
                     </div>
@@ -349,9 +349,9 @@ sidemenu_mode: false
                             <a href="sms:199099" class="nds-primary">
                                 <span class="nds-label">199099</span>
                             </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only copy-btn"
+                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
                                 data-copy="199099" aria-label="Copy SMS number">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <i class="nds-icon nds-hgi-copy-01"></i>
                             </button>
                         </dd>
                     </div>
@@ -364,9 +364,9 @@ sidemenu_mode: false
                             <a href="mailto:help@company.sa" class="nds-primary">
                                 <span class="nds-label">help@company.sa</span>
                             </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only copy-btn"
+                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
                                 data-copy="help@company.sa" aria-label="Copy email">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <i class="nds-icon nds-hgi-copy-01"></i>
                             </button>
                         </dd>
                     </div>
@@ -379,9 +379,9 @@ sidemenu_mode: false
                             <a href="tel:+966114346654" class="nds-primary">
                                 <span class="nds-label">00966-11-434-6654</span>
                             </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only copy-btn"
+                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
                                 data-copy="00966-11-434-6654" aria-label="Copy fax number">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <i class="nds-icon nds-hgi-copy-01"></i>
                             </button>
                         </dd>
                     </div>
@@ -430,9 +430,9 @@ sidemenu_mode: false
                             <a href="tel:998" class="nds-primary">
                                 <span class="nds-label">998</span>
                             </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only copy-btn"
+                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
                                 data-copy="998" aria-label="Copy civil defence number">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <i class="nds-icon nds-hgi-copy-01"></i>
                             </button>
                         </dd>
                     </div>
@@ -445,9 +445,9 @@ sidemenu_mode: false
                             <a href="tel:999" class="nds-primary">
                                 <span class="nds-label">999</span>
                             </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only copy-btn"
+                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
                                 data-copy="999" aria-label="Copy police number">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <i class="nds-icon nds-hgi-copy-01"></i>
                             </button>
                         </dd>
                     </div>
@@ -460,9 +460,9 @@ sidemenu_mode: false
                             <a href="tel:997" class="nds-primary">
                                 <span class="nds-label">997</span>
                             </a>
-                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only copy-btn"
+                            <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-copy"
                                 data-copy="997" aria-label="Copy ambulance number">
-                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                <i class="nds-icon nds-hgi-copy-01"></i>
                             </button>
                         </dd>
                     </div>
