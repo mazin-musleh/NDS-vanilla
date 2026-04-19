@@ -17,7 +17,7 @@ direction: ltr
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
@@ -41,6 +41,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -102,8 +123,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-text-input-1"
                   aria-labelledby="tab-text-input-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -169,6 +190,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -285,8 +327,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-prefix-suffix-1"
                   aria-labelledby="tab-prefix-suffix-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -325,7 +367,7 @@ direction: ltr
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
@@ -349,6 +391,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -418,7 +481,7 @@ direction: ltr
                     <span class="nds-label">Phone</span>
                   </label>
                 </div>
-                <div class="nds-form-control">
+                <div class="nds-form-control nds-ltr">
                   <div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
                     <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
                       <span class="nds-label">+966</span>
@@ -471,8 +534,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-phone-country-1"
                   aria-labelledby="tab-phone-country-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -541,7 +604,7 @@ direction: ltr
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
@@ -565,6 +628,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -661,8 +745,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-number-input-1"
                   aria-labelledby="tab-number-input-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -701,7 +785,7 @@ direction: ltr
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
@@ -725,6 +809,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -791,8 +896,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-search-input-1"
                   aria-labelledby="tab-search-input-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -838,7 +943,7 @@ direction: ltr
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
@@ -862,6 +967,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -924,8 +1050,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-email-input-1"
                   aria-labelledby="tab-email-input-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -968,7 +1094,7 @@ direction: ltr
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
@@ -992,6 +1118,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -1058,8 +1205,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-password-input-1"
                   aria-labelledby="tab-password-input-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -1106,7 +1253,7 @@ direction: ltr
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
@@ -1130,6 +1277,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -1187,8 +1355,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-textarea-1"
                   aria-labelledby="tab-textarea-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -1225,7 +1393,7 @@ direction: ltr
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-demo-card">
+        <div class="nds-demo-card" data-code-rebuild>
           <div class="demo-header">
             <div class="demo-action">
               <div class="nds-dropmenu demo-toggle-menu">
@@ -1249,6 +1417,27 @@ direction: ltr
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
                       <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
                     </button>
                   </div>
                 </div>
@@ -1325,8 +1514,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-select-1"
                   aria-labelledby="tab-select-1">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -1439,8 +1628,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-status-api-html"
                   aria-labelledby="tab-status-api-html">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -1467,8 +1656,8 @@ direction: ltr
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-status-api-js"
                   aria-labelledby="tab-status-api-js" hidden>
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -1564,8 +1753,8 @@ var status = NDS.Forms.getStatus(field);
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-html"
                   aria-labelledby="tab-permanent-html">
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -1600,8 +1789,8 @@ var status = NDS.Forms.getStatus(field);
                 <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-permanent-js"
                   aria-labelledby="tab-permanent-js" hidden>
                   <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
                   <div class="nds-expandable-content">
@@ -1768,8 +1957,8 @@ NDS.Forms.clearStatus(container);</code>
         <p>The <strong>NDS.Forms</strong> API manages initialization, status feedback, state management, and form validation. For dynamically added form elements, call <code class="nds-inline-code lang-js">NDS.Forms.initializeContainer(element)</code> to initialize new inputs.</p>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">
-                <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
-                  <i class="hgi hgi-stroke hgi-copy-01"></i>
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
                 </button>
               </div>
               <div class="nds-expandable-content">

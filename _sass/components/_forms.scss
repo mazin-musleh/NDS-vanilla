@@ -449,6 +449,33 @@ fieldset {
     }
 }
 
+// Filled-background style variants — opt-in via .nds-form-container modifier.
+// Excluded from .nds-file-upload (its form-control is a Browse-Files button surface).
+// Border uses :where() so its specificity stays at (0,1,0); existing
+// hover/focus/active/status rules keep their own border colors via cascade.
+:where(
+    .nds-form-container.nds-lighter:not(.nds-file-upload),
+    .nds-form-container.nds-darker:not(.nds-file-upload)
+) .nds-form-control {
+    border-color: transparent;
+}
+
+.nds-form-container:not(.nds-file-upload) {
+    &.nds-lighter .nds-form-control {
+        background-color: var(--form-field-background-lighter);
+    }
+
+    &.nds-darker .nds-form-control {
+        background-color: var(--form-field-background-darker);
+    }
+
+    // Without this, the [data-state~="active"] rule above swaps the bg to
+    // --form-field-background-darker the moment the user types into a lighter field.
+    &.nds-lighter[data-state~="active"]:not([data-state~="readonly"]) .nds-form-control {
+        background-color: var(--form-field-background-lighter);
+    }
+}
+
 .nds-form-container[data-state~="listening"] .nds-voice-input>i {
     animation: colorCycle 1s linear infinite alternate;
 }
