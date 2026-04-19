@@ -247,7 +247,8 @@
         set: ndsSetCookie,
         get: ndsGetCookie,
         delete: ndsDeleteCookie,
-        getConsent: ndsGetCookieConsent
+        getConsent: ndsGetCookieConsent,
+        show: ndsShowPopup
     };
 
     // Note: Full initialization now handled by nds-loader.js unified system

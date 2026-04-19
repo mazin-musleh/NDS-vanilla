@@ -3,24 +3,38 @@
    ======================================== */
 
 @use '../mixins' as *;
-/* ========================================
-   COOKIE POPUP BASE STYLES
-   ======================================== */
 
-.nds-cookie-popup:not([hidden]) {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--background-card);
-    border-radius: 12px 12px 0 0;
-    box-shadow: var(--shadow-md-top);
-    width: 100%;
-    padding: 24px;
-    z-index: 1000;
-    display: none;
-    display: block;
-    animation: slideUp var(--nds-transition);
+.nds-cookie-popup {
+    --cookie-popup-icon-size: 40px;
+    --cookie-popup-max-width: 480px;
+
+    &:not([hidden]) {
+        position: fixed;
+        bottom: 0;
+        inset-inline: 0;
+        background-color: var(--background-card);
+        border-radius: 12px 12px 0 0;
+        box-shadow: var(--shadow-md-top);
+        width: 100%;
+        padding: var(--spacing-3xl);
+        z-index: 1000;
+        display: block;
+        animation: slideUp var(--nds-transition);
+
+        @include reduced-motion {
+            animation: none;
+        }
+    }
+
+    &.nds-center {
+        @include tablet('min') {
+            margin-inline: auto;
+            bottom: var(--spacing-3xl);
+            width: calc(100% - var(--spacing-4xl));
+            max-width: var(--cookie-popup-max-width);
+            border-radius: 12px;
+        }
+    }
 }
 
 
@@ -46,8 +60,8 @@
 }
 
 .nds-cookie-popup-icon {
-    width: 40px;
-    height: 40px;
+    width: var(--cookie-popup-icon-size);
+    height: var(--cookie-popup-icon-size);
     color: var(--text-secondary-paragraph);
 }
 
@@ -60,7 +74,7 @@
     color: var(--text-secondary-paragraph);
     cursor: pointer;
     padding: var(--spacing-sm);
-    transition: color 0.2s;
+    transition: color var(--nds-transition);
 }
 
 .nds-cookie-popup-close:hover {
@@ -72,13 +86,13 @@
    ======================================== */
 
 .nds-cookie-popup-content {
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-2xl);
 }
 
 .nds-cookie-popup-links {
     display: flex;
     gap: var(--spacing-lg);
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-2xl);
 }
 
 .nds-cookie-popup-links a {
@@ -94,5 +108,5 @@
 .nds-cookie-popup-actions {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--spacing-lg);
 }

@@ -2233,8 +2233,24 @@
                 else if (action === 'alert-create') {
                     createAlertFromDemo(actionBtn, false);
                 }
+                else if (action === 'cookie-show') {
+                    showCookiePopupFromDemo(actionBtn);
+                }
             }
         });
+    }
+
+    // Show the site-wide cookie popup, honoring the demo card's layout toggle
+    function showCookiePopupFromDemo(button) {
+        if (!window.NDS || !window.NDS.Cookies || typeof window.NDS.Cookies.show !== 'function') return;
+
+        const demoCard = button.closest('.nds-demo-card');
+        const popup = document.getElementById('ndsCookiesPopup');
+        if (popup && demoCard) {
+            const centerToggle = demoCard.querySelector('[data-toggler*="cookieLayout"][data-state~="selected"]');
+            popup.classList.toggle('nds-center', !!centerToggle);
+        }
+        window.NDS.Cookies.show();
     }
 
     // Reset progress duration animation

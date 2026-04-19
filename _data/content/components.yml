@@ -393,6 +393,7 @@
   icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
   category: "Plugins"
   tags: ["JS", "CSS"]
+  url: "/components/cookies.html"
 
 - title: "Image Popup Viewer"
   description: "Fullscreen image preview with zoom and navigation"
