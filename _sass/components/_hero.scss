@@ -65,7 +65,7 @@
     &.nds-sub {
         --_brand-light: var(--background-sub-hero);
         --_gradient-angle: 90deg;
-        --section-padding-block: var(--spacing-2xl);
+        --section-padding-block: var(--spacing-5xl);
         --section-title-FS: var(--nds-display-clamp-md-FS);
         --section-title-LH: var(--nds-display-clamp-md-LH);
         --section-title-MB: var(--nds-display-clamp-md-MB);
@@ -80,6 +80,9 @@
         min-height: 100px;
         box-shadow: var(--shadow-inset, inset 0px -2px 4px rgba(0, 0, 0, 0.05)) !important;
         border-radius: 0 !important;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-3xl);
 
         @include ltr {
             --_gradient-angle: 270deg;
