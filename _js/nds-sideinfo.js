@@ -21,6 +21,9 @@
             this.sideInfoParent = element.parentElement;
             this.sectionHead = document.querySelector('.nds-hero-section');
             this.isInitialized = false;
+            // Remember whether the author opted into sticky so we can re-apply
+            // it after a viewport/content change makes it fit again.
+            this.wantsSticky = element.classList.contains('nds-sticky');
 
             if (!this.sectionHead) {
                 console.warn('NDS Side Info: .nds-hero-section .nds-section-head not found');
@@ -38,7 +41,19 @@
         init() {
             this.setupVisibilityObserver();
             this.setupResize();
+            this.setupContentResize();
+            this.updateStickyState();
             this.sideInfo.setAttribute('data-sideinfo-initialized', 'true');
+        }
+
+        // Sticky breaks down when the side info is taller than the viewport
+        // (the user can never scroll past it). Drop the modifier in that case
+        // and let normal flow handle it; restore when it fits again.
+        updateStickyState() {
+            if (!this.wantsSticky) return;
+            const top = parseFloat(getComputedStyle(this.sideInfo).top) || 0;
+            const fits = this.sideInfo.offsetHeight + top <= window.innerHeight;
+            this.sideInfo.classList.toggle('nds-sticky', fits);
         }
 
         setupVisibilityObserver() {
@@ -75,6 +90,14 @@
         setupResize() {
             this._offResize = NDS.onResize(() => {
                 this.updatePosition();
+                this.updateStickyState();
+            });
+        }
+
+        setupContentResize() {
+            if (!this.wantsSticky) return;
+            this._offContentResize = NDS.onElementResize(this.sideInfo, () => {
+                this.updateStickyState();
             });
         }
 
@@ -85,9 +108,11 @@
         destroy() {
             this.sideInfo.removeAttribute('data-sideinfo-initialized');
             this.sideInfo.style.removeProperty('--nds-sideinfo-top');
+            if (this.wantsSticky) this.sideInfo.classList.add('nds-sticky');
 
             if (this._offVisibility) this._offVisibility();
             if (this._offResize) this._offResize();
+            if (this._offContentResize) this._offContentResize();
         }
     }
 

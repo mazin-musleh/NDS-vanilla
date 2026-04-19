@@ -119,6 +119,23 @@
             padding-inline: var(--spacing-xl);
         }
 
+        &.nds-sticky {
+            position: sticky;
+
+            margin-bottom: 0;
+
+            @include tablet(max) {
+                position: static;
+                top: unset;
+            }
+        }
+
+        &.nds-top {
+            @include tablet(max) {
+                order: -1;
+            }
+        }
+
         .nds-definition-list {
             --dl-icon-size: 24px;
             --dl-icon-gap: var(--spacing-md);

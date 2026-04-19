@@ -102,6 +102,7 @@
         &.nds-flat {
             background: var(--background-default) !important;
             box-shadow: unset !important;
+            --section-padding-block-end: 0;
 
             .nds-section-description {
                 color: var(--text-primary-paragraph);
