@@ -114,21 +114,6 @@
         }
     }
 
-    // ── Share page ──
-
-    #nds-sharePage {
-        display: block;
-        min-width: 40px;
-
-        .nds-dropmenu-menu .nds-label {
-            white-space: nowrap;
-        }
-
-        .nds-dropmenu-menu [data-status="success"] i::before {
-            content: "㶦";
-        }
-    }
-
     // ── Hero Drop Menus ──
     .nds-dropmenu-menu {
         z-index: 901;

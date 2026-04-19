@@ -319,6 +319,13 @@
   tags: ["JS"]
   url: "/utilities/numbers.html"
 
+- title: "Share"
+  description: "Social share dropmenu for X, LinkedIn, WhatsApp, and copy link"
+  icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
+  category: "Utilities"
+  tags: ["JS"]
+  url: "/utilities/share.html"
+
 # UI Shell
 - title: "Top Bar"
   description: "Government branding bar with date, weather, and dark mode toggle"
@@ -394,8 +401,3 @@
   tags: ["JS", "CSS"]
   url: "/components/ipv.html"
 
-- title: "Share"
-  description: "Native platform share and copy-to-clipboard"
-  icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
-  category: "Plugins"
-  tags: ["JS"]

@@ -1,0 +1,19 @@
+/* ========================================
+   SHARE UTILITY
+   Styling for any `.nds-share` dropmenu driven by NDS.Share
+   ======================================== */
+
+@use '../mixins' as *;
+
+.nds-share {
+    display: block;
+    min-width: 40px;
+
+    .nds-dropmenu-menu .nds-label {
+        white-space: nowrap;
+    }
+
+    .nds-dropmenu-menu [data-status="success"] i::before {
+        content: "㶦";
+    }
+}

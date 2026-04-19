@@ -36,13 +36,13 @@ Resolution: page front matter → data file → defaults
 {%- comment %} ── Capture share dropmenu HTML ── {%- endcomment -%}
 {%- unless share_placement == "hidden" -%}
 {%- capture share_html %}
-            <div id="nds-sharePage" class="nds-dropmenu">
-                <button id="nds-sharePageBtn" class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
+            <div class="nds-share nds-dropmenu">
+                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
                     aria-label="Share Page">
                     <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                     <span class="nds-label">Share Page</span>
                 </button>
-                <div id="nds-sharePage-dropdown" class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu" hidden>
                     <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
                         <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
                         <span class="nds-label">X</span>

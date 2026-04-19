@@ -1,133 +1,78 @@
-// Share Page Functionality
-// Uses nds-dropmenu for dropdown behavior
-(() => {
+/**
+ * NDS Share — standalone share-page utility
+ *
+ * Binds to any `.nds-share` wrapper containing a `.nds-dropmenu` trigger and
+ * four item buttons (`.nds-share-x`, `.nds-share-linkedin`,
+ * `.nds-share-whatsapp`, `.nds-share-copy`). Author writes the full dropmenu
+ * markup; this module only wires click handlers.
+ *
+ * Per-instance overrides on the `.nds-share` wrapper:
+ *   - data-share-url="https://…"   defaults to window.location.href
+ *   - data-share-title="…"         defaults to document.title
+ *
+ * Public API:
+ *   NDS.Share.init()   Delegate click on '.nds-share'. Called by the loader.
+ *                      Repeat-safe via AbortController.
+ */
+(function () {
     'use strict';
+    if (typeof window === 'undefined') return;
+    window.NDS = window.NDS || {};
 
-    class SharePageDropdown {
-        constructor() {
-            this.container = document.getElementById('nds-sharePage');
-            this.dropdown = document.getElementById('nds-sharePage-dropdown');
+    const POPUP_FEATURES = 'width=600,height=400';
 
-            if (!this.container || !this.dropdown) {
-                console.warn('NDS Share: Required elements not found');
-                return;
-            }
-
-            this._ac = new AbortController();
-            this.init();
-        }
-
-        init() {
-            // nds-dropmenu auto-initializes via its own init system
-            // No manual initialization needed here
-
-            // Menu item click events for share functionality
-            const menuItems = this.dropdown.querySelectorAll('.nds-dropmenu-item');
-            menuItems.forEach((item) => {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    this.handleShare(item);
-                }, { signal: this._ac.signal });
-            });
-        }
-
-        destroy() {
-            if (this._ac) this._ac.abort();
-        }
-
-        handleShare(clickedItem) {
-            if (!clickedItem) return;
-
-            const url = window.location.href;
-            const title = document.title;
-
-            // Determine share type by class
-            if (clickedItem.classList.contains('nds-share-x')) {
-                this.shareOnX(url, title);
-            } else if (clickedItem.classList.contains('nds-share-linkedin')) {
-                this.shareOnLinkedIn(url);
-            } else if (clickedItem.classList.contains('nds-share-whatsapp')) {
-                this.shareOnWhatsApp(url, title);
-            } else if (clickedItem.classList.contains('nds-share-copy')) {
-                this.copyToClipboard(url);
-            }
-        }
-
-        shareOnX(url, title) {
-            const shareUrl = `https://x.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-        }
-
-        shareOnLinkedIn(url) {
-            const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-        }
-
-        shareOnWhatsApp(url, title) {
-            const shareUrl = `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`;
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-        }
-
-        async copyToClipboard(text) {
-            const copyLinkItem = this.dropdown.querySelector('.nds-share-copy');
-            if (!copyLinkItem) return;
-
-            const labelElement = copyLinkItem.querySelector('.nds-label');
-            const originalText = labelElement.textContent;
-            const copiedText = copyLinkItem.dataset.copiedText || 'Link Copied!';
-
-            const copied = NDS.Copy
-                ? await NDS.Copy.writeText(text)
-                : false;
-
-            if (copied) {
-                this.showCopiedState(copyLinkItem, labelElement, copiedText, originalText);
-            } else {
-                console.warn('NDS Share: Could not copy to clipboard');
-            }
-        }
-
-        showCopiedState(item, label, copiedText, originalText) {
-            NDS.Status.set(item, 'success');
-            label.textContent = copiedText;
-
-            // Restore original state and close dropdown after 2000ms
-            setTimeout(() => {
-                NDS.Status.clear(item);
-                label.textContent = originalText;
-
-                // Close the dropdown using nds-dropmenu API
-                this.closeDropdown();
-            }, 2000);
-        }
-
-        closeDropdown() {
-            // Access the nds-dropmenu instance and close it
-            if (this.container && this.container.ndsDropmenu) {
-                this.container.ndsDropmenu.close();
-            }
-        }
-
+    function openPopup(url) {
+        window.open(url, '_blank', POPUP_FEATURES);
     }
 
-    function initializeShareDropdown() {
-        // Check if required elements exist before initializing
-        const shareContainer = document.getElementById('nds-sharePage');
-        const shareDropdown = document.getElementById('nds-sharePage-dropdown');
-
-        if (shareContainer && shareDropdown) {
-            new SharePageDropdown();
-        }
+    function shareOnX(url, title) {
+        openPopup(`https://x.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`);
     }
 
-    // CRITICAL: Expose global API immediately (called by unified init system)
-    if (typeof window !== 'undefined') {
-        NDS.Share = {
-            SharePageDropdown,
-            init: initializeShareDropdown
-        };
+    function shareOnLinkedIn(url) {
+        openPopup(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`);
     }
 
-    // Note: Initialization now handled by nds-loader.js unified system
+    function shareOnWhatsApp(url, title) {
+        openPopup(`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`);
+    }
 
+    async function copyLink(url, button) {
+        if (!NDS.Copy) return;
+        const ok = await NDS.Copy.writeText(url);
+        if (!ok || !button) return;
+        const wrapper = button.closest('.nds-share, .nds-dropmenu');
+        NDS.Copy.flash(button, {
+            onRestore: () => {
+                if (wrapper && wrapper.ndsDropmenu) wrapper.ndsDropmenu.close();
+            }
+        });
+    }
+
+    function handleClick(button) {
+        const wrapper = button.closest('.nds-share');
+        if (!wrapper) return;
+        const url = wrapper.getAttribute('data-share-url') || window.location.href;
+        const title = wrapper.getAttribute('data-share-title') || document.title;
+
+        if (button.classList.contains('nds-share-x')) shareOnX(url, title);
+        else if (button.classList.contains('nds-share-linkedin')) shareOnLinkedIn(url);
+        else if (button.classList.contains('nds-share-whatsapp')) shareOnWhatsApp(url, title);
+        else if (button.classList.contains('nds-share-copy')) copyLink(url, button);
+    }
+
+    let _ac = null;
+    function init() {
+        if (_ac) _ac.abort();
+        _ac = new AbortController();
+        document.addEventListener('click', (e) => {
+            const wrapper = e.target.closest('.nds-share');
+            if (!wrapper) return;
+            const button = e.target.closest('.nds-dropmenu-item');
+            if (!button || !wrapper.contains(button)) return;
+            handleClick(button);
+        }, { signal: _ac.signal });
+    }
+
+    NDS.Share = { init };
 })();
