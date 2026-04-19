@@ -1,24 +1,23 @@
 /* ========================================
    COOKIE POPUP COMPONENT
+   Composes on .nds-card for background, padding, typography, and layout.
+   Only popup-specific overlay behavior lives here.
    ======================================== */
 
 @use '../mixins' as *;
 
-.nds-cookie-popup {
-    --cookie-popup-icon-size: 40px;
-    --cookie-popup-max-width: 480px;
+.nds-cookie-popup.nds-card {
+    --card-width: 100%;
+    --card-padding: var(--spacing-3xl);
+    --card-gap: var(--spacing-lg);
+    --card-radius: var(--components-card-radius) var(--components-card-radius) 0 0;
 
     &:not([hidden]) {
         position: fixed;
         bottom: 0;
         inset-inline: 0;
-        background-color: var(--background-card);
-        border-radius: 12px 12px 0 0;
         box-shadow: var(--shadow-md-top);
-        width: 100%;
-        padding: var(--spacing-3xl);
         z-index: 1000;
-        display: block;
         animation: slideUp var(--nds-transition);
 
         @include reduced-motion {
@@ -26,87 +25,32 @@
         }
     }
 
-    &.nds-center {
+    &.nds-compact {
         @include tablet('min') {
+            --card-radius: var(--components-card-radius);
+            --card-width: calc(100% - var(--spacing-4xl));
+            --card-width-max: 480px;
             margin-inline: auto;
             bottom: var(--spacing-3xl);
-            width: calc(100% - var(--spacing-4xl));
-            max-width: var(--cookie-popup-max-width);
-            border-radius: 12px;
         }
     }
-}
 
-
-/* ========================================
-   COOKIE POPUP HEADER STYLES
-   ======================================== */
-
-.nds-cookie-popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-lg);
-}
-
-.nds-cookie-popup-title {
-    font-size: var(--nds-text-clamp-xl-FS);
-    line-height: var(--nds-text-clamp-xl-LH);
-    font-weight: 600;
-    color: var(--text-display);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-md);
-}
-
-.nds-cookie-popup-icon {
-    width: var(--cookie-popup-icon-size);
-    height: var(--cookie-popup-icon-size);
-    color: var(--text-secondary-paragraph);
-}
-
-.nds-cookie-popup-close {
-    background: none;
-    border: none;
-    font-size: var(--nds-display-clamp-md-FS);
-    line-height: var(--nds-display-clamp-md-LH);
-    letter-spacing: -0.02rem;
-    color: var(--text-secondary-paragraph);
-    cursor: pointer;
-    padding: var(--spacing-sm);
-    transition: color var(--nds-transition);
-}
-
-.nds-cookie-popup-close:hover {
-    color: var(--text-display);
-}
-
-/* ========================================
-   COOKIE POPUP CONTENT STYLES
-   ======================================== */
-
-.nds-cookie-popup-content {
-    margin-bottom: var(--spacing-2xl);
+    .nds-card-actions {
+        flex-direction: column;
+    }
 }
 
 .nds-cookie-popup-links {
     display: flex;
     gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-2xl);
-}
 
-.nds-cookie-popup-links a {
-    color: var(--text-primary);
-    text-decoration: none;
-}
+    a {
+        color: var(--text-primary);
+        text-decoration: none;
 
-.nds-cookie-popup-links a:hover {
-    color: var(--text-default);
-    text-decoration: underline;
-}
-
-.nds-cookie-popup-actions {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
+        &:hover {
+            color: var(--text-default);
+            text-decoration: underline;
+        }
+    }
 }

@@ -2,7 +2,7 @@
 layout: page
 title: Cookie Consent
 hero_title: Cookie Consent - National Design System
-hero_description: A privacy-compliant consent banner that captures the user's cookie preferences, gates analytics and marketing cookies on decline, and can be re-opened from any trigger for ongoing settings control.
+hero_description: A privacy-compliant consent banner, built on the Cards component, that captures the user's cookie preferences, gates analytics and marketing cookies on decline, and can be re-opened from any trigger for ongoing settings control.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Overview</h2>
-            <p class="nds-section-description">A fixed bottom banner by default, with an optional centered desktop card and a programmatic entry point for re-opening</p>
+            <p class="nds-section-description">A fixed bottom banner by default, with an optional compact desktop card and a programmatic entry point for re-opening</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -22,8 +22,8 @@ direction: ltr
 
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-cookie-popup.demo-preview", "cookieLayout"]'>
-                                <span class="nds-label">Center on desktop</span>
+                                data-toggler='["nds-compact", ".nds-cookie-popup.demo-preview", "cookieLayout"]'>
+                                <span class="nds-label">Compact on desktop</span>
                             </button>
                             <button class="nds-btn nds-primary demo-action-btn" data-action="cookie-show">
                                 <span class="nds-label">Show real popup</span>
@@ -32,23 +32,27 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="min-height: 360px; padding: 0;">
-                            <div class="nds-cookie-popup demo-preview" style="position: relative; inset: auto; animation: none;">
-                                <div class="nds-cookie-popup-header">
-                                    <div class="nds-cookie-popup-title">
-                                        <i class="nds-icon nds-cookie-popup-icon nds-hgi-cookie" aria-hidden="true"></i>
-                                        <span>Cookies</span>
+                            <div class="nds-cookie-popup nds-card demo-preview" style="position: relative; inset: auto; animation: none;">
+                                <div class="nds-card-header">
+                                    <span class="nds-featured-icon nds-circle">
+                                        <i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i>
+                                    </span>
+                                    <button class="nds-close nds-btn nds-subtle" aria-label="Close">
+                                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="nds-card-content">
+                                    <div class="nds-card-text">
+                                        <h3 class="nds-card-title">Cookies</h3>
+                                        <p class="nds-card-description">This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</p>
                                     </div>
-                                    <button class="nds-cookie-popup-close" aria-label="Close">&times;</button>
+                                    <div class="nds-cookie-popup-links">
+                                        <a href="/terms-and-conditions">Terms &amp; Conditions</a>
+                                        <span>|</span>
+                                        <a href="/privacy-policy">Privacy Policy</a>
+                                    </div>
                                 </div>
-                                <div class="nds-cookie-popup-content">
-                                    <span>This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</span>
-                                </div>
-                                <div class="nds-cookie-popup-links">
-                                    <a href="/terms-and-conditions">Terms &amp; Conditions</a>
-                                    <span>|</span>
-                                    <a href="/privacy-policy">Privacy Policy</a>
-                                </div>
-                                <div class="nds-cookie-popup-actions">
+                                <div class="nds-card-actions">
                                     <button class="nds-btn nds-primary nds-full" data-accept-title="Accepted" data-accept-message="Cookies have been accepted">
                                         <span class="nds-label">Accept</span>
                                     </button>
@@ -79,23 +83,27 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div class="nds-cookie-popup" id="ndsCookiesPopup" hidden&gt;
-  &lt;div class="nds-cookie-popup-header"&gt;
-    &lt;div class="nds-cookie-popup-title"&gt;
-      &lt;i class="nds-icon nds-cookie-popup-icon nds-hgi-cookie" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;span id="ndsCookiesTitle"&gt;Cookies&lt;/span&gt;
+&lt;div class="nds-cookie-popup nds-card" id="ndsCookiesPopup" hidden&gt;
+  &lt;div class="nds-card-header"&gt;
+    &lt;span class="nds-featured-icon nds-circle"&gt;
+      &lt;i class="nds-icon nds-hgi-cookie" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;button id="ndsCookiesCloseBtn" class="nds-close nds-btn nds-subtle" aria-label="Close"&gt;
+      &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-card-content"&gt;
+    &lt;div class="nds-card-text"&gt;
+      &lt;h3 class="nds-card-title" id="ndsCookiesTitle"&gt;Cookies&lt;/h3&gt;
+      &lt;p class="nds-card-description" id="ndsCookiesContent"&gt;This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.&lt;/p&gt;
     &lt;/div&gt;
-    &lt;button id="ndsCookiesCloseBtn" class="nds-cookie-popup-close"&gt;&amp;times;&lt;/button&gt;
+    &lt;div class="nds-cookie-popup-links"&gt;
+      &lt;a href="/terms-and-conditions" id="ndsCookiesTermsLink"&gt;Terms &amp;amp; Conditions&lt;/a&gt;
+      &lt;span&gt;|&lt;/span&gt;
+      &lt;a href="/privacy-policy" id="ndsCookiesPrivacyLink"&gt;Privacy Policy&lt;/a&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-cookie-popup-content"&gt;
-    &lt;span id="ndsCookiesContent"&gt;This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-cookie-popup-links"&gt;
-    &lt;a href="/terms-and-conditions" id="ndsCookiesTermsLink"&gt;Terms &amp;amp; Conditions&lt;/a&gt;
-    &lt;span&gt;|&lt;/span&gt;
-    &lt;a href="/privacy-policy" id="ndsCookiesPrivacyLink"&gt;Privacy Policy&lt;/a&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-cookie-popup-actions"&gt;
+  &lt;div class="nds-card-actions"&gt;
     &lt;button class="nds-btn nds-primary nds-full" id="ndsCookiesAcceptBtn"
       data-accept-title="Accepted" data-accept-message="Cookies have been accepted"&gt;
       &lt;span class="nds-label"&gt;Accept&lt;/span&gt;
@@ -157,9 +165,9 @@ direction: ltr
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
-                        <span class="nds-label">Centered Layout</span>
+                        <span class="nds-label">Compact Layout</span>
                     </span>
-                    <p class="nds-item-desc">Adding nds-center re-centers the banner as a capped-width card on tablet and up, staying full-width on mobile.</p>
+                    <p class="nds-item-desc">Adding nds-compact re-centers the banner as a capped-width card on tablet and up, staying full-width on mobile.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -186,7 +194,7 @@ direction: ltr
                 <ul>
                     <li>Let the component auto-open on the first visit. A 2000 ms delay keeps the banner from fighting with first-paint content, and the saved consent means return visitors never see it again unnecessarily</li>
                     <li>Add a persistent "Cookie Settings" link in the footer that calls <code class="nds-inline-code lang-js">NDS.Cookies.show()</code>. Consent is a reversible decision, and users expect to find the control later without digging</li>
-                    <li>Choose <code class="nds-inline-code lang-html">nds-center</code> for desktop-first products where the bottom banner would cover a fixed footer, chatbot, or data table. The centered card sits above content as a card rather than a bar</li>
+                    <li>Choose <code class="nds-inline-code lang-html">nds-compact</code> for desktop-first products where the bottom banner would cover a fixed footer, chatbot, or data table. The compact card sits above content as a floating dialog rather than a bar</li>
                     <li>Keep the body text to one or two sentences. Lead with the "why", then link to the Terms and Privacy pages for the full policy. Users skim, not read, consent banners</li>
                     <li>Always include both <strong>Terms &amp; Conditions</strong> and <strong>Privacy Policy</strong> links. Regulations in most jurisdictions require them to be reachable at the moment of consent, not only after. The bundled include points to <code class="nds-inline-code lang-html">/terms-and-conditions</code> and <code class="nds-inline-code lang-html">/privacy-policy</code>; override <code class="nds-inline-code lang-html">_includes/cookie-popup.html</code> if your site uses different paths</li>
                     <li>Wire <strong>Accept</strong> as the primary button and <strong>Decline</strong> as the secondary. This matches user expectation and keeps keyboard focus order predictable</li>
@@ -203,7 +211,8 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Re-centers the banner as a capped-width card on tablet and larger viewports. Mobile behavior is unchanged (full-width bottom bar)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-card</code></td><td>Required. The popup composes on <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a> for background, padding, radius, and typography. Keep it on the root element</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-compact</code></td><td>Re-centers the banner as a capped-width floating card on tablet and larger viewports. Mobile behavior is unchanged (full-width bottom bar). Do not confuse with card's <code class="nds-inline-code lang-html">nds-center</code>, which centers card content, not the card itself</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -218,17 +227,6 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-decline-title</code></td><td>Set on <code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code> to override the toast title shown after Decline</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-decline-message</code></td><td>Set on <code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code> to override the toast description after Decline</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-ga-tracking-id</code></td><td>Set on any element to register a Google Analytics tracking ID that should be disabled when the user declines. Multiple IDs are supported (one per element)</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-content-block">
-                <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--cookie-popup-icon-size</code></td><td><code class="nds-inline-code lang-html">40px</code></td><td>Width and height of the header cookie glyph</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--cookie-popup-max-width</code></td><td><code class="nds-inline-code lang-html">480px</code></td><td>Maximum width of the centered layout on tablet and above. Mobile stays full-width regardless</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -1,30 +1,32 @@
 <!-- Cookie Popup -->
-<div class="nds-cookie-popup" id="ndsCookiesPopup" hidden>
-    <div class="nds-cookie-popup-header">
-        <div class="nds-cookie-popup-title">
-            <i class="nds-icon nds-cookie-popup-icon nds-hgi-cookie" aria-hidden="true"></i>
-            <span id="ndsCookiesTitle">Cookies</span>
+<div class="nds-cookie-popup nds-card" id="ndsCookiesPopup" hidden>
+    <div class="nds-card-header">
+        <span class="nds-featured-icon nds-circle">
+            <i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i>
+        </span>
+        <button id="ndsCookiesCloseBtn" class="nds-close nds-btn nds-subtle" aria-label="Close">
+            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="nds-card-content">
+        <div class="nds-card-text">
+            <h3 class="nds-card-title" id="ndsCookiesTitle">Cookies</h3>
+            <p class="nds-card-description" id="ndsCookiesContent">This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</p>
         </div>
-        <button id="ndsCookiesCloseBtn" class="nds-cookie-popup-close">&times;</button>
+        <div class="nds-cookie-popup-links">
+            <a href="{{ '/terms-and-conditions' | relative_url }}" id="ndsCookiesTermsLink">Terms &amp; Conditions</a>
+            <span>|</span>
+            <a href="{{ '/privacy-policy' | relative_url }}" id="ndsCookiesPrivacyLink">Privacy Policy</a>
+        </div>
     </div>
 
-    <div class="nds-cookie-popup-content">
-        <span id="ndsCookiesContent">This website uses cookies to ensure ease of use and provide an enhanced browsing
-            experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</span>
-    </div>
-
-    <div class="nds-cookie-popup-links">
-        <a href="{{ '/terms-and-conditions' | relative_url }}" id="ndsCookiesTermsLink">Terms & Conditions</a>
-        <span>|</span>
-        <a href="{{ '/privacy-policy' | relative_url }}" id="ndsCookiesPrivacyLink">Privacy Policy</a>
-    </div>
-
-    <div class="nds-cookie-popup-actions">
+    <div class="nds-card-actions">
         <button class="nds-btn nds-primary nds-full" id="ndsCookiesAcceptBtn" data-accept-title="Accepted"
             data-accept-message="Cookies have been accepted">
             <span class="nds-label">Accept</span>
         </button>
-        <button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn" data-accept-title="Declined"
+        <button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn" data-decline-title="Declined"
             data-decline-message="Optional cookies have been declined">
             <span class="nds-label">Decline</span>
         </button>

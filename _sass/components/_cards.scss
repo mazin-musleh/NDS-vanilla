@@ -18,6 +18,7 @@
   --card-border-active: initial;
   --card-padding: initial;
   --card-gap: initial;
+  --card-radius: initial;
   --card-text: initial;
   --card-title: initial;
   --card-subtitle: initial;
@@ -38,6 +39,7 @@
   --_card-border-active: var(--card-border-active, var(--border-neutral-primary));
   --_card-padding: var(--card-padding, var(--spacing-xl));
   --_card-gap: var(--card-gap, var(--spacing-3xl));
+  --_card-radius: var(--card-radius, var(--components-card-radius));
   --_card-text: var(--card-text, var(--text-display));
   --_card-title: var(--card-title, var(--text-display));
   --_card-subtitle: var(--card-subtitle, var(--text-primary));
@@ -56,7 +58,7 @@
   text-align: start;
   background-color: var(--_card-bg);
   border: 1px solid transparent;
-  border-radius: var(--components-card-radius);
+  border-radius: var(--_card-radius);
   padding: var(--_card-padding);
   min-width: var(--_card-width-min);
   width: var(--_card-width);

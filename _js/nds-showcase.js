@@ -2248,7 +2248,7 @@
         const popup = document.getElementById('ndsCookiesPopup');
         if (popup && demoCard) {
             const centerToggle = demoCard.querySelector('[data-toggler*="cookieLayout"][data-state~="selected"]');
-            popup.classList.toggle('nds-center', !!centerToggle);
+            popup.classList.toggle('nds-compact', !!centerToggle);
         }
         window.NDS.Cookies.show();
     }
