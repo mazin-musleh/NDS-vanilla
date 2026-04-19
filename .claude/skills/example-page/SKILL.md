@@ -97,9 +97,16 @@ Example pages use NDS section hierarchy (`nds-content-section` → `nds-section-
 ### Registration Checklist
 
 1. Add to `_data/sidemenu/sidemenu.yml` under Examples (if it should appear in nav)
-2. Set appropriate breadcrumb (e.g., `["Examples"]` or `["Examples", "/examples"]`)
-3. Build test: `bundle exec jekyll build`
-4. If the page needs YAML content that doesn't exist yet, use `/demo-content` to create it
+2. **Always add to `_data/content/examples.yml`** — every new example page gets an entry in the examples catalog. Required fields:
+   - `title` — human-readable page name
+   - `description` — one-sentence summary of what the page demonstrates
+   - `icon` — verified `hgi hgi-stroke hgi-*` class wrapped in `<i>` (e.g. `'<i class="hgi hgi-stroke hgi-mail-01"></i>'`)
+   - `category` — one of: `Service` (citizen-facing service pages), `Form` (standalone flows), `Content` (editorial), `Dashboard` (data views)
+   - `tags` — array of labels; include `DGA` for official DGA design system pages, plus components/features demonstrated (e.g. `["DGA", "Forms", "Upload", "Grid"]`)
+   - `url` — absolute path ending in `.html` (e.g. `/examples/contact.html`)
+3. Set appropriate breadcrumb (e.g., `["Examples"]` or `["Examples", "/examples"]`)
+4. Build test: `bundle exec jekyll build`
+5. If the page needs YAML content that doesn't exist yet, use `/demo-content` to create it
 
 ---
 
@@ -136,6 +143,7 @@ Check all example pages for health issues. Read-only — report findings without
    - **Placeholder text**: scan for Lorem ipsum, "Sample", "Test", generic "Tag 1/2/3"
    - **Content sourcing**: check if page uses `site.data.content.*` Liquid loops or hardcodes repeated data
    - **Front matter**: has `lang`, `direction`, `breadcrumb`
+   - **Catalog registration**: page has a matching entry in `_data/content/examples.yml` (flag any example that exists on disk but is missing from the catalog)
 
 ### Output
 

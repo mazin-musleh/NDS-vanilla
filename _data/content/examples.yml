@@ -9,6 +9,13 @@
   tags: ["DGA", "Tabs", "Side Info", "Rating"]
   url: "/examples/service.html"
 
+- title: "Contact"
+  description: "Contact page with two-column form, country-code prefix, select, textarea, file upload, and a side info card with emergency contacts."
+  icon: '<i class="hgi hgi-stroke hgi-mail-01"></i>'
+  category: "Service"
+  tags: ["DGA", "Forms", "Upload", "Side Info", "Grid"]
+  url: "/examples/contact.html"
+
 - title: "Services List"
   description: "Filterable government services catalog with search and category filters."
   icon: '<i class="hgi hgi-stroke hgi-grid-view"></i>'
