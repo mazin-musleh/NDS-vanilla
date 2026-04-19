@@ -113,6 +113,8 @@
         width: 100%;
 
         @include mobile {
+            gap: var(--spacing-md);
+
             :is(.nds-search-btn, .nds-filter-btn) > .nds-label {
                 display: none;
             }

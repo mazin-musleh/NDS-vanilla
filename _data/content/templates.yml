@@ -4,7 +4,7 @@
 
 - title: "Form Template"
   description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
-  icon: '<i class="hgi hgi-stroke hgi-form"></i>'
+  icon: '<i class="hgi hgi-stroke hgi-file-edit"></i>'
   category: "Form"
   tags: ["DGA", "Forms", "Stepper", "Side Info", "Grid"]
   url: "/templates/form-template.html"
@@ -36,6 +36,13 @@
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
   url: "/templates/about-entity-template.html"
+
+- title: "FAQ Template"
+  description: "Frequently asked questions layout with a flat sub-hero, large accordion list, and a feedback call-to-action card for routing unresolved inquiries to support."
+  icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
+  category: "Content"
+  tags: ["DGA", "Accordion", "Cards"]
+  url: "/templates/faq-template.html"
 
 - title: "Search Template"
   description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
