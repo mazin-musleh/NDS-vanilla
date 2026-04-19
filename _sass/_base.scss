@@ -19,11 +19,11 @@
    ======================================== */
 
 :root {
-    scrollbar-color: var(--colors-neutral-400) transparent;
+    scrollbar-color: var(--colors-neutral-600) var(--background-default);
+}
 
-    @include dark {
-        scrollbar-color: var(--colors-neutral-800) transparent;
-    }
+:root[data-theme="dark"] {
+    scrollbar-color: var(--colors-neutral-400) var(--background-default);
 }
 
 /* ========================================
