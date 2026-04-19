@@ -1,6 +1,6 @@
 @use '../mixins' as *;
 
-.nds-form {
+.nds-form:not([hidden]) {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xl);
@@ -34,9 +34,9 @@
 
     // Required field indicator (using data-required attribute or legacy class)
     &:is([data-required], .nds-required) {
-        .nds-form-header .nds-label::after,
-        >.nds-label::after {
-            content: " *";
+        .nds-form-header .nds-label::before,
+        >.nds-label::before {
+            content: "* ";
             color: var(--controls-control-text-error);
         }
     }
@@ -194,9 +194,9 @@ fieldset {
 
     // Auto-add required indicator when group has data-required, data-min-checked, or nds-required class
     &:is([data-required], [data-min-checked], .nds-required) {
-        >legend>.nds-label::after,
-        >.nds-label::after {
-            content: " *";
+        >legend>.nds-label::before,
+        >.nds-label::before {
+            content: "* ";
             color: var(--controls-control-text-error);
         }
     }
@@ -508,7 +508,7 @@ fieldset {
     }
 
     &:is([data-required], [data-min-checked], .nds-required) {
-        > .nds-label::after { content: " *"; color: var(--controls-control-text-error); }
+        > .nds-label::before { content: "* "; color: var(--controls-control-text-error); }
     }
 
     &[data-state~="disabled"] {

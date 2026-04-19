@@ -815,6 +815,25 @@
                     }
                 }
 
+                // .nds-phone — local-format phone input paired with a separate
+                // country-code prefix:
+                //   1. allow only digits — strips spaces/dashes/+ from paste
+                //   2. strip leading zero(s) — the local-format leading 0 is
+                //      redundant when the country code is already prepended
+                // The browser enforces any maxlength on the input itself.
+                if (input.classList.contains('nds-phone')) {
+                    var caret = input.selectionStart;
+                    var original = input.value;
+                    var stripped = original.replace(/\D/g, '').replace(/^0+/, '');
+                    if (stripped !== original) {
+                        var diff = original.length - stripped.length;
+                        input.value = stripped;
+                        try {
+                            input.setSelectionRange(Math.max(0, caret - diff), Math.max(0, caret - diff));
+                        } catch (_) {}
+                    }
+                }
+
                 FormState.update(input, formControl, true);
 
                 var formContainer = formControl.closest('.nds-form-container');

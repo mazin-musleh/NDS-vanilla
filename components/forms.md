@@ -363,7 +363,7 @@ direction: ltr
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Phone Number with Country Code</h2>
-      <p class="nds-section-description">Compound input using a prefix-slot dropmenu as a value picker. The dropmenu's <code class="nds-inline-code lang-html">data-select-name</code> opt-in captures the selected country code into a hidden input that ships with the form, and updates the trigger label to a compact display variant.</p>
+      <p class="nds-section-description">Compound input using a prefix-slot dropmenu as a value picker. The dropmenu's <code class="nds-inline-code lang-html">data-select-name</code> opt-in captures the selected country code into a hidden input that ships with the form, and updates the trigger label to a compact display variant. Add <code class="nds-inline-code lang-html">nds-phone</code> to the input itself to strip non-digits and any leading zero as the user types, since the country code is already prepended via the prefix slot.</p>
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
@@ -509,7 +509,7 @@ direction: ltr
                       </div>
                     </div>
                   </div>
-                  <input type="tel" id="demo-phoneCountryCode" name="phone" class="nds-input" placeholder="00 000 0000" autocomplete="tel-national" inputmode="tel" required>
+                  <input type="tel" id="demo-phoneCountryCode" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric" required>
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
@@ -574,7 +574,7 @@ direction: ltr
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    &lt;input type="tel" id="phone-country-1" name="phone" class="nds-input" placeholder="00 000 0000" autocomplete="tel-national" inputmode="tel" required&gt;
+    &lt;input type="tel" id="phone-country-1" name="phone" class="nds-input nds-phone" placeholder="00 000 0000" autocomplete="tel-national" inputmode="numeric" required&gt;
     &lt;div class="nds-form-action"&gt;
       &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
         &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
@@ -1920,6 +1920,7 @@ NDS.Forms.clearStatus(container);</code>
           <thead><tr><th>Class</th><th>Description</th></tr></thead>
           <tbody>
             <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size with reduced height (32px) and smaller font</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-phone</code></td><td>Set on a tel input that sits next to a country-code prefix slot. On every keystroke, strips non-digit characters and any leading zero so the value submitted is the local number ready to concatenate with the prefix. Length is still controlled by the input's <code class="nds-inline-code lang-html">maxlength</code>.</td></tr>
           </tbody>
         </table>
       </div>
