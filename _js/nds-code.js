@@ -466,61 +466,14 @@
     // ==============================================
     // COPY FUNCTIONALITY
     // ==============================================
-
-    let _copyButtonsAC = null;
+    // Copy buttons inside `.nds-code` are handled by the shared NDS.Copy
+    // delegate — it reads the nested <code> text and flashes data-status on
+    // success. Kept as a thin wrapper so NDS.Code.init can still bootstrap
+    // copy behavior when the code component initializes in isolation.
     function initializeCopyButtons() {
-        if (_copyButtonsAC) _copyButtonsAC.abort();
-        _copyButtonsAC = new AbortController();
-        document.addEventListener('click', function(e) {
-            const copyBtn = e.target.closest('.copy-btn');
-            if (copyBtn) {
-                handleCopyClick(copyBtn);
-            }
-        }, { signal: _copyButtonsAC.signal });
-    }
-
-    function handleCopyClick(button) {
-        const codeBlock = button.closest('.nds-code').querySelector('code');
-        if (!codeBlock) return;
-
-        // Get plain text content
-        const textToCopy = codeBlock.textContent;
-
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(textToCopy).then(function() {
-                showCopyFeedback(button);
-            }).catch(function() {
-                fallbackCopy(textToCopy, button);
-            });
-        } else {
-            fallbackCopy(textToCopy, button);
+        if (NDS.Copy && typeof NDS.Copy.bind === 'function') {
+            NDS.Copy.bind('.copy-btn');
         }
-    }
-
-    function fallbackCopy(text, button) {
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.select();
-
-        try {
-            document.execCommand('copy');
-            showCopyFeedback(button);
-        } catch (err) {
-            // Silent fail
-        }
-
-        document.body.removeChild(textArea);
-    }
-
-    function showCopyFeedback(button) {
-        NDS.Status.set(button, 'success');
-
-        setTimeout(function() {
-            NDS.Status.clear(button);
-        }, 2000);
     }
 
     // ==============================================

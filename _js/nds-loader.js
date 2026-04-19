@@ -97,6 +97,11 @@
             init: () => NDS.Code?.init?.(),
         },
         {
+            name: 'copy',
+            selector: '.copy-btn',
+            init: () => NDS.Copy?.init?.(),
+        },
+        {
             name: 'showcase',
             selector: '.nds-demo-card, .demo-toggle-btn, .nds-demo-showcase',
             init: () => NDS.Showcase?.init?.(),

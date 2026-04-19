@@ -76,35 +76,9 @@
             const originalText = labelElement.textContent;
             const copiedText = copyLinkItem.dataset.copiedText || 'Link Copied!';
 
-            let copied = false;
-
-            // Try modern Clipboard API (requires secure context: HTTPS or localhost)
-            if (navigator.clipboard && window.isSecureContext) {
-                try {
-                    await navigator.clipboard.writeText(text);
-                    copied = true;
-                } catch (err) {
-                    console.warn('NDS Share: Clipboard API failed, trying fallback', err);
-                }
-            }
-
-            // Fallback via temporary textarea — works on non-secure contexts (network IPs in dev)
-            if (!copied) {
-                try {
-                    const ta = document.createElement('textarea');
-                    ta.value = text;
-                    ta.setAttribute('readonly', '');
-                    ta.style.position = 'fixed';
-                    ta.style.left = '-9999px';
-                    ta.style.top = '0';
-                    document.body.appendChild(ta);
-                    ta.select();
-                    copied = document.execCommand('copy');
-                    document.body.removeChild(ta);
-                } catch (fallbackErr) {
-                    console.warn('NDS Share: Fallback copy failed', fallbackErr);
-                }
-            }
+            const copied = NDS.Copy
+                ? await NDS.Copy.writeText(text)
+                : false;
 
             if (copied) {
                 this.showCopiedState(copyLinkItem, labelElement, copiedText, originalText);
