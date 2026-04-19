@@ -143,7 +143,6 @@
 @include mobile {
 
     .nds-digitalStamp-notices {
-        margin: var(--spacing-xl) auto;
         flex-direction: column;
         gap: var(--spacing-lg);
     }

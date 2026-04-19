@@ -90,7 +90,7 @@
         @include mobile { @include dl-tableView; }
     }
     &.nds-tableView-md {
-        @include tablet('min') { @include dl-tableView; }
+        @include tablet { @include dl-tableView; }
     }
     &.nds-tableView-lg {
         @include desktop('min') { @include dl-tableView; }
@@ -166,7 +166,7 @@
         @include mobile { @include dl-divided-tableView; }
     }
     &.nds-tableView-md {
-        @include tablet('min') { @include dl-divided-tableView; }
+        @include tablet { @include dl-divided-tableView; }
     }
     &.nds-tableView-lg {
         @include desktop('min') { @include dl-divided-tableView; }
