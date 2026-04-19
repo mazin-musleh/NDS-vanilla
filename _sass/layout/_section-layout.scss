@@ -275,8 +275,14 @@
         flex-direction: row;
     }
 
-    // .nds-minimal: hide button labels (icon-only)
-    .nds-section-head > .nds-section-action.nds-minimal > :is(.nds-btn, .nds-dropmenu > .nds-btn) > .nds-label {
+    // .nds-minimal: hide trigger button labels (icon-only).
+    // Applies when placed on the section-action wrapper (covers bare .nds-btn
+    // and buttons wrapped in a .nds-dropmenu, e.g. share) or directly on a button.
+    :is(
+        .nds-section-head > .nds-section-action.nds-minimal > .nds-btn,
+        .nds-section-head > .nds-section-action.nds-minimal > .nds-dropmenu > .nds-btn,
+        .nds-btn.nds-minimal
+    ) > .nds-label {
         display: none;
     }
 }
