@@ -3,31 +3,22 @@
    ======================================== */
 
 @use '../mixins' as *;
+
 /* ========================================
    BREADCRUMB BASE STYLES
    ======================================== */
 
-.nds-breadcrumb-nav {
-    margin-bottom: 10px;
-}
-
 .nds-breadcrumb {
     list-style: none;
-
     display: flex;
-
     padding: 0;
-
     margin: 0;
-
     flex-wrap: wrap;
 }
 
 .nds-breadcrumb>li {
     display: flex;
-
     align-items: center;
-
     color: var(--text-secondary-paragraph);
 
     &:last-child {
@@ -42,17 +33,12 @@
 /* Arrow separator */
 .nds-breadcrumb li:not(:last-child)::after {
     content: "";
-
     display: inline-block;
-
     width: 24px;
-
     height: 1em;
-
     background: var(--icon-separator);
-
-    mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;}
-
+    mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
+}
 
 /* LTR Support - flip arrow direction */
 .nds-breadcrumb>li:not(:last-child)::after {
@@ -63,7 +49,6 @@
 
 .nds-breadcrumb li::after {
     content: '';
-
     min-width: 24px;
 }
 
@@ -73,10 +58,8 @@
 
 .nds-breadcrumb>li>a {
    /*  --link-focused: var(--link-neutral);
-
     --link-visited: var(--link-neutral); */
     text-decoration: none;
-
     line-height: normal;
 }
 
