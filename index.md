@@ -31,182 +31,95 @@ direction: ltr
         <div class="nds-section-body">
             <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The project includes required page layouts as ready-to-use code, along with additional real-world examples.</p>
         </div>
-    </div>
-    <div class="nds-section-body nds-max-width">
-        <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
-            <div class="nds-swiper-wrapper">
-
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-menu-square"></i>
-                                </span>
-                            </div>
+        <div class="nds-form-container nds-search-box" data-filter-target="examples_list">
+            <div class="nds-search-content">
+                <div class="nds-form-control">
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                    <input id="exampleSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
+                        placeholder="Search examples...">
+                    <div class="nds-form-action">
+                        <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <button class="nds-btn nds-primary nds-search-btn" type="button">
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                    <span class="nds-label">Search</span>
+                </button>
+                <div class="nds-dropmenu nds-filter" data-filter-target="examples_list">
+                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                        <i class="hgi hgi-stroke hgi-filter"></i>
+                        <span class="nds-label">Filter</span>
+                    </button>
+                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                        <div class="nds-dropmenu-scroll">
+                            <div data-filter="category" data-filter-legend="Category"
+                                data-filter-type="checkbox" data-no-auto-close></div>
+                            <hr class="nds-divider">
+                            <div data-filter="feature" data-filter-legend="Features"
+                                data-filter-type="checkbox" data-no-auto-close></div>
                         </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title">Service Page</h3>
-                                <p class="nds-card-description">Government digital service with side info, breadcrumbs, and structured content layout.</p>
+                        <div class="nds-dropmenu-footer">
+                            <hr class="nds-divider">
+                            <div class="nds-dropmenu-action nds-grid">
+                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                    data-filter-action="clear" data-no-auto-close>
+                                    <span class="nds-label">Reset</span>
+                                </button>
+                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                    data-filter-action="apply">
+                                    <span class="nds-label">Filter</span>
+                                </button>
                             </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/examples/service.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">View Page</span>
-                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="nds-filter-applied" data-filter-target="examples_list" hidden>
+                <span class="nds-label">Applied Filters:</span>
+                <div class="nds-chips"></div>
+            </div>
+        </div>
+        <div class="nds-section-body">
+            <div id="examples_list" class="nds-paged-content nds-grid" hidden
+                style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-dashboard-browsing"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title">Console</h3>
-                                <p class="nds-card-description">Admin console with charts, transactions, and team directory.</p>
-                            </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/examples/console-demo.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">View Page</span>
-                            </a>
+                {% for ex in site.data.content.examples %}
+                <div class="nds-page-item nds-card nds-stroke">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                {{ ex.icon }}
+                            </span>
                         </div>
                     </div>
-                </div>
-
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-file-validation"></i>
-                                </span>
-                            </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <h3 class="nds-card-title">{{ ex.title }}</h3>
+                            <p class="nds-card-description">{{ ex.description }}</p>
                         </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title">Registration</h3>
-                                <p class="nds-card-description">Multi-step form with validation, OTP, file upload, and Hijri date selection.</p>
-                            </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/examples/registration.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">View Page</span>
-                            </a>
+                        <div class="nds-card-tags">
+                            <span class="nds-tag nds-blue nds-sm">
+                                <span class="nds-label" data-filter="category">{{ ex.category }}</span>
+                            </span>
+                            {% for tag in ex.tags %}
+                            <span class="nds-tag nds-gray nds-sm">
+                                <span class="nds-label" data-filter="feature">{{ tag }}</span>
+                            </span>
+                            {% endfor %}
                         </div>
                     </div>
-                </div>
-
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-school"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title">Academic Profile</h3>
-                                <p class="nds-card-description">Faculty and program pages with tabbed content and structured information.</p>
-                            </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/examples/faculty.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">View Page</span>
-                            </a>
-                        </div>
+                    {% if ex.url %}
+                    <div class="nds-card-actions">
+                        <a href="{{ ex.url | relative_url }}" class="nds-btn nds-primary">
+                            <span class="nds-label">View Page</span>
+                        </a>
                     </div>
+                    {% endif %}
                 </div>
-
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-grid-view"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title">Services List</h3>
-                                <p class="nds-card-description">Filterable government services catalog with search and category filters.</p>
-                            </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/examples/services-list.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">View Page</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-search-01"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title">Search Results</h3>
-                                <p class="nds-card-description">Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list.</p>
-                            </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/examples/search-results.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">View Page</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nds-swiper-slide">
-                    <div class="nds-card nds-stroke">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-xl">
-                                    <i class="hgi hgi-stroke hgi-alert-02"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <h3 class="nds-card-title">404 Page</h3>
-                                <p class="nds-card-description">Custom error page with illustration and back-to-home action.</p>
-                            </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/examples/404.html' | relative_url }}" class="nds-btn nds-primary">
-                                <span class="nds-label">View Page</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
 
             </div>
-            <div class="nds-swiper-navigation">
-                <div class="nds-swiper-buttons">
-                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev"
-                        type="button" aria-label="Previous slide"></button>
-                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next"
-                        type="button" aria-label="Next slide"></button>
-                </div>
-                <div class="nds-swiper-pagination"></div>
-            </div>
+            <nav class="nds-pagination" data-auto-pagination aria-label="Pagination"></nav>
         </div>
     </div>
 </section>
