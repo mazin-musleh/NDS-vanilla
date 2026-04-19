@@ -3,7 +3,7 @@ layout: page
 title: Expandable Content
 hero_title: Expandable Content - National Design System
 hero_description: Height-constrained containers that reveal additional content on demand, with automatic overflow detection and a toggle button that appears only when content exceeds the limit
-breadcrumb: [["Utilities", "/utilities"], "Expandable Content"]
+breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
 lang: en
 direction: ltr
 ---

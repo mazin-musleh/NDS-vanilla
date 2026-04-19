@@ -3,7 +3,7 @@ layout: page
 title: Numbers
 hero_title: Numbers Formatting & Counter - National Design System
 hero_description: Utilities for formatting large numbers with locale separators and animating counter values on scroll
-breadcrumb: [["Utilities", "/utilities"], "Numbers"]
+breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
 lang: en
 direction: ltr
 ---

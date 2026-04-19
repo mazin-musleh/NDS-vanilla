@@ -3,7 +3,7 @@ layout: page
 title: Share
 hero_title: Share - National Design System
 hero_description: A social sharing dropmenu that opens X, LinkedIn, and WhatsApp share dialogs and copies the page link to the clipboard, with per-instance URL and title overrides
-breadcrumb: [["Utilities", "/utilities"], "Share"]
+breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
 lang: en
 direction: ltr
 ---

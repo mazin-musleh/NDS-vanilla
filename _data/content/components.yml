@@ -312,6 +312,13 @@
   tags: ["JS", "CSS"]
   url: "/utilities/expandable-content.html"
 
+- title: "Saudi Cities"
+  description: "Bundled JSON dataset of 132 Saudi Arabian cities with bilingual names, drop-in for autocomplete and address flows"
+  icon: '<i class="hgi hgi-stroke hgi-globe-02"></i>'
+  category: "Utilities"
+  tags: ["Data"]
+  url: "/utilities/saudi-cities.html"
+
 - title: "Numbers"
   description: "Automatic Arabic/English numeral conversion"
   icon: '<i class="hgi hgi-stroke hgi-math"></i>'

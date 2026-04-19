@@ -3,7 +3,7 @@ layout: page
 title: Divider
 hero_title: Divider - National Design System
 hero_description: A utility for separating sections of content with a horizontal or vertical rule, optionally framing a label, and adapting to the parent's writing direction.
-breadcrumb: [["Utilities", "/utilities"]]
+breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
 lang: en
 direction: ltr
 ---
