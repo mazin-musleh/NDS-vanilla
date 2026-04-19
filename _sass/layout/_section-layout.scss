@@ -81,6 +81,10 @@
     margin-block-start: 0;
     max-width: var(--maxwidth-paragraph-max-width, 720px);
 
+    &.nds-full {
+        max-width: none;
+    }
+
     &:not(:last-child) {
         margin-bottom: var(--_section-description-MB);
     }

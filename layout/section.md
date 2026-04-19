@@ -1386,6 +1386,7 @@ section.nds-content-section          (responsive padding for content constrainin
                         <tr><td><code class="nds-inline-code lang-html">nds-brand</code></td><td>Light brand background with inset shadow, adapts for dark mode</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Removes all background, border, and shadow (transparent section)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-max-width</code></td><td>On <code class="nds-inline-code lang-html">nds-section-body</code>: breaks out of content padding to span the full available width</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-full</code></td><td>On <code class="nds-inline-code lang-html">nds-section-subtitle</code> or <code class="nds-inline-code lang-html">nds-section-description</code>: removes the 720px paragraph width cap so the text spans the section width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-minimal</code></td><td>On float action: hides button labels on mobile (icon-only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>On float action: allows action to wrap below the title on mobile instead of floating</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-nowrap</code></td><td>On standard action: keeps action inline at all breakpoints instead of wrapping to full row</td></tr>
