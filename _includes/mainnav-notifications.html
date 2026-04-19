@@ -2,9 +2,10 @@
     <nav class="nds-drawer" style="--drawer-max-height: 40svh; min-width: 40vw; max-width: 100%;" hidden>
         <div class="nds-scroll-more nds-divided">
             <ul class="nds-drawer-list nds-scroll-more-content">
-                {%- assign notifications = site.data.content.notifications | sort: "timestamp" | reverse %}
-                {%- for entry in notifications limit:5 %}
-                <li data-status="{{ entry.type }}">
+                {%- assign nf_source = item.content_source | default: 'notifications' %}
+                {%- assign notifications = site.data.content[nf_source] | sort: "timestamp" | reverse %}
+                {%- for entry in notifications %}
+                <li>
                     {%- if forloop.first %}
                     <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
                         <span class="nds-featured-icon nds-sm">
@@ -14,7 +15,7 @@
                             <span class="nds-drawer-item-head">
                                 <span class="nds-label nds-truncate">{{ entry.title }}</span>
                                 <span class="nds-tag nds-sm" data-status="{{ entry.type }}">
-                                    <span class="nds-label">{{ entry.type }}</span>
+                                    <span class="nds-label">{{ entry.status_label }}</span>
                                 </span>
                             </span>
                             <span class="nds-description">{{ entry.message }}</span>
@@ -47,7 +48,7 @@
                             <span class="nds-drawer-item-head">
                                 <span class="nds-label nds-truncate">{{ entry.title }}</span>
                                 <span class="nds-tag nds-sm" data-status="{{ entry.type }}">
-                                    <span class="nds-label">{{ entry.type }}</span>
+                                    <span class="nds-label">{{ entry.status_label }}</span>
                                 </span>
                             </span>
                             <span class="nds-description">{{ entry.message }}</span>

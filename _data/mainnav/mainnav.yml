@@ -87,7 +87,7 @@ secondary_nav:
     icon: "nds-hgi-notification-02"
     custom_class: "nds-icon-only nds-PAB"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
-    badge: "5"
+    content_source: "notifications"
     template: "mainnav-notifications.html"
     type: "dropdown"
     content_class: "nds-fit"

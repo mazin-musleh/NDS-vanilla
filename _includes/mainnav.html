@@ -73,6 +73,11 @@
                 {%- if nav_data.secondary_nav and nav_data.secondary_nav.size > 0 %}
                 <ul class="nds-nav-secondary">
                     {%- for item in nav_data.secondary_nav %}
+                    {%- if item.content_source %}
+                        {%- assign badge_value = site.data.content[item.content_source] | size %}
+                    {%- else %}
+                        {%- assign badge_value = item.badge %}
+                    {%- endif %}
                     <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-dropdown{%- endif %}{%- if item.custom_class %} {{ item.custom_class }}{%- endif %}" {{ item.attr }}>
                         {%- if item.url %}
                         <a href="{%- if item.url contains '#' and item.url | slice: 0 == '#' %}{{ item.url }}{%- else %}{{ item.url | relative_url }}{%- endif %}"
@@ -85,7 +90,7 @@
                                 <img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="nds-icon">
                                 {%- if item.avatar %}</div>{%- endif %}
                             {%- elsif item.icon %}
-                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{%- endif %}</i>
+                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
                             {%- endif %}
                             <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}"
                                 {%- if item.id=='langToggleBtn' %} id="currentLangLabel"{%- endif %}>{{ item.label }}</span>
@@ -100,7 +105,7 @@
                                 <img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="nds-icon">
                                 {%- if item.avatar %}</div>{%- endif %}
                             {%- elsif item.icon %}
-                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if item.badge %}<span class="nds-badge">{{ item.badge }}</span>{%- endif %}</i>
+                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
                             {%- endif %}
                             <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}"
                                 {%- if item.id=='langToggleBtn' %} id="currentLangLabel"{%- endif %}>{{ item.label }}</span>
