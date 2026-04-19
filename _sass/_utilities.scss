@@ -248,6 +248,16 @@ a[target="_blank"]:not(.nds-btn, :has(>*)) {
 }
 
 // ==============================================
+// DIRECTION UTILITIES
+// ==============================================
+
+// Force LTR direction on a subtree — useful for phone numbers, codes, URLs,
+// and any LTR-only content that must render predictably inside an RTL page.
+.nds-ltr {
+  direction: ltr !important;
+}
+
+// ==============================================
 // VISIBILITY UTILITIES
 // ==============================================
 
