@@ -30,6 +30,13 @@
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
   url: "/templates/help-support-template.html"
 
+- title: "About The Entity Template"
+  description: "Entity landing hub with a flat sub-hero and a responsive grid of topic cards, each with a featured icon, title, and navigation arrow."
+  icon: '<i class="hgi hgi-stroke hgi-information-diamond"></i>'
+  category: "Content"
+  tags: ["DGA", "Grid", "Cards", "Featured Icons"]
+  url: "/templates/about-entity-template.html"
+
 - title: "Search Template"
   description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
   icon: '<i class="hgi hgi-stroke hgi-search-01"></i>'

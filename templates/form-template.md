@@ -10,7 +10,6 @@ breadcrumb:
 lang: en
 direction: ltr
 sidemenu_mode: false
-hide_share_page: true
 ---
 <section id="formTemplate" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">

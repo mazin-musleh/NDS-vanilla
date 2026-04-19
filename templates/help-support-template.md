@@ -9,7 +9,6 @@ breadcrumb:
 lang: en
 direction: ltr
 sidemenu_mode: false
-hide_share_page: true
 ---
 <section id="helpChannels" class="nds-content-section">
     <div class="nds-section-wrapper">
