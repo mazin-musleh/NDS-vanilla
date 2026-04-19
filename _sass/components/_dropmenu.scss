@@ -80,6 +80,12 @@
   // ==============================================
 
   &-item {
+    // Items are block-level flex so they stack vertically regardless of the
+    // parent's `white-space`. Without this, a dropmenu rendered inside an
+    // `.nds-form-action.nds-prefix` (which sets `white-space: nowrap`)
+    // would lay the inline-flex `.nds-btn` items out on a single row and
+    // the scroll's overflow-x would clip everything past the first one.
+    display: flex;
     justify-content: flex-start;
     text-decoration: none;
     width: 100%;

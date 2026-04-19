@@ -115,7 +115,98 @@
         init() {
             this.setupAria();
             this.setupEventListeners();
+            this.setupSelectMode();
             this.dropmenu.setAttribute('data-nds-dropmenu-initialized', 'true');
+        }
+
+        // ==============================================
+        // SELECT MODE (opt-in picker)
+        // ==============================================
+        // Any dropmenu with `data-select-name="..."` becomes a value picker:
+        //   - A hidden <input name="..."> is appended so the selection ships
+        //     with the enclosing form.
+        //   - Clicking an item with `data-value` writes its value to the
+        //     hidden input, updates the trigger label, and marks the item
+        //     selected (clears siblings).
+        //   - Optional attributes on the dropmenu:
+        //       data-select-value="..."  pre-select a value
+        //       data-required             add `required` to the hidden input
+        //   - Optional per-item override:
+        //       data-trigger-label="..."  custom short label for the trigger
+        //                                 (falls back to the item's .nds-label)
+        //   - Events: hidden input fires `change`; dropmenu fires
+        //     `nds:dropmenu:selected` with { item, value } in detail.
+
+        setupSelectMode() {
+            const name = this.dropmenu.getAttribute('data-select-name');
+            if (!name) return;
+            this.isSelect = true;
+
+            let hidden = this.dropmenu.querySelector('input[type="hidden"][data-nds-select-value]');
+            if (!hidden) {
+                hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.setAttribute('data-nds-select-value', '');
+                this.dropmenu.appendChild(hidden);
+            }
+            hidden.name = name;
+            if (this.dropmenu.hasAttribute('data-required')) hidden.required = true;
+            this.selectHidden = hidden;
+
+            // Initial selection: data-select-value beats any pre-rendered
+            // [data-state~="selected"] item, so consumers can drive it from
+            // data without editing the item markup.
+            const initialValue = this.dropmenu.getAttribute('data-select-value');
+            let initialItem = null;
+            if (initialValue != null) {
+                this.menu.querySelectorAll('.nds-dropmenu-item').forEach((el) => {
+                    if (!initialItem && el.getAttribute('data-value') === initialValue) {
+                        initialItem = el;
+                    }
+                });
+            }
+            if (!initialItem) {
+                initialItem = this.menu.querySelector('.nds-dropmenu-item[data-state~="selected"]');
+            }
+            if (initialItem) this.applySelection(initialItem, { silent: true });
+
+            this.menu.addEventListener('click', (e) => {
+                const item = e.target.closest('.nds-dropmenu-item');
+                if (item && item.hasAttribute('data-value')) this.applySelection(item);
+            });
+        }
+
+        applySelection(item, opts = {}) {
+            const value = item.getAttribute('data-value') || '';
+            if (this.selectHidden) this.selectHidden.value = value;
+
+            // Trigger label: prefer per-item data-trigger-label for cases
+            // where the dropdown row is descriptive ("Saudi Arabia (+966)")
+            // but the trigger slot needs something compact ("+966").
+            const triggerAttr = item.getAttribute('data-trigger-label');
+            const itemLabel = item.querySelector('.nds-label');
+            const labelText = triggerAttr != null
+                ? triggerAttr
+                : (itemLabel ? itemLabel.textContent : item.textContent.trim());
+
+            const triggerLabel = this.trigger.querySelector('.nds-label');
+            if (triggerLabel) triggerLabel.textContent = labelText;
+            else this.trigger.textContent = labelText;
+
+            this.menu.querySelectorAll('.nds-dropmenu-item').forEach((o) => {
+                if (o !== item) o.removeAttribute('data-state');
+            });
+            item.setAttribute('data-state', 'selected');
+
+            if (!opts.silent) {
+                if (this.selectHidden) {
+                    this.selectHidden.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                this.dropmenu.dispatchEvent(new CustomEvent('nds:dropmenu:selected', {
+                    detail: { dropmenu: this.dropmenu, item, value },
+                    bubbles: true
+                }));
+            }
         }
 
         setupAria() {
