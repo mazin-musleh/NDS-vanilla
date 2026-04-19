@@ -28,7 +28,6 @@
 # BUNDLE CONFIGURATION:
 #   Edit the @bundles hash to define which files should be combined
 
-require 'execjs'
 require 'json'
 require 'fileutils'
 require 'yaml'
