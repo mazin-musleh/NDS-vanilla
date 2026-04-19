@@ -612,10 +612,10 @@
                             '</div>' +
                         '</div>' +
                         '<div class="nds-calendar-month-switch">' +
-                            '<button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">' +
+                            '<button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">' +
                                 '<i class="nds-icon nds-hgi-arrow-right-02" aria-hidden="true"></i>' +
                             '</button>' +
-                            '<button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">' +
+                            '<button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">' +
                                 '<i class="nds-icon nds-hgi-arrow-left-02" aria-hidden="true"></i>' +
                             '</button>' +
                         '</div>' +

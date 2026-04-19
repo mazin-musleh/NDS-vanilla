@@ -146,10 +146,6 @@
 
     .nds-calendar-month-switch {
         display: flex;
-
-        @include ltr {
-            flex-direction: row-reverse;
-        }
     }
 
     :is(.nds-month-dropmenu, .nds-year-dropmenu) {
