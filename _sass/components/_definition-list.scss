@@ -7,7 +7,7 @@
 @use '../mixins' as *;
 
 // ==============================================
-// TABLE-VIEW MIXINS
+// LAYOUT MIXINS
 // ==============================================
 
 @mixin dl-tableView {
@@ -34,6 +34,23 @@
     }
 }
 
+// rowView puts dt and dd on the same line per item with wrap fallback —
+// looser than tableView (no shared columns across items), so values flow
+// naturally beside their label and only break to a new line when space runs
+// out. Use for compact card meta where each row is independent.
+@mixin dl-rowView {
+    .nds-definition-item {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: var(--col-gap, var(--gap, var(--spacing-sm)));
+    }
+
+    // Reset stacked icon indent in rowView mode
+    .nds-definition-item:has(> :is(dt, .nds-item-title) :is(.nds-icon, i)) :is(dd, .nds-item-desc) {
+        padding-inline-start: 0;
+    }
+}
+
 @mixin dl-divided-stacked {
     .nds-definition-item {
         padding-bottom: var(--_dl-gap);
@@ -49,7 +66,7 @@
 
 @mixin dl-stacked-icon-indent {
     .nds-definition-item:has(> :is(dt, .nds-item-title) :is(.nds-icon, i)) :is(dd, .nds-item-desc) {
-        padding-inline-start: calc(var(--_dl-icon-size) + var(--_dl-icon-gap) + 2px);
+        padding-inline-start: calc(max(18px, var(--_dl-icon-size)) + var(--_dl-icon-gap) + 2px);
     }
 }
 
@@ -72,13 +89,28 @@
 // ==============================================
 
 .nds-definition-list {
+    // Default is lg — nds-lg class is a no-op, provided so an ancestor-set
+    // smaller size can be overridden back to the default on a specific list.
     --_dl-icon-size: var(--dl-icon-size, 18px);
     --_dl-icon-gap: var(--dl-icon-gap, calc(var(--_dl-icon-size)/2));
     --_dl-title-FS: var(--dl-title-FS, var(--nds-text-clamp-lg-FS));
+    --_dl-desc-FS: var(--dl-desc-FS, var(--_dl-title-FS));
     --_dl-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
     display: flex;
     flex-direction: column;
     row-gap: var(--_dl-gap);
+
+    &.nds-md {
+        --_dl-icon-size: var(--dl-icon-size, 16px);
+        --_dl-title-FS: var(--dl-title-FS, var(--nds-text-clamp-md-FS));
+        --_dl-gap: var(--row-gap, var(--gap, var(--spacing-md)));
+    }
+
+    &.nds-sm {
+        --_dl-icon-size: var(--dl-icon-size, 14px);
+        --_dl-title-FS: var(--dl-title-FS, var(--nds-text-clamp-sm-FS));
+        --_dl-gap: var(--row-gap, var(--gap, var(--spacing-sm)));
+    }
 
     // Always-on tableView
     &.nds-tableView:not([class*="nds-tableView-"]) {
@@ -94,6 +126,10 @@
     }
     &.nds-tableView-lg {
         @include desktop('min') { @include dl-tableView; }
+    }
+
+    &.nds-rowView {
+        @include dl-rowView;
     }
 }
 
@@ -123,10 +159,10 @@
 
     :is(.nds-icon, i) {
         color: var(--text-primary);
-        min-width: var(--_dl-title-FS);
-        width: var(--_dl-icon-size);
-        height: var(--_dl-icon-size);
-        font-size: var(--_dl-icon-size);
+        min-width: 18px;
+        width: max(18px, var(--_dl-icon-size));
+        height: max(18px, var(--_dl-icon-size));
+        font-size: max(18px, var(--_dl-icon-size));
     }
 
     .nds-label {
@@ -142,6 +178,7 @@
 
 .nds-definition-list :is(dd, .nds-item-desc) {
     color: var(--text-secondary-paragraph);
+    font-size: var(--_dl-desc-FS);
 }
 
 // Icon indent: always on by default, reset when tableView activates

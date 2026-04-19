@@ -48,6 +48,10 @@ direction: ltr
                                             <span class="nds-label">Table View (Desktop+)</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-rowView", ".nds-definition-list", "dlLayout"]'>
+                                            <span class="nds-label">Row View</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-grid", ".nds-definition-list", "dlLayout"]'
                                             data-toggle-style=".nds-definition-list { --max-col:2; --mid-col:2; --min-col:1; width:fit-content }">
                                             <span class="nds-label">Grid View</span>
@@ -72,6 +76,27 @@ direction: ltr
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='[["", ".nds-definition-list", "dlStyle"], ["nds-card nds-stroke", ".nds-definition-item", "dlStyle"]]'>
                                             <span class="nds-label">Card</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                    <span class="nds-label">Size: Large</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-definition-list", "dlSize"]'>
+                                            <span class="nds-label">Large</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-md", ".nds-definition-list", "dlSize"]'>
+                                            <span class="nds-label">Medium</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-sm", ".nds-definition-list", "dlSize"]'>
+                                            <span class="nds-label">Small</span>
                                         </button>
                                     </div>
                                 </div>
@@ -385,6 +410,8 @@ direction: ltr
                     <li>Use <strong>default layout</strong> for vertical stacking when descriptions vary in length or include multiple lines</li>
                     <li>Use <strong>table view</strong> (<code class="nds-inline-code lang-html">nds-tableView</code>) for compact side-by-side key-value display. Subgrid keeps all columns aligned</li>
                     <li>Use <strong>responsive table view</strong> variants to control when the two-column layout activates: <code class="nds-inline-code lang-html">nds-tableView-md</code> for tablet and up (stacked on mobile), <code class="nds-inline-code lang-html">nds-tableView-lg</code> for desktop and up, or <code class="nds-inline-code lang-html">nds-tableView-sm</code> for mobile only</li>
+                    <li>Use <strong>row view</strong> (<code class="nds-inline-code lang-html">nds-rowView</code>) for compact inline label/value pairs where each item flows on its own wrappable row. No shared columns across items, so short pairs stay tight and long values wrap naturally beside the label. Good for card meta</li>
+                    <li>Use <strong>size modifiers</strong> (<code class="nds-inline-code lang-html">nds-md</code>, <code class="nds-inline-code lang-html">nds-sm</code>) to scale icon size, title font size, and row gap in step. Default (no class) is large. Individual CSS custom properties (<code class="nds-inline-code lang-html">--dl-icon-size</code>, <code class="nds-inline-code lang-html">--dl-title-FS</code>, <code class="nds-inline-code lang-html">--row-gap</code>) still override size defaults when you need finer control</li>
                     <li>Use <strong>grid layout</strong> (<code class="nds-inline-code lang-html">nds-grid</code>) for multi-column responsive grids. Configure breakpoints with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, <code class="nds-inline-code lang-html">--min-col</code></li>
                     <li>Do not use definition list for navigation or action items. Use a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> or standard list instead</li>
                     <li>Combine <strong>styles</strong> independently with any layout: <code class="nds-inline-code lang-html">nds-divided</code> for border separators, <code class="nds-inline-code lang-html">nds-card nds-stroke</code> on items for card appearance</li>
@@ -402,7 +429,10 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-tableView-sm</code></td><td>Table view on mobile only (max-width: 600px), stacked on larger screens</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tableView-md</code></td><td>Table view from tablet and up (min-width: 601px), stacked on mobile</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tableView-lg</code></td><td>Table view from desktop and up (min-width: 961px), stacked below</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>Each item places dt and dd on a single wrappable row. Looser than table view — no shared columns across items</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Adds border separators between items. Adapts styling for table view and stacked layouts</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size: 16px icon, medium title font, medium row gap</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Small size: 14px icon, small title font, small row gap</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -412,11 +442,12 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-icon-size</code></td><td>18px</td><td>Width and height of title icons</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-icon-size</code></td><td>18px (lg) / 16px (md) / 14px (sm)</td><td>Width and height of title icons. Floored at 18px — icons never render smaller, even when this value or a size modifier requests less</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--dl-icon-gap</code></td><td>half of icon size</td><td>Gap between the icon and label text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-title-FS</code></td><td>--nds-text-clamp-lg-FS</td><td>Font size of term/title text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-title-FS</code></td><td>--nds-text-clamp-lg-FS (lg) / -md-FS (md) / -sm-FS (sm)</td><td>Font size of term/title text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-desc-FS</code></td><td>--dl-title-FS</td><td>Font size of description/value text. Defaults to match the title so both sides of each row scale together</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--row-gap</code></td><td>--spacing-lg</td><td>Vertical spacing between items</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--col-gap</code></td><td>--spacing-xl</td><td>Horizontal spacing between columns in table view</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--col-gap</code></td><td>--spacing-xl (table view) / --spacing-sm (row view)</td><td>Horizontal spacing between dt and dd in table view and row view</td></tr>
                     </tbody>
                 </table>
             </div>

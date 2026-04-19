@@ -258,6 +258,17 @@ a[target="_blank"]:not(.nds-btn, :has(>*)) {
 }
 
 // ==============================================
+// TEXT COLOR UTILITIES
+// ==============================================
+
+// Brand-colored text on any element. Pairs well with <strong>/<span> inside
+// card meta, definition lists, and inline emphasis where the anchor-only
+// .nds-color selector does not apply.
+.nds-color-primary {
+  color: var(--text-primary);
+}
+
+// ==============================================
 // VISIBILITY UTILITIES
 // ==============================================
 
@@ -267,4 +278,22 @@ a[target="_blank"]:not(.nds-btn, :has(>*)) {
  */
 .hidden {
   display: none;
+}
+
+// Responsive visibility — pair with a tablet/mobile variant of the same
+// component to swap rendering across the desktop breakpoint (961px) without
+// JS. Both instances stay in the DOM, so progressive enhancement stays trivial.
+.nds-desktop-only {
+  @include tablet(max) { display: none !important; }
+}
+
+.nds-mobile-only {
+  @include desktop(min) { display: none !important; }
+}
+
+// Small red notice shown above a form ("*Required information" etc.).
+.nds-required-notice {
+  color: var(--text-error);
+  font-size: var(--font-size-sm);
+  margin-block-end: var(--spacing-md);
 }
