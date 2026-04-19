@@ -13,12 +13,9 @@
 
 .nds-form-container {
 
-    // Menu spans full input width
-    .nds-autocomplete-menu {
-        left: 0;
-        right: 0;
-        min-width: 100%;
-    }
+    // Note: width is matched to the form-control via JS in open() since the
+    // dropmenu uses position:fixed and CSS percentages would resolve against
+    // the viewport, blowing the menu out to full page width.
 
     // ==============================================
     // HIGHLIGHT & EMPTY STATE

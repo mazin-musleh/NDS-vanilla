@@ -24,9 +24,21 @@
     // ==============================================
 
     class NDSAutocomplete {
-        constructor(containerElement) {
+        constructor(containerElement, options) {
             if (!containerElement) return;
             if (containerElement.hasAttribute('data-nds-autocomplete-initialized')) return;
+            // Programmatic hooks. Pass via NDS.Autocomplete.create(el, opts).
+            //   filter(items, query)     → array  // overrides the default
+            //                                       substring match. Used in
+            //                                       both fetch="once" and
+            //                                       fetch="each" (after fetch).
+            //   renderItem(item, query)  → string // HTML for one dropdown row's
+            //                                       label. Overrides the default
+            //                                       displayFields.join(' · ').
+            //                                       Developer owns escaping.
+            options = options || {};
+            this.customFilter = typeof options.filter === 'function' ? options.filter : null;
+            this.customRender = typeof options.renderItem === 'function' ? options.renderItem : null;
 
             this.container = containerElement;
             this.formControl = containerElement.querySelector('.nds-form-control');
@@ -42,8 +54,22 @@
             this.minChars = parseInt(containerElement.getAttribute('data-min-chars'), 10) || 3;
             this.queryParam = containerElement.getAttribute('data-query-param') || 'q';
             this.resultsPath = containerElement.getAttribute('data-results-path') || '';
+            // Fetch mode:
+            //   "each" (default) — fetch URL?q=value on every keystroke,
+            //                      trust the server to filter
+            //   "once"           — fetch URL once on first input, cache the
+            //                      full list, then filter the cache client-side
+            //                      per keystroke. Use for small static datasets
+            //                      (countries, currencies, departments, etc.)
+            this.fetchMode = containerElement.getAttribute('data-fetch') || 'each';
+            // Fields used for client-side substring matching in fetch="once".
+            // Defaults to nameField. Set to a comma-separated list to match
+            // across multiple fields — e.g. data-search-fields="Name,NameAr"
+            // lets the user find a city by typing either language while the
+            // dropdown still displays nameField.
 
             // State
+            this.cache = null;
             this.results = [];
             this.activeIndex = -1;
             this.abortController = null;
@@ -186,6 +212,15 @@
             // Skip if input value has changed since this fetch was queued (stale debounce)
             if (this.input.value.trim() !== query) return;
 
+            if (this.fetchMode === 'once') {
+                await this._fetchOnceAndFilter(query);
+            } else {
+                await this._fetchEach(query);
+            }
+        }
+
+        // Fetch URL?q=value on every call — server is expected to filter.
+        async _fetchEach(query) {
             if (this.abortController) this.abortController.abort();
             this.abortController = new AbortController();
 
@@ -194,40 +229,10 @@
             try {
                 var separator = this.url.includes('?') ? '&' : '?';
                 var fetchUrl = this.url + separator + this.queryParam + '=' + encodeURIComponent(query);
-
                 var response = await fetch(fetchUrl, { signal: this.abortController.signal });
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-
-                // Fetch protection: limit response size to 1MB
-                var MAX_SIZE = 1024 * 1024;
-                var contentLength = response.headers.get('Content-Length');
-                if (contentLength && parseInt(contentLength, 10) > MAX_SIZE) {
-                    throw new Error('Response too large');
-                }
-
-                var text = '';
-                var reader = response.body.getReader();
-                var decoder = new TextDecoder();
-                var totalBytes = 0;
-
-                while (true) {
-                    var chunk = await reader.read();
-                    if (chunk.done) break;
-                    totalBytes += chunk.value.length;
-                    if (totalBytes > MAX_SIZE) {
-                        reader.cancel();
-                        throw new Error('Response too large');
-                    }
-                    text += decoder.decode(chunk.value, { stream: true });
-                }
-
-                var data = JSON.parse(text);
-                if (this.resultsPath) {
-                    this.results = this.resultsPath.split('.').reduce(function(obj, key) { return obj && obj[key]; }, data) || [];
-                } else {
-                    this.results = Array.isArray(data) ? data : (data.results || data.data || []);
-                }
-
+                var data = await this._readJsonLimited(response);
+                this.results = this._extractResults(data);
+                if (this.customFilter) this.results = this.customFilter(this.results, query) || [];
                 this.renderResults(this.results, query);
                 this.emitEvent('nds:autocomplete:fetch', { query: query, results: this.results });
             } catch (error) {
@@ -239,6 +244,80 @@
             } finally {
                 this.setLoading(false);
             }
+        }
+
+        // Fetch the full list once, cache it, filter the cache client-side
+        // on every subsequent call.
+        async _fetchOnceAndFilter(query) {
+            if (!this.cache) {
+                if (this.abortController) this.abortController.abort();
+                this.abortController = new AbortController();
+                this.setLoading(true);
+                try {
+                    var response = await fetch(this.url, { signal: this.abortController.signal });
+                    var data = await this._readJsonLimited(response);
+                    this.cache = this._extractResults(data);
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.warn('NDS Autocomplete: Fetch failed', error);
+                        this.cache = [];
+                        this.close();
+                    }
+                    this.setLoading(false);
+                    return;
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            if (this.customFilter) {
+                this.results = this.customFilter(this.cache, query) || [];
+            } else {
+                var q = query.toLowerCase();
+                var field = this.nameField;
+                this.results = this.cache.filter(function (item) {
+                    var value = item && item[field];
+                    return value != null && String(value).toLowerCase().indexOf(q) !== -1;
+                });
+            }
+            this.renderResults(this.results, query);
+            this.emitEvent('nds:autocomplete:fetch', { query: query, results: this.results });
+        }
+
+        // Read a fetch response as JSON with a 1MB size cap.
+        async _readJsonLimited(response) {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            var MAX_SIZE = 1024 * 1024;
+            var contentLength = response.headers.get('Content-Length');
+            if (contentLength && parseInt(contentLength, 10) > MAX_SIZE) {
+                throw new Error('Response too large');
+            }
+            var text = '';
+            var reader = response.body.getReader();
+            var decoder = new TextDecoder();
+            var totalBytes = 0;
+            while (true) {
+                var chunk = await reader.read();
+                if (chunk.done) break;
+                totalBytes += chunk.value.length;
+                if (totalBytes > MAX_SIZE) {
+                    reader.cancel();
+                    throw new Error('Response too large');
+                }
+                text += decoder.decode(chunk.value, { stream: true });
+            }
+            return JSON.parse(text);
+        }
+
+        // Extract the array of results from a parsed JSON response, honoring
+        // data-results-path if set.
+        _extractResults(data) {
+            if (this.resultsPath) {
+                return this.resultsPath.split('.').reduce(function (obj, key) {
+                    return obj && obj[key];
+                }, data) || [];
+            }
+            return Array.isArray(data) ? data : (data.results || data.data || []);
         }
 
         // ==============================================
@@ -275,7 +354,6 @@
             var limited = data.slice(0, 20);
 
             limited.forEach((item, index) => {
-                var text = String(item[this.nameField] || '');
                 var btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item';
@@ -285,7 +363,13 @@
 
                 var labelSpan = document.createElement('span');
                 labelSpan.className = 'nds-label';
-                labelSpan.innerHTML = this.highlightMatch(text, query);
+                if (this.customRender) {
+                    // Developer owns escaping in the custom render path.
+                    labelSpan.innerHTML = this.customRender(item, query);
+                } else {
+                    var text = String(item[this.nameField] || '');
+                    labelSpan.innerHTML = this.highlightMatch(text, query);
+                }
                 btn.appendChild(labelSpan);
 
                 btn.addEventListener('click', (e) => {
@@ -321,6 +405,11 @@
 
         open() {
             if (!this.dropmenuInstance || this.dropmenuInstance.isOpen) return;
+            // Match the menu width to the form-control before opening so the
+            // fixed-positioned dropmenu sizes to the input rather than to the
+            // viewport.
+            var menu = this.formControl.querySelector('.nds-autocomplete-menu');
+            if (menu) menu.style.minWidth = this.formControl.offsetWidth + 'px';
             this.dropmenuInstance.open();
         }
 
@@ -542,7 +631,9 @@
     NDS.Autocomplete = {
         init: initializeAutocompletes,
         reinit: initializeAutocompletes,
-        create: function (element) { return new NDSAutocomplete(element); }
+        // Programmatic construction. Pass { filter, renderItem } to override
+        // the default substring match and dropdown-row renderer.
+        create: function (element, options) { return new NDSAutocomplete(element, options); }
     };
 
 })();
