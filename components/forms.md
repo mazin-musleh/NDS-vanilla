@@ -316,6 +316,222 @@ direction: ltr
   </div>
 </section>
 
+<!-- Phone Number with Country Code -->
+<section id="phoneCountryCode" class="nds-content-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Phone Number with Country Code</h2>
+      <p class="nds-section-description">Compound input using a prefix-slot dropmenu as a value picker. The dropmenu's <code class="nds-inline-code lang-html">data-select-name</code> opt-in captures the selected country code into a hidden input that ships with the form, and updates the trigger label to a compact display variant.</p>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-showcase">
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-action">
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="nds-label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="nds-label">Disabled</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["readonly", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="nds-label">Readonly</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="nds-label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="nds-label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
+                  <span class="nds-label">Fix: Subtle</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["nds-subtle", ".nds-prefix > .nds-btn", "fixStyle"]'>
+                      <span class="nds-label">Subtle</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-secondary", ".nds-prefix > .nds-btn", "fixStyle"]'>
+                      <span class="nds-label">Solid</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
+                  <span class="nds-label">Fix: LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["nds-lg", ".nds-prefix > .nds-btn", "fixSize"]'>
+                      <span class="nds-label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-prefix > .nds-btn", "fixSize"]'>
+                      <span class="nds-label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                <span class="nds-label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container" style="--form-width: 360px;">
+                <div class="nds-form-header">
+                  <label for="demo-phoneCountryCode">
+                    <span class="nds-label">Phone</span>
+                  </label>
+                </div>
+                <div class="nds-form-control">
+                  <div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
+                    <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
+                      <span class="nds-label">+966</span>
+                    </button>
+                    <div class="nds-dropmenu-menu" hidden>
+                      <div class="nds-dropmenu-scroll">
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966">
+                          <span class="nds-label">Saudi Arabia (+966)</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971">
+                          <span class="nds-label">United Arab Emirates (+971)</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-trigger-label="+973">
+                          <span class="nds-label">Bahrain (+973)</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-trigger-label="+974">
+                          <span class="nds-label">Qatar (+974)</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-trigger-label="+965">
+                          <span class="nds-label">Kuwait (+965)</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-trigger-label="+968">
+                          <span class="nds-label">Oman (+968)</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="tel" id="demo-phoneCountryCode" name="phone" class="nds-input" placeholder="00 000 0000" autocomplete="tel-national" inputmode="tel" required>
+                  <div class="nds-form-action">
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided" hidden>
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-phone-country-1" id="tab-phone-country-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-phone-country-1"
+                  aria-labelledby="tab-phone-country-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle copy-btn" aria-label="Copy code example">
+                      <i class="hgi hgi-stroke hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
+&lt;div class="nds-form-container"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="phone-country-1"&gt;
+      &lt;span class="nds-label"&gt;Phone&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966"&gt;
+      &lt;button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"&gt;
+        &lt;span class="nds-label"&gt;+966&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;div class="nds-dropmenu-menu" hidden&gt;
+        &lt;div class="nds-dropmenu-scroll"&gt;
+          &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966"&gt;
+            &lt;span class="nds-label"&gt;Saudi Arabia (+966)&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+971" data-trigger-label="+971"&gt;
+            &lt;span class="nds-label"&gt;United Arab Emirates (+971)&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+973" data-trigger-label="+973"&gt;
+            &lt;span class="nds-label"&gt;Bahrain (+973)&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+974" data-trigger-label="+974"&gt;
+            &lt;span class="nds-label"&gt;Qatar (+974)&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+965" data-trigger-label="+965"&gt;
+            &lt;span class="nds-label"&gt;Kuwait (+965)&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+968" data-trigger-label="+968"&gt;
+            &lt;span class="nds-label"&gt;Oman (+968)&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;input type="tel" id="phone-country-1" name="phone" class="nds-input" placeholder="00 000 0000" autocomplete="tel-national" inputmode="tel" required&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
+                    </code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Number Input -->
 <section id="numberInput" class="nds-content-section">
   <div class="nds-section-wrapper">
@@ -1504,6 +1720,7 @@ NDS.Forms.clearStatus(container);</code>
           <li>Add <code class="nds-inline-code lang-html">data-required</code> to the container rather than <code class="nds-inline-code lang-html">required</code> on the input. The system syncs the two automatically and adds the required indicator to the label.</li>
           <li>Use permanent feedback (<code class="nds-inline-code lang-html">data-permanent</code>) for format hints and character requirements. These persist across validation cycles: they hide when an error appears and restore when the error clears.</li>
           <li>Use prefix and suffix slots for units, currency symbols, or action buttons that contextualize the input. Prefix/suffix buttons support both subtle and solid styles, and can include icons or dropmenus for compound inputs.</li>
+          <li>For compound inputs (phone + country code, amount + currency, measurement + unit), use a prefix-slot dropmenu with <code class="nds-inline-code lang-html">data-select-name</code>. The dropmenu renders a hidden input that submits with the form and keeps the trigger label compact while the dropdown rows stay descriptive. See the Phone Number with Country Code demo for the full pattern.</li>
           <li>Always include a <code class="nds-inline-code lang-html">data-feedback-target</code> element in the form footer, even if initially hidden. The validation system needs this target to inject error, success, and warning messages.</li>
           <li>Set <code class="nds-inline-code lang-html">data-error-message</code> on the container to override default browser validation messages with context-specific text that guides the user toward correction.</li>
         </ul>
@@ -1528,6 +1745,10 @@ NDS.Forms.clearStatus(container);</code>
             <tr><td><code class="nds-inline-code lang-html">min</code></td><td>Set on number inputs to define the minimum allowed value (default: 0).</td></tr>
             <tr><td><code class="nds-inline-code lang-html">max</code></td><td>Set on number inputs to define the maximum allowed value (default: 1000).</td></tr>
             <tr><td><code class="nds-inline-code lang-html">step</code></td><td>Set on number inputs to define the increment/decrement size (default: 1). Long press accelerates to 10x this value.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-select-name</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu</code> (including prefix/suffix dropmenus) to turn it into a value picker. Renders a hidden <code class="nds-inline-code lang-html">&lt;input&gt;</code> with this name; item clicks write the item's <code class="nds-inline-code lang-html">data-value</code> into it and update the trigger label.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-select-value</code></td><td>Set on a select-mode dropmenu to pre-select the item whose <code class="nds-inline-code lang-html">data-value</code> matches. Takes precedence over any pre-rendered <code class="nds-inline-code lang-html">data-state="selected"</code> item.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-required</code> (on dropmenu)</td><td>Set on a select-mode dropmenu to add <code class="nds-inline-code lang-html">required</code> to the hidden input, so native form submission blocks when nothing is picked.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-trigger-label</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu-item</code> to override the trigger label text when that item is chosen. Useful when the dropdown row is descriptive (<em>Saudi Arabia (+966)</em>) but the trigger slot needs something compact (<em>+966</em>).</td></tr>
           </tbody>
         </table>
       </div>
@@ -1618,6 +1839,18 @@ form.addEventListener('nds:formInvalid', function(e) {
 // Select dropdown change event on .nds-form-control
 formControl.addEventListener('selectChange', function(e) {
     // e.detail: { value: 'option1', text: 'Option 1' }
+});
+
+// ── Dropmenu select-mode (prefix/suffix pickers) ────
+// Any .nds-dropmenu with data-select-name captures the picked value into
+// a hidden input and fires these two events.
+dropmenu.addEventListener('nds:dropmenu:selected', function(e) {
+    // e.detail: { dropmenu, item, value }
+});
+
+// Hidden input change — use this if you only care about the new value
+hiddenInput.addEventListener('change', function(e) {
+    // e.target.value holds the selected data-value
 });
                 </code>
               </div>
