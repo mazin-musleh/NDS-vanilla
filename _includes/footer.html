@@ -123,7 +123,7 @@
         <div class="nds-footer-logos">
             {%- for logo in footer_logos %}
             {%- if logo.url %}
-            <a href="{{ logo.url | relative_url }}"{%- if logo.url contains 'http' %} target="_blank"{%- endif %}>
+            <a href="{{ logo.url | relative_url }}"{%- if logo.url contains 'http' %} target="_blank"{%- endif %}{%- if logo.nofollow %} rel="nofollow noopener"{%- endif %}>
                 <img{%- if logo.class %} class="{{ logo.class }}"{%- endif %} src="{{ logo.image | relative_url }}" loading="lazy" width="{{ logo.width }}"
                     height="{{ logo.height }}" alt="{{ logo.alt }}">
             </a>

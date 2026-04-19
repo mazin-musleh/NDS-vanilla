@@ -5,9 +5,18 @@
   url: "#"
   class: nds-oncolor
 
+- image: assets/img/ai_2026.svg
+  width: 101
+  height: 40
+  alt: "Saudi Arabia AI 2026"
+  url: "https://sdaia.gov.sa/ar/MediaCenter/Pages/ai-year.aspx"
+  class: nds-oncolor
+  nofollow: true
+
 - image: assets/img/2030-vision.svg
   width: 60
   height: 40
   alt: "Saudi Vision 2030"
   url: "https://www.vision2030.gov.sa/"
   class: nds-oncolor
+  nofollow: true
