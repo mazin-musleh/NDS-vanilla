@@ -1,0 +1,89 @@
+# FAQ items for templates/faq-template.md
+# Category slugs: general | services | account | technical
+# Tag color matches the nds-tag modifier (blue, gray, green, yellow, red, purple).
+
+- id: purpose
+  category: general
+  question: What is this FAQ section for?
+  answer: This section answers the most common questions about our services, eligibility, required documents, and how to complete your application online.
+  tags:
+    - { label: Overview, color: blue }
+
+- id: more-info
+  category: general
+  question: Where can I find more information?
+  answer: Every service page includes a detailed description, required documents, fees, and processing times. You can also visit the Help &amp; Support hub for guided articles.
+  tags:
+    - { label: Documentation, color: blue }
+
+- id: what-nds-includes
+  category: general
+  question: What does the National Design System include?
+  answer: The system ships design tokens, responsive components, page templates, Arabic/English typography, and accessibility guidelines that match official government services.
+  tags:
+    - { label: Overview, color: blue }
+    - { label: Documentation, color: gray }
+
+- id: contact-support
+  category: services
+  question: How do I contact support?
+  answer: Reach us through the contact form, unified call center, or live chat. Response times and availability are listed on the Help &amp; Support page.
+  tags:
+    - { label: Support, color: green }
+
+- id: track-application
+  category: services
+  question: How do I track my application status?
+  answer: Open &quot;My requests&quot; from the account menu. Each request shows its current stage, expected completion date, and any actions pending from your side.
+  tags:
+    - { label: Digital Services, color: green }
+
+- id: online-services
+  category: services
+  question: Which services are available online?
+  answer: Over 6,000 government services are available digitally through the unified portal, covering civil affairs, licensing, health, education, and business registration.
+  tags:
+    - { label: Digital Services, color: green }
+
+- id: get-started
+  category: account
+  question: How do I get started?
+  answer: Create an account using your national ID, verify your contact details, and choose the service you need from the homepage to begin a new request.
+  tags:
+    - { label: Getting Started, color: yellow }
+
+- id: reset-password
+  category: account
+  question: How do I reset my password?
+  answer: On the sign-in screen choose &quot;Forgot password&quot;, verify your national ID and the mobile number linked to your account, then set a new password within the sent link.
+  tags:
+    - { label: Security, color: red }
+
+- id: update-profile
+  category: account
+  question: How do I update my profile details?
+  answer: Open the account menu, choose &quot;Profile&quot;, and edit your contact details. Changes to legal data such as your name require uploading a supporting document for review.
+  tags:
+    - { label: Getting Started, color: yellow }
+    - { label: Security, color: red }
+
+- id: customize-platform
+  category: technical
+  question: Can I customize this platform?
+  answer: Yes. Entities can reuse the National Design System components and tokens to match their own branding while preserving accessibility, RTL support, and consistency with official government services.
+  tags:
+    - { label: Customization, color: purple }
+
+- id: supported-browsers
+  category: technical
+  question: Which browsers are supported?
+  answer: The platform supports the last two major versions of Chrome, Edge, Firefox, and Safari on desktop and mobile. Older browsers may render correctly but are not tested.
+  tags:
+    - { label: Compatibility, color: purple }
+
+- id: loading-error
+  category: technical
+  question: Why am I seeing a loading error?
+  answer: Clear your browser cache, disable conflicting extensions, and confirm that your network allows traffic to our government-issued certificate. If the issue persists, contact support with the error code shown.
+  tags:
+    - { label: Troubleshooting, color: purple }
