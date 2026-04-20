@@ -67,12 +67,12 @@
 
         updatePosition() {
             // Early return for mobile/tablet with reset
-            if (window.innerWidth <= 958) {
+            if (!window.matchMedia(NDS.breakpoints.desktop).matches) {
                 this.sideInfo.style.removeProperty('--nds-sideinfo-top');
                 return;
             }
 
-            // Desktop calculations (>960px)
+            // Desktop calculations (>=960px)
             // Recapture parent position to ensure accuracy on resize
             const parentRect = this.sideInfoParent.getBoundingClientRect();
             const parentTop = parentRect.top;

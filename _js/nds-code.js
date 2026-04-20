@@ -58,7 +58,7 @@
 
         // Inline code gets a single syntax class based on language
         const syntaxClass = lang === 'javascript' ? 'syntax-keyword' : 'syntax-attr';
-        codeElement.innerHTML = '<span class="' + syntaxClass + '">' + escapeHtml(text) + '</span>';
+        codeElement.innerHTML = '<span class="' + syntaxClass + '">' + NDS.escapeHtml(text) + '</span>';
         codeElement.dataset.processed = 'true';
     }
 
@@ -184,12 +184,6 @@
                   .replace(/'/g, '&#x27;');
     }
 
-    function escapeHtml(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
-    }
-
     // ==============================================
     // LANGUAGE DETECTION
     // ==============================================
@@ -247,11 +241,11 @@
                     result += highlightHTMLTag(tag);
                     i = tagEnd + 1;
                 } else {
-                    result += escapeHtml(text[i]);
+                    result += NDS.escapeHtml(text[i]);
                     i++;
                 }
             } else {
-                result += escapeHtml(text[i]);
+                result += NDS.escapeHtml(text[i]);
                 i++;
             }
         }
@@ -280,7 +274,7 @@
                 buffer = char;
             } else if (inQuotes && char === quoteChar) {
                 buffer += char;
-                result += '<span class="syntax-value">' + escapeHtml(buffer) + '</span>';
+                result += '<span class="syntax-value">' + NDS.escapeHtml(buffer) + '</span>';
                 buffer = '';
                 inQuotes = false;
                 quoteChar = '';
@@ -301,7 +295,7 @@
     }
 
     function processHTMLToken(token) {
-        let result = escapeHtml(token);
+        let result = NDS.escapeHtml(token);
 
         // Tag name (opening or closing)
         const tagMatch = token.match(/^<\/?([a-zA-Z][a-zA-Z0-9-]*)/);
@@ -316,7 +310,7 @@
 
     // CSS Syntax Highlighting
     function highlightCSS(text) {
-        let highlighted = escapeHtml(text);
+        let highlighted = NDS.escapeHtml(text);
 
         // Comments
         highlighted = highlighted.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="syntax-comment">$1</span>');
@@ -340,7 +334,7 @@
 
         function tokenize(match, type) {
             const placeholder = '__TOKEN_' + tokens.length + '__';
-            tokens.push({ placeholder: placeholder, content: escapeHtml(match), type: type });
+            tokens.push({ placeholder: placeholder, content: NDS.escapeHtml(match), type: type });
             return placeholder;
         }
 
@@ -377,7 +371,7 @@
         });
 
         // Escape remaining text
-        highlighted = escapeHtml(highlighted);
+        highlighted = NDS.escapeHtml(highlighted);
 
         // Replace tokens
         tokens.forEach(function(token) {

@@ -385,18 +385,12 @@
         }
 
         highlightMatch(text, query) {
-            if (!query) return this.escapeHtml(text);
+            if (!query) return NDS.escapeHtml(text);
 
-            var escaped = this.escapeHtml(text);
-            var escapedQuery = this.escapeHtml(query);
+            var escaped = NDS.escapeHtml(text);
+            var escapedQuery = NDS.escapeHtml(query);
             var regex = new RegExp('(' + escapedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
             return escaped.replace(regex, '<mark>$1</mark>');
-        }
-
-        escapeHtml(str) {
-            var div = document.createElement('div');
-            div.appendChild(document.createTextNode(str));
-            return div.innerHTML;
         }
 
         // ==============================================

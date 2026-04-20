@@ -196,7 +196,7 @@
             this.menu.querySelectorAll('.nds-dropmenu-item').forEach((o) => {
                 if (o !== item) o.removeAttribute('data-state');
             });
-            item.setAttribute('data-state', 'selected');
+            NDS.State.set(item, 'selected');
 
             if (!opts.silent) {
                 if (this.selectHidden) {
