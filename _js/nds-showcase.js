@@ -64,6 +64,8 @@
         initializeCardHeaderToggles();
         initializeCardColorToggles();
         initializeCardContentToggles();
+        initializeStepperResponsiveSimplify();
+        initializeStepperFallbackMenu();
         initializeFormFixToggles();
         initializeFormFixDropmenu();
         initializeFormFixIcon();
@@ -153,16 +155,20 @@
         document.querySelectorAll('.nds-demo-card').forEach(card => {
             const demoContainer = card.querySelector('.demo-container');
             const hasOncolorButtons = demoContainer && demoContainer.querySelector('.nds-oncolor');
-            
+
             // Find first background toggle button for initialization by looking for any background-related toggles
             const firstBgButton = card.querySelector('.demo-toggle-btn[data-toggler*="Bg"], .demo-toggle-btn[data-toggler*="bg"]');
-            
+
             if (hasOncolorButtons && firstBgButton) {
                 // Trigger click on first button to apply initial state
                 firstBgButton.click();
             }
+
+            // Pair options with layout state on first paint so variant-specific
+            // toggles start out hidden/shown correctly.
+            updateDemoOptionVisibility(card);
         });
-        
+
         // Event delegation for all demo toggle buttons
         document.addEventListener('click', function(e) {
             const toggleBtn = e.target.closest('.demo-toggle-btn');
@@ -170,6 +176,93 @@
                 handleToggleClick(toggleBtn);
             }
         });
+    }
+
+    // ── Option pairing ────────────────────────────────────────────────
+    // A toggle button can scope itself to a specific layout state of its
+    // toggler target via:
+    //   data-demo-requires-class="nds-radial"        (show only when target has class)
+    //   data-demo-forbids-class="nds-vertical nds-radial"   (hide when any listed class present)
+    // Both accept space-separated class names. Re-evaluated after every
+    // toggle so options track the active variant automatically. If a
+    // currently-active button becomes hidden, its state is reset (class
+    // removed, button deselected, exclusive-group siblings fall back to
+    // their default option) so the stepper doesn't carry stale modifiers
+    // across variant changes.
+    function updateDemoOptionVisibility(demoCard) {
+        demoCard.querySelectorAll('[data-demo-requires-class], [data-demo-forbids-class]').forEach(function (btn) {
+            var togglerData = parseTogglerData(btn);
+            if (!togglerData || !togglerData[0]) return;
+            var targetSelector = togglerData[0][1];
+            var targets = findToggleTargets(demoCard, targetSelector);
+            if (!targets.length) return;
+            var target = targets[0];
+
+            var requires = (btn.getAttribute('data-demo-requires-class') || '').trim().split(/\s+/).filter(Boolean);
+            var forbids = (btn.getAttribute('data-demo-forbids-class') || '').trim().split(/\s+/).filter(Boolean);
+
+            var show = true;
+            for (var i = 0; i < requires.length && show; i++) {
+                if (!target.classList.contains(requires[i])) show = false;
+            }
+            for (var j = 0; j < forbids.length && show; j++) {
+                if (target.classList.contains(forbids[j])) show = false;
+            }
+
+            btn.hidden = !show;
+
+            if (!show && NDS.State.has(btn, 'selected')) {
+                resetHiddenToggle(btn, demoCard, togglerData);
+            }
+        });
+    }
+
+    // Reverse a toggle button's effect and clear its selected state. Mirrors
+    // the class change into the code-example tab so the copy-paste markup
+    // doesn't keep stale modifiers. For exclusive-group buttons inside a
+    // dropmenu (e.g. a Size dropdown where the SM option becomes invalid
+    // after a variant change), shift selection to the group's default
+    // sibling (the one whose class value is empty).
+    function resetHiddenToggle(btn, demoCard, togglerData) {
+        togglerData.forEach(function (pair) {
+            var classNames = pair[0];
+            var targetSelector = pair[1];
+            var operation = pair[3] || 'class';
+            var action = pair[4];
+            if (operation !== 'class' || !classNames || !targetSelector) return;
+
+            var targets = findToggleTargets(demoCard, targetSelector);
+            var classArray = classNames.trim().split(/\s+/).filter(Boolean);
+            targets.forEach(function (target) {
+                classArray.forEach(function (cls) {
+                    if (action === 'remove') {
+                        target.classList.add(cls);
+                    } else {
+                        target.classList.remove(cls);
+                    }
+                });
+                updateCodeExampleForClasses(demoCard, target, classArray);
+            });
+        });
+
+        NDS.State.remove(btn, 'selected');
+        applyToggleStyles(btn, demoCard);
+
+        var groupName = togglerData[0][2];
+        if (!groupName || !btn.closest('.demo-toggle-menu')) return;
+
+        var siblings = Array.from(demoCard.querySelectorAll('[data-toggler]')).filter(function (b) {
+            return b !== btn && b.getAttribute('data-toggler').includes(groupName);
+        });
+        if (!siblings.length) return;
+
+        var defaultSibling = siblings.find(function (b) {
+            var d = parseTogglerData(b);
+            var firstVal = d && d[0] && d[0][0];
+            return firstVal === '';
+        }) || siblings[0];
+
+        selectDropmenuItem(defaultSibling, '.nds-dropmenu-item');
     }
 
     // Select a dropmenu item: deselect siblings, select button, update trigger label
@@ -507,9 +600,19 @@
         // If button is already selected, we're deselecting → reverse explicit actions
         const isDeselecting = NDS.State.has(button, 'selected');
 
-        // Prevent deselection for dropmenu items — they are always one-of-many,
-        // so clicking the already-selected value should do nothing
-        if (isDeselecting && button.closest('.demo-toggle-menu')) return;
+        // Prevent deselection for dropmenu items only when the group has
+        // other members (Variant / Size / any exclusive one-of-many set).
+        // Standalone dropmenu toggles — each in its own unique group — still
+        // toggle off, so a multi-select "Modifiers" menu works as expected.
+        if (isDeselecting && button.closest('.demo-toggle-menu')) {
+            const groupName = togglePairs[0]?.[2] || 'default';
+            if (groupName !== 'default') {
+                const siblingsInGroup = Array.from(demoCard.querySelectorAll('[data-toggler]')).filter(btn =>
+                    btn !== button && btn.getAttribute('data-toggler').includes(groupName)
+                );
+                if (siblingsInGroup.length > 0) return;
+            }
+        }
 
         // Prevent deselection for attr toggles when other buttons share the same group
         // (e.g., variant selectors must always have one active)
@@ -657,6 +760,10 @@
         if (demoCard.hasAttribute('data-code-rebuild')) {
             rebuildDemoCode(demoCard);
         }
+
+        // Re-pair options with the post-toggle layout state (variant-specific
+        // toggles hide/show as the active variant changes).
+        updateDemoOptionVisibility(demoCard);
     }
 
     // Update alert/toast code examples directly from toggle button states
@@ -1838,6 +1945,148 @@
 
                 rebuildCardCode(demoCard);
             });
+        });
+    }
+
+    // Stepper Fallback dropmenu: picks the always-on variant that acts as the
+    // fallback when no breakpoint override matches. data-stepper-fallback on
+    // each dropmenu item carries the variant name (horizontal|vertical|radial).
+    // Delegates the state change to the stepper instance's setFallback()
+    // method so the authored fallback, the always-on class, and apply()'s
+    // live toggle all stay coherent.
+    function initializeStepperFallbackMenu() {
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('[data-stepper-fallback]');
+            if (!btn) return;
+            const variant = btn.dataset.stepperFallback;
+            if (!variant) return;
+
+            const targetId = btn.dataset.stepperTarget;
+            const stepper = targetId && document.getElementById(targetId);
+            if (!stepper || !stepper.ndsStepper || !stepper.ndsStepper.setFallback) return;
+
+            selectDropmenuItem(btn, '[data-stepper-fallback]');
+            stepper.ndsStepper.setFallback(variant);
+
+            // Pass the real always-on variant classes so the code-tab update
+            // checks each and strips those no longer on the element. Horizontal
+            // has no class (it's the default), so it's intentionally absent.
+            const demoCard = btn.closest('.nds-demo-card');
+            if (demoCard) updateCodeExampleForClasses(demoCard, stepper, ['nds-vertical', 'nds-radial']);
+        });
+    }
+
+    // Stepper responsive auto-simplify: minimizes the authored class count
+    // while preserving the effective variant at every breakpoint. The fallback
+    // (set via setFallback) absorbs whichever variant appears most often across
+    // BPs, so matching BP classes can be dropped. Remaining BP overrides keep
+    // only the ones that differ from the chosen fallback. Fires on every class
+    // mutation via MutationObserver; the "already optimal" guard prevents a
+    // re-collapse loop.
+    //
+    // Example: nds-stepper nds-vertical-lg nds-radial-md nds-radial-sm
+    //   F=horizontal needs 3 BP classes + 0 fallback = 3
+    //   F=vertical   needs 2 BP classes + 1 fallback = 3
+    //   F=radial     needs 1 BP class  + 1 fallback = 2  ← picked
+    //   Result: nds-stepper nds-radial nds-vertical-lg
+    function initializeStepperResponsiveSimplify() {
+        const VARIANTS = ['horizontal', 'vertical', 'radial'];
+        const BPS = ['sm', 'md', 'lg'];
+        const BP_RE = /^nds-(?:horizontal|vertical|radial)-(?:sm|md|lg)$/;
+
+        document.querySelectorAll('[data-stepper-auto-simplify]').forEach(stepper => {
+            const currentFallback = () => (stepper.ndsStepper && stepper.ndsStepper._fallback) || 'horizontal';
+
+            const effectiveAt = (bp, fallback) => {
+                for (const v of VARIANTS) {
+                    if (stepper.classList.contains(`nds-${v}-${bp}`)) return v;
+                }
+                return fallback;
+            };
+
+            // Class count needed to express the given effective map with
+            // `fb` as the always-on fallback. BPs matching fb need no class;
+            // others need nds-{variant}-{bp}. Fallback adds 1 class unless
+            // it's horizontal (the default — no class).
+            const countFor = (fb, effective) =>
+                effective.filter(e => e !== fb).length + (fb !== 'horizontal' ? 1 : 0);
+
+            const simplify = (newFb, effective) => {
+                // Strip every BP class, then set the new fallback (which
+                // updates the always-on variant class + instance state and
+                // re-runs apply). Finally, re-add BP overrides only where
+                // effective differs from the new fallback.
+                for (const bp of BPS) {
+                    for (const v of VARIANTS) stepper.classList.remove(`nds-${v}-${bp}`);
+                }
+                if (stepper.ndsStepper && stepper.ndsStepper.setFallback) {
+                    stepper.ndsStepper.setFallback(newFb);
+                }
+                effective.forEach((e, i) => {
+                    if (e !== newFb) stepper.classList.add(`nds-${e}-${BPS[i]}`);
+                });
+
+                const demoCard = stepper.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                // Sync Fallback dropmenu to the new fallback.
+                const fbTarget = demoCard.querySelector(`[data-stepper-fallback="${newFb}"]`);
+                if (fbTarget) selectDropmenuItem(fbTarget, '[data-stepper-fallback]');
+
+                // Sync each BP dropmenu to the correct option — Fallback when
+                // the BP inherits, the matching variant when it overrides.
+                BPS.forEach((bp, i) => {
+                    const groupName = 'stepperLayout' + bp[0].toUpperCase() + bp.slice(1);
+                    const groupItems = [...demoCard.querySelectorAll(`.demo-toggle-btn[data-toggler*="${groupName}"]`)];
+                    if (!groupItems.length) return;
+
+                    const expectedClass = effective[i] === newFb ? '' : `nds-${effective[i]}-${bp}`;
+                    const target = groupItems.find(b => {
+                        const m = (b.getAttribute('data-toggler') || '').match(/^\[\s*"([^"]*)"/);
+                        return m && m[1] === expectedClass;
+                    });
+                    if (target) {
+                        groupItems.forEach(b => NDS.State.remove(b, 'selected'));
+                        selectDropmenuItem(target, '.nds-dropmenu-item');
+                    }
+                });
+
+                // Mirror into the code tab. Pass every variant + BP class so
+                // stale ones are stripped; nds-horizontal excluded (horizontal
+                // has no always-on class).
+                const touched = [
+                    'nds-vertical', 'nds-radial',
+                    ...VARIANTS.flatMap(v => BPS.map(bp => `nds-${v}-${bp}`))
+                ];
+                updateCodeExampleForClasses(demoCard, stepper, touched);
+            };
+
+            const detect = () => {
+                const currentFb = currentFallback();
+                const effective = BPS.map(bp => effectiveAt(bp, currentFb));
+
+                const authoredBpCount = [...stepper.classList].filter(c => BP_RE.test(c)).length;
+                const currentTotal = authoredBpCount + (currentFb !== 'horizontal' ? 1 : 0);
+
+                let bestFb = currentFb;
+                let bestTotal = currentTotal;
+                for (const candidate of VARIANTS) {
+                    const total = countFor(candidate, effective);
+                    if (total < bestTotal) {
+                        bestTotal = total;
+                        bestFb = candidate;
+                    }
+                }
+
+                if (bestTotal >= currentTotal) return;
+                simplify(bestFb, effective);
+            };
+
+            new MutationObserver(detect).observe(stepper, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+            detect();
         });
     }
 
