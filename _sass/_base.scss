@@ -235,8 +235,8 @@ body.nds-minimal[style*="--bg-img"] {
         margin-block-end: 0;
     }
 
-    & :not(nav, .nds-scroll-more, .nds-drawer-list li)>ul,
-    & :not(nav, .nds-scroll-more, .nds-drawer-list li )>ol {
+    & :not(nav, .nds-scroll-more, .nds-drawer, .nds-drawer-list li)>ul,
+    & :not(nav, .nds-scroll-more, .nds-drawer, .nds-drawer-list li)>ol {
 
         &.nds-divided li {
             border-bottom: 1px solid var(--divider-color);

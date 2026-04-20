@@ -175,8 +175,11 @@
 
     }
 
-    &:not(.nds-menu-btn, :active, .nds-oncolor):is([data-state~="active"], [data-state~="selected"]) {
-        :root:not([data-theme="dark"]) & {
+    // :where() keeps the match logic but contributes 0 specificity, so
+    // variant overrides (e.g. .nds-drawer.nds-toc) can win without needing
+    // to replicate the whole :not/:is chain.
+    &:where(:not(.nds-menu-btn, :active, .nds-oncolor)):where([data-state~="active"], [data-state~="selected"]) {
+        :where(:root:not([data-theme="dark"])) & {
             --btn-color: var(--background-primary);
             --btn-indicator-color: var(--background-primary);
             --btn-indicator-selected: var(--background-primary);
@@ -223,10 +226,11 @@
 
 // ==============================================
 // SUBMENU - CSS :has() DETECTION
+// Descendant combinator so any nesting depth gets the same treatment.
 // ==============================================
 
 // Detect items with nested menus using :has()
-.nds-drawer-list>li:has(> ul) {
+.nds-drawer-list li:has(> ul) {
     >.nds-btn {
         // Ensure proper cursor
         cursor: pointer;
@@ -237,7 +241,7 @@
 // SUBMENU - HEIGHT ANIMATION
 // ==============================================
 
-.nds-drawer-list>li>ul {
+.nds-drawer-list li>ul {
     display: none;
     height: 0;
     overflow: clip;
@@ -278,11 +282,11 @@
 }
 
 // Animation states - height set by JS during opening/closing
-.nds-drawer-list>li>ul:is([data-state~="opening"], [data-state~="open"], [data-state~="closing"]) {
+.nds-drawer-list li>ul:is([data-state~="opening"], [data-state~="open"], [data-state~="closing"]) {
     display: unset;
 }
 
-.nds-drawer-list>li>ul[data-state~="open"] {
+.nds-drawer-list li>ul[data-state~="open"] {
     height: auto;
 }
 

@@ -75,9 +75,26 @@ direction: ltr
                                             </button>
                                             <ul>
                                                 <li>
-                                                    <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                    <button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
                                                         <span class="nds-label">Buttons</span>
-                                                    </a>
+                                                    </button>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                                <span class="nds-label">Primary</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                                <span class="nds-label">Secondary</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="nds-btn nds-subtle nds-indicator">
+                                                                <span class="nds-label">Danger</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
                                                 </li>
                                                 <li>
                                                     <a href="#" class="nds-btn nds-subtle nds-indicator">
@@ -164,9 +181,26 @@ direction: ltr
         &lt;/button&gt;
         &lt;ul&gt;
           &lt;li&gt;
-            &lt;a href="#" class="nds-btn nds-subtle nds-indicator"&gt;
+            &lt;button class="nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false"&gt;
               &lt;span class="nds-label"&gt;Buttons&lt;/span&gt;
-            &lt;/a&gt;
+            &lt;/button&gt;
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;a href="#" class="nds-btn nds-subtle nds-indicator"&gt;
+                  &lt;span class="nds-label"&gt;Primary&lt;/span&gt;
+                &lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="#" class="nds-btn nds-subtle nds-indicator"&gt;
+                  &lt;span class="nds-label"&gt;Secondary&lt;/span&gt;
+                &lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;a href="#" class="nds-btn nds-subtle nds-indicator"&gt;
+                  &lt;span class="nds-label"&gt;Danger&lt;/span&gt;
+                &lt;/a&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
           &lt;/li&gt;
           &lt;li&gt;
             &lt;a href="#" class="nds-btn nds-subtle nds-indicator"&gt;
@@ -1067,7 +1101,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Accordion Submenus</span>
                     </span>
-                    <p class="nds-item-desc">Smooth animated expand and collapse with automatic sibling closing, detected via CSS <code class="nds-inline-code lang-html">:has()</code> without extra classes.</p>
+                    <p class="nds-item-desc">Smooth animated expand and collapse with automatic sibling closing. Submenus nest to any depth and inherit the same animation, indicator, and state tracking at every level.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1120,7 +1154,7 @@ direction: ltr
                     <li>Do not use a drawer for compact action menus attached to a single trigger. Use the <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a>, which handles positioning and dismissal for overlay menus.</li>
                     <li>Reach for <strong><code class="nds-inline-code lang-html">nds-fit</code></strong> when the drawer sits in a grid column that should match the height of sibling cards. Combine with <code class="nds-inline-code lang-html">nds-card</code> and <code class="nds-inline-code lang-html">nds-stroke</code> for a framed block.</li>
                     <li>Add <strong><code class="nds-inline-code lang-html">nds-divided</code></strong> when rows carry multi-line content (descriptions, timestamps, tags). Leave it off for dense flat link lists where the indicator alone is enough visual separation.</li>
-                    <li>Keep nesting to a maximum of <strong>two levels</strong>. The component animates and tracks state for two levels only; deeper trees become hard to scan and hit edge cases in the expand/collapse logic.</li>
+                    <li>Submenus nest to <strong>any depth</strong>, but keep trees shallow (two or three levels) for readability. Deeper structures read like a tangled outline and often hint at a page that should be split up.</li>
                     <li>Mark the current page with <code class="nds-inline-code lang-html">data-state="active"</code> on the deepest <code class="nds-inline-code lang-html">&lt;li&gt;</code>. The drawer automatically opens all ancestor submenus on load so users land with the active path revealed.</li>
                     <li>Constrain long lists by setting <code class="nds-inline-code lang-html">--drawer-max-height</code> on the <code class="nds-inline-code lang-html">&lt;nav&gt;</code> and wrapping the list in <code class="nds-inline-code lang-html">.nds-scroll-more</code>. The fade mask and show-more button appear only when content actually overflows.</li>
                     <li>Apply <code class="nds-inline-code lang-html">nds-oncolor</code> when the drawer sits on a dark or tinted surface. It rebalances dividers and indicators so rows remain legible without touching text colors.</li>

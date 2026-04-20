@@ -182,7 +182,7 @@
     function initResponsiveState(drawer) {
         const isAlwaysOpen = shouldBeAlwaysOpen(drawer);
 
-        drawer.querySelectorAll('.nds-drawer-list > li').forEach(item => {
+        drawer.querySelectorAll('.nds-drawer-list li').forEach(item => {
             const submenu = item.querySelector(':scope > ul');
             if (!submenu) return;
 
@@ -218,7 +218,7 @@
         drawer._togglesAC = new AbortController();
         const { signal } = drawer._togglesAC;
 
-        drawer.querySelectorAll('.nds-drawer-list > li').forEach(li => {
+        drawer.querySelectorAll('.nds-drawer-list li').forEach(li => {
             const submenu = li.querySelector(':scope > ul');
             if (!submenu) return;
 
