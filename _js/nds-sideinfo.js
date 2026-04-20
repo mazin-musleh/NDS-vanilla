@@ -20,7 +20,6 @@
             this.sideInfo = element;
             this.sideInfoParent = element.parentElement;
             this.sectionHead = document.querySelector('.nds-hero-section');
-            this.isInitialized = false;
             // Remember whether the author opted into sticky so we can re-apply
             // it after a viewport/content change makes it fit again.
             this.wantsSticky = element.classList.contains('nds-sticky');
@@ -39,10 +38,12 @@
         }
 
         init() {
-            this.setupVisibilityObserver();
+            this.updatePosition();
+            this.updateStickyState();
+            this.setupHeroResize();
             this.setupResize();
             this.setupContentResize();
-            this.updateStickyState();
+            this.setupLateRecompute();
             this.sideInfo.setAttribute('data-sideinfo-initialized', 'true');
         }
 
@@ -54,15 +55,6 @@
             const top = parseFloat(getComputedStyle(this.sideInfo).top) || 0;
             const fits = this.sideInfo.offsetHeight + top <= window.innerHeight;
             this.sideInfo.classList.toggle('nds-sticky', fits);
-        }
-
-        setupVisibilityObserver() {
-            this._offVisibility = NDS.onIntersect(this.sideInfo, (entry) => {
-                if (entry.isIntersecting && !this.isInitialized) {
-                    this.updatePosition();
-                    this.isInitialized = true;
-                }
-            }, { threshold: 0.01 });
         }
 
         updatePosition() {
@@ -94,11 +86,35 @@
             });
         }
 
+        // Hero height shifts with late-loading images and font swap; a
+        // ResizeObserver recomputes each time so the card re-aligns after CLS.
+        setupHeroResize() {
+            this._offHeroResize = NDS.onElementResize(this.sectionHead, () => {
+                this.updatePosition();
+                this.updateStickyState();
+            });
+        }
+
         setupContentResize() {
             if (!this.wantsSticky) return;
             this._offContentResize = NDS.onElementResize(this.sideInfo, () => {
                 this.updateStickyState();
             });
+        }
+
+        // One-shot recomputes after font swap and image load finish,
+        // covering CLS sources that don't change the hero's own box size.
+        setupLateRecompute() {
+            const recompute = () => {
+                this.updatePosition();
+                this.updateStickyState();
+            };
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(recompute);
+            }
+            if (document.readyState !== 'complete') {
+                window.addEventListener('load', recompute, { once: true });
+            }
         }
 
         // ==============================================
@@ -110,7 +126,7 @@
             this.sideInfo.style.removeProperty('--nds-sideinfo-top');
             if (this.wantsSticky) this.sideInfo.classList.add('nds-sticky');
 
-            if (this._offVisibility) this._offVisibility();
+            if (this._offHeroResize) this._offHeroResize();
             if (this._offResize) this._offResize();
             if (this._offContentResize) this._offContentResize();
         }
