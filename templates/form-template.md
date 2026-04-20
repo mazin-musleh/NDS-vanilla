@@ -2,7 +2,7 @@
 layout: page
 layout_class: nds-wSideInfo
 title: Form Template
-hero_style: "nds-flat"
+hero_style: "nds-flat nds-aside"
 hero_title: Apply for a Service
 hero_description: This form template is designed for multi-step forms, guiding users through various input fields while tracking their progress. It includes all essential input field types and a progress indicator, ensuring clarity and ease of use.
 breadcrumb:
