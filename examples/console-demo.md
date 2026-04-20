@@ -453,7 +453,7 @@ hideFeedback: true
                     <div class="nds-card nds-stroke nds-page-item">
                         <div class="nds-card-header nds-rowView">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-avatar nds-lg">
+                                <span class="nds-avatar nds-2xl">
                                     {% if user.avatar %}
                                     <img src="{{ user.avatar | relative_url }}" alt="{{ user.name }}" loading="lazy">
                                     {% else %}
