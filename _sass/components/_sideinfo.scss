@@ -1,0 +1,92 @@
+@use '../mixins' as *;
+
+/* ── Side info ── */
+
+.nds-sideinfo-section {
+    .nds-section-body {
+        display: flex;
+        gap: var(--spacing-4xl);
+
+        @include tablet(max) {
+            flex-direction: column;
+        }
+    }
+
+    .nds-info-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .nds-sideinfo {
+        --card-padding: var(--spacing-4xl);
+        width: var(--nds-sideinfo-width);
+        position: static;
+        top: calc(var(--nds-nav-height) + var(--spacing-md));
+        height: fit-content;
+        --card-width: 100%;
+
+        @include tablet(max) {
+            top: unset;
+            --nds-sideinfo-width: 100%;
+            padding-inline: var(--spacing-xl);
+        }
+
+        &.nds-sticky {
+            position: sticky;
+
+            @include tablet(max) {
+                position: static;
+                top: unset;
+            }
+        }
+
+        &.nds-top {
+            @include tablet(max) {
+                order: -1;
+            }
+        }
+
+        // Reverse variant: place the sideinfo before the content in the
+        // flex row (visually to the start side in LTR, end side in RTL).
+        &.nds-reverse {
+            order: -1;
+        }
+
+        // Size variants — default (lg) 400px defined in _variables-critical.
+        &.nds-sm { --nds-sideinfo-width: 200px; }
+        &.nds-md { --nds-sideinfo-width: 300px; }
+        &.nds-lg { --nds-sideinfo-width: 400px; }
+
+        .nds-definition-list {
+            --dl-icon-size: 24px;
+            --dl-icon-gap: var(--spacing-md);
+            gap: var(--spacing-xl);
+
+            :is(dt, .nds-item-title) {
+                font-size: var(--nds-text-md-FS);
+            }
+
+            :is(dd, .nds-item-desc) {
+                .nds-btn.nds-transparent {
+                    padding: 0;
+                    --btn-height: fit-content;
+                }
+            }
+        }
+    }
+}
+
+// Hero-aside opt-in: when the page's hero reserves an aside column
+// (`hero_style: "nds-aside"`), pull the sideinfo up into it. Hero is an
+// adjacent sibling of the content layout in the page template, so we
+// chain off that — no `:has()`. `--nds-sideinfo-top` is computed by
+// nds-sideinfo.js from the hero section-head position.
+.nds-hero-section.nds-aside + .nds-content-layout .nds-sideinfo-section .nds-sideinfo {
+    @include desktop(min) {
+        top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--nds-sideinfo-top) * -1);
+        transform: translateY(calc(var(--nds-sideinfo-top, -180px) + var(--spacing-3xl)));
+        margin-bottom: calc(var(--nds-sideinfo-top, -180px) + var(--spacing-3xl));
+    }
+}

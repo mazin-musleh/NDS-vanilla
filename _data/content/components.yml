@@ -369,6 +369,13 @@
   tags: ["JS", "CSS"]
   url: "/ui-shell/sidemenu.html"
 
+- title: "Side Info"
+  description: "Companion column for service details, progress, and in-page navigation"
+  icon: '<i class="hgi hgi-stroke hgi-layout-right"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS", "API"]
+  url: "/ui-shell/sideinfo.html"
+
 - title: "Footer"
   description: "Multi-column footer with light and green variants"
   icon: '<i class="hgi hgi-stroke hgi-layout-bottom"></i>'

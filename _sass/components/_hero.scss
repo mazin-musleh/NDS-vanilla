@@ -113,7 +113,7 @@
         &.nds-aside {
             @include desktop(min) {
                 :is(.nds-breadcrumb-nav, .nds-section-wrapper, .nds-section-head) {
-                    width: calc(100% - var(--nds-sideinfo-width) - var(--spacing-xl));
+                    width: calc(100% - var(--nds-sideinfo-width) - var(--spacing-4xl));
                 }
             }
         }

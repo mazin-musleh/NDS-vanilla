@@ -58,6 +58,14 @@
         }
 
         updatePosition() {
+            // Only compute the hero-alignment offset when the hero actually
+            // reserves an aside column. Without `.nds-aside`, CSS keeps the
+            // sideinfo aligned with content start and doesn't read the var.
+            if (!document.querySelector('.nds-hero-section.nds-aside')) {
+                this.sideInfo.style.removeProperty('--nds-sideinfo-top');
+                return;
+            }
+
             // Early return for mobile/tablet with reset
             if (!window.matchMedia(NDS.breakpoints.desktop).matches) {
                 this.sideInfo.style.removeProperty('--nds-sideinfo-top');
