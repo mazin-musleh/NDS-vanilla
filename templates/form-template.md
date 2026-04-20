@@ -93,8 +93,15 @@ sidemenu_mode: false
                                     placeholder="6-digit code" inputmode="numeric" pattern="[0-9]{6}"
                                     autocomplete="one-time-code" required>
                                 <div class="nds-form-action">
-                                    <button type="button" class="nds-btn nds-subtle" data-otp-resend>
-                                        <span class="nds-label">Resend</span>
+                                    <button type="button" class="nds-btn nds-subtle nds-cooldown"
+                                        id="ft-otp-resend"
+                                        data-cooldown="30"
+                                        data-cooldown-loading="3"
+                                        data-cooldown-label="Resend in {s}s"
+                                        data-resend-label="Resend"
+                                        data-sent-title="Verification code sent"
+                                        data-sent-message="A new code has been sent to your mobile number.">
+                                        <span class="nds-label">Send code</span>
                                     </button>
                                 </div>
                             </div>
@@ -548,43 +555,7 @@ sidemenu_mode: false
         const form = document.getElementById('form-template');
         if (form) form.addEventListener('submit', (e) => e.preventDefault());
 
-        // OTP Resend flow:
-        //   1. 3s loading state — simulates the network round trip
-        //   2. Bottom success toast — confirms the code was sent
-        //   3. 30s cooldown with live countdown in the label — prevents spam
-        const RESEND_COOLDOWN_S = 30;
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('[data-otp-resend]');
-            if (!btn || btn.disabled || btn.dataset.state === 'loading') return;
-            btn.dataset.state = 'loading';
-            setTimeout(() => {
-                delete btn.dataset.state;
-                if (NDS && NDS.Alert && typeof NDS.Alert.create === 'function') {
-                    NDS.Alert.create({
-                        variant: 'success',
-                        title: 'Verification code sent',
-                        description: 'A new code has been sent to your mobile number.',
-                        display: 'toast',
-                        position: 'bottom',
-                        duration: 4000
-                    });
-                }
-                const labelEl = btn.querySelector('.nds-label');
-                const originalLabel = labelEl ? labelEl.textContent : '';
-                btn.disabled = true;
-                let remaining = RESEND_COOLDOWN_S;
-                if (labelEl) labelEl.textContent = `Resend in ${remaining}s`;
-                const tick = setInterval(() => {
-                    remaining -= 1;
-                    if (remaining <= 0) {
-                        clearInterval(tick);
-                        btn.disabled = false;
-                        if (labelEl) labelEl.textContent = originalLabel;
-                    } else if (labelEl) {
-                        labelEl.textContent = `Resend in ${remaining}s`;
-                    }
-                }, 1000);
-            }, 3000);
-        });
+        // OTP Resend: loading, cooldown, countdown, and success toast are all
+        // owned by NDS.CooldownButton via data-* attrs on the button.
     })();
 </script>
