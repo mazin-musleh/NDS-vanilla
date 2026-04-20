@@ -58,6 +58,13 @@
   tags: ["CSS"]
   url: "/components/code.html"
 
+- title: "Cooldown Button"
+  description: "Click-disabled countdown button for resend, retry, and rate-limited actions"
+  icon: '<i class="hgi hgi-stroke hgi-timer-02"></i>'
+  category: "UI"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/cooldown-button.html"
+
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
   icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'

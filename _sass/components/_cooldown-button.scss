@@ -1,0 +1,9 @@
+@use '../mixins' as *;
+
+// Cooldown state toggled on the button by _js/nds-cooldown-button.js.
+// Visuals for [data-state~="loading"] and :disabled already live in
+// components/_buttons.scss; this rule just keeps the label on one line
+// so "Resend" → "Resend in 30s" doesn't wrap or reflow neighbors.
+.nds-btn[data-state~="cooldown"] .nds-label {
+  white-space: nowrap;
+}

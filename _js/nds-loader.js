@@ -202,6 +202,11 @@
             selector: '.nds-empty',
             init: () => NDS.Empty?.init?.(),
         },
+        {
+            name: 'cooldownButton',
+            selector: '.nds-cooldown',
+            init: () => NDS.CooldownButton?.init?.(),
+        },
     ].map((component, index) => ({
         ...component,
         priority: index + 1  // Auto-assign priority based on array order

@@ -95,6 +95,9 @@
     - label: "Cookie Consent"
       url: "/components/cookies"
       href: "/components/cookies.html"
+    - label: "Cooldown Button"
+      url: "/components/cooldown-button"
+      href: "/components/cooldown-button.html"
     - label: "Date Picker"
       url: "/components/date-picker"
       href: "/components/date-picker.html"
@@ -197,9 +200,6 @@
 - label: "Utilities"
   has_sub: true
   children:
-    - label: "View All"
-      url: "/utilities?category=Utilities"
-      href: "/utilities?category=Utilities"
     - label: "Copy"
       url: "/utilities/copy"
       href: "/utilities/copy.html"
