@@ -95,9 +95,13 @@
                 throw new Error('Unknown weather code');
             }
 
-            // Create both language versions from single API response
-            const arabicHtml = `<i class="nds-icon ${icon}" aria-hidden="true"></i><span class="text">${arabicDesc}, ${temp}°C</span>`;
-            const englishHtml = `<i class="nds-icon ${icon}" aria-hidden="true"></i><span class="text">${englishDesc}, ${temp}°C</span>`;
+            // Create both language versions from single API response.
+            // XSS-safe: `icon`, `arabicDesc`, `englishDesc` are all assigned exclusively from the hardcoded
+            // switch chain above (compile-time literals); `temp` is Math.round() output (numeric). The
+            // `NDS.escapeHtml` wrap on the description substitutions is defense-in-depth — if a future
+            // edit ever wires them to API data, the escaping is already in place.
+            const arabicHtml = `<i class="nds-icon ${icon}" aria-hidden="true"></i><span class="text">${NDS.escapeHtml(arabicDesc)}, ${temp}°C</span>`;
+            const englishHtml = `<i class="nds-icon ${icon}" aria-hidden="true"></i><span class="text">${NDS.escapeHtml(englishDesc)}, ${temp}°C</span>`;
             
             el.innerHTML = isArabic ? arabicHtml : englishHtml;
             el.style.display = '';
@@ -145,7 +149,7 @@
 
             if (!city) throw new Error('No city found');
 
-            const html = `<i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i><span class="text">${city}</span>`;
+            const html = `<i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i><span class="text">${NDS.escapeHtml(city)}</span>`;
             
             cityEl.innerHTML = html;
             cityEl.style.display = '';

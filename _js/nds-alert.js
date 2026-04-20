@@ -67,27 +67,6 @@
             if (id) alert.id = id;
             alert.setAttribute('role', 'alert');
 
-            // Build actions HTML
-            let actionsHtml = '';
-            if (actions && actions.length > 0) {
-                actionsHtml = '<div class="nds-alert-actions">';
-                actions.forEach((action, index) => {
-                    const classes = action.class || `nds-btn nds-${action.variant || 'subtle'} nds-${action.size || 'sm'}`;
-                    if (action.href) {
-                        actionsHtml += `
-                            <a href="${action.href}" class="${classes}"${action.target ? ` target="${action.target}"` : ''} data-action-index="${index}">${action.label}</a>
-                        `;
-                    } else {
-                        actionsHtml += `
-                            <button class="${classes}" data-action-index="${index}">
-                                <span class="nds-label">${action.label}</span>
-                            </button>
-                        `;
-                    }
-                });
-                actionsHtml += '</div>';
-            }
-
             const iconStyle = display === 'inline' ? '' : ' nds-outline';
             let html = `
                 <span class="nds-feedback nds-alert-icon${iconStyle}">
@@ -97,17 +76,16 @@
                 </span>
                 <div class="nds-alert-content">
                     <div class="nds-alert-text">
-                        ${title ? `<span class="nds-alert-title">${title}</span>` : ''}
-                        ${description ? `<p class="nds-alert-description">${description}</p>` : ''}
+                        ${title ? `<span class="nds-alert-title">${NDS.escapeHtml(title)}</span>` : ''}
+                        ${description ? `<p class="nds-alert-description">${NDS.escapeHtml(description)}</p>` : ''}
                     </div>
-                    ${actionsHtml}
                 </div>
             `;
 
             if (closable || duration > 0) {
                 // Add progress class and SVG if toast has auto-dismiss
                 const progressClass = (display === 'toast' && duration > 0) ? ' nds-progress' : '';
-                const progressStyle = (display === 'toast' && duration > 0) ? ` style="--progress-duration: ${duration}ms;"` : '';
+                const progressStyle = (display === 'toast' && duration > 0) ? ` style="--progress-duration: ${Number(duration)}ms;"` : '';
                 const progressSVG = (display === 'toast' && duration > 0) ? `
                     <div class="nds-progress-circle" hidden>
                         <svg width="100%" height="100%" viewBox="0 0 24 24">
@@ -126,6 +104,36 @@
             }
 
             alert.innerHTML = html;
+
+            // Build actions via DOM so caller-supplied href/class/target/label never reach the HTML parser,
+            // and so target="_blank" always pairs with rel="noopener noreferrer".
+            if (actions && actions.length > 0) {
+                const actionsWrap = document.createElement('div');
+                actionsWrap.className = 'nds-alert-actions';
+                actions.forEach((action, index) => {
+                    const classes = action.class || `nds-btn nds-${action.variant || 'subtle'} nds-${action.size || 'sm'}`;
+                    let el;
+                    if (action.href) {
+                        el = document.createElement('a');
+                        el.setAttribute('href', action.href);
+                        if (action.target) {
+                            el.setAttribute('target', action.target);
+                            el.setAttribute('rel', 'noopener noreferrer');
+                        }
+                        el.textContent = action.label || '';
+                    } else {
+                        el = document.createElement('button');
+                        const lbl = document.createElement('span');
+                        lbl.className = 'nds-label';
+                        lbl.textContent = action.label || '';
+                        el.appendChild(lbl);
+                    }
+                    el.className = classes;
+                    el.setAttribute('data-action-index', index);
+                    actionsWrap.appendChild(el);
+                });
+                alert.querySelector('.nds-alert-content').appendChild(actionsWrap);
+            }
 
             // Close button handler
             if (closable || duration > 0) {

@@ -407,7 +407,7 @@
                 const label = labels?.[i] || `Item ${i + 1}`;
                 const pct = ((val / total) * 100).toFixed(1) + '%';
                 this._bindTip(slice,
-                    `<strong>${label}</strong><br>${formatNumber(val)} (${pct})`,
+                    `<strong>${NDS.escapeHtml(label)}</strong><br>${NDS.escapeHtml(formatNumber(val))} (${NDS.escapeHtml(pct)})`,
                     null, 'nds-chart-slice--active');
                 svg.appendChild(slice);
 
@@ -514,7 +514,7 @@
                     rect.setAttribute('class', 'nds-chart-bar');
 
                     this._bindTip(rect,
-                        `<strong>${s.name}</strong><br>${catLabels[c]}: ${this._fmtVal(val)}`,
+                        `<strong>${NDS.escapeHtml(s.name)}</strong><br>${NDS.escapeHtml(catLabels[c])}: ${NDS.escapeHtml(this._fmtVal(val))}`,
                         null, 'nds-chart-bar--active');
                     svg.appendChild(rect);
 
@@ -654,7 +654,7 @@
                             fill: 'transparent', class: 'nds-chart-dot-hit',
                         });
                         this._bindTip(hitArea,
-                            `<strong>${s.name}</strong><br>${catLabels[p.idx]}: ${this._fmtVal(p.val)}`,
+                            `<strong>${NDS.escapeHtml(s.name)}</strong><br>${NDS.escapeHtml(catLabels[p.idx])}: ${NDS.escapeHtml(this._fmtVal(p.val))}`,
                             dot, 'nds-chart-dot--active');
                         svg.appendChild(hitArea);
                     });

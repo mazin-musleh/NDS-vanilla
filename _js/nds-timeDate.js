@@ -149,7 +149,7 @@
         }
 
         if (content) {
-            const html = `<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i><span class="text">${content}</span>`;
+            const html = `<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i><span class="text">${NDS.escapeHtml(content)}</span>`;
             el.innerHTML = html;
             el.style.display = '';
             

@@ -111,7 +111,7 @@
 
             // Message (optional - can be icon-only)
             if (message) {
-                html += `<span class="nds-feedback-message">${message}</span>`;
+                html += `<span class="nds-feedback-message">${NDS.escapeHtml(message)}</span>`;
             }
 
             feedback.innerHTML = html;
