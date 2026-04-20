@@ -3,8 +3,9 @@
 /* ── Content layout ── */
 
 main {
-    height: 100%;
     overflow-x: clip;
+    flex: 1;
+    display: grid;
 }
 
 .nds-content-layout {
