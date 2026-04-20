@@ -300,6 +300,19 @@
         clear: (el) => { if (el) el.removeAttribute('data-status'); }
     };
 
+    // ── HTML Escape ──────────────────────────────────────────────────
+    // Escape a string for safe insertion into an HTML context (innerHTML, template literals).
+    // Uses the browser's textContent serializer so every edge case the parser cares about
+    // (quotes, angle brackets, entities, mixed charsets) is handled by the engine itself —
+    // no regex-based escape can match that coverage.
+    // Usage: el.innerHTML = `<span>${NDS.escapeHtml(userValue)}</span>`
+    NDS.escapeHtml = (str) => {
+        if (str == null) return '';
+        const div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+    };
+
     // ── Lazy Reveal ────────────────────────────────────────────────────
     // Remove hidden from [data-nds-lazy] once DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
