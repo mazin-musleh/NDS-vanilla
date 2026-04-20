@@ -15,13 +15,16 @@
             this.progressNumber = element.querySelector('.nds-progress-number');
             this.progressText = element.querySelector('.nds-progress-steps');
 
-            // Cache radial check
-            this.isRadial = element.classList.contains('nds-radial');
-
             this.currentStep = this.getCurrentStep();
             this.totalSteps = this.steps.length;
 
             this.init();
+        }
+
+        // Live getter so responsive class toggling stays consistent with
+        // completion logic — setupResponsiveLayout flips the class on resize.
+        get isRadial() {
+            return this.element.classList.contains('nds-radial');
         }
 
         init() {
@@ -29,6 +32,7 @@
             this.updateProgress();
             this.syncStepStates();
             this.setupControls();
+            this.setupResponsiveLayout();
         }
 
         setupObserver() {
@@ -43,6 +47,103 @@
             if (this.observer) {
                 this.observer.disconnect();
             }
+            if (this._offLayoutResize) this._offLayoutResize();
+        }
+
+        // Responsive variant swap. Authors opt in by adding breakpoint-scoped
+        // variant classes on the root, mirroring the nds-tableView-sm/-md/-lg
+        // convention for consistency across components:
+        //
+        //   class="nds-stepper nds-radial-sm nds-vertical-lg"
+        //     → radial on mobile (≤600px), vertical on desktop (≥961px),
+        //       horizontal as the fallback (no matching breakpoint).
+        //
+        //   class="nds-stepper nds-vertical nds-radial-sm"
+        //     → always vertical, except radial on mobile. The always-on
+        //       nds-vertical / nds-radial class seeds the fallback.
+        //
+        // The marker classes have no CSS rules of their own; apply() reads
+        // the live classList on every tick so runtime mutations (e.g. a demo
+        // toggle swapping nds-radial-sm for nds-vertical-sm) take effect
+        // immediately. A MutationObserver re-triggers apply() when the
+        // breakpoint-scoped classes change. Critical-CSS guard in
+        // _skeleton.scss hides the stepper until the first apply lands
+        // data-layout-ready on the element.
+        setupResponsiveLayout() {
+            const el = this.element;
+
+            // Capture the authored fallback from the always-on variant class.
+            // Stored on the instance so apply() can read it back without being
+            // fooled by its own live nds-vertical / nds-radial toggles. Update
+            // via the setFallback() method (e.g. from the showcase Fallback
+            // dropmenu or the Simplify button).
+            if (el.classList.contains('nds-radial')) this._fallback = 'radial';
+            else if (el.classList.contains('nds-vertical')) this._fallback = 'vertical';
+            else this._fallback = 'horizontal';
+
+            const bpVariant = (bp) => {
+                const m = el.className.match(new RegExp('\\bnds-(horizontal|vertical|radial)-' + bp + '\\b'));
+                return m ? m[1] : null;
+            };
+
+            const apply = () => {
+                const fallback = this._fallback || 'horizontal';
+                let pick = fallback;
+                if (window.matchMedia('(max-width: 600px)').matches) pick = bpVariant('sm') || fallback;
+                else if (window.matchMedia('(min-width: 601px) and (max-width: 960px)').matches) pick = bpVariant('md') || fallback;
+                else if (window.matchMedia('(min-width: 961px)').matches) pick = bpVariant('lg') || fallback;
+
+                el.classList.toggle('nds-vertical', pick === 'vertical');
+                el.classList.toggle('nds-radial',   pick === 'radial');
+
+                // Radial CSS hides non-current steps; if a linear variant had
+                // overshot totalSteps (the form "all completed" trick) and we
+                // flip into radial, re-clamp so a step stays marked current.
+                if (pick === 'radial' && this.currentStep > this.totalSteps) {
+                    this.currentStep = this.totalSteps;
+                }
+                this.updateProgress();
+                this.syncStepStates();
+
+                el.setAttribute('data-layout-ready', 'true');
+            };
+
+            this._applyLayout = apply;
+
+            // Track the breakpoint-scoped class set so we can ignore apply()'s
+            // own toggles of nds-vertical / nds-radial. Class-attribute changes
+            // on .nds-stepper are delivered by the shared NDS.onAttrChange
+            // registration below (module-level init) which calls back into
+            // this._reapplyLayoutIfChanged. Set up for every stepper so that
+            // adding a breakpoint class at runtime activates responsive
+            // behavior without requiring reinitialization.
+            const bpRe = /^nds-(?:horizontal|vertical|radial)-(?:sm|md|lg)$/;
+            const snapshot = () => [...el.classList].filter(c => bpRe.test(c)).sort().join(' ');
+            let lastSnapshot = snapshot();
+
+            this._reapplyLayoutIfChanged = () => {
+                const current = snapshot();
+                if (current !== lastSnapshot) {
+                    lastSnapshot = current;
+                    apply();
+                }
+            };
+
+            apply();
+            this._offLayoutResize = NDS.onResize(apply);
+        }
+
+        // Change the fallback variant at runtime. Updates the always-on
+        // class (nds-radial / nds-vertical, or none for horizontal), records
+        // the new fallback on the instance, and re-runs the responsive apply
+        // so the live variant class updates immediately.
+        setFallback(variant) {
+            if (!['horizontal', 'vertical', 'radial'].includes(variant)) return;
+            const el = this.element;
+            el.classList.remove('nds-vertical', 'nds-radial');
+            if (variant !== 'horizontal') el.classList.add(`nds-${variant}`);
+            this._fallback = variant;
+            if (this._applyLayout) this._applyLayout();
         }
 
         getCurrentStep() {
@@ -214,6 +315,12 @@
 
             const stepper = new NDSStepper(element);
             element.setAttribute('data-initialized', 'true');
+            // Release the critical-CSS visibility guard for every stepper, not
+            // just responsive ones — otherwise a non-responsive stepper that
+            // later gains a breakpoint class (via a runtime toggle) would be
+            // caught by the guard with data-layout-ready still missing, and
+            // would disappear until the page reloads.
+            element.setAttribute('data-layout-ready', 'true');
             element.ndsStepper = stepper;
 
             if (element.id) {
@@ -247,6 +354,17 @@
                     stepper.syncStepStates();
                     stepper.dispatchEvent();
                 }
+            });
+        });
+
+        // Class changes on a stepper re-evaluate responsive layout so runtime
+        // breakpoint-variant swaps (e.g. demo toggles flipping nds-radial-sm
+        // for nds-vertical-sm) apply immediately. Pooled through the same
+        // body-level MutationObserver that drives data-current/total above.
+        NDS.onAttrChange('.nds-stepper', ['class'], els => {
+            els.forEach(el => {
+                const stepper = el.ndsStepper;
+                if (stepper && stepper._reapplyLayoutIfChanged) stepper._reapplyLayoutIfChanged();
             });
         });
     }

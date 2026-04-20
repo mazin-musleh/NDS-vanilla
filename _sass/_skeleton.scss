@@ -80,6 +80,16 @@
     max-width: 100%;
 }
 
+/* Responsive-variant stepper: hide until the JS layout toggle lands. Lives
+   here in critical CSS because nds-main.min.css loads async — the stepper
+   would otherwise paint with its authored marker classes (which have no CSS
+   rules) before JS swaps in the active variant class. Opt-in via any
+   breakpoint-scoped variant class: nds-{horizontal|vertical|radial}-{sm|md|lg}. */
+.nds-stepper:is([class*="nds-horizontal-"], [class*="nds-vertical-"], [class*="nds-radial-"]):not([data-layout-ready]) {
+    visibility: hidden;
+}
+
+
 /* ── Reveal once critical CSS loads ── */
 .nds-hero-content,
 .nds-content-layout {

@@ -42,6 +42,12 @@
         display: none;
     }
 
+    // Radial-only look-ahead text. The shared DOM carries this in every step
+    // so a single stepper can morph across variants; hide unless radial.
+    .nds-stepper-next {
+        display: none;
+    }
+
     // Default horizontal stepper behavior
     .nds-stepper-step {
         flex: 1;
@@ -97,7 +103,10 @@
     }
 }
 
-.nds-stepper.nds-center {
+// Center modifier is a horizontal-only layout tweak (circle translated so
+// that step content stacks centered beneath it). Vertical and radial have
+// their own content alignment, so scope the rule to the horizontal default.
+.nds-stepper.nds-center:not(.nds-vertical):not(.nds-radial) {
     .nds-stepper-step {
         align-self: flex-start !important; //override nds-center align-self
 
@@ -411,11 +420,15 @@
             background-color: var(--stepper-line-completed);
         }
 
-        &:first-child .nds-stepper-base::after {
+        // Reverse flips visuals: DOM-first step sits at the visual bottom, with
+        // nothing below it — so it must not show the downward connector. Using
+        // the sibling combinator instead of :first-child because the shared-DOM
+        // markup places .nds-progress-circle before the steps, which breaks the
+        // :first-child / :last-child pair.
+        .nds-stepper-base::after {
             display: none;
         }
-
-        &:last-child .nds-stepper-base::after {
+        & ~ .nds-stepper-step .nds-stepper-base::after {
             display: block;
         }
     }
@@ -463,6 +476,7 @@
         }
 
         .nds-stepper-next {
+            display: block;
             font-size: clamp(10px, calc(var(--stepper-size) * 0.056 + 7.3px), 14px);
             color: var(--stepper-text-tertiary);
         }
