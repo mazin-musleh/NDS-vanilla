@@ -215,18 +215,19 @@
         });
 
         window.addEventListener('scroll', scrollHandler, { passive: true });
-        NDS.onResize(invalidate);
+        const offResize = NDS.onResize(invalidate);
         window.addEventListener('mousemove', mousemoveHandler, { passive: true });
 
         ac.signal.addEventListener('abort', () => {
             window.removeEventListener('scroll', scrollHandler);
             window.removeEventListener('mousemove', mousemoveHandler);
+            offResize();
         });
     }
 
     function destroy() {
         if (currentInstance) {
-            const { ac, accMenu, animTarget, toggleBtn, isTopMode, drawer } = currentInstance;
+            const { ac, _offResize, accMenu, animTarget, toggleBtn, isTopMode, drawer } = currentInstance;
 
             // Close menu if open before destroying
             if (hasState(animTarget, 'open')) {
@@ -244,6 +245,9 @@
                 if (NDS.Backdrop) NDS.Backdrop.hide();
                 accMenu.style.removeProperty('z-index');
             }
+
+            // Detach the NDS.onResize subscriber (pooled, so must be explicitly unsubscribed).
+            if (_offResize) _offResize();
 
             // Abort all listeners registered via this AbortController
             ac.abort();
@@ -312,11 +316,10 @@
                 if (hasState(animTarget, 'open')) closeMenu(ctx);
             }
         };
-        NDS.onResize(resizeHandler);
-        ac.signal.addEventListener('abort', () => {
-            // NDS.onResize doesn't support removal, but the handler
-            // checks currentInstance implicitly via ctx closure
-        });
+        // Capture the unsubscribe handle so destroy() can detach the resize subscriber.
+        // Each initializeSideMenu() call would otherwise leak a new pooled subscriber on top
+        // of the previous one (the stale handler keeps mutating state via ctx closure).
+        ctx._offResize = NDS.onResize(resizeHandler);
     }
 
     if (typeof window !== 'undefined') {

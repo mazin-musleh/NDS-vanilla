@@ -1649,57 +1649,10 @@
     }
 
     // ==============================================
-    // FEEDBACK OBSERVER
-    // ==============================================
-    function initFeedbackObserver() {
-        var feedbackElements = document.querySelectorAll('.nds-feedback .msg');
-
-        feedbackElements.forEach(function(msgElement) {
-            var feedbackPlaceholder = msgElement.closest('.nds-feedback');
-            var feedbackParent = feedbackPlaceholder ? feedbackPlaceholder.parentElement : null;
-
-            if (!feedbackPlaceholder) return;
-
-            var shouldToggleParent = false;
-            if (feedbackParent) {
-                var isFormContainer = feedbackParent.classList.contains('nds-form-footer') ||
-                                     feedbackParent.classList.contains('nds-form-header');
-                var isOnlyChild = feedbackParent.children.length === 1;
-                shouldToggleParent = isFormContainer && isOnlyChild;
-            }
-
-            // Initial state
-            var hasContent = msgElement.textContent.trim() !== '';
-            feedbackPlaceholder.classList.toggle('show', hasContent);
-            if (shouldToggleParent) {
-                feedbackParent.classList.toggle('show', hasContent);
-            }
-
-            // Observe content changes. Core's NDS.onAttrChange is attribute-only;
-            // there is no shared content-mutation pool yet, so use a scoped MutationObserver here.
-            var observer = new MutationObserver(function() {
-                var hasContent = msgElement.textContent.trim() !== '';
-                feedbackPlaceholder.classList.toggle('show', hasContent);
-                if (shouldToggleParent) {
-                    feedbackParent.classList.toggle('show', hasContent);
-                }
-            });
-
-            observer.observe(msgElement, {
-                characterData: true,
-                childList: true,
-                subtree: true
-            });
-        });
-    }
-
-    // ==============================================
     // DYNAMIC CONTENT OBSERVER
     // ==============================================
     function initDynamicContentObserver() {
-        if (window.NDS && window.NDS.Forms && window.NDS.Forms._dynamicObserver) {
-            return;
-        }
+        if (NDS.Forms._dynamicObserver) return;
 
         NDS.onDOMAdd('.nds-form-control', function() { initFormControlClasses(); });
         NDS.onDOMAdd('.nds-auto-fill', function() { initInputAutoFill(); });
@@ -1779,7 +1732,6 @@
         initFormControlClasses();
         initInputAutoFill();
         initDynamicContentObserver();
-        initFeedbackObserver();
     }
 
     // ==============================================

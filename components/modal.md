@@ -87,7 +87,7 @@ direction: ltr
                                                 <span class="nds-feedback-icon">
                                                     <i class="nds-icon" aria-hidden="true"></i>
                                                 </span>
-                                                <span class="msg"></span>
+                                                <span class="nds-feedback-message"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@ direction: ltr
           &lt;span class="nds-feedback-icon"&gt;
             &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
           &lt;/span&gt;
-          &lt;span class="msg"&gt;&lt;/span&gt;
+          &lt;span class="nds-feedback-message"&gt;&lt;/span&gt;
         &lt;/span&gt;
       &lt;/div&gt;
     &lt;/div&gt;

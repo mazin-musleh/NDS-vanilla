@@ -115,6 +115,11 @@
         }
 
         init() {
+            // One AbortController per instance — every addEventListener below passes its signal so
+            // destroy() can detach all listeners atomically (prevents the O(n) document-keydown leak
+            // on reinit and the swiper-local hover/scroll/nav listeners from lingering).
+            this._ac = new AbortController();
+
             this.updateSlidesPerView();
 
             // Set total slides count as CSS custom property
@@ -303,6 +308,7 @@
         // ==============================================
 
         setupNavigation() {
+            const { signal } = this._ac;
             // Helper to handle navigation action
             const handleNav = (btn, action) => {
                 // Use mousedown for immediate response on press
@@ -310,13 +316,13 @@
                     if (e.button !== 0) return; // Only left mouse button
                     e.preventDefault();
                     action();
-                });
+                }, { signal });
 
                 // Use touchstart for immediate response on touch devices
                 btn.addEventListener('touchstart', (e) => {
                     e.preventDefault();
                     action();
-                }, { passive: false });
+                }, { passive: false, signal });
 
                 // Keep keyboard support (Enter/Space keys trigger click naturally)
                 btn.addEventListener('keydown', (e) => {
@@ -324,7 +330,7 @@
                         e.preventDefault();
                         action();
                     }
-                });
+                }, { signal });
             };
 
             if (this.prevBtn) {
@@ -369,7 +375,7 @@
             this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => {
                 this.detectCurrentSlide();
                 this.updateState();
-            }), { passive: true });
+            }), { passive: true, signal: this._ac.signal });
         }
 
         detectCurrentSlide() {
@@ -420,19 +426,20 @@
             this.wrapper.style.overflow = '';
 
             // Helper to handle navigation action (same as in setupNavigation)
+            const { signal } = this._ac;
             const handleNav = (btn, action) => {
                 // Use mousedown for immediate response on press
                 btn.addEventListener('mousedown', (e) => {
                     if (e.button !== 0) return; // Only left mouse button
                     e.preventDefault();
                     action();
-                });
+                }, { signal });
 
                 // Use touchstart for immediate response on touch devices
                 btn.addEventListener('touchstart', (e) => {
                     e.preventDefault();
                     action();
-                }, { passive: false });
+                }, { passive: false, signal });
 
                 // Keep keyboard support (Enter/Space keys trigger click naturally)
                 btn.addEventListener('keydown', (e) => {
@@ -440,7 +447,7 @@
                         e.preventDefault();
                         action();
                     }
-                });
+                }, { signal });
             };
 
             for (let i = 0; i < pageCount; i++) {
@@ -498,10 +505,12 @@
                 this.container.setAttribute('tabindex', '0');
             }
 
+            const { signal } = this._ac;
+
             // Track if mouse is over swiper for keyboard navigation
             let isHovered = false;
-            this.container.addEventListener('mouseenter', () => isHovered = true);
-            this.container.addEventListener('mouseleave', () => isHovered = false);
+            this.container.addEventListener('mouseenter', () => isHovered = true, { signal });
+            this.container.addEventListener('mouseleave', () => isHovered = false, { signal });
 
             document.addEventListener('keydown', (e) => {
                 // Only respond if swiper is focused or hovered
@@ -530,7 +539,7 @@
                         this.goTo(this.slides.length - this.slidesPerView);
                         break;
                 }
-            });
+            }, { signal });
         }
 
         // ==============================================
@@ -629,6 +638,9 @@
         // CLEANUP
         // ==============================================
 
+        // Instance becomes unusable after destroy(): _ac is nulled so any subsequent call to a setup
+        // method that reads `this._ac.signal` will throw. Re-initialize via `NDS.Swiper.create(el)`
+        // (constructs a fresh instance) rather than calling instance methods directly.
         destroy() {
             this.container.removeAttribute('data-swiper-initialized');
             this.container.removeAttribute('tabindex');
@@ -637,9 +649,8 @@
             }
             if (this._offVisibility) { this._offVisibility(); this._offVisibility = null; }
             if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
-            if (this.resizeHandler) {
-                window.removeEventListener('resize', this.resizeHandler);
-            }
+            if (this._offResize) { this._offResize(); this._offResize = null; }
+            if (this._ac) { this._ac.abort(); this._ac = null; }
         }
     }
 
