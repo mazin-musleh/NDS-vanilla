@@ -31,8 +31,8 @@ direction: ltr
         <div class="nds-section-body">
             <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The templates below cover the most common government service screens. Copy a template, fill in your content, and ship.</p>
         </div>
-        <div class="nds-section-body">
-            <div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="0">
+        <div class="nds-section-body  nds-max-width">
+            <div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40">
                 <div class="nds-swiper-wrapper">
                     {% for tpl in site.data.content.templates %}
                     <div class="nds-swiper-slide">
@@ -177,8 +177,8 @@ direction: ltr
 <section id="components" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Components</h2>
-            <p class="nds-section-description">{{ site.data.content.components | size }} components, each with markup, styling, and JavaScript behavior. All built from scratch.</p>
+            <h2 class="nds-section-title">Components ({{ site.data.content.components | size }})</h2>
+            <p class="nds-section-description">Each with markup, styling, and JavaScript behavior. All built from scratch.</p>
         </div>
         <div class="nds-form-container nds-search-box" data-filter-target="components_list">
             <div class="nds-search-content">
