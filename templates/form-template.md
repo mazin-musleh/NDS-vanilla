@@ -117,7 +117,7 @@ sidemenu_mode: false
 
                     <div class="nds-form-actions">
                         <button type="button" class="nds-btn nds-primary"
-                            data-stepper-control="next" data-stepper-target="formStepperVertical">
+                            data-stepper-control="next" data-stepper-target="formStepper">
                             <span class="nds-label">Continue</span>
                         </button>
                     </div>
@@ -256,11 +256,11 @@ sidemenu_mode: false
 
                     <div class="nds-form-actions">
                         <button type="button" class="nds-btn nds-secondary-outline"
-                            data-stepper-control="previous" data-stepper-target="formStepperVertical">
+                            data-stepper-control="previous" data-stepper-target="formStepper">
                             <span class="nds-label">Back</span>
                         </button>
                         <button type="button" class="nds-btn nds-primary"
-                            data-stepper-control="next" data-stepper-target="formStepperVertical">
+                            data-stepper-control="next" data-stepper-target="formStepper">
                             <span class="nds-label">Continue</span>
                         </button>
                     </div>
@@ -313,11 +313,11 @@ sidemenu_mode: false
 
                     <div class="nds-form-actions">
                         <button type="button" class="nds-btn nds-secondary-outline"
-                            data-stepper-control="previous" data-stepper-target="formStepperVertical">
+                            data-stepper-control="previous" data-stepper-target="formStepper">
                             <span class="nds-label">Back</span>
                         </button>
                         <button type="submit" class="nds-btn nds-primary"
-                            data-stepper-control="next" data-stepper-target="formStepperVertical">
+                            data-stepper-control="next" data-stepper-target="formStepper">
                             <span class="nds-label">Submit Application</span>
                         </button>
                     </div>
@@ -353,7 +353,7 @@ sidemenu_mode: false
                             </a>
                             <button type="button" class="nds-btn nds-primary"
                                 data-stepper-control="goto" data-stepper-value="1"
-                                data-stepper-target="formStepperVertical">
+                                data-stepper-target="formStepper">
                                 <span class="nds-label">Submit another</span>
                             </button>
                         </div>
@@ -364,58 +364,12 @@ sidemenu_mode: false
         </div>
 
         <aside class="nds-sideinfo nds-sticky nds-top nds-card nds-stroke nds-shadow" aria-label="Application progress">
-            <!-- Desktop / tablet: vertical stepper -->
-            <div class="nds-stepper nds-vertical nds-desktop-only"
-                id="formStepperVertical" data-current="1" data-total="4">
-                <div class="nds-stepper-step">
-                    <div class="nds-stepper-base">
-                        <div class="nds-stepper-circle" data-step-text="1"></div>
-                    </div>
-                    <div class="nds-stepper-content">
-                        <div class="nds-stepper-text">
-                            <span class="nds-stepper-title">Identity Verification</span>
-                            <span class="nds-stepper-description">Confirm your National ID and OTP</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-stepper-step">
-                    <div class="nds-stepper-base">
-                        <div class="nds-stepper-circle" data-step-text="2"></div>
-                    </div>
-                    <div class="nds-stepper-content">
-                        <div class="nds-stepper-text">
-                            <span class="nds-stepper-title">Personal Information</span>
-                            <span class="nds-stepper-description">Name, contact and address</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-stepper-step">
-                    <div class="nds-stepper-base">
-                        <div class="nds-stepper-circle" data-step-text="3"></div>
-                    </div>
-                    <div class="nds-stepper-content">
-                        <div class="nds-stepper-text">
-                            <span class="nds-stepper-title">Review &amp; Submit</span>
-                            <span class="nds-stepper-description">Confirm details and submit</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-stepper-step">
-                    <div class="nds-stepper-base">
-                        <div class="nds-stepper-circle" data-step-text="4"></div>
-                    </div>
-                    <div class="nds-stepper-content">
-                        <div class="nds-stepper-text">
-                            <span class="nds-stepper-title">Submitted</span>
-                            <span class="nds-stepper-description">Receive your reference number</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mobile: radial stepper -->
-            <div class="nds-stepper nds-radial nds-mobile-only"
-                id="formStepperRadial" data-current="1" data-total="4">
+            <!-- Vertical fallback (tablet + desktop) with a radial override on
+                 mobile so the 4-step flow stays compact on small screens. -->
+            <div class="nds-stepper nds-radial nds-vertical-lg"
+                id="formStepper"
+                data-current="1" data-total="4">
+                <!-- Radial-only progress ring; hidden on non-radial variants by base CSS. -->
                 <div class="nds-progress-circle">
                     <svg width="64" height="64" viewBox="0 0 24 24">
                         <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />
@@ -479,8 +433,7 @@ sidemenu_mode: false
 
 <script>
     (function () {
-        const vertical = document.getElementById('formStepperVertical');
-        const radial = document.getElementById('formStepperRadial');
+        const stepper = document.getElementById('formStepper');
         const panels = document.querySelectorAll('[data-form-step]');
 
         const requiredNotice = document.querySelector('#formTemplate .nds-required-notice');
@@ -491,9 +444,36 @@ sidemenu_mode: false
             });
             // The success panel has no required fields, so hide the notice there.
             if (requiredNotice) requiredNotice.hidden = step === 4;
-            // Scroll the form section into view so the user sees the new panel from the top
+            // Same scroll-to-top semantics as nds-pagination.js: only scroll when
+            // the form top is hidden behind the sticky nav, and offset by nav height.
             const main = document.querySelector('#formTemplate .nds-info-content');
-            if (main) main.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (main) {
+                const nav = document.querySelector('.nds-main-nav');
+                const navHeight = nav ? nav.offsetHeight : 72;
+                const targetTop = main.getBoundingClientRect().top;
+                if (targetTop < navHeight) {
+                    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    window.scrollTo({
+                        top: targetTop + window.pageYOffset - navHeight - 16,
+                        behavior: reduced ? 'auto' : 'smooth'
+                    });
+                }
+            }
+            const panel = document.querySelector('#form-template [data-form-step]:not([hidden])');
+            if (panel) focusNext(panel);
+        }
+
+        // Move focus into the new panel so keyboard/AT users don't stay on the
+        // previous step's button. Prefer the first form field; fall back to the
+        // panel heading (with tabindex=-1) on panels without inputs like the
+        // success step. preventScroll avoids fighting the smooth scroll above.
+        function focusNext(panel) {
+            let target = panel.querySelector('input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled])');
+            if (!target) {
+                target = panel.querySelector('h1, h2, h3, .nds-card-title, .nds-section-title');
+                if (target && !target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+            }
+            if (target) target.focus({ preventScroll: true });
         }
 
         function valueOf(id) {
@@ -522,29 +502,27 @@ sidemenu_mode: false
             return 'APP-' + year + '-' + rand;
         }
 
-        // Mirror current step to the radial stepper, switch panels, and run
-        // step-specific hooks (review summary, reference number).
-        // Special case: when the success panel (step 4) is reached, push the
-        // vertical stepper one past totalSteps so syncStepStates() marks every
-        // step (including 4) as completed. Radial caps at totalSteps internally.
+        // Switch panels and run step-specific hooks (review summary, reference
+        // number). Special case: when the success panel (step 4) is reached on
+        // a non-radial layout, push currentStep past totalSteps so
+        // syncStepStates() marks every step as completed. On radial the push
+        // is skipped (clamping would leave no step marked current and the CSS
+        // hides non-current steps, collapsing the whole aside).
         document.addEventListener('nds:stepper:change', (e) => {
-            if (e.target.id !== 'formStepperVertical') return;
+            if (e.target.id !== 'formStepper') return;
             const step = e.detail.currentStep;
             const panelStep = Math.min(step, 4);
 
-            if (radial && radial.dataset.current !== String(panelStep)) {
-                radial.dataset.current = String(panelStep);
-            }
             showPanel(panelStep);
             if (panelStep === 3) populateReview();
             if (panelStep === 4) {
                 const ref = document.getElementById('ft-reference');
                 if (ref) ref.textContent = generateReference();
-                if (step === 4) {
+                if (step === 4 && !stepper.classList.contains('nds-radial')) {
                     // Defer so we don't reenter syncStepStates mid-event.
                     // The follow-up change fires with step=5; panelStep clamps
                     // back to 4, so no recursion and the panel stays visible.
-                    queueMicrotask(() => { vertical.dataset.current = '5'; });
+                    queueMicrotask(() => { stepper.dataset.current = '5'; });
                 }
             }
         });
