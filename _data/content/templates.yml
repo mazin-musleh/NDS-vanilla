@@ -23,6 +23,13 @@
   tags: ["DGA", "Forms", "Upload", "Side Info", "Grid"]
   url: "/templates/contact-us-template.html"
 
+- title: "Content Template"
+  description: "Long-form editorial layout with article-style sections, numbered sub-sections, and a sticky on-this-page table of contents for in-page navigation."
+  icon: '<i class="hgi hgi-stroke hgi-book-open-01"></i>'
+  category: "Content"
+  tags: ["DGA", "Side Info", "Article", "TOC"]
+  url: "/templates/content-template.html"
+
 - title: "Help & Support Template"
   description: "Help hub with a flat sub-hero and a responsive grid of support-channel cards, each with a featured icon, description, availability, and response time."
   icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
