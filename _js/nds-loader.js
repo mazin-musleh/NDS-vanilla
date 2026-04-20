@@ -77,6 +77,11 @@
             init: () => NDS.Drawer?.init?.(),
         },
         {
+            name: 'toc',
+            selector: '.nds-toc',
+            init: () => NDS.Toc?.init?.(),
+        },
+        {
             name: 'scrollMore',
             selector: '.nds-scroll-more',
             init: () => NDS.ScrollMore?.init?.(),

@@ -183,6 +183,13 @@
   tags: ["CSS"]
   url: "/components/tags.html"
 
+- title: "TOC"
+  description: "Auto-populated in-page table of contents with active-section tracking"
+  icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'
+  category: "UI"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/toc.html"
+
 # Form Components
 - title: "Text Inputs"
   description: "Single-line fields with labels, icons, and validation"
