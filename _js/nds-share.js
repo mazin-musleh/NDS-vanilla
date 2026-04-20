@@ -1,10 +1,10 @@
 /**
  * NDS Share — standalone share-page utility
  *
- * Binds to any `.nds-share` wrapper containing a `.nds-dropmenu` trigger and
- * four item buttons (`.nds-share-x`, `.nds-share-linkedin`,
- * `.nds-share-whatsapp`, `.nds-share-copy`). Author writes the full dropmenu
- * markup; this module only wires click handlers.
+ * Binds to any `.nds-share` wrapper containing share buttons with one of
+ * `.nds-share-x`, `.nds-share-linkedin`, `.nds-share-whatsapp`,
+ * `.nds-share-copy`. Works with either a `.nds-dropmenu` trigger or an
+ * `.nds-inline` row of buttons — the module only wires click handlers.
  *
  * Per-instance overrides on the `.nds-share` wrapper:
  *   - data-share-url="https://…"   defaults to window.location.href
@@ -61,6 +61,8 @@
         else if (button.classList.contains('nds-share-copy')) copyLink(url, button);
     }
 
+    const TARGET_SELECTOR = '.nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy';
+
     let _ac = null;
     function init() {
         if (_ac) _ac.abort();
@@ -68,7 +70,7 @@
         document.addEventListener('click', (e) => {
             const wrapper = e.target.closest('.nds-share');
             if (!wrapper) return;
-            const button = e.target.closest('.nds-dropmenu-item');
+            const button = e.target.closest(TARGET_SELECTOR);
             if (!button || !wrapper.contains(button)) return;
             handleClick(button);
         }, { signal: _ac.signal });

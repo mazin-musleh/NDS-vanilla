@@ -6,7 +6,10 @@
 @use '../mixins' as *;
 
 .nds-share {
-    display: block;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
     min-width: 40px;
 
     .nds-dropmenu-menu .nds-label {

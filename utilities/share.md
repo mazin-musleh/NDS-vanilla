@@ -2,7 +2,7 @@
 layout: page
 title: Share
 hero_title: Share - National Design System
-hero_description: A social sharing dropmenu that opens X, LinkedIn, and WhatsApp share dialogs and copies the page link to the clipboard, with per-instance URL and title overrides
+hero_description: A social sharing utility that opens X, LinkedIn, and WhatsApp share dialogs and copies the page link to the clipboard. Works as a dropmenu or an inline row of buttons, with per-instance URL and title overrides
 breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
 lang: en
 direction: ltr
@@ -210,6 +210,99 @@ direction: ltr
     </div>
 </section>
 
+<!-- Inline Buttons -->
+<section id="shareInline" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Inline Buttons</h2>
+            <p class="nds-section-description">Drop the same four share buttons directly inside <code class="nds-inline-code lang-html">.nds-share</code> (no <code class="nds-inline-code lang-html">.nds-dropmenu</code>, no trigger) to render them as an inline row. Use any button variant you like, and add <code class="nds-inline-code lang-html">.nds-icon-only</code> to hide the label when space is tight.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-icon-only", ".nds-share .nds-btn", "iconOnly"]'>
+                            <span class="nds-label">Icon Only</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo">
+                        <div class="nds-share">
+                            <button class="nds-btn nds-secondary-outline nds-share-x" type="button" aria-label="Share on X">
+                                <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                                <span class="nds-label">X</span>
+                            </button>
+                            <button class="nds-btn nds-secondary-outline nds-share-linkedin" type="button" aria-label="Share on LinkedIn">
+                                <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                                <span class="nds-label">LinkedIn</span>
+                            </button>
+                            <button class="nds-btn nds-secondary-outline nds-share-whatsapp" type="button" aria-label="Share on WhatsApp">
+                                <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+                                <span class="nds-label">WhatsApp</span>
+                            </button>
+                            <button class="nds-btn nds-secondary-outline nds-share-copy" type="button" aria-label="Copy Link"
+                                data-label="Link Copied!" data-message="Page link copied to clipboard">
+                                <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+                                <span class="nds-label">Copy Link</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-share-inline-1" id="tab-share-inline-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-share-inline-1"
+                            aria-labelledby="tab-share-inline-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <code class="lang-html code">
+&lt;!-- Add .nds-icon-only to any button to hide its label --&gt;
+&lt;div class="nds-share"&gt;
+    &lt;button class="nds-btn nds-secondary-outline nds-share-x" type="button" aria-label="Share on X"&gt;
+        &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;X&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="nds-btn nds-secondary-outline nds-share-linkedin" type="button" aria-label="Share on LinkedIn"&gt;
+        &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;LinkedIn&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="nds-btn nds-secondary-outline nds-share-whatsapp" type="button" aria-label="Share on WhatsApp"&gt;
+        &lt;i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;WhatsApp&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class="nds-btn nds-secondary-outline nds-share-copy" type="button" aria-label="Copy Link"
+        data-label="Link Copied!" data-message="Page link copied to clipboard"&gt;
+        &lt;i class="nds-icon nds-hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Copy Link&lt;/span&gt;
+    &lt;/button&gt;
+&lt;/div&gt;
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="shareFeatures" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -237,7 +330,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-link-04"></i>
                         <span class="nds-label">Copy Link Composition</span>
                     </span>
-                    <p class="nds-item-desc">The Copy Link action reuses the <a class="nds-color" href="{{ 'utilities/copy' | relative_url }}">Copy</a> utility for clipboard write, checkmark flash, label swap, and screen reader announcement, then closes the dropmenu after the flash restores.</p>
+                    <p class="nds-item-desc">The Copy Link action reuses the <a class="nds-color" href="{{ 'utilities/copy' | relative_url }}">Copy</a> utility for clipboard write, checkmark flash, label swap, and screen reader announcement. In the dropmenu variant it also closes the menu after the flash restores.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -249,9 +342,9 @@ direction: ltr
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-menu-01"></i>
-                        <span class="nds-label">Dropmenu Integration</span>
+                        <span class="nds-label">Dropmenu or Inline</span>
                     </span>
-                    <p class="nds-item-desc">Share wraps <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> for open/close, focus management, and outside-click handling. The Copy Link item uses <code class="nds-inline-code lang-html">data-no-auto-close</code> so the success feedback stays visible.</p>
+                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-dropmenu</code> to get a collapsible menu with <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> handling open/close and outside-click. Omit it to render the buttons as an inline row &mdash; same JS, same data attributes.</p>
                 </div>
             </div>
         </div>
@@ -272,7 +365,8 @@ direction: ltr
                     <li>Use the default form (no data attributes) for <strong>page-level sharing</strong>, typically in the hero action bar. It always reflects the current URL and title, so it works on every page without per-page configuration</li>
                     <li>Use <code class="nds-inline-code lang-html">data-share-url</code> and <code class="nds-inline-code lang-html">data-share-title</code> for <strong>item-level sharing</strong>: an article card, a news story, a downloadable resource. Keeps the utility reusable without duplicating JS</li>
                     <li>Always set a meaningful <code class="nds-inline-code lang-html">aria-label</code> on the trigger ("Share Page", "Share Article", "Share Report") so screen reader users know what is being shared</li>
-                    <li>Keep <code class="nds-inline-code lang-html">data-no-auto-close</code> on the Copy Link item. Without it the dropmenu closes before the 2 second success flash finishes, and users never see the confirmation</li>
+                    <li>Keep <code class="nds-inline-code lang-html">data-no-auto-close</code> on the Copy Link item <strong>in the dropmenu variant</strong>. Without it the dropmenu closes before the 2 second success flash finishes, and users never see the confirmation. The inline variant does not need this attribute</li>
+                    <li>Pick the <strong>inline variant</strong> for article footers, cards, and anywhere you want the share targets visible at rest. Pick the <strong>dropmenu variant</strong> for toolbar-style placements where the trigger needs to collapse</li>
                     <li>Pair <code class="nds-inline-code lang-html">data-label</code> with <code class="nds-inline-code lang-html">data-message</code> on the Copy Link item so sighted users and screen reader users get equivalent feedback. The defaults ("Link Copied!" / "Page link copied to clipboard") are a good starting point</li>
                     <li>Avoid stacking more than one Share wrapper in the same visual block. If a list has a share button per row, put the trigger inside the row, not next to a page-level share</li>
                     <li>Do not remove share targets silently to "simplify" the UI. Either show all four or drop the Share utility on that page entirely; partial sets confuse returning users</li>
