@@ -102,7 +102,7 @@
             title: title || '',
             description: message || '',
             display: 'toast',
-            position: 'bottom',
+            position: 'top',
             duration: 4000
         });
     }
