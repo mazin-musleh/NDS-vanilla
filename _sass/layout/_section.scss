@@ -128,8 +128,6 @@
         &.nds-sticky {
             position: sticky;
 
-            margin-bottom: 0;
-
             @include tablet(max) {
                 position: static;
                 top: unset;
