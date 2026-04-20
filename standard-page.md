@@ -8,6 +8,7 @@ direction: ltr              # ltr | rtl
 # === Hero Section (Sub Hero) ===
 hero_title: Page Title - National Design System
 hero_description: Brief description of this page
+# hero_brief: Short bold lead shown between title and description  # optional
 # hero_style: nds-flat          # nds-flat | nds-aside
 # hero_image: assets/img/hero.webp  # override site-level hero_image_sub
 # hero_image_pos: 50% 30%           # hero image position

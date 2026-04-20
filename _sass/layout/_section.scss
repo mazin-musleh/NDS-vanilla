@@ -82,6 +82,12 @@
     color: var(--_section-description-color);
 }
 
+.nds-section-brief {
+    font-size: var(--nds-text-lg-FS);
+    line-height: var(--nds-text-lg-LH);
+    font-weight: 600;
+}
+
 /* ── Side info ── */
 
 .nds-sideinfo-section {

@@ -112,6 +112,9 @@ Resolution: page front matter → data file → defaults
             </div>
             {%- endif %}
             <h1 class="nds-section-title">{{ page.hero_title | default: site.hero_title }}</h1>
+            {%- if page.hero_brief %}
+            <p class="nds-section-brief">{{ page.hero_brief }}</p>
+            {%- endif %}
             {%- if hero_tags %}
             <div class="nds-section-meta">
                 <div class="nds-section-tags">
