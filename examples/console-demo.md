@@ -13,29 +13,7 @@ hide_share_page: true
 hideFeedback: true
 ---
 
-<!-- System Alert -->
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-body">
-            <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
-                <span class="nds-feedback nds-alert-icon">
-                    <span class="nds-feedback-icon">
-                        <i class="nds-icon" aria-hidden="true"></i>
-                    </span>
-                </span>
-                <div class="nds-alert-content">
-                    <div class="nds-alert-text">
-                        <span class="nds-alert-title">Scheduled Maintenance</span>
-                        <p class="nds-alert-description">System maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be temporarily unavailable.</p>
-                    </div>
-                </div>
-                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
-                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <!-- Analytics -->
 <section id="analytics" class="nds-content-section">
@@ -46,6 +24,23 @@ hideFeedback: true
         </div>
     </div>
     <div class="nds-section-body">
+    <!-- System Alert -->
+        <div class="nds-alert nds-card nds-inline nds-content-block" data-status="warning" role="alert">
+            <span class="nds-feedback nds-alert-icon">
+                <span class="nds-feedback-icon">
+                    <i class="nds-icon" aria-hidden="true"></i>
+                </span>
+            </span>
+            <div class="nds-alert-content">
+                <div class="nds-alert-text">
+                    <span class="nds-alert-title">Scheduled Maintenance</span>
+                    <p class="nds-alert-description">System maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be temporarily unavailable.</p>
+                </div>
+            </div>
+            <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert">
+                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+            </button>
+        </div>
         <div class="nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
             <div class="nds-card nds-stroke">
                 <div class="nds-card-content">
