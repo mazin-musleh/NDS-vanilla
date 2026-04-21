@@ -275,6 +275,13 @@
   tags: ["JS", "CSS"]
   url: "/components/tables.html"
 
+- title: "Sort"
+  description: "DOM-reorder engine for lists, grids, and tables with type auto-detect and URL sync"
+  icon: '<i class="hgi hgi-stroke hgi-sorting-05"></i>'
+  category: "Data"
+  tags: ["JS", "API"]
+  url: "/components/sort.html"
+
 - title: "Chart"
   description: "Lightweight SVG charts: bar, line, pie, and donut"
   icon: '<i class="hgi hgi-stroke hgi-chart"></i>'
