@@ -1012,7 +1012,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-content-block">
+                            <div class="nds-block">
                                 <p>Place an empty <code class="nds-inline-code lang-html">data-filter</code> placeholder in the dropmenu, then call <code class="nds-inline-code lang-js">populateFilter()</code> after fetching values. The method generates the same auto-generated inputs as <code class="nds-inline-code lang-html">data-filter-type</code> and binds all listeners automatically.</p>
                             </div>
                         </div>
@@ -1103,7 +1103,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-content-block">
+                            <div class="nds-block">
                                 <p>Call <code class="nds-inline-code lang-js">populateFilter()</code> again whenever a parent filter changes. The method clears the previous inputs and generates new ones from the updated values.</p>
                             </div>
                         </div>
@@ -1172,7 +1172,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-content-block">
+                            <div class="nds-block">
                                 <p>Add a separate <code class="nds-inline-code lang-html">&lt;form&gt;</code> element with <code class="nds-inline-code lang-html">data-filter-target</code> linking it to the filter anchor, plus <code class="nds-inline-code lang-html">data-filter-submit</code> and <code class="nds-inline-code lang-html">data-ajax</code> attributes. Set the <code class="nds-inline-code lang-html">action</code> attribute to the API endpoint URL.</p>
                                 <p><code class="nds-inline-code lang-html">.nds-filter</code> stays a pure anchor — the form drives submission. HTML responses are automatically injected into the target container. For JSON responses, listen for the <code class="nds-inline-code lang-js">nds:filterFormComplete</code> event and render the data yourself.</p>
                             </div>
@@ -1325,7 +1325,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-content-block">
+                            <div class="nds-block">
                                 <p>Use <code class="nds-inline-code lang-js">preventDefault()</code> on the <code class="nds-inline-code lang-js">nds:filterFormAjax</code> event to fully control the AJAX request and rendering. The filter component still handles UI updates (chips, count, URL params) before dispatching the event.</p>
                                 <p>All filter actions (apply, chip removal, reset, clear) fire through <code class="nds-inline-code lang-js">nds:filterFormAjax</code>, so you only need one event listener.</p>
                             </div>
@@ -1467,7 +1467,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use client-side filtering when all items are already on the page and the dataset is small enough to load at once (under a few hundred cards)</li>
@@ -1483,7 +1483,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
 
                 <h4>Filter Anchor (<code class="nds-inline-code lang-html">.nds-filter</code>)</h4>
@@ -1563,7 +1563,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
@@ -1573,7 +1573,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <code class="nds-inline-code lang-js">NDS.Filter</code> API provides methods to create, query, and control filter instances programmatically. For dynamically added filter forms, call <code class="nds-inline-code lang-js">NDS.Filter.init()</code> to initialize new instances.</p>
                 <div class="nds-code nds-expandable">

@@ -433,7 +433,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Use accordions to progressively disclose content. Show headings first, let users expand what they need</li>
@@ -443,7 +443,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Accordion</strong> API provides methods to create instances, control panels programmatically, and listen for state changes. For dynamically added accordions, call <strong>NDS.Accordion.reinit()</strong> to initialize new elements.</p>
                 <div class="nds-code nds-expandable">

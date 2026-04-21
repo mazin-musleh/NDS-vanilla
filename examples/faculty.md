@@ -96,7 +96,7 @@ sidemenu_mode: top
                 <!-- Biography Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-cv" aria-labelledby="tab-cv"
                     tabindex="0">
-                    <div class="nds-content-block">
+                    <div class="nds-block">
                         <h3 class="nds-block-title">Biography</h3>
                         <p>Dr. Mohammed Ahmed Al-Salem is an Associate Professor in the Department of Computer Science at the College of Computer and Information Sciences. He has over 15 years of academic and research experience in the fields of Artificial Intelligence and Machine Learning.</p>
                         <p>He has supervised more than 30 master's and doctoral theses and participated in numerous locally and internationally funded research projects. He also serves as Head of the Research and Innovation Unit in the department.</p>
@@ -105,7 +105,7 @@ sidemenu_mode: top
                 <!-- Research Interests Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-research"
                     aria-labelledby="tab-research" aria-hidden="true" tabindex="-1" hidden>
-                    <div class="nds-content-block">
+                    <div class="nds-block">
                         <h3 class="nds-block-title">Research Interests</h3>
                         <ul>
                             <li>Deep Learning and Artificial Neural Networks</li>
@@ -120,7 +120,7 @@ sidemenu_mode: top
                 <!-- Publications Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-publications"
                     aria-labelledby="tab-publications" aria-hidden="true" tabindex="-1" hidden>
-                    <div class="nds-content-block">
+                    <div class="nds-block">
                         <h3 class="nds-block-title">Publications</h3>
                         <ol>
                             <li>An Enhanced Deep Learning Model for Arabic Text Processing - IEEE Journal of Artificial Intelligence, 2024</li>
@@ -135,7 +135,7 @@ sidemenu_mode: top
                 <!-- Experience Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-experiences"
                     aria-labelledby="tab-experiences" aria-hidden="true" tabindex="-1" hidden>
-                    <div class="nds-content-block">
+                    <div class="nds-block">
                         <h3 class="nds-block-title">Professional Experience</h3>
                         <ul>
                             <li>Associate Professor - Department of Computer Science, College of Computer and Information Sciences (2019 - Present)</li>
@@ -150,7 +150,7 @@ sidemenu_mode: top
                 <!-- Education Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-education"
                     aria-labelledby="tab-education" aria-hidden="true" tabindex="-1" hidden>
-                    <div class="nds-content-block">
+                    <div class="nds-block">
                         <h3 class="nds-block-title">Academic Qualifications</h3>
                         <dl class="nds-definition-list nds-tableView">
                         <div class="nds-definition-item">
@@ -171,7 +171,7 @@ sidemenu_mode: top
                 <!-- Contact Tab -->
                 <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-contact"
                     aria-labelledby="tab-contact" aria-hidden="true" tabindex="-1" hidden>
-                    <div class="nds-content-block">
+                    <div class="nds-block">
                         <h3 class="nds-block-title">Contact Information</h3>
                         <dl class="nds-definition-list nds-tableView">
                             <div class="nds-definition-item">

@@ -446,7 +446,7 @@ footer.nds-footer.nds-content-wrapper
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the footer on every page to provide consistent secondary navigation, legal links, and contact information</li>
@@ -463,7 +463,7 @@ footer.nds-footer.nds-content-wrapper
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Applied To</th><th>Description</th></tr></thead>
@@ -497,7 +497,7 @@ footer.nds-footer.nds-content-wrapper
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -510,7 +510,7 @@ footer.nds-footer.nds-content-wrapper
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>

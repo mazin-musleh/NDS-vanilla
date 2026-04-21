@@ -636,7 +636,7 @@ NDS.Chart.create('#my-chart', {
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>bar charts</strong> for comparing discrete categories or tracking changes across periods. Use stacked mode when the total matters as much as individual values</li>
@@ -651,7 +651,7 @@ NDS.Chart.create('#my-chart', {
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Methods</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -681,7 +681,7 @@ NDS.Chart.create('#my-chart', {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Common Options</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -745,7 +745,7 @@ NDS.Chart.create('#my-chart', {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Bar Options</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -791,7 +791,7 @@ NDS.Chart.create('#my-chart', {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Line Options</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -837,7 +837,7 @@ NDS.Chart.create('#my-chart', {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Axis Options (bar + line)</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -883,7 +883,7 @@ NDS.Chart.create('#my-chart', {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Pie / Donut Options</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -929,7 +929,7 @@ NDS.Chart.create('#my-chart', {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -959,7 +959,7 @@ NDS.Chart.create('#my-chart', {
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead>

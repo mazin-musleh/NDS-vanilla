@@ -332,7 +332,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Use breadcrumbs on pages 2+ levels deep to show location within the site hierarchy</li>
@@ -343,7 +343,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Breadcrumb</strong> API handles auto-collapsing. For dynamically added breadcrumbs, call <strong>NDS.Breadcrumb.reinit()</strong> to process new elements.</p>
                 <div class="nds-code nds-expandable">

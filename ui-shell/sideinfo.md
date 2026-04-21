@@ -395,7 +395,7 @@ section.nds-content-section.nds-sideinfo-section
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Live Examples</h3>
                 <ul>
                     <li><a class="nds-color" href="{{ 'templates/content-template' | relative_url }}">Content Template</a>: article with a <a class="nds-color" href="{{ 'components/toc' | relative_url }}">TOC</a> in the sideinfo column</li>
@@ -405,7 +405,7 @@ section.nds-content-section.nds-sideinfo-section
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use a <strong>sideinfo</strong> for supporting context that should stay visible while the reader scrolls the article: service metadata, progress, <a class="nds-color" href="{{ 'components/toc' | relative_url }}">table of contents</a>, or quick actions</li>
@@ -420,7 +420,7 @@ section.nds-content-section.nds-sideinfo-section
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
@@ -435,7 +435,7 @@ section.nds-content-section.nds-sideinfo-section
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
@@ -447,7 +447,7 @@ section.nds-content-section.nds-sideinfo-section
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Sideinfo</strong> API handles positioning and sticky fallback. Auto-init runs on <code class="nds-inline-code lang-js">DOMContentLoaded</code>; call <code class="nds-inline-code lang-js">NDS.Sideinfo.reinit()</code> after injecting new sideinfo markup.</p>
                 <div class="nds-code nds-expandable">

@@ -184,7 +184,7 @@ header
                 </div>
             </div>
 
-            <div class="nds-content-block" style="margin-top: var(--spacing-3xl);">
+            <div class="nds-block" style="margin-top: var(--spacing-3xl);">
                 <h3 class="nds-block-title">Widget Reference</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Element ID</th><th>JS Module</th><th>Description</th></tr></thead>
@@ -492,7 +492,7 @@ header
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Place the header at the top of every page. The topbar sits above the navigation bar, and both are rendered inside a <code class="nds-inline-code lang-html">&lt;header&gt;</code> element.</li>
@@ -511,7 +511,7 @@ header
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
@@ -534,7 +534,7 @@ header
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
@@ -547,7 +547,7 @@ header
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
@@ -560,7 +560,7 @@ header
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The header initializes automatically when <code class="nds-inline-code lang-html">.nds-main-nav</code> exists on the page. It is priority 1 in the loader (first to initialize). Toggle functions are exposed globally on <code class="nds-inline-code lang-js">window</code> for use in HTML <code class="nds-inline-code lang-html">onclick</code> attributes.</p>
                 <div class="nds-code nds-expandable">

@@ -233,7 +233,7 @@ direction: ltr
       <p class="nds-section-description">When and how to use radio buttons effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">When to Use</h3>
         <ul>
           <li>Selecting exactly one option from a mutually exclusive set</li>
@@ -244,7 +244,7 @@ direction: ltr
           <li>Wrap options in a fieldset with a legend that describes what the user is choosing</li>
         </ul>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">JavaScript API</h3>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">
@@ -271,7 +271,7 @@ NDS.Forms.clearStatus(group);
               </div>
         </div>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">Validation Attributes</h3>
         <ul>
           <li>Add <code class="nds-inline-code lang-html">data-required</code> to the group to require a selection before form submission</li>

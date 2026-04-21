@@ -1163,7 +1163,7 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Use <strong>primary</strong> for the main action on the page. Limit to one per view</li>

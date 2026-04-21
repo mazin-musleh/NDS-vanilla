@@ -514,7 +514,7 @@ document.getElementById('clear-btn').addEventListener('click', function() {
             <p class="nds-section-description">When and how to use OTP inputs effectively</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Verification codes sent via SMS, email, or authenticator apps</li>
@@ -525,7 +525,7 @@ document.getElementById('clear-btn').addEventListener('click', function() {
                     <li>For general text input, use <a href="{{ 'components/forms' | relative_url }}" class="nds-color">form fields</a> instead</li>
                 </ul>
             </div>
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">

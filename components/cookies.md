@@ -189,7 +189,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Let the component auto-open on the first visit. A 2000 ms delay keeps the banner from fighting with first-paint content, and the saved consent means return visitors never see it again unnecessarily</li>
@@ -206,7 +206,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
@@ -217,7 +217,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -231,7 +231,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Required Element IDs</h3>
                 <p>The JS wires events and updates text by ID, so renaming or removing these on your copy of the markup will break the component. If you translate the banner server-side, edit the text nodes inside these IDs but keep the IDs themselves intact.</p>
                 <table class="nds-table nds-responsive">
@@ -245,7 +245,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Cookies</strong> namespace exposes both the consent lifecycle and a generic cookie read/write utility. <strong>NDS.Cookies.init()</strong> is called automatically by the loader, so most integrations only need <strong>show</strong>, <strong>getConsent</strong>, and the cookie helpers. Consent is persisted in a cookie named <code class="nds-inline-code lang-js">cookieConsent</code> for 365 days (or in <code class="nds-inline-code lang-js">localStorage</code> under <code class="nds-inline-code lang-js">nds_cookieConsent</code> when the site is served from <code class="nds-inline-code lang-js">file://</code>).</p>
                 <div class="nds-code nds-expandable">

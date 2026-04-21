@@ -397,7 +397,7 @@ direction: ltr
       <p class="nds-section-description">When and how to use checkboxes effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">When to Use</h3>
         <ul>
           <li>Multiple selections from a list of options</li>
@@ -408,7 +408,7 @@ direction: ltr
           <li>Use indeterminate state for "select all" parent checkboxes that partially control child selections</li>
         </ul>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">JavaScript API</h3>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">
@@ -441,7 +441,7 @@ NDS.Forms.clearStatus(group);
               </div>
         </div>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">Validation Attributes</h3>
         <ul>
           <li>Add <code class="nds-inline-code lang-html">data-required</code> to a single checkbox container to make it mandatory before form submission</li>

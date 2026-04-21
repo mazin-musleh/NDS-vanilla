@@ -258,7 +258,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Use chips for interactive selections like filters, categories, and multi-select options</li>

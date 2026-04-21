@@ -38,7 +38,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-tab-content">
                     <div class="nds-tab-panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
-                        <div class="nds-content-block">
+                        <div class="nds-block">
                             <div class="nds-block-item">
                                 <ol>
                                     <li>Click on the "Start Service" button to access the services homepage</li>

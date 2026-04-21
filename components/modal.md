@@ -265,7 +265,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use a modal when the user must confirm or decide something before the app can continue, such as approving a submission or accepting terms</li>
@@ -281,7 +281,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -311,7 +311,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -333,7 +333,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p><strong>NDS.Modal</strong> initializes automatically on page load. The modal script depends on <code class="nds-inline-code lang-js">nds-backdrop.js</code>, which must load first.</p>
                 <div class="nds-code nds-expandable">

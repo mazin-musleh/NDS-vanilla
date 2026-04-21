@@ -172,7 +172,7 @@ direction: ltr
       <p class="nds-section-description">When and how to use autocomplete inputs effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">When to Use</h3>
         <ul>
           <li>Search fields that query a remote API for suggestions as the user types</li>
@@ -182,7 +182,7 @@ direction: ltr
           <li>For static option lists, use a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">select dropdown</a> instead</li>
         </ul>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">JavaScript API</h3>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">
@@ -222,7 +222,7 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
               </div>
         </div>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">Configuration Attributes</h3>
         <ul>
           <li><code class="nds-inline-code lang-html">data-url</code> on the container: API endpoint that returns JSON</li>
@@ -232,7 +232,7 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
           <li><code class="nds-inline-code lang-html">data-results-path</code>: dot notation path to the results array in the response (e.g. "response.items"). Without it, the component auto-detects flat arrays or objects with <code class="nds-inline-code lang-js">results</code> or <code class="nds-inline-code lang-js">data</code> keys</li>
         </ul>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">API Response Format</h3>
         <p>The component sends a GET request with the query as a URL parameter (e.g. <code class="nds-inline-code lang-html">/api/services?q=term</code>). The API handles filtering and returns JSON in one of these formats:</p>
         <div class="nds-code nds-expandable">

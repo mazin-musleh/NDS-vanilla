@@ -302,7 +302,7 @@ const byRegion = cities.reduce((map, city) =&gt; {
       <h2 class="nds-section-title">Notes</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-content-block">
+      <div class="nds-block">
         <ul>
           <li>The dataset is editorial — it favors administrative seats and well-known towns over an exhaustive census of every village. Expect to extend it for use cases that need full coverage.</li>
           <li>Latin transliterations follow common English-language conventions, not a strict standard. Searches may need to handle alternate spellings (e.g., <em>Mecca</em> vs <em>Makkah</em>) — wire that into your <code class="nds-inline-code lang-html">filter</code> callback rather than duplicating entries.</li>

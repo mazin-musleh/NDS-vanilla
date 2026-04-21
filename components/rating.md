@@ -386,7 +386,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>display ratings</strong> to show aggregate scores, average reviews, or any read-only quality indicator alongside products, services, or content</li>
@@ -402,7 +402,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -440,7 +440,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -458,7 +458,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -498,7 +498,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Rating</strong> API initializes rating components and exposes instance methods on <code class="nds-inline-code lang-js">element.ndsRating</code>. For dynamically added ratings, call <code class="nds-inline-code lang-js">NDS.Rating.init()</code> or rely on automatic MutationObserver detection.</p>
                 <div class="nds-code nds-expandable">

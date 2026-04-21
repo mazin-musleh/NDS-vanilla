@@ -107,14 +107,14 @@ direction: ltr
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-home" aria-labelledby="tab-tabs-standard-home"
                                     tabindex="0">
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Welcome</h3>
                                         <p>Welcome to our platform. Here you'll find the latest updates and important
                                             information about our services and offerings.</p>
                                         <p>This is the main dashboard where users can quickly access key features and get an
                                             overview of their account status.</p>
                                     </div>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Getting Started</h3>
                                         <p>Explore the available services, review your recent activity, or configure your
                                             account preferences from the tabs above.</p>
@@ -127,7 +127,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-services"
                                     aria-labelledby="tab-tabs-standard-services" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Our Services</h3>
                                         <p>We offer a comprehensive range of digital government services designed to make your
                                             life easier.</p>
@@ -141,7 +141,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-about" aria-labelledby="tab-tabs-standard-about"
                                     aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">About Us</h3>
                                         <p>The National Design System is part of Saudi Arabia's digital transformation
                                             initiative, providing consistent and accessible user experiences across all
@@ -152,7 +152,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-contact" aria-labelledby="tab-tabs-standard-contact"
                                     aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Contact Information</h3>
                                         <p>Get in touch with us through the following channels:</p>
                                         <p><strong>Email:</strong> support@nds.gov.sa</p>
@@ -162,7 +162,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-support" aria-labelledby="tab-tabs-standard-support"
                                     aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Support Center</h3>
                                         <p>Find help and assistance with our comprehensive support resources.</p>
                                         <ul>
@@ -175,7 +175,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-resources"
                                     aria-labelledby="tab-tabs-standard-resources" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Resources</h3>
                                         <p>Access downloadable resources and tools for developers and designers.</p>
                                         <p>Browse our collection of design assets, code snippets, and implementation guides.</p>
@@ -183,7 +183,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-documentation"
                                     aria-labelledby="tab-tabs-standard-documentation" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Documentation</h3>
                                         <p>Comprehensive documentation for the National Design System components and guidelines.</p>
                                         <p>Learn how to implement and customize components according to government standards.</p>
@@ -191,7 +191,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-news" aria-labelledby="tab-tabs-standard-news"
                                     aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Latest News</h3>
                                         <p>Stay updated with the latest announcements and updates from the design system team.</p>
                                         <p>New component releases, feature updates, and important notices are published here.</p>
@@ -199,7 +199,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-feedback"
                                     aria-labelledby="tab-tabs-standard-feedback" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Feedback</h3>
                                         <p>We value your feedback and suggestions for improving the design system.</p>
                                         <p>Submit your ideas, report issues, or share your experience with our components.</p>
@@ -207,7 +207,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-standard-settings"
                                     aria-labelledby="tab-tabs-standard-settings" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Settings</h3>
                                         <p>Configure your preferences and customize your experience with the design system.</p>
                                         <p>Adjust theme settings, language preferences, and accessibility options.</p>
@@ -290,14 +290,14 @@ direction: ltr
     &lt;div class="nds-tab-content"&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-home" aria-labelledby="tab-home"
             tabindex="0"&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Welcome&lt;/h3&gt;
                 &lt;p&gt;Welcome to our platform. Here you'll find the latest updates and important
                     information about our services and offerings.&lt;/p&gt;
                 &lt;p&gt;This is the main dashboard where users can quickly access key features and get an
                     overview of their account status.&lt;/p&gt;
             &lt;/div&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Getting Started&lt;/h3&gt;
                 &lt;p&gt;Explore the available services, review your recent activity, or configure your
                     account preferences from the tabs above.&lt;/p&gt;
@@ -310,7 +310,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-services"
             aria-labelledby="tab-services" aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Our Services&lt;/h3&gt;
                 &lt;p&gt;We offer a comprehensive range of digital government services designed to make your
                     life easier.&lt;/p&gt;
@@ -324,7 +324,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-about" aria-labelledby="tab-about"
             aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;About Us&lt;/h3&gt;
                 &lt;p&gt;The National Design System is part of Saudi Arabia's digital transformation
                     initiative, providing consistent and accessible user experiences across all
@@ -335,7 +335,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-contact" aria-labelledby="tab-contact"
             aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Contact Information&lt;/h3&gt;
                 &lt;p&gt;Get in touch with us through the following channels:&lt;/p&gt;
                 &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; support@nds.gov.sa&lt;/p&gt;
@@ -345,7 +345,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-support" aria-labelledby="tab-support"
             aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Support Center&lt;/h3&gt;
                 &lt;p&gt;Find help and assistance with our comprehensive support resources.&lt;/p&gt;
                 &lt;ul&gt;
@@ -358,7 +358,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-resources"
             aria-labelledby="tab-resources" aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Resources&lt;/h3&gt;
                 &lt;p&gt;Access downloadable resources and tools for developers and designers.&lt;/p&gt;
                 &lt;p&gt;Browse our collection of design assets, code snippets, and implementation guides.&lt;/p&gt;
@@ -366,7 +366,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-documentation"
             aria-labelledby="tab-documentation" aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Documentation&lt;/h3&gt;
                 &lt;p&gt;Comprehensive documentation for the National Design System components and guidelines.&lt;/p&gt;
                 &lt;p&gt;Learn how to implement and customize components according to government standards.&lt;/p&gt;
@@ -374,7 +374,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-news" aria-labelledby="tab-news"
             aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Latest News&lt;/h3&gt;
                 &lt;p&gt;Stay updated with the latest announcements and updates from the design system team.&lt;/p&gt;
                 &lt;p&gt;New component releases, feature updates, and important notices are published here.&lt;/p&gt;
@@ -382,7 +382,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-feedback"
             aria-labelledby="tab-feedback" aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Feedback&lt;/h3&gt;
                 &lt;p&gt;We value your feedback and suggestions for improving the design system.&lt;/p&gt;
                 &lt;p&gt;Submit your ideas, report issues, or share your experience with our components.&lt;/p&gt;
@@ -390,7 +390,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-settings"
             aria-labelledby="tab-settings" aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Settings&lt;/h3&gt;
                 &lt;p&gt;Configure your preferences and customize your experience with the design system.&lt;/p&gt;
                 &lt;p&gt;Adjust theme settings, language preferences, and accessibility options.&lt;/p&gt;
@@ -483,21 +483,21 @@ direction: ltr
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-dashboard"
                                     aria-labelledby="tab-tabs-icons-dashboard" tabindex="0">
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Dashboard</h3>
                                         <p>Your main dashboard with key metrics and quick access to important features.</p>
                                     </div>
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-analytics"
                                     aria-labelledby="tab-tabs-icons-analytics" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Analytics</h3>
                                         <p>Configure your analytics preferences and data visualization options.</p>
                                     </div>
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="panel-tabs-icons-settings"
                                     aria-labelledby="tab-tabs-icons-settings" aria-hidden="true" tabindex="-1" hidden>
-                                    <div class="nds-content-block">
+                                    <div class="nds-block">
                                         <h3 class="nds-block-title">Settings</h3>
                                         <p>Configure your preferences and manage your account settings.</p>
                                     </div>
@@ -553,21 +553,21 @@ direction: ltr
     &lt;div class="nds-tab-content"&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-dashboard"
             aria-labelledby="tab-dashboard" tabindex="0"&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Dashboard&lt;/h3&gt;
                 &lt;p&gt;Your main dashboard with key metrics and quick access to important features.&lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-analytics"
             aria-labelledby="tab-analytics" aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Analytics&lt;/h3&gt;
                 &lt;p&gt;Configure your analytics preferences and data visualization options.&lt;/p&gt;
             &lt;/div&gt;
         &lt;/div&gt;
         &lt;div class="nds-tab-panel" role="tabpanel" id="panel-settings"
             aria-labelledby="tab-settings" aria-hidden="true" tabindex="-1" hidden&gt;
-            &lt;div class="nds-content-block"&gt;
+            &lt;div class="nds-block"&gt;
                 &lt;h3 class="nds-block-title"&gt;Settings&lt;/h3&gt;
                 &lt;p&gt;Configure your preferences and manage your account settings.&lt;/p&gt;
             &lt;/div&gt;
@@ -663,7 +663,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use tabs to organize related content that users access one section at a time, such as settings categories, service details, or dashboard views</li>
@@ -676,12 +676,12 @@ direction: ltr
                     <li>Keep tab labels short (one to three words). Long labels cause excessive scrolling in horizontal layouts</li>
                     <li>Add icons to tabs when they represent distinct categories that benefit from visual differentiation, but avoid icons on text-heavy labels where they add clutter</li>
                     <li>Aim for three to seven visible tabs. Beyond that, the overflow scroll mechanism handles the rest, but users may not discover hidden tabs easily</li>
-                    <li>Structure tab panel content using <code class="nds-inline-code lang-html">nds-content-block</code> with <code class="nds-inline-code lang-html">nds-block-title</code> headings. Multiple content blocks per panel create clear visual sections within a single tab</li>
+                    <li>Structure tab panel content using <code class="nds-inline-code lang-html">nds-block</code> with <code class="nds-inline-code lang-html">nds-block-title</code> headings. Multiple content blocks per panel create clear visual sections within a single tab</li>
                     <li>Place the most frequently accessed tab first, as it becomes the default active panel on page load</li>
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -715,7 +715,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -740,7 +740,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Tabs</strong> API provides methods to create, switch, and query tab instances. Each initialized <code class="nds-inline-code lang-html">.nds-tabs</code> element stores its instance on the <code class="nds-inline-code lang-js">.ndsTabs</code> DOM property.</p>
                 <div class="nds-code nds-expandable">

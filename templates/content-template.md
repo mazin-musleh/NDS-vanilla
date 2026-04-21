@@ -103,7 +103,7 @@ sidemenu_mode: false
                     </a>
                 </p>
 
-                <div class="nds-content-block">
+                <div class="nds-block">
                     <h3 id="sub-section-1" class="nds-block-title">1. Sub Section 1</h3>
                     <p>This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections. This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections.</p>
 
@@ -114,12 +114,12 @@ sidemenu_mode: false
                     <p>This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections.</p>
                 </div>
 
-                <div class="nds-content-block">
+                <div class="nds-block">
                     <h3 id="sub-section-2" class="nds-block-title">2. Sub Section 2</h3>
                     <p>This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections. This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections. This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections.</p>
                 </div>
 
-                <div class="nds-content-block">
+                <div class="nds-block">
                     <h3 id="sub-section-3" class="nds-block-title">3. Sub Section 3</h3>
                     <p>This is an example of the paragraph style followed by the design system. The same style is consistent across all body text sections. This is an example of the paragraph style followed by the design system.</p>
                 </div>

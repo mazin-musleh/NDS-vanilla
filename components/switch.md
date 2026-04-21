@@ -355,7 +355,7 @@ direction: ltr
       <p class="nds-section-description">When and how to use switches effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">When to Use</h3>
         <ul>
           <li>Instant on/off actions that take effect immediately without form submission</li>
@@ -365,7 +365,7 @@ direction: ltr
           <li>Always label clearly what state "on" represents</li>
         </ul>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">JavaScript API</h3>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">

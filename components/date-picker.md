@@ -185,7 +185,7 @@ direction: ltr
       <p class="nds-section-description">When and how to use the date picker effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">When to Use</h3>
         <ul>
           <li>Date selection in forms where the user needs a calendar view to pick a date</li>
@@ -196,7 +196,7 @@ direction: ltr
           <li>Pre-populate the input with a value in DD/MM/YYYY format to set an initial date</li>
         </ul>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">JavaScript API</h3>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">

@@ -198,7 +198,7 @@ direction: ltr
             <p class="nds-section-description">When and how to use the image popup viewer effectively</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the image popup viewer for any content where users need to inspect image details: product photos, maps, infographics, architectural plans, or document scans. The zoom and pan controls let users explore at their own pace.</li>
@@ -212,7 +212,7 @@ direction: ltr
                     <li>Add <code class="nds-inline-code lang-html">nds-ipv-image-title</code> below thumbnails in galleries to give users context before they open the viewer.</li>
                 </ul>
             </div>
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -221,7 +221,7 @@ direction: ltr
                     </tbody>
                 </table>
             </div>
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Ipv</strong> API controls initialization and programmatic access. The viewer auto-initializes on page load. For dynamically added thumbnails, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code> to re-scan the page.</p>
                 <div class="nds-code nds-expandable">

@@ -613,7 +613,7 @@ NDS.Alert.create({
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-body">
-                <div class="nds-content-block">
+                <div class="nds-block">
                     <h3 class="nds-block-title">Structure</h3>
                     <ul>
                         <li>All code blocks must be wrapped in .nds-code.nds-expandable</li>
@@ -623,7 +623,7 @@ NDS.Alert.create({
                     </ul>
                 </div>
 
-                <div class="nds-content-block">
+                <div class="nds-block">
                     <h3 class="nds-block-title">Direct vs Tabbed</h3>
                     <ul>
                         <li>Direct: .nds-code.nds-expandable > .nds-expandable-content > code</li>
@@ -633,7 +633,7 @@ NDS.Alert.create({
                     </ul>
                 </div>
 
-                <div class="nds-content-block">
+                <div class="nds-block">
                     <h3 class="nds-block-title">Features</h3>
                     <ul>
                         <li>Add line-numbers class for numbered lines</li>
@@ -643,7 +643,7 @@ NDS.Alert.create({
                     </ul>
                 </div>
 
-                <div class="nds-content-block">
+                <div class="nds-block">
                     <h3 class="nds-block-title">Best Practices</h3>
                     <ul>
                         <li>Keep code examples concise and focused</li>

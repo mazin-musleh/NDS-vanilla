@@ -338,7 +338,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use expandable content to keep pages scannable when a section contains long descriptions, legal text, detailed specifications, or extended lists that most users will not need to read in full</li>
@@ -353,7 +353,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
@@ -364,7 +364,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Expandable</strong> API provides methods to initialize containers, control expand/collapse state, and listen for state change events. Instances are accessible via <code class="nds-inline-code lang-js">element.ndsExpandable</code>.</p>
                 <div class="nds-code nds-expandable">

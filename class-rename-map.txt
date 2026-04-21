@@ -138,6 +138,7 @@ Footer
 Section
 -------
 .nds-section-content        → .nds-section-body
+.nds-content-block          → .nds-block              (pairs with .nds-block-title inside .nds-section-body)
 
 Forms
 -----

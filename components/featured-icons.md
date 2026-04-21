@@ -187,7 +187,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use featured icons to visually anchor key items in <a href="{{ 'components/cards' | relative_url }}">Cards</a>, <a href="{{ 'components/definition-list' | relative_url }}">Definition Lists</a>, and page sections where a plain icon would not stand out enough</li>
@@ -202,7 +202,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Color Variants</h3>
                 <p>Brand is the default color. Use <code class="nds-inline-code lang-html">data-status</code> to set a status color variant.</p>
                 <table class="nds-table nds-responsive">
@@ -241,7 +241,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -283,7 +283,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead>

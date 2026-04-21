@@ -73,7 +73,7 @@ Scan ALL documentation and example pages across the project. Produces a prioriti
    - **Front matter**: has `lang` and `direction`?
    - **Icons**: any `hgi-*` classes that don't exist in the font?
    - **Placeholder text**: any Lorem ipsum, "Sample", "Test", "Content coming soon"?
-   - **Usage Guidelines** (doc pages only): has `nds-content-block` with Built-in Features, When to Use?
+   - **Usage Guidelines** (doc pages only): has `nds-block` with Built-in Features, When to Use?
    - **JS API** (doc pages only): if component has a JS file in `_js/`, does the page document the JS API?
    - **Code tabs** (doc pages only): does each `nds-demo-card` have a `demo-code` section?
    - **Component classes** (example pages): do all `nds-*` classes still exist in SCSS?

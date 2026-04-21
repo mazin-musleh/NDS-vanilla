@@ -193,7 +193,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use for <strong>resend flows</strong> where the backend imposes a per-user rate limit (OTP, verification email, password reset) and you want the UI to match that limit exactly</li>
@@ -209,7 +209,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -224,7 +224,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Events</h3>
                 <p>All events bubble and fire on the button element. Listen for them to add custom behavior (analytics, alternate toasts, parallel UI updates) without replacing the built-in flow.</p>
                 <table class="nds-table nds-responsive">
@@ -238,7 +238,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.CooldownButton</strong> API provides programmatic control for dynamically added buttons and for aborting a cooldown in flight. Auto-initialization handles everything for static markup; no JS call is needed for the common case.</p>
                 <div class="nds-code nds-expandable">

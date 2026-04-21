@@ -53,7 +53,7 @@ Read source files to build a complete understanding of the component. **The sour
   - Code tab structure (`.nds-tabs .nds-code` with HTML and JS API panels)
   - Toggle controls (dropmenu pattern for selection groups, flat buttons for on/off)
   - Built-in Features section (`.nds-definition-list` grid with icons)
-  - Usage Guidelines section (`nds-content-block` with `nds-block-title`)
+  - Usage Guidelines section (`nds-block` with `nds-block-title`)
   - JS API documentation block (expandable code with inline comments)
 
 ### MUST read when they exist

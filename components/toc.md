@@ -303,14 +303,14 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Live Example</h3>
                 <ul>
                     <li><a class="nds-color" href="{{ 'templates/content-template' | relative_url }}">Content Template</a>: long-form article with an auto-populated TOC in a sticky <a class="nds-color" href="{{ 'ui-shell/sideinfo' | relative_url }}">sideinfo</a> column</li>
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use a <strong>TOC</strong> on long-form content (policy pages, documentation, guides) where readers benefit from skimming the structure and jumping around</li>
@@ -326,7 +326,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -337,7 +337,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Toc</strong> API initializes, re-initializes, and creates TOC instances. Auto-init runs on <code class="nds-inline-code lang-js">DOMContentLoaded</code>; call <code class="nds-inline-code lang-js">NDS.Toc.reinit()</code> after injecting new TOC markup dynamically.</p>
                 <div class="nds-code nds-expandable">

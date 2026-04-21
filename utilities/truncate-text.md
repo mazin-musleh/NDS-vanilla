@@ -213,7 +213,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <code class="nds-inline-code lang-html">nds-truncate</code> for text that may overflow in constrained layouts such as <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a>, table cells, navigation labels, and list items</li>
@@ -228,7 +228,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>

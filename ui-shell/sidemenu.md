@@ -234,7 +234,7 @@ aside.nds-sidemenu
                     NDS.Sidemenu.init();
                 });
             </script>
-            <div class="nds-content-block" style="margin-top: var(--spacing-3xl);">
+            <div class="nds-block" style="margin-top: var(--spacing-3xl);">
                 <h3 class="nds-block-title">Mode Comparison</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Mode</th><th>Class / Front Matter</th><th>Mobile Behavior</th><th>Best For</th></tr></thead>
@@ -382,7 +382,7 @@ aside.nds-sidemenu
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the side menu for sites with <strong>hierarchical page structures</strong> where users need to jump between sections: documentation, admin consoles, multi-step workflows</li>
@@ -398,7 +398,7 @@ aside.nds-sidemenu
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Applied To</th><th>Description</th></tr></thead>
@@ -432,7 +432,7 @@ aside.nds-sidemenu
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -453,7 +453,7 @@ aside.nds-sidemenu
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
@@ -482,7 +482,7 @@ aside.nds-sidemenu
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Sidemenu</strong> namespace exposes a single initialization method. The component auto-initializes when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is present on the page, but you can call <code class="nds-inline-code lang-js">init()</code> manually after dynamic content changes.</p>
                 <div class="nds-code nds-expandable">

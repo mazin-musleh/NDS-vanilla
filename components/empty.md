@@ -387,7 +387,7 @@ li.remove();</code>
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>nds-empty</strong> on any container that can legitimately have zero items: search results, filtered lists, data tables, notification feeds, dashboards, user-generated collections</li>
@@ -402,7 +402,7 @@ li.remove();</code>
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -419,7 +419,7 @@ li.remove();</code>
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Empty</strong> API auto-initializes at page load and watches the DOM for new <code class="nds-inline-code lang-html">.nds-empty</code> containers. Use <strong>NDS.Empty.refresh()</strong> when you need to force re-evaluation after an external DOM operation the observer cannot see (for example, a column-count change on a table).</p>
                 <div class="nds-code nds-expandable">

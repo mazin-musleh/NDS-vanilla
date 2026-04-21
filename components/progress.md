@@ -483,7 +483,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>progress circles</strong> for KPI displays, dashboard stats, and completion summaries where the value itself is the focus</li>
@@ -500,7 +500,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -518,7 +518,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -534,7 +534,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -550,7 +550,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Progress</strong> API reads <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code>, and <code class="nds-inline-code lang-html">data-max</code> attributes on initialization and observes changes reactively. For dynamically added elements, call <code class="nds-inline-code lang-js">NDS.Progress.init()</code> to pick them up.</p>
                 <div class="nds-code nds-expandable">

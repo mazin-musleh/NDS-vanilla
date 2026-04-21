@@ -25,7 +25,7 @@ hideFeedback: true
     </div>
     <div class="nds-section-body">
     <!-- System Alert -->
-        <div class="nds-alert nds-card nds-inline nds-content-block" data-status="warning" role="alert">
+        <div class="nds-alert nds-card nds-inline nds-block" data-status="warning" role="alert">
             <span class="nds-feedback nds-alert-icon">
                 <span class="nds-feedback-icon">
                     <i class="nds-icon" aria-hidden="true"></i>

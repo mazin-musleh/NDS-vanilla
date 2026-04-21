@@ -593,7 +593,7 @@ direction: ltr
             <p class="nds-section-description">When and how to use cards effectively</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Display grouped content in grid or list layouts (services, products, articles)</li>

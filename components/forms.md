@@ -1897,7 +1897,7 @@ NDS.Forms.clearStatus(container);</code>
       <p class="nds-section-description">When and how to use form inputs effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">Best Practices</h3>
         <ul>
           <li>Use form inputs for any data collection scenario: registration flows, search interfaces, settings pages, and inline editing. Every input type shares the same container structure, so switching between text, email, password, or select requires minimal markup changes.</li>
@@ -1914,7 +1914,7 @@ NDS.Forms.clearStatus(container);</code>
           <li>Set <code class="nds-inline-code lang-html">data-error-message</code> on the container to override default browser validation messages with context-specific text that guides the user toward correction.</li>
         </ul>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">Modifier Classes</h3>
         <table class="nds-table nds-responsive">
           <thead><tr><th>Class</th><th>Description</th></tr></thead>
@@ -1924,7 +1924,7 @@ NDS.Forms.clearStatus(container);</code>
           </tbody>
         </table>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">Data Attributes</h3>
         <table class="nds-table nds-responsive">
           <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -1942,7 +1942,7 @@ NDS.Forms.clearStatus(container);</code>
           </tbody>
         </table>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">CSS Custom Properties</h3>
         <table class="nds-table nds-responsive">
           <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
@@ -1953,7 +1953,7 @@ NDS.Forms.clearStatus(container);</code>
           </tbody>
         </table>
       </div>
-      <div class="nds-content-block">
+      <div class="nds-block">
         <h3 class="nds-block-title">JavaScript API</h3>
         <p>The <strong>NDS.Forms</strong> API manages initialization, status feedback, state management, and form validation. For dynamically added form elements, call <code class="nds-inline-code lang-js">NDS.Forms.initializeContainer(element)</code> to initialize new inputs.</p>
         <div class="nds-code nds-expandable">

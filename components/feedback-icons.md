@@ -330,7 +330,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <code class="nds-inline-code lang-js">NDS.Feedback.create()</code> for general-purpose feedback on any element: tooltips, notifications, hints on divs, sections, or cards</li>
@@ -345,7 +345,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -375,7 +375,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead>
@@ -397,7 +397,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p><strong>NDS.Feedback</strong> creates and manages feedback elements programmatically. For form validation, use <a class="nds-color" href="{{ 'components/forms' | relative_url }}">NDS.Forms.setStatus()</a> which calls Feedback internally and also sets form-specific attributes.</p>
 

@@ -411,7 +411,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use <strong>literal copy</strong> (<code class="nds-inline-code lang-html">data-copy</code>) for values you already know at render time: phone numbers, emails, reference IDs, API tokens, emergency numbers</li>
@@ -426,7 +426,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -439,7 +439,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Copy</strong> API powers every <code class="nds-inline-code lang-html">.nds-copy</code> on the page and is also callable directly from your own scripts when you need to compose copy into a larger flow (for example, copying a dynamically computed URL after a network request).</p>
                 <div class="nds-code nds-expandable">

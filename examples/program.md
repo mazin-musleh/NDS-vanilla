@@ -15,7 +15,7 @@ layout_class: nds-cardView
         <h2 class="nds-section-title">About the Program</h2>
     </div>
     <div class="nds-section-body nds-expandable">
-        <div class="nds-content-block nds-expandable-content" style="--max-height:300px">
+        <div class="nds-block nds-expandable-content" style="--max-height:300px">
             <div class="nds-block-item">
                 <p>The Bachelor of Science in Artificial Intelligence program equips students with a strong foundation in computer science, mathematics, and the core disciplines of AI including machine learning, deep learning, natural language processing, and computer vision. The program emphasizes both theoretical understanding and practical application, preparing graduates for careers in industry, research, and entrepreneurship.</p>
                 <p>Students engage in hands-on projects, internships, and a capstone research experience. The curriculum is designed in alignment with international standards and industry needs, ensuring graduates are prepared to contribute to Saudi Arabia's Vision 2030 digital transformation goals and the global AI ecosystem.</p>
@@ -30,7 +30,7 @@ layout_class: nds-cardView
         <h2 class="nds-section-title">Program Details</h2>
     </div>
     <div class="nds-section-body">
-        <div class="nds-content-block nds-grid" style="--mid-track: 1fr;">
+        <div class="nds-block nds-grid" style="--mid-track: 1fr;">
             <div class="nds-block-item">
                 <dl class="nds-definition-list nds-divided">
                     <div class="nds-definition-item">

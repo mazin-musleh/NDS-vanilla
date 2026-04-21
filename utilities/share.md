@@ -359,7 +359,7 @@ direction: ltr
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use the default form (no data attributes) for <strong>page-level sharing</strong>, typically in the hero action bar. It always reflects the current URL and title, so it works on every page without per-page configuration</li>
@@ -373,7 +373,7 @@ direction: ltr
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Placement</th><th>Description</th></tr></thead>
@@ -387,7 +387,7 @@ direction: ltr
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Share</strong> module exposes a single method, <code class="nds-inline-code lang-js">NDS.Share.init()</code>, which the NDS loader calls once on page load to attach the delegated click listener. Call it again after injecting new <code class="nds-inline-code lang-html">.nds-share</code> markup into the page; the listener is rebound via <code class="nds-inline-code lang-js">AbortController</code> so repeat calls do not stack handlers.</p>
                 <div class="nds-code">
