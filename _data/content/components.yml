@@ -333,6 +333,13 @@
   tags: ["JS", "CSS"]
   url: "/utilities/expandable-content.html"
 
+- title: "Flex"
+  description: "Quick alignment, direction, and wrapping with custom-property overrides"
+  icon: '<i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/flex.html"
+
 - title: "Saudi Cities"
   description: "Bundled JSON dataset of 132 Saudi Arabian cities with bilingual names, drop-in for autocomplete and address flows"
   icon: '<i class="hgi hgi-stroke hgi-globe-02"></i>'
