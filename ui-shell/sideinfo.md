@@ -441,6 +441,7 @@ section.nds-content-section.nds-sideinfo-section
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--nds-sideinfo-width</code></td><td><code class="nds-inline-code lang-html">400px</code></td><td>Column width. Preset by the size modifiers; override for a custom width</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--nds-sideinfo-top-offset</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Extra space above the card. Adds to the sticky <code class="nds-inline-code lang-html">top</code> threshold and, on hero-aside pages, folds into the pull-up so the card shifts down by the same amount before and after sticking</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--nds-sideinfo-top</code></td><td>computed</td><td>Set by the JS to align the card with the hero section-head when <code class="nds-inline-code lang-html">nds-aside</code> is on the hero. Not intended for manual override</td></tr>
                     </tbody>
                 </table>

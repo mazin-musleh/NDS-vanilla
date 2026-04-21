@@ -363,7 +363,7 @@ sidemenu_mode: false
             </form>
         </div>
 
-        <aside class="nds-sideinfo nds-sticky nds-top nds-card nds-stroke nds-shadow" aria-label="Application progress">
+        <aside class="nds-sideinfo nds-sticky nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
             <!-- Vertical fallback (tablet + desktop) with a radial override on
                  mobile so the 4-step flow stays compact on small screens. -->
             <div class="nds-stepper nds-radial nds-vertical-lg"
