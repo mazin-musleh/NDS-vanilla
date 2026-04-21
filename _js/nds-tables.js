@@ -29,17 +29,14 @@
             // Check if this is a selectable table
             this.isSelectable = this.selectAllCheckbox && this.rowCheckboxes.length > 0;
 
-            if (this.isSortable) {
-                this.currentSortColumn = this.findActiveSortColumn();
-                this.currentSortDirection = this.findActiveSortDirection();
-            }
-
             this.init();
         }
 
         init() {
+            if (this.isSortable) {
+                this.setupSort();
+            }
             this.setupEventListeners();
-            this.setupInitialState();
 
             if (this.isSelectable) {
                 this.updateSelectAllState();
@@ -47,58 +44,86 @@
             }
         }
 
-        findActiveSortColumn() {
+        // ── Sort (delegated to NDS.Sort) ─────────────────────────────────
+
+        setupSort() {
+            // Seed initial state from HTML if a <th> already carries sorted-asc / sorted-desc
             const sortedTh = this.thead.querySelector('[data-state~="sorted-asc"], [data-state~="sorted-desc"]');
+            let initialState = null;
             if (sortedTh) {
                 const button = sortedTh.querySelector('.nds-sort-btn');
-                return this.sortButtons.indexOf(button);
+                const colIdx = this.sortButtons.indexOf(button);
+                if (colIdx !== -1) {
+                    initialState = {
+                        key: colIdx,
+                        dir: NDS.State.has(sortedTh, 'sorted-asc') ? 'asc' : 'desc'
+                    };
+                }
             }
-            return -1;
-        }
 
-        findActiveSortDirection() {
-            const sortedTh = this.thead.querySelector('[data-state~="sorted-asc"], [data-state~="sorted-desc"]');
-            if (!sortedTh) return null;
+            this.sort = NDS.Sort.create(this.table, {
+                items: () => Array.from(this.tbody.querySelectorAll('tr')),
+                reorderIn: this.tbody,
+                triggers: '.nds-sort-btn',
+                mode: 'cycle',
+                a11y: 'sort',
+                a11yTarget: (btn) => btn.closest('th'),
+                accessor: (row, colIdx) => {
+                    // Escape hatch for display/sort-value divergence: authors set
+                    // data-sort-value on the <td> when the rendered text would mis-type
+                    // (e.g. "Free" in a numeric column, localized dates, etc.)
+                    const cell = row.children[colIdx];
+                    if (!cell) return '';
+                    const override = cell.getAttribute('data-sort-value');
+                    return override !== null ? override : this.getCellText(cell);
+                },
+                keyFrom: (btn) => {
+                    const th = btn.closest('th');
+                    return Array.from(th.parentElement.children).indexOf(th);
+                },
+                initialState,
+                onChange: ({ key, dir }) => {
+                    // Clear sorted-asc/sorted-desc data-state from every column header
+                    this.sortButtons.forEach(btn => {
+                        const th = btn.closest('th');
+                        NDS.State.remove(th, 'sorted-asc', 'sorted-desc');
+                    });
 
-            if (NDS.State.has(sortedTh, 'sorted-asc')) return 'asc';
-            if (NDS.State.has(sortedTh, 'sorted-desc')) return 'desc';
-            return null;
-        }
+                    // Apply to the active header for CSS icon swap at _tables.scss
+                    if (key !== null && key !== undefined && dir) {
+                        const activeBtn = this.sortButtons.find(btn => {
+                            const th = btn.closest('th');
+                            return Array.from(th.parentElement.children).indexOf(th) === key;
+                        });
+                        if (activeBtn) {
+                            const th = activeBtn.closest('th');
+                            NDS.State.add(th, dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+                        }
+                    }
 
-        setupInitialState() {
-            // Set initial ARIA attributes
-            this.sortButtons.forEach((button, index) => {
-                const th = button.closest('th');
+                    if (NDS.Pagination && NDS.Pagination.refresh) {
+                        const pagedContent = this.tbody.closest('.nds-paged-content');
+                        if (pagedContent) NDS.Pagination.refresh(pagedContent);
+                    }
 
-                if (index === this.currentSortColumn) {
-                    th.setAttribute('aria-sort', this.currentSortDirection === 'asc' ? 'ascending' : 'descending');
-                    NDS.State.add(button, 'active');
-                } else {
-                    th.setAttribute('aria-sort', 'none');
+                    // Back-compat event — existing listeners expect columnIndex + direction
+                    this.dispatchSortEvent(key, dir);
                 }
             });
         }
 
+        getCellText(cell) {
+            if (!cell) return '';
+            // Ignore nested tags/icons; prefer direct text nodes, fall back to full text
+            const textNode = Array.from(cell.childNodes)
+                .filter(node => node.nodeType === Node.TEXT_NODE)
+                .map(node => node.textContent.trim())
+                .join(' ');
+            return textNode || cell.textContent.trim();
+        }
+
         setupEventListeners() {
-            // Sortable table listeners
-            if (this.isSortable) {
-                this.sortButtons.forEach((button, index) => {
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        this.handleSort(index);
-                    });
-
-                    // Keyboard accessibility
-                    button.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            this.handleSort(index);
-                        }
-                    });
-                });
-            }
-
-            // Selectable table listeners
+            // Selectable table listeners (sort listeners are owned by NDS.Sort)
             if (this.isSelectable) {
                 // Select all checkbox
                 this.selectAllCheckbox.addEventListener('change', (e) => {
@@ -114,189 +139,6 @@
                     });
                 });
             }
-        }
-
-        handleSort(columnIndex) {
-            const button = this.sortButtons[columnIndex];
-            const th = button.closest('th');
-
-            // Determine new sort direction
-            let newDirection;
-            if (this.currentSortColumn === columnIndex) {
-                // Toggle through: asc -> desc -> none (reset)
-                if (this.currentSortDirection === 'asc') {
-                    newDirection = 'desc';
-                } else if (this.currentSortDirection === 'desc') {
-                    newDirection = null; // Reset to original order
-                } else {
-                    newDirection = 'asc';
-                }
-            } else {
-                // New column, start with ascending
-                newDirection = 'asc';
-            }
-
-            // Clear all sort states
-            this.clearSortStates();
-
-            // Apply new sort or reset to original
-            if (newDirection) {
-                this.applySortState(th, newDirection);
-                this.sortTableData(columnIndex, newDirection);
-                this.currentSortColumn = columnIndex;
-                this.currentSortDirection = newDirection;
-            } else {
-                // Reset to original order
-                this.resetToOriginalOrder();
-                this.currentSortColumn = -1;
-                this.currentSortDirection = null;
-            }
-
-            // Dispatch custom event
-            this.dispatchSortEvent(columnIndex, newDirection);
-
-            // Refresh pagination after sort reorder
-            if (NDS.Pagination && NDS.Pagination.refresh) {
-                const pagedContent = this.tbody.closest('.nds-paged-content');
-                if (pagedContent) {
-                    NDS.Pagination.refresh(pagedContent);
-                }
-            }
-        }
-
-        clearSortStates() {
-            this.sortButtons.forEach(button => {
-                const th = button.closest('th');
-
-                NDS.State.remove(th, 'sorted-asc', 'sorted-desc');
-                NDS.State.remove(button, 'active');
-                th.setAttribute('aria-sort', 'none');
-            });
-        }
-
-        applySortState(th, direction) {
-            const button = th.querySelector('.nds-sort-btn');
-
-            if (direction === 'asc') {
-                NDS.State.add(th, 'sorted-asc');
-                th.setAttribute('aria-sort', 'ascending');
-            } else if (direction === 'desc') {
-                NDS.State.add(th, 'sorted-desc');
-                th.setAttribute('aria-sort', 'descending');
-            }
-
-            if (button) NDS.State.add(button, 'active');
-        }
-
-        sortTableData(columnIndex, direction) {
-            // Store original order if not already stored
-            if (!this.originalRowOrder) {
-                this.originalRowOrder = Array.from(this.tbody.querySelectorAll('tr'));
-            }
-
-            const rows = Array.from(this.tbody.querySelectorAll('tr'));
-            const th = this.sortButtons[columnIndex].closest('th');
-            const cellIndex = Array.from(th.parentElement.children).indexOf(th);
-
-            // Determine data type from first cell
-            const dataType = this.detectDataType(rows, cellIndex);
-
-            // Sort rows
-            rows.sort((a, b) => {
-                const aCell = a.children[cellIndex];
-                const bCell = b.children[cellIndex];
-
-                if (!aCell || !bCell) return 0;
-
-                const aValue = this.getCellValue(aCell, dataType);
-                const bValue = this.getCellValue(bCell, dataType);
-
-                let comparison = 0;
-
-                if (dataType === 'number') {
-                    comparison = aValue - bValue;
-                } else if (dataType === 'date') {
-                    comparison = aValue - bValue;
-                } else {
-                    // Text comparison
-                    comparison = aValue.localeCompare(bValue, undefined, { numeric: true, sensitivity: 'base' });
-                }
-
-                return direction === 'asc' ? comparison : -comparison;
-            });
-
-            // Reorder DOM
-            rows.forEach(row => this.tbody.appendChild(row));
-        }
-
-        resetToOriginalOrder() {
-            if (this.originalRowOrder) {
-                this.originalRowOrder.forEach(row => this.tbody.appendChild(row));
-            }
-        }
-
-        detectDataType(rows, cellIndex) {
-            // Check first few rows to determine data type
-            const sampleSize = Math.min(3, rows.length);
-            let numberCount = 0;
-            let dateCount = 0;
-
-            for (let i = 0; i < sampleSize; i++) {
-                const cell = rows[i].children[cellIndex];
-                if (!cell) continue;
-
-                const text = this.getCellText(cell);
-
-                // Check if it's a number (including formatted numbers like "1,000" or "9,375 SAR")
-                const numMatch = text.replace(/[,\s]/g, '').match(/^[\d.]+/);
-                if (numMatch && !isNaN(parseFloat(numMatch[0]))) {
-                    numberCount++;
-                }
-
-                // Check if it's a date
-                if (this.isDate(text)) {
-                    dateCount++;
-                }
-            }
-
-            if (numberCount === sampleSize) return 'number';
-            if (dateCount === sampleSize) return 'date';
-            return 'text';
-        }
-
-        getCellValue(cell, dataType) {
-            const text = this.getCellText(cell);
-
-            if (dataType === 'number') {
-                // Extract number from text (handle formats like "9,375 SAR" or "1,000")
-                const numMatch = text.replace(/[,\s]/g, '').match(/^[\d.]+/);
-                return numMatch ? parseFloat(numMatch[0]) : 0;
-            } else if (dataType === 'date') {
-                return new Date(text).getTime() || 0;
-            } else {
-                return text.toLowerCase();
-            }
-        }
-
-        getCellText(cell) {
-            // Get text content, ignoring nested elements like tags/icons
-            const textNode = Array.from(cell.childNodes)
-                .filter(node => node.nodeType === Node.TEXT_NODE)
-                .map(node => node.textContent.trim())
-                .join(' ');
-
-            // If no direct text, get all text content
-            return textNode || cell.textContent.trim();
-        }
-
-        isDate(text) {
-            // Simple date detection
-            const datePatterns = [
-                /^\d{1,2}[/-]\d{1,2}[/-]\d{2,4}$/,  // DD/MM/YYYY or MM/DD/YYYY
-                /^\d{4}[/-]\d{1,2}[/-]\d{1,2}$/,    // YYYY-MM-DD
-            ];
-
-            return datePatterns.some(pattern => pattern.test(text)) && !isNaN(new Date(text).getTime());
         }
 
         dispatchSortEvent(columnIndex, direction) {
@@ -374,26 +216,20 @@
 
         // Public API methods
         getSortColumn() {
-            return this.currentSortColumn;
+            const s = this.sort?.getState();
+            return s && s.key != null ? s.key : -1;
         }
 
         getSortDirection() {
-            return this.currentSortDirection;
+            return this.sort?.getState().dir || null;
         }
 
         resetSort() {
-            this.clearSortStates();
-            this.resetToOriginalOrder();
-            this.currentSortColumn = -1;
-            this.currentSortDirection = null;
+            this.sort?.reset();
         }
 
         destroy() {
-            // Remove event listeners and clean up
-            this.sortButtons.forEach(button => {
-                button.replaceWith(button.cloneNode(true));
-            });
-            this.originalRowOrder = null;
+            this.sort?.destroy();
         }
     }
 

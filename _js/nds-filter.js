@@ -39,14 +39,11 @@
                 ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
                 : [];
 
-            // Snapshot insertion order for sort-reset ("Default" / "Relevance")
-            this._originalOrder = [...this.items];
-
-            // Filter criteria storage - dynamic structure
+            // Filter criteria storage - dynamic structure.
+            // Sort state lives inside the NDS.Sort instance (this.sort); read via this.sort.getState().
             this.criteria = {
                 search: '',
-                filters: {},  // { filterName: [selectedValues] }
-                sort: { key: null, dir: 'asc' }
+                filters: {}  // { filterName: [selectedValues] }
             };
 
             // Filter inputs storage - dynamic structure
@@ -148,9 +145,12 @@
             this.setupFilterElements();
             this.setupResetButton();
             this.setupActionButtons();
-            this.setupSortButtons();
             this.setupChipStyle();
             this.applyUrlParams();
+
+            // Create the sort engine AFTER applyUrlParams so its URL-read DOM reorder
+            // happens on items whose filter visibility is already settled.
+            this.setupSort();
 
             // Setup form submission mode
             if (this.isFormMode) {
@@ -514,14 +514,8 @@
                 hasParams = true;
             }
 
-            // Apply sort params
-            const sortKey = params.get('sort');
-            if (sortKey) {
-                const sortDir = params.get('dir') || 'asc';
-                // Defer to the end so the DOM reorder happens after filter inputs are set
-                this._pendingSort = { key: sortKey, dir: sortDir };
-                hasParams = true;
-            }
+            // Sort URL params (?sort=…&dir=…) are owned by NDS.Sort (see setupSort);
+            // it reads them in its init which runs after applyUrlParams completes.
 
             // Apply dynamic filter params — plain input names as URL keys
             for (const [key, value] of params.entries()) {
@@ -552,13 +546,6 @@
                     this.updateAppliedChips();
                 } else {
                     this.applyFilters();
-                }
-
-                // Apply sort last so DOM reorder happens after filter visibility is settled
-                if (this._pendingSort) {
-                    const { key, dir } = this._pendingSort;
-                    this._pendingSort = null;
-                    this.applySort(key, dir);
                 }
             }
         }
@@ -603,9 +590,10 @@
             const params = new URLSearchParams(window.location.search);
             const searchParamName = this.getSearchInputName();
 
-            // Managed param keys: this filter's own search + filter names + sort/dir.
-            // Other filters' params (distinct names) are left untouched.
-            const managedKeys = new Set([searchParamName, 'sort', 'dir']);
+            // Managed param keys: this filter's own search + filter names.
+            // Sort/dir are owned by NDS.Sort and preserved untouched here.
+            // Other filters' params (distinct names) are also left untouched.
+            const managedKeys = new Set([searchParamName]);
             for (const key of Object.keys(this.filterInputs)) {
                 managedKeys.add(key);
             }
@@ -624,14 +612,6 @@
             for (const [filterName, values] of Object.entries(this.criteria.filters)) {
                 if (values.length > 0) {
                     params.set(filterName, values.join(','));
-                }
-            }
-
-            // Add sort params
-            if (this.criteria.sort && this.criteria.sort.key) {
-                params.set('sort', this.criteria.sort.key);
-                if (this.criteria.sort.dir && this.criteria.sort.dir !== 'asc') {
-                    params.set('dir', this.criteria.sort.dir);
                 }
             }
 
@@ -711,104 +691,42 @@
         }
 
         // ==============================================
-        // SORT
+        // SORT (delegated to NDS.Sort)
         // ==============================================
 
-        setupSortButtons() {
-            const buttons = this.queryAll('[data-sort]');
-            const { signal } = this._ac;
+        setupSort() {
+            if (!this.targetContainer) return;
 
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const key = button.getAttribute('data-sort') || '';
-                    const dir = button.getAttribute('data-sort-dir') || 'asc';
-                    // Empty key resets to original DOM order (e.g. "Default" / "Relevance")
-                    this.applySort(key, dir);
-                }, { signal });
+            // Sort buttons may live inside the filter container OR externally
+            // via data-filter-target="<id>". queryAll() spans both; pass a live
+            // getter so NDS.Sort resolves triggers with the same scope rules.
+            if (!this.queryAll('[data-sort]').length) return;
+
+            this.sort = NDS.Sort.create(this.filterContainer, {
+                items: () => this.items,
+                reorderIn: this.targetContainer,
+                triggers: () => this.queryAll('[data-sort]'),
+                mode: 'direct',
+                a11y: 'pressed',
+                accessor: (item, key) => item.getAttribute('data-sort-' + key),
+                keyFrom: (trigger) => trigger.getAttribute('data-sort') || '',
+                urlSync: { keyParam: 'sort', dirParam: 'dir' },
+                onChange: ({ orderedItems }) => {
+                    this.items = orderedItems;
+
+                    // Synchronous pagination refresh — bypasses the 50ms setTimeout in
+                    // updatePagination() that would otherwise leave pagination-hidden
+                    // items sitting at the wrong DOM positions (visible as gaps) until
+                    // the deferred refresh caught up.
+                    if (NDS.Pagination && NDS.Pagination.refresh) {
+                        const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
+                                             this.targetContainer.parentElement?.closest('.nds-paged-content');
+                        NDS.Pagination.refresh(pagedContent || this.targetContainer);
+                    }
+
+                    this.dispatchFilterEvent();
+                }
             });
-        }
-
-        applySort(key, dir = 'asc') {
-            const container = this.targetContainer;
-            if (!container || !this.items.length) return;
-
-            this.criteria.sort = { key: key || null, dir };
-
-            let ordered;
-            if (key) {
-                // Detect value type from the data-sort-<key> attribute on items
-                const attr = `data-sort-${key}`;
-                const sampleValues = this.items.map(i => i.getAttribute(attr)).filter(v => v !== null && v !== '');
-                const isNumeric = sampleValues.length > 0 && sampleValues.every(v => !isNaN(parseFloat(v)) && isFinite(v));
-                const isDate = !isNumeric && sampleValues.length > 0 && sampleValues.every(v => !isNaN(Date.parse(v)));
-
-                ordered = [...this.items].sort((a, b) => {
-                    const av = a.getAttribute(attr) || '';
-                    const bv = b.getAttribute(attr) || '';
-                    let cmp;
-                    if (isNumeric) cmp = parseFloat(av) - parseFloat(bv);
-                    else if (isDate) cmp = Date.parse(av) - Date.parse(bv);
-                    else cmp = av.localeCompare(bv);
-                    return dir === 'desc' ? -cmp : cmp;
-                });
-            } else {
-                // Restore original insertion order
-                ordered = this._originalOrder ? [...this._originalOrder] : [...this.items];
-            }
-
-            // Re-append in chosen order (preserves listeners and element state)
-            ordered.forEach(item => container.appendChild(item));
-            this.items = ordered;
-
-            this.updateSortButtonState();
-            this.updateUrlParams();
-
-            // Synchronous pagination refresh — bypasses the 50ms setTimeout in
-            // updatePagination() that would otherwise leave pagination-hidden
-            // items sitting at the wrong DOM positions (visible as gaps) until
-            // the deferred refresh caught up.
-            if (NDS.Pagination && NDS.Pagination.refresh) {
-                const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
-                                     this.targetContainer.parentElement?.closest('.nds-paged-content');
-                NDS.Pagination.refresh(pagedContent || this.targetContainer);
-            }
-
-            this.dispatchFilterEvent();
-        }
-
-        updateSortButtonState() {
-            const activeKey = this.criteria.sort.key;
-            const activeDir = this.criteria.sort.dir;
-
-            const sortButtons = this.queryAll('[data-sort]');
-            sortButtons.forEach(btn => {
-                const key = btn.getAttribute('data-sort') || '';
-                const dir = btn.getAttribute('data-sort-dir') || 'asc';
-                const active = key === (activeKey || '') && (!activeKey || dir === activeDir);
-                btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-                if (active) NDS.State.set(btn, 'selected');
-                else NDS.State.remove(btn, 'selected');
-            });
-
-            // Reflect the active sort on the dropmenu trigger icon. Instead of
-            // hardcoding icon classes, mirror whatever icon the active sort button
-            // uses — so authors can bring any icon set (NDS inline, HGI font, or
-            // custom classes) without JS changes.
-            if (sortButtons.length === 0) return;
-            const dropmenu = sortButtons[0].closest('.nds-dropmenu');
-            const triggerIcon = dropmenu?.querySelector('.nds-dropmenu-trigger > i, .nds-dropmenu-trigger .nds-icon, .nds-dropmenu-trigger .hgi');
-            if (!triggerIcon) return;
-
-            // Find the currently-active sort button (or fall back to the "reset"
-            // button with empty data-sort, so the trigger shows its neutral icon)
-            const activeBtn = sortButtons.find(btn => {
-                const key = btn.getAttribute('data-sort') || '';
-                const dir = btn.getAttribute('data-sort-dir') || 'asc';
-                return key === (activeKey || '') && (!activeKey || dir === activeDir);
-            }) || sortButtons.find(btn => !btn.getAttribute('data-sort'));
-
-            const sourceIcon = activeBtn?.querySelector('i.nds-icon, i.hgi, i');
-            if (sourceIcon) triggerIcon.className = sourceIcon.className;
         }
 
         getActiveFilterCount() {
@@ -1899,14 +1817,9 @@
                 this.criteria.filters[filterName] = [];
             }
 
-            // Clear sort and restore original DOM order
-            if (this.criteria.sort && this.criteria.sort.key) {
-                this.criteria.sort = { key: null, dir: 'asc' };
-                if (this._originalOrder && this.targetContainer) {
-                    this._originalOrder.forEach(item => this.targetContainer.appendChild(item));
-                    this.items = [...this._originalOrder];
-                }
-                this.updateSortButtonState();
+            // Clear sort and restore original DOM order (NDS.Sort handles snapshot + restore + a11y)
+            if (this.sort && this.sort.getState().key) {
+                this.sort.reset();
             }
 
             // Clear hidden inputs and form state if in form mode
