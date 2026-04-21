@@ -31,7 +31,7 @@
     // the menu as soon as the user hits top or bottom.
     overscroll-behavior: contain;
   }
-  
+
 
   // ==============================================
   // 2. MENU CONTAINER
@@ -61,17 +61,26 @@
       background-color: var(--background-neutral-200);
     }
 
-    .nds-dropmenu-group,.nds-dropmenu-item:not(.nds-btn) {
+    .nds-dropmenu-group,
+    .nds-dropmenu-item:not(.nds-btn) {
       margin-top: var(--spacing-2xl);
       margin-bottom: var(--spacing-2xl);
       margin-inline: var(--spacing-md);
 
-      &:first-child{
+      &:first-child {
         margin-top: var(--spacing-md);
       }
-      &:last-child{
+
+      &:last-child {
         margin-bottom: var(--spacing-lg);
       }
+    }
+
+    .nds-dropmenu-group>.nds-label {
+      font-size: var(--nds-text-xs-FS);
+      font-weight: 700;
+      line-height: var(--nds-text-xs-LH);
+      color: var(--text-display);
     }
   }
 
