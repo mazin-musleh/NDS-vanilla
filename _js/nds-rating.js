@@ -35,29 +35,36 @@
     init() {
       if (this._initialized) return;
       this._initialized = true;
+      this._ac = new AbortController();
+      const signal = this._ac.signal;
 
       // Delegated listeners on the container
       this.rating.addEventListener('click', (e) => {
         const star = e.target.closest('.nds-rating-star');
         if (star && !hasState(this.rating, 'disabled')) this.setRating(+star.dataset.value);
-      });
+      }, { signal });
 
       this.rating.addEventListener('mouseenter', (e) => {
         const star = e.target.closest('.nds-rating-star');
         if (star && !hasState(this.rating, 'disabled')) this.showPreview(+star.dataset.value);
-      }, true);
+      }, { capture: true, signal });
 
       this.rating.addEventListener('mouseleave', (e) => {
         const star = e.target.closest('.nds-rating-star');
         if (star && !hasState(this.rating, 'disabled')) this.hidePreview();
-      }, true);
+      }, { capture: true, signal });
 
       this.rating.addEventListener('keydown', (e) => {
         const star = e.target.closest('.nds-rating-star');
         if (star && !hasState(this.rating, 'disabled')) this.handleKeyboard(e, +star.dataset.value);
-      });
+      }, { signal });
 
       this.updateVisualState();
+    }
+
+    destroy() {
+      if (this._ac) { this._ac.abort(); this._ac = null; }
+      this._initialized = false;
     }
 
     setRating(value) {
@@ -210,6 +217,16 @@
   NDS.onDOMAdd('.nds-rating', (nodes) => {
     for (let i = 0; i < nodes.length; i++) {
       if (!nodes[i].ndsRating) nodes[i].ndsRating = new NDSRating(nodes[i]);
+    }
+  });
+
+  NDS.onDOMRemove('.nds-rating', (nodes) => {
+    for (let i = 0; i < nodes.length; i++) {
+      const instance = nodes[i].ndsRating;
+      if (instance) {
+        instance.destroy();
+        nodes[i].ndsRating = null;
+      }
     }
   });
 })();

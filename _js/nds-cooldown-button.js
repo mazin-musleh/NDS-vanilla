@@ -188,16 +188,30 @@
         if (!btn || btn.hasAttribute(WIRED_ATTR)) return;
         btn.setAttribute(WIRED_ATTR, '');
         configFor(btn); // freeze cooldown durations at wire time
+        btn._cooldownAC = new AbortController();
         btn.addEventListener('click', () => {
             if (btn.disabled || active.has(btn)) return;
             start(btn);
-        });
+        }, { signal: btn._cooldownAC.signal });
+    }
+
+    // Paired with onDOMRemove so a detached + re-added button gets a clean
+    // re-wire rather than having the old closure state persist behind the
+    // WIRED_ATTR guard.
+    function unwire(btn) {
+        if (!btn || !btn.hasAttribute(WIRED_ATTR)) return;
+        if (btn._cooldownAC) {
+            btn._cooldownAC.abort();
+            btn._cooldownAC = null;
+        }
+        btn.removeAttribute(WIRED_ATTR);
     }
 
     const CooldownButton = {
         init() {
             document.querySelectorAll(SEL).forEach(wire);
             NDS.onDOMAdd(SEL, (nodes) => nodes.forEach(wire));
+            NDS.onDOMRemove(SEL, (nodes) => nodes.forEach(unwire));
         },
         start,
         reset

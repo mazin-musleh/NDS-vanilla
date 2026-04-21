@@ -65,7 +65,7 @@
     }
 
     function autoClearStatus(group) {
-        if (group.hasAttribute('data-status')) {
+        if (NDS.Status.get(group) !== '') {
             NDS.Forms.clearStatus(group);
         }
     }
@@ -251,6 +251,16 @@
 
         NDS.onDOMAdd('.nds-otp-group', function (nodes) {
             nodes.forEach(initOtpGroup);
+        });
+
+        NDS.onDOMRemove('.nds-otp-group', function (nodes) {
+            nodes.forEach(function (group) {
+                if (group._ndsOtpAC) {
+                    group._ndsOtpAC.abort();
+                    group._ndsOtpAC = null;
+                }
+                group._ndsOtpInit = false;
+            });
         });
     }
 

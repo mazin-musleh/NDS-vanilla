@@ -49,13 +49,6 @@
         return (NDS.isArabic ? MESSAGES.ar : MESSAGES.en)[key];
     }
 
-    function generateFileId() {
-        if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-            return crypto.randomUUID();
-        }
-        return Date.now() + '_' + Math.random().toString(36).substring(2, 11);
-    }
-
     // ==============================================
     // CLASS: NDSUpload
     // ==============================================
@@ -151,7 +144,7 @@
             const isSingle = NDS.State.has(this.container, 'single');
             const fileData = {
                 file: file,
-                id: generateFileId(),
+                id: NDS.uniqueId('file-'),
                 status: options.status || 'ready',
                 progress: options.progress || 0,
                 error: options.error || null,
@@ -386,7 +379,7 @@
                 const errors = this._validateFile(file, config);
                 const fileData = {
                     file: file,
-                    id: generateFileId(),
+                    id: NDS.uniqueId('file-'),
                     status: errors.length === 0 ? 'ready' : 'error',
                     progress: 0,
                     error: errors.length > 0 ? errors.join(', ') : null,
@@ -405,7 +398,7 @@
             excessFiles.forEach(file => {
                 rejectedFiles.push({
                     file: file,
-                    id: generateFileId(),
+                    id: NDS.uniqueId('file-'),
                     status: 'error',
                     progress: 0,
                     error: msg('maxFilesReached') + ' (' + config.maxFiles + ')',
@@ -782,6 +775,16 @@
             if (!el.hasAttribute('data-nds-upload-initialized')) {
                 new NDSUpload(el);
             }
+        });
+    });
+
+    // Paired teardown so a removed upload instance detaches its listeners,
+    // aborts in-flight XHRs, disconnects its MutationObserver, and clears the
+    // init marker — without which a re-added node would short-circuit re-init
+    // behind the stale marker.
+    NDS.onDOMRemove('.nds-file-upload', function (nodes) {
+        nodes.forEach(el => {
+            if (el.ndsUpload) el.ndsUpload.destroy();
         });
     });
 

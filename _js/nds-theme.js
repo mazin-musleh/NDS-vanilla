@@ -73,10 +73,22 @@
         }
     });
 
-    // Init: sync toggle button state with current theme
-    document.addEventListener('DOMContentLoaded', () => updateToggles(getTheme()));
+    // Init: sync toggle button state with current theme.
+    // Idempotent so the loader-driven NDS.Theme.init() and the DOMContentLoaded
+    // fallback don't double-run; either entry point is safe.
+    let _initDone = false;
+    function init() {
+        if (_initDone) return;
+        _initDone = true;
+        updateToggles(getTheme());
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 
     // Public API
     window.NDS = window.NDS || {};
-    NDS.Theme = { get: getTheme, set: setTheme, toggle };
+    NDS.Theme = { init, get: getTheme, set: setTheme, toggle };
 })();

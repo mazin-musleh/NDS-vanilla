@@ -837,13 +837,13 @@
                 FormState.update(input, formControl, true);
 
                 var formContainer = formControl.closest('.nds-form-container');
-                if (formContainer && formContainer.hasAttribute('data-status')) {
+                if (formContainer && NDS.Status.get(formContainer) !== '') {
                     StatusManager.clear(formContainer);
                 }
 
                 // Auto-clear group-level status on input (skip groups with own validation)
                 var formGroup = formControl.closest('.nds-form-group');
-                if (formGroup && formGroup.hasAttribute('data-status')
+                if (formGroup && NDS.Status.get(formGroup) !== ''
                     && !formGroup.hasAttribute('data-min-checked')
                     && !formGroup.hasAttribute('data-max-checked')
                     && !formGroup.hasAttribute('data-required')) {
@@ -1160,7 +1160,7 @@
                 if (!formControl.contains(e.target)) {
                     closeDropdown();
                 }
-            });
+            }, { signal: optionsSignal });
 
             // Initialize selected option
             var initialValue = (hiddenInput ? hiddenInput.value : '') || selectInput.value;
@@ -1530,7 +1530,7 @@
         checkboxes.forEach(function(checkbox) {
             checkbox.addEventListener('change', function() {
                 if (group.hasAttribute('data-min-checked') || group.hasAttribute('data-max-checked') || group.hasAttribute('data-required')) {
-                    if (group.hasAttribute('data-status')) {
+                    if (NDS.Status.get(group) !== '') {
                         Validator.validateCheckboxGroup(group);
                     }
                 }
@@ -1546,7 +1546,7 @@
         radios.forEach(function(radio) {
             radio.addEventListener('change', function() {
                 if (group.hasAttribute('data-required') || group.classList.contains('nds-required')) {
-                    if (group.hasAttribute('data-status')) {
+                    if (NDS.Status.get(group) !== '') {
                         Validator.validateRadioGroup(group);
                     }
                 }

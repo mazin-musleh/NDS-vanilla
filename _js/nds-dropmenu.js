@@ -194,7 +194,7 @@
             else this.trigger.textContent = labelText;
 
             this.menu.querySelectorAll('.nds-dropmenu-item').forEach((o) => {
-                if (o !== item) o.removeAttribute('data-state');
+                if (o !== item) NDS.State.clear(o);
             });
             NDS.State.set(item, 'selected');
 

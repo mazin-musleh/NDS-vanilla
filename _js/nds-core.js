@@ -313,6 +313,20 @@
         return div.innerHTML;
     };
 
+    // ── Unique ID ─────────────────────────────────────────────────────
+    // Short collision-resistant ID for DOM-scoped needs (input names,
+    // aria-controls targets, per-upload file handles). Uses crypto.randomUUID
+    // when available for stronger uniqueness; falls back to time + Math.random
+    // otherwise. Optional prefix keeps IDs grep-friendly when inspected.
+    // Usage: NDS.uniqueId()         → 'c9d7...' or '1745232...nt3m42'
+    //        NDS.uniqueId('file-')  → 'file-c9d7...'
+    NDS.uniqueId = (prefix = '') => {
+        if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+            return prefix + crypto.randomUUID();
+        }
+        return prefix + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+    };
+
     // ── Lazy Reveal ────────────────────────────────────────────────────
     // Remove hidden from [data-nds-lazy] once DOM is ready
     document.addEventListener('DOMContentLoaded', () => {

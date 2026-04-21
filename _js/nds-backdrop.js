@@ -200,8 +200,14 @@
     return backdropElement;
   }
 
+  // No-op init to satisfy the loader's singleton contract.
+  // Backdrop is lazily initialized on first show(); there's nothing to do at
+  // page load. Kept idempotent in case the loader calls it more than once.
+  function init() {}
+
   // Public API
   NDS.Backdrop = {
+    init,
     show,
     hide,
     toggle,

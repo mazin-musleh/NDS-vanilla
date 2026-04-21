@@ -1511,7 +1511,7 @@
             }
 
             // Determine input class and structure based on type
-            const groupName = `filter-${filterName}-${this.generateId()}`;
+            const groupName = `filter-${filterName}-${NDS.uniqueId()}`;
             const labelMap = this.filterLabels[filterName] || {};
 
             // Generate input for each unique value
@@ -1588,10 +1588,6 @@
             });
 
             return fieldset;
-        }
-
-        generateId() {
-            return Math.random().toString(36).substring(2, 9);
         }
 
         updateFilterCriteria(filterName) {

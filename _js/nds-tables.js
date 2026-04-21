@@ -526,21 +526,19 @@
             this._offResizeWrapper = NDS.onElementResize(this.wrapper, checkTable);
 
             // Detect visibility changes (when tab becomes visible)
+            const onVisibleDebounced = NDS.debounce(() => this.checkTableWidth(), 150);
             this._offIntersect = NDS.onIntersect(this.wrapper, (entry) => {
-                if (entry.isIntersecting) {
-                    clearTimeout(this.visibilityTimer);
-                    this.visibilityTimer = setTimeout(() => this.checkTableWidth(), 150);
-                }
+                if (entry.isIntersecting) onVisibleDebounced();
             }, { threshold: 0.1 });
 
             // Tab change listener is now handled globally (see initializeTables function)
         }
 
         handleResize() {
-            clearTimeout(this.resizeTimer);
-            this.resizeTimer = setTimeout(() => {
-                this.checkTableWidth();
-            }, 250);
+            if (!this._debouncedResize) {
+                this._debouncedResize = NDS.debounce(() => this.checkTableWidth(), 250);
+            }
+            this._debouncedResize();
         }
 
         recheckWidth() {
@@ -588,12 +586,16 @@
                 // Find all responsive tables inside the activated tab panel
                 const tables = activePanel.querySelectorAll('.nds-table[data-nds-responsive-initialized]');
                 tables.forEach(table => {
-                    if (table.ndsTableResponsive) {
+                    const responsive = table.ndsTableResponsive;
+                    if (responsive) {
                         // Debounce the recheck
-                        clearTimeout(table.ndsTableResponsive.tabChangeTimer);
-                        table.ndsTableResponsive.tabChangeTimer = setTimeout(() => {
-                            table.ndsTableResponsive.checkTableWidth();
-                        }, 200);
+                        if (!responsive._debouncedTabChangeCheck) {
+                            responsive._debouncedTabChangeCheck = NDS.debounce(
+                                () => responsive.checkTableWidth(),
+                                200
+                            );
+                        }
+                        responsive._debouncedTabChangeCheck();
                     }
                 });
             }
