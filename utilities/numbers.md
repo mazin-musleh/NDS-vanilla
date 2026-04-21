@@ -90,6 +90,7 @@ direction: ltr
                         <span class="nds-number-format" data-currency="SAR" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">25000</span>
                         <span class="nds-number-format" data-currency="USD" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">99999.99</span>
                         <span class="nds-number-format" data-currency="EUR" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">75000</span>
+                        <span class="nds-number-format" data-currency="SAR" data-free style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">Free</span>
                         <span class="nds-number-format" style="font-size: var(--nds-display-clamp-sm-FS); font-weight: 600;">1500000 users</span>
                     </div>
                 </div>
@@ -122,6 +123,9 @@ direction: ltr
 
                                 &lt;span class="nds-number-format" data-currency="EUR"&gt;75000&lt;/span&gt;
                                 &lt;!-- Renders: € 75,000 --&gt;
+
+                                &lt;span class="nds-number-format" data-currency="SAR" data-free&gt;Free&lt;/span&gt;
+                                &lt;!-- Renders: Free (no currency icon) --&gt;
 
                                 &lt;span class="nds-number-format"&gt;1500000 users&lt;/span&gt;
                                 &lt;!-- Renders: 1,500,000 users --&gt;
@@ -514,6 +518,11 @@ direction: ltr
                             <td><code class="nds-inline-code lang-html">data-currency</code></td>
                             <td>none</td>
                             <td>Set on <code class="nds-inline-code lang-html">.nds-number-format</code>. Supported values: <code class="nds-inline-code lang-html">SAR</code>, <code class="nds-inline-code lang-html">USD</code>, <code class="nds-inline-code lang-html">EUR</code>, <code class="nds-inline-code lang-html">GBP</code>, <code class="nds-inline-code lang-html">JPY</code>, <code class="nds-inline-code lang-html">CNY</code>, <code class="nds-inline-code lang-html">INR</code>, <code class="nds-inline-code lang-html">KRW</code>, <code class="nds-inline-code lang-html">TRY</code></td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-free</code></td>
+                            <td>absent</td>
+                            <td>Set on <code class="nds-inline-code lang-html">.nds-number-format</code> to suppress the currency symbol. Pair with a text label (e.g. "Free", "مجاني") for zero-cost items.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-target</code></td>

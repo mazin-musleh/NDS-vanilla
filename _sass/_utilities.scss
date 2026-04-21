@@ -113,6 +113,11 @@ $all-spacers: $spacers;
   &[data-currency="TRY"]::after {
     content: "₺";
   }
+  // Zero-price display: render the label as-is (e.g. "Free") and suppress
+  // the currency icon. Pairs with data-currency for consistent typography.
+  &[data-free]::after {
+    display: none;
+  }
 }
 
 :where(.nds-truncate:not([hidden])) {
