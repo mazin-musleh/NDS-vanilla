@@ -58,6 +58,13 @@ All page content is built from sections. Read `layout/section.md` before creatin
 5. Use `playground.md` to test new components
 6. Add documentation page: `components/[name].md` — use `/doc-page [name]` skill after testing
 7. Add to `_data/sidemenu/sidemenu.yml` under Components children
+8. Add to the matching index data file so the page appears on its landing grid. Match an existing neighbor entry's keys (title, description, icon, category, tags, url) exactly rather than guessing the schema:
+   - `components/` → `_data/content/components.yml`
+   - `layout/` → `_data/content/layouts.yml` (if present)
+   - `utilities/` → `_data/content/utilities.yml` (if present)
+   - `examples/` → `_data/content/examples.yml`
+   - `templates/` → `_data/content/templates.yml`
+   Whenever you create a new doc page, check for a sibling YAML in `_data/content/` and add the entry there too.
 
 ## Content Skills
 
