@@ -19,6 +19,7 @@
 
 // Section styles - visual tokens, color variants, meta, actions, 404, sideInfo
 @use 'layout/section';
+@use 'layout/block';
 
 // Import mixins
 @use 'mixins' as *;

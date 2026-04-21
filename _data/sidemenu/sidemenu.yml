@@ -205,6 +205,9 @@
     - label: "Section"
       url: "/layout/section"
       href: "/layout/section.html"
+    - label: "Block"
+      url: "/layout/block"
+      href: "/layout/block.html"
 
 - label: "Utilities"
   has_sub: true

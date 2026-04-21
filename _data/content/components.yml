@@ -297,6 +297,13 @@
   tags: ["CSS"]
   url: "/layout/grid.html"
 
+- title: "Block"
+  description: "Titled content grouping primitive for sub-sections inside a section body"
+  icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/block.html"
+
 # Utilities
 - title: "Copy"
   description: "One-click clipboard copy with checkmark feedback and screen reader announcement"

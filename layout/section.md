@@ -41,7 +41,7 @@ section.nds-content-section          (responsive padding for content constrainin
 │   │   └── p.nds-section-description
 │   ├── div.nds-section-action       (optional, auto width. Add .nds-nowrap to keep inline on mobile)
 │   └── div.nds-section-body      (full row below)
-│       └── div.nds-content-block    (optional content grouping)
+│       └── div.nds-block    (optional content grouping)
 │           ├── h3.nds-block-title   (optional)
 │           └── p, ul, ol, img...    (direct content)
 └── div.nds-section-body.nds-max-width  (outside wrapper for breakout)
@@ -1176,124 +1176,6 @@ section.nds-content-section          (responsive padding for content constrainin
     </div>
 </section>
 
-<!-- Content Block -->
-<section id="content-block" class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Content Block</h2>
-            <p class="nds-section-description">Group content inside a section using .nds-content-block. Add an optional .nds-block-title for titled blocks. Content goes directly inside, no extra wrappers needed.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Variant</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
-                                            <span class="nds-label">Brand</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
-                                            <span class="nds-label">Ghost</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <section class="nds-content-section">
-                                <div class="nds-section-body">
-                                    <div class="nds-content-block">
-                                        <h3 class="nds-block-title">Block Title</h3>
-                                        <p>First paragraph of content inside the block. Paragraphs, lists, and media get automatic styling when inside .nds-content-block.</p>
-                                        <p>Second paragraph to demonstrate spacing between content elements.</p>
-                                    </div>
-                                    <div class="nds-content-block">
-                                        <h3 class="nds-block-title">Another Block</h3>
-                                        <ul>
-                                            <li>List items work inside content blocks</li>
-                                            <li>With automatic padding and spacing</li>
-                                        </ul>
-                                    </div>
-                                    <div class="nds-content-block">
-                                        <p>Blocks without a title work too. The title is optional.</p>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-contentblock" id="tab-contentblock">
-                                    <span class="nds-tab-label">HTML</span>
-                                </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example" role="tabpanel" id="panel-contentblock" aria-labelledby="tab-contentblock">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
-    &lt;div class="nds-section-body"&gt;
-        &lt;div class="nds-content-block"&gt;
-            &lt;h3 class="nds-block-title"&gt;Block Title&lt;/h3&gt;
-            &lt;p&gt;First paragraph of content inside the block.&lt;/p&gt;
-            &lt;p&gt;Second paragraph to demonstrate spacing.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-content-block"&gt;
-            &lt;h3 class="nds-block-title"&gt;Another Block&lt;/h3&gt;
-            &lt;ul&gt;
-                &lt;li&gt;List items work inside content blocks&lt;/li&gt;
-                &lt;li&gt;With automatic padding and spacing&lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-content-block"&gt;
-            &lt;p&gt;Blocks without a title work too. The title is optional.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-</code>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Built-in Features -->
 <section id="sectionFeatures" class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -1357,7 +1239,7 @@ section.nds-content-section          (responsive padding for content constrainin
         </div>
         <div class="nds-section-body">
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use sections as the <strong>primary building block</strong> for all page content. Every distinct content area on a page should be wrapped in its own <code class="nds-inline-code lang-html">nds-content-section</code></li>
@@ -1365,14 +1247,14 @@ section.nds-content-section          (responsive padding for content constrainin
                     <li>Use <strong>full-width breakout</strong> for content that benefits from edge-to-edge display: carousels, <a class="nds-color" href="{{ 'components/swiper' | relative_url }}">Swiper</a> components, wide image galleries, or full-bleed media</li>
                     <li>Use <strong>horizontal layout</strong> for marketing-style sections where a text block and visual sit side by side, like feature highlights or call-to-action blocks</li>
                     <li>Do not use sections for small inline UI elements. Use <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a> for self-contained content items, or <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> for collapsible groups</li>
-                    <li>Do not nest <code class="nds-inline-code lang-html">nds-content-section</code> inside another <code class="nds-inline-code lang-html">nds-content-section</code>. Use <code class="nds-inline-code lang-html">nds-content-block</code> to subdivide content within a section</li>
+                    <li>Do not nest <code class="nds-inline-code lang-html">nds-content-section</code> inside another <code class="nds-inline-code lang-html">nds-content-section</code>. Use a <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a> to subdivide content within a section</li>
                     <li>Choose <strong>float action</strong> when the action is secondary and the title area has room. Choose <strong>standard action</strong> when the action buttons are prominent and should have their own row on mobile</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-nowrap</code> to the action container only when the action is compact (a single small button) and should stay inline at all breakpoints</li>
                     <li>Use color themes sparingly. Reserve <code class="nds-inline-code lang-html">nds-primary</code> and <code class="nds-inline-code lang-html">nds-gradient-green</code> for hero-level emphasis, and <code class="nds-inline-code lang-html">nds-brand</code> or <code class="nds-inline-code lang-html">nds-ghost</code> for subtle visual separation between adjacent sections</li>
                 </ul>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
@@ -1395,7 +1277,7 @@ section.nds-content-section          (responsive padding for content constrainin
                 </table>
             </div>
 
-            <div class="nds-content-block">
+            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive nds-striped" style="--min-width:600px;">
                     <thead>
