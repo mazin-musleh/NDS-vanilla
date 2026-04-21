@@ -15,7 +15,8 @@ direction: ltr
             <p class="nds-section-description">Why it was built, and what it covers.</p>
         </div>
         <div class="nds-section-body">
-            <p>The Digital Government Authority published a <a href="https://www.figma.com/@sdga" target="_blank" class="nds-primary">unified design system on Figma</a> to standardize government digital services. The specifications are clear, but converting them to working code remains a challenge for most teams.</p>
+            <p>Thanks to the <a href="https://dga.gov.sa/" target="_blank" class="nds-primary">Digital Government Authority (DGA)</a> for its outstanding effort in unifying Saudi Arabia's government websites and services under a single, coherent design language.</p>
+            <p>The DGA's specifications, published on <a href="https://www.figma.com/@sdga" target="_blank" class="nds-primary">Figma</a>, are clear and comprehensive. Converting them to working code, however, remains a challenge for most teams.</p>
             <p>The official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank" class="nds-primary">React/Storybook component library</a> that covers core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, with all components, layout system, page templates, documentation, and a full development environment. No framework required.</p>
         </div>
     </div>
