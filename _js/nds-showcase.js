@@ -63,6 +63,7 @@
         initializeCardStateToggles();
         initializeCardHeaderToggles();
         initializeCardColorToggles();
+        initializeCardLayoutToggles();
         initializeCardContentToggles();
         initializeStepperResponsiveSimplify();
         initializeStepperFallbackMenu();
@@ -1907,7 +1908,7 @@
                 if (imageSection) imageSection.setAttribute('hidden', '');
                 if (avatarSection) avatarSection.setAttribute('hidden', '');
 
-                const checkboxVisible = cardHeader?.querySelector('.nds-card-checkbox:not([hidden])');
+                const checkboxVisible = demoCard.querySelector('.demo-container .nds-card-checkbox:not([hidden])');
                 if (headerType === 'none' && !checkboxVisible) {
                     if (cardHeader) cardHeader.setAttribute('hidden', '');
                 } else {
@@ -1942,6 +1943,27 @@
 
                 // Toggle dark background for oncolor variant
                 if (container) container.classList.toggle('dark-bg', color === 'oncolor');
+
+                rebuildCardCode(demoCard);
+            });
+        });
+    }
+
+    function initializeCardLayoutToggles() {
+        document.querySelectorAll('[data-card-layout]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const layout = this.dataset.cardLayout;
+                selectDropmenuItem(this, '[data-card-layout]');
+
+                const card = demoCard.querySelector('.demo-container .nds-card');
+                if (!card) return;
+
+                card.classList.remove('nds-rowView', 'nds-center');
+                if (layout === 'rowView') card.classList.add('nds-rowView');
+                else if (layout === 'center') card.classList.add('nds-center');
 
                 rebuildCardCode(demoCard);
             });

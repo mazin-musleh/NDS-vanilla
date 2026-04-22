@@ -113,6 +113,24 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Layout: ">
+                                    <span class="nds-label">Layout: Default</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-layout="default">
+                                            <span class="nds-label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-layout="rowView">
+                                            <span class="nds-label">Row view</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-layout="center">
+                                            <span class="nds-label">Center</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-color", ".nds-card", "cardColor"]'>
                                 <span class="nds-label">Color fill</span>
@@ -136,10 +154,6 @@ direction: ltr
                                 <span class="nds-label">Rating</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-card", "cardCenter"]'>
-                                <span class="nds-label">Center</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -160,11 +174,11 @@ direction: ltr
                                     <div class="nds-avatar nds-xl" hidden>
                                         <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                     </div>
-                                    <div class="nds-card-checkbox" hidden>
-                                        <div class="nds-form-container nds-check-container">
-                                            <div class="nds-form-control">
-                                                <input type="checkbox" name="cardSelect" value="card-1" class="nds-check">
-                                            </div>
+                                </div>
+                                <div class="nds-card-checkbox" hidden>
+                                    <div class="nds-form-container nds-check-container">
+                                        <div class="nds-form-control">
+                                            <input type="checkbox" name="cardSelect" value="card-1" class="nds-check">
                                         </div>
                                     </div>
                                 </div>
@@ -195,13 +209,13 @@ direction: ltr
                                             </div>
                                             <span class="nds-card-rating-text">(12 reviews)</span>
                                         </div>
+                                        <div class="nds-card-actions" hidden>
+                                            <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
+                                                <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
+                                                <span class="nds-label">Learn More</span>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="nds-card-actions" hidden>
-                                    <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
-                                        <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
-                                        <span class="nds-label">Learn More</span>
-                                    </a>
                                 </div>
                             </div>
                         </div>
