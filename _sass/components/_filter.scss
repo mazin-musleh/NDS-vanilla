@@ -96,7 +96,7 @@
 
 .nds-search-box {
     display: flex;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-4xl);
     margin: 0 auto;
     justify-content: center;
     align-items: flex-start;
@@ -104,8 +104,13 @@
     width: 100%;
 
     @include mobile {
-        gap: var(--spacing-md);
+        gap: var(--spacing-xl);
+        .nds-main-nav & {
+            padding-inline: var(--spacing-xl);
+        }
     }
+
+    
 
     .nds-search-content {
         display: flex;
@@ -125,6 +130,7 @@
         flex-direction: row;
         flex: 1 1 100%;
         align-items: center;
+        flex-wrap: wrap;
 
         >.nds-label {
             font-size: var(--nds-text-clamp-lg-FS);

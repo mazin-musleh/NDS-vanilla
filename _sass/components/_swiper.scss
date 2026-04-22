@@ -75,7 +75,11 @@
     .nds-swiper:not(.nds-hero) & {
         padding-inline: max(2px, var(--swiper-padding)); //2px min for shadow
     }
-
+    @include desktop(min){
+        .nds-content-layout.nds-cardView & {
+            padding-inline: 0px;
+        }
+    }
 }
 
 // ==============================================

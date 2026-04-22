@@ -21,6 +21,7 @@ main {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--_layout-gap);
+    width: 100%;
 
     @include desktop(min) {
         &.nds-wSideMenu {

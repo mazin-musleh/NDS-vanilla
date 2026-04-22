@@ -129,7 +129,7 @@ $all-spacers: $spacers;
   line-clamp: var(--_truncate);
   text-overflow: ellipsis;
   white-space: wrap;
-  line-height: normal;
+  /* line-height: normal; */
 }
 
 // ==============================================
