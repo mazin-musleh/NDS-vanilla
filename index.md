@@ -15,9 +15,8 @@ direction: ltr
             <p class="nds-section-description">Why it was built, and what it covers.</p>
         </div>
         <div class="nds-section-body">
-            <p>Thanks to the <a href="https://dga.gov.sa/" target="_blank" class="nds-primary">Digital Government Authority (DGA)</a> for its outstanding effort in unifying Saudi Arabia's government websites and services under a single, coherent design language.</p>
-            <p>The DGA's specifications, published on <a href="https://www.figma.com/@sdga" target="_blank" class="nds-primary">Figma</a>, are clear and comprehensive. Converting them to working code, however, remains a challenge for most teams.</p>
-            <p>The official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank" class="nds-primary">React/Storybook component library</a> that covers core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, with all components, layout system, page templates, documentation, and a full development environment. No framework required.</p>
+            <p>Credit to the <a href="https://dga.gov.sa/" target="_blank" class="nds-primary">Digital Government Authority (DGA)</a> for its outstanding work in unifying Saudi Arabia's government websites and services under a single, coherent design language. The specifications published on <a href="https://www.figma.com/@sdga" target="_blank" class="nds-primary">Figma</a> are clear and comprehensive; however, translating them into working code remains a challenge for most teams.</p>
+            <p>The DGA's official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank" class="nds-primary">React and Storybook component library</a> that covers the core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, and includes all components, a layout system, page templates, documentation, and a complete development environment. No framework is required.</p>
         </div>
     </div>
 </section>
@@ -27,10 +26,8 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Compliance Ready</h2>
-            <p class="nds-section-description">Official DGA page templates, assembled from NDS components and ready to ship.</p>
-        </div>
-        <div class="nds-section-body">
-            <p>Every component follows the official design tokens, typography, spacing, and interaction patterns. The templates below cover the most common government service screens. Copy a template, fill in your content, and ship.</p>
+            <p class="nds-section-brief">Official DGA page templates, converted into live, working code and ready for deployment.</p>
+            <p class="nds-section-description">Every component adheres to the official design tokens, typography, spacing, and interaction patterns. The templates below cover the most common government service screens, ready to copy, populate with your content, and publish.</p>
         </div>
         <div class="nds-section-body  nds-max-width">
             <div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40">

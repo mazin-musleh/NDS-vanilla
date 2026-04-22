@@ -6,12 +6,14 @@
 [![Issues](https://img.shields.io/github/issues/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/issues)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
 
-An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero external dependencies.
+Credit to the [Digital Government Authority (DGA)](https://dga.gov.sa/) for its outstanding work in unifying Saudi Arabia's government websites and services under a single, coherent design language. The specifications published on [Figma](https://www.figma.com/@sdga) are clear and comprehensive; however, translating them into working code remains a challenge for most teams.
+
+The DGA's official implementation is a React and Storybook component library that covers the core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, and includes all components, a layout system, page templates, documentation, and a complete development environment. No framework is required.
 
 **Highlights:**
 - **Framework-free.** Plain HTML, CSS, and JavaScript. Works with any stack, or no stack at all.
 - **More than components.** Includes the layout system, page templates, documentation, and fully customizable.
-- **Compliance-ready out of the box.** Every component and page follows official DGA tokens, typography, spacing, and interaction patterns.
+- **Compliance-ready out of the box.** Official DGA page templates, converted into live, working code and ready for deployment. Every component adheres to the official design tokens, typography, spacing, and interaction patterns.
 
 ### → [**Live demo & full documentation**](https://mazin-musleh.github.io/NDS-vanilla/)
 
