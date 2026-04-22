@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Single Checkbox -->
-<section id="checkboxSingle" class="nds-content-section">
+<section id="checkboxSingle" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Single Checkbox</h2>
@@ -146,7 +146,7 @@ direction: ltr
 </section>
 
 <!-- Group Validation -->
-<section id="checkboxGroup" class="nds-content-section">
+<section id="checkboxGroup" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Checkbox Group</h2>
@@ -348,7 +348,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="checkboxFeatures" class="nds-content-section">
+<section id="checkboxFeatures" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -390,7 +390,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="checkboxGuidelines" class="nds-content-section">
+<section id="checkboxGuidelines" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage Guidelines</h2>

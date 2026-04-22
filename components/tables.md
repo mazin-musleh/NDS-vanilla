@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Basic Table Section -->
-<section id="basicTableOverview" class="nds-content-section">
+<section id="basicTableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard Table</h2>
@@ -124,7 +124,7 @@ direction: ltr
 </section>
 
 <!-- Sortable Table Section -->
-<section id="sortableTableOverview" class="nds-content-section">
+<section id="sortableTableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Sortable Table</h2>
@@ -300,7 +300,7 @@ direction: ltr
 </section>
 
 <!-- Table with Feedback Icons -->
-<section id="feedbackIconsTableOverview" class="nds-content-section">
+<section id="feedbackIconsTableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Feedback Icons</h2>
@@ -552,7 +552,7 @@ direction: ltr
 </section>
 
 <!-- Table with Checkboxes -->
-<section id="checkboxTableOverview" class="nds-content-section">
+<section id="checkboxTableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Selection</h2>
@@ -756,7 +756,7 @@ direction: ltr
 </section>
 
 <!-- Center Aligned Table -->
-<section id="centerAlignedTableOverview" class="nds-content-section">
+<section id="centerAlignedTableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Center Aligned Table</h2>
@@ -886,7 +886,7 @@ direction: ltr
 </section>
 
 <!-- Loading State Table -->
-<section id="loadingTableOverview" class="nds-content-section">
+<section id="loadingTableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading State</h2>
@@ -1002,7 +1002,7 @@ direction: ltr
 </section>
 
 <!-- Responsive Table Section -->
-<section id="responsiveTableOverview" class="nds-content-section">
+<section id="responsiveTableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Table</h2>
@@ -1154,7 +1154,7 @@ direction: ltr
 </section>
 
 <!-- Paginated Table Section -->
-<section id="paginatedTableOverview" class="nds-content-section">
+<section id="paginatedTableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Pagination</h2>
@@ -1409,7 +1409,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="tableFeatures" class="nds-content-section">
+<section id="tableFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -1478,7 +1478,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="tableGuidelines" class="nds-content-section">
+<section id="tableGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

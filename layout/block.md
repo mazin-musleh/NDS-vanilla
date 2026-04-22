@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Block Structure -->
-<section id="blockStructure" class="nds-content-section">
+<section id="blockStructure" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Structure</h2>
@@ -30,7 +30,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-section.nds-content-section
+section.nds-content-section nds-demo-section
 &#9492;&#9472;&#9472; div.nds-section-body
     &#9492;&#9472;&#9472; div.nds-block
         &#9500;&#9472;&#9472; h3.nds-block-title   (optional)
@@ -46,7 +46,7 @@ section.nds-content-section
 </section>
 
 <!-- Standard -->
-<section id="blockStandard" class="nds-content-section">
+<section id="blockStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard</h2>
@@ -60,7 +60,7 @@ section.nds-content-section
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section" style="width: 100%;">
+                            <section class="nds-content-section nds-demo-section" style="width: 100%;">
                                 <div class="nds-section-body">
                                     <div class="nds-block">
                                         <h3 class="nds-block-title">Block Title</h3>
@@ -100,7 +100,7 @@ section.nds-content-section
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
+&lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;div class="nds-section-body"&gt;
         &lt;div class="nds-block"&gt;
             &lt;h3 class="nds-block-title"&gt;Block Title&lt;/h3&gt;
@@ -131,7 +131,7 @@ section.nds-content-section
 </section>
 
 <!-- Built-in Features -->
-<section id="blockFeatures" class="nds-content-section">
+<section id="blockFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -172,7 +172,7 @@ section.nds-content-section
 </section>
 
 <!-- Usage Guidelines -->
-<section id="blockGuidelines" class="nds-content-section">
+<section id="blockGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

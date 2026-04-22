@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Featured Icons -->
-<section id="featuredIconsOverview" class="nds-content-section">
+<section id="featuredIconsOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Featured Icons</h2>
@@ -139,7 +139,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="featuredIconsFeatures" class="nds-content-section">
+<section id="featuredIconsFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -180,7 +180,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="featuredIconsGuidelines" class="nds-content-section">
+<section id="featuredIconsGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

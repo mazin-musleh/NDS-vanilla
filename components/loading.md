@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Loading Overview -->
-<section id="loadingOverview" class="nds-content-section">
+<section id="loadingOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Loading Spinner</h2>
@@ -179,7 +179,7 @@ direction: ltr
 </section>
 
 <!-- Size Variants -->
-<section id="sizeVariants" class="nds-content-section">
+<section id="sizeVariants" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Size Variants</h2>

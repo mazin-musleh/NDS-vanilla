@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Standard Pagination -->
-<section id="paginationStandard" class="nds-content-section">
+<section id="paginationStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard Pagination</h2>
@@ -161,7 +161,7 @@ direction: ltr
 </section>
 
 <!-- Data-Driven Pagination -->
-<section id="paginationDataDriven" class="nds-content-section">
+<section id="paginationDataDriven" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Data-Driven Pagination</h2>
@@ -237,7 +237,7 @@ direction: ltr
 </section>
 
 <!-- Automatic Ellipsis -->
-<section id="paginationEllipsis" class="nds-content-section">
+<section id="paginationEllipsis" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic Ellipsis Collapse</h2>
@@ -440,7 +440,7 @@ direction: ltr
 </section>
 
 <!-- Paginated Grid -->
-<section id="paginationGrid" class="nds-content-section">
+<section id="paginationGrid" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Paginated Grid</h2>
@@ -564,7 +564,7 @@ direction: ltr
 </section>
 
 <!-- Paginated Table -->
-<section id="paginationTable" class="nds-content-section">
+<section id="paginationTable" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Paginated Table</h2>
@@ -807,7 +807,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="paginationFeatures" class="nds-content-section">
+<section id="paginationFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -862,7 +862,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="paginationGuidelines" class="nds-content-section">
+<section id="paginationGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

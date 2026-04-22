@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Variants -->
-<section id="tagVariants" class="nds-content-section">
+<section id="tagVariants" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Variants</h2>
@@ -129,7 +129,7 @@ direction: ltr
 </section>
 
 <!-- Status -->
-<section id="tagStatus" class="nds-content-section">
+<section id="tagStatus" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Status</h2>
@@ -245,7 +245,7 @@ direction: ltr
 </section>
 
 <!-- On Color -->
-<section id="tagOnColor" class="nds-content-section">
+<section id="tagOnColor" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">On Color</h2>
@@ -336,7 +336,7 @@ direction: ltr
 </section>
 
 <!-- Icon Only -->
-<section id="tagIconOnly" class="nds-content-section">
+<section id="tagIconOnly" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Icon Only</h2>
@@ -452,7 +452,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="tagFeatures" class="nds-content-section">
+<section id="tagFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -493,7 +493,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="usageGuidelines" class="nds-content-section">
+<section id="usageGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

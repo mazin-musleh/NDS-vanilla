@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Gallery -->
-<section id="ipvGallery" class="nds-content-section">
+<section id="ipvGallery" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image Gallery</h2>
@@ -121,7 +121,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="ipvFeatures" class="nds-content-section">
+<section id="ipvFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -191,7 +191,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="ipvGuidelines" class="nds-content-section">
+<section id="ipvGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

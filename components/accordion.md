@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Standard -->
-<section id="accordionOverview" class="nds-content-section">
+<section id="accordionOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard</h2>
@@ -187,7 +187,7 @@ direction: ltr
 </section>
 
 <!-- With Leading Icons -->
-<section id="accordionIcons" class="nds-content-section">
+<section id="accordionIcons" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">With Leading Icons</h2>
@@ -371,7 +371,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="accordionFeatures" class="nds-content-section">
+<section id="accordionFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -426,7 +426,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="accordionGuidelines" class="nds-content-section">
+<section id="accordionGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

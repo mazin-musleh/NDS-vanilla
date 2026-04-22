@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Code Block Overview -->
-<section id="codeOverview" class="nds-content-section">
+<section id="codeOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Direct Code Block</h2>
@@ -254,7 +254,7 @@ async function handleFormSubmit(form) {
 </section>
 
 <!-- Tabbed Code Block -->
-<section id="tabbedCode" class="nds-content-section">
+<section id="tabbedCode" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tabbed Code Block</h2>
@@ -556,7 +556,7 @@ NDS.Alert.create({
 </section>
 
 <!-- Language Classes -->
-<section id="languageClasses" class="nds-content-section">
+<section id="languageClasses" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Language Classes</h2>
@@ -607,7 +607,7 @@ NDS.Alert.create({
 </section>
 
 <!-- Usage Guidelines -->
-<section id="codeGuidelines" class="nds-content-section">
+<section id="codeGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
@@ -657,7 +657,7 @@ NDS.Alert.create({
 </section>
 
 <!-- CSS Implementation -->
-<section id="codeCSS" class="nds-content-section">
+<section id="codeCSS" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">CSS Implementation</h2>

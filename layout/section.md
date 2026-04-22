@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Section Structure Overview -->
-<section id="structure" class="nds-content-section">
+<section id="structure" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Section Hierarchy</h2>
@@ -30,7 +30,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-section.nds-content-section          (responsive padding for content constraining)
+section.nds-content-section nds-demo-section          (responsive padding for content constraining)
 ├── div.nds-section-wrapper          (Flex row + responsive breakpoints)
 │   ├── div.nds-section-image        (optional)
 │   ├── div.nds-section-head         (flex:1, title + desc + meta)
@@ -56,7 +56,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Tier 1: Minimal -->
-<section id="tier1" class="nds-content-section">
+<section id="tier1" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 1: Minimal (No Wrapper)</h2>
@@ -75,41 +75,41 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                data-toggler='["nds-center", ".nds-content-section nds-demo-section", "sectionLayout"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section">
+                            <section class="nds-content-section nds-demo-section">
                                 <h2 class="nds-section-title">Section Title</h2>
                                 <p class="nds-section-description">Section description goes here. Used for simple sections with only a title and content.</p>
                                 <div class="nds-section-body">
@@ -135,7 +135,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
+&lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
     &lt;p class="nds-section-description"&gt;Section description goes here. Used for simple sections with only a title and content.&lt;/p&gt;
     &lt;div class="nds-section-body"&gt;
@@ -154,7 +154,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Tier 2: Standard with Wrapper -->
-<section id="tier2" class="nds-content-section">
+<section id="tier2" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 2: Standard (With Wrapper)</h2>
@@ -173,41 +173,41 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                data-toggler='["nds-center", ".nds-content-section nds-demo-section", "sectionLayout"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section">
+                            <section class="nds-content-section nds-demo-section">
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-head">
                                         <h2 class="nds-section-title">Section Title</h2>
@@ -237,7 +237,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
+&lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;div class="nds-section-wrapper"&gt;
         &lt;div class="nds-section-head"&gt;
             &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
@@ -260,7 +260,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Tier 3: With Action -->
-<section id="tier3" class="nds-content-section">
+<section id="tier3" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 3: With Action</h2>
@@ -279,41 +279,41 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                data-toggler='["nds-center", ".nds-content-section nds-demo-section", "sectionLayout"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section">
+                            <section class="nds-content-section nds-demo-section">
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-head">
                                         <h2 class="nds-section-title">Latest News</h2>
@@ -348,7 +348,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
+&lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;div class="nds-section-wrapper"&gt;
         &lt;div class="nds-section-head"&gt;
             &lt;h2 class="nds-section-title"&gt;Latest News&lt;/h2&gt;
@@ -376,7 +376,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Float Action -->
-<section id="float-action" class="nds-content-section">
+<section id="float-action" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Float Action</h2>
@@ -395,27 +395,27 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
@@ -430,14 +430,14 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <span class="nds-label">Wrap</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                data-toggler='["nds-center", ".nds-content-section nds-demo-section", "sectionLayout"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section">
+                            <section class="nds-content-section nds-demo-section">
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-head">
                                         <div class="nds-section-action">
@@ -473,7 +473,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
+&lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;div class="nds-section-wrapper"&gt;
         &lt;div class="nds-section-head"&gt;
             &lt;div class="nds-section-action"&gt;
@@ -502,7 +502,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Dual Action -->
-<section id="dual-action" class="nds-content-section">
+<section id="dual-action" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Dual Action</h2>
@@ -521,41 +521,41 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                data-toggler='["nds-center", ".nds-content-section nds-demo-section", "sectionLayout"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section nds-ghost">
+                            <section class="nds-content-section nds-demo-section nds-ghost">
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-head">
                                         <div class="nds-section-action">
@@ -599,7 +599,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;section class="nds-content-section nds-ghost"&gt;
+&lt;section class="nds-content-section nds-demo-section nds-ghost"&gt;
     &lt;div class="nds-section-wrapper"&gt;
         &lt;div class="nds-section-head"&gt;
             &lt;div class="nds-section-action"&gt;
@@ -636,7 +636,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- nds-nowrap Modifier -->
-<section id="nowrap" class="nds-content-section">
+<section id="nowrap" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Action Wrapping: nds-nowrap</h2>
@@ -655,27 +655,27 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
@@ -685,7 +685,7 @@ section.nds-content-section          (responsive padding for content constrainin
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section">
+                            <section class="nds-content-section nds-demo-section">
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-head">
                                         <h2 class="nds-section-title">Section Title</h2>
@@ -720,7 +720,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
+&lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;div class="nds-section-wrapper"&gt;
         &lt;div class="nds-section-head"&gt;
             &lt;h2 class="nds-section-title"&gt;Section Title&lt;/h2&gt;
@@ -748,7 +748,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Tier 4: With Image -->
-<section id="tier4" class="nds-content-section">
+<section id="tier4" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 4: With Image</h2>
@@ -767,41 +767,41 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                data-toggler='["nds-center", ".nds-content-section nds-demo-section", "sectionLayout"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section">
+                            <section class="nds-content-section nds-demo-section">
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-image">
                                         <div class="nds-avatar">
@@ -841,7 +841,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
+&lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;div class="nds-section-wrapper"&gt;
         &lt;div class="nds-section-image"&gt;
             &lt;div class="nds-avatar"&gt;
@@ -874,7 +874,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Tier 5: Max-Width Breakout -->
-<section id="tier5" class="nds-content-section">
+<section id="tier5" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 5: Max-Width Breakout</h2>
@@ -893,41 +893,41 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-swiper,.nds-swiper-navigation .nds-btn,.nds-section-action .nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-swiper,.nds-swiper-navigation .nds-btn,.nds-section-action .nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                data-toggler='["nds-center", ".nds-content-section nds-demo-section", "sectionLayout"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section">
+                            <section class="nds-content-section nds-demo-section">
                                 <div class="nds-section-wrapper">
                                     <div class="nds-section-head">
                                         <h2 class="nds-section-title">Related Services</h2>
@@ -1000,7 +1000,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                 </div>
                                 <div class="nds-expandable-content">
                                 <code class="lang-html code">
-&lt;section class="nds-content-section"&gt;
+&lt;section class="nds-content-section nds-demo-section"&gt;
     &lt;div class="nds-section-wrapper"&gt;
         &lt;div class="nds-section-head"&gt;
             &lt;h2 class="nds-section-title"&gt;Related Services&lt;/h2&gt;
@@ -1061,7 +1061,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Tier 6: Horizontal Layout -->
-<section id="tier6" class="nds-content-section">
+<section id="tier6" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 6: Horizontal Layout</h2>
@@ -1080,41 +1080,41 @@ section.nds-content-section          (responsive padding for content constrainin
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Default</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-neutral", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-primary", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            data-toggler='[["nds-gradient-green", ".nds-content-section nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
                                             <span class="nds-label">Gradient Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-brand", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Brand</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section", "sectionColor"]'>
+                                            data-toggler='["nds-ghost", ".nds-content-section nds-demo-section", "sectionColor"]'>
                                             <span class="nds-label">Ghost</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section", "sectionLayout"]'>
+                                data-toggler='["nds-center", ".nds-content-section nds-demo-section", "sectionLayout"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <section class="nds-content-section nds-horizontal">
+                            <section class="nds-content-section nds-demo-section nds-horizontal">
                                 <div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;">
                                     <div class="nds-section-head">
                                         <h2 class="nds-section-title">Side by Side</h2>
@@ -1149,7 +1149,7 @@ section.nds-content-section          (responsive padding for content constrainin
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;section class="nds-content-section nds-horizontal"&gt;
+&lt;section class="nds-content-section nds-demo-section nds-horizontal"&gt;
     &lt;div class="nds-section-wrapper nds-grid" style="--max-track: 5fr 7fr; --mid-track: 1fr;"&gt;
         &lt;div class="nds-section-head"&gt;
             &lt;h2 class="nds-section-title"&gt;Side by Side&lt;/h2&gt;
@@ -1177,7 +1177,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Built-in Features -->
-<section id="sectionFeatures" class="nds-content-section">
+<section id="sectionFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -1232,7 +1232,7 @@ section.nds-content-section          (responsive padding for content constrainin
 </section>
 
 <!-- Usage Guidelines -->
-<section id="sectionGuidelines" class="nds-content-section">
+<section id="sectionGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
@@ -1242,12 +1242,12 @@ section.nds-content-section          (responsive padding for content constrainin
             <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Use sections as the <strong>primary building block</strong> for all page content. Every distinct content area on a page should be wrapped in its own <code class="nds-inline-code lang-html">nds-content-section</code></li>
+                    <li>Use sections as the <strong>primary building block</strong> for all page content. Every distinct content area on a page should be wrapped in its own <code class="nds-inline-code lang-html">nds-content-section nds-demo-section</code></li>
                     <li>Use <strong>Tier 2 (with wrapper)</strong> as the default starting point. Only drop to Tier 1 for truly minimal sections that need no action or image</li>
                     <li>Use <strong>full-width breakout</strong> for content that benefits from edge-to-edge display: carousels, <a class="nds-color" href="{{ 'components/swiper' | relative_url }}">Swiper</a> components, wide image galleries, or full-bleed media</li>
                     <li>Use <strong>horizontal layout</strong> for marketing-style sections where a text block and visual sit side by side, like feature highlights or call-to-action blocks</li>
                     <li>Do not use sections for small inline UI elements. Use <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a> for self-contained content items, or <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> for collapsible groups</li>
-                    <li>Do not nest <code class="nds-inline-code lang-html">nds-content-section</code> inside another <code class="nds-inline-code lang-html">nds-content-section</code>. Use a <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a> to subdivide content within a section</li>
+                    <li>Do not nest <code class="nds-inline-code lang-html">nds-content-section nds-demo-section</code> inside another <code class="nds-inline-code lang-html">nds-content-section</code>. Use a <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a> to subdivide content within a section</li>
                     <li>Choose <strong>float action</strong> when the action is secondary and the title area has room. Choose <strong>standard action</strong> when the action buttons are prominent and should have their own row on mobile</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-nowrap</code> to the action container only when the action is compact (a single small button) and should stay inline at all breakpoints</li>
                     <li>Use color themes sparingly. Reserve <code class="nds-inline-code lang-html">nds-primary</code> and <code class="nds-inline-code lang-html">nds-gradient-green</code> for hero-level emphasis, and <code class="nds-inline-code lang-html">nds-brand</code> or <code class="nds-inline-code lang-html">nds-ghost</code> for subtle visual separation between adjacent sections</li>

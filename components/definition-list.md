@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- With Icons -->
-<section id="definitionListIcons" class="nds-content-section">
+<section id="definitionListIcons" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Semantic Definition List</h2>
@@ -204,7 +204,7 @@ direction: ltr
 </section>
 
 <!-- Generic Elements -->
-<section id="definitionListGeneric" class="nds-content-section">
+<section id="definitionListGeneric" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Feature List</h2>
@@ -340,7 +340,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="definitionListFeatures" class="nds-content-section">
+<section id="definitionListFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -395,7 +395,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="definitionListGuidelines" class="nds-content-section">
+<section id="definitionListGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

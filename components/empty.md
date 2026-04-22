@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Generic Container -->
-<section id="emptyOverview" class="nds-content-section">
+<section id="emptyOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Generic Container</h2>
@@ -58,7 +58,7 @@ direction: ltr
 </section>
 
 <!-- Lists -->
-<section id="emptyLists" class="nds-content-section">
+<section id="emptyLists" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">In Lists</h2>
@@ -107,7 +107,7 @@ direction: ltr
 </section>
 
 <!-- Tables -->
-<section id="emptyTables" class="nds-content-section">
+<section id="emptyTables" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">In Tables</h2>
@@ -172,7 +172,7 @@ direction: ltr
 </section>
 
 <!-- Customization -->
-<section id="emptyCustom" class="nds-content-section">
+<section id="emptyCustom" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Custom Message &amp; Icon</h2>
@@ -226,7 +226,7 @@ direction: ltr
 </section>
 
 <!-- Live Content Updates -->
-<section id="emptyDynamic" class="nds-content-section">
+<section id="emptyDynamic" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Live Content Updates</h2>
@@ -325,7 +325,7 @@ li.remove();</code>
 </section>
 
 <!-- Built-in Features -->
-<section id="emptyFeatures" class="nds-content-section">
+<section id="emptyFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -380,7 +380,7 @@ li.remove();</code>
 </section>
 
 <!-- Usage Guidelines -->
-<section id="emptyGuidelines" class="nds-content-section">
+<section id="emptyGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

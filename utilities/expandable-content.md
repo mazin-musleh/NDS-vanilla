@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Expandable Content Overview -->
-<section id="expandableOverview" class="nds-content-section">
+<section id="expandableOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard Expandable Content</h2>
@@ -79,7 +79,7 @@ direction: ltr
 </section>
 
 <!-- Expandable Card -->
-<section id="expandableCard" class="nds-content-section">
+<section id="expandableCard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Expandable Card</h2>
@@ -181,7 +181,7 @@ direction: ltr
 </section>
 
 <!-- Sibling Sync -->
-<section id="expandableSiblingSync" class="nds-content-section">
+<section id="expandableSiblingSync" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Sibling Sync</h2>
@@ -276,7 +276,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="expandableFeatures" class="nds-content-section">
+<section id="expandableFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -331,7 +331,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="expandableGuidelines" class="nds-content-section">
+<section id="expandableGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

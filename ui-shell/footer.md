@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Footer Structure -->
-<section id="footerStructure" class="nds-content-section">
+<section id="footerStructure" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Footer Structure</h2>
@@ -67,7 +67,7 @@ footer.nds-footer.nds-content-wrapper
 </section>
 
 <!-- Footer Content Columns -->
-<section id="footerColumns" class="nds-content-section">
+<section id="footerColumns" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Content Columns</h2>
@@ -200,7 +200,7 @@ footer.nds-footer.nds-content-wrapper
 </section>
 
 <!-- Social and App Links -->
-<section id="footerSocial" class="nds-content-section">
+<section id="footerSocial" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Social and App Links</h2>
@@ -316,7 +316,7 @@ footer.nds-footer.nds-content-wrapper
 </section>
 
 <!-- Footer Bottom -->
-<section id="footerBottom" class="nds-content-section">
+<section id="footerBottom" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Footer Bottom Bar</h2>
@@ -384,7 +384,7 @@ footer.nds-footer.nds-content-wrapper
 </section>
 
 <!-- Built-in Features -->
-<section id="footerFeatures" class="nds-content-section">
+<section id="footerFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -439,7 +439,7 @@ footer.nds-footer.nds-content-wrapper
 </section>
 
 <!-- Usage Guidelines -->
-<section id="footerGuidelines" class="nds-content-section">
+<section id="footerGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

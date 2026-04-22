@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Number Formatting -->
-<section id="numberFormatting" class="nds-content-section">
+<section id="numberFormatting" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Number Formatting</h2>
@@ -142,7 +142,7 @@ direction: ltr
 </section>
 
 <!-- Counter Animation -->
-<section id="counterAnimation" class="nds-content-section">
+<section id="counterAnimation" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Counter Animation</h2>
@@ -426,7 +426,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="numberFeatures" class="nds-content-section">
+<section id="numberFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -481,7 +481,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="numberGuidelines" class="nds-content-section">
+<section id="numberGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

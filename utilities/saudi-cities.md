@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Overview -->
-<section id="saudiCitiesOverview" class="nds-content-section">
+<section id="saudiCitiesOverview" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
@@ -51,7 +51,7 @@ direction: ltr
 </section>
 
 <!-- Schema -->
-<section id="saudiCitiesSchema" class="nds-content-section">
+<section id="saudiCitiesSchema" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Schema</h2>
@@ -73,7 +73,7 @@ direction: ltr
 </section>
 
 <!-- Autocomplete Demo -->
-<section id="saudiCitiesAutocomplete" class="nds-content-section">
+<section id="saudiCitiesAutocomplete" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">With Autocomplete</h2>
@@ -158,7 +158,7 @@ direction: ltr
 </section>
 
 <!-- Bilingual + Custom Render Demo -->
-<section id="saudiCitiesBilingual" class="nds-content-section">
+<section id="saudiCitiesBilingual" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Bilingual Search &amp; Custom Display</h2>
@@ -242,7 +242,7 @@ NDS.Autocomplete.create(el, {
 </section>
 
 <!-- Programmatic Access -->
-<section id="saudiCitiesFetch" class="nds-content-section">
+<section id="saudiCitiesFetch" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Direct Access</h2>
@@ -296,7 +296,7 @@ const byRegion = cities.reduce((map, city) =&gt; {
 </section>
 
 <!-- Notes -->
-<section id="saudiCitiesNotes" class="nds-content-section">
+<section id="saudiCitiesNotes" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Notes</h2>

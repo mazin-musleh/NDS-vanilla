@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Overview -->
-<section id="cookiesOverview" class="nds-content-section">
+<section id="cookiesOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Overview</h2>
@@ -127,7 +127,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="cookiesFeatures" class="nds-content-section">
+<section id="cookiesFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -182,7 +182,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="cookiesGuidelines" class="nds-content-section">
+<section id="cookiesGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

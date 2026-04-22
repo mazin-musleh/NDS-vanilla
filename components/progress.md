@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Progress Circle -->
-<section id="progressCircle" class="nds-content-section">
+<section id="progressCircle" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Progress Circle</h2>
@@ -151,7 +151,7 @@ direction: ltr
 </section>
 
 <!-- Progress Circle — Out of -->
-<section id="progressOutOf" class="nds-content-section">
+<section id="progressOutOf" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Progress Circle — Out of</h2>
@@ -287,7 +287,7 @@ direction: ltr
 </section>
 
 <!-- Progress Bar -->
-<section id="progressBar" class="nds-content-section">
+<section id="progressBar" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Progress Line</h2>
@@ -407,7 +407,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="progressFeatures" class="nds-content-section">
+<section id="progressFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -476,7 +476,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="progressGuidelines" class="nds-content-section">
+<section id="progressGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

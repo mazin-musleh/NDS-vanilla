@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Display Rating -->
-<section id="displayRating" class="nds-content-section">
+<section id="displayRating" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Display Rating</h2>
@@ -104,7 +104,7 @@ direction: ltr
 </section>
 
 <!-- Interactive Rating -->
-<section id="interactiveRating" class="nds-content-section">
+<section id="interactiveRating" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Interactive Rating</h2>
@@ -202,7 +202,7 @@ direction: ltr
 </section>
 
 <!-- Dropmenu Rating -->
-<section id="dropmenuRating" class="nds-content-section">
+<section id="dropmenuRating" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Dropmenu Rating</h2>
@@ -324,7 +324,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="ratingFeatures" class="nds-content-section">
+<section id="ratingFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -379,7 +379,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="ratingGuidelines" class="nds-content-section">
+<section id="ratingGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

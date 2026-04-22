@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Basic Alignment -->
-<section id="flexBasic" class="nds-content-section">
+<section id="flexBasic" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Alignment</h2>
@@ -94,7 +94,7 @@ direction: ltr
 </section>
 
 <!-- Direction Control -->
-<section id="flexDirection" class="nds-content-section">
+<section id="flexDirection" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Direction Control</h2>
@@ -187,7 +187,7 @@ direction: ltr
 </section>
 
 <!-- Wrapping -->
-<section id="flexWrapping" class="nds-content-section">
+<section id="flexWrapping" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Wrapping</h2>
@@ -274,7 +274,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="flexFeatures" class="nds-content-section">
+<section id="flexFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -329,7 +329,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="flexGuidelines" class="nds-content-section">
+<section id="flexGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

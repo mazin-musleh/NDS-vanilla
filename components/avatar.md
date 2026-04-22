@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Initials -->
-<section id="avatarInitials" class="nds-content-section">
+<section id="avatarInitials" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Initials</h2>
@@ -106,7 +106,7 @@ direction: ltr
 </section>
 
 <!-- Icon -->
-<section id="avatarIcon" class="nds-content-section">
+<section id="avatarIcon" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Icon</h2>
@@ -203,7 +203,7 @@ direction: ltr
 </section>
 
 <!-- Image -->
-<section id="avatarImage" class="nds-content-section">
+<section id="avatarImage" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image</h2>
@@ -304,7 +304,7 @@ direction: ltr
 </section>
 
 <!-- Link -->
-<section id="avatarLink" class="nds-content-section">
+<section id="avatarLink" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Link</h2>
@@ -401,7 +401,7 @@ direction: ltr
 </section>
 
 <!-- Dropmenu Trigger -->
-<section id="avatarDropmenu" class="nds-content-section">
+<section id="avatarDropmenu" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Dropmenu Trigger</h2>
@@ -534,7 +534,7 @@ direction: ltr
 </section>
 
 <!-- Group -->
-<section id="avatarGroup" class="nds-content-section">
+<section id="avatarGroup" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Group</h2>
@@ -671,7 +671,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="avatarFeatures" class="nds-content-section">
+<section id="avatarFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -712,7 +712,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="avatarGuidelines" class="nds-content-section">
+<section id="avatarGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

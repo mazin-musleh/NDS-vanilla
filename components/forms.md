@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Text Input -->
-<section id="textInput" class="nds-content-section">
+<section id="textInput" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Text Input</h2>
@@ -158,7 +158,7 @@ direction: ltr
 </section>
 
 <!-- Prefix & Suffix -->
-<section id="prefixSuffix" class="nds-content-section">
+<section id="prefixSuffix" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Prefix & Suffix</h2>
@@ -359,7 +359,7 @@ direction: ltr
 </section>
 
 <!-- Phone Number with Country Code -->
-<section id="phoneCountryCode" class="nds-content-section">
+<section id="phoneCountryCode" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Phone Number with Country Code</h2>
@@ -596,7 +596,7 @@ direction: ltr
 </section>
 
 <!-- Number Input -->
-<section id="numberInput" class="nds-content-section">
+<section id="numberInput" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Number Input</h2>
@@ -777,7 +777,7 @@ direction: ltr
 </section>
 
 <!-- Search Input -->
-<section id="searchInput" class="nds-content-section">
+<section id="searchInput" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Search Input</h2>
@@ -935,7 +935,7 @@ direction: ltr
 </section>
 
 <!-- Email Input -->
-<section id="emailInput" class="nds-content-section">
+<section id="emailInput" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Email Input</h2>
@@ -1086,7 +1086,7 @@ direction: ltr
 </section>
 
 <!-- Password Input -->
-<section id="passwordInput" class="nds-content-section">
+<section id="passwordInput" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Password Input</h2>
@@ -1245,7 +1245,7 @@ direction: ltr
 </section>
 
 <!-- Textarea -->
-<section id="textareaInput" class="nds-content-section">
+<section id="textareaInput" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Textarea</h2>
@@ -1385,7 +1385,7 @@ direction: ltr
 </section>
 
 <!-- Select Dropdown -->
-<section id="selectDropdown" class="nds-content-section">
+<section id="selectDropdown" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Select Dropdown</h2>
@@ -1561,7 +1561,7 @@ direction: ltr
 </section>
 
 <!-- Form Status API -->
-<section id="formStatusApi" class="nds-content-section">
+<section id="formStatusApi" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Form Status API</h2>
@@ -1688,7 +1688,7 @@ var status = NDS.Forms.getStatus(field);
 </section>
 
 <!-- Permanent Feedback -->
-<section id="formPermanentFeedback" class="nds-content-section">
+<section id="formPermanentFeedback" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Permanent Feedback</h2>
@@ -1820,7 +1820,7 @@ NDS.Forms.clearStatus(container);</code>
 </section>
 
 <!-- Built-in Features -->
-<section id="formFeatures" class="nds-content-section">
+<section id="formFeatures" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -1890,7 +1890,7 @@ NDS.Forms.clearStatus(container);</code>
 </section>
 
 <!-- Usage Guidelines -->
-<section id="formGuidelines" class="nds-content-section">
+<section id="formGuidelines" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage Guidelines</h2>

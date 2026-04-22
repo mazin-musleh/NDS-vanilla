@@ -8,7 +8,7 @@ direction: ltr
 sidemenu_mode: false
 ---
 
-<section id="uiShell" class="nds-content-section">
+<section id="uiShell" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Shell Components</h2>

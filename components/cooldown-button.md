@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Resend with Success Toast -->
-<section id="cooldownResend" class="nds-content-section">
+<section id="cooldownResend" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Resend with Success Toast</h2>
@@ -74,7 +74,7 @@ direction: ltr
 </section>
 
 <!-- Simple Cooldown -->
-<section id="cooldownSimple" class="nds-content-section">
+<section id="cooldownSimple" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Simple Cooldown</h2>
@@ -131,7 +131,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="cooldownFeatures" class="nds-content-section">
+<section id="cooldownFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -186,7 +186,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="cooldownGuidelines" class="nds-content-section">
+<section id="cooldownGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

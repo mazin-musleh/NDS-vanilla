@@ -8,7 +8,7 @@ direction: ltr
 sidemenu_mode: false
 ---
 
-<section id="layout" class="nds-content-section">
+<section id="layout" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Layout Primitives</h2>

@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Header Structure -->
-<section id="headerStructure" class="nds-content-section">
+<section id="headerStructure" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Header Structure</h2>
@@ -75,7 +75,7 @@ header
 </section>
 
 <!-- Topbar -->
-<section id="topbar" class="nds-content-section">
+<section id="topbar" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Topbar</h2>
@@ -137,7 +137,7 @@ header
 </section>
 
 <!-- Topbar Widgets -->
-<section id="topbarWidgets" class="nds-content-section">
+<section id="topbarWidgets" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Topbar Widgets</h2>
@@ -212,7 +212,7 @@ header
 </section>
 
 <!-- DGA Digital Stamp -->
-<section id="dgaDigitalStamp" class="nds-content-section">
+<section id="dgaDigitalStamp" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">DGA Digital Stamp</h2>
@@ -299,7 +299,7 @@ header
 </section>
 
 <!-- Navigation Bar -->
-<section id="navBar" class="nds-content-section">
+<section id="navBar" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Navigation Bar</h2>
@@ -388,7 +388,7 @@ header
 </section>
 
 <!-- Built-in Features -->
-<section id="headerFeatures" class="nds-content-section">
+<section id="headerFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -485,7 +485,7 @@ header
 </section>
 
 <!-- Usage Guidelines -->
-<section id="headerGuidelines" class="nds-content-section">
+<section id="headerGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

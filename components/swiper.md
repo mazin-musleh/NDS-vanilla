@@ -10,7 +10,7 @@ direction: ltr
 ---
 
 <!-- Basic Swiper Demo -->
-<section class="nds-content-section">
+<section class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Slider</h2>
@@ -136,7 +136,7 @@ direction: ltr
 </section>
 
 <!-- Image Slider Demo -->
-<section class="nds-content-section">
+<section class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Image Slider</h2>
@@ -237,7 +237,7 @@ direction: ltr
 </section>
 
 <!-- Multi-Slide Responsive Demo -->
-<section class="nds-content-section">
+<section class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Multi-Slide</h2>
@@ -372,7 +372,7 @@ direction: ltr
 </section>
 
 <!-- Peek Mode Demo -->
-<section class="nds-content-section">
+<section class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Peek Mode</h2>
@@ -501,7 +501,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="swiperFeatures" class="nds-content-section">
+<section id="swiperFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -570,7 +570,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="swiperGuidelines" class="nds-content-section">
+<section id="swiperGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

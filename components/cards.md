@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Standard Card -->
-<section id="standardCard" class="nds-content-section">
+<section id="standardCard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard</h2>
@@ -261,7 +261,7 @@ direction: ltr
 </section>
 
 <!-- Statistic Card -->
-<section id="statisticCard" class="nds-content-section">
+<section id="statisticCard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Statistic</h2>
@@ -388,7 +388,7 @@ direction: ltr
 </section>
 
 <!-- Card Group -->
-<section id="cardGroup" class="nds-content-section">
+<section id="cardGroup" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Card Group</h2>
@@ -530,7 +530,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="cardFeatures" class="nds-content-section">
+<section id="cardFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -586,7 +586,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="cardGuidelines" class="nds-content-section">
+<section id="cardGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

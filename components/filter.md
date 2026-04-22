@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Basic Client-Side Filter -->
-<section id="basicFilter" class="nds-content-section">
+<section id="basicFilter" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Search and Filter Cards</h2>
@@ -205,7 +205,7 @@ direction: ltr
 </section>
 
 <!-- Filter Types -->
-<section id="filterTypes" class="nds-content-section">
+<section id="filterTypes" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Auto-Generated Filter Types</h2>
@@ -813,7 +813,7 @@ direction: ltr
 </section>
 
 <!-- Static Values Filter -->
-<section id="staticValues" class="nds-content-section">
+<section id="staticValues" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Explicit Values and Label Mapping</h2>
@@ -998,7 +998,7 @@ direction: ltr
 </section>
 
 <!-- Dynamic Values (populateFilter API) -->
-<section id="dynamicValues" class="nds-content-section">
+<section id="dynamicValues" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Dynamic Values (populateFilter API)</h2>
@@ -1158,7 +1158,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
 </section>
 
 <!-- AJAX Form Submission -->
-<section id="ajaxFilter" class="nds-content-section">
+<section id="ajaxFilter" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">AJAX Form Submission</h2>
@@ -1377,7 +1377,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
 </section>
 
 <!-- Sort -->
-<section id="sortInFilter" class="nds-content-section">
+<section id="sortInFilter" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Sort</h2>
@@ -1564,7 +1564,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
 </section>
 
 <!-- Built-in Features -->
-<section id="filterFeatures" class="nds-content-section">
+<section id="filterFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -1647,7 +1647,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
 </section>
 
 <!-- Usage Guidelines -->
-<section id="filterGuidelines" class="nds-content-section">
+<section id="filterGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

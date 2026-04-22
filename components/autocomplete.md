@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Autocomplete Input -->
-<section id="autocompleteOverview" class="nds-content-section">
+<section id="autocompleteOverview" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Autocomplete Input</h2>
@@ -109,7 +109,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="autocompleteFeatures" class="nds-content-section">
+<section id="autocompleteFeatures" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -165,7 +165,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="autocompleteGuidelines" class="nds-content-section">
+<section id="autocompleteGuidelines" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage Guidelines</h2>

@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Single Switch -->
-<section id="switchSingle" class="nds-content-section">
+<section id="switchSingle" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Single Switch</h2>
@@ -125,7 +125,7 @@ direction: ltr
 </section>
 
 <!-- Switch Group -->
-<section id="switchGroup" class="nds-content-section">
+<section id="switchGroup" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Switch Group</h2>
@@ -306,7 +306,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="switchFeatures" class="nds-content-section">
+<section id="switchFeatures" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -348,7 +348,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="switchGuidelines" class="nds-content-section">
+<section id="switchGuidelines" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage Guidelines</h2>

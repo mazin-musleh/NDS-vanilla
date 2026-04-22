@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Plain Divider -->
-<section id="dividerPlain" class="nds-content-section">
+<section id="dividerPlain" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Plain Divider</h2>
@@ -109,7 +109,7 @@ direction: ltr
 </section>
 
 <!-- With HR Element -->
-<section id="dividerHr" class="nds-content-section">
+<section id="dividerHr" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Inside a Dropmenu</h2>
@@ -210,7 +210,7 @@ direction: ltr
 </section>
 
 <!-- Vertical Divider -->
-<section id="dividerVertical" class="nds-content-section">
+<section id="dividerVertical" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Vertical Divider</h2>
@@ -289,7 +289,7 @@ direction: ltr
 </section>
 
 <!-- Divider with Text -->
-<section id="dividerWithText" class="nds-content-section">
+<section id="dividerWithText" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Divider with Text</h2>
@@ -374,7 +374,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="dividerFeatures" class="nds-content-section">
+<section id="dividerFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -415,7 +415,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="dividerGuidelines" class="nds-content-section">
+<section id="dividerGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

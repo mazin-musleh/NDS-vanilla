@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Auto-Populated TOC -->
-<section id="tocAutoPopulate" class="nds-content-section">
+<section id="tocAutoPopulate" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Auto-Populated</h2>
@@ -94,7 +94,7 @@ direction: ltr
 </section>
 
 <!-- Manual Markup -->
-<section id="tocManual" class="nds-content-section">
+<section id="tocManual" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Manual Markup</h2>
@@ -241,7 +241,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="tocFeatures" class="nds-content-section">
+<section id="tocFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -296,7 +296,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="tocGuidelines" class="nds-content-section">
+<section id="tocGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

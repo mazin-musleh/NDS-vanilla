@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Direct Mode -->
-<section id="sortDirectMode" class="nds-content-section">
+<section id="sortDirectMode" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Direct Mode</h2>
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <!-- Cycle Mode -->
-<section id="sortCycleMode" class="nds-content-section">
+<section id="sortCycleMode" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Cycle Mode</h2>
@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <!-- Table Column Sort -->
-<section id="sortTableColumns" class="nds-content-section">
+<section id="sortTableColumns" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table Column Sort</h2>
@@ -611,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </section>
 
 <!-- Built-in Features -->
-<section id="sortFeatures" class="nds-content-section">
+<section id="sortFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -666,7 +666,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </section>
 
 <!-- Usage Guidelines -->
-<section id="sortGuidelines" class="nds-content-section">
+<section id="sortGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

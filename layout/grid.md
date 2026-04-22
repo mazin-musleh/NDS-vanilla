@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Basic Grid -->
-<section id="basic" class="nds-content-section">
+<section id="basic" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Basic Grid</h2>
@@ -121,7 +121,7 @@ direction: ltr
 </section>
 
 <!-- Custom Tracks -->
-<section id="tracks" class="nds-content-section">
+<section id="tracks" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Custom Track Layouts</h2>
@@ -220,7 +220,7 @@ direction: ltr
 </section>
 
 <!-- Responsive Auto-fit -->
-<section id="responsive-autofit" class="nds-content-section">
+<section id="responsive-autofit" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Auto-fit</h2>
@@ -279,7 +279,7 @@ direction: ltr
 </section>
 
 <!-- Breakpoints Reference -->
-<section id="breakpoints" class="nds-content-section">
+<section id="breakpoints" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Breakpoints</h2>
@@ -326,7 +326,7 @@ direction: ltr
 </section>
 
 <!-- Customization Tokens -->
-<section id="tokens" class="nds-content-section">
+<section id="tokens" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Customization Tokens</h2>
@@ -399,7 +399,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="gridFeatures" class="nds-content-section">
+<section id="gridFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -454,7 +454,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="gridGuidelines" class="nds-content-section">
+<section id="gridGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

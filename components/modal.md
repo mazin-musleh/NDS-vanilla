@@ -10,7 +10,7 @@ direction: ltr
 ---
 
 <!-- Modal Dialog -->
-<section id="modalOverview" class="nds-content-section">
+<section id="modalOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Modal Dialog</h2>
@@ -189,7 +189,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="modalFeatures" class="nds-content-section">
+<section id="modalFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -258,7 +258,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="modalGuidelines" class="nds-content-section">
+<section id="modalGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

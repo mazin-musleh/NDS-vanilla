@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- OTP Overview -->
-<section id="otpOverview" class="nds-content-section">
+<section id="otpOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">4-Digit OTP</h2>
@@ -135,7 +135,7 @@ direction: ltr
 </section>
 
 <!-- 6-Digit OTP with Separator -->
-<section id="otpWithSeparator" class="nds-content-section">
+<section id="otpWithSeparator" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">OTP with Separator</h2>
@@ -282,7 +282,7 @@ direction: ltr
 </section>
 
 <!-- OTP with Validation -->
-<section id="otpValidation" class="nds-content-section">
+<section id="otpValidation" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Validation States</h2>
@@ -451,7 +451,7 @@ document.getElementById('clear-btn').addEventListener('click', function() {
 </section>
 
 <!-- Built-in Features -->
-<section id="otpFeatures" class="nds-content-section">
+<section id="otpFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -507,7 +507,7 @@ document.getElementById('clear-btn').addEventListener('click', function() {
 </section>
 
 <!-- Usage Guidelines -->
-<section id="otpGuidelines" class="nds-content-section">
+<section id="otpGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

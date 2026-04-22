@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Standard Tabs -->
-<section id="tabsStandard" class="nds-content-section">
+<section id="tabsStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard Tabs</h2>
@@ -411,7 +411,7 @@ direction: ltr
 </section>
 
 <!-- Tabs with Icons -->
-<section id="tabsIcons" class="nds-content-section">
+<section id="tabsIcons" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">With Leading Icons</h2>
@@ -587,7 +587,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="tabsFeatures" class="nds-content-section">
+<section id="tabsFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -656,7 +656,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="tabsGuidelines" class="nds-content-section">
+<section id="tabsGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

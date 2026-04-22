@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Feedback Icons -->
-<section id="feedbackIcons" class="nds-content-section">
+<section id="feedbackIcons" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Feedback Icons</h2>
@@ -145,7 +145,7 @@ direction: ltr
 </section>
 
 <!-- Feedback Messages -->
-<section id="feedbackMessages" class="nds-content-section">
+<section id="feedbackMessages" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Feedback Messages</h2>
@@ -282,7 +282,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="feedbackFeatures" class="nds-content-section">
+<section id="feedbackFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -323,7 +323,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="feedbackGuidelines" class="nds-content-section">
+<section id="feedbackGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

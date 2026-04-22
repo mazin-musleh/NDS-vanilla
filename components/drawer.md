@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Nested Menu -->
-<section id="drawerNested" class="nds-content-section">
+<section id="drawerNested" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Nested Menu</h2>
@@ -258,7 +258,7 @@ direction: ltr
 </section>
 
 <!-- Responsive State -->
-<section id="drawerResponsive" class="nds-content-section">
+<section id="drawerResponsive" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive State</h2>
@@ -393,7 +393,7 @@ direction: ltr
 </section>
 
 <!-- Constrained Drawer -->
-<section id="drawerConstrained" class="nds-content-section">
+<section id="drawerConstrained" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Constrained Drawer</h2>
@@ -564,7 +564,7 @@ direction: ltr
 </section>
 
 <!-- Fit Mode -->
-<section id="drawerFit" class="nds-content-section">
+<section id="drawerFit" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Fit Mode</h2>
@@ -847,7 +847,7 @@ direction: ltr
 </section>
 
 <!-- Rich List Items (Notifications-style) -->
-<section id="drawerRichItems" class="nds-content-section">
+<section id="drawerRichItems" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Rich List Items</h2>
@@ -1082,7 +1082,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="drawerFeatures" class="nds-content-section">
+<section id="drawerFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -1137,7 +1137,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="drawerGuidelines" class="nds-content-section">
+<section id="drawerGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

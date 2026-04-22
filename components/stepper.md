@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Stepper Layouts -->
-<section id="stepperLayouts" class="nds-content-section">
+<section id="stepperLayouts" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Stepper Layouts</h2>
@@ -266,7 +266,7 @@ direction: ltr
 </section>
 
 <!-- Responsive Stepper -->
-<section id="stepperResponsive" class="nds-content-section">
+<section id="stepperResponsive" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Stepper</h2>
@@ -583,7 +583,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="stepperFeatures" class="nds-content-section">
+<section id="stepperFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -652,7 +652,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="stepperGuidelines" class="nds-content-section">
+<section id="stepperGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

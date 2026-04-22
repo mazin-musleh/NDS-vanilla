@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Standard -->
-<section id="btnStandard" class="nds-content-section">
+<section id="btnStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard</h2>
@@ -132,7 +132,7 @@ direction: ltr
 </section>
 
 <!-- Destructive -->
-<section id="btnDestructive" class="nds-content-section">
+<section id="btnDestructive" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Destructive</h2>
@@ -251,7 +251,7 @@ direction: ltr
 </section>
 
 <!-- Layout -->
-<section id="btnLayout" class="nds-content-section">
+<section id="btnLayout" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Layout</h2>
@@ -413,7 +413,7 @@ direction: ltr
 </section>
 
 <!-- Menu Button -->
-<section id="btnMenu" class="nds-content-section">
+<section id="btnMenu" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Menu Button</h2>
@@ -540,7 +540,7 @@ direction: ltr
 </section>
 
 <!-- Button Group -->
-<section id="btnGroup" class="nds-content-section">
+<section id="btnGroup" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Button Group</h2>
@@ -654,7 +654,7 @@ direction: ltr
 </section>
 
 <!-- Animated Progress -->
-<section id="btnProgressAnimated" class="nds-content-section">
+<section id="btnProgressAnimated" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Animated Progress</h2>
@@ -793,7 +793,7 @@ direction: ltr
 </section>
 
 <!-- Static Progress -->
-<section id="btnProgressStatic" class="nds-content-section">
+<section id="btnProgressStatic" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Static Progress</h2>
@@ -932,7 +932,7 @@ direction: ltr
 </section>
 
 <!-- Status Feedback -->
-<section id="btnStatus" class="nds-content-section">
+<section id="btnStatus" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Status Feedback</h2>
@@ -1035,7 +1035,7 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
 </section>
 
 <!-- Badge -->
-<section id="btnBadge" class="nds-content-section">
+<section id="btnBadge" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Badge</h2>
@@ -1101,7 +1101,7 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
 </section>
 
 <!-- Built-in Features -->
-<section id="btnFeatures" class="nds-content-section">
+<section id="btnFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -1156,7 +1156,7 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
 </section>
 
 <!-- Usage Guidelines -->
-<section id="btnGuidelines" class="nds-content-section">
+<section id="btnGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

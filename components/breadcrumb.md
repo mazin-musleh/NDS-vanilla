@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Standard -->
-<section id="breadcrumbStandard" class="nds-content-section">
+<section id="breadcrumbStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard</h2>
@@ -75,7 +75,7 @@ direction: ltr
 </section>
 
 <!-- Two Level -->
-<section id="breadcrumbTwoLevel" class="nds-content-section">
+<section id="breadcrumbTwoLevel" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Two Level</h2>
@@ -139,7 +139,7 @@ direction: ltr
 </section>
 
 <!-- Long Title -->
-<section id="breadcrumbLongTitle" class="nds-content-section">
+<section id="breadcrumbLongTitle" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Long Title</h2>
@@ -205,7 +205,7 @@ direction: ltr
 </section>
 
 <!-- Automatic Collapsing -->
-<section id="breadcrumbCollapsed" class="nds-content-section">
+<section id="breadcrumbCollapsed" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic Collapsing</h2>
@@ -284,7 +284,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="breadcrumbFeatures" class="nds-content-section">
+<section id="breadcrumbFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -325,7 +325,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="breadcrumbGuidelines" class="nds-content-section">
+<section id="breadcrumbGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

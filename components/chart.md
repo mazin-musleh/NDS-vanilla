@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Bar Chart -->
-<section id="chartBar" class="nds-content-section">
+<section id="chartBar" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Bar Chart</h2>
@@ -128,7 +128,7 @@ NDS.Chart.create('#my-chart', {
 </section>
 
 <!-- Line Chart -->
-<section id="chartLine" class="nds-content-section">
+<section id="chartLine" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Line Chart</h2>
@@ -246,7 +246,7 @@ NDS.Chart.create('#my-chart', {
 </section>
 
 <!-- Pie Chart -->
-<section id="chartPie" class="nds-content-section">
+<section id="chartPie" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Pie Chart</h2>
@@ -343,7 +343,7 @@ NDS.Chart.create('#my-chart', {
 </section>
 
 <!-- Donut Chart -->
-<section id="chartDonut" class="nds-content-section">
+<section id="chartDonut" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Donut Chart</h2>
@@ -443,7 +443,7 @@ NDS.Chart.create('#my-chart', {
 </section>
 
 <!-- HTML Init -->
-<section id="chartHtmlInit" class="nds-content-section">
+<section id="chartHtmlInit" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">HTML Initialization</h2>
@@ -499,7 +499,7 @@ NDS.Chart.create('#my-chart', {
 </section>
 
 <!-- Theming -->
-<section id="chartTheming" class="nds-content-section">
+<section id="chartTheming" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Theming</h2>
@@ -574,7 +574,7 @@ NDS.Chart.create('#my-chart', {
 </section>
 
 <!-- Built-in Features -->
-<section id="chartFeatures" class="nds-content-section">
+<section id="chartFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -629,7 +629,7 @@ NDS.Chart.create('#my-chart', {
 </section>
 
 <!-- Usage Guidelines -->
-<section id="chartGuidelines" class="nds-content-section">
+<section id="chartGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

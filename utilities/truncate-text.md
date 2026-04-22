@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Single-Line Truncation -->
-<section id="truncateSingleLine" class="nds-content-section">
+<section id="truncateSingleLine" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Single-Line Truncation</h2>
@@ -74,7 +74,7 @@ direction: ltr
 </section>
 
 <!-- Multi-Line Truncation -->
-<section id="truncateMultiLine" class="nds-content-section">
+<section id="truncateMultiLine" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Multi-Line Truncation</h2>
@@ -165,7 +165,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="truncateFeatures" class="nds-content-section">
+<section id="truncateFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -206,7 +206,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="truncateGuidelines" class="nds-content-section">
+<section id="truncateGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

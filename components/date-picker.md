@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Date Picker -->
-<section id="datePickerOverview" class="nds-content-section">
+<section id="datePickerOverview" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Date Picker Input</h2>
@@ -122,7 +122,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="datePickerFeatures" class="nds-content-section">
+<section id="datePickerFeatures" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -178,7 +178,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="datePickerGuidelines" class="nds-content-section">
+<section id="datePickerGuidelines" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage Guidelines</h2>

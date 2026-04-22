@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Side Menu Structure -->
-<section id="sideNavStructure" class="nds-content-section">
+<section id="sideNavStructure" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Side Menu Structure</h2>
@@ -61,7 +61,7 @@ aside.nds-sidemenu
 </section>
 
 <!-- Default Side Menu -->
-<section id="sideNavDefault" class="nds-content-section">
+<section id="sideNavDefault" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Default Side Menu</h2>
@@ -166,7 +166,7 @@ aside.nds-sidemenu
 </section>
 
 <!-- Responsive Modes -->
-<section id="sideNavModes" class="nds-content-section">
+<section id="sideNavModes" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Modes</h2>
@@ -259,7 +259,7 @@ aside.nds-sidemenu
 </section>
 
 <!-- Active State -->
-<section id="sideNavActiveState" class="nds-content-section">
+<section id="sideNavActiveState" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Active Page Tracking</h2>
@@ -320,7 +320,7 @@ aside.nds-sidemenu
 </section>
 
 <!-- Built-in Features -->
-<section id="sideNavFeatures" class="nds-content-section">
+<section id="sideNavFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -375,7 +375,7 @@ aside.nds-sidemenu
 </section>
 
 <!-- Usage Guidelines -->
-<section id="sideNavGuidelines" class="nds-content-section">
+<section id="sideNavGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

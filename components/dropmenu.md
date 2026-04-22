@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Standard Dropmenu -->
-<section id="dropmenuStandard" class="nds-content-section">
+<section id="dropmenuStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard Dropmenu</h2>
@@ -118,7 +118,7 @@ direction: ltr
 </section>
 
 <!-- Navigation Dropmenu -->
-<section id="dropmenuNavigation" class="nds-content-section">
+<section id="dropmenuNavigation" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Navigation Dropmenu</h2>
@@ -227,7 +227,7 @@ direction: ltr
 </section>
 
 <!-- Scrollable Menu with No Auto-Close -->
-<section id="dropmenuNoAutoClose" class="nds-content-section">
+<section id="dropmenuNoAutoClose" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Scrollable Menu with No Auto-Close</h2>
@@ -465,7 +465,7 @@ direction: ltr
 </section>
 
 <!-- Dropmenu Inside Table -->
-<section id="dropmenuInTable" class="nds-content-section">
+<section id="dropmenuInTable" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Dropmenu Inside Table</h2>
@@ -666,7 +666,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="dropmenuFeatures" class="nds-content-section">
+<section id="dropmenuFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -721,7 +721,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="dropmenuGuidelines" class="nds-content-section">
+<section id="dropmenuGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

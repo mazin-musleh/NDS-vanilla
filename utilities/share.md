@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Default Share -->
-<section id="shareDefault" class="nds-content-section">
+<section id="shareDefault" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Current Page</h2>
@@ -108,7 +108,7 @@ direction: ltr
 </section>
 
 <!-- Custom URL and Title -->
-<section id="shareCustom" class="nds-content-section">
+<section id="shareCustom" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Custom URL and Title</h2>
@@ -211,7 +211,7 @@ direction: ltr
 </section>
 
 <!-- Inline Buttons -->
-<section id="shareInline" class="nds-content-section">
+<section id="shareInline" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Inline Buttons</h2>
@@ -304,7 +304,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="shareFeatures" class="nds-content-section">
+<section id="shareFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -352,7 +352,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="shareGuidelines" class="nds-content-section">
+<section id="shareGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

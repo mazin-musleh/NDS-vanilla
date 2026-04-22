@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Standard -->
-<section id="chipStandard" class="nds-content-section">
+<section id="chipStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard</h2>
@@ -132,7 +132,7 @@ direction: ltr
 </section>
 
 <!-- Chip Group -->
-<section id="chipGroup" class="nds-content-section">
+<section id="chipGroup" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Chip Group</h2>
@@ -210,7 +210,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="chipFeatures" class="nds-content-section">
+<section id="chipFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -251,7 +251,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="chipGuidelines" class="nds-content-section">
+<section id="chipGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

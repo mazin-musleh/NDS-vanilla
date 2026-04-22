@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Radio Button Group -->
-<section id="radioGroup" class="nds-content-section">
+<section id="radioGroup" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Radio Button Group</h2>
@@ -184,7 +184,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="radioFeatures" class="nds-content-section">
+<section id="radioFeatures" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -226,7 +226,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="radioGuidelines" class="nds-content-section">
+<section id="radioGuidelines" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage Guidelines</h2>

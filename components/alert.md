@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Variants -->
-<section id="alertOverview" class="nds-content-section">
+<section id="alertOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Variants</h2>
@@ -152,7 +152,7 @@ direction: ltr
 </section>
 
 <!-- Layout Variants -->
-<section id="alertLayouts" class="nds-content-section">
+<section id="alertLayouts" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Inline</h2>
@@ -296,7 +296,7 @@ direction: ltr
 </section>
 
 <!-- Alert with Actions -->
-<section id="alertWithActions" class="nds-content-section">
+<section id="alertWithActions" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">With Actions</h2>
@@ -428,7 +428,7 @@ direction: ltr
 </section>
 
 <!-- Toast Notification Demo -->
-<section id="toastDemo" class="nds-content-section">
+<section id="toastDemo" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Toast Notifications</h2>
@@ -563,7 +563,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="alertFeatures" class="nds-content-section">
+<section id="alertFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -618,7 +618,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="alertGuidelines" class="nds-content-section">
+<section id="alertGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

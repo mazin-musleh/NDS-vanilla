@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Side Info Structure -->
-<section id="sideinfoStructure" class="nds-content-section">
+<section id="sideinfoStructure" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Structure</h2>
@@ -30,7 +30,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-section.nds-content-section.nds-sideinfo-section
+section.nds-content-section nds-demo-section.nds-sideinfo-section
 &#9492;&#9472;&#9472; div.nds-section-body
     &#9500;&#9472;&#9472; div.nds-info-content
     &#9474;   &#9492;&#9472;&#9472; article (main content)
@@ -47,7 +47,7 @@ section.nds-content-section.nds-sideinfo-section
 </section>
 
 <!-- Standard -->
-<section id="sideinfoStandard" class="nds-content-section">
+<section id="sideinfoStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard</h2>
@@ -74,7 +74,7 @@ section.nds-content-section.nds-sideinfo-section
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-content-section nds-sideinfo-section" style="width: 100%;">
+                            <div class="nds-content-section nds-demo-section nds-sideinfo-section" style="width: 100%;">
                                 <div class="nds-section-body">
                                     <div class="nds-info-content">
                                         <h3 style="margin-top: 0;">Article Heading</h3>
@@ -121,7 +121,7 @@ section.nds-content-section.nds-sideinfo-section
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;section class="nds-content-section nds-sideinfo-section"&gt;
+&lt;section class="nds-content-section nds-demo-section nds-sideinfo-section"&gt;
   &lt;div class="nds-section-body"&gt;
     &lt;div class="nds-info-content"&gt;
       &lt;h3&gt;Article Heading&lt;/h3&gt;
@@ -159,7 +159,7 @@ section.nds-content-section.nds-sideinfo-section
 </section>
 
 <!-- Sizes -->
-<section id="sideinfoSizes" class="nds-content-section">
+<section id="sideinfoSizes" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Sizes</h2>
@@ -198,7 +198,7 @@ section.nds-content-section.nds-sideinfo-section
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-content-section nds-sideinfo-section" style="width: 100%;">
+                            <div class="nds-content-section nds-demo-section nds-sideinfo-section" style="width: 100%;">
                                 <div class="nds-section-body">
                                     <div class="nds-info-content">
                                         <p>The sideinfo width updates instantly when you switch the size. The main article fills whatever remains.</p>
@@ -258,7 +258,7 @@ section.nds-content-section.nds-sideinfo-section
 </section>
 
 <!-- Reverse -->
-<section id="sideinfoReverse" class="nds-content-section">
+<section id="sideinfoReverse" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Reverse</h2>
@@ -277,7 +277,7 @@ section.nds-content-section.nds-sideinfo-section
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-content-section nds-sideinfo-section" style="width: 100%;">
+                            <div class="nds-content-section nds-demo-section nds-sideinfo-section" style="width: 100%;">
                                 <div class="nds-section-body">
                                     <div class="nds-info-content">
                                         <p>With reverse enabled, the sideinfo takes the start side of the row and the article fills the end. Useful when the sideinfo hosts navigation (e.g., a table of contents) that readers expect on the left.</p>
@@ -333,7 +333,7 @@ section.nds-content-section.nds-sideinfo-section
 </section>
 
 <!-- Built-in Features -->
-<section id="sideinfoFeatures" class="nds-content-section">
+<section id="sideinfoFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -388,7 +388,7 @@ section.nds-content-section.nds-sideinfo-section
 </section>
 
 <!-- Usage Guidelines -->
-<section id="sideinfoGuidelines" class="nds-content-section">
+<section id="sideinfoGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

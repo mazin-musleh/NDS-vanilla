@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Vertical Overflow -->
-<section id="scrollMoreVertical" class="nds-content-section">
+<section id="scrollMoreVertical" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Vertical Overflow</h2>
@@ -101,7 +101,7 @@ direction: ltr
 </section>
 
 <!-- Horizontal Overflow -->
-<section id="scrollMoreHorizontal" class="nds-content-section">
+<section id="scrollMoreHorizontal" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Horizontal Overflow</h2>
@@ -185,7 +185,7 @@ direction: ltr
 </section>
 
 <!-- Card Track -->
-<section id="scrollMoreCards" class="nds-content-section">
+<section id="scrollMoreCards" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Horizontal Card Track</h2>
@@ -293,7 +293,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="scrollMoreFeatures" class="nds-content-section">
+<section id="scrollMoreFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -362,7 +362,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="scrollMoreGuidelines" class="nds-content-section">
+<section id="scrollMoreGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

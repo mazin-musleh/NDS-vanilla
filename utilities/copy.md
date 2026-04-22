@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Literal Copy -->
-<section id="copyLiteral" class="nds-content-section">
+<section id="copyLiteral" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Literal Value</h2>
@@ -140,7 +140,7 @@ direction: ltr
 </section>
 
 <!-- Copy from Target -->
-<section id="copyTarget" class="nds-content-section">
+<section id="copyTarget" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Copy From Target</h2>
@@ -219,7 +219,7 @@ direction: ltr
 </section>
 
 <!-- Code Block Copy -->
-<section id="copyCodeBlock" class="nds-content-section">
+<section id="copyCodeBlock" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Code Block</h2>
@@ -284,7 +284,7 @@ direction: ltr
 </section>
 
 <!-- Label & Message Feedback -->
-<section id="copyFeedback" class="nds-content-section">
+<section id="copyFeedback" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Label and Message</h2>
@@ -349,7 +349,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="copyFeatures" class="nds-content-section">
+<section id="copyFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -404,7 +404,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="copyGuidelines" class="nds-content-section">
+<section id="copyGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
