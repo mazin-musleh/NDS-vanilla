@@ -872,10 +872,10 @@ direction: ltr
                                                 </span>
                                                 <span class="nds-drawer-item">
                                                     <span class="nds-drawer-item-head">
-                                                        <span class="nds-label nds-truncate">Document Approved</span>
                                                         <span class="nds-tag nds-sm" data-status="success">
                                                             <span class="nds-label">success</span>
                                                         </span>
+                                                        <span class="nds-label nds-truncate">Document Approved</span>
                                                     </span>
                                                     <span class="nds-description">Your business license application has been reviewed and approved by the licensing authority.</span>
                                                 </span>
@@ -888,10 +888,10 @@ direction: ltr
                                                 </span>
                                                 <span class="nds-drawer-item">
                                                     <span class="nds-drawer-item-head">
-                                                        <span class="nds-label nds-truncate">Payment Overdue</span>
                                                         <span class="nds-tag nds-sm" data-status="warning">
                                                             <span class="nds-label">warning</span>
                                                         </span>
+                                                        <span class="nds-label nds-truncate">Payment Overdue</span>
                                                     </span>
                                                     <span class="nds-description">Your annual business registration fee of 1,200 SAR is past due. Complete payment to avoid service suspension.</span>
                                                 </span>
@@ -904,10 +904,10 @@ direction: ltr
                                                 </span>
                                                 <span class="nds-drawer-item">
                                                     <span class="nds-drawer-item-head">
-                                                        <span class="nds-label nds-truncate">System Maintenance</span>
                                                         <span class="nds-tag nds-sm" data-status="info">
                                                             <span class="nds-label">info</span>
                                                         </span>
+                                                        <span class="nds-label nds-truncate">System Maintenance</span>
                                                     </span>
                                                     <span class="nds-description">Scheduled maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be unavailable.</span>
                                                 </span>
@@ -920,10 +920,10 @@ direction: ltr
                                                 </span>
                                                 <span class="nds-drawer-item">
                                                     <span class="nds-drawer-item-head">
-                                                        <span class="nds-label nds-truncate">Login Attempt Blocked</span>
                                                         <span class="nds-tag nds-sm" data-status="error">
                                                             <span class="nds-label">error</span>
                                                         </span>
+                                                        <span class="nds-label nds-truncate">Login Attempt Blocked</span>
                                                     </span>
                                                     <span class="nds-description">An unauthorized login attempt was detected from an unrecognized device. Your account has been temporarily locked.</span>
                                                 </span>
@@ -936,10 +936,10 @@ direction: ltr
                                                 </span>
                                                 <span class="nds-drawer-item">
                                                     <span class="nds-drawer-item-head">
-                                                        <span class="nds-label nds-truncate">New Message Received</span>
                                                         <span class="nds-tag nds-sm" data-status="info">
                                                             <span class="nds-label">info</span>
                                                         </span>
+                                                        <span class="nds-label nds-truncate">New Message Received</span>
                                                     </span>
                                                     <span class="nds-description">You have a new message from the Ministry of Commerce regarding your trade license renewal.</span>
                                                 </span>
@@ -987,10 +987,10 @@ direction: ltr
             &lt;/span&gt;
             &lt;span class="nds-drawer-item"&gt;
               &lt;span class="nds-drawer-item-head"&gt;
-                &lt;span class="nds-label nds-truncate"&gt;Document Approved&lt;/span&gt;
                 &lt;span class="nds-tag nds-sm" data-status="success"&gt;
                   &lt;span class="nds-label"&gt;success&lt;/span&gt;
                 &lt;/span&gt;
+                &lt;span class="nds-label nds-truncate"&gt;Document Approved&lt;/span&gt;
               &lt;/span&gt;
               &lt;span class="nds-description"&gt;Your business license application has been reviewed and approved by the licensing authority.&lt;/span&gt;
             &lt;/span&gt;
@@ -1003,10 +1003,10 @@ direction: ltr
             &lt;/span&gt;
             &lt;span class="nds-drawer-item"&gt;
               &lt;span class="nds-drawer-item-head"&gt;
-                &lt;span class="nds-label nds-truncate"&gt;Payment Overdue&lt;/span&gt;
                 &lt;span class="nds-tag nds-sm" data-status="warning"&gt;
                   &lt;span class="nds-label"&gt;warning&lt;/span&gt;
                 &lt;/span&gt;
+                &lt;span class="nds-label nds-truncate"&gt;Payment Overdue&lt;/span&gt;
               &lt;/span&gt;
               &lt;span class="nds-description"&gt;Your annual business registration fee of 1,200 SAR is past due. Complete payment to avoid service suspension.&lt;/span&gt;
             &lt;/span&gt;
@@ -1019,10 +1019,10 @@ direction: ltr
             &lt;/span&gt;
             &lt;span class="nds-drawer-item"&gt;
               &lt;span class="nds-drawer-item-head"&gt;
-                &lt;span class="nds-label nds-truncate"&gt;System Maintenance&lt;/span&gt;
                 &lt;span class="nds-tag nds-sm" data-status="info"&gt;
                   &lt;span class="nds-label"&gt;info&lt;/span&gt;
                 &lt;/span&gt;
+                &lt;span class="nds-label nds-truncate"&gt;System Maintenance&lt;/span&gt;
               &lt;/span&gt;
               &lt;span class="nds-description"&gt;Scheduled maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be unavailable.&lt;/span&gt;
             &lt;/span&gt;
@@ -1035,10 +1035,10 @@ direction: ltr
             &lt;/span&gt;
             &lt;span class="nds-drawer-item"&gt;
               &lt;span class="nds-drawer-item-head"&gt;
-                &lt;span class="nds-label nds-truncate"&gt;Login Attempt Blocked&lt;/span&gt;
                 &lt;span class="nds-tag nds-sm" data-status="error"&gt;
                   &lt;span class="nds-label"&gt;error&lt;/span&gt;
                 &lt;/span&gt;
+                &lt;span class="nds-label nds-truncate"&gt;Login Attempt Blocked&lt;/span&gt;
               &lt;/span&gt;
               &lt;span class="nds-description"&gt;An unauthorized login attempt was detected from an unrecognized device. Your account has been temporarily locked.&lt;/span&gt;
             &lt;/span&gt;
@@ -1051,10 +1051,10 @@ direction: ltr
             &lt;/span&gt;
             &lt;span class="nds-drawer-item"&gt;
               &lt;span class="nds-drawer-item-head"&gt;
-                &lt;span class="nds-label nds-truncate"&gt;New Message Received&lt;/span&gt;
                 &lt;span class="nds-tag nds-sm" data-status="info"&gt;
                   &lt;span class="nds-label"&gt;info&lt;/span&gt;
                 &lt;/span&gt;
+                &lt;span class="nds-label nds-truncate"&gt;New Message Received&lt;/span&gt;
               &lt;/span&gt;
               &lt;span class="nds-description"&gt;You have a new message from the Ministry of Commerce regarding your trade license renewal.&lt;/span&gt;
             &lt;/span&gt;

@@ -88,7 +88,7 @@
         justify-content: flex-start;
 
         // Label takes available space
-        >.nds-label {
+        .nds-label {
             flex: 1;
             white-space: normal;
         }
@@ -213,16 +213,22 @@
 }
 
 .nds-drawer-list .nds-drawer-item-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-sm);
     width: 100%;
+
+    .nds-label:not(.nds-truncate) {
+        display: block;
+        font-size: var(--nds-text-md-FS);
+        line-height: var(--nds-text-md-LH);
+    }
+
+    .nds-tag {
+        float: inline-end;
+    }
+    .nds-description {
+        width: 100%;
+    }
 }
 
-.nds-drawer-list .nds-description {
-    width: 100%;
-}
 
 // ==============================================
 // SUBMENU - CSS :has() DETECTION
