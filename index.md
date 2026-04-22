@@ -415,11 +415,11 @@ direction: ltr
                             <h3 class="nds-card-title">Download</h3>
                             <p class="nds-card-description">Compiled HTML, CSS, and JavaScript ready to use. Source files included as reference.</p>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="https://github.com/mazin-musleh/NDS-vanilla/releases/latest" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
-                            <span class="nds-label">Download Template</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="https://github.com/mazin-musleh/NDS-vanilla/releases/latest" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
+                                <span class="nds-label">Download Template</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="nds-card nds-stroke">
@@ -435,11 +435,11 @@ direction: ltr
                             <h3 class="nds-card-title">Fork</h3>
                             <p class="nds-card-description">Full source code with build system, templates, and tooling.</p>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
-                            <span class="nds-label">View Repository</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
+                                <span class="nds-label">View Repository</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="nds-card nds-stroke">
@@ -455,11 +455,11 @@ direction: ltr
                             <h3 class="nds-card-title">Contribute</h3>
                             <p class="nds-card-description">Report issues, suggest improvements, or submit pull requests on GitHub.</p>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="https://github.com/mazin-musleh/NDS-vanilla/issues" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
-                            <span class="nds-label">Open Issues</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="https://github.com/mazin-musleh/NDS-vanilla/issues" target="_blank" rel="noopener" class="nds-btn nds-primary nds-external">
+                                <span class="nds-label">Open Issues</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

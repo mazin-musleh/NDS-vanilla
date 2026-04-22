@@ -160,13 +160,13 @@ direction: ltr
                                 <div class="nds-card-text">
                                     <p class="nds-card-description">Application reference</p>
                                     <h3 class="nds-card-title" id="copy-target-ref">REF-2026-04-19-7A3F</h3>
-                                </div>
-                                <div class="nds-card-actions">
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
-                                        data-copy-target="#copy-target-ref" aria-label="Copy reference">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                        <span class="nds-label">Copy reference</span>
-                                    </button>
+                                    <div class="nds-card-actions">
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
+                                            data-copy-target="#copy-target-ref" aria-label="Copy reference">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                            <span class="nds-label">Copy reference</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

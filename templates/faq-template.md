@@ -200,11 +200,11 @@ sidemenu_mode: false
                         <h3 class="nds-card-title">Comments &amp; suggestions</h3>
                         <p class="nds-card-description">For any inquiry or feedback on Government Services, please fill the required information.</p>
                     </div>
-                </div>
-                <div class="nds-card-actions">
-                    <a href="{{ '/templates/contact-us-template' | relative_url }}" class="nds-btn nds-primary">
-                        <span class="nds-label">Contact us</span>
-                    </a>
+                    <div class="nds-card-actions">
+                        <a href="{{ '/templates/contact-us-template' | relative_url }}" class="nds-btn nds-primary">
+                            <span class="nds-label">Contact us</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -346,16 +346,16 @@ sidemenu_mode: false
                                     Reference number: <strong id="ft-reference">—</strong>
                                 </p>
                             </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ '/' | relative_url }}" class="nds-btn nds-secondary-outline">
-                                <span class="nds-label">Return to home</span>
-                            </a>
-                            <button type="button" class="nds-btn nds-primary"
-                                data-stepper-control="goto" data-stepper-value="1"
-                                data-stepper-target="formStepper">
-                                <span class="nds-label">Submit another</span>
-                            </button>
+                            <div class="nds-card-actions">
+                                <a href="{{ '/' | relative_url }}" class="nds-btn nds-secondary-outline">
+                                    <span class="nds-label">Return to home</span>
+                                </a>
+                                <button type="button" class="nds-btn nds-primary"
+                                    data-stepper-control="goto" data-stepper-value="1"
+                                    data-stepper-target="formStepper">
+                                    <span class="nds-label">Submit another</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

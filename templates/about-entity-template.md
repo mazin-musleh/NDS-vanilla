@@ -28,11 +28,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">About us</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#about-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open About us">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#about-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open About us">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -49,11 +49,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Organizational Structure</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#organizational-structure" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Organizational Structure">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#organizational-structure" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Organizational Structure">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -70,11 +70,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Strategy, Policies, and Regulations</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#strategy-policies" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Strategy, Policies, and Regulations">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#strategy-policies" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Strategy, Policies, and Regulations">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -91,11 +91,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Budget and Expenditures</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#budget" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Budget and Expenditures">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#budget" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Budget and Expenditures">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -112,11 +112,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Tenders and Procurements</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#tenders" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Tenders and Procurements">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#tenders" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Tenders and Procurements">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -133,11 +133,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">E-Participation</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#e-participation" class="nds-btn nds-secondary nds-icon-only" aria-label="Open E-Participation">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#e-participation" class="nds-btn nds-secondary nds-icon-only" aria-label="Open E-Participation">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -154,11 +154,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Our Partners / Partnerships</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#partners" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Our Partners / Partnerships">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#partners" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Our Partners / Partnerships">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -175,11 +175,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Sustainable Development</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#sustainable-development" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Sustainable Development">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#sustainable-development" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Sustainable Development">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -196,11 +196,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Careers</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#careers" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Careers">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#careers" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Careers">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -217,11 +217,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">News and Events</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#news" class="nds-btn nds-secondary nds-icon-only" aria-label="Open News and Events">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#news" class="nds-btn nds-secondary nds-icon-only" aria-label="Open News and Events">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -238,11 +238,11 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             <h3 class="nds-card-title">Contact Us</h3>
                         </div>
-                    </div>
-                    <div class="nds-card-actions nds-end">
-                        <a href="#contact-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Contact Us">
-                            <i class="nds-icon nds-hgi-arrow-left-02"></i>
-                        </a>
+                        <div class="nds-card-actions nds-end">
+                            <a href="#contact-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Contact Us">
+                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 

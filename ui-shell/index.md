@@ -30,11 +30,11 @@ sidemenu_mode: false
                             <h3 class="nds-card-title">Header</h3>
                             <p class="nds-card-description">Topbar, main navigation, and DGA digital stamp combined into a single responsive shell.</p>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="{{ '/ui-shell/header.html' | relative_url }}" class="nds-btn nds-primary">
-                            <span class="nds-label">View Docs</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/ui-shell/header.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Docs</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -51,11 +51,11 @@ sidemenu_mode: false
                             <h3 class="nds-card-title">Side Menu</h3>
                             <p class="nds-card-description">Persistent sidebar navigation with collapsible groups, slide-in and top dropdown modes.</p>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="{{ '/ui-shell/sidemenu.html' | relative_url }}" class="nds-btn nds-primary">
-                            <span class="nds-label">View Docs</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/ui-shell/sidemenu.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Docs</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -72,11 +72,11 @@ sidemenu_mode: false
                             <h3 class="nds-card-title">Footer</h3>
                             <p class="nds-card-description">Multi-column footer with navigation, legal links, social media, and partner logos.</p>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="{{ '/ui-shell/footer.html' | relative_url }}" class="nds-btn nds-primary">
-                            <span class="nds-label">View Docs</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/ui-shell/footer.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Docs</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 

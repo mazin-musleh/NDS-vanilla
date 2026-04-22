@@ -496,12 +496,12 @@ hideFeedback: true
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="mailto:{{ user.email }}" class="nds-btn nds-secondary-outline nds-lg nds-lead-icon">
-                                <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-                                <span class="nds-label">Contact</span>
-                            </a>
+                            <div class="nds-card-actions">
+                                <a href="mailto:{{ user.email }}" class="nds-btn nds-secondary-outline nds-lg nds-lead-icon">
+                                    <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
+                                    <span class="nds-label">Contact</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     {% endfor %}

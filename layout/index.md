@@ -30,11 +30,11 @@ sidemenu_mode: false
                             <h3 class="nds-card-title">Section</h3>
                             <p class="nds-card-description">Structured container for page content with head, body, action areas, color themes, and full-width breakouts.</p>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="{{ '/layout/section.html' | relative_url }}" class="nds-btn nds-primary">
-                            <span class="nds-label">View Docs</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/layout/section.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Docs</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -51,11 +51,11 @@ sidemenu_mode: false
                             <h3 class="nds-card-title">Grid</h3>
                             <p class="nds-card-description">Responsive CSS grid with auto-fit or explicit columns, per-breakpoint counts, and adaptive gap scaling.</p>
                         </div>
-                    </div>
-                    <div class="nds-card-actions">
-                        <a href="{{ '/layout/grid.html' | relative_url }}" class="nds-btn nds-primary">
-                            <span class="nds-label">View Docs</span>
-                        </a>
+                        <div class="nds-card-actions">
+                            <a href="{{ '/layout/grid.html' | relative_url }}" class="nds-btn nds-primary">
+                                <span class="nds-label">View Docs</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 

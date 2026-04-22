@@ -957,14 +957,14 @@ section.nds-content-section nds-demo-section          (responsive padding for co
                                                             <h3 class="nds-card-title nds-truncate">{{ service.title }}</h3>
                                                             <span class="nds-card-description nds-truncate">{{ service.description }}</span>
                                                         </div>
-                                                    </div>
-                                                    <div class="nds-card-actions">
-                                                        <a href="#" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
-                                                            <span class="nds-label">Details</span>
-                                                        </a>
-                                                        <a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
-                                                            <span class="nds-label">Get Started</span>
-                                                        </a>
+                                                        <div class="nds-card-actions">
+                                                            <a href="#" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
+                                                                <span class="nds-label">Details</span>
+                                                            </a>
+                                                            <a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
+                                                                <span class="nds-label">Get Started</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

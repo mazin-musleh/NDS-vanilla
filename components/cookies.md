@@ -51,14 +51,14 @@ direction: ltr
                                         <span>|</span>
                                         <a href="/privacy-policy">Privacy Policy</a>
                                     </div>
-                                </div>
-                                <div class="nds-card-actions">
-                                    <button class="nds-btn nds-primary nds-full" data-accept-title="Accepted" data-accept-message="Cookies have been accepted">
-                                        <span class="nds-label">Accept</span>
-                                    </button>
-                                    <button class="nds-btn nds-secondary nds-full" data-decline-title="Declined" data-decline-message="Optional cookies have been declined">
-                                        <span class="nds-label">Decline</span>
-                                    </button>
+                                    <div class="nds-card-actions">
+                                        <button class="nds-btn nds-primary nds-full" data-accept-title="Accepted" data-accept-message="Cookies have been accepted">
+                                            <span class="nds-label">Accept</span>
+                                        </button>
+                                        <button class="nds-btn nds-secondary nds-full" data-decline-title="Declined" data-decline-message="Optional cookies have been declined">
+                                            <span class="nds-label">Decline</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

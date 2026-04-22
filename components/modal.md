@@ -92,14 +92,14 @@ direction: ltr
                                         </div>
                                     </div>
 
-                                </div>
-                                <div class="nds-card-actions">
-                                    <button class="nds-btn nds-primary nds-lg" data-modal-close>
-                                        <span class="nds-label">Confirm</span>
-                                    </button>
-                                    <button class="nds-btn nds-secondary-outline nds-lg" data-modal-close>
-                                        <span class="nds-label">Cancel</span>
-                                    </button>
+                                    <div class="nds-card-actions">
+                                        <button class="nds-btn nds-primary nds-lg" data-modal-close>
+                                            <span class="nds-label">Confirm</span>
+                                        </button>
+                                        <button class="nds-btn nds-secondary-outline nds-lg" data-modal-close>
+                                            <span class="nds-label">Cancel</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -308,11 +308,11 @@ direction: ltr
                                     <div class="nds-card-text nds-center">
                                         <h3 class="nds-card-title">Sign in with National Single Sign-On</h3>
                                         <p class="nds-card-description">Use the credentials from your Nafath account to access the services provided by the university.</p>
-                                    </div>
-                                    <div class="nds-card-actions nds-row">
-                                        <a href="#" class="nds-btn nds-primary nds-lg nds-full">
-                                            <span class="nds-label">Continue with Nafath</span>
-                                        </a>
+                                        <div class="nds-card-actions nds-row">
+                                            <a href="#" class="nds-btn nds-primary nds-lg nds-full">
+                                                <span class="nds-label">Continue with Nafath</span>
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="nds-divider">or</div>
                                     <div class="nds-card-actions nds-row">

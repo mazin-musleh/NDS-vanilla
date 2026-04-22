@@ -183,14 +183,14 @@ sidemenu_mode: false
                                 <span class="nds-tag nds-green nds-sm"><span class="nds-label">Most Used</span></span>
                                 {% endif %}
                             </div>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="{{ service.url }}" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
-                                <span class="nds-label">Details</span>
-                            </a>
-                            <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
-                                <span class="nds-label">Get Started</span>
-                            </a>
+                            <div class="nds-card-actions">
+                                <a href="{{ service.url }}" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
+                                    <span class="nds-label">Details</span>
+                                </a>
+                                <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
+                                    <span class="nds-label">Get Started</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
