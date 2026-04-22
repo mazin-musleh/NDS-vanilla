@@ -84,7 +84,7 @@ direction: ltr
                                     </div>
 
                                     <div class="nds-form-action">
-                                        <button type="button" class="nds-btn nds-secondary nds-md nds-browse-btn">
+                                        <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
                                             <i class="hgi hgi-stroke hgi-folder-01"></i>
                                             <span class="nds-label">Browse Files</span>
                                         </button>
@@ -172,7 +172,7 @@ direction: ltr
     &lt;/div&gt;
 
     &lt;div class="nds-form-action"&gt;
-      &lt;button type="button" class="nds-btn nds-secondary nds-md nds-browse-btn"&gt;
+      &lt;button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn"&gt;
         &lt;i class="hgi hgi-stroke hgi-folder-01"&gt;&lt;/i&gt;
         &lt;span class="nds-label"&gt;Browse Files&lt;/span&gt;
       &lt;/button&gt;
