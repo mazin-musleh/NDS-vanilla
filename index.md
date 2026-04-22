@@ -15,8 +15,8 @@ direction: ltr
             <p class="nds-section-description">Why it was built, and what it covers.</p>
         </div>
         <div class="nds-section-body">
-            <p>Credit to the <a href="https://dga.gov.sa/" target="_blank" class="nds-primary">Digital Government Authority (DGA)</a> for its outstanding work in unifying Saudi Arabia's government websites and services under a single, coherent design language. The specifications published on <a href="https://www.figma.com/@sdga" target="_blank" class="nds-primary">Figma</a> are clear and comprehensive; however, translating them into working code remains a challenge for most teams.</p>
-            <p>The DGA's official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank" class="nds-primary">React and Storybook component library</a> that covers the core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, and includes all components, a layout system, page templates, documentation, and a complete development environment. No framework is required.</p>
+            <p>Credit to the <a href="https://dga.gov.sa/" target="_blank">Digital Government Authority (DGA)</a> for its outstanding work in unifying Saudi Arabia's government websites and services under a single, coherent design language. The specifications published on <a href="https://www.figma.com/@sdga" target="_blank">Figma</a> are clear and comprehensive; however, translating them into working code remains a challenge for most teams.</p>
+            <p>The DGA's official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank">React and Storybook component library</a> that covers the core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, and includes all components, a layout system, page templates, documentation, and a complete development environment. No framework is required.</p>
         </div>
     </div>
 </section>
@@ -342,7 +342,7 @@ direction: ltr
             <p class="nds-section-description">Everything needed to build, modify, and extend the system.</p>
         </div>
         <div class="nds-section-body">
-            <p>The project is built on <a href="https://jekyllrb.com/" target="_blank" class="nds-primary">Jekyll</a>, a static site generator natively supported by GitHub Pages. It compiles templates, stylesheets, and data files into static HTML with no external toolchain.</p>
+            <p>The project is built on <a href="https://jekyllrb.com/" target="_blank">Jekyll</a>, a static site generator natively supported by GitHub Pages. It compiles templates, stylesheets, and data files into static HTML with no external toolchain.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--nds-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
@@ -358,7 +358,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-code"></i>
                         <span class="nds-label">Modular JavaScript</span>
                     </span>
-                    <p class="nds-item-desc">Vanilla JavaScript with one file per component, controlled by a smart loader. Only active components initialize on each page. A Ruby processor bundles and minifies using <a href="https://terser.org/" target="_blank" class="nds-primary">Terser</a>.</p>
+                    <p class="nds-item-desc">Vanilla JavaScript with one file per component, controlled by a smart loader. Only active components initialize on each page. A Ruby processor bundles and minifies using <a href="https://terser.org/" target="_blank">Terser</a>.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -386,7 +386,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i>
                         <span class="nds-label">AI Integration</span>
                     </span>
-                    <p class="nds-item-desc">Configured for <a href="https://claude.ai/" target="_blank" class="nds-primary">Claude Code</a> AI assistant with custom skills for documentation, content creation, code review, and component auditing. The codebase is structured for effective AI-assisted development.</p>
+                    <p class="nds-item-desc">Configured for <a href="https://claude.ai/" target="_blank">Claude Code</a> AI assistant with custom skills for documentation, content creation, code review, and component auditing. The codebase is structured for effective AI-assisted development.</p>
                 </div>
             </div>
         </div>

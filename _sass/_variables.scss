@@ -7,34 +7,6 @@
 // NDS-specific additions not found in DGA core
 
 :root {
-    // Font family
-    --nds-font-family: 'IBM Plex Sans Arabic', sans-serif;
-
-    // Static display sizes
-    --nds-display-2xl-FS: 72px;
-    --nds-display-2xl-LH: 90px;
-    --nds-display-xl-FS: 60px;
-    --nds-display-xl-LH: 72px;
-    --nds-display-lg-FS: 48px;
-    --nds-display-lg-LH: 60px;
-    --nds-display-md-FS: 36px;
-    --nds-display-md-LH: 44px;
-    --nds-display-sm-FS: 30px;
-    --nds-display-sm-LH: 38px;
-    --nds-display-xs-FS: 24px;
-    --nds-display-xs-LH: 32px;
-
-    // Static text sizes
-    --nds-text-xl-FS: 20px;
-    --nds-text-xl-LH: 30px;
-    --nds-text-lg-FS: 18px;
-    --nds-text-lg-LH: 28px;
-    --nds-text-md-FS: 16px;
-    --nds-text-md-LH: 24px;
-    --nds-text-sm-FS: 14px;
-    --nds-text-sm-LH: 20px;
-    --nds-text-xs-FS: 12px;
-    --nds-text-xs-LH: 18px;
 
     // Additional color tokens
     --text-white: var(--colors-base-white);
