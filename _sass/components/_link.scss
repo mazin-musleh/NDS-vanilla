@@ -1,0 +1,102 @@
+@use '../mixins' as *;
+
+:where(.nds-link, a):not(.nds-btn, .nds-card) {
+
+    --_link-color: var(--link-color, var(--link-neutral));
+    --_link-hover: var(--link-hover, var(--link-neutral-hovered));
+    --_link-pressed: var(--link-pressed, var(--link-neutral-pressed));
+    --_link-focused: var(--link-focused, var(--link-neutral-focused));
+    --_link-visited: var(--link-visited, var(--link-neutral-visited));
+    --_link-decoration: var(--link-decoration, none);
+
+    color: var(--_link-color);
+    text-decoration: var(--_link-decoration);
+
+
+    &:is(.nds-primary, .nds-color) {
+        --link-color: var(--link-primary);
+        --link-hover: var(--link-primary-hovered);
+        --link-pressed: var(--link-primary-pressed);
+        --link-focused: var(--link-primary-focused);
+        --link-visited: var(--link-primary-visited);
+    }
+
+    &.nds-oncolor {
+        --link-color: var(--link-oncolor);
+        --link-hover: var(--link-oncolor-hovered);
+        --link-pressed: var(--link-oncolor-pressed);
+        --link-focused: var(--link-oncolor-focused);
+        --link-visited: var(--link-oncolor-visited);
+    }
+
+    &.nds-underline {
+        --link-decoration: underline;
+    }
+
+    &:hover {
+        --link-color: var(--_link-hover);
+    }
+
+    &:active {
+        --link-color: var(--_link-pressed);
+    }
+}
+
+:where(.nds-content-section) {
+    :is(.nds-link, a):not(.nds-btn, .nds-card) {
+        &:not(.nds-neutral) {
+            --link-color: var(--link-primary);
+            --link-hover: var(--link-primary-hovered);
+            --link-pressed: var(--link-primary-pressed);
+            --link-focused: var(--link-primary-focused);
+            --link-visited: var(--link-primary-visited);
+        }
+
+        --link-decoration: underline;
+
+
+        &:visited {
+            --link-color: var(--_link-visited);
+        }
+
+        &:focus {
+            --link-color: var(--_link-focused);
+        }
+
+        &:hover {
+            --link-color: var(--_link-hover);
+            --link-decoration: underline;
+        }
+
+        &:active {
+            --link-color: var(--_link-pressed);
+            --link-decoration: underline;
+        }
+    }
+}
+
+:is(.nds-link, a):not(.nds-card):where(.nds-icon,.nds-external) {
+
+    &::after {
+        content: "";
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        background: currentColor;
+        vertical-align: text-bottom;
+        margin-inline-start: var(--spacing-xs);
+        mask: var(--_link-icon) center / contain no-repeat;
+    }
+
+    &.nds-icon {
+        --_link-icon: var(--nds-icon-link-04);
+    }
+
+    &.nds-external {
+        --_link-icon: var(--nds-icon-link-square-02);
+    }
+
+    > .nds-label {
+        flex: unset !important;
+    }
+}

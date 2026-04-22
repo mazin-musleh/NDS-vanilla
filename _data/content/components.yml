@@ -113,6 +113,13 @@
   category: "UI"
   tags: ["JS", "CSS"]
 
+- title: "Link"
+  description: "Inline navigation with color variants and automatic external-link detection"
+  icon: '<i class="hgi hgi-stroke hgi-link-01"></i>'
+  category: "UI"
+  tags: ["CSS", "JS"]
+  url: "/components/link.html"
+
 - title: "Loading"
   description: "Spinners and skeleton placeholders for loading states"
   icon: '<i class="hgi hgi-stroke hgi-loading-03"></i>'

@@ -203,23 +203,6 @@ $all-spacers: $spacers;
   }
 }
 
-.nds-external,
-a[target="_blank"]:not(.nds-btn, :has(>*)) {
-  display: inline-flex;
-  gap: var(--spacing-xs);
-  align-items: center;
-  &::after {
-    content: "";
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    background: currentColor;
-    mask: var(--nds-icon-link-square-02) center / contain no-repeat;
-  }
-  >.nds-label {
-    flex: unset !important;
-  }
-}
 
 // ==============================================
 // DIRECTION UTILITIES

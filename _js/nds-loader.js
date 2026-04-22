@@ -138,6 +138,12 @@
             universal: true,
         },
         {
+            name: 'link',
+            selector: null,
+            init: () => NDS.Link?.init?.(),
+            universal: true,
+        },
+        {
             name: 'cookies',
             selector: '#ndsCookiesAcceptBtn',
             init: () => NDS.Cookies?.init?.(),

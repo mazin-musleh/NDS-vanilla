@@ -116,53 +116,6 @@ body.nds-minimal[style*="--bg-img"] {
     cursor: pointer;
 }
 
-:is(.nds-link, a):not(.nds-btn, .nds-card) {
-    display: inline-flex;
-
-    --_link-color: var(--link-color, var(--link-neutral));
-    --_link-hover: var(--link-hover, var(--link-neutral-hovered));
-    --_link-pressed: var(--link-pressed, var(--link-neutral-pressed));
-    --_link-focused: var(--link-focused, var(--link-neutral-focused));
-    --_link-visited: var(--link-visited, var(--link-neutral-visited));
-
-    color: var(--_link-color);
-
-    /*     &:visited {
-        color: var(--_link-visited);
-    }
-
-    &:focus {
-        color: var(--_link-focused);
-    }
- */
-    &:hover {
-        color: var(--_link-hover);
-    }
-
-    &:active {
-        color: var(--_link-pressed);
-    }
-
-    &:is(.nds-primary, .nds-color) {
-        --link-color: var(--link-primary);
-        --link-hover: var(--link-primary-hovered);
-        --link-pressed: var(--link-primary-pressed);
-        --link-focused: var(--link-primary-focused);
-        --link-visited: var(--link-primary-visited);
-    }
-
-    &.nds-oncolor {
-        --link-color: var(--link-oncolor);
-        --link-hover: var(--link-oncolor-hovered);
-        --link-pressed: var(--link-oncolor-pressed);
-        --link-focused: var(--link-oncolor-focused);
-        --link-visited: var(--link-oncolor-visited);
-    }
-
-    &.nds-underline {
-        text-decoration: underline;
-    }
-}
 
 /* ========================================
    DESCRIPTION — universal secondary text
