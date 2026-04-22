@@ -95,6 +95,14 @@
 
 .nds-pagination-ellipsis {
 
+  .nds-dropmenu-trigger {
+
+    >.nds-label {
+      height: 1em;
+      display: none;
+    }
+  }
+
   // Dropdown menu positioning
   .nds-dropmenu-menu {
     min-width: 60px;
@@ -151,20 +159,16 @@
 
 .nds-pagination-ellipsis .nds-dropmenu-trigger[data-state~="active"] {
 
+    >.nds-label {
+      display: block;
+    }
+
   &::before {
     display: none;
   }
 
   &::after {
-    content: '';
-    display: block;
     position: absolute;
-    bottom: 0;
-    width: 16px;
-    height: 4px;
-    background-color: currentColor;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='4'%3E%3Ccircle cx='2' cy='2' r='1.5'/%3E%3Ccircle cx='8' cy='2' r='1.5'/%3E%3Ccircle cx='14' cy='2' r='1.5'/%3E%3C/svg%3E");
-    mask-size: contain;
-    mask-repeat: no-repeat;
+    transform: translateY(calc((var(--btn-size) / 2) - 2px));
   }
 }

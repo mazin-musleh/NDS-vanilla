@@ -485,6 +485,24 @@
   }
 
   // ==============================================
+  // ELLIPSIS BUTTON
+  // ==============================================
+
+  &.nds-ellipsis {
+    width: var(--btn-size);
+    padding: 0;
+
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      background: currentColor;
+      mask: var(--nds-icon-more-horizontal) center / contain no-repeat;
+    }
+  }
+
+  // ==============================================
   // ICON PSEUDO-ELEMENT BUTTONS (MENU, DIRECTIONAL)
   // ==============================================
 

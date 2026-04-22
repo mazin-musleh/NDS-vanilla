@@ -66,5 +66,14 @@
 /* ========================================
    BREADCRUMB DROPDOWN (FOR COLLAPSED BREADCRUMBS)
    ======================================== */
-/* Uses unified nds-dropmenu component */
-/* Breadcrumb-specific adjustments only */
+
+.nds-breadcrumb-ellipsis {
+
+  .nds-dropmenu-menu {
+    min-width: 120px;
+  }
+
+  .nds-dropmenu-item {
+    min-height: 40px;
+  }
+}

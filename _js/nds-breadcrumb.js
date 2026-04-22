@@ -62,14 +62,15 @@
 
         createDropdown(hiddenItems) {
             const li = document.createElement('li');
+            li.className = 'nds-breadcrumb-ellipsis';
 
             // Create nds-dropmenu structure
             const dropmenu = document.createElement('div');
             dropmenu.className = 'nds-dropmenu';
 
             const button = document.createElement('button');
-            button.className = 'nds-btn nds-subtle nds-dropmenu-trigger';
-            button.innerHTML = '<span class="nds-label">...</span>';
+            button.className = 'nds-btn nds-subtle nds-ellipsis nds-dropmenu-trigger';
+            button.setAttribute('aria-label', 'More');
 
             const menu = document.createElement('div');
             menu.className = 'nds-dropmenu-menu';

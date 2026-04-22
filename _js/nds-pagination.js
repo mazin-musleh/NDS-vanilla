@@ -14,7 +14,6 @@
 (function() {
     'use strict';
 
-    const ELLIPSIS_SVG = '<svg width="16" height="4" viewBox="0 0 16 4" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1.5"/><circle cx="8" cy="2" r="1.5"/><circle cx="14" cy="2" r="1.5"/></svg>';
 
     class NDSPagination {
         constructor(paginationNav) {
@@ -99,8 +98,8 @@
 
             const button = document.createElement('button');
             button.type = 'button';
-            button.className = 'nds-btn nds-subtle nds-dropmenu-trigger nds-indicator';
-            button.innerHTML = `<span class="nds-label">${ELLIPSIS_SVG}</span>`;
+            button.className = 'nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger';
+            button.innerHTML = '<span class="nds-label"></span>';
             button.setAttribute('aria-label', 'More pages');
 
             const menu = document.createElement('div');
@@ -212,9 +211,9 @@
             el.removeAttribute('aria-current');
         });
 
-        // Reset all ellipsis triggers back to "..." label
-        pagination.querySelectorAll('.nds-dropmenu-trigger .nds-label').forEach(label => {
-            label.innerHTML = ELLIPSIS_SVG;
+        // Reset all ellipsis triggers (icon is CSS ::after, just clear page number)
+        pagination.querySelectorAll('.nds-ellipsis .nds-label').forEach(label => {
+            label.textContent = '';
         });
 
         // Find and activate the target page element

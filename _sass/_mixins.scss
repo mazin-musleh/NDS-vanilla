@@ -265,6 +265,7 @@ textarea {
   height: var(--_btn-height);
   min-height: var(--_btn-height-min);
   width: var(--_btn-width, fit-content);
+  min-width: var(--_btn-size);
 
   padding-inline: var(--_btn-padding);
   padding-block: calc(var(--_btn-padding) / 2);
