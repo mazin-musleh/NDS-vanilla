@@ -1,7 +1,6 @@
 @use '../mixins' as *;
 
 :where(.nds-link, a):not(.nds-btn, .nds-card) {
-
     --_link-color: var(--link-color, var(--link-neutral));
     --_link-hover: var(--link-hover, var(--link-neutral-hovered));
     --_link-pressed: var(--link-pressed, var(--link-neutral-pressed));
@@ -12,6 +11,29 @@
     color: var(--_link-color);
     text-decoration: var(--_link-decoration);
 
+    &:is(:hover, :active, .nds-underline) {
+        --link-decoration: underline;
+    }
+
+    :where(.nds-content-section:not(.nds-demo-section)) & {
+        &:not(.nds-neutral) {
+            --link-color: var(--link-primary);
+            --link-hover: var(--link-primary-hovered);
+            --link-pressed: var(--link-primary-pressed);
+            --link-focused: var(--link-primary-focused);
+            --link-visited: var(--link-primary-visited);
+        }
+
+        --link-decoration: underline;
+
+        &:visited {
+            --link-color: var(--_link-visited);
+        }
+
+        &:focus {
+            --link-color: var(--_link-focused);
+        }
+    }
 
     &:is(.nds-primary, .nds-color) {
         --link-color: var(--link-primary);
@@ -29,10 +51,6 @@
         --link-visited: var(--link-oncolor-visited);
     }
 
-    &.nds-underline {
-        --link-decoration: underline;
-    }
-
     &:hover {
         --link-color: var(--_link-hover);
     }
@@ -42,40 +60,7 @@
     }
 }
 
-:where(.nds-content-section) {
-    :is(.nds-link, a):not(.nds-btn, .nds-card) {
-        &:not(.nds-neutral) {
-            --link-color: var(--link-primary);
-            --link-hover: var(--link-primary-hovered);
-            --link-pressed: var(--link-primary-pressed);
-            --link-focused: var(--link-primary-focused);
-            --link-visited: var(--link-primary-visited);
-        }
-
-        --link-decoration: underline;
-
-
-        &:visited {
-            --link-color: var(--_link-visited);
-        }
-
-        &:focus {
-            --link-color: var(--_link-focused);
-        }
-
-        &:hover {
-            --link-color: var(--_link-hover);
-            --link-decoration: underline;
-        }
-
-        &:active {
-            --link-color: var(--_link-pressed);
-            --link-decoration: underline;
-        }
-    }
-}
-
-:is(.nds-link, a):not(.nds-card):where(.nds-icon,.nds-external) {
+:is(.nds-link, a):not(.nds-card):where(.nds-icon, .nds-external) {
 
     &::after {
         content: "";
@@ -96,7 +81,4 @@
         --_link-icon: var(--nds-icon-link-square-02);
     }
 
-    > .nds-label {
-        flex: unset !important;
-    }
 }
