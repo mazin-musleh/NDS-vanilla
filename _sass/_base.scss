@@ -138,11 +138,15 @@ body.nds-minimal[style*="--bg-img"] {
    ======================================== */
 
 .nds-user-card {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+
     .nds-user-info {
         display: flex;
         flex-direction: column;
         gap: var(--spacing-xs);
-        padding: var(--spacing-md);
         text-align: start;
 
         &.nds-center {
@@ -154,18 +158,21 @@ body.nds-minimal[style*="--bg-img"] {
             font-size: var(--nds-text-md-FS);
             line-height: var(--nds-text-md-LH);
             font-weight: 600;
-            color: var(--text-primary-paragraph);
         }
 
         :is(.nds-user-role, .nds-user-email) {
             font-size: var(--nds-text-sm-FS);
             line-height: var(--nds-text-sm-LH);
-            color: var(--text-secondary-paragraph);
+            color: var(--text-primary-paragraph);
         }
 
     }
 
+    .nds-divider{
+            flex: 1 100%;
+    }
     .nds-user-action {
+        flex: 1 100%;
         display: flex;
         flex-wrap: wrap;
 
