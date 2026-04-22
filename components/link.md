@@ -9,7 +9,7 @@ direction: ltr
 ---
 
 <!-- Color Variants -->
-<section id="linkVariants" class="nds-content-section">
+<section id="linkVariants" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Color Variants</h2>
@@ -67,7 +67,7 @@ direction: ltr
 </section>
 
 <!-- On-Color -->
-<section id="linkOnColor" class="nds-content-section">
+<section id="linkOnColor" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">On-Color</h2>
@@ -77,7 +77,12 @@ direction: ltr
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">On primary background</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-underline", ".nds-link", "oncolorStyle"]'>
+                                <span class="nds-label">Underline</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
@@ -120,7 +125,7 @@ direction: ltr
 </section>
 
 <!-- External Links -->
-<section id="linkExternal" class="nds-content-section">
+<section id="linkExternal" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">External Links</h2>
@@ -130,7 +135,12 @@ direction: ltr
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">With external icon</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-underline", ".nds-link", "externalStyle"]'>
+                                <span class="nds-label">Underline</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="padding: var(--spacing-2xl); display: flex; flex-direction: column; gap: var(--spacing-md);">
@@ -172,7 +182,7 @@ direction: ltr
 </section>
 
 <!-- Built-in Features -->
-<section id="linkFeatures" class="nds-content-section">
+<section id="linkFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -227,7 +237,7 @@ direction: ltr
 </section>
 
 <!-- Usage Guidelines -->
-<section id="linkGuidelines" class="nds-content-section">
+<section id="linkGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
@@ -241,7 +251,7 @@ direction: ltr
                     <li>Use <code class="nds-inline-code lang-html">nds-primary</code> for calls to action embedded in body text where the primary color signals importance, such as "Learn more" or "Apply now" links</li>
                     <li>Use <code class="nds-inline-code lang-html">nds-oncolor</code> when placing links on primary or dark backgrounds. Neutral and primary variants do not have sufficient contrast on colored surfaces</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-underline</code> in dense reading content where adjacent text without underlines could make links hard to distinguish from surrounding copy</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-neutral</code> on links inside <code class="nds-inline-code lang-html">.nds-content-section</code> if you need them to stay neutral. By default, all links in a content section use the primary color</li>
+                    <li>Add <code class="nds-inline-code lang-html">nds-neutral</code> on links inside <code class="nds-inline-code lang-html">.nds-content-section nds-demo-section</code> if you need them to stay neutral. By default, all links in a content section use the primary color</li>
                     <li>Do not use <code class="nds-inline-code lang-html">nds-link</code> on standalone navigation items. Use <a class="nds-color" href="{{ 'components/breadcrumb' | relative_url }}">Breadcrumb</a>, <a class="nds-color" href="{{ 'ui-shell/sidemenu' | relative_url }}">Side Navigation</a>, or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for navigation structure</li>
                     <li>Do not use a link when an action is intended rather than navigation. Use <code class="nds-inline-code lang-html">nds-btn nds-subtle</code> for text-like interactive controls that trigger behavior</li>
                     <li>External links (different domain) are detected and marked automatically. You do not need to add <code class="nds-inline-code lang-html">target="_blank"</code> or <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code> manually for cross-domain URLs</li>
@@ -256,7 +266,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Primary color palette: uses the brand color for default, hover, and active states</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-color</code></td><td>Alias for <code class="nds-inline-code lang-html">nds-primary</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>On-color palette for links placed on dark or branded backgrounds</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Explicitly neutral color. Use inside <code class="nds-inline-code lang-html">.nds-content-section</code> to opt out of the primary default</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Explicitly neutral color. Use inside <code class="nds-inline-code lang-html">.nds-content-section nds-demo-section</code> to opt out of the primary default</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-underline</code></td><td>Adds underline decoration to reinforce link identity in dense text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-external</code></td><td>Shows the external-link icon after the text. Applied automatically by JS to cross-domain links</td></tr>
                     </tbody>
