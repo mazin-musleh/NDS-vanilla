@@ -41,6 +41,29 @@ exclude_showcase: false
             <p class="nds-section-description nds-results-count"><span data-filter-count data-filter-target="search_results_content">0</span> Result(s) found</p>
         </div>
         <div class="nds-section-action">
+            <div class="nds-dropmenu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button">
+                    <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
+                    <span class="nds-label">Sort</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                    <div class="nds-dropmenu-scroll">
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort data-filter-target="search_results_content">
+                            <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
+                            <span class="nds-label">Most Relevant</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-dir="asc" data-filter-target="search_results_content">
+                            <i class="nds-icon nds-hgi-sort-by-up-02" aria-hidden="true"></i>
+                            <span class="nds-label">A–Z</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-dir="desc" data-filter-target="search_results_content">
+                            <i class="nds-icon nds-hgi-sort-by-down-02" aria-hidden="true"></i>
+                            <span class="nds-label">Z–A</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="nds-dropmenu nds-filter" data-filter-target="search_results_content">
                 <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -63,29 +86,6 @@ exclude_showcase: false
                                 <span class="nds-label">Filter</span>
                             </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nds-dropmenu">
-                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button">
-                    <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
-                    <span class="nds-label">Sort</span>
-                </button>
-                <div class="nds-dropmenu-menu" hidden>
-                    <div class="nds-dropmenu-scroll">
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort data-filter-target="search_results_content">
-                            <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
-                            <span class="nds-label">Most Relevant</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-dir="asc" data-filter-target="search_results_content">
-                            <i class="nds-icon nds-hgi-sort-by-up-02" aria-hidden="true"></i>
-                            <span class="nds-label">A–Z</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="title" data-sort-dir="desc" data-filter-target="search_results_content">
-                            <i class="nds-icon nds-hgi-sort-by-down-02" aria-hidden="true"></i>
-                            <span class="nds-label">Z–A</span>
-                        </button>
                     </div>
                 </div>
             </div>
