@@ -1226,6 +1226,13 @@ section.nds-content-section nds-demo-section          (responsive padding for co
                     </span>
                     <p class="nds-item-desc">Title and description sizes scale smoothly between mobile and desktop using clamp-based tokens, with every value overridable through CSS custom properties.</p>
                 </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-frame"></i>
+                        <span class="nds-label">Container Query Anchor</span>
+                    </span>
+                    <p class="nds-item-desc">The wrapper establishes a named <code class="nds-inline-code lang-html">section</code> CSS container. Nested <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">grids</a> and components respond to the actual column width, not just the viewport — correct sizing in sidebar layouts where the content column is narrower than the screen.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -1242,12 +1249,12 @@ section.nds-content-section nds-demo-section          (responsive padding for co
             <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Use sections as the <strong>primary building block</strong> for all page content. Every distinct content area on a page should be wrapped in its own <code class="nds-inline-code lang-html">nds-content-section nds-demo-section</code></li>
+                    <li>Use sections as the <strong>primary building block</strong> for all page content. Every distinct content area on a page should be wrapped in its own <code class="nds-inline-code lang-html">nds-content-section</code></li>
                     <li>Use <strong>Tier 2 (with wrapper)</strong> as the default starting point. Only drop to Tier 1 for truly minimal sections that need no action or image</li>
                     <li>Use <strong>full-width breakout</strong> for content that benefits from edge-to-edge display: carousels, <a class="nds-color" href="{{ 'components/swiper' | relative_url }}">Swiper</a> components, wide image galleries, or full-bleed media</li>
                     <li>Use <strong>horizontal layout</strong> for marketing-style sections where a text block and visual sit side by side, like feature highlights or call-to-action blocks</li>
                     <li>Do not use sections for small inline UI elements. Use <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a> for self-contained content items, or <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> for collapsible groups</li>
-                    <li>Do not nest <code class="nds-inline-code lang-html">nds-content-section nds-demo-section</code> inside another <code class="nds-inline-code lang-html">nds-content-section</code>. Use a <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a> to subdivide content within a section</li>
+                    <li>Do not nest <code class="nds-inline-code lang-html">nds-content-section</code> inside another <code class="nds-inline-code lang-html">nds-content-section</code>. Use a <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a> to subdivide content within a section</li>
                     <li>Choose <strong>float action</strong> when the action is secondary and the title area has room. Choose <strong>standard action</strong> when the action buttons are prominent and should have their own row on mobile</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-nowrap</code> to the action container only when the action is compact (a single small button) and should stay inline at all breakpoints</li>
                     <li>Use color themes sparingly. Reserve <code class="nds-inline-code lang-html">nds-primary</code> and <code class="nds-inline-code lang-html">nds-gradient-green</code> for hero-level emphasis, and <code class="nds-inline-code lang-html">nds-brand</code> or <code class="nds-inline-code lang-html">nds-ghost</code> for subtle visual separation between adjacent sections</li>

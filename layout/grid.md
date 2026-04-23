@@ -283,37 +283,41 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Breakpoints</h2>
-            <p class="nds-section-description">The grid switches between <code class="nds-inline-code lang-html">--max-*</code>, <code class="nds-inline-code lang-html">--mid-*</code>, and <code class="nds-inline-code lang-html">--min-*</code> tokens at standard design-system breakpoints. Gap values halve automatically below the large breakpoint.</p>
+            <p class="nds-section-description">The grid switches between <code class="nds-inline-code lang-html">--max-*</code>, <code class="nds-inline-code lang-html">--mid-*</code>, and <code class="nds-inline-code lang-html">--min-*</code> tokens based on two triggers: the viewport width (standard media queries) and, when placed inside a <a class="nds-color" href="{{ 'layout/section' | relative_url }}">section wrapper</a> or <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a>, the nearest container's width (CSS container queries). Whichever trigger crosses first collapses to the narrower token. Gap values halve at the mid breakpoint.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Auto-fit Breakpoints</div>
+                        <div class="demo-label">Breakpoint Triggers</div>
                     </div>
                     <div class="demo-container nds-noBg">
-                        <table class="nds-table nds-responsive nds-striped" style="--min-width:500px;">
+                        <table class="nds-table nds-responsive nds-striped" style="--min-width:640px;">
                             <thead>
                                 <tr>
-                                    <th>Viewport Width</th>
                                     <th>Active Token</th>
+                                    <th>Viewport (media query)</th>
+                                    <th>Container (nearest section/block)</th>
                                     <th>Fallback Chain</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>961px+</td>
                                     <td>--max-col / --max-track</td>
+                                    <td>961px+</td>
+                                    <td>&gt; 768px</td>
                                     <td>auto-fit</td>
                                 </tr>
                                 <tr>
-                                    <td>601px to 960px</td>
                                     <td>--mid-col / --mid-track</td>
+                                    <td>601px to 960px</td>
+                                    <td>&le; 768px</td>
                                     <td>--max-col &rarr; auto-fit</td>
                                 </tr>
                                 <tr>
-                                    <td>Below 601px</td>
                                     <td>--min-col / --min-track</td>
+                                    <td>&le; 600px</td>
+                                    <td>&le; 480px</td>
                                     <td>--mid-col &rarr; --max-col &rarr; auto-fit</td>
                                 </tr>
                             </tbody>
@@ -425,7 +429,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
                         <span class="nds-label">Responsive Column Tokens</span>
                     </span>
-                    <p class="nds-item-desc">Set different column counts per viewport with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, and <code class="nds-inline-code lang-html">--min-col</code>, each cascading to the next as a fallback.</p>
+                    <p class="nds-item-desc">Set different column counts with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, and <code class="nds-inline-code lang-html">--min-col</code>, triggered by viewport or the nearest container width, each cascading to the next as a fallback.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -439,7 +443,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-arrow-shrink"></i>
                         <span class="nds-label">Adaptive Gap Scaling</span>
                     </span>
-                    <p class="nds-item-desc">Gap and row-gap values halve automatically at tablet and mobile breakpoints, keeping spacing proportional on smaller screens.</p>
+                    <p class="nds-item-desc">Gap and row-gap values halve automatically at the mid breakpoint (tablet viewport or a 768px-wide container), keeping spacing proportional in narrower contexts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -447,6 +451,13 @@ direction: ltr
                         <span class="nds-label">Alignment Tokens</span>
                     </span>
                     <p class="nds-item-desc">Control horizontal and vertical alignment of grid items through <code class="nds-inline-code lang-html">--justify</code> and <code class="nds-inline-code lang-html">--align</code> custom properties.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-frame"></i>
+                        <span class="nds-label">Container-Aware</span>
+                    </span>
+                    <p class="nds-item-desc">When placed inside a <a class="nds-color" href="{{ 'layout/section' | relative_url }}">section wrapper</a> or <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a>, the grid responds to the nearest container's width via CSS container queries — correct column counts in sidebar layouts without viewport-only media queries.</p>
                 </div>
             </div>
         </div>

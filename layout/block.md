@@ -166,6 +166,13 @@ section.nds-content-section nds-demo-section
                     </span>
                     <p class="nds-item-desc">Drop blocks inside any section body — default, color-themed, horizontal, or full-width. Positioning and spacing stay consistent across layouts.</p>
                 </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-frame"></i>
+                        <span class="nds-label">Container Query Anchor</span>
+                    </span>
+                    <p class="nds-item-desc">Each block establishes a named <code class="nds-inline-code lang-html">block</code> CSS container. Descendants like <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">grids</a> and <a class="nds-color" href="{{ 'components/quote' | relative_url }}">quotes</a> respond to the block's actual width, not the viewport — correct sizing in multi-column layouts where the block is narrower than the section.</p>
+                </div>
             </div>
         </div>
     </div>
