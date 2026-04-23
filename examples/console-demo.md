@@ -459,16 +459,14 @@ hideFeedback: true
             <div class="nds-paged-content" style="--per-page:6;" hidden>
                 <div class="nds-grid" id="teamDirectoryGrid" data-filter-items=".nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
                     {% for user in site.data.content.users %}
-                    <div class="nds-card nds-stroke nds-page-item">
-                        <div class="nds-card-header nds-rowView">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-avatar nds-2xl">
-                                    {% if user.avatar %}
-                                    <img src="{{ user.avatar | relative_url }}" alt="{{ user.name }}" loading="lazy">
-                                    {% else %}
-                                    <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
-                                    {% endif %}
-                                </span>
+                    <div class="nds-card nds-stroke nds-rowView nds-page-item">
+                        <div class="nds-card-header">
+                            <div class="nds-avatar nds-2xl">
+                                {% if user.avatar %}
+                                <img src="{{ user.avatar | relative_url }}" alt="{{ user.name }}" loading="lazy">
+                                {% else %}
+                                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
+                                {% endif %}
                             </div>
                             {% if user.status == "active" %}
                             <span class="nds-tag nds-sm" data-status="success">
