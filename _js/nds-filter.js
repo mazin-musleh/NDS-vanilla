@@ -632,6 +632,9 @@
                 switch (action) {
                     case 'apply':
                         this.applyButton = button;
+                        // Tag as the dropmenu's primary action so Enter inside
+                        // any filter dropmenu panel triggers Apply.
+                        button.setAttribute('data-dropmenu-primary', '');
                         const labelEl = button.querySelector('.nds-label');
                         this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
 
@@ -904,8 +907,8 @@
             label.className = 'nds-label';
             label.textContent = displayLabel || value;
 
-            chip.appendChild(icon);
             chip.appendChild(label);
+            chip.appendChild(icon);
 
             chip.addEventListener('click', (e) => {
                 e.preventDefault();
