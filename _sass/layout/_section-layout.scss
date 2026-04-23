@@ -158,6 +158,9 @@
 /* ── Section wrapper ── */
 
 .nds-section-wrapper {
+    container-type: inline-size;
+    container-name: section;
+
     display: flex;
     flex-wrap: wrap;
     column-gap: var(--_section-col-gap);

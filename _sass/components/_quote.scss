@@ -98,3 +98,12 @@
         padding-inline: 0;
     }
 }
+
+@container block (width <= 480px) {
+    .nds-quote {
+        --quote-mark-size: 28px;
+        --quote-padding: var(--spacing-xl);
+        --quote-text-FS: var(--nds-text-lg-FS);
+        --quote-text-LH: var(--nds-text-lg-LH);
+    }
+}

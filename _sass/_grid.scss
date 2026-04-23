@@ -27,6 +27,7 @@
   justify-items: var(--justify, stretch);
   align-items: var(--align, start);
   width: 100%;
+  height: 100%;
 
   > * {
     max-width: 100% !important;
@@ -42,6 +43,24 @@
   }
 
   @include mobile {
+    --_cols: var(--min-col, var(--mid-col, var(--max-col, auto-fit)));
+    --_tracks: var(--min-track, var(--mid-track, var(--max-track)));
+  }
+
+  /* Container query overrides — progressive enhancement on top of media queries.
+     Unnamed @container finds the nearest container ancestor: a block when the
+     grid is inside one (e.g. inner grid), the section-wrapper otherwise (e.g.
+     outer grid directly in section-body). When no container ancestor exists
+     at all, these rules are ignored and the @media rules above remain the
+     fallback. */
+  @container (width <= 768px) {
+    --_cols: var(--mid-col, var(--max-col, auto-fit));
+    --_tracks: var(--mid-track, var(--max-track));
+    --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl))) / 2));
+    --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl))) / 2));
+  }
+
+  @container (width <= 480px) {
     --_cols: var(--min-col, var(--mid-col, var(--max-col, auto-fit)));
     --_tracks: var(--min-track, var(--mid-track, var(--max-track)));
   }

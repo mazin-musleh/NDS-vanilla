@@ -3,6 +3,9 @@
 /* ── Block: content grouping primitive ── */
 
 .nds-block {
+    container-type: inline-size;
+    container-name: block;
+
     margin-block-end: 2rem;
 
     &:last-child {
