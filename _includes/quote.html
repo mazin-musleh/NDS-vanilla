@@ -1,0 +1,24 @@
+{%- assign variant = include.variant | default: 'default' -%}
+<figure class="nds-quote{% if variant == 'transparent' %} nds-transparent{% endif %}">
+    <blockquote class="nds-quote-body"{% if include.cite %} cite="{{ include.cite }}"{% endif %}>
+        {% if include.title %}<span class="nds-quote-title">{{ include.title }}</span>{% endif %}
+        <p class="nds-quote-text">{{ include.text }}</p>
+    </blockquote>
+    {% if include.author_name %}
+    <figcaption class="nds-quote-author">
+        <div class="nds-persona nds-sm">
+            <div class="nds-avatar">
+                {% if include.author_avatar %}
+                <img src="{{ include.author_avatar }}" alt="">
+                {% else %}
+                <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
+                {% endif %}
+            </div>
+            <div class="nds-persona-info">
+                <cite class="nds-persona-name">{{ include.author_name }}</cite>
+                {% if include.author_desc %}<span class="nds-persona-desc">{{ include.author_desc }}</span>{% endif %}
+            </div>
+        </div>
+    </figcaption>
+    {% endif %}
+</figure>

@@ -1,0 +1,100 @@
+@use '../mixins' as *;
+
+/* ========================================
+   QUOTE
+   Semantic quotation block with optional title and author attribution.
+   Structure: <figure> + <blockquote> + <figcaption> with inline nds-persona.
+   ======================================== */
+
+.nds-quote {
+    --_quote-bg:          var(--quote-background-default, var(--background-card));
+    --_quote-border:      var(--quote-border, var(--border-default));
+    --_quote-radius:      var(--quote-radius, var(--radius-lg));
+    --_quote-padding:     var(--quote-padding, var(--spacing-2xl));
+    --_quote-mark-color:  var(--quote-mark-color, var(--text-primary-sa-flag));
+    --_quote-mark-size:   var(--quote-mark-size, 48px);
+    --_quote-title-FS:    var(--quote-title-FS, var(--nds-display-xs-FS));
+    --_quote-title-LH:    var(--quote-title-LH, var(--nds-display-xs-LH));
+    --_quote-title-color: var(--quote-title-color, var(--text-default));
+    --_quote-text-FS:     var(--quote-text-FS, var(--nds-text-xl-FS));
+    --_quote-text-LH:     var(--quote-text-LH, var(--nds-text-xl-LH));
+    --_quote-text-color:  var(--quote-text-color, var(--text-primary-paragraph));
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+
+    background: var(--_quote-bg);
+    border: 1px solid var(--_quote-border);
+    border-radius: var(--_quote-radius);
+    padding: calc(var(--_quote-padding) + var(--spacing-sm)) var(--_quote-padding);
+    margin: 0;
+
+    .nds-quote-body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin: 0;
+        padding-inline: calc(var(--_quote-mark-size) + var(--spacing-lg));
+        padding-block-end: var(--spacing-lg);
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            width:  var(--_quote-mark-size);
+            height: var(--_quote-mark-size);
+            background: var(--_quote-mark-color);
+            mask: var(--nds-icon-quote) center / contain no-repeat;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        // Opening mark — inline-start, bleeds into the figure's block-start padding
+        &::before {
+            inset-block-start: calc((var(--_quote-padding) - var(--spacing-xs)) *-1);
+            inset-inline-start: 0;
+        }
+
+        // Closing mark — inline-end, bleeds into the figure's block-end padding
+        &::after {
+            inset-block-end: calc((var(--_quote-padding) - var(--spacing-xs)) *-1);
+            inset-inline-end: 0;
+            transform: rotate(180deg);
+        }
+
+        @include ltr {
+            &::before { transform: scaleX(-1); }
+            &::after  { transform: scaleX(-1) rotate(180deg); }
+        }
+    }
+
+    .nds-quote-title {
+        font-size: var(--_quote-title-FS);
+        line-height: var(--_quote-title-LH);
+        font-weight: 500;
+        color: var(--_quote-title-color);
+        margin: 0;
+        text-align: start;
+    }
+
+    .nds-quote-text {
+        font-size: var(--_quote-text-FS);
+        line-height: var(--_quote-text-LH);
+        color: var(--_quote-text-color);
+        margin: 0;
+        text-align: start;
+    }
+
+    .nds-quote-author {
+        .nds-persona-name { font-style: normal; }
+    }
+
+    &.nds-transparent {
+        --_quote-bg: transparent;
+        --_quote-border: transparent;
+        padding-inline: 0;
+    }
+}

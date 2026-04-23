@@ -71,6 +71,7 @@
         initializeFormFixDropmenu();
         initializeFormFixIcon();
         initializeRatingDisableToggle();
+        initializeQuoteToggles();
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
@@ -2456,6 +2457,68 @@
         // Format and indent the HTML
         html = formatHtml(html, '    ');
         updateCodeFromHiddenCopy(codeEl, html);
+    }
+
+    function rebuildQuoteCode(demoCard) {
+        const codeEl = demoCard.querySelector('.code-example code.lang-html');
+        if (!codeEl) return;
+
+        const quote = demoCard.querySelector('.demo-container .nds-quote');
+        if (!quote) return;
+
+        const clone = quote.cloneNode(true);
+        clone.querySelectorAll('[hidden]').forEach(el => el.remove());
+
+        [clone, ...clone.querySelectorAll('*')].forEach(el => {
+            el.getAttributeNames().filter(a => a.endsWith('-initialized')).forEach(a => el.removeAttribute(a));
+        });
+
+        let html = clone.outerHTML.replace(/([\w-])=""/g, '$1');
+        html = formatHtml(html, '    ');
+        updateCodeFromHiddenCopy(codeEl, html);
+    }
+
+    function initializeQuoteToggles() {
+        document.querySelectorAll('[data-quote-bg]').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const quote = demoCard.querySelector('.demo-container .nds-quote');
+                if (!quote) return;
+
+                selectDropmenuItem(this, '[data-quote-bg]');
+                quote.classList.toggle('nds-transparent', this.dataset.quoteBg === 'transparent');
+                rebuildQuoteCode(demoCard);
+            });
+        });
+
+        document.querySelectorAll('[data-quote-toggle]').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const demoCard = this.closest('.nds-demo-card');
+                if (!demoCard) return;
+
+                const quote = demoCard.querySelector('.demo-container .nds-quote');
+                if (!quote) return;
+
+                const target = this.dataset.quoteToggle;
+                let el;
+                if (target === 'title')  el = quote.querySelector('.nds-quote-title');
+                if (target === 'avatar') el = quote.querySelector('.nds-quote-author .nds-avatar');
+                if (target === 'author') el = quote.querySelector('.nds-quote-author');
+                if (!el) return;
+
+                if (el.hasAttribute('hidden')) {
+                    el.removeAttribute('hidden');
+                    NDS.State.add(this, 'selected');
+                } else {
+                    el.setAttribute('hidden', '');
+                    NDS.State.remove(this, 'selected');
+                }
+
+                rebuildQuoteCode(demoCard);
+            });
+        });
     }
 
     // Format raw HTML string with consistent indentation

@@ -11,8 +11,7 @@ direction: ltr
 ---
 
 
-<section id="compliance" class="nds-content-section">
-
+<section class="nds-content-section">
     <div class="nds-section-body">
 
     </div>

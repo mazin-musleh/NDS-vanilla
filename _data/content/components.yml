@@ -155,6 +155,13 @@
   tags: ["CSS"]
   url: "/components/progress.html"
 
+- title: "Quote"
+  description: "Semantic quotation block with optional title and author attribution"
+  icon: ''
+  category: "Content"
+  tags: ["CSS"]
+  url: "/components/quote.html"
+
 - title: "Rating"
   description: "Star-based display and input for user ratings"
   icon: '<i class="hgi hgi-stroke hgi-star"></i>'
