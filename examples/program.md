@@ -201,9 +201,9 @@ layout_class: nds-cardView
                     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
             </div>
-            <div class="nds-tab-content">
+            <div class="nds-tab-content nds-card nds-shadow">
                 <!-- Objectives Tab -->
-                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-objectives"
+                <div class="nds-tab-panel" role="tabpanel" id="panel-objectives"
                     aria-labelledby="tab-objectives" tabindex="0">
                     <ol>
                         <li>Provide students with a solid foundation in mathematics, statistics, and computer science necessary for AI research and development.</li>
@@ -216,7 +216,7 @@ layout_class: nds-cardView
                 </div>
 
                 <!-- Learning Outcomes Tab -->
-                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-outcomes"
+                <div class="nds-tab-panel" role="tabpanel" id="panel-outcomes"
                     aria-labelledby="tab-outcomes" aria-hidden="true" tabindex="-1" hidden>
                     <ul>
                         <li>Apply mathematical and computational foundations to model and solve AI problems.</li>
@@ -230,7 +230,7 @@ layout_class: nds-cardView
                 </div>
 
                 <!-- Admission Requirements Tab -->
-                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-requirements"
+                <div class="nds-tab-panel" role="tabpanel" id="panel-requirements"
                     aria-labelledby="tab-requirements" aria-hidden="true" tabindex="-1" hidden>
                     <ol>
                         <li>High school diploma (Science track) or equivalent with a minimum GPA of 90%.</li>
@@ -243,7 +243,7 @@ layout_class: nds-cardView
                 </div>
 
                 <!-- Study Plan Tab -->
-                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-curriculum"
+                <div class="nds-tab-panel" role="tabpanel" id="panel-curriculum"
                     aria-labelledby="tab-curriculum" aria-hidden="true" tabindex="-1" hidden>
                     <table class="nds-table nds-responsive nds-center">
                         <thead>
@@ -308,7 +308,7 @@ layout_class: nds-cardView
                 </div>
 
                 <!-- Course Descriptions Tab -->
-                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-description"
+                <div class="nds-tab-panel" role="tabpanel" id="panel-description"
                     aria-labelledby="tab-description" aria-hidden="true" tabindex="-1" hidden>
                     <table class="nds-table nds-responsive nds-center">
                         <thead>
