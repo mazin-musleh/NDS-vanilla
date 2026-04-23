@@ -41,9 +41,16 @@
         // UTILITY METHODS
         // ==============================================
 
-        /** Check if an element is a text input */
+        /** Check if an element is a text-entry input that consumes arrow/Home/End keys.
+         *  Checkbox/radio/button inputs don't use these for editing, so they should
+         *  fall through to menu navigation. */
         isInputElement(el) {
-            return el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA');
+            if (!el) return false;
+            if (el.tagName === 'TEXTAREA') return true;
+            if (el.tagName !== 'INPUT') return false;
+            const textLike = ['text', 'search', 'tel', 'url', 'email', 'password',
+                'number', 'date', 'datetime-local', 'month', 'time', 'week', 'range'];
+            return textLike.includes(el.type);
         }
 
         /** Get all focusable elements in the menu in DOM order */
@@ -59,11 +66,12 @@
                 const isItem = (tag === 'BUTTON' || tag === 'A')
                     && el.classList.contains('nds-dropmenu-item') && !el.disabled;
 
-                if (!el.closest('.nds-form-action')) {
-                    if (isInput || isItem) {
-                        focusable.push(el);
-                        if (isItem) return; // Don't traverse children of items
-                    }
+                // Scope is already the menu subtree (walk starts at this.menu.children
+                // and only recurses downward), so any input or dropmenu-item we reach
+                // is by definition inside the menu. No external-boundary check needed.
+                if (isInput || isItem) {
+                    focusable.push(el);
+                    if (isItem) return; // Don't traverse children of items
                 }
 
                 Array.from(el.children).forEach(walk);
@@ -311,6 +319,23 @@
             const elements = this.getFocusableElements();
             const currentIndex = this.resolveCurrentIndex(elements);
             const isInput = this.isInputElement(document.activeElement);
+
+            // Enter inside the menu triggers the primary action (if tagged).
+            // Buttons/anchors keep native Enter-to-click, and text inputs
+            // keep Enter for their own submit handlers.
+            if (e.key === 'Enter') {
+                const tag = e.target.tagName;
+                const isActionable = tag === 'BUTTON' || tag === 'A';
+                const isTextInput = isInput && !e.altKey;
+                if (!isActionable && !isTextInput) {
+                    const primary = this.menu.querySelector('[data-dropmenu-primary]:not(:disabled)');
+                    if (primary) {
+                        e.preventDefault();
+                        primary.click();
+                        return;
+                    }
+                }
+            }
 
             switch (e.key) {
                 case 'ArrowDown':
