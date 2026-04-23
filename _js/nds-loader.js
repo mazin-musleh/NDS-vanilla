@@ -169,6 +169,11 @@
             init: () => NDS.Dropmenu?.init?.(),
         },
         {
+            name: 'multiselect',
+            selector: '.nds-multiselect',
+            init: () => NDS.Multiselect?.init?.(),
+        },
+        {
             name: 'autocomplete',
             selector: '.nds-form-container[data-url]',
             init: () => NDS.Autocomplete?.init?.(),

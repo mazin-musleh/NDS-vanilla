@@ -1,0 +1,69 @@
+/**
+ * NDS Multiselect Component
+ * Multi-option select built on the prefix-dropmenu slot of .nds-form-control.
+ * The dropmenu hosts grouped checkboxes + apply/reset; selected values mirror
+ * back into the form-control as removable .nds-chip elements.
+ */
+
+@use '../mixins' as *;
+
+.nds-multiselect {
+
+  // ============================================================
+  // FORM-CONTROL: let chips wrap; prefix stays at fixed height
+  // ============================================================
+  // Base .nds-form-control fixes height to --_input-size (40px). When chips
+  // accumulate they need to wrap onto new rows, so we relax the height to
+  // grow with content while keeping the input-size as a floor.
+  > .nds-form-control {
+    height: auto;
+    min-height: var(--_input-size);
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: var(--spacing-sm);
+    cursor: text;
+  }
+
+  // Pin the prefix dropmenu (and its trigger button) to the input height so
+  // it never stretches when the control grows vertically with chip rows.
+  > .nds-form-control > .nds-form-action.nds-prefix {
+    align-self: flex-start;
+    height: stretch;
+  }
+
+  // ============================================================
+  // CHIP TRACK INSIDE THE FORM-CONTROL
+  // ============================================================
+  &-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    flex: 1 1 0;
+    min-width: 0;
+
+    // Empty-state collapse: when no chips, take no horizontal space so the
+    // placeholder span (sibling) sits flush after the prefix.
+    &:empty {
+      display: none;
+    }
+  }
+
+  // Placeholder shows when no values are applied; hidden once filled.
+  &-placeholder {
+    color: var(--form-field-text-placeholder);
+    font-size: var(--nds-text-sm-FS);
+    align-self: center;
+    pointer-events: none;
+  }
+
+  &[data-state~="filled"] .nds-multiselect-placeholder {
+    display: none;
+  }
+
+  // Hidden inputs container: invisible, never affects layout.
+  &-values {
+    display: none !important;
+  }
+}
