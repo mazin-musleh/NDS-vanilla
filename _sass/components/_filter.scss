@@ -117,6 +117,10 @@
         gap: var(--spacing-lg);
         width: 100%;
 
+        .nds-form-control{
+            flex: 1;
+        }
+
         @include mobile {
             gap: var(--spacing-md);
 
