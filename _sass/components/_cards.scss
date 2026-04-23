@@ -89,6 +89,13 @@
 
   &.nds-rowView {
     flex-direction: row;
+
+    .nds-card-header {
+      flex: 0 1;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      justify-content: center;
+    }
   }
 
   // Color fill variant (tinted background)
@@ -131,11 +138,9 @@
   .nds-card-header:not([hidden]) {
     position: relative;
     display: flex;
-    flex-direction: column;
+    gap: var(--spacing-md);
 
     &:is(:has(.nds-close), .nds-rowView) {
-
-      gap: var(--_card-gap);
       width: 100%;
       flex-direction: row;
       justify-content: space-between;
