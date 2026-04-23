@@ -47,6 +47,15 @@
 
     &:not(:disabled) { cursor: pointer; }
 
+    // Custom keyboard focus ring — matches checkbox treatment. The tile
+    // is drawn by ::after, so a circular outline on the input box wraps
+    // it cleanly. :focus-visible keeps it keyboard-only.
+    &:focus-visible {
+        outline: 2px solid var(--colors-base-black);
+        outline-offset: 2px;
+        border-radius: 50%;
+    }
+
     // Single-pseudo tile. Unchecked: flat disc with a 1px outer outline.
     // Checked: 3-band ring via `border: Npx white` creating the gap.
     &::after {

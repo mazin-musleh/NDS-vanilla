@@ -47,6 +47,15 @@
 
     &:not(:disabled) { cursor: pointer; }
 
+    // Custom keyboard focus ring — the tile is drawn by ::before, so the
+    // native outline on the input box surrounds the tile cleanly with a
+    // small offset. :focus-visible keeps it keyboard-only.
+    &:focus-visible {
+        outline: 2px solid var(--colors-base-black);
+        outline-offset: 2px;
+        border-radius: var(--radius-xs);
+    }
+
     &::before,
     &::after {
         content: "";

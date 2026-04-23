@@ -223,7 +223,12 @@ fieldset {
     :is(input, textarea, select) {
         /* min-height: var(--_input-size); */
 
-        :not(:disabled) {
+        // Strip the browser default outline on text-entry inputs — focus
+        // affordance is on the form-control border/underline instead.
+        // Exclude checkbox/radio: they use appearance:none so the input
+        // IS the visual element and needs its own :focus-visible ring
+        // (see _checkbox.scss / _radio.scss).
+        &:not(:disabled):not([type="checkbox"]):not([type="radio"]) {
             color: var(--form-field-text-focused);
             outline: unset !important;
             outline-offset: unset !important;
@@ -293,9 +298,6 @@ fieldset {
         outline: 0px;
         height: 100%;
         width: 100%;
-        outline: unset !important;
-        outline-offset: unset !important;
-        box-shadow: unset !important;
 
         &:focus {
             color: var(--form-field-text-focused);
@@ -389,7 +391,7 @@ fieldset {
         gap: var(--spacing-sm);
         flex-direction: row;
         margin-inline-end: calc(var(--spacing-md) * -1);
-        height: 100%;
+        height: stretch;
 
         &:first-child {
             margin-inline-end: unset;
@@ -424,7 +426,7 @@ fieldset {
             gap: 0;
             white-space: nowrap;
 
-            >*:not([hidden]) {
+            >*:not([hidden]):not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
                 --btn-radius: 0 !important;
 
                 &:not(:first-child)::before {
