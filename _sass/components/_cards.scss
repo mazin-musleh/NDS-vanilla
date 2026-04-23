@@ -70,7 +70,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--_card-gap);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
   // Shadow variant
