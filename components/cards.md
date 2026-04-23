@@ -429,7 +429,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2; width: fit-content;">
+                            <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;">
                                 <div class="nds-card nds-stroke nds-statistic">
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
@@ -513,7 +513,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2; width: fit-content;"&gt;
+&lt;div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;"&gt;
     &lt;div class="nds-card nds-stroke nds-statistic"&gt;
         &lt;div class="nds-card-header"&gt;
             &lt;div class="nds-card-featured-icon"&gt;
