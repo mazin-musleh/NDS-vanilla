@@ -261,6 +261,13 @@
   tags: ["JS", "CSS"]
   url: "/components/autocomplete.html"
 
+- title: "Multiselect"
+  description: "Multi-option select with grouped checkboxes, draft/apply commit, and removable chips"
+  icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/multiselect.html"
+
 - title: "Filter"
   description: "Applied filters with search, URL sync, and remote data"
   icon: '<i class="hgi hgi-stroke hgi-filter"></i>'
