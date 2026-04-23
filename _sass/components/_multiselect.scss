@@ -24,21 +24,10 @@
     cursor: text;
   }
 
-  // Pin the prefix dropmenu (and its trigger button) to the input height so
-  // it never stretches when the control grows vertically with chip rows.
-  > .nds-form-control > .nds-form-action.nds-prefix {
-    align-self: flex-start;
-    height: stretch;
-  }
-
   // ============================================================
   // CHIP TRACK INSIDE THE FORM-CONTROL
   // ============================================================
   &-chips {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--spacing-sm);
     padding: var(--spacing-md);
     flex: 1 1 0;
     min-width: 0;

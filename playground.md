@@ -60,7 +60,7 @@ direction: ltr
                     </div>
                     <div class="nds-form-control">
                         <div class="nds-form-action nds-prefix nds-dropmenu" data-multiselect-dropmenu>
-                            <button class="nds-btn nds-subtle nds-dropmenu-trigger" type="button">
+                            <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger" type="button">
                                 <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                                 <span class="nds-label">Select</span>
                             </button>
@@ -160,6 +160,7 @@ direction: ltr
                         <div class="nds-chips nds-multiselect-chips" data-multiselect-chips></div>
                         <span class="nds-multiselect-placeholder">Select options&hellip;</span>
                     </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
                 <button type="submit" class="nds-btn nds-primary" style="margin-top: 1rem;">
                     <span class="nds-label">Submit (logs to console)</span>

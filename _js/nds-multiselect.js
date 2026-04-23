@@ -6,7 +6,7 @@
  *   <div class="nds-form-container nds-multiselect" data-multiselect-name="...">
  *     <div class="nds-form-control">
  *       <div class="nds-form-action nds-prefix nds-dropmenu" data-multiselect-dropmenu>
- *         <button class="nds-dropmenu-trigger">…</button>
+ *         <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">…</button>
  *         <div class="nds-dropmenu-menu" hidden>
  *           <div class="nds-dropmenu-scroll">
  *             <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-no-auto-close>
@@ -37,6 +37,7 @@
  *       <div class="nds-chips nds-multiselect-chips" data-multiselect-chips></div>
  *       <span class="nds-multiselect-placeholder">Select options…</span>
  *     </div>
+ *     <div class="nds-form-footer" data-feedback-target hidden></div>
  *   </div>
  *
  * Selection semantics (filter-dropmenu pattern):
@@ -87,6 +88,7 @@
         }
 
         init() {
+            if (!this.dropmenu.ndsDropmenu) NDS.Dropmenu?.create?.(this.dropmenu);
             this.ensureValuesContainer();
             this.seedFromMarkup();
             this.bindEvents();
@@ -153,7 +155,42 @@
                 cb.addEventListener('change', () => this.handleCheckboxChange(cb));
             });
 
+            // Click anywhere on the form-container opens the dropmenu, so
+            // the whole field reads as one interactive surface. Exclusions:
+            //   - the dropmenu itself (trigger + panel drive their own logic)
+            //   - chips (own click removes the value, stopPropagation belt+braces)
+            //   - when the panel is already open (avoid toggle-closing on stray clicks)
+            // stopPropagation is needed because the dropmenu's document-level
+            // outside-click handler would otherwise see this click bubble past
+            // the dropmenu (its host form-container isn't inside this.dropmenu)
+            // and immediately close the menu we just opened.
+            const isDelegatedSurface = (target) =>
+                !this.dropmenu.contains(target) && !target.closest('.nds-chip');
+
+            this.root.addEventListener('click', (e) => {
+                if (!isDelegatedSurface(e.target)) return;
+                if (this.isOpen()) return;
+                e.stopPropagation();
+                this.trigger?.click();
+            });
+
+            // Mirror the trigger's press feedback on the whole surface so
+            // holding the mouse down anywhere on the field feels the same
+            // as pressing the trigger button.
+            this.root.addEventListener('mousedown', (e) => {
+                if (!isDelegatedSurface(e.target)) return;
+                NDS.State.add(this.root, 'active');
+            });
+            ['mouseup', 'mouseleave'].forEach(evt => {
+                this.root.addEventListener(evt, () => {
+                    NDS.State.remove(this.root, 'active');
+                });
+            });
+
             if (this.applyBtn) {
+                // Tag as the dropmenu's primary action so Enter inside the
+                // panel triggers Apply (generic dropmenu behavior).
+                this.applyBtn.setAttribute('data-dropmenu-primary', '');
                 this.applyBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.apply();
@@ -247,7 +284,7 @@
             label.className = 'nds-label';
             label.textContent = this.labelFor(value);
 
-            chip.append(icon, label);
+            chip.append(label, icon);
             chip.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
