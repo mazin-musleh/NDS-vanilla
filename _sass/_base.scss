@@ -134,56 +134,6 @@ body.nds-minimal[style*="--bg-img"] {
 }
 
 /* ========================================
-   USER CARD
-   ======================================== */
-
-.nds-user-card {
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-lg);
-
-    .nds-user-info {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-xs);
-        text-align: start;
-
-        &.nds-center {
-            align-items: center;
-            text-align: center;
-        }
-
-        .nds-user-name {
-            font-size: var(--nds-text-md-FS);
-            line-height: var(--nds-text-md-LH);
-            font-weight: 600;
-        }
-
-        :is(.nds-user-role, .nds-user-email) {
-            font-size: var(--nds-text-sm-FS);
-            line-height: var(--nds-text-sm-LH);
-            color: var(--text-primary-paragraph);
-        }
-
-    }
-
-    .nds-divider{
-            flex: 1 100%;
-    }
-    .nds-user-action {
-        flex: 1 100%;
-        display: flex;
-        flex-wrap: wrap;
-
-        >.nds-btn {
-            --btn-width: fit-content;
-        }
-
-    }
-}
-
-/* ========================================
    LAST EDIT
    ======================================== */
 

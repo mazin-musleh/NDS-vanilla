@@ -141,6 +141,13 @@
   tags: ["JS", "CSS"]
   url: "/components/pagination.html"
 
+- title: "Persona"
+  description: "Identity block with avatar, name, role, and optional action row"
+  icon: '<i class="hgi hgi-stroke hgi-profile"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/persona.html"
+
 - title: "Progress"
   description: "Visual indicators for task completion and loading"
   icon: '<i class="hgi hgi-stroke hgi-loading-01"></i>'

@@ -1,0 +1,105 @@
+@use '../mixins' as *;
+
+/* ========================================
+   PERSONA
+   Identity block — avatar + name / role / desc + optional action row.
+   Used in the UI shell user-menu dropdown and as a standalone identity card.
+   ======================================== */
+
+.nds-persona {
+    // Private custom properties with public override capability
+    --_name-FS: var(--persona-name-FS, var(--nds-text-xl-FS));
+    --_name-LH: var(--persona-name-LH, var(--nds-text-xl-LH));
+    --_name-color: var(--persona-name-color, var(--text-default));
+    --_role-FS: var(--persona-role-FS, var(--nds-text-lg-FS));
+    --_role-LH: var(--persona-role-LH, var(--nds-text-lg-LH));
+    --_role-color: var(--persona-role-color, var(--text-primary-paragraph));
+    --_desc-FS: var(--persona-desc-FS, var(--nds-text-md-FS));
+    --_desc-LH: var(--persona-desc-LH, var(--nds-text-md-LH));
+    --_desc-color: var(--persona-desc-color, var(--text-secondary-paragraph));
+
+    --avatar-size: 80px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+
+    .nds-persona-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        text-align: start;
+    }
+
+    .nds-persona-name {
+        font-size: var(--_name-FS);
+        line-height: var(--_name-LH);
+        color: var(--_name-color);
+        font-weight: 600;
+    }
+
+    .nds-persona-role {
+        font-size: var(--_role-FS);
+        line-height: var(--_role-LH);
+        color: var(--_role-color);
+    }
+
+    .nds-persona-desc {
+        font-size: var(--_desc-FS);
+        line-height: var(--_desc-LH);
+        color: var(--_desc-color);
+    }
+
+    .nds-divider {
+        flex: 1 100%;
+        align-self: stretch;
+    }
+
+    .nds-persona-action {
+        flex: 1 100%;
+        display: flex;
+        flex-wrap: wrap;
+
+        > .nds-btn {
+            --btn-width: fit-content;
+        }
+    }
+
+    &.nds-colView {
+        flex-direction: column;
+    }
+
+    &.nds-center {
+        flex-direction: column;
+        align-items: center;
+
+        .nds-persona-info {
+            align-items: center;
+            text-align: center;
+        }
+    }
+
+    // ==============================================
+    // SIZE VARIATIONS
+    // ==============================================
+
+    &.nds-md {
+        --avatar-size: 64px;
+        --persona-name-FS: var(--nds-text-lg-FS);
+        --persona-name-LH: var(--nds-text-lg-LH);
+        --persona-role-FS: var(--nds-text-md-FS);
+        --persona-role-LH: var(--nds-text-md-LH);
+        --persona-desc-FS: var(--nds-text-sm-FS);
+        --persona-desc-LH: var(--nds-text-sm-LH);
+    }
+
+    &.nds-sm {
+        --avatar-size: 48px;
+        --persona-name-FS: var(--nds-text-md-FS);
+        --persona-name-LH: var(--nds-text-md-LH);
+        --persona-role-FS: var(--nds-text-sm-FS);
+        --persona-role-LH: var(--nds-text-sm-LH);
+        --persona-desc-FS: var(--nds-text-xs-FS);
+        --persona-desc-LH: var(--nds-text-xs-LH);
+    }
+}
