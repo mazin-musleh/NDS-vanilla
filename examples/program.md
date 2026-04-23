@@ -11,12 +11,12 @@ layout_class: nds-cardView
 
 <!--Section 1: About the Program - Expandable Content -->
 <section id="aboutProgram" class="nds-content-section">
-    <div class="nds-section-head">
-        <h2 class="nds-section-title">About the Program</h2>
-    </div>
-    <div class="nds-section-body nds-expandable">
-        <div class="nds-block nds-expandable-content" style="--max-height:300px">
-            <div class="nds-block-item">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">About the Program</h2>
+        </div>
+        <div class="nds-section-body nds-expandable">
+            <div class="nds-block nds-expandable-content" style="--max-height:300px">
                 <p>The Bachelor of Science in Artificial Intelligence program equips students with a strong foundation in computer science, mathematics, and the core disciplines of AI including machine learning, deep learning, natural language processing, and computer vision. The program emphasizes both theoretical understanding and practical application, preparing graduates for careers in industry, research, and entrepreneurship.</p>
                 <p>Students engage in hands-on projects, internships, and a capstone research experience. The curriculum is designed in alignment with international standards and industry needs, ensuring graduates are prepared to contribute to Saudi Arabia's Vision 2030 digital transformation goals and the global AI ecosystem.</p>
             </div>
@@ -26,140 +26,144 @@ layout_class: nds-cardView
 
 <!--Section 2: Program Description -->
 <section id="programDescription" class="nds-content-section">
-    <div class="nds-section-head">
-        <h2 class="nds-section-title">Program Details</h2>
-    </div>
-    <div class="nds-section-body">
-        <div class="nds-block nds-grid" style="--mid-track: 1fr;">
-            <div class="nds-block-item">
-                <dl class="nds-definition-list nds-divided">
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-school"></i>
-                            <span class="nds-label">College:</span>
-                        </dt>
-                        <dd>College of Computer and Information Sciences</dd>
-                    </div>
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Program Details</h2>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-grid" style="--mid-track: 1fr;">
+                <div class="nds-block">
+                    <dl class="nds-definition-list nds-divided">
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-school"></i>
+                                <span class="nds-label">College:</span>
+                            </dt>
+                            <dd>College of Computer and Information Sciences</dd>
+                        </div>
 
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-building-02"></i>
-                            <span class="nds-label">Department:</span>
-                        </dt>
-                        <dd>Department of Artificial Intelligence</dd>
-                    </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-building-02"></i>
+                                <span class="nds-label">Department:</span>
+                            </dt>
+                            <dd>Department of Artificial Intelligence</dd>
+                        </div>
 
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-book-open-02"></i>
-                            <span class="nds-label">Specialization:</span>
-                        </dt>
-                        <dd>Artificial Intelligence and Machine Learning</dd>
-                    </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-book-open-02"></i>
+                                <span class="nds-label">Specialization:</span>
+                            </dt>
+                            <dd>Artificial Intelligence and Machine Learning</dd>
+                        </div>
 
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-layers-01"></i>
-                            <span class="nds-label">Degree:</span>
-                        </dt>
-                        <dd>Bachelor of Science</dd>
-                    </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-layers-01"></i>
+                                <span class="nds-label">Degree:</span>
+                            </dt>
+                            <dd>Bachelor of Science</dd>
+                        </div>
 
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-mentoring"></i>
-                            <span class="nds-label">Study Mode:</span>
-                        </dt>
-                        <dd>On-Campus</dd>
-                    </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-mentoring"></i>
+                                <span class="nds-label">Study Mode:</span>
+                            </dt>
+                            <dd>On-Campus</dd>
+                        </div>
 
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                            <span class="nds-label">Study Type:</span>
-                        </dt>
-                        <dd>Full-Time</dd>
-                    </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
+                                <span class="nds-label">Study Type:</span>
+                            </dt>
+                            <dd>Full-Time</dd>
+                        </div>
 
-                    <div class="nds-definition-item">
-                        <dt>
-                            <i class="hgi hgi-stroke hgi-file-02"></i>
-                            <span class="nds-label">Program Specification</span>
-                        </dt>
-                        <dd>
-                            <a class="nds-btn nds-secondary-outline nds-md" href="#" target="_blank"
-                                aria-label="Download program specification"><i class="hgi hgi-stroke hgi-pdf-01"></i>
-                            </a>
-                        </dd>
-                    </div>
-                </dl>
-            </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="hgi hgi-stroke hgi-file-02"></i>
+                                <span class="nds-label">Program Specification</span>
+                            </dt>
+                            <dd>
+                                <a class="nds-btn nds-secondary-outline nds-md" href="#" target="_blank"
+                                    aria-label="Download program specification"><i class="hgi hgi-stroke hgi-pdf-01"></i>
+                                </a>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
 
-            <div class="program-overview-cards nds-block-item nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--min-width: 100px;--gap: 12px;">
-                    <div class="nds-card nds-stroke nds-statistic">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
-                                </span>
+                <div class="nds-block">
+                    <div class="program-overview-cards nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--min-width: 100px;--gap: 12px;">
+                        <div class="nds-card nds-stroke nds-statistic">
+                            <div class="nds-card-header">
+                                <div class="nds-card-featured-icon">
+                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                        <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-number nds-counter-value nds-number-format nds-md"
+                                        data-target="132">0</span>
+                                    <p class="nds-card-description">Credit Hours</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                    data-target="132">0</span>
-                                <p class="nds-card-description">Credit Hours</p>
+                        <div class="nds-card nds-stroke nds-statistic">
+                            <div class="nds-card-header">
+                                <div class="nds-card-featured-icon">
+                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                        <i class="hgi hgi-stroke hgi-certificate-01"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-number nds-counter-value nds-number-format nds-md"
+                                        data-target="4">0</span>
+                                    <p class="nds-card-description">Years</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-card nds-stroke nds-statistic">
+                            <div class="nds-card-header">
+                                <div class="nds-card-featured-icon">
+                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                        <i class="hgi hgi-stroke hgi-layers-01"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-number nds-counter-value nds-number-format nds-md"
+                                        data-target="8">0</span>
+                                    <p class="nds-card-description">Semesters</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-card nds-stroke nds-statistic">
+                            <div class="nds-card-header">
+                                <div class="nds-card-featured-icon">
+                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                        <i class="hgi hgi-stroke hgi-calendar-02"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="nds-card-content">
+                                <div class="nds-card-text">
+                                    <span class="nds-card-number nds-counter-value nds-number-format nds-md"
+                                        data-target="16">0</span>
+                                    <p class="nds-card-description">Weeks per Semester</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="nds-card nds-stroke nds-statistic">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-certificate-01"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                    data-target="4">0</span>
-                                <p class="nds-card-description">Years</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-card nds-stroke nds-statistic">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-layers-01"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                    data-target="8">0</span>
-                                <p class="nds-card-description">Semesters</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nds-card nds-stroke nds-statistic">
-                        <div class="nds-card-header">
-                            <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-calendar-02"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="nds-card-content">
-                            <div class="nds-card-text">
-                                <span class="nds-card-number nds-counter-value nds-number-format nds-md"
-                                    data-target="16">0</span>
-                                <p class="nds-card-description">Weeks per Semester</p>
-                            </div>
-                        </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -167,8 +171,9 @@ layout_class: nds-cardView
 
 <!--Section 3: Tabs (Objectives, Requirements, Curriculum, Course Descriptions) -->
 <section id="programDetails" class="nds-content-section nds-ghost">
-    <div class="nds-section-body">
-        <div class="nds-tabs nds-divided nds-lg" id="programTabs">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-body">
+            <div class="nds-tabs nds-divided nds-lg" id="programTabs">
             <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Program details navigation">
                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -510,5 +515,6 @@ layout_class: nds-cardView
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
