@@ -3,7 +3,7 @@ layout: page
 title: Flex
 hero_title: Flex - National Design System
 hero_description: A lightweight CSS-only utility for quick alignment, direction, and wrapping fixes on ad-hoc elements, with inline custom-property overrides for gap, justify-content, and align-items.
-breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

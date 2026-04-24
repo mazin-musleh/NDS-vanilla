@@ -3,7 +3,7 @@ layout: page
 title: Grid
 hero_title: Grid System - National Design System
 hero_description: A responsive CSS grid for arranging content into auto-fit or explicit column layouts, with per-breakpoint column counts, custom track templates, and adaptive gap scaling.
-breadcrumb: [["Layout", "/layout"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

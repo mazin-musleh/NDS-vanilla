@@ -3,7 +3,7 @@ layout: page
 title: Truncate Text
 hero_title: Truncate Text - National Design System
 hero_description: A single-class CSS utility that clips overflowing text with an ellipsis, supporting both single-line and configurable multi-line truncation on any element
-breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

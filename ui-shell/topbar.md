@@ -3,7 +3,7 @@ layout: page
 title: Top Bar
 hero_title: Top Bar - National Design System
 hero_description: A slim utility bar above the main navigation that establishes government identity through the DGA digital stamp, offers a theme toggle, and hosts optional live widgets for date, clock, city, and weather.
-breadcrumb: [["UI Shell", "/ui-shell"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

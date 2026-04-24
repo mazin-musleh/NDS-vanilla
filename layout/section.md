@@ -3,7 +3,7 @@ layout: page
 title: Section
 hero_title: Section Layout - National Design System
 hero_description: A structured container for organizing page content into titled blocks with optional actions, images, color themes, and full-width breakout areas.
-breadcrumb: [["Layout", "/layout"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

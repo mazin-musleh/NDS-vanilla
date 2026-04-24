@@ -3,7 +3,7 @@ layout: page
 title: Copy
 hero_title: Copy - National Design System
 hero_description: A clipboard utility that turns any button into a one-click copy control with checkmark feedback, visible label swap, and screen reader announcement
-breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

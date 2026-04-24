@@ -3,7 +3,7 @@ layout: page
 title: Hero
 hero_title: Hero - National Design System
 hero_description: Full-width page banners for home page sliders and compact sub-page headers, providing a visually consistent entry point that adapts to every level of site hierarchy.
-breadcrumb: [["UI Shell", "/ui-shell"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

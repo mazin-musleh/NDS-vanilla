@@ -3,7 +3,7 @@ layout: page
 title: Side Menu
 hero_title: Side Menu - National Design System
 hero_description: A persistent sidebar for navigating sections and pages within a site, with collapsible accordion groups, responsive slide-in and top dropdown modes, and active page tracking.
-breadcrumb: [["UI Shell", "/ui-shell"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

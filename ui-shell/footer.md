@@ -3,7 +3,7 @@ layout: page
 title: Footer
 hero_title: Footer - National Design System
 hero_description: A site-wide footer that organizes secondary navigation, contact links, social media, mobile app downloads, legal notices, and partner logos into a responsive multi-column layout.
-breadcrumb: [["UI Shell", "/ui-shell"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

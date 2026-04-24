@@ -3,7 +3,7 @@ layout: page
 title: Side Info
 hero_title: Side Info - National Design System
 hero_description: A companion column placed alongside the main article for service details, progress, tables of contents, and other context, with sticky positioning, size variants, and an opt-in alignment that lifts the column into the hero's reserved aside slot.
-breadcrumb: [["UI Shell", "/ui-shell"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

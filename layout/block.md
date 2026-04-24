@@ -3,7 +3,7 @@ layout: page
 title: Block
 hero_title: Block Layout - National Design System
 hero_description: A lightweight content grouping primitive used inside a section body to separate titled sub-groups of paragraphs, lists, tables, and other flow content without starting a new section.
-breadcrumb: [["Layout", "/layout"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

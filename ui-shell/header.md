@@ -3,7 +3,7 @@ layout: page
 title: Header
 hero_title: Header - National Design System
 hero_description: The site header shell combines the top bar and the main navigation into a single responsive region that handles government branding, primary page links, dropdown menus, and secondary utility actions across all screen sizes.
-breadcrumb: [["UI Shell", "/ui-shell"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---

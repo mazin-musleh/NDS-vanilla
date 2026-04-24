@@ -3,7 +3,7 @@ layout: page
 title: Saudi Cities
 hero_title: Saudi Cities Dataset - National Design System
 hero_description: Bundled JSON dataset of 132 Saudi Arabian cities across all 13 administrative regions, with bilingual (English + Arabic) names. Drop into autocomplete inputs, region selectors, or any address flow.
-breadcrumb: [["Utilities", "/utilities?category=Utilities"]]
+breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
