@@ -60,17 +60,20 @@
         }
     }
 
-    // Bind toggle buttons and switch checkboxes via delegation
+    // Button toggles — click delegation
     document.addEventListener('click', e => {
         const el = e.target.closest(TOGGLE_SEL);
+        if (!el || el.querySelector('.nds-switch-input')) return;
+        toggle(el);
+    });
+
+    // Switch toggles — 'change' fires for all paths: track click (Utils.triggerEvents),
+    // label click (native browser toggle), and keyboard (keydown handler in nds-forms.js).
+    document.addEventListener('change', e => {
+        if (!e.target.matches('.nds-switch-input')) return;
+        const el = e.target.closest(TOGGLE_SEL);
         if (!el) return;
-        // If it's a switch with a checkbox, the checkbox already toggled — read its state
-        const cb = el.querySelector('.nds-switch-input');
-        if (cb) {
-            setTheme(cb.checked ? 'dark' : 'light', el);
-        } else {
-            toggle(el);
-        }
+        setTheme(e.target.checked ? 'dark' : 'light', el);
     });
 
     // Init: sync toggle button state with current theme.
