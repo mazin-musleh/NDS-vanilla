@@ -152,6 +152,9 @@
         - label: "TOC"
           url: "/components/toc"
           href: "/components/toc.html"
+        - label: "Tooltip"
+          url: "/components/tooltip"
+          href: "/components/tooltip.html"
     - label: "Forms"
       is_group: true
       children:

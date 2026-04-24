@@ -169,6 +169,11 @@
             init: () => NDS.Dropmenu?.init?.(),
         },
         {
+            name: 'tooltip',
+            selector: '.nds-tooltip',
+            init: () => NDS.Tooltip?.init?.(),
+        },
+        {
             name: 'multiselect',
             selector: '.nds-multiselect',
             init: () => NDS.Multiselect?.init?.(),

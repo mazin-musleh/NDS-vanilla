@@ -211,6 +211,13 @@
   tags: ["JS", "CSS", "API"]
   url: "/components/toc.html"
 
+- title: "Tooltip"
+  description: "Click-activated balloon for contextual help next to a term or field"
+  icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
+  category: "UI"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/tooltip.html"
+
 # Form Components
 - title: "Text Inputs"
   description: "Single-line fields with labels, icons, and validation"

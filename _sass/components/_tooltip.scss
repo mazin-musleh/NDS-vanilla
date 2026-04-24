@@ -1,0 +1,183 @@
+/**
+ * NDS Tooltip Component
+ * Floating balloon with a title + body (and optional leading icon),
+ * anchored to a trigger via a visible arrow. Viewport-aware fixed
+ * positioning with flip-up and horizontal clamping.
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// 1. CONFIGURATION
+// ==============================================
+
+.nds-tooltip {
+  --_tooltip-bg: var(--tooltip-background-light);
+  --_tooltip-title: var(--tooltip-text-heading-light);
+  --_tooltip-body: var(--tooltip-text-paragraph-light);
+  --_tooltip-padding: var(--tooltip-padding);
+  --_tooltip-gap: var(--tooltip-gap);
+  --_tooltip-arrow-size: var(--tooltip-arrow-size, 10px);
+  --_tooltip-max-width: var(--tooltip-max-width, 240px);
+  --_arrow-inline-start: 16px;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: text-bottom;
+
+  // Auto-swap to inverse tokens when the page is in dark theme. The
+  // `-light` token set is designed for light surfaces; the `-dark` set
+  // is the inverse pair used on dark surfaces.
+  @include dark {
+    --_tooltip-bg: var(--tooltip-background-dark);
+    --_tooltip-title: var(--tooltip-text-heading-dark);
+    --_tooltip-body: var(--tooltip-text-paragraph-dark);
+  }
+
+  // ==============================================
+  // 2. TRIGGER
+  // ==============================================
+
+  // The trigger is a <button> wrapping an `.nds-feedback-icon` chip, so
+  // strip default button chrome — the inner chip paints the whole visual.
+  &-trigger {
+    display: inline-flex;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: help;
+  }
+
+  // Text-trigger mode — applies when the tooltip trigger has no icon.
+  // "Icon" = any `.nds-icon` descendant (the NDS icon base class, which
+  // also lives inside every `.nds-feedback-icon` chip). Covers:
+  //   - Root is the trigger (no `.nds-tooltip-trigger` child) → underline.
+  //   - Explicit `.nds-tooltip-trigger` that holds only text → underline.
+  //   - Explicit `.nds-tooltip-trigger` with `.nds-icon` inside → no underline.
+  // Custom triggers using raw `<svg>` or `<img>` should either wrap the
+  // graphic in `.nds-icon` (the design-system convention) or override
+  // `text-decoration: none` in author CSS.
+  &:not(:has(> .nds-tooltip-trigger .nds-icon)) {
+    cursor: help;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+    vertical-align: unset;
+  }
+
+  // Idle help-trigger chip — neutral gray so the trigger reads as "there's
+  // a tooltip here" rather than as an active status chip. Scoped by the
+  // icon's own feedback wrapper (or any ancestor inside the trigger) having
+  // `data-status="help"`, so the tooltip's outer data-status stays free
+  // to signal something else. Skipped when the chip uses `.nds-outline`
+  // (transparent bg) and when open (status-driven color kicks in).
+  &:not([data-state~="open"]) &-trigger [data-status="help"] .nds-feedback-icon:not(:is(.nds-outline, .nds-feedback.nds-outline > *)) {
+    background-color: var(--icon-default-500);
+  }
+
+  // ==============================================
+  // 3. BALLOON
+  // ==============================================
+
+  // Balloon is marked `hidden` in source; the attribute controls visibility.
+  // When JS toggles `hidden = false` it displays as a flex row so the icon
+  // chip sits beside the title/message stack.
+  &-balloon:not([hidden]) {
+    display: flex;
+    gap: var(--_tooltip-gap);
+    align-items: flex-start;
+    position: fixed;
+    z-index: 5;
+    width: max-content;
+    max-width: var(--_tooltip-max-width);
+    padding: var(--_tooltip-padding);
+    background-color: var(--_tooltip-bg);
+    color: var(--_tooltip-body);
+    border: 1px solid var(--border-neutral-secondary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+
+    font-size: var(--typo-text-xs-FS);
+    line-height: var(--typo-text-xs-LH);
+  }
+
+  // CSS-only arrow: rotated square inheriting background + border so only
+  // the two edges facing away from the balloon body are visible.
+  //
+  // The rotation is purely visual, so logical border properties produce
+  // the wrong chevron in RTL (e.g. `border-inline-end` maps to the LEFT
+  // physical edge in RTL, flipping which two borders survive and rotating
+  // the chevron 90°). RTL is the default; `@include ltr` swaps the hidden
+  // edges so the same physical pair (top + left for "arrow-up",
+  // bottom + right for "arrow-down") remains visible.
+  &-balloon::before {
+    content: "";
+    position: absolute;
+    width: var(--_tooltip-arrow-size);
+    height: var(--_tooltip-arrow-size);
+    background: inherit;
+    border: inherit;
+    transform: rotate(45deg);
+    top: calc(var(--_tooltip-arrow-size) / -2 - 1px);
+    // JS computes a physical left-offset from the balloon's left edge, so
+    // use `left` (not `inset-inline-start`) — the value is the same in
+    // both directions.
+    left: var(--_arrow-inline-start);
+
+    // RTL default: hide physical bottom + right.
+    //   block-end  → bottom (universal)
+    //   inline-start → right (in RTL)
+    border-block-end: 0;
+    border-inline-start: 0;
+  }
+
+  // Flipped above trigger → arrow points down from balloon bottom
+  &[data-position-vertical="top"] .nds-tooltip-balloon::before {
+    top: auto;
+    bottom: calc(var(--_tooltip-arrow-size) / -2 - 1px);
+    border-block-end: inherit;
+    border-inline-start: inherit;
+    border-block-start: 0;
+    border-inline-end: 0;
+  }
+
+  @include ltr {
+    // In LTR the logical names flip: inline-start = left, inline-end = right.
+    &-balloon::before {
+      border-inline-start: inherit;
+      border-inline-end: 0;
+    }
+
+    &[data-position-vertical="top"] .nds-tooltip-balloon::before {
+      border-inline-start: 0;
+      border-inline-end: inherit;
+    }
+  }
+
+  // ==============================================
+  // 4. CONTENT
+  // ==============================================
+
+  // Body wraps the title + message stack. Sits as a flex item beside the
+  // leading `.nds-feedback` icon chip (when present) in the balloon.
+  &-body {
+    display: block;
+    flex: 1;
+    color: var(--_tooltip-body);
+  }
+
+  &-title {
+    display: block;
+    font-weight: 600;
+    color: var(--_tooltip-title);
+    margin-block-end: var(--_tooltip-gap);
+  }
+
+  &-message {
+    display: block;
+    margin: 0;
+    color: var(--_tooltip-body);
+  }
+
+}
