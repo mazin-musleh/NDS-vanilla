@@ -1,5 +1,6 @@
 # Component catalog for homepage listing
-# Tags: JS, CSS, API
+# Tags (tech):   JS, CSS, API, Data
+# Tags (status): Experimental, New, Beta, Deprecated
 
 # UI Components
 - title: "Accordion"
@@ -64,6 +65,13 @@
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/cooldown-button.html"
+
+- title: "Dark Mode"
+  description: "Full-page light and dark theme toggle with localStorage persistence and circular reveal animation"
+  icon: '<i class="hgi hgi-stroke hgi-moon-02"></i>'
+  category: "UI"
+  tags: ["JS"]
+  url: "/components/dark-mode.html"
 
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
@@ -158,8 +166,8 @@
 
 - title: "Quote"
   description: "Semantic quotation block with optional title and author attribution"
-  icon: ''
-  category: "Content"
+  icon: '<i class="hgi hgi-stroke hgi-quote-up-square"></i>'
+  category: "UI"
   tags: ["CSS"]
   url: "/components/quote.html"
 
@@ -239,7 +247,14 @@
   icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
   category: "Forms"
   tags: ["CSS"]
-  url: "/components/forms.html"
+  url: "/components/forms.html#textareaInput"
+
+- title: "Number Input"
+  description: "Numeric field with increment and decrement controls, min/max, and step"
+  icon: '<i class="hgi hgi-stroke hgi-calculator"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/forms.html#numberInput"
 
 - title: "Checkbox"
   description: "Multi-select toggles for options and preferences"
@@ -293,7 +308,7 @@
 - title: "Filter"
   description: "Applied filters with search, URL sync, and remote data"
   icon: '<i class="hgi hgi-stroke hgi-filter"></i>'
-  category: "Forms"
+  category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/filter.html"
 
@@ -392,11 +407,25 @@
   url: "/utilities/saudi-cities.html"
 
 - title: "Numbers"
-  description: "Automatic Arabic/English numeral conversion"
+  description: "Locale-aware thousand separators for any number on the page"
   icon: '<i class="hgi hgi-stroke hgi-math"></i>'
   category: "Utilities"
   tags: ["JS"]
   url: "/utilities/numbers.html"
+
+- title: "Counter Animation"
+  description: "Scroll-triggered animated counters that count up to a target value"
+  icon: '<i class="hgi hgi-stroke hgi-chart-increase"></i>'
+  category: "Utilities"
+  tags: ["JS"]
+  url: "/utilities/numbers.html#counterAnimation"
+
+- title: "Currency"
+  description: "SAR and international currency symbols appended automatically via data attribute"
+  icon: '<i class="hgi hgi-stroke hgi-coins-dollar"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/numbers.html#currencyFormat"
 
 - title: "Share"
   description: "Social share dropmenu for X, LinkedIn, WhatsApp, and copy link"

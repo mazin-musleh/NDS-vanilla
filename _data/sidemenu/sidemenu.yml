@@ -92,6 +92,9 @@
         - label: "Cooldown Button"
           url: "/components/cooldown-button"
           href: "/components/cooldown-button.html"
+        - label: "Dark Mode"
+          url: "/components/dark-mode"
+          href: "/components/dark-mode.html"
         - label: "Definition List"
           url: "/components/definition-list"
           href: "/components/definition-list.html"
@@ -152,6 +155,9 @@
         - label: "TOC"
           url: "/components/toc"
           href: "/components/toc.html"
+        - label: "Quote"
+          url: "/components/quote"
+          href: "/components/quote.html"
         - label: "Tooltip"
           url: "/components/tooltip"
           href: "/components/tooltip.html"
@@ -200,12 +206,6 @@
         - label: "Tables"
           url: "/components/tables"
           href: "/components/tables.html"
-    - label: "Content"
-      is_group: true
-      children:
-        - label: "Quote"
-          url: "/components/quote"
-          href: "/components/quote.html"
     - label: "Plugins"
       is_group: true
       children:
