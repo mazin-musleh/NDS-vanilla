@@ -2,7 +2,7 @@
 layout: page
 title: Header
 hero_title: Header - National Design System
-hero_description: The site header combines a topbar, navigation bar, and DGA digital stamp into a single responsive shell that handles branding, page links, dropdown menus, and utility actions across all screen sizes.
+hero_description: The site header shell combines the top bar and the main navigation into a single responsive region that handles government branding, primary page links, dropdown menus, and secondary utility actions across all screen sizes.
 breadcrumb: [["UI Shell", "/ui-shell"]]
 lang: en
 direction: ltr
@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Header Structure</h2>
-            <p class="nds-section-description">The header wraps three layers: a topbar for government branding and utilities, the main navigation bar, and an expandable DGA digital stamp panel.</p>
+            <p class="nds-section-description">The header wraps three layers: the <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">top bar</a> for government branding and utilities, the main navigation bar, and the expandable <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}#dgaDigitalStamp">DGA digital stamp</a> panel.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -65,230 +65,6 @@ header
                     &#9492;&#9472;&#9472; li.nds-nav-item
                         &#9492;&#9472;&#9472; a/button.nds-nav-link
                                 </code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Topbar -->
-<section id="topbar" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Topbar</h2>
-            <p class="nds-section-description">A slim utility bar above the main navigation that holds the DGA digital stamp trigger, date and time widgets, and a dark mode toggle.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Topbar</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-topbar-1" id="tab-topbar-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-topbar-1" aria-labelledby="tab-topbar-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities"&gt;
-  &lt;button class="nds-btn nds-menu-btn nds-topbar-info nds-digitalStamp-tab"
-      role="button" aria-expanded="false" aria-controls="nds-digitalStamp"&gt;
-    &lt;img class="nds-flag" src="flag.svg" width="20" height="14" loading="lazy" alt="Saudi Arabia Flag"&gt;
-    &lt;span class="nds-digitalStamp-lg-text nds-truncate"&gt;A government website registered with the Digital Government Authority.&lt;/span&gt;
-    &lt;span class="nds-digitalStamp-sm-text nds-truncate"&gt;Government website registered with DGA&lt;/span&gt;
-    &lt;span id="nds-digitalStamp-verify-text" class="nds-link nds-primary"&gt;How you know?&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;div class="nds-topbar-info"&gt;
-    &lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri"&gt;&lt;/span&gt;
-    &lt;span id="nds-realTimeClock" class="nds-text-icon"&gt;&lt;/span&gt;
-    &lt;span id="nds-cityName" class="nds-text-icon"&gt;&lt;/span&gt;
-    &lt;span id="nds-weatherInfo" class="nds-text-icon"
-        data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
-    &lt;button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode"&gt;
-      &lt;i class="nds-icon nds-hgi-moon-02" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Topbar Widgets -->
-<section id="topbarWidgets" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Topbar Widgets</h2>
-            <p class="nds-section-description">Three optional widgets for the topbar: date, clock, and city/weather. Each initializes automatically when its element IDs are on the page. DGA compliance permits a maximum of two: choose the combination that best serves your audience.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Topbar Widgets</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-widgets-1" id="tab-widgets-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-widgets-1" aria-labelledby="tab-widgets-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;!-- Hijri or Gregorian date (set via data-calendar) --&gt;
-&lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri"&gt;&lt;/span&gt;
-
-&lt;!-- Real-time clock (updates every second) --&gt;
-&lt;span id="nds-realTimeClock" class="nds-text-icon"&gt;&lt;/span&gt;
-
-&lt;!-- City &amp; Weather (both required, coordinates on weatherInfo) --&gt;
-&lt;span id="nds-cityName" class="nds-text-icon"&gt;&lt;/span&gt;
-&lt;span id="nds-weatherInfo" class="nds-text-icon"
-    data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
-                                    </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="nds-block" style="margin-top: var(--spacing-3xl);">
-                <h3 class="nds-block-title">Widget Reference</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Element ID</th><th>JS Module</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">#nds-date</code></td>
-                            <td><code class="nds-inline-code lang-js">NDS.TimeDate</code></td>
-                            <td>Displays the current date. Set <code class="nds-inline-code lang-html">data-calendar="hijri"</code> for the Islamic calendar or <code class="nds-inline-code lang-html">data-calendar="gregorian"</code> for the Gregorian calendar. Fetches Hijri dates from the Aladhan API with a 24-hour local cache. Defaults to Hijri for Arabic pages and Gregorian for English.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">#nds-realTimeClock</code></td>
-                            <td><code class="nds-inline-code lang-js">NDS.TimeDate</code></td>
-                            <td>Live clock that updates every second in 12-hour AM/PM format.</td>
-                        </tr>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">#nds-cityName</code> + <code class="nds-inline-code lang-html">#nds-weatherInfo</code></td>
-                            <td><code class="nds-inline-code lang-js">NDS.CityWeather</code></td>
-                            <td>Displays the city name and current weather side by side. City is reverse-geocoded via the Nominatim API (30-day cache), weather is fetched from Open-Meteo (15-minute cache). Set <code class="nds-inline-code lang-html">data-latitude</code> and <code class="nds-inline-code lang-html">data-longitude</code> on <code class="nds-inline-code lang-html">#nds-weatherInfo</code> to configure the location (defaults to Riyadh). Both elements must be present: they share coordinates and initialize together as a single widget.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- DGA Digital Stamp -->
-<section id="dgaDigitalStamp" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">DGA Digital Stamp</h2>
-            <p class="nds-section-description">An expandable panel triggered from the topbar that verifies the site as an official Saudi government digital property. Displays domain verification and HTTPS security notices alongside the DGA registration number.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">DGA Digital Stamp Panel</div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dga-stamp-1" id="tab-dga-stamp-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dga-stamp-1" aria-labelledby="tab-dga-stamp-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden&gt;
-  &lt;div class="nds-content-wrapper"&gt;
-    &lt;div class="nds-digitalStamp-notices"&gt;
-      &lt;!-- Domain Verification Notice --&gt;
-      &lt;div class="nds-digitalStamp-card"&gt;
-        &lt;div class="nds-digitalStamp-icon"&gt;
-          &lt;i class="nds-icon nds-hgi-link-04" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-digitalStamp-content"&gt;
-          &lt;div class="nds-digitalStamp-heading"&gt;
-            Official Saudi Government website URL ends with &lt;span class="nds-digitalStamp-highlight"&gt;gov.sa&lt;/span&gt;
-          &lt;/div&gt;
-          &lt;div class="nds-digitalStamp-description"&gt;
-            Website belongs to an official government organization in the Kingdom of Saudi Arabia always ends with .gov.sa .
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;!-- HTTPS Security Notice --&gt;
-      &lt;div class="nds-digitalStamp-card"&gt;
-        &lt;div class="nds-digitalStamp-icon"&gt;
-          &lt;i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-digitalStamp-content"&gt;
-          &lt;div class="nds-digitalStamp-heading"&gt;
-            Official Secure websites use &lt;span class="nds-digitalStamp-highlight"&gt;HTTPS&lt;/span&gt;
-          &lt;/div&gt;
-          &lt;div class="nds-digitalStamp-description"&gt;
-            Secured governments websites in the Kingdom of Saudi Arabia use Https encryption.
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;!-- DGA Registration --&gt;
-    &lt;div class="nds-digitalStamp-register"&gt;
-      &lt;img src="dga-logo-icon.svg" width="21" height="31" alt="Digital Government Authority" loading="lazy"&gt;
-      &lt;div&gt;
-        &lt;span&gt;Registered on Digital Government Authority: &lt;/span&gt;
-        &lt;a class="nds-digitalStamp-registration nds-primary nds-underline"
-            href="#"
-            target="_blank"&gt;00000000000&lt;/a&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -387,6 +163,221 @@ header
     </div>
 </section>
 
+<!-- Dropdown Menus -->
+<section id="navDropdowns" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Dropdown Menu Content</h2>
+            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-dropdown</code> to a nav item to attach a dropdown panel. The panel's <code class="nds-inline-code lang-html">nds-dropdown-columns</code> child supports three layouts for organizing content.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Column View — Categories with Titles</div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dropdown-col-1" id="tab-dropdown-col-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dropdown-col-1" aria-labelledby="tab-dropdown-col-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
+&lt;li class="nds-nav-item nds-dropdown"&gt;
+  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
+    &lt;span class="nds-label"&gt;Services&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;div class="nds-dropdown-menu"&gt;
+    &lt;div class="nds-dropdown-content nds-content-wrapper"&gt;
+      &lt;div class="nds-dropdown-columns nds-colView"&gt;
+
+        &lt;div class="nds-column"&gt;
+          &lt;div class="nds-dropdown-title"&gt;For Citizens&lt;/div&gt;
+          &lt;div class="nds-list"&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/citizens/national-id"&gt;
+              &lt;i class="nds-icon nds-hgi-identity-card" aria-hidden="true"&gt;&lt;/i&gt;
+              &lt;span class="nds-label"&gt;National ID&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/citizens/travel"&gt;
+              &lt;i class="nds-icon nds-hgi-door-01" aria-hidden="true"&gt;&lt;/i&gt;
+              &lt;span class="nds-label"&gt;Travel Services&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class="nds-column"&gt;
+          &lt;div class="nds-dropdown-title"&gt;For Businesses&lt;/div&gt;
+          &lt;div class="nds-list"&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/business/licensing"&gt;
+              &lt;i class="nds-icon nds-hgi-award-05" aria-hidden="true"&gt;&lt;/i&gt;
+              &lt;span class="nds-label"&gt;Licensing&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/business/tax"&gt;
+              &lt;i class="nds-icon nds-hgi-riyal-circular" aria-hidden="true"&gt;&lt;/i&gt;
+              &lt;span class="nds-label"&gt;Tax Filing&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/li&gt;
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Row View — Flat Horizontal List</div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dropdown-row-1" id="tab-dropdown-row-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-dropdown-row-1" aria-labelledby="tab-dropdown-row-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;li class="nds-nav-item nds-dropdown"&gt;
+  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
+    &lt;span class="nds-label"&gt;Tools&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;div class="nds-dropdown-menu nds-fit"&gt;
+    &lt;div class="nds-dropdown-content"&gt;
+      &lt;div class="nds-dropdown-columns nds-rowView"&gt;
+        &lt;div class="nds-list"&gt;
+          &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/tools/search"&gt;
+            &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;span class="nds-label"&gt;Search&lt;/span&gt;
+          &lt;/a&gt;
+          &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/tools/translate"&gt;
+            &lt;i class="nds-icon nds-hgi-translation" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;span class="nds-label"&gt;Translate&lt;/span&gt;
+          &lt;/a&gt;
+          &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="/tools/support"&gt;
+            &lt;i class="nds-icon nds-hgi-headphones" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;span class="nds-label"&gt;Support&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/li&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Multi-Column List — 3-Column Grid Inside a Column</div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dropdown-mcl-1" id="tab-dropdown-mcl-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-dropdown-mcl-1" aria-labelledby="tab-dropdown-mcl-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
+&lt;li class="nds-nav-item nds-dropdown"&gt;
+  &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
+    &lt;span class="nds-label"&gt;All Services&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;div class="nds-dropdown-menu"&gt;
+    &lt;div class="nds-dropdown-content nds-content-wrapper"&gt;
+      &lt;div class="nds-dropdown-columns nds-colView"&gt;
+        &lt;div class="nds-column"&gt;
+          &lt;div class="nds-dropdown-title"&gt;Directory&lt;/div&gt;
+          &lt;div class="nds-list nds-multi-column-list"&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
+              &lt;span class="nds-label"&gt;Education&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
+              &lt;span class="nds-label"&gt;Health&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
+              &lt;span class="nds-label"&gt;Transport&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
+              &lt;span class="nds-label"&gt;Housing&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
+              &lt;span class="nds-label"&gt;Employment&lt;/span&gt;
+            &lt;/a&gt;
+            &lt;a class="nds-btn nds-subtle nds-dropdown-item" href="#"&gt;
+              &lt;span class="nds-label"&gt;Legal&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/li&gt;
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="nds-block" style="margin-top: var(--spacing-3xl);">
+                <h3 class="nds-block-title">Data-Driven Dropdowns</h3>
+                <p>Pages that use the Jekyll-driven nav (see <code class="nds-inline-code lang-html">_data/mainnav/mainnav.yml</code>) render dropdown content from two includes that map to the layouts above:</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Template</th><th>Layout</th><th>Data Source</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">mainnav-column-view.html</code></td><td><code class="nds-inline-code lang-html">nds-colView</code> with optional <code class="nds-inline-code lang-html">nds-multi-column-list</code> per column</td><td>columns + items array keyed to a file in <code class="nds-inline-code lang-html">_data/content/</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">mainnav-row-list.html</code></td><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>flat items array keyed to a file in <code class="nds-inline-code lang-html">_data/content/</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="headerFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -400,7 +391,7 @@ header
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Dropdowns, collapse, overflow detection, DGA stamp, and scroll behavior attach automatically.</p>
+                    <p class="nds-item-desc">Activates when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Dropdowns, collapse, overflow detection, and scroll behavior attach automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -465,20 +456,6 @@ header
                     </span>
                     <p class="nds-item-desc">Opening a dropdown or the mobile collapse displays a backdrop that closes the menu on outside clicks, preventing interaction with page content beneath.</p>
                 </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-target-02"></i>
-                        <span class="nds-label">DGA Stamp Toggle</span>
-                    </span>
-                    <p class="nds-item-desc">The topbar button expands and collapses the digital stamp panel with animated grid-row transitions, automatically closing any open nav menus first.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-layout-top"></i>
-                        <span class="nds-label">Live Topbar Widgets</span>
-                    </span>
-                    <p class="nds-item-desc">Date, clock, city, and weather widgets populate automatically from external APIs with local caching. Each widget activates independently when its element ID is on the page and hides gracefully on smaller screens.</p>
-                </div>
             </div>
         </div>
     </div>
@@ -495,7 +472,7 @@ header
             <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Place the header at the top of every page. The topbar sits above the navigation bar, and both are rendered inside a <code class="nds-inline-code lang-html">&lt;header&gt;</code> element.</li>
+                    <li>Place the header at the top of every page. The <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">top bar</a> sits above the navigation bar, and both are rendered inside a <code class="nds-inline-code lang-html">&lt;header&gt;</code> element.</li>
                     <li>Keep primary nav items between 3 and 8 links. Overflow handling activates automatically, but excessive items reduce usability.</li>
                     <li>Use dropdown menus for grouping related pages under a single primary nav item. Organize content into columns using <code class="nds-inline-code lang-html">nds-colView</code> for category-based layouts or <code class="nds-inline-code lang-html">nds-rowView</code> for flat lists.</li>
                     <li>Reserve the secondary nav for utility actions: search, language toggle, user profile, notifications. These persist across all breakpoints as icon-only buttons on smaller screens.</li>
@@ -506,8 +483,6 @@ header
                     <li>Set the brand logo dimensions explicitly with <code class="nds-inline-code lang-html">width</code> and <code class="nds-inline-code lang-html">height</code> attributes to prevent layout shift during page load.</li>
                     <li>Use <code class="nds-inline-code lang-html">nds-icon-only</code> on secondary nav items that should display as icon buttons. Labels are automatically hidden on smaller screens for non-CTA items.</li>
                     <li>Mark nav items that must remain visible at all breakpoints with <code class="nds-inline-code lang-html">nds-PAB</code>. These items automatically move to the minimal nav bar on small screens and return to their original position on wider viewports.</li>
-                    <li>Include the DGA digital stamp on all government websites. The topbar trigger and hidden panel are mandatory for DGA compliance. Populate the registration number and notice text from site configuration.</li>
-                    <li>DGA compliance allows a maximum of two topbar widgets. Choose any two from: date, clock, or city/weather.</li>
                 </ul>
             </div>
 
@@ -527,9 +502,6 @@ header
                         <tr><td><code class="nds-inline-code lang-html">nds-colView</code></td><td>dropdown-columns</td><td>Organizes content in vertical columns</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>dropdown-columns</td><td>Organizes content in a horizontal row layout</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-multi-column-list</code></td><td>list inside dropdown</td><td>Renders items in a 3-column grid</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-digitalStamp-tab</code></td><td>topbar button</td><td>Styles the DGA stamp trigger with flag icon and verification text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-digitalStamp-lg-text</code></td><td>inside stamp tab</td><td>Full-length label shown on desktop, hidden on tablet and below</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-digitalStamp-sm-text</code></td><td>inside stamp tab</td><td>Short label shown on tablet and below, hidden on desktop</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -540,9 +512,6 @@ header
                     <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>nav-link</td><td>Marks the active page in the navigation</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-theme-toggle</code></td><td>topbar button</td><td>Registers the element as a dark/light mode toggle</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-calendar</code></td><td><code class="nds-inline-code lang-html">#nds-date</code></td><td>Set to <code class="nds-inline-code lang-html">hijri</code> or <code class="nds-inline-code lang-html">gregorian</code>. Defaults to Hijri for Arabic pages.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-latitude</code> / <code class="nds-inline-code lang-html">data-longitude</code></td><td><code class="nds-inline-code lang-html">#nds-weatherInfo</code></td><td>GPS coordinates for weather and city lookup. Defaults to Riyadh (24.7136, 46.6753).</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -586,40 +555,14 @@ window.toggleNavbar();
 // closes any other open dropdown first, then opens the target.
 window.toggleDropdown(event);
 
-// Toggle the DGA digital stamp panel in the topbar.
-// Automatically closes the navbar or open dropdowns first
-// to prevent overlapping panels.
-window.toggleDGA();
-
 // ── Re-initialize ────────────────────────────
 // Call after dynamically adding or removing nav items.
 // Re-runs layout calculations, overflow detection,
 // responsive breakpoint checks, and PAB placement.
 NDS.Mainnav.init();
 
-// ── Topbar Widget APIs ──────────────────────
-// Each module initializes automatically when its
-// element IDs are present on the page.
-
-// Re-initialize date and clock widgets
-NDS.TimeDate.init();
-
-// Re-initialize city and weather widgets
-NDS.CityWeather.init();
-
-// Manually refresh individual widgets
-window.updateDate();       // refresh date display
-window.updateClock();      // refresh clock display
-window.updateWeather();    // re-fetch weather data
-window.updateCity();       // re-fetch city name
-
-// Get Hijri date programmatically
-// Pass true for Arabic, false for English
-const hijriDate = await window.getHijriDate(true);
-
-// Get structured Hijri data (day, month, year numbers)
-const hijriData = await window.getHijriDate(true, true);
-// Returns: { day: 15, month: 10, year: 1447 }
+// For top bar widget APIs (date, clock, weather, DGA stamp)
+// see the Top Bar documentation page.
 </code>
                     </div>
                 </div>
