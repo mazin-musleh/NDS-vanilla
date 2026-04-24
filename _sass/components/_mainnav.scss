@@ -155,7 +155,7 @@
     }
 
     /* Navigation Lists */
-    :is(.nds-nav-primary, .nds-nav-secondary, .nds-nav-minimal) {
+    :is(.nds-nav-primary, .nds-nav-actions, .nds-nav-minimal) {
         display: flex;
         align-items: center;
         list-style: none;
@@ -548,7 +548,7 @@ body:not(.nds-minimal) .nds-main-nav {
 
     .nds-main-nav {
 
-        :is(.nds-nav-secondary, .nds-nav-minimal) {
+        :is(.nds-nav-actions, .nds-nav-minimal) {
             .nds-nav-item:not(.nds-CTA) {
                 .nds-nav-link .nds-label {
                     display: none;
@@ -589,7 +589,7 @@ body.nds-minimal .nds-main-nav {
             transition: transform var(--nds-transition);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 
-            &:has(.nds-nav-secondary .nds-dropdown[data-state~="open"]) .nds-nav-primary {
+            &:has(.nds-nav-actions .nds-dropdown[data-state~="open"]) .nds-nav-primary {
                 max-height: 20svh;
             }
         }
@@ -758,8 +758,8 @@ body.nds-minimal .nds-main-nav {
         transition: opacity .1s, visibility .1s;
     }
 
-    /* Secondary Navigation */
-    .nds-nav-secondary {
+    /* Action Navigation */
+    .nds-nav-actions {
         position: sticky !important;
         inset-inline: 0;
         flex-direction: row;
@@ -800,7 +800,7 @@ body.nds-minimal .nds-main-nav {
 
     }
 
-    :is(.nds-nav-primary, .nds-nav-secondary) .nds-dropdown-content {
+    :is(.nds-nav-primary, .nds-nav-actions) .nds-dropdown-content {
         border-radius: 0;
         box-shadow: unset;
         margin: 0;
@@ -838,7 +838,7 @@ body.nds-minimal .nds-main-nav {
 /* Respect reduced motion preferences */
 @include reduced-motion {
 
-    .nds-main-nav :is(.nds-dropdown-menu, .nds-dropdown-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-secondary, .nds-show-more) {
+    .nds-main-nav :is(.nds-dropdown-menu, .nds-dropdown-content, .nds-collapse, .nds-collapse-content, .nds-nav-primary, .nds-nav-actions, .nds-show-more) {
         transition: none !important;
     }
 }

@@ -61,7 +61,7 @@ header
                 &#9474;   &#9474;   &#9492;&#9472;&#9472; div.nds-dropdown-menu
                 &#9474;   &#9474;       &#9492;&#9472;&#9472; div.nds-dropdown-content.nds-content-wrapper
                 &#9474;   &#9492;&#9472;&#9472; div.nds-show-more
-                &#9492;&#9472;&#9472; ul.nds-nav-secondary
+                &#9492;&#9472;&#9472; ul.nds-nav-actions
                     &#9492;&#9472;&#9472; li.nds-nav-item
                         &#9492;&#9472;&#9472; a/button.nds-nav-link
                                 </code>
@@ -363,7 +363,7 @@ header
             &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
           &lt;/a&gt;
         &lt;/div&gt;
-        &lt;ul class="nds-nav-secondary"&gt;
+        &lt;ul class="nds-nav-actions"&gt;
           &lt;li class="nds-nav-item"&gt;
             &lt;a href="/search" class="nds-nav-link nds-btn nds-subtle nds-indicator"&gt;
               &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;

@@ -56,8 +56,9 @@ Nav Component
 .PAB                        → .nds-PAB
 .showMore                   → .nds-show-more     (nav, tabs, accordion, breadcrumb, etc.)
 .nds-drawer-more            → .nds-show-more     (drawer, scoped to .nds-drawer in SCSS)
-.search                     → .nds-search        (mainnav secondary nav)
-.login                      → .nds-login         (mainnav secondary nav)
+.nds-nav-secondary          → .nds-nav-actions   (mainnav utility-actions list: search, profile, etc.)
+.search                     → .nds-search        (mainnav nav-actions)
+.login                      → .nds-login         (mainnav nav-actions)
 
 Progress Components
 -------------------

@@ -20,7 +20,7 @@
         get collapseContent() { return this.nav?.querySelector('.nds-collapse-content'); },
         get container() { return this.nav?.querySelector('.nds-nav-container'); },
         get primary() { return this.nav?.querySelector('.nds-nav-primary'); },
-        get secondary() { return this.nav?.querySelector('.nds-nav-secondary'); },
+        get secondary() { return this.nav?.querySelector('.nds-nav-actions'); },
         get minimal() { return this.nav?.querySelector('.nds-nav-minimal'); },
         get toggler() { return this.nav?.querySelector('.nds-mainNav-toggler'); },
         get brand() { return this.nav?.querySelector('.nds-brand'); },
@@ -665,7 +665,7 @@
         if (DOM.toggler && hasState(DOM.collapse, 'open')) {
             const elements = [DOM.collapse, DOM.toggler];
             if (state.isMinimal) {
-                DOM.collapse?.querySelectorAll('.nds-nav-secondary .nds-dropdown[data-state~="open"] .nds-dropdown-menu')
+                DOM.collapse?.querySelectorAll('.nds-nav-actions .nds-dropdown[data-state~="open"] .nds-dropdown-menu')
                     .forEach(m => { if (!m.closest('.nds-nav-minimal')) elements.push(m); });
             }
             if (!elements.some(el => el?.contains(target))) toggleNavbar();
@@ -676,7 +676,7 @@
             if (hasState(dd, 'closing')) return;
             const menu = dd.querySelector('.nds-dropdown-menu');
             if (![dd, menu].some(el => el?.contains(target))) {
-                const needsRecalc = (dd.closest('.nds-nav-primary') || dd.closest('.nds-nav-secondary')) &&
+                const needsRecalc = (dd.closest('.nds-nav-primary') || dd.closest('.nds-nav-actions')) &&
                     hasState(DOM.collapse, 'open');
                 dropdown.toggle(dd, false);
                 if (needsRecalc) afterDelay(state.getDuration(menu), updatePositions);
@@ -749,7 +749,7 @@
             const amount = (state.isMinimal ? DOM.primary.clientHeight : DOM.primary.clientWidth) * 0.8;
 
             if (state.isMinimal) {
-                DOM.nav.querySelectorAll('.nds-nav-secondary .nds-dropdown[data-state~="open"]')
+                DOM.nav.querySelectorAll('.nds-nav-actions .nds-dropdown[data-state~="open"]')
                     .forEach(dd => dropdown.toggle(dd, false));
                 DOM.primary.scrollTo({ top: atEnd ? 0 : DOM.primary.scrollTop + amount, behavior: 'smooth' });
             } else {

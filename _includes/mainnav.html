@@ -71,7 +71,7 @@
 
                 {%- comment %} Data-driven Secondary Navigation {%- endcomment -%}
                 {%- if nav_data.secondary_nav and nav_data.secondary_nav.size > 0 %}
-                <ul class="nds-nav-secondary">
+                <ul class="nds-nav-actions">
                     {%- for item in nav_data.secondary_nav %}
                     {%- if item.content_source %}
                         {%- assign badge_value = site.data.content[item.content_source] | size %}
