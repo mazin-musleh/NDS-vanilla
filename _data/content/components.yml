@@ -112,6 +112,7 @@
   icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
   category: "UI"
   tags: ["JS", "CSS"]
+  url: "/ui-shell/hero.html"
 
 - title: "Link"
   description: "Inline navigation with color variants and automatic external-link detection"
@@ -410,7 +411,7 @@
   icon: '<i class="hgi hgi-stroke hgi-layout-top"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
-  url: "/ui-shell/header.html#topbar"
+  url: "/ui-shell/topbar.html"
 
 - title: "Main Navigation"
   description: "Primary site navigation with mega menu and mobile drawer"
@@ -424,7 +425,7 @@
   icon: '<i class="hgi hgi-stroke hgi-shield-01"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS"]
-  url: "/ui-shell/header.html#dgaDigitalStamp"
+  url: "/ui-shell/topbar.html#dgaDigitalStamp"
 
 - title: "Side Menu"
   description: "Collapsible nested sidebar navigation"
@@ -460,18 +461,21 @@
   icon: '<i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>'
   category: "Plugins"
   tags: ["JS", "API"]
+  url: "/components/speech-recognition.html"
 
 - title: "Weather Widget"
   description: "Live weather display from GPS coordinates"
   icon: '<i class="nds-icon nds-hgi-sun-cloud-01" aria-hidden="true"></i>'
   category: "Plugins"
   tags: ["JS", "CSS", "API"]
+  url: "/ui-shell/topbar.html#topbarWidgets"
 
 - title: "Clock"
   description: "Real-time clock with Hijri/Gregorian date"
   icon: '<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>'
   category: "Plugins"
   tags: ["JS", "API"]
+  url: "/ui-shell/topbar.html#topbarWidgets"
 
 - title: "Cookie Consent"
   description: "Privacy-compliant cookie management banner"

@@ -64,19 +64,19 @@
     // ── Sub variant ──
 
     &.nds-sub {
-        --_brand-light: var(--background-sub-hero);
-        --_gradient-angle: 90deg;
+        // Public tokens — override on the element to customize the mask shape
+        // --hero-mask-angle: 90deg / 270deg  (auto-set by RTL/LTR; override to a fixed angle)
+        // --hero-mask-from:  0%              (opaque edge of the image)
+        // --hero-mask-to:    70%             (point where image fully fades out)
+        --_mask-angle: var(--hero-mask-angle, 90deg);
+        --_mask-from: var(--hero-mask-from, 0%);
+        --_mask-to: var(--hero-mask-to, 70%);
         --section-padding-block: var(--spacing-5xl);
         --section-title-FS: var(--typo-display-clamp-md-FS);
         --section-title-LH: var(--typo-display-clamp-md-LH);
         --section-title-MB: var(--typo-display-clamp-md-MB);
-        background-image: linear-gradient(var(--_gradient-angle),
-                transparent 0%, var(--_brand-light) 70%),
-            var(--hero_image);
-        background-position-x: left;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-color: var(--_brand-light);
+        isolation: isolate;
+        background-color: var(--background-sub-hero);
         height: fit-content;
         min-height: 100px;
         box-shadow: var(--shadow-inset, inset 0px -2px 4px rgba(0, 0, 0, 0.05)) !important;
@@ -85,15 +85,23 @@
         flex-direction: column;
         gap: var(--spacing-3xl);
 
-        @include ltr {
-            --_gradient-angle: 270deg;
+        // Image layer — mask fades it to transparent so background-color shows through
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: var(--hero_image);
+            background-position: left center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            -webkit-mask-image: linear-gradient(var(--_mask-angle), black var(--_mask-from), transparent var(--_mask-to));
+            mask-image: linear-gradient(var(--_mask-angle), black var(--_mask-from), transparent var(--_mask-to));
+            pointer-events: none;
+            z-index: -1;
         }
 
-        @supports (background: color-mix(in srgb, #000 0%, transparent)) {
-            background-image: linear-gradient(var(--_gradient-angle),
-                    color-mix(in srgb, var(--_brand-light) 0%, transparent) 0%,
-                    color-mix(in srgb, var(--_brand-light) 100%, transparent) 70%),
-                var(--hero_image);
+        @include ltr {
+            --_mask-angle: var(--hero-mask-angle, 270deg);
         }
 
         .nds-hero-image-wrapper {
@@ -104,6 +112,10 @@
             background: var(--background-default) !important;
             box-shadow: unset !important;
             --section-padding-block-end: 0;
+
+            &::after {
+                display: none;
+            }
 
             .nds-section-description {
                 color: var(--text-primary-paragraph);
