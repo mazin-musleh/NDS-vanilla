@@ -48,6 +48,10 @@ direction: ltr
                                 <span class="nds-label">Divided</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-lined", ".nds-drawer", "drawerLined"]'>
+                                <span class="nds-label">Lined</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -1195,6 +1199,18 @@ direction: ltr
                             <td><code class="nds-inline-code lang-html">nds-card</code></td>
                             <td>Displays the drawer as a card-width block, letting it sit alongside other cards in a grid.</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-lined</code></td>
+                            <td>Adds a vertical side rail (<code class="nds-inline-code lang-css">::before</code> pseudo-element) alongside every sub-list. Opt-in — add to <code class="nds-inline-code lang-html">.nds-drawer</code>. Used by the site sidemenu and TOC. Rail width and block-axis inset are controlled by <code class="nds-inline-code lang-html">--drawer-lined-width</code> and <code class="nds-inline-code lang-html">--drawer-lined-block</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-drawer-group</code></td>
+                            <td>Applied to a <code class="nds-inline-code lang-html">li</code> inside a sub-<code class="nds-inline-code lang-html">ul</code> to create a 3-level collapsible group. The group renders as a bold header button that expands a nested sub-list. Restores <code class="nds-inline-code lang-html">display: flex</code> and full text color that the muted sub-list styles normally suppress.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-divided</code> on <code class="nds-inline-code lang-html">ul</code></td>
+                            <td>Applied to an inner sub-<code class="nds-inline-code lang-html">ul</code> (not the drawer root) to add <code class="nds-inline-code lang-css">border-block-end</code> dividers between its immediate children. The last child never gets a divider. Useful for separating group items within a 3-level drawer.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1295,6 +1311,16 @@ direction: ltr
                             <td><code class="nds-inline-code lang-html">--drawer-btn-gap</code></td>
                             <td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td>
                             <td>Gap between the icon, label, and trailing content inside a row.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-lined-width</code></td>
+                            <td><code class="nds-inline-code lang-html">2px</code></td>
+                            <td>Width of the vertical side rail rendered by <code class="nds-inline-code lang-html">nds-lined</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--drawer-lined-block</code></td>
+                            <td><code class="nds-inline-code lang-html">0px</code></td>
+                            <td>Block-axis inset (top and bottom trim) of the side rail. Increase to shorten the rail so it does not reach the very top or bottom edge of its sub-list.</td>
                         </tr>
                     </tbody>
                 </table>

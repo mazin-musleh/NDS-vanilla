@@ -41,13 +41,22 @@ aside.nds-sidemenu
         &#9474;   &#9500;&#9472;&#9472; li (flat link)
         &#9474;   &#9474;   &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
         &#9474;   &#9474;       &#9492;&#9472;&#9472; span.nds-label
-        &#9474;   &#9492;&#9472;&#9472; li (accordion group)
+        &#9474;   &#9492;&#9472;&#9472; li (accordion section)
         &#9474;       &#9500;&#9472;&#9472; button.nds-btn.nds-subtle.nds-menu-btn.nds-indicator
-        &#9474;       &#9474;   &#9492;&#9472;&#9472; span.nds-label
+        &#9474;       &#9474;   &#9500;&#9472;&#9472; span.nds-label
+        &#9474;       &#9474;   &#9492;&#9472;&#9472; span.nds-tag (optional count)
         &#9474;       &#9492;&#9472;&#9472; ul (submenu)
-        &#9474;           &#9492;&#9472;&#9472; li
-        &#9474;               &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
-        &#9474;                   &#9492;&#9472;&#9472; span.nds-label
+        &#9474;           &#9500;&#9472;&#9472; li (flat link)
+        &#9474;           &#9474;   &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
+        &#9474;           &#9474;       &#9492;&#9472;&#9472; span.nds-label
+        &#9474;           &#9492;&#9472;&#9472; li.nds-drawer-group (optional 3rd level)
+        &#9474;               &#9500;&#9472;&#9472; button.nds-btn.nds-subtle.nds-indicator
+        &#9474;               &#9474;   &#9500;&#9472;&#9472; span.nds-label
+        &#9474;               &#9474;   &#9492;&#9472;&#9472; span.nds-tag (optional count)
+        &#9474;               &#9492;&#9472;&#9472; ul (group submenu)
+        &#9474;                   &#9492;&#9472;&#9472; li
+        &#9474;                       &#9492;&#9472;&#9472; a.nds-btn.nds-subtle.nds-indicator
+        &#9474;                           &#9492;&#9472;&#9472; span.nds-label
         &#9492;&#9472;&#9472; button.nds-show-more.nds-btn.nds-subtle
             &#9492;&#9472;&#9472; i.hgi.hgi-stroke.hgi-arrow-down-01
                                 </code>
@@ -153,6 +162,155 @@ aside.nds-sidemenu
     &lt;/div&gt;
   &lt;/nav&gt;
 &lt;/aside&gt;
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Grouped Navigation -->
+<section id="sideNavGrouped" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Grouped Navigation</h2>
+            <p class="nds-section-description">Add a third level by placing <code class="nds-inline-code lang-html">li.nds-drawer-group</code> items inside a section's submenu. Each group gets its own collapsible button. Use a count tag to show the number of items at a glance.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Section → Group → Item</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo" style="padding: var(--spacing-xl); display: flex; justify-content: center;">
+                            <nav class="nds-drawer nds-divided" style="width: 280px;">
+                                <ul class="nds-drawer-list">
+                                    <li>
+                                        <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                            <span class="nds-label">Components</span>
+                                            <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">10</span></span>
+                                        </button>
+                                        <ul>
+                                            <li class="nds-drawer-group">
+                                                <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                                    <span class="nds-label">Forms</span>
+                                                    <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">4</span></span>
+                                                </button>
+                                                <ul>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Autocomplete</span></a></li>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Checkbox</span></a></li>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Switch</span></a></li>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Upload</span></a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="nds-drawer-group">
+                                                <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                                    <span class="nds-label">UI</span>
+                                                    <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+                                                </button>
+                                                <ul>
+                                                    <li data-state="active"><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Alert</span></a></li>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Modal</span></a></li>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Tabs</span></a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="nds-drawer-group">
+                                                <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                                    <span class="nds-label">Data</span>
+                                                    <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+                                                </button>
+                                                <ul>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Chart</span></a></li>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Sort</span></a></li>
+                                                    <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Tables</span></a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                            <span class="nds-label">Layout</span>
+                                            <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+                                        </button>
+                                        <ul>
+                                            <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Grid</span></a></li>
+                                            <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Section</span></a></li>
+                                            <li><a class="nds-btn nds-subtle nds-indicator" href="#"><span class="nds-label">Block</span></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sidenav-grouped-1" id="tab-sidenav-grouped-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-sidenav-grouped-1" aria-labelledby="tab-sidenav-grouped-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
+&lt;ul class="nds-drawer-list"&gt;
+  &lt;!-- Level 1: Section --&gt;
+  &lt;li&gt;
+    &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
+      &lt;span class="nds-label"&gt;Components&lt;/span&gt;
+      &lt;span class="nds-tag nds-gray nds-xs nds-rounded"&gt;&lt;span class="nds-label"&gt;10&lt;/span&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;ul&gt;
+
+      &lt;!-- Level 2: Group --&gt;
+      &lt;li class="nds-drawer-group"&gt;
+        &lt;button class="nds-btn nds-subtle nds-indicator" aria-expanded="false"&gt;
+          &lt;span class="nds-label"&gt;Forms&lt;/span&gt;
+          &lt;span class="nds-tag nds-gray nds-xs nds-rounded"&gt;&lt;span class="nds-label"&gt;4&lt;/span&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;ul&gt;
+          &lt;!-- Level 3: Pages --&gt;
+          &lt;li&gt;
+            &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/autocomplete.html"&gt;
+              &lt;span class="nds-label"&gt;Autocomplete&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/checkbox.html"&gt;
+              &lt;span class="nds-label"&gt;Checkbox&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li data-state="active"&gt;
+            &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/switch.html"&gt;
+              &lt;span class="nds-label"&gt;Switch&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a class="nds-btn nds-subtle nds-indicator" href="/components/upload.html"&gt;
+              &lt;span class="nds-label"&gt;Upload&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+
+      &lt;!-- More groups... --&gt;
+
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -390,7 +548,7 @@ aside.nds-sidemenu
                     <li>Choose <strong>top submenu mode</strong> (<code class="nds-inline-code lang-html">nds-top</code>) when the navigation list is short (under 10 items) or the content area needs full viewport width on mobile</li>
                     <li>Choose <strong>slider mode</strong> (default) for longer navigation trees or when users frequently switch between pages and benefit from a persistent, independently scrollable menu</li>
                     <li>Do not use the side menu for simple linear flows or single-page sites. Use <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> for sequential processes or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switching between views on the same page</li>
-                    <li>Keep accordion groups to <strong>two levels</strong> of nesting. Deeper hierarchies are harder to scan and navigate on mobile</li>
+                    <li>Use <strong>two levels</strong> for most navigation trees. Use the three-level grouped pattern (with <code class="nds-inline-code lang-html">nds-drawer-group</code>) only when the section has enough items to benefit from categorization, such as a large component library</li>
                     <li>Always set <code class="nds-inline-code lang-html">data-state="active"</code> on the current page's <code class="nds-inline-code lang-html">&lt;li&gt;</code> so users can orient themselves</li>
                     <li>Group related pages under a single accordion parent with a clear category label. Avoid mixing unrelated items in the same group</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-cardView</code> to the layout wrapper when the page design calls for rounded, card-like containers. This applies border-radius to the sidebar</li>

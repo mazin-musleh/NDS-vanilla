@@ -21,7 +21,7 @@ sidemenu_mode: false
                     <span class="nds-label">On this page</span>
                     <h2 class="nds-toc-title nds-truncate">Page Title</h2>
                 </div>
-                <div class="nds-drawer">
+                <div class="nds-drawer nds-lined">
                     <ul class="nds-drawer-list"></ul>
                 </div>
             </nav>

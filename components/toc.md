@@ -29,7 +29,7 @@ direction: ltr
                                     <span class="nds-label">On this page</span>
                                     <h2 class="nds-toc-title nds-truncate">Page Title</h2>
                                 </div>
-                                <div class="nds-drawer">
+                                <div class="nds-drawer nds-lined">
                                     <ul class="nds-drawer-list"></ul>
                                 </div>
                             </nav>
@@ -78,7 +78,7 @@ direction: ltr
     &lt;span class="nds-label"&gt;On this page&lt;/span&gt;
     &lt;h2 class="nds-toc-title nds-truncate"&gt;Page Title&lt;/h2&gt;
   &lt;/div&gt;
-  &lt;div class="nds-drawer"&gt;
+  &lt;div class="nds-drawer nds-lined"&gt;
     &lt;ul class="nds-drawer-list"&gt;&lt;/ul&gt;
   &lt;/div&gt;
 &lt;/nav&gt;
@@ -113,7 +113,7 @@ direction: ltr
                                     <span class="nds-label">On this page</span>
                                     <h2 class="nds-toc-title nds-truncate">Page Title</h2>
                                 </div>
-                                <div class="nds-drawer">
+                                <div class="nds-drawer nds-lined">
                                     <ul class="nds-drawer-list">
                                         <li>
                                             <a href="#manual-section-1" class="nds-btn nds-subtle nds-indicator">
@@ -184,7 +184,7 @@ direction: ltr
     &lt;span class="nds-label"&gt;On this page&lt;/span&gt;
     &lt;h2 class="nds-toc-title nds-truncate"&gt;Page Title&lt;/h2&gt;
   &lt;/div&gt;
-  &lt;div class="nds-drawer"&gt;
+  &lt;div class="nds-drawer nds-lined"&gt;
     &lt;ul class="nds-drawer-list"&gt;
       &lt;li&gt;
         &lt;a href="#manual-section-1" class="nds-btn nds-subtle nds-indicator"&gt;
@@ -333,6 +333,16 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-toc-source</code></td><td>CSS selector for the container whose headings should populate the list. Omit for manual markup.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-toc-levels</code></td><td>Comma-separated heading tags to include (default: <code class="nds-inline-code lang-html">h2,h3,h4</code>). Use <code class="nds-inline-code lang-html">h2</code> for a flat TOC or <code class="nds-inline-code lang-html">h2,h3,h4,h5</code> for deeper docs.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Applied to</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lined</code></td><td><code class="nds-inline-code lang-html">.nds-drawer</code></td><td>Required. Renders the vertical rail beside sub-lists. <code class="nds-inline-code lang-html">.nds-toc</code> sets <code class="nds-inline-code lang-css">--drawer-lined-block: 0px</code> internally so the rail extends flush to the block edges of each nested list.</td></tr>
                     </tbody>
                 </table>
             </div>
