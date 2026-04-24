@@ -34,11 +34,11 @@
     &[data-status="warning"], [data-status="warning"] & { color: var(--text-warning); }
     &[data-status="info"],    [data-status="info"] &    { color: var(--text-info); }
 
-    // Neutral dark-mode tweaks depend on .nds-outline modifier, so they
-    // stay scoped inside .nds-feedback rather than on the generic
-    // [data-status="neutral"] rule below.
-    &[data-status="neutral"],
-    [data-status="neutral"] & {
+    // Neutral/help dark-mode tweaks depend on .nds-outline modifier, so
+    // they stay scoped inside .nds-feedback rather than on the generic
+    // [data-status="..."] rule below.
+    &:is([data-status="neutral"], [data-status="help"]),
+    :is([data-status="neutral"], [data-status="help"]) & {
         &:not(.nds-outline) .nds-feedback-icon {
             @include dark {
                 --feedback-ring: var(--colors-neutral-900);
@@ -110,10 +110,14 @@
     --feedback-ring: var(--icon-info-ring);
 }
 
-[data-status="neutral"] {
+:is([data-status="neutral"], [data-status="help"]) {
     --feedback-bg: var(--icon-neutral);
     --feedback-color: var(--icon-neutral);
     --feedback-ring: var(--icon-neutral-ring);
+}
+
+[data-status="help"] {
+    .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-help-circle); }
 }
 
 // ==============================================
@@ -152,24 +156,31 @@
     }
 
     // ==============================================
-    // ICON STYLE VARIANTS
+    // ICON STYLE VARIANTS — solid by default, .nds-outline opt-in
     // ==============================================
 
-    .nds-feedback:not(.nds-outline)>& i {
-        // Solid variant: icon paints white (via currentColor) over the colored
-        // chip background. Clip the SVG's outer circle stroke so only the inner
-        // glyph shows — the feedback chip already provides the circular background.
+    // Solid (default): icon paints white over the colored chip background.
+    // Clip the SVG's outer circle stroke so only the inner glyph shows —
+    // the feedback chip already provides the circular background.
+    & > i {
         color: var(--colors-base-white);
-        clip-path: inset(25%);
+        clip-path: inset(25.5%);
     }
 
-    .nds-feedback.nds-outline>& {
-        // Outline variant: no chip background — the icon itself (including its own
-        // circle stroke) is the whole visual, painted in the status color.
+    // Outline opt-in: transparent chip, full glyph (including its own ring)
+    // painted in the status color. Supported on the chip itself OR on a
+    // `.nds-feedback.nds-outline` ancestor.
+    &:is(.nds-outline, .nds-feedback.nds-outline > *) {
         background-color: transparent;
+
+        > i {
+            color: var(--_feedback-color);
+            clip-path: none;
+        }
     }
 
-    .nds-feedback.nds-ring>& {
+    // Ring accent — on the chip itself OR on a `.nds-feedback.nds-ring` ancestor.
+    &:is(.nds-ring, .nds-feedback.nds-ring > *) {
         box-shadow: 0 0 0 4px var(--_feedback-ring);
     }
 
