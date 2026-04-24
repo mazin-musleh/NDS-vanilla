@@ -294,6 +294,7 @@
   icon: '<i class="hgi hgi-stroke hgi-message-edit-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS"]
+  url: "/components/user-feedback.html"
 
 # Data Components
 - title: "Tables"
