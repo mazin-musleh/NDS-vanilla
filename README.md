@@ -4,7 +4,7 @@
 [![Pages](https://img.shields.io/github/deployments/mazin-musleh/NDS-vanilla/github-pages?label=pages)](https://mazin-musleh.github.io/NDS-vanilla/)
 [![Last commit](https://img.shields.io/github/last-commit/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/commits/main)
 [![Issues](https://img.shields.io/github/issues/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/issues)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
+[![Release](https://img.shields.io/github/v/release/mazin-musleh/NDS-vanilla?display_name=tag&sort=semver)](https://github.com/mazin-musleh/NDS-vanilla/releases/latest)
 
 Credit to the [Digital Government Authority (DGA)](https://dga.gov.sa/) for its outstanding work in unifying Saudi Arabia's government websites and services under a single, coherent design language. The specifications published on [Figma](https://www.figma.com/@sdga) are clear and comprehensive; however, translating them into working code remains a challenge for most teams.
 
@@ -19,7 +19,8 @@ The DGA's official implementation is a React and Storybook component library tha
 
 Quick links:
 [Components](https://mazin-musleh.github.io/NDS-vanilla/#components) ·
-[Example pages](https://mazin-musleh.github.io/NDS-vanilla/#compliance) ·
+[Templates](https://mazin-musleh.github.io/NDS-vanilla/#compliance) ·
+[Examples](https://mazin-musleh.github.io/NDS-vanilla/#examples) ·
 [Architecture](https://mazin-musleh.github.io/NDS-vanilla/#architecture) ·
 [Download](https://github.com/mazin-musleh/NDS-vanilla/releases/latest) ·
 [Report issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose)
@@ -33,7 +34,7 @@ Quick links:
 - **Students and fresh graduates** learning core HTML, CSS, and vanilla JavaScript from a readable production-grade codebase.
 - **Teachers and trainers** using real components, page templates, and patterns as study cases for web-development courses, bootcamps, or workshops.
 
-> **Important:** The default visual identity (design tokens, colors, logos, and the digital-stamp component) is **exclusive to Saudi Arabia government entities**. Any non-government use must replace these with the adopting organization's own identity before deploying. See [Attribution & disclaimer](#attribution--disclaimer) below.
+> **Important:** The default visual identity (design tokens, colors, logos, and the digital-stamp component) is **exclusive to Saudi Arabia government entities**. Any non-government use must replace these with the adopting organization's own identity before deploying. See [Disclaimer](#disclaimer) below.
 
 ## How should I use this?
 
@@ -87,6 +88,7 @@ gem install bundler
 git clone https://github.com/mazin-musleh/NDS-vanilla.git
 cd NDS-vanilla
 bundle install
+npm install                       # installs Terser (only needed if editing _js/)
 bundle exec jekyll serve          # http://localhost:4002/NDS-vanilla/
 ```
 
@@ -95,7 +97,6 @@ bundle exec jekyll serve          # http://localhost:4002/NDS-vanilla/
 ```bash
 bundle exec jekyll build          # production build to _site/
 ruby _plugins/js_processor.rb     # rebuild assets/js/*.min.js after any _js/ change
-npm install                       # installs Terser (needed by the JS processor)
 ```
 
 ### Troubleshooting
@@ -120,7 +121,7 @@ Report vulnerabilities privately via the [Security tab](https://github.com/mazin
 
 [MIT](LICENSE) © 2025-2026 Mazin Musleh.
 
-## Attribution & disclaimer
+## Disclaimer
 
 Based on the public Saudi DGA design specifications published on Figma. This is an independent community implementation. **Not affiliated with, endorsed by, or maintained by the Digital Government Authority (DGA) or the Government of Saudi Arabia.**
 

@@ -25,8 +25,8 @@ direction: ltr
                 </span>
                 <div class="nds-alert-content">
                     <div class="nds-alert-text">
-                        <span class="nds-alert-title">Attribution & Disclaimer</span>
-                        <p class="nds-alert-description">This is an independent community implementation — not affiliated with, endorsed by, or maintained by the Digital Government Authority (DGA) or the Government of Saudi Arabia.</p>
+                        <span class="nds-alert-title">Disclaimer</span>
+                        <p class="nds-alert-description">This is an independent community implementation, not affiliated with, endorsed by, or maintained by the Digital Government Authority (DGA) or the Government of Saudi Arabia.</p>
                     </div>
                 </div>
             </div>
