@@ -197,9 +197,9 @@
     if (typeof window !== 'undefined') {
         window.updateDate = updateDate;
         window.updateClock = updateClock;
-        window.getHijriDate = getHijriDate;
         NDS.TimeDate = {
-            init: initializeTimeDate
+            init: initializeTimeDate,
+            getHijriDate: getHijriDate
         };
     }
 

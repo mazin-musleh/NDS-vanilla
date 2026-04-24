@@ -855,11 +855,10 @@
         getTodaysHijriDate: function () {
             // Simple cache for today's Hijri date - API handles date validation internally
             if (!this._cachedTodaysHijriDate) {
-                // Try to use global getHijriDate function if available
-                if (typeof getHijriDate === 'function') {
+                if (NDS.TimeDate && NDS.TimeDate.getHijriDate) {
                     var self = this;
 
-                    getHijriDate(false, true).then(function(hijriData) {
+                    NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
                         if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
                             // Cache the result
                             self._cachedTodaysHijriDate = hijriData;
@@ -955,16 +954,17 @@
 
             // Get accurate Hijri date FIRST before parsing initial values
             // This ensures accurate conversions when parsing dates
-            if (typeof getHijriDate === 'function' && this.state.calendarType === 'hijri') {
+            var hasHijriApi = !!(NDS.TimeDate && NDS.TimeDate.getHijriDate);
+            if (hasHijriApi && this.state.calendarType === 'hijri') {
                 this.initializeHijriCalendarWithParsing();
             } else {
-                // For Gregorian calendar or when getHijriDate is unavailable
+                // For Gregorian calendar or when NDS.TimeDate.getHijriDate is unavailable
                 this.parseInitialValue();
                 this.setupCalendarUI();
                 this.bindCalendarEvents();
                 this.setupLanguageObserver();
 
-                if (typeof getHijriDate === 'function') {
+                if (hasHijriApi) {
                     this.fetchAccurateHijriReference();
                 }
                 this.render();
@@ -973,7 +973,7 @@
 
         initializeHijriCalendarWithParsing: function () {
             var self = this;
-            getHijriDate(false, true).then(function(hijriData) {
+            NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
                 self.storeAccurateHijriData(hijriData);
                 self.completeCalendarSetup();
             }).catch(function() {
@@ -983,7 +983,7 @@
 
         fetchAccurateHijriReference: function () {
             var self = this;
-            getHijriDate(false, true).then(function(hijriData) {
+            NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
                 self.storeAccurateHijriData(hijriData);
                 if (self.state.selectedDate || self.state.rangeStart) {
                     self.updateInput();

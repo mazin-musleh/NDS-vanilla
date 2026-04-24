@@ -66,132 +66,6 @@
     var VOICE_TIMEOUT = 30000; // 30 seconds
 
     // ==============================================
-    // VOICE RECOGNITION MODULE
-    // ==============================================
-    var VoiceRecognition = (function() {
-        var audioContext = null;
-
-        function initAudioContext() {
-            if (!audioContext) {
-                try {
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                } catch (e) {
-                    audioContext = null;
-                }
-            }
-            return audioContext;
-        }
-
-        function playTone(frequency, duration) {
-            var ctx = initAudioContext();
-            if (!ctx) return;
-
-            try {
-                if (ctx.state === 'suspended') ctx.resume();
-
-                var osc = ctx.createOscillator();
-                var gain = ctx.createGain();
-                var now = ctx.currentTime;
-
-                osc.connect(gain).connect(ctx.destination);
-                osc.frequency.setValueAtTime(frequency, now);
-                osc.type = 'sine';
-
-                gain.gain.setValueAtTime(0.1, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + duration / 1000);
-
-                osc.start(now);
-                osc.stop(now + duration / 1000);
-            } catch (e) {
-                // Silent fail
-            }
-        }
-
-        return {
-            audioFeedback: {
-                init: initAudioContext,
-                start: function() { playTone(800, 200); },
-                end: function() { playTone(400, 300); },
-                error: function() { playTone(200, 400); }
-            },
-
-            isSupported: function() {
-                return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
-            },
-
-            getLanguage: function() {
-                return NDS.isArabic ? 'ar-SA' : 'en-US';
-            },
-
-            create: function(options) {
-                if (!this.isSupported()) return null;
-
-                var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                var detectedLang = this.getLanguage();
-
-                Object.assign(recognition, {
-                    continuous: false,
-                    interimResults: true,
-                    lang: detectedLang,
-                    maxAlternatives: 1
-                }, options || {});
-
-                recognition._ndsLang = detectedLang;
-                return recognition;
-            },
-
-            startListening: function(recognition, callbacks) {
-                if (!recognition) return;
-
-                var finalTranscript = '';
-                callbacks = callbacks || {};
-
-                recognition.onstart = function() {
-                    VoiceRecognition.audioFeedback.start();
-                    if (callbacks.onStart) callbacks.onStart();
-                };
-
-                recognition.onresult = function(event) {
-                    var interimTranscript = '';
-
-                    for (var i = event.resultIndex; i < event.results.length; i++) {
-                        var transcript = event.results[i][0].transcript;
-                        if (event.results[i].isFinal) {
-                            finalTranscript += transcript;
-                        } else {
-                            interimTranscript += transcript;
-                        }
-                    }
-
-                    if (callbacks.onResult) {
-                        callbacks.onResult({
-                            final: finalTranscript,
-                            interim: interimTranscript,
-                            isFinal: event.results[event.results.length - 1].isFinal
-                        });
-                    }
-                };
-
-                recognition.onerror = function(event) {
-                    VoiceRecognition.audioFeedback.error();
-                    if (callbacks.onError) callbacks.onError(event.error);
-                };
-
-                recognition.onend = function() {
-                    VoiceRecognition.audioFeedback.end();
-                    if (callbacks.onEnd) callbacks.onEnd(finalTranscript);
-                };
-
-                recognition.start();
-            },
-
-            stopListening: function(recognition) {
-                if (recognition) recognition.stop();
-            }
-        };
-    })();
-
-    // ==============================================
     // UTILITY FUNCTIONS
     // ==============================================
     var Utils = {
@@ -1188,7 +1062,7 @@
 
         initVoiceInput: function(formControl) {
             var voiceButton = formControl.querySelector('.nds-form-action .nds-voice-input');
-            if (!voiceButton || !VoiceRecognition.isSupported()) {
+            if (!voiceButton || !NDS.VoiceRecognition.isSupported()) {
                 if (voiceButton) voiceButton.style.display = 'none';
                 return;
             }
@@ -1246,7 +1120,7 @@
             function start() {
                 if (!input) return;
 
-                recognition = VoiceRecognition.create();
+                recognition = NDS.VoiceRecognition.create();
                 if (!recognition) return;
 
                 isListening = true;
@@ -1261,7 +1135,7 @@
                     showMessage(msg, 4000);
                 }, VOICE_TIMEOUT);
 
-                VoiceRecognition.startListening(recognition, {
+                NDS.VoiceRecognition.startListening(recognition, {
                     onResult: function(result) {
                         var value = result.isFinal ? result.final.trim() : result.interim;
                         input.style.fontStyle = result.isFinal ? '' : 'italic';
@@ -1308,7 +1182,7 @@
             voiceButton.addEventListener('click', function() {
                 if (isListening) {
                     stop();
-                    VoiceRecognition.stopListening(recognition);
+                    NDS.VoiceRecognition.stopListening(recognition);
                 } else {
                     start();
                 }
@@ -1729,7 +1603,7 @@
     }
 
     function initializeAllForms() {
-        VoiceRecognition.audioFeedback.init();
+        NDS.VoiceRecognition.audioFeedback.init();
         initFormControlClasses();
         initInputAutoFill();
         initDynamicContentObserver();
@@ -1787,9 +1661,6 @@
         // Form Validation
         validateForm: Validator.validateForm.bind(Validator),
         initForm: initForm,
-
-        // Utility
-        VoiceRecognition: VoiceRecognition,
 
         // Mark as loaded
         _loaded: true
