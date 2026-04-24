@@ -404,13 +404,10 @@
 
             this.applyPosition();
 
-            // Close on external scroll/resize. Ignore scrolls inside the menu
-            // itself so filters/scrollable content keep working.
-            this._onScroll = (e) => {
-                if (e?.target?.nodeType && this.menu.contains(e.target)) return;
-                this.close();
-            };
-            document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
+            // Close on external scroll/resize. NDS.onOutsideScroll ignores
+            // scrolls inside the menu itself so filters/scrollable content
+            // keep working.
+            this._offScroll = NDS.onOutsideScroll(this.menu, () => this.close());
             this._unsubResize = NDS.onResize(() => this.close());
 
             requestAnimationFrame(() => removeState(this.dropmenu, 'opening'));
@@ -426,10 +423,7 @@
             addState(this.dropmenu, 'closing');
             this.trigger.setAttribute('aria-expanded', 'false');
 
-            if (this._onScroll) {
-                document.removeEventListener('scroll', this._onScroll, { capture: true });
-                this._onScroll = null;
-            }
+            if (this._offScroll) { this._offScroll(); this._offScroll = null; }
             if (this._unsubResize) { this._unsubResize(); this._unsubResize = null; }
 
             let done = false;
@@ -465,46 +459,49 @@
          * (RTL-aware) then clamps to the viewport.
          */
         applyPosition() {
-            const tr = this.trigger.getBoundingClientRect();
-            const doc = document.documentElement;
-            const vw = doc.clientWidth, vh = doc.clientHeight;
             const gap = 4, pad = 8;
-
-            // Treat the sticky mainnav as the top edge so the menu can't
-            // open behind it.
-            const nav = document.querySelector('.nds-main-nav');
-            const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
-            const topEdge = Math.max(pad, navBottom + 16);
 
             const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
             if (scroll) scroll.style.maxHeight = '';
 
-            // Lock width in px. fit-content/max-content are unreliable for
-            // position:fixed + block when children use flex/grid or width:100%.
+            // Lock width in px before measurement. fit-content/max-content
+            // are unreliable for position:fixed + block when children use
+            // flex/grid or width:100%.
             this.menu.style.width = '';
+            const vw = document.documentElement.clientWidth;
             const w = Math.min(this.menu.offsetWidth, vw - pad * 2);
             this.menu.style.width = w + 'px';
 
-            const mr = this.menu.getBoundingClientRect();
-            const spaceBelow = vh - tr.bottom - gap - pad;
-            const spaceAbove = tr.top - gap - topEdge;
+            // NDS.flipPosition returns raw space values + topEdge using the
+            // sticky mainnav as the top boundary. We clamp topEdge to `pad`
+            // for pages without the nav and subtract our own gap/pad from
+            // the raw space values.
+            const p = NDS.flipPosition(this.trigger, this.menu);
+            const topEdge = Math.max(pad, p.topEdge);
+            const spaceBelow = p.spaceBelow - gap - pad;
+            // Recompute spaceAbove from triggerRect rather than reusing
+            // p.spaceAbove because p.spaceAbove uses the unclamped p.topEdge
+            // (which is 0 when no nav is present); we need the clamped value.
+            const spaceAbove = p.triggerRect.top - gap - topEdge;
             // Flip up when space below is tight AND above has more room.
             const flipUp = spaceBelow < 400 && spaceAbove > spaceBelow;
             const available = flipUp ? spaceAbove : spaceBelow;
 
-            if (scroll && mr.height > available) {
-                const chrome = mr.height - scroll.getBoundingClientRect().height;
+            if (scroll && p.menuRect.height > available) {
+                const chrome = p.menuRect.height - scroll.getBoundingClientRect().height;
                 scroll.style.maxHeight = Math.max(80, available - chrome) + 'px';
             }
 
+            // Re-measure after the max-height clamp so placement uses the
+            // final size.
             const mr2 = this.menu.getBoundingClientRect();
             if (flipUp) this.dropmenu.setAttribute('data-position-vertical', 'top');
             else this.dropmenu.removeAttribute('data-position-vertical');
 
-            let top = flipUp ? tr.top - mr2.height - gap : tr.bottom + gap;
-            top = Math.max(topEdge, Math.min(top, vh - mr2.height - pad));
+            let top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
+            top = Math.max(topEdge, Math.min(top, p.viewportHeight - mr2.height - pad));
 
-            let leftPx = this.isRTL ? tr.right - mr2.width : tr.left;
+            let leftPx = this.isRTL ? p.triggerRect.right - mr2.width : p.triggerRect.left;
             leftPx = Math.max(pad, Math.min(leftPx, vw - mr2.width - pad));
 
             this.menu.style.top = top + 'px';

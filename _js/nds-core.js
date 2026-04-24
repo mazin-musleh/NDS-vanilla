@@ -327,6 +327,69 @@
         return prefix + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
     };
 
+    // ── Outside-scroll Close Helper ────────────────────────────────────
+    // Capture-phase document scroll listener that invokes `onClose` when the
+    // scroll event originates outside `scopeEl`. Scrolls inside scopeEl
+    // (e.g. a scrollable dropmenu panel) are ignored. Returns an unsubscribe
+    // handle the caller stores for later removal — mirrors the NDS.on*
+    // subscription shape so teardown is uniform across helpers.
+    // Usage: const off = NDS.onOutsideScroll(this.menu, () => this.close());
+    //        // later: off();
+    NDS.onOutsideScroll = (scopeEl, onClose) => {
+        const handler = (e) => {
+            if (e?.target?.nodeType && scopeEl.contains(e.target)) return;
+            onClose();
+        };
+        document.addEventListener('scroll', handler, { capture: true, passive: true });
+        return () => document.removeEventListener('scroll', handler, { capture: true });
+    };
+
+    // ── Viewport Flip-Position Measurement ─────────────────────────────
+    // Measures available space around a trigger so popup-like components
+    // (dropmenus, tooltips, date pickers, custom selects) can decide
+    // whether their menu fits below the trigger or should flip above.
+    // Returns raw measurements only — the caller computes its own flipUp
+    // heuristic (e.g. `spaceBelow < menuRect.height`) and writes final
+    // top/left styles so each component keeps its own arrow offsets,
+    // RTL clamp, and gap conventions.
+    //
+    // When `respectNav` is true (default), treats the sticky `.nds-main-nav`
+    // bottom edge + `navGap` as the top viewport boundary so menus can't
+    // open behind it. Pass `respectNav: false` for components inside forms
+    // or other contexts where the nav overlap doesn't apply.
+    //
+    // Usage: const p = NDS.flipPosition(trigger, menu);
+    //        const flipUp = p.spaceBelow < p.menuRect.height && p.spaceAbove > p.spaceBelow;
+    //        const top = flipUp ? p.triggerRect.top - p.menuRect.height - 4 : p.triggerRect.bottom + 4;
+    NDS.flipPosition = (trigger, menuEl, opts = {}) => {
+        const { respectNav = true, navGap = 16 } = opts;
+        const triggerRect = trigger.getBoundingClientRect();
+        const doc = document.documentElement;
+        const vw = doc.clientWidth;
+        const vh = doc.clientHeight;
+
+        let topEdge = 0;
+        if (respectNav) {
+            const nav = document.querySelector('.nds-main-nav');
+            const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
+            if (navBottom > 0) topEdge = navBottom + navGap;
+        }
+
+        const menuRect = menuEl.getBoundingClientRect();
+        const spaceBelow = vh - triggerRect.bottom;
+        const spaceAbove = triggerRect.top - topEdge;
+
+        return {
+            spaceBelow,
+            spaceAbove,
+            topEdge,
+            triggerRect,
+            menuRect,
+            viewportWidth: vw,
+            viewportHeight: vh,
+        };
+    };
+
     // ── Lazy Reveal ────────────────────────────────────────────────────
     // Remove hidden from [data-nds-lazy] once DOM is ready
     document.addEventListener('DOMContentLoaded', () => {

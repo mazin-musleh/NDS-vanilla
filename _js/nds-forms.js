@@ -1013,18 +1013,19 @@
                 if (isOpen) {
                     updateSelectedOptions();
                     // Staged measurement (JSD-06 exempt): stage the dropdown off-screen
-                    // via fixed+hidden so it can be measured without extending the page,
-                    // then read offsetHeight/getBoundingClientRect. The read depends on
-                    // the write, so "batch reads before writes" doesn't apply here.
+                    // via fixed+hidden and drop the `hidden` attribute so NDS.flipPosition
+                    // can measure a non-zero menuRect. The read depends on the write, so
+                    // "batch reads before writes" doesn't apply here.
                     dropdown.style.cssText = 'visibility:hidden;position:fixed;top:0;left:0;';
                     dropdown.removeAttribute('hidden');
 
-                    var dropdownHeight = dropdown.offsetHeight;
-                    var fcRect = formControl.getBoundingClientRect();
-                    var spaceBelow = window.innerHeight - fcRect.bottom;
+                    // respectNav: false — the dropdown is positioned inline beneath its
+                    // form-control sibling, so the sticky mainnav doesn't apply as a top
+                    // boundary.
+                    var p = NDS.flipPosition(formControl, dropdown, { respectNav: false });
 
                     // Clear measurement styles, apply direction override if needed
-                    if (spaceBelow < dropdownHeight + 4 && fcRect.top > spaceBelow) {
+                    if (p.spaceBelow < p.menuRect.height + 4 && p.triggerRect.top > p.spaceBelow) {
                         dropdown.style.cssText = 'top:unset;bottom:100%;margin-bottom:4px;';
                     } else {
                         dropdown.style.cssText = '';

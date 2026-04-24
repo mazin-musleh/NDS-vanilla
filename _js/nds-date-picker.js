@@ -930,15 +930,18 @@
 
             if (!dropdown || !formControl) return;
 
-            // Measure with fixed + hidden to avoid extending the page
+            // Stage with fixed + hidden to avoid extending the page AND to
+            // give NDS.flipPosition a non-zero menuRect to work with — the
+            // dropdown is otherwise hidden via data-state.
             dropdown.style.cssText = 'visibility:hidden;position:fixed;top:0;left:0;';
 
-            var dropdownHeight = dropdown.offsetHeight;
-            var fcRect = formControl.getBoundingClientRect();
-            var spaceBelow = window.innerHeight - fcRect.bottom;
+            // respectNav: false — the dropdown is positioned inline beneath
+            // its form-control sibling, so the sticky mainnav doesn't apply
+            // as a top boundary.
+            var p = NDS.flipPosition(formControl, dropdown, { respectNav: false });
 
             // Clear measurement styles, flip above if not enough space below
-            if (spaceBelow < dropdownHeight + 4 && fcRect.top > spaceBelow) {
+            if (p.spaceBelow < p.menuRect.height + 4 && p.triggerRect.top > p.spaceBelow) {
                 dropdown.style.cssText = 'top:unset;margin-top:unset;bottom:100%;margin-bottom:4px;';
             } else {
                 dropdown.style.cssText = '';

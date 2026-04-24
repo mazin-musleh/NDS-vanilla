@@ -34,7 +34,7 @@
 
             this.isOpen = false;
             this._onDocClick = null;
-            this._onScroll = null;
+            this._offScroll = null;
 
             this.init();
         }
@@ -66,7 +66,7 @@
             const buildChip = () => {
                 const wrap = document.createElement('span');
                 wrap.className = 'nds-feedback nds-sm';
-                wrap.dataset.status = status;
+                NDS.Status.set(wrap, status);
                 const icon = document.createElement('span');
                 icon.className = 'nds-feedback-icon';
                 const i = document.createElement('i');
@@ -173,13 +173,9 @@
             document.addEventListener('click', this._onDocClick);
 
             // Close on outer scroll — the balloon is position: fixed, so
-            // scrolling would leave it detached from the trigger. Ignore
-            // scrolls inside the balloon itself.
-            this._onScroll = (e) => {
-                if (e?.target?.nodeType && this.balloon.contains(e.target)) return;
-                this.close();
-            };
-            document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
+            // scrolling would leave it detached from the trigger.
+            // NDS.onOutsideScroll ignores scrolls inside the balloon itself.
+            this._offScroll = NDS.onOutsideScroll(this.balloon, () => this.close());
 
             this.emitEvent('nds:tooltip:opened');
         }
@@ -196,48 +192,46 @@
                 document.removeEventListener('click', this._onDocClick);
                 this._onDocClick = null;
             }
-            if (this._onScroll) {
-                document.removeEventListener('scroll', this._onScroll, { capture: true });
-                this._onScroll = null;
-            }
+            if (this._offScroll) { this._offScroll(); this._offScroll = null; }
 
             this.emitEvent('nds:tooltip:closed');
         }
 
         applyPosition() {
-            const tr = this.trigger.getBoundingClientRect();
-            const doc = document.documentElement;
-            const vw = doc.clientWidth, vh = doc.clientHeight;
             const gap = 8, pad = 8;
 
-            const nav = document.querySelector('.nds-main-nav');
-            const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
-            const topEdge = Math.max(pad, navBottom + 16);
-
+            // Reset inline placement so the balloon's natural size can be
+            // measured before re-placing.
             this.balloon.style.top = '';
             this.balloon.style.left = '';
 
-            const br = this.balloon.getBoundingClientRect();
-            const bW = br.width, bH = br.height;
-
-            const spaceBelow = vh - tr.bottom - gap - pad;
-            const spaceAbove = tr.top - gap - topEdge;
+            // NDS.flipPosition returns raw space values + topEdge using the
+            // sticky mainnav as the top boundary. Clamp topEdge to `pad` for
+            // pages without the nav and subtract our own gap/pad from the
+            // raw space values. Recompute spaceAbove from triggerRect rather
+            // than reusing p.spaceAbove because p.spaceAbove uses the
+            // unclamped p.topEdge (which is 0 when no nav is present).
+            const p = NDS.flipPosition(this.trigger, this.balloon);
+            const topEdge = Math.max(pad, p.topEdge);
+            const bW = p.menuRect.width, bH = p.menuRect.height;
+            const spaceBelow = p.spaceBelow - gap - pad;
+            const spaceAbove = p.triggerRect.top - gap - topEdge;
             const flipUp = spaceBelow < bH && spaceAbove > spaceBelow;
 
             if (flipUp) this.root.setAttribute('data-position-vertical', 'top');
             else this.root.removeAttribute('data-position-vertical');
 
-            let top = flipUp ? tr.top - bH - gap : tr.bottom + gap;
-            top = Math.max(topEdge, Math.min(top, vh - bH - pad));
+            let top = flipUp ? p.triggerRect.top - bH - gap : p.triggerRect.bottom + gap;
+            top = Math.max(topEdge, Math.min(top, p.viewportHeight - bH - pad));
 
-            let left = tr.left + (tr.width / 2) - (bW / 2);
-            left = Math.max(pad, Math.min(left, vw - bW - pad));
+            let left = p.triggerRect.left + (p.triggerRect.width / 2) - (bW / 2);
+            left = Math.max(pad, Math.min(left, p.viewportWidth - bW - pad));
 
             this.balloon.style.top = top + 'px';
             this.balloon.style.left = left + 'px';
 
             // Arrow points at the trigger center, clamped inside balloon edges
-            const triggerCenterX = tr.left + tr.width / 2;
+            const triggerCenterX = p.triggerRect.left + p.triggerRect.width / 2;
             const arrowHalf = 5;
             const arrowInlineStart = Math.max(
                 12,
