@@ -2772,18 +2772,45 @@
     function simulateProgressForDemo(api, fileId, startProgress) {
         let progress = startProgress;
         const targetProgress = Math.min(startProgress + 30, 85); // Don't complete, just show progress
-        
+
         const interval = setInterval(() => {
             progress += Math.random() * 3;
             if (progress >= targetProgress) {
                 progress = targetProgress;
                 clearInterval(interval);
             }
-            
+
             api.setFileProgress(fileId, progress);
         }, 200);
     }
 
+    // ── Counter restart button ───────────────────────────────────────
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.demo-counter-restart');
+        if (!btn) return;
 
+        const card = btn.closest('.nds-demo-card');
+        if (!card) return;
+
+        card.querySelectorAll('.nds-counter-value').forEach(function(el) {
+            if (typeof el._ndsCounterOff === 'function') {
+                el._ndsCounterOff();
+                delete el._ndsCounterOff;
+            }
+            el.removeAttribute('data-animated');
+
+            // Reset the number text node back to 0 (preserves child elements like icons)
+            var textNodes = [];
+            for (var node of el.childNodes) {
+                if (node.nodeType === Node.TEXT_NODE) textNodes.push(node);
+            }
+            var target = textNodes.find(function(n) { return /\d/.test(n.textContent); })
+                || textNodes[textNodes.length - 1];
+            if (target) target.textContent = '0';
+            else el.textContent = '0';
+        });
+
+        if (window.NDS && NDS.Numbers) NDS.Numbers.reinit();
+    });
 
 })();
