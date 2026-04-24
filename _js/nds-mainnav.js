@@ -843,17 +843,37 @@
         NDS.onDOMRemove('.nds-dropdown-menu', trackDD);
     }
 
+    // All document/window/element listeners attached in setupEventListeners +
+    // init() are scoped to this AbortController. Re-running init detaches the
+    // prior batch atomically instead of stacking listeners on document/window
+    // (the JSP-06 sub-shape (c) hazard). Pooled subscribers from NDS.onResize
+    // and NDS.onElementResize return their own unsubscribe handles — tracked
+    // separately because they can't use the AbortController signal.
+    let _eventsAC = null;
+    let _offResize = null;
+    const _offElementResizes = [];
+    let _initialized = false;
+
     function setupEventListeners() {
-        NDS.onResize(() => { state.invalidateCache(); scheduleUpdate(); });
+        // Abort prior subscriptions so a re-run doesn't stack listeners.
+        if (_eventsAC) _eventsAC.abort();
+        _eventsAC = new AbortController();
+        const { signal } = _eventsAC;
+
+        if (_offResize) { _offResize(); _offResize = null; }
+        _offResize = NDS.onResize(() => { state.invalidateCache(); scheduleUpdate(); });
+
+        _offElementResizes.splice(0).forEach(off => off());
+
         window.addEventListener('orientationchange', () => {
             state.invalidateCache();
             setTimeout(scheduleUpdate, 150);
-        }, { passive: true });
+        }, { passive: true, signal });
 
         document.addEventListener('click', (e) => {
             if (e.target.closest('.nds-dropdown > .nds-nav-link')) toggleDropdown(e);
             if (e.target.closest('.nds-mainNav-toggler')) { e.preventDefault(); toggleNavbar(); }
-        });
+        }, { signal });
 
         // Same-page anchor navigation — close nav and scroll to target
         DOM.nav?.addEventListener('click', (e) => {
@@ -888,12 +908,14 @@
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 history.replaceState(null, '', `#${hash}`);
             }, delay);
-        });
+        }, { signal });
 
         DOM.collapse?.addEventListener('transitionend', (e) => {
             if (e.target === DOM.collapse && e.propertyName === 'height') scheduleUpdate();
-        });
+        }, { signal });
 
+        // NDS.onDOMAdd / onDOMRemove don't return unsubscribe handles, so they
+        // rely on the init-guard below to prevent duplicate registrations.
         const navChanged = NDS.debounce(() => { state._navChanged = true; scheduleUpdate(); }, 100);
         NDS.onDOMAdd('.nds-nav-item, .nds-dropdown', navChanged);
         NDS.onDOMRemove('.nds-nav-item, .nds-dropdown', navChanged);
@@ -911,20 +933,28 @@
             }
         }, 100);
 
-        [DOM.nav, DOM.primary].filter(Boolean).forEach(el => NDS.onElementResize(el, navResizeHandler));
+        [DOM.nav, DOM.primary].filter(Boolean).forEach(el => {
+            _offElementResizes.push(NDS.onElementResize(el, navResizeHandler));
+        });
     }
 
     // ==============================================
     // INITIALIZATION
     // ==============================================
     function init() {
-        if (!DOM.collapse) return;
+        // Entry guard: mainnav is a singleton; a second init() call would stack
+        // pooled subscribers that aren't covered by the AbortController
+        // (NDS.onDOMAdd/onDOMRemove in particular).
+        if (_initialized || !DOM.collapse) return;
+        _initialized = true;
 
         updateBodyClass();
         setupEventListeners();
-        document.addEventListener('click', handleDocumentClick);
+        // handleDocumentClick shares the setupEventListeners AbortController so
+        // both document-click listeners detach atomically on teardown.
+        document.addEventListener('click', handleDocumentClick, { signal: _eventsAC.signal });
         managePABPlacement();
-        DOM.dgaTab?.addEventListener('click', toggleDGA);
+        DOM.dgaTab?.addEventListener('click', toggleDGA, { signal: _eventsAC.signal });
 
         if (hasState(DOM.collapse, 'open')) updatePositions();
         setupInteractions();
