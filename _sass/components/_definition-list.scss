@@ -93,7 +93,7 @@
     // smaller size can be overridden back to the default on a specific list.
     --_dl-icon-size: var(--dl-icon-size, 20px);
     --_dl-icon-gap: var(--dl-icon-gap, calc(var(--_dl-icon-size)/2));
-    --_dl-title-FS: var(--dl-title-FS, var(--typo-text-clamp-lg-FS));
+    --_dl-title-FS: var(--dl-title-FS, var(--typo-text-lg-FS));
     --_dl-desc-FS: var(--dl-desc-FS, var(--typo-text-md-FS));
     --_dl-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
     display: flex;
