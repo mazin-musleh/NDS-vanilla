@@ -26,7 +26,7 @@
                     <ul>
                         {%- for child in item.children %}
                         {%- if child.is_group %}
-                        <li class="nds-drawer-group">
+                        <li>
                             <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
                                 <span class="nds-label">{{ child.label }}</span>
                                 <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">{{ child.children | size }}</span></span>

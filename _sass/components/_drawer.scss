@@ -286,7 +286,7 @@
 // Overrides the muted list-item styling applied to all ul > li.
 // ==============================================
 
-.nds-drawer-list li > ul > li.nds-drawer-group {
+.nds-drawer-list li > ul > li {
     display: flex;
     color: inherit;
 
@@ -335,7 +335,7 @@
             background-color: var(--_divider);
         }
 
-        >li .nds-btn {
+        >li .nds-btn::before {
             inset-inline-start: calc((var(--_indicator-width)/2) * -1);
         }
     }
