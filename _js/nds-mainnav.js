@@ -749,6 +749,8 @@
             const amount = (state.isMinimal ? DOM.primary.clientHeight : DOM.primary.clientWidth) * 0.8;
 
             if (state.isMinimal) {
+                DOM.nav.querySelectorAll('.nds-nav-secondary .nds-dropdown[data-state~="open"]')
+                    .forEach(dd => dropdown.toggle(dd, false));
                 DOM.primary.scrollTo({ top: atEnd ? 0 : DOM.primary.scrollTop + amount, behavior: 'smooth' });
             } else {
                 const dir = state.css.isRTL ? -1 : 1;
