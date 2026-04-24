@@ -3,25 +3,53 @@
         <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
         <span class="nds-label nds-truncate" hidden>Side menu</span>
     </button>
-    <nav class="nds-drawer nds-divided nds-full-height" hidden>
+    <nav class="nds-drawer nds-divided nds-lined nds-full-height" hidden>
         {%- assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" -%}
         {%- assign sidemenu_items = site.data.sidemenu[sidemenu_data_file] -%}
         <div class="nds-scroll-more nds-divided">
             <ul class="nds-drawer-list nds-scroll-more-content">
                 {%- for item in sidemenu_items %}
                 {%- if item.has_sub %}
+                {%- assign item_count = 0 %}
+                {%- for child in item.children %}
+                  {%- if child.is_group %}
+                    {%- assign item_count = item_count | plus: child.children.size %}
+                  {%- else %}
+                    {%- assign item_count = item_count | plus: 1 %}
+                  {%- endif %}
+                {%- endfor %}
                 <li>
                     <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
                         <span class="nds-label">{{ item.label }}</span>
+                        <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">{{ item_count }}</span></span>
                     </button>
                     <ul>
                         {%- for child in item.children %}
+                        {%- if child.is_group %}
+                        <li class="nds-drawer-group">
+                            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                                <span class="nds-label">{{ child.label }}</span>
+                                <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">{{ child.children | size }}</span></span>
+                            </button>
+                            <ul>
+                                {%- for grandchild in child.children %}
+                                <li{%- if page.url == grandchild.href %} data-state="active"{%- endif %}>
+                                    <a class="nds-btn nds-subtle nds-indicator"
+                                        href="{{ grandchild.href | relative_url }}">
+                                        <span class="nds-label">{{ grandchild.label }}</span>
+                                    </a>
+                                </li>
+                                {%- endfor %}
+                            </ul>
+                        </li>
+                        {%- else %}
                         <li{%- if page.url == child.href %} data-state="active"{%- endif %}>
                             <a class="nds-btn nds-subtle nds-indicator"
                                 href="{{ child.href | relative_url }}">
                                 <span class="nds-label">{{ child.label }}</span>
                             </a>
                         </li>
+                        {%- endif %}
                         {%- endfor %}
                     </ul>
                 </li>
