@@ -29,33 +29,33 @@ direction: ltr
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                                <code class="code">
 footer.nds-footer.nds-content-wrapper
-&amp;#9500;&amp;#9472;&amp;#9472; nav.nds-footer-drawer.nds-drawer.nds-divided
-&amp;#9474;   &amp;#9492;&amp;#9472;&amp;#9472; ul.nds-drawer-list.nds-footer-content
-&amp;#9474;       &amp;#9500;&amp;#9472;&amp;#9472; li (link column)
-&amp;#9474;       &amp;#9474;   &amp;#9500;&amp;#9472;&amp;#9472; button.nds-list-header.nds-btn (column heading)
-&amp;#9474;       &amp;#9474;   &amp;#9492;&amp;#9472;&amp;#9472; ul (column links)
-&amp;#9474;       &amp;#9474;       &amp;#9492;&amp;#9472;&amp;#9472; li &gt; a.nds-btn.nds-subtle.nds-indicator
-&amp;#9474;       &amp;#9500;&amp;#9472;&amp;#9472; li (social icons column)
-&amp;#9474;       &amp;#9474;   &amp;#9500;&amp;#9472;&amp;#9472; button.nds-list-header.nds-btn (column heading)
-&amp;#9474;       &amp;#9474;   &amp;#9492;&amp;#9472;&amp;#9472; ul &gt; li.nds-footer-social-wrapper
-&amp;#9474;       &amp;#9474;       &amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-social-icons
-&amp;#9474;       &amp;#9474;           &amp;#9492;&amp;#9472;&amp;#9472; a.nds-btn.nds-secondary-outline.nds-icon-only
-&amp;#9474;       &amp;#9492;&amp;#9472;&amp;#9472; li.nds-footer-app-item (mobile apps column)
-&amp;#9474;           &amp;#9500;&amp;#9472;&amp;#9472; button.nds-list-header.nds-btn (column heading)
-&amp;#9474;           &amp;#9492;&amp;#9472;&amp;#9472; ul &gt; li.nds-footer-apps-wrapper
-&amp;#9474;               &amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-mobile-app-icons
-&amp;#9474;                   &amp;#9492;&amp;#9472;&amp;#9472; a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only
-&amp;#9474;
-&amp;#9500;&amp;#9472;&amp;#9472; hr.nds-divider.nds-lg
-&amp;#9474;
-&amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-bottom
-    &amp;#9500;&amp;#9472;&amp;#9472; div.nds-footer-copyright
-    &amp;#9474;   &amp;#9500;&amp;#9472;&amp;#9472; div.nds-footer-links (legal links with separators)
-    &amp;#9474;   &amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-copy-right (copyright text)
-    &amp;#9492;&amp;#9472;&amp;#9472; div.nds-footer-logos
-        &amp;#9492;&amp;#9472;&amp;#9472; a &gt; img (partner/government logos)
+├── nav.nds-footer-drawer.nds-drawer.nds-divided
+│   └── ul.nds-drawer-list.nds-footer-content
+│       ├── li (link column)
+│       │   ├── button.nds-list-header.nds-btn (column heading)
+│       │   └── ul (column links)
+│       │       └── li > a.nds-btn.nds-subtle.nds-indicator
+│       ├── li (social icons column)
+│       │   ├── button.nds-list-header.nds-btn (column heading)
+│       │   └── ul > li.nds-footer-social-wrapper
+│       │       └── div.nds-footer-social-icons
+│       │           └── a.nds-btn.nds-secondary-outline.nds-icon-only
+│       └── li.nds-footer-app-item (mobile apps column)
+│           ├── button.nds-list-header.nds-btn (column heading)
+│           └── ul > li.nds-footer-apps-wrapper
+│               └── div.nds-footer-mobile-app-icons
+│                   └── a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only
+│
+├── hr.nds-divider.nds-lg
+│
+└── div.nds-footer-bottom
+    ├── div.nds-footer-copyright
+    │   ├── div.nds-footer-links (legal links with separators)
+    │   └── div.nds-footer-copy-right (copyright text)
+    └── div.nds-footer-logos
+        └── a > img (partner/government logos)
                                 </code>
                             </div>
                         </div>
