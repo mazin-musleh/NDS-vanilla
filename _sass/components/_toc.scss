@@ -8,6 +8,7 @@
 @use '../mixins' as *;
 
 .nds-toc {
+    --drawer-lined-block: 0px;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
@@ -41,19 +42,12 @@
         &[data-state~="active"] .nds-label { font-weight: 600; }
     }
 
-    /* Nested sub-section group (any depth). Drawer auto-detects
-       `<li> > <ul>` as a submenu (hides it, adds an arrow, tags the parent
-       `.nds-menu-btn`); we want sub-sections always visible, arrow-less,
-       and the parent still behaving as a plain navigation link.
-       `overflow: visible` lets the active-indicator `::before` escape past
-       the ul's inline-start edge so it can overlap the rail. */
     .nds-drawer-list li > ul {
         display: flex;
         flex-direction: column;
         height: auto;
         overflow: visible;
-        margin-inline-start: var(--spacing-xl);
-        border-inline-start: 2px solid var(--divider-color);
+        margin-inline-start: var(--_indent);
 
         > li {
             display: flex;
@@ -63,10 +57,6 @@
 
             &:first-child { padding-block-start: 0; }
             &:last-child { padding-block-end: 0; }
-
-            /* Overlap the rail so the active green indicator covers the
-               grey border instead of sitting beside it. */
-            .nds-btn.nds-indicator::before { inset-inline-start: -2px; }
         }
     }
 

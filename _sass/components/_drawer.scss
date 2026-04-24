@@ -14,9 +14,11 @@
 .nds-drawer {
     // Internal custom properties with external fallbacks
     --_gap: var(--drawer-gap, 0px);
-    --_indent: var(--drawer-indent, calc(var(--_btn-padding, var(--spacing-md))));
+    --_indent: var(--drawer-indent, calc(var(--_btn-padding, var(--spacing-xl))));
+    --_lined-block: var(--drawer-lined-block, 0px);
     --_divider: var(--drawer-divider, var(--divider-color));
     --_indicator-width: var(--drawer-indicator-width, 5px);
+    --_lined-width: var(--drawer-lined-width, 2px);
     --_indicator: var(--drawer-indicator, transparent/* var(--alpha-black-30) */);
     --_indicator-active: var(--drawer-indicator-active, var(--background-primary));
     --_indicator-hover: var(--drawer-indicator-hover, var(--colors-neutral-400));
@@ -137,24 +139,6 @@
 // ACTIVE STATE
 // ==============================================
 
-/* .nds-drawer-list>li[data-state~="active"] {
-    // Update featured icon colors
-    --icon-color: var(--_indicator-active);
-    --icon-bg-color: var(--colors-primary-sa-flag-50);
-
-    >.nds-btn {
-        &.nds-indicator::before {
-            opacity: 1;
-            background-color: var(--_indicator-active);
-        }
-    }
-}
-
-// Nested active item
-.nds-drawer-list ul li[data-state~="active"]>.nds-btn {
-    color: var(--_indicator-active);
-} */
-
 .nds-drawer-list .nds-btn {
 
     &.nds-menu-btn {
@@ -250,7 +234,6 @@
 .nds-drawer-list li>ul {
     display: none;
     height: 0;
-    overflow: clip;
     transition: height var(--_transition);
     margin-inline-start: var(--_indent);
 
@@ -273,17 +256,50 @@
             font-weight: 400;
 
             &.nds-indicator:not(:hover, :active, [data-state~="active"], [data-state~="selected"]) {
-                /* padding-inline-start: calc(var(--_btn-padding) * 1.5); */
-
                 &::before {
                     --btn-indicator-size: var(--_indicator-width);
                     height: var(--btn-indicator-size);
                     display: block;
                     background-color: var(--_indicator);
-                    /* inset-inline-start: var(--spacing-xs); */
                 }
             }
         }
+    }
+}
+
+// ==============================================
+// DIVIDED SUB-LIST
+// ul.nds-divided inside a drawer adds dividers between its li children.
+// ==============================================
+
+.nds-drawer-list li > ul.nds-divided > li {
+    border-block-end: 1px solid var(--_divider);
+
+    &:last-child {
+        border-block-end: none;
+    }
+}
+
+// ==============================================
+// GROUP HEADER (3-level drawer)
+// A collapsible group within a section submenu.
+// Overrides the muted list-item styling applied to all ul > li.
+// ==============================================
+
+.nds-drawer-list li > ul > li.nds-drawer-group {
+    display: flex;
+    color: inherit;
+
+    &:not(:first-child) {
+        margin-block-start: var(--spacing-xs);
+    }
+
+    > .nds-btn {
+        font-weight: 600;
+    }
+
+    > ul {
+        margin-inline-start: calc(var(--_indent));
     }
 }
 
@@ -292,10 +308,38 @@
     display: unset;
 }
 
+.nds-drawer-list li>ul:is([data-state~="opening"], [data-state~="closing"]) {
+    overflow-y: clip;
+}
+
 .nds-drawer-list li>ul[data-state~="open"] {
     height: auto;
 }
 
+
+// ==============================================
+// SUB-LIST SIDE LINE (opt-in)
+// Add .nds-lined to .nds-drawer to enable the TOC-style vertical rail.
+// ==============================================
+
+.nds-drawer.nds-lined {
+    .nds-drawer-list li>ul {
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset-inline-start: 0;
+            inset-block: var(--_lined-block);
+            width: var(--_lined-width);
+            background-color: var(--_divider);
+        }
+
+        >li .nds-btn {
+            inset-inline-start: calc((var(--_indicator-width)/2) * -1);
+        }
+    }
+}
 
 // ==============================================
 // SIZE VARIANTS
@@ -329,6 +373,7 @@
 // using --drawer-max-height. Scroll-more owns the actual overflow/mask layout.
 .nds-drawer > .nds-scroll-more {
     --scroll-max-height: var(--drawer-max-height, 400px);
+    --scroll-divider: var(--_divider);
     --scroll-fade: 48px;
 
     // Drawer is a flex column; let the scroll wrapper fill it so fit mode
@@ -340,17 +385,10 @@
 // ==============================================
 // MORE BUTTON (drawer-specific theming only)
 // Layout/visibility/icon-rotation come from .nds-scroll-more > .nds-show-more
-// The separator above the button is rendered by scroll-more's .nds-divided
-// pattern (border on the button, shown only when has-more).
 // ==============================================
 
 .nds-drawer .nds-show-more {
     --btn-height: var(--drawer-btn-height);
-}
-
-// Separator color matches the drawer's divider token.
-.nds-drawer > .nds-scroll-more {
-    --scroll-divider: var(--_divider);
 }
 
 // ==============================================
