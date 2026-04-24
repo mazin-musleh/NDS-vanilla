@@ -22,6 +22,10 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 - **NEVER use `sed`** for file edits — it rewrites every file it opens even with no match, polluting git diffs.
 - **For mass/bulk edits** — write a targeted script (Python, Ruby, etc.) that reads each file, checks for a match, and only writes back files that actually changed.
 
+## Using Components (CRITICAL)
+
+**NEVER guess a component's markup structure.** Before placing any NDS component on a page, open its doc page at `components/[name].md` and copy the canonical markup from the `<code class="lang-html code">` block (or the live demo above it). Class names, element nesting, required modifier classes, `data-*` attributes, and ARIA roles must match the doc exactly. If the doc is missing or unclear, read the component's SCSS in `_sass/components/_[name].scss` — do not invent structure from memory.
+
 ## RTL/LTR Support (CRITICAL)
 
 **RTL is the default.** There is NO `@include rtl` mixin. Write base styles for RTL.

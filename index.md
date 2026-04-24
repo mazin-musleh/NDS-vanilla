@@ -17,6 +17,19 @@ direction: ltr
         <div class="nds-section-body">
             <p>Credit to the <a href="https://dga.gov.sa/" target="_blank">Digital Government Authority (DGA)</a> for its outstanding work in unifying Saudi Arabia's government websites and services under a single, coherent design language. The specifications published on <a href="https://www.figma.com/@sdga" target="_blank">Figma</a> are clear and comprehensive; however, translating them into working code remains a challenge for most teams.</p>
             <p>The DGA's official implementation is a <a href="https://dga-nds-story-book-695z8.ondigitalocean.app/" target="_blank">React and Storybook component library</a> that covers the core UI components. This project provides the same design system in plain HTML, CSS, and JavaScript, and includes all components, a layout system, page templates, documentation, and a complete development environment. No framework is required.</p>
+            <div class="nds-alert nds-card nds-inline nds-block" data-status="neutral" role="alert">
+                <span class="nds-feedback nds-alert-icon">
+                    <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                    </span>
+                </span>
+                <div class="nds-alert-content">
+                    <div class="nds-alert-text">
+                        <span class="nds-alert-title">Attribution & Disclaimer</span>
+                        <p class="nds-alert-description">This is an independent community implementation — not affiliated with, endorsed by, or maintained by the Digital Government Authority (DGA) or the Government of Saudi Arabia.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
