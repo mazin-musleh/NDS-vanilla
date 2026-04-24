@@ -590,7 +590,7 @@ body.nds-minimal .nds-main-nav {
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 
             &:has(.nds-nav-actions .nds-dropdown[data-state~="open"]) .nds-nav-primary {
-                max-height: 20svh;
+                max-height: 10svh;
             }
         }
 

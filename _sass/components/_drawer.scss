@@ -199,7 +199,7 @@
 .nds-drawer-list .nds-drawer-item-head {
     width: 100%;
 
-    .nds-label:not(.nds-truncate) {
+    >.nds-label:not(.nds-truncate) {
         display: block;
         font-size: var(--typo-text-md-FS);
         line-height: var(--typo-text-md-LH);
