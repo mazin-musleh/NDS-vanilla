@@ -203,8 +203,8 @@
 
 
     .nds-card-title {
-      font-size: var(--nds-text-lg-FS);
-      line-height: var(--nds-text-lg-LH);
+      font-size: var(--typo-text-lg-FS);
+      line-height: var(--typo-text-lg-LH);
       font-weight: 700;
       color: var(--_card-title);
       margin: 0;
@@ -212,8 +212,8 @@
     }
 
     .nds-card-subtitle {
-      font-size: var(--nds-text-md-FS);
-      line-height: var(--nds-text-md-LH);
+      font-size: var(--typo-text-md-FS);
+      line-height: var(--typo-text-md-LH);
       font-weight: 600;
       color: var(--_card-subtitle);
       margin: 0;
@@ -222,8 +222,8 @@
 
 
     .nds-card-description {
-      font-size: var(--nds-text-md-FS);
-      line-height: var(--nds-text-md-LH);
+      font-size: var(--typo-text-md-FS);
+      line-height: var(--typo-text-md-LH);
       font-weight: 400;
       color: var(--_card-text);
       margin: 0;
@@ -260,8 +260,8 @@
   }
 
   .nds-card-rating-text {
-    font-size: var(--nds-text-xs-FS);
-    line-height: var(--nds-text-xs-LH);
+    font-size: var(--typo-text-xs-FS);
+    line-height: var(--typo-text-xs-LH);
     font-weight: 400;
     color: var(--_card-rating);
     margin: 0;
@@ -355,8 +355,8 @@
 
     :is(.nds-card-number, .nds-counter-value, .nds-number-format) {
       color: var(--_card-number);
-      font-size: var(--nds-display-clamp-lg-FS);
-      line-height: var(--nds-display-clamp-lg-LH);
+      font-size: var(--typo-display-clamp-lg-FS);
+      line-height: var(--typo-display-clamp-lg-LH);
       font-weight: 500;
       letter-spacing: -0.96px;
       direction: ltr;
@@ -364,13 +364,13 @@
       width: 100%;
 
       &.nds-md {
-        font-size: var(--nds-display-clamp-md-FS);
-        line-height: var(--nds-display-clamp-md-LH);
+        font-size: var(--typo-display-clamp-md-FS);
+        line-height: var(--typo-display-clamp-md-LH);
       }
 
       &.nds-sm {
-        font-size: var(--nds-display-clamp-sm-FS);
-        line-height: var(--nds-display-clamp-sm-LH);
+        font-size: var(--typo-display-clamp-sm-FS);
+        line-height: var(--typo-display-clamp-sm-LH);
       }
     }
 

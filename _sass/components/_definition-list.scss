@@ -93,8 +93,8 @@
     // smaller size can be overridden back to the default on a specific list.
     --_dl-icon-size: var(--dl-icon-size, 20px);
     --_dl-icon-gap: var(--dl-icon-gap, calc(var(--_dl-icon-size)/2));
-    --_dl-title-FS: var(--dl-title-FS, var(--nds-text-clamp-lg-FS));
-    --_dl-desc-FS: var(--dl-desc-FS, var(--nds-text-md-FS));
+    --_dl-title-FS: var(--dl-title-FS, var(--typo-text-clamp-lg-FS));
+    --_dl-desc-FS: var(--dl-desc-FS, var(--typo-text-md-FS));
     --_dl-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
     display: flex;
     flex-direction: column;
@@ -102,14 +102,14 @@
 
     &.nds-md {
         --dl-icon-size: 18px;
-        --dl-title-FS: var(--nds-text-clamp-md-FS);
+        --dl-title-FS: var(--typo-text-clamp-md-FS);
         --row-gap: var(--spacing-md);
     }
 
     &.nds-sm {
         --dl-icon-size: 18px;
-        --dl-title-FS: var(--nds-text-clamp-sm-FS);
-        --dl-desc-FS: var(--nds-text-sm-FS);
+        --dl-title-FS: var(--typo-text-clamp-sm-FS);
+        --dl-desc-FS: var(--typo-text-sm-FS);
         --row-gap: var(--spacing-sm);
     }
 

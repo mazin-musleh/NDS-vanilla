@@ -36,15 +36,15 @@
         min-width: 40px;
 
         &>.text {
-            font-size: var(--nds-text-clamp-md-FS);
-            line-height: var(--nds-text-clamp-md-LH);
+            font-size: var(--typo-text-clamp-md-FS);
+            line-height: var(--typo-text-clamp-md-LH);
             white-space: nowrap;
         }
 
         &>i {
-            font-size: var(--nds-text-lg-FS);
-            line-height: var(--nds-text-lg-LH);
-            width: var(--nds-text-lg-FS);
+            font-size: var(--typo-text-lg-FS);
+            line-height: var(--typo-text-lg-LH);
+            width: var(--typo-text-lg-FS);
         }
     }
 
@@ -125,16 +125,16 @@
 
         .nds-brand-name {
             visibility: visible;
-            line-height: var(--nds-text-clamp-md-LH);
-            font-size: var(--nds-text-clamp-md-FS);
+            line-height: var(--typo-text-clamp-md-LH);
+            font-size: var(--typo-text-clamp-md-FS);
             display: flex;
             flex-direction: column;
             gap: var(--spacing-2xs, 2px);
         }
 
         .nds-brand-slogan {
-            font-size: var(--nds-text-sm-FS);
-            line-height: var(--nds-text-sm-LH);
+            font-size: var(--typo-text-sm-FS);
+            line-height: var(--typo-text-sm-LH);
             font-weight: 400;
             display: block;
         }
@@ -172,8 +172,8 @@
 
         :is(.nds-nav-link, .nds-dropdown-item) .nds-label {
             position: relative;
-            font-size: var(--nds-text-md-FS);
-            line-height: var(--nds-text-md-LH);
+            font-size: var(--typo-text-md-FS);
+            line-height: var(--typo-text-md-LH);
             font-weight: 400;
         }
 
@@ -206,8 +206,8 @@
     .nds-nav-link {
         --btn-indicator-size: 5px;
         --btn-height: var(--nds-nav-height);
-        font-size: var(--nds-text-clamp-lg-FS);
-        line-height: var(--nds-text-clamp-lg-LH);
+        font-size: var(--typo-text-clamp-lg-FS);
+        line-height: var(--typo-text-clamp-lg-LH);
 
         .nds-avatar {
             --avatar-size: calc(var(--nds-nav-height) - 40px);
@@ -342,8 +342,8 @@
     /* Dropdown Columns Grid */
     .nds-dropdown-columns {
         .nds-dropdown-title {
-            font-size: var(--nds-text-clamp-lg-FS);
-            line-height: var(--nds-text-clamp-lg-LH);
+            font-size: var(--typo-text-clamp-lg-FS);
+            line-height: var(--typo-text-clamp-lg-LH);
             color: var(--_nav-menu-title);
             font-weight: 500;
         }

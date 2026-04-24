@@ -13,11 +13,11 @@
     --_quote-padding:     var(--quote-padding, var(--spacing-2xl));
     --_quote-mark-color:  var(--quote-mark-color, var(--text-primary-sa-flag));
     --_quote-mark-size:   var(--quote-mark-size, 48px);
-    --_quote-title-FS:    var(--quote-title-FS, var(--nds-display-xs-FS));
-    --_quote-title-LH:    var(--quote-title-LH, var(--nds-display-xs-LH));
+    --_quote-title-FS:    var(--quote-title-FS, var(--typo-display-xs-FS));
+    --_quote-title-LH:    var(--quote-title-LH, var(--typo-display-xs-LH));
     --_quote-title-color: var(--quote-title-color, var(--text-default));
-    --_quote-text-FS:     var(--quote-text-FS, var(--nds-text-xl-FS));
-    --_quote-text-LH:     var(--quote-text-LH, var(--nds-text-xl-LH));
+    --_quote-text-FS:     var(--quote-text-FS, var(--typo-text-xl-FS));
+    --_quote-text-LH:     var(--quote-text-LH, var(--typo-text-xl-LH));
     --_quote-text-color:  var(--quote-text-color, var(--text-primary-paragraph));
 
     position: relative;
@@ -103,7 +103,7 @@
     .nds-quote {
         --quote-mark-size: 28px;
         --quote-padding: var(--spacing-xl);
-        --quote-text-FS: var(--nds-text-lg-FS);
-        --quote-text-LH: var(--nds-text-lg-LH);
+        --quote-text-FS: var(--typo-text-lg-FS);
+        --quote-text-LH: var(--typo-text-lg-LH);
     }
 }

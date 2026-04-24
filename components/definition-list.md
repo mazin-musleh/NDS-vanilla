@@ -444,7 +444,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--dl-icon-size</code></td><td>18px (lg) / 16px (md) / 14px (sm)</td><td>Width and height of title icons. Floored at 18px — icons never render smaller, even when this value or a size modifier requests less</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--dl-icon-gap</code></td><td>half of icon size</td><td>Gap between the icon and label text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-title-FS</code></td><td>--nds-text-clamp-lg-FS (lg) / -md-FS (md) / -sm-FS (sm)</td><td>Font size of term/title text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-title-FS</code></td><td>--typo-text-clamp-lg-FS (lg) / -md-FS (md) / -sm-FS (sm)</td><td>Font size of term/title text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--dl-desc-FS</code></td><td>--dl-title-FS</td><td>Font size of description/value text. Defaults to match the title so both sides of each row scale together</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--row-gap</code></td><td>--spacing-lg</td><td>Vertical spacing between items</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--col-gap</code></td><td>--spacing-xl (table view) / --spacing-sm (row view)</td><td>Horizontal spacing between dt and dd in table view and row view</td></tr>

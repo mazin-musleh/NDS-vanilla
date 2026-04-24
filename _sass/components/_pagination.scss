@@ -39,7 +39,7 @@
 
   // Pagination button styling
   .nds-btn {
-    --btn-FS: var(--nds-text-md-FS);
+    --btn-FS: var(--typo-text-md-FS);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -145,7 +145,7 @@
 
 .nds-pagination.nds-sm .nds-btn {
   --btn-size: 24px;
-  --btn-FS: var(--nds-text-sm-FS);
+  --btn-FS: var(--typo-text-sm-FS);
 }
 
 

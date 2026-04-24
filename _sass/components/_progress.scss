@@ -132,8 +132,8 @@
 
   // ─── Label ───
   .nds-progress-label {
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
     font-weight: 500;
     color: var(--text-default);
   }
@@ -166,7 +166,7 @@
     justify-content: flex-end;
     padding-inline-end: var(--spacing-xs);
     color: var(--text-oncolor-primary);
-    font-size: var(--nds-text-xs-FS);
+    font-size: var(--typo-text-xs-FS);
     font-weight: 600;
     white-space: nowrap;
 

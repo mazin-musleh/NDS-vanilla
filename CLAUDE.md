@@ -17,6 +17,11 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 - **NEVER read** `assets/css/hgi-stroke-rounded.css` (large icon font)
 - **NEVER read** any `.min.js` or `.min.css` files (minified output)
 
+## Tool Restrictions
+
+- **NEVER use `sed`** for file edits — it rewrites every file it opens even with no match, polluting git diffs.
+- **For mass/bulk edits** — write a targeted script (Python, Ruby, etc.) that reads each file, checks for a match, and only writes back files that actually changed.
+
 ## RTL/LTR Support (CRITICAL)
 
 **RTL is the default.** There is NO `@include rtl` mixin. Write base styles for RTL.

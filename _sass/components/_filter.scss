@@ -15,8 +15,8 @@
     flex-direction: column;
 
     >.nds-label {
-        font-size: var(--nds-text-clamp-lg-FS);
-        line-height: var(--nds-text-clamp-lg-LH);
+        font-size: var(--typo-text-clamp-lg-FS);
+        line-height: var(--typo-text-clamp-lg-LH);
         color: var(--text-primary);
         font-weight: 500;
     }
@@ -46,7 +46,7 @@
     min-width: 0;
 
     >.nds-label {
-        font-size: var(--nds-text-clamp-lg-FS);
+        font-size: var(--typo-text-clamp-lg-FS);
         font-weight: 500;
     }
 }
@@ -137,7 +137,7 @@
         flex-wrap: wrap;
 
         >.nds-label {
-            font-size: var(--nds-text-clamp-lg-FS);
+            font-size: var(--typo-text-clamp-lg-FS);
             font-weight: 500;
             color: var(--text-default);
         }

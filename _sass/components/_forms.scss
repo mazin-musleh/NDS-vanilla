@@ -25,8 +25,8 @@
 
         .nds-label {
             color: var(--form-field-text-label);
-            font-size: var(--nds-text-md-FS);
-            line-height: var(--nds-text-md-LH);
+            font-size: var(--typo-text-md-FS);
+            line-height: var(--typo-text-md-LH);
             font-weight: 500;
             cursor: pointer;
         }
@@ -167,8 +167,8 @@
 :is(.nds-form-container, .nds-form-group) {
     .nds-label+.nds-info {
         color: var(--text-primary-paragraph);
-        font-size: var(--nds-text-sm-FS);
-        line-height: var(--nds-text-sm-LH);
+        font-size: var(--typo-text-sm-FS);
+        line-height: var(--typo-text-sm-LH);
         min-width: 200px;
     }
 
@@ -188,7 +188,7 @@ fieldset {
     >legend>.nds-label {
         padding: 0;
         margin-bottom: var(--spacing-xl);
-        font-size: var(--nds-text-lg-FS);
+        font-size: var(--typo-text-lg-FS);
         font-weight: 500;
         line-height: 1;
     }
@@ -267,7 +267,7 @@ fieldset {
     // Size: Medium (32px)
     .nds-md>& {
         --_input-size: 32px;
-        font-size: var(--nds-text-sm-FS);
+        font-size: var(--typo-text-sm-FS);
 
         .nds-form-action>.nds-btn {
             --btn-size: 32px;

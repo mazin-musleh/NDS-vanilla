@@ -31,7 +31,7 @@
   border-bottom: 1px solid var(--border-neutral-secondary);
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   font-weight: 600;
-  font-size: var(--nds-text-md-FS);
+  font-size: var(--typo-text-md-FS);
   color: var(--text-default);
 }
 
@@ -168,7 +168,7 @@
 
   .demo-header {
     padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--nds-text-sm-FS);
+    font-size: var(--typo-text-sm-FS);
   }
 
   :is(.state-demo, .button-row) {

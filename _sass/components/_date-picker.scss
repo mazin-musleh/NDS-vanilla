@@ -197,7 +197,7 @@
             
             text-align: center;
 
-            font-size: var(--nds-text-md-FS);
+            font-size: var(--typo-text-md-FS);
 
             font-weight: 400;
 
@@ -208,7 +208,7 @@
             min-width: var(--btn-size);
 
             @include mobile {
-                font-size: var(--nds-text-sm-FS);
+                font-size: var(--typo-text-sm-FS);
             }
         }
     }

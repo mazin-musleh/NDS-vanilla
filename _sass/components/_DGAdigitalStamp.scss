@@ -10,8 +10,8 @@
 .nds-digitalStamp-tab {
     z-index: 10;
     cursor: pointer;
-    font-size: var(--nds-text-clamp-sm-FS);
-    line-height: var(--nds-text-clamp-sm-LH);
+    font-size: var(--typo-text-clamp-sm-FS);
+    line-height: var(--typo-text-clamp-sm-LH);
     font-weight: 500;
     padding-inline: 0;
     gap: var(--spacing-xs);
@@ -128,8 +128,8 @@
 }
 
 .nds-digitalStamp-heading {
-    font-size: var(--nds-text-clamp-lg-FS);
-    line-height: var(--nds-text-clamp-lg-LH);
+    font-size: var(--typo-text-clamp-lg-FS);
+    line-height: var(--typo-text-clamp-lg-LH);
     font-weight: 600;
     color: var(--text-default);
     margin-bottom: var(--spacing-md);

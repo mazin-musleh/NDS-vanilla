@@ -273,12 +273,12 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--quote-title-FS</code></td>
-                            <td><code class="nds-inline-code lang-html">--nds-display-xs-FS</code></td>
+                            <td><code class="nds-inline-code lang-html">--typo-display-xs-FS</code></td>
                             <td>Font size of the title paragraph.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--quote-title-LH</code></td>
-                            <td><code class="nds-inline-code lang-html">--nds-display-xs-LH</code></td>
+                            <td><code class="nds-inline-code lang-html">--typo-display-xs-LH</code></td>
                             <td>Line height of the title paragraph.</td>
                         </tr>
                         <tr>
@@ -288,12 +288,12 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--quote-text-FS</code></td>
-                            <td><code class="nds-inline-code lang-html">--nds-text-xl-FS</code></td>
+                            <td><code class="nds-inline-code lang-html">--typo-text-xl-FS</code></td>
                             <td>Font size of the quotation body.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--quote-text-LH</code></td>
-                            <td><code class="nds-inline-code lang-html">--nds-text-xl-LH</code></td>
+                            <td><code class="nds-inline-code lang-html">--typo-text-xl-LH</code></td>
                             <td>Line height of the quotation body.</td>
                         </tr>
                         <tr>

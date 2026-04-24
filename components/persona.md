@@ -403,14 +403,14 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--persona-name-FS</code></td><td><code class="nds-inline-code lang-html">--nds-text-xl-FS</code></td><td>Name font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--persona-name-LH</code></td><td><code class="nds-inline-code lang-html">--nds-text-xl-LH</code></td><td>Name line height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--persona-name-FS</code></td><td><code class="nds-inline-code lang-html">--typo-text-xl-FS</code></td><td>Name font size</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--persona-name-LH</code></td><td><code class="nds-inline-code lang-html">--typo-text-xl-LH</code></td><td>Name line height</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--persona-name-color</code></td><td><code class="nds-inline-code lang-html">--text-default</code></td><td>Name text color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--persona-role-FS</code></td><td><code class="nds-inline-code lang-html">--nds-text-lg-FS</code></td><td>Role font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--persona-role-LH</code></td><td><code class="nds-inline-code lang-html">--nds-text-lg-LH</code></td><td>Role line height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--persona-role-FS</code></td><td><code class="nds-inline-code lang-html">--typo-text-lg-FS</code></td><td>Role font size</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--persona-role-LH</code></td><td><code class="nds-inline-code lang-html">--typo-text-lg-LH</code></td><td>Role line height</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--persona-role-color</code></td><td><code class="nds-inline-code lang-html">--text-primary-paragraph</code></td><td>Role text color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--persona-desc-FS</code></td><td><code class="nds-inline-code lang-html">--nds-text-md-FS</code></td><td>Desc font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--persona-desc-LH</code></td><td><code class="nds-inline-code lang-html">--nds-text-md-LH</code></td><td>Desc line height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--persona-desc-FS</code></td><td><code class="nds-inline-code lang-html">--typo-text-md-FS</code></td><td>Desc font size</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--persona-desc-LH</code></td><td><code class="nds-inline-code lang-html">--typo-text-md-LH</code></td><td>Desc line height</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--persona-desc-color</code></td><td><code class="nds-inline-code lang-html">--text-secondary-paragraph</code></td><td>Desc text color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--avatar-size</code></td><td><code class="nds-inline-code lang-html">80px</code></td><td>Avatar diameter; cascades via inheritance to any child <code class="nds-inline-code lang-html">.nds-avatar</code></td></tr>
                     </tbody>

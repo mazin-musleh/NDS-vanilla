@@ -137,9 +137,9 @@ main {
         }
 
         .nds-content-section {
-            --section-title-FS: var(--nds-display-clamp-sm-FS);
-            --section-title-LH: var(--nds-display-clamp-sm-LH);
-            --section-title-MB: var(--nds-display-clamp-sm-MB);
+            --section-title-FS: var(--typo-display-clamp-sm-FS);
+            --section-title-LH: var(--typo-display-clamp-sm-LH);
+            --section-title-MB: var(--typo-display-clamp-sm-MB);
         }
 
         .nds-content-section.nds-ghost {

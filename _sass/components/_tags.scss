@@ -16,7 +16,7 @@
   --_border: var(--tag-border, var(--tag-border-neutral-light));
   --_icon: var(--tag-icon, var(--tag-icon-neutral));
   --_tag-height: var(--tag-height, 32px);
-  --_tag-fs: var(--tag-fs, var(--nds-text-md-FS));
+  --_tag-fs: var(--tag-fs, var(--typo-text-md-FS));
   --_tag-padding-inline: var(--tag-padding-inline, var(--spacing-xl));
   --_tag-dot-size: var(--tag-dot-size, 10px);
 
@@ -48,14 +48,14 @@
 
   &.nds-sm {
     --tag-height: 24px;
-    --tag-fs: var(--nds-text-sm-FS);
+    --tag-fs: var(--typo-text-sm-FS);
     --tag-padding-inline: var(--spacing-md);
     --tag-dot-size: 8px;
   }
 
   &.nds-xs {
     --tag-height: 20px;
-    --tag-fs: var(--nds-text-xs-FS);
+    --tag-fs: var(--typo-text-xs-FS);
     --tag-padding-inline: var(--spacing-md);
   }
 

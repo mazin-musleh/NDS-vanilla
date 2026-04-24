@@ -692,8 +692,8 @@ NDS.Alert.create({
 
 .nds-code code {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
     font-weight: 600;
     direction: ltr;
     text-align: left;
@@ -714,7 +714,7 @@ NDS.Alert.create({
     width: 3em;
     margin-right: 1rem;
     color: var(--colors-neutral-500);
-    font-size: var(--nds-text-xs-FS);
+    font-size: var(--typo-text-xs-FS);
 }
                 </code>
                 </div>

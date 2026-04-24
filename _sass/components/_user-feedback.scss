@@ -74,7 +74,7 @@
         }
 
         .nds-user-feedback-statistic {
-            font-size: var(--nds-text-sm-FS);
+            font-size: var(--typo-text-sm-FS);
         }
     }
 
@@ -110,8 +110,8 @@
         }
 
         .nds-user-feedback-agreement {
-            font-size: var(--nds-text-sm-FS);
-            line-height: var(--nds-text-sm-LH);
+            font-size: var(--typo-text-sm-FS);
+            line-height: var(--typo-text-sm-LH);
             --link-color: var(--link-primary);
             --link-hover: var(--link-primary-hovered);
             --link-pressed: var(--link-primary-pressed);

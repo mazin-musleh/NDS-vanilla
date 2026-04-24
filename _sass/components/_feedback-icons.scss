@@ -12,8 +12,8 @@
 
 .nds-feedback {
     align-items: center;
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
     font-weight: 500;
     gap: var(--spacing-sm);
 
@@ -62,8 +62,8 @@
 
     &.nds-md {
         --feedback-size: 24px;
-        font-size: var(--nds-text-md-FS);
-        line-height: var(--nds-text-md-LH);
+        font-size: var(--typo-text-md-FS);
+        line-height: var(--typo-text-md-LH);
     }
 
     .nds-feedback-message {

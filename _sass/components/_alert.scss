@@ -91,16 +91,16 @@
   }
 
   .nds-alert-title {
-    font-size: var(--nds-text-md-FS);
-    line-height: var(--nds-text-md-LH);
+    font-size: var(--typo-text-md-FS);
+    line-height: var(--typo-text-md-LH);
     font-weight: 600;
     color: var(--_card-title);
     margin: 0;
   }
 
   .nds-alert-description {
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
     font-weight: 400;
     color: var(--text-subdued);
     margin: 0;
@@ -286,8 +286,8 @@
 
     .nds-alert-title,
     .nds-alert-description {
-      font-size: var(--nds-text-clamp-md-FS);
-      line-height: var(--nds-text-clamp-md-LH);
+      font-size: var(--typo-text-clamp-md-FS);
+      line-height: var(--typo-text-clamp-md-LH);
     }
 
     .nds-alert-description {
@@ -326,8 +326,8 @@
       margin-top: 0;
 
       .nds-link {
-        font-size: var(--nds-text-clamp-md-FS);
-        line-height: var(--nds-text-clamp-md-LH);
+        font-size: var(--typo-text-clamp-md-FS);
+        line-height: var(--typo-text-clamp-md-LH);
         text-decoration: underline;
       }
     }

@@ -110,13 +110,13 @@
 
 .nds-chart-axis-label {
     fill: var(--_chart-text);
-    font-size: var(--nds-text-sm-FS);
+    font-size: var(--typo-text-sm-FS);
     font-family: inherit;
 }
 
 .nds-chart-axis-title {
     color: var(--_chart-text);
-    font-size: var(--nds-text-sm-FS);
+    font-size: var(--typo-text-sm-FS);
     font-weight: 600;
     font-family: inherit;
     white-space: nowrap;
@@ -156,7 +156,7 @@
 }
 
 .nds-chart-pie-label {
-    font-size: var(--nds-text-sm-FS);
+    font-size: var(--typo-text-sm-FS);
     font-weight: 600;
     font-family: inherit;
     pointer-events: none;
@@ -197,7 +197,7 @@
 
 .nds-chart-data-label {
     fill: var(--_chart-label);
-    font-size: var(--nds-text-sm-FS);
+    font-size: var(--typo-text-sm-FS);
     font-weight: 600;
     font-family: inherit;
 }
@@ -227,7 +227,7 @@
 }
 
 .nds-chart-legend-label {
-    font-size: var(--nds-text-sm-FS);
+    font-size: var(--typo-text-sm-FS);
     color: var(--_chart-label);
 }
 
@@ -243,8 +243,8 @@
     border: 1px solid var(--_chart-tooltip-border);
     border-radius: var(--_chart-radius);
     box-shadow: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1));
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
     color: var(--_chart-label);
     pointer-events: none;
     opacity: 0;
@@ -266,7 +266,7 @@
     }
 
     .nds-chart-legend-label {
-        font-size: var(--nds-text-xs-FS);
+        font-size: var(--typo-text-xs-FS);
     }
 
     .nds-chart-axis-label {

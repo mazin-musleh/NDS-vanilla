@@ -43,12 +43,12 @@ tr[data-nds-empty-placeholder] > td {
 :is(.nds-empty-placeholder, tr[data-nds-empty-placeholder] > td) {
   > i {
     color: var(--text-primary-paragraph);
-    font-size: var(--nds-display-md-FS);
+    font-size: var(--typo-display-md-FS);
   }
 
   .nds-empty-message {
     color: var(--text-secondary-paragraph);
-    font-size: var(--nds-text-clamp-md-FS);
-    line-height: var(--nds-text-clamp-md-LH);
+    font-size: var(--typo-text-clamp-md-FS);
+    line-height: var(--typo-text-clamp-md-LH);
   }
 }

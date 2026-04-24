@@ -26,7 +26,7 @@
   }
 
   &.nds-tabs .nds-tab {
-    font-size: var(--nds-text-sm-FS);
+    font-size: var(--typo-text-sm-FS);
   }
 
   .nds-tab-content {
@@ -56,8 +56,8 @@
 
   code {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: var(--nds-text-sm-FS);
-    line-height: var(--nds-text-sm-LH);
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
     font-weight: 600;
     direction: ltr;
     text-align: left;
@@ -91,7 +91,7 @@
           width: 3em;
           margin-right: 1rem;
           color: var(--colors-neutral-500);
-          font-size: var(--nds-text-xs-FS);
+          font-size: var(--typo-text-xs-FS);
           user-select: none;
           pointer-events: none;
           position: relative;
@@ -106,7 +106,7 @@
           left: 0;
           width: 3em;
           height: calc(100% + var(--spacing-7xl));
-          font-size: var(--nds-text-xs-FS);
+          font-size: var(--typo-text-xs-FS);
           background-color: var(--background-stripe);
           border: none;
           border-right: 1px solid var(--border-neutral-secondary);
@@ -197,12 +197,12 @@
 
 @include mobile {
   .nds-code code {
-    font-size: var(--nds-text-xs-FS);
+    font-size: var(--typo-text-xs-FS);
   }
 }
 
 @include tablet {
   .nds-code code {
-    font-size: var(--nds-text-sm-FS);
+    font-size: var(--typo-text-sm-FS);
   }
 }

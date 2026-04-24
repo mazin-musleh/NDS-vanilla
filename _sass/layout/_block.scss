@@ -36,8 +36,8 @@
 }
 
 .nds-block-title {
-    --_block-title-FS: var(--block-title-FS, var(--nds-text-xl-FS));
-    --_block-title-LH: var(--block-title-LH, var(--nds-text-xl-LH));
+    --_block-title-FS: var(--block-title-FS, var(--typo-text-xl-FS));
+    --_block-title-LH: var(--block-title-LH, var(--typo-text-xl-LH));
     --_block-title-FW: var(--block-title-FW, 600);
     --_block-title-MB: var(--block-title-MB, var(--spacing-lg));
     --_block-title-color: var(--block-title-color, var(--text-display));

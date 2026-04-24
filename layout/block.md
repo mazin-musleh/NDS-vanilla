@@ -191,7 +191,7 @@ section.nds-content-section nds-demo-section
                 <ul>
                     <li>Use <strong>blocks</strong> to subdivide content inside a single <a class="nds-color" href="{{ 'layout/section' | relative_url }}">section</a> instead of starting a new section — they share the same visual container but group related paragraphs under their own heading</li>
                     <li>Prefer <strong>one section per topic</strong>, with multiple blocks inside when the topic has distinct sub-groups (best practices, modifier tables, API references, etc.)</li>
-                    <li>Keep block titles short and descriptive. They render at <code class="nds-inline-code lang-html">--nds-text-xl-FS</code> by default, sitting below the section title in visual hierarchy</li>
+                    <li>Keep block titles short and descriptive. They render at <code class="nds-inline-code lang-html">--typo-text-xl-FS</code> by default, sitting below the section title in visual hierarchy</li>
                     <li>Do not wrap cards, grids, or other full components in a block. Place them directly under <code class="nds-inline-code lang-html">.nds-section-body</code> so the block-title hierarchy stays reserved for flow content</li>
                     <li>Do not nest blocks. If a sub-group needs its own heading level, consider whether it belongs in a new section instead</li>
                     <li>Skip the title on a single-block section where the section title already carries the heading — the wrapper is still useful for the automatic flow styling</li>
@@ -203,8 +203,8 @@ section.nds-content-section nds-demo-section
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--block-title-FS</code></td><td>var(--nds-text-xl-FS)</td><td>Block title font size</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--block-title-LH</code></td><td>var(--nds-text-xl-LH)</td><td>Block title line height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--block-title-FS</code></td><td>var(--typo-text-xl-FS)</td><td>Block title font size</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--block-title-LH</code></td><td>var(--typo-text-xl-LH)</td><td>Block title line height</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--block-title-FW</code></td><td>600</td><td>Block title font weight</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--block-title-MB</code></td><td>var(--spacing-lg)</td><td>Spacing below the title (when exposed via the shared token)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--block-title-color</code></td><td>var(--text-display)</td><td>Block title color</td></tr>

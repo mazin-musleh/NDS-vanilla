@@ -9,11 +9,11 @@
     max-height: 550px;
 
     &:not(.nds-sub) {
-        --section-title-FS: var(--nds-display-clamp-lg-FS);
-        --section-title-LH: var(--nds-display-clamp-lg-LH);
-        --section-title-MB: var(--nds-display-clamp-lg-MB);
-        --section-description-FS: var(--nds-text-clamp-xl-FS);
-        --section-description-LH: var(--nds-text-clamp-xl-LH);
+        --section-title-FS: var(--typo-display-clamp-lg-FS);
+        --section-title-LH: var(--typo-display-clamp-lg-LH);
+        --section-title-MB: var(--typo-display-clamp-lg-MB);
+        --section-description-FS: var(--typo-text-clamp-xl-FS);
+        --section-description-LH: var(--typo-text-clamp-xl-LH);
         overflow: hidden;
         aspect-ratio: 16 / 9;
         height: 60svh;
@@ -67,9 +67,9 @@
         --_brand-light: var(--background-sub-hero);
         --_gradient-angle: 90deg;
         --section-padding-block: var(--spacing-5xl);
-        --section-title-FS: var(--nds-display-clamp-md-FS);
-        --section-title-LH: var(--nds-display-clamp-md-LH);
-        --section-title-MB: var(--nds-display-clamp-md-MB);
+        --section-title-FS: var(--typo-display-clamp-md-FS);
+        --section-title-LH: var(--typo-display-clamp-md-LH);
+        --section-title-MB: var(--typo-display-clamp-md-MB);
         background-image: linear-gradient(var(--_gradient-angle),
                 transparent 0%, var(--_brand-light) 70%),
             var(--hero_image);

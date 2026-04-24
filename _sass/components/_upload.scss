@@ -114,15 +114,15 @@
 
         .nds-upload-text {
             color: var(--text-display);
-            font-size: var(--nds-text-md-FS);
-            line-height: var(--nds-text-md-LH);
+            font-size: var(--typo-text-md-FS);
+            line-height: var(--typo-text-md-LH);
             font-weight: 500;
         }
 
         .nds-upload-hint {
             color: var(--text-primary-paragraph);
-            font-size: var(--nds-text-sm-FS);
-            line-height: var(--nds-text-sm-LH);
+            font-size: var(--typo-text-sm-FS);
+            line-height: var(--typo-text-sm-LH);
         }
     }
 
@@ -209,8 +209,8 @@
 
             .nds-file-name {
                 color: var(--text-default);
-                font-size: var(--nds-text-sm-FS);
-                line-height: var(--nds-text-sm-LH);
+                font-size: var(--typo-text-sm-FS);
+                line-height: var(--typo-text-sm-LH);
                 font-weight: 500;
                 display: flex;
                 align-items: center;
@@ -226,7 +226,7 @@
             align-items: center;
             gap: var(--spacing-xs);
             color: var(--text-error);
-            font-size: var(--nds-text-sm-FS);
+            font-size: var(--typo-text-sm-FS);
             font-weight: 500;
         }
     }
