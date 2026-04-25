@@ -52,7 +52,7 @@ Read source files to build a complete understanding of the component. **The sour
   - Demo card skeleton (`.nds-demo-card` with `demo-header`, `demo-container`, `demo-code`)
   - Code tab structure (`.nds-tabs .nds-code` with HTML and JS API panels)
   - Toggle controls (dropmenu pattern for selection groups, flat buttons for on/off)
-  - Built-in Features section (`.nds-definition-list` grid with icons)
+  - Built-in Features section (`.nds-definition-list.nds-divided.nds-grid.nds-doc-features` — the `.nds-doc-features` modifier sets the shared column/gap/icon-size custom properties; do NOT inline `style="--max-col:..."`)
   - Usage Guidelines section (`nds-block` with `nds-block-title`)
   - JS API documentation block (expandable code with inline comments)
 
@@ -102,7 +102,7 @@ Thoroughly analyze the SCSS and JS source files from Phase 2. Build a complete m
 
 For each section of the existing page, check two things:
 
-1. **Structure**: does the HTML skeleton match `alert.md` patterns? (demo card layout, code tab structure, toggle controls, bottom sections)
+1. **Structure**: does the HTML skeleton match `alert.md` patterns? (demo card layout, code tab structure, toggle controls, bottom sections). Code tabs must contain entity-encoded markup (`&lt;div&gt;` not `<div>`) — raw HTML inside `<code class="lang-html code">` counts as OUTDATED and must be converted during rebuild.
 2. **Content**: does it accurately and completely reflect what the source files define? Are all variants/methods/events/states covered?
 
 ### Classify Each Section
@@ -232,7 +232,7 @@ Run this check once, covering every icon on the page. If you revise the page and
 
 ### Built-in Features Section
 
-Its own section (NOT inside Usage Guidelines). Uses `nds-definition-list` grid with icons. Get the HTML pattern from `alert.md`.
+Its own section (NOT inside Usage Guidelines). The wrapper is `<div class="nds-definition-list nds-divided nds-grid nds-doc-features">` — the `.nds-doc-features` modifier (defined in `_sass/components/_definition-list.scss`) sets `--max-col`, `--mid-col`, `--min-col`, `--dl-icon-size`, `--row-gap`, and `--col-gap` so no inline `style="..."` is needed. Get the rest of the HTML pattern (item structure, icons) from `alert.md`.
 
 - **Sells the component's capabilities.** Each item should make a developer think "I get that for free just by using this component."
 - **Titles**: short, concrete noun phrases that name the capability. Prefer specific names over abstract ones ("Active Page Tracking" over "State Management", "Programmatic Control" over "JavaScript API").
@@ -311,7 +311,7 @@ Do NOT document things the developer already gets from copying the code examples
 ### Content Rules
 
 - **NEVER use em dashes** in any generated content. Use colons, commas, periods, or restructure instead.
-- Write code examples as raw HTML, not entity-encoded. Escape HTML tags meant to display as text (e.g., `&lt;a&gt;` in a JS comment).
+- **Use HTML entities inside code tabs**, not raw HTML. The `<code class="lang-html code">` body contains entity-encoded markup (`&lt;div&gt;`, `&lt;span class="..."&gt;`) so the browser renders it as literal text instead of parsing it. Live demo markup above (inside `.state-demo`) stays as raw HTML — only the code-tab copy is entity-encoded. When reviewing an existing page with raw HTML inside a code tab, convert every tag character: `<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;` (when not already part of an entity like `&lt;`).
 - Use `<code class="nds-inline-code lang-html">` for HTML references. Use `<code class="nds-inline-code lang-js">` for JS references. Do NOT use plain `<code>` or the `nds-code` wrapper for inline text.
 - **Links to other pages**: always use Jekyll's `relative_url` filter with `nds-color` class. Example: `<a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a>`. Never use absolute paths like `/components/stepper`.
 
@@ -340,6 +340,7 @@ Before finishing, validate your work against this checklist. Every item MUST pas
 ### Structure and Patterns
 - [ ] All demo card HTML structure matches `alert.md` patterns
 - [ ] All code tabs contain production-ready, copy-paste markup
+- [ ] Code tab markup is entity-encoded (`&lt;`, `&gt;`, `&amp;`) — no raw `<` or `>` inside `<code class="lang-html code">`
 - [ ] Code tab markup is a direct copy of the live demo (same structure, classes, attributes, content, number of items. No abbreviation or placeholders)
 - [ ] All icons verified against `_sass/_hgiRoundedStroke.scss` (content-icon names) or `UI_ICONS` in `scripts/generate-icons-scss.mjs` (UI-icon names) — none guessed; chosen mechanism (`nds-hgi-` for UI vs `hgi hgi-stroke hgi-` for content) matches the usage context
 - [ ] Built-in Features section exists with even number of items

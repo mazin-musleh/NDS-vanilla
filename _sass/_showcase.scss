@@ -156,6 +156,24 @@
   }
 }
 
+
+// ==============================================
+// DOC PAGE BUILT-IN FEATURES GRID
+// ==============================================
+
+// Shared layout for the Built-in Features section on every doc page.
+// Used on `.nds-definition-list.nds-divided.nds-grid.nds-doc-features`;
+// the custom properties are consumed by .nds-grid and .nds-definition-list.
+.nds-definition-list.nds-doc-features {
+  --max-col: 2;
+  --mid-col: 1;
+  --min-col: 1;
+  --dl-icon-size: 24px;
+  --row-gap: 24px;
+  --col-gap: 32px;
+}
+
+
 // ==============================================
 // RESPONSIVE DESIGN & ACCESSIBILITY
 // ==============================================

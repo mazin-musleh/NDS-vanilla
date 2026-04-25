@@ -247,7 +247,7 @@ direction: ltr
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:24px; --row-gap: 24px; --col-gap: 32px;">
+            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
