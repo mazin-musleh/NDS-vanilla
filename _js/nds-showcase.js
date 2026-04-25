@@ -192,7 +192,7 @@
     // their default option) so the stepper doesn't carry stale modifiers
     // across variant changes.
     function updateDemoOptionVisibility(demoCard) {
-        demoCard.querySelectorAll('[data-demo-requires-class], [data-demo-forbids-class]').forEach(function (btn) {
+        NDS.queryAll(demoCard, '[data-demo-requires-class], [data-demo-forbids-class]').forEach(function (btn) {
             var togglerData = parseTogglerData(btn);
             if (!togglerData || !togglerData[0]) return;
             var targetSelector = togglerData[0][1];
@@ -253,7 +253,7 @@
         var groupName = togglerData[0][2];
         if (!groupName || !btn.closest('.demo-toggle-menu')) return;
 
-        var siblings = Array.from(demoCard.querySelectorAll('[data-toggler]')).filter(function (b) {
+        var siblings = Array.from(NDS.queryAll(demoCard, '[data-toggler]')).filter(function (b) {
             return b !== btn && b.getAttribute('data-toggler').includes(groupName);
         });
         if (!siblings.length) return;
@@ -372,7 +372,7 @@
     // Re-apply all active data-toggler operations in a demo card after DOM changes.
     // Handles mutual exclusion: reverses deselected siblings before applying selected ones.
     function reapplyActiveTogglers(demoCard) {
-        var allTogglerBtns = demoCard.querySelectorAll('.demo-toggle-btn[data-toggler]');
+        var allTogglerBtns = NDS.queryAll(demoCard, '.demo-toggle-btn[data-toggler]');
 
         // Collect types that have an active (selected) button
         var activeTypes = {};
@@ -516,7 +516,7 @@
             togglePairs = [[toggleClass, targetSelector]];
         }
 
-        const demoCard = button.closest('.nds-demo-card');
+        const demoCard = NDS.closest(button, '.nds-demo-card');
         if (!demoCard) {
             return;
         }
@@ -527,7 +527,7 @@
         if (buttonTypes.length === 1) {
             const buttonType = buttonTypes[0];
 
-            const allTogglers = demoCard.querySelectorAll('[data-toggler]');
+            const allTogglers = NDS.queryAll(demoCard, '[data-toggler]');
             allTogglers.forEach(otherButton => {
                 if (otherButton === button) return;
 
@@ -610,7 +610,7 @@
         if (isDeselecting && button.closest('.demo-toggle-menu')) {
             const groupName = togglePairs[0]?.[2] || 'default';
             if (groupName !== 'default') {
-                const siblingsInGroup = Array.from(demoCard.querySelectorAll('[data-toggler]')).filter(btn =>
+                const siblingsInGroup = Array.from(NDS.queryAll(demoCard, '[data-toggler]')).filter(btn =>
                     btn !== button && btn.getAttribute('data-toggler').includes(groupName)
                 );
                 if (siblingsInGroup.length > 0) return;
@@ -622,7 +622,7 @@
         const hasAttrOp = togglePairs.some(([,,,op]) => (op || 'class') === 'attr');
         const toggleType = togglePairs[0]?.[2] || 'default';
         if (isDeselecting && hasAttrOp && toggleType !== 'default') {
-            const siblingsInGroup = Array.from(demoCard.querySelectorAll('[data-toggler]')).filter(btn =>
+            const siblingsInGroup = Array.from(NDS.queryAll(demoCard, '[data-toggler]')).filter(btn =>
                 btn !== button && btn.getAttribute('data-toggler').includes(toggleType)
             );
             if (siblingsInGroup.length > 0) return;
@@ -781,7 +781,7 @@
         // Get current state from selected toggle buttons
         const variantType = isToast ? 'toastVariant' : 'alertVariant';
         let variant = 'success';
-        const variantToggle = demoCard.querySelector(`[data-toggler*="${variantType}"][data-state~="selected"]`);
+        const variantToggle = NDS.querySelector(demoCard, `[data-toggler*="${variantType}"][data-state~="selected"]`);
         if (variantToggle) {
             try {
                 const data = JSON.parse(variantToggle.getAttribute('data-toggler'));
@@ -792,7 +792,7 @@
         // Get position (toast only)
         let position = 'top';
         if (isToast) {
-            const positionToggle = demoCard.querySelector('[data-toggler*="toastPosition"][data-state~="selected"]');
+            const positionToggle = NDS.querySelector(demoCard, '[data-toggler*="toastPosition"][data-state~="selected"]');
             if (positionToggle) {
                 position = 'bottom';
             }
@@ -800,9 +800,9 @@
 
         // Get color and shadow
         const colorType = isToast ? 'toastColor' : 'alertColor';
-        const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"][data-state~="selected"]`);
+        const colorToggle = NDS.querySelector(demoCard, `[data-toggler*="${colorType}"][data-state~="selected"]`);
         const hasColor = !!colorToggle;
-        const shadowToggle = demoCard.querySelector('[data-toggler*="alertStyle"][data-state~="selected"]');
+        const shadowToggle = NDS.querySelector(demoCard, '[data-toggler*="alertStyle"][data-state~="selected"]');
         const hasShadow = !!shadowToggle;
 
         const capitalizedVariant = variant.charAt(0).toUpperCase() + variant.slice(1);
@@ -1312,7 +1312,7 @@
         var updatedCode = hiddenCopy.textContent;
 
         // Read all chart toggle buttons and apply their current state to the code
-        demoCard.querySelectorAll('[data-toggler*="chart"]').forEach(function (btn) {
+        NDS.queryAll(demoCard, '[data-toggler*="chart"]').forEach(function (btn) {
             var isOn = NDS.State.has(btn, 'selected');
             var codeReplace = btn.getAttribute('data-code-on');
             var codeReplaceOff = btn.getAttribute('data-code-off');
@@ -1757,7 +1757,7 @@
     function initializeCardModeToggles() {
         document.querySelectorAll('[data-card-mode]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const mode = this.dataset.cardMode;
@@ -1781,7 +1781,7 @@
                 if (cardContent) cardContent.classList.remove('nds-expandable-content');
 
                 // Ensure header visibility matches state
-                const headerMode = demoCard.querySelector('[data-card-header][data-state~="selected"]')?.dataset.cardHeader || 'icon';
+                const headerMode = NDS.querySelector(demoCard, '[data-card-header][data-state~="selected"]')?.dataset.cardHeader || 'icon';
                 const cardHeader = card.querySelector('.nds-card-header');
                 if (headerMode === 'none' && mode !== 'selectable') {
                     cardHeader?.setAttribute('hidden', '');
@@ -1806,7 +1806,7 @@
                 } else if (mode === 'expandable') {
                     // Reset state to default if interactive/disabled
                     if (card.tagName === 'BUTTON') {
-                        const defaultStateBtn = demoCard.querySelector('[data-card-state="default"]');
+                        const defaultStateBtn = NDS.querySelector(demoCard, '[data-card-state="default"]');
                         if (defaultStateBtn) defaultStateBtn.click();
                         card = demoCard.querySelector('.demo-container .nds-card');
                         if (!card) return;
@@ -1814,7 +1814,7 @@
 
                     // Remove truncate if active (conflicts with expandable)
                     card.querySelectorAll('.nds-truncate').forEach(el => el.classList.remove('nds-truncate'));
-                    const truncateBtn = demoCard.querySelector('[data-toggler*="cardTruncate"]');
+                    const truncateBtn = NDS.querySelector(demoCard, '[data-toggler*="cardTruncate"]');
                     if (truncateBtn) NDS.State.remove(truncateBtn, 'selected');
 
                     card.classList.add('nds-expandable');
@@ -1835,7 +1835,7 @@
     function initializeCardStateToggles() {
         document.querySelectorAll('[data-card-state]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const state = this.dataset.cardState;
@@ -1846,7 +1846,7 @@
 
                 // Reset mode to default if expandable is active
                 if (state !== 'default' && NDS.State.has(card, 'expandable')) {
-                    const defaultModeBtn = demoCard.querySelector('[data-card-mode="default"]');
+                    const defaultModeBtn = NDS.querySelector(demoCard, '[data-card-mode="default"]');
                     if (defaultModeBtn) defaultModeBtn.click();
                     card = demoCard.querySelector('.demo-container .nds-card');
                     if (!card) return;
@@ -1895,7 +1895,7 @@
     function initializeCardHeaderToggles() {
         document.querySelectorAll('[data-card-header]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const headerType = this.dataset.cardHeader;
@@ -1930,7 +1930,7 @@
     function initializeCardColorToggles() {
         document.querySelectorAll('[data-card-color]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const color = this.dataset.cardColor;
@@ -1954,7 +1954,7 @@
     function initializeCardLayoutToggles() {
         document.querySelectorAll('[data-card-layout]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const layout = this.dataset.cardLayout;
@@ -1995,7 +1995,7 @@
             // Pass the real always-on variant classes so the code-tab update
             // checks each and strips those no longer on the element. Horizontal
             // has no class (it's the default), so it's intentionally absent.
-            const demoCard = btn.closest('.nds-demo-card');
+            const demoCard = NDS.closest(btn, '.nds-demo-card');
             if (demoCard) updateCodeExampleForClasses(demoCard, stepper, ['nds-vertical', 'nds-radial']);
         });
     }
@@ -2050,18 +2050,18 @@
                     if (e !== newFb) stepper.classList.add(`nds-${e}-${BPS[i]}`);
                 });
 
-                const demoCard = stepper.closest('.nds-demo-card');
+                const demoCard = NDS.closest(stepper, '.nds-demo-card');
                 if (!demoCard) return;
 
                 // Sync Fallback dropmenu to the new fallback.
-                const fbTarget = demoCard.querySelector(`[data-stepper-fallback="${newFb}"]`);
+                const fbTarget = NDS.querySelector(demoCard, `[data-stepper-fallback="${newFb}"]`);
                 if (fbTarget) selectDropmenuItem(fbTarget, '[data-stepper-fallback]');
 
                 // Sync each BP dropmenu to the correct option — Fallback when
                 // the BP inherits, the matching variant when it overrides.
                 BPS.forEach((bp, i) => {
                     const groupName = 'stepperLayout' + bp[0].toUpperCase() + bp.slice(1);
-                    const groupItems = [...demoCard.querySelectorAll(`.demo-toggle-btn[data-toggler*="${groupName}"]`)];
+                    const groupItems = NDS.queryAll(demoCard, `.demo-toggle-btn[data-toggler*="${groupName}"]`);
                     if (!groupItems.length) return;
 
                     const expectedClass = effective[i] === newFb ? '' : `nds-${effective[i]}-${bp}`;
@@ -2118,7 +2118,7 @@
     function initializeCardContentToggles() {
         document.querySelectorAll('[data-card-toggle]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const section = this.dataset.cardToggle;
@@ -2148,7 +2148,7 @@
     function initializeFormFixToggles() {
         document.querySelectorAll('[data-form-fix]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const mode = this.dataset.formFix;
@@ -2180,10 +2180,10 @@
                 reapplyActiveTogglers(demoCard);
 
                 // Re-apply icon/dropmenu after state so new elements inherit disabled/readonly
-                if (demoCard.querySelector('[data-form-fix-icon][data-state~="selected"]')) {
+                if (NDS.querySelector(demoCard, '[data-form-fix-icon][data-state~="selected"]')) {
                     applyFormFixIcon(formControl, true);
                 }
-                if (demoCard.querySelector('[data-form-fix-dropmenu][data-state~="selected"]')) {
+                if (NDS.querySelector(demoCard, '[data-form-fix-dropmenu][data-state~="selected"]')) {
                     applyFormFixDropmenu(formControl, true);
                 }
 
@@ -2216,7 +2216,7 @@
     function initializeFormFixIcon() {
         document.querySelectorAll('[data-form-fix-icon]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const isActive = !NDS.State.has(this, 'selected');
@@ -2308,7 +2308,7 @@
     function initializeFormFixDropmenu() {
         document.querySelectorAll('[data-form-fix-dropmenu]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const isActive = !NDS.State.has(this, 'selected');
@@ -2329,7 +2329,7 @@
     function initializeRatingDisableToggle() {
         document.querySelectorAll('[data-rating-disable]').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
                 const rating = demoCard.querySelector('.nds-rating');
                 if (!rating || !rating.ndsRating) return;
@@ -2482,7 +2482,7 @@
     function initializeQuoteToggles() {
         document.querySelectorAll('[data-quote-bg]').forEach(btn => {
             btn.addEventListener('click', function () {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const quote = demoCard.querySelector('.demo-container .nds-quote');
@@ -2496,7 +2496,7 @@
 
         document.querySelectorAll('[data-quote-toggle]').forEach(btn => {
             btn.addEventListener('click', function () {
-                const demoCard = this.closest('.nds-demo-card');
+                const demoCard = NDS.closest(this, '.nds-demo-card');
                 if (!demoCard) return;
 
                 const quote = demoCard.querySelector('.demo-container .nds-quote');
@@ -2579,10 +2579,10 @@
     function showCookiePopupFromDemo(button) {
         if (!window.NDS || !window.NDS.Cookies || typeof window.NDS.Cookies.show !== 'function') return;
 
-        const demoCard = button.closest('.nds-demo-card');
+        const demoCard = NDS.closest(button, '.nds-demo-card');
         const popup = document.getElementById('ndsCookiesPopup');
         if (popup && demoCard) {
-            const centerToggle = demoCard.querySelector('[data-toggler*="cookieLayout"][data-state~="selected"]');
+            const centerToggle = NDS.querySelector(demoCard, '[data-toggler*="cookieLayout"][data-state~="selected"]');
             popup.classList.toggle('nds-compact', !!centerToggle);
         }
         window.NDS.Cookies.show();
@@ -2590,7 +2590,7 @@
 
     // Reset progress duration animation
     function resetProgressDuration(button) {
-        const demoCard = button.closest('.nds-demo-card');
+        const demoCard = NDS.closest(button, '.nds-demo-card');
         if (!demoCard) return;
 
         const progressButtons = demoCard.querySelectorAll('.nds-progress:not(.nds-progress-static)');
@@ -2605,7 +2605,7 @@
 
     // Set random progress values
     function randomProgressValue(button) {
-        const demoCard = button.closest('.nds-demo-card');
+        const demoCard = NDS.closest(button, '.nds-demo-card');
         if (!demoCard) return;
 
         const progressButtons = demoCard.querySelectorAll('.nds-progress-static');
@@ -2618,7 +2618,7 @@
 
     // Create alert or toast from demo toggle states
     function createAlertFromDemo(button, isToast) {
-        const demoCard = button.closest('.nds-demo-card');
+        const demoCard = NDS.closest(button, '.nds-demo-card');
         if (!demoCard) return;
 
         // Determine toggle type prefixes based on alert type
@@ -2627,7 +2627,7 @@
 
         // Get variant from selected toggle button
         let variant = 'success';
-        const variantToggle = demoCard.querySelector(`[data-toggler*="${variantType}"][data-state~="selected"]`);
+        const variantToggle = NDS.querySelector(demoCard, `[data-toggler*="${variantType}"][data-state~="selected"]`);
         if (variantToggle) {
             try {
                 const toggleData = JSON.parse(variantToggle.getAttribute('data-toggler'));
@@ -2636,13 +2636,13 @@
         }
 
         // Get color from toggle button
-        const colorToggle = demoCard.querySelector(`[data-toggler*="${colorType}"][data-state~="selected"]`);
+        const colorToggle = NDS.querySelector(demoCard, `[data-toggler*="${colorType}"][data-state~="selected"]`);
         const hasColor = !!colorToggle;
 
         // Get position (toast only)
         let position = 'top';
         if (isToast) {
-            const positionToggle = demoCard.querySelector('[data-toggler*="toastPosition"][data-state~="selected"]');
+            const positionToggle = NDS.querySelector(demoCard, '[data-toggler*="toastPosition"][data-state~="selected"]');
             if (positionToggle) position = 'bottom';
         }
 
@@ -2674,7 +2674,7 @@
     function populateDemoFiles(button) {
         
         // Find the file upload container in the same demo card
-        const demoCard = button.closest('.nds-demo-card');
+        const demoCard = NDS.closest(button, '.nds-demo-card');
         if (!demoCard) {
             return;
         }
@@ -2790,7 +2790,7 @@
         const btn = e.target.closest('.demo-counter-restart');
         if (!btn) return;
 
-        const card = btn.closest('.nds-demo-card');
+        const card = NDS.closest(btn, '.nds-demo-card');
         if (!card) return;
 
         card.querySelectorAll('.nds-counter-value').forEach(function(el) {

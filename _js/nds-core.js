@@ -344,6 +344,68 @@
         return () => document.removeEventListener('scroll', handler, { capture: true });
     };
 
+    // ── Portal-Aware DOM Lookup ────────────────────────────────────────
+    // When a `.nds-dropmenu-menu` is portaled to <body>, its descendants
+    // are no longer reachable through the original wrapper's DOM tree.
+    // These helpers bridge that gap using the `_ownerDropmenu` backref
+    // dropmenu sets on every menu.
+    //
+    //   NDS.closest(el, sel)       — like el.closest, but if `el` lives
+    //                                inside a portaled menu it falls back
+    //                                to the menu's owner wrapper and
+    //                                continues from there.
+    //   NDS.queryAll(root, sel)    — like root.querySelectorAll, but also
+    //                                searches inside any portaled menu
+    //                                whose owner wrapper is a descendant
+    //                                of `root`.
+    //   NDS.querySelector(root, sel) — first match using queryAll order.
+
+    NDS.closest = (el, selector) => {
+        if (!el) return null;
+        const direct = el.closest(selector);
+        if (direct) return direct;
+        const menu = el.closest('.nds-dropmenu-menu');
+        if (menu && menu._ownerDropmenu) {
+            return menu._ownerDropmenu.closest(selector);
+        }
+        return null;
+    };
+
+    NDS.queryAll = (root, selector) => {
+        if (!root) return [];
+        const set = new Set();
+        root.querySelectorAll(selector).forEach(el => set.add(el));
+        if (document.body) {
+            const portaled = document.body.querySelectorAll(':scope > .nds-dropmenu-menu');
+            for (let i = 0; i < portaled.length; i++) {
+                const menu = portaled[i];
+                const owner = menu._ownerDropmenu;
+                if (!owner || !root.contains(owner)) continue;
+                if (menu.matches(selector)) set.add(menu);
+                menu.querySelectorAll(selector).forEach(el => set.add(el));
+            }
+        }
+        return Array.from(set);
+    };
+
+    NDS.querySelector = (root, selector) => {
+        if (!root) return null;
+        const direct = root.querySelector(selector);
+        if (direct) return direct;
+        if (document.body) {
+            const portaled = document.body.querySelectorAll(':scope > .nds-dropmenu-menu');
+            for (let i = 0; i < portaled.length; i++) {
+                const menu = portaled[i];
+                const owner = menu._ownerDropmenu;
+                if (!owner || !root.contains(owner)) continue;
+                if (menu.matches(selector)) return menu;
+                const found = menu.querySelector(selector);
+                if (found) return found;
+            }
+        }
+        return null;
+    };
+
     // ── Portal / Containing-Block Detection ────────────────────────────
     // A `position: fixed` element resolves `top`/`left` against the nearest
     // ancestor that establishes a containing block — and is trapped inside

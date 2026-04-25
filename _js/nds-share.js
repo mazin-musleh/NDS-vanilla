@@ -37,11 +37,25 @@
         openPopup(`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`);
     }
 
+    // Walk up to a `.nds-share` wrapper, falling back via the menu's
+    // `_ownerDropmenu` backref. Needed because the share buttons usually
+    // live inside a `.nds-share.nds-dropmenu` whose menu portals to <body>
+    // when open — at that point the buttons are no longer DOM descendants
+    // of `.nds-share`, so plain `closest()` returns null.
+    function shareWrapperFrom(el) {
+        if (!el) return null;
+        const direct = el.closest('.nds-share');
+        if (direct) return direct;
+        const menu = el.closest('.nds-dropmenu-menu');
+        const owner = menu && menu._ownerDropmenu;
+        return owner && owner.classList.contains('nds-share') ? owner : null;
+    }
+
     async function copyLink(url, button) {
         if (!NDS.Copy) return;
         const ok = await NDS.Copy.writeText(url);
         if (!ok || !button) return;
-        const wrapper = button.closest('.nds-share, .nds-dropmenu');
+        const wrapper = shareWrapperFrom(button);
         NDS.Copy.flash(button, {
             onRestore: () => {
                 if (wrapper && wrapper.ndsDropmenu) wrapper.ndsDropmenu.close();
@@ -50,7 +64,7 @@
     }
 
     function handleClick(button) {
-        const wrapper = button.closest('.nds-share');
+        const wrapper = shareWrapperFrom(button);
         if (!wrapper) return;
         const url = wrapper.getAttribute('data-share-url') || window.location.href;
         const title = wrapper.getAttribute('data-share-title') || document.title;
@@ -68,10 +82,10 @@
         if (_ac) _ac.abort();
         _ac = new AbortController();
         document.addEventListener('click', (e) => {
-            const wrapper = e.target.closest('.nds-share');
-            if (!wrapper) return;
             const button = e.target.closest(TARGET_SELECTOR);
-            if (!button || !wrapper.contains(button)) return;
+            if (!button) return;
+            const wrapper = shareWrapperFrom(button);
+            if (!wrapper) return;
             handleClick(button);
         }, { signal: _ac.signal });
     }
