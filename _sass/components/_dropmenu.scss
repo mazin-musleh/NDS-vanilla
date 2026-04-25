@@ -77,8 +77,8 @@
   --_menu-padding: var(--menu-padding, var(--spacing-md, 8px));
   --_dropmenu-offset: var(--spacing-xs, 4px);
   --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
-  --_dropmenu-width: var(--dropmenu-width, min-content);
-  --_dropmenu-min-width: var(--dropmenu-min-width, 150px);
+  --_dropmenu-width: var(--dropmenu-width, fit-content);
+  --_dropmenu-min-width: var(--dropmenu-min-width, max-content);
   --_dropmenu-max-width: var(--dropmenu-max-width, calc(100vw - 16px));
   --divider: var(--_menu-padding);
 
