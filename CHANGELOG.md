@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-## [1.0.0] - 2026-04-17
+## [1.0.0] - 2026-04-26
 
 ### Added
 - Initial public release.
@@ -16,6 +16,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Smart component loader with on-demand initialization.
 - Six example pages: Service, Console, Registration, Academic Profile, Services List, 404.
 - Jekyll-based development environment with custom Ruby plugins for JS bundling, HTML compression, and baseurl resolution.
-- GitHub Actions workflows for Pages deployment and release artifact generation.
-- Seven project-specific Claude Code skills for contributors.
+- GitHub Actions workflow for Pages deployment.
+- Five project-specific Claude Code skills for contributors.
 - MIT license, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policies.
