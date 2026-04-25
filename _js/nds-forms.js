@@ -607,16 +607,24 @@
                 input.setAttribute('aria-required', 'true');
             }
 
+            // The select-input is `readonly` to prevent typing, but the field
+            // is still interactive — clicking opens the dropdown. Treat it
+            // as not-readonly for state-visualization purposes so it picks
+            // up active/focus/filled like any other input.
+            function statesActive() {
+                return !input.readOnly || input.classList.contains('nds-select-input');
+            }
+
             // Mouse interaction - use data-state on container
             input.addEventListener('mousedown', function() {
-                if (formContainer && !input.readOnly) {
+                if (formContainer && statesActive()) {
                     NDS.State.add(formContainer, 'active');
                 }
             });
 
             ['mouseup', 'mouseleave'].forEach(function(event) {
                 input.addEventListener(event, function() {
-                    if (formContainer && !input.readOnly) {
+                    if (formContainer && statesActive()) {
                         NDS.State.remove(formContainer, 'active');
                     }
                 });
@@ -624,13 +632,13 @@
 
             // Focus states - use data-state on container
             input.addEventListener('focus', function() {
-                if (formContainer && !input.readOnly) {
+                if (formContainer && statesActive()) {
                     NDS.State.add(formContainer, 'focus');
                 }
             });
 
             input.addEventListener('blur', function() {
-                if (formContainer && !input.readOnly) {
+                if (formContainer && statesActive()) {
                     NDS.State.remove(formContainer, 'focus');
                     NDS.State.remove(formContainer, 'typing');
                 }
@@ -650,12 +658,12 @@
 
                 // Only validate on blur if field already has an error (to clear it when fixed)
                 var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
-                if (!input.readOnly) FormState.update(input, formControl, !hasError);
+                if (statesActive()) FormState.update(input, formControl, !hasError);
             });
 
             // Typing state - indicates real user input
             input.addEventListener('keydown', function() {
-                if (formContainer && !input.readOnly) {
+                if (formContainer && statesActive()) {
                     NDS.State.add(formContainer, 'typing');
                 }
             });
@@ -877,40 +885,38 @@
 
             if (!dropdown || !options.length) return;
 
-            var isOpen = false;
-            var selectedValue = '';
+            // Augment the existing markup with NDS.Dropmenu hooks so we
+            // inherit positioning (placeFixed + portal), animation,
+            // outside-click, and keyboard nav from the dropmenu component
+            // — same approach as nds-autocomplete. Author markup is
+            // unchanged; the legacy `nds-select-*` classes stay alongside.
+            formControl.classList.add('nds-dropmenu');
+            // Skip dropmenu's own click-to-toggle on the trigger; the
+            // <input> already drives toggle via its own listeners below.
+            formControl.setAttribute('data-dropmenu-no-click', '');
+            // Mark the input as the dropmenu trigger so focus restoration
+            // on close (Escape, Tab past last item) lands back on the
+            // focusable input rather than the form-control <div>.
+            selectInput.classList.add('nds-dropmenu-trigger');
+            dropdown.classList.add('nds-dropmenu-menu');
+            // The dropdown is shown/hidden via dropmenu's data-state, not
+            // the `hidden` attribute, so strip it.
+            dropdown.removeAttribute('hidden');
+
+            // Inner scroll wrapper — dropmenu's `.nds-dropmenu-scroll`
+            // styles handle max-height + overscroll-behavior.
+            var optionsContainer = dropdown.querySelector('.nds-select-options');
+            if (optionsContainer) optionsContainer.classList.add('nds-dropmenu-scroll');
+
+            // Item class so dropmenu's keyboard nav + auto-close-on-click
+            // pick the buttons up.
+            options.forEach(function(option) {
+                option.classList.add('nds-dropmenu-item');
+            });
+
+            var dropmenuInstance = NDS.Dropmenu.create(formControl);
             var formContainer = formControl.closest('.nds-form-container') || formControl;
-
-            function updateOpenState() {
-                isOpen ? NDS.State.add(formContainer, 'open') : NDS.State.remove(formContainer, 'open');
-
-                if (isOpen) {
-                    updateSelectedOptions();
-                    // Staged measurement (JSD-06 exempt): stage the dropdown off-screen
-                    // via fixed+hidden and drop the `hidden` attribute so NDS.flipPosition
-                    // can measure a non-zero menuRect. The read depends on the write, so
-                    // "batch reads before writes" doesn't apply here.
-                    dropdown.style.cssText = 'visibility:hidden;position:fixed;top:0;left:0;';
-                    dropdown.removeAttribute('hidden');
-
-                    // respectNav: false — the dropdown is positioned inline beneath its
-                    // form-control sibling, so the sticky mainnav doesn't apply as a top
-                    // boundary.
-                    var p = NDS.flipPosition(formControl, dropdown, { respectNav: false });
-
-                    // Clear measurement styles, apply direction override if needed
-                    if (p.spaceBelow < p.menuRect.height + 4 && p.triggerRect.top > p.spaceBelow) {
-                        dropdown.style.cssText = 'top:unset;bottom:100%;margin-bottom:4px;';
-                    } else {
-                        dropdown.style.cssText = '';
-                    }
-
-                    if (options[0]) options[0].focus();
-                } else {
-                    dropdown.setAttribute('hidden', '');
-                    dropdown.style.cssText = '';
-                }
-            }
+            var selectedValue = '';
 
             function updateSelectedOptions() {
                 options.forEach(function(option) {
@@ -927,7 +933,6 @@
                 selectInput.value = text;
                 if (hiddenInput) hiddenInput.value = value;
                 updateSelectedOptions();
-                closeDropdown();
 
                 Utils.triggerEvents(selectInput);
                 if (hiddenInput) Utils.triggerEvents(hiddenInput);
@@ -939,29 +944,43 @@
                 }));
             }
 
-            function openDropdown() {
-                if (selectInput.disabled) return;
-                isOpen = true;
-                updateOpenState();
-            }
-
-            function closeDropdown() {
-                isOpen = false;
-                updateOpenState();
-            }
-
-            function toggleDropdown() {
-                isOpen ? closeDropdown() : openDropdown();
-            }
-
-            // Event listeners
-            selectInput.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleDropdown();
+            // Mirror dropmenu open/close onto the form-container so the
+            // arrow rotation rule and any consumer styling that hooks
+            // `[data-state~="open"]` on `.nds-form-container` keeps working.
+            formControl.addEventListener('nds:dropmenu:opened', function() {
+                NDS.State.add(formContainer, 'open');
+                updateSelectedOptions();
+                if (options[0]) options[0].focus();
+            });
+            formControl.addEventListener('nds:dropmenu:closed', function() {
+                NDS.State.remove(formContainer, 'open');
             });
 
-            // Scoped AbortController so per-option listeners can be detached as a group
-            // if initCustomSelectDropdown is re-run on the same select element.
+            // Match the dropdown's min-width to the form-control before
+            // opening — same approach autocomplete uses. Without this the
+            // fixed-positioned menu sizes to its content rather than the
+            // input it anchors to. Sync on focus so any subsequent open
+            // path (mouse click via our handler, or keyboard via
+            // dropmenu's own handleTriggerKeydown) uses the right width.
+            function syncWidth() {
+                dropdown.style.minWidth = formControl.offsetWidth + 'px';
+            }
+            selectInput.addEventListener('focus', syncWidth);
+
+            // Click → toggle. Dropmenu's own click-to-toggle is disabled
+            // via data-dropmenu-no-click, so this is the only click path.
+            // syncWidth is redundant here for users who clicked (focus
+            // fires first), but covers programmatic / direct-click cases
+            // where focus might not have settled yet.
+            selectInput.addEventListener('click', function(e) {
+                if (selectInput.disabled) return;
+                e.preventDefault();
+                if (!dropmenuInstance.isOpen) syncWidth();
+                dropmenuInstance.toggle();
+            });
+
+            // Scoped AbortController so per-option listeners can be
+            // detached as a group if initCustomSelectDropdown is re-run.
             if (selectInput._ndsOptionsAC) selectInput._ndsOptionsAC.abort();
             selectInput._ndsOptionsAC = new AbortController();
             var optionsSignal = selectInput._ndsOptionsAC.signal;
@@ -973,69 +992,18 @@
                     var optionText = this.querySelector('.nds-option-text');
                     var text = optionText ? optionText.textContent : value;
                     selectValue(value, text);
-                    selectInput.focus();
+                    // Dropmenu's item-click handler auto-closes after
+                    // 100ms; restore focus to the input after that. With
+                    // `nds-dropmenu-trigger` on the input, dropmenu's
+                    // close also calls trigger.focus() — this setTimeout
+                    // is belt-and-braces for the "click-to-select" path.
+                    setTimeout(function() { selectInput.focus(); }, 110);
                 }, { signal: optionsSignal });
-
-                option.addEventListener('keydown', function(e) {
-                    var currentIndex = Array.from(options).indexOf(this);
-
-                    switch(e.key) {
-                        case 'Enter':
-                        case ' ':
-                            e.preventDefault();
-                            var value = this.dataset.value || '';
-                            var optionText = this.querySelector('.nds-option-text');
-                            var text = optionText ? optionText.textContent : value;
-                            selectValue(value, text);
-                            selectInput.focus();
-                            break;
-                        case 'ArrowDown':
-                            e.preventDefault();
-                            options[Math.min(currentIndex + 1, options.length - 1)].focus();
-                            break;
-                        case 'ArrowUp':
-                            e.preventDefault();
-                            options[Math.max(currentIndex - 1, 0)].focus();
-                            break;
-                        case 'Escape':
-                            closeDropdown();
-                            selectInput.focus();
-                            break;
-                    }
-                }, { signal: optionsSignal });
+                // Enter/Space/Arrow/Home/End/Tab/Escape are all handled
+                // by NDS.Dropmenu (handleTriggerKeydown for the input,
+                // handleMenuKeydown for inside the menu) — no per-option
+                // or input keydown wiring needed here.
             });
-
-            selectInput.addEventListener('keydown', function(e) {
-                if (selectInput.disabled) return;
-
-                switch(e.key) {
-                    case 'Enter':
-                    case ' ':
-                    case 'ArrowDown':
-                        e.preventDefault();
-                        if (!isOpen) {
-                            openDropdown();
-                        } else if (options[0]) {
-                            options[0].focus();
-                        }
-                        break;
-                    case 'ArrowUp':
-                        e.preventDefault();
-                        if (isOpen && options.length > 0) {
-                            options[options.length - 1].focus();
-                        }
-                        break;
-                    case 'Escape':
-                        if (isOpen) closeDropdown();
-                        break;
-                }
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!formControl.contains(e.target)) {
-                    closeDropdown();
-                }
-            }, { signal: optionsSignal });
 
             // Initialize selected option
             var initialValue = (hiddenInput ? hiddenInput.value : '') || selectInput.value;

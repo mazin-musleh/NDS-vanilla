@@ -354,36 +354,12 @@ fieldset {
         transform: rotate(180deg);
     }
 
-    // Custom dropdown styles for nds-select when using input instead of select element
+    // Custom dropdown styles for nds-select when using input instead of
+    // select element. Position/border/shadow/scroll are inherited from
+    // `.nds-dropmenu-menu` (added by JS at init); only the input-side
+    // affordances remain here.
     .nds-select-input {
         cursor: pointer;
-    }
-
-    .nds-select-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        z-index: 999;
-        margin-top: 4px;
-        padding: var(--spacing-xs, 4px);
-        background-color: var(--form-field-background-default);
-        border: 1px solid var(--form-field-border-default);
-        border-radius: var(--radius-md, 8px);
-        box-shadow: var(--shadow-md);
-        max-height: 200px;
-        overflow-y: auto;
-
-        .nds-select-options {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xs);
-
-            .nds-btn {
-                justify-content: start;
-                width: 100%;
-            }
-        }
     }
 
     .nds-form-action:not([hidden]) {
@@ -391,7 +367,7 @@ fieldset {
         gap: var(--spacing-sm);
         flex-direction: row;
         margin-inline-end: calc(var(--spacing-md) * -1);
-        height: stretch;
+        align-self: stretch;
 
         &:first-child {
             margin-inline-end: unset;
@@ -399,7 +375,7 @@ fieldset {
         }
 
         >*:not([hidden]):not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
-            --btn-height: 100%;
+            --btn-height:100%;
             --btn-height-min: var(--btn-height);
             --btn-radius: var(--_input-radius);
             padding-block: 0;
