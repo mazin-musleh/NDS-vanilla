@@ -1,17 +1,17 @@
 ---
-name: nds-code-audit
+name: nds-js-audit
 description: Audit NDS source JS for DRY/KISS violations, scalability and maintainability risks, performance issues, client-side security risks, and cross-file pattern consistency. Covers listener/observer pooling via nds-core.js (NDS.onResize, NDS.onIntersect, NDS.onElementResize, NDS.onDOMAdd, NDS.onAttrChange, NDS.debounce), throttling of scroll/resize handlers, NDS.State and NDS.Status reuse, NDS.breakpoints reuse, cross-file detection of repeated helper functions that should be promoted to nds-core.js, component contract conformance (factory vs singleton shape via NDS.{Name}.init/reinit/create), dead defensive guards inside loader-registered components, and common web-security sinks (innerHTML XSS, eval/new Function, target="_blank" tabnabbing, postMessage origin checks, untrusted URLs). Use this skill for "audit the JS", "audit performance", "audit security", "optimize listeners", "check nds-core usage", "find functions that should live in core", "find unthrottled scroll handlers", "find XSS risks", "make all components follow the same pattern", "check component consistency", or any JS source-code quality pass on `_js/`. NOT for SCSS/CSS audits, documentation page audits (use nds-doc), or UX copy review.
 argument-hint: "[target] [optional: rule-group]"
 ---
 
-# NDS Code Audit
+# NDS JS Audit
 
 Apply this skill to: `$ARGUMENTS`
 
 This skill audits the NDS JavaScript source — the files in `_js/` — against the conventions already codified in `CLAUDE.md` and the shared-utility contract published by `_js/nds-core.js`. It reports real duplication, real performance risk, and real maintainability drag, then applies fixes only after the user approves the report. It is the code-quality counterpart to `nds-doc` (which audits documentation).
 
-> **THIS SKILL WILL EAT YOUR TOKENS FAST.**
-> A full-scope run reads every `_js/nds-*.js` file (40+ files), applies 22 rules against each, and spawns per-file review agents during Phase 5/6 fix application. Budget roughly 30–60k tokens for an audit-only pass, more when applying fixes or promotion candidates (each migrated file adds another review-agent round). Narrow the scope whenever you can: `/nds-code-audit <filename>` for a single-file pass, or `/nds-code-audit js <rule-group>` (`performance` / `dry` / `security`) to restrict the catalog. The full-surface run is for release-prep or significant refactor windows — not every session.
+> **THIS SKILL WILL BURN YOUR TOKENS FAST.**
+> A full-scope run reads every `_js/nds-*.js` file (40+ files), applies 22 rules against each, and spawns per-file review agents during Phase 5/6 fix application. Budget roughly 30–60k tokens for an audit-only pass, more when applying fixes or promotion candidates (each migrated file adds another review-agent round). Narrow the scope whenever you can: `/nds-js-audit <filename>` for a single-file pass, or `/nds-js-audit js <rule-group>` (`performance` / `dry` / `security`) to restrict the catalog. The full-surface run is for release-prep or significant refactor windows — not every session.
 
 ---
 
@@ -29,11 +29,35 @@ The rule catalog is a living document — surface gaps and dead rules during the
 
 Parse `$ARGUMENTS` into a mode and (optionally) a rule-group filter.
 
+### No arguments — show menu and stop
+
+If `$ARGUMENTS` is empty, **do not run the audit**. Instead, print this menu and wait for the user to reply with a choice:
+
+```
+> ⚠ THIS SKILL BURNS TOKENS FAST. Full-scope run: ~30–60k tokens. Single-file: ~5–10k.
+
+NDS JS Audit — choose a scope:
+
+  1  js                    Full audit — all component files in _js/ (expensive: ~30–60k tokens)
+  2  <filename>            Single-file audit, e.g. nds-modal.js
+  3  js performance        Performance rules only (JSP)
+  4  js dry                DRY/KISS rules only (JSD)
+  5  js security           Security rules only (JSS)
+  6  <filename> performance|dry|security   Single file + one rule group
+  0  exit
+
+Reply with a number, or type the scope directly.
+```
+
+Accept `0` or `exit` as "end here, nothing runs". For `2` and `6`, ask the user to name the file before proceeding.
+
+Do not begin Phase 2 or any file reads until the user responds.
+
 ### Mode selection (first argument)
 
 | `$1` | Files in scope | Rule groups run |
 |---|---|---|
-| `js` or empty | All `_js/nds-*.js` except `nds-core.js`, `nds-loader.js`, `nds-showcase.js` | JSP + JSD + JSS |
+| `js` | All `_js/nds-*.js` except `nds-core.js`, `nds-loader.js`, `nds-showcase.js` | JSP + JSD + JSS |
 | `<filename>` or `<relative/path>` | Single JS file under `_js/` | JSP + JSD + JSS |
 
 **SCSS is not supported.** If the user passes `scss`, `all`, or any path ending in `.scss`, stop and reply: *"SCSS audit coverage was removed from this skill. Refactor SCSS manually — see `CLAUDE.md` for token, RTL, and scaffold conventions."* Do not run partial rules on an SCSS file.
@@ -207,9 +231,9 @@ When emitting the Next Step block at the end of a real report, adapt the numbere
 
 When the user replies `save` — alone, or combined with another action like `save and evolve` or `fix HIGH then save` — write the current report verbatim to `.claude/audit-reports/` under this pattern:
 
-**Filename:** `YYYY-MM-DD-nds-code-audit-js-run-N.md`
+**Filename:** `YYYY-MM-DD-nds-js-audit-run-N.md`
 - `YYYY-MM-DD` is today's date (the run date, not the save date — they're the same in 99% of cases, but use the date of the audit if they diverge).
-- `N` is the **save-order index**: `(count of existing `run-*.md` files in `.claude/audit-reports/`) + 1`. Do NOT count `/nds-code-audit` invocations from the conversation that didn't get saved; the index reflects persisted artifacts only.
+- `N` is the **save-order index**: `(count of existing `run-*.md` files in `.claude/audit-reports/`) + 1`. Do NOT count `/nds-js-audit` invocations from the conversation that didn't get saved; the index reflects persisted artifacts only.
 - No scope suffixes (`-baseline`, `-security`, etc.) in the filename. The distinction lives inside the report itself via the "Rule catalog version" line at the top of the file — that's enough signal for any later reader to tell which rule groups were active.
 
 **Always include a frontmatter-style header** in the saved file so later audits can be diffed meaningfully:
@@ -219,7 +243,7 @@ When the user replies `save` — alone, or combined with another action like `sa
 
 **Date:** YYYY-MM-DD
 **Rule catalog version:** {JSP + JSD | JSP + JSD + JSS} (note any post-evolution refinements: "post-evolution: JSD-03 [400,2000] range, JSS-01 allowlist v3")
-**Invocation:** `/nds-code-audit {args}`
+**Invocation:** `/nds-js-audit {args}`
 
 ## Summary
 …
@@ -254,7 +278,7 @@ Only enter this phase when the user replies with an explicit fix instruction. Re
 
 Automated refactors carry regression risk. Before starting the first fix batch, tell the user:
 
-> Recommended: create a git checkpoint now so any fix batch can be reverted cleanly — for example `git add -A && git commit -m "checkpoint before nds-code-audit fixes"`. The skill will NOT run git commands; this is your call.
+> Recommended: create a git checkpoint now so any fix batch can be reverted cleanly — for example `git add -A && git commit -m "checkpoint before nds-js-audit fixes"`. The skill will NOT run git commands; this is your call.
 
 The skill never runs git itself. The reminder is one sentence, not a lecture. If the user declines or ignores it, proceed — they know their workflow.
 
@@ -439,7 +463,7 @@ Proposal 3 of N: DELETE rule
 
 ### Application
 
-For each proposal the user accepts, edit this file (`.claude/skills/nds-code-audit/SKILL.md`) — and only this file — to apply the change:
+For each proposal the user accepts, edit this file (`.claude/skills/nds-js-audit/SKILL.md`) — and only this file — to apply the change:
 
 - **ADD**: insert the new rule in the correct rule-group table, keeping IDs sequential.
 - **NARROW / REFINE**: edit the "What to detect" column, not the rule's identity. Do not change its ID.
