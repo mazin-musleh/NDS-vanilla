@@ -1443,8 +1443,12 @@
             btn.className = 'nds-btn nds-subtle nds-date-cell';
             btn.type = 'button';
 
-            // Use helper method for day number display
-            btn.innerHTML = '<span class="nds-label">' + this.getDisplayDayNumber(date) + '</span>';
+            // Day number display — built imperatively so the value flows through
+            // .textContent (text-only) and never reaches the HTML parser.
+            var dayLabel = document.createElement('span');
+            dayLabel.className = 'nds-label';
+            dayLabel.textContent = this.getDisplayDayNumber(date);
+            btn.appendChild(dayLabel);
 
             // Add appropriate classes
             if (type === 'other-month') {
@@ -1713,7 +1717,12 @@
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-month-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', index);
-                btn.innerHTML = '<span class="nds-label">' + monthName + '</span>';
+                // Month label — built imperatively so the value flows through
+                // .textContent (text-only) and never reaches the HTML parser.
+                var monthLabel = document.createElement('span');
+                monthLabel.className = 'nds-label';
+                monthLabel.textContent = monthName;
+                btn.appendChild(monthLabel);
 
                 var isSelected = self.state.calendarType === 'hijri' ?
                     (index + 1) === self.getCurrentMonth() : // For Hijri: compare (0-based index + 1) with 1-based month
@@ -1780,7 +1789,13 @@
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-year-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', year);
-                btn.innerHTML = '<span class="nds-label">' + year + '</span>';
+                // Year label — built imperatively to match the month-option /
+                // date-cell shape elsewhere in this file. `year` is a loop
+                // counter (numeric); textContent is purely cosmetic consistency.
+                var yearLabel = document.createElement('span');
+                yearLabel.className = 'nds-label';
+                yearLabel.textContent = year;
+                btn.appendChild(yearLabel);
 
                 if (year === currentYear) {
                     NDS.State.add(btn, 'selected');
