@@ -15,7 +15,7 @@ sidemenu_mode: false
     <div class="nds-section-body">
         <div class="nds-info-content">
             <form id="contact-form" class="nds-form" data-ajax>
-                <div class="nds-grid" style="--max-col:2;--mid-col:2;--min-col:1;--row-gap: var(--spacing-xl);">
+                <div class="nds-grid" style="--max-col:2;--mid-col:2;--min-col:1;">
 
                     <!-- First Name -->
                     <div class="nds-form-container nds-darker" data-required>
