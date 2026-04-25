@@ -84,6 +84,7 @@
             this.applied = [];
             this.draft = [];
 
+            this._ac = new AbortController();
             this.init();
         }
 
@@ -117,6 +118,8 @@
         }
 
         bindEvents() {
+            const { signal } = this._ac;
+
             // Mirror the focus/active visual states that nds-forms.js wires up
             // from native input focus/mousedown. Multiselect has no input in
             // the form-control — the interaction happens on the trigger button
@@ -127,32 +130,32 @@
             this.dropmenu.addEventListener('nds:dropmenu:opened', () => {
                 NDS.State.add(this.root, 'focus');
                 this.openSync();
-            });
+            }, { signal });
             this.dropmenu.addEventListener('nds:dropmenu:closed', () => {
                 NDS.State.remove(this.root, 'focus');
-            });
+            }, { signal });
 
             if (this.trigger) {
                 this.trigger.addEventListener('mousedown', () => {
                     NDS.State.add(this.root, 'active');
-                });
+                }, { signal });
                 ['mouseup', 'mouseleave'].forEach(evt => {
                     this.trigger.addEventListener(evt, () => {
                         NDS.State.remove(this.root, 'active');
-                    });
+                    }, { signal });
                 });
                 this.trigger.addEventListener('focus', () => {
                     NDS.State.add(this.root, 'focus');
-                });
+                }, { signal });
                 this.trigger.addEventListener('blur', () => {
                     // Don't clear focus while the panel is open — the user is
                     // interacting with checkboxes/actions inside it.
                     if (!this.isOpen()) NDS.State.remove(this.root, 'focus');
-                });
+                }, { signal });
             }
 
             this.checkboxes.forEach(cb => {
-                cb.addEventListener('change', () => this.handleCheckboxChange(cb));
+                cb.addEventListener('change', () => this.handleCheckboxChange(cb), { signal });
             });
 
             // Click anywhere on the form-container opens the dropmenu, so
@@ -172,7 +175,7 @@
                 if (this.isOpen()) return;
                 e.stopPropagation();
                 this.trigger?.click();
-            });
+            }, { signal });
 
             // Mirror the trigger's press feedback on the whole surface so
             // holding the mouse down anywhere on the field feels the same
@@ -180,11 +183,11 @@
             this.root.addEventListener('mousedown', (e) => {
                 if (!isDelegatedSurface(e.target)) return;
                 NDS.State.add(this.root, 'active');
-            });
+            }, { signal });
             ['mouseup', 'mouseleave'].forEach(evt => {
                 this.root.addEventListener(evt, () => {
                     NDS.State.remove(this.root, 'active');
-                });
+                }, { signal });
             });
 
             if (this.applyBtn) {
@@ -194,15 +197,20 @@
                 this.applyBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.apply();
-                });
+                }, { signal });
             }
 
             if (this.resetBtn) {
                 this.resetBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.reset();
-                });
+                }, { signal });
             }
+        }
+
+        destroy() {
+            this._ac?.abort();
+            this.root.removeAttribute('data-nds-multiselect-initialized');
         }
 
         isOpen() {
@@ -330,7 +338,8 @@
         NDS.Multiselect = {
             init: initializeMultiselects,
             reinit: initializeMultiselects,
-            create: (element) => new NDSMultiselect(element)
+            create: (element) => new NDSMultiselect(element),
+            destroy: (element) => element.ndsMultiselect?.destroy()
         };
     }
 
