@@ -62,6 +62,10 @@
 
 :is(.nds-link, a):not(.nds-card):where(.nds-icon, .nds-external) {
 
+    >.nds-label{
+         flex: unset !important;
+    }
+
     &::after {
         content: "";
         display: inline-block;
