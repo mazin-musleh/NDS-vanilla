@@ -38,6 +38,8 @@
         --btn-bg: transparent;
         --btn-bg-selected: transparent;
         --btn-color: var(--text-display);
+        --btn-indicator-color: var(--background-primary);
+        --btn-indicator-selected: var(--background-primary);
 
         &[data-state~="active"] .nds-label { font-weight: 600; }
     }

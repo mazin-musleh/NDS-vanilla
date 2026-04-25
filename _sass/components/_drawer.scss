@@ -143,7 +143,7 @@
 
     &.nds-menu-btn {
         --btn-bg: var(--button-background-transparent-default);
-        --btn-bg-hover: var(--button-background-neutral-default);
+/*         --btn-bg-hover: var(--button-background-neutral-default);
         --btn-bg-active: var(--button-background-neutral-pressed);
         --btn-bg-selected: var(--button-background-transparent-default)!important;
 
@@ -155,9 +155,9 @@
         &:is([data-state~="active"], [data-state~="selected"]):not( :active, .nds-oncolor) {
             --btn-indicator-color: var(--background-primary);
             --btn-indicator-selected: var(--background-primary);
-        }
+        } */
 
-    }
+    } 
 
     // :where() keeps the match logic but contributes 0 specificity, so
     // variant overrides (e.g. .nds-drawer.nds-toc) can win without needing
