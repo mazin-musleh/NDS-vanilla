@@ -1,5 +1,5 @@
 ---
-name: update-icon-font
+name: nds-hgi-font-update
 description: Update the local HGI stroke-rounded icon font and CSS from the HugeIcons CDN. Downloads the latest font file and rebuilds the icon class SCSS. Use when the CDN publishes new icons or fixes glyphs.
 argument-hint: "[optional: CDN URL override]"
 ---

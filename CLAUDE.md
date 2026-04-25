@@ -65,7 +65,7 @@ All page content is built from sections. Read `layout/section.md` before creatin
 3. Add to `_includes/` if reusable across pages
 4. Use `nds-` prefix for all class names
 5. Use `playground.md` to test new components
-6. Add documentation page: `components/[name].md` — use `/doc-page [name]` skill after testing
+6. Add documentation page: `components/[name].md` — use `/nds-doc [name]` skill after testing
 7. Add to `_data/sidemenu/sidemenu.yml` under Components children
 8. Add to the matching index data file so the page appears on its landing grid. Match an existing neighbor entry's keys (title, description, icon, category, tags, url) exactly rather than guessing the schema:
    - `components/` → `_data/content/components.yml`
@@ -77,16 +77,7 @@ All page content is built from sections. Read `layout/section.md` before creatin
 
 ## Content Skills
 
-Four skills handle all content creation and quality assurance:
-
-| Skill | Purpose |
-|-------|---------|
-| `/doc-page [name]` | Create, refine, or audit documentation pages (`components/`, `ui-shell/`, `layout/`, `utilities/`) |
-| `/example-page [name]` | Create, refine, or brainstorm example and promotional pages (`examples/`, homepage) |
-| `/demo-content [name]` | Create YAML demo data files in `_data/content/` on demand |
-| `/content-review [audit\|icons\|coverage]` | Site-wide health checks — broken icons, placeholder text, undocumented components, sidemenu coherence |
-
-Each skill's `SKILL.md` has full usage details. All four are independent — use any without the others.
+Use `/nds-doc [name]` to create, refine, or audit documentation pages under `components/`, `ui-shell/`, `layout/`, and `utilities/`. See its `SKILL.md` for full usage.
 
 ## Git Commits
 

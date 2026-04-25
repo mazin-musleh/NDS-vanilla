@@ -1,6 +1,6 @@
 ---
-name: code-audit
-description: Audit NDS source JS for DRY/KISS violations, scalability and maintainability risks, performance issues, client-side security risks, and cross-file pattern consistency. Covers listener/observer pooling via nds-core.js (NDS.onResize, NDS.onIntersect, NDS.onElementResize, NDS.onDOMAdd, NDS.onAttrChange, NDS.debounce), throttling of scroll/resize handlers, NDS.State and NDS.Status reuse, NDS.breakpoints reuse, cross-file detection of repeated helper functions that should be promoted to nds-core.js, component contract conformance (factory vs singleton shape via NDS.{Name}.init/reinit/create), dead defensive guards inside loader-registered components, and common web-security sinks (innerHTML XSS, eval/new Function, target="_blank" tabnabbing, postMessage origin checks, untrusted URLs). Use this skill for "audit the JS", "audit performance", "audit security", "optimize listeners", "check nds-core usage", "find functions that should live in core", "find unthrottled scroll handlers", "find XSS risks", "make all components follow the same pattern", "check component consistency", or any JS source-code quality pass on `_js/`. NOT for SCSS/CSS audits, documentation page audits (use doc-page), content/icon/sidemenu audits (use content-review), or UX copy review.
+name: nds-code-audit
+description: Audit NDS source JS for DRY/KISS violations, scalability and maintainability risks, performance issues, client-side security risks, and cross-file pattern consistency. Covers listener/observer pooling via nds-core.js (NDS.onResize, NDS.onIntersect, NDS.onElementResize, NDS.onDOMAdd, NDS.onAttrChange, NDS.debounce), throttling of scroll/resize handlers, NDS.State and NDS.Status reuse, NDS.breakpoints reuse, cross-file detection of repeated helper functions that should be promoted to nds-core.js, component contract conformance (factory vs singleton shape via NDS.{Name}.init/reinit/create), dead defensive guards inside loader-registered components, and common web-security sinks (innerHTML XSS, eval/new Function, target="_blank" tabnabbing, postMessage origin checks, untrusted URLs). Use this skill for "audit the JS", "audit performance", "audit security", "optimize listeners", "check nds-core usage", "find functions that should live in core", "find unthrottled scroll handlers", "find XSS risks", "make all components follow the same pattern", "check component consistency", or any JS source-code quality pass on `_js/`. NOT for SCSS/CSS audits, documentation page audits (use nds-doc), or UX copy review.
 argument-hint: "[target] [optional: rule-group]"
 ---
 
@@ -8,10 +8,10 @@ argument-hint: "[target] [optional: rule-group]"
 
 Apply this skill to: `$ARGUMENTS`
 
-This skill audits the NDS JavaScript source — the files in `_js/` — against the conventions already codified in `CLAUDE.md` and the shared-utility contract published by `_js/nds-core.js`. It reports real duplication, real performance risk, and real maintainability drag, then applies fixes only after the user approves the report. It is the code-quality counterpart to `doc-page` (which audits documentation) and `content-review` (which audits content/icons/sidemenu coverage).
+This skill audits the NDS JavaScript source — the files in `_js/` — against the conventions already codified in `CLAUDE.md` and the shared-utility contract published by `_js/nds-core.js`. It reports real duplication, real performance risk, and real maintainability drag, then applies fixes only after the user approves the report. It is the code-quality counterpart to `nds-doc` (which audits documentation).
 
 > **THIS SKILL WILL EAT YOUR TOKENS FAST.**
-> A full-scope run reads every `_js/nds-*.js` file (40+ files), applies 22 rules against each, and spawns per-file review agents during Phase 5/6 fix application. Budget roughly 30–60k tokens for an audit-only pass, more when applying fixes or promotion candidates (each migrated file adds another review-agent round). Narrow the scope whenever you can: `/code-audit <filename>` for a single-file pass, or `/code-audit js <rule-group>` (`performance` / `dry` / `security`) to restrict the catalog. The full-surface run is for release-prep or significant refactor windows — not every session.
+> A full-scope run reads every `_js/nds-*.js` file (40+ files), applies 22 rules against each, and spawns per-file review agents during Phase 5/6 fix application. Budget roughly 30–60k tokens for an audit-only pass, more when applying fixes or promotion candidates (each migrated file adds another review-agent round). Narrow the scope whenever you can: `/nds-code-audit <filename>` for a single-file pass, or `/nds-code-audit js <rule-group>` (`performance` / `dry` / `security`) to restrict the catalog. The full-surface run is for release-prep or significant refactor windows — not every session.
 
 ---
 
@@ -207,9 +207,9 @@ When emitting the Next Step block at the end of a real report, adapt the numbere
 
 When the user replies `save` — alone, or combined with another action like `save and evolve` or `fix HIGH then save` — write the current report verbatim to `.claude/audit-reports/` under this pattern:
 
-**Filename:** `YYYY-MM-DD-code-audit-js-run-N.md`
+**Filename:** `YYYY-MM-DD-nds-code-audit-js-run-N.md`
 - `YYYY-MM-DD` is today's date (the run date, not the save date — they're the same in 99% of cases, but use the date of the audit if they diverge).
-- `N` is the **save-order index**: `(count of existing `run-*.md` files in `.claude/audit-reports/`) + 1`. Do NOT count `/code-audit` invocations from the conversation that didn't get saved; the index reflects persisted artifacts only.
+- `N` is the **save-order index**: `(count of existing `run-*.md` files in `.claude/audit-reports/`) + 1`. Do NOT count `/nds-code-audit` invocations from the conversation that didn't get saved; the index reflects persisted artifacts only.
 - No scope suffixes (`-baseline`, `-security`, etc.) in the filename. The distinction lives inside the report itself via the "Rule catalog version" line at the top of the file — that's enough signal for any later reader to tell which rule groups were active.
 
 **Always include a frontmatter-style header** in the saved file so later audits can be diffed meaningfully:
@@ -219,7 +219,7 @@ When the user replies `save` — alone, or combined with another action like `sa
 
 **Date:** YYYY-MM-DD
 **Rule catalog version:** {JSP + JSD | JSP + JSD + JSS} (note any post-evolution refinements: "post-evolution: JSD-03 [400,2000] range, JSS-01 allowlist v3")
-**Invocation:** `/code-audit {args}`
+**Invocation:** `/nds-code-audit {args}`
 
 ## Summary
 …
@@ -254,7 +254,7 @@ Only enter this phase when the user replies with an explicit fix instruction. Re
 
 Automated refactors carry regression risk. Before starting the first fix batch, tell the user:
 
-> Recommended: create a git checkpoint now so any fix batch can be reverted cleanly — for example `git add -A && git commit -m "checkpoint before code-audit fixes"`. The skill will NOT run git commands; this is your call.
+> Recommended: create a git checkpoint now so any fix batch can be reverted cleanly — for example `git add -A && git commit -m "checkpoint before nds-code-audit fixes"`. The skill will NOT run git commands; this is your call.
 
 The skill never runs git itself. The reminder is one sentence, not a lecture. If the user declines or ignores it, proceed — they know their workflow.
 
@@ -353,7 +353,7 @@ For every rule ID that fired in the current file, emit the matching checklist ro
 | JSD-04 (NDS.isRTL / NDS.lang) | **Medium** — live getter vs cached read. If a component cached the value and relied on cache, switching to `NDS.isRTL` makes it reactive, which may be the intent or an unintended change | Toggle the direction switcher on a page that uses the component; confirm layout flips cleanly and does not leak into other direction-unrelated features. |
 | JSD-05 (promotion candidate) | **Medium-High** — a bug in the new core helper breaks every migrated call site at once. A wrong signature, a missing caller-specific opt (e.g., `respectNav: false`), or a subtle off-by-one in the returned measurements produces semantic drift that only shows up in specific caller contexts. Skipping the "confirm signature before editing core" step compounds this: once N call sites commit to the signature, changing it means migrating them again. | Exercise every migrated component's primary interaction under both ambient conditions the helper's opts cover. For a flip-position promotion: open dropmenu, tooltip, date-picker, and custom-select at both the top and bottom of the viewport; each should flip (or not) identically to the pre-promotion behavior. Test with AND without the ambient element the helper can respect (e.g., with AND without `.nds-main-nav` on the page for nav-aware helpers). For a scroll-close helper: scroll inside and outside the scope element for each component — inside must not close, outside must close. Leak test: open/close each migrated component 20+ times and confirm no document/window listener count growth in devtools Event Listeners panel. |
 | JSD-06 (batch reads-before-writes) | Low — refactor preserves behavior when done correctly, but easy to get wrong | Component's animated transitions and measurements must still be visually correct: height animations expand to the right size, position calculations land in the right place. Compare before/after with reduced-motion on and off. |
-| JSD-07 (component contract) | **Medium** — refactoring the public shape can break doc-page JS tabs and consumer integrations | Open the component's doc page and exercise every snippet in the "JS API" tab. Confirm `NDS.{Name}.init()`, `.reinit()`, `.create(el)` all work as documented. |
+| JSD-07 (component contract) | **Medium** — refactoring the public shape can break documentation-page JS tabs and consumer integrations | Open the component's doc page and exercise every snippet in the "JS API" tab. Confirm `NDS.{Name}.init()`, `.reinit()`, `.create(el)` all work as documented. |
 | JSD-08 (dead defensive guards) | Low — removing `typeof NDS !== 'undefined'` hedges only prunes dead code since the loader guarantees NDS exists. Risk is a missed case where the component actually runs before the loader (module top-level code). | Confirm the guard you removed was inside a method or function invoked after init — not at module top level. Then load any page using the component; no ReferenceError should appear in devtools console. |
 | JSS-01 (innerHTML XSS) | **Medium-High** — replacing `innerHTML = template` with `createElement` + `textContent` changes the DOM-construction path. Whitespace inside templates disappears; child-element structure can subtly reorder; event-listener attachment points move. | Exercise every visual variant the affected component supports — every `variant`/`status`/`display` option in one of its factory methods (e.g., `NDS.Alert.create({ variant: 'success' | 'error' | ... })`). Inspect the rendered DOM in devtools and confirm class names, aria attributes, and text content all match the pre-fix version. Then paste an XSS probe string (`<img src=x onerror=alert(1)>`) as the user-facing value: it must render as literal text, not execute. |
 | JSS-02 (eval/Function removal) | Low — dynamic code paths are rare in UI; replacements should behave identically. | Trigger the code path that previously built the string: call the feature from the browser console with both a typical value and an unusual one (symbols, empty string, very long string). No syntax errors, no silent noops. |
@@ -439,7 +439,7 @@ Proposal 3 of N: DELETE rule
 
 ### Application
 
-For each proposal the user accepts, edit this file (`.claude/skills/code-audit/SKILL.md`) — and only this file — to apply the change:
+For each proposal the user accepts, edit this file (`.claude/skills/nds-code-audit/SKILL.md`) — and only this file — to apply the change:
 
 - **ADD**: insert the new rule in the correct rule-group table, keeping IDs sequential.
 - **NARROW / REFINE**: edit the "What to detect" column, not the rule's identity. Do not change its ID.
@@ -470,9 +470,9 @@ Next audit run will use the updated rules.
 This skill deliberately does not cover:
 
 - SCSS audits. SCSS coverage was removed because refactor blast radius (specificity, nesting, state/variant cascade) and token-family gaps made automated fixes too risky. Refactor SCSS manually against the conventions in `CLAUDE.md`.
-- Documentation page audits — use `doc-page`.
-- Icon, placeholder-text, or sidemenu coverage — use `content-review`.
-- `_data/content/` YAML demo data — use `demo-content`.
+- Documentation page audits — use `nds-doc`.
+- Icon, placeholder-text, or sidemenu coverage.
+- `_data/content/` YAML demo data.
 - UX copy, hero descriptions, or visual design review.
 - Replacing eslint. No lint config is authored; the rules are NDS-specific conventions enforced through an agent loop.
 - Auditing `_js/nds-core.js`. Its patterns are the canonical shape the rule catalog enforces; auditing it would mean critiquing the source of truth. Phase 5 `promote <api-name>` DOES edit core to add new helpers — that's a different action (adding public API for components to consume) and runs under explicit per-candidate user approval.

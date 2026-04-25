@@ -1,5 +1,5 @@
 ---
-name: add-nds-icon
+name: nds-add-icon
 description: Add an HGI icon, a raw SVG, or a Figma icon to the inline UI-icon set so it renders as mask-image via `.nds-icon.nds-hgi-{name}`. Use when components or chrome need a new icon that must paint immediately (no font wait, no FOUT). Triggers on "add HGI icon", "inline this SVG as an icon", and "add icon from Figma". Content/demo pages should keep using `<i class="hgi hgi-stroke hgi-NAME">` — the local HGI font handles those automatically.
 argument-hint: "<icon-name> (--stdin | --file <path>) [--class <selector>]"
 ---

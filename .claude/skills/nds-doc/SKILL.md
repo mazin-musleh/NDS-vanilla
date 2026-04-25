@@ -1,5 +1,5 @@
 ---
-name: doc-page
+name: nds-doc
 description: Work with NDS documentation pages — create new pages, refine existing ones, add sections, fix code tabs, update guidelines. Covers all doc page categories: components (components/*.md), UI Shell (ui-shell/*.md), layout (layout/*.md), and utilities (utilities/*.md). Use this skill for any task involving demo cards, code examples, toggle controls, or usage guidelines sections.
 argument-hint: "[name] [optional: specific task]"
 ---
