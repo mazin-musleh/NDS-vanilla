@@ -921,12 +921,36 @@
 
                 this.initializeCalendar();
                 this.adjustDropdownPosition();
+                this.bindViewportTracking();
             } else {
+                this.unbindViewportTracking();
                 NDS.State.add(this.elements.dropdown, 'hidden');
                 NDS.State.remove(this.elements.container, 'open');
                 this.cleanup();
                 NDS.unportal(this.elements.dropdown);
             }
+        },
+
+        // Keep the fixed-positioned dropdown anchored to its trigger as the
+        // page (or any ancestor scroll container) scrolls — emulating the
+        // natural scroll-with-trigger behaviour without giving up the
+        // portal + measure-and-correct stack. Capture-phase scroll picks up
+        // inner scroll containers too. rAF-throttled so the listener cost
+        // is bounded to one read/write per frame.
+        bindViewportTracking: function () {
+            var self = this;
+            this._onViewportChange = NDS.rafThrottle(function () {
+                self.repositionDropdown();
+            });
+            window.addEventListener('scroll', this._onViewportChange, { passive: true, capture: true });
+            window.addEventListener('resize', this._onViewportChange, { passive: true });
+        },
+
+        unbindViewportTracking: function () {
+            if (!this._onViewportChange) return;
+            window.removeEventListener('scroll', this._onViewportChange, { capture: true });
+            window.removeEventListener('resize', this._onViewportChange);
+            this._onViewportChange = null;
         },
 
         adjustDropdownPosition: function () {
@@ -952,18 +976,52 @@
             var bW = p.menuRect.width;
 
             // Flip above when not enough space below AND more space above.
+            // Cache the direction so scroll updates don't oscillate the
+            // dropdown above/below as the trigger crosses thresholds.
             var flipUp = p.spaceBelow < bH + gap && p.triggerRect.top - pad > p.spaceBelow;
+            this._flipUp = flipUp;
+
             var top = flipUp ? p.triggerRect.top - bH - gap : p.triggerRect.bottom + gap;
-            top = Math.max(pad, Math.min(top, p.viewportHeight - bH - pad));
+            // No vertical viewport clamp — the dropdown is anchored to its
+            // trigger via the scroll listener, so any portion that exceeds
+            // the viewport is reachable by normal page scroll. Clamping
+            // would desync the dropdown from the trigger.
 
             // Default: align dropdown's left edge with form-control's left.
             // When the dropdown is wider than the trigger (mobile, narrow
             // form-controls), center it on the trigger so it doesn't shoot
-            // off one side.
+            // off one side. Horizontal clamp stays — users can't scroll
+            // sideways to reveal clipped content.
             var left = bW > fcRect.width
                 ? p.triggerRect.left + (fcRect.width / 2) - (bW / 2)
                 : p.triggerRect.left;
             left = Math.max(pad, Math.min(left, p.viewportWidth - bW - pad));
+
+            NDS.placeFixed(dropdown, top, left);
+        },
+
+        // Lightweight scroll-time placement: keeps the cached flip direction
+        // and only re-reads the trigger rect + dropdown size, so we don't
+        // re-evaluate layout decisions that the user already saw on open.
+        repositionDropdown: function () {
+            var dropdown = this.elements.dropdown;
+            var formControl = this.elements.formControl;
+            if (!dropdown || !formControl) return;
+            if (NDS.State.has(dropdown, 'hidden')) return;
+
+            var fcRect = formControl.getBoundingClientRect();
+            var ddRect = dropdown.getBoundingClientRect();
+            var pad = 8, gap = 4;
+            var bW = ddRect.width;
+
+            var top = this._flipUp
+                ? fcRect.top - ddRect.height - gap
+                : fcRect.bottom + gap;
+
+            var left = bW > fcRect.width
+                ? fcRect.left + (fcRect.width / 2) - (bW / 2)
+                : fcRect.left;
+            left = Math.max(pad, Math.min(left, window.innerWidth - bW - pad));
 
             NDS.placeFixed(dropdown, top, left);
         },
@@ -1628,6 +1686,7 @@
                 if (self.isDropdownCreated
                     && !self.elements.container.contains(clickTarget)
                     && !(self.elements.dropdown && self.elements.dropdown.contains(clickTarget))) {
+                    self.unbindViewportTracking();
                     if (self.elements.dropdown) {
                         NDS.State.add(self.elements.dropdown, 'hidden');
                     }
