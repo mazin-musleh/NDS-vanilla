@@ -1381,11 +1381,14 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Sort</h2>
-            <p class="nds-section-description">Drop sort buttons anywhere inside the filter (typically a dropmenu). Each button carries <code>data-sort="{key}"</code> and <code>data-sort-dir="asc|desc"</code>; items expose the sortable value via <code>data-sort-{key}</code>. An empty <code>data-sort</code> resets to the original DOM order.</p>
+            <p class="nds-section-description">Drop sort buttons anywhere inside the filter (typically a dropmenu). Each button carries <code class="nds-inline-code lang-html">data-sort="{key}"</code> and <code class="nds-inline-code lang-html">data-sort-dir="asc|desc"</code>; items expose the sortable value via <code class="nds-inline-code lang-html">data-sort-{key}</code>. An empty <code class="nds-inline-code lang-html">data-sort</code> resets to the original DOM order.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Sort by Name or Price</div>
+                    </div>
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-filter" data-filter-target="sortDemoList">
@@ -1558,7 +1561,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     <p class="nds-item-desc">Sort buttons can live outside <code class="nds-inline-code lang-html">.nds-filter</code> — add <code class="nds-inline-code lang-html">data-filter-target="{id}"</code> on each trigger (or on their wrapper) to bind them to a filter whose target matches.</p>
                 </div>
             </div>
-            <p>See the <a href="/components/sort">Sort component page</a> for the underlying JavaScript API, including <code>NDS.Sort</code>, the <code>nds:sort:change</code> event, and the pure comparator helpers.</p>
+            <p>See the <a class="nds-color" href="{{ 'components/sort' | relative_url }}">Sort component page</a> for the underlying JavaScript API, including <code class="nds-inline-code lang-js">NDS.Sort</code>, the <code class="nds-inline-code lang-js">nds:sort:change</code> event, and the pure comparator helpers.</p>
         </div>
     </div>
 </section>
@@ -1601,14 +1604,14 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                        <i class="hgi hgi-stroke hgi-search-01"></i>
                         <span class="nds-label">No Results Alert</span>
                     </span>
                     <p class="nds-item-desc">Shows a warning alert with a "Clear Filter" action when no cards match the current criteria. The alert dismisses automatically when results reappear.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
+                        <i class="hgi hgi-stroke hgi-refresh"></i>
                         <span class="nds-label">Dynamic and Cascading Filters</span>
                     </span>
                     <p class="nds-item-desc">Use <code class="nds-inline-code lang-js">populateFilter()</code> to generate or replace filter inputs at runtime. Supports cascading filters where one selection drives another filter's options via API.</p>
@@ -1704,6 +1707,16 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-items</code></td><td>Set on the target container (the element referenced by <code class="nds-inline-code lang-html">data-filter-target</code>) to specify a custom CSS selector for filterable items. Default: <code class="nds-inline-code lang-html">.nds-card</code>. Example: <code class="nds-inline-code lang-html">data-filter-items=".search-result"</code> to filter non-card elements like list items or table rows.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-total-count</code></td><td>Set on the target container by server-side rendering or inside a <code class="nds-inline-code lang-js">nds:filterFormComplete</code> handler to provide a server-authoritative result count. When present, overrides the DOM-enumerated count written to <code class="nds-inline-code lang-html">[data-filter-count]</code> slots.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Result Count and Query Slots</h4>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-count</code></td><td>Place on any element linked via <code class="nds-inline-code lang-html">data-filter-target</code>. The filter writes the number of visible items into this element's <code class="nds-inline-code lang-html">textContent</code> after every filter pass. Pair with <code class="nds-inline-code lang-html">.nds-results-count</code> for the standard styling.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-query</code></td><td>Place on any element linked via <code class="nds-inline-code lang-html">data-filter-target</code>. The filter writes the active search keyword (wrapped in curly quotes) into this element's <code class="nds-inline-code lang-html">textContent</code>. When present, the search term is routed here instead of appearing as an applied-chip.</td></tr>
                     </tbody>
                 </table>
 
@@ -1814,8 +1827,9 @@ filter.destroy();       // Show all items and remove initialization flag
 filter.reapplyUrlParamsForFilter('system');
 
 // ── Static methods ──────────────────────────────────
-NDS.Filter.init();       // Initialize any new .nds-filter elements on page
-NDS.Filter.reinit();     // Same as init()
+NDS.Filter.init();                    // Initialize any new .nds-filter elements on page
+NDS.Filter.reinit();                  // Same as init()
+NDS.Filter.create(containerEl);       // Manually instantiate — returns an NDSFilter instance
 
 // ── Events ──────────────────────────────────────────
 // nds:filter:ready - Filter initialized
