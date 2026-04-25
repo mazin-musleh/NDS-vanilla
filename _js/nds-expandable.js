@@ -171,14 +171,6 @@
             }, 100));
         }
 
-        handleResize() {
-            // Debounce resize events (fallback method)
-            clearTimeout(this.resizeTimer);
-            this.resizeTimer = setTimeout(() => {
-                this.checkContentHeight();
-            }, 250);
-        }
-
         dispatchEvent(eventType) {
             const event = new CustomEvent(eventType, {
                 detail: {
@@ -236,11 +228,6 @@
             if (this.expandButton) {
                 this.expandButton.remove();
                 this.expandButton = null;
-            }
-
-            // Clear resize timer
-            if (this.resizeTimer) {
-                clearTimeout(this.resizeTimer);
             }
 
             // Remove states

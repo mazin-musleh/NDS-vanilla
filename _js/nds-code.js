@@ -176,14 +176,6 @@
                   .replace(/&amp;/g, '&');
     }
 
-    function encodeEntities(str) {
-        return str.replace(/&/g, '&amp;')
-                  .replace(/</g, '&lt;')
-                  .replace(/>/g, '&gt;')
-                  .replace(/"/g, '&quot;')
-                  .replace(/'/g, '&#x27;');
-    }
-
     // ==============================================
     // LANGUAGE DETECTION
     // ==============================================
@@ -464,7 +456,6 @@
             init: initializeCodeProcessing,
             reprocessCodeElement: reprocessCodeElement,
             detectLanguage: detectLanguage,
-            encodeEntities: encodeEntities,
             decodeEntities: decodeEntities
         };
     }

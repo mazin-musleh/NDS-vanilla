@@ -86,9 +86,9 @@
             const apply = () => {
                 const fallback = this._fallback || 'horizontal';
                 let pick = fallback;
-                if (window.matchMedia('(max-width: 600px)').matches) pick = bpVariant('sm') || fallback;
-                else if (window.matchMedia('(min-width: 601px) and (max-width: 960px)').matches) pick = bpVariant('md') || fallback;
-                else if (window.matchMedia('(min-width: 961px)').matches) pick = bpVariant('lg') || fallback;
+                if (window.matchMedia(NDS.breakpoints.mobile).matches) pick = bpVariant('sm') || fallback;
+                else if (window.matchMedia(NDS.breakpoints['tablet-max']).matches) pick = bpVariant('md') || fallback;
+                else if (window.matchMedia(NDS.breakpoints.desktop).matches) pick = bpVariant('lg') || fallback;
 
                 el.classList.toggle('nds-vertical', pick === 'vertical');
                 el.classList.toggle('nds-radial',   pick === 'radial');

@@ -142,6 +142,13 @@
         }
 
         init() {
+            // Trailing-edge debounce for the loading-class cleanup at the end of
+            // applyFilters(). One wrapper per instance so rapid filter passes
+            // share the same 500ms timer.
+            this._clearLoadingDebounced = NDS.debounce(() => {
+                if (this.targetContainer) this.targetContainer.classList.remove('nds-loading');
+            }, 500);
+
             this.setupFilterElements();
             this.setupResetButton();
             this.setupActionButtons();
@@ -1600,10 +1607,7 @@
                 this.updateHiddenInputs();
             }
 
-            clearTimeout(this.targetLoadingTimer);
-            this.targetLoadingTimer = setTimeout(() => {
-                if (this.targetContainer) this.targetContainer.classList.remove('nds-loading');
-            }, 500);
+            this._clearLoadingDebounced();
         }
 
         updateNoResultsAlert(visibleCount) {
