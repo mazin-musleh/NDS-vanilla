@@ -269,9 +269,10 @@
 
     // Select a dropmenu item: deselect siblings, select button, update trigger label
     function selectDropmenuItem(button, siblingSelector) {
-        var dropmenu = button.closest('.nds-dropmenu');
+        var dropmenu = NDS.Dropmenu?.from(button);
         if (!dropmenu) return;
-        dropmenu.querySelectorAll(siblingSelector).forEach(function(b) { NDS.State.remove(b, 'selected'); });
+        var menu = NDS.Dropmenu.menuOf(dropmenu);
+        (menu || dropmenu).querySelectorAll(siblingSelector).forEach(function(b) { NDS.State.remove(b, 'selected'); });
         NDS.State.add(button, 'selected');
         var triggerEl = dropmenu.querySelector('.nds-dropmenu-trigger');
         var triggerLabel = triggerEl?.querySelector('.nds-label');
@@ -719,7 +720,7 @@
 
         // Sync dropmenu trigger label when item is selected
         // Supports data-label-prefix on the trigger for prefixed labels (e.g., "Layout: Default")
-        const dropmenu = button.closest('.nds-dropmenu');
+        const dropmenu = NDS.Dropmenu?.from(button);
         if (dropmenu && NDS.State.has(button, 'selected')) {
             const trigger = dropmenu.querySelector('.nds-dropmenu-trigger');
             const triggerLabel = trigger?.querySelector('.nds-label');

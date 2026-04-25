@@ -11,6 +11,19 @@
     // State helpers — delegated to NDS.State (nds-core.js)
     const { add: addState, remove: removeState } = NDS.State;
 
+    // Custom properties consumers can set on a dropmenu wrapper to customize
+    // the popup. Snapshotted onto the menu before portaling so the cascade
+    // survives the move to <body>. Kept as a module-level const (not a static
+    // class field) for older-Safari compatibility.
+    const PORTAL_VARS = [
+        '--menu-padding',
+        '--dropmenu-width',
+        '--dropmenu-min-width',
+        '--dropmenu-max-width',
+        '--dropmenu-slide',
+    ];
+
+
     // ==============================================
     // DROPMENU CLASS
     // ==============================================
@@ -33,6 +46,13 @@
             this.contentLayout = dropmenuElement.closest('.nds-content-layout')
                 || document.querySelector('.nds-content-layout');
             this.isRTL = NDS.isRTL;
+
+            // Backrefs so consumers walking up from a menu item can still
+            // reach the wrapper after the menu is portaled to <body>. With
+            // these, `el.closest('.nds-dropmenu-menu')?._ownerDropmenu`
+            // works whether the menu is in original or portaled position.
+            this.menu._ownerDropmenu = this.dropmenu;
+            this.dropmenu._ownerMenu = this.menu;
 
             this.init();
         }
@@ -250,9 +270,13 @@
                 });
             }
 
-            // Outside click
+            // Outside click — portal-aware: while open the menu lives at
+            // <body> level, so events from menu items don't bubble through
+            // .nds-dropmenu. Treat clicks inside the menu as inside.
             this.handleOutsideClick = (e) => {
-                if (this.isOpen && !this.dropmenu.contains(e.target)) this.close();
+                if (this.isOpen
+                    && !this.dropmenu.contains(e.target)
+                    && !this.menu.contains(e.target)) this.close();
             };
             document.addEventListener('click', this.handleOutsideClick);
 
@@ -270,14 +294,18 @@
                 this.handleMenuKeydown(e);
             });
 
-            // Escape (scoped to dropmenu)
-            this.dropmenu.addEventListener('keydown', (e) => {
+            // Escape — listen on both dropmenu (for trigger focus) and menu
+            // (for focus inside the portaled menu, which no longer bubbles
+            // up to the dropmenu wrapper).
+            const onEscape = (e) => {
                 if (e.key === 'Escape' && this.isOpen) {
                     e.stopPropagation();
                     this.close();
                     this.trigger.focus();
                 }
-            });
+            };
+            this.dropmenu.addEventListener('keydown', onEscape);
+            this.menu.addEventListener('keydown', onEscape);
 
             // Item click auto-close
             this.menu.addEventListener('click', (e) => {
@@ -387,6 +415,7 @@
             this.isOpen ? this.close() : this.open();
         }
 
+
         open() {
             this._closeCancelled = true;
 
@@ -395,10 +424,16 @@
             });
 
             removeState(this.dropmenu, 'closing');
+            removeState(this.menu,     'closing');
             this.isOpen = true;
 
+            // Portal first so subsequent measurement happens in <body>'s
+            // containing block, free of any container-type/transform ancestor.
+            NDS.portal(this.menu, { snapshotVars: PORTAL_VARS });
+
             addState(this.dropmenu, 'open', 'opening');
-            addState(this.trigger, 'open');
+            addState(this.menu,     'open', 'opening');
+            addState(this.trigger,  'open');
             this.trigger.setAttribute('aria-expanded', 'true');
             this.menu.setAttribute('aria-hidden', 'false');
 
@@ -410,7 +445,10 @@
             this._offScroll = NDS.onOutsideScroll(this.menu, () => this.close());
             this._unsubResize = NDS.onResize(() => this.close());
 
-            requestAnimationFrame(() => removeState(this.dropmenu, 'opening'));
+            requestAnimationFrame(() => {
+                removeState(this.dropmenu, 'opening');
+                removeState(this.menu,     'opening');
+            });
             this.emitEvent('nds:dropmenu:opened');
         }
 
@@ -421,6 +459,7 @@
             if (this.menu.contains(document.activeElement)) this.trigger.focus();
 
             addState(this.dropmenu, 'closing');
+            addState(this.menu,     'closing');
             this.trigger.setAttribute('aria-expanded', 'false');
 
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
@@ -432,13 +471,19 @@
                 done = true;
 
                 removeState(this.dropmenu, 'open', 'opening', 'closing');
+                removeState(this.menu,     'open', 'opening', 'closing');
                 removeState(this.trigger, 'open');
                 this.dropmenu.removeAttribute('data-position-vertical');
+                this.menu.removeAttribute('data-position-vertical');
                 this.menu.style.cssText = '';
                 const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
                 if (scroll) scroll.style.maxHeight = '';
                 this.menu.setAttribute('aria-hidden', 'true');
                 this.menu.removeEventListener('transitionend', onEnd);
+                // Restore the menu to its original location so authored
+                // markup queries (e.g. `dropmenu.querySelector(...)`) still
+                // resolve while closed.
+                NDS.unportal(this.menu);
                 this.emitEvent('nds:dropmenu:closed');
             };
 
@@ -495,8 +540,13 @@
             // Re-measure after the max-height clamp so placement uses the
             // final size.
             const mr2 = this.menu.getBoundingClientRect();
-            if (flipUp) this.dropmenu.setAttribute('data-position-vertical', 'top');
-            else this.dropmenu.removeAttribute('data-position-vertical');
+            if (flipUp) {
+                this.dropmenu.setAttribute('data-position-vertical', 'top');
+                this.menu.setAttribute('data-position-vertical', 'top');
+            } else {
+                this.dropmenu.removeAttribute('data-position-vertical');
+                this.menu.removeAttribute('data-position-vertical');
+            }
 
             let top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
             top = Math.max(topEdge, Math.min(top, p.viewportHeight - mr2.height - pad));
@@ -504,8 +554,7 @@
             let leftPx = this.isRTL ? p.triggerRect.right - mr2.width : p.triggerRect.left;
             leftPx = Math.max(pad, Math.min(leftPx, vw - mr2.width - pad));
 
-            this.menu.style.top = top + 'px';
-            this.menu.style.left = leftPx + 'px';
+            NDS.placeFixed(this.menu, top, leftPx);
         }
 
         // ==============================================
@@ -551,7 +600,21 @@
         NDS.Dropmenu = {
             init: initializeDropmenus,
             reinit: initializeDropmenus,
-            create: (element) => new NDSDropmenu(element)
+            create: (element) => new NDSDropmenu(element),
+            // Walks up from `el` to find the .nds-dropmenu wrapper. Falls
+            // back to the menu's `_ownerDropmenu` backref when the menu has
+            // been portaled to <body> (so closest can't reach the wrapper
+            // through the DOM ancestor chain).
+            from: (el) => {
+                if (!el) return null;
+                return el.closest('.nds-dropmenu')
+                    || el.closest('.nds-dropmenu-menu')?._ownerDropmenu
+                    || null;
+            },
+            // Returns the menu element for a wrapper, regardless of whether
+            // the menu is currently nested inside or portaled to <body>.
+            menuOf: (dropmenu) => dropmenu?.querySelector('.nds-dropmenu-menu')
+                || dropmenu?._ownerMenu || null,
         };
     }
 

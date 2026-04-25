@@ -229,7 +229,7 @@
                 // Check if this element is inside a dropdown
                 if (element.classList.contains('nds-dropmenu-item')) {
                     activeInDropdown = true;
-                    const dropdown = element.closest('.nds-dropmenu');
+                    const dropdown = NDS.Dropmenu?.from(element);
                     ellipsisTrigger = dropdown?.querySelector('.nds-dropmenu-trigger');
                 }
             }

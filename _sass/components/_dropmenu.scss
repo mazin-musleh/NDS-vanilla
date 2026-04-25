@@ -11,14 +11,6 @@
 // ==============================================
 
 .nds-dropmenu {
-  --_menu-padding: var(--menu-padding, var(--spacing-md, 8px));
-  --_dropmenu-offset: var(--spacing-xs, 4px);
-  --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
-  --_dropmenu-width: var(--dropmenu-width, min-content);
-  --_dropmenu-min-width: var(--dropmenu-min-width, 150px);
-  --_dropmenu-max-width: var(--dropmenu-max-width, calc(100vw - 16px));
-  --divider: var(--_menu-padding);
-
   position: relative;
   display: inline-flex;
 
@@ -30,58 +22,6 @@
     // scroll hits its end — otherwise the page-scroll listener closes
     // the menu as soon as the user hits top or bottom.
     overscroll-behavior: contain;
-  }
-
-
-  // ==============================================
-  // 2. MENU CONTAINER
-  // ==============================================
-
-  &-menu {
-    display: none;
-    position: fixed;
-    z-index: 5;
-    width: var(--_dropmenu-width);
-    min-width: var(--_dropmenu-min-width);
-    max-width: var(--_dropmenu-max-width);
-    padding: var(--_menu-padding);
-    list-style: none;
-    background-color: var(--background-menu);
-    border: 1px solid var(--border-neutral-secondary);
-    border-radius: var(--radius-md, 8px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-    // Animation base
-    transition: opacity var(--nds-transition),
-      transform var(--nds-transition);
-    opacity: 1;
-    transform: translateY(0);
-
-    .nds-dropmenu-item[data-state~="active"] {
-      background-color: var(--background-neutral-200);
-    }
-
-    .nds-dropmenu-group,
-    .nds-dropmenu-item:not(.nds-btn) {
-      margin-top: var(--spacing-2xl);
-      margin-bottom: var(--spacing-2xl);
-      margin-inline: var(--spacing-md);
-
-      &:first-child {
-        margin-top: var(--spacing-md);
-      }
-
-      &:last-child {
-        margin-bottom: var(--spacing-lg);
-      }
-    }
-
-    .nds-dropmenu-group>.nds-label {
-      font-size: var(--typo-text-xs-FS);
-      font-weight: 700;
-      line-height: var(--typo-text-xs-LH);
-      color: var(--text-display);
-    }
   }
 
   // ==============================================
@@ -105,36 +45,9 @@
   }
 
   // ==============================================
-  // 4. STATES & ANIMATIONS
+  // 5. INNER COMPONENTS — sticky action footer
   // ==============================================
 
-  // Open state → display: block (first to add, last to remove)
-  &[data-state~="open"] .nds-dropmenu-menu {
-    display: block;
-  }
-
-  // Reverse slide direction when opening upward
-  &[data-position-vertical="top"] {
-    --_dropmenu-slide: var(--dropmenu-slide, 8px);
-  }
-
-  // Opening/closing animation (direction set by --_dropmenu-slide)
-  &:is([data-state~="opening"], [data-state~="closing"]) .nds-dropmenu-menu {
-    opacity: 0;
-    transform: translateY(var(--_dropmenu-slide));
-  }
-
-  // ==============================================
-  // 5. INNER COMPONENTS
-  // ==============================================
-
-  // Form controls inside dropdown
-  &-menu .nds-form-control {
-    min-width: unset;
-    width: 100%;
-  }
-
-  // Sticky action footer
   &-action {
     --gap: var(--spacing-lg);
 
@@ -147,15 +60,95 @@
       }
     }
   }
+}
 
-  // ==============================================
-  // 6. RESPONSIVE
-  // ==============================================
+// ==============================================
+// 2. MENU CONTAINER
+// ==============================================
+// The menu lives at body level while open (portal), so its variables and
+// state-driven rules must apply via the menu's own data-state — we can't
+// rely on the wrapper as an ancestor selector.
+
+.nds-dropmenu-menu {
+  // Variables — defined on the menu itself so portaling to body doesn't
+  // break the cascade. Consumers still set `--menu-padding` etc. on a
+  // dropmenu wrapper; JS snapshots the inherited values onto the menu
+  // before portaling.
+  --_menu-padding: var(--menu-padding, var(--spacing-md, 8px));
+  --_dropmenu-offset: var(--spacing-xs, 4px);
+  --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
+  --_dropmenu-width: var(--dropmenu-width, min-content);
+  --_dropmenu-min-width: var(--dropmenu-min-width, 150px);
+  --_dropmenu-max-width: var(--dropmenu-max-width, calc(100vw - 16px));
+  --divider: var(--_menu-padding);
+
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  width: var(--_dropmenu-width);
+  min-width: var(--_dropmenu-min-width);
+  max-width: var(--_dropmenu-max-width);
+  padding: var(--_menu-padding);
+  list-style: none;
+  background-color: var(--background-menu);
+  border: 1px solid var(--border-neutral-secondary);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  // Animation base
+  transition: opacity var(--nds-transition),
+    transform var(--nds-transition);
+  opacity: 1;
+  transform: translateY(0);
+
+  .nds-dropmenu-item[data-state~="active"] {
+    background-color: var(--background-neutral-200);
+  }
+
+  .nds-dropmenu-group,
+  .nds-dropmenu-item:not(.nds-btn) {
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl);
+    margin-inline: var(--spacing-md);
+
+    &:first-child {
+      margin-top: var(--spacing-md);
+    }
+
+    &:last-child {
+      margin-bottom: var(--spacing-lg);
+    }
+  }
+
+  .nds-dropmenu-group>.nds-label {
+    font-size: var(--typo-text-xs-FS);
+    font-weight: 700;
+    line-height: var(--typo-text-xs-LH);
+    color: var(--text-display);
+  }
+
+  .nds-form-control {
+    min-width: unset;
+    width: 100%;
+  }
+
+  // ── States & animations (applied directly on the menu) ─────────
+  &[data-state~="open"] {
+    display: block;
+  }
+
+  &[data-position-vertical="top"] {
+    --_dropmenu-slide: var(--dropmenu-slide, 8px);
+  }
+
+  &[data-state~="opening"],
+  &[data-state~="closing"] {
+    opacity: 0;
+    transform: translateY(var(--_dropmenu-slide));
+  }
 
   @include mobile {
-    &-menu {
-      max-width: calc(100vw - var(--nds-viewport-padding) * 4);
-    }
+    max-width: calc(100vw - var(--nds-viewport-padding) * 4);
   }
 }
 

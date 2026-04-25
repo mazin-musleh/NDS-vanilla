@@ -344,6 +344,127 @@
         return () => document.removeEventListener('scroll', handler, { capture: true });
     };
 
+    // ── Portal / Containing-Block Detection ────────────────────────────
+    // A `position: fixed` element resolves `top`/`left` against the nearest
+    // ancestor that establishes a containing block — and is trapped inside
+    // the nearest stacking-context ancestor. The CSS spec lists many
+    // properties that establish either; the most common offenders we hit
+    // in this codebase are `container-type: inline-size` (on
+    // `.nds-section-wrapper`) and `isolation: isolate` (on
+    // `.nds-hero-section.nds-sub`). Returns true if any ancestor would
+    // trap the element.
+    NDS.needsPortal = (el) => {
+        let n = el.parentElement;
+        while (n && n !== document.documentElement) {
+            const cs = getComputedStyle(n);
+            const wc = cs.willChange || '';
+            const cn = cs.contain || '';
+            const ct = cs.containerType || '';
+            if (cs.transform !== 'none' ||
+                cs.perspective !== 'none' ||
+                cs.filter !== 'none' ||
+                (cs.backdropFilter && cs.backdropFilter !== 'none') ||
+                (cs.webkitBackdropFilter && cs.webkitBackdropFilter !== 'none') ||
+                cs.clipPath !== 'none' ||
+                cs.contentVisibility === 'auto' ||
+                cs.isolation === 'isolate' ||
+                /\b(transform|filter|perspective)\b/.test(wc) ||
+                /\b(paint|layout|strict|content)\b/.test(cn) ||
+                /\b(inline-size|size)\b/.test(ct)) {
+                return true;
+            }
+            n = n.parentElement;
+        }
+        return false;
+    };
+
+    // Move `el` to <body> when an ancestor would trap it; no-op otherwise.
+    // Records the original parent + next-sibling on the element so unportal
+    // can restore them. `opts.snapshotVars` lets callers preserve custom
+    // properties that consumers set on the wrapper (e.g.
+    // `--dropmenu-min-width: 250px` on `.nds-filter`) — those values are
+    // read from the inherited cascade BEFORE the move and re-applied as
+    // inline styles after, so the visual remains identical.
+    // Usage: NDS.portal(menu, { snapshotVars: ['--menu-padding', ...] });
+    //        NDS.unportal(menu); // later
+    NDS.portal = (el, opts = {}) => {
+        if (el._ndsPortal) return; // already portaled
+        if (!NDS.needsPortal(el)) return;
+        const snap = {};
+        const vars = opts.snapshotVars;
+        if (vars && vars.length) {
+            const cs = getComputedStyle(el);
+            for (let i = 0; i < vars.length; i++) {
+                const val = cs.getPropertyValue(vars[i]).trim();
+                if (val) snap[vars[i]] = val;
+            }
+        }
+        const setProps = [];
+        el._ndsPortal = {
+            parent: el.parentNode,
+            nextSibling: el.nextSibling,
+            setProps,
+        };
+        document.body.appendChild(el);
+        for (const k in snap) {
+            el.style.setProperty(k, snap[k]);
+            setProps.push(k);
+        }
+        // Force a style/layout flush — Safari sometimes skips style recalc
+        // when an element is reparented while display:none/hidden.
+        void el.offsetHeight;
+    };
+
+    NDS.unportal = (el) => {
+        const state = el._ndsPortal;
+        if (!state) return;
+        if (state.nextSibling && state.nextSibling.parentNode === state.parent) {
+            state.parent.insertBefore(el, state.nextSibling);
+        } else {
+            state.parent.appendChild(el);
+        }
+        for (let i = 0; i < state.setProps.length; i++) {
+            el.style.removeProperty(state.setProps[i]);
+        }
+        delete el._ndsPortal;
+    };
+
+    // ── Place `position: fixed` element at viewport coords ─────────────
+    // Writes `top`/`left` then measures and corrects. The CSS spec says
+    // top/left on a `position: fixed` element resolve against the
+    // viewport — but only when no ancestor establishes a containing block.
+    // When one does (transform, filter, container-type, etc.), the values
+    // resolve against that ancestor instead, leaving the element offset.
+    // The set of triggering properties varies per engine (Safari notably
+    // honors `container-type: inline-size` strictly), so a static heuristic
+    // misfires. Reading the actual rect after the write reveals any
+    // discrepancy; subtracting it lands the element at the intended
+    // viewport coords across engines.
+    // The transform back-out handles in-flight slide animations on the
+    // element itself (e.g. dropmenu's opening translateY).
+    // Usage: NDS.placeFixed(menu, top, leftPx);
+    NDS.placeFixed = (el, top, left) => {
+        el.style.top = top + 'px';
+        el.style.left = left + 'px';
+        const r = el.getBoundingClientRect();
+        const tm = getComputedStyle(el).transform;
+        let tx = 0, ty = 0;
+        if (tm && tm !== 'none') {
+            const m = tm.match(/matrix\(([^)]+)\)/);
+            if (m) {
+                const parts = m[1].split(',');
+                tx = parseFloat(parts[4]) || 0;
+                ty = parseFloat(parts[5]) || 0;
+            }
+        }
+        const dx = (r.left - tx) - left;
+        const dy = (r.top  - ty) - top;
+        if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+            el.style.top  = (top  - dy) + 'px';
+            el.style.left = (left - dx) + 'px';
+        }
+    };
+
     // ── Viewport Flip-Position Measurement ─────────────────────────────
     // Measures available space around a trigger so popup-like components
     // (dropmenus, tooltips, date pickers, custom selects) can decide

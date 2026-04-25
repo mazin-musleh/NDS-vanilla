@@ -161,13 +161,20 @@
                 if (el !== this.root && el.ndsTooltip) el.ndsTooltip.close();
             });
 
+            // Portal first so subsequent measurement happens in <body>'s
+            // containing block, free of any container-type/transform ancestor.
+            NDS.portal(this.balloon);
+
             addState(this.root, 'open');
             this.balloon.hidden = false;
             this.applyPosition();
 
-            // Close on click outside
+            // Close on click outside — portal-aware: while open the balloon
+            // lives at <body> level, so events from inside it don't bubble
+            // through `this.root`. Treat clicks inside the balloon as inside.
             this._onDocClick = (e) => {
                 if (this.root.contains(e.target)) return;
+                if (this.balloon.contains(e.target)) return;
                 this.close();
             };
             document.addEventListener('click', this._onDocClick);
@@ -187,12 +194,18 @@
             removeState(this.root, 'open');
             this.balloon.hidden = true;
             this.root.removeAttribute('data-position-vertical');
+            this.balloon.removeAttribute('data-position-vertical');
 
             if (this._onDocClick) {
                 document.removeEventListener('click', this._onDocClick);
                 this._onDocClick = null;
             }
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
+
+            // Restore the balloon to its original location so author markup
+            // queries (e.g. `tooltip.querySelector('.nds-tooltip-balloon')`)
+            // still resolve while closed.
+            NDS.unportal(this.balloon);
 
             this.emitEvent('nds:tooltip:closed');
         }
@@ -218,8 +231,13 @@
             const spaceAbove = p.triggerRect.top - gap - topEdge;
             const flipUp = spaceBelow < bH && spaceAbove > spaceBelow;
 
-            if (flipUp) this.root.setAttribute('data-position-vertical', 'top');
-            else this.root.removeAttribute('data-position-vertical');
+            if (flipUp) {
+                this.root.setAttribute('data-position-vertical', 'top');
+                this.balloon.setAttribute('data-position-vertical', 'top');
+            } else {
+                this.root.removeAttribute('data-position-vertical');
+                this.balloon.removeAttribute('data-position-vertical');
+            }
 
             let top = flipUp ? p.triggerRect.top - bH - gap : p.triggerRect.bottom + gap;
             top = Math.max(topEdge, Math.min(top, p.viewportHeight - bH - pad));
@@ -227,8 +245,7 @@
             let left = p.triggerRect.left + (p.triggerRect.width / 2) - (bW / 2);
             left = Math.max(pad, Math.min(left, p.viewportWidth - bW - pad));
 
-            this.balloon.style.top = top + 'px';
-            this.balloon.style.left = left + 'px';
+            NDS.placeFixed(this.balloon, top, left);
 
             // Arrow points at the trigger center, clamped inside balloon edges
             const triggerCenterX = p.triggerRect.left + p.triggerRect.width / 2;
