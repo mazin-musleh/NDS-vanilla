@@ -1231,7 +1231,10 @@
             if (!element._ndsFilterObserver) {
                 element._ndsFilterObserver = true;
                 NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
-                    if (nodes.some(n => element.contains(n))) {
+                    // Ignore nodes that already have listeners bound — they are
+                    // being moved (portal open/close), not genuinely inserted.
+                    const fresh = nodes.filter(n => element.contains(n) && !n._ndsFilterBound);
+                    if (fresh.length > 0) {
                         this.setupManualFilter(element, filterName);
                         this.reapplyUrlParamsForFilter(filterName);
                     }
