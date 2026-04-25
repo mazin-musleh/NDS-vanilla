@@ -34,11 +34,15 @@
     --drawer-btn-height: 48px;
 }
 
+.nds-footer-drawer[data-state="always-open"] .nds-list-header {
+    --btn-bg-selected: transparent!important;
+}
+
 /* ========================================
    FOOTER SOCIAL AND MOBILE APP ITEMS
    ======================================== */
 
-:is(.nds-footer-social-item, .nds-footer-app-item) {
+.nds-footer-app-item {
     break-inside: avoid;
     break-after: avoid;
 }
@@ -59,10 +63,9 @@
 
 .nds-footer-social-icons {
     display: flex;
-    gap: var(--spacing-md, 16px);
+    gap: var(--spacing-md);
     margin: var(--spacing-md) 0;
     flex-wrap: wrap;
-    justify-content: flex-start;
 }
 
 /* ========================================
@@ -71,10 +74,9 @@
 
 .nds-footer-mobile-app-icons {
     display: flex;
-    gap: var(--spacing-md, 16px);
+    gap: var(--spacing-md);
     margin: var(--spacing-md) 0;
     flex-wrap: wrap;
-    justify-content: flex-start;
 }
 
 /* ========================================
@@ -95,12 +97,12 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-xl);
     text-decoration: underline;
 }
 
 .nds-footer-separator {
-    margin: 0 0.5rem;
+    margin-inline: var(--spacing-md);
     opacity: 0.7;
 }
 
@@ -203,7 +205,7 @@
         }
 
         .nds-footer-copy-right {
-            color: var(--color-white-alfa-60);
+            color: var(--alpha-white-60);
         }
     }
 }
