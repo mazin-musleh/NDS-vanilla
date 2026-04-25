@@ -15,6 +15,8 @@ The DGA's official implementation is a React and Storybook component library tha
 - **More than components.** Includes the layout system, page templates, documentation, and fully customizable.
 - **Compliance-ready out of the box.** Official DGA page templates, converted into live, working code and ready for deployment. Every component adheres to the official design tokens, typography, spacing, and interaction patterns.
 
+> **Accessibility:** Components are manually tested for WCAG 2.1 AA compliance. A formal automated audit (axe-core + screen reader) is planned for a future release. Known gaps are tracked via issues labeled `accessibility`.
+
 ### → [**Live demo & full documentation**](https://mazin-musleh.github.io/NDS-vanilla/)
 
 Quick links:
