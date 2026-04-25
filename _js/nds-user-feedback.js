@@ -47,19 +47,14 @@ NDS.UserFeedback = (() => {
     // NOTE: These are ESSENTIAL/FUNCTIONAL cookies - no consent check required
     // They prevent duplicate submissions and maintain form state
     function saveFeedbackStatus(status = 'submitted') {
-        if (NDS.Cookies && NDS.Cookies.set) {
-            const cookieName = getFeedbackCookieName();
-            NDS.Cookies.set(cookieName, status, 365); // Save for 365 days
-        }
+        const cookieName = getFeedbackCookieName();
+        NDS.Cookies.set(cookieName, status, 365); // Save for 365 days
     }
 
     // Get feedback status from cookie
     function getFeedbackStatus() {
-        if (NDS.Cookies && NDS.Cookies.get) {
-            const cookieName = getFeedbackCookieName();
-            return NDS.Cookies.get(cookieName);
-        }
-        return null;
+        const cookieName = getFeedbackCookieName();
+        return NDS.Cookies.get(cookieName);
     }
 
     function init() {
@@ -124,7 +119,7 @@ NDS.UserFeedback = (() => {
                 const message = status === 'success' ? successMessage : errorMessage;
 
                 // Create feedback message using NDSFeedback API
-                if (NDS.Feedback && statusEl) {
+                if (statusEl) {
                     // Clear any existing feedback in status element
                     NDS.Feedback.dismissAll(statusEl);
 
@@ -171,7 +166,7 @@ NDS.UserFeedback = (() => {
                 feedbackComponent.removeAttribute('data-answer');
 
                 // Dismiss any feedback messages created by NDSFeedback API
-                if (NDS.Feedback && statusEl) {
+                if (statusEl) {
                     NDS.Feedback.dismissAll(statusEl);
                 }
 

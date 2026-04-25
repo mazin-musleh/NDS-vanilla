@@ -127,9 +127,7 @@
         codeElement.innerHTML = updatedContent;
 
         // Reprocess using new simplified API
-        if (NDS.Code && NDS.Code.reprocessCodeElement) {
-            NDS.Code.reprocessCodeElement(codeElement);
-        }
+        NDS.Code.reprocessCodeElement(codeElement);
     }
 
 
@@ -404,18 +402,14 @@
                         value.trim().split(/\s+/).forEach(function(attrPair) {
                             var attrName = attrPair.split('=')[0];
                             el.removeAttribute(attrName);
-                            if (attrName === 'data-required' && window.NDS && NDS.Forms && NDS.Forms.setState) {
+                            if (attrName === 'data-required') {
                                 NDS.Forms.setState(el, 'required', false);
                             }
                         });
                     } else if (op === 'data-state') {
                         value.trim().split(/\s+/).forEach(function(state) {
                             if (!state) return;
-                            if (window.NDS && NDS.Forms && NDS.Forms.setState) {
-                                NDS.Forms.setState(el, state, false);
-                            } else {
-                                toggleDataState(el, state, false);
-                            }
+                            NDS.Forms.setState(el, state, false);
                         });
                     } else if (op === 'prop') {
                         value.trim().split(/\s+/).forEach(function(prop) {
@@ -458,7 +452,7 @@
                             } else {
                                 el.setAttribute(parts[0], '');
                             }
-                            if (parts[0] === 'data-required' && window.NDS && NDS.Forms && NDS.Forms.setState) {
+                            if (parts[0] === 'data-required') {
                                 NDS.Forms.setState(el, 'required', true);
                             }
                         });
@@ -466,11 +460,7 @@
                         value.trim().split(/\s+/).forEach(function(state) {
                             if (!state) return;
                             toggleDataState(el, state, false);
-                            if (window.NDS && NDS.Forms && NDS.Forms.setState) {
-                                NDS.Forms.setState(el, state, true);
-                            } else {
-                                toggleDataState(el, state, true);
-                            }
+                            NDS.Forms.setState(el, state, true);
                         });
                     } else if (op === 'prop') {
                         value.trim().split(/\s+/).forEach(function(prop) {
@@ -974,9 +964,7 @@
 
             // Propagate data-required to inputs (live demo)
             if (attrName === 'data-required') {
-                if (window.NDS && NDS.Forms && NDS.Forms.setState) {
-                    NDS.Forms.setState(targetElement, 'required', isAdding);
-                }
+                NDS.Forms.setState(targetElement, 'required', isAdding);
             }
 
             // Special handling for data-status variant changes
@@ -1023,8 +1011,8 @@
             targetElement[prop] = newValue;
 
             // Sync with forms system if available
-            if (prop === 'indeterminate' && window.NDS && window.NDS.Forms && window.NDS.Forms.setIndeterminate) {
-                window.NDS.Forms.setIndeterminate(targetElement, newValue);
+            if (prop === 'indeterminate') {
+                NDS.Forms.setIndeterminate(targetElement, newValue);
             }
         });
     }
@@ -1038,8 +1026,8 @@
             targetElement[prop] = false;
 
             // Sync with forms system if available
-            if (prop === 'indeterminate' && window.NDS && window.NDS.Forms && window.NDS.Forms.setIndeterminate) {
-                window.NDS.Forms.setIndeterminate(targetElement, false);
+            if (prop === 'indeterminate') {
+                NDS.Forms.setIndeterminate(targetElement, false);
             }
         });
     }
@@ -1075,11 +1063,7 @@
             const isAdding = !NDS.State.has(targetElement, state);
 
             // Live demo: Forms API handles data-state + input propagation
-            if (window.NDS && NDS.Forms && NDS.Forms.setState) {
-                NDS.Forms.setState(targetElement, state, isAdding);
-            } else {
-                toggleDataState(targetElement, state, isAdding);
-            }
+            NDS.Forms.setState(targetElement, state, isAdding);
 
             // Sync code example text
             if (demoCard) {
@@ -1825,7 +1809,7 @@
                     }
                 }
 
-                if (NDS.Expandable && NDS.Expandable.reinit) NDS.Expandable.reinit();
+                NDS.Expandable.reinit();
                 rebuildCardCode(demoCard);
             });
         });
@@ -2419,9 +2403,7 @@
         if (hiddenCopy) hiddenCopy.textContent = result;
         codeElement.dataset.originalContent = result;
         codeElement.innerHTML = result;
-        if (NDS.Code && NDS.Code.reprocessCodeElement) {
-            NDS.Code.reprocessCodeElement(codeElement);
-        }
+        NDS.Code.reprocessCodeElement(codeElement);
     }
 
     function rebuildCardCode(demoCard) {

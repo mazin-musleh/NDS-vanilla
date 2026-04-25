@@ -278,9 +278,7 @@
             panel.setAttribute('tabindex', '0');
 
             // Recheck height for expandable components now visible
-            if (NDS.Expandable && NDS.Expandable.recheckHeights) {
-                setTimeout(() => NDS.Expandable.recheckHeights(), 10);
-            }
+            setTimeout(() => NDS.Expandable.recheckHeights(), 10);
         }
 
         deactivateTab(tab, index) {

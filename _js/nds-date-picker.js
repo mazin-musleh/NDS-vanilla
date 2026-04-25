@@ -855,7 +855,7 @@
         getTodaysHijriDate: function () {
             // Simple cache for today's Hijri date - API handles date validation internally
             if (!this._cachedTodaysHijriDate) {
-                if (NDS.TimeDate && NDS.TimeDate.getHijriDate) {
+                if (NDS.TimeDate.getHijriDate) {
                     var self = this;
 
                     NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
@@ -1033,7 +1033,7 @@
 
             // Get accurate Hijri date FIRST before parsing initial values
             // This ensures accurate conversions when parsing dates
-            var hasHijriApi = !!(NDS.TimeDate && NDS.TimeDate.getHijriDate);
+            var hasHijriApi = !!NDS.TimeDate.getHijriDate;
             if (hasHijriApi && this.state.calendarType === 'hijri') {
                 this.initializeHijriCalendarWithParsing();
             } else {
@@ -1273,7 +1273,7 @@
         bindDropdownEvents: function () {
             var self = this;
 
-            if (this.elements.monthDropmenu && NDS.Dropmenu && !this.monthDropmenuInstance) {
+            if (this.elements.monthDropmenu && !this.monthDropmenuInstance) {
                 this.monthDropmenuInstance = NDS.Dropmenu.create(this.elements.monthDropmenu);
                 this.elements.monthDropmenu.ndsDropmenu = this.monthDropmenuInstance;
                 this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
@@ -1286,7 +1286,7 @@
                 });
             }
 
-            if (this.elements.yearDropmenu && NDS.Dropmenu && !this.yearDropmenuInstance) {
+            if (this.elements.yearDropmenu && !this.yearDropmenuInstance) {
                 this.yearDropmenuInstance = NDS.Dropmenu.create(this.elements.yearDropmenu);
                 this.elements.yearDropmenu.ndsDropmenu = this.yearDropmenuInstance;
                 this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {

@@ -134,7 +134,7 @@
                 }
 
                 // Create feedback using NDSFeedback API
-                if (NDS.Feedback && message) {
+                if (message) {
                     // Dynamic target selection using data-feedback-target attribute
                     var targetSelector = container.getAttribute('data-feedback-target');
                     var target = container;
@@ -197,9 +197,7 @@
             container.removeAttribute('data-message');
 
             // Dismiss all feedback in container using NDSFeedback API
-            if (NDS.Feedback) {
-                NDS.Feedback.dismissAll(container);
-            }
+            NDS.Feedback.dismissAll(container);
 
             // Clear accessibility
             var input = container.querySelector('input, textarea, select');

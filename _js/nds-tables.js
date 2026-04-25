@@ -106,7 +106,7 @@
                         }
                     }
 
-                    if (NDS.Pagination && NDS.Pagination.refresh) {
+                    if (NDS.Pagination.refresh) {
                         const pagedContent = this.tbody.closest('.nds-paged-content');
                         if (pagedContent) NDS.Pagination.refresh(pagedContent);
                     }
