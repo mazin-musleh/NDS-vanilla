@@ -26,7 +26,7 @@ brandSlogan: Vanilla Design System
 brandSloganColor: var(--text-secondary-paragraph,#6c727e)
 
 hero_image: assets/img/riyadhcenter_ai.webp
-hero_image_small: assets/img/riyadhcenter_ais.webp
+hero_image_small: assets/img/riyadhcenter3s.webp
 hero_image_sub:
 hero_image_pos: 50% 80%
 hero_title: National Design System
