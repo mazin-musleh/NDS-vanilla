@@ -319,10 +319,10 @@
     }
 
     function destroyDrawer(drawer) {
-        // Clean up resize handler
-        if (drawer._resizeHandler) {
-            window.removeEventListener('resize', drawer._resizeHandler);
-            delete drawer._resizeHandler;
+        // Release pooled resize subscription stored at initDrawer L308.
+        if (drawer._offResize) {
+            drawer._offResize();
+            delete drawer._offResize;
         }
 
         // Abort all submenu-toggle listeners attached in initToggles

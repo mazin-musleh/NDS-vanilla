@@ -14,6 +14,8 @@
 (function() {
     'use strict';
 
+    // One-shot guard for the auto-pagination DOM-removal listener.
+    let _autoCleanupReady = false;
 
     class NDSPagination {
         constructor(paginationNav) {
@@ -313,6 +315,20 @@
 
     // Auto-Pagination Generator for content-based pagination
     function initializeAutoPagination() {
+        // Release pooled ResizeObserver subscriptions when paged-content
+        // containers leave the DOM. Wired once for the page; idempotent.
+        if (!_autoCleanupReady) {
+            _autoCleanupReady = true;
+            NDS.onDOMRemove('.nds-paged-content', removed => {
+                removed.forEach(el => {
+                    if (el._offResize) {
+                        el._offResize();
+                        delete el._offResize;
+                    }
+                });
+            });
+        }
+
         const autoPaginationContainers = document.querySelectorAll('.nds-pagination[data-auto-pagination]');
 
         autoPaginationContainers.forEach(paginationNav => {
@@ -411,8 +427,10 @@
             // Initial pagination setup
             updatePagination();
 
-            // Watch for --per-page changes on resize
-            NDS.onElementResize(contentContainer, NDS.debounce(() => {
+            // Watch for --per-page changes on resize. Stored handle lets the
+            // module-level `.nds-paged-content` removal listener release the
+            // pooled ResizeObserver entry when this container leaves the DOM.
+            contentContainer._offResize = NDS.onElementResize(contentContainer, NDS.debounce(() => {
                 const currentPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
                 if (currentPerPage !== lastPerPage) {
                     lastPerPage = currentPerPage;

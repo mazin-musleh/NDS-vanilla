@@ -44,9 +44,6 @@
         }
 
         destroy() {
-            if (this.observer) {
-                this.observer.disconnect();
-            }
             if (this._offLayoutResize) this._offLayoutResize();
         }
 

@@ -327,6 +327,53 @@
         return prefix + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
     };
 
+    // ── Local-Storage TTL Cache ────────────────────────────────────────
+    // Wraps localStorage with a JSON `{value, expires}` envelope. Getter
+    // returns the cached value when fresh, `null` on miss / parse error /
+    // expiry (stale entries are evicted on read). Setter stamps
+    // `Date.now() + minutes * 60 * 1000`. All storage operations are
+    // try/catch'd so callers never have to handle quota / disabled-storage
+    // exceptions. Keys are namespaced under an `nds_` prefix so the
+    // cache shares the origin's localStorage cleanly with non-NDS code.
+    //
+    // Cache safety: callers are responsible for treating cached values as
+    // potentially-untrusted (any same-origin script can write to
+    // localStorage). Store primitive values, not pre-rendered HTML; render
+    // imperatively at the consumer. See `_js/nds-cityWeather.js` for the
+    // canonical pattern.
+    //
+    // Usage:
+    //   NDS.cache.set('weather_v2_ar_24.71', { desc, temp, icon }, 15);
+    //   const cached = NDS.cache.get('weather_v2_ar_24.71');
+    //   if (cached) renderWeather(el, cached);
+    //   NDS.cache.clear('weather_v2_ar_24.71'); // optional manual eviction
+    NDS.cache = (() => {
+        const PREFIX = 'nds_';
+        return {
+            get(key) {
+                try {
+                    const data = localStorage.getItem(PREFIX + key);
+                    if (!data) return null;
+                    const parsed = JSON.parse(data);
+                    if (Date.now() < parsed.expires) return parsed.value;
+                    localStorage.removeItem(PREFIX + key);
+                } catch {}
+                return null;
+            },
+            set(key, value, minutes) {
+                try {
+                    localStorage.setItem(PREFIX + key, JSON.stringify({
+                        value,
+                        expires: Date.now() + (minutes * 60 * 1000)
+                    }));
+                } catch {}
+            },
+            clear(key) {
+                try { localStorage.removeItem(PREFIX + key); } catch {}
+            }
+        };
+    })();
+
     // ── Outside-scroll Close Helper ────────────────────────────────────
     // Capture-phase document scroll listener that invokes `onClose` when the
     // scroll event originates outside `scopeEl`. Scrolls inside scopeEl

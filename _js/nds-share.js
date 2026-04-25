@@ -37,6 +37,25 @@
         openPopup(`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`);
     }
 
+    // Read the share URL from the wrapper, validating the scheme. The
+    // `data-share-url` attribute is caller-controlled markup; without
+    // validation, `data-share-url="javascript:alert(1)"` would pollute the
+    // clipboard via the copy path (and any future direct-navigation caller).
+    // Falls back to the page URL when the attribute is missing or its
+    // scheme is outside the navigation allowlist.
+    const ALLOWED_SHARE_SCHEMES = ['http:', 'https:', 'mailto:', 'tel:'];
+    function getShareUrl(wrapper) {
+        const raw = wrapper.getAttribute('data-share-url');
+        if (!raw) return window.location.href;
+        try {
+            const u = new URL(raw, window.location.href);
+            if (!ALLOWED_SHARE_SCHEMES.includes(u.protocol)) return window.location.href;
+            return u.href;
+        } catch {
+            return window.location.href;
+        }
+    }
+
     // Walk up to a `.nds-share` wrapper, falling back via the menu's
     // `_ownerDropmenu` backref. Needed because the share buttons usually
     // live inside a `.nds-share.nds-dropmenu` whose menu portals to <body>
@@ -66,7 +85,7 @@
     function handleClick(button) {
         const wrapper = shareWrapperFrom(button);
         if (!wrapper) return;
-        const url = wrapper.getAttribute('data-share-url') || window.location.href;
+        const url = getShareUrl(wrapper);
         const title = wrapper.getAttribute('data-share-title') || document.title;
 
         if (button.classList.contains('nds-share-x')) shareOnX(url, title);

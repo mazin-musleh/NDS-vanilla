@@ -711,7 +711,7 @@
                 if (_navBackdropOwner) {
                     _navBackdropOwner = null;
                     cancelToggleAction();
-                    if (NDS.Backdrop?.isActive()) NDS.Backdrop.hide();
+                    if (NDS.Backdrop.isActive()) NDS.Backdrop.hide();
                 }
             }
 

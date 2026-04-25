@@ -2,49 +2,30 @@
 (() => {
     'use strict';
 
-    // Helper to get Saudi Arabia date (GMT+3)
+    // Helper to get Saudi Arabia date (GMT+3) — embedded into every cache
+    // key below so a tab that crosses midnight automatically reads the
+    // new day's entry instead of stale data.
     function getSaudiDate() {
         return new Date().toLocaleDateString('en-CA', {
             timeZone: 'Asia/Riyadh'
         });
     }
 
-    // Simple cache helper with date validation
-    function getCache(key) {
-        try {
-            const data = localStorage.getItem(`nds_${key}`);
-            if (data) {
-                const parsed = JSON.parse(data);
-                // Check if cache is still valid by timestamp AND date (Saudi Arabia time)
-                const today = getSaudiDate();
-                if (Date.now() < parsed.expires && parsed.date === today) {
-                    return parsed.value;
-                }
-                // Remove expired or old-date cache
-                localStorage.removeItem(`nds_${key}`);
-            }
-        } catch {}
-        return null;
+    // Cached payloads live in localStorage, which any same-origin script can
+    // overwrite. Cache primitives only; render imperatively at the consumer
+    // so attacker-controlled bytes can't reach the HTML parser. Pattern
+    // matches `_js/nds-cityWeather.js` post-fix.
+    function renderDate(parent, content) {
+        while (parent.firstChild) parent.removeChild(parent.firstChild);
+        const icon = document.createElement('i');
+        icon.className = 'nds-icon nds-hgi-calendar-03';
+        icon.setAttribute('aria-hidden', 'true');
+        const span = document.createElement('span');
+        span.className = 'text';
+        span.textContent = content;
+        parent.appendChild(icon);
+        parent.appendChild(span);
     }
-
-    function setCache(key, value, minutes) {
-        try {
-            const today = getSaudiDate();
-            localStorage.setItem(`nds_${key}`, JSON.stringify({
-                value,
-                expires: Date.now() + (minutes * 60 * 1000),
-                date: today // Store the date when cache was created (Saudi Arabia time)
-            }));
-        } catch {}
-    }
-
-    // Add this function to clear specific cache
-  function clearHijriCache(date = null) {
-      const targetDate = date || getSaudiDate();
-      localStorage.removeItem(`nds_hijri_ar_${targetDate}`);
-      localStorage.removeItem(`nds_hijri_en_${targetDate}`);
-      localStorage.removeItem(`nds_hijri_data_${targetDate}`);
-  }
 
     // Hijri date with efficient dual-language caching
     async function getHijriDate(isArabic, returnStructured = false) {
@@ -53,10 +34,11 @@
         const englishKey = `hijri_en_${today}`;
         const dataKey = `hijri_data_${today}`;
 
-        // Check if we already have all three cached
-        const arabicCached = getCache(arabicKey);
-        const englishCached = getCache(englishKey);
-        const dataCached = getCache(dataKey);
+        // Check if we already have all three cached. Keys embed today, so
+        // day-boundary invalidation is handled by the cache-miss path.
+        const arabicCached = NDS.cache.get(arabicKey);
+        const englishCached = NDS.cache.get(englishKey);
+        const dataCached = NDS.cache.get(dataKey);
 
         //console.log('Cache check:', { arabicCached: !!arabicCached, englishCached: !!englishCached, dataCached: !!dataCached });
 
@@ -94,9 +76,9 @@
                 };
                 
                 // Cache all three for 24 hours
-                setCache(arabicKey, arabicDate, 24 * 60);
-                setCache(englishKey, englishDate, 24 * 60);
-                setCache(dataKey, hijriData, 24 * 60);
+                NDS.cache.set(arabicKey, arabicDate, 24 * 60);
+                NDS.cache.set(englishKey, englishDate, 24 * 60);
+                NDS.cache.set(dataKey, hijriData, 24 * 60);
                 
                 return returnStructured ? hijriData : (isArabic ? arabicDate : englishDate);
             }
@@ -126,18 +108,19 @@
         const isArabic = NDS.isArabic;
         const today = getSaudiDate();
         const type = el.dataset?.calendar || (isArabic ? 'hijri' : 'gregorian');
-        const cacheKey = `date_${type}_${isArabic}_${today}`;
+        // v2 key: cache shape changed from HTML string to primitive content.
+        const cacheKey = `date_v2_${type}_${isArabic}_${today}`;
 
         // Check cache first (24 hours)
-        const cached = getCache(cacheKey);
-        if (cached) {
-            el.innerHTML = cached;
+        const cached = NDS.cache.get(cacheKey);
+        if (typeof cached === 'string' && cached) {
+            renderDate(el, cached);
             el.style.display = '';
             return;
         }
 
         let content;
-        
+
         if (type === 'hijri') {
             content = await getHijriDate(isArabic);
         } else {
@@ -149,12 +132,11 @@
         }
 
         if (content) {
-            const html = `<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i><span class="text">${NDS.escapeHtml(content)}</span>`;
-            el.innerHTML = html;
+            renderDate(el, content);
             el.style.display = '';
-            
-            // Cache for 24 hours
-            setCache(cacheKey, html, 24 * 60);
+
+            // Cache for 24 hours (primitive content, not HTML)
+            NDS.cache.set(cacheKey, content, 24 * 60);
         } else {
             el.style.display = 'none';
         }

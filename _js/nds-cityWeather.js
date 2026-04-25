@@ -2,26 +2,33 @@
 (() => {
     'use strict';
 
-    // Simple cache helper
-    function getCache(key) {
-        try {
-            const data = localStorage.getItem(`nds_${key}`);
-            if (data) {
-                const parsed = JSON.parse(data);
-                if (Date.now() < parsed.expires) return parsed.value;
-                localStorage.removeItem(`nds_${key}`);
-            }
-        } catch {}
-        return null;
+    // Cached payloads live in localStorage, which any same-origin script (XSS in another
+    // page on the origin, a malicious browser extension with `storage` access) can
+    // overwrite. The cache stores primitives only; the renderer rebuilds DOM imperatively
+    // so every caller-controlled value flows through `.className` / `setAttribute` /
+    // `.textContent` — text-context boundaries the HTML parser never executes.
+    function renderWeather(parent, payload) {
+        while (parent.firstChild) parent.removeChild(parent.firstChild);
+        const icon = document.createElement('i');
+        icon.className = 'nds-icon ' + payload.icon;
+        icon.setAttribute('aria-hidden', 'true');
+        const span = document.createElement('span');
+        span.className = 'text';
+        span.textContent = payload.desc + ', ' + payload.temp + '°C';
+        parent.appendChild(icon);
+        parent.appendChild(span);
     }
 
-    function setCache(key, value, minutes) {
-        try {
-            localStorage.setItem(`nds_${key}`, JSON.stringify({
-                value,
-                expires: Date.now() + (minutes * 60 * 1000)
-            }));
-        } catch {}
+    function renderCity(parent, city) {
+        while (parent.firstChild) parent.removeChild(parent.firstChild);
+        const icon = document.createElement('i');
+        icon.className = 'nds-icon nds-hgi-location-01';
+        icon.setAttribute('aria-hidden', 'true');
+        const span = document.createElement('span');
+        span.className = 'text';
+        span.textContent = city;
+        parent.appendChild(icon);
+        parent.appendChild(span);
     }
 
     // Weather function with dual-language API caching
@@ -32,15 +39,17 @@
         const lat = +(el.dataset.latitude || 24.7136);
         const lng = +(el.dataset.longitude || 46.6753);
         const isArabic = NDS.isArabic;
-        const arabicKey = `weather_ar_${lat}_${lng}`;
-        const englishKey = `weather_en_${lat}_${lng}`;
+        // v2 keys: cache shape changed from HTML string to { desc, temp, icon } primitives.
+        const arabicKey = `weather_v2_ar_${lat}_${lng}`;
+        const englishKey = `weather_v2_en_${lat}_${lng}`;
 
-        // Check if we already have both languages cached
-        const arabicCached = getCache(arabicKey);
-        const englishCached = getCache(englishKey);
+        const arabicCached = NDS.cache.get(arabicKey);
+        const englishCached = NDS.cache.get(englishKey);
 
-        if (arabicCached && englishCached) {
-            el.innerHTML = isArabic ? arabicCached : englishCached;
+        if (arabicCached && englishCached &&
+            typeof arabicCached === 'object' && typeof englishCached === 'object' &&
+            arabicCached.icon && englishCached.icon) {
+            renderWeather(el, isArabic ? arabicCached : englishCached);
             el.style.display = '';
             return;
         }
@@ -95,20 +104,15 @@
                 throw new Error('Unknown weather code');
             }
 
-            // Create both language versions from single API response.
-            // XSS-safe: `icon`, `arabicDesc`, `englishDesc` are all assigned exclusively from the hardcoded
-            // switch chain above (compile-time literals); `temp` is Math.round() output (numeric). The
-            // `NDS.escapeHtml` wrap on the description substitutions is defense-in-depth — if a future
-            // edit ever wires them to API data, the escaping is already in place.
-            const arabicHtml = `<i class="nds-icon ${icon}" aria-hidden="true"></i><span class="text">${NDS.escapeHtml(arabicDesc)}, ${temp}°C</span>`;
-            const englishHtml = `<i class="nds-icon ${icon}" aria-hidden="true"></i><span class="text">${NDS.escapeHtml(englishDesc)}, ${temp}°C</span>`;
-            
-            el.innerHTML = isArabic ? arabicHtml : englishHtml;
+            const arabicData = { desc: arabicDesc, temp, icon };
+            const englishData = { desc: englishDesc, temp, icon };
+
+            renderWeather(el, isArabic ? arabicData : englishData);
             el.style.display = '';
-            
-            // Cache both languages for 15 minutes
-            setCache(arabicKey, arabicHtml, 15);
-            setCache(englishKey, englishHtml, 15);
+
+            // Cache both languages for 15 minutes (primitives, not HTML)
+            NDS.cache.set(arabicKey, arabicData, 15);
+            NDS.cache.set(englishKey, englishData, 15);
             
         } catch (error) {
             el.style.display = 'none';
@@ -125,12 +129,13 @@
         const lng = +(weatherEl.dataset.longitude || 46.6753);
         const isArabic = NDS.isArabic;
         const lang = isArabic ? 'ar' : 'en';
-        const cacheKey = `city_${lat}_${lng}_${lang}`;
+        // v2 key: cache shape changed from HTML string to plain city name.
+        const cacheKey = `city_v2_${lat}_${lng}_${lang}`;
 
         // Check cache first (30 days)
-        const cached = getCache(cacheKey);
-        if (cached) {
-            cityEl.innerHTML = cached;
+        const cached = NDS.cache.get(cacheKey);
+        if (typeof cached === 'string' && cached) {
+            renderCity(cityEl, cached);
             cityEl.style.display = '';
             return;
         }
@@ -149,13 +154,11 @@
 
             if (!city) throw new Error('No city found');
 
-            const html = `<i class="nds-icon nds-hgi-location-01" aria-hidden="true"></i><span class="text">${NDS.escapeHtml(city)}</span>`;
-            
-            cityEl.innerHTML = html;
+            renderCity(cityEl, city);
             cityEl.style.display = '';
-            
-            // Cache for 30 days
-            setCache(cacheKey, html, 30 * 24 * 60);
+
+            // Cache for 30 days (city name only, not HTML)
+            NDS.cache.set(cacheKey, city, 30 * 24 * 60);
             
         } catch (error) {
             cityEl.style.display = 'none';
