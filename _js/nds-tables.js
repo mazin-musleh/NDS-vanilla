@@ -29,6 +29,11 @@
             // Check if this is a selectable table
             this.isSelectable = this.selectAllCheckbox && this.rowCheckboxes.length > 0;
 
+            // AbortController for the change-listeners attached in
+            // setupEventListeners — aborted in destroy() so the per-row
+            // bookkeeping detaches cleanly when the table is torn down.
+            this._ac = new AbortController();
+
             this.init();
         }
 
@@ -125,10 +130,12 @@
         setupEventListeners() {
             // Selectable table listeners (sort listeners are owned by NDS.Sort)
             if (this.isSelectable) {
+                const { signal } = this._ac;
+
                 // Select all checkbox
                 this.selectAllCheckbox.addEventListener('change', (e) => {
                     this.handleSelectAll(e.target.checked);
-                });
+                }, { signal });
 
                 // Individual row checkboxes
                 this.rowCheckboxes.forEach(checkbox => {
@@ -136,7 +143,7 @@
                         this.updateSelectAllState();
                         this.updateRowSelectedStates();
                         this.dispatchSelectionEvent();
-                    });
+                    }, { signal });
                 });
             }
         }
@@ -230,6 +237,7 @@
 
         destroy() {
             this.sort?.destroy();
+            this._ac?.abort();
         }
     }
 
@@ -289,11 +297,13 @@
                 }
             });
 
-            // Measure each header cell's computed width with all rows visible
+            // Measure each header cell's computed width with all rows visible.
+            // Batch reads first, writes second, so a write to header N doesn't
+            // dirty layout for the read of header N+1.
             const headers = this.table.querySelectorAll('thead th');
-            headers.forEach(th => {
-                const width = th.getBoundingClientRect().width;
-                th.style.width = width + 'px';
+            const widths = Array.from(headers).map(th => th.getBoundingClientRect().width);
+            headers.forEach((th, i) => {
+                th.style.width = widths[i] + 'px';
             });
 
             // Re-hide the rows that were hidden
