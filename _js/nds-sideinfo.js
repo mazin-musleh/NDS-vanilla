@@ -53,7 +53,7 @@
         updateStickyState() {
             if (!this.wantsSticky) return;
             const top = parseFloat(getComputedStyle(this.sideInfo).top) || 0;
-            const fits = this.sideInfo.offsetHeight + top <= window.innerHeight;
+            const fits = this.sideInfo.offsetHeight + top <= document.documentElement.clientHeight;
             this.sideInfo.classList.toggle('nds-sticky', fits);
         }
 
