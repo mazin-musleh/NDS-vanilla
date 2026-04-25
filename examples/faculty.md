@@ -92,9 +92,9 @@ sidemenu_mode: top
                     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
             </div>
-            <div class="nds-tab-content nds-card nds-shadow">
+            <div class="nds-tab-content">
                 <!-- Biography Tab -->
-                <div class="nds-tab-panel" role="tabpanel" id="panel-cv" aria-labelledby="tab-cv"
+                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-cv" aria-labelledby="tab-cv"
                     tabindex="0">
                     <div class="nds-block">
                         <h3 class="nds-block-title">Biography</h3>
@@ -103,7 +103,7 @@ sidemenu_mode: top
                     </div>
                 </div>
                 <!-- Research Interests Tab -->
-                <div class="nds-tab-panel" role="tabpanel" id="panel-research"
+                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-research"
                     aria-labelledby="tab-research" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-block">
                         <h3 class="nds-block-title">Research Interests</h3>
@@ -118,7 +118,7 @@ sidemenu_mode: top
                     </div>
                 </div>
                 <!-- Publications Tab -->
-                <div class="nds-tab-panel" role="tabpanel" id="panel-publications"
+                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-publications"
                     aria-labelledby="tab-publications" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-block">
                         <h3 class="nds-block-title">Publications</h3>
@@ -133,7 +133,7 @@ sidemenu_mode: top
                     </div>
                 </div>
                 <!-- Experience Tab -->
-                <div class="nds-tab-panel" role="tabpanel" id="panel-experiences"
+                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-experiences"
                     aria-labelledby="tab-experiences" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-block">
                         <h3 class="nds-block-title">Professional Experience</h3>
@@ -148,7 +148,7 @@ sidemenu_mode: top
                     </div>
                 </div>
                 <!-- Education Tab -->
-                <div class="nds-tab-panel" role="tabpanel" id="panel-education"
+                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-education"
                     aria-labelledby="tab-education" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-block">
                         <h3 class="nds-block-title">Academic Qualifications</h3>
@@ -169,7 +169,7 @@ sidemenu_mode: top
                     </div>
                 </div>
                 <!-- Contact Tab -->
-                <div class="nds-tab-panel" role="tabpanel" id="panel-contact"
+                <div class="nds-tab-panel nds-card nds-shadow" role="tabpanel" id="panel-contact"
                     aria-labelledby="tab-contact" aria-hidden="true" tabindex="-1" hidden>
                     <div class="nds-block">
                         <h3 class="nds-block-title">Contact Information</h3>

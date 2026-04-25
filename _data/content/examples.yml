@@ -16,13 +16,6 @@
   tags: ["Stepper", "OTP", "Upload", "Date Picker"]
   url: "/examples/registration.html"
 
-- title: "Post"
-  description: "Article layout with hero image, author metadata, and rich content."
-  icon: '<i class="hgi hgi-stroke hgi-news"></i>'
-  category: "Content"
-  tags: ["Article", "Hero"]
-  url: "/examples/example-post.html"
-
 - title: "Faculty Profile"
   description: "Faculty member page with profile, tabbed content, and structured academic information."
   icon: '<i class="hgi hgi-stroke hgi-school"></i>'
