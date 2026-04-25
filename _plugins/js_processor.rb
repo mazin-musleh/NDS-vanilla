@@ -131,6 +131,7 @@ class JSProcessor
 
         # Header comment (no timestamp — keeps git diffs stable on rebuild)
         project_title = @config['title'] || 'National Design System'
+        version = @config['version'] || ''
         author_name = @config['author'] || 'Unknown'
         author_profile = @config['author_profile'] || ''
         license = @config['license'] || 'MIT'
@@ -138,6 +139,7 @@ class JSProcessor
 
         header_comment = "/*!\n"
         header_comment += " * #{project_title}\n"
+        header_comment += " * Version: #{version}\n" unless version.empty?
         header_comment += " * License: #{license}\n"
         header_comment += " * Repository: #{repo_url}\n"
         header_comment += " * Author: #{author_name}\n"
@@ -176,6 +178,7 @@ class JSProcessor
 
         # Header comment (no timestamp — keeps git diffs stable on rebuild)
         project_title = @config['title'] || 'National Design System'
+        version = @config['version'] || ''
         author_name = @config['author'] || 'Unknown'
         author_profile = @config['author_profile'] || ''
         license = @config['license'] || 'MIT'
@@ -183,6 +186,7 @@ class JSProcessor
 
         header_comment = "/*!\n"
         header_comment += " * #{project_title}\n"
+        header_comment += " * Version: #{version}\n" unless version.empty?
         header_comment += " * License: #{license}\n"
         header_comment += " * Repository: #{repo_url}\n"
         header_comment += " * Author: #{author_name}\n"

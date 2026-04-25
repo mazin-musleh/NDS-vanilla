@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 - Initial public release.
-- 56 components across UI, Forms, UI Shell, Plugins, Data, Layout, and Utilities categories.
+- 70+ components across UI, Forms, UI Shell, Plugins, Data, Layout, and Utilities categories.
 - RTL/LTR native support via CSS Logical Properties.
 - 3-tier design token system (color, semantic, component).
 - Smart component loader with on-demand initialization.

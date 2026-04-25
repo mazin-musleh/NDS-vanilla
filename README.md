@@ -115,7 +115,7 @@ Project-specific skills under [.claude/skills/](.claude/skills/) help with doc p
 
 ## Security
 
-Report vulnerabilities privately via the [Security tab](https://github.com/mazin-musleh/NDS-vanilla/security) or email ``. See [SECURITY.md](SECURITY.md).
+Report vulnerabilities privately via the [Security tab](https://github.com/mazin-musleh/NDS-vanilla/security). See [SECURITY.md](SECURITY.md) for details.
 
 ## License
 

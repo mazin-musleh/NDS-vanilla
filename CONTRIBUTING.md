@@ -3,8 +3,8 @@
 Thanks for your interest. Issues and pull requests are welcome.
 
 - **Found a bug?** [Open a bug report](https://github.com/mazin-musleh/NDS-vanilla/issues/new?template=bug_report.yml).
-- **Want a feature or new component?** [Open a feature request](https://github.com/mazin-musleh/NDS-vanilla/issues/new?template=feature_request.yml) first, before writing code.
 - **Small fix (typo, broken link, obvious bug)?** Send a PR directly.
+- **Want a feature or new component?** Start with a [Discussion](https://github.com/mazin-musleh/NDS-vanilla/discussions) so we can align on scope before any code is written.
 - **Got a question or idea?** Use [Discussions](https://github.com/mazin-musleh/NDS-vanilla/discussions).
 
 ---
@@ -24,7 +24,7 @@ The issue form enforces most of these. Fill it in.
 
 ## Running the project locally
 
-**Requirements:** Ruby 3.x, Bundler, Jekyll. Node.js only if you're modifying `scripts/add-icon.mjs` or rebuilding the JS bundles (Terser is invoked by `_plugins/js_processor.rb`).
+**Requirements:** Ruby 3.x, Bundler, Jekyll. Node.js 20+ is required if you edit any file under `_js/` — Terser is invoked by `_plugins/js_processor.rb` to bundle the JS.
 
 ```bash
 git clone https://github.com/mazin-musleh/NDS-vanilla.git

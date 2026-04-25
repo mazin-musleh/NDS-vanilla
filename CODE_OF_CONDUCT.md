@@ -6,9 +6,7 @@ All contributors, issue reporters, and discussion participants are expected to f
 
 ## Reporting
 
-If you experience or witness behavior that violates the Contributor Covenant in any project space (issues, pull requests, discussions, or other community interactions), please report it privately to:
-
-**``**
+If you experience or witness behavior that violates the Contributor Covenant in any project space (issues, pull requests, discussions, or other community interactions), please report it privately via the repository's [Security tab](https://github.com/mazin-musleh/NDS-vanilla/security/advisories/new) — the same channel used for security advisories handles confidential conduct reports.
 
 Reports will be reviewed and acted upon confidentially. The project maintainer is responsible for clarifying and enforcing the standards of acceptable behavior, and may take appropriate corrective action in response to any conduct deemed inappropriate.
 

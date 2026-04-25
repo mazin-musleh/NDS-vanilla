@@ -11,13 +11,7 @@
 
 Please **do not** open a public issue for security concerns.
 
-### Preferred: GitHub Security Advisories
-
-Use the **"Report a vulnerability"** button on the repository's [Security tab](https://github.com/mazin-musleh/NDS-vanilla/security). This keeps the discussion private between you and the maintainer.
-
-### Alternative: email
-
-Send details to `` with the subject line `[NDS Security]`.
+Use the **"Report a vulnerability"** button on the repository's [Security tab](https://github.com/mazin-musleh/NDS-vanilla/security/advisories/new). This keeps the discussion private between you and the maintainer.
 
 Please include:
 

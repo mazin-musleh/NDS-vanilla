@@ -1,8 +1,7 @@
 {
-  "name": "nds-jekyll-site",
+  "name": "nds-vanilla",
   "version": "1.0.0",
-  "description": "Vanilla HTML/CSS/JS implementation of Saudi Arabia's National Design System. 56 components, RTL/LTR native, zero dependencies.",
-  "main": "index.js",
+  "description": "Vanilla HTML/CSS/JS implementation of Saudi Arabia's National Design System. RTL/LTR native, zero runtime dependencies.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "bundle exec jekyll build",
@@ -19,7 +18,6 @@
     "saudi-arabia",
     "vanilla-js",
     "accessibility",
-    "dga",
     "nds"
   ],
   "author": "Mazin Musleh",
