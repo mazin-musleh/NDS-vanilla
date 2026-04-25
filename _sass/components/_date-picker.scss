@@ -7,13 +7,14 @@
 @use '../mixins' as *;
 
 // ==============================================
-// DATE PICKER BASE STYLES
+// DATE PICKER WRAPPER (form-control container)
 // ==============================================
+// The dropdown is portaled to <body> while open (escapes container-type
+// stacking traps), so its styles must apply via the dropdown's own
+// selector — we can't rely on `.nds-date-picker` as an ancestor.
 
 .nds-date-picker {
     position: relative;
-
-    --btn-size: 32px;
 
     // Arrow styling for date picker input (same as select)
     .nds-form-control {
@@ -28,7 +29,7 @@
             content: "";
 
             pointer-events: none;
-            position: absolute;
+            position: absolute;
 
             left: var(--spacing-md);
 
@@ -63,57 +64,27 @@
     &[data-state~="open"] .nds-form-control::after {
         transform: rotate(180deg);
     }
+}
 
-    // ==============================================
-    // DATE PICKER DROPDOWN STYLES
-    // ==============================================
+// ==============================================
+// DATE PICKER DROPDOWN (portaled to <body> while open)
+// ==============================================
 
-    .nds-date-picker-dropdown {
-        position: absolute;
+.nds-date-picker-dropdown {
+    --btn-size: 32px;
 
-        top: 100%;
+    position: fixed;
+    z-index: 1000;
+    padding: 0;
+    max-width: 500px;
+    min-width: 350px;
+    background-color: var(--form-field-background-default);
+    border: 1px solid var(--form-field-border-default);
+    border-radius: var(--radius-md, 8px);
+    box-shadow: var(--shadow-md);
 
-        left: 0;
-
-        right: 0;
-
-        z-index: 11;
-
-        margin-top: 4px;
-
-        padding: 0;
-
-        max-width: 500px;
-
-        min-width: 350px;
-
-        width: 100%;
-
-        background-color: var(--form-field-background-default);
-
-        border: 1px solid var(--form-field-border-default);
-
-        border-radius: var(--radius-md, 8px);
-
-        box-shadow: var(--shadow-md);
-
-        &[data-state~="hidden"] {
-            display: none;
-        }
-
-        @include mobile {
-            right: 50%;
-
-            transform: translateX(50%);
-
-            @include ltr {
-                right: 0;
-
-                left: 50%;
-
-                transform: translateX(-50%);
-            }
-        }
+    &[data-state~="hidden"] {
+        display: none;
     }
 
     // ==============================================
@@ -194,7 +165,7 @@
         margin-bottom: 8px;
 
         .nds-weekday {
-            
+
             text-align: center;
 
             font-size: var(--typo-text-md-FS);

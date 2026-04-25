@@ -911,6 +911,11 @@
             var isNowOpen = NDS.State.has(this.elements.dropdown, 'hidden');
 
             if (isNowOpen) {
+                // Portal first so subsequent measurement happens in <body>'s
+                // containing block, free of any container-type/transform
+                // ancestor (the same trap dropmenu/tooltip hit on Safari).
+                NDS.portal(this.elements.dropdown);
+
                 NDS.State.remove(this.elements.dropdown, 'hidden');
                 NDS.State.add(this.elements.container, 'open');
 
@@ -920,6 +925,7 @@
                 NDS.State.add(this.elements.dropdown, 'hidden');
                 NDS.State.remove(this.elements.container, 'open');
                 this.cleanup();
+                NDS.unportal(this.elements.dropdown);
             }
         },
 
@@ -929,22 +935,37 @@
 
             if (!dropdown || !formControl) return;
 
-            // Stage with fixed + hidden to avoid extending the page AND to
-            // give NDS.flipPosition a non-zero menuRect to work with — the
-            // dropdown is otherwise hidden via data-state.
-            dropdown.style.cssText = 'visibility:hidden;position:fixed;top:0;left:0;';
+            // Match the dropdown's width to the form-control. SCSS clamps via
+            // min-width 350 / max-width 500, so on narrow form-controls the
+            // dropdown ends up wider than the trigger and we'll center it
+            // below.
+            var fcRect = formControl.getBoundingClientRect();
+            dropdown.style.width = fcRect.width + 'px';
 
-            // respectNav: false — the dropdown is positioned inline beneath
-            // its form-control sibling, so the sticky mainnav doesn't apply
-            // as a top boundary.
+            var gap = 4, pad = 8;
+
+            // respectNav: false — the dropdown is positioned beneath its
+            // form-control, so the sticky mainnav doesn't apply as a top
+            // boundary.
             var p = NDS.flipPosition(formControl, dropdown, { respectNav: false });
+            var bH = p.menuRect.height;
+            var bW = p.menuRect.width;
 
-            // Clear measurement styles, flip above if not enough space below
-            if (p.spaceBelow < p.menuRect.height + 4 && p.triggerRect.top > p.spaceBelow) {
-                dropdown.style.cssText = 'top:unset;margin-top:unset;bottom:100%;margin-bottom:4px;';
-            } else {
-                dropdown.style.cssText = '';
-            }
+            // Flip above when not enough space below AND more space above.
+            var flipUp = p.spaceBelow < bH + gap && p.triggerRect.top - pad > p.spaceBelow;
+            var top = flipUp ? p.triggerRect.top - bH - gap : p.triggerRect.bottom + gap;
+            top = Math.max(pad, Math.min(top, p.viewportHeight - bH - pad));
+
+            // Default: align dropdown's left edge with form-control's left.
+            // When the dropdown is wider than the trigger (mobile, narrow
+            // form-controls), center it on the trigger so it doesn't shoot
+            // off one side.
+            var left = bW > fcRect.width
+                ? p.triggerRect.left + (fcRect.width / 2) - (bW / 2)
+                : p.triggerRect.left;
+            left = Math.max(pad, Math.min(left, p.viewportWidth - bW - pad));
+
+            NDS.placeFixed(dropdown, top, left);
         },
 
         initializeCalendar: function () {
@@ -1200,6 +1221,10 @@
                 this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderMonthOptions();
                     self.scrollToSelected(self.elements.monthDropdownMenu, '.nds-month-option[data-state~="selected"]');
+                    // Re-measure after content is appended — applyPosition
+                    // ran with an empty menu (width 0), so the inline width
+                    // it wrote is wrong until we re-trigger positioning.
+                    self.monthDropmenuInstance.applyPosition();
                 });
             }
 
@@ -1209,6 +1234,7 @@
                 this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderYearOptions();
                     self.scrollToSelected(self.elements.yearDropdownMenu, '.nds-year-option[data-state~="selected"]');
+                    self.yearDropmenuInstance.applyPosition();
                 });
             }
         },
@@ -1595,13 +1621,19 @@
                     return;
                 }
 
-                // Close entire calendar if clicked outside container
-                if (self.isDropdownCreated && !self.elements.container.contains(clickTarget)) {
+                // Close entire calendar if clicked outside container — also
+                // exclude clicks inside the dropdown itself, since while open
+                // it's portaled to <body> and no longer a descendant of the
+                // container.
+                if (self.isDropdownCreated
+                    && !self.elements.container.contains(clickTarget)
+                    && !(self.elements.dropdown && self.elements.dropdown.contains(clickTarget))) {
                     if (self.elements.dropdown) {
                         NDS.State.add(self.elements.dropdown, 'hidden');
                     }
                     NDS.State.remove(self.elements.container, 'open');
                     self.cleanup();
+                    NDS.unportal(self.elements.dropdown);
                 }
             }, 0);
         },
