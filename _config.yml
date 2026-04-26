@@ -1,6 +1,7 @@
-title: National Design System
+title: "NDS - Vanilla National Design System"
 version: 1.0.0
-description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
+description: "An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
+
 baseurl: "/NDS-vanilla"
 
 # HGI icon font from CDN: loads the font site-wide when true so any
