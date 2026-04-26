@@ -129,7 +129,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">External Links</h2>
-            <p class="nds-section-description">Links pointing to a different domain get an icon indicator automatically. Add <code class="nds-inline-code lang-html">nds-external</code> manually for same-hostname links that should be treated as external.</p>
+            <p class="nds-section-description">Links to a different domain are detected and marked with the external icon automatically. Use <code class="nds-inline-code lang-html">nds-icon</code> to add an inline link icon to internal links. Apply <code class="nds-inline-code lang-html">data-no-external</code> to any link or ancestor to opt out of automatic external treatment.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -167,9 +167,89 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;!-- JS detects the external hostname and adds nds-external, target="_blank", rel="noopener noreferrer" --&gt;
+&lt;!-- JS detects the external hostname and adds nds-external + target="_blank". Cross-domain links also get rel="noopener noreferrer". Subdomain links are trusted and skip rel. --&gt;
 &lt;p&gt;Consult the &lt;a href="https://www.data.gov.sa/" class="nds-link"&gt;Saudi Open Data portal&lt;/a&gt; for published datasets.&lt;/p&gt;
 &lt;p&gt;Review the &lt;a href="https://www.itu.int/en/Pages/default.aspx" class="nds-link nds-primary"&gt;ITU accessibility guidelines&lt;/a&gt; before publishing your service.&lt;/p&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Icon Link</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo" style="padding: var(--spacing-2xl);">
+                            <p>Download the <a href="#" class="nds-link nds-icon">Accessibility Compliance Report</a> for the current quarter.</p>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-link-icon-1" id="tab-link-icon-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-icon-1"
+                                    aria-labelledby="tab-link-icon-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;p&gt;Download the &lt;a href="/reports/accessibility-q1" class="nds-link nds-icon"&gt;Accessibility Compliance Report&lt;/a&gt; for the current quarter.&lt;/p&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Opt-out</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo" style="padding: var(--spacing-2xl); display: flex; flex-direction: column; gap: var(--spacing-md);">
+                            <p>This <a href="https://example.com" class="nds-link" data-no-external>partner portal</a> skips external treatment on a single link.</p>
+                            <div data-no-external>
+                                <p>All links in this container are also excluded: <a href="https://example.com" class="nds-link">trusted site</a> and <a href="https://other.com" class="nds-link">related service</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-link-optout-1" id="tab-link-optout-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-optout-1"
+                                    aria-labelledby="tab-link-optout-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;!-- On a single link --&gt;
+&lt;a href="https://partner.example.com" class="nds-link" data-no-external&gt;partner portal&lt;/a&gt;
+
+&lt;!-- On a container: all links inside are excluded --&gt;
+&lt;div data-no-external&gt;
+  &lt;a href="https://example.com" class="nds-link"&gt;trusted site&lt;/a&gt;
+  &lt;a href="https://other.com" class="nds-link"&gt;related service&lt;/a&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -215,14 +295,14 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-security-check"></i>
                         <span class="nds-label">Safe Navigation</span>
                     </span>
-                    <p class="nds-item-desc">External links receive <code class="nds-inline-code lang-html">target="_blank"</code> and <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code> without any manual markup.</p>
+                    <p class="nds-item-desc">External links open in a new tab automatically. Cross-domain links also receive <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>. Subdomain links are treated as trusted and skip the rel attribute.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-navigation-03"></i>
-                        <span class="nds-label">Navigation Exclusions</span>
+                        <i class="hgi hgi-stroke hgi-toggle-off"></i>
+                        <span class="nds-label">Opt-out Control</span>
                     </span>
-                    <p class="nds-item-desc">Links inside the main nav, side menu, and footer are skipped so navigation structure is never modified.</p>
+                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-no-external</code> to any link or ancestor element to prevent automatic external treatment on that link or the entire container.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -255,6 +335,8 @@ direction: ltr
                     <li>Do not use <code class="nds-inline-code lang-html">nds-link</code> on standalone navigation items. Use <a class="nds-color" href="{{ 'components/breadcrumb' | relative_url }}">Breadcrumb</a>, <a class="nds-color" href="{{ 'ui-shell/sidemenu' | relative_url }}">Side Navigation</a>, or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for navigation structure</li>
                     <li>Do not use a link when an action is intended rather than navigation. Use <code class="nds-inline-code lang-html">nds-btn nds-subtle</code> for text-like interactive controls that trigger behavior</li>
                     <li>External links (different domain) are detected and marked automatically. You do not need to add <code class="nds-inline-code lang-html">target="_blank"</code> or <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code> manually for cross-domain URLs</li>
+                    <li>Use <code class="nds-inline-code lang-html">data-no-external</code> on a link or a wrapper element when you want to suppress the external icon and new-tab behavior, such as for trusted partner sites or embedded widgets from a known domain</li>
+                    <li>Icon-only buttons (<code class="nds-inline-code lang-html">nds-btn nds-icon-only</code>) that happen to be links are automatically excluded from external treatment since they have no visible label to accompany the external icon</li>
                 </ul>
             </div>
 
@@ -268,7 +350,18 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>On-color palette for links placed on dark or branded backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Explicitly neutral color. Use inside <code class="nds-inline-code lang-html">.nds-content-section nds-demo-section</code> to opt out of the primary default</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-underline</code></td><td>Adds underline decoration to reinforce link identity in dense text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-icon</code></td><td>Shows a generic link icon after the text. Use for internal links that benefit from a visual anchor cue</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-external</code></td><td>Shows the external-link icon after the text. Applied automatically by JS to cross-domain links</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-no-external</code></td><td>Place on an <code class="nds-inline-code lang-html">&lt;a&gt;</code> or any ancestor element. Links matching or contained within the element skip external detection: no <code class="nds-inline-code lang-html">nds-external</code> class, no <code class="nds-inline-code lang-html">target="_blank"</code>, no <code class="nds-inline-code lang-html">rel</code></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -282,7 +375,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--link-hover</code></td><td><code class="nds-inline-code lang-html">--link-neutral-hovered</code></td><td>Text color on hover</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--link-pressed</code></td><td><code class="nds-inline-code lang-html">--link-neutral-pressed</code></td><td>Text color on active press</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--link-focused</code></td><td><code class="nds-inline-code lang-html">--link-neutral-focused</code></td><td>Text color when focused</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--link-visited</code></td><td><code class="nds-inline-code lang-html">--link-neutral-visited</code></td><td>Text color for visited links (inactive by default, commented out in source)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--link-visited</code></td><td><code class="nds-inline-code lang-html">--link-neutral-visited</code></td><td>Text color for visited links. Active inside <code class="nds-inline-code lang-html">.nds-content-section</code> where the <code class="nds-inline-code lang-html">:visited</code> state is applied</td></tr>
                     </tbody>
                 </table>
             </div>
