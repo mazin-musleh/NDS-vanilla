@@ -101,10 +101,6 @@
   opacity: 1;
   transform: translateY(0);
 
-  .nds-dropmenu-item[data-state~="active"] {
-    background-color: var(--background-neutral-200);
-  }
-
   .nds-dropmenu-group,
   .nds-dropmenu-item:not(.nds-btn) {
     margin-top: var(--spacing-2xl);

@@ -309,16 +309,18 @@ textarea {
 
     @if $position =='b' {
       bottom: 0;
-      width: calc(100% - var(--_btn-padding));
+      inset-inline: 0;
+      margin-inline: var(--spacing-md);
     }
 
     @else if $position =='v' {
+      height: unset;
       inset-inline-start: 0;
       bottom: unset;
       width: $size !important;
-      height: calc(100% - var(--_btn-padding));
-      transform: translateY(-50%);
-      top: 50%;
+      inset-block: 0;
+      margin-block: var(--spacing-md);
+      margin-inline: unset;
     }
   }
 }

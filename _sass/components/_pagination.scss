@@ -110,16 +110,16 @@
   overflow: hidden auto; */
 
   .nds-dropmenu-item {
+    --btn-indicator-selected: var(--button-background-primary-default);
     justify-content: center;
     min-width: 40px;
     min-height: 40px;
 
-    &.nds-indicator {
-      @include btn-indicator-styles(var(--background-neutral-400),
-        var(--background-neutral-800),
-        'b'
-      );
+    &:is([aria-current="page"], [data-state~="active"]):not(.nds-dropmenu-trigger:hover) {
+      background-color: unset;
     }
+
+
   }
 }
 

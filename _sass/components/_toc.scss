@@ -9,6 +9,7 @@
 
 .nds-toc {
     --drawer-lined-block: 0px;
+    --drawer-lined-width: 2px;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
