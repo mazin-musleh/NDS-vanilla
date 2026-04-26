@@ -1,4 +1,5 @@
 ---
+exclude_showcase: true
 layout: console
 body_class: nds-full-width
 layout_class: nds-toEdge

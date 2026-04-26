@@ -1,4 +1,5 @@
 ---
+exclude_showcase: true
 layout: page
 title: Bachelor of Science in Artificial Intelligence
 hero_title: Bachelor of Science in Artificial Intelligence

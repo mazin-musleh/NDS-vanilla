@@ -1,4 +1,5 @@
 ---
+exclude_showcase: true
 layout: page
 title: e-Participation Template
 hero_style: ""

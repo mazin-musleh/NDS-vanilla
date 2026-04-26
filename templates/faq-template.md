@@ -1,4 +1,5 @@
 ---
+exclude_showcase: true
 layout: page
 title: FAQ Template
 hero_style: "nds-flat"

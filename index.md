@@ -1,10 +1,11 @@
 ---
 layout: home
-title: "NDS - Vanilla National Design System"
+title: "Home"
 description: "An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
 
 lang: en
 direction: ltr
+exclude_showcase: true
 ---
 
 <!-- Implementation Solution -->
