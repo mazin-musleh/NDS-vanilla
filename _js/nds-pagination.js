@@ -548,10 +548,15 @@
             ? contentContainer
             : paginationNav;
 
+        // Tunable gap between the sticky nav and the pagination scroll target.
+        // Override per-page or globally via `--pagination-scroll-offset`.
+        const offsetVar = parseFloat(getComputedStyle(paginationNav).getPropertyValue('--pagination-scroll-offset'));
+        const offset = Number.isFinite(offsetVar) ? offsetVar : 120;
+
         // Only scroll if the top of the content is above the viewport
         const targetTop = targetElement.getBoundingClientRect().top;
         if (targetTop < navHeight) {
-            const scrollPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+            const scrollPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - offset;
             window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
         }
     }
