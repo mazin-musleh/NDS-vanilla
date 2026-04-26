@@ -94,9 +94,13 @@
             const li = document.createElement('li');
             li.className = 'nds-pagination-item nds-pagination-ellipsis';
 
-            // Create nds-dropmenu structure
+            // Create nds-dropmenu structure. `data-portal-scope` survives the
+            // menu's portal-to-<body> move by mirroring the parent context as
+            // a class on the menu — see `.nds-dropmenu-menu.nds-pagination-ellipsis`
+            // selectors in `_pagination.scss`.
             const dropmenu = document.createElement('div');
             dropmenu.className = 'nds-dropmenu';
+            dropmenu.dataset.portalScope = 'nds-pagination-ellipsis';
 
             const button = document.createElement('button');
             button.type = 'button';
@@ -136,16 +140,14 @@
                         menuItem.setAttribute('href', element.getAttribute('href'));
                     }
 
-                    // Copy click handler or page number for buttons
+                    // Preserve any onclick the source button carried; otherwise
+                    // navigation is handled by the document-level pagination
+                    // click handler (the dropmenu portals to <body>, so the
+                    // wrapper re-dispatches a synthetic click that carries the
+                    // item via `event.ndsDropmenuItem`).
                     if (!isAnchor) {
                         menuItem.type = 'button';
-                        if (element.onclick) {
-                            menuItem.onclick = element.onclick;
-                        } else {
-                            menuItem.onclick = () => {
-                                console.log('Navigate to page:', element.textContent);
-                            };
-                        }
+                        if (element.onclick) menuItem.onclick = element.onclick;
                     }
 
                     scroll.appendChild(menuItem);
@@ -205,10 +207,35 @@
         });
     }
 
+    // Collect dropmenu items associated with a pagination, including those
+    // in menus currently portaled to <body> (resolved via the wrapper's
+    // `_ownerMenu` backref through NDS.Dropmenu.menuOf).
+    function getPaginationDropmenuItems(pagination) {
+        const items = [];
+        pagination.querySelectorAll('.nds-dropmenu').forEach(dm => {
+            const menu = NDS.Dropmenu?.menuOf?.(dm) || dm.querySelector('.nds-dropmenu-menu');
+            if (menu) items.push(...menu.querySelectorAll('.nds-dropmenu-item'));
+        });
+        return items;
+    }
+
+    // All clickable page elements (in-list buttons + dropmenu items),
+    // portal-aware. Excludes prev/next.
+    function getAllPageElements(pagination) {
+        const inList = Array.from(pagination.querySelectorAll(
+            '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, ' +
+            '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a'
+        ));
+        return [...inList, ...getPaginationDropmenuItems(pagination)];
+    }
+
     // Shared function to set active page and aria-current
     function setActivePage(pagination, pageNumber) {
+        const dropmenuItems = getPaginationDropmenuItems(pagination);
+
         // Remove active from all items (including dropdown items and ellipsis trigger)
-        pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item, .nds-dropmenu-trigger').forEach(el => {
+        const inListClickables = pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-trigger');
+        [...inListClickables, ...dropmenuItems].forEach(el => {
             NDS.State.clear(el);
             el.removeAttribute('aria-current');
         });
@@ -222,7 +249,8 @@
         let activeInDropdown = false;
         let ellipsisTrigger = null;
 
-        pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item').forEach(element => {
+        const inListPages = pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a');
+        [...inListPages, ...dropmenuItems].forEach(element => {
             const elementPageNumber = parseInt(element.querySelector('.nds-label')?.textContent || element.textContent);
             if (elementPageNumber === pageNumber) {
                 NDS.State.set(element, 'active');
@@ -285,8 +313,8 @@
     function initializePaginationStates(paginationNav) {
         const pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
 
-        // Get all page elements and numbers
-        const allPageElements = Array.from(pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item'));
+        // Get all page elements and numbers (portal-aware)
+        const allPageElements = getAllPageElements(pagination);
         if (allPageElements.length === 0) return;
 
         const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
@@ -295,8 +323,8 @@
         const minPage = Math.min(...pageNumbers);
         const maxPage = Math.max(...pageNumbers);
 
-        // Find the active page
-        const activePage = pagination.querySelector('.nds-pagination-item button[aria-current="page"], .nds-pagination-item a[aria-current="page"], .nds-dropmenu-item[aria-current="page"]');
+        // Find the active page (portal-aware)
+        const activePage = allPageElements.find(el => el.getAttribute('aria-current') === 'page');
 
         // Get current page number (or default to first page if none active)
         let currentPageNum;
@@ -390,8 +418,10 @@
                 // Add click handlers
                 const newPagination = paginationNav.querySelector('.nds-pagination-list');
                 newPagination.addEventListener('click', (e) => {
-                    // Check for page buttons/links (both in pagination list and dropdown menu)
-                    const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
+                    // Portaled dropmenu items reach this listener via the
+                    // wrapper's re-dispatched click (see nds-dropmenu.js).
+                    const pageElement = e.ndsDropmenuItem
+                        || e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
 
                     if (pageElement) {
                         // Prevent default for anchors in auto-pagination
@@ -496,18 +526,12 @@
     }
 
     function getCurrentPage(pagination) {
-        // Check visible pagination items (both buttons and anchors)
-        let activeElement = pagination.querySelector('.nds-pagination-item button[aria-current="page"], .nds-pagination-item a[aria-current="page"]');
-        if (activeElement) {
-            return parseInt(activeElement.querySelector('.nds-label')?.textContent) || 1;
+        // Portal-aware: searches both in-list items and dropmenu items
+        // (whether the menu is nested or currently portaled to <body>).
+        const active = getAllPageElements(pagination).find(el => el.getAttribute('aria-current') === 'page');
+        if (active) {
+            return parseInt(active.querySelector('.nds-label')?.textContent || active.textContent) || 1;
         }
-
-        // Check dropdown menu items
-        activeElement = pagination.querySelector('.nds-dropmenu-item[aria-current="page"]');
-        if (activeElement) {
-            return parseInt(activeElement.querySelector('.nds-label')?.textContent || activeElement.textContent) || 1;
-        }
-
         return 1;
     }
 
@@ -549,9 +573,16 @@
     // Global click handler for manual pagination (not auto-pagination)
     const _paginationGlobalAC = new AbortController();
     document.addEventListener('click', (e) => {
-        // Check if click is on a pagination item or dropdown menu item
+        // Portaled dropmenu items don't bubble through .nds-pagination-list;
+        // nds-dropmenu re-dispatches a synthetic click on the wrapper carrying
+        // `e.ndsDropmenuItem` so we can resolve the original item here.
+        const portaledItem = e.ndsDropmenuItem
+            && e.target.closest?.('.nds-pagination-list')
+            ? e.ndsDropmenuItem
+            : null;
+
         const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a');
-        const dropdownItem = e.target.closest('.nds-pagination-list .nds-dropmenu-item');
+        const dropdownItem = portaledItem || e.target.closest('.nds-pagination-list .nds-dropmenu-item');
         const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
         const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
 
@@ -560,11 +591,14 @@
         // If neither page element nor prev/next clicked, return
         if (!clickedElement && !prevElement && !nextElement) return;
 
-        // Find the pagination container
-        const pagination = (clickedElement || prevElement || nextElement).closest('.nds-pagination-list');
+        // Find the pagination container — for portaled dropmenu items, walk
+        // through the wrapper (which is `e.target` of the re-dispatched click).
+        const pagination = portaledItem
+            ? e.target.closest('.nds-pagination-list')
+            : (clickedElement || prevElement || nextElement).closest('.nds-pagination-list');
         if (!pagination) return;
 
-        // Skip if this is an auto-pagination (already handled)
+        // Skip if this is an auto-pagination (handled by its own listener)
         const paginationNav = pagination.closest('.nds-pagination');
         if (paginationNav && paginationNav.hasAttribute('data-nds-auto-pagination-initialized')) {
             return;
@@ -572,7 +606,8 @@
 
         // Handle prev/next clicks
         if (prevElement || nextElement) {
-            const currentActive = pagination.querySelector('.nds-pagination-item button[aria-current="page"], .nds-pagination-item a[aria-current="page"], .nds-dropmenu-item[aria-current="page"]');
+            const allPageElements = getAllPageElements(pagination);
+            const currentActive = allPageElements.find(el => el.getAttribute('aria-current') === 'page');
             if (!currentActive) return;
 
             const currentPageNum = parseInt(currentActive.querySelector('.nds-label')?.textContent || currentActive.textContent);
@@ -580,13 +615,10 @@
 
             const targetPageNum = prevElement ? currentPageNum - 1 : currentPageNum + 1;
 
-            // Find the target page element
-            let targetElement = null;
-            pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-item').forEach(el => {
+            // Find the target page element (portal-aware)
+            const targetElement = allPageElements.find(el => {
                 const pageNum = parseInt(el.querySelector('.nds-label')?.textContent || el.textContent);
-                if (pageNum === targetPageNum) {
-                    targetElement = el;
-                }
+                return pageNum === targetPageNum;
             });
 
             if (!targetElement) return;
@@ -595,7 +627,6 @@
             setActivePage(pagination, targetPageNum);
 
             // Update prev/next button states
-            const allPageElements = Array.from(pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item'));
             const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
             const minPage = Math.min(...pageNumbers);
             const maxPage = Math.max(...pageNumbers);
@@ -615,8 +646,8 @@
                 // Set active page with aria-current
                 setActivePage(pagination, clickedPageNum);
 
-                // Update prev/next button states
-                const allPageElements = Array.from(pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item'));
+                // Update prev/next button states (portal-aware)
+                const allPageElements = getAllPageElements(pagination);
                 const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
                 const minPage = Math.min(...pageNumbers);
                 const maxPage = Math.max(...pageNumbers);
@@ -676,8 +707,9 @@
             const currentVisibleItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'))
                 .filter(item => !item.hasAttribute('data-filtered') && !item.classList.contains('nds-filtered-out'));
 
-            // Check for page buttons/links
-            const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
+            // Portaled dropmenu items arrive via the wrapper's re-dispatch.
+            const pageElement = e.ndsDropmenuItem
+                || e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
 
             if (pageElement) {
                 if (pageElement.tagName.toLowerCase() === 'a') {
@@ -739,11 +771,7 @@
             refresh: refreshAutoPagination,
             setPage: function(container, pageNumber) {
                 const pagination = container.querySelector('.nds-pagination-list') || container;
-                const allPages = Array.from(pagination.querySelectorAll(
-                    '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, ' +
-                    '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, ' +
-                    '.nds-dropmenu-item'
-                ));
+                const allPages = getAllPageElements(pagination);
                 const pageNumbers = allPages.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
                 if (pageNumbers.length === 0) return;
                 setActivePage(pagination, pageNumber);
