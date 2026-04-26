@@ -307,12 +307,46 @@
             this.dropmenu.addEventListener('keydown', onEscape);
             this.menu.addEventListener('keydown', onEscape);
 
-            // Item click auto-close
+            // Item click auto-close + portal-aware re-dispatch.
+            // When the menu is portaled to <body>, native click events on items
+            // bubble through <body>, not through the wrapper — so listeners on
+            // ancestors (e.g. `.nds-pagination-list`) never see them. Dispatch
+            // a synthetic bubbling click on the wrapper to restore that path.
+            // The original item is attached as `event.ndsDropmenuItem` so
+            // listeners can identify which item was clicked.
             this.menu.addEventListener('click', (e) => {
                 const item = e.target.closest('.nds-dropmenu-item');
-                if (item && !item.hasAttribute('data-no-auto-close')) {
+                if (!item) return;
+
+                if (!item.hasAttribute('data-no-auto-close')) {
                     setTimeout(() => this.close(), 100);
                 }
+
+                // Skip re-dispatch when the menu is still nested inside the
+                // wrapper (natural bubbling reaches ancestors), or when this
+                // click is itself a re-dispatch (avoid feedback loops).
+                if (this.dropmenu.contains(this.menu)) return;
+                if (e.ndsDropmenuRedispatch) return;
+
+                const synthetic = new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                    view: window,
+                    button: e.button,
+                    buttons: e.buttons,
+                    clientX: e.clientX,
+                    clientY: e.clientY,
+                    screenX: e.screenX,
+                    screenY: e.screenY,
+                    ctrlKey: e.ctrlKey,
+                    shiftKey: e.shiftKey,
+                    altKey: e.altKey,
+                    metaKey: e.metaKey,
+                });
+                synthetic.ndsDropmenuRedispatch = true;
+                synthetic.ndsDropmenuItem = item;
+                this.dropmenu.dispatchEvent(synthetic);
             });
         }
 
@@ -429,7 +463,17 @@
 
             // Portal first so subsequent measurement happens in <body>'s
             // containing block, free of any container-type/transform ancestor.
-            NDS.portal(this.menu, { snapshotVars: PORTAL_VARS });
+            // `data-portal-scope` on the wrapper opts in to mirroring parent
+            // context as classes on the portaled menu, so SCSS that scoped
+            // styles via descendant selectors (e.g.
+            // `.nds-pagination-ellipsis .nds-dropmenu-menu`) keeps working
+            // by adding a parallel `.nds-dropmenu-menu.nds-pagination-ellipsis`
+            // selector.
+            const scopeAttr = this.dropmenu.dataset.portalScope;
+            const scopeClasses = scopeAttr
+                ? scopeAttr.trim().split(/\s+/).filter(Boolean)
+                : null;
+            NDS.portal(this.menu, { snapshotVars: PORTAL_VARS, scopeClasses });
 
             addState(this.dropmenu, 'open', 'opening');
             addState(this.menu,     'open', 'opening');

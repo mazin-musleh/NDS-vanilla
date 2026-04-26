@@ -494,7 +494,12 @@
     // `--dropmenu-min-width: 250px` on `.nds-filter`) — those values are
     // read from the inherited cascade BEFORE the move and re-applied as
     // inline styles after, so the visual remains identical.
-    // Usage: NDS.portal(menu, { snapshotVars: ['--menu-padding', ...] });
+    // `opts.scopeClasses` accepts class tokens that get added to `el` on
+    // portal (and removed on unportal). Authors use these to mirror parent
+    // context — e.g. `.nds-pagination-ellipsis .nds-dropmenu-menu` styles
+    // can also target `.nds-dropmenu-menu.nds-pagination-ellipsis` so the
+    // visual survives the move.
+    // Usage: NDS.portal(menu, { snapshotVars: ['--menu-padding'], scopeClasses: ['nds-pagination-ellipsis'] });
     //        NDS.unportal(menu); // later
     NDS.portal = (el, opts = {}) => {
         if (el._ndsPortal) return; // already portaled
@@ -509,15 +514,27 @@
             }
         }
         const setProps = [];
+        const addedClasses = [];
         el._ndsPortal = {
             parent: el.parentNode,
             nextSibling: el.nextSibling,
             setProps,
+            addedClasses,
         };
         document.body.appendChild(el);
         for (const k in snap) {
             el.style.setProperty(k, snap[k]);
             setProps.push(k);
+        }
+        const scopes = opts.scopeClasses;
+        if (scopes && scopes.length) {
+            for (let i = 0; i < scopes.length; i++) {
+                const cls = scopes[i];
+                if (cls && !el.classList.contains(cls)) {
+                    el.classList.add(cls);
+                    addedClasses.push(cls);
+                }
+            }
         }
         // Force a style/layout flush — Safari sometimes skips style recalc
         // when an element is reparented while display:none/hidden.
@@ -534,6 +551,11 @@
         }
         for (let i = 0; i < state.setProps.length; i++) {
             el.style.removeProperty(state.setProps[i]);
+        }
+        if (state.addedClasses) {
+            for (let i = 0; i < state.addedClasses.length; i++) {
+                el.classList.remove(state.addedClasses[i]);
+            }
         }
         delete el._ndsPortal;
     };
