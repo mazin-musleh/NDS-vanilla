@@ -73,6 +73,13 @@
   tags: ["JS"]
   url: "/components/dark-mode.html"
 
+- title: "Language Switcher"
+  description: "One-click RTL/LTR toggle with cookie persistence, View Transition slide animation, and FOUC prevention"
+  icon: '<i class="hgi hgi-stroke hgi-translation"></i>'
+  category: "UI"
+  tags: ["JS"]
+  url: "/components/lang-switcher.html"
+
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
   icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'

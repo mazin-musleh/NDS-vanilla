@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
         content="{{ page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
-    <title>{%- if page.title %}{{ page.title }} | {%- endif %}{{ site_title }}</title>
+    <title>{%- if page.title %}{{ page.title }} | {%- endif %} {{ site_title }}</title>
     <!-- Blocking scripts — FOUC / direction-mismatch prevention -->
     <script>
         // Apply cached theme before rendering to prevent FOUC
@@ -13,7 +13,6 @@
             if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
         })();
     </script>
-    {%- unless page.exclude_showcase == true %}
     <script>
         // Apply cached language preference before any rendering to prevent direction mismatch
         (function() {
@@ -25,6 +24,12 @@
             }
         })();
     </script>
+    {%- unless page.exclude_showcase == true %}
+    <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver=1.000" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver=1.000">
+    </noscript>
     {%- endunless %}
     <!-- Critical CSS - Blocking (small, cacheable) -->
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.009">

@@ -114,7 +114,7 @@ secondary_nav:
   - label: "English"
     icon: "nds-hgi-translation"
     custom_class: "nds-icon-only lang"
-    id: "langToggleBtn"
+    data_attr: "data-lang-toggle"
 
   - label: "Call to Action"
     url: "#"
