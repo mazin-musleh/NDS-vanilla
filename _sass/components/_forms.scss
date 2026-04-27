@@ -107,7 +107,7 @@
         }
 
         border-color: var(--form-field-border-default);
-        background-color: var(--form-field-background-darker);
+        --_form-control-bg: var(--form-field-background-darker);
         box-shadow: var(--shadow-md);
 
         &,
@@ -207,6 +207,11 @@ fieldset {
 .nds-form-control {
     --_input-size: var(--input-size, 40px);
     --_input-radius: var(--input-radius, var(--radius-sm));
+    // Single source of truth for the wrapper bg — the autofill mask reads this
+    // (via autofill-reset mixin) so the inset-shadow mask always tracks the
+    // wrapper's current state bg (active/lighter/darker) instead of staying
+    // pinned to --form-field-background-default.
+    --_form-control-bg: var(--form-field-background-default);
     display: flex;
     min-height: var(--_input-size);
     height: var(--_input-size);
@@ -216,7 +221,7 @@ fieldset {
     border-radius: var(--_input-radius);
     gap: var(--spacing-md);
     border: 1px solid var(--form-field-border-default);
-    background-color: var(--form-field-background-default);
+    background-color: var(--_form-control-bg);
     position: relative;
 
 
@@ -232,7 +237,14 @@ fieldset {
             color: var(--form-field-text-focused);
             outline: unset !important;
             outline-offset: unset !important;
-            box-shadow: unset !important;
+
+            // Suppress the global *:focus-visible inset ring (from _reset.scss);
+            // the wrapper's ::before underline is the focus affordance here.
+            // No !important — the autofill-reset mixin paints its mask via
+            // !important inset box-shadow and must still win over this.
+            &:focus-visible {
+                box-shadow: none;
+            }
         }
 
     }
@@ -445,17 +457,17 @@ fieldset {
 
 .nds-form-container:not(.nds-file-upload) {
     &.nds-lighter .nds-form-control {
-        background-color: var(--form-field-background-lighter);
+        --_form-control-bg: var(--form-field-background-lighter);
     }
 
     &.nds-darker .nds-form-control {
-        background-color: var(--form-field-background-darker);
+        --_form-control-bg: var(--form-field-background-darker);
     }
 
     // Without this, the [data-state~="active"] rule above swaps the bg to
     // --form-field-background-darker the moment the user types into a lighter field.
     &.nds-lighter[data-state~="active"]:not([data-state~="readonly"]) .nds-form-control {
-        background-color: var(--form-field-background-lighter);
+        --_form-control-bg: var(--form-field-background-lighter);
     }
 }
 

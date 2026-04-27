@@ -166,7 +166,7 @@ $breakpoints-range: (
 // AUTOFILL RESET
 // ==============================================
 
-@mixin autofill-reset($bg: var(--form-field-background-default),
+@mixin autofill-reset($bg: var(--_form-control-bg, var(--form-field-background-default)),
   $text: var(--form-field-text-focused),
   $border: var(--form-field-border-default)) {
 
