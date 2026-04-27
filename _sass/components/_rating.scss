@@ -82,6 +82,15 @@
 .nds-rating-dropmenu {
   --menu-padding: var(--spacing-2xl);
 
+  // Stack label and stars inside the rating dropmenu's prompt item.
+  // .nds-btn is excluded so the Vote action button keeps its own layout.
+  .nds-dropmenu-item:not(.nds-btn) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xl);
+  }
+
   .nds-dropmenu-menu {
     .nds-rating {
       margin-block: var(--spacing-2xl);
