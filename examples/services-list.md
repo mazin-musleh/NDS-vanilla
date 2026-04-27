@@ -113,7 +113,7 @@ exclude_showcase: false
                         {% endif %}
                     </div>
                     <div class="nds-card-actions">
-                        <a href="{{ '/templates/service-template/' | relative_url }}" class="nds-btn nds-secondary-outline nds-lg"
+                        <a href="{{ '/templates/service-template' | relative_url }}" class="nds-btn nds-secondary-outline nds-lg"
                             aria-label="Service Details">
                             <span class="nds-label">Details</span>
                         </a>
