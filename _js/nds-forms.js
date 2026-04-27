@@ -1032,6 +1032,8 @@
                 if (voiceButton) voiceButton.style.display = 'none';
                 return;
             }
+            if (voiceButton._ndsVoiceInit) return;
+            voiceButton._ndsVoiceInit = true;
 
             var isListening = false;
             var recognition = null;
