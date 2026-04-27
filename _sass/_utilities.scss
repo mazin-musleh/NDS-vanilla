@@ -30,7 +30,6 @@ $all-spacers: $spacers;
   justify-content: var(--justify, flex-start);
   align-items: var(--align, center);
   gap: var(--gap, var(--spacing-xl));
-  width: 100%;
 }
 
 // Direction overrides — unscoped so components like .nds-card-actions
