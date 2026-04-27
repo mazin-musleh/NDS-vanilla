@@ -14,7 +14,6 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 
 ## Files to Ignore
 
-- **NEVER read** `assets/css/hgi-stroke-rounded.css` (large icon font)
 - **NEVER read** any `.min.js` or `.min.css` files (minified output)
 
 ## Tool Restrictions
@@ -24,7 +23,7 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 
 ## Using Components (CRITICAL)
 
-**NEVER guess a component's markup structure.** Before placing any NDS component on a page, open its doc page at `components/[name].md` and copy the canonical markup from the `<code class="lang-html code">` block (or the live demo above it). Class names, element nesting, required modifier classes, `data-*` attributes, and ARIA roles must match the doc exactly. If the doc is missing or unclear, read the component's SCSS in `_sass/components/_[name].scss` — do not invent structure from memory.
+**NEVER guess a component's markup structure.** Before placing any NDS component on a page, open its doc page at `components/[name].md` and copy the canonical markup from the `<code class="lang-html code">` block (or the live demo above it). Class names, element nesting, required modifier classes, `data-*` attributes, and ARIA roles must match the doc exactly. Also check `examples/*.md` for real-world usage patterns. If the doc is missing or unclear, read the component's SCSS in `_sass/components/_[name].scss` — do not invent structure from memory.
 
 ## RTL/LTR Support (CRITICAL)
 
@@ -35,6 +34,8 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 ## SCSS Standards
 
 **Every component file must start with** `@use '../mixins' as *;`
+
+**Use `nds-` prefix** for all class names.
 
 **Responsive/accessibility mixins** — see `_sass/_mixins.scss`.
 
@@ -60,14 +61,18 @@ All page content is built from sections. Read `layout/section.md` before creatin
 
 ## Adding New Components
 
+**Phase 1: Build & test** — verify behavior in `playground.md` before registering anywhere.
+
 1. Create `_sass/components/_[name].scss` (with `@use '../mixins' as *;`)
 2. Add `@use 'components/[name]';` to `assets/css/nds-main.min.scss`
-3. Add to `_includes/` if reusable across pages
-4. Use `nds-` prefix for all class names
-5. Use `playground.md` to test new components
-6. Add documentation page: `components/[name].md` — use `/nds-doc [name]` skill after testing
-7. Add to `_data/sidemenu/sidemenu.yml` under Components children
-8. Add to the matching index data file so the page appears on its landing grid. Match an existing neighbor entry's keys (title, description, icon, category, tags, url) exactly rather than guessing the schema:
+3. Add JS in `_js/nds-[name].js` if needed, then run `ruby _plugins/js_processor.rb`
+4. Test the component in `playground.md` until behavior is correct
+
+**Phase 2: Document & register** — only after Phase 1 verifies behavior.
+
+5. Add documentation page: `components/[name].md` — use the `/nds-doc [name]` skill
+6. Add to `_data/sidemenu/sidemenu.yml` under Components children
+7. Add to the matching index data file so the page appears on its landing grid. Match an existing neighbor entry's keys (title, description, icon, category, tags, url) exactly rather than guessing the schema:
    - `components/` → `_data/content/components.yml`
    - `layout/` → `_data/content/layouts.yml` (if present)
    - `utilities/` → `_data/content/utilities.yml` (if present)
@@ -82,3 +87,5 @@ Use `/nds-doc [name]` to create, refine, or audit documentation pages under `com
 ## Git Commits
 
 - Do NOT add `Co-Authored-By` lines to commit messages
+- Always propose the commit message and wait for explicit user approval before running `git commit` — never commit unreviewed
+- Keep commit messages brief and to the point — short subject line, body only when the "why" isn't obvious from the diff
