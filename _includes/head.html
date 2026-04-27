@@ -12,12 +12,13 @@
         <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver=1.000">
     </noscript>
     {%- endunless %}
-    {%- comment -%} Preload first hero slide so LCP can start before body parse {%- endcomment -%}
+    {%- comment -%} Preload first hero slide so LCP can start before body parse — only on layouts that render the main slider {%- endcomment -%}
+    {%- if page.layout == 'home' -%}
     {%- if page.hero_sliders -%}
     {%- assign _hs = page.hero_sliders -%}
     {%- else -%}
-    {%- assign _hs_name = page.herosliders | default: site.herosliders -%}
-    {%- if _hs_name -%}{%- assign _hs = site.data.hero[_hs_name] -%}{%- endif -%}
+    {%- assign _hs_name = page.herosliders | default: site.herosliders | default: "herosliders" -%}
+    {%- assign _hs = site.data.hero[_hs_name] -%}
     {%- endif -%}
     {%- if _hs and _hs.size > 0 -%}
     {%- assign _first = _hs[0] -%}
@@ -26,6 +27,7 @@
     <link rel="preload" as="image" href="{{ _first.src | relative_url }}" media="(min-width: 769px)" fetchpriority="high">
     {%- else -%}
     <link rel="preload" as="image" href="{{ _first.src | relative_url }}" fetchpriority="high">
+    {%- endif -%}
     {%- endif -%}
     {%- endif -%}
     <!-- Critical CSS - Blocking (small, cacheable) -->
