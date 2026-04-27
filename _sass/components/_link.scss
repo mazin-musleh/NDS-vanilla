@@ -1,38 +1,29 @@
 @use '../mixins' as *;
 
 :where(.nds-link, a):not(.nds-btn, .nds-card) {
-    --_link-color: var(--link-color, var(--link-neutral));
-    --_link-hover: var(--link-hover, var(--link-neutral-hovered));
-    --_link-pressed: var(--link-pressed, var(--link-neutral-pressed));
-    --_link-focused: var(--link-focused, var(--link-neutral-focused));
-    --_link-visited: var(--link-visited, var(--link-neutral-visited));
-    --_link-decoration: var(--link-decoration, none);
-
-    color: var(--_link-color);
-    text-decoration: var(--_link-decoration);
+    color: var(--link-color, var(--link-neutral));
+    text-decoration: var(--link-decoration, none);
 
     &:is(:hover, :active, .nds-underline) {
         --link-decoration: underline;
     }
 
-    :where(.nds-content-section:not(.nds-demo-section)) & {
-        &:not(.nds-neutral) {
-            --link-color: var(--link-primary);
-            --link-hover: var(--link-primary-hovered);
-            --link-pressed: var(--link-primary-pressed);
-            --link-focused: var(--link-primary-focused);
-            --link-visited: var(--link-primary-visited);
-        }
+    // LVHA-ordered state colors. Setting `color` directly avoids the custom-property
+    // round-trip on :visited (which is inconsistent across engines).
+    &:visited {
+        color: var(--link-visited, var(--link-neutral-visited));
+    }
 
-        --link-decoration: underline;
+    &:focus {
+        color: var(--link-focused, var(--link-neutral-focused));
+    }
 
-        &:visited {
-            --link-color: var(--_link-visited);
-        }
+    &:hover {
+        color: var(--link-hover, var(--link-neutral-hovered));
+    }
 
-        &:focus {
-            --link-color: var(--_link-focused);
-        }
+    &:active {
+        color: var(--link-pressed, var(--link-neutral-pressed));
     }
 
     &:is(.nds-primary, .nds-color) {
@@ -51,12 +42,16 @@
         --link-visited: var(--link-oncolor-visited);
     }
 
-    &:hover {
-        --link-color: var(--_link-hover);
-    }
+    :where(.nds-content-section:not(.nds-demo-section)) & {
+        --link-decoration: underline;
 
-    &:active {
-        --link-color: var(--_link-pressed);
+        &:not(.nds-neutral, .nds-oncolor) {
+            --link-color: var(--link-primary);
+            --link-hover: var(--link-primary-hovered);
+            --link-pressed: var(--link-primary-pressed);
+            --link-focused: var(--link-primary-focused);
+            --link-visited: var(--link-primary-visited);
+        }
     }
 }
 
