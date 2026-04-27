@@ -341,6 +341,22 @@
         return prefix + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
     };
 
+    // ── Transition Speed ─────────────────────────────────────────────
+    // Reads --nds-transition-speed from document.documentElement and
+    // returns the value in milliseconds. The CSS variable is set in
+    // critical CSS and doesn't change at runtime, so the value is
+    // memoized on first call.
+    // Usage: const ms = NDS.transitionSpeed();
+    NDS.transitionSpeed = (() => {
+        let cached;
+        return () => {
+            if (cached !== undefined) return cached;
+            const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed'));
+            cached = isFinite(v) ? v * 1000 : 200;
+            return cached;
+        };
+    })();
+
     // ── Local-Storage TTL Cache ────────────────────────────────────────
     // Wraps localStorage with a JSON `{value, expires}` envelope. Getter
     // returns the cached value when fresh, `null` on miss / parse error /

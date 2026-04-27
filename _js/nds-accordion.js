@@ -37,15 +37,6 @@
             return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         }
 
-        getTransitionDuration() {
-            if (this._transitionDuration === undefined) {
-                this._transitionDuration = parseFloat(
-                    getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')
-                ) * 1000 || 300;
-            }
-            return this._transitionDuration;
-        }
-
         setupInitialState() {
             // Ensure proper initial state for all accordion items
             this.buttons.forEach((button, index) => {
@@ -163,7 +154,7 @@
                 this.isAnimating = true;
                 setTimeout(() => {
                     this.isAnimating = false;
-                }, this.getTransitionDuration() + 50);
+                }, NDS.transitionSpeed() + 50);
             }
 
             // Update button state immediately
@@ -194,7 +185,7 @@
                 this.isAnimating = true;
                 setTimeout(() => {
                     this.isAnimating = false;
-                }, this.getTransitionDuration() + 50);
+                }, NDS.transitionSpeed() + 50);
             }
 
             // Update button state immediately
@@ -240,7 +231,7 @@
                 if (NDS.State.has(collapse, 'opening')) {
                     handleTransitionEnd();
                 }
-            }, this.getTransitionDuration());
+            }, NDS.transitionSpeed());
         }
 
         animateHide(collapse, callback) {
@@ -263,7 +254,7 @@
                 if (NDS.State.has(collapse, 'closing')) {
                     handleTransitionEnd();
                 }
-            }, this.getTransitionDuration());
+            }, NDS.transitionSpeed());
         }
 
         dispatchToggleEvent(index, button, collapse, isShown) {

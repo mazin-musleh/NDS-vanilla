@@ -13,7 +13,6 @@
   let scrollY = 0;
   let isActive = false;
   let activeCount = 0; // Track how many components are using the backdrop
-  const transitionSpeed = () => (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nds-transition-speed')) || 0.2) * 1000;
 
   /**
    * Initialize backdrop element (created once)
@@ -108,7 +107,7 @@
 
     // Show backdrop — delay active state and scroll lock after component transition
     backdropElement.style.display = 'block';
-    const speed = transitionSpeed();
+    const speed = NDS.transitionSpeed();
     setTimeout(() => {
       if (!isActive) return;
       NDS.State.set(backdropElement, 'active');
@@ -164,7 +163,7 @@
     }
 
     // Clean up display after component transition
-    const speed = transitionSpeed();
+    const speed = NDS.transitionSpeed();
     setTimeout(() => {
       if (isActive) return;
       backdropElement.style.display = '';

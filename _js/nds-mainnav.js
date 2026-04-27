@@ -47,7 +47,7 @@
                 const styles = getComputedStyle(document.documentElement);
                 this._css = {
                     minimalBp: parseInt(styles.getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BP_FALLBACK,
-                    speed: (parseFloat(styles.getPropertyValue('--nds-transition-speed')) || 0.2) * 1000,
+                    speed: NDS.transitionSpeed(),
                     isRTL: NDS.isRTL
                 };
             }
