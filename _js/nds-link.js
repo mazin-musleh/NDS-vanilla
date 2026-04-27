@@ -11,6 +11,20 @@
         return linkHost !== location.hostname && linkHost.endsWith('.' + location.hostname);
     }
 
+    // Image/icon-only links (e.g. `<a><img></a>`, `<a><i class="hgi …"></i></a>`)
+    // skip auto-tagging because the trailing badge clashes visually. Authors can
+    // still force the badge by adding `nds-external` themselves.
+    function isIconOrImageOnly(a) {
+        if (a.textContent.trim()) return false;
+        var kids = a.children;
+        if (!kids.length) return false;
+        for (var i = 0; i < kids.length; i++) {
+            var tag = kids[i].tagName;
+            if (tag !== 'I' && tag !== 'IMG') return false;
+        }
+        return true;
+    }
+
     function init() {
         document.querySelectorAll('a').forEach(function (a) {
             if (!a.href || a.hostname === '') return;
@@ -21,6 +35,7 @@
             if (a.closest('[data-no-external]')) return;
             if (a.hostname === location.hostname) return;
             if (a.classList.contains('nds-btn') && a.classList.contains('nds-icon-only')) return;
+            if (!a.classList.contains('nds-external') && isIconOrImageOnly(a)) return;
             var sub = isSubDomain(a.hostname);
             a.classList.add('nds-external');
             a.setAttribute('target', '_blank');
