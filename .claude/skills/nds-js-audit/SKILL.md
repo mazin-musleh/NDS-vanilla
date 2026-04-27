@@ -34,22 +34,17 @@ Parse `$ARGUMENTS` into a mode and (optionally) a rule-group filter.
 If `$ARGUMENTS` is empty, **do not run the audit**. Instead, print this menu and wait for the user to reply with a choice:
 
 ```
-> ⚠ THIS SKILL BURNS TOKENS FAST. Full-scope run: ~30–60k tokens. Single-file: ~5–10k.
+NDS JS Audit — for best results run each group in separate sessions:
 
-NDS JS Audit — choose a scope:
-
-  1  js                    Full audit — all component files in _js/ (expensive: ~30–60k tokens)
-  2  <filename>            Single-file audit, e.g. nds-modal.js
-  3  js performance        Performance rules only (JSP)
-  4  js dry                DRY/KISS rules only (JSD)
-  5  js security           Security rules only (JSS)
-  6  <filename> performance|dry|security   Single file + one rule group
+  1  js performance        Performance rules only (JSP)
+  2  js dry                DRY/KISS rules only (JSD)
+  3  js security           Security rules only (JSS)
   0  exit
 
 Reply with a number, or type the scope directly.
 ```
 
-Accept `0` or `exit` as "end here, nothing runs". For `2` and `6`, ask the user to name the file before proceeding.
+Accept `0` or `exit` as "end here, nothing runs".
 
 Do not begin Phase 2 or any file reads until the user responds.
 
@@ -57,16 +52,17 @@ Do not begin Phase 2 or any file reads until the user responds.
 
 | `$1` | Files in scope | Rule groups run |
 |---|---|---|
-| `js` | All `_js/nds-*.js` except `nds-core.js`, `nds-loader.js`, `nds-showcase.js` | JSP + JSD + JSS |
-| `<filename>` or `<relative/path>` | Single JS file under `_js/` | JSP + JSD + JSS |
+| `js` | All `_js/nds-*.js` except `nds-core.js`, `nds-loader.js`, `nds-showcase.js` | Always paired with a rule-group filter (`performance` / `dry` / `security`); see below |
+
+Single-file audits and unfiltered full audits are not supported through this skill — the cross-file rules (JSD-05 promotion candidates, JSD-10 demotion checks) need full-tree visibility, and full audits across all three rule groups are too expensive for routine use. Always run one rule group across the full tree.
 
 **SCSS is not supported.** If the user passes `scss`, `all`, or any path ending in `.scss`, stop and reply: *"SCSS audit coverage was removed from this skill. Refactor SCSS manually — see `CLAUDE.md` for token, RTL, and scaffold conventions."* Do not run partial rules on an SCSS file.
 
 **Strict scope constraint.** Only JSP, JSD, and JSS rules run. No SCSS-scoped rule groups exist in this catalog.
 
-### Rule-group filter (optional second argument)
+### Rule-group filter (required second argument)
 
-If `$2` is present, restrict the run to a subset of rule groups:
+`$2` selects which rule group runs. Always required — every run is one group across the full tree:
 
 | `$2` | Rule groups included |
 |---|---|
@@ -74,7 +70,7 @@ If `$2` is present, restrict the run to a subset of rule groups:
 | `dry` | JSD |
 | `security` | JSS |
 
-Without `$2`, JSP + JSD + JSS all run.
+If `$1 = js` is passed without a `$2`, ask the user which group to run rather than defaulting to all three.
 
 ### Excluded files (always)
 
@@ -82,8 +78,6 @@ Without `$2`, JSP + JSD + JSS all run.
 - `_js/nds-loader.js` — init registry with its own ordering rules; outside the scope.
 - `_js/nds-showcase.js` — demo-page wiring, not a shipped component.
 - Any `.min.js` file.
-
-If the user names an excluded file in single-file mode, stop and explain why rather than running partial rules.
 
 ---
 
@@ -209,7 +203,10 @@ Use this structure verbatim:
 - {rule-id} — N matches where {different context the rule did not account for}. Proposed: {concrete refinement}.
 
 ## Next Step
-Reply with a number OR the literal command:
+
+**Recommended: {action}** — {one-line reason tied to findings}
+
+Other options:
 
 1. `fix all` — apply every finding in the report. Excludes JSD-05 promotion candidates by default — those edit core + migrate multiple call sites, so they go through `promote <api-name>` with per-candidate approval.
 2. `promote <api-name>` — apply one JSD-05 promotion: edit `_js/nds-core.js` to add the proposed helper, migrate every call site listed in the report, and follow the file-by-file rhythm (rebundle + agent review + pause between files). Only offered when the report has "Promotion candidates (JSD-05)" entries.
@@ -226,6 +223,19 @@ Finer-grained fix filters (type the literal, no number):
 ```
 
 When emitting the Next Step block at the end of a real report, adapt the numbered list to only include options that are actually available for THIS run: omit item 2 if there are no gap/dead-rule proposals; adjust item 4 accordingly. The user reading the report should never see a choice that is a no-op on the current state.
+
+### Computing the Recommended action
+
+Pick the recommendation by walking this table top-to-bottom and stopping at the first row that matches the run state:
+
+| Run state | Recommended | One-line reason template |
+|---|---|---|
+| Has "Gaps observed" OR "Dead-rule candidates" entries | `save and evolve` | "preserves this report and applies {N} catalog refinement(s) before the next run" |
+| Has "Promotion candidates (JSD-05)" entries | `save and evolve` (the catalog refinements still come first; promotions are a follow-up turn) | "preserves the snapshot and sharpens rules; reply `promote <api>` next turn to apply the {N} promotion(s)" |
+| Has findings (HIGH / MEDIUM / LOW) AND no catalog evolutions | `save` | "persists the report; reply `fix all` next turn to apply the {N} finding(s) file-by-file" |
+| Clean run — zero findings, zero gaps, zero dead-rule candidates | `save` | "keeps the diff trail. Even clean runs are worth saving — Run N+1's diff vs. this one will show whether the codebase stayed clean" |
+
+The recommendation is opinionated, not exclusive: the user can still pick any of the numbered options. Phrase the reason in plain language tied to the actual numbers from THIS run (e.g., "preserves this report and applies 2 catalog refinements before the next run") so the user can read the recommendation without scrolling back through the report.
 
 ### Saving the report (optional, user-approved)
 
