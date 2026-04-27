@@ -20,21 +20,21 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-vertical", ".nds-tabs", "tabLayout"]'>
                                 <span class="nds-label">Vertical</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-lg", ".nds-tabs", "tabSize"]'>
                                 <span class="nds-label">Large</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-divided", ".nds-tabs", "addDivider"]'>
                                 <span class="nds-label">Divider</span>
                             </button>
                             <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Card View</span>
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
+                                    <span class="nds-label">Card View: None</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
@@ -422,21 +422,21 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-vertical", ".nds-tabs", "tabLayout"]'>
                                 <span class="nds-label">Vertical</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-divided", ".nds-tabs", "addDivider"]'>
                                 <span class="nds-label">Divider</span>
                             </button>
-                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-center", ".nds-tab-list", "tabsAlign"]'>
                                 <span class="nds-label">Center</span>
                             </button>
                             <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Card View</span>
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
+                                    <span class="nds-label">Card View: None</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
