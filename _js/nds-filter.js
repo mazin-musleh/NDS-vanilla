@@ -1353,9 +1353,9 @@
 
         generateFilterInputs(container, filterName, inputType, explicitValues = null) {
             // Use explicit values if provided, otherwise collect from cards
-            const values = explicitValues || this.collectFilterValues(filterName);
+            const collectedValues = explicitValues || this.collectFilterValues(filterName);
 
-            if (values.length === 0) {
+            if (collectedValues.length === 0) {
                 if (!explicitValues) {
                     console.warn(`NDS Filter: No values found for filter "${filterName}". Use data-filter-values or populateFilter() to provide values.`);
                 }
@@ -1364,6 +1364,15 @@
 
             const legendText = container.getAttribute('data-filter-legend') || '';
             const variant = container.getAttribute('data-filter-variant') || '';
+
+            // Radios cannot be deselected once chosen, so auto-prepend an "All"
+            // option with value="" — updateFilterCriteria already excludes empty
+            // values, so selecting it clears the filter.
+            const includeAllOption = inputType === 'radio'
+                && !container.hasAttribute('data-filter-no-all');
+            const allLabel = container.getAttribute('data-filter-all-label')
+                || (NDS.isArabic ? 'الكل' : 'All');
+            const values = includeAllOption ? ['', ...collectedValues] : collectedValues;
 
             // Create the wrapper structure
             let wrapper = container;
@@ -1448,6 +1457,7 @@
             // Generate input for each unique value
             values.forEach((value, index) => {
                 const id = `${groupName}-${index}`;
+                const isAllOption = includeAllOption && index === 0;
 
                 const formContainer = document.createElement('div');
                 formContainer.className = inputType === 'switch'
@@ -1464,7 +1474,7 @@
 
                 const labelSpan = document.createElement('span');
                 labelSpan.className = 'nds-label';
-                labelSpan.textContent = labelMap[value] || value;
+                labelSpan.textContent = isAllOption ? allLabel : (labelMap[value] || value);
 
                 label.appendChild(labelSpan);
                 formHeader.appendChild(label);
@@ -1508,6 +1518,9 @@
                     input.className = inputClass;
                     if (variant) {
                         input.classList.add(variant);
+                    }
+                    if (isAllOption) {
+                        input.checked = true;
                     }
 
                     formControl.appendChild(input);
@@ -1788,6 +1801,12 @@
                 filterData.inputs.forEach(input => {
                     input.checked = false;
                 });
+                // Re-check the "All" radio (value="") so radio groups keep a valid
+                // selection after clearing.
+                if (filterData.type === 'radio') {
+                    const allInput = filterData.inputs.find(i => i.value === '');
+                    if (allInput) allInput.checked = true;
+                }
                 this.criteria.filters[filterName] = [];
             }
 
@@ -1824,6 +1843,12 @@
                 filterData.inputs.forEach(input => {
                     input.checked = false;
                 });
+                // Re-check the "All" radio (value="") so radio groups keep a valid
+                // selection after clearing.
+                if (filterData.type === 'radio') {
+                    const allInput = filterData.inputs.find(i => i.value === '');
+                    if (allInput) allInput.checked = true;
+                }
                 this.criteria.filters[filterName] = [];
             }
 
