@@ -689,9 +689,9 @@
 
   .nds-badge {
     position: absolute;
-    inset-block-start: -6px;
-    inset-inline-end: -6px;
-    font-size: 9px;
+    inset-block-start: -8px;
+    inset-inline-end: -4px;
+    font-size: var(--typo-text-2xs-FS);
     font-family: var(--nds-font-family);
     background-color: var(--background-error);
     color: var(--text-oncolor-primary);
@@ -701,8 +701,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    line-height: 1;
-    padding: 4px;
+    line-height: normal;
+    padding: var(--spacing-xs);
     pointer-events: none;
   }
 }
