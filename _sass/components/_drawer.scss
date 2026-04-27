@@ -19,7 +19,7 @@
     --_divider: var(--drawer-divider, var(--divider-color));
     --_indicator-width: var(--drawer-indicator-width, 5px);
     --_lined-width: var(--drawer-lined-width, 1px);
-    --_indicator: var(--drawer-indicator, transparent/* var(--alpha-black-30) */);
+    --_indicator: var(--drawer-indicator, transparent);
     --_indicator-active: var(--drawer-indicator-active, var(--background-primary));
     --_indicator-hover: var(--drawer-indicator-hover, var(--colors-neutral-400));
     --truncate: var(--drawer-truncate, 1);
@@ -45,7 +45,6 @@
 
     &.nds-oncolor {
         --drawer-divider: var(--alpha-white-10);
-        /* --drawer-indicator: var(--alpha-white-30); */
     }
 
     &.nds-card{
@@ -84,7 +83,7 @@
 
     // Button/link styling within drawer
     >.nds-btn {
-        --btn-height: var(--drawer-btn-height, 'fit-content');
+        --btn-height: var(--drawer-btn-height, fit-content);
         --btn-width: 100%;
         --btn-gap: var(--drawer-btn-gap, var(--spacing-md));
         justify-content: flex-start;
@@ -143,24 +142,12 @@
 
     &.nds-menu-btn {
         --btn-bg: var(--button-background-transparent-default);
-/*         --btn-bg-hover: var(--button-background-neutral-default);
-        --btn-bg-active: var(--button-background-neutral-pressed);
-        --btn-bg-selected: var(--button-background-transparent-default)!important;
-
-        &.nds-oncolor {
-            --btn-bg-hover: var(--button-background-transparent-hovered);
-            --btn-bg-active: var(--button-background-transparent-pressed);
-        }
-
-        &:is([data-state~="active"], [data-state~="selected"]):not( :active, .nds-oncolor) {
-            --btn-indicator-color: var(--background-primary);
-            --btn-indicator-selected: var(--background-primary);
-        } */
-
-    } 
+        --btn-indicator-selected: var(--background-primary);
+        --btn-bg-selected: var(--button-background-transparent-default);
+    }
 
     // :where() keeps the match logic but contributes 0 specificity, so
-    // variant overrides (e.g. .nds-drawer.nds-toc) can win without needing
+    // variant overrides (e.g. .nds-toc .nds-drawer) can win without needing
     // to replicate the whole :not/:is chain.
     &:where(:not(.nds-menu-btn, :active, .nds-oncolor)):where([data-state~="active"], [data-state~="selected"]) {
         :where(:root:not([data-theme="dark"])) & {
