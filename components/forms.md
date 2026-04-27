@@ -1168,27 +1168,31 @@ direction: ltr
           </div>
           <div class="demo-container">
             <div class="state-demo">
-              <div class="nds-form-container">
-                <div class="nds-form-header">
-                  <label for="demo-passwordInput">
-                    <span class="nds-label">Password</span>
-                  </label>
-                </div>
-                <div class="nds-form-control">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
-                      <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                    </button>
+              <form class="nds-form" onsubmit="return false" novalidate>
+                <label for="demo-passwordUsername" hidden aria-hidden="true">Username</label>
+                <input type="text" id="demo-passwordUsername" autocomplete="username" hidden aria-hidden="true">
+                <div class="nds-form-container">
+                  <div class="nds-form-header">
+                    <label for="demo-passwordInput">
+                      <span class="nds-label">Password</span>
+                    </label>
                   </div>
-                  <input type="password" id="demo-passwordInput" class="nds-input" placeholder="Enter password...">
-                  <div class="nds-form-action">
-                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
-                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                    </button>
+                  <div class="nds-form-control">
+                    <div class="nds-form-action">
+                      <button class="nds-btn nds-subtle nds-toggle-password" type="button" aria-label="Show password">
+                        <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <input type="password" id="demo-passwordInput" class="nds-input" placeholder="Enter password..." autocomplete="new-password">
+                    <div class="nds-form-action">
+                      <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden>
+                        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                      </button>
+                    </div>
                   </div>
+                  <div class="nds-form-footer" data-feedback-target hidden></div>
                 </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
-              </div>
+              </form>
             </div>
           </div>
           <div class="demo-code">
@@ -1223,7 +1227,7 @@ direction: ltr
         &lt;i class="nds-icon nds-hgi-view-off" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/div&gt;
-    &lt;input type="password" id="password-input-1" class="nds-input" placeholder="Enter password..."&gt;
+    &lt;input type="password" id="password-input-1" class="nds-input" placeholder="Enter password..." autocomplete="new-password"&gt;
     &lt;div class="nds-form-action"&gt;
       &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear password" hidden&gt;
         &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
@@ -1329,12 +1333,12 @@ direction: ltr
             <div class="state-demo">
               <div class="nds-form-container nds-textarea">
                 <div class="nds-form-header">
-                  <label for="textareaInput">
+                  <label for="demo-textareaInput">
                     <span class="nds-label">Message</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <textarea id="textareaInput" class="nds-textarea" placeholder="Enter your message..."
+                  <textarea id="demo-textareaInput" class="nds-textarea" placeholder="Enter your message..."
                     rows="4"></textarea>
                 </div>
                 <div class="nds-form-footer" data-feedback-target hidden></div>

@@ -55,22 +55,22 @@ direction: ltr
                                 <div class="nds-otp">
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
+                                            <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                 </div>
@@ -102,22 +102,22 @@ direction: ltr
   &lt;div class="nds-otp"&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
+        &lt;input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -180,33 +180,33 @@ direction: ltr
                                 <div class="nds-otp">
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
+                                            <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <span class="nds-otp-separator"></span>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-5" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-6" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                 </div>
@@ -238,33 +238,33 @@ direction: ltr
   &lt;div class="nds-otp"&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
+        &lt;input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;span class="nds-otp-separator"&gt;&lt;/span&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-5" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-6" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -306,22 +306,22 @@ direction: ltr
                                 <div class="nds-otp">
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
+                                            <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+                                            <input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                 </div>
@@ -385,22 +385,22 @@ direction: ltr
   &lt;div class="nds-otp"&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
+        &lt;input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-2" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-3" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
+        &lt;input type="text" name="otp-digit-4" inputmode="numeric" maxlength="1" pattern="[0-9]"&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
