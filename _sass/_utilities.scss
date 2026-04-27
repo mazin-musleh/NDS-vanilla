@@ -250,6 +250,7 @@ $all-spacers: $spacers;
 // Small red notice shown above a form ("*Required information" etc.).
 .nds-required-notice {
   color: var(--text-error);
-  font-size: var(--font-size-sm);
+  font-size: var(--typo-text-sm-FS);
+  line-height: var(--typo-text-sm-LH);
   margin-block-end: var(--spacing-md);
 }

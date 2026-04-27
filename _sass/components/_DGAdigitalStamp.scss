@@ -152,12 +152,13 @@
     }
 
     .nds-digitalStamp-heading {
-        font-size: 16px;
-        line-height: normal;
+        font-size: var(--typo-text-md-FS);
+        line-height: var(--typo-text-md-LH);
     }
 
     .nds-digitalStamp-description {
-        font-size: 13px;
+        font-size: var(--typo-text-sm-FS);
+        line-height: var(--typo-text-sm-LH);
     }
 
 }

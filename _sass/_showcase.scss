@@ -71,7 +71,8 @@
 }
 
 .demo-bg-btn {
-  font-size: 12px;
+  font-size: var(--typo-text-xs-FS);
+  line-height: var(--typo-text-xs-LH);
   padding: 2px 8px;
   min-height: 20px;
 }
