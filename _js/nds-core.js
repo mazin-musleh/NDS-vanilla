@@ -168,8 +168,22 @@
                     for (let j = 0; j < m.removedNodes.length; j++)
                         if (m.removedNodes[j].nodeType === 1) removed.push(m.removedNodes[j]);
                 }
-                if (added.length) dispatch(added, addSubs);
-                if (removed.length) dispatch(removed, removeSubs);
+                // A reparent (e.g. NDS.portal → document.body.appendChild) emits
+                // both a remove and an add for the same node in one batch. Treat
+                // that as a move, not a lifecycle change — drop those nodes from
+                // both lists so subscribers (and any descendants matching their
+                // selectors) keep their instances, listeners, and internal state
+                // across portals and similar reparents.
+                let realAdded = added, realRemoved = removed;
+                if (added.length && removed.length) {
+                    const addedSet = new Set(added), removedSet = new Set(removed);
+                    realAdded = added.filter(n => !removedSet.has(n));
+                    realRemoved = removed.filter(n => !addedSet.has(n));
+                }
+                // Removes before adds: for unrelated mutations batched together,
+                // tearing down old state before constructing new state is safer.
+                if (realRemoved.length) dispatch(realRemoved, removeSubs);
+                if (realAdded.length) dispatch(realAdded, addSubs);
                 if (parents.size && childrenSubs.length) dispatchParents(parents, childrenSubs);
             }).observe(document.body, { childList: true, subtree: true });
         }
