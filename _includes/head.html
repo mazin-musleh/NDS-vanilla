@@ -5,25 +5,6 @@
     <meta name="description"
         content="{{ page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{%- if page.title %}{{ page.title }} | {%- endif %} {{ site_title }}</title>
-    <!-- Blocking scripts — FOUC / direction-mismatch prevention -->
-    <script>
-        // Apply cached theme before rendering to prevent FOUC
-        (function() {
-            var t = localStorage.getItem('nds-theme');
-            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-        })();
-    </script>
-    <script>
-        // Apply cached language preference before any rendering to prevent direction mismatch
-        (function() {
-            var m = document.cookie.match(/(?:^|;\s*)preferred-language=(\w+)/);
-            if (m) {
-                var lang = m[1];
-                document.documentElement.lang = lang;
-                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            }
-        })();
-    </script>
     {%- unless page.exclude_showcase == true %}
     <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver=1.000" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
@@ -31,6 +12,22 @@
         <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver=1.000">
     </noscript>
     {%- endunless %}
+    {%- comment -%} Preload first hero slide so LCP can start before body parse {%- endcomment -%}
+    {%- if page.hero_sliders -%}
+    {%- assign _hs = page.hero_sliders -%}
+    {%- else -%}
+    {%- assign _hs_name = page.herosliders | default: site.herosliders -%}
+    {%- if _hs_name -%}{%- assign _hs = site.data.hero[_hs_name] -%}{%- endif -%}
+    {%- endif -%}
+    {%- if _hs and _hs.size > 0 -%}
+    {%- assign _first = _hs[0] -%}
+    {%- if _first.src_small -%}
+    <link rel="preload" as="image" href="{{ _first.src_small | relative_url }}" media="(max-width: 768px)" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ _first.src | relative_url }}" media="(min-width: 769px)" fetchpriority="high">
+    {%- else -%}
+    <link rel="preload" as="image" href="{{ _first.src | relative_url }}" fetchpriority="high">
+    {%- endif -%}
+    {%- endif -%}
     <!-- Critical CSS - Blocking (small, cacheable) -->
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.009">
     <!-- Icons — UI icons inlined (core) + HGI font (content/demo/doc) -->
@@ -77,4 +74,37 @@
     {%- if site.debug %}
     {%- include perf-monitor.html %}
     {%- endif %}
+    <!-- Blocking scripts — FOUC / direction-mismatch prevention. Placed last so resource preloads kick off first. -->
+    <!-- Demo-only: auth FOUC guard for the showcase login/avatar swap. Safe to remove in production. -->
+    <style>
+        html:not([data-auth]) .nds-auth { display: none; }
+        html[data-auth] .nds-guest { display: none; }
+    </style>
+    <script>
+        // Apply cached theme before rendering to prevent FOUC
+        (function() {
+            var t = localStorage.getItem('nds-theme');
+            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+    <script>
+        // Apply cached language preference before any rendering to prevent direction mismatch
+        (function() {
+            var m = document.cookie.match(/(?:^|;\s*)preferred-language=(\w+)/);
+            if (m) {
+                var lang = m[1];
+                document.documentElement.lang = lang;
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            }
+        })();
+    </script>
+    <!-- Demo-only: pairs with the [data-auth] style above. Safe to remove in production. -->
+    <script>
+        // Stamp [data-auth] from cookie before paint so .nds-guest / .nds-auth show the correct variant
+        (function() {
+            if (document.cookie.indexOf('nds_auth=true') !== -1) {
+                document.documentElement.setAttribute('data-auth', 'true');
+            }
+        })();
+    </script>
 </head>

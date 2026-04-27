@@ -66,7 +66,7 @@
     </button>
 </div>
 </form>
-<script>
+<script type="module">
     (function () {
         var nav = document.getElementById('ndsMainNav');
         var emailInput = document.getElementById('login-email');
@@ -77,9 +77,11 @@
             if (isAuth) {
                 document.cookie = 'nds_auth=true;path=/;max-age=86400';
                 document.body.dataset.auth = 'true';
+                document.documentElement.setAttribute('data-auth', 'true');
             } else {
                 document.cookie = 'nds_auth=;path=/;max-age=0';
                 delete document.body.dataset.auth;
+                document.documentElement.removeAttribute('data-auth');
             }
             nav.querySelectorAll('.nds-guest').forEach(function (el) { el.hidden = isAuth; });
             nav.querySelectorAll('.nds-auth').forEach(function (el) { el.hidden = !isAuth; });

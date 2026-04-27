@@ -109,7 +109,6 @@ secondary_nav:
     template: "mainnav-user.html"
     type: "dropdown"
     content_class: "nds-fit"
-    attr: "hidden"
 
   - label: "English"
     icon: "nds-hgi-translation"
