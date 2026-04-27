@@ -58,21 +58,10 @@
 }
 
 /* ========================================
-   FOOTER SOCIAL ICONS (within drawer)
+   FOOTER SOCIAL & MOBILE APP ICONS (within drawer)
    ======================================== */
 
-.nds-footer-social-icons {
-    display: flex;
-    gap: var(--spacing-md);
-    margin: var(--spacing-md) 0;
-    flex-wrap: wrap;
-}
-
-/* ========================================
-   FOOTER MOBILE APP ICONS (within drawer)
-   ======================================== */
-
-.nds-footer-mobile-app-icons {
+:is(.nds-footer-social-icons, .nds-footer-mobile-app-icons) {
     display: flex;
     gap: var(--spacing-md);
     margin: var(--spacing-md) 0;
@@ -98,7 +87,6 @@
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: var(--spacing-xl);
-    text-decoration: underline;
 }
 
 .nds-footer-separator {
@@ -109,6 +97,7 @@
 .nds-footer-copy-right {
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
+    font-weight: 600;
 }
 
 /* ========================================
@@ -157,6 +146,7 @@
     // Light mode: force dark-bg appearance since green bg stays dark regardless of theme
     :root:not([data-theme="dark"]) & {
         color: var(--text-oncolor-primary);
+        --divider-color: var(--alpha-white-10);
 
         .nds-drawer {
             --drawer-divider: var(--alpha-white-10);
@@ -203,10 +193,6 @@
         .nds-footer-separator {
             color: var(--text-oncolor-primary);
         }
-
-        .nds-footer-copy-right {
-            color: var(--alpha-white-60);
-        }
     }
 }
 
@@ -230,8 +216,7 @@
             text-align: center;
         }
 
-        .nds-footer-copyright .nds-footer-links,
-        #authorCopyright {
+        .nds-footer-copyright .nds-footer-links {
             justify-content: center;
         }
 

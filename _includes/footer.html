@@ -110,11 +110,6 @@
             {%- endif %}
             <div class="nds-footer-copy-right">
                 <span>All Rights Reserved {{ site.title }} &copy; {{ site.time | date: '%Y' }}</span>
-                {%- if site.author and site.author_profile %}<br>
-                <a id="authorCopyright" class="nds-external" href="{{ site.author_profile | relative_url }}" target="_blank" rel="noopener noreferrer">
-                    Template developed by {{ site.author }}
-                </a>
-                {%- endif %}
             </div>
         </div>
         {%- assign footer_logos_file = page.footerlogos | default: site.footerlogos | default: "footerlogos" -%}
