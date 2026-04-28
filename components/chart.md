@@ -171,6 +171,14 @@ NDS.Chart.create('#my-chart', {
                                 data-code-off="grid:    { show: false }">
                                 <span class="nds-label">Grid</span>
                             </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["", "#demo-line", "chartLineCrosshair", "chart"]'
+                                data-chart-opt='{"line":{"crosshair":true}}'
+                                data-chart-opt-off='{"line":{"crosshair":false}}'
+                                data-code-on="crosshair: true,"
+                                data-code-off="crosshair: false,">
+                                <span class="nds-label">Crosshair</span>
+                            </button>
                         </div>
                     </div>
                     <div class="demo-container">
@@ -240,6 +248,120 @@ NDS.Chart.create('#my-chart', {
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dense X-Axis Labels -->
+<section id="chartDenseLabels" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Dense X-Axis Labels</h2>
+            <p class="nds-section-description">Labels auto-rotate to 45&deg; when they would overlap. Opt into decimation to show only every Nth label for very dense time-series data</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["", "#demo-dense", "chartDenseDecimate", "chart"]'
+                                data-chart-opt='{"xaxis":{"labelDecimate":"auto"}}'
+                                data-chart-opt-off='{"xaxis":{"labelDecimate":false}}'
+                                data-code-on="labelDecimate: 'auto',"
+                                data-code-off="labelDecimate: false,">
+                                <span class="nds-label">Decimate</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["", "#demo-dense", "chartDenseHorizontal", "chart"]'
+                                data-chart-opt='{"xaxis":{"labelRotate":0}}'
+                                data-chart-opt-off='{"xaxis":{"labelRotate":"auto"}}'
+                                data-code-on="labelRotate:   0,"
+                                data-code-off="labelRotate:   'auto',">
+                                <span class="nds-label">Force Horizontal</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["", "#demo-dense", "chartDenseSmooth", "chart"]'
+                                data-chart-opt='{"line":{"smooth":true}}'
+                                data-chart-opt-off='{"line":{"smooth":false}}'
+                                data-code-on="smooth: true,"
+                                data-code-off="smooth: false,">
+                                <span class="nds-label">Smooth</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["", "#demo-dense", "chartDenseDots", "chart"]'
+                                data-chart-opt='{"line":{"dots":true}}'
+                                data-chart-opt-off='{"line":{"dots":false}}'
+                                data-code-on="dots: true,"
+                                data-code-off="dots: false,">
+                                <span class="nds-label">Dots</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["", "#demo-dense", "chartDenseArea", "chart"]'
+                                data-chart-opt='{"line":{"area":true}}'
+                                data-chart-opt-off='{"line":{"area":false}}'
+                                data-code-on="area: true,"
+                                data-code-off="area: false,">
+                                <span class="nds-label">Area</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["", "#demo-dense", "chartDenseGrid", "chart"]'
+                                data-chart-opt='{"grid":{"show":true}}'
+                                data-chart-opt-off='{"grid":{"show":false}}'
+                                data-code-on="grid:    { show: true }"
+                                data-code-off="grid:    { show: false }">
+                                <span class="nds-label">Grid</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["", "#demo-dense", "chartDenseCrosshair", "chart"]'
+                                data-chart-opt='{"line":{"crosshair":true}}'
+                                data-chart-opt-off='{"line":{"crosshair":false}}'
+                                data-code-on="crosshair: true,"
+                                data-code-off="crosshair: false,">
+                                <span class="nds-label">Crosshair</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div id="demo-dense" class="nds-chart"></div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided" hidden>
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-chart-dense-js" id="tab-chart-dense-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chart-dense-js"
+                                    aria-labelledby="tab-chart-dense-js">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-js code">
+NDS.Chart.create('#my-chart', {
+  type: 'line',
+  series: [{ name: 'Sessions', data: [/* 24 values */] }],
+  labels: ['Jan 23', 'Feb 23', /* … */, 'Dec 24'],
+  xaxis: {
+    labelRotate:   'auto',               // 'auto' | 0 | 45 | 90 | &lt;number&gt;
+    labelDecimate: false,                // false | true | 'auto' | &lt;number&gt;
+  },
+});
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -648,6 +770,7 @@ NDS.Chart.create('#my-chart', {
                     <li>Set axis titles (<code class="nds-inline-code lang-js">yaxis.title</code>, <code class="nds-inline-code lang-js">xaxis.title</code>) to label what the numbers represent. Without titles, the chart relies on the legend alone</li>
                     <li>Override <code class="nds-inline-code lang-html">--chart-color-*</code> properties to match your project's brand palette. The default palette uses Saudi flag green tones</li>
                     <li>Charts auto-resize via ResizeObserver. No manual resize calls are needed when the container width changes</li>
+                    <li>X-axis labels auto-rotate to 45&deg; when they would overlap (<code class="nds-inline-code lang-js">xaxis.labelRotate: 'auto'</code> by default). For dense time-series, opt into <code class="nds-inline-code lang-js">xaxis.labelDecimate: 'auto'</code> to show only every Nth label instead</li>
                 </ul>
             </div>
 
@@ -879,6 +1002,18 @@ NDS.Chart.create('#my-chart', {
                             <td><code class="nds-inline-code lang-js">''</code></td>
                             <td>X-axis title</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">xaxis.labelRotate</code></td>
+                            <td>string | number</td>
+                            <td><code class="nds-inline-code lang-js">'auto'</code></td>
+                            <td>Rotate x-axis labels when they would overlap. <code class="nds-inline-code lang-js">'auto'</code> picks 0&deg; or 45&deg; based on fit; pass an explicit number (e.g. <code class="nds-inline-code lang-js">45</code> or <code class="nds-inline-code lang-js">90</code>) to force an angle. Mirrored in RTL</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">xaxis.labelDecimate</code></td>
+                            <td>boolean | string | number</td>
+                            <td><code class="nds-inline-code lang-js">false</code></td>
+                            <td>Show only every Nth label to thin out dense axes (time-series). <code class="nds-inline-code lang-js">true</code> or <code class="nds-inline-code lang-js">'auto'</code> computes the step from available width; pass a number (e.g. <code class="nds-inline-code lang-js">3</code>) to force every-Nth</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1040,6 +1175,15 @@ document.addEventListener('DOMContentLoaded', function () {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
         yaxis: { title: 'Active users' },
         xaxis: { title: 'Month' },
+    });
+
+    NDS.Chart.create('#demo-dense', {
+        type: 'line',
+        series: [
+            { name: 'Sessions', data: [42, 51, 38, 65, 72, 58, 49, 88, 95, 67, 71, 84, 52, 61, 78, 45, 92, 81, 56, 74, 89, 63, 77, 86] },
+        ],
+        labels: ['Jan 23', 'Feb 23', 'Mar 23', 'Apr 23', 'May 23', 'Jun 23', 'Jul 23', 'Aug 23', 'Sep 23', 'Oct 23', 'Nov 23', 'Dec 23',
+                 'Jan 24', 'Feb 24', 'Mar 24', 'Apr 24', 'May 24', 'Jun 24', 'Jul 24', 'Aug 24', 'Sep 24', 'Oct 24', 'Nov 24', 'Dec 24'],
     });
 
     NDS.Chart.create('#demo-pie', {

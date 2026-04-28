@@ -97,14 +97,16 @@
         tooltip: { show: true },
         grid: { show: true },
         yaxis: { show: true, title: '' },
-        xaxis: { show: true, title: '' },
+        // labelRotate: 'auto' | 0 | 45 | 90 | <number>  — auto picks 0 or 45 based on fit
+        // labelDecimate: false | true | 'auto' | <number>  — true/'auto' computes step; number forces every-Nth
+        xaxis: { show: true, title: '', labelRotate: 'auto', labelDecimate: false },
     };
 
     const TYPE_DEFAULTS = {
         pie: PIE_BASE,
         donut: { ...PIE_BASE, donut: { size: 0.50 } },
         bar: { ...AXIS_BASE, bar: { borderRadius: 6, gap: 0.3, stacked: false }, dataLabels: { show: false } },
-        line: { ...AXIS_BASE, line: { width: 3, smooth: true, dots: true, dotRadius: 4, area: false } },
+        line: { ...AXIS_BASE, line: { width: 3, smooth: true, dots: true, dotRadius: 4, area: false, crosshair: true } },
     };
 
     // ── Chart class ────────────────────────────────────────────────
@@ -222,12 +224,12 @@
             }));
         }
 
-        _layout(wrap, height) {
+        _layout(wrap, height, extraPadBottom = 0) {
             const isRTL = this._isRTL;
             const w = wrap.clientWidth || this.el.clientWidth || 600;
             const h = height || 350;
             const hasY = this.opts.yaxis?.show !== false;
-            const padTop = 20, padBottom = 40;
+            const padTop = 20, padBottom = 40 + extraPadBottom;
             const axisPad = hasY ? 55 : 20;
             const padLeft = isRTL ? 20 : axisPad;
             const padRight = isRTL ? axisPad : 20;
@@ -236,6 +238,48 @@
                 plotW: w - padLeft - padRight,
                 plotH: h - padTop - padBottom,
             };
+        }
+
+        // Decide whether x-axis labels should be decimated and/or rotated.
+        // Returns { step, rotate, extraPad }. Char width is estimated, not measured —
+        // an explicit labelRotate/labelDecimate overrides the auto decision.
+        _xaxisStrategy(catLabels, plotW) {
+            const xaxis = this.opts.xaxis || {};
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+            const fontSize = isMobile ? 11 : 13;
+            const charW = fontSize * 0.6;
+            const padding = 8;
+
+            const labelStrs = catLabels.map(l => String(l));
+            const maxLen = Math.max(1, ...labelStrs.map(s => s.length));
+            const maxLabelW = maxLen * charW;
+
+            let step = 1;
+            const dec = xaxis.labelDecimate;
+            if (typeof dec === 'number' && dec > 1) {
+                step = Math.floor(dec);
+            } else if (dec === true || dec === 'auto') {
+                const slotNeeded = maxLabelW + padding;
+                const fits = Math.max(1, Math.floor(plotW / slotNeeded));
+                step = Math.max(1, Math.ceil(catLabels.length / fits));
+            }
+
+            const effectiveSlot = (plotW / Math.max(1, catLabels.length)) * step;
+            let rotate = xaxis.labelRotate;
+            if (rotate === undefined || rotate === 'auto') {
+                rotate = maxLabelW > effectiveSlot - padding ? 45 : 0;
+            } else if (rotate === true) {
+                rotate = 45;
+            } else if (rotate === false) {
+                rotate = 0;
+            }
+            rotate = Math.max(0, Math.min(90, Number(rotate) || 0));
+
+            const extraPad = rotate
+                ? Math.max(0, Math.ceil(maxLabelW * Math.sin(rotate * Math.PI / 180)) - 14)
+                : 0;
+
+            return { step, rotate, extraPad };
         }
 
         _valToY(val, scale, L) {
@@ -260,14 +304,19 @@
             const seriesArr = this._normSeries(series);
             const catCount = Math.max(...seriesArr.map(s => s.data.length));
             const catLabels = labels || Array.from({ length: catCount }, (_, i) => `${i + 1}`);
-            const L = this._layout(wrap, height);
+
+            // Two-step layout: provisional plotW → x-axis strategy → final layout with extraPad
+            const provisional = this._layout(wrap, height);
+            const xStrategy = this._xaxisStrategy(catLabels, provisional.plotW);
+            const L = this._layout(wrap, height, xStrategy.extraPad);
+
             const scale = computeScale(seriesArr, catCount);
             const svg = this._createSvg(L, ariaLabel);
 
             if (this.opts.grid?.show) this._renderGrid(svg, scale, L);
             if (this.opts.yaxis?.show) this._renderYAxis(svg, scale, L);
 
-            return { seriesArr, catCount, catLabels, L, scale, svg };
+            return { seriesArr, catCount, catLabels, L, scale, svg, xStrategy };
         }
 
         _renderGrid(svg, scale, L) {
@@ -294,14 +343,25 @@
             });
         }
 
-        _renderXLabels(svg, catLabels, xPositions, L) {
-            const y = L.padTop + L.plotH + 30;
+        _renderXLabels(svg, catLabels, xPositions, L, xStrategy) {
+            const { step = 1, rotate = 0 } = xStrategy || {};
+            const baseY = L.padTop + L.plotH;
+            const y = rotate ? baseY + 14 : baseY + 30;
+
             catLabels.forEach((label, i) => {
-                const txt = svgEl('text', {
-                    x: xPositions[i], y,
-                    class: 'nds-chart-axis-label',
-                    'text-anchor': 'middle',
-                });
+                if (step > 1 && i % step !== 0) return;
+
+                const x = xPositions[i];
+                const attrs = { x, y, class: 'nds-chart-axis-label' };
+
+                if (rotate === 0) {
+                    attrs['text-anchor'] = 'middle';
+                } else {
+                    attrs['text-anchor'] = 'end';
+                    attrs.transform = `rotate(${L.isRTL ? rotate : -rotate} ${x} ${y})`;
+                }
+
+                const txt = svgEl('text', attrs);
                 txt.textContent = label;
                 svg.appendChild(txt);
             });
@@ -479,7 +539,7 @@
             });
             if (!ctx) return;
 
-            const { seriesArr, catCount, catLabels, L, scale, svg } = ctx;
+            const { seriesArr, catCount, catLabels, L, scale, svg, xStrategy } = ctx;
             const groupW = L.plotW / catCount;
             const gapOffset = (groupW * (bar?.gap ?? 0.3)) / 2;
             const usableW = groupW - gapOffset * 2;
@@ -537,7 +597,7 @@
                     const ci = L.isRTL ? catCount - 1 - c : c;
                     return L.padLeft + ci * groupW + groupW / 2;
                 });
-                this._renderXLabels(svg, catLabels, xPositions, L);
+                this._renderXLabels(svg, catLabels, xPositions, L, xStrategy);
             }
 
             wrap.appendChild(svg);
@@ -578,7 +638,7 @@
             });
             if (!ctx) return;
 
-            const { seriesArr, catCount, catLabels, L, scale, svg } = ctx;
+            const { seriesArr, catCount, catLabels, L, scale, svg, xStrategy } = ctx;
 
             // Pre-compute x-positions (shared by points and x-labels)
             const xPositions = catLabels.map((_, c) => {
@@ -638,7 +698,10 @@
                 }));
             });
 
-            // Layer 3: Dots + hit areas
+            // Layer 3: Dots (refs collected per index for crosshair activation)
+            const enableCrosshair = line?.crosshair !== false;
+            const dotsByIdx = catLabels.map(() => []);
+
             if (showDots) {
                 computed.forEach(({ s, pts, color }) => {
                     pts.forEach(p => {
@@ -648,21 +711,89 @@
                             class: 'nds-chart-dot',
                         });
                         svg.appendChild(dot);
+                        dotsByIdx[p.idx].push(dot);
 
-                        const hitArea = svgEl('circle', {
-                            cx: p.x, cy: p.y, r: dotR * 3,
-                            fill: 'transparent', class: 'nds-chart-dot-hit',
-                        });
-                        this._bindTip(hitArea,
-                            `<strong>${NDS.escapeHtml(s.name)}</strong><br>${NDS.escapeHtml(catLabels[p.idx])}: ${NDS.escapeHtml(this._fmtVal(p.val))}`,
-                            dot, 'nds-chart-dot--active');
-                        svg.appendChild(hitArea);
+                        // Per-dot tooltips only when crosshair is off
+                        if (!enableCrosshair) {
+                            const hitArea = svgEl('circle', {
+                                cx: p.x, cy: p.y, r: dotR * 3,
+                                fill: 'transparent', class: 'nds-chart-dot-hit',
+                            });
+                            this._bindTip(hitArea,
+                                `<strong>${NDS.escapeHtml(s.name)}</strong><br>${NDS.escapeHtml(catLabels[p.idx])}: ${NDS.escapeHtml(this._fmtVal(p.val))}`,
+                                dot, 'nds-chart-dot--active');
+                            svg.appendChild(hitArea);
+                        }
                     });
                 });
             }
 
+            // Layer 4: Crosshair line + plot-area overlay (snaps to nearest x-index on hover)
+            if (enableCrosshair && catCount > 0) {
+                const colors = computed.map(c => c.color);
+                const crosshair = svgEl('line', {
+                    x1: 0, y1: L.padTop, x2: 0, y2: L.padTop + L.plotH,
+                    class: 'nds-chart-crosshair',
+                    style: 'display:none',
+                });
+                svg.appendChild(crosshair);
+
+                const overlay = svgEl('rect', {
+                    x: L.padLeft, y: L.padTop,
+                    width: L.plotW, height: L.plotH,
+                    fill: 'transparent',
+                    class: 'nds-chart-overlay',
+                });
+                svg.appendChild(overlay);
+
+                let lastIdx = -1;
+                const signal = this._ac.signal;
+
+                overlay.addEventListener('mousemove', (e) => {
+                    const rect = svg.getBoundingClientRect();
+                    if (!rect.width) return;
+                    const mouseSvgX = ((e.clientX - rect.left) / rect.width) * L.w;
+
+                    let nearest = 0, minDist = Infinity;
+                    for (let i = 0; i < xPositions.length; i++) {
+                        const d = Math.abs(xPositions[i] - mouseSvgX);
+                        if (d < minDist) { minDist = d; nearest = i; }
+                    }
+
+                    if (nearest !== lastIdx) {
+                        lastIdx = nearest;
+                        crosshair.setAttribute('x1', xPositions[nearest]);
+                        crosshair.setAttribute('x2', xPositions[nearest]);
+                        crosshair.style.display = '';
+
+                        for (let i = 0; i < dotsByIdx.length; i++) {
+                            const action = i === nearest ? 'add' : 'remove';
+                            dotsByIdx[i].forEach(d => d.classList[action]('nds-chart-dot--active'));
+                        }
+
+                        const tipLines = seriesArr.map((s, si) => {
+                            const v = s.data[nearest];
+                            if (v === undefined) return '';
+                            return `<span class="nds-chart-tip-marker" style="background:${colors[si]}"></span>`
+                                + NDS.escapeHtml(s.name) + ': ' + NDS.escapeHtml(this._fmtVal(v));
+                        }).filter(Boolean).join('<br>');
+                        const html = '<strong>' + NDS.escapeHtml(catLabels[nearest]) + '</strong><br>' + tipLines;
+                        this._showTooltip(e, html);
+                    } else {
+                        this._moveTooltip(e);
+                    }
+                }, { signal });
+
+                overlay.addEventListener('mouseleave', () => {
+                    lastIdx = -1;
+                    crosshair.style.display = 'none';
+                    dotsByIdx.forEach(arr => arr.forEach(d => d.classList.remove('nds-chart-dot--active')));
+                    this._hideTooltip();
+                }, { signal });
+            }
+
             if (this.opts.xaxis?.show) {
-                this._renderXLabels(svg, catLabels, xPositions, L);
+                this._renderXLabels(svg, catLabels, xPositions, L, xStrategy);
             }
 
             wrap.appendChild(svg);
@@ -743,7 +874,22 @@
 
     // ── Public interface ───────────────────────────────────────────
 
+    // Re-render every chart instance when document direction or lang changes.
+    // Lang switcher uses View Transitions; the shared NDS.onAttrChange dispatch fires
+    // before the new snapshot is captured, so the new render is animated cleanly.
+    let _dirObserverReady = false;
+    function setupDirObserver() {
+        if (_dirObserverReady) return;
+        _dirObserverReady = true;
+        NDS.onAttrChange('html', ['dir', 'lang'], () => {
+            document.querySelectorAll('.nds-chart[data-nds-init]').forEach(el => {
+                if (el.ndsChart) el.ndsChart.render();
+            });
+        });
+    }
+
     function initCharts() {
+        setupDirObserver();
         document.querySelectorAll('.nds-chart:not([data-nds-init])').forEach(el => {
             if (el.ndsChart) return;
             const d = el.dataset;
@@ -762,6 +908,7 @@
     function createChart(el, opts) {
         if (typeof el === 'string') el = document.querySelector(el);
         if (!el) return null;
+        setupDirObserver();
         if (el.ndsChart) el.ndsChart.destroy();
         el.ndsChart = new NDSChartInstance(el, opts);
         el.setAttribute('data-nds-init', '');

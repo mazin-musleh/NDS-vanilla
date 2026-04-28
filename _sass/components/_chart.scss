@@ -193,6 +193,27 @@
     cursor: pointer;
 }
 
+.nds-chart-crosshair {
+    stroke: var(--_chart-text);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.nds-chart-overlay {
+    cursor: crosshair;
+}
+
+.nds-chart-tip-marker {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-inline-end: var(--spacing-xs, 4px);
+    vertical-align: middle;
+}
+
 // ── Data Labels ───────────────────────────────────────────────
 
 .nds-chart-data-label {
