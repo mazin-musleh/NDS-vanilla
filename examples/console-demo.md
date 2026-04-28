@@ -269,7 +269,7 @@ hideFeedback: true
                                 <div class="nds-col-header">
                                     <span class="nds-label">Reference</span>
                                     <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by reference"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </th>
@@ -277,7 +277,7 @@ hideFeedback: true
                                 <div class="nds-col-header">
                                     <span class="nds-label">Service</span>
                                     <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by service"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </th>
@@ -285,7 +285,7 @@ hideFeedback: true
                                 <div class="nds-col-header">
                                     <span class="nds-label">Category</span>
                                     <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by category"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </th>
@@ -293,7 +293,7 @@ hideFeedback: true
                                 <div class="nds-col-header">
                                     <span class="nds-label">Amount</span>
                                     <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by amount"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </th>
@@ -301,7 +301,7 @@ hideFeedback: true
                                 <div class="nds-col-header">
                                     <span class="nds-label">Date</span>
                                     <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by date"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </th>
@@ -309,7 +309,7 @@ hideFeedback: true
                                 <div class="nds-col-header">
                                     <span class="nds-label">Status</span>
                                     <div class="nds-col-actions">
-                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by status"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                     </div>
                                 </div>
                             </th>

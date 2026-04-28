@@ -613,7 +613,7 @@ direction: ltr
                                                 <div class="nds-col-header">
                                                     <span class="nds-label">#</span>
                                                     <div class="nds-col-actions">
-                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="number"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="number" aria-label="Sort by row number"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
                                             </th>
@@ -621,7 +621,7 @@ direction: ltr
                                                 <div class="nds-col-header">
                                                     <span class="nds-label">Service</span>
                                                     <div class="nds-col-actions">
-                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="string"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="string" aria-label="Sort by service"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
                                             </th>
@@ -630,7 +630,7 @@ direction: ltr
                                                 <div class="nds-col-header">
                                                     <span class="nds-label">System</span>
                                                     <div class="nds-col-actions">
-                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="string"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" data-sort-type="string" aria-label="Sort by system"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
                                             </th>

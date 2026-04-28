@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                             <div class="nds-col-header">
                                                 <span class="nds-label">Name</span>
                                                 <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by name"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </th>
@@ -469,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                             <div class="nds-col-header">
                                                 <span class="nds-label">Amount</span>
                                                 <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by amount"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </th>
@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                             <div class="nds-col-header">
                                                 <span class="nds-label">Status</span>
                                                 <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by status"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </th>
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                             <div class="nds-col-header">
                                                 <span class="nds-label">Date</span>
                                                 <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by date"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </th>
@@ -529,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function () {
         &lt;div class="nds-col-header"&gt;
           &lt;span class="nds-label"&gt;Name&lt;/span&gt;
           &lt;div class="nds-col-actions"&gt;
-            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by name"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/th&gt;
@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function () {
         &lt;div class="nds-col-header"&gt;
           &lt;span class="nds-label"&gt;Amount&lt;/span&gt;
           &lt;div class="nds-col-actions"&gt;
-            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by amount"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/th&gt;
@@ -545,7 +545,7 @@ document.addEventListener('DOMContentLoaded', function () {
         &lt;div class="nds-col-header"&gt;
           &lt;span class="nds-label"&gt;Status&lt;/span&gt;
           &lt;div class="nds-col-actions"&gt;
-            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by status"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/th&gt;
@@ -553,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function () {
         &lt;div class="nds-col-header"&gt;
           &lt;span class="nds-label"&gt;Date&lt;/span&gt;
           &lt;div class="nds-col-actions"&gt;
-            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by date"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/th&gt;

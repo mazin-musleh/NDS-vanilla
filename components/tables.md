@@ -154,7 +154,7 @@ direction: ltr
                                         <div class="nds-col-header">
                                             <span class="nds-label">Department</span>
                                             <div class="nds-col-actions">
-                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by department"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
                                     </th>
@@ -162,7 +162,7 @@ direction: ltr
                                         <div class="nds-col-header">
                                             <span class="nds-label">Employees</span>
                                             <div class="nds-col-actions">
-                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by employees"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
                                     </th>
@@ -170,7 +170,7 @@ direction: ltr
                                         <div class="nds-col-header">
                                             <span class="nds-label">Budget</span>
                                             <div class="nds-col-actions">
-                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by budget"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
                                     </th>
@@ -237,7 +237,7 @@ direction: ltr
         &lt;div class="nds-col-header"&gt;
           &lt;span class="nds-label"&gt;Department&lt;/span&gt;
           &lt;div class="nds-col-actions"&gt;
-            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by department"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/th&gt;
@@ -245,7 +245,7 @@ direction: ltr
         &lt;div class="nds-col-header"&gt;
           &lt;span class="nds-label"&gt;Employees&lt;/span&gt;
           &lt;div class="nds-col-actions"&gt;
-            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by employees"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/th&gt;
@@ -253,7 +253,7 @@ direction: ltr
         &lt;div class="nds-col-header"&gt;
           &lt;span class="nds-label"&gt;Budget&lt;/span&gt;
           &lt;div class="nds-col-actions"&gt;
-            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by budget"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/th&gt;
@@ -1223,7 +1223,7 @@ direction: ltr
                                             <div class="nds-col-header">
                                                 <span class="nds-label">#</span>
                                                 <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by row number"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </th>
@@ -1231,7 +1231,7 @@ direction: ltr
                                             <div class="nds-col-header">
                                                 <span class="nds-label">Service</span>
                                                 <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by service"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </th>
@@ -1239,7 +1239,7 @@ direction: ltr
                                             <div class="nds-col-header">
                                                 <span class="nds-label">System</span>
                                                 <div class="nds-col-actions">
-                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"></i></button>
+                                                    <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by system"><i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i></button>
                                                 </div>
                                             </div>
                                         </th>
@@ -1337,7 +1337,7 @@ direction: ltr
           &lt;div class="nds-col-header"&gt;
             &lt;span class="nds-label"&gt;#&lt;/span&gt;
             &lt;div class="nds-col-actions"&gt;
-              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by row number"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
             &lt;/div&gt;
           &lt;/div&gt;
         &lt;/th&gt;
@@ -1345,7 +1345,7 @@ direction: ltr
           &lt;div class="nds-col-header"&gt;
             &lt;span class="nds-label"&gt;Service&lt;/span&gt;
             &lt;div class="nds-col-actions"&gt;
-              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by service"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
             &lt;/div&gt;
           &lt;/div&gt;
         &lt;/th&gt;
@@ -1353,7 +1353,7 @@ direction: ltr
           &lt;div class="nds-col-header"&gt;
             &lt;span class="nds-label"&gt;System&lt;/span&gt;
             &lt;div class="nds-col-actions"&gt;
-              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon"&gt;&lt;/i&gt;&lt;/button&gt;
+              &lt;button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by system"&gt;&lt;i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/button&gt;
             &lt;/div&gt;
           &lt;/div&gt;
         &lt;/th&gt;
