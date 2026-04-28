@@ -69,47 +69,43 @@
                 </div>
                 {%- endif %}
 
-                {%- comment %} Data-driven Secondary Navigation {%- endcomment -%}
-                {%- if nav_data.secondary_nav and nav_data.secondary_nav.size > 0 %}
+                {%- comment %} Data-driven Action Navigation {%- endcomment -%}
+                {%- if nav_data.actions_nav and nav_data.actions_nav.size > 0 %}
                 <ul class="nds-nav-actions">
-                    {%- for item in nav_data.secondary_nav %}
+                    {%- for item in nav_data.actions_nav %}
                     {%- if item.content_source %}
                         {%- assign badge_value = site.data.content[item.content_source] | size %}
                     {%- else %}
                         {%- assign badge_value = item.badge %}
                     {%- endif %}
+                    {%- capture action_inner -%}
+                        {%- if item.img_icon -%}
+                            {%- if item.avatar %}<div class="nds-avatar">{% endif -%}
+                            <img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="nds-icon" loading="lazy">
+                            {%- if item.avatar %}</div>{% endif -%}
+                        {%- elsif item.icon -%}
+                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
+                        {%- endif -%}
+                        <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}">{{ item.label }}</span>
+                    {%- endcapture -%}
+                    {%- assign action_class = item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' -%}
+                    {%- if item.type == 'modal' -%}
+                        {%- assign modal_target = item.id | default: item.label | slugify | append: '-modal' -%}
+                    {%- endif -%}
                     <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-dropdown{%- endif %}{%- if item.custom_class %} {{ item.custom_class }}{%- endif %}" {{ item.attr }}>
                         {%- if item.url %}
                         <a href="{%- if item.url contains '#' and item.url | slice: 0 == '#' %}{{ item.url }}{%- else %}{{ item.url | relative_url }}{%- endif %}"
-                            class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}"
-                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}
+                            class="{{ action_class }}"
+                            {%- if item.type == 'modal' %} data-modal-target="{{ modal_target }}"{%- endif %}
                             title="{{ item.label }}"
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}
-                            {%- if item.data_attr %} {{ item.data_attr }}{%- endif %}>
-                            {%- if item.img_icon %}
-                                {%- if item.avatar %}<div class="nds-avatar">{%- endif %}
-                                <img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="nds-icon">
-                                {%- if item.avatar %}</div>{%- endif %}
-                            {%- elsif item.icon %}
-                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
-                            {%- endif %}
-                            <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}">{{ item.label }}</span>
-                        </a>
+                            {%- if item.data_attr %} {{ item.data_attr }}{%- endif %}>{{ action_inner }}</a>
                         {%- else %}
-                        <button class="{{ item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' }}"
-                            {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}
+                        <button class="{{ action_class }}"
+                            {%- if item.type == 'modal' %} data-modal-target="{{ modal_target }}"{%- endif %}
                             title="{{ item.label }}"
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}
-                            {%- if item.data_attr %} {{ item.data_attr }}{%- endif %}>
-                            {%- if item.img_icon %}
-                                {%- if item.avatar %}<div class="nds-avatar">{%- endif %}
-                                <img src="{{ item.img_icon | relative_url }}" alt="{{ item.label }}" class="nds-icon">
-                                {%- if item.avatar %}</div>{%- endif %}
-                            {%- elsif item.icon %}
-                            <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
-                            {%- endif %}
-                            <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}">{{ item.label }}</span>
-                        </button>
+                            {%- if item.data_attr %} {{ item.data_attr }}{%- endif %}>{{ action_inner }}</button>
                         {%- endif %}
                         {%- if item.type == 'dropdown' %}
                         <div class="nds-dropdown-menu{%- if item.content_class %} {{ item.content_class }}{%- endif %}">
@@ -138,8 +134,8 @@
 </div>
     {%- endif %}
 {%- endfor %}
-{%- comment %} Secondary nav modals {%- endcomment -%}
-{%- for item in nav_data.secondary_nav %}
+{%- comment %} Action nav modals {%- endcomment -%}
+{%- for item in nav_data.actions_nav %}
     {%- if item.type == 'modal' and item.template %}
     {%- assign modal_id = item.id | default: item.label | slugify | append: "-modal" %}
     {%- assign modal_tpl = item.template %}

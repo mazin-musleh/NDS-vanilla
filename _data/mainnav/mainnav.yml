@@ -73,9 +73,9 @@ primary_nav:
     url: "/contact"
 
 # ──────────────────────────────────────────────────────────────
-# Secondary Navigation
+# Actions Navigation
 # ──────────────────────────────────────────────────────────────
-secondary_nav:
+actions_nav:
   - label: "Search"
     icon: "nds-hgi-search-01"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
