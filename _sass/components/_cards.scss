@@ -119,9 +119,9 @@
 
   &:is(.nds-center, .nds-statistic) {
     :is(.nds-card-header, .nds-card-content > *, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
-      align-items: center !important;
-      justify-content: center !important;
-      text-align: center !important;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     :is(.nds-card-rating) {
@@ -195,6 +195,7 @@
 
   .nds-card-text:not([hidden]) {
     display: flex;
+    justify-content: flex-start;
     flex-direction: column;
     gap: var(--spacing-md, 8px);
     width: 100%;
