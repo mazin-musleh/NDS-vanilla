@@ -33,16 +33,18 @@
   // BUTTON STATES
   // ==============================================
 
+  &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+    background-color: var(--_btn-bg-selected);
+    border-color: var(--_btn-border-selected);
+  }
+
+  
   &:is(:hover, [data-state~="hover"]) {
     background-color: var(--_btn-bg-hover);
     color: var(--_btn-color-hover);
     border-color: var(--_btn-border-hover);
   }
 
-  &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
-    background-color: var(--_btn-bg-selected);
-    border-color: var(--_btn-border-selected);
-  }
 
   &:is(:active, [data-state~="pressed"]) {
     background-color: var(--_btn-bg-active);
