@@ -196,13 +196,15 @@
     NDS.onChildrenChange = (sel, fn) => { domBus.childrenSubs.push({ sel, fn }); domBus.start(); };
 
     // ── Attribute Change Observer ────────────────────────────────────
-    // Single MutationObserver on body for attribute changes, selector-based dispatch
+    // Single MutationObserver on <html> for attribute changes, selector-based dispatch.
+    // Observing documentElement (not body) so subscribers can match 'html' itself —
+    // e.g. lang/dir changes for direction-aware components.
     // Usage: NDS.onAttrChange('.nds-progress-circle', ['data-value', 'data-num'], els => { ... })
     const attrSubs = [];
     NDS.onAttrChange = (sel, attrs, fn) => {
         if (attrSubs.some(s => s.sel === sel && s.fn === fn)) return;
         attrSubs.push({ sel, attrs: new Set(attrs), fn });
-        if (attrSubs.length === 1 && document.body) {
+        if (attrSubs.length === 1) {
             new MutationObserver(mutations => {
                 const changed = new Map();
                 for (let i = 0; i < mutations.length; i++) {
@@ -218,7 +220,7 @@
                     });
                     if (hits.length) attrSubs[s].fn(hits);
                 }
-            }).observe(document.body, { attributes: true, subtree: true });
+            }).observe(document.documentElement, { attributes: true, subtree: true });
         }
     };
 
