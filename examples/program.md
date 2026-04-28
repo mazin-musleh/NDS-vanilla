@@ -98,7 +98,7 @@ layout_class: nds-cardView
                 </div>
 
                 <div class="nds-block">
-                    <div class="program-overview-cards nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--min-width: 100px;--gap: 12px;">
+                    <div class="program-overview-cards nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--min-width: 100px;--gap: 12px;height: auto;">
                         <div class="nds-card nds-stroke nds-statistic">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
