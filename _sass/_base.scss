@@ -19,10 +19,6 @@
    ======================================== */
 
 :root {
-    scrollbar-color: var(--colors-neutral-600) var(--background-default);
-}
-
-:root[data-theme="dark"] {
     scrollbar-color: var(--colors-neutral-400) var(--background-default);
 }
 
