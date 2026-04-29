@@ -20,7 +20,7 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["", "#demo-bar", "chartBarDL", "chart"]'
                                 data-chart-opt='{"dataLabels":{"show":true}}'
                                 data-chart-opt-off='{"dataLabels":{"show":false}}'
@@ -1163,7 +1163,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { name: 'Pending', data: [5, 7, 6, 4, 3, 8] },
         ],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        dataLabels: { show: true, format: '%'},
+        dataLabels: { show: false, format: '%' },
     });
 
     NDS.Chart.create('#demo-line', {
