@@ -35,6 +35,14 @@
             this.isOpen = false;
             this._onDocClick = null;
             this._offScroll = null;
+            // One AbortController per instance — every addEventListener in
+            // bindEvents() passes its signal so destroy() can detach all
+            // trigger listeners atomically. Open-lifecycle subscriptions
+            // (this._onDocClick, this._offScroll) sit outside this AC
+            // because they're already torn down by close() per open/close
+            // cycle, so adding a signal would duplicate the bookkeeping
+            // close() already does.
+            this._ac = new AbortController();
 
             this.init();
         }
@@ -139,17 +147,18 @@
         }
 
         bindEvents() {
+            const { signal } = this._ac;
             this.trigger.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.isOpen ? this.close() : this.open();
-            });
+            }, { signal });
             this.trigger.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && this.isOpen) {
                     e.stopPropagation();
                     this.close();
                     this.trigger.focus();
                 }
-            });
+            }, { signal });
         }
 
         open() {
@@ -267,6 +276,19 @@
                 },
                 bubbles: true
             }));
+        }
+
+        // Drain open-lifecycle subscriptions before tearing the instance
+        // down. close() releases this._onDocClick (document click listener)
+        // and this._offScroll (NDS.onOutsideScroll) and unportals the
+        // balloon. Without the close() drain, destroy-while-open would
+        // strand the document listener and the pooled scroll subscriber for
+        // the page lifetime.
+        destroy() {
+            if (this.isOpen) this.close();
+            if (this._ac) { this._ac.abort(); this._ac = null; }
+            this.root.removeAttribute('data-nds-tooltip-initialized');
+            delete this.root.ndsTooltip;
         }
     }
 

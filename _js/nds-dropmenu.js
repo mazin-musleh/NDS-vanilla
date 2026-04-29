@@ -618,6 +618,17 @@
         }
 
         destroy() {
+            // Drain the open-lifecycle subscriptions before tearing the
+            // wrapper down. close() releases this._offScroll (NDS.onOutsideScroll)
+            // and this._unsubResize (NDS.onResize) synchronously at the top of
+            // its body — without this guard, destroy-while-open strands both
+            // pooled subscribers for the page lifetime.
+            if (this.isOpen) this.close();
+            // close() schedules NDS.unportal via setTimeout 200ms later;
+            // calling it synchronously here ensures the menu is restored to
+            // its original parent before replaceWith detaches that parent —
+            // otherwise the late unportal reparents into a detached node.
+            NDS.unportal(this.menu);
             if (this.handleOutsideClick) {
                 document.removeEventListener('click', this.handleOutsideClick);
             }
