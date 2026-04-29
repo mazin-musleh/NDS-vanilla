@@ -203,6 +203,10 @@
 
 .nds-chart-overlay {
     cursor: crosshair;
+    // Take full ownership of touch gestures inside the plot area so the browser
+    // does not cancel pointer events the moment the finger drifts vertically.
+    // Page scroll still works above/below the chart.
+    touch-action: none;
 }
 
 .nds-chart-tip-marker {

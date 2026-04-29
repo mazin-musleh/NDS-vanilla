@@ -730,6 +730,11 @@
 
             // Layer 4: Crosshair line + plot-area overlay (snaps to nearest x-index on hover)
             if (enableCrosshair && catCount > 0) {
+                // touch-action on SVG <rect> is unreliable in mobile browsers — they walk
+                // up to the SVG element to decide gesture ownership. Setting it here
+                // stops Chrome/Safari from firing pointercancel after a few moves.
+                svg.style.touchAction = 'none';
+
                 const colors = computed.map(c => c.color);
                 const crosshair = svgEl('line', {
                     x1: 0, y1: L.padTop, x2: 0, y2: L.padTop + L.plotH,
@@ -749,7 +754,50 @@
                 let lastIdx = -1;
                 const signal = this._ac.signal;
 
-                overlay.addEventListener('mousemove', (e) => {
+                // Touch tooltips pin to the top of the chart and follow the crosshair X
+                // so the user's finger never covers them. Mouse keeps the cursor-follow
+                // behavior since that is not the same problem.
+                const positionTip = (e, crosshairX) => {
+                    if (!this._tooltip) return;
+                    const rect = this.el.getBoundingClientRect();
+                    const tw = this._tooltip.offsetWidth;
+                    const th = this._tooltip.offsetHeight;
+                    if (e.pointerType && e.pointerType !== 'mouse') {
+                        const gap = 8;
+                        const svgRect = svg.getBoundingClientRect();
+                        const chartX = svgRect.left + (crosshairX / L.w) * svgRect.width - rect.left;
+                        // Place tooltip on the side with more room so it never covers the line
+                        let x = chartX < rect.width / 2 ? chartX + gap : chartX - tw - gap;
+                        x = Math.max(4, Math.min(x, rect.width - tw - 4));
+                        this._tooltip.style.left = x + 'px';
+                        // Anchor to the SVG's top edge so a top-positioned legend
+                        // is not covered. Falls inside the SVG's padTop band.
+                        this._tooltip.style.top = (svgRect.top - rect.top) + 'px';
+                    } else {
+                        this._moveTooltip(e);
+                    }
+                };
+
+                const dismiss = () => {
+                    lastIdx = -1;
+                    crosshair.style.display = 'none';
+                    dotsByIdx.forEach(arr => arr.forEach(d => d.classList.remove('nds-chart-dot--active')));
+                    this._hideTooltip();
+                };
+
+                // Pointer Events unify mouse + touch + pen. setPointerCapture keeps
+                // events flowing when a finger drags outside the overlay bounds —
+                // preventDefault stops the browser from claiming the gesture as scroll.
+                overlay.addEventListener('pointerdown', (e) => {
+                    if (e.pointerType !== 'mouse') {
+                        e.preventDefault();
+                        if (overlay.setPointerCapture) {
+                            try { overlay.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
+                        }
+                    }
+                }, { signal });
+
+                overlay.addEventListener('pointermove', (e) => {
                     const rect = svg.getBoundingClientRect();
                     if (!rect.width) return;
                     const mouseSvgX = ((e.clientX - rect.left) / rect.width) * L.w;
@@ -778,17 +826,24 @@
                                 + NDS.escapeHtml(s.name) + ': ' + NDS.escapeHtml(this._fmtVal(v));
                         }).filter(Boolean).join('<br>');
                         const html = '<strong>' + NDS.escapeHtml(catLabels[nearest]) + '</strong><br>' + tipLines;
-                        this._showTooltip(e, html);
+                        if (this.opts.tooltip?.show !== false && this._tooltip) {
+                            this._tooltip.innerHTML = html;
+                            this._tooltip.classList.add('nds-chart-tooltip--visible');
+                            positionTip(e, xPositions[nearest]);
+                        }
                     } else {
-                        this._moveTooltip(e);
+                        positionTip(e, xPositions[lastIdx]);
                     }
                 }, { signal });
 
-                overlay.addEventListener('mouseleave', () => {
-                    lastIdx = -1;
-                    crosshair.style.display = 'none';
-                    dotsByIdx.forEach(arr => arr.forEach(d => d.classList.remove('nds-chart-dot--active')));
-                    this._hideTooltip();
+                // pointerleave fires on actual boundary crossing even when captured,
+                // so dismiss it only for mouse — touch dismissal goes through pointerup/cancel.
+                overlay.addEventListener('pointerleave', (e) => {
+                    if (e.pointerType === 'mouse') dismiss();
+                }, { signal });
+                overlay.addEventListener('pointercancel', dismiss, { signal });
+                overlay.addEventListener('pointerup', (e) => {
+                    if (e.pointerType !== 'mouse') dismiss();
                 }, { signal });
             }
 
