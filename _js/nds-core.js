@@ -123,14 +123,21 @@
     })();
 
     // ── DOM Mutation Bus ─────────────────────────────────────────────
-    // Single MutationObserver on body, selector-based dispatch
-    // Usage: NDS.onDOMAdd('.selector', nodes => { ... })
-    //        NDS.onDOMRemove('.selector', nodes => { ... })
-    //        NDS.onChildrenChange('.selector', parents => { ... })
-    //          Fires when a matched element's direct children change. Matches
-    //          on mutation.target (the parent, still attached), so selectors
-    //          with '>' combinators work and child removals are detected
-    //          cleanly (removed nodes have parentNode === null by callback time).
+    // Single MutationObserver on body, selector-based dispatch.
+    // Each subscriber returns an unsubscribe handle so per-instance callers
+    // (component constructors / init() methods called per re-init) can
+    // release their subscription without the pool's array growing
+    // unboundedly across instances. Mirrors NDS.onResize / onElementResize
+    // / onIntersect / onOutsideScroll.
+    // Usage: const off = NDS.onDOMAdd('.selector', nodes => { ... })
+    //        const off = NDS.onDOMRemove('.selector', nodes => { ... })
+    //        const off = NDS.onChildrenChange('.selector', parents => { ... })
+    //        // later: off();  releases the subscriber
+    //          onChildrenChange fires when a matched element's direct
+    //          children change. Matches on mutation.target (the parent,
+    //          still attached), so selectors with '>' combinators work and
+    //          child removals are detected cleanly (removed nodes have
+    //          parentNode === null by callback time).
     const domBus = (() => {
         const addSubs = [], removeSubs = [], childrenSubs = [];
         let started = false;
@@ -191,19 +198,37 @@
         return { addSubs, removeSubs, childrenSubs, start };
     })();
 
-    NDS.onDOMAdd         = (sel, fn) => { domBus.addSubs.push({ sel, fn });      domBus.start(); };
-    NDS.onDOMRemove      = (sel, fn) => { domBus.removeSubs.push({ sel, fn });   domBus.start(); };
-    NDS.onChildrenChange = (sel, fn) => { domBus.childrenSubs.push({ sel, fn }); domBus.start(); };
+    NDS.onDOMAdd = (sel, fn) => {
+        const sub = { sel, fn };
+        domBus.addSubs.push(sub);
+        domBus.start();
+        return () => { const i = domBus.addSubs.indexOf(sub); if (i !== -1) domBus.addSubs.splice(i, 1); };
+    };
+    NDS.onDOMRemove = (sel, fn) => {
+        const sub = { sel, fn };
+        domBus.removeSubs.push(sub);
+        domBus.start();
+        return () => { const i = domBus.removeSubs.indexOf(sub); if (i !== -1) domBus.removeSubs.splice(i, 1); };
+    };
+    NDS.onChildrenChange = (sel, fn) => {
+        const sub = { sel, fn };
+        domBus.childrenSubs.push(sub);
+        domBus.start();
+        return () => { const i = domBus.childrenSubs.indexOf(sub); if (i !== -1) domBus.childrenSubs.splice(i, 1); };
+    };
 
     // ── Attribute Change Observer ────────────────────────────────────
     // Single MutationObserver on <html> for attribute changes, selector-based dispatch.
     // Observing documentElement (not body) so subscribers can match 'html' itself —
     // e.g. lang/dir changes for direction-aware components.
-    // Usage: NDS.onAttrChange('.nds-progress-circle', ['data-value', 'data-num'], els => { ... })
+    // Returns an unsubscribe handle so per-instance callers can release
+    // their subscription. Mirrors the DOM Mutation Bus shape above.
+    // Usage: const off = NDS.onAttrChange('.nds-progress-circle', ['data-value', 'data-num'], els => { ... })
+    //        // later: off();  releases the subscriber
     const attrSubs = [];
     NDS.onAttrChange = (sel, attrs, fn) => {
-        if (attrSubs.some(s => s.sel === sel && s.fn === fn)) return;
-        attrSubs.push({ sel, attrs: new Set(attrs), fn });
+        const sub = { sel, attrs: new Set(attrs), fn };
+        attrSubs.push(sub);
         if (attrSubs.length === 1) {
             new MutationObserver(mutations => {
                 const changed = new Map();
@@ -222,6 +247,7 @@
                 }
             }).observe(document.documentElement, { attributes: true, subtree: true });
         }
+        return () => { const i = attrSubs.indexOf(sub); if (i !== -1) attrSubs.splice(i, 1); };
     };
 
     // ── State Management (data-state) ─────────────────────────────────

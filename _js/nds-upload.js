@@ -310,6 +310,7 @@
 
             // Tear down drag and observer
             this._removeDragAndDrop();
+            if (this._offAttrChange) { this._offAttrChange(); this._offAttrChange = null; }
             if (this._observer) {
                 this._observer.disconnect();
                 this._observer = null;
@@ -699,7 +700,12 @@
         _setupMutationObserver() {
             let lastDropboxState = NDS.State.has(this.container, 'dropbox');
 
-            NDS.onAttrChange('.nds-file-upload', ['data-state'], (hits) => {
+            // Store the unsubscribe handle so destroy() can release the
+            // pooled subscriber. Without this, every NDSUpload instance
+            // would stack a fresh closure on attrSubs that captures
+            // this.container and lastDropboxState — a per-instance leak
+            // that compounds with each created/destroyed upload.
+            this._offAttrChange = NDS.onAttrChange('.nds-file-upload', ['data-state'], (hits) => {
                 if (!hits.includes(this.container)) return;
                 const currentDropboxState = NDS.State.has(this.container, 'dropbox');
                 if (currentDropboxState !== lastDropboxState) {

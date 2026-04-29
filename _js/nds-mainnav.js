@@ -916,8 +916,9 @@
             if (e.target === DOM.collapse && e.propertyName === 'height') scheduleUpdate();
         }, { signal });
 
-        // NDS.onDOMAdd / onDOMRemove don't return unsubscribe handles, so they
-        // rely on the init-guard below to prevent duplicate registrations.
+        // mainnav is a singleton so the init-guard below prevents duplicate
+        // registrations; that's why the unsubscribe handles NDS.onDOMAdd /
+        // onDOMRemove now return aren't captured here.
         const navChanged = NDS.debounce(() => { state._navChanged = true; scheduleUpdate(); }, 100);
         NDS.onDOMAdd('.nds-nav-item, .nds-dropdown', navChanged);
         NDS.onDOMRemove('.nds-nav-item, .nds-dropdown', navChanged);
@@ -945,8 +946,8 @@
     // ==============================================
     function init() {
         // Entry guard: mainnav is a singleton; a second init() call would stack
-        // pooled subscribers that aren't covered by the AbortController
-        // (NDS.onDOMAdd/onDOMRemove in particular).
+        // pooled subscribers because the unsubscribe handles from
+        // NDS.onDOMAdd / onDOMRemove aren't captured (see setupEventListeners).
         if (_initialized || !DOM.collapse) return;
         _initialized = true;
 

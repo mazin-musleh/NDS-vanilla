@@ -96,6 +96,10 @@
             this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
             this._ac = new AbortController();
+            // Pool subscriber handles from setupManualFilter's NDS.onDOMAdd
+            // calls; released atomically in destroy() so the per-element
+            // closures don't outlive the filter instance.
+            this._offDOMAdds = [];
             this.init();
         }
 
@@ -1230,7 +1234,7 @@
             // Always set up the DOM observer, even with 0 inputs (handles cascading/async filters)
             if (!element._ndsFilterObserver) {
                 element._ndsFilterObserver = true;
-                NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
+                this._offDOMAdds.push(NDS.onDOMAdd('input[type="checkbox"], input[type="radio"], .nds-switch-input', (nodes) => {
                     // Ignore nodes that already have listeners bound — they are
                     // being moved (portal open/close), not genuinely inserted.
                     const fresh = nodes.filter(n => element.contains(n) && !n._ndsFilterBound);
@@ -1238,7 +1242,7 @@
                         this.setupManualFilter(element, filterName);
                         this.reapplyUrlParamsForFilter(filterName);
                     }
-                });
+                }));
             }
 
             if (inputs.length === 0) {
@@ -2066,6 +2070,11 @@
 
         destroy() {
             this._ac.abort();
+            // Release pooled NDS.onDOMAdd subscribers registered per filter
+            // element by setupManualFilter; without this, each filter instance
+            // would leak one closure per filter element for the page lifetime.
+            this._offDOMAdds.forEach(off => off());
+            this._offDOMAdds.length = 0;
             this.items.forEach(item => this.showItem(item));
             this.filterContainer.removeAttribute('data-nds-filter-initialized');
         }

@@ -1845,10 +1845,17 @@
             }, 10);
         },
 
-        // Setup language observer
+        // Setup language observer.
+        // setupLanguageObserver runs every time the calendar is (re-)initialized
+        // (initializeCalendar / completeCalendarSetup paths), so release the
+        // prior subscription before registering a new one — otherwise each
+        // re-init stacks a fresh closure on the pool's array. The handle is
+        // also released in destroy() so a calendar instance teardown drops
+        // its lang-attr subscriber instead of leaking it for the page lifetime.
         setupLanguageObserver: function () {
+            if (this._offLangChange) this._offLangChange();
             var self = this;
-            NDS.onAttrChange('html', ['lang'], function () {
+            this._offLangChange = NDS.onAttrChange('html', ['lang'], function () {
                 if (self.state.isInitialized) {
                     self.renderWeekdays();
                     self.renderButtonLabels();
@@ -1887,6 +1894,11 @@
             if (this.handlers.outsideClick) {
                 document.removeEventListener('click', this.handlers.outsideClick);
             }
+
+            // Release the lang-attr subscriber registered in setupLanguageObserver.
+            // Lives across open/close cycles (cleanup() doesn't drop it), so the
+            // release belongs in destroy() — instance-lifetime, not panel-lifetime.
+            if (this._offLangChange) { this._offLangChange(); this._offLangChange = null; }
 
             // Disconnect observers
             if (this.observers) {
