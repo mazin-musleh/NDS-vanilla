@@ -1021,9 +1021,7 @@
         },
 
         initDatePicker: function(dateInput, formControl) {
-            if (typeof DatePickerCalendar !== 'undefined') {
-                new DatePickerCalendar(dateInput, formControl);
-            }
+            NDS.DatePicker.create(dateInput, formControl);
         },
 
         initVoiceInput: function(formControl) {
