@@ -105,7 +105,7 @@
   .nds-dropmenu-item:not(.nds-btn) {
     margin-top: var(--spacing-2xl);
     margin-bottom: var(--spacing-2xl);
-    margin-inline: var(--spacing-md);
+    padding-inline: var(--spacing-md);
 
     &:first-child {
       margin-top: var(--spacing-md);
