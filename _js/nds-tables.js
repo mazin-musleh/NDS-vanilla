@@ -106,10 +106,8 @@
                         }
                     }
 
-                    if (NDS.Pagination.refresh) {
-                        const pagedContent = this.tbody.closest('.nds-paged-content');
-                        if (pagedContent) NDS.Pagination.refresh(pagedContent);
-                    }
+                    const pagedContent = this.tbody.closest('.nds-paged-content');
+                    if (pagedContent) NDS.Pagination.refresh(pagedContent);
 
                     // Back-compat event — existing listeners expect columnIndex + direction
                     this.dispatchSortEvent(key, dir);

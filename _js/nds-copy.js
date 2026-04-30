@@ -127,11 +127,11 @@
             }
         }
 
-        if (NDS.Status) NDS.Status.set(button, 'success');
+        NDS.Status.set(button, 'success');
         announce(messageText);
 
         setTimeout(() => {
-            if (NDS.Status) NDS.Status.clear(button);
+            NDS.Status.clear(button);
             if (icon) {
                 if (originalIconClass == null) icon.removeAttribute('class');
                 else icon.setAttribute('class', originalIconClass);

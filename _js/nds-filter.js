@@ -732,11 +732,9 @@
                     // updatePagination() that would otherwise leave pagination-hidden
                     // items sitting at the wrong DOM positions (visible as gaps) until
                     // the deferred refresh caught up.
-                    if (NDS.Pagination.refresh) {
-                        const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
-                                             this.targetContainer.parentElement?.closest('.nds-paged-content');
-                        NDS.Pagination.refresh(pagedContent || this.targetContainer);
-                    }
+                    const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
+                                         this.targetContainer.parentElement?.closest('.nds-paged-content');
+                    NDS.Pagination.refresh(pagedContent || this.targetContainer);
 
                     this.dispatchFilterEvent();
                 }
@@ -1694,7 +1692,7 @@
             if (!existingAlert) return;
 
             const tableRow = existingAlert.closest('tr.nds-filter-no-results-row');
-            if (NDS.Alert) NDS.Alert.dismiss(existingAlert);
+            NDS.Alert.dismiss(existingAlert);
             if (tableRow && tableRow.isConnected) tableRow.remove();
         }
 
@@ -1947,17 +1945,15 @@
         updatePagination() {
             if (!this.targetContainer) return;
 
-            if (NDS.Pagination.refresh) {
-                // Walk up to find the .nds-paged-content wrapper (pagination expects this as the container)
-                const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
-                                     this.targetContainer.parentElement?.closest('.nds-paged-content');
-                const container = pagedContent || this.targetContainer;
-                const paginationNav = container.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
-                if (paginationNav) {
-                    setTimeout(() => {
-                        NDS.Pagination.refresh(container);
-                    }, 50);
-                }
+            // Walk up to find the .nds-paged-content wrapper (pagination expects this as the container)
+            const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
+                                 this.targetContainer.parentElement?.closest('.nds-paged-content');
+            const container = pagedContent || this.targetContainer;
+            const paginationNav = container.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
+            if (paginationNav) {
+                setTimeout(() => {
+                    NDS.Pagination.refresh(container);
+                }, 50);
             }
         }
 

@@ -69,14 +69,6 @@
     // UTILITY FUNCTIONS
     // ==============================================
     var Utils = {
-        getCurrentLanguage: function() {
-            return NDS.lang;
-        },
-
-        isArabic: function() {
-            return NDS.isArabic;
-        },
-
         validateNumberRange: function(input) {
             var val = parseInt(input.value);
             if (input.value === '' || isNaN(val)) return null;
@@ -243,7 +235,7 @@
             }
 
             var validity = input.validity;
-            var isArabic = Utils.isArabic();
+            var isArabic = NDS.isArabic;
 
             if (validity.valueMissing) {
                 return isArabic ? 'هذا الحقل مطلوب' : 'This field is required';
@@ -277,7 +269,7 @@
         },
 
         getNumberRangeMessage: function(type, value) {
-            var isArabic = Utils.isArabic();
+            var isArabic = NDS.isArabic;
             if (type === 'min') return isArabic ? 'الحد الأدنى ' + value : 'Minimum value is ' + value;
             return isArabic ? 'الحد الأقصى ' + value : 'Maximum value is ' + value;
         },
@@ -297,7 +289,7 @@
 
             var isValid = checkedCount >= minChecked && checkedCount <= maxChecked;
             var message = '';
-            var isArabic = Utils.isArabic();
+            var isArabic = NDS.isArabic;
 
             if (!isValid) {
                 if (checkedCount < minChecked) {
@@ -332,7 +324,7 @@
             var isRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
             var isValid = !isRequired || isSelected;
             var message = '';
-            var isArabic = Utils.isArabic();
+            var isArabic = NDS.isArabic;
 
             if (!isValid) {
                 message = isArabic ? 'يرجى اختيار خيار واحد' : 'Please select an option';
@@ -358,7 +350,7 @@
 
             var isValid = isAllFilled;
             var message = '';
-            var isArabic = Utils.isArabic();
+            var isArabic = NDS.isArabic;
 
             if (!isValid) {
                 message = isArabic ? 'يرجى إدخال جميع الأرقام' : 'Please enter all ' + inputs.length + ' digits';
@@ -688,7 +680,7 @@
                         input.value = cleaned;
                         var fc = formControl.closest('.nds-form-container');
                         if (fc) {
-                            var msg = Utils.isArabic() ? 'الأحرف العربية غير مسموح بها' : 'Arabic characters are not allowed';
+                            var msg = NDS.isArabic ? 'الأحرف العربية غير مسموح بها' : 'Arabic characters are not allowed';
                             StatusManager.set({ element: fc, status: 'error', message: msg });
                         }
                         return;
@@ -1040,7 +1032,7 @@
             var input = Utils.findPrimaryInput(formControl);
             var originalPlaceholder = input ? input.placeholder : '';
 
-            var isArabic = Utils.isArabic();
+            var isArabic = NDS.isArabic;
             var langName = isArabic ? 'العربية' : 'English';
             var startLabel = isArabic ? 'بدء إدخال الصوت (' + langName + ')' : 'Start voice input (' + langName + ')';
             var stopLabel = isArabic ? 'إيقاف إدخال الصوت' : 'Stop voice input';
@@ -1097,7 +1089,7 @@
 
                 timeout = setTimeout(function() {
                     stop();
-                    var msg = Utils.isArabic() ? 'انتهت مهلة إدخال الصوت' : 'Voice input timed out';
+                    var msg = NDS.isArabic ? 'انتهت مهلة إدخال الصوت' : 'Voice input timed out';
                     showMessage(msg, 4000);
                 }, VOICE_TIMEOUT);
 
@@ -1137,7 +1129,7 @@
                                 'default': 'Voice input error'
                             }
                         };
-                        var lang = Utils.isArabic() ? 'ar' : 'en';
+                        var lang = NDS.isArabic ? 'ar' : 'en';
                         var msg = messages[lang][errorType] || messages[lang]['default'];
                         showMessage(msg);
                     },

@@ -23,10 +23,6 @@
     // UTILITIES
     // ==============================================
 
-    function isRTL() {
-        return NDS.isRTL;
-    }
-
     function fixSrcsetSpaces(srcsetValue) {
         if (!srcsetValue) return srcsetValue;
 
@@ -181,7 +177,7 @@
                         setTimeout(() => {
                             const hasHiddenSlides = this.isHero && this.slides.some(slide => slide.hasAttribute('hidden'));
 
-                            if (hasHiddenSlides && isRTL()) {
+                            if (hasHiddenSlides && NDS.isRTL) {
                                 // WebKit RTL fix: keep scroll-behavior: auto through entire update
                                 // to prevent Safari/WebKit from jumping scroll position on reflow
                                 this.wrapper.style.scrollBehavior = 'auto';
@@ -362,7 +358,7 @@
             const offset = Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
             this.wrapper.scrollTo({
-                left: isRTL() ? -offset : offset,
+                left: NDS.isRTL ? -offset : offset,
                 behavior: 'smooth'
             });
         }
@@ -387,7 +383,7 @@
             }
 
             const step = this._measuredStep || (this.slides[0].offsetWidth + this.getGap()) || 1;
-            const scrollPos = isRTL() ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft;
+            const scrollPos = NDS.isRTL ? -this.wrapper.scrollLeft : this.wrapper.scrollLeft;
 
             this.currentIndex = Math.max(0, Math.min(
                 Math.round(scrollPos / step),
@@ -517,7 +513,7 @@
                 const isFocused = this.container.contains(document.activeElement);
                 if (!isFocused && !isHovered) return;
 
-                const rtl = isRTL();
+                const rtl = NDS.isRTL;
 
                 switch (e.key) {
                     case 'ArrowLeft':
@@ -618,7 +614,7 @@
             const wrapperRect = this.wrapper.getBoundingClientRect();
             const slideRect = targetSlide.getBoundingClientRect();
 
-            const rtl = isRTL();
+            const rtl = NDS.isRTL;
             let scrollDelta;
 
             if (rtl) {

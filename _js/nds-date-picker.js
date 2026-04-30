@@ -534,7 +534,6 @@
 
         this.state = this.initializeState();
         this.handlers = {};
-        this.observers = [];
         this.isDropdownCreated = false;
 
         // Bind events that need dropdown creation
@@ -855,30 +854,28 @@
         getTodaysHijriDate: function () {
             // Simple cache for today's Hijri date - API handles date validation internally
             if (!this._cachedTodaysHijriDate) {
-                if (NDS.TimeDate.getHijriDate) {
-                    var self = this;
+                var self = this;
 
-                    NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
-                        if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
-                            // Cache the result
-                            self._cachedTodaysHijriDate = hijriData;
+                NDS.TimeDate.getHijriDate(false, true).then(function(hijriData) {
+                    if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
+                        // Cache the result
+                        self._cachedTodaysHijriDate = hijriData;
 
-                            // Store accurate reference data globally for conversions
-                            window._accurateTodaysHijriDate = hijriData;
-                            window._accurateTodaysGregorianDate = getSaudiDateObject();
+                        // Store accurate reference data globally for conversions
+                        window._accurateTodaysHijriDate = hijriData;
+                        window._accurateTodaysGregorianDate = getSaudiDateObject();
 
-                            // Save to currentDate for getCurrentHijriDate to use
-                            self.state.currentDate._hijriDay = hijriData.day;
-                            self.state.currentDate._hijriMonth = hijriData.month;
-                            self.state.currentDate._hijriYear = hijriData.year;
+                        // Save to currentDate for getCurrentHijriDate to use
+                        self.state.currentDate._hijriDay = hijriData.day;
+                        self.state.currentDate._hijriMonth = hijriData.month;
+                        self.state.currentDate._hijriYear = hijriData.year;
 
-                            // Re-render calendar with accurate date
-                            self.render();
-                        }
-                    }).catch(function(e) {
-                        // API failed, fallback handled below
-                    });
-                }
+                        // Re-render calendar with accurate date
+                        self.render();
+                    }
+                }).catch(function(e) {
+                    // API failed, fallback handled below
+                });
 
                 // Return math fallback for initial render
                 var today = getSaudiDateObject();
@@ -1138,14 +1135,6 @@
             this._cachedTodaysHijriDate = null;
             window._accurateTodaysHijriDate = null;
             window._accurateTodaysGregorianDate = null;
-
-            // Disconnect observers
-            if (this.observers) {
-                this.observers.forEach(function(observer) {
-                    if (observer && observer.disconnect) observer.disconnect();
-                });
-                this.observers = [];
-            }
 
             // Reset states
             this.resetButtonStates();
@@ -1899,13 +1888,6 @@
             // Lives across open/close cycles (cleanup() doesn't drop it), so the
             // release belongs in destroy() — instance-lifetime, not panel-lifetime.
             if (this._offLangChange) { this._offLangChange(); this._offLangChange = null; }
-
-            // Disconnect observers
-            if (this.observers) {
-                this.observers.forEach(function (observer) {
-                    observer.disconnect();
-                });
-            }
 
             this.cleanup();
         }
