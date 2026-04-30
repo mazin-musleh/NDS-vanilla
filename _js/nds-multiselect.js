@@ -89,7 +89,7 @@
         }
 
         init() {
-            if (!this.dropmenu.ndsDropmenu) NDS.Dropmenu?.create?.(this.dropmenu);
+            if (!this.dropmenu.ndsDropmenu) NDS.Dropmenu.create(this.dropmenu);
             this.ensureValuesContainer();
             this.seedFromMarkup();
             this.bindEvents();

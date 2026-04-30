@@ -343,6 +343,7 @@
     NDS.Drawer = {
         init: initAllDrawers,
         reinit: initAllDrawers,
+        create: initDrawer,
         initDrawer,
         destroy: destroyDrawer,
         toggle: toggleSubmenu

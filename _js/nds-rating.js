@@ -211,6 +211,10 @@
     initializeRatings,
     init: initializeRatings,
     reinit: initializeRatings,
+    create: (element) => {
+      if (!element.ndsRating) element.ndsRating = new NDSRating(element);
+      return element.ndsRating;
+    },
     enableRating,
   };
 

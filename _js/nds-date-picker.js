@@ -1923,7 +1923,15 @@
             UIConfig,
             createHijriDate,
             init: initializeCalendar,
-            reinit: initializeCalendar
+            reinit: initializeCalendar,
+            create: (dateInput, formControl) => {
+                if (!dateInput) return null;
+                if (dateInput._ndsDatePicker) return dateInput._ndsDatePicker;
+                formControl = formControl || dateInput.closest('.nds-form-control');
+                if (!formControl) return null;
+                dateInput._ndsDatePicker = new DatePickerCalendar(dateInput, formControl);
+                return dateInput._ndsDatePicker;
+            }
         };
     }
 

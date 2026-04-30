@@ -245,7 +245,7 @@
         // an explicit labelRotate/labelDecimate overrides the auto decision.
         _xaxisStrategy(catLabels, plotW) {
             const xaxis = this.opts.xaxis || {};
-            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+            const isMobile = typeof window !== 'undefined' && window.matchMedia(NDS.breakpoints['tablet-max']).matches;
             const fontSize = isMobile ? 11 : 13;
             const charW = fontSize * 0.6;
             const padding = 8;

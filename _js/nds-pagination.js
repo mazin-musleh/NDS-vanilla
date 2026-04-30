@@ -213,7 +213,7 @@
     function getPaginationDropmenuItems(pagination) {
         const items = [];
         pagination.querySelectorAll('.nds-dropmenu').forEach(dm => {
-            const menu = NDS.Dropmenu?.menuOf?.(dm) || dm.querySelector('.nds-dropmenu-menu');
+            const menu = NDS.Dropmenu.menuOf(dm) || dm.querySelector('.nds-dropmenu-menu');
             if (menu) items.push(...menu.querySelectorAll('.nds-dropmenu-item'));
         });
         return items;
@@ -259,7 +259,7 @@
                 // Check if this element is inside a dropdown
                 if (element.classList.contains('nds-dropmenu-item')) {
                     activeInDropdown = true;
-                    const dropdown = NDS.Dropmenu?.from(element);
+                    const dropdown = NDS.Dropmenu.from(element);
                     ellipsisTrigger = dropdown?.querySelector('.nds-dropmenu-trigger');
                 }
             }
