@@ -6,7 +6,7 @@
 @use '../mixins' as *;
 
 // ==============================================
-// BASE SWIPER CONTAINER
+// CONTAINER
 // ==============================================
 
 .nds-swiper {
@@ -20,123 +20,74 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-2xl);
-
     position: relative;
     width: 100%;
-    direction: inherit;
 
-    .nds-max-width &{
+    .nds-max-width & {
         --swiper-padding: var(--padding, var(--nds-viewport-padding));
     }
-
 }
 
 // ==============================================
-// SWIPER WRAPPER (Scroll Container)
+// WRAPPER (scroll container)
 // ==============================================
 
 .nds-swiper-wrapper {
     display: flex;
     height: 100%;
     width: 100%;
-
-    //display: grid;
-    //grid-template-columns: repeat(var(--swiper-total), calc((100% - var(--swiper-peek, 0px) - (var(--swiper-gap, 0px) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1)));
-    // Gap between slides (replaces padding-inline on each slide)
     gap: var(--swiper-gap);
 
-    // Scroll-snap behavior
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
 
-    // Hide scrollbar
     scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
-
-    // Direction inheritance for RTL/LTR
-    direction: inherit;
-
-    // Prevent text selection during drag
     user-select: none;
 
-    // Peek mode: add padding to show partial slides
     padding-inline: var(--swiper-padding);
-
-    // Scroll padding for proper snap alignment with peek
     scroll-padding-inline: max(var(--swiper-peek), var(--swiper-padding));
 
-
     .nds-swiper:not(.nds-hero) & {
-        padding-inline: max(2px, var(--swiper-padding)); //2px min for shadow
+        padding-inline: max(2px, var(--swiper-padding)); // 2px floor for shadow clipping
     }
-    @include desktop(min){
+    @include desktop(min) {
         .nds-content-layout.nds-cardView & {
-            padding-inline: 0px;
+            padding-inline: 0;
         }
     }
 }
 
 // ==============================================
-// SWIPER SLIDES
+// SLIDES
 // ==============================================
 
 .nds-swiper-slide {
-    // Slide width formula:
-    // Available = 100% - (padding × 2) - peek
-    // Slide = (Available - (gap × (slides - 1))) / slides
+    // Width = (100% − peek − gap × (slides − 1)) / slides
     flex: 0 0 calc((100% - var(--swiper-peek) - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1));
     min-width: 0;
     height: auto;
     position: relative;
     box-sizing: border-box;
 
-    // Scroll snap alignment
     scroll-snap-align: start;
-
-    // Peek mode: first slide negative margin to offset wrapper padding
-    /* .nds-swiper[peek] &:first-child {
-        margin-inline-start: calc(var(--swiper-peek) * -1);
-    } */
-
-    // Peek mode: last slide negative margin to offset wrapper padding
-    /* .nds-swiper[peek] &:last-child {
-        margin-inline-end: calc(var(--swiper-peek) * -1);
-    } */
-
-    /*     .nds-swiper.nds-full-width & {
-        flex: 0 0 calc((100% - (var(--swiper-gap) * (var(--swiper-slides, 1) - 1))) / var(--swiper-slides, 1) - var(--swiper-peek));
-    } */
-
-    // Full-width swiper: add viewport padding to first and last slides
-    /* .nds-swiper.nds-full-width &:first-child {
-        padding-inline-start: var(--nds-viewport-padding);
-    }
-
-    .nds-swiper.nds-full-width &:last-child {
-        padding-inline-end: var(--nds-viewport-padding);
-    } */
 
     .nds-swiper:not(.nds-hero) &:first-child {
         padding-inline-start: 2px;
     }
-
     .nds-swiper:not(.nds-hero) &:last-child {
         padding-inline-end: 2px;
     }
-    
     .nds-swiper:not(.nds-hero) &:has(.nds-card.nds-shadow) {
         padding-inline: 4px;
         padding-block: 4px 8px;
     }
 
-    // Card within slide should fill height
-    >.nds-card {
+    > .nds-card {
         height: 100%;
         max-width: unset;
     }
@@ -144,22 +95,11 @@
 
 // ==============================================
 // NAVIGATION BUTTONS
+// Arrow glyph comes from .nds-prev / .nds-next in _buttons.scss (no inner <i>)
 // ==============================================
 
 :is(.nds-swiper-button-prev, .nds-swiper-button-next) {
     user-select: none;
-
-    .nds-swiper.nds-hero & {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 10;
-        text-shadow: 0px -0px 2px rgb(0 0 0);
-    }
-
-    // Arrow glyph comes from the shared `.nds-prev` / `.nds-next` button
-    // modifiers in _buttons.scss (pseudo-element, direction-aware). Apply
-    // those classes to the button element; no inner `<i>` is required.
 }
 
 .nds-swiper-button-prev {
@@ -185,26 +125,17 @@
 // ==============================================
 
 .nds-swiper-pagination {
-
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     gap: var(--spacing-lg);
 
-    .nds-swiper.nds-hero & {
-        position: absolute;
-        bottom: var(--spacing-lg);
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
     .nds-swiper:not(.nds-hero) & {
         padding-block: var(--spacing-md);
         float: inline-end;
         margin-inline-end: var(--nds-viewport-padding);
     }
-
 }
 
 .nds-swiper-pagination-bullet {
@@ -219,9 +150,7 @@
     padding: 0;
     user-select: none;
 
-    &:hover {
-        opacity: 0.8;
-    }
+    &:hover { opacity: 0.8; }
 
     &.nds-swiper-pagination-bullet-active {
         opacity: 1;
@@ -230,6 +159,9 @@
     }
 }
 
+// ==============================================
+// NAVIGATION ROW (optional wrapper grouping prev/next/pagination on one line)
+// ==============================================
 
 .nds-swiper-navigation {
     display: flex;
@@ -240,7 +172,7 @@
     gap: var(--spacing-xl);
 
     .nds-max-width & {
-        --_nav-padding: max(calc(var(--nds-viewport-padding) + var(--spacing-lg)) , calc((100% - var(--nds-content-MaxWidth)) / 2));
+        --_nav-padding: max(calc(var(--nds-viewport-padding) + var(--spacing-lg)), calc((100% - var(--nds-content-MaxWidth)) / 2));
     }
 
     .nds-swiper-buttons {
@@ -248,6 +180,8 @@
         gap: var(--spacing-md);
     }
 
+    // Override the absolute-positioning / float layout of the base controls
+    // when they live inside this row wrapper.
     :is(.nds-swiper-button-prev, .nds-swiper-button-next, .nds-swiper-pagination) {
         inset-inline: 0 !important;
         margin-block: 0 !important;
@@ -257,7 +191,7 @@
 }
 
 // ==============================================
-// ON-COLOR VARIANTS (dark backgrounds)
+// ON-COLOR (dark backgrounds, including hero)
 // ==============================================
 
 .nds-swiper:is(.nds-oncolor, .nds-hero),
@@ -278,7 +212,9 @@
 }
 
 // ==============================================
-// HERO SWIPER VARIANT
+// HERO VARIANT
+// Full-bleed slider with image backgrounds.
+// All `.nds-swiper.nds-hero` overrides live here.
 // ==============================================
 
 .nds-swiper.nds-hero {
@@ -286,13 +222,11 @@
     height: 100%;
     position: relative;
 
-    // Hero swiper has no gap between slides
     .nds-swiper-wrapper {
         gap: 0;
     }
 
     .nds-swiper-slide {
-        // Full width slides in hero (no gap adjustment needed)
         flex: 0 0 100%;
         position: relative;
         background-size: cover;
@@ -303,30 +237,31 @@
         width: 100%;
     }
 
-    .nds-swiper-button-prev {
-        inset-inline-start: var(--spacing-lg);
-    }
-
-    .nds-swiper-button-next {
-        inset-inline-end: var(--spacing-lg);
-    }
-
+    // Prev/next arrows: hover-reveal, larger size, on-color shadow
     :is(.nds-swiper-button-prev, .nds-swiper-button-next) {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
         --btn-size: 48px;
+        text-shadow: 0px -0px 2px rgb(0 0 0);
         visibility: hidden;
     }
 
-    &:hover {
-        :is(.nds-swiper-button-prev, .nds-swiper-button-next) {
-            visibility: visible;
-        }
+    .nds-swiper-button-prev { inset-inline-start: var(--spacing-lg); }
+    .nds-swiper-button-next { inset-inline-end: var(--spacing-lg); }
+
+    &:hover :is(.nds-swiper-button-prev, .nds-swiper-button-next) {
+        visibility: visible;
     }
 
+    // Pagination centered at bottom
     .nds-swiper-pagination {
+        position: absolute;
         bottom: var(--spacing-xl);
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
-
 
 // ==============================================
 // ACCESSIBILITY
