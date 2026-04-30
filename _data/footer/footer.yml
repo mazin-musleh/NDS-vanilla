@@ -62,14 +62,14 @@ columns:
     mobile_apps:
       apps:
         - url: "#"
+          icon: "nds-icon-apple"
           label: "Apple App Store"
-          type: "apple"
         - url: "#"
+          icon: "nds-icon-google-play"
           label: "Google Play Store"
-          type: "google"
         - url: "#"
+          icon: "nds-icon-huawei"
           label: "Huawei AppGallery"
-          type: "huawei"
 
 bottom:
   links:
