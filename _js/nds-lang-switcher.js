@@ -131,7 +131,7 @@
         // Simple toggle button (plain button, not a dropmenu wrapper)
         const el = e.target.closest(TOGGLE_SEL);
         if (!el || el.classList.contains('nds-dropmenu')) return;
-        const targetLang = root.getAttribute('lang') === 'ar' ? 'en' : 'ar';
+        const targetLang = NDS.isArabic ? 'en' : 'ar';
         switchLang(targetLang, el);
     });
 
