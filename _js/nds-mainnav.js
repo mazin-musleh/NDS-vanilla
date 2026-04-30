@@ -184,6 +184,26 @@
         }
     };
 
+    // Center .nds-fit dropdown menus on their trigger and clamp into the viewport.
+    // SCSS centers via `left: 50%` + `transform: translateX(-50%)`; this helper
+    // overrides the transform inline only when the centered rect would clip
+    // either edge. Bails on mobile (mobile uses `position: fixed; inset-inline: 0`).
+    const FIT_SHIFT_PAD = 8;
+    function applyFitShift(dd) {
+        if (state.isMinimal) return;
+        const menu = dd.querySelector('.nds-dropdown-menu.nds-fit');
+        if (!menu) return;
+        menu.style.removeProperty('transform');
+        requestAnimationFrame(() => {
+            const r = menu.getBoundingClientRect();
+            const vw = window.innerWidth;
+            let shift = 0;
+            if (r.left < FIT_SHIFT_PAD) shift = FIT_SHIFT_PAD - r.left;
+            else if (r.right > vw - FIT_SHIFT_PAD) shift = (vw - FIT_SHIFT_PAD) - r.right;
+            if (shift) menu.style.transform = `translateX(calc(-50% + ${shift}px))`;
+        });
+    }
+
     // ==============================================
     // DROPDOWN MANAGEMENT
     // ==============================================
@@ -218,7 +238,10 @@
             animate.run(el, open, {
                 getMenu: () => animTarget,
                 blockWhileAnimating: open,
-                onStart: () => overflow.schedule('high', 10),
+                onStart: () => {
+                    overflow.schedule('high', 10);
+                    if (open) applyFitShift(el);
+                },
                 onComplete: () => {
                     if (!isInMinimal) updatePositions();
                     overflow.schedule('low', 100);

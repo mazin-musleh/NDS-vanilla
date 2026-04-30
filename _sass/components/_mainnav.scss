@@ -492,11 +492,13 @@ body:not(.nds-minimal) .nds-main-nav {
     }
 
 
-    .nds-dropdown[data-state~="open"] .nds-dropdown-menu.nds-fit,
-    .nds-nav-minimal .nds-dropdown[data-state~="open"] .nds-dropdown-menu.nds-fit {
+    .nds-dropdown-menu.nds-fit {
         min-width: fit-content !important;
+        max-inline-size: calc(100vw - 16px);
         position: absolute !important;
-        inset-inline: auto 0;
+        inset-inline: auto;
+        left: 50%;
+        transform: translateX(-50%);
         white-space: nowrap;
     }
 }
