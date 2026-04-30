@@ -598,7 +598,7 @@
                                 '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select month">' +
                                     '<span class="nds-label"></span>' +
                                 '</button>' +
-                                '<div class="nds-dropmenu-menu">' +
+                                '<div class="nds-dropmenu-menu nds-month-dropmenu">' +
                                     '<div class="nds-dropmenu-scroll"></div>' +
                                 '</div>' +
                             '</div>' +
@@ -606,7 +606,7 @@
                                 '<button class="nds-dropmenu-trigger nds-btn nds-subtle nds-menu-btn" aria-label="Select year">' +
                                     '<span class="nds-label"></span>' +
                                 '</button>' +
-                                '<div class="nds-dropmenu-menu">' +
+                                '<div class="nds-dropmenu-menu nds-year-dropmenu">' +
                                     '<div class="nds-dropmenu-scroll"></div>' +
                                 '</div>' +
                             '</div>' +

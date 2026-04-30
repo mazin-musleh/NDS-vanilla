@@ -225,7 +225,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-dropmenu nds-rating-dropmenu">
+                            <div class="nds-dropmenu">
                                 <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button">
                                     <div class="nds-rating nds-xs" data-rating="4.5">
                                         <span class="nds-rating-star" aria-hidden="true"></span>
@@ -236,7 +236,7 @@ direction: ltr
                                     </div>
                                     <span class="nds-label"><span class="nds-total-rate">4.5</span> - (<span class="nds-total-votes">18</span>) Votes</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden="">
+                                <div class="nds-dropmenu-menu nds-rating-dropmenu" hidden="">
                                     <div class="nds-dropmenu-item" data-no-auto-close>
                                         <span class="nds-label">Rate this service</span>
                                         <div class="nds-rating" data-rating="0">
@@ -279,7 +279,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div class="nds-dropmenu nds-rating-dropmenu"&gt;
+&lt;div class="nds-dropmenu"&gt;
     &lt;button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button"&gt;
         &lt;div class="nds-rating nds-xs" data-rating="4.5"&gt;
             &lt;span class="nds-rating-star" aria-hidden="true"&gt;&lt;/span&gt;
@@ -290,7 +290,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;span class="nds-label"&gt;&lt;span class="nds-total-rate"&gt;4.5&lt;/span&gt; - (&lt;span class="nds-total-votes"&gt;18&lt;/span&gt;) Votes&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden=""&gt;
+    &lt;div class="nds-dropmenu-menu nds-rating-dropmenu" hidden=""&gt;
         &lt;div class="nds-dropmenu-item" data-no-auto-close&gt;
             &lt;span class="nds-label"&gt;Rate this service&lt;/span&gt;
             &lt;div class="nds-rating" data-rating="0"&gt;
@@ -434,7 +434,7 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-rating-dropmenu</code></td>
-                            <td>Layout wrapper for placing a rating inside a dropmenu with proper spacing</td>
+                            <td>Layout class for placing a rating inside a dropmenu with proper spacing. Apply on <code class="nds-inline-code lang-html">.nds-dropmenu-menu</code> so the styles match in both DOM positions (the menu is portaled to <code class="nds-inline-code lang-html">&lt;body&gt;</code> while open).</td>
                         </tr>
                     </tbody>
                 </table>

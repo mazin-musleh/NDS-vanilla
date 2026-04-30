@@ -79,7 +79,10 @@
   }
 }
 
-.nds-rating-dropmenu {
+// Variant class lives on `.nds-dropmenu-menu` directly so a single
+// selector matches whether the menu is nested in the wrapper (closed)
+// or portaled to <body> (open).
+.nds-dropmenu-menu.nds-rating-dropmenu {
   --menu-padding: var(--spacing-2xl);
 
   // Stack label and stars inside the rating dropmenu's prompt item.
@@ -91,11 +94,6 @@
     gap: var(--spacing-xl);
   }
 
-  .nds-dropmenu-menu {
-    .nds-rating {
-      margin-block: var(--spacing-2xl);
-    }
-  }
 }
 
 // ==============================================
@@ -118,9 +116,6 @@
   --star-pressed: var(--rating-star-pressed-brand);
   --star-hovered: var(--rating-star-hovered-brand);
 
-  .nds-rating-star:hover {
-    color: var(--_star-hovered);
-  }
 }
 
 // ==============================================

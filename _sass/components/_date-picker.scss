@@ -119,31 +119,14 @@
         display: flex;
     }
 
-    :is(.nds-month-dropmenu, .nds-year-dropmenu) {
-        .nds-dropmenu-menu {
-            min-width: unset;
+    // Trigger label — wrapper scoping is fine; trigger never portals.
+    :is(.nds-month-dropmenu, .nds-year-dropmenu) .nds-dropmenu-trigger .nds-label {
+        @include mobile {
+            max-width: 100px;
 
-            padding: var(--spacing-md);
-        }
+            overflow: clip;
 
-        .nds-dropmenu-scroll {
-            max-height: 200px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: var(--spacing-xs);
-        }
-
-        .nds-dropmenu-trigger .nds-label {
-            @include mobile {
-                max-width: 100px;
-
-                overflow: clip;
-
-                text-overflow: ellipsis;
-            }
+            text-overflow: ellipsis;
         }
     }
 
@@ -363,5 +346,19 @@
 
             gap: var(--spacing-md);
         }
+    }
+}
+
+// Month/year dropmenu — class-on-menu so styles match whether the menu
+// is nested in `.nds-date-picker-dropdown` or portaled to <body>.
+.nds-dropmenu-menu:is(.nds-month-dropmenu, .nds-year-dropmenu) {
+    min-width: unset;
+    padding: var(--spacing-md);
+
+    .nds-dropmenu-scroll {
+        max-height: 200px;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
     }
 }
