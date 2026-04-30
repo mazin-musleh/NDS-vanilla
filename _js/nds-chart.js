@@ -819,15 +819,26 @@
                             dotsByIdx[i].forEach(d => d.classList[action]('nds-chart-dot--active'));
                         }
 
-                        const tipLines = seriesArr.map((s, si) => {
-                            const v = s.data[nearest];
-                            if (v === undefined) return '';
-                            return `<span class="nds-chart-tip-marker" style="background:${colors[si]}"></span>`
-                                + NDS.escapeHtml(s.name) + ': ' + NDS.escapeHtml(this._fmtVal(v));
-                        }).filter(Boolean).join('<br>');
-                        const html = '<strong>' + NDS.escapeHtml(catLabels[nearest]) + '</strong><br>' + tipLines;
                         if (this.opts.tooltip?.show !== false && this._tooltip) {
-                            this._tooltip.innerHTML = html;
+                            // Build tip as DOM so caller-supplied colors[] flow through
+                            // marker.style.backgroundColor (a CSSOM setter) instead of an
+                            // HTML attribute interpolation. escapeHtml cannot safely close
+                            // attribute-context quote-breakouts.
+                            this._tooltip.replaceChildren();
+                            const title = document.createElement('strong');
+                            title.textContent = catLabels[nearest] ?? '';
+                            this._tooltip.appendChild(title);
+                            for (let si = 0; si < seriesArr.length; si++) {
+                                const s = seriesArr[si];
+                                const v = s.data[nearest];
+                                if (v === undefined) continue;
+                                this._tooltip.appendChild(document.createElement('br'));
+                                const marker = document.createElement('span');
+                                marker.className = 'nds-chart-tip-marker';
+                                marker.style.backgroundColor = colors[si];
+                                this._tooltip.appendChild(marker);
+                                this._tooltip.appendChild(document.createTextNode(s.name + ': ' + this._fmtVal(v)));
+                            }
                             this._tooltip.classList.add('nds-chart-tooltip--visible');
                             positionTip(e, xPositions[nearest]);
                         }
