@@ -1,0 +1,202 @@
+{%- assign hero_bg = page.hero_image | default: site.hero_image_sub -%}
+
+{%- assign hero_action_file = page.heroaction | default: "heroaction" -%}
+{%- assign hero_data = site.data.hero[hero_action_file] -%}
+
+{%- if page.hero_tags -%}
+    {%- assign hero_tags = page.hero_tags -%}
+{%- elsif hero_data.tags -%}
+    {%- assign hero_tags = hero_data.tags -%}
+{%- endif -%}
+
+{%- if page.hero_float_actions -%}
+    {%- assign _raw_float = page.hero_float_actions -%}
+{%- elsif hero_data.float_actions -%}
+    {%- assign _raw_float = hero_data.float_actions -%}
+{%- endif -%}
+{%- if _raw_float.items -%}
+    {%- assign hero_float_actions = _raw_float.items -%}
+    {%- assign hero_float_actions_class = _raw_float.class -%}
+{%- else -%}
+    {%- assign hero_float_actions = _raw_float -%}
+{%- endif -%}
+
+{%- if page.hero_actions -%}
+    {%- assign hero_actions = page.hero_actions -%}
+{%- elsif hero_data.actions -%}
+    {%- assign hero_actions = hero_data.actions -%}
+{%- endif -%}
+
+{%- assign _share_in_action = false -%}
+{%- for item in hero_actions -%}
+    {%- if item == "share" -%}{%- assign _share_in_action = true -%}{%- endif -%}
+{%- endfor -%}
+{%- assign _share_in_float = false -%}
+{%- for item in hero_float_actions -%}
+    {%- if item == "share" -%}{%- assign _share_in_float = true -%}{%- endif -%}
+{%- endfor -%}
+{%- if page.hide_share_page -%}
+    {%- assign share_placement = "hidden" -%}
+{%- elsif _share_in_action -%}
+    {%- assign share_placement = "action" -%}
+{%- elsif _share_in_float -%}
+    {%- assign share_placement = "float" -%}
+{%- else -%}
+    {%- assign share_placement = "hidden" -%}
+{%- endif -%}
+
+{%- unless share_placement == "hidden" -%}
+{%- capture share_html %}
+            <div class="nds-share nds-dropmenu">
+                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
+                    aria-label="Share Page">
+                    <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+                    <span class="nds-label">Share Page</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
+                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                        <span class="nds-label">X</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-linkedin" type="button"
+                        aria-label="Share on LinkedIn">
+                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                        <span class="nds-label">LinkedIn</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-whatsapp" type="button"
+                        aria-label="Share on WhatsApp">
+                        <i class="nds-icon nds-hgi-whatsapp" aria-hidden="true"></i>
+                        <span class="nds-label">WhatsApp</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-copy" type="button" aria-label="Copy Link"
+                        data-label="Link Copied!" data-message="Page link copied to clipboard" data-no-auto-close>
+                        <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+                        <span class="nds-label">Copy Link</span>
+                    </button>
+                </div>
+            </div>
+{%- endcapture -%}
+{%- endunless -%}
+
+{%- assign _has_float = false -%}
+{%- for item in hero_float_actions -%}
+    {%- if item == "share" -%}
+        {%- if share_placement == "float" -%}{%- assign _has_float = true -%}{%- endif -%}
+    {%- else -%}
+        {%- assign _has_float = true -%}
+    {%- endif -%}
+{%- endfor -%}
+{%- assign _has_action = false -%}
+{%- for item in hero_actions -%}
+    {%- unless item == "share" -%}{%- assign _has_action = true -%}{%- endunless -%}
+{%- endfor -%}
+{%- if share_placement == "action" -%}{%- assign _has_action = true -%}{%- endif -%}
+<section class="nds-hero-section nds-sub {{ page.hero_style }}" aria-label="قسم العرض الرئيسي"
+    {%- if hero_bg %} style="--hero_image: url('{{ hero_bg | relative_url }}');"{%- endif %}>
+    <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+        <ol class="nds-breadcrumb">
+            {%- assign home_text = 'الرئيسية' -%}{%- if page.lang == 'en' -%}{%- assign home_text = 'Home' -%}{%- endif %}
+            <li><a href="{{ page.breadcrumb_root_url | default: '/' | relative_url }}">{{ page.breadcrumb_root | default: home_text }}</a></li>
+            {%- if page.breadcrumb %}
+            {%- for crumb in page.breadcrumb %}
+            <li><a href="{%- if crumb.first %}{{ crumb[1] | relative_url }}{%- else %}#{%- endif %}">
+                {%- if crumb.first %}{{ crumb[0] }}{%- else %}{{ crumb }}{%- endif %}</a></li>
+            {%- endfor %}
+            {%- endif %}
+            <li class="nds-truncate" aria-current="page">{{ page.title }}</li>
+        </ol>
+    </nav>
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            {%- if _has_float %}
+            <div class="nds-section-action{%- if hero_float_actions_class %} {{ hero_float_actions_class }}{%- endif %}">
+                {%- for item in hero_float_actions %}
+                {%- if item == "share" -%}{%- unless share_placement == "hidden" %}{{ share_html }}{%- endunless %}
+                {%- else %}
+                <a class="nds-btn {{ item.style | default: 'nds-secondary-outline' }}" href="{{ item.url | relative_url }}"
+                    aria-label="{{ item.aria_label | default: item.label }}"
+                    {%- if item.target %} target="{{ item.target }}"{%- endif %}>
+                    {%- if item.icon and item.icon_position != "trailing" %}
+                    <i class="nds-icon {{ item.icon }}" aria-hidden="true"></i>
+                    {%- endif %}
+                    <span class="nds-label">{{ item.label }}</span>
+                    {%- if item.icon and item.icon_position == "trailing" %}
+                    <i class="nds-icon {{ item.icon }}" aria-hidden="true"></i>
+                    {%- endif %}
+                </a>
+                {%- endif %}
+                {%- endfor %}
+            </div>
+            {%- endif %}
+            <h1 class="nds-section-title">{{ page.hero_title | default: site.hero_title }}</h1>
+            {%- if page.hero_brief %}
+            <p class="nds-section-brief">{{ page.hero_brief }}</p>
+            {%- endif %}
+            {%- if hero_tags %}
+            <div class="nds-section-meta">
+                <div class="nds-section-tags">
+                    {%- for tag in hero_tags %}
+                    <span class="nds-tag {{ tag.style | default: 'nds-gray' }} {{ tag.modifiers }} nds-sm">
+                        {%- if tag.icon %}<i class="nds-icon {{ tag.icon }}" aria-hidden="true"></i>{%- endif %}
+                        <span class="nds-label">{{ tag.label }}</span>
+                    </span>
+                    {%- endfor %}
+                </div>
+                <div class="nds-dropmenu">
+                    <button class="nds-section-rating nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button">
+                        <div class="nds-rating nds-xs " data-rating="4.5">
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                            <span class="nds-rating-star" aria-hidden="true"></span>
+                        </div>
+                        <span class="nds-label"><span class="nds-total-rate">4.5</span> - (<span class="nds-total-votes">18</span>) Votes</span>
+                    </button>
+                    <div class="nds-dropmenu-menu nds-rating-dropmenu" hidden="">
+                        <div class="nds-dropmenu-item" data-no-auto-close>
+                            <span class="nds-label">Rate this service</span>
+                            <div class="nds-rating" data-rating="0">
+                                <button class="nds-rating-star" type="button" aria-label="1 star"></button>
+                                <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
+                                <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
+                                <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
+                                <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
+                            </div>
+                        </div>
+                        <div class="nds-dropmenu-footer">
+                            <hr class="nds-divider nds-lg">
+                            <div class="nds-dropmenu-action nds-grid">
+                                <button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close>
+                                    <span class="nds-label">Vote</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%- endif %}
+            <p class="nds-section-description">{{ page.hero_description | default: site.hero_description }}</p>
+        </div>
+        {%- if _has_action %}
+        <div class="nds-section-action">
+            {%- for action in hero_actions %}
+            {%- if action == "share" %}{{ share_html }}
+            {%- else %}
+            <a class="nds-btn {{ action.style | default: 'nds-primary' }}" href="{{ action.url | relative_url }}"
+                aria-label="{{ action.aria_label | default: action.label }}"
+                {%- if action.target %} target="{{ action.target }}"{%- endif %}>
+                {%- if action.icon and action.icon_position != "trailing" %}
+                <i class="nds-icon {{ action.icon }}" aria-hidden="true"></i>
+                {%- endif %}
+                <span class="nds-label">{{ action.label }}</span>
+                {%- if action.icon and action.icon_position == "trailing" %}
+                <i class="nds-icon {{ action.icon }}" aria-hidden="true"></i>
+                {%- endif %}
+            </a>
+            {%- endif %}
+            {%- endfor %}
+        </div>
+        {%- endif %}
+    </div>
+</section>

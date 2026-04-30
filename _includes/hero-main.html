@@ -1,0 +1,65 @@
+{%- comment %}
+Determine hero sliders source:
+1. Use page.hero_sliders if custom slides defined in page front matter
+2. Use page.herosliders to specify which data file to load (e.g., "herosliders-about")
+3. Fall back to site.herosliders config (default: "herosliders")
+4. Load from site.data[hero_file_name]
+{%- endcomment -%}
+{%- if page.hero_sliders -%}
+{%- assign hero_sliders = page.hero_sliders -%}
+{%- else -%}
+{%- assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" -%}
+{%- assign hero_sliders = site.data.hero[hero_file_name] -%}
+{%- endif -%}
+<section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
+    <div class="nds-swiper nds-hero nds-full-width" style="--total: {{ hero_sliders | size }}">
+        <div class="nds-swiper-wrapper">
+            {%- for slide in hero_sliders %}
+            <div class="nds-swiper-slide nds-content-wrapper{%- if slide.class %} {{ slide.class }}{%- endif %}"{%- unless forloop.first %} hidden{%- endunless %}>
+                <div class="nds-hero-image-wrapper nds-full-width"
+                    style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    {%- if forloop.first %}
+                    <picture>
+                        {%- if slide.src_small %}
+                        <source media="(max-width: 768px)" srcset="{{ slide.src_small | relative_url }}">
+                        {%- endif %}
+                        <img src="{{ slide.src | relative_url }}" class="nds-hero-image" alt=""
+                            style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;"
+                            fetchpriority="high">
+                    </picture>
+                    {%- else %}
+                    <picture>
+                        {%- if slide.src_small %}
+                        <source media="(max-width: 768px)" data-srcset="{{ slide.src_small | relative_url }}">
+                        {%- endif %}
+                        <img data-src="{{ slide.src | relative_url }}" class="nds-hero-image nds-swiper-lazy" alt=""
+                            style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;">
+                    </picture>
+                    {%- endif %}
+                </div>
+                {%- if slide.content %}
+                {%- assign _slide_content = slide.content | replace: '{relative_url}', site.baseurl %}
+                {%- else %}
+                {%- capture _slide_content %}
+                    <h1 class="nds-section-title">{{ slide.title }}</h1>
+                    <p class="nds-section-description">{{ slide.description }}</p>
+                    {%- if slide.url and slide.url != '#' %}
+                    <a href="{{ slide.url | relative_url }}" class="nds-btn nds-primary nds-oncolor nds-lg">
+                        <span class="nds-label">Learn More</span>
+                    </a>
+                    {%- endif %}
+                {%- endcapture %}
+                {%- endif %}
+                <div class="nds-section-body">
+                    {{ _slide_content }}
+                </div>
+            </div>
+            {%- endfor %}
+        </div>
+        <div class="nds-swiper-pagination" hidden></div>
+        <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-prev nds-swiper-button-prev"
+            aria-label="Previous slide" hidden></button>
+        <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-next nds-swiper-button-next"
+            aria-label="Next slide" hidden></button>
+    </div>
+</section>
