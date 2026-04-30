@@ -22,17 +22,13 @@
 
     // Scroll lock helpers for top mode
     const lockBodyScroll = () => {
-        const scrollY = window.pageYOffset;
-        document.body.style.top = `-${scrollY}px`;
+        NDS.scrollLock.lock();
         NDS.State.set(document.body, 'backdrop');
     };
 
     const unlockBodyScroll = () => {
-        if (!document.body.style.top) return;
-        const scrollY = parseInt(document.body.style.top, 10) * -1;
-        document.body.style.top = '';
         NDS.State.clear(document.body);
-        window.scrollTo(0, scrollY);
+        NDS.scrollLock.unlock();
     };
 
     // Scroll past hero then lock — handles user touch interruption

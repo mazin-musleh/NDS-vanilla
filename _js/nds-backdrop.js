@@ -10,7 +10,6 @@
   // Single shared backdrop element
   let backdropElement = null;
   let currentConfig = null;
-  let scrollY = 0;
   let isActive = false;
   let activeCount = 0; // Track how many components are using the backdrop
 
@@ -112,8 +111,7 @@
       if (!isActive) return;
       NDS.State.set(backdropElement, 'active');
       if (currentConfig.preventScroll) {
-        scrollY = window.pageYOffset;
-        document.body.style.top = `-${scrollY}px`;
+        NDS.scrollLock.lock();
       }
       NDS.State.set(document.body, 'backdrop');
     }, speed);
@@ -158,8 +156,7 @@
     // Restore body state and scroll immediately
     NDS.State.clear(document.body);
     if (currentConfig?.preventScroll) {
-      document.body.style.top = '';
-      window.scrollTo(0, scrollY);
+      NDS.scrollLock.unlock();
     }
 
     // Clean up display after component transition

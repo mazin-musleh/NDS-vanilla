@@ -432,6 +432,42 @@
         };
     })();
 
+    // ── Body Scroll Lock ───────────────────────────────────────────────
+    // Locks/unlocks document scroll while preserving the visual scroll
+    // position. `lock()` captures the current pageYOffset and pins the
+    // body via `position: top: -<scrollY>px` (callers are expected to
+    // pair this with a CSS rule that sets `body { position: fixed }`
+    // when the appropriate state-token is present, e.g.
+    // `body[data-state~="backdrop"]`). `unlock()` parses the saved
+    // offset back out of the inline style, clears it, and restores
+    // scroll. Stateless: the inline style is the source of truth, so
+    // calling `unlock()` when not locked is a safe no-op.
+    //
+    // Does NOT touch `data-state` — callers manage backdrop / overlay
+    // state tokens themselves so the same helper serves both
+    // backdrop-coupled and standalone scroll-lock use cases.
+    //
+    // Caller responsibility: do NOT call `lock()` twice without an
+    // intervening `unlock()`. The second call would capture the
+    // already-locked scroll position (0) and lose the original. Existing
+    // callers gate this via overlay isActive / menu open-state guards.
+    //
+    // Usage: NDS.scrollLock.lock();
+    //        // ... overlay shown ...
+    //        NDS.scrollLock.unlock();
+    NDS.scrollLock = {
+        lock() {
+            const scrollY = window.pageYOffset;
+            document.body.style.top = `-${scrollY}px`;
+        },
+        unlock() {
+            if (!document.body.style.top) return;
+            const scrollY = parseInt(document.body.style.top, 10) * -1;
+            document.body.style.top = '';
+            window.scrollTo(0, scrollY);
+        }
+    };
+
     // ── Outside-scroll Close Helper ────────────────────────────────────
     // Capture-phase document scroll listener that invokes `onClose` when the
     // scroll event originates outside `scopeEl`. Scrolls inside scopeEl
