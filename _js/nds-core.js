@@ -21,10 +21,13 @@
         'large-desktop': '(min-width: 1280px)'
     };
 
-    const _lang = (document.documentElement.lang || 'en').split('-')[0].toLowerCase();
-    NDS.lang = _lang;
-    NDS.isArabic = _lang === 'ar';
-    // Live getter so runtime direction toggles (e.g. language switcher) stay correct.
+    // Live getters so runtime language/direction toggles (e.g. language switcher) stay correct.
+    Object.defineProperty(NDS, 'lang', {
+        get() { return (document.documentElement.lang || 'en').split('-')[0].toLowerCase(); }
+    });
+    Object.defineProperty(NDS, 'isArabic', {
+        get() { return NDS.lang === 'ar'; }
+    });
     Object.defineProperty(NDS, 'isRTL', {
         get() { return document.documentElement.dir === 'rtl'; }
     });

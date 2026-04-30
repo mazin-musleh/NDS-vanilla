@@ -168,25 +168,25 @@
     function initializeCityWeather() {
         const weatherEl = document.getElementById('nds-weatherInfo');
         const cityEl = document.getElementById('nds-cityName');
-        
+
         // Only run if both weather and city elements exist (they depend on each other)
         if (weatherEl && cityEl) {
             updateWeather();
             updateCity(); // City runs once on load, cached for 30 days
-            
+
             // Update weather every 15 minutes
             setInterval(updateWeather, 15 * 60 * 1000);
-            
+
             // City doesn't need interval - coordinates don't change, cached for 30 days
+            NDS.onAttrChange('html', ['lang'], () => { updateWeather(); updateCity(); });
         }
     }
 
-    // CRITICAL: Expose global functions immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.updateWeather = updateWeather;
-        window.updateCity = updateCity;
         NDS.CityWeather = {
-            init: initializeCityWeather
+            init: initializeCityWeather,
+            updateWeather,
+            updateCity
         };
     }
 

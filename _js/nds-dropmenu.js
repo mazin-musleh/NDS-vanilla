@@ -45,7 +45,6 @@
             // Cache references
             this.contentLayout = dropmenuElement.closest('.nds-content-layout')
                 || document.querySelector('.nds-content-layout');
-            this.isRTL = NDS.isRTL;
 
             // Backrefs so consumers walking up from a menu item can still
             // reach the wrapper after the menu is portaled to <body>. With
@@ -595,7 +594,7 @@
             let top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
             top = Math.max(topEdge, Math.min(top, p.viewportHeight - mr2.height - pad));
 
-            let leftPx = this.isRTL ? p.triggerRect.right - mr2.width : p.triggerRect.left;
+            let leftPx = NDS.isRTL ? p.triggerRect.right - mr2.width : p.triggerRect.left;
             leftPx = Math.max(pad, Math.min(leftPx, vw - mr2.width - pad));
 
             NDS.placeFixed(this.menu, top, leftPx);

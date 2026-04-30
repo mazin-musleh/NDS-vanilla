@@ -161,27 +161,25 @@
     function initializeTimeDate() {
         const dateEl = document.getElementById('nds-date');
         const clockEl = document.getElementById('nds-realTimeClock');
-        
+
         if (dateEl) {
             updateDate();
-            // Update date every 24 hours
             setInterval(updateDate, 24 * 60 * 60 * 1000);
+            NDS.onAttrChange('html', ['lang'], updateDate);
         }
-        
+
         if (clockEl) {
             updateClock();
-            // Update clock every second
             setInterval(updateClock, 1000);
         }
     }
 
-    // CRITICAL: Expose global functions immediately (called by unified init system)
     if (typeof window !== 'undefined') {
-        window.updateDate = updateDate;
-        window.updateClock = updateClock;
         NDS.TimeDate = {
             init: initializeTimeDate,
-            getHijriDate: getHijriDate
+            getHijriDate,
+            updateDate,
+            updateClock
         };
     }
 

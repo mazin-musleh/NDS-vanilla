@@ -89,6 +89,8 @@
         root.setAttribute('lang', lang);
         root.setAttribute('dir', getDir(lang));
         updateToggles(lang);
+        // Direction-aware components subscribe to <html lang/dir> changes
+        // via NDS.onAttrChange — no need to call them from here.
     }
 
     function switchLang(targetLang, el) {

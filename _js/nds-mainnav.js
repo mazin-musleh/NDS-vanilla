@@ -71,7 +71,7 @@
             return cached > 0 ? this.css.speed : 0;
         },
 
-        invalidateCache() { _containerLayoutCache = null; }
+        invalidateCache() { _containerLayoutCache = null; this._css = null; }
     };
 
     // ==============================================

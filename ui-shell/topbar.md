@@ -357,10 +357,10 @@ NDS.TimeDate.init();
 NDS.CityWeather.init();
 
 // ── Manual Refresh ──────────────────────────
-window.updateDate();       // refresh date display
-window.updateClock();      // refresh clock display
-window.updateWeather();    // re-fetch weather data
-window.updateCity();       // re-fetch city name
+NDS.TimeDate.updateDate();        // refresh date display
+NDS.TimeDate.updateClock();       // refresh clock display
+NDS.CityWeather.updateWeather();  // re-fetch weather data
+NDS.CityWeather.updateCity();     // re-fetch city name
 
 // ── DGA Stamp Toggle ────────────────────────
 // Opens or closes the digital stamp panel.
