@@ -900,6 +900,14 @@
             if (e.target.closest('.nds-mainNav-toggler')) { e.preventDefault(); toggleNavbar(); }
         }, { signal });
 
+        // When a modal opens, dismiss any open nav drawer/dropdowns so the
+        // modal sits on a clean overlay. Closing the drawer cascades to
+        // close any dropdowns inside it via navbar.toggle().
+        document.addEventListener('nds-modal-opened', () => {
+            if (hasState(DOM.collapse, 'open')) navbar.toggle(false);
+            else dropdown.closeAll();
+        }, { signal });
+
         // Same-page anchor navigation — close nav and scroll to target
         DOM.nav?.addEventListener('click', (e) => {
             const anchor = e.target.closest('a[href*="#"]');
