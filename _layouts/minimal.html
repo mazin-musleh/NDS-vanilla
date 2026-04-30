@@ -10,9 +10,9 @@
         </div>
     </main>
     <!-- Scripts -->
-    <script defer src="{{ 'assets/js/nds-main.min.js' | relative_url }}?ver=1.113"></script>
+    <script defer src="{{ 'assets/js/nds-main.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
     {%- unless page.exclude_showcase == true %}
-    <script defer src="{{ 'assets/js/nds-showcase.min.js' | relative_url }}?ver=1.018"></script>
+    <script defer src="{{ 'assets/js/nds-showcase.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
     {%- endunless %}
     {%- if page.custom_js %}
     {%- for js_file in page.custom_js %}

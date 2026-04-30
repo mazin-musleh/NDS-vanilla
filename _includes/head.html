@@ -6,10 +6,10 @@
         content="{{ page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{%- if page.title %}{{ page.title }} | {%- endif %} {{ site_title }}</title>
     {%- unless page.exclude_showcase == true %}
-    <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver=1.000" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver=1.000">
+        <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     {%- endunless %}
     {%- comment -%} Preload first hero slide so LCP can start before body parse — only on layouts that render the main slider {%- endcomment -%}
@@ -31,19 +31,19 @@
     {%- endif -%}
     {%- endif -%}
     <!-- Critical CSS - Blocking (small, cacheable) -->
-    <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver=1.009">
+    <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     <!-- Icons — UI icons inlined (core) + HGI font (content/demo/doc) -->
-    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver=1.000" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver=1.000">
+        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     {%- if site.use_hgi_font or page.use_hgi_font %}
     <style>i.hgi-stroke{opacity:0}body[data-font-loaded~="hgi-stroke-rounded"] i.hgi-stroke{opacity:1}</style>
-    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver=1.001" as="style"
+    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver=1.001">
+        <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     {%- endif %}
     <!-- Main CSS - Deferred loading for below-the-fold content -->
@@ -56,10 +56,10 @@
             document.head.appendChild(favicon);
         }
     </script>
-    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
         onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver=1.064">
+        <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     <!-- Custom page-specific CSS files with deferred loading -->
     {%- if page.custom_css %}
