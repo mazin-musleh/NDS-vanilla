@@ -437,7 +437,7 @@ NDS.ScrollMore.init();
 // ── Initialize a single element ──────────────────────
 // Idempotent: safe to call on an already-initialized wrapper.
 const wrapper = document.querySelector('.nds-scroll-more');
-NDS.ScrollMore.initElement(wrapper);
+NDS.ScrollMore.create(wrapper);          // alias: initElement
 
 // ── Recheck overflow after content changes ───────────
 // The built-in ResizeObserver handles size changes, but if

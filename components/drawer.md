@@ -1328,7 +1328,7 @@ direction: ltr
 
             <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p><strong>NDS.Drawer</strong> initializes automatically on page load for all <code class="nds-inline-code lang-html">.nds-drawer</code> elements. For dynamically added drawers, call <code class="nds-inline-code lang-js">NDS.Drawer.initDrawer(element)</code>.</p>
+                <p><strong>NDS.Drawer</strong> initializes automatically on page load for all <code class="nds-inline-code lang-html">.nds-drawer</code> elements. For dynamically added drawers, call <code class="nds-inline-code lang-js">NDS.Drawer.create(element)</code> (legacy alias: <code class="nds-inline-code lang-js">NDS.Drawer.initDrawer</code>).</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -1340,7 +1340,7 @@ direction: ltr
 // ── Initialize ──────────────────────────────────────
 NDS.Drawer.init();                    // All drawers on the page
 NDS.Drawer.reinit();                  // Re-scan (same as init)
-NDS.Drawer.initDrawer(drawerEl);      // Single drawer element
+NDS.Drawer.create(drawerEl);          // Single drawer element (alias: initDrawer)
 
 // ── Toggle a submenu ────────────────────────────────
 // Pass the parent button element (does nothing in always-open mode)
