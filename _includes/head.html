@@ -47,17 +47,8 @@
     </noscript>
     {%- endif %}
     <!-- Main CSS - Deferred loading for below-the-fold content -->
-    <script>
-        function loadDeferredAssets() {
-            var favicon = document.createElement('link');
-            favicon.rel = 'icon';
-            favicon.type = 'image/svg+xml';
-            favicon.href = '{{ "assets/img/favicon.svg" | relative_url }}';
-            document.head.appendChild(favicon);
-        }
-    </script>
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
-        onload="this.onload=null;this.rel='stylesheet';loadDeferredAssets()">
+        onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
@@ -70,9 +61,8 @@
     </noscript>
     {%- endfor %}
     {%- endif %}
-    <noscript>
-        <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
-    </noscript>
+    <!-- Favicon - low-priority fetch so it doesn't compete with critical assets -->
+    <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}" fetchpriority="low">
     {%- if site.debug %}
     {%- include perf-monitor.html %}
     {%- endif %}
