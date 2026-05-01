@@ -17,12 +17,17 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     /* Fallback for older browsers */
     overflow-y: clip;
 
     >* {
         visibility: visible;
+    }
+
+    .nds-btn {
+        align-self: center;
+        --btn-size: 32px;
     }
 
     .nds-topbar-info {
@@ -106,12 +111,12 @@
     /* Navigation Brand */
     .nds-brand {
         height: var(--nds-nav-height);
-        padding: var(--spacing-lg, 12px) 0;
+        padding: var(--spacing-lg) 0;
         display: flex;
         align-items: center;
         font-weight: bold;
         text-decoration: none;
-        gap: var(--spacing-lg, 12px);
+        gap: var(--spacing-lg);
         align-content: center;
         flex-wrap: nowrap;
         white-space: nowrap;
@@ -159,22 +164,33 @@
         display: flex;
         align-items: center;
         list-style: none;
+        /* gap: var(--spacing-xs); */
     }
 
     .nds-nav-minimal {
         .nds-nav-item {
             border-bottom: unset !important;
+
+            @include mobile {
+                .nds-btn {
+                    --btn-size: 32px;
+                }
+            }
         }
     }
 
     /* Navigation Items */
     .nds-nav-item {
 
-        :is(.nds-nav-link, .nds-dropdown-item) .nds-label {
-            position: relative;
-            font-size: var(--typo-text-md-FS);
-            line-height: var(--typo-text-md-LH);
-            font-weight: 400;
+        :is(.nds-nav-link, .nds-dropdown-item) {
+
+            --btn-height-min: 40px;
+
+            .nds-label {
+                position: relative;
+                font-size: var(--typo-text-md-FS);
+                line-height: var(--typo-text-md-LH);
+            }
         }
 
         &.nds-CTA {
@@ -182,6 +198,10 @@
             flex-direction: column;
             justify-content: center;
             margin: 0 var(--spacing-md);
+
+            .nds-btn {
+                --btn-size: 32px;
+            }
 
             > ::before {
                 background-color: var(--_btn-indicator-color);
@@ -206,8 +226,7 @@
     .nds-nav-link {
         --btn-indicator-size: 5px;
         --btn-height: var(--nds-nav-height);
-        font-size: var(--typo-text-clamp-lg-FS);
-        line-height: var(--typo-text-clamp-lg-LH);
+
 
         .nds-avatar {
             --avatar-size: calc(var(--nds-nav-height) - 40px);
@@ -237,6 +256,15 @@
             color: var(--_nav-color);
             transition: opacity var(--nds-transition);
             flex-shrink: 0;
+
+            .nds-btn {
+                --btn-padding: var(--spacing-lg);
+
+                i {
+                    width: calc(var(--_btn-icon-size) - 4px);
+                    height: calc(var(--_btn-icon-size) - 4px);
+                }
+            }
 
             * {
                 justify-content: center;
@@ -282,7 +310,8 @@
                 padding-top: var(--spacing-2xl);
                 padding-bottom: var(--spacing-2xl);
                 width: 100%;
-                .nds-search-box{
+
+                .nds-search-box {
                     max-width: 800px;
                 }
             }
@@ -341,6 +370,8 @@
 
     /* Dropdown Columns Grid */
     .nds-dropdown-columns {
+        padding: var(--spacing-lg) 0;
+
         .nds-dropdown-title {
             font-size: var(--typo-text-clamp-lg-FS);
             line-height: var(--typo-text-clamp-lg-LH);
@@ -359,20 +390,22 @@
             flex-wrap: wrap;
             flex-direction: column;
             column-gap: var(--spacing-2xl);
-            padding: var(--spacing-lg) 0;
 
             &.nds-multi-column-list {
                 display: block;
                 column-count: 3;
                 column-gap: 2rem;
                 list-style: none;
-                padding: 0;
-                margin: 0;
 
                 * {
                     display: flex;
                     white-space: nowrap;
                 }
+
+                @include tablet(max) {
+                    column-count: 2;
+                }
+
             }
         }
 
@@ -405,6 +438,7 @@
 body:not(.nds-minimal) .nds-main-nav {
     .nds-nav-item {
         .nds-nav-link {
+
             &:is([data-state~="current"]) {
                 --btn-bg: var(--button-background-primary-default);
                 --btn-bg-hover: var(--button-background-primary-hovered);
@@ -525,18 +559,12 @@ body:not(.nds-minimal) .nds-main-nav {
             }
 
             &.nds-rowView {
-                margin: 0;
-                padding: 0;
 
                 .nds-list {
                     flex-direction: column;
                 }
             }
         }
-    }
-
-    .nds-multi-column-list {
-        column-count: 2;
     }
 
     .nds-topbar {
@@ -701,6 +729,7 @@ body.nds-minimal .nds-main-nav {
                 transition: none;
                 max-height: unset;
                 overflow: unset !important;
+                padding-inline: 0;
 
                 .nds-dropdown-item {
                     width: 100%;
@@ -830,10 +859,6 @@ body.nds-minimal .nds-main-nav {
     .nds-dropdown-menu .nds-dropdown-columns.nds-colView {
         column-count: 1;
         width: 100%;
-    }
-
-    .nds-multi-column-list {
-        column-count: 1;
     }
 }
 
