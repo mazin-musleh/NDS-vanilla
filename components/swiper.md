@@ -2,27 +2,51 @@
 layout: page
 title: Swiper
 hero_title: Swiper - National Design System
-hero_description: "A responsive carousel/slider component with CSS scroll-snap, RTL/LTR support, and keyboard
-navigation"
+hero_description: "A horizontal slider for hero banners, image galleries, and multi-card decks, with responsive slides-per-view, optional peek previews, and lazy-loaded images."
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 ---
 
-<!-- Basic Swiper Demo -->
+<!-- Hero Slider Demo -->
 <section class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Basic Slider</h2>
-            <p class="nds-section-description">A simple slider with navigation buttons and pagination. Uses native CSS
-                scroll-snap for smooth, performant sliding.</p>
+            <h2 class="nds-section-title">Hero Slider</h2>
+            <p class="nds-section-description">Full-bleed single-slide carousel for the top of a page. Use this when each slide is a marketing message, banner, or call to action that should fill the hero area.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Basic Slider</div>
                     <div class="demo-action">
+                        <div class="nds-dropmenu demo-toggle-menu">
+                            <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
+                                <span class="nds-label">Bullets: Large</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                    data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Large</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                    data-toggler='[["nds-lg", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-md", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Medium</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                    data-toggler='[["nds-lg", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Small</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-center", ".nds-swiper-navigation", "navCenter"]'>
+                            <span class="nds-label">Center</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
+                            data-toggler='["nds-oncolor", ".nds-swiper", "swiperOncolor"]'>
+                            <span class="nds-label">On-color</span>
+                        </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
@@ -31,7 +55,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper nds-hero">
+                        <div class="nds-swiper nds-hero nds-oncolor">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="slide-content"
@@ -82,13 +106,13 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-swiper-pagination"></div>
-                            <button
-                                class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-prev nds-swiper-button-prev"
-                                aria-label="Previous slide"></button>
-                            <button
-                                class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-next nds-swiper-button-next"
-                                aria-label="Next slide"></button>
+                            <div class="nds-swiper-navigation">
+                                <div class="nds-swiper-buttons">
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"></button>
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"></button>
+                                </div>
+                                <div class="nds-swiper-pagination nds-lg"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,19 +135,53 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                &lt;div class="nds-swiper"&gt;
-                                    &lt;div class="nds-swiper-wrapper"&gt;
-                                        &lt;div class="nds-swiper-slide"&gt;
-                                            &lt;!-- Slide content --&gt;
-                                        &lt;/div&gt;
-                                        &lt;div class="nds-swiper-slide"&gt;
-                                            &lt;!-- Slide content --&gt;
-                                        &lt;/div&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
-                                    &lt;button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-prev nds-swiper-button-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
-                                    &lt;button class="nds-btn nds-subtle nds-icon-only nds-xl nds-oncolor nds-next nds-swiper-button-next" aria-label="Next slide"&gt;&lt;/button&gt;
-                                &lt;/div&gt;
+&lt;div class="nds-swiper nds-hero nds-oncolor"&gt;
+    &lt;div class="nds-swiper-wrapper"&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="slide-content"
+                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;"&gt;
+                &lt;div style="max-width: 800px; text-align: center;"&gt;
+                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;"&gt;Welcome to Our Platform&lt;/h2&gt;
+                    &lt;p style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;"&gt;Discover innovative solutions for your digital needs&lt;/p&gt;
+                    &lt;button class="nds-btn nds-primary nds-lg nds-oncolor"&gt;
+                        &lt;span class="nds-label"&gt;Get Started&lt;/span&gt;
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="slide-content"
+                style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;"&gt;
+                &lt;div style="max-width: 800px; text-align: center;"&gt;
+                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;"&gt;Powerful Features&lt;/h2&gt;
+                    &lt;p style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;"&gt;Built with the latest technology and best practices&lt;/p&gt;
+                    &lt;button class="nds-btn nds-primary nds-lg nds-oncolor"&gt;
+                        &lt;span class="nds-label"&gt;Learn More&lt;/span&gt;
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="slide-content"
+                style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;"&gt;
+                &lt;div style="max-width: 800px; text-align: center;"&gt;
+                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;"&gt;Start Your Journey&lt;/h2&gt;
+                    &lt;p style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;"&gt;Join thousands of satisfied users today&lt;/p&gt;
+                    &lt;button class="nds-btn nds-primary nds-lg nds-oncolor"&gt;
+                        &lt;span class="nds-label"&gt;Join Now&lt;/span&gt;
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-swiper-navigation"&gt;
+        &lt;div class="nds-swiper-buttons"&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -135,59 +193,83 @@ direction: ltr
     </div>
 </section>
 
-<!-- Image Slider Demo -->
+<!-- Image Hero Demo -->
 <section class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Image Slider</h2>
-            <p class="nds-section-description">Image slider with lazy loading for optimal performance. Uses
-                data-src pattern to defer image loading until slides approach the viewport.
-            </p>
+            <h2 class="nds-section-title">Hero with Images</h2>
+            <p class="nds-section-description">Hero slider where each slide is a full-bleed image. Pick this when the imagery itself carries the message: photo galleries, campaign banners, or visual storytelling at the top of a page.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Image Slider</div>
                     <div class="demo-action">
+                        <div class="nds-dropmenu demo-toggle-menu">
+                            <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
+                                <span class="nds-label">Bullets: Large</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                    data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Large</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                    data-toggler='[["nds-lg", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-md", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Medium</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                    data-toggler='[["nds-lg", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Small</span>
+                                </button>
+                            </div>
+                        </div>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["darkBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Dark bg</span>
+                            data-toggler='["nds-center", ".nds-swiper-navigation", "navCenter"]'>
+                            <span class="nds-label">Center</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn" data-state="selected"
+                            data-toggler='["nds-oncolor", ".nds-swiper", "swiperOncolor"]'>
+                            <span class="nds-label">On-color</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper nds-hero">
+                        <div class="nds-swiper nds-hero nds-oncolor">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
-                                    <img data-src="https://picsum.photos/800/450?random=1" alt="Landscape 1"
+                                    <img data-src="https://picsum.photos/id/1015/800/450" alt="Landscape 1"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <img data-src="https://picsum.photos/800/450?random=2" alt="Landscape 2"
+                                    <img data-src="https://picsum.photos/id/1018/800/450" alt="Landscape 2"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <img data-src="https://picsum.photos/800/450?random=3" alt="Landscape 3"
+                                    <img data-src="https://picsum.photos/id/1039/800/450" alt="Landscape 3"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <img data-src="https://picsum.photos/800/450?random=4" alt="Landscape 4"
+                                    <img data-src="https://picsum.photos/id/1043/800/450" alt="Landscape 4"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="nds-swiper-slide">
-                                    <img data-src="https://picsum.photos/800/450?random=5" alt="Landscape 5"
+                                    <img data-src="https://picsum.photos/id/870/800/450" alt="Landscape 5"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                             </div>
-                            <div class="nds-swiper-pagination"></div>
-                            <button
-                                class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-prev nds-swiper-button-prev"
-                                aria-label="Previous slide"></button>
-                            <button
-                                class="nds-btn nds-subtle nds-icon-only nds-xl nds-circle nds-oncolor nds-next nds-swiper-button-next"
-                                aria-label="Next slide"></button>
+                            <div class="nds-swiper-navigation">
+                                <div class="nds-swiper-buttons">
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"></button>
+                                    <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"></button>
+                                </div>
+                                <div class="nds-swiper-pagination nds-lg"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,21 +292,37 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                &lt;div class="nds-swiper"&gt;
-                                    &lt;div class="nds-swiper-wrapper"&gt;
-                                        &lt;div class="nds-swiper-slide"&gt;
-                                            &lt;img data-src="image1.jpg" alt="Description"
-                                                style="width: 100%; height: 450px; object-fit: cover;"&gt;
-                                        &lt;/div&gt;
-                                        &lt;div class="nds-swiper-slide"&gt;
-                                            &lt;img data-src="image2.jpg" data-srcset="small.jpg 600w, large.jpg 1200w" alt="Description"&gt;
-                                        &lt;/div&gt;
-                                        &lt;!-- More slides... --&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
-                                    &lt;button class="nds-prev nds-swiper-button-prev" aria-label="Previous slide"&gt;...&lt;/button&gt;
-                                    &lt;button class="nds-next nds-swiper-button-next" aria-label="Next slide"&gt;...&lt;/button&gt;
-                                &lt;/div&gt;
+&lt;div class="nds-swiper nds-hero nds-oncolor"&gt;
+    &lt;div class="nds-swiper-wrapper"&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;img data-src="https://picsum.photos/id/1015/800/450" alt="Landscape 1"
+                style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;img data-src="https://picsum.photos/id/1018/800/450" alt="Landscape 2"
+                style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;img data-src="https://picsum.photos/id/1039/800/450" alt="Landscape 3"
+                style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;img data-src="https://picsum.photos/id/1043/800/450" alt="Landscape 4"
+                style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;img data-src="https://picsum.photos/id/870/800/450" alt="Landscape 5"
+                style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-swiper-navigation"&gt;
+        &lt;div class="nds-swiper-buttons"&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -248,11 +346,37 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Multiple Slides Per View</div>
                     <div class="demo-action">
+                        <div class="nds-dropmenu demo-toggle-menu">
+                            <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
+                                <span class="nds-label">Bullets: Large</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                    data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Large</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                    data-toggler='[["nds-lg", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-md", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Medium</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                    data-toggler='[["nds-lg", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Small</span>
+                                </button>
+                            </div>
+                        </div>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["darkBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Dark bg</span>
+                            data-toggler='["nds-center", ".nds-swiper-navigation", "navCenter"]'>
+                            <span class="nds-label">Center</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-oncolor", ".nds-swiper", "swiperOncolor"]'>
+                            <span class="nds-label">On-color</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -313,10 +437,10 @@ direction: ltr
                             </div>
                             <div class="nds-swiper-navigation">
                                 <div class="nds-swiper-buttons">
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"></button>
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"></button>
                                 </div>
-                                <div class="nds-swiper-pagination"></div>
+                                <div class="nds-swiper-pagination nds-lg"></div>
                             </div>
                         </div>
                     </div>
@@ -340,26 +464,65 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                &lt;div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1"&gt;
-                                    &lt;div class="nds-swiper-wrapper"&gt;
-                                        &lt;div class="nds-swiper-slide"&gt;
-                                            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
-                                                &lt;div class="nds-card-content"&gt;
-                                                    &lt;h4 class="nds-card-title"&gt;Card 1&lt;/h4&gt;
-                                                    &lt;p class="nds-card-description"&gt;Content&lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/div&gt;
-                                        &lt;/div&gt;
-                                        &lt;!-- More slides... --&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-swiper-navigation"&gt;
-                                        &lt;div class="nds-swiper-buttons"&gt;
-                                            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
-                                            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
-                                        &lt;/div&gt;
-                                        &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
+&lt;div class="nds-swiper" hidden slides-max="4" slides-mid="3" slides-min="1" peek="0"&gt;
+    &lt;div class="nds-swiper-wrapper"&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 1&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Multi-slide example with responsive breakpoints.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 2&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Resize the browser to see responsive behavior.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 3&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Drag or use arrows to navigate.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 4&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Native scroll-snap behavior.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 5&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Full RTL/LTR support.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 6&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Touch and keyboard navigation.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-swiper-navigation"&gt;
+        &lt;div class="nds-swiper-buttons"&gt;
+            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -384,11 +547,37 @@ direction: ltr
             <div class="nds-showcase">
             <div class="nds-demo-card">
                 <div class="demo-header">
-                    <div class="demo-label">Peek Mode (40px)</div>
                     <div class="demo-action">
+                        <div class="nds-dropmenu demo-toggle-menu">
+                            <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
+                                <span class="nds-label">Bullets: Large</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                    data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Large</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                    data-toggler='[["nds-lg", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-md", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Medium</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                    data-toggler='[["nds-lg", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "add"]]'>
+                                    <span class="nds-label">Small</span>
+                                </button>
+                            </div>
+                        </div>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
-                            data-toggler='["darkBg", ".demo-container", "containerBg"]'>
-                            <span class="nds-label">Dark bg</span>
+                            data-toggler='["nds-center", ".nds-swiper-navigation", "navCenter"]'>
+                            <span class="nds-label">Center</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-oncolor", ".nds-swiper", "swiperOncolor"]'>
+                            <span class="nds-label">On-color</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                            <span class="nds-label">Remove bg</span>
                         </button>
                     </div>
                 </div>
@@ -447,10 +636,10 @@ direction: ltr
                             </div>
                             <div class="nds-swiper-navigation">
                                 <div class="nds-swiper-buttons">
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"></button>
-                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"></button>
+                                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"></button>
                                 </div>
-                                <div class="nds-swiper-pagination"></div>
+                                <div class="nds-swiper-pagination nds-lg"></div>
                             </div>
                         </div>
                     </div>
@@ -474,21 +663,65 @@ direction: ltr
                                 </button>
                             </div>
                             <code class="lang-html code">
-                                &lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
-                                    &lt;div class="nds-swiper-wrapper"&gt;
-                                        &lt;div class="nds-swiper-slide"&gt;
-                                            &lt;!-- Slide content --&gt;
-                                        &lt;/div&gt;
-                                        &lt;!-- More slides... --&gt;
-                                    &lt;/div&gt;
-                                    &lt;div class="nds-swiper-navigation"&gt;
-                                        &lt;div class="nds-swiper-buttons"&gt;
-                                            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
-                                            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
-                                        &lt;/div&gt;
-                                        &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
-                                    &lt;/div&gt;
-                                &lt;/div&gt;
+&lt;div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
+    &lt;div class="nds-swiper-wrapper"&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 1&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Peek mode shows partial adjacent slides.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 2&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Users can see there's more content.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 3&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;This encourages scrolling/navigation.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 4&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Configurable peek amount in pixels.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 5&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Works with any slides-per-view.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-slide"&gt;
+            &lt;div class="nds-card nds-stroke nds-shadow"&gt;
+                &lt;div class="nds-card-content"&gt;
+                    &lt;h4 class="nds-card-title"&gt;Card 6&lt;/h4&gt;
+                    &lt;p class="nds-card-description"&gt;Last slide in the carousel.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-swiper-navigation"&gt;
+        &lt;div class="nds-swiper-buttons"&gt;
+            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
+            &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
                             </code>
                         </div>
                     </div>
@@ -545,7 +778,7 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
+                        <i class="hgi hgi-stroke hgi-eye"></i>
                         <span class="nds-label">Peek Preview</span>
                     </span>
                     <p class="nds-item-desc">Set a <code class="nds-inline-code lang-html">peek</code> value in pixels to reveal partial adjacent slides, signaling that more content is available.</p>
@@ -596,10 +829,11 @@ direction: ltr
             <div class="nds-block">
                 <h3 class="nds-block-title">Modifier Classes</h3>
                 <table class="nds-table nds-responsive">
-                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <thead><tr><th>Class</th><th>Applied to</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-hero</code></td><td>Full-width single-slide hero mode with overlay navigation and centered pagination</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Adjusts pagination bullets and navigation for dark/image backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-hero</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Full-width single-slide hero mode with overlay navigation absolutely positioned at the bottom</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Adjusts pagination bullets and navigation contrast for dark or image backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-navigation</code></td><td>Centers the bullets and pushes the prev/next buttons to the outer edges of the navigation row</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -620,14 +854,14 @@ direction: ltr
 
             <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <p>Set these on <code class="nds-inline-code lang-html">.nds-swiper</code> (or <code class="nds-inline-code lang-html">.nds-bullet</code>) to override the defaults. Resolved tokens like <code class="nds-inline-code lang-html">--swiper-gap</code>, <code class="nds-inline-code lang-html">--swiper-peek</code>, <code class="nds-inline-code lang-html">--swiper-slides</code>, and <code class="nds-inline-code lang-html">--swiper-total</code> are managed by the component and should not be set directly.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--swiper-gap</code></td><td>var(--spacing-xl)</td><td>Gap between slides</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--swiper-peek</code></td><td>0px</td><td>Peek amount (set by JS from peek attribute)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--swiper-padding</code></td><td>0px</td><td>Container inline padding (auto-set for full-width sections)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--swiper-slides</code></td><td>1</td><td>Current slides per view (set by JS from breakpoint calculation)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--swiper-total</code></td><td>1</td><td>Total number of slides (set by JS)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between slides</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bullet-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-200)</code></td><td>Inactive pagination bullet color (light theme); auto-shifts to neutral-700 in dark mode and to a translucent white on hero/on-color backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bullet-active</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-sa-flag-600-primary)</code></td><td>Active pagination bullet color; switches to base white on hero/on-color backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bullet-border</code></td><td><code class="nds-inline-code lang-html">transparent</code></td><td>Border color around the pagination bullets</td></tr>
                     </tbody>
                 </table>
             </div>
