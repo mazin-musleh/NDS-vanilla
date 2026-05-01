@@ -12,11 +12,11 @@ Determine hero sliders source:
 {%- assign hero_sliders = site.data.hero[hero_file_name] -%}
 {%- endif -%}
 <section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
-    <div class="nds-swiper nds-hero nds-full-width" style="--total: {{ hero_sliders | size }}">
+    <div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">
             {%- for slide in hero_sliders %}
             <div class="nds-swiper-slide nds-content-wrapper{%- if slide.class %} {{ slide.class }}{%- endif %}"{%- unless forloop.first %} hidden{%- endunless %}>
-                <div class="nds-hero-image-wrapper nds-full-width"
+                <div class="nds-hero-image-wrapper"
                     style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     {%- if forloop.first %}
                     <picture>
@@ -32,7 +32,7 @@ Determine hero sliders source:
                         {%- if slide.src_small %}
                         <source media="(max-width: 768px)" data-srcset="{{ slide.src_small | relative_url }}">
                         {%- endif %}
-                        <img data-src="{{ slide.src | relative_url }}" class="nds-hero-image nds-swiper-lazy" alt=""
+                        <img data-src="{{ slide.src | relative_url }}" class="nds-hero-image" alt=""
                             style="width: 100%; height: 100%; object-fit: cover; object-position: {{ slide.position | default: 'center center' }}; display: block;">
                     </picture>
                     {%- endif %}
@@ -56,10 +56,14 @@ Determine hero sliders source:
             </div>
             {%- endfor %}
         </div>
-        <div class="nds-swiper-pagination" hidden></div>
-        <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-prev nds-swiper-button-prev"
-            aria-label="Previous slide" hidden></button>
-        <button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-next nds-swiper-button-next"
-            aria-label="Next slide" hidden></button>
+        <div class="nds-swiper-navigation">
+            <div class="nds-swiper-buttons">
+                <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev"
+                    aria-label="Previous slide" hidden></button>
+                <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next"
+                    aria-label="Next slide" hidden></button>
+            </div>
+            <div class="nds-swiper-pagination" hidden></div>
+        </div>
     </div>
 </section>

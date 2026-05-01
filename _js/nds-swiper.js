@@ -60,8 +60,8 @@
             this.slides = Array.from(container.querySelectorAll('.nds-swiper-slide'));
             this.pagination = container.querySelector('.nds-swiper-pagination');
             this.navigation = container.querySelector('.nds-swiper-navigation');
-            this.prevBtn = container.querySelector('.nds-swiper-button-prev');
-            this.nextBtn = container.querySelector('.nds-swiper-button-next');
+            this.prevBtn = container.querySelector('.nds-prev');
+            this.nextBtn = container.querySelector('.nds-next');
 
             this.isHero = container.classList.contains('nds-hero');
             this._cachedGap = null;
@@ -448,7 +448,7 @@
 
             for (let i = 0; i < pageCount; i++) {
                 const bullet = document.createElement('button');
-                bullet.className = 'nds-swiper-pagination-bullet';
+                bullet.className = 'nds-bullet';
                 bullet.type = 'button';
                 bullet.setAttribute('aria-label', `Go to slide ${i + 1}`);
 
@@ -467,7 +467,7 @@
         updatePagination() {
             if (!this.pagination) return;
 
-            const bullets = this.pagination.querySelectorAll('.nds-swiper-pagination-bullet');
+            const bullets = this.pagination.querySelectorAll('.nds-bullet');
             const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
 
             // Map currentIndex to page based on proximity to page start indices
@@ -487,7 +487,8 @@
 
             bullets.forEach((bullet, i) => {
                 const isActive = i === currentPage;
-                bullet.classList.toggle('nds-swiper-pagination-bullet-active', isActive);
+                if (isActive) NDS.Status.set(bullet, 'active');
+                else NDS.Status.clear(bullet);
                 bullet.setAttribute('aria-current', isActive ? 'true' : 'false');
             });
         }

@@ -95,29 +95,14 @@
 
 // ==============================================
 // NAVIGATION BUTTONS
-// Arrow glyph comes from .nds-prev / .nds-next in _buttons.scss (no inner <i>)
+// Arrow glyph + JS hook both come from .nds-prev / .nds-next.
+// They can sit anywhere inside .nds-swiper. Size, shape, and on-color
+// treatment are the consumer's job — apply standard button modifiers
+// (.nds-icon-only, .nds-md/.nds-sm, .nds-oncolor) directly on the button.
 // ==============================================
 
-:is(.nds-swiper-button-prev, .nds-swiper-button-next) {
+.nds-swiper :is(.nds-prev, .nds-next) {
     user-select: none;
-}
-
-.nds-swiper-button-prev {
-    inset-inline-start: var(--spacing-md);
-
-    .nds-swiper:not(.nds-hero) & {
-        inset-inline-start: var(--nds-viewport-padding);
-        margin-block: var(--spacing-sm);
-    }
-}
-
-.nds-swiper-button-next {
-    inset-inline-end: var(--spacing-md);
-
-    .nds-swiper:not(.nds-hero) & {
-        inset-inline-start: calc(var(--nds-viewport-padding) + var(--spacing-xs));
-        margin-block: var(--spacing-sm);
-    }
 }
 
 // ==============================================
@@ -131,31 +116,54 @@
     flex-wrap: wrap;
     gap: var(--spacing-lg);
 
-    .nds-swiper:not(.nds-hero) & {
+    .nds-swiper & {
         padding-block: var(--spacing-md);
         float: inline-end;
         margin-inline-end: var(--nds-viewport-padding);
     }
+
+    // Bullet size variants
+    &.nds-lg .nds-bullet { --_bullet-size: 16px; }
+    &.nds-md .nds-bullet { --_bullet-size: 12px; }
+    &.nds-sm .nds-bullet { --_bullet-size: 8px; }
 }
 
-.nds-swiper-pagination-bullet {
-    width: 16px;
-    height: 16px;
+.nds-bullet {
+
+    // Theme-resolved color tokens (with public override slots)
+    --_bullet-default: var(--bullet-default, var(--colors-neutral-200));
+    --_bullet-active: var(--bullet-active, var(--colors-primary-sa-flag-600-primary));
+    --_bullet-border: var(--bullet-border, transparent);
+
+    @include dark {
+        --_bullet-default: var(--bullet-default, var(--colors-neutral-700));
+    }
+
+    // Per-property tokens; states only rebind these (no property restatement)
+    --_bullet-bg: var(--_bullet-default);
+    --_bullet-bcolor: var(--_bullet-border);
+    --_bullet-opacity: 0.6;
+    --_bullet-size: 16px;
+
+    width: var(--_bullet-size);
+    height: var(--_bullet-size);
     border-radius: 50%;
-    background-color: var(--swiper-pagination-bullet-default);
-    opacity: 0.6;
+    background-color: var(--_bullet-bg);
+    border: 1px solid var(--_bullet-bcolor);
+    opacity: var(--_bullet-opacity);
     cursor: pointer;
-    transition: opacity var(--nds-transition);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: opacity var(--nds-transition),
+                background-color var(--nds-transition),
+                border-color var(--nds-transition);
     padding: 0;
     user-select: none;
 
-    &:hover { opacity: 0.8; }
+    &:hover { --_bullet-opacity: 0.8; }
 
-    &.nds-swiper-pagination-bullet-active {
-        opacity: 1;
-        background-color: var(--swiper-pagination-bullet-active);
-        border-color: var(--swiper-pagination-bullet-active);
+    &[data-status="active"] {
+        --_bullet-bg: var(--_bullet-active);
+        --_bullet-bcolor: var(--_bullet-active);
+        --_bullet-opacity: 1;
     }
 }
 
@@ -167,12 +175,12 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    --_nav-padding: var(--spacing-lg);
-    padding-inline: var(--_nav-padding);
     gap: var(--spacing-xl);
 
+    padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+
     .nds-max-width & {
-        --_nav-padding: max(calc(var(--nds-viewport-padding) + var(--spacing-lg)), calc((100% - var(--nds-content-MaxWidth)) / 2));
+        padding-inline: max(calc(var(--nds-viewport-padding) + var(--spacing-lg)), calc((100% - var(--nds-content-MaxWidth)) / 2));
     }
 
     .nds-swiper-buttons {
@@ -180,10 +188,9 @@
         gap: var(--spacing-md);
     }
 
-    // Override the absolute-positioning / float layout of the base controls
-    // when they live inside this row wrapper.
-    :is(.nds-swiper-button-prev, .nds-swiper-button-next, .nds-swiper-pagination) {
-        inset-inline: 0 !important;
+    // Reset float/margins from the base pagination rule when controls live
+    // inside this row wrapper (buttons themselves are flex items, no overrides needed).
+    .nds-swiper-pagination {
         margin-block: 0 !important;
         margin-inline: 0 !important;
         float: unset;
@@ -194,20 +201,15 @@
 // ON-COLOR (dark backgrounds, including hero)
 // ==============================================
 
-.nds-swiper:is(.nds-oncolor, .nds-hero),
+.nds-swiper.nds-oncolor,
 .nds-oncolor {
     :is(.nds-section-title, .nds-section-description) {
         color: var(--text-oncolor-primary);
     }
 
-    .nds-swiper-pagination-bullet {
-        background-color: var(--swiper-pagination-bullet-oncolor-default);
-        border-color: rgba(255, 255, 255, 0.3);
-
-        &.nds-swiper-pagination-bullet-active {
-            background-color: var(--swiper-pagination-bullet-oncolor-active);
-            border-color: var(--swiper-pagination-bullet-oncolor-active);
-        }
+    .nds-bullet {
+        --_bullet-default: var(--bullet-default, var(--colors-alpha-alpha-white-60));
+        --_bullet-active: var(--bullet-active, var(--colors-base-white));
     }
 }
 
@@ -237,44 +239,26 @@
         width: 100%;
     }
 
-    // Prev/next arrows: hover-reveal, larger size, on-color shadow
-    :is(.nds-swiper-button-prev, .nds-swiper-button-next) {
+    .nds-swiper-navigation {
         position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        --btn-size: 48px;
-        text-shadow: 0px -0px 2px rgb(0 0 0);
-        visibility: hidden;
-    }
-
-    .nds-swiper-button-prev { inset-inline-start: var(--spacing-lg); }
-    .nds-swiper-button-next { inset-inline-end: var(--spacing-lg); }
-
-    &:hover :is(.nds-swiper-button-prev, .nds-swiper-button-next) {
-        visibility: visible;
-    }
-
-    // Pagination centered at bottom
-    .nds-swiper-pagination {
-        position: absolute;
-        bottom: var(--spacing-xl);
-        left: 50%;
-        transform: translateX(-50%);
+        bottom: 0;
+        padding-block: var(--spacing-xl);
     }
 }
 
 // ==============================================
-// ACCESSIBILITY
+// NAVIGATION VARIANT — .nds-center
+// Bullets stay in the center, arrows pushed to the row's outer edges.
 // ==============================================
 
-.nds-swiper-sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+.nds-swiper-navigation.nds-center {
+    // Promote prev/next to flex children of the nav so the row becomes
+    // [prev] [bullets] [next] under the existing `justify-content: space-between`.
+    .nds-swiper-buttons {
+        display: contents;
+    }
+
+    .nds-next {
+        order: 1;
+    }
 }

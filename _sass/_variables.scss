@@ -59,32 +59,6 @@
     --chip-text-oncolor-primary: var(--colors-base-white);
     --chip-text-disabled: var(--colors-neutral-400);
 
-    // Swiper component tokens
-    // Navigation Buttons
-    --swiper-button-background-default: var(--colors-base-white);
-    --swiper-button-background-hovered: var(--colors-primary-sa-flag-50);
-    --swiper-button-background-pressed: var(--colors-primary-sa-flag-100);
-    --swiper-button-background-disabled: var(--colors-neutral-200);
-    --swiper-button-icon-default: var(--colors-primary-sa-flag-600-primary);
-    --swiper-button-icon-hovered: var(--colors-primary-sa-flag-700);
-    --swiper-button-icon-disabled: var(--colors-neutral-400);
-
-    // Navigation Buttons - On Color (dark backgrounds)
-    --swiper-button-oncolor-background-default: var(--colors-alpha-alpha-white-10);
-    --swiper-button-oncolor-background-hovered: var(--colors-alpha-alpha-white-20);
-    --swiper-button-oncolor-background-pressed: var(--colors-alpha-alpha-white-30);
-    --swiper-button-oncolor-icon-default: var(--colors-base-white);
-    --swiper-button-oncolor-icon-hovered: var(--colors-base-white);
-
-    // Pagination
-    --swiper-pagination-bullet-default: var(--colors-neutral-200);
-    --swiper-pagination-bullet-active: var(--colors-primary-sa-flag-600-primary);
-    --swiper-pagination-bullet-oncolor-default: var(--colors-alpha-alpha-white-60);
-    --swiper-pagination-bullet-oncolor-active: var(--colors-base-white);
-
-    // Transitions
-    --swiper-transition-speed: 500ms;
-    --swiper-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
     --chip-text-oncolor-disabled: var(--colors-alpha-alpha-white-40);
 
     /* Rating Component Tokens - Based on Figma _RatingStar component */

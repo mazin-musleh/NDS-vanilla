@@ -75,8 +75,8 @@ exclude_showcase: true
                 </div>
                 <div class="nds-swiper-navigation">
                     <div class="nds-swiper-buttons">
-                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous template"></button>
-                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next template"></button>
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous template"></button>
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next template"></button>
                     </div>
                     <div class="nds-swiper-pagination"></div>
                 </div>
@@ -134,8 +134,8 @@ exclude_showcase: true
                 </div>
                 <div class="nds-swiper-navigation">
                     <div class="nds-swiper-buttons">
-                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev nds-swiper-button-prev" type="button" aria-label="Previous example"></button>
-                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next nds-swiper-button-next" type="button" aria-label="Next example"></button>
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous example"></button>
+                        <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next example"></button>
                     </div>
                     <div class="nds-swiper-pagination"></div>
                 </div>

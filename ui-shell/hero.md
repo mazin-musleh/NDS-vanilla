@@ -475,12 +475,12 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;section class="nds-hero-section" aria-label="Page Hero"&gt;
-  &lt;div class="nds-swiper nds-hero nds-full-width" style="--total: 2"&gt;
+  &lt;div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: 2"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
 
       &lt;!-- First slide: use fetchpriority="high" for LCP --&gt;
       &lt;div class="nds-swiper-slide nds-content-wrapper"&gt;
-        &lt;div class="nds-hero-image-wrapper nds-full-width"
+        &lt;div class="nds-hero-image-wrapper"
             style="--overlay: 0.6; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"&gt;
           &lt;picture&gt;
             &lt;source media="(max-width: 768px)" srcset="assets/img/hero-mobile.webp"&gt;
@@ -489,7 +489,7 @@ direction: ltr
               fetchpriority="high"&gt;
           &lt;/picture&gt;
         &lt;/div&gt;
-        &lt;div class="nds-section-body" style="position: relative; z-index: 3;"&gt;
+        &lt;div class="nds-section-body"&gt;
           &lt;h1 class="nds-section-title"&gt;Welcome to Our Portal&lt;/h1&gt;
           &lt;p class="nds-section-description"&gt;Access government services, information, and resources.&lt;/p&gt;
           &lt;a href="/services" class="nds-btn nds-primary nds-oncolor nds-lg"&gt;
@@ -500,14 +500,14 @@ direction: ltr
 
       &lt;!-- Subsequent slides: use data-src for lazy loading --&gt;
       &lt;div class="nds-swiper-slide nds-content-wrapper" hidden&gt;
-        &lt;div class="nds-hero-image-wrapper nds-full-width"
+        &lt;div class="nds-hero-image-wrapper"
             style="--overlay: 0.5; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"&gt;
           &lt;picture&gt;
-            &lt;img data-src="assets/img/hero-2.webp" class="nds-hero-image nds-swiper-lazy" alt=""
+            &lt;img data-src="assets/img/hero-2.webp" class="nds-hero-image" alt=""
               style="width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block;"&gt;
           &lt;/picture&gt;
         &lt;/div&gt;
-        &lt;div class="nds-section-body" style="position: relative; z-index: 3;"&gt;
+        &lt;div class="nds-section-body"&gt;
           &lt;h2 class="nds-section-title"&gt;Digital Transformation&lt;/h2&gt;
           &lt;p class="nds-section-description"&gt;Join millions of citizens benefiting from smart government services.&lt;/p&gt;
           &lt;a href="/about" class="nds-btn nds-secondary-outline nds-oncolor nds-lg"&gt;
@@ -517,11 +517,15 @@ direction: ltr
       &lt;/div&gt;
 
     &lt;/div&gt;
-    &lt;div class="nds-swiper-pagination" hidden&gt;&lt;/div&gt;
-    &lt;button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-prev nds-swiper-button-prev"
-        aria-label="Previous slide" hidden&gt;&lt;/button&gt;
-    &lt;button class="nds-btn nds-subtle nds-oncolor nds-icon-only nds-next nds-swiper-button-next"
-        aria-label="Next slide" hidden&gt;&lt;/button&gt;
+    &lt;div class="nds-swiper-navigation"&gt;
+      &lt;div class="nds-swiper-buttons"&gt;
+        &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev"
+            aria-label="Previous slide" hidden&gt;&lt;/button&gt;
+        &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next"
+            aria-label="Next slide" hidden&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-swiper-pagination" hidden&gt;&lt;/div&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/section&gt;
                                         </code>
@@ -611,7 +615,7 @@ direction: ltr
                     <li>For main hero slides, use the float action slot (such as a share button) for tools rather than navigation. Visitors who arrived on the page are past the "where to go" decision</li>
                     <li>Background images on the sub hero should have a clear subject on the start edge (right in RTL, left in LTR) — the mask keeps that edge fully opaque while fading toward the content area</li>
                     <li>Set <code class="nds-inline-code lang-html">fetchpriority="high"</code> on the first main hero slide image. It is the Largest Contentful Paint element on home pages and skipping this degrades Core Web Vitals scores</li>
-                    <li>Use <code class="nds-inline-code lang-html">data-src</code> and <code class="nds-inline-code lang-html">nds-swiper-lazy</code> on second and later main hero slides to defer image loading until the slide is about to appear</li>
+                    <li>Use <code class="nds-inline-code lang-html">data-src</code> on second and later main hero slides to defer image loading until the slide is about to appear</li>
                     <li>Adjust <code class="nds-inline-code lang-html">--overlay</code> per slide on the main hero to match each image's brightness. Dark images need lower values (0.4-0.5), bright outdoor images need higher values (0.6-0.8)</li>
                 </ul>
             </div>
