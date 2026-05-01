@@ -235,16 +235,17 @@ textarea {
   --_btn-height-min: var(--btn-height-min, var(--_btn-size));
   --_btn-width: var(--btn-width, unset);
   --_btn-gap: var(--btn-gap, var(--spacing-xs));
-  --_btn-padding: var(--btn-padding, calc(var(--_btn-size) * 0.375 - 3px));
+  --_btn-padding: var(--btn-padding, calc((var(--_btn-size) - 8px) / 2));
   --_btn-radius: var(--btn-radius, var(--radius-sm));
 
-  --_btn-FS: var(--btn-FS, calc(var(--_btn-size) * 0.2 + 8px));
-  --_btn-icon-size: calc(var(--_btn-size) / 2);
+  --_btn-FS: var(--btn-FS, calc(var(--_btn-size) / 4 + 6px));
+  --_btn-LH: var(--btn-LH, calc(var(--_btn-FS) * 1.5));
+  --_btn-icon-size: var(--btn-icon-size, calc(var(--_btn-size) / 2 + 4px));
 
   --btn-indicator-size: calc(var(--_btn-size) * 0.075);
-  --_btn-space: calc(var(--_btn-size) - var(--_btn-padding) - 4px);
+  --_btn-space: calc(var(--_btn-size) - var(--_btn-padding));
   --loading-size: var(--_btn-space) !important;
-  --loading-border: max(2px, calc(var(--_btn-space) / 12)) !important;
+  --loading-border: max(2px, calc(var(--_btn-space) / 10)) !important;
 
   display: inline-flex;
   align-items: center;
@@ -268,13 +269,14 @@ textarea {
   min-width: var(--_btn-size);
 
   padding-inline: var(--_btn-padding);
-  padding-block: calc(var(--_btn-padding) / 2);
+  padding-block: 0;
 
   >.nds-label,
   i {
     font-weight: 500;
     text-decoration: none;
     font-size: var(--_btn-FS);
+    line-height: var(--_btn-LH);
   }
 }
 

@@ -130,6 +130,8 @@
     i {
         transition: transform var(--nds-transition);
         transform: rotate(var(--_icon-rotate, 0deg));
+        width: calc(var(--_btn-icon-size) - 4px);
+        height: calc(var(--_btn-icon-size) - 4px);
     }
 }
 

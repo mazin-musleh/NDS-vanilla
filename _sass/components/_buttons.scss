@@ -120,11 +120,16 @@
   &.nds-md {
     --btn-size: 32px;
     --btn-indicator-size: 3px;
+    // Pin label typography to text-sm so LH matches the design system (20, not the calc's 21)
+    --btn-FS: var(--typo-text-sm-FS);
+    --btn-LH: var(--typo-text-sm-LH);
   }
 
   &.nds-sm {
     --btn-size: 24px;
     --btn-indicator-size: 2px;
+    --btn-FS: var(--typo-text-xs-FS);
+    --btn-LH: var(--typo-text-xs-LH);
   }
 
   // ==============================================
@@ -497,8 +502,8 @@
     &::after {
       content: "";
       display: inline-block;
-      width: 1em;
-      height: 1em;
+      width: var(--_btn-icon-size);
+      height: var(--_btn-icon-size);
       background: currentColor;
       mask: var(--nds-icon-more-horizontal) center / contain no-repeat;
     }
@@ -526,6 +531,10 @@
     &:is([data-state~="opening"], [data-state~="open"], [aria-expanded="true"])::after,
     :is([data-state~="opening"], [data-state~="open"])>&::after {
       transform: rotate(180deg);
+    }
+    &::after{
+      width: calc(var(--_btn-icon-size) - 4px);
+      height: calc(var(--_btn-icon-size) - 4px);
     }
   }
 
@@ -579,7 +588,7 @@
     }
   }
 
-  &:is(.nds-icon-only, .nds-circle) .nds-label {
+  &:is(.nds-icon-only) .nds-label {
     display: none;
   }
 
@@ -588,7 +597,7 @@
   }
 
   /* Icon-Only Button Configurations */
-  &:is(.nds-icon-only, .nds-circle/*, :has(i, img, svg):not(:has(span, p, div, h1, h2, h3, h4, h5, h6)) */) {
+  &.nds-icon-only {
     justify-content: center;
     width: var(--btn-size);
     padding: 0 var(--spacing-md);
@@ -609,11 +618,12 @@
         padding: 0 var(--spacing-lg);
       }
     }
-
-    &.nds-circle {
-      border-radius: 50%;
-    }
+    
   }
+
+  &.nds-circle {
+      border-radius: 999px;
+    }
 
   /* Icon Sizing */
   &.nds-btn i {

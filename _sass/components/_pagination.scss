@@ -82,9 +82,13 @@
 // ==============================================
 
 .nds-pagination-item:is(.nds-pagination-prev, .nds-pagination-next) {
-  .nds-btn i {
-    @include ltr {
-      transform: scaleX(-1);
+  .nds-btn {
+    aspect-ratio: 1;
+
+    i {
+      @include ltr {
+        transform: scaleX(-1);
+      }
     }
   }
 }
@@ -95,8 +99,7 @@
 
 // Trigger lives inside the wrapper, never portaled — descendant selectors
 // from `.nds-pagination-ellipsis` are safe.
-.nds-pagination-ellipsis .nds-dropmenu-trigger > .nds-label {
-  height: 1em;
+.nds-pagination-ellipsis .nds-dropmenu-trigger>.nds-label {
   display: none;
 }
 
@@ -157,9 +160,9 @@
 
 .nds-pagination-ellipsis .nds-dropmenu-trigger[data-state~="active"] {
 
-    >.nds-label {
-      display: block;
-    }
+  >.nds-label {
+    display: block;
+  }
 
   &::before {
     display: none;

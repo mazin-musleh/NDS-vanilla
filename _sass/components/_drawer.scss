@@ -83,10 +83,13 @@
 
     // Button/link styling within drawer
     >.nds-btn {
+        --btn-size: 32px;
         --btn-height: var(--drawer-btn-height, fit-content);
+        --btn-height-min: 36px;
         --btn-width: 100%;
         --btn-gap: var(--drawer-btn-gap, var(--spacing-md));
         justify-content: flex-start;
+        
 
         // Label takes available space
         .nds-label {
@@ -144,6 +147,10 @@
         --btn-bg: var(--button-background-transparent-default);
         --btn-indicator-selected: var(--background-primary);
         --btn-bg-selected: var(--button-background-transparent-default);
+
+        .nds-label{
+            font-weight: 600;
+        }
     }
 
     // :where() keeps the match logic but contributes 0 specificity, so
@@ -276,10 +283,6 @@
 .nds-drawer-list li > ul > li {
     display: flex;
     color: inherit;
-
-    &:not(:first-child) {
-        margin-block-start: var(--spacing-xs);
-    }
 
     > .nds-btn {
         font-weight: 600;

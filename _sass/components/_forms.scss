@@ -302,6 +302,7 @@ fieldset {
 
     >i {
         align-self: center;
+        font-size: 20px;
     }
 
     >input {
@@ -386,8 +387,14 @@ fieldset {
             margin-inline-start: calc(var(--spacing-md) * -1);
         }
 
+        &:not(.nds-prefix, .nds-suffix) {
+            >.nds-btn {
+                --btn-size: 32px;
+            }
+        }
+
         >*:not([hidden]):not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
-            --btn-height:100%;
+            --btn-height: 100%;
             --btn-height-min: var(--btn-height);
             --btn-radius: var(--_input-radius);
             padding-block: 0;
