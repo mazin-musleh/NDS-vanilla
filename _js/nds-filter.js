@@ -200,7 +200,7 @@
                 } else {
                     this.handleFormSubmit(e);
                 }
-            });
+            }, { signal: this._ac.signal });
         }
 
         /**
@@ -1071,12 +1071,13 @@
         }
 
         setupDropmenuSearch(searchInput, clearBtn) {
+            const signal = this._ac.signal;
             searchInput.addEventListener('input', () => {
                 if (clearBtn) {
                     this.updateClearButtonVisibility(searchInput, clearBtn);
                 }
                 this.updateApplyButtonLabel();
-            });
+            }, { signal });
 
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
@@ -1100,18 +1101,19 @@
                     // Client-side mode: apply filters
                     this.applyFilters();
                 }
-            });
+            }, { signal });
 
             if (clearBtn) {
                 clearBtn.addEventListener('click', () => {
                     searchInput.value = '';
                     this.updateClearButtonVisibility(searchInput, clearBtn);
                     this.updateApplyButtonLabel();
-                });
+                }, { signal });
             }
         }
 
         setupDirectSearch(searchInput, clearBtn) {
+            const signal = this._ac.signal;
             const searchContainer = searchInput.closest('.nds-search-box, .nds-form-control')?.parentElement ||
                                    searchInput.closest('.nds-search-content')?.parentElement ||
                                    searchInput.parentElement;
@@ -1123,7 +1125,7 @@
                 if (clearBtn) {
                     this.updateClearButtonVisibility(searchInput, clearBtn);
                 }
-            });
+            }, { signal });
 
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
@@ -1132,13 +1134,13 @@
                     // Centralized logic: applyDirectSearch → applyFilters (handles both modes)
                     this.applyDirectSearch(searchInput);
                 }
-            });
+            }, { signal });
 
             if (searchBtn) {
                 searchBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.applyDirectSearch(searchInput);
-                });
+                }, { signal });
             }
 
             if (clearBtn) {
@@ -1161,7 +1163,7 @@
                     } else {
                         this.applyFilters();
                     }
-                });
+                }, { signal });
             }
         }
 
@@ -1291,7 +1293,7 @@
                 input.addEventListener('change', () => {
                     this.updateFilterCriteria(filterName);
                     this.updateApplyButtonLabel();
-                });
+                }, { signal: this._ac.signal });
             });
         }
 
@@ -1786,7 +1788,7 @@
                 resetButton.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.reset();
-                });
+                }, { signal: this._ac.signal });
             }
         }
 

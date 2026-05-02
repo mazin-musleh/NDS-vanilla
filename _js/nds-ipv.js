@@ -37,6 +37,12 @@
                 imageCounter: document.getElementById('ndsIpvImageCounter')
             };
 
+            // Instance-lifetime controller for thumbnail and control listeners.
+            // Separate from this._ac (which attachGlobalEvents resets on reinit)
+            // so these listeners survive any future reinit and only detach on
+            // destroy().
+            this._instanceAc = new AbortController();
+
             this.init();
         }
 
@@ -349,8 +355,9 @@
                 return !thumb.closest('code, .code-example');
             });
 
+            const { signal } = this._instanceAc;
             this.state.thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', () => this.open(thumb));
+                thumb.addEventListener('click', () => this.open(thumb), { signal });
             });
         }
 
@@ -365,13 +372,14 @@
                 '.nds-ipv-next-btn': () => this.showNext()
             };
 
+            const { signal } = this._instanceAc;
             Object.entries(buttons).forEach(([sel, fn]) => {
                 const btn = document.querySelector(sel);
                 if (btn) {
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
                         fn();
-                    });
+                    }, { signal });
                 }
             });
         }
@@ -390,6 +398,11 @@
             document.addEventListener('mousemove', (e) => this.handleMouseMove(e), { signal });
             document.addEventListener('mouseup', () => this.handleMouseUp(), { signal });
             document.addEventListener('keydown', (e) => this.handleKeydown(e), { signal });
+        }
+
+        destroy() {
+            if (this._ac) this._ac.abort();
+            if (this._instanceAc) this._instanceAc.abort();
         }
 
         // Static factory method

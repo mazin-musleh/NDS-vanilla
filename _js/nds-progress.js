@@ -51,12 +51,15 @@
     function setValue(el, value) { el.dataset.value = value; }
     function setOutOf(el, num, max) { el.dataset.num = num; el.dataset.max = max; }
 
+    let _offAttrChange;
+
     function init() {
         document.querySelectorAll(SEL).forEach(el => {
             if (el.dataset.value != null || el.dataset.num != null) syncFromData(el);
         });
 
-        NDS.onAttrChange(SEL, ATTRS, els => els.forEach(syncFromData));
+        if (_offAttrChange) _offAttrChange();
+        _offAttrChange = NDS.onAttrChange(SEL, ATTRS, els => els.forEach(syncFromData));
     }
 
     NDS.Progress = { init, initCircle: syncFromData, setValue, setOutOf };

@@ -305,6 +305,8 @@
 
     // Simple global API
     const steppers = new Map();
+    let _offDataAttrChange;
+    let _offClassChange;
 
     function init() {
         document.querySelectorAll('.nds-stepper:not([data-initialized])').forEach(element => {
@@ -326,7 +328,8 @@
         });
 
         // Shared attribute observer for all steppers
-        NDS.onAttrChange('.nds-stepper', ['data-current', 'data-total'], els => {
+        if (_offDataAttrChange) _offDataAttrChange();
+        _offDataAttrChange = NDS.onAttrChange('.nds-stepper', ['data-current', 'data-total'], els => {
             els.forEach(el => {
                 const stepper = el.ndsStepper;
                 if (!stepper || stepper.isInternalUpdate) return;
@@ -358,7 +361,8 @@
         // breakpoint-variant swaps (e.g. demo toggles flipping nds-radial-sm
         // for nds-vertical-sm) apply immediately. Pooled through the same
         // body-level MutationObserver that drives data-current/total above.
-        NDS.onAttrChange('.nds-stepper', ['class'], els => {
+        if (_offClassChange) _offClassChange();
+        _offClassChange = NDS.onAttrChange('.nds-stepper', ['class'], els => {
             els.forEach(el => {
                 const stepper = el.ndsStepper;
                 if (stepper && stepper._reapplyLayoutIfChanged) stepper._reapplyLayoutIfChanged();
