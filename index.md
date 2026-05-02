@@ -284,7 +284,7 @@ exclude_showcase: true
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-code-circle"></i>
-                        <span class="nds-label">~78 KB Total JS (gzipped)</span>
+                        <span class="nds-label">~84 KB Total JS (gzipped)</span>
                     </span>
                     <p class="nds-item-desc">The full component library in a single bundle for better compression, simpler deployment, and minimum requests. Components initialize as needed.</p>
                 </div>
