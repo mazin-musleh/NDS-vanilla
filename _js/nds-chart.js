@@ -229,10 +229,12 @@
             const w = wrap.clientWidth || this.el.clientWidth || 600;
             const h = height || 350;
             const hasY = this.opts.yaxis?.show !== false;
-            const padTop = 20, padBottom = 40 + extraPadBottom;
+            const pad = this.opts.padding || {};
             const axisPad = hasY ? 55 : 20;
-            const padLeft = isRTL ? 20 : axisPad;
-            const padRight = isRTL ? axisPad : 20;
+            const padTop = pad.top ?? 20;
+            const padBottom = (pad.bottom ?? 40) + extraPadBottom;
+            const padLeft = pad.left ?? (isRTL ? 20 : axisPad);
+            const padRight = pad.right ?? (isRTL ? axisPad : 20);
             return {
                 w, h, padTop, padBottom, padLeft, padRight, isRTL,
                 plotW: w - padLeft - padRight,
@@ -384,7 +386,17 @@
             this.el.setAttribute('data-chart-type', this.opts.type);
 
             const { type } = this.opts;
-            this._isRTL = NDS.isRTL;
+            // Direction resolution:
+            //   1. opts.direction              — explicit config override ('ltr' | 'rtl')
+            //   2. computed CSS direction      — covers both `dir="…"` attribute on any
+            //      ancestor AND CSS `direction: …` set on a wrapper (e.g. metric chart)
+            // Computed direction always returns 'ltr' or 'rtl' (HTML default is ltr),
+            // so no explicit page fallback is needed.
+            if (this.opts.direction) {
+                this._isRTL = this.opts.direction === 'rtl';
+            } else {
+                this._isRTL = getComputedStyle(this.el).direction === 'rtl';
+            }
 
             const hasAxes = type === 'bar' || type === 'line';
             const yTitle = this.opts.yaxis?.title;
@@ -698,34 +710,67 @@
                 }));
             });
 
-            // Layer 3: Dots (refs collected per index for crosshair activation)
+            // Layer 2.5: Spotlight halo — persistent indicator, fixed at the configured
+            // index (e.g. 'last'). Only the inner dot at that index gets the --spotlight
+            // class to inflate via CSS; hover --active dots elsewhere on the line do NOT
+            // get a halo (transient hover ≠ persistent marker).
+            const spotlightOpt = line?.spotlight;
+            let spotlightHomeIdx = -1;
+            if (spotlightOpt !== undefined && spotlightOpt !== false && spotlightOpt !== null) {
+                const idx = spotlightOpt === 'last' ? catLabels.length - 1
+                    : spotlightOpt === 'first' ? 0
+                    : Number(spotlightOpt);
+                if (Number.isFinite(idx) && idx >= 0 && idx < catLabels.length) {
+                    spotlightHomeIdx = idx;
+                    computed.forEach(({ pts, color }) => {
+                        const pt = pts.find(p => p.idx === idx);
+                        if (!pt) return;
+                        svg.appendChild(svgEl('circle', {
+                            cx: pt.x, cy: pt.y, r: dotR * 2.5,
+                            fill: color, 'fill-opacity': 0.18,
+                            class: 'nds-chart-spotlight-halo',
+                            style: 'pointer-events:none;',
+                        }));
+                    });
+                }
+            }
+
+            // Layer 3: Dots (always rendered; CSS hides all but --active/--spotlight when
+            // showDots is false). Single rendering path covers both visible and sparkline modes.
             const enableCrosshair = line?.crosshair !== false;
             const dotsByIdx = catLabels.map(() => []);
+            this.el.classList.toggle('nds-chart--show-dots', showDots);
 
-            if (showDots) {
-                computed.forEach(({ s, pts, color }) => {
-                    pts.forEach(p => {
-                        const dot = svgEl('circle', {
-                            cx: p.x, cy: p.y, r: dotR,
-                            fill: 'var(--_chart-dot-fill)', stroke: color, 'stroke-width': 2,
-                            class: 'nds-chart-dot',
-                        });
-                        svg.appendChild(dot);
-                        dotsByIdx[p.idx].push(dot);
-
-                        // Per-dot tooltips only when crosshair is off
-                        if (!enableCrosshair) {
-                            const hitArea = svgEl('circle', {
-                                cx: p.x, cy: p.y, r: dotR * 3,
-                                fill: 'transparent', class: 'nds-chart-dot-hit',
-                            });
-                            this._bindTip(hitArea,
-                                `<strong>${NDS.escapeHtml(s.name)}</strong><br>${NDS.escapeHtml(catLabels[p.idx])}: ${NDS.escapeHtml(this._fmtVal(p.val))}`,
-                                dot, 'nds-chart-dot--active');
-                            svg.appendChild(hitArea);
-                        }
+            computed.forEach(({ s, pts, color }) => {
+                pts.forEach(p => {
+                    const dot = svgEl('circle', {
+                        cx: p.x, cy: p.y, r: dotR,
+                        fill: 'var(--_chart-dot-fill)', stroke: color, 'stroke-width': 2,
+                        class: 'nds-chart-dot',
                     });
+                    svg.appendChild(dot);
+                    dotsByIdx[p.idx].push(dot);
+
+                    // Per-dot tooltips only when crosshair is off (and only when dots are visible —
+                    // hidden dots have no surface to hover, so the hit area would be misleading).
+                    if (!enableCrosshair && showDots) {
+                        const hitArea = svgEl('circle', {
+                            cx: p.x, cy: p.y, r: dotR * 3,
+                            fill: 'transparent', class: 'nds-chart-dot-hit',
+                        });
+                        this._bindTip(hitArea,
+                            `<strong>${NDS.escapeHtml(s.name)}</strong><br>${NDS.escapeHtml(catLabels[p.idx])}: ${NDS.escapeHtml(this._fmtVal(p.val))}`,
+                            dot, 'nds-chart-dot--active');
+                        svg.appendChild(hitArea);
+                    }
                 });
+            });
+
+            // Mark the spotlight home index (visible via --spotlight class). Stays put;
+            // hover only toggles --active on the nearest dot, leaving the spotlight alone.
+            if (spotlightHomeIdx >= 0) {
+                (dotsByIdx[spotlightHomeIdx] || []).forEach(d =>
+                    d.classList.add('nds-chart-dot--spotlight'));
             }
 
             // Layer 4: Crosshair line + plot-area overlay (snaps to nearest x-index on hover)
@@ -742,6 +787,7 @@
                     style: 'display:none',
                 });
                 svg.appendChild(crosshair);
+
 
                 const overlay = svgEl('rect', {
                     x: L.padLeft, y: L.padTop,
@@ -818,6 +864,7 @@
                             const action = i === nearest ? 'add' : 'remove';
                             dotsByIdx[i].forEach(d => d.classList[action]('nds-chart-dot--active'));
                         }
+
 
                         if (this.opts.tooltip?.show !== false && this._tooltip) {
                             // Build tip as DOM so caller-supplied colors[] flow through

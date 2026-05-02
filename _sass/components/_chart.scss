@@ -4,23 +4,29 @@
 // Override --chart-* custom properties to theme.
 
 .nds-chart {
-    --_chart-color-1: var(--chart-color-1, var(--colors-primary-sa-flag-600));
-    --_chart-color-2: var(--chart-color-2, var(--colors-primary-sa-flag-400));
-    --_chart-color-3: var(--chart-color-3, var(--colors-neutral-200));
-    --_chart-color-4: var(--chart-color-4, var(--colors-primary-sa-flag-500));
-    --_chart-color-5: var(--chart-color-5, var(--colors-primary-sa-flag-200));
-    --_chart-color-6: var(--chart-color-6, var(--colors-primary-sa-flag-800));
+    // Color resolution chain (highest priority first):
+    //   1. --chart-color-N           — public consumer override (set on the chart or any ancestor)
+    //   2. --_chart-type-color-N     — type-specific palette default (set per chart-type below)
+    //   3. base default              — universal fallback when neither is set
+    // Type rules MUST set the internal --_chart-type-color-N tokens, never the public
+    // --chart-color-N tokens, otherwise they defeat consumer overrides set on parents.
+    --_chart-color-1: var(--chart-color-1, var(--_chart-type-color-1, var(--colors-primary-sa-flag-600)));
+    --_chart-color-2: var(--chart-color-2, var(--_chart-type-color-2, var(--colors-primary-sa-flag-400)));
+    --_chart-color-3: var(--chart-color-3, var(--_chart-type-color-3, var(--colors-neutral-200)));
+    --_chart-color-4: var(--chart-color-4, var(--_chart-type-color-4, var(--colors-primary-sa-flag-500)));
+    --_chart-color-5: var(--chart-color-5, var(--_chart-type-color-5, var(--colors-primary-sa-flag-200)));
+    --_chart-color-6: var(--chart-color-6, var(--_chart-type-color-6, var(--colors-primary-sa-flag-800)));
     --_chart-area-opacity: var(--chart-area-opacity, 0.15);
     --_chart-grid-color: var(--chart-grid-color, var(--colors-neutral-100));
 
     @include dark {
         --_chart-grid-color: var(--chart-grid-color, var(--colors-neutral-700));
-        --_chart-color-1: var(--chart-color-1, var(--colors-primary-sa-flag-600));
-        --_chart-color-2: var(--chart-color-2, var(--colors-primary-sa-flag-400));
-        --_chart-color-3: var(--chart-color-3, var(--colors-neutral-200));
-        --_chart-color-4: var(--chart-color-4, var(--colors-primary-sa-flag-500));
-        --_chart-color-5: var(--chart-color-5, var(--colors-primary-sa-flag-200));
-        --_chart-color-6: var(--chart-color-6, var(--colors-primary-sa-flag-300));
+        --_chart-color-1: var(--chart-color-1, var(--_chart-type-color-1, var(--colors-primary-sa-flag-600)));
+        --_chart-color-2: var(--chart-color-2, var(--_chart-type-color-2, var(--colors-primary-sa-flag-400)));
+        --_chart-color-3: var(--chart-color-3, var(--_chart-type-color-3, var(--colors-neutral-200)));
+        --_chart-color-4: var(--chart-color-4, var(--_chart-type-color-4, var(--colors-primary-sa-flag-500)));
+        --_chart-color-5: var(--chart-color-5, var(--_chart-type-color-5, var(--colors-primary-sa-flag-200)));
+        --_chart-color-6: var(--chart-color-6, var(--_chart-type-color-6, var(--colors-primary-sa-flag-300)));
     }
     --_chart-text: var(--chart-text, var(--text-primary-paragraph));
     --_chart-label: var(--chart-label, var(--text-default));
@@ -44,38 +50,38 @@
 
 .nds-chart[data-chart-type="pie"],
 .nds-chart[data-chart-type="donut"] {
-    --chart-color-1: var(--colors-primary-sa-flag-600);
-    --chart-color-2: var(--colors-primary-sa-flag-500);
-    --chart-color-3: var(--colors-primary-sa-flag-400);
-    --chart-color-4: var(--colors-primary-sa-flag-200);
-    --chart-color-5: var(--colors-primary-sa-flag-800);
-    --chart-color-6: var(--colors-primary-sa-flag-900);
+    --_chart-type-color-1: var(--colors-primary-sa-flag-600);
+    --_chart-type-color-2: var(--colors-primary-sa-flag-500);
+    --_chart-type-color-3: var(--colors-primary-sa-flag-400);
+    --_chart-type-color-4: var(--colors-primary-sa-flag-200);
+    --_chart-type-color-5: var(--colors-primary-sa-flag-800);
+    --_chart-type-color-6: var(--colors-primary-sa-flag-900);
 
     @include dark {
-        --chart-color-1: var(--colors-primary-sa-flag-600);
-        --chart-color-2: var(--colors-primary-sa-flag-500);
-        --chart-color-3: var(--colors-primary-sa-flag-400);
-        --chart-color-4: var(--colors-primary-sa-flag-200);
-        --chart-color-5: var(--colors-primary-sa-flag-300);
-        --chart-color-6: var(--colors-primary-sa-flag-100);
+        --_chart-type-color-1: var(--colors-primary-sa-flag-600);
+        --_chart-type-color-2: var(--colors-primary-sa-flag-500);
+        --_chart-type-color-3: var(--colors-primary-sa-flag-400);
+        --_chart-type-color-4: var(--colors-primary-sa-flag-200);
+        --_chart-type-color-5: var(--colors-primary-sa-flag-300);
+        --_chart-type-color-6: var(--colors-primary-sa-flag-100);
     }
 }
 
 .nds-chart[data-chart-type="line"] {
-    --chart-color-1: var(--colors-primary-sa-flag-900);
-    --chart-color-2: var(--colors-primary-sa-flag-600);
-    --chart-color-3: var(--colors-primary-sa-flag-200);
-    --chart-color-4: var(--colors-primary-sa-flag-500);
-    --chart-color-5: var(--colors-primary-sa-flag-400);
-    --chart-color-6: var(--colors-primary-sa-flag-800);
+    --_chart-type-color-1: var(--colors-primary-sa-flag-600);
+    --_chart-type-color-2: var(--colors-primary-sa-flag-900);
+    --_chart-type-color-3: var(--colors-primary-sa-flag-200);
+    --_chart-type-color-4: var(--colors-primary-sa-flag-500);
+    --_chart-type-color-5: var(--colors-primary-sa-flag-400);
+    --_chart-type-color-6: var(--colors-primary-sa-flag-800);
 
     @include dark {
-        --chart-color-1: var(--colors-primary-sa-flag-600);
-        --chart-color-2: var(--colors-primary-sa-flag-400);
-        --chart-color-3: var(--colors-primary-sa-flag-200);
-        --chart-color-4: var(--colors-primary-sa-flag-500);
-        --chart-color-5: var(--colors-primary-sa-flag-300);
-        --chart-color-6: var(--colors-primary-sa-flag-100);
+        --_chart-type-color-1: var(--colors-primary-sa-flag-600);
+        --_chart-type-color-2: var(--colors-primary-sa-flag-400);
+        --_chart-type-color-3: var(--colors-primary-sa-flag-200);
+        --_chart-type-color-4: var(--colors-primary-sa-flag-500);
+        --_chart-type-color-5: var(--colors-primary-sa-flag-300);
+        --_chart-type-color-6: var(--colors-primary-sa-flag-100);
     }
 }
 
@@ -91,14 +97,13 @@
     min-width: 0;
 }
 
-.nds-chart-canvas {
-    overflow: hidden;
-}
-
 .nds-chart-svg {
     display: block;
     width: 100%;
     height: auto;
+    // Browsers default <svg> to overflow:hidden, which clips spotlight halos and
+    // hover dots near the plot edges. Allow them to render past the viewBox.
+    overflow: visible;
 }
 
 // ── Grid & Axes ───────────────────────────────────────────────
@@ -180,13 +185,22 @@
     stop-opacity: 0;
 }
 
+// Dots are hidden by default; only the active hover one, the persistent spotlight,
+// or charts that opted in via .nds-chart--show-dots render them.
 .nds-chart-dot {
     transition: r 0.15s ease;
     pointer-events: none;
+    display: none;
 
-    &--active {
+    &--active,
+    &--spotlight {
+        display: block;
         r: 6;
     }
+}
+
+.nds-chart--show-dots .nds-chart-dot {
+    display: block;
 }
 
 .nds-chart-dot-hit {

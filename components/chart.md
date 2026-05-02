@@ -69,7 +69,7 @@ direction: ltr
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-chart-bar-js" id="tab-chart-bar-js">
-                                        <span class="nds-tab-label">JavaScript</span>
+                                        <span class="nds-tab-label">JS API</span>
                                     </button>
                                 </nav>
                             </div>
@@ -196,7 +196,7 @@ NDS.Chart.create('#my-chart', {
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-chart-line-js" id="tab-chart-line-js">
-                                        <span class="nds-tab-label">JavaScript</span>
+                                        <span class="nds-tab-label">JS API</span>
                                     </button>
                                 </nav>
                             </div>
@@ -334,7 +334,7 @@ NDS.Chart.create('#my-chart', {
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chart-dense-js" id="tab-chart-dense-js">
-                                        <span class="nds-tab-label">JavaScript</span>
+                                        <span class="nds-tab-label">JS API</span>
                                     </button>
                                 </nav>
                             </div>
@@ -412,7 +412,7 @@ NDS.Chart.create('#my-chart', {
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-chart-pie-js" id="tab-chart-pie-js">
-                                        <span class="nds-tab-label">JavaScript</span>
+                                        <span class="nds-tab-label">JS API</span>
                                     </button>
                                 </nav>
                             </div>
@@ -509,7 +509,7 @@ NDS.Chart.create('#my-chart', {
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-chart-donut-js" id="tab-chart-donut-js">
-                                        <span class="nds-tab-label">JavaScript</span>
+                                        <span class="nds-tab-label">JS API</span>
                                     </button>
                                 </nav>
                             </div>
@@ -765,7 +765,7 @@ NDS.Chart.create('#my-chart', {
                     <li>Use <strong>line charts</strong> for continuous data, trends, and time series. Enable area fill to emphasize volume over shape</li>
                     <li>Use <strong>pie or donut charts</strong> for showing proportions of a whole. Keep to 6 or fewer segments so the chart stays readable</li>
                     <li>Avoid pie charts when differences between segments are small. A bar chart makes small differences easier to compare</li>
-                    <li>For simple numbers without trends, use a <a href="{{ 'components/statistic-card' | relative_url }}">Statistic Card</a> instead of a chart</li>
+                    <li>For a headline number with a trend sparkline, use a <a class="nds-color" href="{{ 'components/metric' | relative_url }}">Metric</a> tile instead of a standalone chart</li>
                     <li>Use HTML <code class="nds-inline-code lang-html">data-chart-*</code> attributes for static charts that don't change. Use the JS API for dynamic or user-driven data that updates after load</li>
                     <li>Set axis titles (<code class="nds-inline-code lang-js">yaxis.title</code>, <code class="nds-inline-code lang-js">xaxis.title</code>) to label what the numbers represent. Without titles, the chart relies on the legend alone</li>
                     <li>Override <code class="nds-inline-code lang-html">--chart-color-*</code> properties to match your project's brand palette. The default palette uses Saudi flag green tones</li>
@@ -864,6 +864,18 @@ NDS.Chart.create('#my-chart', {
                             <td>true</td>
                             <td>Show/hide hover tooltips</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">padding</code></td>
+                            <td>object</td>
+                            <td>auto</td>
+                            <td>Override plot padding per side: <code class="nds-inline-code lang-js">{ top, bottom, left, right }</code> in pixels. Defaults are picked from the axis layout (top 20, bottom 40, sides 20 or 55 depending on whether <code class="nds-inline-code lang-js">yaxis.show</code> is true). Set <code class="nds-inline-code lang-js">{ top: 0, bottom: 0, left: 0, right: 0 }</code> for edge-to-edge sparklines.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">direction</code></td>
+                            <td>string</td>
+                            <td>auto</td>
+                            <td><code class="nds-inline-code lang-js">'ltr'</code> or <code class="nds-inline-code lang-js">'rtl'</code> to force a reading direction. Default reads the chart's computed CSS direction, which honors any <code class="nds-inline-code lang-html">dir="..."</code> attribute or <code class="nds-inline-code lang-html">direction:</code> CSS rule on an ancestor.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -955,6 +967,18 @@ NDS.Chart.create('#my-chart', {
                             <td>boolean</td>
                             <td>false</td>
                             <td>Fill area under lines</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">line.crosshair</code></td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Vertical hover line that snaps to the nearest data point and enlarges its dot. Disable to fall back to per-dot hover tooltips.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">line.spotlight</code></td>
+                            <td>number | string</td>
+                            <td>none</td>
+                            <td>Persistent highlight on a single data point: numeric index, <code class="nds-inline-code lang-js">'first'</code>, or <code class="nds-inline-code lang-js">'last'</code>. Renders a translucent halo and enlarges the dot at that position. Used by the <a class="nds-color" href="{{ 'components/metric' | relative_url }}">Metric</a> tile to anchor the comparison value.</td>
                         </tr>
                     </tbody>
                 </table>
