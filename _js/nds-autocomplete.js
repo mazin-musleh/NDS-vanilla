@@ -194,14 +194,16 @@
             this.input.addEventListener('focus', this._onFocus);
 
             // Sync aria-expanded when dropmenu opens/closes
-            this.container.addEventListener('nds:dropmenu:opened', () => {
+            this._onDropmenuOpened = () => {
                 this.input.setAttribute('aria-expanded', 'true');
-            });
-            this.container.addEventListener('nds:dropmenu:closed', () => {
+            };
+            this._onDropmenuClosed = () => {
                 this.input.setAttribute('aria-expanded', 'false');
                 this.input.removeAttribute('aria-activedescendant');
                 this.activeIndex = -1;
-            });
+            };
+            this.container.addEventListener('nds:dropmenu:opened', this._onDropmenuOpened);
+            this.container.addEventListener('nds:dropmenu:closed', this._onDropmenuClosed);
         }
 
         // ==============================================
@@ -584,6 +586,13 @@
 
             if (this.clearBtn && this._onClear) {
                 this.clearBtn.removeEventListener('click', this._onClear);
+            }
+
+            if (this._onDropmenuOpened) {
+                this.container.removeEventListener('nds:dropmenu:opened', this._onDropmenuOpened);
+            }
+            if (this._onDropmenuClosed) {
+                this.container.removeEventListener('nds:dropmenu:closed', this._onDropmenuClosed);
             }
 
             if (this.dropmenuInstance) {

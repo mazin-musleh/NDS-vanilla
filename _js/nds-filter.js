@@ -100,6 +100,10 @@
             // calls; released atomically in destroy() so the per-element
             // closures don't outlive the filter instance.
             this._offDOMAdds = [];
+            // Per-filter-element AbortControllers stored on the elements
+            // themselves (element._ndsFilterAC); tracked here so destroy()
+            // can release them all in one sweep.
+            this._filterElementACs = new Set();
             this.init();
         }
 
@@ -1287,13 +1291,25 @@
                 labels: labels           // Store value-to-label map
             };
 
+            // Per-filter-element controller: refresh()/populateFilter()/onDOMAdd
+            // cascades may re-call setupManualFilter on the same element with a
+            // fresh input set (or the same set after innerHTML='' rebuild).
+            // Aborting+resetting here releases the prior listener-target entries
+            // atomically so they don't accumulate on the long-lived this._ac.signal
+            // until destroy(). The per-input _ndsFilterBound flag is preserved
+            // (it's used by the onDOMAdd filter above to distinguish moves from
+            // genuine inserts), but it no longer gates the bind itself — every
+            // call re-wires every current input.
+            if (element._ndsFilterAC) element._ndsFilterAC.abort();
+            element._ndsFilterAC = new AbortController();
+            this._filterElementACs.add(element);
+
             inputs.forEach(input => {
-                if (input._ndsFilterBound) return;
                 input._ndsFilterBound = true;
                 input.addEventListener('change', () => {
                     this.updateFilterCriteria(filterName);
                     this.updateApplyButtonLabel();
-                }, { signal: this._ac.signal });
+                }, { signal: element._ndsFilterAC.signal });
             });
         }
 
@@ -2073,6 +2089,10 @@
             // would leak one closure per filter element for the page lifetime.
             this._offDOMAdds.forEach(off => off());
             this._offDOMAdds.length = 0;
+            this._filterElementACs.forEach(el => {
+                if (el._ndsFilterAC) { el._ndsFilterAC.abort(); delete el._ndsFilterAC; }
+            });
+            this._filterElementACs.clear();
             this.items.forEach(item => this.showItem(item));
             this.filterContainer.removeAttribute('data-nds-filter-initialized');
         }

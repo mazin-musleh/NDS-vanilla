@@ -139,10 +139,13 @@
 
         checkOverflow(wrapper);
 
-        content.addEventListener('scroll', NDS.rafThrottle(() => checkScrollPosition(wrapper)), { passive: true });
+        wrapper._ac = new AbortController();
+        const { signal } = wrapper._ac;
+
+        content.addEventListener('scroll', NDS.rafThrottle(() => checkScrollPosition(wrapper)), { passive: true, signal });
 
         if (btn) {
-            btn.addEventListener('click', () => scrollStep(wrapper));
+            btn.addEventListener('click', () => scrollStep(wrapper), { signal });
         }
 
         wrapper._offResizeObs = NDS.onElementResize(content, () => checkOverflow(wrapper));
@@ -157,6 +160,10 @@
     }
 
     function destroy(wrapper) {
+        if (wrapper._ac) {
+            wrapper._ac.abort();
+            delete wrapper._ac;
+        }
         if (wrapper._offResizeObs) {
             wrapper._offResizeObs();
             delete wrapper._offResizeObs;

@@ -182,6 +182,11 @@
 
         counters.forEach(counter => {
             if (!counterConfigs.has(counter)) return;
+            // Release any prior subscription so reinit() doesn't stack pooled
+            // IntersectionObserver entries on counters that haven't yet
+            // triggered (startCounter normally clears _ndsCounterOff on
+            // intersect; this handles the un-intersected case).
+            if (counter._ndsCounterOff) counter._ndsCounterOff();
             counter._ndsCounterOff = NDS.onIntersect(counter, startCounter, { threshold: 0.5 });
         });
     }

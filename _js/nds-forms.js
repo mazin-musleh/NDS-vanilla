@@ -1335,6 +1335,8 @@
         initClearButton: function(formControl, inputElements) {
             var clearButton = formControl.querySelector('.nds-form-action .nds-clear');
             if (!clearButton) return;
+            if (clearButton._ndsClearInit) return;
+            clearButton._ndsClearInit = true;
 
             clearButton.addEventListener('click', function(e) {
                 e.preventDefault();

@@ -154,6 +154,7 @@
 
         destroy() {
             this._ac.abort();
+            if (this._renderAC) { this._renderAC.abort(); this._renderAC = null; }
             if (this._offResize) { this._offResize(); this._offResize = null; }
             this.el.innerHTML = '';
             delete this.el.ndsChart;
@@ -381,6 +382,11 @@
             }
             this._deferCount = 0;
             this._activeHover = null;
+            // Per-render AbortController: overlay pointer listeners attach to this
+            // signal so the prior overlay's listener entries release on each rebuild
+            // instead of accumulating on the instance-lifetime this._ac until destroy.
+            if (this._renderAC) this._renderAC.abort();
+            this._renderAC = new AbortController();
             this.el.innerHTML = '';
             this.el.classList.add('nds-chart');
             this.el.setAttribute('data-chart-type', this.opts.type);
@@ -798,7 +804,7 @@
                 svg.appendChild(overlay);
 
                 let lastIdx = -1;
-                const signal = this._ac.signal;
+                const signal = this._renderAC.signal;
 
                 // Touch tooltips pin to the top of the chart and follow the crosshair X
                 // so the user's finger never covers them. Mouse keeps the cursor-follow
