@@ -354,7 +354,8 @@
                     '[hidden].nds-swiper, ' +
                     '[hidden].nds-paged-content, ' +
                     '[hidden].nds-footer, ' +
-                    '[hidden].nds-sideinfo '
+                    '[hidden].nds-sideinfo, ' +
+                    '[hidden].nds-digitalStamp-tab '
                 );
 
                 const collectEnd = performance.now();
