@@ -326,7 +326,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
                         <span class="nds-label">Item-aware Step</span>
                     </span>
-                    <p class="nds-item-desc">Each click advances the scroll by one viewport minus the first child's size and the fade distance, keeping one full item visible as an anchor for the next page.</p>
+                    <p class="nds-item-desc">One full item from the previous page stays visible as an anchor on the next click, so users never lose their place when paging through long lists or card tracks.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -374,10 +374,12 @@ direction: ltr
                 <ul>
                     <li>Use <strong>Scroll More</strong> when you need to fit a long list, chip row, or card track into a bounded area while preserving full access to every item</li>
                     <li>Set <code class="nds-inline-code lang-html">--scroll-max-height</code> for vertical lists and <code class="nds-inline-code lang-html">--scroll-max-width</code> for horizontal rows. Without a size limit the content will not overflow and the button will not appear</li>
+                    <li>Use a single wrapper for either direction; the axis is auto-detected from whichever dimension overflows, so the same markup works for vertical lists and horizontal rows</li>
                     <li>Do not use Scroll More for navigational tabs. Use <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a>, which has its own overflow and active-tab tracking</li>
                     <li>Do not use Scroll More for nested menus or multi-level navigation. Use <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a>, which handles submenu open/close state</li>
                     <li>Do not use Scroll More when a "Show all" affordance is enough and pagination is not needed. Use <a class="nds-color" href="{{ 'utilities/expandable-content' | relative_url }}">Expandable Content</a> instead</li>
                     <li>Keep the first child uniform in size when you expect item-aware paging. The step is computed from the first child; uneven sizes still work but the "one page at a time" feel is weaker</li>
+                    <li>Set <code class="nds-inline-code lang-html">--scroll-gap</code> when you want visible breathing room between the content and the show-more button. Pair with <code class="nds-inline-code lang-html">nds-divided</code> for a hairline separator on top of the gap</li>
                     <li>If children have borders, outlines, or shadows that get clipped by the overflow container, apply inline padding to <code class="nds-inline-code lang-html">.nds-scroll-more-content</code> to reserve breathing room</li>
                 </ul>
             </div>

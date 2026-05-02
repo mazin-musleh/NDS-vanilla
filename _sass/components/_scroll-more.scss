@@ -65,6 +65,12 @@
     &::-webkit-scrollbar { display: none; }
     scrollbar-width: none;
     -ms-overflow-style: none;
+
+    // Direct children must keep their natural width in flex contexts —
+    // otherwise items like buttons (with their own min-width) shrink to fit
+    // the container, scrollWidth never exceeds clientWidth, and the JS
+    // axis-detection sees no overflow. No effect in block/grid contexts.
+    > * { flex-shrink: 0; }
 }
 
 // Opt-in: snap each child's leading edge to the scroll container.
