@@ -143,6 +143,13 @@
   tags: ["CSS"]
   url: "/components/loading.html"
 
+- title: "Metric"
+  description: "Dashboard tile pairing a key statistic with an inline sparkline"
+  icon: '<i class="hgi hgi-stroke hgi-chart-line-data-01"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/metric.html"
+
 - title: "Modal"
   description: "Focused dialog overlays for confirmations and forms"
   icon: '<i class="hgi hgi-stroke hgi-browser"></i>'

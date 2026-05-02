@@ -1,0 +1,149 @@
+/**
+ * NDS Metric — content block for dashboard tiles
+ * Drops into .nds-card-content to render a stat with an inline sparkline.
+ * Card visual treatments (stroke, shadow, color) stay consumer-controlled.
+ */
+
+@use '../mixins' as *;
+
+// ==============================================
+// METRIC CONTAINER
+// ==============================================
+
+.nds-card-metric {
+  // Public custom properties (overridable per-card)
+  --_metric-trend-color: var(--metric-trend-color, var(--text-default));
+  --_metric-chart-color: var(--metric-chart-color, var(--colors-primary-sa-flag-600));
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-2xl);
+
+  // Default split: chart claims ~40% on the inline-end; .nds-card-metric-info fills the rest
+  > .nds-card-metric-chart {
+    flex: 1 0 40%;
+  }
+
+  // Full-width variant: chart wraps below the stat
+  &.nds-full > .nds-card-metric-chart {
+    flex: 1 0 100%;
+  }
+}
+
+// ==============================================
+// METRIC SUB-ELEMENTS
+// ==============================================
+
+.nds-card-metric-info {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--spacing-lg) var(--spacing-3xl);
+}
+
+.nds-card-metric-value {
+  display: block;
+  font-size: var(--typo-display-clamp-md-FS);
+  line-height: var(--typo-display-clamp-md-LH);
+  font-weight: 700;
+  color: var(--text-display);
+}
+
+.nds-card-metric-trend {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--spacing-md);
+  margin: 0;
+  font-size: var(--typo-text-sm-FS);
+  line-height: var(--typo-text-sm-LH);
+  color: var(--text-secondary-paragraph);
+  white-space: nowrap;
+
+  > i {
+    color: var(--_metric-trend-color);
+    font-size: 24px;
+  }
+
+  > strong {
+    color: var(--_metric-trend-color);
+    font-weight: 600;
+  }
+
+  // Modifier: swap the trade icon for a plain directional arrow (arrow-left-02 rotated).
+  // Default markup keeps trade-up/down; add .nds-arrow to opt into the arrow variant.
+  // Rotation is driven by the card's data-status, set in the block below.
+  &.nds-arrow > i.nds-icon {
+    --nds-icon: var(--nds-icon-arrow-left-02);
+  }
+}
+
+.nds-card-metric-chart {
+  // Sparkline always reads left-to-right (oldest → newest) regardless of page
+  // direction. The chart's JS reads the computed CSS direction, so this CSS
+  // setting is enough — no dir="ltr" attribute needed on the markup.
+  direction: ltr;
+
+  // Set --chart-color-1 (the chart's public override token) directly on .nds-chart
+  // so the chart's color-resolution chain picks up the metric's status-driven color.
+  .nds-chart {
+    --chart-color-1: var(--_metric-chart-color);
+    min-height: 0; // chart's hardcoded 200px floor in _chart.scss is too tall for sparklines
+  }
+}
+
+// ==============================================
+// CARD-LEVEL TREATMENT (scoped to metric-bearing cards)
+//   - data-status drives metric internals + featured-icon palette in one place
+//   - header uses centered alignment with a smaller card title
+//   - the trailing header button (e.g. 3-dot menu) is pushed to the end
+//   - actions slot gets a divider above
+// ==============================================
+
+.nds-card:has(.nds-card-metric) {
+  &[data-status="positive"] {
+    --metric-trend-color: var(--text-success);
+    --metric-chart-color: var(--border-success);
+    --icon-bg-color: var(--featuredicons-background-success-light);
+    --icon-color: var(--featuredicons-icon-success);
+    --dark-bg-color: var(--background-success);
+
+    .nds-card-metric-trend.nds-arrow > i.nds-icon::before {
+      transform: rotate(90deg);
+    }
+  }
+
+  &[data-status="negative"] {
+    --metric-trend-color: var(--text-error);
+    --metric-chart-color: var(--border-error);
+    --icon-bg-color: var(--featuredicons-background-error-light);
+    --icon-color: var(--featuredicons-icon-error);
+    --dark-bg-color: var(--background-error);
+
+    .nds-card-metric-trend.nds-arrow > i.nds-icon::before {
+      transform: rotate(-90deg);
+    }
+  }
+
+  > .nds-card-header {
+    align-items: center;
+
+    > .nds-btn:last-child {
+      margin-inline-start: auto;
+    }
+  }
+
+  .nds-card-title {
+    margin: 0;
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
+  }
+
+  > .nds-card-actions {
+    justify-content: space-between;
+    border-block-start: 1px solid var(--divider-color);
+    padding-block-start: var(--spacing-xl);
+  }
+}
