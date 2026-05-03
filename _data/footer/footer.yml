@@ -72,12 +72,21 @@ columns:
           label: "Huawei AppGallery"
 
 bottom:
+  # Top row above the copyright — underlined links, no separators
   links:
-    - label: "Site Map"
+    - label: "Footer Link"
       url: "#"
+    - label: "Footer Link"
+      url: "#"
+    - label: "Footer Link"
+      url: "#"
+    - label: "Footer Link"
+      url: "#"
+    - label: "Footer Link"
+      url: "#"
+  # Bottom row beneath the copyright — plain links, no underline
+  policy:
     - label: "Terms & Conditions"
       url: "#"
     - label: "Privacy Policy"
-      url: "#"
-    - label: "Accessibility"
       url: "#"

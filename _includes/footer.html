@@ -4,19 +4,19 @@
     {%- assign footer_data = site.data.footer[footer_data_file] -%}
     {%- if footer_data.columns and footer_data.columns.size > 0 %}
     <nav class="nds-footer-content" aria-label="Footer navigation">
-        {%- for column in footer_data.columns %}
-        {%- unless column.mobile_apps or column.social_icons %}
+        {%- comment -%} Link columns {%- endcomment -%}
+        {%- for column in footer_data.columns -%}
+        {%- if column.links %}
         <div class="nds-footer-column">
             <h3 class="nds-footer-heading">{{ column.heading }}</h3>
-            {%- if column.links %}
             <ul class="nds-footer-list">
                 {%- for link in column.links %}
+                {%- assign link_url = link.url -%}
+                {%- unless link.url contains "http" or link.url contains "mailto:" or link.url contains "tel:" or link.url contains "#" -%}
+                {%- assign link_url = link.url | relative_url -%}
+                {%- endunless %}
                 <li>
-                    {%- assign url_output = link.url -%}
-                    {%- unless link.url contains "http" or link.url contains "mailto:" or link.url contains "tel:" or link.url contains "#" -%}
-                    {%- assign url_output = link.url | relative_url -%}
-                    {%- endunless %}
-                    <a class="nds-link nds-footer-link{% if link.class %} {{ link.class }}{% endif %}" href="{{ url_output }}"
+                    <a class="nds-link nds-footer-link{% if link.class %} {{ link.class }}{% endif %}" href="{{ link_url }}"
                         {%- if link.target %} target="{{ link.target }}" rel="noopener noreferrer"{%- endif %}>
                         {%- if link.icon %}<i class="nds-icon {{ link.icon }}" aria-hidden="true"></i>{%- endif %}
                         <span class="nds-label">{{ link.label }}</span>
@@ -24,35 +24,24 @@
                 </li>
                 {%- endfor %}
             </ul>
-            {%- endif %}
         </div>
-        {%- endunless %}
-        {%- endfor %}
+        {%- endif -%}
+        {%- endfor -%}
 
-        {%- assign has_icons_column = false -%}
-        {%- for column in footer_data.columns -%}
-            {%- if column.social_icons or column.mobile_apps -%}{%- assign has_icons_column = true -%}{%- endif -%}
-        {%- endfor %}
-        {%- if has_icons_column %}
-        <div class="nds-footer-column nds-footer-icons-column">
-            {%- for column in footer_data.columns %}
-            {%- if column.social_icons %}
-            <div class="nds-footer-subblock">
+        {%- comment -%} Merged icons column: all social + mobile-app groups {%- endcomment -%}
+        {%- assign icon_cols = footer_data.columns | where_exp: "c", "c.social_icons or c.mobile_apps" -%}
+        {%- if icon_cols.size > 0 %}
+        <div class="nds-footer-column nds-footer-icons">
+            {%- for column in icon_cols %}
+            <div class="nds-footer-icon-group">
                 <h3 class="nds-footer-heading">{{ column.heading }}</h3>
-                <div class="nds-footer-social-icons">
+                <div class="nds-footer-icon-row">
                     {%- for social in column.social_icons %}
                     <a class="nds-btn nds-secondary-outline nds-icon-only" href="{{ social.url }}"
                         target="_blank" aria-label="{{ social.label }}">
                         <i class="nds-icon {{ social.icon }}" aria-hidden="true"></i>
                     </a>
                     {%- endfor %}
-                </div>
-            </div>
-            {%- endif %}
-            {%- if column.mobile_apps %}
-            <div class="nds-footer-subblock">
-                <h3 class="nds-footer-heading">{{ column.heading }}</h3>
-                <div class="nds-footer-mobile-app-icons">
                     {%- for app in column.mobile_apps.apps %}
                     <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only"
                         href="{{ app.url }}" target="_blank" aria-label="{{ app.label }}">
@@ -61,7 +50,6 @@
                     {%- endfor %}
                 </div>
             </div>
-            {%- endif %}
             {%- endfor %}
         </div>
         {%- endif %}
@@ -70,23 +58,37 @@
     <hr class="nds-divider nds-lg">
     <!-- Footer Bottom -->
     <div class="nds-footer-bottom">
-        <div class="nds-footer-copyright">
+        <div class="nds-footer-meta">
             {%- if footer_data.bottom.links and footer_data.bottom.links.size > 0 %}
             <div class="nds-footer-links">
                 {%- for link in footer_data.bottom.links %}
-                {%- assign url_output = link.url -%}
+                {%- assign link_url = link.url -%}
                 {%- unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" -%}
-                {%- assign url_output = link.url | relative_url -%}
+                {%- assign link_url = link.url | relative_url -%}
                 {%- endunless %}
-                <a class="nds-link" href="{{ url_output }}">
+                <a class="nds-link" href="{{ link_url }}">
                     <span class="nds-label">{{ link.label }}</span>
                 </a>
-                {%- unless forloop.last %}<span class="nds-footer-separator">|</span>{%- endunless %}
                 {%- endfor %}
             </div>
             {%- endif %}
-            <div class="nds-footer-copy-right">
-                <span>All Rights Reserved {{ site.title }} &copy; {{ site.time | date: '%Y' }}</span>
+            <div class="nds-footer-legal">
+                <div class="nds-footer-copyright">
+                    <span>All Rights Reserved {{ site.title }} &copy; {{ site.time | date: '%Y' }}</span>
+                </div>
+                {%- if footer_data.bottom.policy and footer_data.bottom.policy.size > 0 %}
+                <div class="nds-footer-policy">
+                    {%- for link in footer_data.bottom.policy %}
+                    {%- assign link_url = link.url -%}
+                    {%- unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" -%}
+                    {%- assign link_url = link.url | relative_url -%}
+                    {%- endunless %}
+                    <a class="nds-link" href="{{ link_url }}">
+                        <span class="nds-label">{{ link.label }}</span>
+                    </a>
+                    {%- endfor %}
+                </div>
+                {%- endif %}
             </div>
         </div>
         {%- assign footer_logos_file = page.footerlogos | default: site.footerlogos | default: "footerlogos" -%}

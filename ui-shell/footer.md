@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Footer Structure</h2>
-            <p class="nds-section-description">The footer sits at the bottom of every page and is split into two regions: a multi-column content area powered by the drawer component, and a bottom bar with legal links, copyright, and logos.</p>
+            <p class="nds-section-description">The footer sits at the bottom of every page and is split into two regions: a flex-wrap multi-column content area, and a bottom bar that stacks general links above the copyright and policy links below it, alongside partner logos.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -31,29 +31,29 @@ direction: ltr
                             <div class="nds-expandable-content">
                                 <code class="code">
 footer.nds-footer.nds-content-wrapper
-├── nav.nds-footer-drawer.nds-drawer.nds-divided
-│   └── ul.nds-drawer-list.nds-footer-content
-│       ├── li (link column)
-│       │   ├── button.nds-list-header.nds-btn (column heading)
-│       │   └── ul (column links)
-│       │       └── li > a.nds-btn.nds-subtle.nds-indicator
-│       ├── li (social icons column)
-│       │   ├── button.nds-list-header.nds-btn (column heading)
-│       │   └── ul > li.nds-footer-social-wrapper
-│       │       └── div.nds-footer-social-icons
-│       │           └── a.nds-btn.nds-secondary-outline.nds-icon-only
-│       └── li.nds-footer-app-item (mobile apps column)
-│           ├── button.nds-list-header.nds-btn (column heading)
-│           └── ul > li.nds-footer-apps-wrapper
-│               └── div.nds-footer-mobile-app-icons
-│                   └── a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only
+├── nav.nds-footer-content
+│   ├── div.nds-footer-column (link column)
+│   │   ├── h3.nds-footer-heading
+│   │   └── ul.nds-footer-list
+│   │       └── li > a.nds-link.nds-footer-link
+│   └── div.nds-footer-column.nds-footer-icons (merged icons column)
+│       ├── div.nds-footer-icon-group (social)
+│       │   ├── h3.nds-footer-heading
+│       │   └── div.nds-footer-icon-row
+│       │       └── a.nds-btn.nds-secondary-outline.nds-icon-only
+│       └── div.nds-footer-icon-group (mobile apps)
+│           ├── h3.nds-footer-heading
+│           └── div.nds-footer-icon-row
+│               └── a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only
 │
 ├── hr.nds-divider.nds-lg
 │
 └── div.nds-footer-bottom
-    ├── div.nds-footer-copyright
-    │   ├── div.nds-footer-links (legal links with separators)
-    │   └── div.nds-footer-copy-right (copyright text)
+    ├── div.nds-footer-meta
+    │   ├── div.nds-footer-links (top row — underlined generic links)
+    │   └── div.nds-footer-legal (legal block)
+    │       ├── div.nds-footer-copyright (copyright text)
+    │       └── div.nds-footer-policy (policy/terms links — no underline)
     └── div.nds-footer-logos
         └── a > img (partner/government logos)
                                 </code>
@@ -71,7 +71,7 @@ footer.nds-footer.nds-content-wrapper
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Content Columns</h2>
-            <p class="nds-section-description">The footer content area uses a multi-column CSS layout with collapsible drawer groups. Each column has a heading button and a list of links. On desktop, columns display side by side. On mobile, they collapse into accordion groups.</p>
+            <p class="nds-section-description">The footer content area uses a flex-wrap layout. Each column has a heading and a list of links. On desktop columns display side by side; on tablet they drop to two per row; on mobile they stack to one per row.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -98,93 +98,27 @@ footer.nds-footer.nds-content-wrapper
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;footer class="nds-footer nds-content-wrapper" role="contentinfo" aria-label="Site Footer"&gt;
-  &lt;nav class="nds-footer-drawer nds-drawer nds-divided" data-always-open-on="tablet"&gt;
-    &lt;ul class="nds-drawer-list nds-footer-content"&gt;
-      &lt;!-- Link column --&gt;
-      &lt;li&gt;
-        &lt;button class="nds-list-header nds-btn nds-subtle nds-indicator"&gt;
-          &lt;span class="nds-label"&gt;Services&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/services/individuals"&gt;
-              &lt;span class="nds-label"&gt;Individuals&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/services/businesses"&gt;
-              &lt;span class="nds-label"&gt;Businesses&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/services/government"&gt;
-              &lt;span class="nds-label"&gt;Government Entities&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/open-data"&gt;
-              &lt;span class="nds-label"&gt;Open Data&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
+  &lt;nav class="nds-footer-content" aria-label="Footer navigation"&gt;
+    &lt;!-- Link column --&gt;
+    &lt;div class="nds-footer-column"&gt;
+      &lt;h3 class="nds-footer-heading"&gt;Services&lt;/h3&gt;
+      &lt;ul class="nds-footer-list"&gt;
+        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/services/individuals"&gt;&lt;span class="nds-label"&gt;Individuals&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/services/businesses"&gt;&lt;span class="nds-label"&gt;Businesses&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/services/government"&gt;&lt;span class="nds-label"&gt;Government Entities&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/open-data"&gt;&lt;span class="nds-label"&gt;Open Data&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
 
-      &lt;!-- About column --&gt;
-      &lt;li&gt;
-        &lt;button class="nds-list-header nds-btn nds-subtle nds-indicator"&gt;
-          &lt;span class="nds-label"&gt;About&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/about"&gt;
-              &lt;span class="nds-label"&gt;About the Authority&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/leadership"&gt;
-              &lt;span class="nds-label"&gt;Leadership&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/careers"&gt;
-              &lt;span class="nds-label"&gt;Careers&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="/media-center"&gt;
-              &lt;span class="nds-label"&gt;Media Center&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-
-      &lt;!-- Contact column with icons --&gt;
-      &lt;li&gt;
-        &lt;button class="nds-list-header nds-btn nds-subtle nds-indicator"&gt;
-          &lt;span class="nds-label"&gt;Contact Us&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="#"&gt;
-              &lt;i class="nds-icon nds-hgi-location-01" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;Riyadh, King Fahd Road&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="tel:920000000"&gt;
-              &lt;i class="nds-icon nds-hgi-headphones" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;920 000 000&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a class="nds-btn nds-subtle nds-indicator" href="mailto:info@example.gov.sa"&gt;
-              &lt;i class="nds-icon nds-hgi-mail-01" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label"&gt;info@example.gov.sa&lt;/span&gt;
-            &lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;!-- Contact column with leading icons --&gt;
+    &lt;div class="nds-footer-column"&gt;
+      &lt;h3 class="nds-footer-heading"&gt;Contact Us&lt;/h3&gt;
+      &lt;ul class="nds-footer-list"&gt;
+        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="#"&gt;&lt;i class="nds-icon nds-hgi-location-01" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;Riyadh, King Fahd Road&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="tel:920000000"&gt;&lt;i class="nds-icon nds-hgi-headphones" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;920 000 000&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="mailto:info@example.gov.sa"&gt;&lt;i class="nds-icon nds-hgi-mail-01" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;info@example.gov.sa&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
   &lt;/nav&gt;
 &lt;/footer&gt;
                                         </code>
@@ -204,7 +138,7 @@ footer.nds-footer.nds-content-wrapper
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Social and App Links</h2>
-            <p class="nds-section-description">Dedicated column types for social media icon buttons and mobile app store badges. Social icons use outline buttons, app store links use larger outline buttons with inline SVG logos.</p>
+            <p class="nds-section-description">Social and mobile-app icon groups share a single merged column (<code class="nds-inline-code lang-html">nds-footer-icons</code>) so the two clusters sit side-by-side and wrap together. Social icons use outline icon buttons; app store links use the larger <code class="nds-inline-code lang-html">nds-xl</code> variant with inline SVG brand marks.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -231,30 +165,27 @@ footer.nds-footer.nds-content-wrapper
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;!-- Social icons column --&gt;
-&lt;li class="nds-footer-contact-item"&gt;
-  &lt;button class="nds-list-header nds-btn nds-subtle nds-indicator"&gt;
-    &lt;span class="nds-label"&gt;Follow Us&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;ul&gt;
-    &lt;li class="nds-footer-social-wrapper"&gt;
-      &lt;div class="nds-footer-social-icons"&gt;
-        &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Twitter"&gt;
-          &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/a&gt;
-        &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Facebook"&gt;
-          &lt;i class="nds-icon nds-hgi-facebook-02" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/a&gt;
-        &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="YouTube"&gt;
-          &lt;i class="nds-icon nds-hgi-youtube" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/a&gt;
-        &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="LinkedIn"&gt;
-          &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/a&gt;
-      &lt;/div&gt;
-    &lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/li&gt;
+&lt;!-- Merged icons column with social + mobile-app groups --&gt;
+&lt;div class="nds-footer-column nds-footer-icons"&gt;
+  &lt;div class="nds-footer-icon-group"&gt;
+    &lt;h3 class="nds-footer-heading"&gt;Follow Us&lt;/h3&gt;
+    &lt;div class="nds-footer-icon-row"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Twitter"&gt;
+        &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/a&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Facebook"&gt;
+        &lt;i class="nds-icon nds-hgi-facebook-02" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/a&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="YouTube"&gt;
+        &lt;i class="nds-icon nds-hgi-youtube" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/a&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="LinkedIn"&gt;
+        &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- Mobile-app group lives in the same column --&gt;
+&lt;/div&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -284,26 +215,18 @@ footer.nds-footer.nds-content-wrapper
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;!-- Mobile app column --&gt;
-&lt;li class="nds-footer-app-item"&gt;
-  &lt;button class="nds-list-header nds-btn nds-subtle nds-indicator"&gt;
-    &lt;span class="nds-label"&gt;Mobile App&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;ul&gt;
-    &lt;li class="nds-footer-apps-wrapper"&gt;
-      &lt;div class="nds-footer-mobile-app-icons"&gt;
-        &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only"
-            href="#" target="_blank" aria-label="Apple App Store"&gt;
-          &lt;svg&gt;...&lt;/svg&gt;
-        &lt;/a&gt;
-        &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only"
-            href="#" target="_blank" aria-label="Google Play Store"&gt;
-          &lt;svg&gt;...&lt;/svg&gt;
-        &lt;/a&gt;
-      &lt;/div&gt;
-    &lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/li&gt;
+&lt;!-- Mobile-app group (sibling of social inside .nds-footer-icons) --&gt;
+&lt;div class="nds-footer-icon-group"&gt;
+  &lt;h3 class="nds-footer-heading"&gt;Mobile App&lt;/h3&gt;
+  &lt;div class="nds-footer-icon-row"&gt;
+    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" aria-label="Apple App Store"&gt;
+      &lt;svg&gt;...&lt;/svg&gt;
+    &lt;/a&gt;
+    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" aria-label="Google Play Store"&gt;
+      &lt;svg&gt;...&lt;/svg&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
                                     </code>
                                 </div>
                             </div>
@@ -320,7 +243,7 @@ footer.nds-footer.nds-content-wrapper
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Footer Bottom Bar</h2>
-            <p class="nds-section-description">A horizontal bar below the divider that holds legal links, copyright text, and partner or government logos. On mobile the layout stacks vertically and centers.</p>
+            <p class="nds-section-description">A horizontal bar below the divider. The meta block stacks two regions: <code class="nds-inline-code lang-html">.nds-footer-links</code> (top, underlined generic links), and <code class="nds-inline-code lang-html">.nds-footer-legal</code> (the legal block, holding <code class="nds-inline-code lang-html">.nds-footer-copyright</code> above <code class="nds-inline-code lang-html">.nds-footer-policy</code>). Partner logos sit on the opposite side. On mobile the layout stacks vertically and centers.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -348,18 +271,22 @@ footer.nds-footer.nds-content-wrapper
                                         <code class="lang-html code">
 &lt;hr class="nds-divider nds-lg"&gt;
 &lt;div class="nds-footer-bottom"&gt;
-  &lt;div class="nds-footer-copyright"&gt;
+  &lt;div class="nds-footer-meta"&gt;
     &lt;div class="nds-footer-links"&gt;
-      &lt;a href="/site-map"&gt;&lt;span class="nds-label"&gt;Site Map&lt;/span&gt;&lt;/a&gt;
-      &lt;span class="nds-footer-separator"&gt;|&lt;/span&gt;
-      &lt;a href="/terms-and-conditions"&gt;&lt;span class="nds-label"&gt;Terms &amp; Conditions&lt;/span&gt;&lt;/a&gt;
-      &lt;span class="nds-footer-separator"&gt;|&lt;/span&gt;
-      &lt;a href="/privacy-policy"&gt;&lt;span class="nds-label"&gt;Privacy Policy&lt;/span&gt;&lt;/a&gt;
-      &lt;span class="nds-footer-separator"&gt;|&lt;/span&gt;
-      &lt;a href="/accessibility"&gt;&lt;span class="nds-label"&gt;Accessibility&lt;/span&gt;&lt;/a&gt;
+      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
+      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
+      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
+      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
+      &lt;a href="#"&gt;&lt;span class="nds-label"&gt;Footer Link&lt;/span&gt;&lt;/a&gt;
     &lt;/div&gt;
-    &lt;div class="nds-footer-copy-right"&gt;
-      &lt;span&gt;All Rights Reserved Ministry of Digital Affairs &amp;copy; 2026&lt;/span&gt;
+    &lt;div class="nds-footer-legal"&gt;
+      &lt;div class="nds-footer-copyright"&gt;
+        &lt;span&gt;All Rights Reserved Ministry of Digital Affairs &amp;copy; 2026&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-footer-policy"&gt;
+        &lt;a href="/terms-and-conditions"&gt;&lt;span class="nds-label"&gt;Terms &amp; Conditions&lt;/span&gt;&lt;/a&gt;
+        &lt;a href="/privacy-policy"&gt;&lt;span class="nds-label"&gt;Privacy Policy&lt;/span&gt;&lt;/a&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-footer-logos"&gt;
@@ -400,17 +327,10 @@ footer.nds-footer.nds-content-wrapper
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
-                        <span class="nds-label">Collapsible Accordion</span>
+                        <i class="hgi hgi-stroke hgi-share-01"></i>
+                        <span class="nds-label">Merged Icons Column</span>
                     </span>
-                    <p class="nds-item-desc">Column headings become accordion toggles on mobile via the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> component. On tablet and above, columns stay expanded automatically with <code class="nds-inline-code lang-html">data-always-open-on="tablet"</code>.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-                        <span class="nds-label">Social and App Columns</span>
-                    </span>
-                    <p class="nds-item-desc">Dedicated column types for social media icon buttons and mobile app store badges with flex-wrap layout and consistent spacing.</p>
+                    <p class="nds-item-desc">Social-media and mobile-app groups share one column (<code class="nds-inline-code lang-html">nds-footer-icons</code>) with flex-wrap content, so the two clusters sit side-by-side at wider widths and stack as space narrows. The column spans the full row on mobile. Social icons use outline icon buttons; app store links use the larger <code class="nds-inline-code lang-html">nds-xl</code> variant with inline SVG brand marks.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -451,7 +371,7 @@ footer.nds-footer.nds-content-wrapper
                 <ul>
                     <li>Use the footer on every page to provide consistent secondary navigation, legal links, and contact information</li>
                     <li>Use the footer alongside the <a class="nds-color" href="{{ 'ui-shell/header' | relative_url }}">Header</a> and <a class="nds-color" href="{{ 'ui-shell/sidemenu' | relative_url }}">Side Menu</a> to complete the UI shell. The header handles primary navigation, the side menu handles section navigation, and the footer handles secondary and legal content</li>
-                    <li>Keep footer columns to <strong>4 or fewer</strong>. More columns crowd the layout on tablet where it drops to 2 columns</li>
+                    <li>Keep footer columns to <strong>6 or fewer</strong>. More columns crowd the layout on tablet where it drops to 2 columns</li>
                     <li>Put the most important links (home, about, main sections) in the first column. Contact and social columns work best at the end</li>
                     <li>Do not duplicate primary navigation links in the footer. The footer is for secondary access: legal pages, contact info, social profiles, and sitemap</li>
                     <li>Add leading icons to contact links (location, email, phone) to make them scannable. Use icon classes from the HGI Stroke Rounded set</li>
@@ -479,9 +399,9 @@ footer.nds-footer.nds-content-wrapper
                             <td>Inverts the image to white on dark backgrounds (dark mode and green variant)</td>
                         </tr>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">nds-divided</code></td>
-                            <td><code class="nds-inline-code lang-html">.nds-footer-drawer</code></td>
-                            <td>Adds separator lines between accordion items (from the drawer component)</td>
+                            <td><code class="nds-inline-code lang-html">nds-footer-icons</code></td>
+                            <td><code class="nds-inline-code lang-html">.nds-footer-column</code></td>
+                            <td>Marks a column as the merged social + mobile-app container. Lays out <code class="nds-inline-code lang-html">.nds-footer-icon-group</code> children with flex-wrap.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-icon-only</code></td>
@@ -498,19 +418,6 @@ footer.nds-footer.nds-content-wrapper
             </div>
 
             <div class="nds-block">
-                <h3 class="nds-block-title">Data Attributes</h3>
-                <table class="nds-table nds-responsive">
-                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td><code class="nds-inline-code lang-html">data-always-open-on="tablet"</code></td>
-                            <td>Set on <code class="nds-inline-code lang-html">.nds-footer-drawer</code>. Keeps all accordion columns expanded on tablet and above. On mobile, columns become collapsible. Handled by the <a class="nds-color" href="{{ 'components/drawer' | relative_url }}">Drawer</a> component.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
@@ -521,9 +428,9 @@ footer.nds-footer.nds-content-wrapper
                             <td>Background color for the <code class="nds-inline-code lang-html">nds-green</code> variant. Resolves to dark green in light mode and a semi-transparent green in dark mode.</td>
                         </tr>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">--drawer-btn-height</code></td>
-                            <td><code class="nds-inline-code lang-html">48px</code></td>
-                            <td>Height of the column heading buttons in the footer drawer.</td>
+                            <td><code class="nds-inline-code lang-html">--divider-color</code></td>
+                            <td>Theme token</td>
+                            <td>Color of the heading underline and the legal-link separators. Inherits from the global divider token; the <code class="nds-inline-code lang-html">nds-green</code> variant overrides it locally to <code class="nds-inline-code lang-html">--alpha-white-10</code>.</td>
                         </tr>
                     </tbody>
                 </table>
