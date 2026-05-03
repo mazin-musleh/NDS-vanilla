@@ -115,7 +115,8 @@ actions_nav:
     custom_class: "nds-icon-only lang"
     data_attr: "data-lang-toggle"
 
-  - label: "Call to Action"
-    url: "#"
-    custom_class: "nds-CTA"
-    button_style: "nds-btn nds-primary"
+  # not compliant with DGA
+  # - label: "Call to Action"
+  #   url: "#"
+  #   custom_class: "nds-CTA"
+  #   button_style: "nds-btn nds-primary"
