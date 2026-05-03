@@ -27,7 +27,7 @@
 .nds-footer-column {
     flex: 1 1 160px;
     min-width: 0;
-    max-width: calc(50% - var(--spacing-4xl)/2);
+    width: calc(50% - var(--spacing-4xl)/2);
 }
 
 .nds-footer-heading {
@@ -164,7 +164,7 @@
     gap: var(--spacing-xl);
     align-items: center;
 
-    & > * {
+    &>* {
         display: inline-flex;
     }
 
@@ -179,6 +179,7 @@
 
         // Invert logos on dark backgrounds when marked with nds-oncolor
         &.nds-oncolor {
+
             :root[data-theme="dark"] &,
             .nds-footer.nds-green & {
                 filter: brightness(0) invert(1);
@@ -250,11 +251,15 @@
     .nds-footer-column {
         flex: 1 1 calc(50% - var(--spacing-4xl) / 2);
     }
+
+    .nds-footer-icons {
+        flex-basis: 100%;
+    }
 }
 
 @include mobile {
     .nds-footer {
-        .nds-footer-icons {
+        .nds-footer-column {
             flex-basis: 100%;
         }
 
