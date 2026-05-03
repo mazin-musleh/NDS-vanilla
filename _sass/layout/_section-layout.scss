@@ -36,6 +36,15 @@
 .nds-section-head {
     position: relative;
     column-gap: var(--spacing-xl);
+
+    .nds-section-image ~ & {
+        display: flex;
+        text-align: start;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 0;
+        flex-direction: column;
+    }
 }
 
 .nds-section-head:has(~ .nds-section-body),
@@ -111,10 +120,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-
-    &:not(:last-child) {
-        margin-bottom: var(--_section-image-MB);
-    }
+    margin-bottom: 0;
 }
 
 /* ── Section meta ── */
