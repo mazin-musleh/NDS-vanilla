@@ -132,7 +132,8 @@ Replace your bundled `nds-main.min.css` and `nds-main.min.js` with the v1.0.1 ve
 - Five project-specific Claude Code skills for contributors.
 - MIT license, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policies.
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/mazin-musleh/NDS-vanilla/releases/tag/v1.0.0
