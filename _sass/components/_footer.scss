@@ -18,53 +18,65 @@
    ======================================== */
 
 .nds-footer-content {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2xl) var(--spacing-4xl);
     margin-bottom: var(--spacing-4xl);
-    column-count: 4;
-    column-gap: var(--spacing-4xl);
-
-    >li {
-        break-inside: avoid;
-        page-break-inside: avoid;
-    }
-
 }
 
-.nds-footer-drawer .nds-list-header {
-    --drawer-btn-height: 48px;
+.nds-footer-column {
+    flex: 1 1 160px;
+    min-width: 0;
 }
 
-.nds-footer-drawer[data-state="always-open"] .nds-list-header {
-    --btn-bg-selected: transparent!important;
+.nds-footer-icons-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
 }
 
-/* ========================================
-   FOOTER SOCIAL AND MOBILE APP ITEMS
-   ======================================== */
-
-.nds-footer-app-item {
-    break-inside: avoid;
-    break-after: avoid;
+.nds-footer-heading {
+    font-size: var(--typo-text-lg-FS);
+    line-height: var(--typo-text-lg-LH);
+    font-weight: 600;
+    margin: 0 0 var(--spacing-md);
+    padding-block-end: var(--spacing-md);
+    border-block-end: 1px solid var(--divider-color, currentColor);
 }
 
-/* ========================================
-   FOOTER SOCIAL WRAPPER
-   ======================================== */
-
-:is(.nds-footer-social-wrapper, .nds-footer-apps-wrapper) {
-    list-style: none !important;
+.nds-footer-list {
+    list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+
+    li {
+        margin: 0;
+    }
+}
+
+.nds-footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: inherit;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        text-decoration: underline;
+    }
 }
 
 /* ========================================
-   FOOTER SOCIAL & MOBILE APP ICONS (within drawer)
+   FOOTER SOCIAL & MOBILE APP ICONS
    ======================================== */
 
 :is(.nds-footer-social-icons, .nds-footer-mobile-app-icons) {
     display: flex;
     gap: var(--spacing-md);
-    margin: var(--spacing-md) 0;
     flex-wrap: wrap;
 }
 
@@ -87,6 +99,10 @@
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: var(--spacing-xl);
+
+    a {
+        text-decoration: underline;
+    }
 }
 
 .nds-footer-separator {
@@ -148,10 +164,6 @@
         color: var(--text-oncolor-primary);
         --divider-color: var(--alpha-white-10);
 
-        .nds-drawer {
-            --drawer-divider: var(--alpha-white-10);
-        }
-
         .nds-btn.nds-subtle {
             --btn-bg: transparent;
             --btn-bg-hover: var(--button-background-transparent-hovered);
@@ -182,7 +194,7 @@
             --btn-loading-track: var(--alpha-white-20);
         }
 
-        .nds-footer-bottom a {
+        :is(.nds-footer-bottom, .nds-footer-content) a {
             --link-color: var(--link-oncolor);
             --link-hover: var(--link-oncolor-hovered);
             --link-pressed: var(--link-oncolor-pressed);
@@ -190,8 +202,13 @@
             --link-visited: var(--link-oncolor-visited);
         }
 
-        .nds-footer-separator {
+        .nds-footer-separator,
+        .nds-footer-heading {
             color: var(--text-oncolor-primary);
+        }
+
+        .nds-footer-heading {
+            border-block-end-color: var(--alpha-white-10);
         }
     }
 }
@@ -201,8 +218,8 @@
    ======================================== */
 
 @include tablet(max) {
-    .nds-footer-content {
-        column-count: 2;
+    .nds-footer-column {
+        flex: 1 1 calc(50% - var(--spacing-4xl) / 2);
     }
 }
 
@@ -225,13 +242,5 @@
             min-width: auto;
             justify-content: center;
         }
-
-        :is(.nds-footer-social-icons, .nds-footer-mobile-app-icons) {
-            justify-content: center;
-        }
-    }
-
-    .nds-footer-content {
-        column-count: 1;
     }
 }
