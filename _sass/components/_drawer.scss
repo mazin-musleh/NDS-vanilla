@@ -88,6 +88,7 @@
         --btn-height-min: 36px;
         --btn-width: 100%;
         --btn-gap: var(--drawer-btn-gap, var(--spacing-md));
+        padding-block: calc(var(--_btn-padding)/2);
         justify-content: flex-start;
         
 
@@ -427,7 +428,7 @@
         height: 100%;
 
         >li {
-            height: 100%;
+             flex: 1;
         }
     }
 }

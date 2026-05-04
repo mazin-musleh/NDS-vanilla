@@ -469,9 +469,9 @@ direction: ltr
                                             </a>
                                         </li>
                                     </ul>
-                                    <button class="nds-show-more nds-btn nds-subtle">
+                                    <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
                                         <span class="nds-label">Show more</span>
-                                        <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+                                        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </nav>
@@ -549,9 +549,9 @@ direction: ltr
         &lt;/a&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
-    &lt;button class="nds-show-more nds-btn nds-subtle"&gt;
+    &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
       &lt;span class="nds-label"&gt;Show more&lt;/span&gt;
-      &lt;i class="hgi hgi-stroke hgi-arrow-down-01"&gt;&lt;/i&gt;
+      &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
   &lt;/div&gt;
 &lt;/nav&gt;
@@ -628,8 +628,8 @@ direction: ltr
                                                     </button>
                                                 </li>
                                             </ul>
-                                            <button class="nds-show-more nds-btn nds-subtle">
-                                                <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+                                            <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
+                                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                     </nav>
@@ -695,8 +695,8 @@ direction: ltr
                                                     </a>
                                                 </li>
                                             </ul>
-                                            <button class="nds-show-more nds-btn nds-subtle">
-                                                <i class="hgi hgi-stroke hgi-arrow-down-01"></i>
+                                            <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more">
+                                                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                     </nav>
@@ -764,8 +764,8 @@ direction: ltr
             &lt;/button&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
-        &lt;button class="nds-show-more nds-btn nds-subtle"&gt;
-          &lt;i class="hgi hgi-stroke hgi-arrow-down-01"&gt;&lt;/i&gt;
+        &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
+          &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/nav&gt;
@@ -831,8 +831,8 @@ direction: ltr
             &lt;/a&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
-        &lt;button class="nds-show-more nds-btn nds-subtle"&gt;
-          &lt;i class="hgi hgi-stroke hgi-arrow-down-01"&gt;&lt;/i&gt;
+        &lt;button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Show more"&gt;
+          &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/nav&gt;

@@ -148,6 +148,7 @@
 // Vertical: button spans full width below content
 .nds-scroll-more[data-axis="vertical"] > .nds-show-more {
     width: 100% !important;
+    height: fit-content;
 }
 
 // Optional .nds-divider child (auto-injected by the JS) — shown only when the
