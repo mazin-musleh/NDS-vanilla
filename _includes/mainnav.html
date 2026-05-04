@@ -106,6 +106,10 @@
                             title="{{ item.label }}"
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}
                             {%- if item.data_attr %} {{ item.data_attr }}{%- endif %}>{{ action_inner }}</button>
+                        {%- if item.data_attr == 'data-lang-toggle' %}
+                        {%- comment %} Demo-only direction preview. Flips <html lang/dir> in place — does NOT translate content. Remove the data_attr above (or this whole nav item) to disable. {%- endcomment %}
+                        <script>(function(){var b=document.currentScript.previousElementSibling,h=document.documentElement;b.addEventListener('click',function(){var ar=h.lang!=='ar';h.lang=ar?'ar':'en';h.dir=ar?'rtl':'ltr';var l=b.querySelector('.nds-label');if(l)l.textContent=ar?'العربية':'English';});})();</script>
+                        {%- endif %}
                         {%- endif %}
                         {%- if item.type == 'dropdown' %}
                         <div class="nds-dropdown-menu{%- if item.content_class %} {{ item.content_class }}{%- endif %}">

@@ -79,17 +79,6 @@
             if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
         })();
     </script>
-    <script>
-        // Apply cached language preference before any rendering to prevent direction mismatch
-        (function() {
-            var m = document.cookie.match(/(?:^|;\s*)preferred-language=(\w+)/);
-            if (m) {
-                var lang = m[1];
-                document.documentElement.lang = lang;
-                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            }
-        })();
-    </script>
     <!-- Demo-only: pairs with the [data-auth] style above. Safe to remove in production. -->
     <script>
         // Stamp [data-auth] from cookie before paint so .nds-guest / .nds-auth show the correct variant

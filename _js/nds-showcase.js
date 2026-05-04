@@ -55,7 +55,6 @@
     function initializeShowcase() {
         storeOriginalCodeContent();
         initializeDemoToggleButtons();
-        initializeDirectionSwitcher();
         initializeFakeFileUpload();
         initializeAutocompleteDemoData();
         initializeDemoActionButtons();
@@ -79,7 +78,6 @@
         NDS.Showcase = {
             initializeDemoToggleButtons: initializeDemoToggleButtons,
             updateButtonsForBackground: updateButtonsForBackground,
-            initializeDirectionSwitcher: initializeDirectionSwitcher,
             startUploadSimulation: startUploadSimulation,
             populateDemoFiles: populateDemoFiles,
             reapplyActiveTogglers: reapplyActiveTogglers,
@@ -1538,19 +1536,6 @@
         
         // Update using the hidden copy system
         updateCodeFromHiddenCopy(codeElement, updatedCode);
-    }
-
-    // RTL/LTR Direction Switcher — delegated to NDS.LangSwitcher (nds-main bundle)
-    function initializeDirectionSwitcher() {
-        if (NDS.LangSwitcher) NDS.LangSwitcher.init();
-    }
-
-    function setCookie(name, value, days) {
-        if (NDS.LangSwitcher) NDS.LangSwitcher.setCookie(name, value, days);
-    }
-
-    function getCookie(name) {
-        return NDS.LangSwitcher ? NDS.LangSwitcher.getCookie(name) : null;
     }
 
     // Fake file upload for demonstration purposes
