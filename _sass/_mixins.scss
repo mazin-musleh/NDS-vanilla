@@ -312,7 +312,7 @@ textarea {
     @if $position =='b' {
       bottom: 0;
       inset-inline: 0;
-      margin-inline: var(--spacing-md);
+      margin-inline: calc((var(--_btn-size) - 8px) / 4);
     }
 
     @else if $position =='v' {
@@ -321,7 +321,7 @@ textarea {
       bottom: unset;
       width: $size !important;
       inset-block: 0;
-      margin-block: var(--spacing-md);
+      margin-block: calc((var(--_btn-size) - 8px) / 4);
       margin-inline: unset;
     }
   }
