@@ -60,35 +60,32 @@
         }
     }
 
-    // Button toggles — click delegation
-    document.addEventListener('click', e => {
-        const el = e.target.closest(TOGGLE_SEL);
-        if (!el || el.querySelector('.nds-switch-input')) return;
-        toggle(el);
-    });
-
-    // Switch toggles — 'change' fires for all paths: track click (Utils.triggerEvents),
-    // label click (native browser toggle), and keyboard (keydown handler in nds-forms.js).
-    document.addEventListener('change', e => {
-        if (!e.target.matches('.nds-switch-input')) return;
-        const el = e.target.closest(TOGGLE_SEL);
-        if (!el) return;
-        setTheme(e.target.checked ? 'dark' : 'light', el);
-    });
-
-    // Init: sync toggle button state with current theme.
-    // Idempotent so the loader-driven NDS.Theme.init() and the DOMContentLoaded
-    // fallback don't double-run; either entry point is safe.
+    // Init: syncs toggle UI and attaches click/change delegation. The loader
+    // gates this on [data-theme-toggle] presence so toggle-less pages skip
+    // the global listeners entirely. The FOUC inline script in <head> applies
+    // the cached theme before first paint independently of this init.
     let _initDone = false;
     function init() {
         if (_initDone) return;
         _initDone = true;
+
         updateToggles(getTheme());
-    }
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
+
+        // Button toggles — click delegation
+        document.addEventListener('click', e => {
+            const el = e.target.closest(TOGGLE_SEL);
+            if (!el || el.querySelector('.nds-switch-input')) return;
+            toggle(el);
+        });
+
+        // Switch toggles — 'change' fires for all paths: track click (Utils.triggerEvents),
+        // label click (native browser toggle), and keyboard (keydown handler in nds-forms.js).
+        document.addEventListener('change', e => {
+            if (!e.target.matches('.nds-switch-input')) return;
+            const el = e.target.closest(TOGGLE_SEL);
+            if (!el) return;
+            setTheme(e.target.checked ? 'dark' : 'light', el);
+        });
     }
 
     // Public API

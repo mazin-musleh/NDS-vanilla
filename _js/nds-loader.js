@@ -22,6 +22,11 @@
             init: () => NDS.Mainnav?.init?.(),
         },
         {
+            name: 'theme',
+            selector: '[data-theme-toggle], #ndsThemeToggle',
+            init: () => NDS.Theme?.init?.(),
+        },
+        {
             name: 'forms',
             selector: '.nds-form-control',
             init: () => NDS.Forms?.init?.(),
