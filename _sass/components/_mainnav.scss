@@ -161,7 +161,7 @@
     }
 
     /* Navigation Lists */
-    :is(.nds-nav-primary, .nds-nav-actions, .nds-nav-minimal) {
+    :is(.nds-nav-primary, .nds-nav-actions, .nds-nav-minimal):not([hidden]) {
         display: flex;
         align-items: center;
         list-style: none;

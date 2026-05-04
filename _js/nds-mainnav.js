@@ -473,10 +473,17 @@
 
     function updateBodyClass() {
         const should = state.isMinimal;
-        const is = document.body.classList.contains('nds-minimal');
-        if (should !== is) {
+        const isBodyMin = document.body.classList.contains('nds-minimal');
+        const wantsHidden = !should;
+        // Layouts server-render <body class="nds-minimal"> as a mobile-first
+        // FOUC default, so on init the body class can already match `should`
+        // while .nds-nav-minimal[hidden] hasn't been toggled yet. Compare
+        // both states so the first sync still fires when only the hidden
+        // attribute is out of step.
+        const isHidden = DOM.minimal ? DOM.minimal.hasAttribute('hidden') : wantsHidden;
+        if (should !== isBodyMin || wantsHidden !== isHidden) {
             document.body.classList.toggle('nds-minimal', should);
-            if (DOM.minimal) DOM.minimal.toggleAttribute('hidden', !should);
+            if (DOM.minimal) DOM.minimal.toggleAttribute('hidden', wantsHidden);
             state.invalidateCache();
             managePABPlacement();
             return true;
@@ -528,9 +535,12 @@
                 }
             });
 
-            let minNav = DOM.nav?.querySelector('.nds-nav-minimal');
+            let minNav = DOM.minimal;
             if (!minNav) {
-                minNav = document.createElement('nav');
+                // Match the static include's tag so <li> PABs (and toggler)
+                // remain valid descendants when the create-if-missing fallback
+                // fires for consumers that omit the static <ul>.
+                minNav = document.createElement('ul');
                 minNav.className = 'nds-nav-minimal';
                 DOM.nav?.insertBefore(minNav, DOM.nav.firstChild);
             }
@@ -548,7 +558,7 @@
                     delete item.dataset.origPos;
                 }
             });
-            const minNav = DOM.nav?.querySelector('.nds-nav-minimal');
+            const minNav = DOM.minimal;
             if (minNav && !minNav.children.length) minNav.remove();
         }
     }
