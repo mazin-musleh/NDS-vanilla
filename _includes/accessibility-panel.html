@@ -1,0 +1,282 @@
+{%- comment -%}
+  Accessibility Panel — site-wide floating action button + slide-in panel.
+
+  All controls carry `data-a11y-mode` (string token written to <html data-a11y>),
+  `data-a11y-setting` (cycled scalar, e.g. font-scale), or `data-a11y-action`
+  (one-shot reset/hide). The JS layer (NDS.Accessibility) reads those.
+
+  Optional include argument:
+    {%- include accessibility-panel.html position="start" %}
+  Defaults to "end" (bottom inline-end). The user can also flip position
+  inside the panel; the JS keeps `<html data-a11y-pos>` in sync.
+{%- endcomment -%}
+
+{%- assign a11y_pos = include.position | default: site.a11y_panel_position | default: "end" -%}
+{%- assign a11y_start = "" -%}
+{%- if a11y_pos == "start" %}{%- assign a11y_start = " nds-start" -%}{%- endif %}
+
+<button class="nds-btn nds-primary nds-circle nds-accessibility-toggle{{ a11y_start }}"
+        type="button"
+        aria-label="Open accessibility settings"
+        aria-controls="ndsAccessibilityPanel"
+        aria-expanded="false"
+        data-accessibility-toggle>
+    <i class="hgi hgi-stroke hgi-accessibility-01" aria-hidden="true"></i>
+</button>
+
+<aside id="ndsAccessibilityPanel"
+       class="nds-accessibility-panel{{ a11y_start }}"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="ndsAccessibilityPanelTitle"
+       data-accessibility-panel
+       hidden>
+
+    <div class="nds-accessibility-panel-header">
+        <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
+                data-theme-toggle
+                type="button"
+                aria-label="Toggle dark mode">
+            <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
+        </button>
+
+        {%- comment -%} Language link reuses the topbar locale mechanism — falls back to no-op if site has only one lang {%- endcomment -%}
+        <a class="nds-btn nds-subtle nds-icon-only"
+           href="{%- if page.lang == 'ar' %}{{ '/' | relative_url }}{%- else %}{{ '/ar/' | relative_url }}{%- endif %}"
+           aria-label="Switch language">
+            <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+        </a>
+
+        <div class="nds-accessibility-panel-header-actions">
+            <button class="nds-btn nds-subtle nds-icon-only"
+                    data-accessibility-close
+                    type="button"
+                    aria-label="Close accessibility panel">
+                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <h2 id="ndsAccessibilityPanelTitle" class="nds-accessibility-panel-title">Accessibility Tools</h2>
+
+    <div class="nds-accessibility-position">
+        <span class="nds-label">Widget Position</span>
+        <div class="nds-accessibility-position-group" role="group" aria-label="Widget position">
+            <button type="button"
+                    data-accessibility-position="start"
+                    aria-pressed="{%- if a11y_pos == 'start' %}true{%- else %}false{%- endif -%}">Start</button>
+            <button type="button"
+                    data-accessibility-position="end"
+                    aria-pressed="{%- if a11y_pos == 'end' %}true{%- else %}false{%- endif -%}">End</button>
+        </div>
+    </div>
+
+    <div class="nds-scroll-more nds-divided">
+        <div class="nds-scroll-more-content">
+            <div class="nds-accessibility-panel-body">
+
+                <!-- Oversize Widget -->
+        <div class="nds-form-container nds-switch-container">
+            <div class="nds-form-header">
+                <label for="a11y-oversize">
+                    <span class="nds-label">Oversize Widget</span>
+                    <span class="nds-info">Make the accessibility button larger</span>
+                </label>
+            </div>
+            <div class="nds-form-control">
+                <div class="nds-switch">
+                    <input type="checkbox" id="a11y-oversize" class="nds-switch-input" data-a11y-oversize>
+                    <div class="nds-switch-track">
+                        <div class="nds-switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accessibility Modes (accordion) -->
+        <div class="nds-accordion nds-lg nds-accessibility-modes" id="a11yModesAccordion">
+            <div class="nds-accordion-item">
+                <h3 class="nds-accordion-header" id="a11yModesHeader">
+                    <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
+                            type="button"
+                            aria-expanded="true"
+                            aria-controls="a11yModesCollapse">
+                        <span class="nds-accordion-title">Accessibility Modes</span>
+                    </button>
+                </h3>
+                <div class="nds-accordion-collapse"
+                     id="a11yModesCollapse"
+                     aria-labelledby="a11yModesHeader">
+                    <div class="nds-accordion-content">
+                        <div class="nds-accordion-body">
+                            <fieldset class="nds-form-group nds-switch-group">
+                                <legend class="nds-label nds-visually-hidden">Accessibility modes</legend>
+
+                                {%- assign a11y_modes =
+                                    "epilepsy-safe|Epilepsy Safe Mode|Dampens color and removes blinks," |
+                                    append: "visually-impaired|Visually Impaired Mode|Improves website visuals," |
+                                    append: "cognitive-disability|Cognitive Disability Mode|Helps focus on specific content," |
+                                    append: "motor-impaired|Motor Impaired Mode|Allows using the website with a keyboard," |
+                                    append: "colorblind|Colorblind Mode|Adjusts the website for colorblind users," |
+                                    append: "dyslexia-friendly|Dyslexia Friendly Mode|Helps users with Dyslexia," |
+                                    append: "adhd-friendly|ADHD Friendly Mode|Reduces distractions and improves focus," |
+                                    append: "blindness|Blindness Mode|Allows using the site with your screen-reader"
+                                    | split: ","
+                                -%}
+
+                                {%- for entry in a11y_modes -%}
+                                {%- assign parts = entry | split: "|" -%}
+                                {%- assign mode_id   = parts[0] -%}
+                                {%- assign mode_name = parts[1] -%}
+                                {%- assign mode_desc = parts[2] -%}
+                                <div class="nds-form-container nds-switch-container">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-{{ mode_id }}">
+                                            <span class="nds-label">{{ mode_name }}</span>
+                                            <span class="nds-info">{{ mode_desc }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox"
+                                                   id="a11y-mode-{{ mode_id }}"
+                                                   class="nds-switch-input"
+                                                   data-a11y-mode="{{ mode_id }}">
+                                            <div class="nds-switch-track">
+                                                <div class="nds-switch-thumb"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%- endfor -%}
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Readable Experience -->
+        <section aria-labelledby="a11yReadableTitle">
+            <h3 id="a11yReadableTitle" class="nds-accessibility-section-title">Readable Experience</h3>
+            <div class="nds-accessibility-grid" role="group" aria-label="Readable experience controls">
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-mode="content-scaling" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-zoom-in-area" aria-hidden="true"></i>
+                    <span>Content Scaling</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-setting="font-scale" data-a11y-cycle="1,1.15,1.25,1.5" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i>
+                    <span>Font Sizing</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-a11y-sr-only" data-a11y-value>100%</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-mode="readable-font" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-creation" aria-hidden="true"></i>
+                    <span>Readable Font</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-mode="dyslexia" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-italic" aria-hidden="true"></i>
+                    <span>Dyslexia Friendly</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-mode="highlight-titles" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-quote-up" aria-hidden="true"></i>
+                    <span>Highlight Titles</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-mode="highlight-links" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-link-04" aria-hidden="true"></i>
+                    <span>Highlight Links</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-mode="reading-mask" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-cursor-02" aria-hidden="true"></i>
+                    <span>Reading Mask</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-setting="text-align" data-a11y-cycle="default,left,right,justify" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i>
+                    <span>Text Alignment</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-a11y-sr-only" data-a11y-value>Default</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-setting="line-height" data-a11y-cycle="normal,1.4,1.6,1.8" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-paragraph" aria-hidden="true"></i>
+                    <span>Line Height</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-a11y-sr-only" data-a11y-value>Default</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-setting="letter-spacing" data-a11y-cycle="0,0.04em,0.08em,0.12em" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-tracking" aria-hidden="true"></i>
+                    <span>Letter Spacing</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-a11y-sr-only" data-a11y-value>Default</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-setting="word-spacing" data-a11y-cycle="0,0.16em,0.32em,0.48em" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-text-kerning" aria-hidden="true"></i>
+                    <span>Word Spacing</span>
+                    <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
+                    <span class="nds-a11y-sr-only" data-a11y-value>Default</span>
+                </button>
+
+            </div>
+        </section>
+
+        <!-- Visually Pleasing Experience (radio-style) -->
+        <section aria-labelledby="a11yVisualTitle">
+            <h3 id="a11yVisualTitle" class="nds-accessibility-section-title">Visually Pleasing Experience</h3>
+            <div class="nds-accessibility-grid" role="radiogroup" aria-label="Visual filter">
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-visual="smart-contrast" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i>
+                    <span>Smart Contrast</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-visual="monochrome" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-droplet" aria-hidden="true"></i>
+                    <span>Monochrome</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-visual="high-contrast" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-contrast" aria-hidden="true"></i>
+                    <span>High Contrast</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-visual="high-saturation" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-droplet" aria-hidden="true"></i>
+                    <span>High Saturation</span>
+                </button>
+
+                <button type="button" class="nds-accessibility-tile" data-a11y-visual="low-saturation" aria-pressed="false">
+                    <i class="hgi hgi-stroke hgi-droplet" aria-hidden="true"></i>
+                    <span>Low Saturation</span>
+                </button>
+
+            </div>
+        </section>
+
+            </div>
+        </div>
+        <button class="nds-btn nds-subtle nds-md nds-show-more" type="button" aria-label="Scroll panel">
+            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="nds-accessibility-panel-footer">
+        <button class="nds-btn nds-primary" type="button" data-accessibility-action="reset">
+            <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
+            <span class="nds-label">Reset Settings</span>
+        </button>
+        <button class="nds-btn nds-primary" type="button" data-accessibility-action="hide-forever">
+            <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+            <span class="nds-label">Hide Forever</span>
+        </button>
+    </div>
+</aside>

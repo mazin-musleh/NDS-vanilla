@@ -17,6 +17,8 @@
 @use 'variables-dga';
 @use 'variables';
 @use 'variables-dark';
+@use 'variables-a11y';
+@use 'skip-link';
 
 // Section styles - visual tokens, color variants, meta, actions, 404, sideInfo
 @use 'layout/section';
@@ -88,6 +90,7 @@
 @use 'components/chart';
 @use 'components/cooldown-button';
 @use 'components/metric';
+@use 'components/accessibility';
 
 // Import utilities
 @use 'utilities';

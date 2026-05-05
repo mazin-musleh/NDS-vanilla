@@ -1,0 +1,561 @@
+// ==============================================
+// ACCESSIBILITY MODE TOKEN OVERRIDES
+// ==============================================
+// User-controlled accessibility modes layered on top of the existing
+// semantic token system. Each mode is a `data-a11y~="<name>"` token on
+// <html>; modes compose, so the same selector can carry several tokens.
+//
+// Modes never mutate page content — they only re-bind CSS custom
+// properties or add scoped declarations. OS-level signals
+// (prefers-reduced-motion, prefers-contrast, forced-colors) keep their
+// own behavior and are not overridden here.
+//
+// User-tunable scalars (font scale, line height, letter/word spacing)
+// are written as inline custom properties on <html> by the JS layer
+// (--user-font-scale, --user-line-height, etc.) and are consumed below
+// where appropriate.
+
+// ----------------------------------------------
+// Visual filters — applied to the page content shell (header, main,
+// footer) rather than <body>.
+//
+// Why not body: `filter` on an element creates a new containing block
+// for its `position: fixed` descendants. With `filter` on <body>, the
+// accessibility panel and its sticky footer (both fixed/sticky inside
+// body) lose their viewport anchor — the panel starts positioning
+// relative to body and the sticky footer breaks. Targeting the page
+// shell instead leaves the panel + FAB + cookie-popup outside the
+// filtered subtree, so their fixed positioning continues to resolve
+// against the viewport.
+// ----------------------------------------------
+:root[data-a11y~="monochrome"] body > :is(header, main, footer) {
+    filter: grayscale(1);
+}
+:root[data-a11y~="high-saturation"] body > :is(header, main, footer) {
+    filter: saturate(2);
+}
+:root[data-a11y~="low-saturation"] body > :is(header, main, footer) {
+    filter: saturate(0.5);
+}
+
+// `colorblind` is a generic catch-all that reduces saturation slightly
+// (helps deuteranopia/protanopia by flattening reds and greens). Real
+// per-type LMS matrices can be added later behind data-a11y~="colorblind-*"
+// variants without changing the JS surface.
+:root[data-a11y~="colorblind"] body > :is(header, main, footer) {
+    filter: saturate(0.6) contrast(1.05);
+}
+
+// Smart Contrast — moderate boost for users who find the default
+// readable but want a touch more separation. Pairs cleanly with
+// high-contrast (one or the other, the JS guarantees mutual exclusion).
+:root[data-a11y~="smart-contrast"] body > :is(header, main, footer) {
+    filter: contrast(1.15);
+}
+
+// ----------------------------------------------
+// High contrast — token-level (not a filter)
+// Replaces semantic surface/text/border tokens with AAA-vetted blacks
+// and whites. JS makes this mutually exclusive with smart/high-saturation
+// to avoid stacked filter side effects.
+// ----------------------------------------------
+// Token names verified against _variables-dga.scss / _variables-dark.scss /
+// _variables-critical.scss as of audit on 2026-05-05. All overrides target
+// tokens that real components consume. Non-canonical names that earlier
+// versions of this file defined (--text-link, --text-disabled,
+// --border-default, --border-strong, --border-subtle, --background-oncolor,
+// --button-text-primary-default, --typo-font-family-*) were no-ops because
+// no consumer reads them — replaced with the canonical names below.
+:root[data-a11y~="high-contrast"] {
+    --background-default:               #ffffff;
+    --background-secondary:             #ffffff;
+    --background-card:                  #ffffff;
+    --background-menu:                  #ffffff;
+    --background-nav:                   #ffffff;
+    --background-disabled:              #ffffff;
+    --background-stripe:                #ffffff;
+
+    --text-default:                     #000000;
+    --text-primary:                     #000000;
+    --text-secondary:                   #000000;
+    --text-secondary-paragraph:         #000000;
+    --text-tertiary:                    #000000;
+    --text-display:                     #000000;
+    --text-oncolor-primary:             #ffffff;
+    --text-oncolor-secondary:           #ffffff;
+
+    // Real link tokens — the project exposes a full state family,
+    // override every state so links stay AAA in all interactions.
+    --link-primary:                     #0000ee;
+    --link-primary-hovered:             #0000aa;
+    --link-primary-pressed:             #000088;
+    --link-primary-focused:             #0000ee;
+    --link-primary-visited:             #5500aa;
+
+    // Real border tokens (NDS exposes neutral primary/secondary/tertiary
+    // and a strong primary; high-contrast collapses them to pure black).
+    --border-neutral-primary:           #000000;
+    --border-neutral-secondary:         #000000;
+    --border-neutral-tertiary:          #000000;
+    --border-primary:                   #000000;
+    --border-focus:                     #0000ee;
+
+    // Component-level: nudge the primary button to a contrast-vetted blue.
+    // The primary button computes its label color internally — overriding
+    // the background tokens is enough to cascade through the button.
+    --button-background-primary-default:   #0000ee;
+    --button-background-primary-hovered:   #0000aa;
+    --button-background-primary-pressed:   #000088;
+}
+
+:root[data-a11y~="high-contrast"][data-theme="dark"] {
+    --background-default:               #000000;
+    --background-secondary:             #000000;
+    --background-card:                  #000000;
+    --background-menu:                  #000000;
+    --background-nav:                   #000000;
+    --background-disabled:              #000000;
+    --background-stripe:                #000000;
+
+    --text-default:                     #ffffff;
+    --text-primary:                     #ffffff;
+    --text-secondary:                   #ffffff;
+    --text-secondary-paragraph:         #ffffff;
+    --text-tertiary:                    #ffffff;
+    --text-display:                     #ffffff;
+    --text-oncolor-primary:             #000000;
+    --text-oncolor-secondary:           #000000;
+
+    --link-primary:                     #ffff00;
+    --link-primary-hovered:             #cccc00;
+    --link-primary-pressed:             #999900;
+    --link-primary-focused:             #ffff00;
+    --link-primary-visited:             #ffaa00;
+
+    --border-neutral-primary:           #ffffff;
+    --border-neutral-secondary:         #ffffff;
+    --border-neutral-tertiary:          #ffffff;
+    --border-primary:                   #ffffff;
+    --border-focus:                     #ffff00;
+
+    --button-background-primary-default:   #ffff00;
+    --button-background-primary-hovered:   #cccc00;
+    --button-background-primary-pressed:   #999900;
+}
+
+// ----------------------------------------------
+// Readable font — Dyslexia friendly
+// Stacks OpenDyslexic / Lexend / system-ui so the user gets *something*
+// even if the project hasn't shipped OpenDyslexic locally. The token
+// canonical name is --nds-font-family (defined in _variables-critical.scss);
+// every component's typography cascade consumes it.
+// ----------------------------------------------
+:root[data-a11y~="dyslexia"],
+:root[data-a11y~="readable-font"] {
+    --nds-font-family: "OpenDyslexic", "Lexend", "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+}
+
+// ----------------------------------------------
+// User-tunable scalars (font scale, line height, letter/word spacing)
+// JS writes these as inline custom properties on <html> when the user
+// cycles the matching tile button. Defaults (1, normal, 0) keep
+// untouched pages unaffected.
+// ----------------------------------------------
+:root {
+    --user-font-scale: 1;
+    --user-line-height: normal;
+    --user-letter-spacing: 0;
+    --user-word-spacing: 0;
+}
+
+// All cosmetic page-content mutations below are scoped to the page shell
+// `body > :is(header, main, footer)` so the accessibility panel and the FAB
+// (siblings of those elements, not descendants) are NEVER affected by them.
+// Token-level overrides (high-contrast palette, dyslexia font) intentionally
+// stay at `:root` scope so the panel matches the user's chosen palette/font
+// — that's a feature, not a leak. If the panel needs to look identical
+// regardless of mode, see the local-token reset block at the bottom of
+// _sass/components/_accessibility.scss.
+
+// Content Scaling primitive (used by the Visually Impaired bundle) — sets
+// a 1.25x default scale unless the user has set their own value via the
+// Font Sizing tile (which writes --user-font-scale inline on <html>;
+// inline styles win over this rule).
+:root[data-a11y~="content-scaling"] {
+    --user-font-scale: 1.25;
+}
+
+// Scale every typography token (text body sizes AND display/title sizes)
+// AND each one's paired line-height by --user-font-scale. Scoped to the
+// page shell so the panel's own chrome keeps standard sizes. Both Content
+// Scaling mode and any inline --user-font-scale (Font Sizing tile) trigger
+// this rule.
+:root[data-a11y~="content-scaling"] body > :is(header, main, footer),
+:root[style*="--user-font-scale"] body > :is(header, main, footer) {
+    // Body text scale (paragraphs, labels, buttons, cards…)
+    --typo-text-2xs-FS: calc(10px * var(--user-font-scale, 1));
+    --typo-text-2xs-LH: calc(16px * var(--user-font-scale, 1));
+    --typo-text-xs-FS:  calc(12px * var(--user-font-scale, 1));
+    --typo-text-xs-LH:  calc(18px * var(--user-font-scale, 1));
+    --typo-text-sm-FS:  calc(14px * var(--user-font-scale, 1));
+    --typo-text-sm-LH:  calc(20px * var(--user-font-scale, 1));
+    --typo-text-md-FS:  calc(16px * var(--user-font-scale, 1));
+    --typo-text-md-LH:  calc(24px * var(--user-font-scale, 1));
+    --typo-text-lg-FS:  calc(18px * var(--user-font-scale, 1));
+    --typo-text-lg-LH:  calc(28px * var(--user-font-scale, 1));
+    --typo-text-xl-FS:  calc(20px * var(--user-font-scale, 1));
+    --typo-text-xl-LH:  calc(30px * var(--user-font-scale, 1));
+
+    // Display / title scale (h1–h3 headings, hero copy, section titles)
+    --typo-display-xs-FS: calc(24px * var(--user-font-scale, 1));
+    --typo-display-xs-LH: calc(32px * var(--user-font-scale, 1));
+    --typo-display-sm-FS: calc(30px * var(--user-font-scale, 1));
+    --typo-display-sm-LH: calc(38px * var(--user-font-scale, 1));
+    --typo-display-md-FS: calc(36px * var(--user-font-scale, 1));
+    --typo-display-md-LH: calc(44px * var(--user-font-scale, 1));
+    --typo-display-lg-FS: calc(48px * var(--user-font-scale, 1));
+    --typo-display-lg-LH: calc(60px * var(--user-font-scale, 1));
+    --typo-display-xl-FS: calc(60px * var(--user-font-scale, 1));
+    --typo-display-xl-LH: calc(72px * var(--user-font-scale, 1));
+    --typo-display-2xl-FS: calc(72px * var(--user-font-scale, 1));
+    --typo-display-2xl-LH: calc(90px * var(--user-font-scale, 1));
+
+    // Fluid clamp() tokens — used by title/hero/section components and
+    // some body-text contexts. Multiply the whole clamp() result by the
+    // scale; min, preferred, and max all scale together.
+    --typo-text-clamp-2xs-FS: calc(clamp(8px, 0.83vw, 10px)   * var(--user-font-scale, 1));
+    --typo-text-clamp-2xs-LH: calc(clamp(14px, 1.33vw, 16px)  * var(--user-font-scale, 1));
+    --typo-text-clamp-xs-FS:  calc(clamp(8px, 1.04vw, 12px)   * var(--user-font-scale, 1));
+    --typo-text-clamp-xs-LH:  calc(clamp(16px, 1.67vw, 20px)  * var(--user-font-scale, 1));
+    --typo-text-clamp-sm-FS:  calc(clamp(10px, 1.25vw, 14px)  * var(--user-font-scale, 1));
+    --typo-text-clamp-sm-LH:  calc(clamp(20px, 1.83vw, 22px)  * var(--user-font-scale, 1));
+    --typo-text-clamp-md-FS:  calc(clamp(12px, 1.46vw, 16px)  * var(--user-font-scale, 1));
+    --typo-text-clamp-md-LH:  calc(clamp(22px, 2vw, 24px)     * var(--user-font-scale, 1));
+    --typo-text-clamp-lg-FS:  calc(clamp(14px, 1.67vw, 18px)  * var(--user-font-scale, 1));
+    --typo-text-clamp-lg-LH:  calc(clamp(24px, 2.17vw, 26px)  * var(--user-font-scale, 1));
+    --typo-text-clamp-xl-FS:  calc(clamp(16px, 1.875vw, 20px) * var(--user-font-scale, 1));
+    --typo-text-clamp-xl-LH:  calc(clamp(26px, 2.33vw, 28px)  * var(--user-font-scale, 1));
+
+    --typo-display-clamp-xs-FS:  calc(clamp(18px, 2vw, 24px)   * var(--user-font-scale, 1));
+    --typo-display-clamp-xs-LH:  calc(clamp(24px, 2.5vw, 30px) * var(--user-font-scale, 1));
+    --typo-display-clamp-sm-FS:  calc(clamp(20px, 2.5vw, 30px) * var(--user-font-scale, 1));
+    --typo-display-clamp-sm-LH:  calc(clamp(26px, 3.17vw, 38px) * var(--user-font-scale, 1));
+    --typo-display-clamp-md-FS:  calc(clamp(24px, 3vw, 36px)    * var(--user-font-scale, 1));
+    --typo-display-clamp-md-LH:  calc(clamp(30px, 3.67vw, 44px) * var(--user-font-scale, 1));
+    --typo-display-clamp-lg-FS:  calc(clamp(32px, 3.75vw, 48px) * var(--user-font-scale, 1));
+    --typo-display-clamp-lg-LH:  calc(clamp(38px, 5vw, 60px)    * var(--user-font-scale, 1));
+    --typo-display-clamp-xl-FS:  calc(clamp(40px, 5vw, 60px)    * var(--user-font-scale, 1));
+    --typo-display-clamp-xl-LH:  calc(clamp(44px, 6vw, 72px)    * var(--user-font-scale, 1));
+    --typo-display-clamp-2xl-FS: calc(clamp(48px, 6vw, 72px)    * var(--user-font-scale, 1));
+    --typo-display-clamp-2xl-LH: calc(clamp(58px, 7.5vw, 90px)  * var(--user-font-scale, 1));
+
+    // Also bump body's own font-size for elements that use plain
+    // inheritance (paragraphs, lists, etc. without an explicit token).
+    font-size: calc(1rem * var(--user-font-scale, 1));
+}
+
+// Buttons compute label font-size from --_btn-size, not the typo tokens
+// directly: --_btn-FS = var(--btn-FS, calc(--_btn-size / 4 + 6px)). The
+// calc already produces 16/14/12px for default/md/sm variants — multiply
+// by --user-font-scale to scale every variant proportionally without
+// per-variant rules. .nds-btn here keeps the existing :root-level cascade
+// of --_btn-size; we just rewrite the FS/LH derivation. Higher specificity
+// than the mixin's own .nds-btn declaration so this wins.
+:root[data-a11y~="content-scaling"] .nds-btn,
+:root[style*="--user-font-scale"] .nds-btn {
+    --_btn-FS: calc((var(--_btn-size, 40px) / 4 + 6px) * var(--user-font-scale, 1));
+    --_btn-LH: calc(var(--_btn-FS) * 1.5);
+}
+
+// ----------------------------------------------
+// PANEL OUT OF SCOPE — reset every typo token + button derivation back
+// to their defaults inside the accessibility panel and FAB. This keeps
+// the panel chrome at standard sizes regardless of how the user has
+// scaled the rest of the page (the panel is itself a UI for adjusting
+// scale, so it has to stay readable / consistent).
+//
+// Higher specificity than the body-level overrides because the selector
+// is `:is(.nds-accessibility-panel, .nds-accessibility-toggle) ...` —
+// no `body` ancestor required, but matches anywhere within these roots.
+// ----------------------------------------------
+.nds-accessibility-panel,
+.nds-accessibility-toggle {
+    --typo-text-2xs-FS: 10px;
+    --typo-text-2xs-LH: 16px;
+    --typo-text-xs-FS:  12px;
+    --typo-text-xs-LH:  18px;
+    --typo-text-sm-FS:  14px;
+    --typo-text-sm-LH:  20px;
+    --typo-text-md-FS:  16px;
+    --typo-text-md-LH:  24px;
+    --typo-text-lg-FS:  18px;
+    --typo-text-lg-LH:  28px;
+    --typo-text-xl-FS:  20px;
+    --typo-text-xl-LH:  30px;
+
+    --typo-display-xs-FS:  24px; --typo-display-xs-LH:  32px;
+    --typo-display-sm-FS:  30px; --typo-display-sm-LH:  38px;
+    --typo-display-md-FS:  36px; --typo-display-md-LH:  44px;
+    --typo-display-lg-FS:  48px; --typo-display-lg-LH:  60px;
+    --typo-display-xl-FS:  60px; --typo-display-xl-LH:  72px;
+    --typo-display-2xl-FS: 72px; --typo-display-2xl-LH: 90px;
+
+    --typo-text-clamp-2xs-FS: clamp(8px, 0.83vw, 10px);
+    --typo-text-clamp-2xs-LH: clamp(14px, 1.33vw, 16px);
+    --typo-text-clamp-xs-FS:  clamp(8px, 1.04vw, 12px);
+    --typo-text-clamp-xs-LH:  clamp(16px, 1.67vw, 20px);
+    --typo-text-clamp-sm-FS:  clamp(10px, 1.25vw, 14px);
+    --typo-text-clamp-sm-LH:  clamp(20px, 1.83vw, 22px);
+    --typo-text-clamp-md-FS:  clamp(12px, 1.46vw, 16px);
+    --typo-text-clamp-md-LH:  clamp(22px, 2vw, 24px);
+    --typo-text-clamp-lg-FS:  clamp(14px, 1.67vw, 18px);
+    --typo-text-clamp-lg-LH:  clamp(24px, 2.17vw, 26px);
+    --typo-text-clamp-xl-FS:  clamp(16px, 1.875vw, 20px);
+    --typo-text-clamp-xl-LH:  clamp(26px, 2.33vw, 28px);
+
+    --typo-display-clamp-xs-FS:  clamp(18px, 2vw, 24px);
+    --typo-display-clamp-xs-LH:  clamp(24px, 2.5vw, 30px);
+    --typo-display-clamp-sm-FS:  clamp(20px, 2.5vw, 30px);
+    --typo-display-clamp-sm-LH:  clamp(26px, 3.17vw, 38px);
+    --typo-display-clamp-md-FS:  clamp(24px, 3vw, 36px);
+    --typo-display-clamp-md-LH:  clamp(30px, 3.67vw, 44px);
+    --typo-display-clamp-lg-FS:  clamp(32px, 3.75vw, 48px);
+    --typo-display-clamp-lg-LH:  clamp(38px, 5vw, 60px);
+    --typo-display-clamp-xl-FS:  clamp(40px, 5vw, 60px);
+    --typo-display-clamp-xl-LH:  clamp(44px, 6vw, 72px);
+    --typo-display-clamp-2xl-FS: clamp(48px, 6vw, 72px);
+    --typo-display-clamp-2xl-LH: clamp(58px, 7.5vw, 90px);
+
+    // Pin --user-font-scale back to 1 for any rule inside the panel that
+    // reads it directly (e.g. the body font-size override) so plain
+    // inheritance also stays at default.
+    --user-font-scale: 1;
+    font-size: 1rem;
+}
+
+// Buttons inside the panel — reset --_btn-FS / --_btn-LH back to the
+// mixin's natural derivation (no scale).
+.nds-accessibility-panel .nds-btn,
+.nds-accessibility-toggle.nds-btn {
+    --_btn-FS: var(--btn-FS, calc(var(--_btn-size, 40px) / 4 + 6px));
+    --_btn-LH: var(--btn-LH, calc(var(--_btn-FS) * 1.5));
+}
+
+:root[style*="--user-line-height"] body > :is(header, main, footer) {
+    line-height: var(--user-line-height, normal);
+}
+
+:root[style*="--user-letter-spacing"] body > :is(header, main, footer) {
+    letter-spacing: var(--user-letter-spacing, 0);
+}
+
+:root[style*="--user-word-spacing"] body > :is(header, main, footer) {
+    word-spacing: var(--user-word-spacing, 0);
+}
+
+// ----------------------------------------------
+// Text alignment overrides — page-shell scoped so panel controls,
+// labels, and tile buttons keep their natural alignment.
+// ----------------------------------------------
+:root[data-a11y~="text-align-left"] body > :is(header, main, footer),
+:root[data-a11y~="text-align-left"] body > :is(header, main, footer) :is(p, li) {
+    text-align: left !important;
+}
+:root[data-a11y~="text-align-right"] body > :is(header, main, footer),
+:root[data-a11y~="text-align-right"] body > :is(header, main, footer) :is(p, li) {
+    text-align: right !important;
+}
+:root[data-a11y~="text-align-justify"] body > :is(header, main, footer),
+:root[data-a11y~="text-align-justify"] body > :is(header, main, footer) :is(p, li) {
+    text-align: justify !important;
+}
+
+// ----------------------------------------------
+// Highlight titles / links — visible scaffolding for users who scan
+// pages by structure rather than reading top to bottom. Page-shell
+// scoped so panel headings and the panel's own language link stay
+// clean (the panel chrome is not "page content").
+// ----------------------------------------------
+:root[data-a11y~="highlight-titles"] body > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
+    outline: 2px solid var(--link-primary, #0000ee);
+    outline-offset: 2px;
+    background-color: rgba(255, 255, 0, 0.18);
+}
+
+:root[data-a11y~="highlight-links"] body > :is(header, main, footer) a:not(.nds-btn) {
+    outline: 1px dashed var(--link-primary, #0000ee);
+    outline-offset: 2px;
+    text-decoration: underline !important;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+}
+
+// ----------------------------------------------
+// Reading mask — dims everything except a horizontal band that follows
+// the pointer / finger. Implemented as two real <div>s injected by JS
+// (.nds-a11y-mask-top and .nds-a11y-mask-bottom) — pseudo-elements were
+// tried first but didn't reliably get their own GPU compositor layer
+// across browsers.
+//
+// Each mask div is 100vh tall and pinned at top: 0; only its inline
+// `transform: translate3d()` changes per frame. translate3d() is the
+// most reliable cross-browser promotion hint (forces a compositor layer
+// even where `will-change: transform` doesn't), and `contain: layout
+// paint style` isolates the overlay so its updates can't invalidate
+// the rest of the page.
+//
+// Sits at z-index 850: above page chrome (sticky nav ~100, content
+// ~auto), below the panel (999) and the FAB (899) so the user can still
+// reach the toggle to disable the mask. Pointer events pass through.
+// ----------------------------------------------
+.nds-a11y-mask {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-start: 0;
+    // 100vh fallback for very old browsers; 100dvh is the dynamic viewport
+    // height — it tracks the visible viewport including mobile address-bar
+    // expand/collapse, which is what window.innerHeight returns in JS. Using
+    // 100vh here would resolve to the LARGE viewport on iOS/Android while
+    // JS math uses innerHeight (small viewport), shrinking the band when
+    // the address bar is visible.
+    height: 100vh;     // fallback for very old browsers
+    height: 100lvh;    // large viewport — STABLE across mobile address-bar
+                       // expand/collapse. dvh would re-flow the element on
+                       // every scroll tick (visible flicker on iOS/Android).
+                       // Top mask uses translate3d(0, calc(Ypx - 100%), 0)
+                       // in JS so its bottom edge anchors to the band top
+                       // regardless of what 100lvh resolves to in pixels.
+    background-color: rgba(0, 0, 0, 0.78);
+    pointer-events: none;
+    z-index: 850;
+    will-change: transform;
+    contain: layout paint style;
+    // Off-screen default so the overlay never flashes mid-screen on insertion.
+    transform: translate3d(0, -200vh, 0);
+}
+
+// Toolbar pinned to the bottom-center of the clear band — the mask is
+// "telescope" style (fixed in place, only moves when the grab handle is
+// dragged). Layout: [size−] [grab] [size+] horizontally, with the toolbar's
+// bottom edge aligned to the band's bottom edge so it sits inside the
+// clear area without poking into the dim overlay.
+//
+// Centered horizontally via `inset-inline-start: 50%` + `translateX(-50%)`.
+// JS writes the vertical part of translate3d on every render.
+.nds-a11y-mask-controls {
+    position: fixed;
+    inset-inline-start: 50%;
+    // Small breathing room between the band edge and the toolbar. JS
+    // accounts for this offset when flipping the toolbar above the band
+    // (subtracts 2× --spacing-md so the gap is symmetric on both sides).
+    inset-block-start: var(--spacing-md, 8px);
+    z-index: 851;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-xs, 4px);
+    padding: var(--spacing-xs, 4px);
+    background-color: var(--background-card);
+    color: var(--text-default);
+    border: 1px solid var(--border-neutral-primary);
+    border-radius: var(--radius-md, 8px);
+    box-shadow: var(--shadow-lg);
+    pointer-events: auto;
+    will-change: transform;
+    contain: layout paint style;
+    // Off-screen default. -50% on X self-centers from element width; Y is
+    // overwritten by JS (calc((bandBottom)px - 100%)) on every render.
+    transform: translate3d(-50%, -200vh, 0);
+
+    button {
+        appearance: none;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        color: inherit;
+        border: 0;
+        border-radius: var(--radius-sm, 4px);
+        cursor: pointer;
+        font: inherit;
+
+        &:hover { background-color: var(--button-background-neutral-hovered); }
+        &:focus-visible {
+            outline: 2px solid var(--border-focus);
+            outline-offset: 2px;
+        }
+
+        i {
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        &[data-action="grab"] {
+            cursor: grab;
+            min-width: 56px;            // wider hit-target for the primary handle
+            touch-action: none;         // let pointermove drag without scrolling
+        }
+        &[data-action="grab"]:active,
+        &[data-action="grab"][data-state~="dragging"] {
+            cursor: grabbing;
+            background-color: var(--button-background-neutral-pressed);
+        }
+    }
+}
+
+// ----------------------------------------------
+// Motor Impaired Mode — enlarges focus indicators and ensures interactive
+// targets meet WCAG 2.5.5 (Target Size). Activated via the bundle marker
+// (the bundle has no primitives, so the bundle name itself stamps onto
+// data-a11y when the switch is on).
+// ----------------------------------------------
+:root[data-a11y~="motor-impaired"] body > :is(header, main, footer) :is(
+    button, a, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])
+):focus-visible {
+    outline: 4px solid var(--border-focus, #0000ee) !important;
+    outline-offset: 4px !important;
+}
+
+:root[data-a11y~="motor-impaired"] body > :is(header, main, footer) :is(
+    .nds-btn, button, [role="button"], a.nds-btn, input[type="button"], input[type="submit"]
+) {
+    min-block-size: 48px;
+    min-inline-size: 48px;
+}
+
+// ----------------------------------------------
+// Reduce motion — user override on top of OS pref. The OS pref handles
+// itself via @media (prefers-reduced-motion); this token forces it on
+// for users whose OS doesn't expose the setting.
+// ----------------------------------------------
+:root[data-a11y~="reduce-motion"] *,
+:root[data-a11y~="reduce-motion"] *::before,
+:root[data-a11y~="reduce-motion"] *::after {
+    animation-duration:    0.001ms !important;
+    animation-iteration-count: 1   !important;
+    transition-duration:   0.001ms !important;
+    scroll-behavior:       auto    !important;
+}
+
+// ----------------------------------------------
+// Mode bundles — each accordion-section toggle composes existing
+// primitives so the JS layer doesn't need per-mode logic. Adding a
+// mode bundle here is the only change required to introduce a new
+// accordion toggle.
+//
+// The JS layer adds the bundle name AND each implied primitive to
+// data-a11y so individual selectors above still match. This file
+// just documents the intent for maintainers.
+// ----------------------------------------------
+//
+//   epilepsy-safe        → reduce-motion, low-saturation
+//   visually-impaired    → high-contrast, content-scaling (1.25)
+//   cognitive-disability → readable-font, highlight-titles, reduce-motion
+//   motor-impaired       → (focus enhancements only — no token override)
+//   colorblind           → colorblind (filter)
+//   dyslexia-friendly    → dyslexia, highlight-links
+//   adhd-friendly        → reduce-motion, highlight-titles, reading-mask
+//   blindness            → reduce-motion (most work is screen-reader, not visual)

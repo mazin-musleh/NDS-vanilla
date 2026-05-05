@@ -2,15 +2,17 @@
 <html lang="{{ page.lang | default: 'en' }}" dir="{{ page.direction | default: 'ltr' }}">
 {%- include head.html %}
 <body class="nds-minimal {{ page.body_class }}">
+    <a class="nds-skip-link" href="#mainContent">Skip to main content</a>
     <header>
         {%- include topbar.html %}
         {%- include mainnav.html %}
     </header>
-    <main>
+    <main id="mainContent" tabindex="-1">
         {{ content }}
     </main>
     {%- include footer.html %}
     {%- include cookie-popup.html %}
+    {%- include accessibility-panel.html %}
     <!-- Scripts -->
     <script defer src="{{ 'assets/js/nds-main.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
     {%- unless page.exclude_showcase == true %}
