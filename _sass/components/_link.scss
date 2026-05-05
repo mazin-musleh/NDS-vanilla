@@ -3,6 +3,7 @@
 :where(.nds-link, a):not(.nds-btn, .nds-card) {
     color: var(--link-color, var(--link-neutral));
     text-decoration: var(--link-decoration, none);
+    word-wrap: break-word;
 
     &:is(:hover, :active, .nds-underline) {
         --link-decoration: underline;
