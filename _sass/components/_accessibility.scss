@@ -12,7 +12,73 @@
 @use '../mixins' as *;
 
 // ----------------------------------------------
-// Floating action button
+// Panel-private design tokens. The panel reads ONLY these — never
+// --typo-* — so its chrome is fully decoupled from the global typography
+// system. No --user-font-scale pin needed: the panel doesn't go through
+// any calc that reads it. Values mirror the equivalent typo rungs in
+// _variables-critical.scss (text-sm = 14/20, text-md = 16/24, text-xl =
+// 20/30, display-xs = 24).
+:is(.nds-accessibility-panel, .nds-accessibility-toggle) {
+    --a11y-text-FS:        14px;   // panel body text
+    --a11y-text-LH:        20px;
+    --a11y-section-FS:     16px;   // section titles ("Readable Experience" etc.)
+    --a11y-section-LH:     24px;
+    --a11y-title-FS:       20px;   // panel title ("Accessibility Tools")
+    --a11y-title-LH:       30px;
+    --a11y-icon-FS:        24px;   // panel/tile/FAB icons
+
+    --a11y-btn-size:       40px;   // .nds-btn default
+    --a11y-btn-size-md:    32px;   // .nds-md
+    --a11y-btn-size-sm:    24px;   // .nds-sm
+
+    font-size: var(--a11y-text-FS);
+    line-height: var(--a11y-text-LH);
+}
+
+// Pin button chrome inside the panel/FAB to the panel-private tokens.
+// `:root` prefix brings specificity to (0,3,0) so this beats the default
+// `.nds-btn` rule from _mixins.scss whose `--_btn-FS` calc reads
+// `var(--user-font-scale, 1)`. Setting --_btn-FS directly to --a11y-text-FS
+// (a literal px) bypasses the calc entirely, so panel buttons stay at
+// their readable baseline regardless of any global scaling.
+:root :is(.nds-accessibility-panel .nds-btn, .nds-accessibility-toggle.nds-btn) {
+    --btn-size: var(--a11y-btn-size);
+    --_btn-FS:  var(--a11y-text-FS);
+    --_btn-LH:  var(--a11y-text-LH);
+
+    &.nds-md { --btn-size: var(--a11y-btn-size-md); }
+    &.nds-sm { --btn-size: var(--a11y-btn-size-sm); }
+}
+
+// Pin shared-component typography inside the panel to panel-private
+// literals. Without these, the accordion header button and switch-row
+// label/info inherit `--typo-text-md-FS` / `--typo-text-sm-FS` from
+// _accordion.scss + _forms.scss — both of which scale with the global
+// --user-font-scale and would leak page-level scaling into the panel.
+//
+// Selectors are chosen to win on specificity over the source rules:
+//   _forms.scss label  : .nds-form-container.nds-switch-container:not([hidden]) .nds-form-header .nds-label  → (0,5,0)
+//   _forms.scss info   : :is(.nds-form-container, .nds-form-group) .nds-label+.nds-info                       → (0,3,0)
+//   _accordion.scss btn: .nds-accordion .nds-accordion-btn                                                    → (0,2,0)
+// Each panel override below adds the .nds-accessibility-panel prefix
+// AND mirrors the source structure so the result is one specificity
+// level higher than the rule it's replacing.
+.nds-accessibility-panel .nds-accordion .nds-accordion-btn,
+.nds-accessibility-panel .nds-form-container.nds-switch-container:not([hidden]) .nds-form-header .nds-label {
+    font-size:   var(--a11y-section-FS);
+    line-height: var(--a11y-section-LH);
+}
+.nds-accessibility-panel .nds-form-container .nds-label + .nds-info {
+    font-size:   var(--a11y-text-FS);
+    line-height: var(--a11y-text-LH);
+}
+
+// ----------------------------------------------
+// Floating action button — size and centering come from the .nds-btn
+// mixin. Setting --a11y-btn-size here flows through the panel button
+// override above (which pins --btn-size: var(--a11y-btn-size)), so the
+// FAB sizes itself via the standard button system instead of carrying
+// its own --a11y-toggle-size token.
 // ----------------------------------------------
 .nds-accessibility-toggle {
     position: fixed;
@@ -20,38 +86,29 @@
     inset-inline-end: var(--spacing-2xl, 20px);
     inset-inline-start: auto;
     z-index: 899;                              // sits below modal (1100) but above page chrome
-    width: var(--a11y-toggle-size, 56px);
-    height: var(--a11y-toggle-size, 56px);
     padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     box-shadow: var(--shadow-lg);
+    --a11y-btn-size: 56px;
 
-    // Start-side variant — used when the user picks "Start" inside the panel.
-    &.nds-start {
+    // Start-side variant — flips the FAB to inline-start when the
+    // document root carries `data-a11y-pos="start"`.
+    :root[data-a11y-pos="start"] & {
         inset-inline-start: var(--spacing-2xl, 20px);
         inset-inline-end: auto;
     }
 
-    // Oversize variant — applied when user enables "Oversize Widget"
+    // Oversize variant — applied when user enables "Oversize Widget".
+    // Only the button grows; icon stays at --a11y-icon-FS (24px) since
+    // the size jump is about click-target area, not icon legibility.
     &.nds-oversize {
-        --a11y-toggle-size: 72px;
-        font-size: 1.75rem;
+        --a11y-btn-size: 72px;
     }
 
     i.hgi,
     i.nds-icon {
-        font-size: 1.5rem;
+        font-size: var(--a11y-icon-FS);
         line-height: 1;
     }
-}
-
-// Hide FAB + panel entirely when the user has chosen "Hide Forever"
-// — Reset Settings restores them.
-:root[data-a11y-hidden="true"] .nds-accessibility-toggle,
-:root[data-a11y-hidden="true"] .nds-accessibility-panel {
-    display: none !important;
 }
 
 // ----------------------------------------------
@@ -84,7 +141,9 @@
 
     // Default closed state — end-anchored panel slides off the side it sits on.
     // translateX is physical (not logical), so each writing direction needs its
-    // own offset:
+    // own offset. Explicit transform values (not a var()-driven token) so the
+    // CSS engine reliably interpolates between closed and open states across
+    // every browser.
     //   RTL: inset-inline-end: 0 → left: 0   → hide left  → translateX(-100%)
     //   LTR: inset-inline-end: 0 → right: 0  → hide right → translateX( 100%)
     transform: translateX(-100%);
@@ -105,30 +164,42 @@
             transform: translateX(100%) !important;
         }
     }
+}
 
-    // ----- Start-side variant -----
-    // Inverse of end: anchor to inline-start, slide off the start side.
-    //   RTL: inset-inline-start: 0 → right: 0 → hide right → translateX( 100%)
-    //   LTR: inset-inline-start: 0 → left: 0  → hide left  → translateX(-100%)
-    &.nds-start {
-        inset-inline-start: 0;
-        inset-inline-end: auto;
-        transform: translateX(100%);
-        @include ltr {
-            transform: translateX(-100%);
-        }
+// ----- Start-side variant -----
+// Inverse of end: anchor to inline-start, slide off the start side.
+// Triggered by `<html data-a11y-pos="start">`.
+//   RTL: inset-inline-start: 0 → right: 0 → hide right → translateX( 100%)
+//   LTR: inset-inline-start: 0 → left: 0  → hide left  → translateX(-100%)
+//
+// `@include ltr` is NOT used here because it expands to a descendant
+// chain `:is(html[dir="ltr"], .ltr) <inner>`. With the inner selector
+// containing `:root[data-a11y-pos="start"]`, the cascade requires the
+// LTR ancestor and the data-a11y-pos ancestor to be DIFFERENT elements
+// — but both can only be `<html>`. The compiled rule would never match.
+// Compound selectors on `<html>` (`html[dir="ltr"][data-a11y-pos="start"]`)
+// avoid that trap by asking for both attributes on the same element.
+:root[data-a11y-pos="start"] .nds-accessibility-panel {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    transform: translateX(100%);
 
-        &[data-state~="closing"] {
-            transform: translateX(100%) !important;
-            @include ltr {
-                transform: translateX(-100%) !important;
-            }
-        }
+    &[data-state~="closing"] {
+        transform: translateX(100%) !important;
+    }
+}
+
+:is(html[dir="ltr"], html.ltr)[data-a11y-pos="start"] .nds-accessibility-panel {
+    transform: translateX(-100%);
+
+    &[data-state~="closing"] {
+        transform: translateX(-100%) !important;
     }
 }
 
 // ----------------------------------------------
-// Panel header — language, theme, close
+// Panel header — title + close button. Theme and language moved into
+// the scroll body via .nds-accessibility-panel-quick.
 // ----------------------------------------------
 .nds-accessibility-panel-header {
     display: flex;
@@ -136,22 +207,23 @@
     justify-content: space-between;
     gap: var(--spacing-md);
     padding: var(--spacing-lg);
-    border-block-end: 1px solid var(--border-neutral-primary);
-}
-
-.nds-accessibility-panel-header-actions {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    margin-inline-start: auto;
+    border-block-end: 1px solid var(--divider-color);
 }
 
 .nds-accessibility-panel-title {
     margin: 0;
-    padding: var(--spacing-md) var(--spacing-lg) 0;
-    font-size: 1.25rem;
+    font-size: var(--a11y-title-FS);
+    line-height: var(--a11y-title-LH);
     font-weight: 700;
     color: var(--text-display);
+}
+
+// Quick toggles row (theme + language) — sits at the top of the
+// scrollable body so it's visible first but scrolls with the rest.
+.nds-accessibility-panel-quick {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
 }
 
 // ----------------------------------------------
@@ -165,69 +237,39 @@
     gap: var(--spacing-2xl);
 }
 
-.nds-accessibility-section-title {
-    margin: 0 0 var(--spacing-md);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text-display);
-}
-
-.nds-accessibility-grid {
-    display: grid;
-    gap: var(--spacing-md);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    @include mobile {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+// ----------------------------------------------
+// Tile grid — uses .nds-grid with panel-scoped column counts and gap.
+// 3 columns on desktop, 2 on tablet/mobile (matches the design intent
+// of the original .nds-accessibility-grid block).
+// ----------------------------------------------
+.nds-accessibility-panel .nds-grid {
+    --max-col: 3;
+    --min-col: 2;
+    --gap: var(--spacing-md);
 }
 
 // ----------------------------------------------
-// Tile button — used for Readable Experience and Visually Pleasing.
-// `aria-pressed="true"` paints the active state.
+// Tile-style button — vertical card layout for Readable / Visually
+// Pleasing tiles. Built on top of `.nds-btn .nds-secondary-outline`,
+// which provides the base reset, hover/focus/active/disabled states,
+// and selected-state coloring (via `[data-state~="selected"]`).
+//
+// Geometry is driven by NDS button tokens (--btn-width, --btn-height-min,
+// --btn-radius) so the tile reuses the button system's sizing primitives
+// rather than reimplementing them. Min-height 96px gives the square
+// card aspect; the rest is layout (column flex + centered).
 // ----------------------------------------------
-.nds-accessibility-tile {
-    --tile-bg:        var(--background-card, var(--background-stripe));
-    --tile-border:    var(--border-neutral-primary);
-    --tile-fg:        var(--text-default);
-    --tile-bg-hover:  var(--button-background-neutral-hovered, var(--background-stripe));
-    --tile-bg-active: var(--button-background-primary-default);
-    --tile-fg-active: var(--text-oncolor-primary, #fff);
-
-    display: flex;
+.nds-accessibility-panel .nds-grid > .nds-btn {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-sm);
-    min-height: 96px;
-    padding: var(--spacing-md);
-    background-color: var(--tile-bg);
-    color: var(--tile-fg);
-    border: 1px solid var(--tile-border);
-    border-radius: var(--radius-md, 8px);
-    text-align: center;
-    cursor: pointer;
-    font: inherit;
-    transition: background-color var(--nds-transition), color var(--nds-transition), border-color var(--nds-transition);
+    --btn-width: 100%;
+    --btn-height-min: 96px;
+    --btn-radius: var(--radius-md);
 
-    &:hover {
-        background-color: var(--tile-bg-hover);
-    }
-
-    &:focus-visible {
-        outline: 3px solid var(--border-focus, var(--button-background-primary-default));
-        outline-offset: 2px;
-    }
-
-    &[aria-pressed="true"] {
-        background-color: var(--tile-bg-active);
-        color: var(--tile-fg-active);
-        border-color: var(--tile-bg-active);
-    }
-
-    i.hgi,
-    i.nds-icon {
-        font-size: 1.5rem;
+    // Icon at panel-private 24px, NOT --_btn-FS (which is 14px for label).
+    > i {
+        font-size: var(--a11y-icon-FS);
         line-height: 1;
     }
 }
@@ -259,7 +301,9 @@
 }
 
 // Inactive (step 0) shows a single dim hint bar for visual consistency.
-.nds-accessibility-tile[aria-pressed="false"] .nds-accessibility-tile-bar {
+// Reads data-state because that's the NDS-button selected signal; the
+// JS adds/removes "selected" via NDS.State on every cycle.
+.nds-accessibility-panel .nds-grid > .nds-btn:not([data-state~="selected"]) .nds-accessibility-tile-bar {
     opacity: 0.18;
 }
 
@@ -276,48 +320,9 @@
 }
 
 // ----------------------------------------------
-// Position picker — segmented radio in the header strip
-// ----------------------------------------------
-.nds-accessibility-position {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-block-end: 1px solid var(--border-neutral-primary);
-
-    .nds-label { font-weight: 600; }
-
-    .nds-accessibility-position-group {
-        display: inline-flex;
-        border: 1px solid var(--border-neutral-primary);
-        border-radius: var(--radius-sm, 4px);
-        overflow: hidden;
-
-        button {
-            padding: var(--spacing-sm) var(--spacing-md);
-            background: transparent;
-            color: var(--text-default);
-            border: 0;
-            cursor: pointer;
-            font: inherit;
-        }
-
-        button[aria-pressed="true"] {
-            background-color: var(--button-background-primary-default);
-            color: var(--text-oncolor-primary, #fff);
-        }
-
-        button:focus-visible {
-            outline: 2px solid var(--border-focus, var(--button-background-primary-default));
-            outline-offset: -2px;
-        }
-    }
-}
-
-// ----------------------------------------------
-// Scroll-More — claim the remaining flex height between the position
-// strip and the footer. nds-scroll-more handles scrollbar hiding,
-// edge mask-fade, and the show-more button itself.
+// Scroll-More — claim the remaining flex height between the panel body
+// and the footer. nds-scroll-more handles scrollbar hiding, edge
+// mask-fade, and the show-more button itself.
 // ----------------------------------------------
 .nds-accessibility-panel > .nds-scroll-more {
     flex: 1 1 auto;
@@ -326,17 +331,16 @@
 }
 
 // ----------------------------------------------
-// Footer — Reset / Hide Forever. No `position: sticky` needed: the
+// Footer — Reset Settings action. No `position: sticky` needed: the
 // flex column already pins the footer below the scroll wrapper.
-// `--btn-width: 100%` lets each button fill its grid column.
+// `--btn-width: 100%` makes the button fill the row.
 // ----------------------------------------------
 .nds-accessibility-panel-footer {
     flex-shrink: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: var(--spacing-md);
     padding: var(--spacing-lg);
-    border-block-start: 1px solid var(--border-neutral-primary);
+    border-block-start: 1px solid var(--divider-color);
     background-color: var(--background-stripe, var(--background-menu));
 
     .nds-btn {
@@ -348,5 +352,15 @@
 // so we only override layout, not the switch itself.
 .nds-accessibility-modes .nds-switch-container {
     padding-block: var(--spacing-sm);
+}
+
+// Live count next to each accordion title. Visuals come from the
+// .nds-tag .nds-green .nds-rounded .nds-sm classes on the markup. The
+// :empty rule hides the pill entirely when no controls are active —
+// without it the .nds-tag's own padding/background would leave an
+// empty green dot next to the title.
+.nds-a11y-count {
+    &:empty { display: none; }
+    margin-inline-start: var(--spacing-xs);
 }
 

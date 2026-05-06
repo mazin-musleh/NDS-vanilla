@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 // ==============================================
 // ACCESSIBILITY MODE TOKEN OVERRIDES
 // ==============================================
@@ -27,30 +29,26 @@
 // shell instead leaves the panel + FAB + cookie-popup outside the
 // filtered subtree, so their fixed positioning continues to resolve
 // against the viewport.
-// ----------------------------------------------
-:root[data-a11y~="monochrome"] body > :is(header, main, footer) {
-    filter: grayscale(1);
-}
-:root[data-a11y~="high-saturation"] body > :is(header, main, footer) {
-    filter: saturate(2);
-}
-:root[data-a11y~="low-saturation"] body > :is(header, main, footer) {
-    filter: saturate(0.5);
-}
-
+//
 // `colorblind` is a generic catch-all that reduces saturation slightly
 // (helps deuteranopia/protanopia by flattening reds and greens). Real
 // per-type LMS matrices can be added later behind data-a11y~="colorblind-*"
 // variants without changing the JS surface.
-:root[data-a11y~="colorblind"] body > :is(header, main, footer) {
-    filter: saturate(0.6) contrast(1.05);
-}
-
-// Smart Contrast — moderate boost for users who find the default
-// readable but want a touch more separation. Pairs cleanly with
-// high-contrast (one or the other, the JS guarantees mutual exclusion).
-:root[data-a11y~="smart-contrast"] body > :is(header, main, footer) {
-    filter: contrast(1.15);
+//
+// `smart-contrast` and `high-contrast` (token-level, below) are kept
+// mutually exclusive by the JS so their effects can't stack.
+// ----------------------------------------------
+$a11y-filters: (
+    'monochrome':       grayscale(1),
+    'high-saturation':  saturate(2),
+    'low-saturation':   saturate(0.5),
+    'colorblind':       saturate(0.6) contrast(1.05),
+    'smart-contrast':   contrast(1.15),
+);
+@each $mode, $filter in $a11y-filters {
+    :root[data-a11y~="#{$mode}"] body > :is(header, main, footer) {
+        filter: $filter;
+    }
 }
 
 // ----------------------------------------------
@@ -61,86 +59,95 @@
 // ----------------------------------------------
 // Token names verified against _variables-dga.scss / _variables-dark.scss /
 // _variables-critical.scss as of audit on 2026-05-05. All overrides target
-// tokens that real components consume. Non-canonical names that earlier
-// versions of this file defined (--text-link, --text-disabled,
-// --border-default, --border-strong, --border-subtle, --background-oncolor,
-// --button-text-primary-default, --typo-font-family-*) were no-ops because
-// no consumer reads them — replaced with the canonical names below.
+// tokens that real components consume; values are sourced exclusively from
+// the existing --colors-* palette in _variables-dga.scss. Picks are AAA-
+// vetted for the surface they sit on (≥7:1 for text, ≥3:1 for non-text UI).
 :root[data-a11y~="high-contrast"] {
-    --background-default:               #ffffff;
-    --background-secondary:             #ffffff;
-    --background-card:                  #ffffff;
-    --background-menu:                  #ffffff;
-    --background-nav:                   #ffffff;
-    --background-disabled:              #ffffff;
-    --background-stripe:                #ffffff;
+    --background-default:               var(--colors-base-white);
+    --background-secondary:             var(--colors-base-white);
+    --background-card:                  var(--colors-base-white);
+    --background-menu:                  var(--colors-base-white);
+    --background-nav:                   var(--colors-base-white);
+    --background-disabled:              var(--colors-base-white);
+    --background-stripe:                var(--colors-base-white);
 
-    --text-default:                     #000000;
-    --text-primary:                     #000000;
-    --text-secondary:                   #000000;
-    --text-secondary-paragraph:         #000000;
-    --text-tertiary:                    #000000;
-    --text-display:                     #000000;
-    --text-oncolor-primary:             #ffffff;
-    --text-oncolor-secondary:           #ffffff;
+    --text-default:                     var(--colors-base-black);
+    --text-primary:                     var(--colors-base-black);
+    --text-secondary:                   var(--colors-base-black);
+    --text-secondary-paragraph:         var(--colors-base-black);
+    --text-tertiary:                    var(--colors-base-black);
+    --text-display:                     var(--colors-base-black);
+    --text-oncolor-primary:             var(--colors-base-white);
+    --text-oncolor-secondary:           var(--colors-base-white);
 
-    // Real link tokens — the project exposes a full state family,
-    // override every state so links stay AAA in all interactions.
-    --link-primary:                     #0000ee;
-    --link-primary-hovered:             #0000aa;
-    --link-primary-pressed:             #000088;
-    --link-primary-focused:             #0000ee;
-    --link-primary-visited:             #5500aa;
+    // Link family — brand sa-flag green ladder. 800 → 900 → 950 gives a
+    // 9:1 → 11:1 → 14:1 contrast ramp on white. Visited steers to
+    // lavendar-900 so it's a distinct hue from the active state.
+    --link-primary:                     var(--colors-primary-sa-flag-800);
+    --link-primary-hovered:             var(--colors-primary-sa-flag-900);
+    --link-primary-pressed:             var(--colors-primary-sa-flag-950);
+    --link-primary-focused:             var(--colors-primary-sa-flag-800);
+    --link-primary-visited:             var(--colors-tertiary-lavendar-900);
 
-    // Real border tokens (NDS exposes neutral primary/secondary/tertiary
-    // and a strong primary; high-contrast collapses them to pure black).
-    --border-neutral-primary:           #000000;
-    --border-neutral-secondary:         #000000;
-    --border-neutral-tertiary:          #000000;
-    --border-primary:                   #000000;
-    --border-focus:                     #0000ee;
+    // Borders collapse to pure black for the maximum-contrast variant.
+    --border-neutral-primary:           var(--colors-base-black);
+    --border-neutral-secondary:         var(--colors-base-black);
+    --border-neutral-tertiary:          var(--colors-base-black);
+    --border-primary:                   var(--colors-base-black);
+    --border-focus:                     var(--colors-primary-sa-flag-800);
 
-    // Component-level: nudge the primary button to a contrast-vetted blue.
-    // The primary button computes its label color internally — overriding
-    // the background tokens is enough to cascade through the button.
-    --button-background-primary-default:   #0000ee;
-    --button-background-primary-hovered:   #0000aa;
-    --button-background-primary-pressed:   #000088;
+    // Primary button: same green ladder as links — brand-aligned and
+    // each shade clears AAA on its on-color (white) text.
+    --button-background-primary-default: var(--colors-primary-sa-flag-800);
+    --button-background-primary-hovered: var(--colors-primary-sa-flag-900);
+    --button-background-primary-pressed: var(--colors-primary-sa-flag-950);
 }
 
 :root[data-a11y~="high-contrast"][data-theme="dark"] {
-    --background-default:               #000000;
-    --background-secondary:             #000000;
-    --background-card:                  #000000;
-    --background-menu:                  #000000;
-    --background-nav:                   #000000;
-    --background-disabled:              #000000;
-    --background-stripe:                #000000;
+    --background-default:               var(--colors-base-black);
+    --background-secondary:             var(--colors-base-black);
+    --background-card:                  var(--colors-base-black);
+    --background-menu:                  var(--colors-base-black);
+    --background-nav:                   var(--colors-base-black);
+    --background-disabled:              var(--colors-base-black);
+    --background-stripe:                var(--colors-base-black);
 
-    --text-default:                     #ffffff;
-    --text-primary:                     #ffffff;
-    --text-secondary:                   #ffffff;
-    --text-secondary-paragraph:         #ffffff;
-    --text-tertiary:                    #ffffff;
-    --text-display:                     #ffffff;
-    --text-oncolor-primary:             #000000;
-    --text-oncolor-secondary:           #000000;
+    --text-default:                     var(--colors-base-white);
+    --text-primary:                     var(--colors-base-white);
+    --text-secondary:                   var(--colors-base-white);
+    --text-secondary-paragraph:         var(--colors-base-white);
+    --text-tertiary:                    var(--colors-base-white);
+    --text-display:                     var(--colors-base-white);
+    // Buttons keep dark-green bg (matches LIGHT HC's pattern), so the
+    // on-color text stays white in both themes. Without this, dark HC
+    // would produce black icons inside .nds-primary buttons — visually
+    // inconsistent with the rest of the dark-mode chrome.
+    --text-oncolor-primary:             var(--colors-base-white);
+    --text-oncolor-secondary:           var(--colors-base-white);
 
-    --link-primary:                     #ffff00;
-    --link-primary-hovered:             #cccc00;
-    --link-primary-pressed:             #999900;
-    --link-primary-focused:             #ffff00;
-    --link-primary-visited:             #ffaa00;
+    // Link family — brand sa-flag green ladder, light shades for dark BG.
+    // 300 → 200 → 100 gives a 12:1 → 14:1 → 16:1 ramp on black. Visited
+    // steers to gold-300 to keep a distinct (warmer) hue. Standalone
+    // links sit DIRECTLY on the dark page (no button bg behind), so they
+    // need light shades to be readable on black.
+    --link-primary:                     var(--colors-primary-sa-flag-300);
+    --link-primary-hovered:             var(--colors-primary-sa-flag-200);
+    --link-primary-pressed:             var(--colors-primary-sa-flag-100);
+    --link-primary-focused:             var(--colors-primary-sa-flag-300);
+    --link-primary-visited:             var(--colors-secondary-gold-300);
 
-    --border-neutral-primary:           #ffffff;
-    --border-neutral-secondary:         #ffffff;
-    --border-neutral-tertiary:          #ffffff;
-    --border-primary:                   #ffffff;
-    --border-focus:                     #ffff00;
+    --border-neutral-primary:           var(--colors-base-white);
+    --border-neutral-secondary:         var(--colors-base-white);
+    --border-neutral-tertiary:          var(--colors-base-white);
+    --border-primary:                   var(--colors-base-white);
+    --border-focus:                     var(--colors-primary-sa-flag-300);
 
-    --button-background-primary-default:   #ffff00;
-    --button-background-primary-hovered:   #cccc00;
-    --button-background-primary-pressed:   #999900;
+    // Primary button — dark-green ladder (same as LIGHT HC). Sits on the
+    // black page bg so green-800 stands out as a saturated dark button,
+    // and white on-color text/icon lands AAA on it.
+    --button-background-primary-default: var(--colors-primary-sa-flag-800);
+    --button-background-primary-hovered: var(--colors-primary-sa-flag-900);
+    --button-background-primary-pressed: var(--colors-primary-sa-flag-950);
 }
 
 // ----------------------------------------------
@@ -156,13 +163,15 @@
 }
 
 // ----------------------------------------------
-// User-tunable scalars (font scale, line height, letter/word spacing)
-// JS writes these as inline custom properties on <html> when the user
-// cycles the matching tile button. Defaults (1, normal, 0) keep
-// untouched pages unaffected.
+// User-tunable scalars defaults (line height, letter/word spacing). JS
+// writes these as inline custom properties on <html> when the user cycles
+// the matching tile button. Defaults keep untouched pages unaffected.
+//
+// Font sizing uses a different mechanism — see the ladder-step block
+// below — because we want each scaled size to land on a designer-chosen
+// rung of the existing typography ladder, not on an arbitrary calc().
 // ----------------------------------------------
 :root {
-    --user-font-scale: 1;
     --user-line-height: normal;
     --user-letter-spacing: 0;
     --user-word-spacing: 0;
@@ -177,197 +186,72 @@
 // regardless of mode, see the local-token reset block at the bottom of
 // _sass/components/_accessibility.scss.
 
-// Content Scaling primitive (used by the Visually Impaired bundle) — sets
-// a 1.25x default scale unless the user has set their own value via the
-// Font Sizing tile (which writes --user-font-scale inline on <html>;
-// inline styles win over this rule).
-:root[data-a11y~="content-scaling"] {
-    --user-font-scale: 1.25;
-}
-
-// Scale every typography token (text body sizes AND display/title sizes)
-// AND each one's paired line-height by --user-font-scale. Scoped to the
-// page shell so the panel's own chrome keeps standard sizes. Both Content
-// Scaling mode and any inline --user-font-scale (Font Sizing tile) trigger
-// this rule.
-:root[data-a11y~="content-scaling"] body > :is(header, main, footer),
-:root[style*="--user-font-scale"] body > :is(header, main, footer) {
-    // Body text scale (paragraphs, labels, buttons, cards…)
-    --typo-text-2xs-FS: calc(10px * var(--user-font-scale, 1));
-    --typo-text-2xs-LH: calc(16px * var(--user-font-scale, 1));
-    --typo-text-xs-FS:  calc(12px * var(--user-font-scale, 1));
-    --typo-text-xs-LH:  calc(18px * var(--user-font-scale, 1));
-    --typo-text-sm-FS:  calc(14px * var(--user-font-scale, 1));
-    --typo-text-sm-LH:  calc(20px * var(--user-font-scale, 1));
-    --typo-text-md-FS:  calc(16px * var(--user-font-scale, 1));
-    --typo-text-md-LH:  calc(24px * var(--user-font-scale, 1));
-    --typo-text-lg-FS:  calc(18px * var(--user-font-scale, 1));
-    --typo-text-lg-LH:  calc(28px * var(--user-font-scale, 1));
-    --typo-text-xl-FS:  calc(20px * var(--user-font-scale, 1));
-    --typo-text-xl-LH:  calc(30px * var(--user-font-scale, 1));
-
-    // Display / title scale (h1–h3 headings, hero copy, section titles)
-    --typo-display-xs-FS: calc(24px * var(--user-font-scale, 1));
-    --typo-display-xs-LH: calc(32px * var(--user-font-scale, 1));
-    --typo-display-sm-FS: calc(30px * var(--user-font-scale, 1));
-    --typo-display-sm-LH: calc(38px * var(--user-font-scale, 1));
-    --typo-display-md-FS: calc(36px * var(--user-font-scale, 1));
-    --typo-display-md-LH: calc(44px * var(--user-font-scale, 1));
-    --typo-display-lg-FS: calc(48px * var(--user-font-scale, 1));
-    --typo-display-lg-LH: calc(60px * var(--user-font-scale, 1));
-    --typo-display-xl-FS: calc(60px * var(--user-font-scale, 1));
-    --typo-display-xl-LH: calc(72px * var(--user-font-scale, 1));
-    --typo-display-2xl-FS: calc(72px * var(--user-font-scale, 1));
-    --typo-display-2xl-LH: calc(90px * var(--user-font-scale, 1));
-
-    // Fluid clamp() tokens — used by title/hero/section components and
-    // some body-text contexts. Multiply the whole clamp() result by the
-    // scale; min, preferred, and max all scale together.
-    --typo-text-clamp-2xs-FS: calc(clamp(8px, 0.83vw, 10px)   * var(--user-font-scale, 1));
-    --typo-text-clamp-2xs-LH: calc(clamp(14px, 1.33vw, 16px)  * var(--user-font-scale, 1));
-    --typo-text-clamp-xs-FS:  calc(clamp(8px, 1.04vw, 12px)   * var(--user-font-scale, 1));
-    --typo-text-clamp-xs-LH:  calc(clamp(16px, 1.67vw, 20px)  * var(--user-font-scale, 1));
-    --typo-text-clamp-sm-FS:  calc(clamp(10px, 1.25vw, 14px)  * var(--user-font-scale, 1));
-    --typo-text-clamp-sm-LH:  calc(clamp(20px, 1.83vw, 22px)  * var(--user-font-scale, 1));
-    --typo-text-clamp-md-FS:  calc(clamp(12px, 1.46vw, 16px)  * var(--user-font-scale, 1));
-    --typo-text-clamp-md-LH:  calc(clamp(22px, 2vw, 24px)     * var(--user-font-scale, 1));
-    --typo-text-clamp-lg-FS:  calc(clamp(14px, 1.67vw, 18px)  * var(--user-font-scale, 1));
-    --typo-text-clamp-lg-LH:  calc(clamp(24px, 2.17vw, 26px)  * var(--user-font-scale, 1));
-    --typo-text-clamp-xl-FS:  calc(clamp(16px, 1.875vw, 20px) * var(--user-font-scale, 1));
-    --typo-text-clamp-xl-LH:  calc(clamp(26px, 2.33vw, 28px)  * var(--user-font-scale, 1));
-
-    --typo-display-clamp-xs-FS:  calc(clamp(18px, 2vw, 24px)   * var(--user-font-scale, 1));
-    --typo-display-clamp-xs-LH:  calc(clamp(24px, 2.5vw, 30px) * var(--user-font-scale, 1));
-    --typo-display-clamp-sm-FS:  calc(clamp(20px, 2.5vw, 30px) * var(--user-font-scale, 1));
-    --typo-display-clamp-sm-LH:  calc(clamp(26px, 3.17vw, 38px) * var(--user-font-scale, 1));
-    --typo-display-clamp-md-FS:  calc(clamp(24px, 3vw, 36px)    * var(--user-font-scale, 1));
-    --typo-display-clamp-md-LH:  calc(clamp(30px, 3.67vw, 44px) * var(--user-font-scale, 1));
-    --typo-display-clamp-lg-FS:  calc(clamp(32px, 3.75vw, 48px) * var(--user-font-scale, 1));
-    --typo-display-clamp-lg-LH:  calc(clamp(38px, 5vw, 60px)    * var(--user-font-scale, 1));
-    --typo-display-clamp-xl-FS:  calc(clamp(40px, 5vw, 60px)    * var(--user-font-scale, 1));
-    --typo-display-clamp-xl-LH:  calc(clamp(44px, 6vw, 72px)    * var(--user-font-scale, 1));
-    --typo-display-clamp-2xl-FS: calc(clamp(48px, 6vw, 72px)    * var(--user-font-scale, 1));
-    --typo-display-clamp-2xl-LH: calc(clamp(58px, 7.5vw, 90px)  * var(--user-font-scale, 1));
-
-    // Also bump body's own font-size for elements that use plain
-    // inheritance (paragraphs, lists, etc. without an explicit token).
-    font-size: calc(1rem * var(--user-font-scale, 1));
-}
-
-// Buttons compute label font-size from --_btn-size, not the typo tokens
-// directly: --_btn-FS = var(--btn-FS, calc(--_btn-size / 4 + 6px)). The
-// calc already produces 16/14/12px for default/md/sm variants — multiply
-// by --user-font-scale to scale every variant proportionally without
-// per-variant rules. .nds-btn here keeps the existing :root-level cascade
-// of --_btn-size; we just rewrite the FS/LH derivation. Higher specificity
-// than the mixin's own .nds-btn declaration so this wins.
-:root[data-a11y~="content-scaling"] .nds-btn,
-:root[style*="--user-font-scale"] .nds-btn {
-    --_btn-FS: calc((var(--_btn-size, 40px) / 4 + 6px) * var(--user-font-scale, 1));
-    --_btn-LH: calc(var(--_btn-FS) * 1.5);
-}
-
 // ----------------------------------------------
-// PANEL OUT OF SCOPE — reset every typo token + button derivation back
-// to their defaults inside the accessibility panel and FAB. This keeps
-// the panel chrome at standard sizes regardless of how the user has
-// scaled the rest of the page (the panel is itself a UI for adjusting
-// scale, so it has to stay readable / consistent).
+// Font sizing — single global multiplier
 //
-// Higher specificity than the body-level overrides because the selector
-// is `:is(.nds-accessibility-panel, .nds-accessibility-toggle) ...` —
-// no `body` ancestor required, but matches anywhere within these roots.
+// Every typography token in _variables-critical.scss wraps its value in
+// `calc(value * var(--user-font-scale, 1))`, and `--_btn-FS` in
+// _mixins.scss does the same. Setting `--user-font-scale` here at :root
+// scope therefore flows through to every consumer downstream. No
+// per-token remap, no -base aliases, no page-shell scoping needed for
+// the type math itself.
+//
+// JS writes `--user-font-step` (1, 2, or 3) inline on <html>; absent =
+// step 0 (no scaling). The selectors below translate the step into a
+// concrete `--user-font-scale` value at :root scope.
+//
+// Why the panel chrome doesn't grow: panel + FAB + mask-controls all
+// declare panel-private literal-px tokens (--a11y-text-FS etc.) and
+// never read --typo-* directly, so the multiplier never reaches them.
+// See _accessibility.scss and the .nds-a11y-mask-controls block below.
 // ----------------------------------------------
-.nds-accessibility-panel,
-.nds-accessibility-toggle {
-    --typo-text-2xs-FS: 10px;
-    --typo-text-2xs-LH: 16px;
-    --typo-text-xs-FS:  12px;
-    --typo-text-xs-LH:  18px;
-    --typo-text-sm-FS:  14px;
-    --typo-text-sm-LH:  20px;
-    --typo-text-md-FS:  16px;
-    --typo-text-md-LH:  24px;
-    --typo-text-lg-FS:  18px;
-    --typo-text-lg-LH:  28px;
-    --typo-text-xl-FS:  20px;
-    --typo-text-xl-LH:  30px;
+$step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 
-    --typo-display-xs-FS:  24px; --typo-display-xs-LH:  32px;
-    --typo-display-sm-FS:  30px; --typo-display-sm-LH:  38px;
-    --typo-display-md-FS:  36px; --typo-display-md-LH:  44px;
-    --typo-display-lg-FS:  48px; --typo-display-lg-LH:  60px;
-    --typo-display-xl-FS:  60px; --typo-display-xl-LH:  72px;
-    --typo-display-2xl-FS: 72px; --typo-display-2xl-LH: 90px;
-
-    --typo-text-clamp-2xs-FS: clamp(8px, 0.83vw, 10px);
-    --typo-text-clamp-2xs-LH: clamp(14px, 1.33vw, 16px);
-    --typo-text-clamp-xs-FS:  clamp(8px, 1.04vw, 12px);
-    --typo-text-clamp-xs-LH:  clamp(16px, 1.67vw, 20px);
-    --typo-text-clamp-sm-FS:  clamp(10px, 1.25vw, 14px);
-    --typo-text-clamp-sm-LH:  clamp(20px, 1.83vw, 22px);
-    --typo-text-clamp-md-FS:  clamp(12px, 1.46vw, 16px);
-    --typo-text-clamp-md-LH:  clamp(22px, 2vw, 24px);
-    --typo-text-clamp-lg-FS:  clamp(14px, 1.67vw, 18px);
-    --typo-text-clamp-lg-LH:  clamp(24px, 2.17vw, 26px);
-    --typo-text-clamp-xl-FS:  clamp(16px, 1.875vw, 20px);
-    --typo-text-clamp-xl-LH:  clamp(26px, 2.33vw, 28px);
-
-    --typo-display-clamp-xs-FS:  clamp(18px, 2vw, 24px);
-    --typo-display-clamp-xs-LH:  clamp(24px, 2.5vw, 30px);
-    --typo-display-clamp-sm-FS:  clamp(20px, 2.5vw, 30px);
-    --typo-display-clamp-sm-LH:  clamp(26px, 3.17vw, 38px);
-    --typo-display-clamp-md-FS:  clamp(24px, 3vw, 36px);
-    --typo-display-clamp-md-LH:  clamp(30px, 3.67vw, 44px);
-    --typo-display-clamp-lg-FS:  clamp(32px, 3.75vw, 48px);
-    --typo-display-clamp-lg-LH:  clamp(38px, 5vw, 60px);
-    --typo-display-clamp-xl-FS:  clamp(40px, 5vw, 60px);
-    --typo-display-clamp-xl-LH:  clamp(44px, 6vw, 72px);
-    --typo-display-clamp-2xl-FS: clamp(48px, 6vw, 72px);
-    --typo-display-clamp-2xl-LH: clamp(58px, 7.5vw, 90px);
-
-    // Pin --user-font-scale back to 1 for any rule inside the panel that
-    // reads it directly (e.g. the body font-size override) so plain
-    // inheritance also stays at default.
-    --user-font-scale: 1;
-    font-size: 1rem;
+@for $step from 1 through 3 {
+    :root[style*="--user-font-step: #{$step}"] {
+        --user-font-scale: #{map.get($step-scales, $step)};
+    }
 }
 
-// Buttons inside the panel — reset --_btn-FS / --_btn-LH back to the
-// mixin's natural derivation (no scale).
-.nds-accessibility-panel .nds-btn,
-.nds-accessibility-toggle.nds-btn {
-    --_btn-FS: var(--btn-FS, calc(var(--_btn-size, 40px) / 4 + 6px));
-    --_btn-LH: var(--btn-LH, calc(var(--_btn-FS) * 1.5));
+// Content-scaling primitive (Visually-Impaired bundle) → step 1.
+:root[data-a11y~="content-scaling"] {
+    --user-font-scale: #{map.get($step-scales, 1)};
 }
 
-:root[style*="--user-line-height"] body > :is(header, main, footer) {
-    line-height: var(--user-line-height, normal);
+// Body's own font-size — keep unstyled <p>/<li>/<span> aligned with the
+// scaled body-text-md token. Page-shell scoped so the panel itself uses
+// the browser default font-size (not the scaled token).
+:root[style*="--user-font-step"] body > :is(header, main, footer),
+:root[data-a11y~="content-scaling"] body > :is(header, main, footer) {
+    font-size: var(--typo-text-md-FS);
 }
 
-:root[style*="--user-letter-spacing"] body > :is(header, main, footer) {
-    letter-spacing: var(--user-letter-spacing, 0);
-}
-
-:root[style*="--user-word-spacing"] body > :is(header, main, footer) {
-    word-spacing: var(--user-word-spacing, 0);
+// Other user-tunable scalars (inline style → page-shell rule).
+//
+// Hits the page-shell containers AND body-text descendants. Headings
+// (h1-h6) are intentionally excluded — they have tight design ratios
+// from _reset.scss (display-clamp LHs designed for visual hierarchy),
+// and font-step already scales their LH proportionally with FS via the
+// --user-font-scale calc. Forcing user-line-height onto headings would
+// loosen those ratios and break the heading rhythm.
+@each $prop, $default in (line-height: normal, letter-spacing: 0, word-spacing: 0) {
+    :root[style*="--user-#{$prop}"] body > :is(header, main, footer),
+    :root[style*="--user-#{$prop}"] body > :is(header, main, footer) :is(p, li, ul, ol, dl, dt, dd, blockquote) {
+        #{$prop}: var(--user-#{$prop}, #{$default});
+    }
 }
 
 // ----------------------------------------------
 // Text alignment overrides — page-shell scoped so panel controls,
-// labels, and tile buttons keep their natural alignment.
+// labels, and tile buttons keep their natural alignment. The descendant
+// `:is(p, li)` rule beats per-element text-align declarations that some
+// content sets locally; the !important keeps those overrides in check.
 // ----------------------------------------------
-:root[data-a11y~="text-align-left"] body > :is(header, main, footer),
-:root[data-a11y~="text-align-left"] body > :is(header, main, footer) :is(p, li) {
-    text-align: left !important;
-}
-:root[data-a11y~="text-align-right"] body > :is(header, main, footer),
-:root[data-a11y~="text-align-right"] body > :is(header, main, footer) :is(p, li) {
-    text-align: right !important;
-}
-:root[data-a11y~="text-align-justify"] body > :is(header, main, footer),
-:root[data-a11y~="text-align-justify"] body > :is(header, main, footer) :is(p, li) {
-    text-align: justify !important;
+@each $alignment in (left, right, justify) {
+    :root[data-a11y~="text-align-#{$alignment}"] body > :is(header, main, footer),
+    :root[data-a11y~="text-align-#{$alignment}"] body > :is(header, main, footer) :is(p, li) {
+        text-align: #{$alignment} !important;
+    }
 }
 
 // ----------------------------------------------
@@ -377,13 +261,13 @@
 // clean (the panel chrome is not "page content").
 // ----------------------------------------------
 :root[data-a11y~="highlight-titles"] body > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
-    outline: 2px solid var(--link-primary, #0000ee);
+    outline: 2px solid var(--link-primary);
     outline-offset: 2px;
-    background-color: rgba(255, 255, 0, 0.18);
+    background-color: var(--colors-yellow-100);
 }
 
 :root[data-a11y~="highlight-links"] body > :is(header, main, footer) a:not(.nds-btn) {
-    outline: 1px dashed var(--link-primary, #0000ee);
+    outline: 1px dashed var(--link-primary);
     outline-offset: 2px;
     text-decoration: underline !important;
     text-underline-offset: 2px;
@@ -425,7 +309,7 @@
                        // Top mask uses translate3d(0, calc(Ypx - 100%), 0)
                        // in JS so its bottom edge anchors to the band top
                        // regardless of what 100lvh resolves to in pixels.
-    background-color: rgba(0, 0, 0, 0.78);
+    background-color: var(--colors-alpha-alpha-black-80);
     pointer-events: none;
     z-index: 850;
     will-change: transform;
@@ -440,11 +324,27 @@
 // bottom edge aligned to the band's bottom edge so it sits inside the
 // clear area without poking into the dim overlay.
 //
-// Centered horizontally via `inset-inline-start: 50%` + `translateX(-50%)`.
-// JS writes the vertical part of translate3d on every render.
+// Centered horizontally via PHYSICAL `left: 50%` + `translateX(-50%)`.
+// `inset-inline-start` would flip with RTL (right edge anchored at 50%
+// from viewport right), and combined with the physical `translateX(-50%)`
+// the element ends up off-center. Physical `left` keeps the anchor on
+// the LEFT in both directions so the symmetric `translateX(-50%)` always
+// lands the element on viewport-center. JS writes the vertical part of
+// translate3d on every render and keeps using `-50%` for X.
 .nds-a11y-mask-controls {
+    // Body-attached panel-equivalent chrome — same isolation strategy as
+    // .nds-accessibility-panel: panel-private literal tokens, no read of
+    // global --typo-* anywhere, so the toolbar can't be touched by user
+    // font scaling or any future global typo override.
+    --a11y-text-FS:          14px;
+    --a11y-text-LH:          20px;
+    --a11y-toolbar-icon-FS:  20px;  // toolbar icon target size
+    --a11y-toolbar-btn-size: 36px;  // tiny inline utility buttons
+    font-size: var(--a11y-text-FS);
+    line-height: var(--a11y-text-LH);
+
     position: fixed;
-    inset-inline-start: 50%;
+    left: 50%;
     // Small breathing room between the band edge and the toolbar. JS
     // accounts for this offset when flipping the toolbar above the band
     // (subtracts 2× --spacing-md so the gap is symmetric on both sides).
@@ -469,8 +369,8 @@
 
     button {
         appearance: none;
-        width: 36px;
-        height: 36px;
+        width: var(--a11y-toolbar-btn-size);
+        height: var(--a11y-toolbar-btn-size);
         padding: 0;
         display: inline-flex;
         align-items: center;
@@ -489,7 +389,7 @@
         }
 
         i {
-            font-size: 1.25rem;
+            font-size: var(--a11y-toolbar-icon-FS, 1.25rem);
             line-height: 1;
         }
 
@@ -515,7 +415,7 @@
 :root[data-a11y~="motor-impaired"] body > :is(header, main, footer) :is(
     button, a, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])
 ):focus-visible {
-    outline: 4px solid var(--border-focus, #0000ee) !important;
+    outline: 4px solid var(--border-focus) !important;
     outline-offset: 4px !important;
 }
 

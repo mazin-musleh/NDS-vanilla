@@ -28,77 +28,87 @@
     // Font family
     --nds-font-family: 'IBM Plex Sans Arabic', sans-serif;
 
-    // Fluid typography — display sizes
-    --typo-display-clamp-2xl-FS: clamp(48px, 6vw, 72px);
-    --typo-display-clamp-2xl-LH: clamp(58px, 7.5vw, 90px);
+    // Global user font scale — set by JS / content-scaling mode to
+    // reflect the user's chosen accessibility scale. Undefined by default
+    // ("no choice made"); every consumer's calc carries `, 1` as the
+    // var() fallback so default pages never scale. Components like the
+    // accessibility panel pin this to 1 inside their subtree to keep
+    // their typo tokens at canonical sizes regardless of the user's
+    // page-level setting.
+
+    // Fluid typography — display sizes. FS and LH wrap in calc * --user-font-scale
+    // so the user's a11y font-step setting propagates through every consumer
+    // automatically. MB (margin-bottom) stays unscaled — it's spacing, not type.
+    --typo-display-clamp-2xl-FS: calc(clamp(48px, 6vw, 72px) * var(--user-font-scale, 1));
+    --typo-display-clamp-2xl-LH: calc(clamp(58px, 7.5vw, 90px) * var(--user-font-scale, 1));
     --typo-display-clamp-2xl-MB: clamp(14.5px, 1.875vw, 22.5px);
 
-    --typo-display-clamp-xl-FS: clamp(40px, 5vw, 60px);
-    --typo-display-clamp-xl-LH: clamp(44px, 6vw, 72px);
+    --typo-display-clamp-xl-FS: calc(clamp(40px, 5vw, 60px) * var(--user-font-scale, 1));
+    --typo-display-clamp-xl-LH: calc(clamp(44px, 6vw, 72px) * var(--user-font-scale, 1));
     --typo-display-clamp-xl-MB: clamp(11px, 1.5vw, 18px);
 
-    --typo-display-clamp-lg-FS: clamp(32px, 3.75vw, 48px);
-    --typo-display-clamp-lg-LH: clamp(38px, 5vw, 60px);
+    --typo-display-clamp-lg-FS: calc(clamp(32px, 3.75vw, 48px) * var(--user-font-scale, 1));
+    --typo-display-clamp-lg-LH: calc(clamp(38px, 5vw, 60px) * var(--user-font-scale, 1));
     --typo-display-clamp-lg-MB: clamp(9.5px, 1.25vw, 15px);
 
-    --typo-display-clamp-md-FS: clamp(24px, 3vw, 36px);
-    --typo-display-clamp-md-LH: clamp(30px, 3.67vw, 44px);
+    --typo-display-clamp-md-FS: calc(clamp(24px, 3vw, 36px) * var(--user-font-scale, 1));
+    --typo-display-clamp-md-LH: calc(clamp(30px, 3.67vw, 44px) * var(--user-font-scale, 1));
     --typo-display-clamp-md-MB: clamp(7.5px, 0.9175vw, 11px);
 
-    --typo-display-clamp-sm-FS: clamp(20px, 2.5vw, 30px);
-    --typo-display-clamp-sm-LH: clamp(26px, 3.17vw, 38px);
+    --typo-display-clamp-sm-FS: calc(clamp(20px, 2.5vw, 30px) * var(--user-font-scale, 1));
+    --typo-display-clamp-sm-LH: calc(clamp(26px, 3.17vw, 38px) * var(--user-font-scale, 1));
     --typo-display-clamp-sm-MB: clamp(6.5px, 0.7925vw, 9.5px);
 
-    --typo-display-clamp-xs-FS: clamp(18px, 2vw, 24px);
-    --typo-display-clamp-xs-LH: clamp(24px, 2.5vw, 30px);
+    --typo-display-clamp-xs-FS: calc(clamp(18px, 2vw, 24px) * var(--user-font-scale, 1));
+    --typo-display-clamp-xs-LH: calc(clamp(24px, 2.5vw, 30px) * var(--user-font-scale, 1));
     --typo-display-clamp-xs-MB: clamp(6px, 0.625vw, 7.5px);
 
     // Fluid typography — text sizes
-    --typo-text-clamp-xl-FS: clamp(16px, 1.875vw, 20px);
-    --typo-text-clamp-xl-LH: clamp(26px, 2.33vw, 28px);
+    --typo-text-clamp-xl-FS: calc(clamp(16px, 1.875vw, 20px) * var(--user-font-scale, 1));
+    --typo-text-clamp-xl-LH: calc(clamp(26px, 2.33vw, 28px) * var(--user-font-scale, 1));
 
-    --typo-text-clamp-lg-FS: clamp(14px, 1.67vw, 18px);
-    --typo-text-clamp-lg-LH: clamp(24px, 2.17vw, 26px);
+    --typo-text-clamp-lg-FS: calc(clamp(14px, 1.67vw, 18px) * var(--user-font-scale, 1));
+    --typo-text-clamp-lg-LH: calc(clamp(24px, 2.17vw, 26px) * var(--user-font-scale, 1));
 
-    --typo-text-clamp-md-FS: clamp(12px, 1.46vw, 16px);
-    --typo-text-clamp-md-LH: clamp(22px, 2vw, 24px);
+    --typo-text-clamp-md-FS: calc(clamp(12px, 1.46vw, 16px) * var(--user-font-scale, 1));
+    --typo-text-clamp-md-LH: calc(clamp(22px, 2vw, 24px) * var(--user-font-scale, 1));
 
-    --typo-text-clamp-sm-FS: clamp(10px, 1.25vw, 14px);
-    --typo-text-clamp-sm-LH: clamp(20px, 1.83vw, 22px);
+    --typo-text-clamp-sm-FS: calc(clamp(10px, 1.25vw, 14px) * var(--user-font-scale, 1));
+    --typo-text-clamp-sm-LH: calc(clamp(20px, 1.83vw, 22px) * var(--user-font-scale, 1));
 
-    --typo-text-clamp-xs-FS: clamp(8px, 1.04vw, 12px);
-    --typo-text-clamp-xs-LH: clamp(16px, 1.67vw, 20px);
+    --typo-text-clamp-xs-FS: calc(clamp(8px, 1.04vw, 12px) * var(--user-font-scale, 1));
+    --typo-text-clamp-xs-LH: calc(clamp(16px, 1.67vw, 20px) * var(--user-font-scale, 1));
 
-    --typo-text-clamp-2xs-FS: clamp(8px, 0.83vw, 10px);
-    --typo-text-clamp-2xs-LH: clamp(14px, 1.33vw, 16px);
+    --typo-text-clamp-2xs-FS: calc(clamp(8px, 0.83vw, 10px) * var(--user-font-scale, 1));
+    --typo-text-clamp-2xs-LH: calc(clamp(14px, 1.33vw, 16px) * var(--user-font-scale, 1));
 
     // Static display sizes
-    --typo-display-2xl-FS: 72px;
-    --typo-display-2xl-LH: 90px;
-    --typo-display-xl-FS: 60px;
-    --typo-display-xl-LH: 72px;
-    --typo-display-lg-FS: 48px;
-    --typo-display-lg-LH: 60px;
-    --typo-display-md-FS: 36px;
-    --typo-display-md-LH: 44px;
-    --typo-display-sm-FS: 30px;
-    --typo-display-sm-LH: 38px;
-    --typo-display-xs-FS: 24px;
-    --typo-display-xs-LH: 32px;
+    --typo-display-2xl-FS: calc(72px * var(--user-font-scale, 1));
+    --typo-display-2xl-LH: calc(90px * var(--user-font-scale, 1));
+    --typo-display-xl-FS:  calc(60px * var(--user-font-scale, 1));
+    --typo-display-xl-LH:  calc(72px * var(--user-font-scale, 1));
+    --typo-display-lg-FS:  calc(48px * var(--user-font-scale, 1));
+    --typo-display-lg-LH:  calc(60px * var(--user-font-scale, 1));
+    --typo-display-md-FS:  calc(36px * var(--user-font-scale, 1));
+    --typo-display-md-LH:  calc(44px * var(--user-font-scale, 1));
+    --typo-display-sm-FS:  calc(30px * var(--user-font-scale, 1));
+    --typo-display-sm-LH:  calc(38px * var(--user-font-scale, 1));
+    --typo-display-xs-FS:  calc(24px * var(--user-font-scale, 1));
+    --typo-display-xs-LH:  calc(32px * var(--user-font-scale, 1));
 
     // Static text sizes
-    --typo-text-xl-FS: 20px;
-    --typo-text-xl-LH: 30px;
-    --typo-text-lg-FS: 18px;
-    --typo-text-lg-LH: 28px;
-    --typo-text-md-FS: 16px;
-    --typo-text-md-LH: 24px;
-    --typo-text-sm-FS: 14px;
-    --typo-text-sm-LH: 20px;
-    --typo-text-xs-FS: 12px;
-    --typo-text-xs-LH: 18px;
-    --typo-text-2xs-FS: 10px;
-    --typo-text-2xs-LH: 16px;
+    --typo-text-xl-FS:  calc(20px * var(--user-font-scale, 1));
+    --typo-text-xl-LH:  calc(30px * var(--user-font-scale, 1));
+    --typo-text-lg-FS:  calc(18px * var(--user-font-scale, 1));
+    --typo-text-lg-LH:  calc(28px * var(--user-font-scale, 1));
+    --typo-text-md-FS:  calc(16px * var(--user-font-scale, 1));
+    --typo-text-md-LH:  calc(24px * var(--user-font-scale, 1));
+    --typo-text-sm-FS:  calc(14px * var(--user-font-scale, 1));
+    --typo-text-sm-LH:  calc(20px * var(--user-font-scale, 1));
+    --typo-text-xs-FS:  calc(12px * var(--user-font-scale, 1));
+    --typo-text-xs-LH:  calc(18px * var(--user-font-scale, 1));
+    --typo-text-2xs-FS: calc(10px * var(--user-font-scale, 1));
+    --typo-text-2xs-LH: calc(16px * var(--user-font-scale, 1));
 
     // Semantic spacing aliases (numeric tokens in _variables.scss)
     --spacing-none: var(--spacing-0, 0px);

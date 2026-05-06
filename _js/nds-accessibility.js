@@ -2,7 +2,7 @@
 //
 // Modes are CSS-only token overrides in _variables-a11y.scss; this JS
 // only manages state, persistence, focus, and the open/close lifecycle.
-// Storage: localStorage['nds-a11y'] = { modes, settings, position, hidden, oversize }.
+// Storage: localStorage['nds-a11y'] = { modes, bundles, excluded, settings, oversize }.
 //
 // Apply-before-paint of cached state happens in _includes/head.html
 // (alongside the theme FOUC guard) so reload doesn't flash.
@@ -34,12 +34,30 @@
     // one of "make it brighter / dimmer / monochrome / boosted contrast".
     const VISUAL_FILTERS = ['smart-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation'];
 
+    // Scalar settings → inline custom properties on <html>. Each entry is
+    // applied identically: write the CSS var when the value differs from the
+    // default; remove it otherwise. Driven by apply() in one short loop.
+    //
+    // `font-step` is a discrete level (0/1/2/3) — the SCSS layer in
+    // _variables-a11y.scss reads `--user-font-step: N` and remaps every
+    // typography token to the next-N rung of the existing ladder. Coarser
+    // than a multiplier, but each step lands on a designer-chosen size.
+    const SCALAR_PROPS = [
+        { key: 'font-step',      cssVar: '--user-font-step',      def: 0 },
+        { key: 'line-height',    cssVar: '--user-line-height',    def: 'normal' },
+        { key: 'letter-spacing', cssVar: '--user-letter-spacing', def: '0' },
+        { key: 'word-spacing',   cssVar: '--user-word-spacing',   def: '0' },
+    ];
+
     let state = defaultState();
     let panel = null;
     let toggleBtn = null;
+    let navEl = null;          // .nds-main-nav  — cached for updateHeaderOffset
+    let topbarEl = null;       // .nds-topbar    — cached for updateHeaderOffset
     let openerEl = null;       // element that opened the panel — focus returns here
     let inertedSiblings = [];  // captured on open so close removes inert from the same nodes
     let ac = null;             // AbortController for all listeners scoped to current init
+    let openAC = null;         // separate AC for listeners that only run while the panel is open
     let maskAC = null;         // separate AC for reading-mask pointer listener (lifecycle = mode on/off)
     let maskTopEl = null;      // top overlay <div> created when reading-mask is on
     let maskBottomEl = null;   // bottom overlay <div>
@@ -53,7 +71,7 @@
             bundles:  [],                      // active accordion bundles (e.g. "adhd-friendly")
             excluded: [],                      // primitives the user clicked OFF; override bundle inclusions
             settings: {                        // free-form scalars
-                'font-scale': 1,
+                'font-step': 0,                // 0 = default; 1/2/3 = N rungs up the typo ladder
                 'text-align': 'default',
                 'line-height': 'normal',
                 'letter-spacing': '0',
@@ -61,8 +79,6 @@
                 'mask-band': 60,               // half-height of reading-mask clear band, px
                 'mask-y': null,                // band center Y in px; null = use viewport center on first activation
             },
-            position: 'end',
-            hidden: false,
             oversize: false,
         };
     }
@@ -83,6 +99,29 @@
             });
             if (!Array.isArray(result.bundles))  result.bundles = [];
             if (!Array.isArray(result.excluded)) result.excluded = [];
+            // Drop legacy `hidden` flag (Hide Forever feature was removed).
+            // Without this, anyone who clicked Hide Forever in a previous
+            // build would have their FAB+panel permanently invisible —
+            // the SCSS rule that honored data-a11y-hidden is also gone,
+            // so the flag is dead weight, but cleaning it up keeps stored
+            // state lean.
+            if ('hidden' in result) delete result.hidden;
+            // Drop legacy `position` field (Widget Position picker was
+            // removed). Position is now set Jekyll-time via the include
+            // arg or runtime via <html data-a11y-pos>.
+            if ('position' in result) delete result.position;
+            // Migrate v1 → v2 (font-scale multiplier → font-step ladder rungs).
+            // The old multiplier cycle 1/1.15/1.25/1.5 maps to step 0/1/2/3
+            // on the new ladder. Drop the legacy key after translating.
+            if (result.settings && result.settings['font-scale'] != null) {
+                const fs = parseFloat(result.settings['font-scale']);
+                let step = 0;
+                if (fs >= 1.5)        step = 3;
+                else if (fs >= 1.25)  step = 2;
+                else if (fs >= 1.15)  step = 1;
+                result.settings['font-step'] = step;
+                delete result.settings['font-scale'];
+            }
             // Migrate older saves: split anything in state.modes that's a
             // bundle name into state.bundles. Leaves primitives in state.modes.
             const newModes = [];
@@ -139,71 +178,48 @@
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
     }
 
+    // Persist + push to DOM. Every state mutator ends with commit() so the
+    // save/apply pair stays atomic — easy to grep and impossible to forget
+    // one of the two halves.
+    function commit() { save(); apply(); }
+
     // ----------------------------------------------
     // DOM application — single source of truth for the visible state.
     // Called after every state mutation so the UI never drifts from the
     // stored object.
     // ----------------------------------------------
     function apply() {
-        // Stamp the union of user primitives + active bundle primitives
-        // onto data-a11y as a space-separated token set.
+        // Build the full data-a11y token set ONCE — including text-align —
+        // so the attribute is written exactly once per apply() call. The
+        // text-align token is purely derived from state.settings; folding
+        // it into the same Set avoids the parse-mutate-restamp dance the
+        // earlier version did.
+        const s = state.settings;
         const tokens = effectiveTokens();
+        if (s['text-align'] && s['text-align'] !== 'default') {
+            tokens.add('text-align-' + s['text-align']);
+        }
         if (tokens.size === 0) {
             root.removeAttribute('data-a11y');
         } else {
             root.setAttribute('data-a11y', Array.from(tokens).join(' '));
         }
 
-        // Position
-        if (state.position && state.position !== 'end') {
-            root.setAttribute('data-a11y-pos', state.position);
-        } else {
-            root.removeAttribute('data-a11y-pos');
-        }
+        // Position is no longer state-driven — set at Jekyll-time via the
+        // include's `position` arg or at runtime via <html data-a11y-pos>.
+        // SCSS reads both. See _includes/accessibility-panel.html intro.
 
-        // Hidden
-        if (state.hidden) {
-            root.setAttribute('data-a11y-hidden', 'true');
-        } else {
-            root.removeAttribute('data-a11y-hidden');
-        }
-
-        // Scalar settings → inline custom properties on <html>
-        const s = state.settings;
-        if (s['font-scale'] && s['font-scale'] !== 1) {
-            root.style.setProperty('--user-font-scale', s['font-scale']);
-        } else {
-            root.style.removeProperty('--user-font-scale');
-        }
-        if (s['line-height'] && s['line-height'] !== 'normal') {
-            root.style.setProperty('--user-line-height', s['line-height']);
-        } else {
-            root.style.removeProperty('--user-line-height');
-        }
-        if (s['letter-spacing'] && s['letter-spacing'] !== '0') {
-            root.style.setProperty('--user-letter-spacing', s['letter-spacing']);
-        } else {
-            root.style.removeProperty('--user-letter-spacing');
-        }
-        if (s['word-spacing'] && s['word-spacing'] !== '0') {
-            root.style.setProperty('--user-word-spacing', s['word-spacing']);
-        } else {
-            root.style.removeProperty('--user-word-spacing');
-        }
-
-        // Text alignment is a token, not a custom property — apply via data-a11y
-        ['text-align-left', 'text-align-right', 'text-align-justify'].forEach(t => tokens.delete(t));
-        if (s['text-align'] && s['text-align'] !== 'default') {
-            const tokenList = (root.getAttribute('data-a11y') || '').split(/\s+/).filter(Boolean);
-            tokenList.push('text-align-' + s['text-align']);
-            root.setAttribute('data-a11y', tokenList.join(' '));
-        }
+        // Scalar settings → inline custom properties on <html>. See
+        // SCALAR_PROPS at the top of the IIFE for the full mapping.
+        SCALAR_PROPS.forEach(({ key, cssVar, def }) => {
+            const v = s[key];
+            if (v && v !== def) root.style.setProperty(cssVar, v);
+            else root.style.removeProperty(cssVar);
+        });
 
         // Sync UI to state — only if panel is in the DOM
         if (panel) syncUI();
         if (toggleBtn) toggleBtn.classList.toggle('nds-oversize', !!state.oversize);
-        if (toggleBtn) toggleBtn.classList.toggle('nds-start', state.position === 'start');
-        if (panel) panel.classList.toggle('nds-start', state.position === 'start');
 
         // Reading-mask pointer tracking — attach/detach based on whether the
         // expanded token list contains "reading-mask". Single pooled listener
@@ -244,16 +260,21 @@
                 maskControlsEl.setAttribute('role', 'toolbar');
                 maskControlsEl.setAttribute('aria-label', 'Reading mask controls');
                 // Order: size− on the left, grab in the middle, size+ on the
-                // right — so the grab handle is visually centered.
+                // right — so the grab handle is visually centered. Close
+                // sits at the inline-end (right in LTR, left in RTL via the
+                // flex-row reversal) as the terminal action.
                 maskControlsEl.innerHTML =
                     '<button type="button" data-action="size-down" aria-label="Decrease mask band">' +
                         '<i class="nds-icon nds-hgi-zoom-out-area" aria-hidden="true"></i>' +
                     '</button>' +
-                    '<button type="button" data-action="grab" aria-label="Drag mask vertically. Use arrow keys to nudge.">' +
-                        '<i class="hgi hgi-stroke hgi-arrow-up-down" aria-hidden="true"></i>' +
-                    '</button>' +
                     '<button type="button" data-action="size-up" aria-label="Increase mask band">' +
                         '<i class="nds-icon nds-hgi-zoom-in-area" aria-hidden="true"></i>' +
+                    '</button>' +
+                    '<button type="button" data-action="grab" aria-label="Drag mask vertically. Use arrow keys to nudge.">' +
+                        '<i class="hgi hgi-stroke hgi-arrow-all-direction" aria-hidden="true"></i>' +
+                    '</button>' +
+                    '<button type="button" data-action="close" aria-label="Close reading mask">' +
+                        '<i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>' +
                     '</button>';
                 document.body.appendChild(maskControlsEl);
             }
@@ -333,21 +354,27 @@
             maskAC = new AbortController();
             const { signal } = maskAC;
 
-            // Size +/− click handler (delegated). Clamps to [MIN, MAX] and
-            // re-renders so the band height changes immediately.
+            // Toolbar click handler (delegated). Size +/− clamps to [MIN, MAX]
+            // and re-renders. Close routes through toggleMode so bundle-
+            // supplied reading-mask correctly lands in state.excluded
+            // (deactivating from the toolbar matches the panel's own tile
+            // semantics — it doesn't disable the parent bundle).
             maskControlsEl.addEventListener('click', (e) => {
                 const btn = e.target.closest('button[data-action]');
                 if (!btn) return;
                 const action = btn.dataset.action;
-                if (action !== 'size-up' && action !== 'size-down') return;
-                const cur = state.settings['mask-band'] || 60;
-                const next = action === 'size-up'
-                    ? Math.min(MASK_BAND_MAX, cur + MASK_BAND_STEP)
-                    : Math.max(MASK_BAND_MIN, cur - MASK_BAND_STEP);
-                if (next === cur) return;
-                state.settings['mask-band'] = next;
-                save();
-                render();
+                if (action === 'size-up' || action === 'size-down') {
+                    const cur = state.settings['mask-band'] || 60;
+                    const next = action === 'size-up'
+                        ? Math.min(MASK_BAND_MAX, cur + MASK_BAND_STEP)
+                        : Math.max(MASK_BAND_MIN, cur - MASK_BAND_STEP);
+                    if (next === cur) return;
+                    state.settings['mask-band'] = next;
+                    save();
+                    render();
+                } else if (action === 'close') {
+                    toggleMode('reading-mask');
+                }
             }, { signal });
 
             // Grab handle — pointer-capture drag using delta math so the mask
@@ -433,18 +460,31 @@
 
     function syncUI() {
         const tokens = effectiveTokens();
-        // Mode switches (accordion bundles)
-        panel.querySelectorAll('input[data-a11y-mode]').forEach(input => {
-            input.checked = isModeActive(input.dataset.a11yMode, tokens);
-        });
-        // Mode tile buttons (Readable Experience primitives)
-        panel.querySelectorAll('button[data-a11y-mode]').forEach(btn => {
-            btn.setAttribute('aria-pressed', isModeActive(btn.dataset.a11yMode, tokens) ? 'true' : 'false');
+        // Tile-style buttons (.nds-btn) reflect their active state via TWO
+        // attributes simultaneously:
+        //   • aria-pressed — ARIA semantics for screen readers (toggle button)
+        //   • data-state~="selected" — visual signal read by NDS button SCSS
+        //     in _buttons.scss (`[data-state~="selected"]` triggers the
+        //     selected background/border colors via --_btn-bg-selected)
+        // Helper keeps both in sync on every UI tick.
+        const setPressed = (el, on) => {
+            el.setAttribute('aria-pressed', on ? 'true' : 'false');
+            if (on) addState(el, 'selected');
+            else removeState(el, 'selected');
+        };
+
+        // Mode controls — accordion switches (input) and Readable Experience
+        // tiles (button). Branch on tagName so each control reflects active
+        // state via its own contract.
+        panel.querySelectorAll('[data-a11y-mode]').forEach(el => {
+            const active = isModeActive(el.dataset.a11yMode, tokens);
+            if (el.tagName === 'INPUT') el.checked = active;
+            else setPressed(el, active);
         });
         // Visual filter buttons (single-pick — always primitives, only
         // reflect state.modes; bundles don't pull these in).
         panel.querySelectorAll('button[data-a11y-visual]').forEach(btn => {
-            btn.setAttribute('aria-pressed', state.modes.includes(btn.dataset.a11yVisual) ? 'true' : 'false');
+            setPressed(btn, state.modes.includes(btn.dataset.a11yVisual));
         });
         // Setting tile buttons (cycled). The cycle's first entry is "off /
         // default" — not a level — so the indicator renders (cycle.length - 1)
@@ -455,25 +495,61 @@
             const cycle = (btn.dataset.a11yCycle || '').split(',').map(s => s.trim());
             const cur = String(state.settings[key]);
             const idx = Math.max(0, cycle.indexOf(cur));
-            btn.setAttribute('aria-pressed', (idx > 0) ? 'true' : 'false');
+            setPressed(btn, idx > 0);
             const valEl = btn.querySelector('[data-a11y-value]');
             if (valEl) valEl.textContent = formatSettingValue(key, cur);
             const bars = btn.querySelectorAll('[data-a11y-bars] .nds-accessibility-tile-bar');
             bars.forEach((bar, i) => bar.classList.toggle('is-active', i < idx));
         });
-        // Position group
-        panel.querySelectorAll('button[data-accessibility-position]').forEach(btn => {
-            btn.setAttribute('aria-pressed', btn.dataset.accessibilityPosition === state.position ? 'true' : 'false');
-        });
         // Oversize switch
         const oversize = panel.querySelector('input[data-a11y-oversize]');
         if (oversize) oversize.checked = !!state.oversize;
+
+        // Live "(n)" counter next to each accordion title — gives users a
+        // quick overview of how many controls are on per section without
+        // having to expand each one. Counts active children inside the
+        // matching accordion-collapse subtree:
+        //   • modes    → checked switches (bundle toggles)
+        //   • readable → tile buttons in [aria-pressed="true"]
+        //   • visual   → tile buttons in [aria-pressed="true"]
+        // Empty when count is 0 so the title looks clean by default.
+        const countActive = (collapseId, sel) => {
+            const root = panel.querySelector(collapseId);
+            return root ? root.querySelectorAll(sel).length : 0;
+        };
+        const counts = {
+            modes:    countActive('#a11yModesCollapse',    'input[data-a11y-mode]:checked'),
+            readable: countActive('#a11yReadableCollapse', 'button[aria-pressed="true"]'),
+            visual:   countActive('#a11yVisualCollapse',   'button[aria-pressed="true"]'),
+        };
+        panel.querySelectorAll('[data-a11y-count]').forEach(el => {
+            const n = counts[el.dataset.a11yCount] || 0;
+            el.textContent = n > 0 ? String(n) : '';
+        });
+    }
+
+    // Render (cycle.length - 1) step-indicator bars inside a setting tile's
+    // [data-a11y-bars] container. The first cycle entry is the off/default
+    // state, not a level — so 4 cycle entries draw 3 bars (levels 1, 2, 3).
+    // Idempotent: skips if bars already exist (server-rendered or re-init).
+    function populateSettingBars(btn) {
+        const cycle = (btn.dataset.a11yCycle || '').split(',').map(s => s.trim());
+        const barsEl = btn.querySelector('[data-a11y-bars]');
+        if (!barsEl || barsEl.children.length) return;
+        const levels = Math.max(0, cycle.length - 1);
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < levels; i++) {
+            const bar = document.createElement('span');
+            bar.className = 'nds-accessibility-tile-bar';
+            frag.appendChild(bar);
+        }
+        barsEl.appendChild(frag);
     }
 
     function formatSettingValue(key, val) {
-        if (key === 'font-scale') {
-            const n = parseFloat(val);
-            return n === 1 ? '100%' : Math.round(n * 100) + '%';
+        if (key === 'font-step') {
+            const n = parseInt(val, 10);
+            return n === 0 ? 'Default' : '+' + n;
         }
         if (key === 'text-align') {
             return val === 'default' ? 'Default' : val.charAt(0).toUpperCase() + val.slice(1);
@@ -536,7 +612,7 @@
                 }
             }
         }
-        save(); apply();
+        commit();
     }
 
     function setVisualFilter(filter) {
@@ -545,7 +621,7 @@
         const i = state.modes.indexOf(filter);
         if (i >= 0) state.modes.splice(i, 1);          // clicking the active one toggles off
         else state.modes.push(filter);
-        save(); apply();
+        commit();
     }
 
     function cycleSetting(key, cycleArr) {
@@ -553,45 +629,25 @@
         const idx = cycleArr.indexOf(cur);
         const next = cycleArr[(idx + 1) % cycleArr.length];
         state.settings[key] = next;
-        save(); apply();
-    }
-
-    function setPosition(pos) {
-        state.position = pos === 'start' ? 'start' : 'end';
-        save(); apply();
+        commit();
     }
 
     function setOversize(on) {
         state.oversize = !!on;
-        save(); apply();
+        commit();
     }
 
     function reset() {
         state = defaultState();
-        save(); apply();
-    }
-
-    function hideForever() {
-        // Close the panel first so focus doesn't get stuck inside a hidden node.
-        if (panel && hasState(panel, 'open')) close();
-        state.hidden = true;
-        save(); apply();
+        commit();
     }
 
     // ----------------------------------------------
-    // Focus trap (cloned from nds-modal.js with minor tweaks for the panel)
+    // Focus trap — delegates to NDS.trapFocus (shared with nds-modal.js).
+    // The container-getter only returns `panel` when it's open, so the trap
+    // is a no-op while closed.
     // ----------------------------------------------
-    function trapFocus(e) {
-        if (e.key !== 'Tab' || !panel || !hasState(panel, 'open')) return;
-        const focusable = panel.querySelectorAll(
-            'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        );
-        if (!focusable.length) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
+    const trapFocus = NDS.trapFocus(() => (panel && hasState(panel, 'open')) ? panel : null);
 
     // ----------------------------------------------
     // Header offset — measure the visible bottom of the topbar+mainnav and
@@ -601,10 +657,8 @@
     // ----------------------------------------------
     function updateHeaderOffset() {
         if (!panel) return;
-        const nav = document.querySelector('.nds-main-nav');
-        const topbar = document.querySelector('.nds-topbar');
-        const navBottom    = nav    ? Math.max(0, nav.getBoundingClientRect().bottom)    : 0;
-        const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
+        const navBottom    = navEl    ? Math.max(0, navEl.getBoundingClientRect().bottom)    : 0;
+        const topbarBottom = topbarEl ? Math.max(0, topbarEl.getBoundingClientRect().bottom) : 0;
         const visible = Math.max(navBottom, topbarBottom);
         if (visible > 0) panel.style.setProperty('--a11y-panel-top', visible + 'px');
         else panel.style.removeProperty('--a11y-panel-top');
@@ -622,6 +676,16 @@
         // Measure header bottom BEFORE the open transition starts so the panel
         // animates into the correct slot. Layout reads first, style writes after.
         updateHeaderOffset();
+
+        // Track the visible header bottom while the panel is open. The
+        // topbar is position:relative (scrolls away) while the nav is
+        // position:sticky, so as the user scrolls past the topbar the
+        // header's visible bottom shrinks from (topbar + nav) to (nav).
+        // Listener is scoped to openAC so it tears down on close() — zero
+        // scroll-tick overhead when the panel isn't open.
+        openAC = new AbortController();
+        const onPanelScroll = NDS.rafThrottle(updateHeaderOffset);
+        window.addEventListener('scroll', onPanelScroll, { passive: true, signal: openAC.signal });
 
         // Mark surroundings inert so AT and tab order skip them. Cache the
         // exact node list so close() removes the attribute from the same
@@ -658,6 +722,11 @@
         if (!panel || !hasState(panel, 'open')) return;
         addState(panel, 'closing');
 
+        // Tear down the open-only scroll listener immediately — no need
+        // to wait for the transition to finish. Once the user clicks
+        // close, scroll-tracking the header offset is wasted work.
+        if (openAC) { openAC.abort(); openAC = null; }
+
         let done = false;
         const cleanup = () => {
             if (done) return;
@@ -692,11 +761,13 @@
     // ----------------------------------------------
     function destroy() {
         if (ac) { ac.abort(); ac = null; }
+        if (openAC) { openAC.abort(); openAC = null; }
         if (maskAC) { maskAC.abort(); maskAC = null; }
         if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
         if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
         if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
         maskLastY = null;
+        navEl = topbarEl = null;
     }
 
     function init() {
@@ -706,6 +777,12 @@
         toggleBtn = document.querySelector('[data-accessibility-toggle]');
         panel = document.querySelector('[data-accessibility-panel]');
         if (!toggleBtn || !panel) return;
+
+        // Cache sticky-header references — re-read by updateHeaderOffset on
+        // every open + every resize tick. Stable site-chrome elements; null
+        // is tolerated downstream if either is absent on this layout.
+        navEl    = document.querySelector('.nds-main-nav');
+        topbarEl = document.querySelector('.nds-topbar');
 
         // Pull persisted state, push to DOM
         state = load();
@@ -759,64 +836,42 @@
         });
         signal.addEventListener('abort', offResize);
 
+        // Per-open scroll listener for tracking the topbar's
+        // appearance/disappearance is attached in open() and torn down in
+        // close(), so there's zero scroll-tick overhead while the panel is
+        // closed. See open() for details.
+
         // ----- Control wiring -----
-        // Mode switches (accordion section)
-        panel.querySelectorAll('input[data-a11y-mode]').forEach(input => {
-            input.addEventListener('change', () => toggleMode(input.dataset.a11yMode), { signal });
-        });
+        // Declarative table: every panel control is { selector, event, fn }.
+        // The optional `each` hook runs once per matched element at wire-time
+        // (used by setting tiles to render their step-indicator bars). All
+        // listeners attach with the same { signal } so destroy() tears them
+        // down atomically.
+        const WIRE = [
+            { sel: 'input[data-a11y-mode]',                event: 'change', fn: el => toggleMode(el.dataset.a11yMode) },
+            { sel: 'button[data-a11y-mode]',               event: 'click',  fn: el => toggleMode(el.dataset.a11yMode) },
+            { sel: 'button[data-a11y-visual]',             event: 'click',  fn: el => setVisualFilter(el.dataset.a11yVisual) },
+            { sel: 'button[data-a11y-setting]',            event: 'click',
+              fn: el => {
+                  const cycle = (el.dataset.a11yCycle || '').split(',').map(s => s.trim());
+                  cycleSetting(el.dataset.a11ySetting, cycle);
+              },
+              each: populateSettingBars,
+            },
+            { sel: 'input[data-a11y-oversize]',            event: 'change', fn: el => setOversize(el.checked) },
+            { sel: '[data-accessibility-action]',          event: 'click',
+              fn: el => {
+                  const a = el.dataset.accessibilityAction;
+                  if (a === 'reset') reset();
+              },
+            },
+        ];
 
-        // Mode tile buttons (Readable Experience: highlight-titles, etc.)
-        panel.querySelectorAll('button[data-a11y-mode]').forEach(btn => {
-            btn.addEventListener('click', () => toggleMode(btn.dataset.a11yMode), { signal });
-        });
-
-        // Visual filters (single-pick group)
-        panel.querySelectorAll('button[data-a11y-visual]').forEach(btn => {
-            btn.addEventListener('click', () => setVisualFilter(btn.dataset.a11yVisual), { signal });
-        });
-
-        // Cycled scalar settings — wire click + populate the step-indicator
-        // bars based on cycle length. Idempotent: skips if bars already exist
-        // (e.g., on a re-init after server-rendered markup is already present).
-        panel.querySelectorAll('button[data-a11y-setting]').forEach(btn => {
-            const key = btn.dataset.a11ySetting;
-            const cycle = (btn.dataset.a11yCycle || '').split(',').map(s => s.trim());
-            btn.addEventListener('click', () => cycleSetting(key, cycle), { signal });
-
-            // Render (cycle.length - 1) bars: the first cycle value is the
-            // off/default state, not a level. With 4 cycle entries we draw 3
-            // bars representing levels 1, 2, 3.
-            const barsEl = btn.querySelector('[data-a11y-bars]');
-            if (barsEl && !barsEl.children.length) {
-                const levels = Math.max(0, cycle.length - 1);
-                const frag = document.createDocumentFragment();
-                for (let i = 0; i < levels; i++) {
-                    const bar = document.createElement('span');
-                    bar.className = 'nds-accessibility-tile-bar';
-                    frag.appendChild(bar);
-                }
-                barsEl.appendChild(frag);
-            }
-        });
-
-        // Position
-        panel.querySelectorAll('button[data-accessibility-position]').forEach(btn => {
-            btn.addEventListener('click', () => setPosition(btn.dataset.accessibilityPosition), { signal });
-        });
-
-        // Oversize
-        const oversize = panel.querySelector('input[data-a11y-oversize]');
-        if (oversize) {
-            oversize.addEventListener('change', () => setOversize(oversize.checked), { signal });
-        }
-
-        // Footer actions
-        panel.querySelectorAll('[data-accessibility-action]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const action = btn.dataset.accessibilityAction;
-                if (action === 'reset') reset();
-                else if (action === 'hide-forever') hideForever();
-            }, { signal });
+        WIRE.forEach(({ sel, event, fn, each }) => {
+            panel.querySelectorAll(sel).forEach(el => {
+                if (each) each(el);
+                el.addEventListener(event, () => fn(el), { signal });
+            });
         });
 
         syncUI();
@@ -825,8 +880,8 @@
     NDS.Accessibility = {
         init,
         open, close, toggle,
-        toggleMode, setVisualFilter, cycleSetting, setPosition, setOversize,
-        reset, hideForever,
+        toggleMode, setVisualFilter, cycleSetting, setOversize,
+        reset,
         get state() { return JSON.parse(JSON.stringify(state)); },
     };
 })();

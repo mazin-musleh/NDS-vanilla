@@ -2,12 +2,11 @@
 <html lang="{{ page.lang | default: 'en' }}" dir="{{ page.direction | default: 'ltr' }}">
 {%- include head.html %}
 <body class="nds-minimal {{ page.body_class }}">
-    <a class="nds-skip-link" href="#mainContent">Skip to main content</a>
     <header>
         {%- include topbar.html %}
         {%- include mainnav.html %}
     </header>
-    <main id="mainContent" tabindex="-1">
+    <main>
         {{ content }}
     </main>
     {%- include footer.html %}
