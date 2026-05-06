@@ -388,6 +388,38 @@
         };
     })();
 
+    // ── Focusable Selector + Tab Focus Trap ──────────────────────────
+    // Standard "tabbable element" selector — matches the elements a Tab/
+    // Shift+Tab traversal will land on. Excludes [tabindex="-1"] (unreachable
+    // by Tab) and disabled form controls. Exposed so component code can
+    // reuse the same coverage when querying focusables.
+    NDS.focusableSel =
+        'a[href], button:not([disabled]), textarea:not([disabled]), ' +
+        'input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    // Build a keydown handler that traps Tab/Shift+Tab inside `containerFn()`'s
+    // returned element. Pass either a function (re-evaluated on every Tab —
+    // lets the caller gate by open/close state, or return null when the
+    // surface isn't active) or the element directly. When the active element
+    // is the first tabbable, Shift+Tab wraps to the last; when it's the last,
+    // Tab wraps to the first. No-ops when the container is gone, hidden, or
+    // has no tabbables.
+    //
+    // Usage: document.addEventListener('keydown',
+    //          NDS.trapFocus(() => isOpen ? panelEl : null),
+    //          { signal });
+    NDS.trapFocus = (containerFn) => (e) => {
+        if (e.key !== 'Tab') return;
+        const c = typeof containerFn === 'function' ? containerFn() : containerFn;
+        if (!c) return;
+        const f = c.querySelectorAll(NDS.focusableSel);
+        if (!f.length) return;
+        const first = f[0];
+        const last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+
     // ── Local-Storage TTL Cache ────────────────────────────────────────
     // Wraps localStorage with a JSON `{value, expires}` envelope. Getter
     // returns the cached value when fresh, `null` on miss / parse error /
