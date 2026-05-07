@@ -28,8 +28,9 @@
     // Font family
     --nds-font-family: 'IBM Plex Sans Arabic', sans-serif;
 
-    // Global user font scale — set by JS / content-scaling mode to
-    // reflect the user's chosen accessibility scale. Undefined by default
+    // Global user font scale — set by the accessibility panel's Font
+    // Sizing tile (font-step ladder) to reflect the user's chosen
+    // accessibility scale. Undefined by default
     // ("no choice made"); every consumer's calc carries `, 1` as the
     // var() fallback so default pages never scale. Components like the
     // accessibility panel pin this to 1 inside their subtree to keep

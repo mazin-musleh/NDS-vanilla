@@ -213,47 +213,34 @@ $a11y-filters: (
 }
 
 // ----------------------------------------------
-// Readable-font and Dyslexia primitives — DIFFERENT font stacks.
-//
-// Earlier they were aliased to the same OpenDyslexic-first stack, which
-// hid the fact that they target different research traditions. They're
-// now split:
-//
-//   readable-font  → Lexend-first. General readability gain across the
-//                    population, including dyslexic and non-dyslexic
-//                    readers (Bonacker 2019 — measurable reading-speed
-//                    improvement for typical readers; OpenDyslexic
-//                    specifically NOT included because Marinus et al.
-//                    2016 and Wery & Diliberto 2017 found no reliable
-//                    advantage for dyslexic users vs neutral
-//                    sans-serifs). Atkinson Hyperlegible is a low-
-//                    vision-optimized fallback (Braille Institute, 2020).
-//
-//   dyslexia       → OpenDyslexic-first. OpenDyslexic's clinical
-//                    efficacy is contested, but a meaningful subset of
-//                    dyslexic users report subjective preference for
-//                    its weighted bottoms. Falls back to the same
-//                    Lexend-led readability stack so users without
-//                    OpenDyslexic installed still get an evidence-
-//                    backed alternative — never a worse experience.
-//
-// The token canonical name is --nds-font-family (defined in
-// _variables-critical.scss); every component's typography cascade
-// consumes it. The override stays at `:root` scope so the cascade
-// reaches every descendant via inheritance (CSS variable redefinition
-// on a deeper element doesn't re-compute already-inherited font-family
-// values — only elements that explicitly read `var(--nds-font-family)`
-// pick up a deeper override). The accessibility panel / FAB / mask
-// controls pin their own font-family to a panel-private literal
-// (`--a11y-font-family` in _accessibility.scss) so the chrome stays on
-// the NDS default font regardless of this user-chosen content font —
-// same pattern as the panel's font-size pin.
+// Dyslexia primitive — Latin (OpenDyslexic) + Arabic (Maqroo) stack.
+// Browsers resolve per-character: Latin glyphs hit OpenDyslexic, Arabic
+// glyphs walk past the Latin-only faces to Maqroo (or IBM Plex Sans
+// Arabic fallback). Override stays at `:root` so body-level font-family
+// resolves correctly via inheritance — panel chrome pins its own
+// --nds-font-family override in _accessibility.scss.
 // ----------------------------------------------
-:root[data-a11y~="readable-font"] {
-    --nds-font-family: "Lexend", "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
-}
 :root[data-a11y~="dyslexia"] {
-    --nds-font-family: "OpenDyslexic", "Lexend", "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+    --nds-font-family: "OpenDyslexic", "Lexend", "Atkinson Hyperlegible", "Verdana",
+                       "Maqroo", "Tajawal", "IBM Plex Sans Arabic",
+                       system-ui, sans-serif;
+}
+
+// Stroke-weight bump under the dyslexia mode. Maqroo Regular's stroke
+// is naturally lighter than IBM Plex Sans Arabic Regular at the same
+// nominal weight — at body sizes the contrast reads thin against
+// surrounding chrome. Bumping body-text elements to 500 lets the
+// browser:
+//   • faux-bold Maqroo (the @font-face declares range 400-700 against
+//     the single woff2 file; browsers synthesize the in-between),
+//   • OR — if Maqroo isn't loaded yet — pick up the real Medium weight
+//     of IBM Plex Sans Arabic (already shipped at assets/fonts/IBMPlex
+//     SansArabic-Medium.woff2), so the fallback path also looks heavier.
+// Page-shell scoped so panel chrome stays at its panel-private weight,
+// and limited to body-text elements so headings (which already carry
+// 600-700 design weights) aren't pulled DOWN to 500.
+@include a11y-page-shell-within('dyslexia', ':is(p, li, dt, dd, blockquote)') {
+    font-weight: 500;
 }
 
 // ----------------------------------------------
@@ -271,14 +258,14 @@ $a11y-filters: (
 // All cosmetic page-content mutations below are scoped through the
 // `.nds-a11y-scope` marker class so the accessibility panel and the FAB
 // (which never receive the class) are NEVER affected. Token-level
-// overrides above (high-contrast palette, readable-font, dyslexia font)
-// stay at `:root` scope because CSS variable redefinition on deeper
-// elements doesn't re-compute already-inherited font-family / color
-// values. The panel guards itself against the font cascade via a
-// panel-private `--a11y-font-family` token in _accessibility.scss —
-// same pattern as the font-size pin. The high-contrast palette is
-// intentionally left to cascade so the panel matches the user's chosen
-// palette (a fundamental theme change like dark-mode).
+// overrides above (high-contrast palette, dyslexia font) stay at `:root`
+// scope because CSS variable redefinition on deeper elements doesn't
+// re-compute already-inherited font-family / color values. The panel
+// guards itself against the font cascade via a panel-private
+// `--a11y-font-family` token in _accessibility.scss — same pattern as
+// the font-size pin. The high-contrast palette is intentionally left to
+// cascade so the panel matches the user's chosen palette (a fundamental
+// theme change like dark-mode).
 
 // ----------------------------------------------
 // Font sizing — single global multiplier
@@ -307,32 +294,15 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     }
 }
 
-// Content-scaling primitive (Visually-Impaired bundle) → step 2 (1.30×).
-//
-// Earlier mapped to step 1 (1.15×), which was too weak for a low-vision
-// preset — users picking "Visually Impaired" deserve a stronger opening
-// scale than 15%. Step 2 lands at 1.30× while still keeping layout
-// integrity (testing at step 3 = 1.50× shows occasional overflow on
-// tight components; 2.0× is browser-zoom territory).
-//
-// WCAG 1.4.4 mandates 200% text resize support — reachable via browser
-// zoom (Ctrl+/Ctrl-), not via this ladder. The panel ladder is a
-// supplementary control for users who don't know about browser zoom or
-// can't adjust the OS-wide setting; it isn't a substitute for 1.4.4.
-:root[data-a11y~="content-scaling"] {
-    --user-font-scale: #{map.get($step-scales, 2)};
-}
-
 // Body's own font-size — keep unstyled <p>/<li>/<span> aligned with the
 // scaled body-text-md token. Page-shell scoped so the panel itself uses
-// the browser default font-size (not the scaled token).
+// the browser default font-size (not the scaled token). WCAG 1.4.4's
+// 200% target is reached via browser zoom (Ctrl+/-); this ladder is a
+// supplementary panel control, not a 1.4.4 substitute.
 @each $step, $scale in $step-scales {
     @include a11y-page-shell('font-step-#{$step}') {
         font-size: var(--typo-text-md-FS);
     }
-}
-@include a11y-page-shell('content-scaling') {
-    font-size: var(--typo-text-md-FS);
 }
 
 // ----------------------------------------------
@@ -365,8 +335,15 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 // labels, and tile buttons keep their natural alignment. The descendant
 // `:is(p, li)` rule beats per-element text-align declarations that some
 // content sets locally; the !important keeps those overrides in check.
+//
+// Uses CSS logical values `start` / `end` instead of physical `left` /
+// `right`, so an Arabic (RTL) reader gets reading-start alignment from
+// the same `start` token that a Latin (LTR) reader does. Tile cycle in
+// _includes/accessibility-panel.html: default,start,end,justify.
+// Legacy saved values `left` / `right` from earlier builds become
+// no-op tokens (no SCSS match) and self-heal on the next user cycle.
 // ----------------------------------------------
-@each $alignment in (left, right, justify) {
+@each $alignment in (start, end, justify) {
     @include a11y-page-shell('text-align-#{$alignment}') {
         text-align: #{$alignment} !important;
     }
@@ -386,7 +363,17 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 // block at the top of this file for rationale and the dark-mode caveat.
 // ----------------------------------------------
 @include a11y-page-shell-within('highlight-titles', ':is(h1, h2, h3, h4, h5, h6)') {
-    outline: 2px solid var(--link-primary);
+    // All-amber warning palette: bg (`--background-warning-25` light tint),
+    // text (`--text-warning` saturated amber), and outline (`--border-warning`
+    // saturated amber). Earlier the outline used `--link-primary` (green)
+    // for contrast against the amber bg, but headings aren't links —
+    // semantic mismatch — and the green ring conflicted with the
+    // highlight-links amber outline for users who activated both modes
+    // together. Using `--border-warning` keeps the contrast (saturated
+    // border vs light tint bg) while staying inside one palette family.
+    // Style stays SOLID (vs highlight-links' DASHED) to preserve the
+    // "filled state" / "scaffold annotation" semantic split.
+    outline: 2px solid var(--border-warning);
     outline-offset: 2px;
     background-color: var(--background-warning-25);
     color: var(--text-warning) !important;
@@ -396,17 +383,62 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     border-radius: var(--radius-xs);
 }
 
-// Dark-mode override — `--background-warning-25` stays cream in dark, but
-// `--text-warning` remaps to amber-400 (which would be ~1.7:1 on cream).
-// Swap the bg to `--alpha-warning-10` so amber-on-tinted-dark resolves
-// AAA. Same pattern as the warning variants in _alert.scss / _tags.scss.
+// Dark-mode overrides for both highlight-titles and highlight-links.
+// Token resolution differs sharply between the two themes:
+//   • Light: `--border-warning` / `--text-warning` both → yellow-700
+//     (saturated dark amber). Reads clear-on-light against white/cream.
+//   • Dark:  `--border-warning` stays at yellow-700 (now mid-tone on
+//     dark), `--text-warning` lightens to yellow-600. The outline ends
+//     up DARKER than the text inside it — backward hierarchy that also
+//     reduces visibility against the dark page bg.
+//
+// Fix: in dark mode, swap the outline to `--border-warning-light`
+// (yellow-200, the bright pale amber the design system reserves for
+// dark-mode borders). High contrast against dark page background;
+// matches the way the saturated amber pops on white in light mode.
+//
+// Highlight-titles also gets the bg override that was already here —
+// `--background-warning-25` resolves to neutral-900 in dark (NOT amber!)
+// so the heading would lose its warning-tone bg without this override.
+// `--alpha-warning-10` is a transparent yellow-tinted overlay that
+// renders as a subtle amber tint on the dark page. Same pattern as the
+// warning variants in _alert.scss / _tags.scss.
 :root[data-a11y~="highlight-titles"][data-theme="dark"] .nds-a11y-scope :is(h1, h2, h3, h4, h5, h6) {
     background-color: var(--alpha-warning-10);
+    outline-color: var(--border-warning-light);
+}
+:root[data-a11y~="highlight-links"][data-theme="dark"] .nds-a11y-scope a {
+    outline-color: var(--border-warning-light);
 }
 
-@include a11y-page-shell-within('highlight-links', 'a:not(.nds-btn)') {
-    outline: 1px dashed var(--link-primary);
+// Highlight Links — split into two rules so button-styled anchors
+// (`<a class="nds-btn">`) ALSO get the dashed-outline scaffold that
+// marks them as navigation elements (the WCAG/dyslexia goal: show
+// every clickable link regardless of visual style). The underline is
+// kept off button-styled anchors because text-decoration on a button
+// only underlines the label text, fragments visually with adjacent
+// icons, and is redundant against the button shape that already
+// signals interactivity.
+//
+// Color choice — split intentionally between the two visual signals so
+// activated links carry BOTH cues:
+//   • Outline:   amber `--text-warning` — NOT `--link-primary` (Saudi
+//                green). Plain text links and most NDS button links are
+//                already green, so a green outline camouflages against
+//                the link, defeating the highlight. Amber sits adjacent
+//                to green in the warning palette and provides clear
+//                contrast — same scaffold tone highlight-titles uses.
+//   • Underline: inherits the link's natural color (currently green).
+//                Preserves the link's brand-identity underline rather
+//                than monochroming everything to amber. Result: green
+//                underline + amber outline = dual signal that says both
+//                "this is a link" (green) and "this is a highlighted
+//                link in the active mode" (amber scaffold).
+@include a11y-page-shell-within('highlight-links', 'a') {
+    outline: 2px dashed var(--text-warning);
     outline-offset: 2px;
+}
+@include a11y-page-shell-within('highlight-links', 'a:not(.nds-btn)') {
     text-decoration: underline !important;
     text-underline-offset: 2px;
     text-decoration-thickness: 2px;
@@ -476,8 +508,8 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     // font scaling or any future global typo override. Same font-family
     // strategy: override --nds-font-family inside this subtree so
     // descendant components that read `var(--nds-font-family)` resolve
-    // to the panel-private stack instead of root-scoped readable-font /
-    // dyslexia overrides.
+    // to the panel-private stack instead of the root-scoped dyslexia
+    // override.
     --a11y-text-FS:          14px;
     --a11y-text-LH:          20px;
     --a11y-toolbar-icon-FS:  20px;  // toolbar icon target size
@@ -605,9 +637,9 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 //
 //   epilepsy-safe        → reduce-motion, low-saturation
 //                          (WCAG 2.3.1 Three Flashes — baseline)
-//   visually-impaired    → high-contrast, content-scaling (1.30×)
+//   visually-impaired    → high-contrast + font-step: 2 setting (1.30×)
 //                          (WCAG 1.4.6 Contrast Enhanced)
-//   cognitive-disability → readable-font (Lexend-first), highlight-titles, reduce-motion
+//   cognitive-disability → highlight-titles, reduce-motion
 //   motor-impaired       → (no primitives — SCSS-only effect: 4px focus rings,
 //                          48×48 target size; exceeds WCAG 2.5.5 Enhanced 44×44)
 //   colorblind           → colorblind (generic catch-all filter — see below)
@@ -617,14 +649,6 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 //                            word-spacing 0.16em (set via the bundle's
 //                            `settings` recipe in MODE_BUNDLES).
 //   adhd-friendly        → reduce-motion, highlight-titles, reading-mask
-//   blindness            → reduce-motion (animations during AT
-//                          announcements shift focus mid-utterance —
-//                          motion reduction IS a screen-reader
-//                          accommodation, not just a visual one).
-//                          applyMotionPause() also fires here, pausing
-//                          autoplay video/audio — WCAG 2.2.2 Pause/
-//                          Stop/Hide for AT users where autoplay audio
-//                          collides with screen-reader speech.
 //
 // ----------------------------------------------
 // DEFERRED — known gaps documented for future work

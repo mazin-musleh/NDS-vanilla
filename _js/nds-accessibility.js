@@ -38,13 +38,20 @@
         'epilepsy-safe':        ['reduce-motion', 'low-saturation'],
 
         // Low vision / contrast sensitivity: WCAG 1.4.6 (Contrast Enhanced)
-        // via high-contrast palette + 1.30× text scaling. content-scaling
-        // primitive resolves to step 2 (see _variables-a11y.scss).
-        'visually-impaired':    ['high-contrast', 'content-scaling'],
+        // via high-contrast palette + 1.30× text scaling. The text scale
+        // is delivered through the bundle's `settings` channel (same shape
+        // as dyslexia-friendly's spacing settings) — sets state.settings
+        // ['font-step'] = 2 so the Font Sizing tile correctly reflects
+        // the active scale instead of showing "Default" while the page is
+        // scaled. Snapshot/restore on deactivation is handled by the
+        // existing toggleMode() machinery.
+        'visually-impaired':    {
+            primitives: ['high-contrast'],
+            settings:   { 'font-step': 2 },
+        },
 
-        // Cognitive load: readable typography + structural anchors +
-        // motion reduction. Lexend-first stack (evidence-backed).
-        'cognitive-disability': ['readable-font', 'highlight-titles', 'reduce-motion'],
+        // Cognitive load: structural anchors + motion reduction.
+        'cognitive-disability': ['highlight-titles', 'reduce-motion'],
 
         // Motor accommodation: SCSS-only effect (4px focus rings + 48×48
         // target size — exceeds WCAG 2.5.5 Enhanced 44×44 minimum).
@@ -75,20 +82,31 @@
         // guide rulers — strongest evidence-supported piece of the panel).
         'adhd-friendly':        ['reduce-motion', 'highlight-titles', 'reading-mask'],
 
-        // Screen-reader users: reduce-motion isn't only visual — auto
-        // animations during AT announcements shift focus mid-utterance
-        // and force the user to re-read. Pausing motion + autoplay media
-        // (see applyMotionPause) is a real screen-reader accommodation,
-        // not just a visual one.
-        'blindness':            ['reduce-motion'],
     };
 
     // Normalize a bundle entry into { primitives, settings }.
+    //
+    // Arabic carve-out: CSS `letter-spacing` physically separates connected
+    // letters in the cursive Arabic script — the WCAG 1.4.8 / 1.4.12
+    // letter-spacing thresholds (designed for Latin) actively *break*
+    // Arabic ligatures and reduce readability. The dyslexia-friendly
+    // bundle's `letter-spacing` setting is dropped at runtime when the
+    // document language is Arabic; line-height + word-spacing + the font
+    // primitives still apply, so the bundle remains useful without the
+    // Latin-script harm. Mirrors W3C i18n WG guidance that script-aware
+    // typography overrides matter more than rote application of the
+    // letter-spacing minimum.
     function bundleRecipe(name) {
         const entry = MODE_BUNDLES[name];
         if (!entry) return { primitives: [], settings: null };
         if (Array.isArray(entry)) return { primitives: entry, settings: null };
-        return { primitives: entry.primitives || [], settings: entry.settings || null };
+        let settings = entry.settings || null;
+        if (settings && NDS.lang === 'ar' && 'letter-spacing' in settings) {
+            const stripped = {};
+            for (const k in settings) if (k !== 'letter-spacing') stripped[k] = settings[k];
+            settings = stripped;
+        }
+        return { primitives: entry.primitives || [], settings };
     }
 
     // Single-pick group — only one of these can be active at a time, since
@@ -378,9 +396,9 @@
     // resume motion. Carousel timers are out of scope (component-specific
     // state machines, not native autoplay).
     //
-    // Also relevant for screen-reader users (the blindness bundle now
-    // includes reduce-motion): autoplay audio cuts across AT speech and
-    // animations during announcements shift focus mid-utterance.
+    // Also helps screen-reader users: autoplay audio collides with
+    // AT speech, and focus-shifting animations during announcements
+    // force the user to re-read.
     function applyMotionPause(active) {
         if (!active) return;
         const media = document.querySelectorAll('video[autoplay], audio[autoplay]');
