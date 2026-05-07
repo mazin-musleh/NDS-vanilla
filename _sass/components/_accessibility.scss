@@ -328,6 +328,9 @@
     flex: 1 1 auto;
     min-height: 0;
     --scroll-fade: 32px;
+    .nds-scroll-more-content{
+        flex: unset;
+    }
 }
 
 // ----------------------------------------------

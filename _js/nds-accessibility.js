@@ -16,37 +16,109 @@
     const root = document.documentElement;
 
     // Bundles map a single accordion-section toggle (e.g. "epilepsy-safe")
-    // to the set of low-level tokens that implement it. Keep this in sync
-    // with the comment block at the bottom of _variables-a11y.scss.
+    // to a low-level recipe: { primitives: [...], settings: { ... } }.
+    // The shorthand `[...]` is sugar for `{ primitives: [...] }`. Keep
+    // this in sync with the comment block at the bottom of _variables-a11y.scss.
+    //
+    // `primitives` are tokens stamped into data-a11y while the bundle is
+    // active (and removed when it's deactivated AND the user hasn't also
+    // toggled them on individually).
+    //
+    // `settings` are values pushed into state.settings on activation —
+    // matching WCAG-derived defaults for the bundle's user-need profile.
+    // We treat them as an OPENING POSITION: they're applied when the
+    // bundle is enabled (clobbering the user's prior values), but the
+    // user can immediately re-cycle any tile to override. On bundle
+    // deactivation we do NOT auto-reset settings — the user keeps the
+    // last value they saw, even if it came from the bundle. This is
+    // less surprising than resurrecting the pre-bundle state, which
+    // would silently undo any tile cycles the user did mid-session.
     const MODE_BUNDLES = {
+        // Photosensitive epilepsy: WCAG 2.3.1 (Three Flashes) baseline.
         'epilepsy-safe':        ['reduce-motion', 'low-saturation'],
+
+        // Low vision / contrast sensitivity: WCAG 1.4.6 (Contrast Enhanced)
+        // via high-contrast palette + 1.30× text scaling. content-scaling
+        // primitive resolves to step 2 (see _variables-a11y.scss).
         'visually-impaired':    ['high-contrast', 'content-scaling'],
+
+        // Cognitive load: readable typography + structural anchors +
+        // motion reduction. Lexend-first stack (evidence-backed).
         'cognitive-disability': ['readable-font', 'highlight-titles', 'reduce-motion'],
+
+        // Motor accommodation: SCSS-only effect (4px focus rings + 48×48
+        // target size — exceeds WCAG 2.5.5 Enhanced 44×44 minimum).
         'motor-impaired':       [],
+
+        // Color vision deficiency: generic catch-all filter. Per-type
+        // LMS-matrix variants (deuteranopia/protanopia/tritanopia) are
+        // future work — deferred until peer-reviewed Daltonization
+        // matrices are wired up via SVG <feColorMatrix>. The current
+        // generic filter is documented at _variables-a11y.scss.
         'colorblind':           ['colorblind'],
-        'dyslexia-friendly':    ['dyslexia', 'highlight-links'],
+
+        // Dyslexia-specific reading aid: OpenDyslexic-first font + link
+        // emphasis + WCAG 1.4.8 (Visual Presentation) text spacing.
+        // OpenDyslexic's clinical efficacy is contested but some users
+        // subjectively prefer it; falls back to Lexend if not installed.
+        // The 1.4.8 spacing thresholds (line-height ≥ 1.5, letter-
+        // spacing ≥ 0.12em, word-spacing ≥ 0.16em) are part of the
+        // bundle so dyslexic readers don't have to discover and cycle
+        // four separate tiles to get standards-aligned typography.
+        'dyslexia-friendly':    {
+            primitives: ['dyslexia', 'highlight-links'],
+            settings:   { 'line-height': '1.6', 'letter-spacing': '0.12em', 'word-spacing': '0.16em' },
+        },
+
+        // Attention regulation: motion reduction + structural scaffolds +
+        // reading mask (the focus aid that mirrors classroom reading-
+        // guide rulers — strongest evidence-supported piece of the panel).
         'adhd-friendly':        ['reduce-motion', 'highlight-titles', 'reading-mask'],
-        'blindness':            [],   // marker-only — see _variables-a11y.scss for rationale
+
+        // Screen-reader users: reduce-motion isn't only visual — auto
+        // animations during AT announcements shift focus mid-utterance
+        // and force the user to re-read. Pausing motion + autoplay media
+        // (see applyMotionPause) is a real screen-reader accommodation,
+        // not just a visual one.
+        'blindness':            ['reduce-motion'],
     };
+
+    // Normalize a bundle entry into { primitives, settings }.
+    function bundleRecipe(name) {
+        const entry = MODE_BUNDLES[name];
+        if (!entry) return { primitives: [], settings: null };
+        if (Array.isArray(entry)) return { primitives: entry, settings: null };
+        return { primitives: entry.primitives || [], settings: entry.settings || null };
+    }
 
     // Single-pick group — only one of these can be active at a time, since
     // their CSS filters compose multiplicatively and most users want exactly
     // one of "make it brighter / dimmer / monochrome / boosted contrast".
-    const VISUAL_FILTERS = ['smart-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation'];
+    const VISUAL_FILTERS = ['boost-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation'];
 
-    // Scalar settings → inline custom properties on <html>. Each entry is
-    // applied identically: write the CSS var when the value differs from the
-    // default; remove it otherwise. Driven by apply() in one short loop.
+    // Continuous user-tunable scalars → inline custom properties on <html>
+    // PLUS a presence token in data-a11y. Each entry is applied identically:
+    // when the value differs from the default, write the CSS var AND stamp
+    // the `token` into data-a11y; when it matches the default, remove the
+    // var (no token is added). Driven by apply() in one short loop.
     //
-    // `font-step` is a discrete level (0/1/2/3) — the SCSS layer in
-    // _variables-a11y.scss reads `--user-font-step: N` and remaps every
-    // typography token to the next-N rung of the existing ladder. Coarser
-    // than a multiplier, but each step lands on a designer-chosen size.
+    // Why both a CSS var AND a token: the var carries the arbitrary value
+    // (e.g. 1.6, 0.04em); the token gates the SCSS rule so the override
+    // only applies when the user has actually changed this scalar. Without
+    // the token, the SCSS rule would reset author line-height/spacing to
+    // the property's initial value whenever ANY other mod (filter,
+    // high-contrast, highlight-titles, etc.) caused the scope wrapper to
+    // appear — clobbering the design-system typography for unrelated mods.
+    //
+    // Note: `font-step` is NOT here. Although it's stored as a number
+    // (0/1/2/3), it's a discrete mode token and lives in data-a11y as
+    // `font-step-1` / `-2` / `-3` (apply() folds it into the token Set
+    // alongside `text-align-*`). Continuous scalars stay as inline custom
+    // properties because they carry an arbitrary value.
     const SCALAR_PROPS = [
-        { key: 'font-step',      cssVar: '--user-font-step',      def: 0 },
-        { key: 'line-height',    cssVar: '--user-line-height',    def: 'normal' },
-        { key: 'letter-spacing', cssVar: '--user-letter-spacing', def: '0' },
-        { key: 'word-spacing',   cssVar: '--user-word-spacing',   def: '0' },
+        { key: 'line-height',    cssVar: '--user-line-height',    token: 'has-line-height',    def: 'normal' },
+        { key: 'letter-spacing', cssVar: '--user-letter-spacing', token: 'has-letter-spacing', def: '0' },
+        { key: 'word-spacing',   cssVar: '--user-word-spacing',   token: 'has-word-spacing',   def: '0' },
     ];
 
     let state = defaultState();
@@ -55,6 +127,7 @@
     let navEl = null;          // .nds-main-nav  — cached for updateHeaderOffset
     let topbarEl = null;       // .nds-topbar    — cached for updateHeaderOffset
     let openerEl = null;       // element that opened the panel — focus returns here
+    let scopeWrapper = null;   // .nds-a11y-scope — wrapper around <header>/<main>/<footer>; created lazily by ensureScopeWrapper() the first time any mod is active, removed by removeScopeWrapper() when nothing is active
     let inertedSiblings = [];  // captured on open so close removes inert from the same nodes
     let ac = null;             // AbortController for all listeners scoped to current init
     let openAC = null;         // separate AC for listeners that only run while the panel is open
@@ -79,6 +152,12 @@
                 'mask-band': 60,               // half-height of reading-mask clear band, px
                 'mask-y': null,                // band center Y in px; null = use viewport center on first activation
             },
+            // Per-bundle snapshot of settings as they were JUST BEFORE the
+            // bundle activated. Used by the deactivation path to revert the
+            // bundle's auto-applied settings while preserving any tile the
+            // user manually cycled mid-session. Keyed by bundle name; an
+            // entry exists ONLY while the bundle is active. See toggleMode.
+            settingsSnapshots: {},
             oversize: false,
         };
     }
@@ -135,6 +214,13 @@
             });
             result.modes = newModes;
             result.bundles = newBundles;
+            // Rename smart-contrast → boost-contrast in saved state.modes.
+            // Earlier builds shipped the filter under the misleading
+            // "smart-contrast" name (it's a flat contrast(1.15) — nothing
+            // smart about it). Rewrite once on load so the SCSS selector
+            // and the panel label stay consistent for returning users.
+            const sci = result.modes.indexOf('smart-contrast');
+            if (sci !== -1) result.modes[sci] = 'boost-contrast';
             return result;
         } catch {
             return defaultState();
@@ -153,11 +239,11 @@
         const tokens = new Set(state.modes);
         for (let i = 0; i < state.bundles.length; i++) {
             const b = state.bundles[i];
-            const primitives = MODE_BUNDLES[b];
-            if (Array.isArray(primitives) && primitives.length > 0) {
+            const { primitives } = bundleRecipe(b);
+            if (primitives.length > 0) {
                 primitives.forEach(p => tokens.add(p));
             } else {
-                tokens.add(b);                 // empty bundle — marker token
+                tokens.add(b);                 // marker-only bundle (motor-impaired, etc.)
             }
         }
         // User-side exclusions override bundle inclusions.
@@ -165,11 +251,46 @@
         return tokens;
     }
 
+    // ----------------------------------------------
+    // Page-shell scope wrapper — `.nds-a11y-scope`
+    // ----------------------------------------------
+    // The wrapper groups <header>/<main>/<footer> into a single element so
+    // SCSS can scope filters and cosmetic mods through one selector head.
+    // Benefits over targeting the three structural elements directly:
+    //   • One stacking context / one compositor layer when a filter is on
+    //     instead of three.
+    //   • One containing block for any future position:fixed descendants.
+    //   • One inert target on panel-open (cascades to all descendants).
+    //
+    // Created lazily — only when at least one mod is active. Removed when
+    // every mod is cleared. The default DOM is identical to a build with
+    // no a11y panel; we never modify the markup until there's something
+    // to scope. The accessibility panel + FAB + cookie popup + reading
+    // mask are body siblings of the targets and therefore stay outside
+    // the wrapper, preserving their viewport-anchored fixed positioning.
+    //
+    // The wrap/unwrap mechanics (insertion-point math, sibling-order
+    // preservation on restore, iframe/media survival on move) live in
+    // NDS.wrap / NDS.unwrap (nds-core.js); ensureScopeWrapper / remove
+    // ScopeWrapper just supply the targets and the wrapper class.
+    function ensureScopeWrapper() {
+        if (scopeWrapper && scopeWrapper.isConnected) return;
+        const targets = Array.from(
+            document.body.querySelectorAll(':scope > header, :scope > main, :scope > footer')
+        );
+        scopeWrapper = NDS.wrap(targets, { className: 'nds-a11y-scope' });
+    }
+
+    function removeScopeWrapper() {
+        NDS.unwrap(scopeWrapper);
+        scopeWrapper = null;
+    }
+
     // Is a given primitive currently supplied by ANY active bundle?
     function isSuppliedByBundle(primitive) {
         for (let i = 0; i < state.bundles.length; i++) {
-            const prims = MODE_BUNDLES[state.bundles[i]] || [];
-            if (prims.indexOf(primitive) !== -1) return true;
+            const { primitives } = bundleRecipe(state.bundles[i]);
+            if (primitives.indexOf(primitive) !== -1) return true;
         }
         return false;
     }
@@ -189,16 +310,35 @@
     // stored object.
     // ----------------------------------------------
     function apply() {
-        // Build the full data-a11y token set ONCE — including text-align —
-        // so the attribute is written exactly once per apply() call. The
-        // text-align token is purely derived from state.settings; folding
-        // it into the same Set avoids the parse-mutate-restamp dance the
-        // earlier version did.
+        // Build the full data-a11y token set ONCE — primitives, font-step,
+        // text-align, AND scalar-presence tokens — so the attribute is
+        // written exactly once per apply() call. Each derivative is folded
+        // into the same Set, avoiding any parse-mutate-restamp dance.
         const s = state.settings;
         const tokens = effectiveTokens();
+        const step = parseInt(s['font-step'], 10) || 0;
+        if (step >= 1 && step <= 3) tokens.add('font-step-' + step);
         if (s['text-align'] && s['text-align'] !== 'default') {
             tokens.add('text-align-' + s['text-align']);
         }
+
+        // Continuous scalars → inline CSS var when non-default + presence
+        // token in data-a11y. The token gates the SCSS rule so the
+        // override only applies when the user has actually changed this
+        // scalar — author line-height / letter-spacing / word-spacing are
+        // untouched when other mods (filters, high-contrast, etc.) are on.
+        // See SCALAR_PROPS at the top of the IIFE for the full mapping.
+        SCALAR_PROPS.forEach(({ key, cssVar, def, token }) => {
+            const v = s[key];
+            if (v && v !== def) {
+                root.style.setProperty(cssVar, v);
+                tokens.add(token);
+            } else {
+                root.style.removeProperty(cssVar);
+            }
+        });
+
+        // Single data-a11y write
         if (tokens.size === 0) {
             root.removeAttribute('data-a11y');
         } else {
@@ -209,13 +349,14 @@
         // include's `position` arg or at runtime via <html data-a11y-pos>.
         // SCSS reads both. See _includes/accessibility-panel.html intro.
 
-        // Scalar settings → inline custom properties on <html>. See
-        // SCALAR_PROPS at the top of the IIFE for the full mapping.
-        SCALAR_PROPS.forEach(({ key, cssVar, def }) => {
-            const v = s[key];
-            if (v && v !== def) root.style.setProperty(cssVar, v);
-            else root.style.removeProperty(cssVar);
-        });
+        // Page-shell scope wrapper — wrap <header>/<main>/<footer> in a
+        // `.nds-a11y-scope` <div> when ANY mod is active (any token in
+        // data-a11y, including scalar-presence tokens), unwrap otherwise.
+        // Both helpers are idempotent so apply() can safely run on every
+        // settings cycle — the DOM mutates only at the
+        // "default ↔ any-mod" boundary, not on intra-active toggles.
+        if (tokens.size > 0) ensureScopeWrapper();
+        else                 removeScopeWrapper();
 
         // Sync UI to state — only if panel is in the DOM
         if (panel) syncUI();
@@ -225,6 +366,25 @@
         // expanded token list contains "reading-mask". Single pooled listener
         // via NDS.rafThrottle so frequent pointermove events don't thrash.
         applyReadingMask(tokens.has('reading-mask'));
+        applyMotionPause(tokens.has('reduce-motion'));
+    }
+
+    // WCAG 2.2.2 (Pause, Stop, Hide). When reduce-motion activates, pause
+    // any auto-playing video/audio one-shot. We don't auto-resume on
+    // toggle-off — the user can hit play if they want it back, and that
+    // matches the principle that motion-sensitive users own when to
+    // resume motion. Carousel timers are out of scope (component-specific
+    // state machines, not native autoplay).
+    //
+    // Also relevant for screen-reader users (the blindness bundle now
+    // includes reduce-motion): autoplay audio cuts across AT speech and
+    // animations during announcements shift focus mid-utterance.
+    function applyMotionPause(active) {
+        if (!active) return;
+        const media = document.querySelectorAll('video[autoplay], audio[autoplay]');
+        for (let i = 0; i < media.length; i++) {
+            if (!media[i].paused) media[i].pause();
+        }
     }
 
     // Reading mask — telescope-style: the mask is fixed at a saved Y position
@@ -481,10 +641,16 @@
             if (el.tagName === 'INPUT') el.checked = active;
             else setPressed(el, active);
         });
-        // Visual filter buttons (single-pick — always primitives, only
-        // reflect state.modes; bundles don't pull these in).
+        // Visual filter buttons — pressed iff the filter is currently
+        // EFFECTIVE on the page, regardless of which slot supplied it
+        // (state.modes from a direct click, or a bundle's primitives via
+        // effectiveTokens). Reading from `tokens` instead of state.modes
+        // lets bundle-supplied filters (e.g. visually-impaired → high-
+        // contrast, epilepsy-safe → low-saturation) light up their tile
+        // so the user can see what the bundle activated and click to
+        // override it.
         panel.querySelectorAll('button[data-a11y-visual]').forEach(btn => {
-            setPressed(btn, state.modes.includes(btn.dataset.a11yVisual));
+            setPressed(btn, tokens.has(btn.dataset.a11yVisual));
         });
         // Setting tile buttons (cycled). The cycle's first entry is "off /
         // default" — not a level — so the indicator renders (cycle.length - 1)
@@ -573,16 +739,49 @@
             const i = state.bundles.indexOf(name);
             if (i >= 0) {
                 state.bundles.splice(i, 1);
+                // Restore settings the bundle had auto-applied so its tiles
+                // visibly toggle off alongside the bundle switch. The
+                // snapshot was taken at activation time. We only restore
+                // keys where the user did NOT manually re-cycle the tile
+                // during the bundle's lifetime — detected by comparing the
+                // current setting value to what the bundle had written:
+                //   match  → user didn't touch it; safe to revert.
+                //   differ → user cycled it; respect their choice and keep.
+                const snapshot = state.settingsSnapshots[name];
+                if (snapshot) {
+                    const { settings: bundleSettings } = bundleRecipe(name);
+                    for (const k in snapshot) {
+                        if (bundleSettings && state.settings[k] !== bundleSettings[k]) continue;
+                        state.settings[k] = snapshot[k];
+                    }
+                    delete state.settingsSnapshots[name];
+                }
             } else {
                 state.bundles.push(name);
+                const { primitives, settings } = bundleRecipe(name);
                 // Re-toggling a mode = fresh activation. Clear any
                 // exclusions the user had set on this bundle's primitives
                 // so the full bundle re-applies (instead of the bundle
                 // coming back with the user's old "minus N effects"
                 // customization sticking silently).
-                const primitives = MODE_BUNDLES[name] || [];
                 if (primitives.length && state.excluded.length) {
                     state.excluded = state.excluded.filter(p => !primitives.includes(p));
+                }
+                // Apply the bundle's recommended settings (WCAG-derived
+                // text spacing for dyslexia-friendly, etc.). Snapshot the
+                // PRIOR values first so deactivation can revert cleanly.
+                // Snapshot reflects whatever the user had — defaults, a
+                // prior bundle's leftovers, or their own manual cycles —
+                // so on deactivation the panel returns to that exact
+                // pre-activation state for any setting the user didn't
+                // re-cycle in the meantime.
+                if (settings) {
+                    const snapshot = {};
+                    for (const k in settings) {
+                        snapshot[k] = state.settings[k];
+                        state.settings[k] = settings[k];
+                    }
+                    state.settingsSnapshots[name] = snapshot;
                 }
             }
         } else {
@@ -616,11 +815,50 @@
     }
 
     function setVisualFilter(filter) {
-        // Mutually exclusive group — clear any other visual filter first.
-        state.modes = state.modes.filter(m => !VISUAL_FILTERS.includes(m) || m === filter);
-        const i = state.modes.indexOf(filter);
-        if (i >= 0) state.modes.splice(i, 1);          // clicking the active one toggles off
-        else state.modes.push(filter);
+        // Visual filters are mutex AND can be supplied by either path —
+        // a direct click (state.modes) OR a bundle's primitives. The
+        // toggle has to manage both to behave intuitively when a bundle
+        // already supplies one of them.
+        //
+        //   • Click an effective filter (whether from state.modes or
+        //     from a bundle's primitives) → turn it OFF. For bundle-
+        //     supplied filters we use state.excluded (the same mechanism
+        //     toggleMode uses for primitive tiles) — it overrides bundle
+        //     inclusions without disabling the bundle.
+        //   • Click an inactive filter → turn it ON. Mute every OTHER
+        //     visual filter at the same time, regardless of which slot
+        //     supplied it. Otherwise a bundle-supplied filter would
+        //     stack with the user's pick and both effects compose.
+        const tokens = effectiveTokens();
+        const wasActive = tokens.has(filter);
+
+        if (wasActive) {
+            // Turn off — strip from state.modes (if there) and add to
+            // excluded (if a bundle supplies it).
+            if (state.modes.includes(filter)) {
+                state.modes = state.modes.filter(m => m !== filter);
+            }
+            if (isSuppliedByBundle(filter) && !state.excluded.includes(filter)) {
+                state.excluded.push(filter);
+            }
+        } else {
+            // Turn on — mute every OTHER visual filter first, in both slots.
+            VISUAL_FILTERS.forEach(other => {
+                if (other === filter) return;
+                const i = state.modes.indexOf(other);
+                if (i >= 0) state.modes.splice(i, 1);
+                if (isSuppliedByBundle(other) && !state.excluded.includes(other)) {
+                    state.excluded.push(other);
+                }
+            });
+            // Un-exclude the requested filter if it was previously excluded.
+            const ei = state.excluded.indexOf(filter);
+            if (ei >= 0) state.excluded.splice(ei, 1);
+            // Add to state.modes only if no bundle is already supplying it.
+            if (!isSuppliedByBundle(filter) && !state.modes.includes(filter)) {
+                state.modes.push(filter);
+            }
+        }
         commit();
     }
 
@@ -687,12 +925,17 @@
         const onPanelScroll = NDS.rafThrottle(updateHeaderOffset);
         window.addEventListener('scroll', onPanelScroll, { passive: true, signal: openAC.signal });
 
-        // Mark surroundings inert so AT and tab order skip them. Cache the
-        // exact node list so close() removes the attribute from the same
-        // elements — symmetric add/remove even if the DOM changes mid-open.
-        inertedSiblings = Array.from(
-            document.body.querySelectorAll(':scope > header, :scope > main, :scope > footer')
-        );
+        // Mark surroundings inert so AT and tab order skip them. When the
+        // scope wrapper is present (any mod active) we inert the single
+        // wrapper — `inert` cascades to all descendants so one node hides
+        // the entire page-content surface. When the wrapper is absent
+        // (no mods), fall back to inerting <header>/<main>/<footer>
+        // individually. Snapshot the live list so close() removes inert
+        // from the same nodes — symmetric add/remove even if the wrapper
+        // appears or disappears mid-open.
+        inertedSiblings = scopeWrapper
+            ? [scopeWrapper]
+            : Array.from(document.body.querySelectorAll(':scope > header, :scope > main, :scope > footer'));
         inertedSiblings.forEach(el => el.setAttribute('inert', ''));
 
         // Intentionally no backdrop. Users open this panel specifically to see
@@ -768,6 +1011,10 @@
         if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
         maskLastY = null;
         navEl = topbarEl = null;
+        // Unwrap the scope wrapper if it was created — restores the page
+        // markup to its authored state so a subsequent init() (or a
+        // userland teardown) leaves no a11y-side DOM mutation behind.
+        removeScopeWrapper();
     }
 
     function init() {
@@ -784,7 +1031,9 @@
         navEl    = document.querySelector('.nds-main-nav');
         topbarEl = document.querySelector('.nds-topbar');
 
-        // Pull persisted state, push to DOM
+        // Pull persisted state, push to DOM. apply() lazily wraps
+        // <header>/<main>/<footer> in the scope <div> if cached state
+        // already has any mod active.
         state = load();
         apply();
 

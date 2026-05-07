@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'mixins' as *;
 
 // ==============================================
 // ACCESSIBILITY MODE TOKEN OVERRIDES
@@ -12,14 +13,65 @@
 // (prefers-reduced-motion, prefers-contrast, forced-colors) keep their
 // own behavior and are not overridden here.
 //
-// User-tunable scalars (font scale, line height, letter/word spacing)
-// are written as inline custom properties on <html> by the JS layer
-// (--user-font-scale, --user-line-height, etc.) and are consumed below
-// where appropriate.
+// User-tunable scalars (line height, letter/word spacing) are written as
+// inline custom properties on <html> by the JS layer (--user-line-height,
+// --user-letter-spacing, etc.) and are consumed below where appropriate.
+// font-step (discrete 1/2/3) lives in `data-a11y` as `font-step-N` rather
+// than as an inline custom property — it's a stepped mode, not a
+// continuous scalar, and belongs alongside the other discrete tokens.
 
 // ----------------------------------------------
-// Visual filters — applied to the page content shell (header, main,
-// footer) rather than <body>.
+// COLOR-CHOICE RULES FOR A11Y MOD OVERRIDES
+// ----------------------------------------------
+// Every mode rule that paints a background MUST also set an explicit `color`.
+// Inherited text colors break AAA the moment they land on an arbitrary fill —
+// e.g. a hero h1 with `color: var(--text-oncolor-primary)` (white) on a
+// cream-yellow highlight is ~1.4:1, not the 9.6:1 the warning pair guarantees.
+//
+// ALWAYS use semantic tokens (--background-*, --text-*, --link-*).
+// NEVER reach for raw --colors-* directly — those are foundation tokens, not
+// contrast-vetted in either theme. The component-token rule from CLAUDE.md
+// applies here too.
+//
+// For HIGHLIGHT / MARKING modes, prefer the warning pair:
+//     background-color: var(--background-warning-25);
+//     color:            var(--text-warning) !important;
+// In LIGHT this is brown-700 on cream — ~9.6:1 (AAA). In DARK the cream bg
+// leaves dark-mode text-warning unreadable, so add a matching dark override
+// that swaps to `--alpha-warning-10`. Mirrors the warning variants in
+// _alert.scss:178-185 and _tags.scss:148-186.
+//
+// To beat hero/oncolor headings whose color comes from a high-specificity
+// `--text-oncolor-*` cascade, append `!important` to the override `color`.
+// Inline-style colors do not appear in hero markup in this codebase, so
+// !important is sufficient — no need for a custom-property-rebind dance.
+
+// ----------------------------------------------
+// PAGE-SHELL SCOPE CONTRACT — `.nds-a11y-scope`
+// ----------------------------------------------
+// Marker class applied by the a11y JS to <header>, <main>, and <footer>
+// ONLY when at least one mod is active (a token in data-a11y, a non-default
+// continuous scalar like --user-line-height, etc.). Removed when nothing is
+// active so the default DOM stays clean.
+//
+// Lives on existing structural elements — we do NOT introduce a wrapper
+// div. The page-content surface stays exactly as authored; the a11y
+// system attaches and detaches a class on demand.
+//
+// The accessibility panel + FAB + cookie popup + reading mask sit as
+// siblings of <header>/<main>/<footer> and never receive the class, so:
+//   1. `filter:` on a `.nds-a11y-scope` element creates a containing
+//      block for its position:fixed descendants — but the panel/FAB/popup/
+//      mask aren't descendants, so their viewport-anchored fixed
+//      positioning is safe.
+//   2. Cosmetic mods (highlight-titles, motor-impaired, text-align, etc.)
+//      can't reach the panel because they all match through `.nds-a11y-scope`,
+//      which the panel never carries.
+//
+// See _js/nds-accessibility.js apply() for the toggle logic.
+
+// ----------------------------------------------
+// Visual filters — applied to the page-shell wrapper rather than <body>.
 //
 // Why not body: `filter` on an element creates a new containing block
 // for its `position: fixed` descendants. With `filter` on <body>, the
@@ -35,27 +87,37 @@
 // per-type LMS matrices can be added later behind data-a11y~="colorblind-*"
 // variants without changing the JS surface.
 //
-// `smart-contrast` and `high-contrast` (token-level, below) are kept
-// mutually exclusive by the JS so their effects can't stack.
+// `boost-contrast` is a flat contrast bump (was named `smart-contrast`
+// in earlier builds — renamed because nothing about it is "smart").
+// `high-contrast` (token-level, below) swaps the entire palette to
+// AAA blacks/whites; the JS keeps the two mutually exclusive so their
+// effects can't stack.
+//
+// Wrapped in `@media not (forced-colors: active)` so Windows High
+// Contrast Mode users aren't double-treated — under forced-colors the
+// OS substitutes its own palette and any `filter` on top adds noise
+// that defeats the OS theme.
 // ----------------------------------------------
 $a11y-filters: (
     'monochrome':       grayscale(1),
     'high-saturation':  saturate(2),
     'low-saturation':   saturate(0.5),
     'colorblind':       saturate(0.6) contrast(1.05),
-    'smart-contrast':   contrast(1.15),
+    'boost-contrast':   contrast(1.15),
 );
-@each $mode, $filter in $a11y-filters {
-    :root[data-a11y~="#{$mode}"] body > :is(header, main, footer) {
-        filter: $filter;
+@media not (forced-colors: active) {
+    @each $mode, $filter in $a11y-filters {
+        @include a11y-page-shell($mode) {
+            filter: $filter;
+        }
     }
 }
 
 // ----------------------------------------------
 // High contrast — token-level (not a filter)
 // Replaces semantic surface/text/border tokens with AAA-vetted blacks
-// and whites. JS makes this mutually exclusive with smart/high-saturation
-// to avoid stacked filter side effects.
+// and whites. JS makes this mutually exclusive with boost-contrast and
+// the saturation filters to avoid stacked side effects.
 // ----------------------------------------------
 // Token names verified against _variables-dga.scss / _variables-dark.scss /
 // _variables-critical.scss as of audit on 2026-05-05. All overrides target
@@ -151,25 +213,46 @@ $a11y-filters: (
 }
 
 // ----------------------------------------------
-// Readable font — Dyslexia friendly
-// Stacks OpenDyslexic / Lexend / system-ui so the user gets *something*
-// even if the project hasn't shipped OpenDyslexic locally. The token
-// canonical name is --nds-font-family (defined in _variables-critical.scss);
-// every component's typography cascade consumes it.
+// Readable-font and Dyslexia primitives — DIFFERENT font stacks.
+//
+// Earlier they were aliased to the same OpenDyslexic-first stack, which
+// hid the fact that they target different research traditions. They're
+// now split:
+//
+//   readable-font  → Lexend-first. General readability gain across the
+//                    population, including dyslexic and non-dyslexic
+//                    readers (Bonacker 2019 — measurable reading-speed
+//                    improvement for typical readers; OpenDyslexic
+//                    specifically NOT included because Marinus et al.
+//                    2016 and Wery & Diliberto 2017 found no reliable
+//                    advantage for dyslexic users vs neutral
+//                    sans-serifs). Atkinson Hyperlegible is a low-
+//                    vision-optimized fallback (Braille Institute, 2020).
+//
+//   dyslexia       → OpenDyslexic-first. OpenDyslexic's clinical
+//                    efficacy is contested, but a meaningful subset of
+//                    dyslexic users report subjective preference for
+//                    its weighted bottoms. Falls back to the same
+//                    Lexend-led readability stack so users without
+//                    OpenDyslexic installed still get an evidence-
+//                    backed alternative — never a worse experience.
+//
+// The token canonical name is --nds-font-family (defined in
+// _variables-critical.scss); every component's typography cascade
+// consumes it.
 // ----------------------------------------------
-:root[data-a11y~="dyslexia"],
 :root[data-a11y~="readable-font"] {
+    --nds-font-family: "Lexend", "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+}
+:root[data-a11y~="dyslexia"] {
     --nds-font-family: "OpenDyslexic", "Lexend", "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
 }
 
 // ----------------------------------------------
-// User-tunable scalars defaults (line height, letter/word spacing). JS
-// writes these as inline custom properties on <html> when the user cycles
-// the matching tile button. Defaults keep untouched pages unaffected.
-//
-// Font sizing uses a different mechanism — see the ladder-step block
-// below — because we want each scaled size to land on a designer-chosen
-// rung of the existing typography ladder, not on an arbitrary calc().
+// User-tunable scalars — defaults at :root scope. JS writes overrides as
+// inline custom properties on <html> when the user cycles a tile button.
+// These defaults make sure `var(--user-*, fallback)` always resolves
+// even before the JS layer hydrates.
 // ----------------------------------------------
 :root {
     --user-line-height: normal;
@@ -177,14 +260,14 @@ $a11y-filters: (
     --user-word-spacing: 0;
 }
 
-// All cosmetic page-content mutations below are scoped to the page shell
-// `body > :is(header, main, footer)` so the accessibility panel and the FAB
-// (siblings of those elements, not descendants) are NEVER affected by them.
-// Token-level overrides (high-contrast palette, dyslexia font) intentionally
-// stay at `:root` scope so the panel matches the user's chosen palette/font
-// — that's a feature, not a leak. If the panel needs to look identical
-// regardless of mode, see the local-token reset block at the bottom of
-// _sass/components/_accessibility.scss.
+// All cosmetic page-content mutations below are scoped through the
+// `.nds-a11y-scope` marker class so the accessibility panel and the FAB
+// (which never receive the class) are NEVER affected. Token-level
+// overrides (high-contrast palette, dyslexia font) above intentionally
+// stay at `:root` scope so the panel matches the user's chosen palette/
+// font — that's a feature, not a leak. If the panel needs to look
+// identical regardless of mode, see the local-token reset block at the
+// bottom of _sass/components/_accessibility.scss.
 
 // ----------------------------------------------
 // Font sizing — single global multiplier
@@ -196,9 +279,9 @@ $a11y-filters: (
 // per-token remap, no -base aliases, no page-shell scoping needed for
 // the type math itself.
 //
-// JS writes `--user-font-step` (1, 2, or 3) inline on <html>; absent =
-// step 0 (no scaling). The selectors below translate the step into a
-// concrete `--user-font-scale` value at :root scope.
+// JS adds `font-step-1`, `-2`, or `-3` to data-a11y when the user picks
+// a step; absent = no scaling. The selectors below translate the token
+// into a concrete `--user-font-scale` value at :root scope.
 //
 // Why the panel chrome doesn't grow: panel + FAB + mask-controls all
 // declare panel-private literal-px tokens (--a11y-text-FS etc.) and
@@ -207,37 +290,62 @@ $a11y-filters: (
 // ----------------------------------------------
 $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 
-@for $step from 1 through 3 {
-    :root[style*="--user-font-step: #{$step}"] {
-        --user-font-scale: #{map.get($step-scales, $step)};
+@each $step, $scale in $step-scales {
+    :root[data-a11y~="font-step-#{$step}"] {
+        --user-font-scale: #{$scale};
     }
 }
 
-// Content-scaling primitive (Visually-Impaired bundle) → step 1.
+// Content-scaling primitive (Visually-Impaired bundle) → step 2 (1.30×).
+//
+// Earlier mapped to step 1 (1.15×), which was too weak for a low-vision
+// preset — users picking "Visually Impaired" deserve a stronger opening
+// scale than 15%. Step 2 lands at 1.30× while still keeping layout
+// integrity (testing at step 3 = 1.50× shows occasional overflow on
+// tight components; 2.0× is browser-zoom territory).
+//
+// WCAG 1.4.4 mandates 200% text resize support — reachable via browser
+// zoom (Ctrl+/Ctrl-), not via this ladder. The panel ladder is a
+// supplementary control for users who don't know about browser zoom or
+// can't adjust the OS-wide setting; it isn't a substitute for 1.4.4.
 :root[data-a11y~="content-scaling"] {
-    --user-font-scale: #{map.get($step-scales, 1)};
+    --user-font-scale: #{map.get($step-scales, 2)};
 }
 
 // Body's own font-size — keep unstyled <p>/<li>/<span> aligned with the
 // scaled body-text-md token. Page-shell scoped so the panel itself uses
 // the browser default font-size (not the scaled token).
-:root[style*="--user-font-step"] body > :is(header, main, footer),
-:root[data-a11y~="content-scaling"] body > :is(header, main, footer) {
+@each $step, $scale in $step-scales {
+    @include a11y-page-shell('font-step-#{$step}') {
+        font-size: var(--typo-text-md-FS);
+    }
+}
+@include a11y-page-shell('content-scaling') {
     font-size: var(--typo-text-md-FS);
 }
 
-// Other user-tunable scalars (inline style → page-shell rule).
+// ----------------------------------------------
+// Continuous user-tunable scalars (line height, letter/word spacing).
 //
-// Hits the page-shell containers AND body-text descendants. Headings
-// (h1-h6) are intentionally excluded — they have tight design ratios
-// from _reset.scss (display-clamp LHs designed for visual hierarchy),
-// and font-step already scales their LH proportionally with FS via the
-// --user-font-scale calc. Forcing user-line-height onto headings would
-// loosen those ratios and break the heading rhythm.
-@each $prop, $default in (line-height: normal, letter-spacing: 0, word-spacing: 0) {
-    :root[style*="--user-#{$prop}"] body > :is(header, main, footer),
-    :root[style*="--user-#{$prop}"] body > :is(header, main, footer) :is(p, li, ul, ol, dl, dt, dd, blockquote) {
-        #{$prop}: var(--user-#{$prop}, #{$default});
+// Each rule is gated behind a `has-{prop}` token in data-a11y, stamped
+// by JS only when the user sets a non-default value. Without this gate
+// the unconditional rule would clobber author CSS line-height/spacing
+// any time the scope wrapper appears for an UNRELATED mod (filter,
+// high-contrast, highlight-titles, etc.) — paragraphs would silently
+// snap to `normal` whenever any tile was on.
+//
+// Headings (h1-h6) are intentionally excluded — they have tight design
+// ratios from _reset.scss (display-clamp LHs designed for visual
+// hierarchy), and font-step already scales their LH proportionally
+// with FS via --user-font-scale. Forcing user-line-height onto headings
+// would loosen those ratios and break the heading rhythm.
+// ----------------------------------------------
+@each $prop in (line-height, letter-spacing, word-spacing) {
+    @include a11y-page-shell('has-#{$prop}') {
+        #{$prop}: var(--user-#{$prop});
+    }
+    @include a11y-page-shell-within('has-#{$prop}', ':is(p, li, ul, ol, dl, dt, dd, blockquote)') {
+        #{$prop}: var(--user-#{$prop});
     }
 }
 
@@ -248,8 +356,10 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 // content sets locally; the !important keeps those overrides in check.
 // ----------------------------------------------
 @each $alignment in (left, right, justify) {
-    :root[data-a11y~="text-align-#{$alignment}"] body > :is(header, main, footer),
-    :root[data-a11y~="text-align-#{$alignment}"] body > :is(header, main, footer) :is(p, li) {
+    @include a11y-page-shell('text-align-#{$alignment}') {
+        text-align: #{$alignment} !important;
+    }
+    @include a11y-page-shell-within('text-align-#{$alignment}', ':is(p, li)') {
         text-align: #{$alignment} !important;
     }
 }
@@ -259,14 +369,31 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 // pages by structure rather than reading top to bottom. Page-shell
 // scoped so panel headings and the panel's own language link stay
 // clean (the panel chrome is not "page content").
+//
+// Titles use the warning bg/text pair so the explicit foreground beats
+// any inherited oncolor (white) headings. See the color-choice rules
+// block at the top of this file for rationale and the dark-mode caveat.
 // ----------------------------------------------
-:root[data-a11y~="highlight-titles"] body > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
+@include a11y-page-shell-within('highlight-titles', ':is(h1, h2, h3, h4, h5, h6)') {
     outline: 2px solid var(--link-primary);
     outline-offset: 2px;
-    background-color: var(--colors-yellow-100);
+    background-color: var(--background-warning-25);
+    color: var(--text-warning) !important;
+    // Small breathing room so the bg/outline aren't flush against the text —
+    // a flat fill on a heading without padding reads as a label, not a highlight.
+    padding-inline: var(--spacing-xs);
+    border-radius: var(--radius-xs);
 }
 
-:root[data-a11y~="highlight-links"] body > :is(header, main, footer) a:not(.nds-btn) {
+// Dark-mode override — `--background-warning-25` stays cream in dark, but
+// `--text-warning` remaps to amber-400 (which would be ~1.7:1 on cream).
+// Swap the bg to `--alpha-warning-10` so amber-on-tinted-dark resolves
+// AAA. Same pattern as the warning variants in _alert.scss / _tags.scss.
+:root[data-a11y~="highlight-titles"][data-theme="dark"] .nds-a11y-scope :is(h1, h2, h3, h4, h5, h6) {
+    background-color: var(--alpha-warning-10);
+}
+
+@include a11y-page-shell-within('highlight-links', 'a:not(.nds-btn)') {
     outline: 1px dashed var(--link-primary);
     outline-offset: 2px;
     text-decoration: underline !important;
@@ -412,15 +539,17 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 // (the bundle has no primitives, so the bundle name itself stamps onto
 // data-a11y when the switch is on).
 // ----------------------------------------------
-:root[data-a11y~="motor-impaired"] body > :is(header, main, footer) :is(
-    button, a, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])
-):focus-visible {
+@include a11y-page-shell-within(
+    'motor-impaired',
+    ':is(button, a, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible'
+) {
     outline: 4px solid var(--border-focus) !important;
     outline-offset: 4px !important;
 }
 
-:root[data-a11y~="motor-impaired"] body > :is(header, main, footer) :is(
-    .nds-btn, button, [role="button"], a.nds-btn, input[type="button"], input[type="submit"]
+@include a11y-page-shell-within(
+    'motor-impaired',
+    ':is(.nds-btn, button, [role="button"], a.nds-btn, input[type="button"], input[type="submit"])'
 ) {
     min-block-size: 48px;
     min-inline-size: 48px;
@@ -429,7 +558,10 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 // ----------------------------------------------
 // Reduce motion — user override on top of OS pref. The OS pref handles
 // itself via @media (prefers-reduced-motion); this token forces it on
-// for users whose OS doesn't expose the setting.
+// for users whose OS doesn't expose the setting. Root-scoped (NOT
+// page-shell) so the panel chrome's own animations are also muted —
+// otherwise the panel would still slide in while page content stays
+// still, which is the wrong cue.
 // ----------------------------------------------
 :root[data-a11y~="reduce-motion"] *,
 :root[data-a11y~="reduce-motion"] *::before,
@@ -442,20 +574,66 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 
 // ----------------------------------------------
 // Mode bundles — each accordion-section toggle composes existing
-// primitives so the JS layer doesn't need per-mode logic. Adding a
-// mode bundle here is the only change required to introduce a new
-// accordion toggle.
+// primitives (and optionally pre-fills a few settings) so the JS layer
+// doesn't need per-bundle logic. Adding a bundle is one entry in
+// MODE_BUNDLES (nds-accessibility.js) plus, if the bundle paints
+// anything new, one rule below.
 //
-// The JS layer adds the bundle name AND each implied primitive to
-// data-a11y so individual selectors above still match. This file
-// just documents the intent for maintainers.
+// JS adds the bundle name AND each implied primitive to data-a11y, so
+// the individual SCSS selectors above (per-primitive) still match. This
+// block just documents the WCAG / standards alignment per bundle.
+// Keep in sync with MODE_BUNDLES in _js/nds-accessibility.js.
 // ----------------------------------------------
 //
 //   epilepsy-safe        → reduce-motion, low-saturation
-//   visually-impaired    → high-contrast, content-scaling (1.25)
-//   cognitive-disability → readable-font, highlight-titles, reduce-motion
-//   motor-impaired       → (focus enhancements only — no token override)
-//   colorblind           → colorblind (filter)
-//   dyslexia-friendly    → dyslexia, highlight-links
+//                          (WCAG 2.3.1 Three Flashes — baseline)
+//   visually-impaired    → high-contrast, content-scaling (1.30×)
+//                          (WCAG 1.4.6 Contrast Enhanced)
+//   cognitive-disability → readable-font (Lexend-first), highlight-titles, reduce-motion
+//   motor-impaired       → (no primitives — SCSS-only effect: 4px focus rings,
+//                          48×48 target size; exceeds WCAG 2.5.5 Enhanced 44×44)
+//   colorblind           → colorblind (generic catch-all filter — see below)
+//   dyslexia-friendly    → dyslexia (OpenDyslexic-first), highlight-links
+//                          + WCAG 1.4.8 spacing settings auto-applied:
+//                            line-height 1.6, letter-spacing 0.12em,
+//                            word-spacing 0.16em (set via the bundle's
+//                            `settings` recipe in MODE_BUNDLES).
 //   adhd-friendly        → reduce-motion, highlight-titles, reading-mask
-//   blindness            → reduce-motion (most work is screen-reader, not visual)
+//   blindness            → reduce-motion (animations during AT
+//                          announcements shift focus mid-utterance —
+//                          motion reduction IS a screen-reader
+//                          accommodation, not just a visual one).
+//                          applyMotionPause() also fires here, pausing
+//                          autoplay video/audio — WCAG 2.2.2 Pause/
+//                          Stop/Hide for AT users where autoplay audio
+//                          collides with screen-reader speech.
+//
+// ----------------------------------------------
+// DEFERRED — known gaps documented for future work
+// ----------------------------------------------
+// Per-type CVD filters (deuteranopia/protanopia/tritanopia/achromatopsia):
+//   The current `colorblind` filter is a generic saturate(0.6)+contrast(1.05).
+//   Real per-type accommodation needs SVG <feColorMatrix> filters with
+//   peer-reviewed Daltonization matrices (Brettel-Viénot-Mollon 1997,
+//   Machado et al. 2009). Shipping guessed approximations under labels
+//   like "Deuteranopia Mode" would actively mislead users into thinking
+//   their selection helps when it might not.
+//
+// Font scale beyond 1.5×:
+//   WCAG 1.4.4 mandates 200% support — reachable via browser zoom
+//   (Ctrl+/Ctrl-) which preserves layout. The panel ladder caps at
+//   1.50× (step 3) because pushing further breaks several components
+//   in this codebase. Document in panel UI that browser zoom is the
+//   path to 200%; don't extend the ladder.
+//
+// Simplified language / glossary tooltips:
+//   Cognitive accommodation (Inclusion International, WAI-CCP) calls for
+//   plain-language toggles and on-demand definitions. These are
+//   content-side features — they require a separate authoring layer
+//   (alternate copy, glossary data) and don't fit a CSS-toggle panel.
+//
+// Per-component carousel/timer pause:
+//   applyMotionPause() handles native <video autoplay> / <audio autoplay>
+//   only. JS-driven carousel rotators (custom intervals) need
+//   per-component opt-in via NDS.onAttrChange or similar. No global
+//   accommodation possible without each component cooperating.

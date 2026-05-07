@@ -689,6 +689,62 @@
         delete el._ndsPortal;
     };
 
+    // ── Sibling Group Wrap / Unwrap ────────────────────────────────────
+    // Group a set of sibling elements into a freshly-created container,
+    // and later restore them to their original positions and order.
+    // Complements NDS.portal/unportal (single element ↔ body) — wrap/
+    // unwrap is the multi-element ↔ new-container shape.
+    //
+    // Why not just `parent.append(wrapper); targets.forEach(t => wrapper.append(t))`
+    // by hand? Two reasons make this a primitive worth sharing:
+    //   1. Insertion-point math: the wrapper must be inserted at the
+    //      position of the FIRST target so DOM order is preserved when
+    //      the targets move into it. Easy to get wrong inline.
+    //   2. Restore order: unwrap() re-emits children before the wrapper
+    //      via `insertBefore(firstChild, wrapper)` in firstChild order so
+    //      original sibling order is preserved without any saved state.
+    //
+    // DOM-move safety: appendChild on already-connected nodes MOVES
+    // (no clone, no listener loss). Per the HTML spec, moving an iframe
+    // or media element within the same Document does NOT reset its
+    // document or playback state, so embedded content survives.
+    //
+    // MutationObserver: a reparent (remove + add of the same node in one
+    // batch) is filtered out by the domBus above as a "move", so
+    // onDOMAdd / onDOMRemove subscribers don't see the wrap/unwrap as a
+    // lifecycle change.
+    //
+    // Usage:
+    //   const wrapper = NDS.wrap(targets, { className: 'nds-a11y-scope' });
+    //   // ... later ...
+    //   NDS.unwrap(wrapper);
+    NDS.wrap = (elements, opts = {}) => {
+        if (!elements || !elements.length) return null;
+        const wrapper = opts.wrapper || document.createElement(opts.tag || 'div');
+        if (opts.className) wrapper.className = opts.className;
+        // Insert at the position of the first target; appendChild on the
+        // remaining targets MOVES them into the wrapper, leaving the
+        // original surrounding siblings untouched.
+        elements[0].parentNode.insertBefore(wrapper, elements[0]);
+        for (let i = 0; i < elements.length; i++) wrapper.appendChild(elements[i]);
+        return wrapper;
+    };
+
+    // Unwrap: move children of `wrapper` to the wrapper's position in
+    // document order, then remove the now-empty wrapper. Idempotent —
+    // safe to call on null, an already-detached wrapper, or one that's
+    // already been unwrapped.
+    NDS.unwrap = (wrapper) => {
+        if (!wrapper || !wrapper.isConnected) return;
+        const parent = wrapper.parentNode;
+        // insertBefore(firstChild, wrapper) repeatedly emits children in
+        // their existing order, immediately before the wrapper — so the
+        // final layout is [...children, wrapper], and removing the empty
+        // wrapper restores [...children, <whatever followed the wrapper>].
+        while (wrapper.firstChild) parent.insertBefore(wrapper.firstChild, wrapper);
+        wrapper.remove();
+    };
+
     // ── Place `position: fixed` element at viewport coords ─────────────
     // Writes `top`/`left` then measures and corrects. The CSS spec says
     // top/left on a `position: fixed` element resolve against the
