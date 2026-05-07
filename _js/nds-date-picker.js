@@ -797,7 +797,7 @@
                 }
             }
             // Fallback to document language
-            return NDS.isArabic ? 'ar' : 'en';
+            return NDS.langKey;
         },
 
         getCurrentCalendar: function () {

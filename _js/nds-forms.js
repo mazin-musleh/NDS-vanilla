@@ -1129,7 +1129,7 @@
                                 'default': 'Voice input error'
                             }
                         };
-                        var lang = NDS.isArabic ? 'ar' : 'en';
+                        var lang = NDS.langKey;
                         var msg = messages[lang][errorType] || messages[lang]['default'];
                         showMessage(msg);
                     },

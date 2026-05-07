@@ -22,13 +22,9 @@
   const PLACEHOLDER_ATTR = 'data-nds-empty-placeholder';
   const DEFAULT_ICON_CLASS = 'nds-icon nds-hgi-desert';
 
-  function pickLang() {
-    return NDS.isArabic ? 'ar' : 'en';
-  }
-
   function getMessage(container) {
     const custom = container.getAttribute('data-empty-message');
-    return custom && custom.trim() ? custom : STRINGS[pickLang()];
+    return custom && custom.trim() ? custom : STRINGS[NDS.langKey];
   }
 
   function getIconClass(container) {

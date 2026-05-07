@@ -6,9 +6,14 @@
 
     // ── Language & Direction (cached) ────────────────────────────────
     // BCP 47: 'ar', 'ar-SA', 'ar-EG' → 'ar'  |  'en', 'en-US' → 'en'
-    // Usage: NDS.lang  → 'ar' | 'en' | ...
+    // Usage: NDS.lang    → 'ar' | 'en' | ...
     //        NDS.isArabic → true/false
-    //        NDS.isRTL → true/false
+    //        NDS.isRTL   → true/false
+    //        NDS.langKey → 'ar' | 'en'   (bilingual selector — falls back to
+    //                                     'en' for any non-Arabic locale; use
+    //                                     for component `labels[NDS.langKey]`
+    //                                     lookups where the component carries
+    //                                     only `{ ar, en }` translations)
     // ── Breakpoints (matches _mixins.scss) ─────────────────────────
     // Usage: NDS.breakpoints.desktop → '(min-width: 960px)'
     //        window.matchMedia(NDS.breakpoints.mobile).matches
@@ -30,6 +35,9 @@
     });
     Object.defineProperty(NDS, 'isRTL', {
         get() { return document.documentElement.dir === 'rtl'; }
+    });
+    Object.defineProperty(NDS, 'langKey', {
+        get() { return NDS.isArabic ? 'ar' : 'en'; }
     });
 
     // ── Debounce ─────────────────────────────────────────────────────
