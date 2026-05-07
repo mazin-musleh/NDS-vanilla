@@ -11,7 +11,9 @@ Apply this skill to: `$ARGUMENTS`
 This skill audits the NDS JavaScript source — the files in `_js/` — against the conventions already codified in `CLAUDE.md` and the shared-utility contract published by `_js/nds-core.js`. It reports real duplication, real performance risk, and real maintainability drag, then applies fixes only after the user approves the report. It is the code-quality counterpart to `nds-doc` (which audits documentation).
 
 > **THIS SKILL WILL BURN YOUR TOKENS FAST.**
-> A full-scope run reads every `_js/nds-*.js` file (40+ files), applies 22 rules against each, and spawns per-file review agents during Phase 5/6 fix application. Budget roughly 30–60k tokens for an audit-only pass, more when applying fixes or promotion candidates (each migrated file adds another review-agent round). Narrow the scope whenever you can: `/nds-js-audit <filename>` for a single-file pass, or `/nds-js-audit js <rule-group>` (`performance` / `dry` / `security`) to restrict the catalog. The full-surface run is for release-prep or significant refactor windows — not every session.
+> A full-scope run reads every `_js/nds-*.js` file (40+ files), applies 22 rules against each, and spawns per-file review agents during Phase 5/6 fix application. Budget roughly 30–60k tokens for an audit-only pass, more when applying fixes or promotion candidates (each migrated file adds another review-agent round). Narrow the scope whenever you can:
+> - `/nds-js-audit <filename> <rule-group>` — single-file pass against one component (e.g. `/nds-js-audit nds-accessibility.js performance`). ~3 reads, ~5–10k tokens. Best fit when auditing a newly-added component before merging. JSD-05 (cross-tree promotion candidates) is skipped with a banner in single-file dry mode — periodic full-tree dry runs catch those.
+> - `/nds-js-audit js <rule-group>` — full-tree pass for one rule group (`performance` / `dry` / `security`). ~30–60k tokens. The release-prep / refactor-window shape.
 
 ---
 
@@ -42,6 +44,12 @@ NDS JS Audit — for best results run each group in separate sessions:
   0  exit
 
 Reply with a number, or type the scope directly.
+
+For a single-file audit (e.g. a newly-added component before merging),
+type the filename + rule group directly — no menu needed:
+  /nds-js-audit nds-accessibility.js performance
+  /nds-js-audit nds-accessibility.js dry      (JSD-05 skipped — banner in report)
+  /nds-js-audit nds-accessibility.js security
 ```
 
 Accept `0` or `exit` as "end here, nothing runs".
@@ -53,8 +61,13 @@ Do not begin Phase 2 or any file reads until the user responds.
 | `$1` | Files in scope | Rule groups run |
 |---|---|---|
 | `js` | All `_js/nds-*.js` except `nds-core.js`, `nds-loader.js`, `nds-showcase.js` | Always paired with a rule-group filter (`performance` / `dry` / `security`); see below |
+| **filename** (e.g. `nds-accessibility.js`, `_js/nds-accessibility.js`, `nds-accessibility`, `accessibility`) | One file: the resolved target | Always paired with a rule-group filter (`performance` / `dry` / `security`); see below. In `dry` mode, JSD-05 is **skipped with a banner** — see "JSD-05 in single-file mode" below |
 
-Single-file audits and unfiltered full audits are not supported through this skill — the cross-file rules (JSD-05 promotion candidates, JSD-10 demotion checks) need full-tree visibility, and full audits across all three rule groups are too expensive for routine use. Always run one rule group across the full tree.
+**File resolution.** When `$1` doesn't match a known mode token (`js`), treat it as a filename and try these in order: (1) literal `_js/$1` if `$1` already starts with `nds-` and ends in `.js`; (2) `_js/$1` if it ends in `.js`; (3) `_js/$1.js` if it starts with `nds-`; (4) `_js/nds-$1.js` for the bare-name form. Stop at the first existing file. If none exist, reply: *"Couldn't resolve `<filename>` to a file in `_js/`. Tried: `_js/<X>.js`, `_js/nds-<X>.js`. Pass the filename as it appears in `_js/`."* and stop.
+
+**Excluded-file rejection.** If the resolved file is `nds-core.js`, `nds-loader.js`, `nds-showcase.js`, or any `.min.js`, reply: *"`<file>` is excluded from audits — see the 'Excluded files' section below for why."* and stop. Don't attempt a partial audit on an excluded file.
+
+Unfiltered full audits across all three rule groups in one run are not supported through this skill — too expensive for routine use. Always run one rule group at a time, single-file or full-tree.
 
 **SCSS is not supported.** If the user passes `scss`, `all`, or any path ending in `.scss`, stop and reply: *"SCSS audit coverage was removed from this skill. Refactor SCSS manually — see `CLAUDE.md` for token, RTL, and scaffold conventions."* Do not run partial rules on an SCSS file.
 
@@ -62,7 +75,7 @@ Single-file audits and unfiltered full audits are not supported through this ski
 
 ### Rule-group filter (required second argument)
 
-`$2` selects which rule group runs. Always required — every run is one group across the full tree:
+`$2` selects which rule group runs. Always required — every run is one group:
 
 | `$2` | Rule groups included |
 |---|---|
@@ -70,7 +83,15 @@ Single-file audits and unfiltered full audits are not supported through this ski
 | `dry` | JSD |
 | `security` | JSS |
 
-If `$1 = js` is passed without a `$2`, ask the user which group to run rather than defaulting to all three.
+If `$2` is missing (whether `$1` is `js` or a filename), ask the user which group to run rather than defaulting to all three. For single-file mode, the menu offers all three groups — single-file dry IS supported, with the JSD-05 carve-out below.
+
+### JSD-05 in single-file mode
+
+Single-file `dry` runs all JSD rules **except JSD-05**, which is skipped because cross-file promotion detection requires comparing helper bodies across every file in `_js/` — incompatible with the single-file budget. The audit report's "Promotion candidates" section is replaced by a banner:
+
+> *"JSD-05 (cross-tree promotion candidates) was skipped in single-file mode. To surface helpers in `<target>` that duplicate code in other files, periodically run `/nds-js-audit js dry` against the full tree."*
+
+JSD-10 (demotion vs core) and every other JSD rule run normally — those are per-file checks. The banner is the report's honest disclosure of what wasn't covered; do NOT silently omit it.
 
 ### Excluded files (always)
 
@@ -175,6 +196,13 @@ Use this structure verbatim:
 - Findings: X HIGH / Y MEDIUM / Z LOW
 - Rule groups hit: JSP, JSD
 
+> **JSD-05 (cross-tree promotion candidates) was skipped in single-file mode.**
+> To surface helpers in `<target>` that duplicate code in other files, periodically
+> run `/nds-js-audit js dry` against the full tree.
+
+(Banner above is single-file `dry` runs only — omit it on full-tree runs and on
+single-file `performance` / `security` runs where JSD-05 wasn't in scope to begin with.)
+
 ## HIGH
 ### _js/nds-alert.js
 - L219 [JSP-01] Raw window scroll listener
@@ -240,17 +268,23 @@ The recommendation is opinionated, not exclusive: the user can still pick any of
 
 ### Saving the report (optional, user-approved)
 
-When the user replies `save` — alone, or combined with another action like `save and evolve` or `fix HIGH then save` — write the current report verbatim to `.claude/audit-reports/` under this pattern:
+When the user replies `save` — alone, or combined with another action like `save and evolve` or `fix HIGH then save` — write the current report verbatim to `.claude/audit-reports/` under one of these patterns:
 
-**Filename:** `YYYY-MM-DD-nds-js-{category}-audit-run-N.md`
+**Full-tree filename:** `YYYY-MM-DD-nds-js-{category}-audit-run-N.md`
+**Single-file filename:** `YYYY-MM-DD-nds-js-{component}-{category}-audit-run-N.md`
+
 - `YYYY-MM-DD` is today's date (the run date, not the save date — they're the same in 99% of cases, but use the date of the audit if they diverge).
 - `{category}` is the rule-group filter the run used: `performance` / `dry` / `security`. The Phase 1 rule-group filter maps 1:1 to this slug — `performance` → `performance`, `dry` → `dry`, `security` → `security`. Always lowercased.
-- `N` is the **per-category save-order index**: `(count of existing `*-{category}-audit-run-*.md` files in `.claude/audit-reports/`) + 1`. Index is per-category, not global — a `security` audit's index advances independently of `performance` and `dry` indices. This keeps "Diff vs. Run (N−1)" meaningful: comparing a security run against the prior security run is informative; comparing it against a performance run is not. Do NOT count `/nds-js-audit` invocations from the conversation that didn't get saved; the index reflects persisted artifacts only.
+- `{component}` (single-file mode only) is the resolved target's stem with the `nds-` prefix stripped: `_js/nds-accessibility.js` → `accessibility`. Lowercased, hyphens preserved (`nds-cooldown-button.js` → `cooldown-button`).
+- `N` is the **per-scope save-order index**:
+  - **Full-tree:** `(count of existing `*-{category}-audit-run-*.md` files at the full-tree pattern in `.claude/audit-reports/`) + 1`.
+  - **Single-file:** `(count of existing `*-{component}-{category}-audit-run-*.md` files in `.claude/audit-reports/`) + 1`. Indexed per-(component, category) so "Run 2 vs Run 1 of accessibility performance" stays diffable independently of any full-tree run that landed between them.
+- Index is per-category (and per-component for single-file), not global — comparing apples to apples is what makes "Diff vs. Run (N−1)" useful. Do NOT count `/nds-js-audit` invocations from the conversation that didn't get saved; the index reflects persisted artifacts only.
 
 **Always include a frontmatter-style header** in the saved file so later audits can be diffed meaningfully:
 
 ```markdown
-# Code Audit — `_js/` (js mode) — Run N
+# Code Audit — {scope-line} — Run N
 
 **Date:** YYYY-MM-DD
 **Rule catalog version:** {JSP + JSD | JSP + JSD + JSS} (note any post-evolution refinements: "post-evolution: JSD-03 [400,2000] range, JSS-01 allowlist v3")
@@ -259,6 +293,8 @@ When the user replies `save` — alone, or combined with another action like `sa
 ## Summary
 …
 ```
+
+`{scope-line}` is `` `_js/` (js mode) `` for full-tree runs, or `` `_js/nds-accessibility.js` (single-file mode) `` (use the actual file path) for single-file runs. Single-file reports MUST also surface the JSD-05 skip banner from Phase 1 verbatim when the run was `dry`.
 
 **Diff-vs-prior section.** If `N ≥ 2`, append a "Diff vs. Run (N−1)" section at the bottom of the file listing what changed between this run and the last saved one: new findings, closed findings, re-classified findings, and any rule evolutions applied between runs. This is what makes multi-run refinement legible across time.
 
