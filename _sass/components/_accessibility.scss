@@ -73,6 +73,19 @@
     line-height: var(--a11y-text-LH);
 }
 
+// Pin .nds-tag inside the panel to a literal font-size so the count
+// pills next to accordion titles don't scale with --user-font-scale
+// (font-step). Generic tags read --typo-text-{sm,xs}-FS — both wrapped
+// in `calc(value * var(--user-font-scale, 1))`, so font-step would
+// otherwise stretch the pills beyond the surrounding panel-section
+// text. Same reasoning as the .nds-accordion-btn / .nds-info pins
+// above. The override targets `--tag-fs`, the public override channel
+// _tags.scss exposes; cascade order (accessibility imports after tags)
+// gives equal-specificity wins without !important.
+.nds-accessibility-panel .nds-tag {
+    --tag-fs: var(--a11y-text-FS);
+}
+
 // ----------------------------------------------
 // Floating action button — size and centering come from the .nds-btn
 // mixin. Setting --a11y-btn-size here flows through the panel button
@@ -95,13 +108,6 @@
     :root[data-a11y-pos="start"] & {
         inset-inline-start: var(--spacing-2xl, 20px);
         inset-inline-end: auto;
-    }
-
-    // Oversize variant — applied when user enables "Oversize Widget".
-    // Only the button grows; icon stays at --a11y-icon-FS (24px) since
-    // the size jump is about click-target area, not icon legibility.
-    &.nds-oversize {
-        --a11y-btn-size: 72px;
     }
 
     i.hgi,
@@ -344,7 +350,6 @@
     gap: var(--spacing-md);
     padding: var(--spacing-lg);
     border-block-start: 1px solid var(--divider-color);
-    background-color: var(--background-stripe, var(--background-menu));
 
     .nds-btn {
         --btn-width: 100%;

@@ -2,7 +2,7 @@
 //
 // Modes are CSS-only token overrides in _variables-a11y.scss; this JS
 // only manages state, persistence, focus, and the open/close lifecycle.
-// Storage: localStorage['nds-a11y'] = { modes, bundles, excluded, settings, oversize }.
+// Storage: localStorage['nds-a11y'] = { modes, bundles, excluded, settings }.
 //
 // Apply-before-paint of cached state happens in _includes/head.html
 // (alongside the theme FOUC guard) so reload doesn't flash.
@@ -158,7 +158,6 @@
             // user manually cycled mid-session. Keyed by bundle name; an
             // entry exists ONLY while the bundle is active. See toggleMode.
             settingsSnapshots: {},
-            oversize: false,
         };
     }
     const MASK_BAND_MIN = 20;
@@ -189,6 +188,10 @@
             // removed). Position is now set Jekyll-time via the include
             // arg or runtime via <html data-a11y-pos>.
             if ('position' in result) delete result.position;
+            // Drop legacy `oversize` flag (Oversize Widget switch was
+            // removed). The SCSS .nds-oversize rule is also gone, so
+            // the flag is dead weight; clean it up on read.
+            if ('oversize' in result) delete result.oversize;
             // Migrate v1 → v2 (font-scale multiplier → font-step ladder rungs).
             // The old multiplier cycle 1/1.15/1.25/1.5 maps to step 0/1/2/3
             // on the new ladder. Drop the legacy key after translating.
@@ -360,7 +363,6 @@
 
         // Sync UI to state — only if panel is in the DOM
         if (panel) syncUI();
-        if (toggleBtn) toggleBtn.classList.toggle('nds-oversize', !!state.oversize);
 
         // Reading-mask pointer tracking — attach/detach based on whether the
         // expanded token list contains "reading-mask". Single pooled listener
@@ -667,10 +669,6 @@
             const bars = btn.querySelectorAll('[data-a11y-bars] .nds-accessibility-tile-bar');
             bars.forEach((bar, i) => bar.classList.toggle('is-active', i < idx));
         });
-        // Oversize switch
-        const oversize = panel.querySelector('input[data-a11y-oversize]');
-        if (oversize) oversize.checked = !!state.oversize;
-
         // Live "(n)" counter next to each accordion title — gives users a
         // quick overview of how many controls are on per section without
         // having to expand each one. Counts active children inside the
@@ -867,11 +865,6 @@
         const idx = cycleArr.indexOf(cur);
         const next = cycleArr[(idx + 1) % cycleArr.length];
         state.settings[key] = next;
-        commit();
-    }
-
-    function setOversize(on) {
-        state.oversize = !!on;
         commit();
     }
 
@@ -1115,7 +1108,6 @@
               },
               each: populateSettingBars,
             },
-            { sel: 'input[data-a11y-oversize]',            event: 'change', fn: el => setOversize(el.checked) },
             { sel: '[data-accessibility-action]',          event: 'click',
               fn: el => {
                   const a = el.dataset.accessibilityAction;
@@ -1137,7 +1129,7 @@
     NDS.Accessibility = {
         init,
         open, close, toggle,
-        toggleMode, setVisualFilter, cycleSetting, setOversize,
+        toggleMode, setVisualFilter, cycleSetting,
         reset,
         get state() { return JSON.parse(JSON.stringify(state)); },
     };
