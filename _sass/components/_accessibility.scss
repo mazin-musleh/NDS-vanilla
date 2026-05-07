@@ -18,6 +18,17 @@
 // any calc that reads it. Values mirror the equivalent typo rungs in
 // _variables-critical.scss (text-sm = 14/20, text-md = 16/24, text-xl =
 // 20/30, display-xs = 24).
+//
+// Font-family is also pinned panel-locally. readable-font and dyslexia
+// redefine --nds-font-family at :root scope, and individual components
+// (buttons, cards, charts) read `var(--nds-font-family)` at use-time —
+// so a panel-local `font-family` declaration alone wouldn't help, since
+// descendant components would re-resolve the variable from :root and
+// pick up Lexend / OpenDyslexic anyway. Fix is to redefine
+// --nds-font-family itself inside the panel scope: any descendant
+// `var(--nds-font-family)` lookup walks up to the panel and stops here,
+// resolving to the panel-private literal regardless of root-scope mods.
+// Mirrors the default stack from _variables-critical.scss line 29.
 :is(.nds-accessibility-panel, .nds-accessibility-toggle) {
     --a11y-text-FS:        14px;   // panel body text
     --a11y-text-LH:        20px;
@@ -26,13 +37,23 @@
     --a11y-title-FS:       20px;   // panel title ("Accessibility Tools")
     --a11y-title-LH:       30px;
     --a11y-icon-FS:        24px;   // panel/tile/FAB icons
+    --a11y-font-family:    'IBM Plex Sans Arabic', sans-serif;
 
     --a11y-btn-size:       40px;   // .nds-btn default
     --a11y-btn-size-md:    32px;   // .nds-md
     --a11y-btn-size-sm:    24px;   // .nds-sm
 
+    // Override --nds-font-family inside the panel subtree so descendant
+    // components that read `var(--nds-font-family)` directly
+    // (buttons, cards, etc.) resolve to the panel-private stack.
+    --nds-font-family: var(--a11y-font-family);
+
     font-size: var(--a11y-text-FS);
     line-height: var(--a11y-text-LH);
+    // Explicit font-family pulls from the now-local --nds-font-family;
+    // breaks the inheritance chain that would otherwise pass body's
+    // computed Lexend / OpenDyslexic into the panel root.
+    font-family: var(--nds-font-family);
 }
 
 // Pin button chrome inside the panel/FAB to the panel-private tokens.

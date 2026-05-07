@@ -239,7 +239,15 @@ $a11y-filters: (
 //
 // The token canonical name is --nds-font-family (defined in
 // _variables-critical.scss); every component's typography cascade
-// consumes it.
+// consumes it. The override stays at `:root` scope so the cascade
+// reaches every descendant via inheritance (CSS variable redefinition
+// on a deeper element doesn't re-compute already-inherited font-family
+// values — only elements that explicitly read `var(--nds-font-family)`
+// pick up a deeper override). The accessibility panel / FAB / mask
+// controls pin their own font-family to a panel-private literal
+// (`--a11y-font-family` in _accessibility.scss) so the chrome stays on
+// the NDS default font regardless of this user-chosen content font —
+// same pattern as the panel's font-size pin.
 // ----------------------------------------------
 :root[data-a11y~="readable-font"] {
     --nds-font-family: "Lexend", "Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
@@ -263,11 +271,14 @@ $a11y-filters: (
 // All cosmetic page-content mutations below are scoped through the
 // `.nds-a11y-scope` marker class so the accessibility panel and the FAB
 // (which never receive the class) are NEVER affected. Token-level
-// overrides (high-contrast palette, dyslexia font) above intentionally
-// stay at `:root` scope so the panel matches the user's chosen palette/
-// font — that's a feature, not a leak. If the panel needs to look
-// identical regardless of mode, see the local-token reset block at the
-// bottom of _sass/components/_accessibility.scss.
+// overrides above (high-contrast palette, readable-font, dyslexia font)
+// stay at `:root` scope because CSS variable redefinition on deeper
+// elements doesn't re-compute already-inherited font-family / color
+// values. The panel guards itself against the font cascade via a
+// panel-private `--a11y-font-family` token in _accessibility.scss —
+// same pattern as the font-size pin. The high-contrast palette is
+// intentionally left to cascade so the panel matches the user's chosen
+// palette (a fundamental theme change like dark-mode).
 
 // ----------------------------------------------
 // Font sizing — single global multiplier
@@ -462,13 +473,20 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     // Body-attached panel-equivalent chrome — same isolation strategy as
     // .nds-accessibility-panel: panel-private literal tokens, no read of
     // global --typo-* anywhere, so the toolbar can't be touched by user
-    // font scaling or any future global typo override.
+    // font scaling or any future global typo override. Same font-family
+    // strategy: override --nds-font-family inside this subtree so
+    // descendant components that read `var(--nds-font-family)` resolve
+    // to the panel-private stack instead of root-scoped readable-font /
+    // dyslexia overrides.
     --a11y-text-FS:          14px;
     --a11y-text-LH:          20px;
     --a11y-toolbar-icon-FS:  20px;  // toolbar icon target size
     --a11y-toolbar-btn-size: 36px;  // tiny inline utility buttons
+    --a11y-font-family:      'IBM Plex Sans Arabic', sans-serif;
+    --nds-font-family:       var(--a11y-font-family);
     font-size: var(--a11y-text-FS);
     line-height: var(--a11y-text-LH);
+    font-family: var(--nds-font-family);
 
     position: fixed;
     left: 50%;
