@@ -1003,6 +1003,14 @@
     // Init / destroy
     // ----------------------------------------------
     function destroy() {
+        // If the panel is open, route through close() first so the inert
+        // attribute on <header>/<main>/<footer> (or the scope wrapper),
+        // panel data-state, toggleBtn aria-expanded, and openerEl reference
+        // unwind via close()'s cleanup() before we abort the ACs. close()
+        // handles its own teardown via transitionend + the safety-net
+        // setTimeout, so the async path is fine — destroy continues
+        // synchronously below.
+        if (panel && hasState(panel, 'open')) close();
         if (ac) { ac.abort(); ac = null; }
         if (openAC) { openAC.abort(); openAC = null; }
         if (maskAC) { maskAC.abort(); maskAC = null; }
