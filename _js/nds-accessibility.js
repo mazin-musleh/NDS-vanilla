@@ -4,8 +4,12 @@
 // only manages state, persistence, focus, and the open/close lifecycle.
 // Storage: localStorage['nds-a11y'] = { modes, bundles, excluded, settings }.
 //
-// Apply-before-paint of cached state happens in _includes/head.html
-// (alongside the theme FOUC guard) so reload doesn't flash.
+// Apply-before-paint of cached state happens in
+// _includes/head-inline-scripts.html (alongside the theme FOUC guard).
+// Visual filters apply to body; cosmetic SCSS rules scope through
+// `body[class] > :is(header, main, footer)`. Both match at first paint
+// without any JS-applied class — the FOUC guard only needs to set
+// data-a11y on <html>.
 //
 // Pattern: W3C APG Disclosure — the panel is a non-blocking preferences
 // drawer, not a modal dialog. The page stays interactive underneath so
@@ -197,7 +201,6 @@
     let navEl = null;          // .nds-main-nav  — cached for updateHeaderOffset
     let topbarEl = null;       // .nds-topbar    — cached for updateHeaderOffset
     let openerEl = null;       // element that opened the panel — focus returns here
-    let scopeWrapper = null;   // .nds-a11y-scope — wrapper around <header>/<main>/<footer>; created lazily by ensureScopeWrapper() the first time any mod is active, removed by removeScopeWrapper() when nothing is active
     let ac = null;             // AbortController for all listeners scoped to current init
     let openAC = null;         // separate AC for listeners that only run while the panel is open
     let maskAC = null;         // separate AC for reading-mask pointer listener (lifecycle = mode on/off)
@@ -324,40 +327,9 @@
         return tokens;
     }
 
-    // ----------------------------------------------
-    // Page-shell scope wrapper — `.nds-a11y-scope`
-    // ----------------------------------------------
-    // The wrapper groups <header>/<main>/<footer> into a single element so
-    // SCSS can scope filters and cosmetic mods through one selector head.
-    // Benefits over targeting the three structural elements directly:
-    //   • One stacking context / one compositor layer when a filter is on
-    //     instead of three.
-    //   • One containing block for any future position:fixed descendants.
-    //   • One inert target on panel-open (cascades to all descendants).
-    //
-    // Created lazily — only when at least one mod is active. Removed when
-    // every mod is cleared. The default DOM is identical to a build with
-    // no a11y panel; we never modify the markup until there's something
-    // to scope. The accessibility panel + FAB + cookie popup + reading
-    // mask are body siblings of the targets and therefore stay outside
-    // the wrapper, preserving their viewport-anchored fixed positioning.
-    //
-    // The wrap/unwrap mechanics (insertion-point math, sibling-order
-    // preservation on restore, iframe/media survival on move) live in
-    // NDS.wrap / NDS.unwrap (nds-core.js); ensureScopeWrapper / remove
-    // ScopeWrapper just supply the targets and the wrapper class.
-    function ensureScopeWrapper() {
-        if (scopeWrapper && scopeWrapper.isConnected) return;
-        const targets = Array.from(
-            document.body.querySelectorAll(':scope > header, :scope > main, :scope > footer')
-        );
-        scopeWrapper = NDS.wrap(targets, { className: 'nds-a11y-scope' });
-    }
-
-    function removeScopeWrapper() {
-        NDS.unwrap(scopeWrapper);
-        scopeWrapper = null;
-    }
+    // No JS-driven scope wrapper. Visual filters apply to body; cosmetic
+    // rules scope through `body[class] > :is(header, main, footer)`. All
+    // rules match at first paint without DOM mutation or class toggle.
 
     // Is a given primitive currently supplied by ANY active bundle?
     function isSuppliedByBundle(primitive) {
@@ -421,15 +393,6 @@
         // Position is no longer state-driven — set at Jekyll-time via the
         // include's `position` arg or at runtime via <html data-a11y-pos>.
         // SCSS reads both. See _includes/accessibility-panel.html intro.
-
-        // Page-shell scope wrapper — wrap <header>/<main>/<footer> in a
-        // `.nds-a11y-scope` <div> when ANY mod is active (any token in
-        // data-a11y, including scalar-presence tokens), unwrap otherwise.
-        // Both helpers are idempotent so apply() can safely run on every
-        // settings cycle — the DOM mutates only at the
-        // "default ↔ any-mod" boundary, not on intra-active toggles.
-        if (tokens.size > 0) ensureScopeWrapper();
-        else                 removeScopeWrapper();
 
         // Sync UI to state — only if panel is in the DOM
         if (panel) syncUI();
@@ -1181,10 +1144,6 @@
         if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
         maskLastY = null;
         navEl = topbarEl = null;
-        // Unwrap the scope wrapper if it was created — restores the page
-        // markup to its authored state so a subsequent init() (or a
-        // userland teardown) leaves no a11y-side DOM mutation behind.
-        removeScopeWrapper();
     }
 
     function init() {

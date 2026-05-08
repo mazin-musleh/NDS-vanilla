@@ -1,102 +1,18 @@
-@use 'sass:map';
-@use 'mixins' as *;
-
 // ==============================================
 // ACCESSIBILITY MODE TOKEN OVERRIDES
 // ==============================================
-// User-controlled accessibility modes layered on top of the existing
-// semantic token system. Each mode is a `data-a11y~="<name>"` token on
-// <html>; modes compose, so the same selector can carry several tokens.
-//
-// Modes never mutate page content — they only re-bind CSS custom
-// properties or add scoped declarations. OS-level signals
-// (prefers-reduced-motion, prefers-contrast, forced-colors) keep their
-// own behavior and are not overridden here.
-//
-// User-tunable scalars (line height, letter/word spacing) are written as
-// inline custom properties on <html> by the JS layer (--user-line-height,
-// --user-letter-spacing, etc.) and are consumed below where appropriate.
-// font-step (discrete 1/2/3) lives in `data-a11y` as `font-step-N` rather
-// than as an inline custom property — it's a stepped mode, not a
-// continuous scalar, and belongs alongside the other discrete tokens.
+// User-controlled modes layered on the semantic token system. Each mode
+// is a `data-a11y~="<name>"` token on <html>; modes compose. Visual
+// filters apply directly to :root. Cosmetic mods (text, highlights,
+// motor) scope through `body[class] > :is(header, main, footer)` so
+// the panel/FAB/cookie/mask stay untouched. Selectors match at first
+// paint — the inline FOUC guard in head-inline-scripts.html covers
+// every mode.
 
 // ----------------------------------------------
-// COLOR-CHOICE RULES FOR A11Y MOD OVERRIDES
-// ----------------------------------------------
-// Every mode rule that paints a background MUST also set an explicit `color`.
-// Inherited text colors break AAA the moment they land on an arbitrary fill —
-// e.g. a hero h1 with `color: var(--text-oncolor-primary)` (white) on a
-// cream-yellow highlight is ~1.4:1, not the 9.6:1 the warning pair guarantees.
-//
-// ALWAYS use semantic tokens (--background-*, --text-*, --link-*).
-// NEVER reach for raw --colors-* directly — those are foundation tokens, not
-// contrast-vetted in either theme. The component-token rule from CLAUDE.md
-// applies here too.
-//
-// For HIGHLIGHT / MARKING modes, prefer the warning pair:
-//     background-color: var(--background-warning-25);
-//     color:            var(--text-warning) !important;
-// In LIGHT this is brown-700 on cream — ~9.6:1 (AAA). In DARK the cream bg
-// leaves dark-mode text-warning unreadable, so add a matching dark override
-// that swaps to `--alpha-warning-10`. Mirrors the warning variants in
-// _alert.scss:178-185 and _tags.scss:148-186.
-//
-// To beat hero/oncolor headings whose color comes from a high-specificity
-// `--text-oncolor-*` cascade, append `!important` to the override `color`.
-// Inline-style colors do not appear in hero markup in this codebase, so
-// !important is sufficient — no need for a custom-property-rebind dance.
-
-// ----------------------------------------------
-// PAGE-SHELL SCOPE CONTRACT — `.nds-a11y-scope`
-// ----------------------------------------------
-// Marker class applied by the a11y JS to <header>, <main>, and <footer>
-// ONLY when at least one mod is active (a token in data-a11y, a non-default
-// continuous scalar like --user-line-height, etc.). Removed when nothing is
-// active so the default DOM stays clean.
-//
-// Lives on existing structural elements — we do NOT introduce a wrapper
-// div. The page-content surface stays exactly as authored; the a11y
-// system attaches and detaches a class on demand.
-//
-// The accessibility panel + FAB + cookie popup + reading mask sit as
-// siblings of <header>/<main>/<footer> and never receive the class, so:
-//   1. `filter:` on a `.nds-a11y-scope` element creates a containing
-//      block for its position:fixed descendants — but the panel/FAB/popup/
-//      mask aren't descendants, so their viewport-anchored fixed
-//      positioning is safe.
-//   2. Cosmetic mods (highlight-titles, motor-impaired, text-align, etc.)
-//      can't reach the panel because they all match through `.nds-a11y-scope`,
-//      which the panel never carries.
-//
-// See _js/nds-accessibility.js apply() for the toggle logic.
-
-// ----------------------------------------------
-// Visual filters — applied to the page-shell wrapper rather than <body>.
-//
-// Why not body: `filter` on an element creates a new containing block
-// for its `position: fixed` descendants. With `filter` on <body>, the
-// accessibility panel and its sticky footer (both fixed/sticky inside
-// body) lose their viewport anchor — the panel starts positioning
-// relative to body and the sticky footer breaks. Targeting the page
-// shell instead leaves the panel + FAB + cookie-popup outside the
-// filtered subtree, so their fixed positioning continues to resolve
-// against the viewport.
-//
-// `colorblind` is a generic catch-all that reduces saturation slightly
-// (helps deuteranopia/protanopia by flattening reds and greens). Real
-// per-type LMS matrices can be added later behind data-a11y~="colorblind-*"
-// variants without changing the JS surface.
-//
-// `boost-contrast` is a flat contrast bump (was named `smart-contrast`
-// in earlier builds — renamed because nothing about it is "smart").
-// `high-contrast` (token-level, below) swaps the entire palette to
-// AAA blacks/whites; the JS keeps the two mutually exclusive so their
-// effects can't stack.
-//
-// Wrapped in `@media not (forced-colors: active)` so Windows High
-// Contrast Mode users aren't double-treated — under forced-colors the
-// OS substitutes its own palette and any `filter` on top adds noise
-// that defeats the OS theme.
+// Visual filters — applied directly to :root for a single document-wide
+// stacking context, no scope wrapper. Wrapped in `not (forced-colors:
+// active)` so HC users aren't double-treated.
 // ----------------------------------------------
 $a11y-filters: (
     'monochrome':       grayscale(1),
@@ -107,118 +23,73 @@ $a11y-filters: (
 );
 @media not (forced-colors: active) {
     @each $mode, $filter in $a11y-filters {
-        @include a11y-page-shell($mode) {
+        :root[data-a11y~="#{$mode}"] {
             filter: $filter;
         }
     }
 }
 
 // ----------------------------------------------
-// High contrast — token-level (not a filter)
-// Replaces semantic surface/text/border tokens with AAA-vetted blacks
-// and whites. JS makes this mutually exclusive with boost-contrast and
-// the saturation filters to avoid stacked side effects.
+// High contrast — token-level palette swap (mutex with the filters above).
+// Light wires every semantic token to four internal vars (--_hc-bg/-fg/
+// -link/-link-*); dark redefines only those vars and the long token list
+// cascades through. Buttons + on-color text are theme-invariant.
 // ----------------------------------------------
-// Token names verified against _variables-dga.scss / _variables-dark.scss /
-// _variables-critical.scss as of audit on 2026-05-05. All overrides target
-// tokens that real components consume; values are sourced exclusively from
-// the existing --colors-* palette in _variables-dga.scss. Picks are AAA-
-// vetted for the surface they sit on (≥7:1 for text, ≥3:1 for non-text UI).
 :root[data-a11y~="high-contrast"] {
-    --background-default:               var(--colors-base-white);
-    --background-secondary:             var(--colors-base-white);
-    --background-card:                  var(--colors-base-white);
-    --background-menu:                  var(--colors-base-white);
-    --background-nav:                   var(--colors-base-white);
-    --background-disabled:              var(--colors-base-white);
-    --background-stripe:                var(--colors-base-white);
+    --_hc-bg:           var(--colors-base-white);
+    --_hc-fg:           var(--colors-base-black);
+    --_hc-link:         var(--colors-primary-sa-flag-800);
+    --_hc-link-hovered: var(--colors-primary-sa-flag-900);
+    --_hc-link-pressed: var(--colors-primary-sa-flag-950);
+    --_hc-link-visited: var(--colors-tertiary-lavendar-900);
 
-    --text-default:                     var(--colors-base-black);
-    --text-primary:                     var(--colors-base-black);
-    --text-secondary:                   var(--colors-base-black);
-    --text-secondary-paragraph:         var(--colors-base-black);
-    --text-tertiary:                    var(--colors-base-black);
-    --text-display:                     var(--colors-base-black);
-    --text-oncolor-primary:             var(--colors-base-white);
-    --text-oncolor-secondary:           var(--colors-base-white);
+    --background-default:                var(--_hc-bg);
+    --background-secondary:              var(--_hc-bg);
+    --background-card:                   var(--_hc-bg);
+    --background-menu:                   var(--_hc-bg);
+    --background-nav:                    var(--_hc-bg);
+    --background-disabled:               var(--_hc-bg);
+    --background-stripe:                 var(--_hc-bg);
 
-    // Link family — brand sa-flag green ladder. 800 → 900 → 950 gives a
-    // 9:1 → 11:1 → 14:1 contrast ramp on white. Visited steers to
-    // lavendar-900 so it's a distinct hue from the active state.
-    --link-primary:                     var(--colors-primary-sa-flag-800);
-    --link-primary-hovered:             var(--colors-primary-sa-flag-900);
-    --link-primary-pressed:             var(--colors-primary-sa-flag-950);
-    --link-primary-focused:             var(--colors-primary-sa-flag-800);
-    --link-primary-visited:             var(--colors-tertiary-lavendar-900);
+    --text-default:                      var(--_hc-fg);
+    --text-primary:                      var(--_hc-fg);
+    --text-secondary:                    var(--_hc-fg);
+    --text-secondary-paragraph:          var(--_hc-fg);
+    --text-tertiary:                     var(--_hc-fg);
+    --text-display:                      var(--_hc-fg);
+    --text-oncolor-primary:              var(--colors-base-white);
+    --text-oncolor-secondary:            var(--colors-base-white);
 
-    // Borders collapse to pure black for the maximum-contrast variant.
-    --border-neutral-primary:           var(--colors-base-black);
-    --border-neutral-secondary:         var(--colors-base-black);
-    --border-neutral-tertiary:          var(--colors-base-black);
-    --border-primary:                   var(--colors-base-black);
-    --border-focus:                     var(--colors-primary-sa-flag-800);
+    --link-primary:                      var(--_hc-link);
+    --link-primary-hovered:              var(--_hc-link-hovered);
+    --link-primary-pressed:              var(--_hc-link-pressed);
+    --link-primary-focused:              var(--_hc-link);
+    --link-primary-visited:              var(--_hc-link-visited);
 
-    // Primary button: same green ladder as links — brand-aligned and
-    // each shade clears AAA on its on-color (white) text.
+    --border-neutral-primary:            var(--_hc-fg);
+    --border-neutral-secondary:          var(--_hc-fg);
+    --border-neutral-tertiary:           var(--_hc-fg);
+    --border-primary:                    var(--_hc-fg);
+    --border-focus:                      var(--_hc-link);
+
     --button-background-primary-default: var(--colors-primary-sa-flag-800);
     --button-background-primary-hovered: var(--colors-primary-sa-flag-900);
     --button-background-primary-pressed: var(--colors-primary-sa-flag-950);
 }
 
+// Dark HC: invert bg/fg, shift the link ladder.
 :root[data-a11y~="high-contrast"][data-theme="dark"] {
-    --background-default:               var(--colors-base-black);
-    --background-secondary:             var(--colors-base-black);
-    --background-card:                  var(--colors-base-black);
-    --background-menu:                  var(--colors-base-black);
-    --background-nav:                   var(--colors-base-black);
-    --background-disabled:              var(--colors-base-black);
-    --background-stripe:                var(--colors-base-black);
-
-    --text-default:                     var(--colors-base-white);
-    --text-primary:                     var(--colors-base-white);
-    --text-secondary:                   var(--colors-base-white);
-    --text-secondary-paragraph:         var(--colors-base-white);
-    --text-tertiary:                    var(--colors-base-white);
-    --text-display:                     var(--colors-base-white);
-    // Buttons keep dark-green bg (matches LIGHT HC's pattern), so the
-    // on-color text stays white in both themes. Without this, dark HC
-    // would produce black icons inside .nds-primary buttons — visually
-    // inconsistent with the rest of the dark-mode chrome.
-    --text-oncolor-primary:             var(--colors-base-white);
-    --text-oncolor-secondary:           var(--colors-base-white);
-
-    // Link family — brand sa-flag green ladder, light shades for dark BG.
-    // 300 → 200 → 100 gives a 12:1 → 14:1 → 16:1 ramp on black. Visited
-    // steers to gold-300 to keep a distinct (warmer) hue. Standalone
-    // links sit DIRECTLY on the dark page (no button bg behind), so they
-    // need light shades to be readable on black.
-    --link-primary:                     var(--colors-primary-sa-flag-300);
-    --link-primary-hovered:             var(--colors-primary-sa-flag-200);
-    --link-primary-pressed:             var(--colors-primary-sa-flag-100);
-    --link-primary-focused:             var(--colors-primary-sa-flag-300);
-    --link-primary-visited:             var(--colors-secondary-gold-300);
-
-    --border-neutral-primary:           var(--colors-base-white);
-    --border-neutral-secondary:         var(--colors-base-white);
-    --border-neutral-tertiary:          var(--colors-base-white);
-    --border-primary:                   var(--colors-base-white);
-    --border-focus:                     var(--colors-primary-sa-flag-300);
-
-    // Primary button — dark-green ladder (same as LIGHT HC). Sits on the
-    // black page bg so green-800 stands out as a saturated dark button,
-    // and white on-color text/icon lands AAA on it.
-    --button-background-primary-default: var(--colors-primary-sa-flag-800);
-    --button-background-primary-hovered: var(--colors-primary-sa-flag-900);
-    --button-background-primary-pressed: var(--colors-primary-sa-flag-950);
+    --_hc-bg:           var(--colors-base-black);
+    --_hc-fg:           var(--colors-base-white);
+    --_hc-link:         var(--colors-primary-sa-flag-300);
+    --_hc-link-hovered: var(--colors-primary-sa-flag-200);
+    --_hc-link-pressed: var(--colors-primary-sa-flag-100);
+    --_hc-link-visited: var(--colors-secondary-gold-300);
 }
 
 // ----------------------------------------------
-// Dyslexia primitive — Latin (OpenDyslexic) + Arabic (Maqroo) stack.
-// Browsers resolve per-character: Latin glyphs hit OpenDyslexic, Arabic
-// glyphs walk past the Latin-only faces to Maqroo (or IBM Plex Sans
-// Arabic fallback). Override stays at `:root` so body-level font-family
-// resolves correctly via inheritance — panel chrome pins its own
-// --nds-font-family override in _accessibility.scss.
+// Dyslexia — Latin (OpenDyslexic) + Arabic (Maqroo) stack. Browsers
+// resolve per-character so both scripts find a face.
 // ----------------------------------------------
 :root[data-a11y~="dyslexia"] {
     --nds-font-family: "OpenDyslexic", "Lexend", "Atkinson Hyperlegible", "Verdana",
@@ -226,28 +97,16 @@ $a11y-filters: (
                        system-ui, sans-serif;
 }
 
-// Stroke-weight bump under the dyslexia mode. Maqroo Regular's stroke
-// is naturally lighter than IBM Plex Sans Arabic Regular at the same
-// nominal weight — at body sizes the contrast reads thin against
-// surrounding chrome. Bumping body-text elements to 500 lets the
-// browser:
-//   • faux-bold Maqroo (the @font-face declares range 400-700 against
-//     the single woff2 file; browsers synthesize the in-between),
-//   • OR — if Maqroo isn't loaded yet — pick up the real Medium weight
-//     of IBM Plex Sans Arabic (already shipped at assets/fonts/IBMPlex
-//     SansArabic-Medium.woff2), so the fallback path also looks heavier.
-// Page-shell scoped so panel chrome stays at its panel-private weight,
-// and limited to body-text elements so headings (which already carry
-// 600-700 design weights) aren't pulled DOWN to 500.
-@include a11y-page-shell-within('dyslexia', ':is(p, li, dt, dd, blockquote)') {
+// Bump body-text weight: Maqroo Regular reads thinner than IBM Plex
+// Arabic Regular at the same nominal weight. Headings already carry
+// 600-700 design weights, so scope to body-text elements only.
+:root[data-a11y~="dyslexia"] body[class] > :is(header, main, footer) :is(p, li, dt, dd, blockquote) {
     font-weight: 500;
 }
 
 // ----------------------------------------------
-// User-tunable scalars — defaults at :root scope. JS writes overrides as
-// inline custom properties on <html> when the user cycles a tile button.
-// These defaults make sure `var(--user-*, fallback)` always resolves
-// even before the JS layer hydrates.
+// User-tunable scalars — defaults so var(--user-*) always resolves
+// before JS hydrates.
 // ----------------------------------------------
 :root {
     --user-line-height: normal;
@@ -255,36 +114,11 @@ $a11y-filters: (
     --user-word-spacing: 0;
 }
 
-// All cosmetic page-content mutations below are scoped through the
-// `.nds-a11y-scope` marker class so the accessibility panel and the FAB
-// (which never receive the class) are NEVER affected. Token-level
-// overrides above (high-contrast palette, dyslexia font) stay at `:root`
-// scope because CSS variable redefinition on deeper elements doesn't
-// re-compute already-inherited font-family / color values. The panel
-// guards itself against the font cascade via a panel-private
-// `--a11y-font-family` token in _accessibility.scss — same pattern as
-// the font-size pin. The high-contrast palette is intentionally left to
-// cascade so the panel matches the user's chosen palette (a fundamental
-// theme change like dark-mode).
-
 // ----------------------------------------------
-// Font sizing — single global multiplier
-//
-// Every typography token in _variables-critical.scss wraps its value in
-// `calc(value * var(--user-font-scale, 1))`, and `--_btn-FS` in
-// _mixins.scss does the same. Setting `--user-font-scale` here at :root
-// scope therefore flows through to every consumer downstream. No
-// per-token remap, no -base aliases, no page-shell scoping needed for
-// the type math itself.
-//
-// JS adds `font-step-1`, `-2`, or `-3` to data-a11y when the user picks
-// a step; absent = no scaling. The selectors below translate the token
-// into a concrete `--user-font-scale` value at :root scope.
-//
-// Why the panel chrome doesn't grow: panel + FAB + mask-controls all
-// declare panel-private literal-px tokens (--a11y-text-FS etc.) and
-// never read --typo-* directly, so the multiplier never reaches them.
-// See _accessibility.scss and the .nds-a11y-mask-controls block below.
+// Font sizing — single global multiplier. Every --typo-* token in
+// _variables-critical.scss wraps in `calc(value * var(--user-font-scale, 1))`,
+// so setting --user-font-scale at :root cascades to every consumer. The
+// panel chrome reads literal-px tokens so it doesn't grow.
 // ----------------------------------------------
 $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 
@@ -294,226 +128,102 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     }
 }
 
-// Body's own font-size — keep unstyled <p>/<li>/<span> aligned with the
-// scaled body-text-md token. Page-shell scoped so the panel itself uses
-// the browser default font-size (not the scaled token). WCAG 1.4.4's
-// 200% target is reached via browser zoom (Ctrl+/-); this ladder is a
-// supplementary panel control, not a 1.4.4 substitute.
-@each $step, $scale in $step-scales {
-    @include a11y-page-shell('font-step-#{$step}') {
-        font-size: var(--typo-text-md-FS);
-    }
+// Body font-size aligns unstyled <p>/<li>/<span> with the scaled body-md token.
+:root:is([data-a11y~="font-step-1"], [data-a11y~="font-step-2"], [data-a11y~="font-step-3"]) body[class] > :is(header, main, footer) {
+    font-size: var(--typo-text-md-FS);
 }
 
 // ----------------------------------------------
 // Continuous user-tunable scalars (line height, letter/word spacing).
-//
-// Each rule is gated behind a `has-{prop}` token in data-a11y, stamped
-// by JS only when the user sets a non-default value. Without this gate
-// the unconditional rule would clobber author CSS line-height/spacing
-// any time the scope wrapper appears for an UNRELATED mod (filter,
-// high-contrast, highlight-titles, etc.) — paragraphs would silently
-// snap to `normal` whenever any tile was on.
-//
-// Headings (h1-h6) are intentionally excluded — they have tight design
-// ratios from _reset.scss (display-clamp LHs designed for visual
-// hierarchy), and font-step already scales their LH proportionally
-// with FS via --user-font-scale. Forcing user-line-height onto headings
-// would loosen those ratios and break the heading rhythm.
+// Gated behind `has-{prop}` tokens (stamped by JS only when non-default)
+// so the rule never clobbers author CSS for unrelated mods. Headings
+// excluded — _reset.scss display-clamp ratios drive their LH and
+// font-step already scales it via --user-font-scale.
 // ----------------------------------------------
 @each $prop in (line-height, letter-spacing, word-spacing) {
-    @include a11y-page-shell('has-#{$prop}') {
-        #{$prop}: var(--user-#{$prop});
-    }
-    @include a11y-page-shell-within('has-#{$prop}', ':is(p, li, ul, ol, dl, dt, dd, blockquote)') {
+    :root[data-a11y~="has-#{$prop}"] body[class] > :is(header, main, footer),
+    :root[data-a11y~="has-#{$prop}"] body[class] > :is(header, main, footer) :is(p, li, ul, ol, dl, dt, dd, blockquote) {
         #{$prop}: var(--user-#{$prop});
     }
 }
 
 // ----------------------------------------------
-// Text alignment overrides — page-shell scoped so panel controls,
-// labels, and tile buttons keep their natural alignment. The descendant
-// `:is(p, li)` rule beats per-element text-align declarations that some
-// content sets locally; the !important keeps those overrides in check.
-//
-// Uses CSS logical values `start` / `end` instead of physical `left` /
-// `right`, so an Arabic (RTL) reader gets reading-start alignment from
-// the same `start` token that a Latin (LTR) reader does. Tile cycle in
-// _includes/accessibility-panel.html: default,start,end,justify.
-// Legacy saved values `left` / `right` from earlier builds become
-// no-op tokens (no SCSS match) and self-heal on the next user cycle.
+// Text alignment — logical `start` / `end` so RTL and LTR both read
+// naturally. !important wins over per-element text-align in content.
 // ----------------------------------------------
 @each $alignment in (start, end, justify) {
-    @include a11y-page-shell('text-align-#{$alignment}') {
-        text-align: #{$alignment} !important;
-    }
-    @include a11y-page-shell-within('text-align-#{$alignment}', ':is(p, li)') {
+    :root[data-a11y~="text-align-#{$alignment}"] body[class] > :is(header, main, footer),
+    :root[data-a11y~="text-align-#{$alignment}"] body[class] > :is(header, main, footer) :is(p, li) {
         text-align: #{$alignment} !important;
     }
 }
 
 // ----------------------------------------------
-// Highlight titles / links — visible scaffolding for users who scan
-// pages by structure rather than reading top to bottom. Page-shell
-// scoped so panel headings and the panel's own language link stay
-// clean (the panel chrome is not "page content").
-//
-// Titles use the warning bg/text pair so the explicit foreground beats
-// any inherited oncolor (white) headings. See the color-choice rules
-// block at the top of this file for rationale and the dark-mode caveat.
+// Highlight titles — warning palette (bg + outline + text). `color`
+// !important beats inherited oncolor (white) hero headings.
 // ----------------------------------------------
-@include a11y-page-shell-within('highlight-titles', ':is(h1, h2, h3, h4, h5, h6)') {
-    // All-amber warning palette: bg (`--background-warning-25` light tint),
-    // text (`--text-warning` saturated amber), and outline (`--border-warning`
-    // saturated amber). Earlier the outline used `--link-primary` (green)
-    // for contrast against the amber bg, but headings aren't links —
-    // semantic mismatch — and the green ring conflicted with the
-    // highlight-links amber outline for users who activated both modes
-    // together. Using `--border-warning` keeps the contrast (saturated
-    // border vs light tint bg) while staying inside one palette family.
-    // Style stays SOLID (vs highlight-links' DASHED) to preserve the
-    // "filled state" / "scaffold annotation" semantic split.
+:root[data-a11y~="highlight-titles"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
     outline: 2px solid var(--border-warning);
     outline-offset: 2px;
     background-color: var(--background-warning-25);
     color: var(--text-warning) !important;
-    // Small breathing room so the bg/outline aren't flush against the text —
-    // a flat fill on a heading without padding reads as a label, not a highlight.
     padding-inline: var(--spacing-xs);
     border-radius: var(--radius-xs);
 }
 
-// Dark-mode overrides for both highlight-titles and highlight-links.
-// Token resolution differs sharply between the two themes:
-//   • Light: `--border-warning` / `--text-warning` both → yellow-700
-//     (saturated dark amber). Reads clear-on-light against white/cream.
-//   • Dark:  `--border-warning` stays at yellow-700 (now mid-tone on
-//     dark), `--text-warning` lightens to yellow-600. The outline ends
-//     up DARKER than the text inside it — backward hierarchy that also
-//     reduces visibility against the dark page bg.
-//
-// Fix: in dark mode, swap the outline to `--border-warning-light`
-// (yellow-200, the bright pale amber the design system reserves for
-// dark-mode borders). High contrast against dark page background;
-// matches the way the saturated amber pops on white in light mode.
-//
-// Highlight-titles also gets the bg override that was already here —
-// `--background-warning-25` resolves to neutral-900 in dark (NOT amber!)
-// so the heading would lose its warning-tone bg without this override.
-// `--alpha-warning-10` is a transparent yellow-tinted overlay that
-// renders as a subtle amber tint on the dark page. Same pattern as the
-// warning variants in _alert.scss / _tags.scss.
-:root[data-a11y~="highlight-titles"][data-theme="dark"] .nds-a11y-scope :is(h1, h2, h3, h4, h5, h6) {
-    background-color: var(--alpha-warning-10);
+// Dark mode: --border-warning resolves dark on dark — swap to the
+// lighter warning border. Title bg also swaps because --background-
+// warning-25 is neutral-900 in dark, not amber.
+:root[data-a11y~="highlight-titles"][data-theme="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6),
+:root[data-a11y~="highlight-links"][data-theme="dark"] body[class] > :is(header, main, footer) a {
     outline-color: var(--border-warning-light);
 }
-:root[data-a11y~="highlight-links"][data-theme="dark"] .nds-a11y-scope a {
-    outline-color: var(--border-warning-light);
+:root[data-a11y~="highlight-titles"][data-theme="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
+    background-color: var(--alpha-warning-10);
 }
 
-// Highlight Links — split into two rules so button-styled anchors
-// (`<a class="nds-btn">`) ALSO get the dashed-outline scaffold that
-// marks them as navigation elements (the WCAG/dyslexia goal: show
-// every clickable link regardless of visual style). The underline is
-// kept off button-styled anchors because text-decoration on a button
-// only underlines the label text, fragments visually with adjacent
-// icons, and is redundant against the button shape that already
-// signals interactivity.
-//
-// Color choice — split intentionally between the two visual signals so
-// activated links carry BOTH cues:
-//   • Outline:   amber `--text-warning` — NOT `--link-primary` (Saudi
-//                green). Plain text links and most NDS button links are
-//                already green, so a green outline camouflages against
-//                the link, defeating the highlight. Amber sits adjacent
-//                to green in the warning palette and provides clear
-//                contrast — same scaffold tone highlight-titles uses.
-//   • Underline: inherits the link's natural color (currently green).
-//                Preserves the link's brand-identity underline rather
-//                than monochroming everything to amber. Result: green
-//                underline + amber outline = dual signal that says both
-//                "this is a link" (green) and "this is a highlighted
-//                link in the active mode" (amber scaffold).
-@include a11y-page-shell-within('highlight-links', 'a') {
+// ----------------------------------------------
+// Highlight links — outline on every <a>, underline only on text links
+// (button-styled anchors keep their shape signal).
+// ----------------------------------------------
+:root[data-a11y~="highlight-links"] body[class] > :is(header, main, footer) a {
     outline: 2px dashed var(--text-warning);
     outline-offset: 2px;
 }
-@include a11y-page-shell-within('highlight-links', 'a:not(.nds-btn)') {
+:root[data-a11y~="highlight-links"] body[class] > :is(header, main, footer) a:not(.nds-btn) {
     text-decoration: underline !important;
     text-underline-offset: 2px;
     text-decoration-thickness: 2px;
 }
 
 // ----------------------------------------------
-// Reading mask — dims everything except a horizontal band that follows
-// the pointer / finger. Implemented as two real <div>s injected by JS
-// (.nds-a11y-mask-top and .nds-a11y-mask-bottom) — pseudo-elements were
-// tried first but didn't reliably get their own GPU compositor layer
-// across browsers.
-//
-// Each mask div is 100vh tall and pinned at top: 0; only its inline
-// `transform: translate3d()` changes per frame. translate3d() is the
-// most reliable cross-browser promotion hint (forces a compositor layer
-// even where `will-change: transform` doesn't), and `contain: layout
-// paint style` isolates the overlay so its updates can't invalidate
-// the rest of the page.
-//
-// Sits at z-index 850: above page chrome (sticky nav ~100, content
-// ~auto), below the panel (999) and the FAB (899) so the user can still
-// reach the toggle to disable the mask. Pointer events pass through.
+// Reading mask — two real <div>s injected by JS (pseudo-elements didn't
+// reliably get their own GPU layer). Sits below the panel (999) and FAB
+// (899) so the user can still reach the toggle to disable it.
 // ----------------------------------------------
 .nds-a11y-mask {
     position: fixed;
     inset-inline: 0;
     inset-block-start: 0;
-    // 100vh fallback for very old browsers; 100dvh is the dynamic viewport
-    // height — it tracks the visible viewport including mobile address-bar
-    // expand/collapse, which is what window.innerHeight returns in JS. Using
-    // 100vh here would resolve to the LARGE viewport on iOS/Android while
-    // JS math uses innerHeight (small viewport), shrinking the band when
-    // the address bar is visible.
-    height: 100vh;     // fallback for very old browsers
-    height: 100lvh;    // large viewport — STABLE across mobile address-bar
-                       // expand/collapse. dvh would re-flow the element on
-                       // every scroll tick (visible flicker on iOS/Android).
-                       // Top mask uses translate3d(0, calc(Ypx - 100%), 0)
-                       // in JS so its bottom edge anchors to the band top
-                       // regardless of what 100lvh resolves to in pixels.
+    // 100lvh tracks the LARGE viewport (stable across mobile address-bar
+    // expand/collapse). dvh would re-flow on every scroll tick.
+    height: 100vh;
+    height: 100lvh;
     background-color: var(--colors-alpha-alpha-black-80);
     pointer-events: none;
     z-index: 850;
     will-change: transform;
     contain: layout paint style;
-    // Off-screen default so the overlay never flashes mid-screen on insertion.
-    transform: translate3d(0, -200vh, 0);
+    transform: translate3d(0, -200vh, 0); // off-screen until JS positions
 }
 
-// Toolbar pinned to the bottom-center of the clear band — the mask is
-// "telescope" style (fixed in place, only moves when the grab handle is
-// dragged). Layout: [size−] [grab] [size+] horizontally, with the toolbar's
-// bottom edge aligned to the band's bottom edge so it sits inside the
-// clear area without poking into the dim overlay.
-//
-// Centered horizontally via PHYSICAL `left: 50%` + `translateX(-50%)`.
-// `inset-inline-start` would flip with RTL (right edge anchored at 50%
-// from viewport right), and combined with the physical `translateX(-50%)`
-// the element ends up off-center. Physical `left` keeps the anchor on
-// the LEFT in both directions so the symmetric `translateX(-50%)` always
-// lands the element on viewport-center. JS writes the vertical part of
-// translate3d on every render and keeps using `-50%` for X.
+// Toolbar centered via PHYSICAL `left: 50%` (logical inset-inline-start
+// flips with RTL and breaks the symmetric translateX(-50%)).
 .nds-a11y-mask-controls {
-    // Body-attached panel-equivalent chrome — same isolation strategy as
-    // .nds-accessibility-panel: panel-private literal tokens, no read of
-    // global --typo-* anywhere, so the toolbar can't be touched by user
-    // font scaling or any future global typo override. Same font-family
-    // strategy: override --nds-font-family inside this subtree so
-    // descendant components that read `var(--nds-font-family)` resolve
-    // to the panel-private stack instead of the root-scoped dyslexia
-    // override.
     --a11y-text-FS:          14px;
     --a11y-text-LH:          20px;
-    --a11y-toolbar-icon-FS:  20px;  // toolbar icon target size
-    --a11y-toolbar-btn-size: 36px;  // tiny inline utility buttons
+    --a11y-toolbar-icon-FS:  20px;
+    --a11y-toolbar-btn-size: 36px;
     --a11y-font-family:      'IBM Plex Sans Arabic', sans-serif;
     --nds-font-family:       var(--a11y-font-family);
     font-size: var(--a11y-text-FS);
@@ -522,9 +232,6 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 
     position: fixed;
     left: 50%;
-    // Small breathing room between the band edge and the toolbar. JS
-    // accounts for this offset when flipping the toolbar above the band
-    // (subtracts 2× --spacing-md so the gap is symmetric on both sides).
     inset-block-start: var(--spacing-md, 8px);
     z-index: 851;
     display: inline-flex;
@@ -540,8 +247,6 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     pointer-events: auto;
     will-change: transform;
     contain: layout paint style;
-    // Off-screen default. -50% on X self-centers from element width; Y is
-    // overwritten by JS (calc((bandBottom)px - 100%)) on every render.
     transform: translate3d(-50%, -200vh, 0);
 
     button {
@@ -573,7 +278,7 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
         &[data-action="grab"] {
             cursor: grab;
             min-width: 56px;            // wider hit-target for the primary handle
-            touch-action: none;         // let pointermove drag without scrolling
+            touch-action: none;         // pointermove drags without scrolling
         }
         &[data-action="grab"]:active,
         &[data-action="grab"][data-state~="dragging"] {
@@ -584,34 +289,24 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 }
 
 // ----------------------------------------------
-// Motor Impaired Mode — enlarges focus indicators and ensures interactive
-// targets meet WCAG 2.5.5 (Target Size). Activated via the bundle marker
-// (the bundle has no primitives, so the bundle name itself stamps onto
-// data-a11y when the switch is on).
+// Motor Impaired — 4px focus rings + 48×48 targets. Bundle has no
+// primitives; the bundle name itself stamps onto data-a11y.
 // ----------------------------------------------
-@include a11y-page-shell-within(
-    'motor-impaired',
-    ':is(button, a, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible'
-) {
+:root[data-a11y~="motor-impaired"] body[class] > :is(header, main, footer)
+    :is(button, a, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
     outline: 4px solid var(--border-focus) !important;
     outline-offset: 4px !important;
 }
 
-@include a11y-page-shell-within(
-    'motor-impaired',
-    ':is(.nds-btn, button, [role="button"], a.nds-btn, input[type="button"], input[type="submit"])'
-) {
+:root[data-a11y~="motor-impaired"] body[class] > :is(header, main, footer)
+    :is(.nds-btn, button, [role="button"], a.nds-btn, input[type="button"], input[type="submit"]) {
     min-block-size: 48px;
     min-inline-size: 48px;
 }
 
 // ----------------------------------------------
-// Reduce motion — user override on top of OS pref. The OS pref handles
-// itself via @media (prefers-reduced-motion); this token forces it on
-// for users whose OS doesn't expose the setting. Root-scoped (NOT
-// page-shell) so the panel chrome's own animations are also muted —
-// otherwise the panel would still slide in while page content stays
-// still, which is the wrong cue.
+// Reduce motion — root-scoped (NOT page-shell) so panel chrome animations
+// are also muted; otherwise the panel slides in while page content is still.
 // ----------------------------------------------
 :root[data-a11y~="reduce-motion"] *,
 :root[data-a11y~="reduce-motion"] *::before,
@@ -623,59 +318,16 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 }
 
 // ----------------------------------------------
-// Mode bundles — each accordion-section toggle composes existing
-// primitives (and optionally pre-fills a few settings) so the JS layer
-// doesn't need per-bundle logic. Adding a bundle is one entry in
-// MODE_BUNDLES (nds-accessibility.js) plus, if the bundle paints
-// anything new, one rule below.
-//
-// JS adds the bundle name AND each implied primitive to data-a11y, so
-// the individual SCSS selectors above (per-primitive) still match. This
-// block just documents the WCAG / standards alignment per bundle.
-// Keep in sync with MODE_BUNDLES in _js/nds-accessibility.js.
-// ----------------------------------------------
-//
-//   epilepsy-safe        → reduce-motion, low-saturation
-//                          (WCAG 2.3.1 Three Flashes — baseline)
-//   visually-impaired    → high-contrast + font-step: 2 setting (1.30×)
-//                          (WCAG 1.4.6 Contrast Enhanced)
+// Bundle composition lives in MODE_BUNDLES (_js/nds-accessibility.js):
+//   epilepsy-safe        → reduce-motion, low-saturation         (WCAG 2.3.1)
+//   visually-impaired    → high-contrast + font-step 2 (1.30×)   (WCAG 1.4.6)
 //   cognitive-disability → highlight-titles, reduce-motion
-//   motor-impaired       → (no primitives — SCSS-only effect: 4px focus rings,
-//                          48×48 target size; exceeds WCAG 2.5.5 Enhanced 44×44)
-//   colorblind           → colorblind (generic catch-all filter — see below)
-//   dyslexia-friendly    → dyslexia (OpenDyslexic-first), highlight-links
-//                          + WCAG 1.4.8 spacing settings auto-applied:
-//                            line-height 1.6, letter-spacing 0.12em,
-//                            word-spacing 0.16em (set via the bundle's
-//                            `settings` recipe in MODE_BUNDLES).
+//   motor-impaired       → marker-only (rules above)
+//   colorblind           → colorblind
+//   dyslexia-friendly    → dyslexia, highlight-links + WCAG 1.4.8 spacing
 //   adhd-friendly        → reduce-motion, highlight-titles, reading-mask
 //
+// DEFERRED — per-type CVD filters (need feColorMatrix + Brettel-Viénot-Mollon
+// matrices), font-scale > 1.5× (use browser zoom for WCAG 1.4.4 200%),
+// plain-language toggles (content-side), JS carousel pause.
 // ----------------------------------------------
-// DEFERRED — known gaps documented for future work
-// ----------------------------------------------
-// Per-type CVD filters (deuteranopia/protanopia/tritanopia/achromatopsia):
-//   The current `colorblind` filter is a generic saturate(0.6)+contrast(1.05).
-//   Real per-type accommodation needs SVG <feColorMatrix> filters with
-//   peer-reviewed Daltonization matrices (Brettel-Viénot-Mollon 1997,
-//   Machado et al. 2009). Shipping guessed approximations under labels
-//   like "Deuteranopia Mode" would actively mislead users into thinking
-//   their selection helps when it might not.
-//
-// Font scale beyond 1.5×:
-//   WCAG 1.4.4 mandates 200% support — reachable via browser zoom
-//   (Ctrl+/Ctrl-) which preserves layout. The panel ladder caps at
-//   1.50× (step 3) because pushing further breaks several components
-//   in this codebase. Document in panel UI that browser zoom is the
-//   path to 200%; don't extend the ladder.
-//
-// Simplified language / glossary tooltips:
-//   Cognitive accommodation (Inclusion International, WAI-CCP) calls for
-//   plain-language toggles and on-demand definitions. These are
-//   content-side features — they require a separate authoring layer
-//   (alternate copy, glossary data) and don't fit a CSS-toggle panel.
-//
-// Per-component carousel/timer pause:
-//   applyMotionPause() handles native <video autoplay> / <audio autoplay>
-//   only. JS-driven carousel rotators (custom intervals) need
-//   per-component opt-in via NDS.onAttrChange or similar. No global
-//   accommodation possible without each component cooperating.

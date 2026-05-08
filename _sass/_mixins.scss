@@ -162,40 +162,6 @@ $breakpoints-range: (
   }
 }
 
-// ----------------------------------------------
-// A11y page-shell scoping
-// ----------------------------------------------
-// Emit rules scoped to the `.nds-a11y-scope` marker class. The class is
-// applied by JS in apply() to <header>, <main>, and <footer> ONLY when at
-// least one a11y mod is active, and removed when none are. The panel +
-// FAB + cookie popup + reading mask never receive the class and are
-// therefore never affected by filters or cosmetic mods.
-//
-// Why a class instead of a permanent wrapper: avoids changing the page
-// structure. Why JS-driven: the class only exists when there's something
-// to scope, so the rules never match in the default state and the
-// default DOM stays clean.
-//
-//   @include a11y-page-shell('boost-contrast') { filter: contrast(1.15); }
-//
-// Use `a11y-page-shell-within` when the declarations apply to elements
-// INSIDE the scoped container (e.g. h1-h6, anchors) rather than the
-// container itself.
-//
-//   @include a11y-page-shell-within('highlight-links', 'a:not(.nds-btn)') {
-//     text-decoration: underline !important;
-//   }
-@mixin a11y-page-shell($mode-token) {
-  :root[data-a11y~="#{$mode-token}"] .nds-a11y-scope {
-    @content;
-  }
-}
-
-@mixin a11y-page-shell-within($mode-token, $descendants) {
-  :root[data-a11y~="#{$mode-token}"] .nds-a11y-scope #{$descendants} {
-    @content;
-  }
-}
 
 // ==============================================
 // AUTOFILL RESET
