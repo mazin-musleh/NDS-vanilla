@@ -1,110 +1,7 @@
-{%- comment -%}
-  Accessibility Panel — site-wide floating action button + slide-in panel.
-
-  All controls carry `data-a11y-mode` (string token written to <html data-a11y>),
-  `data-a11y-setting` (cycled scalar, e.g. font-step), or `data-a11y-action`
-  (one-shot reset). The JS layer (NDS.Accessibility) reads those.
-
-  Position is markup-driven on the FAB itself via `data-a11y-pos`:
-      "start"  ← inline-start (logical; flips with dir) — DEFAULT
-      "end"    ← inline-end   (logical; flips with dir)
-      "left"   ← physical left  (fixed regardless of dir)
-      "right"  ← physical right (fixed regardless of dir)
-  The panel picks up the side via a sibling combinator in SCSS, so
-  one attribute on the FAB flips both elements together.
-
-  Translation strings are centralized in the assign block below. First-pass
-  Arabic — flag for native-speaker review before public launch.
-{%- endcomment -%}
-
-{%- if page.lang == 'ar' -%}
-    {%- assign t_panel_title       = "أدوات الوصول" -%}
-    {%- assign t_panel_label       = "إعدادات الوصول" -%}
-    {%- assign t_close_panel       = "إغلاق لوحة الوصول" -%}
-    {%- assign t_toggle_theme      = "تبديل المظهر" -%}
-    {%- assign t_switch_lang       = "Switch to English" -%}
-    {%- assign t_scroll_panel      = "تمرير اللوحة" -%}
-    {%- assign t_section_modes     = "أوضاع الوصول" -%}
-    {%- assign t_section_readable  = "تجربة القراءة" -%}
-    {%- assign t_section_visual    = "التجربة البصرية" -%}
-    {%- assign t_aria_readable     = "عناصر تحكم تجربة القراءة" -%}
-    {%- assign t_aria_visual       = "التعديلات البصرية" -%}
-    {%- assign t_default           = "افتراضي" -%}
-    {%- assign t_font_sizing       = "حجم الخط" -%}
-    {%- assign t_dyslexia          = "صديق عُسْر القراءة" -%}
-    {%- assign t_highlight_titles  = "تمييز العناوين" -%}
-    {%- assign t_highlight_links   = "تمييز الروابط" -%}
-    {%- assign t_reading_mask      = "قناع القراءة" -%}
-    {%- assign t_pause_motion      = "إيقاف الحركة" -%}
-    {%- assign t_text_align        = "محاذاة النص" -%}
-    {%- assign t_line_height       = "ارتفاع السطر" -%}
-    {%- assign t_letter_spacing    = "تباعد الحروف" -%}
-    {%- assign t_word_spacing      = "تباعد الكلمات" -%}
-    {%- assign t_reset             = "إعادة تعيين الإعدادات" -%}
-    {%- assign a11y_modes_data =
-        "epilepsy-safe|وضع آمن للصرع|يخفف الألوان ويزيل الوميض," |
-        append: "visually-impaired|وضع ضعاف البصر|يحسّن مرئيات الموقع," |
-        append: "cognitive-disability|وضع الإعاقة الإدراكية|يساعد على التركيز على محتوى محدد," |
-        append: "motor-impaired|وضع الإعاقة الحركية|يتيح استخدام الموقع بلوحة المفاتيح," |
-        append: "colorblind|وضع عمى الألوان|يعدّل الموقع لمستخدمي عمى الألوان," |
-        append: "dyslexia-friendly|وضع صديق عُسْر القراءة|يساعد مستخدمي عُسْر القراءة," |
-        append: "adhd-friendly|وضع صديق فرط الحركة|يقلل التشتت ويحسّن التركيز"
-    -%}
-    {%- assign a11y_visuals_data =
-        "boost-contrast|تعزيز التباين|hgi-flash" |
-        append: ",monochrome|أحادي اللون|hgi-color-picker" |
-        append: ",high-contrast|تباين عالٍ|hgi-blur" |
-        append: ",high-saturation|تشبّع عالٍ|hgi-sparkles" |
-        append: ",low-saturation|تشبّع منخفض|hgi-droplet" |
-        append: ",colorblind|عمى الألوان|hgi-eye"
-    -%}
-{%- else -%}
-    {%- assign t_panel_title       = "Accessibility Tools" -%}
-    {%- assign t_panel_label       = "Accessibility settings" -%}
-    {%- assign t_close_panel       = "Close accessibility panel" -%}
-    {%- assign t_toggle_theme      = "Toggle theme" -%}
-    {%- assign t_switch_lang       = "التبديل إلى العربية" -%}
-    {%- assign t_scroll_panel      = "Scroll panel" -%}
-    {%- assign t_section_modes     = "Accessibility Modes" -%}
-    {%- assign t_section_readable  = "Readable Experience" -%}
-    {%- assign t_section_visual    = "Visually Pleasing Experience" -%}
-    {%- assign t_aria_readable     = "Readable experience controls" -%}
-    {%- assign t_aria_visual       = "Visual adjustments" -%}
-    {%- assign t_default           = "Default" -%}
-    {%- assign t_font_sizing       = "Font Sizing" -%}
-    {%- assign t_dyslexia          = "Dyslexia Friendly" -%}
-    {%- assign t_highlight_titles  = "Highlight Titles" -%}
-    {%- assign t_highlight_links   = "Highlight Links" -%}
-    {%- assign t_reading_mask      = "Reading Mask" -%}
-    {%- assign t_pause_motion      = "Pause Motion" -%}
-    {%- assign t_text_align        = "Text Alignment" -%}
-    {%- assign t_line_height       = "Line Height" -%}
-    {%- assign t_letter_spacing    = "Letter Spacing" -%}
-    {%- assign t_word_spacing      = "Word Spacing" -%}
-    {%- assign t_reset             = "Reset Settings" -%}
-    {%- assign a11y_modes_data =
-        "epilepsy-safe|Epilepsy Safe Mode|Dampens color and removes blinks," |
-        append: "visually-impaired|Visually Impaired Mode|Improves website visuals," |
-        append: "cognitive-disability|Cognitive Disability Mode|Helps focus on specific content," |
-        append: "motor-impaired|Motor Impaired Mode|Allows using the website with a keyboard," |
-        append: "colorblind|Colorblind Mode|Adjusts the website for colorblind users," |
-        append: "dyslexia-friendly|Dyslexia Friendly Mode|Helps users with Dyslexia," |
-        append: "adhd-friendly|ADHD Friendly Mode|Reduces distractions and improves focus"
-    -%}
-    {%- assign a11y_visuals_data =
-        "boost-contrast|Boost Contrast|hgi-flash" |
-        append: ",monochrome|Monochrome|hgi-color-picker" |
-        append: ",high-contrast|High Contrast|hgi-blur" |
-        append: ",high-saturation|High Saturation|hgi-sparkles" |
-        append: ",low-saturation|Low Saturation|hgi-droplet" |
-        append: ",colorblind|Colorblind|hgi-eye"
-    -%}
-{%- endif -%}
-
-{%- comment -%} Disclosure pattern (W3C APG) — panel stays non-blocking so users can watch tiles affect live page. Layout author may pass `pos="start"` to flip FAB + panel to inline-start. {%- endcomment -%}
 <button class="nds-btn nds-primary nds-circle nds-accessibility-toggle"
         type="button"
-        aria-label="{{ t_panel_label }}"
+        aria-label="Accessibility settings"
+        data-i18n-attr="aria-label:panel_label"
         aria-controls="ndsAccessibilityPanel"
         aria-expanded="false"
         data-a11y-pos="end"
@@ -114,16 +11,16 @@
 
 <aside id="ndsAccessibilityPanel"
        class="nds-accessibility-panel"
-       aria-label="{{ t_panel_label }}"
+       data-i18n-attr="aria-label:panel_label"
        data-accessibility-panel
        hidden>
 
     <div class="nds-accessibility-panel-header">
-        <h2 class="nds-accessibility-panel-title">{{ t_panel_title }}</h2>
+        <h2 class="nds-accessibility-panel-title" data-i18n="panel_title"></h2>
         <button class="nds-btn nds-subtle nds-icon-only"
                 data-accessibility-close
                 type="button"
-                aria-label="{{ t_close_panel }}">
+                data-i18n-attr="aria-label:close_panel">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
@@ -132,7 +29,6 @@
         <div class="nds-scroll-more-content">
             <div class="nds-accessibility-panel-body">
 
-                {%- comment -%} WCAG 4.1.3 status region — JS announce() writes here on every state change. {%- endcomment -%}
                 <div class="nds-sr-only" data-a11y-status role="status" aria-live="polite" aria-atomic="true"></div>
 
                 <!-- Display & Language — quick toggles -->
@@ -140,14 +36,13 @@
                     <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
                             data-theme-toggle
                             type="button"
-                            aria-label="{{ t_toggle_theme }}">
+                            data-i18n-attr="aria-label:toggle_theme">
                         <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
                     </button>
 
-                    {%- comment -%} Language link reuses the topbar locale mechanism — falls back to no-op if site has only one lang {%- endcomment -%}
                     <a class="nds-btn nds-subtle nds-icon-only"
                        href="{%- if page.lang == 'ar' %}{{ '/' | relative_url }}{%- else %}{{ '/ar/' | relative_url }}{%- endif %}"
-                       aria-label="{{ t_switch_lang }}">
+                       data-i18n-attr="aria-label:switch_lang">
                         <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -165,7 +60,7 @@
                             type="button"
                             aria-expanded="true"
                             aria-controls="a11yModesCollapse">
-                        <span class="nds-accordion-title">{{ t_section_modes }} <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="modes"></span></span>
+                        <span class="nds-accordion-title"><span data-i18n="section_modes"></span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="modes"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
@@ -173,32 +68,112 @@
                     <div class="nds-accordion-content">
                         <div class="nds-accordion-body">
                             <fieldset class="nds-form-group nds-switch-group">
-                                {%- assign a11y_modes = a11y_modes_data | split: "," -%}
-                                {%- for entry in a11y_modes -%}
-                                {%- assign parts = entry | split: "|" -%}
-                                {%- assign mode_id   = parts[0] -%}
-                                {%- assign mode_name = parts[1] -%}
-                                {%- assign mode_desc = parts[2] -%}
-                                <div class="nds-form-container nds-switch-container">
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="epilepsy-safe">
                                     <div class="nds-form-header">
-                                        <label for="a11y-mode-{{ mode_id }}">
-                                            <span class="nds-label">{{ mode_name }}</span>
-                                            <span class="nds-info">{{ mode_desc }}</span>
+                                        <label for="a11y-mode-epilepsy-safe">
+                                            <span class="nds-label" data-i18n-name></span>
+                                            <span class="nds-info"  data-i18n-desc></span>
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-switch">
-                                            <input type="checkbox"
-                                                   id="a11y-mode-{{ mode_id }}"
-                                                   class="nds-switch-input"
-                                                   data-a11y-mode="{{ mode_id }}">
-                                            <div class="nds-switch-track">
-                                                <div class="nds-switch-thumb"></div>
-                                            </div>
+                                            <input type="checkbox" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
                                 </div>
-                                {%- endfor -%}
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="visually-impaired">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-visually-impaired">
+                                            <span class="nds-label" data-i18n-name></span>
+                                            <span class="nds-info"  data-i18n-desc></span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="cognitive-disability">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-cognitive-disability">
+                                            <span class="nds-label" data-i18n-name></span>
+                                            <span class="nds-info"  data-i18n-desc></span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="motor-impaired">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-motor-impaired">
+                                            <span class="nds-label" data-i18n-name></span>
+                                            <span class="nds-info"  data-i18n-desc></span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="colorblind">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-colorblind">
+                                            <span class="nds-label" data-i18n-name></span>
+                                            <span class="nds-info"  data-i18n-desc></span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="dyslexia-friendly">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-dyslexia-friendly">
+                                            <span class="nds-label" data-i18n-name></span>
+                                            <span class="nds-info"  data-i18n-desc></span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="nds-form-container nds-switch-container" data-mode-id="adhd-friendly">
+                                    <div class="nds-form-header">
+                                        <label for="a11y-mode-adhd-friendly">
+                                            <span class="nds-label" data-i18n-name></span>
+                                            <span class="nds-info"  data-i18n-desc></span>
+                                        </label>
+                                    </div>
+                                    <div class="nds-form-control">
+                                        <div class="nds-switch">
+                                            <input type="checkbox" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly">
+                                            <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </fieldset>
                         </div>
                     </div>
@@ -212,77 +187,73 @@
                             type="button"
                             aria-expanded="false"
                             aria-controls="a11yReadableCollapse">
-                        <span class="nds-accordion-title">{{ t_section_readable }} <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="readable"></span></span>
+                        <span class="nds-accordion-title"><span data-i18n="section_readable"></span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="readable"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
                      id="a11yReadableCollapse">
                     <div class="nds-accordion-content">
                         <div class="nds-accordion-body">
-                            <div class="nds-grid" role="group" aria-label="{{ t_aria_readable }}">
+                            <div class="nds-grid" role="group" data-i18n-attr="aria-label:aria_readable">
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="font-step" data-a11y-cycle="0,1,2,3" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_font_sizing }}</span>
+                                    <span class="nds-label" data-i18n="font_sizing"></span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value>{{ t_default }}</span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="dyslexia" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-italic" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_dyslexia }}</span>
+                                    <span class="nds-label" data-i18n="dyslexia"></span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-titles" aria-pressed="false">
                                     <i class="nds-icon nds-hgi-highlighter" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_highlight_titles }}</span>
+                                    <span class="nds-label" data-i18n="highlight_titles"></span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-links" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-link-04" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_highlight_links }}</span>
+                                    <span class="nds-label" data-i18n="highlight_links"></span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reading-mask" aria-pressed="false">
                                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_reading_mask }}</span>
+                                    <span class="nds-label" data-i18n="reading_mask"></span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reduce-motion" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-pause" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_pause_motion }}</span>
+                                    <span class="nds-label" data-i18n="pause_motion"></span>
                                 </button>
 
-                                {%- comment -%} Logical start/end values; default,end,start,justify so the first click does something visible (start matches default for most content). {%- endcomment -%}
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="text-align" data-a11y-cycle="default,end,start,justify" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_text_align }}</span>
+                                    <span class="nds-label" data-i18n="text_align"></span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value>{{ t_default }}</span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="line-height" data-a11y-cycle="normal,1.6,1.8,2.0" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-paragraph-spacing" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_line_height }}</span>
+                                    <span class="nds-label" data-i18n="line_height"></span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value>{{ t_default }}</span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
                                 </button>
 
-                                {%- comment -%} Hidden on Arabic — CSS letter-spacing shatters cursive ligatures. Dyslexia bundle strips it via bundleRecipe(). {%- endcomment -%}
-                                {%- unless page.lang == 'ar' -%}
-                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="letter-spacing" data-a11y-cycle="0,0.04em,0.08em,0.12em" aria-pressed="false">
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="letter-spacing" data-a11y-cycle="0,0.04em,0.08em,0.12em" data-a11y-exclude-token="letter-spacing" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-letter-spacing" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_letter_spacing }}</span>
+                                    <span class="nds-label" data-i18n="letter_spacing"></span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value>{{ t_default }}</span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
                                 </button>
-                                {%- endunless -%}
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="word-spacing" data-a11y-cycle="0,0.16em,0.32em,0.48em" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-kerning" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ t_word_spacing }}</span>
+                                    <span class="nds-label" data-i18n="word_spacing"></span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value>{{ t_default }}</span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
                                 </button>
 
                             </div>
@@ -298,25 +269,44 @@
                             type="button"
                             aria-expanded="false"
                             aria-controls="a11yVisualCollapse">
-                        <span class="nds-accordion-title">{{ t_section_visual }} <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="visual"></span></span>
+                        <span class="nds-accordion-title"><span data-i18n="section_visual"></span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="visual"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
                      id="a11yVisualCollapse">
                     <div class="nds-accordion-content">
                         <div class="nds-accordion-body">
-                            {%- comment -%} role="group" not radiogroup — children are aria-pressed toggles, not role="radio". Mutex enforced in JS. {%- endcomment -%}
-                            <div class="nds-grid" role="group" aria-label="{{ t_aria_visual }}">
+                            <div class="nds-grid" role="group" data-i18n-attr="aria-label:aria_visual">
 
-                                {%- comment -%} Visual filters — mutex single-pick (incl. colorblind). Token|label|icon triples. {%- endcomment -%}
-                                {%- assign a11y_visuals = a11y_visuals_data | split: "," -%}
-                                {%- for entry in a11y_visuals -%}
-                                {%- assign p = entry | split: "|" -%}
-                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="{{ p[0] }}" aria-pressed="false">
-                                    <i class="hgi hgi-stroke {{ p[2] }}" aria-hidden="true"></i>
-                                    <span class="nds-label">{{ p[1] }}</span>
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="boost-contrast" data-visual-id="boost-contrast" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label></span>
                                 </button>
-                                {%- endfor -%}
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="monochrome" data-visual-id="monochrome" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-color-picker" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label></span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="high-contrast" data-visual-id="high-contrast" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-blur" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label></span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="high-saturation" data-visual-id="high-saturation" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-sparkles" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label></span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="low-saturation" data-visual-id="low-saturation" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-droplet" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label></span>
+                                </button>
+
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="colorblind" data-visual-id="colorblind" aria-pressed="false">
+                                    <i class="hgi hgi-stroke hgi-eye" aria-hidden="true"></i>
+                                    <span class="nds-label" data-i18n-label></span>
+                                </button>
 
                             </div>
                         </div>
@@ -328,15 +318,14 @@
 
             </div>
         </div>
-        <button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="{{ t_scroll_panel }}">
+        <button class="nds-btn nds-subtle nds-show-more" type="button" data-i18n-attr="aria-label:scroll_panel">
             <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
     </div>
 
     <div class="nds-accessibility-panel-footer">
-        {%- comment -%} Progress-circle markup is inert until JS adds nds-progress + --progress-duration during arming. {%- endcomment -%}
         <button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset">
-            <span class="nds-label">{{ t_reset }}</span>
+            <span class="nds-label" data-i18n="reset"></span>
             <div class="nds-progress-circle" hidden>
                 <svg width="100%" height="100%" viewBox="0 0 24 24">
                     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>

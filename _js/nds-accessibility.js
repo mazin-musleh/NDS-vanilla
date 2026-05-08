@@ -14,53 +14,23 @@
     const STORAGE_KEY = 'nds-a11y';
     const root = document.documentElement;
 
-    // i18n strings for live-region announcements (WCAG 4.1.3). Tile/bundle
-    // names come from the visible <span class="nds-label"> in the panel
-    // markup (Liquid-localized at build time).
-    const A11Y_I18N = (NDS.lang === 'ar') ? {
-        on:              'مُفعَّل',
-        off:             'مُعطَّل',
-        set:             'تم الضبط على',
-        reset:           'تمت إعادة تعيين جميع إعدادات الوصول.',
-        resetDone:       '✓ تمت إعادة التعيين',
-        active:          'مُفعَّل',
-        confirmReset:    'انقر مرة أخرى للتأكيد',
-        confirmResetMsg: 'اضغط زر إعادة التعيين مرة أخرى للتأكيد.',
-        default:         'افتراضي',
-        start:           'البداية',
-        end:             'النهاية',
-        justify:         'مضبوط',
-        small:           'صغير',
-        medium:          'متوسط',
-        large:           'كبير',
-    } : {
-        on:              'on',
-        off:             'off',
-        set:             'set to',
-        reset:           'All accessibility settings reset to default.',
-        resetDone:       '✓ Settings reset',
-        active:          'active',
-        confirmReset:    'Click again to confirm',
-        confirmResetMsg: 'Press the reset button again to confirm.',
-        default:         'Default',
-        start:           'Start',
-        end:             'End',
-        justify:         'Justify',
-        small:           'Small',
-        medium:          'Medium',
-        large:           'Large',
-    };
+    // i18n strings for live-region announcements (WCAG 4.1.3) and
+    // dynamically-built UI (reset confirm, reading-mask toolbar). Populated
+    // by NDS.i18n.load() from assets/i18n/accessibility/{lang}.json — the
+    // single source of truth. A11Y_I18N is mutated (Object.assign), never
+    // reassigned, so other consts that reference it by key (e.g. SPACING_TIER
+    // below) stay valid after the fetch resolves. Tile/bundle names live on
+    // the visible <span class="nds-label"> in the panel markup, localized
+    // in-place by the same loader.
+    const A11Y_I18N = {};
 
     // Letter cycle 0/0.04/0.08/0.12em and word cycle 0/0.16/0.32/0.48em both
-    // step Default → Small → Medium → Large, so one map covers both.
-    const SPACING_LABELS = {
-        '0':       A11Y_I18N.default,
-        '0.04em':  A11Y_I18N.small,
-        '0.08em':  A11Y_I18N.medium,
-        '0.12em':  A11Y_I18N.large,
-        '0.16em':  A11Y_I18N.small,
-        '0.32em':  A11Y_I18N.medium,
-        '0.48em':  A11Y_I18N.large,
+    // step Default → Small → Medium → Large, so one tier map covers both.
+    // Indirected through A11Y_I18N so locale swaps land at runtime.
+    const SPACING_TIER = {
+        '0':       'default',
+        '0.04em':  'small',  '0.08em':  'medium',  '0.12em':  'large',
+        '0.16em':  'small',  '0.32em':  'medium',  '0.48em':  'large',
     };
 
     const RESET_CONFIRM_MS = 5000;  // arming window
@@ -181,9 +151,10 @@
             const raw = localStorage.getItem(STORAGE_KEY);
             if (!raw) return defaultState();
             const parsed = JSON.parse(raw);
-            const result = Object.assign(defaultState(), parsed, {
-                settings: Object.assign(defaultState().settings, parsed.settings || {}),
-            });
+            // Route the localStorage payload through safeMerge so a planted
+            // __proto__ key can't replace the rehydrated state's prototype.
+            const result = NDS.i18n.safeMerge(defaultState(), parsed);
+            result.settings = NDS.i18n.safeMerge(defaultState().settings, parsed.settings || {});
             if (!Array.isArray(result.bundles))  result.bundles = [];
             if (!Array.isArray(result.excluded)) result.excluded = [];
             // Strip legacy fields from earlier builds.
@@ -318,20 +289,28 @@
                 maskControlsEl = document.createElement('div');
                 maskControlsEl.className = 'nds-a11y-mask-controls';
                 maskControlsEl.setAttribute('role', 'toolbar');
-                maskControlsEl.setAttribute('aria-label', 'Reading mask controls');
-                maskControlsEl.innerHTML =
-                    '<button type="button" data-action="size-down" aria-label="Decrease mask band">' +
-                        '<i class="nds-icon nds-hgi-zoom-out-area" aria-hidden="true"></i>' +
-                    '</button>' +
-                    '<button type="button" data-action="size-up" aria-label="Increase mask band">' +
-                        '<i class="nds-icon nds-hgi-zoom-in-area" aria-hidden="true"></i>' +
-                    '</button>' +
-                    '<button type="button" data-action="grab" aria-label="Drag mask vertically. Use arrow keys to nudge.">' +
-                        '<i class="hgi hgi-stroke hgi-arrow-all-direction" aria-hidden="true"></i>' +
-                    '</button>' +
-                    '<button type="button" data-action="close" aria-label="Close reading mask">' +
-                        '<i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>' +
-                    '</button>';
+                // Toolbar builds lazily on first reading-mask activation, so
+                // the i18n fetch has resolved long before this runs (user must
+                // open the panel and toggle the mask first). Built via
+                // createElement so JSON-sourced labels can't break out of the
+                // attribute via innerHTML string concat.
+                maskControlsEl.setAttribute('aria-label', A11Y_I18N.mask_toolbar);
+                [
+                    { action: 'size-down', icon: 'nds-icon nds-hgi-zoom-out-area',         label: A11Y_I18N.mask_size_down },
+                    { action: 'size-up',   icon: 'nds-icon nds-hgi-zoom-in-area',          label: A11Y_I18N.mask_size_up   },
+                    { action: 'grab',      icon: 'hgi hgi-stroke hgi-arrow-all-direction', label: A11Y_I18N.mask_grab      },
+                    { action: 'close',     icon: 'nds-icon nds-hgi-cancel-01',             label: A11Y_I18N.mask_close     },
+                ].forEach(({ action, icon, label }) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.dataset.action = action;
+                    btn.setAttribute('aria-label', label || '');
+                    const i = document.createElement('i');
+                    i.className = icon;
+                    i.setAttribute('aria-hidden', 'true');
+                    btn.appendChild(i);
+                    maskControlsEl.appendChild(btn);
+                });
                 document.body.appendChild(maskControlsEl);
             }
 
@@ -574,7 +553,7 @@
             return val === 'normal' ? A11Y_I18N.default : val + '×';
         }
         if (key === 'letter-spacing' || key === 'word-spacing') {
-            return SPACING_LABELS[val] || val;
+            return A11Y_I18N[SPACING_TIER[val]] || val;
         }
         return val;
     }
@@ -744,7 +723,18 @@
         if (!lbl) return;
         if (resetDoneTimer) clearTimeout(resetDoneTimer);
         if (!btn.dataset.flashOriginal) btn.dataset.flashOriginal = lbl.textContent;
-        lbl.textContent = A11Y_I18N.resetDone;
+        // Insert icon as direct button child before the label. The
+        // .nds-btn[data-status="success"] rule in _buttons.scss auto-swaps
+        // any child .nds-icon to a checkmark via the shared --nds-icon var.
+        // Tagged with data-flash-icon so the timer / pre-empt paths find it.
+        if (!btn.querySelector(':scope > [data-flash-icon]')) {
+            const icon = document.createElement('i');
+            icon.className = 'nds-icon';
+            icon.dataset.flashIcon = '';
+            icon.setAttribute('aria-hidden', 'true');
+            btn.insertBefore(icon, lbl);
+        }
+        lbl.textContent = A11Y_I18N.reset_done;
         btn.dataset.status = 'success';
         resetDoneTimer = setTimeout(() => {
             resetDoneTimer = null;
@@ -752,6 +742,8 @@
                 lbl.textContent = btn.dataset.flashOriginal;
                 delete btn.dataset.flashOriginal;
             }
+            const icon = btn.querySelector(':scope > [data-flash-icon]');
+            if (icon) icon.remove();
             delete btn.dataset.status;
         }, RESET_DONE_MS);
     }
@@ -760,7 +752,7 @@
     // .nds-progress button pattern (components/button.md → Animated Progress).
     function handleResetClick(btn) {
         // Restore the real label if a post-reset flash is mid-flight, so
-        // arming doesn't capture "✓ Settings reset" as the original.
+        // arming doesn't capture "Settings reset" as the original.
         if (resetDoneTimer) {
             clearTimeout(resetDoneTimer);
             resetDoneTimer = null;
@@ -769,6 +761,8 @@
                 lbl.textContent = btn.dataset.flashOriginal;
                 delete btn.dataset.flashOriginal;
             }
+            const icon = btn.querySelector(':scope > [data-flash-icon]');
+            if (icon) icon.remove();
             delete btn.dataset.status;
         }
         if (resetTimer) {
@@ -781,11 +775,11 @@
         const lbl = btn.querySelector('.nds-label');
         if (!lbl) { reset(); return; }
         btn.dataset.originalLabel = lbl.textContent;
-        lbl.textContent = A11Y_I18N.confirmReset;
+        lbl.textContent = A11Y_I18N.confirm_reset;
         addState(btn, 'arming');
         btn.style.setProperty('--progress-duration', RESET_CONFIRM_MS + 'ms');
         btn.classList.add('nds-progress');
-        announce(A11Y_I18N.confirmResetMsg);
+        announce(A11Y_I18N.confirm_reset_msg);
         resetTimer = setTimeout(() => {
             resetTimer = null;
             restoreResetLabel(btn);
@@ -919,6 +913,36 @@
         },
     ];
 
+    // Apply locale data fetched by NDS.i18n.load(): mutate A11Y_I18N (so
+    // existing key references resolve to localized strings), populate the
+    // structured arrays (modes / visuals) by id, and drop tiles flagged for
+    // this locale via exclude_controls (e.g. letter-spacing on Arabic, where
+    // CSS letter-spacing shatters cursive ligatures).
+    function applyComponentI18n(data) {
+        if (!data || !panel) return;
+        if (data.js) NDS.i18n.safeMerge(A11Y_I18N, data.js);
+
+        (data.modes || []).forEach(m => {
+            const row = panel.querySelector('[data-mode-id="' + m.id + '"]');
+            if (!row) return;
+            const n = row.querySelector('[data-i18n-name]');
+            const d = row.querySelector('[data-i18n-desc]');
+            if (n && m.name) n.textContent = m.name;
+            if (d && m.desc) d.textContent = m.desc;
+        });
+
+        (data.visuals || []).forEach(v => {
+            const tile = panel.querySelector('[data-visual-id="' + v.id + '"]');
+            const lbl  = tile && tile.querySelector('[data-i18n-label]');
+            if (lbl && v.label) lbl.textContent = v.label;
+        });
+
+        (data.exclude_controls || []).forEach(token => {
+            panel.querySelectorAll('[data-a11y-exclude-token="' + token + '"]')
+                 .forEach(el => el.remove());
+        });
+    }
+
     function init() {
         if (_initDone) destroy();
         _initDone = true;
@@ -985,6 +1009,12 @@
                 el.addEventListener(event, () => fn(el), { signal });
             });
         });
+
+        // Localize FAB + panel from assets/i18n/accessibility/{lang}.json.
+        // Fire-and-forget so open/close stays responsive on slow networks; on
+        // EN pages the load short-circuits (no fetch) and applyComponentI18n
+        // is called with null, becoming a no-op.
+        NDS.i18n.load('accessibility', [toggleBtn, panel]).then(applyComponentI18n);
 
         syncUI();
     }

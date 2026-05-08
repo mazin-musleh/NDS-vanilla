@@ -1,0 +1,69 @@
+{
+    "panel_title":      "أدوات الوصول",
+    "panel_label":      "إعدادات الوصول",
+    "close_panel":      "إغلاق لوحة الوصول",
+    "toggle_theme":     "تبديل المظهر",
+    "switch_lang":      "Switch to English",
+    "scroll_panel":     "تمرير اللوحة",
+    "section_modes":    "أوضاع الوصول",
+    "section_readable": "تجربة القراءة",
+    "section_visual":   "التجربة البصرية",
+    "aria_readable":    "عناصر تحكم تجربة القراءة",
+    "aria_visual":      "التعديلات البصرية",
+    "default":          "افتراضي",
+    "font_sizing":      "حجم الخط",
+    "dyslexia":         "صديق عُسْر القراءة",
+    "highlight_titles": "تمييز العناوين",
+    "highlight_links":  "تمييز الروابط",
+    "reading_mask":     "قناع القراءة",
+    "pause_motion":     "إيقاف الحركة",
+    "text_align":       "محاذاة النص",
+    "line_height":      "ارتفاع السطر",
+    "letter_spacing":   "تباعد الحروف",
+    "word_spacing":     "تباعد الكلمات",
+    "reset":            "إعادة تعيين الإعدادات",
+
+    "exclude_controls": ["letter-spacing"],
+
+    "modes": [
+        { "id": "epilepsy-safe",        "name": "وضع آمن للصرع",         "desc": "يخفف الألوان ويزيل الوميض" },
+        { "id": "visually-impaired",    "name": "وضع ضعاف البصر",         "desc": "يحسّن مرئيات الموقع" },
+        { "id": "cognitive-disability", "name": "وضع الإعاقة الإدراكية", "desc": "يساعد على التركيز على محتوى محدد" },
+        { "id": "motor-impaired",       "name": "وضع الإعاقة الحركية",   "desc": "يتيح استخدام الموقع بلوحة المفاتيح" },
+        { "id": "colorblind",           "name": "وضع عمى الألوان",        "desc": "يعدّل الموقع لمستخدمي عمى الألوان" },
+        { "id": "dyslexia-friendly",    "name": "وضع صديق عُسْر القراءة", "desc": "يساعد مستخدمي عُسْر القراءة" },
+        { "id": "adhd-friendly",        "name": "وضع صديق فرط الحركة",    "desc": "يقلل التشتت ويحسّن التركيز" }
+    ],
+
+    "visuals": [
+        { "id": "boost-contrast",  "label": "تعزيز التباين",  "icon": "hgi-flash" },
+        { "id": "monochrome",      "label": "أحادي اللون",    "icon": "hgi-color-picker" },
+        { "id": "high-contrast",   "label": "تباين عالٍ",     "icon": "hgi-blur" },
+        { "id": "high-saturation", "label": "تشبّع عالٍ",     "icon": "hgi-sparkles" },
+        { "id": "low-saturation",  "label": "تشبّع منخفض",   "icon": "hgi-droplet" },
+        { "id": "colorblind",      "label": "عمى الألوان",    "icon": "hgi-eye" }
+    ],
+
+    "js": {
+        "on":                "مُفعَّل",
+        "off":               "مُعطَّل",
+        "set":               "تم الضبط على",
+        "reset":             "تمت إعادة تعيين جميع إعدادات الوصول.",
+        "reset_done":        "تمت إعادة التعيين",
+        "active":            "مُفعَّل",
+        "confirm_reset":     "انقر مرة أخرى للتأكيد",
+        "confirm_reset_msg": "اضغط زر إعادة التعيين مرة أخرى للتأكيد.",
+        "default":           "افتراضي",
+        "start":             "البداية",
+        "end":               "النهاية",
+        "justify":           "مضبوط",
+        "small":             "صغير",
+        "medium":            "متوسط",
+        "large":             "كبير",
+        "mask_toolbar":      "عناصر تحكم قناع القراءة",
+        "mask_size_down":    "تصغير شريط القناع",
+        "mask_size_up":      "تكبير شريط القناع",
+        "mask_grab":         "اسحب القناع رأسيًا. استخدم مفاتيح الأسهم لتحريكه.",
+        "mask_close":        "إغلاق قناع القراءة"
+    }
+}

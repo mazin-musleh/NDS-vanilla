@@ -1,0 +1,69 @@
+{
+    "panel_title":      "Accessibility Tools",
+    "panel_label":      "Accessibility settings",
+    "close_panel":      "Close accessibility panel",
+    "toggle_theme":     "Toggle theme",
+    "switch_lang":      "التبديل إلى العربية",
+    "scroll_panel":     "Scroll panel",
+    "section_modes":    "Accessibility Modes",
+    "section_readable": "Readable Experience",
+    "section_visual":   "Visually Pleasing Experience",
+    "aria_readable":    "Readable experience controls",
+    "aria_visual":      "Visual adjustments",
+    "default":          "Default",
+    "font_sizing":      "Font Sizing",
+    "dyslexia":         "Dyslexia Friendly",
+    "highlight_titles": "Highlight Titles",
+    "highlight_links":  "Highlight Links",
+    "reading_mask":     "Reading Mask",
+    "pause_motion":     "Pause Motion",
+    "text_align":       "Text Alignment",
+    "line_height":      "Line Height",
+    "letter_spacing":   "Letter Spacing",
+    "word_spacing":     "Word Spacing",
+    "reset":            "Reset Settings",
+
+    "exclude_controls": [],
+
+    "modes": [
+        { "id": "epilepsy-safe",        "name": "Epilepsy Safe Mode",        "desc": "Dampens color and removes blinks" },
+        { "id": "visually-impaired",    "name": "Visually Impaired Mode",    "desc": "Improves website visuals" },
+        { "id": "cognitive-disability", "name": "Cognitive Disability Mode", "desc": "Helps focus on specific content" },
+        { "id": "motor-impaired",       "name": "Motor Impaired Mode",       "desc": "Allows using the website with a keyboard" },
+        { "id": "colorblind",           "name": "Colorblind Mode",           "desc": "Adjusts the website for colorblind users" },
+        { "id": "dyslexia-friendly",    "name": "Dyslexia Friendly Mode",    "desc": "Helps users with Dyslexia" },
+        { "id": "adhd-friendly",        "name": "ADHD Friendly Mode",        "desc": "Reduces distractions and improves focus" }
+    ],
+
+    "visuals": [
+        { "id": "boost-contrast",  "label": "Boost Contrast",  "icon": "hgi-flash" },
+        { "id": "monochrome",      "label": "Monochrome",      "icon": "hgi-color-picker" },
+        { "id": "high-contrast",   "label": "High Contrast",   "icon": "hgi-blur" },
+        { "id": "high-saturation", "label": "High Saturation", "icon": "hgi-sparkles" },
+        { "id": "low-saturation",  "label": "Low Saturation",  "icon": "hgi-droplet" },
+        { "id": "colorblind",      "label": "Colorblind",      "icon": "hgi-eye" }
+    ],
+
+    "js": {
+        "on":                "on",
+        "off":               "off",
+        "set":               "set to",
+        "reset":             "All accessibility settings reset to default.",
+        "reset_done":        "Settings reset",
+        "active":            "active",
+        "confirm_reset":     "Click again to confirm",
+        "confirm_reset_msg": "Press the reset button again to confirm.",
+        "default":           "Default",
+        "start":             "Start",
+        "end":               "End",
+        "justify":           "Justify",
+        "small":             "Small",
+        "medium":            "Medium",
+        "large":             "Large",
+        "mask_toolbar":      "Reading mask controls",
+        "mask_size_down":    "Decrease mask band",
+        "mask_size_up":      "Increase mask band",
+        "mask_grab":         "Drag mask vertically. Use arrow keys to nudge.",
+        "mask_close":        "Close reading mask"
+    }
+}
