@@ -67,27 +67,33 @@
 // ----------------------------------------------
 .nds-accessibility-toggle {
     position: fixed;
-    inset-block-end: var(--spacing-2xl, 20px);
-    inset-inline-end: var(--spacing-2xl, 20px);
+    --a11y-btn-size:   56px;
+    --a11y-fab-offset: var(--spacing-2xl);
+    inset-block-end: var(--a11y-fab-offset);
+    inset-inline-end: var(--a11y-fab-offset);
     inset-inline-start: auto;
     z-index: 899;          // below modal (1100), above page chrome
     padding: 0;
     box-shadow: var(--shadow-lg);
-    --a11y-btn-size: 56px;
+
+    @include mobile {
+        --a11y-btn-size:   48px;
+        --a11y-fab-offset: var(--spacing-xl);
+    }
 
     // Position variants. `start`/`end` are LOGICAL (flip with dir);
     // `left`/`right` are PHYSICAL (fixed). Matching panel rules below
     // use a sibling combinator so both elements flip from one attribute.
     &[data-a11y-pos="start"] {
-        inset-inline-start: var(--spacing-2xl, 20px);
+        inset-inline-start: var(--a11y-fab-offset);
         inset-inline-end: auto;
     }
     &[data-a11y-pos="left"] {
-        left: var(--spacing-2xl, 20px);
+        left: var(--a11y-fab-offset);
         right: auto;
     }
     &[data-a11y-pos="right"] {
-        right: var(--spacing-2xl, 20px);
+        right: var(--a11y-fab-offset);
         left: auto;
     }
 
