@@ -648,7 +648,7 @@
   // PROGRESS STATES
   // ==============================================
 
-  &.nds-progress {
+  &{
     position: relative;
 
     .nds-progress-circle {
@@ -689,6 +689,10 @@
       --progress-track-color: var(--alpha-white-20);
       --progress-color: var(--text-oncolor-primary);
     }
+  }
+
+  &:not(.nds-progress) .nds-progress-circle {
+    display: none;
   }
 
   // ==============================================
