@@ -1,4 +1,4 @@
-// NDS Accessibility — site-wide a11y panel (FAB + slide-in dialog)
+// NDS Accessibility — site-wide a11y panel (FAB + slide-in disclosure)
 //
 // Modes are CSS-only token overrides in _variables-a11y.scss; this JS
 // only manages state, persistence, focus, and the open/close lifecycle.
@@ -6,6 +6,14 @@
 //
 // Apply-before-paint of cached state happens in _includes/head.html
 // (alongside the theme FOUC guard) so reload doesn't flash.
+//
+// Pattern: W3C APG Disclosure — the panel is a non-blocking preferences
+// drawer, not a modal dialog. The page stays interactive underneath so
+// users can watch tiles affect live content (the whole point of the
+// panel). Implications: no role="dialog", no aria-modal, no focus
+// trap, no inert on siblings. Kept: aria-expanded sync, Esc-to-close,
+// click-outside-to-close, focus-into-panel-on-open, focus-return-to-
+// trigger-on-close.
 
 (() => {
     'use strict';
@@ -15,10 +23,32 @@
     const STORAGE_KEY = 'nds-a11y';
     const root = document.documentElement;
 
+    // i18n strings for live-region announcements (WCAG 4.1.3 Status Messages).
+    // Tile/bundle/filter names are pulled from the visible <span class="nds-label">
+    // in the panel markup (already localized at Jekyll-time), so this map only
+    // needs the connective phrasing and the reset confirmation.
+    const A11Y_I18N = (NDS.lang === 'ar') ? {
+        on:    'مُفعَّل',
+        off:   'مُعطَّل',
+        set:   'تم الضبط على',
+        reset: 'تمت إعادة تعيين جميع إعدادات الوصول.',
+    } : {
+        on:    'on',
+        off:   'off',
+        set:   'set to',
+        reset: 'All accessibility settings reset to default.',
+    };
+
     // Bundles map a single accordion-section toggle (e.g. "epilepsy-safe")
     // to a low-level recipe: { primitives: [...], settings: { ... } }.
     // The shorthand `[...]` is sugar for `{ primitives: [...] }`. Keep
-    // this in sync with the comment block at the bottom of _variables-a11y.scss.
+    // this in sync with TWO sibling places:
+    //   1. The comment block at the bottom of _variables-a11y.scss
+    //   2. The inline FOUC-guard recipe table in _includes/head.html
+    //      — the head script needs the same primitives map to apply
+    //      cached state before paint. If you change a bundle's
+    //      primitives here, mirror the change in head.html or the
+    //      first paint after reload will be wrong.
     //
     // `primitives` are tokens stamped into data-a11y while the bundle is
     // active (and removed when it's deactivated AND the user hasn't also
@@ -146,7 +176,6 @@
     let topbarEl = null;       // .nds-topbar    — cached for updateHeaderOffset
     let openerEl = null;       // element that opened the panel — focus returns here
     let scopeWrapper = null;   // .nds-a11y-scope — wrapper around <header>/<main>/<footer>; created lazily by ensureScopeWrapper() the first time any mod is active, removed by removeScopeWrapper() when nothing is active
-    let inertedSiblings = [];  // captured on open so close removes inert from the same nodes
     let ac = null;             // AbortController for all listeners scoped to current init
     let openAC = null;         // separate AC for listeners that only run while the panel is open
     let maskAC = null;         // separate AC for reading-mask pointer listener (lifecycle = mode on/off)
@@ -744,6 +773,51 @@
     }
 
     // ----------------------------------------------
+    // Live-region announcer (WCAG 4.1.3 Status Messages).
+    //
+    // Bundle activations flip 3-5 primitives + scalars at once; SR users
+    // would otherwise hear only the originating switch's aria-checked
+    // change. Visual-filter mutex unmutes others silently. Reset wipes
+    // everything. Each mutator pipes a short summary through here so
+    // those state changes reach AT users the same way they reach sighted
+    // users.
+    //
+    // Clear-then-set timing: some screen readers don't re-announce
+    // identical strings; clearing forces a fresh utterance. 50ms is short
+    // enough to feel synchronous and long enough to debounce coalesced
+    // state writes.
+    // ----------------------------------------------
+    function announce(msg) {
+        if (!panel || !msg) return;
+        const region = panel.querySelector('[data-a11y-status]');
+        if (!region) return;
+        region.textContent = '';
+        setTimeout(() => { region.textContent = msg; }, 50);
+    }
+
+    // Resolve a localized label for a mode/visual/setting key by reading
+    // the visible <span class="nds-label"> inside the matching control.
+    // Liquid renders these strings at build time, so they're already in
+    // the right language — no parallel JS dictionary needed.
+    function labelFor(name) {
+        if (!panel) return name;
+        const el = panel.querySelector(
+            '[data-a11y-mode="' + name + '"], [data-a11y-visual="' + name + '"]'
+        );
+        if (!el) return name;
+        const lab = el.querySelector('.nds-label');
+        return lab ? lab.textContent.trim() : name;
+    }
+
+    function settingLabelFor(key) {
+        if (!panel) return key;
+        const btn = panel.querySelector('[data-a11y-setting="' + key + '"]');
+        if (!btn) return key;
+        const lab = btn.querySelector('.nds-label');
+        return lab ? lab.textContent.trim() : key;
+    }
+
+    // ----------------------------------------------
     // Mutators — every change goes through these so apply() + save()
     // stay paired.
     // ----------------------------------------------
@@ -828,6 +902,14 @@
             }
         }
         commit();
+
+        // Status announcement — read effective state AFTER commit() so
+        // bundle activations correctly report on/off based on the union
+        // of state.bundles and state.modes.
+        const isOn = MODE_BUNDLES[name]
+            ? state.bundles.includes(name)
+            : effectiveTokens().has(name);
+        announce(labelFor(name) + ' ' + (isOn ? A11Y_I18N.on : A11Y_I18N.off));
     }
 
     function setVisualFilter(filter) {
@@ -876,6 +958,11 @@
             }
         }
         commit();
+
+        // Status announcement — wasActive captured before the toggle, so
+        // a flipped-on filter announces ON and a flipped-off filter
+        // announces OFF without re-reading effective state.
+        announce(labelFor(filter) + ' ' + (wasActive ? A11Y_I18N.off : A11Y_I18N.on));
     }
 
     function cycleSetting(key, cycleArr) {
@@ -884,19 +971,24 @@
         const next = cycleArr[(idx + 1) % cycleArr.length];
         state.settings[key] = next;
         commit();
+
+        // Status announcement — "Font sizing set to +2", etc.
+        announce(settingLabelFor(key) + ' ' + A11Y_I18N.set + ' ' + formatSettingValue(key, next));
     }
 
     function reset() {
         state = defaultState();
         commit();
+        announce(A11Y_I18N.reset);
     }
 
     // ----------------------------------------------
-    // Focus trap — delegates to NDS.trapFocus (shared with nds-modal.js).
-    // The container-getter only returns `panel` when it's open, so the trap
-    // is a no-op while closed.
+    // No focus trap. As a Disclosure (not a modal), Tab is allowed to
+    // leave the panel and reach the page underneath — that's the whole
+    // point of keeping the page interactive while tiles toggle. Esc and
+    // click-outside still close the panel; focus returns to the FAB on
+    // close (see close()).
     // ----------------------------------------------
-    const trapFocus = NDS.trapFocus(() => (panel && hasState(panel, 'open')) ? panel : null);
 
     // ----------------------------------------------
     // Header offset — measure the visible bottom of the topbar+mainnav and
@@ -936,24 +1028,12 @@
         const onPanelScroll = NDS.rafThrottle(updateHeaderOffset);
         window.addEventListener('scroll', onPanelScroll, { passive: true, signal: openAC.signal });
 
-        // Mark surroundings inert so AT and tab order skip them. When the
-        // scope wrapper is present (any mod active) we inert the single
-        // wrapper — `inert` cascades to all descendants so one node hides
-        // the entire page-content surface. When the wrapper is absent
-        // (no mods), fall back to inerting <header>/<main>/<footer>
-        // individually. Snapshot the live list so close() removes inert
-        // from the same nodes — symmetric add/remove even if the wrapper
-        // appears or disappears mid-open.
-        inertedSiblings = scopeWrapper
-            ? [scopeWrapper]
-            : Array.from(document.body.querySelectorAll(':scope > header, :scope > main, :scope > footer'));
-        inertedSiblings.forEach(el => el.setAttribute('inert', ''));
-
-        // Intentionally no backdrop. Users open this panel specifically to see
-        // how toggles affect the live page (High Contrast, Highlight Titles,
-        // Font Sizing, etc.) — a dimming/blurring layer would hide the change
-        // they're trying to evaluate. Click-outside-to-close is still handled
-        // by the document-level outsideHandler registered in init().
+        // No inert / no backdrop — this is a Disclosure, not a modal.
+        // Users open the panel specifically to see how toggles affect the
+        // live page (High Contrast, Highlight Titles, Font Sizing, etc.):
+        // dimming or inerting the page would defeat the entire reason the
+        // panel exists. Click-outside-to-close (registered in init()) and
+        // Esc-to-close still apply as UX affordances.
 
         if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
 
@@ -989,9 +1069,6 @@
             panel.setAttribute('hidden', '');
             panel.removeEventListener('transitionend', onClosed);
 
-            inertedSiblings.forEach(el => el.removeAttribute('inert'));
-            inertedSiblings = [];
-
             if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
 
             // Restore focus to whichever element opened the panel
@@ -1014,9 +1091,8 @@
     // Init / destroy
     // ----------------------------------------------
     function destroy() {
-        // If the panel is open, route through close() first so the inert
-        // attribute on <header>/<main>/<footer> (or the scope wrapper),
-        // panel data-state, toggleBtn aria-expanded, and openerEl reference
+        // If the panel is open, route through close() first so the panel
+        // data-state, toggleBtn aria-expanded, and openerEl reference
         // unwind via close()'s cleanup() before we abort the ACs. close()
         // handles its own teardown via transitionend + the safety-net
         // setTimeout, so the async path is fine — destroy continues
@@ -1087,7 +1163,9 @@
             close();
         }, { signal });
 
-        document.addEventListener('keydown', trapFocus, { signal });
+        // No global focus-trap keydown — Tab is allowed to leave the panel
+        // and reach the page underneath (Disclosure pattern). See open() and
+        // the file-header notes for the full rationale.
 
         // Close on width change (matches sidemenu behavior — keeps a panel
         // sized for one breakpoint from looking broken at another). Also

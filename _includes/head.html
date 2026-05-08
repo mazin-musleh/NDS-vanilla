@@ -79,6 +79,31 @@
             if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
         })();
     </script>
+    <script>
+        // Apply cached a11y state before paint to prevent FOUC. Bundle table mirrors MODE_BUNDLES — keep in sync.
+        (() => { try {
+            const s = JSON.parse(localStorage.getItem('nds-a11y') || '{}');
+            const R = {
+                'epilepsy-safe':        ['reduce-motion','low-saturation'],
+                'visually-impaired':    ['high-contrast'],
+                'cognitive-disability': ['highlight-titles','reduce-motion'],
+                'motor-impaired':       [],
+                'colorblind':           ['colorblind'],
+                'dyslexia-friendly':    ['dyslexia','highlight-links'],
+                'adhd-friendly':        ['reduce-motion','highlight-titles','reading-mask'],
+            };
+            const t = new Set([
+                ...(s.modes || []),
+                ...(s.bundles || []).flatMap(b => b in R ? (R[b].length ? R[b] : [b]) : []),
+            ]);
+            (s.excluded || []).forEach(e => t.delete(e));
+            const c = s.settings || {};
+            const step = parseInt(c['font-step'], 10) || 0;
+            if (step > 0 && step < 4) t.add('font-step-' + step);
+            if (c['text-align'] && c['text-align'] !== 'default') t.add('text-align-' + c['text-align']);
+            if (t.size) document.documentElement.setAttribute('data-a11y', [...t].join(' '));
+        } catch {} })();
+    </script>
     <!-- Demo-only: pairs with the [data-auth] style above. Safe to remove in production. -->
     <script>
         // Stamp [data-auth] from cookie before paint so .nds-guest / .nds-auth show the correct variant
