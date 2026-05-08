@@ -301,6 +301,27 @@
     }
 }
 
+// Active tile mirrors the mainnav "current" indicator — brand-primary fill,
+// white text, lighter-primary indicator bar — so the panel's "you have this
+// on" cue matches the rest of the chrome's "you are here" cue. Tokens
+// override the nds-secondary-outline defaults via the --btn-* channel; the
+// border collapses to match the fill so the outline doesn't double-print
+// against the new background.
+.nds-accessibility-panel .nds-grid > .nds-btn[data-state~="selected"] {
+    --btn-bg:                 var(--button-background-primary-default);
+    --btn-bg-hover:           var(--button-background-primary-hovered);
+    --btn-bg-active:          var(--button-background-primary-pressed);
+    --btn-bg-selected:        var(--button-background-primary-default);
+    --btn-color:              var(--text-oncolor-primary);
+    --btn-border:             var(--button-background-primary-default);
+    --btn-border-hover:       var(--button-background-primary-hovered);
+    --btn-border-active:      var(--button-background-primary-pressed);
+    --btn-border-selected:    var(--button-background-primary-default);
+    --btn-indicator-color:    var(--background-primary-400);
+    --btn-indicator-active:   var(--background-primary-400);
+    --btn-indicator-selected: var(--background-primary-400);
+}
+
 // Multi-level step indicator. Each cycled tile (Font Sizing, Text Alignment,
 // Line Height, Letter/Word Spacing) gets one of these — bars match the
 // cycle length, the leading N bars light up to show the current step.

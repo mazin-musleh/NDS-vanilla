@@ -28,27 +28,35 @@
     // in the panel markup (already localized at Jekyll-time), so this map only
     // needs the connective phrasing and the reset confirmation.
     const A11Y_I18N = (NDS.lang === 'ar') ? {
-        on:    'مُفعَّل',
-        off:   'مُعطَّل',
-        set:   'تم الضبط على',
-        reset: 'تمت إعادة تعيين جميع إعدادات الوصول.',
+        on:              'مُفعَّل',
+        off:             'مُعطَّل',
+        set:             'تم الضبط على',
+        reset:           'تمت إعادة تعيين جميع إعدادات الوصول.',
+        active:          'مُفعَّل',
+        confirmReset:    'انقر مرة أخرى للتأكيد',
+        confirmResetMsg: 'اضغط زر إعادة التعيين مرة أخرى للتأكيد.',
     } : {
-        on:    'on',
-        off:   'off',
-        set:   'set to',
-        reset: 'All accessibility settings reset to default.',
+        on:              'on',
+        off:             'off',
+        set:             'set to',
+        reset:           'All accessibility settings reset to default.',
+        active:          'active',
+        confirmReset:    'Click again to confirm',
+        confirmResetMsg: 'Press the reset button again to confirm.',
     };
+
+    // Reset confirmation window — first click arms, second within window
+    // performs the reset, timeout reverts the label.
+    const RESET_CONFIRM_MS = 5000;
 
     // Bundles map a single accordion-section toggle (e.g. "epilepsy-safe")
     // to a low-level recipe: { primitives: [...], settings: { ... } }.
     // The shorthand `[...]` is sugar for `{ primitives: [...] }`. Keep
     // this in sync with TWO sibling places:
     //   1. The comment block at the bottom of _variables-a11y.scss
-    //   2. The inline FOUC-guard recipe table in _includes/head.html
-    //      — the head script needs the same primitives map to apply
-    //      cached state before paint. If you change a bundle's
-    //      primitives here, mirror the change in head.html or the
-    //      first paint after reload will be wrong.
+    //   2. The FOUC-guard recipe table in _includes/head-inline-scripts.html
+    //      — that script applies cached state before paint and needs
+    //      the same primitives map. Change either, change both.
     //
     // `primitives` are tokens stamped into data-a11y while the bundle is
     // active (and removed when it's deactivated AND the user hasn't also
@@ -142,7 +150,21 @@
     // Single-pick group — only one of these can be active at a time, since
     // their CSS filters compose multiplicatively and most users want exactly
     // one of "make it brighter / dimmer / monochrome / boosted contrast".
-    const VISUAL_FILTERS = ['boost-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation'];
+    // colorblind sits in the same mutex (clicking a saturation/contrast
+    // tile mutes colorblind and vice versa) — see setVisualFilter().
+    const VISUAL_FILTERS = ['boost-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation', 'colorblind'];
+
+    // OS-supplied preferences. These auto-supply the matching primitive
+    // tokens (same way bundles do) so a user with prefers-reduced-motion
+    // ON at the OS level sees the Pause Motion tile correctly reflect
+    // ON. state.excluded still wins — explicit user OFF overrides OS.
+    const OS_MQ = {
+        'reduce-motion': matchMedia('(prefers-reduced-motion: reduce)'),
+        'high-contrast': matchMedia('(prefers-contrast: more)'),
+    };
+    function isSuppliedByOS(name) {
+        return !!(OS_MQ[name] && OS_MQ[name].matches);
+    }
 
     // Continuous user-tunable scalars → inline custom properties on <html>
     // PLUS a presence token in data-a11y. Each entry is applied identically:
@@ -183,6 +205,7 @@
     let maskBottomEl = null;   // bottom overlay <div>
     let maskControlsEl = null; // floating toolbar with size +/− and grab handle
     let maskLastY = null;      // last cursor Y used to position the band; reused when only the band size changes
+    let resetTimer = null;     // armed by first reset click; cleared on second click within window or timeout
     let _initDone = false;
 
     function defaultState() {
@@ -278,15 +301,15 @@
     }
 
     // Effective primitive tokens for the page:
-    //   (state.modes ∪ each active bundle's primitives) − state.excluded
+    //   (state.modes ∪ each active bundle's primitives ∪ OS-supplied) − state.excluded
     //
-    // Bundles and primitives are independent state — toggling a bundle never
-    // affects primitives directly added by the user, and toggling a primitive
-    // never affects bundle-switch state. The excluded list lets a user click
-    // a tile that was switched on BY A BUNDLE and turn it off without
-    // disabling the entire bundle.
+    // Bundles, primitives, and OS preferences are independent supply
+    // channels — any of them can light up a tile, and the same
+    // state.excluded mechanism lets the user explicitly turn one OFF
+    // without disabling the bundle or fighting their OS setting.
     function effectiveTokens() {
         const tokens = new Set(state.modes);
+        for (const k in OS_MQ) if (OS_MQ[k].matches) tokens.add(k);
         for (let i = 0; i < state.bundles.length; i++) {
             const b = state.bundles[i];
             const { primitives } = bundleRecipe(b);
@@ -296,7 +319,7 @@
                 tokens.add(b);                 // marker-only bundle (motor-impaired, etc.)
             }
         }
-        // User-side exclusions override bundle inclusions.
+        // User-side exclusions override bundle/OS inclusions.
         for (let i = 0; i < state.excluded.length; i++) tokens.delete(state.excluded[i]);
         return tokens;
     }
@@ -737,6 +760,13 @@
             const n = counts[el.dataset.a11yCount] || 0;
             el.textContent = n > 0 ? String(n) : '';
         });
+        // SR-only sibling — visible badge is aria-hidden so the count
+        // information would otherwise be unreachable for screen-reader
+        // users navigating the accordion buttons.
+        panel.querySelectorAll('[data-a11y-count-sr]').forEach(el => {
+            const n = counts[el.dataset.a11yCountSr] || 0;
+            el.textContent = n > 0 ? `, ${n} ${A11Y_I18N.active}` : '';
+        });
     }
 
     // Render (cycle.length - 1) step-indicator bars inside a setting tile's
@@ -858,32 +888,36 @@
                     state.excluded = state.excluded.filter(p => !primitives.includes(p));
                 }
                 // Apply the bundle's recommended settings (WCAG-derived
-                // text spacing for dyslexia-friendly, etc.). Snapshot the
-                // PRIOR values first so deactivation can revert cleanly.
-                // Snapshot reflects whatever the user had — defaults, a
-                // prior bundle's leftovers, or their own manual cycles —
-                // so on deactivation the panel returns to that exact
-                // pre-activation state for any setting the user didn't
-                // re-cycle in the meantime.
+                // text spacing for dyslexia-friendly, etc.) — but ONLY
+                // for keys the user hasn't already tuned away from
+                // default. If the user already picked line-height 1.8,
+                // dyslexia-friendly's 1.6 doesn't get to clobber it.
+                // Snapshot still records the pre-activation value so
+                // deactivation can revert any settings the bundle DID
+                // write.
                 if (settings) {
+                    const defaults = defaultState().settings;
                     const snapshot = {};
                     for (const k in settings) {
                         snapshot[k] = state.settings[k];
-                        state.settings[k] = settings[k];
+                        if (state.settings[k] === defaults[k]) {
+                            state.settings[k] = settings[k];
+                        }
                     }
                     state.settingsSnapshots[name] = snapshot;
                 }
             }
         } else {
-            // PRIMITIVE — three slots track its presence:
+            // PRIMITIVE — four slots track its presence:
             //   • state.modes:    user-direct toggle (independent of bundles)
-            //   • state.excluded: user-direct removal (overrides bundles)
+            //   • state.excluded: user-direct removal (overrides bundles + OS)
             //   • bundle supply:  whether any active bundle includes it
+            //   • OS supply:      OS pref (prefers-reduced-motion, etc.)
             // Effective ON ≡ (in modes OR supplied) AND NOT excluded.
             // A click flips the effective state by the minimum-needed write.
             const inModes   = state.modes.indexOf(name)   !== -1;
             const excluded  = state.excluded.indexOf(name) !== -1;
-            const supplied  = isSuppliedByBundle(name);
+            const supplied  = isSuppliedByBundle(name) || isSuppliedByOS(name);
             const effective = (inModes || supplied) && !excluded;
 
             if (effective) {
@@ -930,13 +964,19 @@
         const tokens = effectiveTokens();
         const wasActive = tokens.has(filter);
 
+        // "Supplied by something other than state.modes" — bundle or OS.
+        // Used to decide whether a turn-off needs state.excluded to win,
+        // and whether a turn-on needs state.modes (or whether an existing
+        // supply already handles it).
+        const suppliedElsewhere = n => isSuppliedByBundle(n) || isSuppliedByOS(n);
+
         if (wasActive) {
             // Turn off — strip from state.modes (if there) and add to
-            // excluded (if a bundle supplies it).
+            // excluded (if a bundle or OS supplies it).
             if (state.modes.includes(filter)) {
                 state.modes = state.modes.filter(m => m !== filter);
             }
-            if (isSuppliedByBundle(filter) && !state.excluded.includes(filter)) {
+            if (suppliedElsewhere(filter) && !state.excluded.includes(filter)) {
                 state.excluded.push(filter);
             }
         } else {
@@ -945,15 +985,15 @@
                 if (other === filter) return;
                 const i = state.modes.indexOf(other);
                 if (i >= 0) state.modes.splice(i, 1);
-                if (isSuppliedByBundle(other) && !state.excluded.includes(other)) {
+                if (suppliedElsewhere(other) && !state.excluded.includes(other)) {
                     state.excluded.push(other);
                 }
             });
             // Un-exclude the requested filter if it was previously excluded.
             const ei = state.excluded.indexOf(filter);
             if (ei >= 0) state.excluded.splice(ei, 1);
-            // Add to state.modes only if no bundle is already supplying it.
-            if (!isSuppliedByBundle(filter) && !state.modes.includes(filter)) {
+            // Add to state.modes only if no bundle/OS is already supplying it.
+            if (!suppliedElsewhere(filter) && !state.modes.includes(filter)) {
                 state.modes.push(filter);
             }
         }
@@ -980,6 +1020,40 @@
         state = defaultState();
         commit();
         announce(A11Y_I18N.reset);
+    }
+
+    // Two-click reset confirmation — first click arms (label swaps to
+    // "Click again to confirm"), second click within RESET_CONFIRM_MS
+    // performs the reset, timeout reverts the label. Inline pattern
+    // chosen over a modal so the panel stays non-blocking (Disclosure
+    // pattern; see file header).
+    function handleResetClick(btn) {
+        if (resetTimer) {
+            clearTimeout(resetTimer);
+            resetTimer = null;
+            restoreResetLabel(btn);
+            reset();
+            return;
+        }
+        const lbl = btn.querySelector('.nds-label');
+        if (!lbl) { reset(); return; }
+        btn.dataset.originalLabel = lbl.textContent;
+        lbl.textContent = A11Y_I18N.confirmReset;
+        addState(btn, 'arming');
+        announce(A11Y_I18N.confirmResetMsg);
+        resetTimer = setTimeout(() => {
+            resetTimer = null;
+            restoreResetLabel(btn);
+        }, RESET_CONFIRM_MS);
+    }
+
+    function restoreResetLabel(btn) {
+        const lbl = btn.querySelector('.nds-label');
+        if (lbl && btn.dataset.originalLabel) {
+            lbl.textContent = btn.dataset.originalLabel;
+            delete btn.dataset.originalLabel;
+        }
+        removeState(btn, 'arming');
     }
 
     // ----------------------------------------------
@@ -1098,6 +1172,7 @@
         // setTimeout, so the async path is fine — destroy continues
         // synchronously below.
         if (panel && hasState(panel, 'open')) close();
+        if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
         if (ac) { ac.abort(); ac = null; }
         if (openAC) { openAC.abort(); openAC = null; }
         if (maskAC) { maskAC.abort(); maskAC = null; }
@@ -1167,6 +1242,13 @@
         // and reach the page underneath (Disclosure pattern). See open() and
         // the file-header notes for the full rationale.
 
+        // Re-apply when an OS preference flips mid-session so tile state
+        // and the data-a11y attribute stay in sync with prefers-reduced-
+        // motion / prefers-contrast.
+        for (const k in OS_MQ) {
+            OS_MQ[k].addEventListener('change', () => apply(), { signal });
+        }
+
         // Close on width change (matches sidemenu behavior — keeps a panel
         // sized for one breakpoint from looking broken at another). Also
         // re-measure the sticky-header offset on every resize tick so the
@@ -1206,8 +1288,7 @@
             },
             { sel: '[data-accessibility-action]',          event: 'click',
               fn: el => {
-                  const a = el.dataset.accessibilityAction;
-                  if (a === 'reset') reset();
+                  if (el.dataset.accessibilityAction === 'reset') handleResetClick(el);
               },
             },
         ];

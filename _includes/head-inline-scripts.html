@@ -1,0 +1,57 @@
+{%- comment -%}
+  Parser-blocking inline scripts for FOUC / direction-mismatch prevention.
+  MUST stay inline — moving any of these to <script src> defeats the
+  guard (extra round trip; runs after first paint). Place this include
+  in <head> AFTER the critical stylesheet link so attributes land before
+  CSS is applied but before <body> parsing begins.
+
+  Contents:
+    1. Theme FOUC guard       — reads `nds-theme` → data-theme
+    2. Accessibility FOUC     — reads `nds-a11y` → data-a11y
+                                 (recipe table mirrors MODE_BUNDLES in
+                                 _js/nds-accessibility.js — keep in sync)
+    3. Auth demo guard        — reads `nds_auth` cookie → data-auth.
+                                 Demo-only; safe to remove in production
+                                 (paired with the [data-auth] <style>
+                                 block in head.html).
+{%- endcomment -%}
+<script>
+    // Apply cached theme before rendering to prevent FOUC
+    (function() {
+        var t = localStorage.getItem('nds-theme');
+        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    })();
+</script>
+<script>
+    // Apply cached a11y state before paint to prevent FOUC. Bundle table mirrors MODE_BUNDLES — keep in sync.
+    (() => { try {
+        const s = JSON.parse(localStorage.getItem('nds-a11y') || '{}');
+        const R = {
+            'epilepsy-safe':        ['reduce-motion','low-saturation'],
+            'visually-impaired':    ['high-contrast'],
+            'cognitive-disability': ['highlight-titles','reduce-motion'],
+            'motor-impaired':       [],
+            'colorblind':           ['colorblind'],
+            'dyslexia-friendly':    ['dyslexia','highlight-links'],
+            'adhd-friendly':        ['reduce-motion','highlight-titles','reading-mask'],
+        };
+        const t = new Set([
+            ...(s.modes || []),
+            ...(s.bundles || []).flatMap(b => b in R ? (R[b].length ? R[b] : [b]) : []),
+        ]);
+        (s.excluded || []).forEach(e => t.delete(e));
+        const c = s.settings || {};
+        const step = parseInt(c['font-step'], 10) || 0;
+        if (step > 0 && step < 4) t.add('font-step-' + step);
+        if (c['text-align'] && c['text-align'] !== 'default') t.add('text-align-' + c['text-align']);
+        if (t.size) document.documentElement.setAttribute('data-a11y', [...t].join(' '));
+    } catch {} })();
+</script>
+<script>
+    // Stamp [data-auth] from cookie before paint so .nds-guest / .nds-auth show the correct variant. Demo-only.
+    (function() {
+        if (document.cookie.indexOf('nds_auth=true') !== -1) {
+            document.documentElement.setAttribute('data-auth', 'true');
+        }
+    })();
+</script>

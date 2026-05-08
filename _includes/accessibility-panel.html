@@ -75,7 +75,7 @@
                             type="button"
                             aria-expanded="true"
                             aria-controls="a11yModesCollapse">
-                        <span class="nds-accordion-title">Accessibility Modes <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span></span>
+                        <span class="nds-accordion-title">Accessibility Modes <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-a11y-sr-only" data-a11y-count-sr="modes"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
@@ -132,7 +132,7 @@
                             type="button"
                             aria-expanded="false"
                             aria-controls="a11yReadableCollapse">
-                        <span class="nds-accordion-title">Readable Experience <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span></span>
+                        <span class="nds-accordion-title">Readable Experience <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-a11y-sr-only" data-a11y-count-sr="readable"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
@@ -154,7 +154,7 @@
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-titles" aria-pressed="false">
-                                    <i class="hgi hgi-stroke hgi-quote-up" aria-hidden="true"></i>
+                                    <i class="nds-icon nds-hgi-highlighter" aria-hidden="true"></i>
                                     <span class="nds-label">Highlight Titles</span>
                                 </button>
 
@@ -164,7 +164,7 @@
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reading-mask" aria-pressed="false">
-                                    <i class="hgi hgi-stroke hgi-cursor-02" aria-hidden="true"></i>
+                                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                                     <span class="nds-label">Reading Mask</span>
                                 </button>
 
@@ -174,7 +174,8 @@
                                 </button>
 
                                 {%- comment -%} Cycle uses logical `start`/`end` so RTL and LTR both read naturally. {%- endcomment -%}
-                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="text-align" data-a11y-cycle="default,start,end,justify" aria-pressed="false">
+                                {%- comment -%} default,end,start,justify — `start` matches `default` visually for most content, so end comes first to make the first click do something. {%- endcomment -%}
+                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="text-align" data-a11y-cycle="default,end,start,justify" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i>
                                     <span class="nds-label">Text Alignment</span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
@@ -182,7 +183,7 @@
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="line-height" data-a11y-cycle="normal,1.6,1.8,2.0" aria-pressed="false">
-                                    <i class="hgi hgi-stroke hgi-paragraph" aria-hidden="true"></i>
+                                    <i class="hgi hgi-stroke hgi-paragraph-spacing" aria-hidden="true"></i>
                                     <span class="nds-label">Line Height</span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
                                     <span class="nds-a11y-sr-only" data-a11y-value>Default</span>
@@ -191,7 +192,7 @@
                                 {%- comment -%} Hidden on Arabic — CSS letter-spacing shatters cursive ligatures. Dyslexia bundle strips it via bundleRecipe(). {%- endcomment -%}
                                 {%- unless page.lang == 'ar' -%}
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="letter-spacing" data-a11y-cycle="0,0.04em,0.08em,0.12em" aria-pressed="false">
-                                    <i class="hgi hgi-stroke hgi-text-tracking" aria-hidden="true"></i>
+                                    <i class="hgi hgi-stroke hgi-letter-spacing" aria-hidden="true"></i>
                                     <span class="nds-label">Letter Spacing</span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
                                     <span class="nds-a11y-sr-only" data-a11y-value>Default</span>
@@ -218,7 +219,7 @@
                             type="button"
                             aria-expanded="false"
                             aria-controls="a11yVisualCollapse">
-                        <span class="nds-accordion-title">Visually Pleasing Experience <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span></span>
+                        <span class="nds-accordion-title">Visually Pleasing Experience <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-a11y-sr-only" data-a11y-count-sr="visual"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
@@ -228,18 +229,14 @@
                             {%- comment -%} role="group" not radiogroup — children are aria-pressed toggles, not role="radio". Mutex enforced in JS. {%- endcomment -%}
                             <div class="nds-grid" role="group" aria-label="Visual adjustments">
 
-                                {%- comment -%}
-                                  Visual filters are mutually exclusive (single-pick). All five
-                                  are token|label|icon triples and share the same skeleton.
-                                  Colorblind sits below as a separate primitive — different
-                                  data attribute family (data-a11y-mode), so kept inline.
-                                {%- endcomment -%}
+                                {%- comment -%} Visual filters — mutex single-pick (incl. colorblind). Token|label|icon triples. {%- endcomment -%}
                                 {%- assign a11y_visuals =
                                     "boost-contrast|Boost Contrast|hgi-flash" |
-                                    append: ",monochrome|Monochrome|hgi-droplet" |
-                                    append: ",high-contrast|High Contrast|hgi-contrast" |
-                                    append: ",high-saturation|High Saturation|hgi-droplet" |
-                                    append: ",low-saturation|Low Saturation|hgi-droplet"
+                                    append: ",monochrome|Monochrome|hgi-color-picker" |
+                                    append: ",high-contrast|High Contrast|hgi-blur" |
+                                    append: ",high-saturation|High Saturation|hgi-sparkles" |
+                                    append: ",low-saturation|Low Saturation|hgi-droplet" |
+                                    append: ",colorblind|Colorblind|hgi-eye"
                                     | split: ","
                                 -%}
                                 {%- for entry in a11y_visuals -%}
@@ -249,11 +246,6 @@
                                     <span class="nds-label">{{ p[1] }}</span>
                                 </button>
                                 {%- endfor -%}
-
-                                <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="colorblind" aria-pressed="false">
-                                    <i class="hgi hgi-stroke hgi-eye" aria-hidden="true"></i>
-                                    <span class="nds-label">Colorblind</span>
-                                </button>
 
                             </div>
                         </div>
@@ -272,7 +264,6 @@
 
     <div class="nds-accessibility-panel-footer">
         <button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset">
-            <i class="hgi hgi-stroke hgi-rounded hgi-reload" aria-hidden="true"></i>
             <span class="nds-label">Reset Settings</span>
         </button>
     </div>
