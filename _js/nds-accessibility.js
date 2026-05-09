@@ -74,7 +74,7 @@
         },
         'cognitive-disability': ['highlight-titles', 'reduce-motion'],
         'motor-impaired':       [],                                            // SCSS-only effect (rings + 48×48)
-        'colorblind':           ['colorblind'],
+        'colorblind':           ['cvd-deutan'],
         'dyslexia-friendly':    {                                              // OpenDyslexic + WCAG 1.4.8 spacing
             primitives: ['dyslexia', 'highlight-links'],
             settings:   { 'line-height': '1.6', 'letter-spacing': '0.12em', 'word-spacing': '0.16em' },
@@ -101,7 +101,7 @@
 
     // Mutex group — clicking any of these mutes the others (filters compose
     // multiplicatively; users want exactly one).
-    const VISUAL_FILTERS = ['boost-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation', 'colorblind'];
+    const VISUAL_FILTERS = ['boost-contrast', 'monochrome', 'high-contrast', 'high-saturation', 'low-saturation', 'cvd-deutan'];
 
     // OS-supplied preferences auto-supply the matching primitive token
     // (same way bundles do). state.excluded still wins.

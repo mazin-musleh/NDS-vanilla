@@ -14,11 +14,26 @@
 // stacking context, no scope wrapper. Wrapped in `not (forced-colors:
 // active)` so HC users aren't double-treated.
 // ----------------------------------------------
+// `cvd-deutan` is a deuteranopia SIMULATION via Machado-Oliveira-Fernandes
+// 2009 matrix (severity 1.0). Same matrix Chrome DevTools' "Emulate vision
+// deficiencies" panel uses, so QA via DevTools matches the on-page filter
+// exactly. Inlined as a data URI (matches _icons.scss pattern) so the
+// filter ships with CSS — no inline-SVG sprite, no extra <head> include.
+//
+// Note: this transforms the page so SIGHTED viewers see what a deuteranope
+// sees (designer QA / empathy). Deuteranopes themselves should use OS-level
+// daltonization (Win11 Color Filters / macOS Display Filters).
+//
+// The `colorblind` BUNDLE in the modes accordion still exists as the
+// umbrella switch — it now activates `cvd-deutan` and will gain protan/
+// tritan primitives as more CVD types ship.
+$_cvd-deutan: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cvd-deutan' color-interpolation-filters='sRGB'%3E%3CfeColorMatrix type='matrix' values='0.367 0.861 -0.228 0 0  0.280 0.673 0.047 0 0  -0.012 0.043 0.969 0 0  0 0 0 1 0'/%3E%3C/filter%3E%3C/svg%3E#cvd-deutan");
+
 $a11y-filters: (
     'monochrome':       grayscale(1),
     'high-saturation':  saturate(2),
     'low-saturation':   saturate(0.5),
-    'colorblind':       saturate(0.6) contrast(1.05),
+    'cvd-deutan':       $_cvd-deutan,
     'boost-contrast':   contrast(1.15),
 );
 @media not (forced-colors: active) {
@@ -316,7 +331,7 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 //   visually-impaired    → high-contrast + font-step 2 (1.30×)   (WCAG 1.4.6)
 //   cognitive-disability → highlight-titles, reduce-motion
 //   motor-impaired       → marker-only (rules above)
-//   colorblind           → colorblind
+//   colorblind           → cvd-deutan
 //   dyslexia-friendly    → dyslexia, highlight-links + WCAG 1.4.8 spacing
 //   adhd-friendly        → reduce-motion, highlight-titles, reading-mask
 //

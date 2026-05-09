@@ -41,7 +41,7 @@
         { "id": "high-contrast",   "label": "تباين عالٍ",     "icon": "hgi-blur" },
         { "id": "high-saturation", "label": "تشبّع عالٍ",     "icon": "hgi-sparkles" },
         { "id": "low-saturation",  "label": "تشبّع منخفض",   "icon": "hgi-droplet" },
-        { "id": "colorblind",      "label": "عمى الألوان",    "icon": "hgi-eye" }
+        { "id": "cvd-deutan",      "label": "عمى اللون الأخضر","icon": "hgi-eye" }
     ],
 
     "js": {

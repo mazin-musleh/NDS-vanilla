@@ -41,7 +41,7 @@
         { "id": "high-contrast",   "label": "High Contrast",   "icon": "hgi-blur" },
         { "id": "high-saturation", "label": "High Saturation", "icon": "hgi-sparkles" },
         { "id": "low-saturation",  "label": "Low Saturation",  "icon": "hgi-droplet" },
-        { "id": "colorblind",      "label": "Colorblind",      "icon": "hgi-eye" }
+        { "id": "cvd-deutan",      "label": "Deuteranopia",    "icon": "hgi-eye" }
     ],
 
     "js": {
