@@ -11,15 +11,17 @@
 
 <aside id="ndsAccessibilityPanel"
        class="nds-accessibility-panel"
+       aria-label="Accessibility settings"
        data-i18n-attr="aria-label:panel_label"
        data-accessibility-panel
        hidden>
 
     <div class="nds-accessibility-panel-header">
-        <h2 class="nds-accessibility-panel-title" data-i18n="panel_title"></h2>
+        <h2 class="nds-accessibility-panel-title" data-i18n="panel_title">Accessibility Tools</h2>
         <button class="nds-btn nds-subtle nds-icon-only"
                 data-accessibility-close
                 type="button"
+                aria-label="Close accessibility panel"
                 data-i18n-attr="aria-label:close_panel">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
@@ -36,12 +38,14 @@
                     <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
                             data-theme-toggle
                             type="button"
+                            aria-label="Toggle theme"
                             data-i18n-attr="aria-label:toggle_theme">
                         <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
                     </button>
 
                     <a class="nds-btn nds-subtle nds-icon-only"
                        href="{%- if page.lang == 'ar' %}{{ '/' | relative_url }}{%- else %}{{ '/ar/' | relative_url }}{%- endif %}"
+                       aria-label="{%- if page.lang == 'ar' %}Switch to English{%- else %}التبديل إلى العربية{%- endif %}"
                        data-i18n-attr="aria-label:switch_lang">
                         <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
                     </a>
@@ -55,12 +59,12 @@
 
             <!-- Item 1: Accessibility Modes (bundle switches) -->
             <div class="nds-accordion-item">
-                <h3 class="nds-accordion-header" id="a11yModesHeader">
+                <h3 class="nds-accordion-header">
                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                             type="button"
                             aria-expanded="true"
                             aria-controls="a11yModesCollapse">
-                        <span class="nds-accordion-title"><span data-i18n="section_modes"></span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="modes"></span></span>
+                        <span class="nds-accordion-title"><span data-i18n="section_modes">Accessibility Modes</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="modes"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
@@ -182,78 +186,78 @@
 
             <!-- Item 2: Readable Experience (tile grid) -->
             <div class="nds-accordion-item">
-                <h3 class="nds-accordion-header" id="a11yReadableHeader">
+                <h3 class="nds-accordion-header">
                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                             type="button"
                             aria-expanded="false"
                             aria-controls="a11yReadableCollapse">
-                        <span class="nds-accordion-title"><span data-i18n="section_readable"></span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="readable"></span></span>
+                        <span class="nds-accordion-title"><span data-i18n="section_readable">Readable Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="readable" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="readable"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
                      id="a11yReadableCollapse">
                     <div class="nds-accordion-content">
                         <div class="nds-accordion-body">
-                            <div class="nds-grid" role="group" data-i18n-attr="aria-label:aria_readable">
+                            <div class="nds-grid" role="group" aria-label="Readable experience controls" data-i18n-attr="aria-label:aria_readable">
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="font-step" data-a11y-cycle="0,1,2,3" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="font_sizing"></span>
+                                    <span class="nds-label" data-i18n="font_sizing">Font Sizing</span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="dyslexia" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-italic" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="dyslexia"></span>
+                                    <span class="nds-label" data-i18n="dyslexia">Dyslexia Friendly</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-titles" aria-pressed="false">
                                     <i class="nds-icon nds-hgi-highlighter" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="highlight_titles"></span>
+                                    <span class="nds-label" data-i18n="highlight_titles">Highlight Titles</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="highlight-links" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-link-04" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="highlight_links"></span>
+                                    <span class="nds-label" data-i18n="highlight_links">Highlight Links</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reading-mask" aria-pressed="false">
                                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="reading_mask"></span>
+                                    <span class="nds-label" data-i18n="reading_mask">Reading Mask</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="reduce-motion" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-pause" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="pause_motion"></span>
+                                    <span class="nds-label" data-i18n="pause_motion">Pause Motion</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="text-align" data-a11y-cycle="default,end,start,justify" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="text_align"></span>
+                                    <span class="nds-label" data-i18n="text_align">Text Alignment</span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="line-height" data-a11y-cycle="normal,1.6,1.8,2.0" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-paragraph-spacing" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="line_height"></span>
+                                    <span class="nds-label" data-i18n="line_height">Line Height</span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="letter-spacing" data-a11y-cycle="0,0.04em,0.08em,0.12em" data-a11y-exclude-token="letter-spacing" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-letter-spacing" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="letter_spacing"></span>
+                                    <span class="nds-label" data-i18n="letter_spacing">Letter Spacing</span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
                                 </button>
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="word-spacing" data-a11y-cycle="0,0.16em,0.32em,0.48em" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-text-kerning" aria-hidden="true"></i>
-                                    <span class="nds-label" data-i18n="word_spacing"></span>
+                                    <span class="nds-label" data-i18n="word_spacing">Word Spacing</span>
                                     <span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"></span>
-                                    <span class="nds-sr-only" data-a11y-value data-i18n="default"></span>
+                                    <span class="nds-sr-only" data-a11y-value data-i18n="default">Default</span>
                                 </button>
 
                             </div>
@@ -264,19 +268,19 @@
 
             <!-- Item 3: Visually Pleasing Experience (single-pick filters + colorblind primitive) -->
             <div class="nds-accordion-item">
-                <h3 class="nds-accordion-header" id="a11yVisualHeader">
+                <h3 class="nds-accordion-header">
                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                             type="button"
                             aria-expanded="false"
                             aria-controls="a11yVisualCollapse">
-                        <span class="nds-accordion-title"><span data-i18n="section_visual"></span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="visual"></span></span>
+                        <span class="nds-accordion-title"><span data-i18n="section_visual">Visually Pleasing Experience</span> <span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="visual" aria-hidden="true"></span><span class="nds-sr-only" data-a11y-count-sr="visual"></span></span>
                     </button>
                 </h3>
                 <div class="nds-accordion-collapse"
                      id="a11yVisualCollapse">
                     <div class="nds-accordion-content">
                         <div class="nds-accordion-body">
-                            <div class="nds-grid" role="group" data-i18n-attr="aria-label:aria_visual">
+                            <div class="nds-grid" role="group" aria-label="Visual adjustments" data-i18n-attr="aria-label:aria_visual">
 
                                 <button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="boost-contrast" data-visual-id="boost-contrast" aria-pressed="false">
                                     <i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i>
@@ -318,14 +322,14 @@
 
             </div>
         </div>
-        <button class="nds-btn nds-subtle nds-show-more" type="button" data-i18n-attr="aria-label:scroll_panel">
+        <button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="Scroll panel" data-i18n-attr="aria-label:scroll_panel">
             <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
     </div>
 
     <div class="nds-accessibility-panel-footer">
         <button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset">
-            <span class="nds-label" data-i18n="reset"></span>
+            <span class="nds-label" data-i18n="reset">Reset Settings</span>
             <div class="nds-progress-circle" hidden>
                 <svg width="100%" height="100%" viewBox="0 0 24 24">
                     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>

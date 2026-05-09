@@ -22,7 +22,28 @@
     // below) stay valid after the fetch resolves. Tile/bundle names live on
     // the visible <span class="nds-label"> in the panel markup, localized
     // in-place by the same loader.
-    const A11Y_I18N = {};
+    //
+    // Seeded with English defaults so the lazy-built reading-mask toolbar
+    // and live-region announcements stay accessible even when the i18n
+    // fetch hasn't resolved (offline, 404, slow network). safeMerge() with
+    // the loaded JSON overwrites these in place.
+    const A11Y_I18N = {
+        on: 'on', off: 'off', set: 'set to', active: 'active',
+        reset: 'All accessibility settings reset to default.',
+        reset_done: 'Settings reset',
+        confirm_reset: 'Click again to confirm',
+        confirm_reset_msg: 'Press the reset button again to confirm.',
+        confirm_reset_remaining: 'Confirm reset within {n} seconds.',
+        reset_cancelled: 'Reset cancelled.',
+        default: 'Default',
+        start: 'Start', end: 'End', justify: 'Justify',
+        small: 'Small', medium: 'Medium', large: 'Large',
+        mask_toolbar: 'Reading mask controls',
+        mask_size_down: 'Decrease mask band',
+        mask_size_up: 'Increase mask band',
+        mask_grab: 'Drag mask vertically. Use arrow keys to nudge.',
+        mask_close: 'Close reading mask',
+    };
 
     // Letter cycle 0/0.04/0.08/0.12em and word cycle 0/0.16/0.32/0.48em both
     // step Default → Small → Medium → Large, so one tier map covers both.
@@ -115,8 +136,9 @@
     let maskBottomEl = null;
     let maskControlsEl = null;
     let maskLastY = null;
-    let resetTimer = null;     // armed by first reset click
-    let resetDoneTimer = null; // post-reset visible-flash
+    let resetTimer = null;          // armed by first reset click
+    let resetDoneTimer = null;      // post-reset visible-flash
+    let resetCountdownTimer = null; // mid-arming SR announcement
     let _initDone = false;
 
     function defaultState() {
@@ -303,6 +325,7 @@
                 ].forEach(({ action, icon, label }) => {
                     const btn = document.createElement('button');
                     btn.type = 'button';
+                    btn.className = 'nds-btn nds-subtle nds-icon-only';
                     btn.dataset.action = action;
                     btn.setAttribute('aria-label', label || '');
                     const i = document.createElement('i');
@@ -412,9 +435,17 @@
                 e.preventDefault();
             }, { signal });
 
+            // rAF-throttle so high-frequency pointermove events (~60–120/s on
+            // drag) collapse to one DOM write per frame. The dragging guard
+            // stays OUTSIDE the rAF closure so a stale move queued between
+            // pointerup and the next frame can't render a frame after release.
+            const onMaskMove = NDS.rafThrottle((deltaY) => {
+                if (!dragging) return;
+                moveTo(dragStartBandY + deltaY);
+            });
             grabBtn.addEventListener('pointermove', (e) => {
                 if (!dragging) return;
-                moveTo(dragStartBandY + (e.clientY - dragStartY));
+                onMaskMove(e.clientY - dragStartY);
             }, { signal });
 
             const endDrag = (e) => {
@@ -768,6 +799,7 @@
         if (resetTimer) {
             clearTimeout(resetTimer);
             resetTimer = null;
+            if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
             restoreResetLabel(btn);
             reset();
             return;
@@ -780,9 +812,24 @@
         btn.style.setProperty('--progress-duration', RESET_CONFIRM_MS + 'ms');
         btn.classList.add('nds-progress');
         announce(A11Y_I18N.confirm_reset_msg);
+        // Mid-window reminder so SR users aren't navigating blind through the
+        // 5s arming window (countdown is purely visual otherwise — WCAG 2.2.3).
+        const remainingMs = 2000;
+        const remainingSec = Math.round(remainingMs / 1000);
+        resetCountdownTimer = setTimeout(() => {
+            resetCountdownTimer = null;
+            // Only announce if still armed — the second-click path already
+            // cleared the timer and announced the success message.
+            if (resetTimer) {
+                const tpl = A11Y_I18N.confirm_reset_remaining || 'Confirm reset within {n} seconds.';
+                announce(tpl.replace('{n}', remainingSec));
+            }
+        }, RESET_CONFIRM_MS - remainingMs);
         resetTimer = setTimeout(() => {
             resetTimer = null;
+            if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
             restoreResetLabel(btn);
+            announce(A11Y_I18N.reset_cancelled || 'Reset cancelled.');
         }, RESET_CONFIRM_MS);
     }
 
@@ -883,6 +930,7 @@
         if (panel && hasState(panel, 'open')) close();
         if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
         if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; }
+        if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
         if (ac) { ac.abort(); ac = null; }
         if (openAC) { openAC.abort(); openAC = null; }
         if (maskAC) { maskAC.abort(); maskAC = null; }

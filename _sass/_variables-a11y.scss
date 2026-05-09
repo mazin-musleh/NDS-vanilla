@@ -218,14 +218,14 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 }
 
 // Toolbar centered via PHYSICAL `left: 50%` (logical inset-inline-start
-// flips with RTL and breaks the symmetric translateX(-50%)).
+// flips with RTL and breaks the symmetric translateX(-50%)). Buttons inside
+// use `.nds-btn .nds-subtle .nds-icon-only` from _buttons.scss — only the
+// grab-handle's drag-cursor + wider hit-target stay custom here.
 .nds-a11y-mask-controls {
-    --a11y-text-FS:          14px;
-    --a11y-text-LH:          20px;
-    --a11y-toolbar-icon-FS:  20px;
-    --a11y-toolbar-btn-size: 36px;
-    --a11y-font-family:      'IBM Plex Sans Arabic', sans-serif;
-    --nds-font-family:       var(--a11y-font-family);
+    --a11y-text-FS:     14px;
+    --a11y-text-LH:     20px;
+    --a11y-font-family: 'IBM Plex Sans Arabic', sans-serif;
+    --nds-font-family:  var(--a11y-font-family);
     font-size: var(--a11y-text-FS);
     line-height: var(--a11y-text-LH);
     font-family: var(--nds-font-family);
@@ -249,55 +249,48 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     contain: layout paint style;
     transform: translate3d(-50%, -200vh, 0);
 
-    button {
-        appearance: none;
-        width: var(--a11y-toolbar-btn-size);
-        height: var(--a11y-toolbar-btn-size);
-        padding: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
-        color: inherit;
-        border: 0;
-        border-radius: var(--radius-sm, 4px);
-        cursor: pointer;
-        font: inherit;
+    .nds-btn[data-action="grab"] {
+        cursor: grab;
+        min-width: 56px;                // wider hit-target for the primary handle
+        touch-action: none;             // pointermove drags without scrolling
 
-        &:hover { background-color: var(--button-background-neutral-hovered); }
-        &:focus-visible {
-            outline: 2px solid var(--border-focus);
-            outline-offset: 2px;
-        }
-
-        i {
-            font-size: var(--a11y-toolbar-icon-FS, 1.25rem);
-            line-height: 1;
-        }
-
-        &[data-action="grab"] {
-            cursor: grab;
-            min-width: 56px;            // wider hit-target for the primary handle
-            touch-action: none;         // pointermove drags without scrolling
-        }
-        &[data-action="grab"]:active,
-        &[data-action="grab"][data-state~="dragging"] {
+        &:active,
+        &[data-state~="dragging"] {
             cursor: grabbing;
             background-color: var(--button-background-neutral-pressed);
         }
     }
 }
 
-// ----------------------------------------------
-// Motor Impaired — 4px focus rings + 48×48 targets. Bundle has no
-// primitives; the bundle name itself stamps onto data-a11y.
-// ----------------------------------------------
-:root[data-a11y~="motor-impaired"] body[class] > :is(header, main, footer)
-    :is(button, a, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
-    outline: 4px solid var(--border-focus) !important;
-    outline-offset: 4px !important;
+// Forced-colors: the alpha-black masks become invisible under Windows HC
+// themes (system swaps them to Canvas / drops opacity). Force opaque
+// Canvas + a CanvasText edge at the band boundary so the reading window
+// stays identifiable. Toolbar gets an explicit Canvas-text border so its
+// chrome doesn't blend into the mask.
+@media (forced-colors: active) {
+    .nds-a11y-mask {
+        background-color: Canvas;
+        forced-color-adjust: none;
+    }
+    .nds-a11y-mask-top    { border-block-end:   1px solid CanvasText; }
+    .nds-a11y-mask-bottom { border-block-start: 1px solid CanvasText; }
+    .nds-a11y-mask-controls {
+        background-color: Canvas;
+        color: CanvasText;
+        border-color: CanvasText;
+        forced-color-adjust: none;
+
+        button:focus-visible {
+            outline-color: Highlight;
+        }
+    }
 }
 
+// ----------------------------------------------
+// Motor Impaired — 48×48 targets. Bundle has no primitives; the bundle
+// name itself stamps onto data-a11y. Focus rings come from the global
+// `*:focus-visible` rule in _reset.scss — no override needed.
+// ----------------------------------------------
 :root[data-a11y~="motor-impaired"] body[class] > :is(header, main, footer)
     :is(.nds-btn, button, [role="button"], a.nds-btn, input[type="button"], input[type="submit"]) {
     min-block-size: 48px;
