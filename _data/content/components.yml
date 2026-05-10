@@ -3,6 +3,13 @@
 # Tags (status): Experimental, New, Beta, Deprecated
 
 # UI Components
+- title: "Accessibility"
+  description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
+  icon: '<i class="hgi hgi-stroke hgi-accessibility"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/accessibility.html"
+
 - title: "Accordion"
   description: "Expandable content panels with nested group support"
   icon: '<i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>'

@@ -62,6 +62,9 @@
     - label: "UI"
       is_group: true
       children:
+        - label: "Accessibility"
+          url: "/components/accessibility"
+          href: "/components/accessibility.html"
         - label: "Accordion"
           url: "/components/accordion"
           href: "/components/accordion.html"
