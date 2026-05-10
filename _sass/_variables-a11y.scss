@@ -325,6 +325,18 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     scroll-behavior:       auto    !important;
 }
 
+// Progress indicators convey duration / value — essential status info,
+// not decoration. Re-declare author durations system-wide so the rule
+// above doesn't break time-conveying arcs and bars across the design
+// system (button countdowns, file-upload progress, stepper rings, linear
+// bars). Per W3C reduce-motion guidance, animations conveying essential
+// info are exempt. Specificity (0,2,1) beats the global *-rule (0,1,1).
+:root[data-a11y~="reduce-motion"] :is(.nds-progress-circle, .nds-progress-bar),
+:root[data-a11y~="reduce-motion"] :is(.nds-progress-circle, .nds-progress-bar) * {
+    animation-duration:  var(--progress-duration, 4000ms) !important;
+    transition-duration: 0.3s !important;
+}
+
 // ----------------------------------------------
 // Bundle composition lives in MODE_BUNDLES (_js/nds-accessibility.js):
 //   epilepsy-safe        → reduce-motion, low-saturation         (WCAG 2.3.1)

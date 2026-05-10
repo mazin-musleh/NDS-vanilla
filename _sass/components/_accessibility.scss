@@ -335,7 +335,8 @@
     }
 
     // Reset countdown — small circle anchored to inline-end so it
-    // doesn't overlap the centered confirm label.
+    // doesn't overlap the centered confirm label. Reduce-motion exemption
+    // for time-conveying progress is system-wide in _variables-a11y.scss.
     .nds-btn.nds-progress .nds-progress-circle {
         --progress-size: 24px;
         inset-inline-start: auto;
