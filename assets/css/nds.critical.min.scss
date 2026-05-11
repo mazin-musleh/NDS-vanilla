@@ -18,9 +18,6 @@
 // Import mixins - Required for responsive design
 @use 'mixins' as *;
 
-// Import fonts - Required for proper text rendering
-@use 'fonts';
-
 // Import CSS reset - Essential normalization
 @use 'reset';
 
