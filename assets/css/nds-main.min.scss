@@ -10,16 +10,13 @@
  * Author: {{ site.author }}
  * Profile: {{ site.author_profile }}
  */
-// Note: reset, hero, grid, content-layout, section-layout
+// Note: fonts, reset, hero, grid, content-layout, section-layout
 // are in nds.critical.min.scss (loaded as blocking CSS)
 
 // Import variables (CSS custom properties)
 @use 'variables-dga';
 @use 'variables';
 @use 'variables-dark';
-
-// Import fonts - IBM Plex Sans Arabic @font-face declarations
-@use 'fonts';
 
 // Section styles - visual tokens, color variants, meta, actions, 404, sideInfo
 @use 'layout/section';
