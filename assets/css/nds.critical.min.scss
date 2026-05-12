@@ -15,9 +15,6 @@
 // Import critical variables only (essential design tokens)
 @use 'variables-critical';
 
-// Import mixins - Required for responsive design
-@use 'mixins' as *;
-
 // Import fonts - Required for proper text rendering
 @use 'fonts';
 

@@ -198,16 +198,6 @@ $breakpoints-range: (
 
 }
 
-input:is([type="text"],
-  [type="email"],
-  [type="password"],
-  [type="search"],
-  [type="tel"],
-  [type="url"]),
-textarea {
-  @include autofill-reset();
-}
-
 // ==============================================
 // BUTTON BASE MIXINS
 // ==============================================

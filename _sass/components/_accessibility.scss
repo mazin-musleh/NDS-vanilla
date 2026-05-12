@@ -355,3 +355,56 @@
     &:empty { display: none; }
     margin-inline-start: var(--spacing-xs);
 }
+
+// ==============================================
+// DYSLEXIA-MODE FONTS
+// ==============================================
+// Faces used only when the `dyslexia` primitive activates (cascade in
+// _variables-a11y.scss). Kept out of the critical font set since they're
+// loaded on demand; `font-display: swap` so activation never blocks paint.
+
+/* OpenDyslexic — Latin dyslexia-friendly face. SIL-OFL, sourced from
+   github.com/antijingoist/opendyslexic v0.91.12. size-adjust: 92%
+   normalizes its 56% x-height to IBM Plex Latin's 51.6% baseline so
+   activation doesn't shift line breaks. Regular's range 400-500 captures
+   the body-weight bump from _variables-a11y.scss so it doesn't fall
+   through to Bold per the CSS spec's heavier-first tiebreaker for
+   desired ≥ 500. */
+@font-face {
+  font-family: 'OpenDyslexic';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  size-adjust: 92%;
+  src: url(../fonts/OpenDyslexic-Regular.woff2) format('woff2');
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  size-adjust: 92%;
+  src: url(../fonts/OpenDyslexic-Bold.woff2) format('woff2');
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+}
+
+/* Maqroo — Arabic dyslexia-friendly face (Omantel + Leo Burnett Dubai,
+   2023). Open-source, sourced from omantel.om. The file's
+   OS/2.usWeightClass is set to 300 at conversion time and the @font-face
+   declares a single weight (not a range) — both tricks force browsers
+   down the synthesis path for the body/heading weight bumps in
+   _variables-a11y.scss (a `font-weight: 500` request faux-bolds from the
+   300 baseline by 200 weight units, matching OpenDyslexic's heavier
+   natural rendering in mixed-script lines). size-adjust: 125% matches
+   Maqroo's x-height to OpenDyslexic's at the same nominal font-size. */
+@font-face {
+  font-family: 'Maqroo';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  size-adjust: 125%;
+  src: url(../fonts/Maqroo-Regular.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}

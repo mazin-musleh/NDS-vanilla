@@ -17,7 +17,6 @@
 html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -44,11 +43,12 @@ img:not([hidden]) {
     height: auto;
 }
 
+// One <h1> per page, always the page/hero title at the top — so it hits
+// the :first-child rule below (margin-top: 0) regardless. No margin-top here.
 h1 {
     font-size: var(--typo-display-clamp-md-FS);
     line-height: var(--typo-display-clamp-md-LH);
     margin-bottom: calc(var(--typo-display-clamp-md-MB) * 2);
-    margin-top: calc(var(--typo-display-clamp-ms-MB) * 4);
 }
 
 h2 {
@@ -127,6 +127,14 @@ input:-internal-autofill-selected {
     color: fieldtext !important;
 }
 
+// Neutralise the browser's yellow autofill fill on text-ish inputs. The
+// mixin's box-shadow reads --_form-control-bg, so styled form fields
+// (which set that var) automatically autofill to their own background.
+input:is([type="text"], [type="email"], [type="password"], [type="search"], [type="tel"], [type="url"]),
+textarea {
+    @include autofill-reset();
+}
+
 button {
     cursor: pointer;
     background-color: transparent;
@@ -162,14 +170,11 @@ address,
 }
 
 
+// display: contents — header creates no box, its children join the parent
+// flow. Browsers without support fall back to <header>'s UA `display: block`,
+// so no @supports guard / explicit fallback is needed.
 header {
-    display: block;
-}
-
-@supports (display: contents) {
-    header {
-        display: contents;
-    }
+    display: contents;
 }
 
 /* ========================================

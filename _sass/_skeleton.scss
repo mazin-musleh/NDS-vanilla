@@ -16,11 +16,7 @@
 
     .nds-brand {
         height: var(--nds-nav-height);
-        padding: var(--spacing-lg, 12px) 0;
-    }
-
-    .nds-brand-name {
-        visibility: hidden;
+        padding-block: var(--spacing-lg, 12px);
     }
 }
 
@@ -33,17 +29,14 @@
     }
 }
 
-.nds-breadcrumb {
+.nds-breadcrumb,
+.nds-pagination-list {
     display: flex;
 }
 
 .nds-breadcrumb li::after {
     content: "";
     min-width: 24px;
-}
-
-.nds-pagination-list {
-    display: flex;
 }
 
 /* ── Hero ── */
@@ -58,9 +51,8 @@
     width: 100%;
 }
 
-/* ── Content ── */
-.nds-hero-section :is(.nds-section-wrapper, .nds-section-head),
-.nds-content-layout {
+/* ── Hide chrome / reserve layout until JS + main CSS land ── */
+:is(.nds-brand-name, .nds-hero-section :is(.nds-section-wrapper, .nds-section-head)) {
     visibility: hidden;
 }
 
@@ -87,11 +79,4 @@
    breakpoint-scoped variant class: nds-{horizontal|vertical|radial}-{sm|md|lg}. */
 .nds-stepper:is([class*="nds-horizontal-"], [class*="nds-vertical-"], [class*="nds-radial-"]):not([data-layout-ready]) {
     visibility: hidden;
-}
-
-
-/* ── Reveal once critical CSS loads ── */
-.nds-hero-content,
-.nds-content-layout {
-    visibility: visible;
 }
