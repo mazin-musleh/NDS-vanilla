@@ -5,6 +5,7 @@
         if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
     })();
 </script>
+{%- unless site.accessibility == false %}
 <script>
     // Apply cached a11y state before paint to prevent FOUC. Bundle table mirrors MODE_BUNDLES — keep in sync.
     (() => { try {
@@ -30,6 +31,7 @@
         if (t.size) document.documentElement.setAttribute('data-a11y', [...t].join(' '));
     } catch {} })();
 </script>
+{%- endunless %}
 <script>
     // Stamp [data-auth] from cookie before paint so .nds-guest / .nds-auth show the correct variant. Demo-only.
     (function() {

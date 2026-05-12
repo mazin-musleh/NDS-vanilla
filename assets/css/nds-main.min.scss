@@ -14,17 +14,16 @@
 // are in nds.critical.min.scss (loaded as blocking CSS)
 
 // Import variables (CSS custom properties)
+// NOTE: a11y mode overrides (variables-a11y) + the accessibility panel
+// (components/accessibility) live in the optional assets/css/nds-accessibility.min.css
+// bundle — not here. Core only reads --user-* a11y vars with fallbacks.
 @use 'variables-dga';
 @use 'variables';
 @use 'variables-dark';
-@use 'variables-a11y';
 
 // Section styles - visual tokens, color variants, meta, actions, 404, sideInfo
 @use 'layout/section';
 @use 'layout/block';
-
-// Import mixins
-@use 'mixins' as *;
 
 // NOTE: Icon tokens + .nds-icon base are in assets/css/nds-icons.min.css
 // (loaded as a separate stylesheet via _includes/head.html).
@@ -89,7 +88,6 @@
 @use 'components/chart';
 @use 'components/cooldown-button';
 @use 'components/metric';
-@use 'components/accessibility';
 
 // Import utilities
 @use 'utilities';

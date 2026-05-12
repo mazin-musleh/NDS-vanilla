@@ -52,6 +52,14 @@
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
+    {%- unless site.accessibility == false %}
+    <!-- Accessibility add-on (optional) - a11y panel + mode overrides -->
+    <link rel="preload" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    </noscript>
+    {%- endunless %}
     <!-- Custom page-specific CSS files with deferred loading -->
     {%- if page.custom_css %}
     {%- for css_file in page.custom_css %}
