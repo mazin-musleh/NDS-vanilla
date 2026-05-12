@@ -58,13 +58,42 @@ $a11y-filters: (
     --_hc-link-pressed: var(--colors-primary-sa-flag-950);
     --_hc-link-visited: var(--colors-tertiary-lavendar-900);
 
+    --background-body:                   var(--_hc-bg);
     --background-default:                var(--_hc-bg);
     --background-secondary:              var(--_hc-bg);
+    // The brand-green accent surface — drives active nav/drawer/toc
+    // indicators, loading spinners, progress fills. Mono in HC.
+    --background-primary:                var(--_hc-fg);
     --background-card:                   var(--_hc-bg);
     --background-menu:                   var(--_hc-bg);
     --background-nav:                    var(--_hc-bg);
+    --background-topbar:                 var(--_hc-bg);
+    --background-footer:                 var(--_hc-bg);
+    --background-sub-hero:               var(--_hc-bg);
     --background-disabled:               var(--_hc-bg);
     --background-stripe:                 var(--_hc-bg);
+
+    --form-field-background-default:      var(--_hc-bg);
+    --form-field-background-lighter:      var(--_hc-bg);
+    --form-field-background-darker:       var(--_hc-bg);
+
+    // Tables: flat mono cells, --_hc-fg gridlines. Zebra striping and
+    // bg-only row selection collapse to --_hc-bg (the gridlines carry row
+    // separation; selection still shows via the row's checkbox).
+    --table-background-header:           var(--_hc-bg);
+    --table-background-row:              var(--_hc-bg);
+    --table-background-tr-selected:      var(--_hc-bg);
+    --table-background-row-selected:     var(--_hc-bg);
+    --table-background-hover-selected:   var(--_hc-bg);
+    --table-cell-border:                 var(--_hc-fg);
+    --table-text-head:                   var(--_hc-fg);
+    --table-text-body:                   var(--_hc-fg);
+
+    // Avatars: mono fill + ink. The boundary ring is drawn as an inset
+    // box-shadow (see scoped rule) rather than the outer --avatar-border,
+    // so it stays crisp over photos and doesn't enlarge the avatar.
+    --avatar-background:                 var(--_hc-bg);
+    --avatar-color:                      var(--_hc-fg);
 
     --text-default:                      var(--_hc-fg);
     --text-primary:                      var(--_hc-fg);
@@ -87,9 +116,14 @@ $a11y-filters: (
     --border-primary:                    var(--_hc-fg);
     --border-focus:                      var(--_hc-link);
 
-    --button-background-primary-default: var(--colors-primary-sa-flag-800);
-    --button-background-primary-hovered: var(--colors-primary-sa-flag-900);
-    --button-background-primary-pressed: var(--colors-primary-sa-flag-950);
+    // Primary-button bg/label tokens — consumed directly by pagination's
+    // active-page indicator, .nds-transparent labels, ellipsis-menu dots.
+    // (The primary button itself overrides --btn-bg in the scoped rules
+    // below, so these don't drive its background.)
+    --button-background-primary-default: var(--_hc-fg);
+    --button-background-primary-hovered: var(--_hc-fg);
+    --button-background-primary-pressed: var(--_hc-fg);
+    --button-label-primary-default:      var(--_hc-fg);
 }
 
 // Dark HC: invert bg/fg, shift the link ladder.
@@ -100,6 +134,124 @@ $a11y-filters: (
     --_hc-link-hovered: var(--colors-primary-sa-flag-200);
     --_hc-link-pressed: var(--colors-primary-sa-flag-100);
     --_hc-link-visited: var(--colors-secondary-gold-300);
+}
+
+// Topbar carries a brand-tinted background; the token swap above
+// neutralises it to --_hc-bg, so its on-colour text flips to --_hc-fg.
+// The main (full-bleed) hero is intentionally left untouched — see below.
+:root[data-a11y~="high-contrast"] .nds-topbar {
+    --text-oncolor-primary:   var(--_hc-fg);
+    --text-oncolor-secondary: var(--_hc-fg);
+    color: var(--_hc-fg);
+}
+
+// Primary buttons in HC: the neutral (near-black) variant in light theme;
+// the on-colour (light) variant in dark theme. Skips .nds-oncolor
+// primaries — they already carry the on-colour treatment (e.g. hero).
+:root[data-a11y~="high-contrast"] .nds-btn.nds-primary:not(.nds-oncolor) {
+    --btn-bg:                 var(--button-background-black-default);
+    --btn-bg-hover:           var(--button-background-black-hovered);
+    --btn-bg-active:          var(--button-background-black-pressed);
+    --btn-bg-selected:        var(--button-background-black-selected);
+    --btn-color:              var(--text-oncolor-primary);
+    --btn-indicator-color:    var(--background-primary-400);
+    --btn-indicator-active:   var(--background-primary-400);
+    --btn-indicator-selected: var(--background-primary-400);
+    --btn-loading-color:      var(--text-oncolor-primary);
+    --btn-loading-track:      var(--alpha-white-20);
+}
+:root[data-a11y~="high-contrast"][data-theme="dark"] .nds-btn:is(.nds-primary,.nds-neutral):not(.nds-oncolor) {
+    --btn-bg:             var(--button-background-oncolor-default);
+    --btn-bg-hover:       var(--button-background-oncolor-hovered);
+    --btn-bg-active:      var(--button-background-oncolor-pressed);
+    --btn-bg-selected:    var(--button-background-oncolor-selected);
+    --btn-bg-disabled:    var(--button-background-disabled-on-color);
+    --btn-color-disabled: var(--text-default-oncolor-disabled);
+    --btn-color:          var(--background-black);
+    --btn-loading-color:  var(--background-black);
+}
+
+// Sub-hero only: --background-sub-hero is swapped to --_hc-bg above, so
+// drop its masked decorative image (it'd fade into a now-white band). The
+// main `.nds-hero-section:not(.nds-sub)` — full-bleed photo + on-colour
+// text — is deliberately NOT altered by high-contrast mode.
+:root[data-a11y~="high-contrast"] .nds-hero-section.nds-sub::after {
+    display: none;
+}
+
+// Swiper pagination bullets: --bullet-* are public override slots with
+// --colors-* fallbacks, so the token swap doesn't reach them. Inactive →
+// hollow (--_hc-bg fill, --_hc-fg ring); active → solid --_hc-fg. Force
+// full opacity since the 0.6 dim cue reads as nothing in two tones.
+:root[data-a11y~="high-contrast"] .nds-bullet {
+    --bullet-default:  var(--_hc-bg);
+    --bullet-active:   var(--_hc-fg);
+    --bullet-border:   var(--_hc-fg);
+    --_bullet-opacity: 1;
+}
+
+// Avatars: inset --_hc-fg ring. outline (not box-shadow) so it paints
+// over the avatar's <img> too; negative offset pulls it inside the edge;
+// modern browsers clip the outline to the 50% radius.
+:root[data-a11y~="high-contrast"] .nds-avatar:not([hidden]) {
+    outline: 2px solid var(--_hc-fg);
+    outline-offset: -2px;
+}
+
+// Sidemenu toggle: a primary .nds-btn whose icon is hard-pinned to
+// --text-oncolor-primary (white). In dark HC the button flips to the
+// light on-colour variant, so the icon must follow the button's resolved
+// label colour (dark) instead — white-on-white would vanish.
+:root[data-a11y~="high-contrast"] .nds-sidemenu-toggle i {
+    color: var(--_btn-color);
+}
+
+// Content sections — the coloured variants (.nds-primary / .nds-green /
+// .nds-neutral / .nds-brand / .nds-gradient-green) and any author-set
+// --section-bg collapse to the mono palette. !important on --section-bg
+// beats the (non-important) variant tokens and inline style overrides;
+// the gradient variant also needs its `background` shorthand cleared so
+// the neutralised background-color shows through.
+:root[data-a11y~="high-contrast"] .nds-content-section {
+    --section-bg:                var(--_hc-bg) !important;
+    --section-title-color:       var(--_hc-fg);
+    --section-subtitle-color:    var(--_hc-fg);
+    --section-description-color:  var(--_hc-fg);
+    --section-text-color:        var(--_hc-fg);
+}
+:root[data-a11y~="high-contrast"] .nds-content-section.nds-gradient-green {
+    background: var(--_hc-bg);
+}
+
+// Footer (light theme): the plain footer flattens to the white page;
+// the .nds-green variant inverts to a solid black band so it still reads
+// as a distinct footer. !important on background beats the neutral base
+// fills in _footer.scss.
+:root[data-a11y~="high-contrast"] .nds-footer {
+    background: var(--_hc-bg) !important;
+    color: var(--_hc-fg);
+    --text-oncolor-primary:   var(--_hc-fg);
+    --text-oncolor-secondary: var(--_hc-fg);
+    border-block-start: 1px solid var(--_hc-fg);
+}
+:root[data-a11y~="high-contrast"] .nds-footer.nds-green {
+    background: var(--_hc-fg) !important;
+    color: var(--_hc-bg);
+    --text-oncolor-primary:   var(--_hc-bg);
+    --text-oncolor-secondary: var(--_hc-bg);
+    border-block-start: 0;
+}
+
+// Dark theme: the page is already black, so every footer — including the
+// .nds-green variant, which would otherwise invert to a white band — sits
+// flush at --_hc-bg with a --_hc-fg top edge for separation. Comes after
+// the rules above so it wins over the .nds-green inversion in dark mode.
+:root[data-a11y~="high-contrast"][data-theme="dark"] .nds-footer {
+    background: var(--_hc-bg) !important;
+    color: var(--_hc-fg);
+    --text-oncolor-primary:   var(--_hc-fg);
+    --text-oncolor-secondary: var(--_hc-fg);
+    border-block-start: 1px solid var(--_hc-fg);
 }
 
 // ----------------------------------------------
