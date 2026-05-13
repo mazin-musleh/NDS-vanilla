@@ -4,11 +4,45 @@
 
     window.NDS = window.NDS || {};
 
+    // ── Assets base (auto-derived; consumer can override) ───────────
+    // Resolve sibling-asset URLs (i18n JSON, future data files) against
+    // wherever this bundle actually loaded from, regardless of the calling
+    // page's depth or the site's baseurl. Works for:
+    //   /assets/js/nds-main.min.js                   → /assets/
+    //   /NDS-vanilla/assets/js/nds-main.min.js?ver=… → /NDS-vanilla/assets/
+    //   https://cdn.example.com/v1/assets/js/…       → https://cdn.example.com/v1/assets/
+    // document.currentScript is valid synchronously while this IIFE runs
+    // (script parsing time). Falls back to page-relative if the bundle was
+    // loaded inline or via a path we can't pattern-match.
+    //
+    // Override layers, in priority order:
+    //   1. window.NDS_I18N_PATH       → only the i18n directory (component-specific)
+    //   2. window.NDS_ASSETS_BASE     → entire assets directory (e.g. CDN)
+    //   3. auto-derived from script src
+    //   4. 'assets/' (page-relative fallback)
+    // Set the override BEFORE this bundle loads.
+    //
+    // Use match() (not replace()) so a script src that doesn't fit the
+    // `/.../js/{name}.js` shape falls through to the empty-string fallback,
+    // letting _fetchOne use 'assets/i18n/' page-relative. replace() would
+    // return the original src unchanged and produce a malformed URL like
+    // `https://host/bundle.jsi18n/...` on the first fetch.
+    const _scriptSrc = (document.currentScript && document.currentScript.src) || '';
+    const _scriptBaseMatch = _scriptSrc.match(/^(.*\/)js\/[^/]+\.js(?:\?.*)?$/);
+    const ASSETS_BASE = window.NDS_ASSETS_BASE
+                     || (_scriptBaseMatch && _scriptBaseMatch[1])
+                     || '';
+
     // ── Language & Direction (cached) ────────────────────────────────
     // BCP 47: 'ar', 'ar-SA', 'ar-EG' → 'ar'  |  'en', 'en-US' → 'en'
-    // Usage: NDS.lang  → 'ar' | 'en' | ...
+    // Usage: NDS.lang    → 'ar' | 'en' | ...
     //        NDS.isArabic → true/false
-    //        NDS.isRTL → true/false
+    //        NDS.isRTL   → true/false
+    //        NDS.langKey → 'ar' | 'en'   (bilingual selector — falls back to
+    //                                     'en' for any non-Arabic locale; use
+    //                                     for component `labels[NDS.langKey]`
+    //                                     lookups where the component carries
+    //                                     only `{ ar, en }` translations)
     // ── Breakpoints (matches _mixins.scss) ─────────────────────────
     // Usage: NDS.breakpoints.desktop → '(min-width: 960px)'
     //        window.matchMedia(NDS.breakpoints.mobile).matches
@@ -31,6 +65,105 @@
     Object.defineProperty(NDS, 'isRTL', {
         get() { return document.documentElement.dir === 'rtl'; }
     });
+    Object.defineProperty(NDS, 'langKey', {
+        get() { return NDS.isArabic ? 'ar' : 'en'; }
+    });
+
+    // ── i18n ─────────────────────────────────────────────────────────
+    // Component-scoped runtime localization. Each consumer:
+    //   1. Bakes English defaults into its HTML alongside data-i18n keys.
+    //   2. Calls NDS.i18n.load('{component}', scope) at init.
+    //   3. Optionally awaits the returned data for component-specific work
+    //      (iterating arrays, removing locale-excluded controls, etc.).
+    //
+    // Override hooks (read once per load):
+    //   window.NDS_I18N      = { '{component}': {...}, ... }   inline strings
+    //   window.NDS_I18N_PATH = '/custom/'                       base path
+    NDS.i18n = {
+        // Load translations for a component and apply them to its scope(s).
+        // Always fetches — JSON is the single source of truth for both EN
+        // and other locales. Falls back to en.json when the active locale's
+        // file is missing or fails (so consumers can ship a partial set of
+        // translations without breaking the live-region / lazy-built UI).
+        async load(component, scopes) {
+            // Inline override wins — consumer set strings before bundle loaded.
+            const inline = window.NDS_I18N && window.NDS_I18N[component];
+            if (inline) { this.apply(scopes, inline); return inline; }
+
+            // Reject anything that isn't a BCP-47 base tag (2–3 letters) before
+            // it reaches the fetch URL — guards against <html lang="../foo">
+            // path-traversal into a sibling _data file.
+            const lang = /^[a-z]{2,3}$/.test(NDS.lang) ? NDS.lang : 'en';
+            const data = await this._fetchOne(component, lang)
+                      || (lang !== 'en' && await this._fetchOne(component, 'en'));
+            if (data) this.apply(scopes, data);
+            return data || null;
+        },
+
+        async _fetchOne(component, lang) {
+            const base = window.NDS_I18N_PATH || (ASSETS_BASE ? ASSETS_BASE + 'i18n/' : 'assets/i18n/');
+            try {
+                const res = await fetch(base + component + '/' + lang + '.json', { cache: 'default' });
+                if (!res.ok) throw new Error(res.status);
+                return await res.json();
+            } catch (err) {
+                console.warn('[NDS.i18n] ' + component + '/' + lang + ' failed', err);
+                return null;
+            }
+        },
+
+        // Walk scope(s) and swap text/attributes per data on every match.
+        //   data-i18n="key"            → textContent = data[key]
+        //   data-i18n-attr="a:k1,b:k2" → setAttribute(a, data[k1]) etc.
+        // Missing keys are skipped (HTML defaults stay). Attribute names are
+        // allowlisted to a11y/text attrs so JSON-driven values can never reach
+        // event handlers (onclick), URLs (href/src), or styles. Lookup is
+        // portal-aware (NDS.queryAll) so future components with portaled
+        // dropmenus inside their i18n scope still get translated.
+        apply(scopes, data) {
+            if (!data) return;
+            this._roots(scopes).forEach(root => {
+                NDS.queryAll(root, '[data-i18n]').forEach(el => {
+                    const v = data[el.dataset.i18n];
+                    if (typeof v === 'string') el.textContent = v;
+                });
+                NDS.queryAll(root, '[data-i18n-attr]').forEach(el => {
+                    el.dataset.i18nAttr.split(',').forEach(pair => {
+                        const [attr, key] = pair.split(':').map(s => s.trim());
+                        if (!this._SAFE_ATTR.test(attr)) {
+                            console.warn('[NDS.i18n] refused to set unsafe attr:', attr);
+                            return;
+                        }
+                        const v = data[key];
+                        if (typeof v === 'string') el.setAttribute(attr, v);
+                    });
+                });
+            });
+        },
+
+        // Copy own enumerable keys from src onto target, skipping prototype
+        // pollution vectors. Use this anywhere a component overlays JSON-
+        // sourced data onto a runtime object (e.g. a strings dictionary).
+        safeMerge(target, src) {
+            if (!src) return target;
+            for (const k of Object.keys(src)) {
+                if (k === '__proto__' || k === 'constructor' || k === 'prototype') continue;
+                target[k] = src[k];
+            }
+            return target;
+        },
+
+        // Allowlist for data-i18n-attr — text/a11y attributes only.
+        _SAFE_ATTR: /^(aria-[a-z-]+|title|alt|placeholder|label)$/,
+
+        _roots(scopes) {
+            if (!scopes) return [document.documentElement];
+            const arr = Array.isArray(scopes) ? scopes : [scopes];
+            return arr
+                .map(s => typeof s === 'string' ? document.querySelector(s) : s)
+                .filter(Boolean);
+        },
+    };
 
     // ── Debounce ─────────────────────────────────────────────────────
     // Usage: const fn = NDS.debounce(handler, 150)
@@ -387,6 +520,38 @@
             return cached;
         };
     })();
+
+    // ── Focusable Selector + Tab Focus Trap ──────────────────────────
+    // Standard "tabbable element" selector — matches the elements a Tab/
+    // Shift+Tab traversal will land on. Excludes [tabindex="-1"] (unreachable
+    // by Tab) and disabled form controls. Exposed so component code can
+    // reuse the same coverage when querying focusables.
+    NDS.focusableSel =
+        'a[href], button:not([disabled]), textarea:not([disabled]), ' +
+        'input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    // Build a keydown handler that traps Tab/Shift+Tab inside `containerFn()`'s
+    // returned element. Pass either a function (re-evaluated on every Tab —
+    // lets the caller gate by open/close state, or return null when the
+    // surface isn't active) or the element directly. When the active element
+    // is the first tabbable, Shift+Tab wraps to the last; when it's the last,
+    // Tab wraps to the first. No-ops when the container is gone, hidden, or
+    // has no tabbables.
+    //
+    // Usage: document.addEventListener('keydown',
+    //          NDS.trapFocus(() => isOpen ? panelEl : null),
+    //          { signal });
+    NDS.trapFocus = (containerFn) => (e) => {
+        if (e.key !== 'Tab') return;
+        const c = typeof containerFn === 'function' ? containerFn() : containerFn;
+        if (!c) return;
+        const f = c.querySelectorAll(NDS.focusableSel);
+        if (!f.length) return;
+        const first = f[0];
+        const last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
 
     // ── Local-Storage TTL Cache ────────────────────────────────────────
     // Wraps localStorage with a JSON `{value, expires}` envelope. Getter

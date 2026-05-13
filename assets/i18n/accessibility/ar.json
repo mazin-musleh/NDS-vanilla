@@ -1,0 +1,71 @@
+{
+    "panel_title":      "أدوات إمكانية الوصول",
+    "panel_label":      "إعدادات إمكانية الوصول",
+    "close_panel":      "إغلاق لوحة إمكانية الوصول",
+    "toggle_theme":     "تبديل المظهر",
+    "switch_lang":      "Switch to English",
+    "scroll_panel":     "تمرير اللوحة",
+    "section_modes":    "أوضاع إمكانية الوصول",
+    "section_readable": "تجربة القراءة",
+    "section_visual":   "التجربة البصرية",
+    "aria_readable":    "عناصر تحكم تجربة القراءة",
+    "aria_visual":      "التعديلات البصرية",
+    "default":          "افتراضي",
+    "font_sizing":      "حجم الخط",
+    "dyslexia":         "داعم لعسر القراءة",
+    "highlight_titles": "تمييز العناوين",
+    "highlight_links":  "تمييز الروابط",
+    "reading_mask":     "مجهر القراءة",
+    "pause_motion":     "إيقاف الحركة",
+    "text_align":       "محاذاة النص",
+    "line_height":      "ارتفاع السطر",
+    "letter_spacing":   "تباعد الحروف",
+    "word_spacing":     "تباعد الكلمات",
+    "reset":            "إعادة تعيين الإعدادات",
+
+    "exclude_controls": ["letter-spacing"],
+
+    "modes": [
+        { "id": "epilepsy-safe",        "name": "وضع مراعٍ للصرع",                            "desc": "يوقف الحركة ويخفّف حدة الألوان" },
+        { "id": "visually-impaired",    "name": "وضع ذوي الإعاقة البصرية",                    "desc": "يكبّر الخط ويعزّز التباين لقراءة أوضح" },
+        { "id": "cognitive-disability", "name": "وضع داعم للإعاقة المعرفية",                  "desc": "يبرز العناوين ويوقف الحركة لتقليل الإلهاء" },
+        { "id": "motor-impaired",       "name": "وضع ذوي الإعاقة الحركية",                    "desc": "يكبّر مناطق النقر ويبرز مؤشر التركيز" },
+        { "id": "colorblind",           "name": "وضع عمى الألوان",                            "desc": "يضبط الألوان لتمييز الأحمر والأخضر بوضوح" },
+        { "id": "dyslexia-friendly",    "name": "وضع داعم لعسر القراءة",                      "desc": "يستخدم خطًا أوضح ويوسّع تباعد الأسطر والكلمات" },
+        { "id": "adhd-friendly",        "name": "وضع داعم لاضطراب فرط الحركة وتشتت الانتباه", "desc": "يوقف الحركة ويبرز العناوين مع مجهر القراءة" }
+    ],
+
+    "visuals": [
+        { "id": "boost-contrast",  "label": "تعزيز التباين" },
+        { "id": "monochrome",      "label": "أحادي اللون" },
+        { "id": "high-contrast",   "label": "تباين عالٍ" },
+        { "id": "high-saturation", "label": "تشبع عالٍ" },
+        { "id": "low-saturation",  "label": "تشبع منخفض" },
+        { "id": "cvd-deutan",      "label": "عمى اللون الأخضر" }
+    ],
+
+    "js": {
+        "on":                "مفعل",
+        "off":               "معطل",
+        "set":               "تم الضبط على",
+        "reset":             "تمت إعادة تعيين جميع إعدادات إمكانية الوصول إلى الافتراضي.",
+        "reset_done":        "تمت إعادة التعيين",
+        "active":            "نشط",
+        "confirm_reset":     "انقر مرة أخرى للتأكيد",
+        "confirm_reset_msg": "اضغط زر إعادة التعيين مرة أخرى للتأكيد.",
+        "confirm_reset_remaining": "أكّد إعادة التعيين خلال {n} ثوانٍ.",
+        "reset_cancelled":   "تم إلغاء إعادة التعيين.",
+        "default":           "افتراضي",
+        "start":             "البداية",
+        "end":               "النهاية",
+        "justify":           "مضبوط",
+        "small":             "صغير",
+        "medium":            "متوسط",
+        "large":             "كبير",
+        "mask_toolbar":      "عناصر تحكم مجهر القراءة",
+        "mask_size_down":    "تصغير شريط المجهر",
+        "mask_size_up":      "تكبير شريط المجهر",
+        "mask_grab":         "اسحب المجهر رأسيًا. استخدم مفاتيح الأسهم لتحريكه.",
+        "mask_close":        "إغلاق مجهر القراءة"
+    }
+}

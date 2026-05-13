@@ -31,6 +31,7 @@
 require 'json'
 require 'fileutils'
 require 'yaml'
+require 'tempfile'
 
 class JSProcessor
   def initialize
@@ -38,6 +39,9 @@ class JSProcessor
     @output_dir = 'assets/js'
     @bundles = {
       'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js','nds-date-picker.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-share.js', 'nds-cookies.js', 'nds-numbers.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-sort.js', 'nds-tables.js', 'nds-stepper.js', 'nds-progress.js', 'nds-swiper.js', 'nds-voice-recognition.js', 'nds-forms.js', 'nds-otp.js', 'nds-upload.js', 'nds-code.js', 'nds-copy.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-tooltip.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-ipv.js', 'nds-backdrop.js', 'nds-modal.js', 'nds-alert.js', 'nds-feedback.js', 'nds-filter.js', 'nds-user-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-autocomplete.js', 'nds-chart.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js']
+      # NOTE: nds-accessibility.js is intentionally NOT bundled here — it
+      # builds to its own assets/js/nds-accessibility.min.js (optional add-on,
+      # loaded by a separate <script> gated on site.accessibility).
     }
 
     # Load config from _config.yml
@@ -81,6 +85,80 @@ class JSProcessor
     end
   end
 
+  # Regenerate _includes/a11y-fouc-bundles.html from MODE_BUNDLES in
+  # _js/nds-accessibility.js. The JS literal is the single source of truth;
+  # the inline FOUC guard in head-inline-scripts.html consumes the generated
+  # include via Liquid. Evaluated via Node (already a build dep through
+  # Terser) so the JS literal is parsed by a JS engine, not a hand-rolled
+  # Ruby parser — JS format changes (added entries, trailing commas, comments)
+  # keep working as long as they remain valid JS.
+  def generate_a11y_fouc_include
+    source_path = File.join(@source_dir, 'nds-accessibility.js')
+    return unless File.exist?(source_path)
+
+    script = Tempfile.new(['extract-a11y-bundles', '.js'])
+    script.write(<<~JS)
+      const fs = require('fs');
+      const src = fs.readFileSync(#{source_path.to_json}, 'utf8');
+      const start = src.indexOf('const MODE_BUNDLES = {');
+      if (start === -1) { console.error('MODE_BUNDLES literal not found'); process.exit(1); }
+      // Walk brace depth from the opening `{`, skipping strings and line comments.
+      let i = src.indexOf('{', start);
+      const open = i;
+      let depth = 1;
+      i++;
+      while (i < src.length && depth > 0) {
+        const c = src[i];
+        if (c === "'" || c === '"') {
+          const q = c; i++;
+          while (i < src.length && src[i] !== q) { if (src[i] === '\\\\') i++; i++; }
+        } else if (c === '/' && src[i + 1] === '/') {
+          while (i < src.length && src[i] !== '\\n') i++;
+        } else if (c === '{') { depth++; }
+        else if (c === '}') { depth--; }
+        i++;
+      }
+      if (depth !== 0) { console.error('MODE_BUNDLES literal unterminated'); process.exit(1); }
+      const literal = src.substring(open, i);
+      let bundles;
+      try { bundles = eval('(' + literal + ')'); }
+      catch (e) { console.error('Failed to evaluate MODE_BUNDLES:', e.message); process.exit(1); }
+      const out = {};
+      for (const [k, v] of Object.entries(bundles)) {
+        out[k] = Array.isArray(v) ? v : (v.primitives || []);
+      }
+      process.stdout.write(JSON.stringify(out));
+    JS
+    script.close
+
+    json_out = `node "#{script.path}" 2>&1`
+    success = $?.success?
+    script.unlink
+
+    unless success
+      raise "Failed to extract MODE_BUNDLES from #{source_path}:\n#{json_out}"
+    end
+
+    bundles = JSON.parse(json_out)
+
+    output_path = '_includes/a11y-fouc-bundles.html'
+    pad = bundles.keys.map(&:length).max + 3  # `'name':` width for alignment
+    body = String.new
+    body << "{%- comment %} Auto-generated from MODE_BUNDLES in _js/nds-accessibility.js by _plugins/js_processor.rb. Do not edit by hand. {%- endcomment -%}\n"
+    body << "const R = {\n"
+    bundles.each do |name, primitives|
+      key = "'#{name}':".ljust(pad)
+      arr = '[' + primitives.map { |p| "'#{p}'" }.join(',') + ']'
+      body << "    #{key} #{arr},\n"
+    end
+    body << "};"
+
+    if !File.exist?(output_path) || File.read(output_path) != body
+      File.write(output_path, body)
+      puts "Generated: #{output_path}"
+    end
+  end
+
   def process_files(changed_files = nil)
     unless Dir.exist?(@source_dir)
       puts "Source directory #{@source_dir} not found"
@@ -89,6 +167,11 @@ class JSProcessor
 
     # Ensure output directory exists
     FileUtils.mkdir_p(@output_dir)
+
+    # Always regenerate the a11y FOUC include — cheap, and guarantees the
+    # inline head guard stays in lockstep with MODE_BUNDLES even if a
+    # downstream consumer edits the JS without bumping the bundle table.
+    generate_a11y_fouc_include
 
     # If no specific files provided, process all files
     if changed_files.nil?

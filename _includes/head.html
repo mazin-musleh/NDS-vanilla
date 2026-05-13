@@ -52,6 +52,14 @@
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
+    {%- unless site.accessibility == false %}
+    <!-- Accessibility add-on (optional) - a11y panel + mode overrides -->
+    <link rel="preload" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    </noscript>
+    {%- endunless %}
     <!-- Custom page-specific CSS files with deferred loading -->
     {%- if page.custom_css %}
     {%- for css_file in page.custom_css %}
@@ -67,25 +75,10 @@
     {%- include perf-monitor.html %}
     {%- endif %}
     <!-- Blocking scripts — FOUC / direction-mismatch prevention. Placed last so resource preloads kick off first. -->
-    <!-- Demo-only: auth FOUC guard for the showcase login/avatar swap. Safe to remove in production. -->
+    <!-- Demo-only: paired with the auth FOUC guard in head-inline-scripts.html. Safe to remove in production. -->
     <style>
         html:not([data-auth]) .nds-auth { display: none; }
         html[data-auth] .nds-guest { display: none; }
     </style>
-    <script>
-        // Apply cached theme before rendering to prevent FOUC
-        (function() {
-            var t = localStorage.getItem('nds-theme');
-            if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-        })();
-    </script>
-    <!-- Demo-only: pairs with the [data-auth] style above. Safe to remove in production. -->
-    <script>
-        // Stamp [data-auth] from cookie before paint so .nds-guest / .nds-auth show the correct variant
-        (function() {
-            if (document.cookie.indexOf('nds_auth=true') !== -1) {
-                document.documentElement.setAttribute('data-auth', 'true');
-            }
-        })();
-    </script>
+    {%- include head-inline-scripts.html -%}
 </head>

@@ -60,8 +60,7 @@ direction: ltr
                                         <span class="nds-accordion-title">Getting Started</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-1"
-                                    aria-labelledby="accordion-basic-heading-1">
+                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-1">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>Overview of the service and how to begin your application.</p>
@@ -77,8 +76,7 @@ direction: ltr
                                         <span class="nds-accordion-title">Requirements</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-2"
-                                    aria-labelledby="accordion-basic-heading-2">
+                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-2">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>Documents and eligibility criteria needed before applying.</p>
@@ -94,8 +92,7 @@ direction: ltr
                                         <span class="nds-accordion-title">Fees & Processing</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-3"
-                                    aria-labelledby="accordion-basic-heading-3">
+                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-3">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>Fee schedule and expected processing times.</p>
@@ -135,7 +132,7 @@ direction: ltr
                 &lt;span class="nds-accordion-title"&gt;Getting Started&lt;/span&gt;
             &lt;/button&gt;
         &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="collapse-1" aria-labelledby="heading-1"&gt;
+        &lt;div class="nds-accordion-collapse" id="collapse-1"&gt;
             &lt;div class="nds-accordion-content"&gt;
                 &lt;div class="nds-accordion-body"&gt;
                     &lt;p&gt;Overview of the service and how to begin.&lt;/p&gt;
@@ -150,7 +147,7 @@ direction: ltr
                 &lt;span class="nds-accordion-title"&gt;Requirements&lt;/span&gt;
             &lt;/button&gt;
         &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="collapse-2" aria-labelledby="heading-2"&gt;
+        &lt;div class="nds-accordion-collapse" id="collapse-2"&gt;
             &lt;div class="nds-accordion-content"&gt;
                 &lt;div class="nds-accordion-body"&gt;
                     &lt;p&gt;Documents and eligibility criteria needed.&lt;/p&gt;
@@ -165,7 +162,7 @@ direction: ltr
                 &lt;span class="nds-accordion-title"&gt;Fees &amp; Processing&lt;/span&gt;
             &lt;/button&gt;
         &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="collapse-3" aria-labelledby="heading-3"&gt;
+        &lt;div class="nds-accordion-collapse" id="collapse-3"&gt;
             &lt;div class="nds-accordion-content"&gt;
                 &lt;div class="nds-accordion-body"&gt;
                     &lt;p&gt;Fee schedule and expected processing times.&lt;/p&gt;
@@ -239,8 +236,7 @@ direction: ltr
                                         <span class="nds-accordion-title">Housing</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-1"
-                                    aria-labelledby="accordion-icon-heading-1">
+                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-1">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>Browse housing programs and check eligibility.</p>
@@ -257,8 +253,7 @@ direction: ltr
                                         <span class="nds-accordion-title">Education</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-2"
-                                    aria-labelledby="accordion-icon-heading-2">
+                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-2">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>Scholarships, transcripts, and certification exams.</p>
@@ -275,8 +270,7 @@ direction: ltr
                                         <span class="nds-accordion-title">Vehicles</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-3"
-                                    aria-labelledby="accordion-icon-heading-3">
+                                <div class="nds-accordion-collapse" id="accordion-icon-collapse-3">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>Registration renewal, fines, and driving tests.</p>
@@ -317,7 +311,7 @@ direction: ltr
                 &lt;span class="nds-accordion-title"&gt;Housing&lt;/span&gt;
             &lt;/button&gt;
         &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="icon-collapse-1" aria-labelledby="icon-heading-1"&gt;
+        &lt;div class="nds-accordion-collapse" id="icon-collapse-1"&gt;
             &lt;div class="nds-accordion-content"&gt;
                 &lt;div class="nds-accordion-body"&gt;
                     &lt;p&gt;Browse housing programs and check eligibility.&lt;/p&gt;
@@ -333,7 +327,7 @@ direction: ltr
                 &lt;span class="nds-accordion-title"&gt;Education&lt;/span&gt;
             &lt;/button&gt;
         &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="icon-collapse-2" aria-labelledby="icon-heading-2"&gt;
+        &lt;div class="nds-accordion-collapse" id="icon-collapse-2"&gt;
             &lt;div class="nds-accordion-content"&gt;
                 &lt;div class="nds-accordion-body"&gt;
                     &lt;p&gt;Scholarships, transcripts, and certification exams.&lt;/p&gt;
@@ -349,7 +343,7 @@ direction: ltr
                 &lt;span class="nds-accordion-title"&gt;Vehicles&lt;/span&gt;
             &lt;/button&gt;
         &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="icon-collapse-3" aria-labelledby="icon-heading-3"&gt;
+        &lt;div class="nds-accordion-collapse" id="icon-collapse-3"&gt;
             &lt;div class="nds-accordion-content"&gt;
                 &lt;div class="nds-accordion-body"&gt;
                     &lt;p&gt;Registration renewal, fines, and driving tests.&lt;/p&gt;

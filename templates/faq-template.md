@@ -101,7 +101,7 @@ sidemenu_mode: false
                                         <span class="nds-accordion-title">{{ item.question }}</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="{{ cid }}" aria-labelledby="{{ hid }}">
+                                <div class="nds-accordion-collapse" id="{{ cid }}">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>{{ item.answer }}</p>
@@ -133,7 +133,7 @@ sidemenu_mode: false
                                         <span class="nds-accordion-title">{{ item.question }}</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="{{ cid }}" aria-labelledby="{{ hid }}">
+                                <div class="nds-accordion-collapse" id="{{ cid }}">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>{{ item.answer }}</p>

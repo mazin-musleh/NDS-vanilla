@@ -1,0 +1,516 @@
+// ==============================================
+// ACCESSIBILITY MODE TOKEN OVERRIDES
+// ==============================================
+// User-controlled modes layered on the semantic token system. Each mode
+// is a `data-a11y~="<name>"` token on <html>; modes compose. Visual
+// filters apply directly to :root. Cosmetic mods (text, highlights,
+// motor) scope through `body[class] > :is(header, main, footer)` so
+// the panel/FAB/cookie/mask stay untouched. Selectors match at first
+// paint — the inline FOUC guard in head-inline-scripts.html covers
+// every mode.
+
+// ----------------------------------------------
+// Visual filters — applied directly to :root for a single document-wide
+// stacking context, no scope wrapper. Wrapped in `not (forced-colors:
+// active)` so HC users aren't double-treated.
+// ----------------------------------------------
+// `cvd-deutan` is a deuteranopia SIMULATION via Machado-Oliveira-Fernandes
+// 2009 matrix (severity 1.0). Same matrix Chrome DevTools' "Emulate vision
+// deficiencies" panel uses, so QA via DevTools matches the on-page filter
+// exactly. Inlined as a data URI (matches _icons.scss pattern) so the
+// filter ships with CSS — no inline-SVG sprite, no extra <head> include.
+//
+// Note: this transforms the page so SIGHTED viewers see what a deuteranope
+// sees (designer QA / empathy). Deuteranopes themselves should use OS-level
+// daltonization (Win11 Color Filters / macOS Display Filters).
+//
+// The `colorblind` BUNDLE in the modes accordion still exists as the
+// umbrella switch — it now activates `cvd-deutan` and will gain protan/
+// tritan primitives as more CVD types ship.
+$_cvd-deutan: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cvd-deutan' color-interpolation-filters='sRGB'%3E%3CfeColorMatrix type='matrix' values='0.367 0.861 -0.228 0 0  0.280 0.673 0.047 0 0  -0.012 0.043 0.969 0 0  0 0 0 1 0'/%3E%3C/filter%3E%3C/svg%3E#cvd-deutan");
+
+$a11y-filters: (
+    'monochrome':       grayscale(1),
+    'high-saturation':  saturate(2),
+    'low-saturation':   saturate(0.5),
+    'cvd-deutan':       $_cvd-deutan,
+    'boost-contrast':   contrast(1.15),
+);
+@media not (forced-colors: active) {
+    @each $mode, $filter in $a11y-filters {
+        :root[data-a11y~="#{$mode}"] {
+            filter: $filter;
+        }
+    }
+}
+
+// ----------------------------------------------
+// High contrast — token-level palette swap (mutex with the filters above).
+// Light wires every semantic token to four internal vars (--_hc-bg/-fg/
+// -link/-link-*); dark redefines only those vars and the long token list
+// cascades through. Buttons + on-color text are theme-invariant.
+// ----------------------------------------------
+:root[data-a11y~="high-contrast"] {
+    --_hc-bg:           var(--colors-base-white);
+    --_hc-fg:           var(--colors-base-black);
+    --_hc-link:         var(--colors-primary-sa-flag-800);
+    --_hc-link-hovered: var(--colors-primary-sa-flag-900);
+    --_hc-link-pressed: var(--colors-primary-sa-flag-950);
+    --_hc-link-visited: var(--colors-tertiary-lavendar-900);
+
+    --background-body:                   var(--_hc-bg);
+    --background-default:                var(--_hc-bg);
+    --background-secondary:              var(--_hc-bg);
+    // The brand-green accent surface — drives active nav/drawer/toc
+    // indicators, loading spinners, progress fills. Mono in HC.
+    --background-primary:                var(--_hc-fg);
+    --background-card:                   var(--_hc-bg);
+    --background-menu:                   var(--_hc-bg);
+    --background-nav:                    var(--_hc-bg);
+    --background-topbar:                 var(--_hc-bg);
+    --background-footer:                 var(--_hc-bg);
+    --background-sub-hero:               var(--_hc-bg);
+    --background-disabled:               var(--_hc-bg);
+    --background-stripe:                 var(--_hc-bg);
+
+    --form-field-background-default:      var(--_hc-bg);
+    --form-field-background-lighter:      var(--_hc-bg);
+    --form-field-background-darker:       var(--_hc-bg);
+
+    // Tables: flat mono cells, --_hc-fg gridlines. Zebra striping and
+    // bg-only row selection collapse to --_hc-bg (the gridlines carry row
+    // separation; selection still shows via the row's checkbox).
+    --table-background-header:           var(--_hc-bg);
+    --table-background-row:              var(--_hc-bg);
+    --table-background-tr-selected:      var(--_hc-bg);
+    --table-background-row-selected:     var(--_hc-bg);
+    --table-background-hover-selected:   var(--_hc-bg);
+    --table-cell-border:                 var(--_hc-fg);
+    --table-text-head:                   var(--_hc-fg);
+    --table-text-body:                   var(--_hc-fg);
+
+    // Avatars: mono fill + ink. The boundary ring is drawn as an inset
+    // box-shadow (see scoped rule) rather than the outer --avatar-border,
+    // so it stays crisp over photos and doesn't enlarge the avatar.
+    --avatar-background:                 var(--_hc-bg);
+    --avatar-color:                      var(--_hc-fg);
+
+    --text-default:                      var(--_hc-fg);
+    --text-primary:                      var(--_hc-fg);
+    --text-secondary:                    var(--_hc-fg);
+    --text-secondary-paragraph:          var(--_hc-fg);
+    --text-tertiary:                     var(--_hc-fg);
+    --text-display:                      var(--_hc-fg);
+    --text-oncolor-primary:              var(--colors-base-white);
+    --text-oncolor-secondary:            var(--colors-base-white);
+
+    --link-primary:                      var(--_hc-link);
+    --link-primary-hovered:              var(--_hc-link-hovered);
+    --link-primary-pressed:              var(--_hc-link-pressed);
+    --link-primary-focused:              var(--_hc-link);
+    --link-primary-visited:              var(--_hc-link-visited);
+
+    --border-neutral-primary:            var(--_hc-fg);
+    --border-neutral-secondary:          var(--_hc-fg);
+    --border-neutral-tertiary:           var(--_hc-fg);
+    --border-primary:                    var(--_hc-fg);
+    --border-focus:                      var(--_hc-link);
+
+    // Primary-button bg/label tokens — consumed directly by pagination's
+    // active-page indicator, .nds-transparent labels, ellipsis-menu dots.
+    // (The primary button itself overrides --btn-bg in the scoped rules
+    // below, so these don't drive its background.)
+    --button-background-primary-default: var(--_hc-fg);
+    --button-background-primary-hovered: var(--_hc-fg);
+    --button-background-primary-pressed: var(--_hc-fg);
+    --button-label-primary-default:      var(--_hc-fg);
+}
+
+// Dark HC: invert bg/fg, shift the link ladder.
+:root[data-a11y~="high-contrast"][data-theme="dark"] {
+    --_hc-bg:           var(--colors-base-black);
+    --_hc-fg:           var(--colors-base-white);
+    --_hc-link:         var(--colors-primary-sa-flag-300);
+    --_hc-link-hovered: var(--colors-primary-sa-flag-200);
+    --_hc-link-pressed: var(--colors-primary-sa-flag-100);
+    --_hc-link-visited: var(--colors-secondary-gold-300);
+}
+
+// Topbar carries a brand-tinted background; the token swap above
+// neutralises it to --_hc-bg, so its on-colour text flips to --_hc-fg.
+// The main (full-bleed) hero is intentionally left untouched — see below.
+:root[data-a11y~="high-contrast"] .nds-topbar {
+    --text-oncolor-primary:   var(--_hc-fg);
+    --text-oncolor-secondary: var(--_hc-fg);
+    color: var(--_hc-fg);
+}
+
+// Primary buttons in HC: the neutral (near-black) variant in light theme;
+// the on-colour (light) variant in dark theme. Skips .nds-oncolor
+// primaries — they already carry the on-colour treatment (e.g. hero).
+:root[data-a11y~="high-contrast"] .nds-btn.nds-primary:not(.nds-oncolor) {
+    --btn-bg:                 var(--button-background-black-default);
+    --btn-bg-hover:           var(--button-background-black-hovered);
+    --btn-bg-active:          var(--button-background-black-pressed);
+    --btn-bg-selected:        var(--button-background-black-selected);
+    --btn-color:              var(--text-oncolor-primary);
+    --btn-indicator-color:    var(--background-primary-400);
+    --btn-indicator-active:   var(--background-primary-400);
+    --btn-indicator-selected: var(--background-primary-400);
+    --btn-loading-color:      var(--text-oncolor-primary);
+    --btn-loading-track:      var(--alpha-white-20);
+}
+:root[data-a11y~="high-contrast"][data-theme="dark"] .nds-btn:is(.nds-primary,.nds-neutral):not(.nds-oncolor) {
+    --btn-bg:             var(--button-background-oncolor-default);
+    --btn-bg-hover:       var(--button-background-oncolor-hovered);
+    --btn-bg-active:      var(--button-background-oncolor-pressed);
+    --btn-bg-selected:    var(--button-background-oncolor-selected);
+    --btn-bg-disabled:    var(--button-background-disabled-on-color);
+    --btn-color-disabled: var(--text-default-oncolor-disabled);
+    --btn-color:          var(--background-black);
+    --btn-loading-color:  var(--background-black);
+}
+
+// Sub-hero only: --background-sub-hero is swapped to --_hc-bg above, so
+// drop its masked decorative image (it'd fade into a now-white band). The
+// main `.nds-hero-section:not(.nds-sub)` — full-bleed photo + on-colour
+// text — is deliberately NOT altered by high-contrast mode.
+:root[data-a11y~="high-contrast"] .nds-hero-section.nds-sub::after {
+    display: none;
+}
+
+// Swiper pagination bullets: --bullet-* are public override slots with
+// --colors-* fallbacks, so the token swap doesn't reach them. Inactive →
+// hollow (--_hc-bg fill, --_hc-fg ring); active → solid --_hc-fg. Force
+// full opacity since the 0.6 dim cue reads as nothing in two tones.
+:root[data-a11y~="high-contrast"] .nds-bullet {
+    --bullet-default:  var(--_hc-bg);
+    --bullet-active:   var(--_hc-fg);
+    --bullet-border:   var(--_hc-fg);
+    --_bullet-opacity: 1;
+}
+
+// Avatars: inset --_hc-fg ring. outline (not box-shadow) so it paints
+// over the avatar's <img> too; negative offset pulls it inside the edge;
+// modern browsers clip the outline to the 50% radius.
+:root[data-a11y~="high-contrast"] .nds-avatar:not([hidden]) {
+    outline: 2px solid var(--_hc-fg);
+    outline-offset: -2px;
+}
+
+// Sidemenu toggle: a primary .nds-btn whose icon is hard-pinned to
+// --text-oncolor-primary (white). In dark HC the button flips to the
+// light on-colour variant, so the icon must follow the button's resolved
+// label colour (dark) instead — white-on-white would vanish.
+:root[data-a11y~="high-contrast"] .nds-sidemenu-toggle i {
+    color: var(--_btn-color);
+}
+
+// Accessibility-panel selected tile: its --btn-bg pulls
+// --button-background-primary-default which the root HC block above
+// redefines to --_hc-fg, while --btn-color still resolves to plain
+// white via --text-oncolor-primary (pinned at line 104). Fine in light
+// HC (white text on black tile) but a white-on-white blank in dark HC.
+// Re-pair the label colour with --_hc-bg so text and icon stay legible
+// regardless of theme.
+:root[data-a11y~="high-contrast"] .nds-accessibility-panel .nds-grid > .nds-btn[data-state~="selected"] {
+    --btn-color: var(--_hc-bg);
+}
+
+// Content sections — the coloured variants (.nds-primary / .nds-green /
+// .nds-neutral / .nds-brand / .nds-gradient-green) and any author-set
+// --section-bg collapse to the mono palette. !important on --section-bg
+// beats the (non-important) variant tokens and inline style overrides;
+// the gradient variant also needs its `background` shorthand cleared so
+// the neutralised background-color shows through.
+:root[data-a11y~="high-contrast"] .nds-content-section {
+    --section-bg:                var(--_hc-bg) !important;
+    --section-title-color:       var(--_hc-fg);
+    --section-subtitle-color:    var(--_hc-fg);
+    --section-description-color:  var(--_hc-fg);
+    --section-text-color:        var(--_hc-fg);
+}
+:root[data-a11y~="high-contrast"] .nds-content-section.nds-gradient-green {
+    background: var(--_hc-bg);
+}
+
+// Footer (light theme): the plain footer flattens to the white page;
+// the .nds-green variant inverts to a solid black band so it still reads
+// as a distinct footer. !important on background beats the neutral base
+// fills in _footer.scss.
+:root[data-a11y~="high-contrast"] .nds-footer {
+    background: var(--_hc-bg) !important;
+    color: var(--_hc-fg);
+    --text-oncolor-primary:   var(--_hc-fg);
+    --text-oncolor-secondary: var(--_hc-fg);
+    border-block-start: 1px solid var(--_hc-fg);
+}
+:root[data-a11y~="high-contrast"] .nds-footer.nds-green {
+    background: var(--_hc-fg) !important;
+    color: var(--_hc-bg);
+    --text-oncolor-primary:   var(--_hc-bg);
+    --text-oncolor-secondary: var(--_hc-bg);
+    border-block-start: 0;
+}
+
+// Dark theme: the page is already black, so every footer — including the
+// .nds-green variant, which would otherwise invert to a white band — sits
+// flush at --_hc-bg with a --_hc-fg top edge for separation. Comes after
+// the rules above so it wins over the .nds-green inversion in dark mode.
+:root[data-a11y~="high-contrast"][data-theme="dark"] .nds-footer {
+    background: var(--_hc-bg) !important;
+    color: var(--_hc-fg);
+    --text-oncolor-primary:   var(--_hc-fg);
+    --text-oncolor-secondary: var(--_hc-fg);
+    border-block-start: 1px solid var(--_hc-fg);
+}
+
+// ----------------------------------------------
+// Dyslexia — Latin (OpenDyslexic) + Arabic (Maqroo) stack. Browsers
+// resolve per-character so both scripts find a face.
+// ----------------------------------------------
+:root[data-a11y~="dyslexia"] {
+    --nds-font-family: "OpenDyslexic", "Lexend", "Atkinson Hyperlegible", "Verdana",
+                       "Maqroo", "Tajawal", "IBM Plex Sans Arabic",
+                       system-ui, sans-serif;
+}
+
+// Bump body-text weight: Maqroo Regular reads thinner than IBM Plex
+// Arabic Regular at the same nominal weight. Headings already carry
+// 600-700 design weights, so scope to body-text elements only.
+:root[data-a11y~="dyslexia"] body[class] > :is(header, main, footer) :is(p, li, dt, dd, blockquote) {
+    font-weight: 500;
+}
+
+// ----------------------------------------------
+// User-tunable scalars — defaults so var(--user-*) always resolves
+// before JS hydrates.
+// ----------------------------------------------
+:root {
+    --user-line-height: normal;
+    --user-letter-spacing: 0;
+    --user-word-spacing: 0;
+}
+
+// ----------------------------------------------
+// Font sizing — single global multiplier. Every --typo-* token in
+// _variables-critical.scss wraps in `calc(value * var(--user-font-scale, 1))`,
+// so setting --user-font-scale at :root cascades to every consumer. The
+// panel chrome reads literal-px tokens so it doesn't grow.
+// ----------------------------------------------
+$step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
+
+@each $step, $scale in $step-scales {
+    :root[data-a11y~="font-step-#{$step}"] {
+        --user-font-scale: #{$scale};
+    }
+}
+
+// Body font-size aligns unstyled <p>/<li>/<span> with the scaled body-md token.
+:root:is([data-a11y~="font-step-1"], [data-a11y~="font-step-2"], [data-a11y~="font-step-3"]) body[class] > :is(header, main, footer) {
+    font-size: var(--typo-text-md-FS);
+}
+
+// ----------------------------------------------
+// Continuous user-tunable scalars (line height, letter/word spacing).
+// Gated behind `has-{prop}` tokens (stamped by JS only when non-default)
+// so the rule never clobbers author CSS for unrelated mods. Headings
+// excluded — _reset.scss display-clamp ratios drive their LH and
+// font-step already scales it via --user-font-scale.
+// ----------------------------------------------
+@each $prop in (line-height, letter-spacing, word-spacing) {
+    :root[data-a11y~="has-#{$prop}"] body[class] > :is(header, main, footer),
+    :root[data-a11y~="has-#{$prop}"] body[class] > :is(header, main, footer) :is(p, li, ul, ol, dl, dt, dd, blockquote) {
+        #{$prop}: var(--user-#{$prop});
+    }
+}
+
+// ----------------------------------------------
+// Text alignment — logical `start` / `end` so RTL and LTR both read
+// naturally. !important wins over per-element text-align in content.
+// ----------------------------------------------
+@each $alignment in (start, end, justify) {
+    :root[data-a11y~="text-align-#{$alignment}"] body[class] > :is(header, main, footer),
+    :root[data-a11y~="text-align-#{$alignment}"] body[class] > :is(header, main, footer) :is(p, li) {
+        text-align: #{$alignment} !important;
+    }
+}
+
+// ----------------------------------------------
+// Highlight titles — warning palette (bg + outline + text). `color`
+// !important beats inherited oncolor (white) hero headings.
+// ----------------------------------------------
+:root[data-a11y~="highlight-titles"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
+    outline: 2px solid var(--border-warning);
+    outline-offset: 2px;
+    background-color: var(--background-warning-25);
+    color: var(--text-warning) !important;
+    padding-inline: var(--spacing-xs);
+    border-radius: var(--radius-xs);
+}
+
+// Dark mode: --border-warning resolves dark on dark — swap to the
+// lighter warning border. Title bg also swaps because --background-
+// warning-25 is neutral-900 in dark, not amber.
+:root[data-a11y~="highlight-titles"][data-theme="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6),
+:root[data-a11y~="highlight-links"][data-theme="dark"] body[class] > :is(header, main, footer) a {
+    outline-color: var(--border-warning-light);
+}
+:root[data-a11y~="highlight-titles"][data-theme="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
+    background-color: var(--alpha-warning-10);
+}
+
+// ----------------------------------------------
+// Highlight links — outline on every <a>, underline only on text links
+// (button-styled anchors keep their shape signal).
+// ----------------------------------------------
+:root[data-a11y~="highlight-links"] body[class] > :is(header, main, footer) a {
+    outline: 2px dashed var(--text-warning);
+    outline-offset: 2px;
+}
+:root[data-a11y~="highlight-links"] body[class] > :is(header, main, footer) a:not(.nds-btn) {
+    text-decoration: underline !important;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+}
+
+// ----------------------------------------------
+// Reading mask — two real <div>s injected by JS (pseudo-elements didn't
+// reliably get their own GPU layer). Sits below the panel (999) and FAB
+// (899) so the user can still reach the toggle to disable it.
+// ----------------------------------------------
+.nds-a11y-mask {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-start: 0;
+    // 100lvh tracks the LARGE viewport (stable across mobile address-bar
+    // expand/collapse). dvh would re-flow on every scroll tick.
+    height: 100vh;
+    height: 100lvh;
+    background-color: var(--colors-alpha-alpha-black-80);
+    pointer-events: none;
+    z-index: 850;
+    will-change: transform;
+    contain: layout paint style;
+    transform: translate3d(0, -200vh, 0); // off-screen until JS positions
+}
+
+// Toolbar centered via PHYSICAL `left: 50%` (logical inset-inline-start
+// flips with RTL and breaks the symmetric translateX(-50%)). Buttons inside
+// use `.nds-btn .nds-subtle .nds-icon-only` from _buttons.scss — only the
+// grab-handle's drag-cursor + wider hit-target stay custom here.
+.nds-a11y-mask-controls {
+    --a11y-text-FS:     14px;
+    --a11y-text-LH:     20px;
+    --a11y-font-family: 'IBM Plex Sans Arabic', sans-serif;
+    --nds-font-family:  var(--a11y-font-family);
+    font-size: var(--a11y-text-FS);
+    line-height: var(--a11y-text-LH);
+    font-family: var(--nds-font-family);
+
+    position: fixed;
+    left: 50%;
+    inset-block-start: var(--spacing-md, 8px);
+    z-index: 851;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-xs, 4px);
+    padding: var(--spacing-xs, 4px);
+    background-color: var(--background-card);
+    color: var(--text-default);
+    border: 1px solid var(--border-neutral-primary);
+    border-radius: var(--radius-md, 8px);
+    box-shadow: var(--shadow-lg);
+    pointer-events: auto;
+    will-change: transform;
+    contain: layout paint style;
+    transform: translate3d(-50%, -200vh, 0);
+
+    .nds-btn[data-action="grab"] {
+        cursor: grab;
+        min-width: 56px;                // wider hit-target for the primary handle
+        touch-action: none;             // pointermove drags without scrolling
+
+        &:active,
+        &[data-state~="dragging"] {
+            cursor: grabbing;
+            background-color: var(--button-background-neutral-pressed);
+        }
+    }
+}
+
+// Forced-colors: the alpha-black masks become invisible under Windows HC
+// themes (system swaps them to Canvas / drops opacity). Force opaque
+// Canvas + a CanvasText edge at the band boundary so the reading window
+// stays identifiable. Toolbar gets an explicit Canvas-text border so its
+// chrome doesn't blend into the mask.
+@media (forced-colors: active) {
+    .nds-a11y-mask {
+        background-color: Canvas;
+        forced-color-adjust: none;
+    }
+    .nds-a11y-mask-top    { border-block-end:   1px solid CanvasText; }
+    .nds-a11y-mask-bottom { border-block-start: 1px solid CanvasText; }
+    .nds-a11y-mask-controls {
+        background-color: Canvas;
+        color: CanvasText;
+        border-color: CanvasText;
+        forced-color-adjust: none;
+
+        button:focus-visible {
+            outline-color: Highlight;
+        }
+    }
+}
+
+// ----------------------------------------------
+// Motor Impaired — 48×48 targets. Bundle has no primitives; the bundle
+// name itself stamps onto data-a11y. Focus rings come from the global
+// `*:focus-visible` rule in _reset.scss — no override needed.
+// ----------------------------------------------
+:root[data-a11y~="motor-impaired"] body[class] > :is(header, main, footer)
+    :is(.nds-btn, button, [role="button"], a.nds-btn, input[type="button"], input[type="submit"]) {
+    min-block-size: 48px;
+    min-inline-size: 48px;
+}
+
+// ----------------------------------------------
+// Reduce motion — root-scoped (NOT page-shell) so panel chrome animations
+// are also muted; otherwise the panel slides in while page content is still.
+// ----------------------------------------------
+:root[data-a11y~="reduce-motion"] *,
+:root[data-a11y~="reduce-motion"] *::before,
+:root[data-a11y~="reduce-motion"] *::after {
+    animation-duration:    0.001ms !important;
+    animation-iteration-count: 1   !important;
+    transition-duration:   0.001ms !important;
+    scroll-behavior:       auto    !important;
+}
+
+// Progress indicators convey duration / value — essential status info,
+// not decoration. Re-declare author durations system-wide so the rule
+// above doesn't break time-conveying arcs and bars across the design
+// system (button countdowns, file-upload progress, stepper rings, linear
+// bars). Per W3C reduce-motion guidance, animations conveying essential
+// info are exempt. Specificity (0,2,1) beats the global *-rule (0,1,1).
+:root[data-a11y~="reduce-motion"] :is(.nds-progress-circle, .nds-progress-bar),
+:root[data-a11y~="reduce-motion"] :is(.nds-progress-circle, .nds-progress-bar) * {
+    animation-duration:  var(--progress-duration, 4000ms) !important;
+    transition-duration: 0.3s !important;
+}
+
+// ----------------------------------------------
+// Bundle composition lives in MODE_BUNDLES (_js/nds-accessibility.js):
+//   epilepsy-safe        → reduce-motion, low-saturation         (WCAG 2.3.1)
+//   visually-impaired    → high-contrast + font-step 2 (1.30×)   (WCAG 1.4.6)
+//   cognitive-disability → highlight-titles, reduce-motion
+//   motor-impaired       → marker-only (rules above)
+//   colorblind           → cvd-deutan
+//   dyslexia-friendly    → dyslexia, highlight-links + WCAG 1.4.8 spacing
+//   adhd-friendly        → reduce-motion, highlight-titles, reading-mask
+//
+// DEFERRED — per-type CVD filters (need feColorMatrix + Brettel-Viénot-Mollon
+// matrices), font-scale > 1.5× (use browser zoom for WCAG 1.4.4 200%),
+// plain-language toggles (content-side), JS carousel pause.
+// ----------------------------------------------

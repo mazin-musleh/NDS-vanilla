@@ -1,0 +1,410 @@
+// ==============================================
+// ACCESSIBILITY PANEL
+// ==============================================
+// FAB + slide-in disclosure panel. Modes the panel applies to the host
+// page live in _variables-a11y.scss.
+
+@use '../mixins' as *;
+
+// ----------------------------------------------
+// Panel-private design tokens. Decoupled from --typo-* so global font
+// scaling can't reach the chrome. Font-family is also pinned panel-
+// locally — the dyslexia mode redefines --nds-font-family at :root,
+// so the panel re-defines it here to break the inheritance chain.
+// ----------------------------------------------
+:is(.nds-accessibility-panel, .nds-accessibility-toggle) {
+    --a11y-text-FS:        14px;
+    --a11y-text-LH:        20px;
+    --a11y-section-FS:     16px;
+    --a11y-section-LH:     24px;
+    --a11y-title-FS:       20px;
+    --a11y-title-LH:       30px;
+    --a11y-icon-FS:        24px;
+    --a11y-font-family:    'IBM Plex Sans Arabic', sans-serif;
+
+    --a11y-btn-size:       40px;
+    --a11y-btn-size-md:    32px;
+    --a11y-btn-size-sm:    24px;
+
+    --nds-font-family: var(--a11y-font-family);
+
+    font-size: var(--a11y-text-FS);
+    line-height: var(--a11y-text-LH);
+    font-family: var(--nds-font-family);
+}
+
+// `:root` prefix bumps specificity past the default .nds-btn rule whose
+// --_btn-FS calc reads --user-font-scale. Pinning literal px bypasses
+// the calc so panel buttons stay readable regardless of global scaling.
+:root :is(.nds-accessibility-panel .nds-btn, .nds-accessibility-toggle.nds-btn) {
+    --btn-size: var(--a11y-btn-size);
+    --_btn-FS:  var(--a11y-text-FS);
+    --_btn-LH:  var(--a11y-text-LH);
+
+    &.nds-md { --btn-size: var(--a11y-btn-size-md); }
+    &.nds-sm { --btn-size: var(--a11y-btn-size-sm); }
+}
+
+// Mirror the source-rule structure so each override wins specificity
+// over _accordion.scss / _forms.scss without !important.
+.nds-accessibility-panel .nds-accordion .nds-accordion-btn,
+.nds-accessibility-panel .nds-form-container.nds-switch-container:not([hidden]) .nds-form-header .nds-label {
+    font-size:   var(--a11y-section-FS);
+    line-height: var(--a11y-section-LH);
+}
+.nds-accessibility-panel .nds-form-container .nds-label + .nds-info {
+    font-size:   var(--a11y-text-FS);
+    line-height: var(--a11y-text-LH);
+}
+
+// Tag pills use --tag-fs as the public override channel.
+.nds-accessibility-panel .nds-tag {
+    --tag-fs: var(--a11y-text-FS);
+}
+
+// ----------------------------------------------
+// Floating action button
+// ----------------------------------------------
+.nds-accessibility-toggle {
+    position: fixed;
+    --a11y-btn-size:   56px;
+    --a11y-fab-offset: var(--spacing-2xl);
+    inset-block-end: var(--a11y-fab-offset);
+    inset-inline-end: var(--a11y-fab-offset);
+    inset-inline-start: auto;
+    z-index: 899;          // below modal (1100), above page chrome
+    padding: 0;
+    box-shadow: var(--shadow-lg);
+
+    @include mobile {
+        --a11y-btn-size:   48px;
+        --a11y-fab-offset: var(--spacing-xl);
+    }
+
+    // Position variants. `start`/`end` are LOGICAL (flip with dir);
+    // `left`/`right` are PHYSICAL (fixed). Matching panel rules below
+    // use a sibling combinator so both elements flip from one attribute.
+    &[data-a11y-pos="start"] {
+        inset-inline-start: var(--a11y-fab-offset);
+        inset-inline-end: auto;
+    }
+    &[data-a11y-pos="left"] {
+        left: var(--a11y-fab-offset);
+        right: auto;
+    }
+    &[data-a11y-pos="right"] {
+        right: var(--a11y-fab-offset);
+        left: auto;
+    }
+
+    i.hgi,
+    i.nds-icon {
+        font-size: var(--a11y-icon-FS);
+        line-height: 1;
+    }
+}
+
+// ----------------------------------------------
+// Panel — fixed, full-height, slides in from inline-end (default).
+// ----------------------------------------------
+.nds-accessibility-panel {
+    --a11y-panel-width: min(420px, 100vw);
+    // JS overrides at runtime by measuring sticky-header bottom; falls
+    // back to --nds-nav-height before JS hydrates.
+    --a11y-panel-top: var(--nds-nav-height, 72px);
+
+    position: fixed;
+    inset-block-start: var(--a11y-panel-top);
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+    width: var(--a11y-panel-width);
+    background-color: var(--background-menu);
+    color: var(--text-default);
+    box-shadow: var(--shadow-lg);
+    z-index: 999;          // above FAB, sidemenu; below modal
+    overflow: hidden;      // scroll delegated to inner .nds-scroll-more
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+
+    // translateX is physical, so each writing direction needs its own
+    // closed offset. Explicit values (not a var()) so the engine
+    // interpolates closed↔open reliably across browsers.
+    transform: translateX(-100%);
+    @include ltr {
+        transform: translateX(100%);
+    }
+
+    &[data-state~="open"] {
+        transform: translateX(0) !important;
+        transition: transform var(--nds-transition);
+    }
+
+    &[data-state~="closing"] {
+        transform: translateX(-100%) !important;
+        transition: transform var(--nds-transition);
+
+        @include ltr {
+            transform: translateX(100%) !important;
+        }
+    }
+}
+
+// ----- Start-side variant -----
+// Inverse of the default end-side. Triggered by `data-a11y-pos="start"`
+// on the FAB; the panel picks it up via subsequent-sibling combinator.
+.nds-accessibility-toggle[data-a11y-pos="start"] ~ .nds-accessibility-panel {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    transform: translateX(100%);
+
+    &[data-state~="closing"] {
+        transform: translateX(100%) !important;
+    }
+}
+:is(html[dir="ltr"], html.ltr) .nds-accessibility-toggle[data-a11y-pos="start"] ~ .nds-accessibility-panel {
+    transform: translateX(-100%);
+
+    &[data-state~="closing"] {
+        transform: translateX(-100%) !important;
+    }
+}
+
+// ----- Physical left / right variants -----
+// PHYSICAL only — mixing `inset-inline: auto` here would cascade-clobber
+// `left`/`right` via source order in whichever direction the logical-to-
+// physical mapping coincides. Higher specificity wins over the base's
+// logical inset-inline-* declarations.
+.nds-accessibility-toggle[data-a11y-pos="left"] ~ .nds-accessibility-panel {
+    left: 0;
+    right: auto;
+    transform: translateX(-100%);
+
+    &[data-state~="closing"] {
+        transform: translateX(-100%) !important;
+    }
+}
+
+.nds-accessibility-toggle[data-a11y-pos="right"] ~ .nds-accessibility-panel {
+    right: 0;
+    left: auto;
+    transform: translateX(100%);
+
+    &[data-state~="closing"] {
+        transform: translateX(100%) !important;
+    }
+}
+
+// ----------------------------------------------
+// Header
+// ----------------------------------------------
+.nds-accessibility-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border-block-end: 1px solid var(--divider-color);
+}
+
+.nds-accessibility-panel-title {
+    margin: 0;
+    font-size: var(--a11y-title-FS);
+    line-height: var(--a11y-title-LH);
+    font-weight: 700;
+    color: var(--text-display);
+}
+
+// Theme + language quick toggles, top of the scrollable body.
+.nds-accessibility-panel-quick {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+// ----------------------------------------------
+// Body — sections + tile grids
+// ----------------------------------------------
+.nds-accessibility-panel-body {
+    flex: 1 1 auto;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+}
+
+// 3 columns desktop / 2 mobile.
+.nds-accessibility-panel .nds-grid {
+    --max-col: 3;
+    --min-col: 2;
+    --gap: var(--spacing-md);
+}
+
+// ----------------------------------------------
+// Tile-style button — vertical card layout for Readable / Visually
+// Pleasing tiles, built on .nds-btn .nds-secondary-outline.
+// ----------------------------------------------
+.nds-accessibility-panel .nds-grid > .nds-btn {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    --btn-width: 100%;
+    --btn-height-min: 96px;
+    --btn-radius: var(--radius-md);
+
+    > i {
+        font-size: var(--a11y-icon-FS);
+        line-height: 1;
+    }
+}
+
+// Active tile mirrors mainnav's "current" indicator. Local aliases
+// dedupe the repeated brand tokens.
+.nds-accessibility-panel .nds-grid > .nds-btn[data-state~="selected"] {
+    --_pd: var(--button-background-primary-default);
+    --_ph: var(--button-background-primary-hovered);
+    --_pp: var(--button-background-primary-pressed);
+    --_pi: var(--background-primary-400);
+    --btn-bg:                 var(--_pd);
+    --btn-bg-hover:           var(--_ph);
+    --btn-bg-active:          var(--_pp);
+    --btn-bg-selected:        var(--_pd);
+    --btn-color:              var(--text-oncolor-primary);
+    --btn-border:             var(--_pd);
+    --btn-border-hover:       var(--_ph);
+    --btn-border-active:      var(--_pp);
+    --btn-border-selected:    var(--_pd);
+    --btn-indicator-color:    var(--_pi);
+    --btn-indicator-active:   var(--_pi);
+    --btn-indicator-selected: var(--_pi);
+}
+
+// Step indicator on cycled tiles. The precise value lives in a sibling
+// SR-only text node; the bars are pure visual.
+.nds-accessibility-tile-bars {
+    display: inline-flex;
+    gap: 3px;
+    align-items: center;
+    margin-block-start: var(--spacing-xs);
+    pointer-events: none;
+}
+
+.nds-accessibility-tile-bar {
+    width: 14px;
+    height: 3px;
+    background-color: currentColor;
+    border-radius: 2px;
+    opacity: 0.25;
+    transition: opacity var(--nds-transition);
+
+    &.is-active {
+        opacity: 1;
+    }
+}
+
+// Step 0 shows a single dim hint bar.
+.nds-accessibility-panel .nds-grid > .nds-btn:not([data-state~="selected"]) .nds-accessibility-tile-bar {
+    opacity: 0.18;
+}
+
+// ----------------------------------------------
+// Scroll wrapper — claims remaining flex height between body and footer.
+// ----------------------------------------------
+.nds-accessibility-panel > .nds-scroll-more {
+    flex: 1 1 auto;
+    min-height: 0;
+    --scroll-fade: 32px;
+    .nds-scroll-more-content{
+        flex: unset;
+    }
+}
+
+// ----------------------------------------------
+// Footer — Reset action.
+// ----------------------------------------------
+.nds-accessibility-panel-footer {
+    flex-shrink: 0;
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border-block-start: 1px solid var(--divider-color);
+
+    .nds-btn {
+        --btn-width: 100%;
+    }
+
+    // Reset countdown — small circle anchored to inline-end so it
+    // doesn't overlap the centered confirm label. Reduce-motion exemption
+    // for time-conveying progress is system-wide in _variables-a11y.scss.
+    .nds-btn.nds-progress .nds-progress-circle {
+        --progress-size: 24px;
+        inset-inline-start: auto;
+        inset-inline-end: var(--spacing-md);
+    }
+}
+
+// Mode switch row inside the accordion.
+.nds-accessibility-modes .nds-switch-container {
+    padding-block: var(--spacing-sm);
+}
+
+// Count pill next to each accordion title — :empty hides it when no
+// controls are active so the pill's bg/padding doesn't leave a stray dot.
+.nds-a11y-count {
+    &:empty { display: none; }
+    margin-inline-start: var(--spacing-xs);
+}
+
+// ==============================================
+// DYSLEXIA-MODE FONTS
+// ==============================================
+// Faces used only when the `dyslexia` primitive activates (cascade in
+// _variables-a11y.scss). Kept out of the critical font set since they're
+// loaded on demand; `font-display: swap` so activation never blocks paint.
+
+/* OpenDyslexic — Latin dyslexia-friendly face. SIL-OFL, sourced from
+   github.com/antijingoist/opendyslexic v0.91.12. size-adjust: 92%
+   normalizes its 56% x-height to IBM Plex Latin's 51.6% baseline so
+   activation doesn't shift line breaks. Regular's range 400-500 captures
+   the body-weight bump from _variables-a11y.scss so it doesn't fall
+   through to Bold per the CSS spec's heavier-first tiebreaker for
+   desired ≥ 500. */
+@font-face {
+  font-family: 'OpenDyslexic';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  size-adjust: 92%;
+  src: url(../fonts/OpenDyslexic-Regular.woff2) format('woff2');
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  size-adjust: 92%;
+  src: url(../fonts/OpenDyslexic-Bold.woff2) format('woff2');
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+}
+
+/* Maqroo — Arabic dyslexia-friendly face (Omantel + Leo Burnett Dubai,
+   2023). Open-source, sourced from omantel.om. The file's
+   OS/2.usWeightClass is set to 300 at conversion time and the @font-face
+   declares a single weight (not a range) — both tricks force browsers
+   down the synthesis path for the body/heading weight bumps in
+   _variables-a11y.scss (a `font-weight: 500` request faux-bolds from the
+   300 baseline by 200 weight units, matching OpenDyslexic's heavier
+   natural rendering in mixed-script lines). size-adjust: 125% matches
+   Maqroo's x-height to OpenDyslexic's at the same nominal font-size. */
+@font-face {
+  font-family: 'Maqroo';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  size-adjust: 125%;
+  src: url(../fonts/Maqroo-Regular.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}

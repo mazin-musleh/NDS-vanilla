@@ -1,0 +1,71 @@
+{
+    "panel_title":      "Accessibility Tools",
+    "panel_label":      "Accessibility settings",
+    "close_panel":      "Close accessibility panel",
+    "toggle_theme":     "Toggle theme",
+    "switch_lang":      "التبديل إلى العربية",
+    "scroll_panel":     "Scroll panel",
+    "section_modes":    "Accessibility Modes",
+    "section_readable": "Readable Experience",
+    "section_visual":   "Visually Pleasing Experience",
+    "aria_readable":    "Readable experience controls",
+    "aria_visual":      "Visual adjustments",
+    "default":          "Default",
+    "font_sizing":      "Font Sizing",
+    "dyslexia":         "Dyslexia Friendly",
+    "highlight_titles": "Highlight Titles",
+    "highlight_links":  "Highlight Links",
+    "reading_mask":     "Reading Mask",
+    "pause_motion":     "Pause Motion",
+    "text_align":       "Text Alignment",
+    "line_height":      "Line Height",
+    "letter_spacing":   "Letter Spacing",
+    "word_spacing":     "Word Spacing",
+    "reset":            "Reset Settings",
+
+    "exclude_controls": [],
+
+    "modes": [
+        { "id": "epilepsy-safe",        "name": "Epilepsy Safe Mode",        "desc": "Stops motion and dampens color intensity" },
+        { "id": "visually-impaired",    "name": "Visually Impaired Mode",    "desc": "Enlarges text and boosts contrast for clearer reading" },
+        { "id": "cognitive-disability", "name": "Cognitive Disability Mode", "desc": "Highlights titles and stops motion to reduce distraction" },
+        { "id": "motor-impaired",       "name": "Motor Impaired Mode",       "desc": "Enlarges click targets and emphasizes the focus indicator" },
+        { "id": "colorblind",           "name": "Colorblind Mode",           "desc": "Adjusts colors to distinguish red and green clearly" },
+        { "id": "dyslexia-friendly",    "name": "Dyslexia Friendly Mode",    "desc": "Uses a clearer font and widens line and word spacing" },
+        { "id": "adhd-friendly",        "name": "ADHD Friendly Mode",        "desc": "Stops motion, highlights titles, and enables the reading mask" }
+    ],
+
+    "visuals": [
+        { "id": "boost-contrast",  "label": "Boost Contrast"  },
+        { "id": "monochrome",      "label": "Monochrome"      },
+        { "id": "high-contrast",   "label": "High Contrast"   },
+        { "id": "high-saturation", "label": "High Saturation" },
+        { "id": "low-saturation",  "label": "Low Saturation"  },
+        { "id": "cvd-deutan",      "label": "Deuteranopia"    }
+    ],
+
+    "js": {
+        "on":                "on",
+        "off":               "off",
+        "set":               "set to",
+        "reset":             "All accessibility settings reset to default.",
+        "reset_done":        "Settings reset",
+        "active":            "active",
+        "confirm_reset":     "Click again to confirm",
+        "confirm_reset_msg": "Press the reset button again to confirm.",
+        "confirm_reset_remaining": "Confirm reset within {n} seconds.",
+        "reset_cancelled":   "Reset cancelled.",
+        "default":           "Default",
+        "start":             "Start",
+        "end":               "End",
+        "justify":           "Justify",
+        "small":             "Small",
+        "medium":            "Medium",
+        "large":             "Large",
+        "mask_toolbar":      "Reading mask controls",
+        "mask_size_down":    "Decrease mask band",
+        "mask_size_up":      "Increase mask band",
+        "mask_grab":         "Drag mask vertically. Use arrow keys to nudge.",
+        "mask_close":        "Close reading mask"
+    }
+}

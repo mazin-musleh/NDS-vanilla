@@ -162,6 +162,7 @@ $breakpoints-range: (
   }
 }
 
+
 // ==============================================
 // AUTOFILL RESET
 // ==============================================
@@ -197,16 +198,6 @@ $breakpoints-range: (
 
 }
 
-input:is([type="text"],
-  [type="email"],
-  [type="password"],
-  [type="search"],
-  [type="tel"],
-  [type="url"]),
-textarea {
-  @include autofill-reset();
-}
-
 // ==============================================
 // BUTTON BASE MIXINS
 // ==============================================
@@ -238,7 +229,12 @@ textarea {
   --_btn-padding: var(--btn-padding, calc((var(--_btn-size) - 8px) / 2));
   --_btn-radius: var(--btn-radius, var(--radius-sm));
 
-  --_btn-FS: var(--btn-FS, calc(var(--_btn-size) / 4 + 6px));
+  // Outer * --user-font-scale wraps both the consumer-override path and
+  // the default calc, so an explicit --btn-FS still respects the global
+  // a11y scale. Components that pin --user-font-scale: 1 inside their
+  // subtree (e.g. the accessibility panel) get unscaled button labels
+  // without having to override --_btn-FS directly.
+  --_btn-FS: calc(var(--btn-FS, calc(var(--_btn-size) / 4 + 6px)) * var(--user-font-scale, 1));
   --_btn-LH: var(--btn-LH, calc(var(--_btn-FS) * 1.5));
   --_btn-icon-size: var(--btn-icon-size, calc(var(--_btn-size) / 2 + 4px));
 

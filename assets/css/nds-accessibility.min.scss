@@ -1,0 +1,23 @@
+---
+# Accessibility add-on for NDS (National Design System) — OPTIONAL bundle.
+# Bundles the a11y mode token overrides (`data-a11y` — high-contrast, dyslexia,
+# font-scaling, reading-mask, motor, …), the accessibility FAB + panel + reading
+# mask chrome, and the dyslexia-mode @font-face declarations.
+# Requires nds-main.min.css (references its design tokens). Drop the <link> —
+# plus the accessibility-panel.html include and the a11y FOUC guard in
+# head-inline-scripts.html — to ship your own accessibility solution instead.
+# The a11y baked into the core (focus rings, ARIA, semantic contrast,
+# reduce-motion in components) stays in nds-main; only this user-facing
+# control panel + its mode overrides are optional.
+---
+/*!
+ * National Design System — Accessibility (optional add-on)
+ * Version: {{ site.version }}
+ * License: {{ site.license }}
+ * Repository: {{ site.repository_url }}
+ * Author: {{ site.author }}
+ * Profile: {{ site.author_profile }}
+ */
+
+@use 'variables-a11y';
+@use 'components/accessibility';

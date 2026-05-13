@@ -13,10 +13,6 @@
         ar: { showMore: 'عرض المزيد', showLess: 'عرض أقل' }
     };
 
-    function getLang() {
-        return NDS.isArabic ? 'ar' : 'en';
-    }
-
     class NDSExpandable {
         constructor(expandableContainer) {
             this.expandableContainer = expandableContainer;
@@ -82,7 +78,7 @@
             this.expandButton.setAttribute('aria-label', 'Expand content');
             this.expandButton.setAttribute('aria-expanded', 'false');
 
-            this.expandButton.innerHTML = `<span class="nds-label">${labels[getLang()].showMore}</span>`;
+            this.expandButton.innerHTML = `<span class="nds-label">${labels[NDS.langKey].showMore}</span>`;
 
             // Add button to the parent container (not the content element)
             this.expandableContainer.appendChild(this.expandButton);
@@ -112,7 +108,7 @@
             if (this.expandButton) {
                 this.expandButton.setAttribute('aria-expanded', 'true');
                 this.expandButton.setAttribute('aria-label', 'Menu');
-                this.expandButton.querySelector('.nds-label').textContent = labels[getLang()].showLess;
+                this.expandButton.querySelector('.nds-label').textContent = labels[NDS.langKey].showLess;
             }
 
             // Sync siblings if parent has nds-expand-all
@@ -134,7 +130,7 @@
             if (this.expandButton) {
                 this.expandButton.setAttribute('aria-expanded', 'false');
                 this.expandButton.setAttribute('aria-label', 'Menu');
-                this.expandButton.querySelector('.nds-label').textContent = labels[getLang()].showMore;
+                this.expandButton.querySelector('.nds-label').textContent = labels[NDS.langKey].showMore;
             }
 
             // Sync siblings if parent has nds-expand-all

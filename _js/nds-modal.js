@@ -15,32 +15,10 @@
   let activeModal = null;
   let initAC = null;
 
-  /**
-   * Simple focus trap handler
-   */
-  function trapFocus(e) {
-    if (e.key !== 'Tab' || !activeModal) return;
-
-    const focusable = activeModal.querySelectorAll(
-      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    );
-
-    if (focusable.length === 0) return;
-
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    // Shift + Tab: if on first, go to last
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    }
-    // Tab: if on last, go to first
-    else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }
+  // Tab focus trap — delegates to the shared NDS.trapFocus factory.
+  // The arrow form re-evaluates `activeModal` on every Tab press, so this
+  // single handler instance works across open/close cycles.
+  const trapFocus = NDS.trapFocus(() => activeModal);
 
   /**
    * Open modal by ID or element

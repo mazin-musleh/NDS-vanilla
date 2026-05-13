@@ -233,6 +233,11 @@
             selector: '.nds-cooldown',
             init: () => NDS.CooldownButton?.init?.(),
         },
+        {
+            name: 'accessibility',
+            selector: '[data-accessibility-panel]',
+            init: () => NDS.Accessibility?.init?.(),
+        },
     ].map((component, index) => ({
         ...component,
         priority: index + 1  // Auto-assign priority based on array order
