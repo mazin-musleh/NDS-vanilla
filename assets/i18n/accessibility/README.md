@@ -45,12 +45,12 @@ The seven Accessibility-Modes accordion rows. Match by `id` against
 Order in the array drives nothing visual — the rows are statically
 ordered in HTML. Keep all seven `id`s present.
 
-### `visuals: { id, label, icon }[]`
+### `visuals: { id, label }[]`
 
 The six Visually-Pleasing tiles. Match by `id` against
-`data-visual-id="…"`; `label` populates `[data-i18n-label]`. `icon` is
-informational metadata for translators — the icon class is hard-baked
-into the HTML.
+`data-visual-id="…"`; `label` populates `[data-i18n-label]`. Icon
+classes live in `_includes/accessibility-panel.html` only — there's no
+locale-specific icon variant, so nothing about the icon belongs here.
 
 ### `js: { … }`
 

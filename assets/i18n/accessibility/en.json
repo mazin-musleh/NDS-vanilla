@@ -36,12 +36,12 @@
     ],
 
     "visuals": [
-        { "id": "boost-contrast",  "label": "Boost Contrast",  "icon": "hgi-flash" },
-        { "id": "monochrome",      "label": "Monochrome",      "icon": "hgi-color-picker" },
-        { "id": "high-contrast",   "label": "High Contrast",   "icon": "hgi-blur" },
-        { "id": "high-saturation", "label": "High Saturation", "icon": "hgi-sparkles" },
-        { "id": "low-saturation",  "label": "Low Saturation",  "icon": "hgi-droplet" },
-        { "id": "cvd-deutan",      "label": "Deuteranopia",    "icon": "hgi-eye" }
+        { "id": "boost-contrast",  "label": "Boost Contrast"  },
+        { "id": "monochrome",      "label": "Monochrome"      },
+        { "id": "high-contrast",   "label": "High Contrast"   },
+        { "id": "high-saturation", "label": "High Saturation" },
+        { "id": "low-saturation",  "label": "Low Saturation"  },
+        { "id": "cvd-deutan",      "label": "Deuteranopia"    }
     ],
 
     "js": {

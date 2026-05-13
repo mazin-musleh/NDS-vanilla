@@ -36,12 +36,12 @@
     ],
 
     "visuals": [
-        { "id": "boost-contrast",  "label": "تعزيز التباين",  "icon": "hgi-flash" },
-        { "id": "monochrome",      "label": "أحادي اللون",    "icon": "hgi-color-picker" },
-        { "id": "high-contrast",   "label": "تباين عالٍ",     "icon": "hgi-blur" },
-        { "id": "high-saturation", "label": "تشبع عالٍ",     "icon": "hgi-sparkles" },
-        { "id": "low-saturation",  "label": "تشبع منخفض",   "icon": "hgi-droplet" },
-        { "id": "cvd-deutan",      "label": "عمى اللون الأخضر","icon": "hgi-eye" }
+        { "id": "boost-contrast",  "label": "تعزيز التباين" },
+        { "id": "monochrome",      "label": "أحادي اللون" },
+        { "id": "high-contrast",   "label": "تباين عالٍ" },
+        { "id": "high-saturation", "label": "تشبع عالٍ" },
+        { "id": "low-saturation",  "label": "تشبع منخفض" },
+        { "id": "cvd-deutan",      "label": "عمى اللون الأخضر" }
     ],
 
     "js": {
