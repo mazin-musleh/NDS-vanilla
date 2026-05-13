@@ -206,6 +206,17 @@ $a11y-filters: (
     color: var(--_btn-color);
 }
 
+// Accessibility-panel selected tile: its --btn-bg pulls
+// --button-background-primary-default which the root HC block above
+// redefines to --_hc-fg, while --btn-color still resolves to plain
+// white via --text-oncolor-primary (pinned at line 104). Fine in light
+// HC (white text on black tile) but a white-on-white blank in dark HC.
+// Re-pair the label colour with --_hc-bg so text and icon stay legible
+// regardless of theme.
+:root[data-a11y~="high-contrast"] .nds-accessibility-panel .nds-grid > .nds-btn[data-state~="selected"] {
+    --btn-color: var(--_hc-bg);
+}
+
 // Content sections — the coloured variants (.nds-primary / .nds-green /
 // .nds-neutral / .nds-brand / .nds-gradient-green) and any author-set
 // --section-bg collapse to the mono palette. !important on --section-bg
