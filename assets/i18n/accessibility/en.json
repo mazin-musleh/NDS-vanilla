@@ -26,13 +26,13 @@
     "exclude_controls": [],
 
     "modes": [
-        { "id": "epilepsy-safe",        "name": "Epilepsy Safe Mode",        "desc": "Dampens color and removes blinks" },
-        { "id": "visually-impaired",    "name": "Visually Impaired Mode",    "desc": "Improves website visuals" },
-        { "id": "cognitive-disability", "name": "Cognitive Disability Mode", "desc": "Helps focus on specific content" },
-        { "id": "motor-impaired",       "name": "Motor Impaired Mode",       "desc": "Allows using the website with a keyboard" },
-        { "id": "colorblind",           "name": "Colorblind Mode",           "desc": "Adjusts the website for colorblind users" },
-        { "id": "dyslexia-friendly",    "name": "Dyslexia Friendly Mode",    "desc": "Helps users with Dyslexia" },
-        { "id": "adhd-friendly",        "name": "ADHD Friendly Mode",        "desc": "Reduces distractions and improves focus" }
+        { "id": "epilepsy-safe",        "name": "Epilepsy Safe Mode",        "desc": "Stops motion and dampens color intensity" },
+        { "id": "visually-impaired",    "name": "Visually Impaired Mode",    "desc": "Enlarges text and boosts contrast for clearer reading" },
+        { "id": "cognitive-disability", "name": "Cognitive Disability Mode", "desc": "Highlights titles and stops motion to reduce distraction" },
+        { "id": "motor-impaired",       "name": "Motor Impaired Mode",       "desc": "Enlarges click targets and emphasizes the focus indicator" },
+        { "id": "colorblind",           "name": "Colorblind Mode",           "desc": "Adjusts colors to distinguish red and green clearly" },
+        { "id": "dyslexia-friendly",    "name": "Dyslexia Friendly Mode",    "desc": "Uses a clearer font and widens line and word spacing" },
+        { "id": "adhd-friendly",        "name": "ADHD Friendly Mode",        "desc": "Stops motion, highlights titles, and enables the reading mask" }
     ],
 
     "visuals": [

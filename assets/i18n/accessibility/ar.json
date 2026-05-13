@@ -1,21 +1,21 @@
 {
-    "panel_title":      "أدوات الوصول",
-    "panel_label":      "إعدادات الوصول",
-    "close_panel":      "إغلاق لوحة الوصول",
+    "panel_title":      "أدوات إمكانية الوصول",
+    "panel_label":      "إعدادات إمكانية الوصول",
+    "close_panel":      "إغلاق لوحة إمكانية الوصول",
     "toggle_theme":     "تبديل المظهر",
     "switch_lang":      "Switch to English",
     "scroll_panel":     "تمرير اللوحة",
-    "section_modes":    "أوضاع الوصول",
+    "section_modes":    "أوضاع إمكانية الوصول",
     "section_readable": "تجربة القراءة",
     "section_visual":   "التجربة البصرية",
     "aria_readable":    "عناصر تحكم تجربة القراءة",
     "aria_visual":      "التعديلات البصرية",
     "default":          "افتراضي",
     "font_sizing":      "حجم الخط",
-    "dyslexia":         "صديق عُسْر القراءة",
+    "dyslexia":         "داعم لعسر القراءة",
     "highlight_titles": "تمييز العناوين",
     "highlight_links":  "تمييز الروابط",
-    "reading_mask":     "قناع القراءة",
+    "reading_mask":     "مجهر القراءة",
     "pause_motion":     "إيقاف الحركة",
     "text_align":       "محاذاة النص",
     "line_height":      "ارتفاع السطر",
@@ -26,31 +26,31 @@
     "exclude_controls": ["letter-spacing"],
 
     "modes": [
-        { "id": "epilepsy-safe",        "name": "وضع آمن للصرع",         "desc": "يخفف الألوان ويزيل الوميض" },
-        { "id": "visually-impaired",    "name": "وضع ضعاف البصر",         "desc": "يحسّن مرئيات الموقع" },
-        { "id": "cognitive-disability", "name": "وضع الإعاقة الإدراكية", "desc": "يساعد على التركيز على محتوى محدد" },
-        { "id": "motor-impaired",       "name": "وضع الإعاقة الحركية",   "desc": "يتيح استخدام الموقع بلوحة المفاتيح" },
-        { "id": "colorblind",           "name": "وضع عمى الألوان",        "desc": "يعدّل الموقع لمستخدمي عمى الألوان" },
-        { "id": "dyslexia-friendly",    "name": "وضع صديق عُسْر القراءة", "desc": "يساعد مستخدمي عُسْر القراءة" },
-        { "id": "adhd-friendly",        "name": "وضع صديق فرط الحركة",    "desc": "يقلل التشتت ويحسّن التركيز" }
+        { "id": "epilepsy-safe",        "name": "وضع مراعٍ للصرع",                            "desc": "يوقف الحركة ويخفّف حدة الألوان" },
+        { "id": "visually-impaired",    "name": "وضع ذوي الإعاقة البصرية",                    "desc": "يكبّر الخط ويعزّز التباين لقراءة أوضح" },
+        { "id": "cognitive-disability", "name": "وضع داعم للإعاقة المعرفية",                  "desc": "يبرز العناوين ويوقف الحركة لتقليل الإلهاء" },
+        { "id": "motor-impaired",       "name": "وضع ذوي الإعاقة الحركية",                    "desc": "يكبّر مناطق النقر ويبرز مؤشر التركيز" },
+        { "id": "colorblind",           "name": "وضع عمى الألوان",                            "desc": "يضبط الألوان لتمييز الأحمر والأخضر بوضوح" },
+        { "id": "dyslexia-friendly",    "name": "وضع داعم لعسر القراءة",                      "desc": "يستخدم خطًا أوضح ويوسّع تباعد الأسطر والكلمات" },
+        { "id": "adhd-friendly",        "name": "وضع داعم لاضطراب فرط الحركة وتشتت الانتباه", "desc": "يوقف الحركة ويبرز العناوين مع مجهر القراءة" }
     ],
 
     "visuals": [
         { "id": "boost-contrast",  "label": "تعزيز التباين",  "icon": "hgi-flash" },
         { "id": "monochrome",      "label": "أحادي اللون",    "icon": "hgi-color-picker" },
         { "id": "high-contrast",   "label": "تباين عالٍ",     "icon": "hgi-blur" },
-        { "id": "high-saturation", "label": "تشبّع عالٍ",     "icon": "hgi-sparkles" },
-        { "id": "low-saturation",  "label": "تشبّع منخفض",   "icon": "hgi-droplet" },
+        { "id": "high-saturation", "label": "تشبع عالٍ",     "icon": "hgi-sparkles" },
+        { "id": "low-saturation",  "label": "تشبع منخفض",   "icon": "hgi-droplet" },
         { "id": "cvd-deutan",      "label": "عمى اللون الأخضر","icon": "hgi-eye" }
     ],
 
     "js": {
-        "on":                "مُفعَّل",
-        "off":               "مُعطَّل",
+        "on":                "مفعل",
+        "off":               "معطل",
         "set":               "تم الضبط على",
-        "reset":             "تمت إعادة تعيين جميع إعدادات الوصول.",
+        "reset":             "تمت إعادة تعيين جميع إعدادات إمكانية الوصول إلى الافتراضي.",
         "reset_done":        "تمت إعادة التعيين",
-        "active":            "مُفعَّل",
+        "active":            "نشط",
         "confirm_reset":     "انقر مرة أخرى للتأكيد",
         "confirm_reset_msg": "اضغط زر إعادة التعيين مرة أخرى للتأكيد.",
         "confirm_reset_remaining": "أكّد إعادة التعيين خلال {n} ثوانٍ.",
@@ -62,10 +62,10 @@
         "small":             "صغير",
         "medium":            "متوسط",
         "large":             "كبير",
-        "mask_toolbar":      "عناصر تحكم قناع القراءة",
-        "mask_size_down":    "تصغير شريط القناع",
-        "mask_size_up":      "تكبير شريط القناع",
-        "mask_grab":         "اسحب القناع رأسيًا. استخدم مفاتيح الأسهم لتحريكه.",
-        "mask_close":        "إغلاق قناع القراءة"
+        "mask_toolbar":      "عناصر تحكم مجهر القراءة",
+        "mask_size_down":    "تصغير شريط المجهر",
+        "mask_size_up":      "تكبير شريط المجهر",
+        "mask_grab":         "اسحب المجهر رأسيًا. استخدم مفاتيح الأسهم لتحريكه.",
+        "mask_close":        "إغلاق مجهر القراءة"
     }
 }
