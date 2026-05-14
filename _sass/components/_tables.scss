@@ -117,7 +117,7 @@
     td {
         padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
         vertical-align: middle;
-        background-color: var(--background-card);
+        background-color: var(--table-background-cell);
         color: var(--table-text-body);
         border-left: 1px solid var(--table-cell-border);
         height: var(--_table-row-height, 64px);
@@ -137,28 +137,25 @@
 
     // ── Row states ──
 
-    tbody tr:hover td {
-        background-color: var(--table-background-header);
-    }
-
     tbody tr:nth-child(even) td {
         background-color: var(--table-background-row);
     }
 
-    tbody tr:nth-child(even):hover td {
-        background-color: var(--table-background-header);
+    &.nds-interactive {
+        tbody tr:hover td,
+        tbody tr:nth-child(even):hover td {
+            background-color: var(--table-background-header);
+        }
     }
 
     tbody tr[data-state~="selected"] {
-        background-color: var(--table-background-tr-selected);
-
         td {
             background-color: var(--table-background-row-selected);
         }
+    }
 
-        &:hover td {
-            background-color: var(--table-background-hover-selected);
-        }
+    &.nds-interactive tbody tr[data-state~="selected"]:hover td {
+        background-color: var(--table-background-hover-selected);
     }
 
     // ── Column header (label + actions) ──
