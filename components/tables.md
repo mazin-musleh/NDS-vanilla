@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Standard Table</h2>
-            <p class="nds-section-description">The default table layout with striped rows, hover highlighting, and rounded borders</p>
+            <p class="nds-section-description">The default table layout with striped rows and rounded borders. Toggle Interactive to preview the optional hover state</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -1478,9 +1478,9 @@ direction: ltr
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-layout-table-01"></i>
-                        <span class="nds-label">Striped Rows</span>
+                        <span class="nds-label">Row Highlighting</span>
                     </span>
-                    <p class="nds-item-desc">Alternating row backgrounds and hover highlighting are applied automatically for easier scanning of large datasets.</p>
+                    <p class="nds-item-desc">Alternating row backgrounds make large datasets easier to scan. Add <code class="nds-inline-code lang-html">nds-interactive</code> to opt into hover highlighting on tables whose rows respond to clicks or selection.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1517,6 +1517,7 @@ direction: ltr
                     <li>Choose <strong>compact tables</strong> for dense administrative data (logs, inventories, audit trails) and <strong>standard tables</strong> when rows contain rich content like tags, avatars, or action buttons</li>
                     <li>Enable sorting only on columns with meaningful sort order. Status columns with tags are poor candidates for sorting</li>
                     <li>Add <strong>row selection</strong> when the interface supports bulk operations (delete, export, assign). Pair the table with an action bar that appears when rows are selected</li>
+                    <li>Apply <code class="nds-inline-code lang-html">nds-interactive</code> only when rows actually do something on click or hover (open a detail panel, link to a record, toggle selection). Leave it off for read-only data so the hover highlight does not suggest interactivity that is not there</li>
                     <li>Set <code class="nds-inline-code lang-html">--max-width</code> when placing a table in a narrow container or side panel to trigger the responsive scroll wrapper early</li>
                     <li>Use <strong>pagination</strong> for datasets over 15-20 rows. Showing too many rows slows rendering and makes scanning harder</li>
                     <li>Keep header labels short and descriptive. Avoid abbreviations that require explanation</li>
@@ -1532,6 +1533,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-compact</code></td><td>Reduces row height to 48px. Override with <code class="nds-inline-code lang-html">--table-row-height</code> for custom values</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-mask</code></td><td>Applies gradient fade masks on the overflow edges when the table scrolls horizontally. Off by default. Note: mask clips descendants to the wrapper and breaks overflowing UI like dropmenus, tooltips, and popovers that escape table bounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-interactive</code></td><td>Enables hover background changes on rows so the table reads as clickable. Off by default to keep static data tables from suggesting interactivity</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sortable</code></td><td>Enables column sorting. Use <code class="nds-inline-code lang-html">nds-col-header</code> with <code class="nds-inline-code lang-html">nds-sort-btn nds-icon-only</code> inside sortable <code class="nds-inline-code lang-html">&lt;th&gt;</code> elements</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td>Center-aligns all cell content across the table</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-col-header</code></td><td>Flex container inside <code class="nds-inline-code lang-html">&lt;th&gt;</code> that holds the label and actions side by side</td></tr>
