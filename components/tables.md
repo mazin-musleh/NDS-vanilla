@@ -25,6 +25,10 @@ direction: ltr
                             <span class="nds-label">Compact</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                            <span class="nds-label">Interactive</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
                         </button>
@@ -138,6 +142,10 @@ direction: ltr
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
                             <span class="nds-label">Compact</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                            <span class="nds-label">Interactive</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
@@ -314,6 +322,10 @@ direction: ltr
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
                             <span class="nds-label">Compact</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                            <span class="nds-label">Interactive</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
@@ -568,6 +580,10 @@ direction: ltr
                             <span class="nds-label">Compact</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                            <span class="nds-label">Interactive</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
                         </button>
@@ -772,6 +788,10 @@ direction: ltr
                             <span class="nds-label">Compact</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                            <span class="nds-label">Interactive</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                             <span class="nds-label">Remove bg</span>
                         </button>
@@ -900,6 +920,10 @@ direction: ltr
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
                             <span class="nds-label">Compact</span>
+                        </button>
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-interactive", ".nds-table", "tableInteractive"]'>
+                            <span class="nds-label">Interactive</span>
                         </button>
                         <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                             data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>

@@ -81,8 +81,8 @@ $a11y-filters: (
     // bg-only row selection collapse to --_hc-bg (the gridlines carry row
     // separation; selection still shows via the row's checkbox).
     --table-background-header:           var(--_hc-bg);
+    --table-background-cell:             var(--_hc-bg);
     --table-background-row:              var(--_hc-bg);
-    --table-background-tr-selected:      var(--_hc-bg);
     --table-background-row-selected:     var(--_hc-bg);
     --table-background-hover-selected:   var(--_hc-bg);
     --table-cell-border:                 var(--_hc-fg);
