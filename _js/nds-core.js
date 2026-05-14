@@ -184,6 +184,20 @@
         };
     };
 
+    // ── Run-When-Idle ────────────────────────────────────────────────
+    // Defers work to a browser-idle slot via requestIdleCallback, with a
+    // setTimeout fallback for environments without rIC. Use for non-critical
+    // init-time work (topbar widget API calls, post-load analytics, etc.)
+    // that shouldn't compete with the post-DCL hydration window.
+    // Usage: NDS.onIdle(() => fetchWeather(), 2000)
+    NDS.onIdle = (fn, timeout = 2000) => {
+        if (typeof requestIdleCallback === 'function') {
+            requestIdleCallback(fn, { timeout });
+        } else {
+            setTimeout(fn, 1);
+        }
+    };
+
     // ── Window Resize Bus ────────────────────────────────────────────
     // Single listener, 150ms debounce, fan-out to subscribers
     // Usage: const off = NDS.onResize(handler)

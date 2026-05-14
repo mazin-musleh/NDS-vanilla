@@ -127,16 +127,6 @@
             init: () => NDS.DatePicker?.init?.(),
         },
         {
-            name: 'cityWeather',
-            selector: '#nds-weatherInfo, #nds-cityName',
-            init: () => NDS.CityWeather?.init?.(),
-        },
-        {
-            name: 'timeDate',
-            selector: '#nds-date, #nds-realTimeClock',
-            init: () => NDS.TimeDate?.init?.(),
-        },
-        {
             name: 'fontLoading',
             selector: null,
             init: () => NDS.FontLoading?.init?.(),
@@ -232,6 +222,21 @@
             name: 'cooldownButton',
             selector: '.nds-cooldown',
             init: () => NDS.CooldownButton?.init?.(),
+        },
+        // Topbar widgets — placed last because they're non-critical chrome
+        // (clock, hijri date, weather, city). Their network-bound updates
+        // are async anyway; ordering them after interactive components
+        // (modal, tooltip, filter, pagination…) keeps the early init chain
+        // focused on what the user can click.
+        {
+            name: 'cityWeather',
+            selector: '#nds-weatherInfo, #nds-cityName',
+            init: () => NDS.CityWeather?.init?.(),
+        },
+        {
+            name: 'timeDate',
+            selector: '#nds-date, #nds-realTimeClock',
+            init: () => NDS.TimeDate?.init?.(),
         },
         {
             name: 'accessibility',

@@ -142,35 +142,81 @@
         }
     }
 
-    // Clock function (no caching needed)
-    function updateClock() {
-        const el = document.getElementById('nds-realTimeClock');
-        if (!el) return;
+    // Clock — build the icon + span once, then only mutate the cached
+    // text node on each tick. Displays h:mm AM/PM (no seconds): topbar
+    // clocks don't need second-by-second precision, and ticking once per
+    // minute (aligned to the minute boundary) cuts DOM work 60× vs a
+    // per-second setInterval.
+    let clockText = null;
+    let clockTimer = null;
 
+    function ensureClockDOM() {
+        if (clockText) return true;
+        const el = document.getElementById('nds-realTimeClock');
+        if (!el) return false;
+        const icon = document.createElement('i');
+        icon.className = 'nds-icon nds-hgi-clock-01';
+        icon.setAttribute('aria-hidden', 'true');
+        clockText = document.createTextNode('');
+        const span = document.createElement('span');
+        span.className = 'text';
+        span.appendChild(clockText);
+        el.replaceChildren(icon, span);
+        return true;
+    }
+
+    function updateClock() {
+        if (!ensureClockDOM()) return;
         const now = new Date();
         const h = now.getHours();
         const m = now.getMinutes();
-        const s = now.getSeconds();
-        const time = `${h % 12 || 12}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
-        
-        el.innerHTML = `<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i><span class="text">${time}</span>`;
+        clockText.nodeValue = `${h % 12 || 12}:${m.toString().padStart(2, '0')} ${h >= 12 ? 'PM' : 'AM'}`;
     }
 
+    function scheduleNextMinute() {
+        const now = new Date();
+        const msUntilNext = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+        clockTimer = setTimeout(() => {
+            updateClock();
+            scheduleNextMinute();
+        }, msUntilNext);
+    }
 
+    function startClock() {
+        if (clockTimer) return;
+        updateClock();
+        scheduleNextMinute();
+    }
+
+    function stopClock() {
+        if (!clockTimer) return;
+        clearTimeout(clockTimer);
+        clockTimer = null;
+    }
 
     function initializeTimeDate() {
         const dateEl = document.getElementById('nds-date');
         const clockEl = document.getElementById('nds-realTimeClock');
 
         if (dateEl) {
-            updateDate();
+            // Defer the initial fetch to an idle slot — on cache miss
+            // updateDate hits api.aladhan.com, and we don't want that
+            // racing critical resources during post-DCL hydration. The
+            // 24h interval and lang-change handler still run inline so
+            // they respond promptly when triggered.
+            NDS.onIdle(updateDate);
             setInterval(updateDate, 24 * 60 * 60 * 1000);
             NDS.onAttrChange('html', ['lang'], updateDate);
         }
 
         if (clockEl) {
-            updateClock();
-            setInterval(updateClock, 1000);
+            // Skip the tick loop while the tab is hidden — no point burning
+            // per-second DOM mutations no one can see. On resume, startClock()
+            // ticks immediately so the time isn't a second stale.
+            if (!document.hidden) startClock();
+            document.addEventListener('visibilitychange', () => {
+                document.hidden ? stopClock() : startClock();
+            });
         }
     }
 

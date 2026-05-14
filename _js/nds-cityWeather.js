@@ -171,8 +171,15 @@
 
         // Only run if both weather and city elements exist (they depend on each other)
         if (weatherEl && cityEl) {
-            updateWeather();
-            updateCity(); // City runs once on load, cached for 30 days
+            // Defer the initial fetches to an idle slot — on cache miss
+            // these hit open-meteo and nominatim, and we don't want them
+            // racing critical resources during post-DCL hydration. The
+            // 15-min weather interval and lang-change handler still run
+            // inline so they respond promptly when triggered.
+            NDS.onIdle(() => {
+                updateWeather();
+                updateCity();
+            });
 
             // Update weather every 15 minutes
             setInterval(updateWeather, 15 * 60 * 1000);
