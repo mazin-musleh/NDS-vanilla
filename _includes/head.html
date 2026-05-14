@@ -5,13 +5,6 @@
     <meta name="description"
         content="{{ page.description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
     <title>{%- if page.title %}{{ page.title }} | {%- endif %} {{ site_title }}</title>
-    {%- unless page.exclude_showcase == true %}
-    <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
-    {%- endunless %}
     {%- comment -%} Preload first hero slide so LCP can start before body parse — only on layouts that render the main slider {%- endcomment -%}
     {%- if page.layout == 'home' -%}
     {%- if page.hero_sliders -%}
@@ -71,6 +64,13 @@
     {%- endif %}
     <!-- Favicon - low-priority fetch so it doesn't compete with critical assets -->
     <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}" fetchpriority="low">
+    {%- unless page.exclude_showcase == true %}
+    <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    </noscript>
+    {%- endunless %}
     {%- if site.debug %}
     {%- include perf-monitor.html %}
     {%- endif %}
