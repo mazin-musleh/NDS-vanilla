@@ -89,7 +89,7 @@ sidemenu_mode: false
 
                 <div class="nds-tab-content">
 
-                    <div class="nds-tab-panel" role="tabpanel" id="panel-faq-all" aria-labelledby="tab-faq-all" tabindex="0">
+                    <div class="nds-tab-panel" role="tabpanel" id="panel-faq-all" aria-labelledby="tab-faq-all" tabindex="0" style="padding:0;">
                         <div class="nds-accordion nds-lg" id="faq-all-items" data-filter-items=".nds-accordion-item">
                             {% for item in faqs %}
                             {% assign hid = "faq-all-h-" | append: item.id %}
@@ -120,7 +120,7 @@ sidemenu_mode: false
 
                     {% for category in categories %}
                     <div class="nds-tab-panel" role="tabpanel" id="panel-faq-{{ category }}" aria-labelledby="tab-faq-{{ category }}"
-                        aria-hidden="true" tabindex="-1" hidden>
+                        aria-hidden="true" tabindex="-1" hidden style="padding:0;">
                         <div class="nds-accordion nds-lg" id="faq-{{ category }}-items">
                             {% for item in faqs %}
                             {% if item.category == category %}
@@ -162,8 +162,18 @@ sidemenu_mode: false
 (function () {
     const searchBox = document.querySelector('.nds-search-box[data-filter-target="faq-all-items"]');
     const filterDropmenu = document.querySelector('.nds-filter[data-filter-target="faq-all-items"]');
+    const appliedContainer = document.querySelector('.nds-filter-applied[data-filter-target="faq-all-items"]');
+    const tabListContainer = document.querySelector('#faq-tabs .nds-tab-list-container');
     const allTabBtn = document.getElementById('tab-faq-all');
     if (!allTabBtn) return;
+
+    if (appliedContainer && tabListContainer) {
+        const syncTabList = () => {
+            tabListContainer.hidden = !appliedContainer.hasAttribute('hidden');
+        };
+        syncTabList();
+        new MutationObserver(syncTabList).observe(appliedContainer, { attributes: true, attributeFilter: ['hidden'] });
+    }
 
     function switchToAll() {
         if (allTabBtn.getAttribute('aria-selected') === 'true') return;
