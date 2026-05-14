@@ -230,13 +230,31 @@
                     var d = Math.round(e.duration);
                     if (d < 100) return;
                     var label = 'LONG TASK  ' + d + 'ms';
+                    var blk = Math.round(e.blockingDuration || 0);
+                    if (blk) label += '  block:' + blk;
+
+                    // LoAF timing buckets — populated even when scripts[] is empty
+                    var taskEnd = e.startTime + e.duration;
+                    var renderDur = e.renderStart ? Math.round(taskEnd - e.renderStart) : 0;
+                    var layoutDur = e.styleAndLayoutStart ? Math.round(taskEnd - e.styleAndLayoutStart) : 0;
+
                     if (e.scripts && e.scripts.length) {
                         for (var i = 0; i < e.scripts.length; i++) {
-                            var s = e.scripts[i], src = s.sourceURL || '', fn = s.sourceFunctionName || '';
+                            var s = e.scripts[i];
+                            var src = s.sourceURL || '', fn = s.sourceFunctionName || '';
+                            var sd = Math.round(s.duration || 0);
                             if (src) { var p = src.split('/'); src = p[p.length - 1].split('?')[0]; }
-                            if (src || fn) label += '  → ' + (fn || '') + (fn && src ? ' ' : '') + (src ? '(' + src + ')' : '');
+                            if (src || fn) label += '  → ' + (fn || '?') + (src ? '(' + src + ')' : '') + (sd ? ' ' + sd + 'ms' : '');
                         }
+                    } else {
+                        // No script attribution → log timing buckets so non-script
+                        // work (parse/compile/decode/paint/layout) is still visible.
+                        var parts = [];
+                        if (layoutDur) parts.push('layout:' + layoutDur);
+                        if (renderDur && renderDur !== layoutDur) parts.push('render:' + renderDur);
+                        label += '  ' + (parts.length ? parts.join(' ') : '(non-script: parse/decode/paint)');
                     }
+
                     log(label, d > 200 ? 'b' : 'w');
                 });
             }).observe({ type: 'long-animation-frame', buffered: true });
@@ -247,7 +265,7 @@
                 new PerformanceObserver(function (l) {
                     l.getEntries().forEach(function (e) {
                         var d = Math.round(e.duration);
-                        if (d > 100) log('LONG TASK  ' + d + 'ms', d > 200 ? 'b' : 'w');
+                        if (d > 100) log('LONG TASK  ' + d + 'ms  (longtask API; LoAF unavailable)', d > 200 ? 'b' : 'w');
                     });
                 }).observe({ type: 'longtask', buffered: true });
             } catch (e) { }
