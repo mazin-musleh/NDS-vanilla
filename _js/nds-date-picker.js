@@ -1872,6 +1872,14 @@
 
         // Destroy instance
         destroy: function () {
+            // If the dropdown is open at destroy time, close it first so the
+            // close branch of toggleDropdown releases viewport tracking +
+            // portal state. Without this, raw window scroll + resize
+            // listeners from bindViewportTracking leak for the page lifetime.
+            if (this.elements.dropdown && !NDS.State.has(this.elements.dropdown, 'hidden')) {
+                this.toggleDropdown();
+            }
+
             // Remove persistent event listeners
             if (this.handlers.ensureDropdownAndToggle) {
                 this.elements.input.removeEventListener('click', this.handlers.ensureDropdownAndToggle);
