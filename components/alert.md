@@ -511,7 +511,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 &lt;div class="nds-alert-placeholder" data-position="top"&gt;
-  &lt;div class="nds-alert nds-card nds-toast nds-shadow" data-status="success" role="alert" data-toast-state="show"&gt;
+  &lt;div class="nds-alert nds-card nds-toast nds-shadow" data-status="success" role="alert" data-state="toast-show"&gt;
     &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
       &lt;span class="nds-feedback-icon"&gt;
         &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
@@ -662,7 +662,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-alert</code> to control the variant. Values: <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">critical</code>, <code class="nds-inline-code lang-html">neutral</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-position</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-alert-placeholder</code> to position toast containers. Values: <code class="nds-inline-code lang-html">top</code>, <code class="nds-inline-code lang-html">bottom</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-toast-state</code></td><td>Controls toast visibility transitions. Values: <code class="nds-inline-code lang-html">show</code>, <code class="nds-inline-code lang-html">hide</code>. Managed automatically by the JS API</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-toast</code> to control visibility transitions. Values: <code class="nds-inline-code lang-html">toast-show</code>, <code class="nds-inline-code lang-html">toast-hide</code>. Managed automatically by the JS API</td></tr>
                     </tbody>
                 </table>
             </div>

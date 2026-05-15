@@ -480,11 +480,10 @@
     }
 
     function updatePositions() {
-        // Single attribute read + split — both flags share the same data-state.
-        // Avoids the duplicated parse cost inside hasState().
-        const ds = (DOM.collapse?.getAttribute('data-state') || '').split(/\s+/);
-        const isOpen = ds.includes('open');
-        const isClosing = ds.includes('closing');
+        // Single parse — both flags read from the same data-state token Set.
+        const ds = DOM.collapse ? NDS.State.parse(DOM.collapse) : new Set();
+        const isOpen = ds.has('open');
+        const isClosing = ds.has('closing');
 
         if (!state.isMinimal || !isOpen || isClosing) {
             if (!state.isMinimal && DOM.secondary) {

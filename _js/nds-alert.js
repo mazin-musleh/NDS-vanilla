@@ -186,7 +186,7 @@
                 }
 
                 // Add entrance animation
-                setTimeout(() => alert.setAttribute('data-toast-state', 'show'), 10);
+                setTimeout(() => NDS.State.set(alert, 'toast-show'), 10);
 
                 // Auto-dismiss with duration
                 if (duration > 0) {
@@ -258,7 +258,7 @@
 
                 // Add exit animation for toasts
                 if (el.classList.contains('nds-toast')) {
-                    el.setAttribute('data-toast-state', 'hide');
+                    NDS.State.set(el, 'toast-hide');
                     setTimeout(() => {
                         el.remove();
                         if (placeholder && !placeholder.children.length) {

@@ -426,11 +426,11 @@
     width: auto;
   }
 
-  &[data-toast-state="show"] {
+  &[data-state~="toast-show"] {
     opacity: 1;
   }
 
-  &[data-toast-state="hide"] {
+  &[data-state~="toast-hide"] {
     opacity: 0;
   }
 

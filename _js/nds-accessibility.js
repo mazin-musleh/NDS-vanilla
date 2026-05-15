@@ -770,7 +770,7 @@
             btn.insertBefore(icon, lbl);
         }
         lbl.textContent = A11Y_I18N.reset_done;
-        btn.dataset.status = 'success';
+        NDS.Status.set(btn, 'success');
         resetDoneTimer = setTimeout(() => {
             resetDoneTimer = null;
             if (btn.dataset.flashOriginal) {
@@ -779,7 +779,7 @@
             }
             const icon = btn.querySelector(':scope > [data-flash-icon]');
             if (icon) icon.remove();
-            delete btn.dataset.status;
+            NDS.Status.clear(btn);
         }, RESET_DONE_MS);
     }
 
@@ -798,7 +798,7 @@
             }
             const icon = btn.querySelector(':scope > [data-flash-icon]');
             if (icon) icon.remove();
-            delete btn.dataset.status;
+            NDS.Status.clear(btn);
         }
         if (resetTimer) {
             clearTimeout(resetTimer);
