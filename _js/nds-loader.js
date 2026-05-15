@@ -275,6 +275,27 @@
         '[hidden].nds-sideinfo, ' +
         '[hidden].nds-digitalStamp-tab';
 
+    // Shared MessageChannel for cross-batch yielding — allocated once per page
+    // lifetime instead of per initializeNDS() call. Reinitialize-heavy
+    // consumers (SPA route changes) would otherwise leak the prior channel +
+    // its onmessage handler on every call. FIFO queue handles overlapping
+    // init chains (reinit fired while a previous chain is still draining).
+    const _yieldChannel = new MessageChannel();
+    const _yieldQueue = [];
+    _yieldChannel.port1.onmessage = () => {
+        const cb = _yieldQueue.shift();
+        if (cb) cb();
+    };
+    const yieldToBrowser = (cb) => {
+        _yieldQueue.push(cb);
+        _yieldChannel.port2.postMessage(null);
+    };
+
+    // rIC fallback for older Safari (<18); behaves like a deferred macrotask
+    // with a fake deadline so the loop still drains.
+    const scheduleIdle = window.requestIdleCallback ||
+        ((cb) => setTimeout(() => cb({ timeRemaining: () => 50, didTimeout: false }), 1));
+
     function initializeNDS() {
         if (CONFIG.disableAll === true) {
             if (CONFIG.enableLogging) {
@@ -309,25 +330,6 @@
                 `(${eagerComponents.length} eager, ${idleComponents.length} idle)`
             );
         }
-
-        // MessageChannel yield: resumes within ~1ms vs setTimeout's ≥4ms clamp,
-        // while still letting the browser interleave input/layout/paint.
-        const yieldChannel = new MessageChannel();
-        let queuedYieldCallback = null;
-        yieldChannel.port1.onmessage = () => {
-            const cb = queuedYieldCallback;
-            queuedYieldCallback = null;
-            if (cb) cb();
-        };
-        const yieldToBrowser = (cb) => {
-            queuedYieldCallback = cb;
-            yieldChannel.port2.postMessage(null);
-        };
-
-        // rIC fallback for older Safari (<18); behaves like a deferred macrotask
-        // with a fake deadline so the loop still drains.
-        const scheduleIdle = window.requestIdleCallback ||
-            ((cb) => setTimeout(() => cb({ timeRemaining: () => 50, didTimeout: false }), 1));
 
         const runInit = (component) => {
             try {

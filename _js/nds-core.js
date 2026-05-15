@@ -906,10 +906,12 @@
     // Usage: const p = NDS.flipPosition(trigger, menu);
     //        const flipUp = p.spaceBelow < p.menuRect.height && p.spaceAbove > p.spaceBelow;
     //        const top = flipUp ? p.triggerRect.top - p.menuRect.height - 4 : p.triggerRect.bottom + 4;
-    // Cached lookup for `.nds-main-nav` — exactly one per page, present from
-    // chrome render onward. `undefined` = not yet looked up, element-or-null
-    // after first call. flipPosition fires on every popup open, so avoiding
-    // the repeated qS adds up across dropmenu/tooltip/datepicker interactions.
+    // Cached lookup for `.nds-main-nav` — flipPosition fires on every popup
+    // open, so avoiding the repeated qS adds up. `undefined` = never looked up,
+    // null = looked up and absent, element = cached. SPA consumers that swap
+    // the nav DOM on route changes leave a detached element in the cache;
+    // isConnected re-lookups in that case (null stays sticky to avoid
+    // re-querying on every popup when no nav is present).
     let _navEl;
 
     NDS.flipPosition = (trigger, menuEl, opts = {}) => {
@@ -921,7 +923,9 @@
 
         let topEdge = 0;
         if (respectNav) {
-            if (_navEl === undefined) _navEl = document.querySelector('.nds-main-nav');
+            if (_navEl === undefined || (_navEl && !_navEl.isConnected)) {
+                _navEl = document.querySelector('.nds-main-nav');
+            }
             const navBottom = _navEl ? _navEl.getBoundingClientRect().bottom : 0;
             if (navBottom > 0) topEdge = navBottom + navGap;
         }
