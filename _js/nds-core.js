@@ -208,11 +208,8 @@
     // Usage: const off = NDS.onResize(handler)
     NDS.onResize = (() => {
         const subs = [];
-        let t;
-        window.addEventListener('resize', () => {
-            clearTimeout(t);
-            t = setTimeout(() => { for (let i = 0; i < subs.length; i++) subs[i](); }, 150);
-        }, { passive: true });
+        const fire = NDS.debounce(() => { for (let i = 0; i < subs.length; i++) subs[i](); }, 150);
+        window.addEventListener('resize', fire, { passive: true });
 
         return fn => {
             subs.push(fn);
