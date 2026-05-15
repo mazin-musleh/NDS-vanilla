@@ -38,8 +38,8 @@
   @include tablet(max) {
     --_cols: var(--mid-col, var(--max-col, auto-fit));
     --_tracks: var(--mid-track, var(--max-track));
-    --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl))) / 2));
-    --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl))) / 2));
+    --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl)/ 2))));
+    --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl)/ 2))));
   }
 
   @include mobile {
