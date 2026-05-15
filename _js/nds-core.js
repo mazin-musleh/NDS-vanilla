@@ -498,11 +498,14 @@
     // (quotes, angle brackets, entities, mixed charsets) is handled by the engine itself —
     // no regex-based escape can match that coverage.
     // Usage: el.innerHTML = `<span>${NDS.escapeHtml(userValue)}</span>`
+    // Shared scratch node — one allocation for the page lifetime instead of
+    // one per escape call. Reading innerHTML between writes is fine because
+    // the node is never inserted into the document.
+    const _escapeNode = document.createElement('div');
     NDS.escapeHtml = (str) => {
         if (str == null) return '';
-        const div = document.createElement('div');
-        div.textContent = String(str);
-        return div.innerHTML;
+        _escapeNode.textContent = String(str);
+        return _escapeNode.innerHTML;
     };
 
     // ── Unique ID ─────────────────────────────────────────────────────
@@ -694,8 +697,14 @@
         return null;
     };
 
+    // Active NDS.portal count — incremented in portal, decremented in unportal.
+    // queryAll/querySelector use this to skip the body > .nds-dropmenu-menu sweep
+    // when nothing is portaled (the common case on most pages).
+    let _portaledCount = 0;
+
     NDS.queryAll = (root, selector) => {
         if (!root) return [];
+        if (_portaledCount === 0) return Array.from(root.querySelectorAll(selector));
         const set = new Set();
         root.querySelectorAll(selector).forEach(el => set.add(el));
         if (document.body) {
@@ -715,6 +724,7 @@
         if (!root) return null;
         const direct = root.querySelector(selector);
         if (direct) return direct;
+        if (_portaledCount === 0) return null;
         if (document.body) {
             const portaled = document.body.querySelectorAll(':scope > .nds-dropmenu-menu');
             for (let i = 0; i < portaled.length; i++) {
@@ -780,6 +790,7 @@
     NDS.portal = (el, opts = {}) => {
         if (el._ndsPortal) return; // already portaled
         if (!NDS.needsPortal(el)) return;
+        _portaledCount++;
         const snap = {};
         const vars = opts.snapshotVars;
         if (vars && vars.length) {
@@ -820,6 +831,7 @@
     NDS.unportal = (el) => {
         const state = el._ndsPortal;
         if (!state) return;
+        _portaledCount--;
         if (state.nextSibling && state.nextSibling.parentNode === state.parent) {
             state.parent.insertBefore(el, state.nextSibling);
         } else {
