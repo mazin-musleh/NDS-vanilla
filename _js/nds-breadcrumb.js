@@ -54,6 +54,7 @@
 
             // Initialize only the newly created dropdown menu
             const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
+            // Soft dependency — overflow stays as plain markup if NDS.Dropmenu isn't bundled.
             if (dropmenuElement && NDS.Dropmenu) {
                 // Use create() to initialize just this dropdown
                 NDS.Dropmenu.create(dropmenuElement);

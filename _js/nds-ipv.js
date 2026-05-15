@@ -316,6 +316,7 @@
 
             if (this.el.overlay) {
                 this.el.overlay.classList.add('nds-ipv-active');
+                // Soft dependency — image viewer skips dimming overlay if NDS.Backdrop isn't bundled.
                 if (!skipIndexUpdate && NDS.Backdrop) {
                     NDS.Backdrop.show({ zIndex: 999, clickToClose: false, escapeClose: false });
                 }
@@ -338,6 +339,7 @@
 
             if (this.el.overlay) {
                 this.el.overlay.classList.remove('nds-ipv-active');
+                // Soft dependency — image viewer skips dimming overlay if NDS.Backdrop isn't bundled.
                 if (NDS.Backdrop) {
                     NDS.Backdrop.hide();
                 }

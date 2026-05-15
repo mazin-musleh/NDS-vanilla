@@ -95,6 +95,7 @@
         accMenu.style.zIndex = backdropZ + 1;
 
         // Show backdrop
+        // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
         if (NDS.Backdrop) {
             NDS.Backdrop.show({
                 zIndex: backdropZ,
@@ -147,6 +148,7 @@
             if (toggleBtn) clearState(toggleBtn);
             if (drawer) drawer.style.removeProperty('--drawer-max-height');
 
+            // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
             if (NDS.Backdrop) NDS.Backdrop.hide();
             setTimeout(() => { if (closeEpoch === menuEpoch) accMenu.style.removeProperty('z-index'); }, 300);
             animTarget.removeEventListener('transitionend', onClosed);
@@ -238,6 +240,7 @@
                 }
                 if (toggleBtn) clearState(toggleBtn);
                 if (drawer) drawer.style.removeProperty('--drawer-max-height');
+                // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
                 if (NDS.Backdrop) NDS.Backdrop.hide();
                 accMenu.style.removeProperty('z-index');
             }

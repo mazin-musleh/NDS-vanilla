@@ -151,6 +151,7 @@
     let _navBackdropOwner = null;
 
     const showNavBackdrop = (owner, onClick) => {
+        // Soft dependency — nav skips backdrop dimming if NDS.Backdrop isn't bundled.
         if (!NDS.Backdrop) return;
         if (_navBackdropOwner === owner) return;
         const replacing = _navBackdropOwner !== null;
@@ -160,6 +161,7 @@
     };
 
     const hideNavBackdrop = (owner) => {
+        // Soft dependency — nav skips backdrop dimming if NDS.Backdrop isn't bundled.
         if (!NDS.Backdrop || _navBackdropOwner !== owner) return;
         _navBackdropOwner = null;
         NDS.Backdrop.hide();

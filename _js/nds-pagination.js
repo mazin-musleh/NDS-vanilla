@@ -71,6 +71,7 @@
 
             // Initialize only the newly created dropdown menu (same as breadcrumbs)
             const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
+            // Soft dependency — ellipsis stays as plain markup if NDS.Dropmenu isn't bundled.
             if (dropmenuElement && NDS.Dropmenu) {
                 NDS.Dropmenu.create(dropmenuElement);
             }

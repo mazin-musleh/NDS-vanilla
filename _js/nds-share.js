@@ -71,6 +71,7 @@
     }
 
     async function copyLink(url, button) {
+        // Soft dependency — share's copy-link action no-ops if NDS.Copy isn't bundled.
         if (!NDS.Copy) return;
         const ok = await NDS.Copy.writeText(url);
         if (!ok || !button) return;

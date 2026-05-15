@@ -102,7 +102,9 @@
   function init() {
     if (document.body.hasAttribute('data-nds-modal-initialized')) return;
 
-    // Ensure NDSBackdrop is available
+    // Soft dependency — modal init no-ops (with a loud console.error) if NDS.Backdrop
+    // isn't bundled. Modal needs Backdrop's overlay layer to function; failing loudly
+    // surfaces the bundle misconfiguration without crashing the whole page.
     if (!NDS.Backdrop) {
       console.error('NDSModal requires NDSBackdrop API. Please include nds-backdrop.js first.');
       return;

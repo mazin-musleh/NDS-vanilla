@@ -1199,6 +1199,7 @@
             if (!this.submissionForm) return;
 
             // Dismiss any feedback in filter container
+            // Soft dependency — filter skips feedback dismissal if NDS.Feedback isn't bundled.
             if (NDS.Feedback) {
                 NDS.Feedback.dismissAll(this.filterContainer);
             }
@@ -1569,6 +1570,7 @@
 
         applyFilters() {
             // Dismiss any feedback in filter container
+            // Soft dependency — filter skips feedback dismissal if NDS.Feedback isn't bundled.
             if (NDS.Feedback) {
                 NDS.Feedback.dismissAll(this.filterContainer);
             }
@@ -1658,6 +1660,7 @@
 
         showNoResultsAlert() {
             const alertId = `nds-filter-no-results-${this.targetId}`;
+            // Soft dependency — filter skips no-results alert banner if NDS.Alert isn't bundled.
             if (document.getElementById(alertId) || !NDS.Alert) return;
 
             const isArabic = NDS.isArabic;
@@ -1895,6 +1898,7 @@
             this.dismissNoResultsAlert();
 
             // Dismiss any feedback in filter container
+            // Soft dependency — filter skips feedback dismissal if NDS.Feedback isn't bundled.
             if (NDS.Feedback) {
                 NDS.Feedback.dismissAll(this.filterContainer);
             }
