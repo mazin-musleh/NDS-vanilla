@@ -123,12 +123,17 @@
         apply(scopes, data) {
             if (!data) return;
             this._roots(scopes).forEach(root => {
-                NDS.queryAll(root, '[data-i18n]').forEach(el => {
-                    const v = data[el.dataset.i18n];
-                    if (typeof v === 'string') el.textContent = v;
-                });
-                NDS.queryAll(root, '[data-i18n-attr]').forEach(el => {
-                    el.dataset.i18nAttr.split(',').forEach(pair => {
+                // One walk for both attrs; classify per element. An element can
+                // carry data-i18n AND data-i18n-attr — both branches still run.
+                NDS.queryAll(root, '[data-i18n], [data-i18n-attr]').forEach(el => {
+                    const textKey = el.dataset.i18n;
+                    if (textKey) {
+                        const v = data[textKey];
+                        if (typeof v === 'string') el.textContent = v;
+                    }
+                    const attrSpec = el.dataset.i18nAttr;
+                    if (!attrSpec) return;
+                    attrSpec.split(',').forEach(pair => {
                         const [attr, key] = pair.split(':').map(s => s.trim());
                         if (!this._SAFE_ATTR.test(attr)) {
                             console.warn('[NDS.i18n] refused to set unsafe attr:', attr);
@@ -901,6 +906,12 @@
     // Usage: const p = NDS.flipPosition(trigger, menu);
     //        const flipUp = p.spaceBelow < p.menuRect.height && p.spaceAbove > p.spaceBelow;
     //        const top = flipUp ? p.triggerRect.top - p.menuRect.height - 4 : p.triggerRect.bottom + 4;
+    // Cached lookup for `.nds-main-nav` — exactly one per page, present from
+    // chrome render onward. `undefined` = not yet looked up, element-or-null
+    // after first call. flipPosition fires on every popup open, so avoiding
+    // the repeated qS adds up across dropmenu/tooltip/datepicker interactions.
+    let _navEl;
+
     NDS.flipPosition = (trigger, menuEl, opts = {}) => {
         const { respectNav = true, navGap = 16 } = opts;
         const triggerRect = trigger.getBoundingClientRect();
@@ -910,8 +921,8 @@
 
         let topEdge = 0;
         if (respectNav) {
-            const nav = document.querySelector('.nds-main-nav');
-            const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
+            if (_navEl === undefined) _navEl = document.querySelector('.nds-main-nav');
+            const navBottom = _navEl ? _navEl.getBoundingClientRect().bottom : 0;
             if (navBottom > 0) topEdge = navBottom + navGap;
         }
 
