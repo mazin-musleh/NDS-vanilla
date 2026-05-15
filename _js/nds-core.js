@@ -572,6 +572,41 @@
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     };
 
+    // ── Live-Region Announcer (WCAG 4.1.3) ─────────────────────────────
+    // Announce a transient message to assistive tech. Clear-then-set (with a
+    // short delay) forces AT to re-utter even when the text is identical to
+    // the previous announcement. No-ops on an empty message or an
+    // unresolvable region.
+    //   message — string to announce
+    //   region  — optional explicit live-region element. Pass it for a
+    //             component-owned status region; omit it entirely to use a
+    //             shared SR-only region NDS lazily creates on <body>. An
+    //             explicitly-passed null/falsy region no-ops (lets callers
+    //             forward an optional element without a separate guard).
+    // Usage: NDS.announce('Copied to clipboard');
+    //        NDS.announce(msg, panel.querySelector('[data-a11y-status]'));
+    NDS.announce = (() => {
+        const DELAY = 50;
+        let shared;
+        const defaultRegion = () => {
+            if (!shared || !shared.isConnected) {
+                shared = document.createElement('div');
+                shared.className = 'sr-only';
+                shared.setAttribute('aria-live', 'polite');
+                shared.setAttribute('aria-atomic', 'true');
+                document.body.appendChild(shared);
+            }
+            return shared;
+        };
+        return (message, region) => {
+            if (!message) return;
+            const el = region === undefined ? defaultRegion() : region;
+            if (!el) return;
+            el.textContent = '';
+            setTimeout(() => { el.textContent = message; }, DELAY);
+        };
+    })();
+
     // ── Local-Storage TTL Cache ────────────────────────────────────────
     // Wraps localStorage with a JSON `{value, expires}` envelope. Getter
     // returns the cached value when fresh, `null` on miss / parse error /

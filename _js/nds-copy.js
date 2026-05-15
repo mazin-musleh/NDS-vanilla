@@ -48,7 +48,6 @@
 
     const DEFAULT_FLASH_MS = 2000;
     const CHECKMARK_CLASS = 'nds-icon-checkmark';
-    let _liveRegion = null;
 
     async function writeText(text) {
         if (text == null || text === '') return false;
@@ -77,24 +76,6 @@
         } catch (_) {
             return false;
         }
-    }
-
-    function getLiveRegion() {
-        if (_liveRegion && document.body.contains(_liveRegion)) return _liveRegion;
-        _liveRegion = document.createElement('div');
-        _liveRegion.className = 'sr-only nds-copy-live';
-        _liveRegion.setAttribute('aria-live', 'polite');
-        _liveRegion.setAttribute('aria-atomic', 'true');
-        document.body.appendChild(_liveRegion);
-        return _liveRegion;
-    }
-
-    function announce(message) {
-        if (!message) return;
-        const region = getLiveRegion();
-        // Clear-then-set so AT re-announces even if the message text repeats
-        region.textContent = '';
-        setTimeout(() => { region.textContent = message; }, 30);
     }
 
     function flash(button, options) {
@@ -128,7 +109,7 @@
         }
 
         NDS.Status.set(button, 'success');
-        announce(messageText);
+        NDS.announce(messageText);
 
         setTimeout(() => {
             NDS.Status.clear(button);

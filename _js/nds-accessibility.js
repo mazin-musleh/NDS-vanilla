@@ -593,14 +593,11 @@
         return val;
     }
 
-    // Live-region announcer (WCAG 4.1.3). Clear-then-set forces a fresh
-    // utterance for repeated identical strings. 50ms debounces coalesced writes.
+    // Live-region announcer (WCAG 4.1.3) — delegates the clear-then-set
+    // re-utterance to NDS.announce, scoped to the panel's own status region.
+    // Passing null when the panel is absent keeps "no panel → no announce".
     function announce(msg) {
-        if (!panel || !msg) return;
-        const region = panel.querySelector('[data-a11y-status]');
-        if (!region) return;
-        region.textContent = '';
-        setTimeout(() => { region.textContent = msg; }, 50);
+        NDS.announce(msg, panel ? panel.querySelector('[data-a11y-status]') : null);
     }
 
     // Resolve a localized label by reading the visible <span class="nds-label">.
