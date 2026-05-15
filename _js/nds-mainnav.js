@@ -85,8 +85,23 @@
             return cached > 0 ? this.css.speed : 0;
         },
 
-        invalidateCache() { _containerLayoutCache = null; this._css = null; }
+        invalidateCache() {
+            _containerLayoutCache = null;
+            _primaryMaxHeightCached = null;
+            this._css = null;
+        }
     };
+
+    // Cache of getComputedStyle(DOM.primary).maxHeight (parsed). Driven by CSS,
+    // doesn't change at runtime; invalidated alongside the other layout caches
+    // when state.invalidateCache() fires (mode change, resize, etc.).
+    let _primaryMaxHeightCached = null;
+    function getPrimaryMaxHeight() {
+        if (_primaryMaxHeightCached === null) {
+            _primaryMaxHeightCached = parseFloat(getComputedStyle(DOM.primary).maxHeight);
+        }
+        return _primaryMaxHeightCached;
+    }
 
     // ==============================================
     // UTILITY HELPERS
@@ -105,15 +120,31 @@
         if (_pendingToggleTimer) { clearTimeout(_pendingToggleTimer); _pendingToggleTimer = null; }
     };
 
-    // Resolve the animation target for a dropdown element
+    // Resolve the animation target for a dropdown element.
+    // The descendant lookups (menu, content) and ancestor lookups (isInMinimal,
+    // isInPrimary) don't change across normal toggle flow — same dropdown
+    // returns the same nodes. Cache via WeakMap. Invalidated by
+    // invalidateDdCache() whenever managePABPlacement moves a PAB li between
+    // .nds-nav-primary/.nds-nav-actions and .nds-nav-minimal (which changes
+    // the ancestor chain).
+    // needsHeight + animTarget still derive from state.isMinimal, which can
+    // change at runtime, so those are computed fresh on every call.
+    let _ddCache = new WeakMap();
+    const invalidateDdCache = () => { _ddCache = new WeakMap(); };
+
     const getDropdownAnimTarget = (dd) => {
-        const menu = dd.querySelector('.nds-dropdown-menu');
-        const content = menu?.querySelector('.nds-dropdown-content');
-        const isInMinimal = dd.closest('.nds-nav-minimal');
-        const isInPrimary = dd.closest('.nds-nav-primary');
-        const needsHeight = state.isMinimal && isInPrimary;
-        const animTarget = isInMinimal ? (content || menu) : (needsHeight ? menu : (content || menu));
-        return { menu, content, isInMinimal, isInPrimary, needsHeight, animTarget };
+        let c = _ddCache.get(dd);
+        if (!c) {
+            const menu = dd.querySelector('.nds-dropdown-menu');
+            const content = menu?.querySelector('.nds-dropdown-content');
+            const isInMinimal = dd.closest('.nds-nav-minimal');
+            const isInPrimary = dd.closest('.nds-nav-primary');
+            c = { menu, content, isInMinimal, isInPrimary };
+            _ddCache.set(dd, c);
+        }
+        const needsHeight = state.isMinimal && c.isInPrimary;
+        const animTarget = c.isInMinimal ? (c.content || c.menu) : (needsHeight ? c.menu : (c.content || c.menu));
+        return { ...c, needsHeight, animTarget };
     };
 
     // Nav backdrop ownership — prevents flicker during navbar↔dropdown transitions
@@ -237,15 +268,16 @@
     // ==============================================
     // DROPDOWN MANAGEMENT
     // ==============================================
-    // Tracks how many dropdowns are currently open (or in the open→closing
-    // transition). Lets handleDocumentClick exit in O(1) instead of running a
-    // full querySelectorAll on every click anywhere in the document.
-    let _openDropdownCount = 0;
+    // Set of currently-open dropdown elements (in any of open/opening/closing
+    // state). Replaces ~10 `querySelectorAll('.nds-dropdown[data-state~="open"]')`
+    // scans across this file with O(1) Set membership + O(open-count) iteration.
+    // Maintained inside dropdown.toggle when state actually flips.
+    const _openDropdowns = new Set();
 
     const dropdown = {
         closeAll(except = null) {
             let maxDuration = 0;
-            DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]').forEach(dd => {
+            _openDropdowns.forEach(dd => {
                 if (dd !== except) {
                     this.toggle(dd, false);
                     maxDuration = Math.max(maxDuration, state.getDuration(getDropdownAnimTarget(dd).animTarget));
@@ -259,11 +291,11 @@
             const { animTarget, isInMinimal } = getDropdownAnimTarget(el);
             const navLink = el.querySelector('.nds-nav-link');
 
-            // Maintain the open-count whenever toggle actually flips state.
-            // Clamp to 0 so any bookkeeping drift is self-correcting.
+            // Maintain the open set when toggle actually flips state.
             const wasOpen = hasState(el, 'open');
             if (open !== wasOpen) {
-                _openDropdownCount = Math.max(0, _openDropdownCount + (open ? 1 : -1));
+                if (open) _openDropdowns.add(el);
+                else _openDropdowns.delete(el);
             }
 
             if (open) addState(navLink, 'active');
@@ -272,8 +304,7 @@
             const collapseHandlesBackdrop = !isInMinimal && hasState(DOM.collapse, 'open');
             if (open && !collapseHandlesBackdrop) {
                 showNavBackdrop('dropdown', () => {
-                    DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]')
-                        .forEach(d => dropdown.toggle(d, false));
+                    _openDropdowns.forEach(d => dropdown.toggle(d, false));
                 });
             }
 
@@ -289,8 +320,7 @@
                     overflow.schedule('low', 100);
 
                     if (!open && !collapseHandlesBackdrop) {
-                        const stillOpen = DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]');
-                        if (stillOpen.length === 0 && !hasState(DOM.collapse, 'open') && !_pendingToggleTimer) {
+                        if (_openDropdowns.size === 0 && !hasState(DOM.collapse, 'open') && !_pendingToggleTimer) {
                             hideNavBackdrop('dropdown');
                         }
                     }
@@ -393,7 +423,7 @@
             let hasOverflow = false;
 
             if (state.isMinimal) {
-                const maxH = parseFloat(getComputedStyle(DOM.primary).maxHeight);
+                const maxH = getPrimaryMaxHeight();
                 const scrollHeight = DOM.primary.scrollHeight;
                 if (scrollHeight === 0) { this.schedule('low', 50); return; }
                 if (isFinite(maxH) && maxH > 0) hasOverflow = scrollHeight > maxH + 2;
@@ -448,8 +478,11 @@
     }
 
     function updatePositions() {
-        const isOpen = hasState(DOM.collapse, 'open');
-        const isClosing = hasState(DOM.collapse, 'closing');
+        // Single attribute read + split — both flags share the same data-state.
+        // Avoids the duplicated parse cost inside hasState().
+        const ds = (DOM.collapse?.getAttribute('data-state') || '').split(/\s+/);
+        const isOpen = ds.includes('open');
+        const isClosing = ds.includes('closing');
 
         if (!state.isMinimal || !isOpen || isClosing) {
             if (!state.isMinimal && DOM.secondary) {
@@ -575,6 +608,11 @@
         const pabs = document.querySelectorAll('.nds-nav-item.nds-PAB');
         if (!pabs.length) return;
 
+        // PAB moves change the ancestor chain of any dropdown inside a PAB li;
+        // invalidate the cached closest() results so getDropdownAnimTarget
+        // re-resolves isInMinimal / isInPrimary after the move.
+        invalidateDdCache();
+
         if (state.isMinimal) {
             pabs.forEach((item, i) => {
                 if (!item.dataset.origPos) {
@@ -652,8 +690,9 @@
 
             if (hasState(DOM.collapse, 'open')) {
                 showNavBackdrop('dropdown', () => {
-                    document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]')
-                        .forEach(d => dropdown.toggle(d, false));
+                    _openDropdowns.forEach(d => {
+                        if (d.closest('.nds-nav-minimal')) dropdown.toggle(d, false);
+                    });
                 });
 
                 const dropdownCloseDelay = state.reducedMotion ? 0 : dropdown.closeAll();
@@ -689,7 +728,7 @@
         const duration = state.getDuration(collapseContent || DOM.collapse);
 
         if (!isOpen) {
-            const minimalDropdowns = document.querySelectorAll('.nds-nav-minimal .nds-dropdown[data-state~="open"]');
+            const minimalDropdowns = [..._openDropdowns].filter(d => d.closest('.nds-nav-minimal'));
             if (minimalDropdowns.length) {
                 showNavBackdrop('navbar', () => {
                     if (hasState(DOM.collapse, 'open')) toggleNavbar();
@@ -724,10 +763,10 @@
             navbar.toggle(false);
             afterDelay(duration * 1.2 + 50, () => dga.toggle());
         } else {
-            const openDDs = document.querySelectorAll('.nds-dropdown[data-state~="open"]');
-            if (openDDs.length) {
-                const ddDuration = state.getDuration(getDropdownAnimTarget(openDDs[0]).animTarget);
-                openDDs.forEach(d => dropdown.toggle(d, false));
+            if (_openDropdowns.size) {
+                const first = _openDropdowns.values().next().value;
+                const ddDuration = state.getDuration(getDropdownAnimTarget(first).animTarget);
+                _openDropdowns.forEach(d => dropdown.toggle(d, false));
                 afterDelay(ddDuration, () => dga.toggle());
             } else {
                 dga.toggle();
@@ -746,7 +785,7 @@
         // checks on the overwhelming majority of page clicks.
         const dgaOpen = hasState(DOM.dgaDigitalStamp, 'open');
         const collapseOpen = DOM.toggler && hasState(DOM.collapse, 'open');
-        if (!dgaOpen && !collapseOpen && _openDropdownCount === 0) return;
+        if (!dgaOpen && !collapseOpen && _openDropdowns.size === 0) return;
 
         const target = event.target;
 
@@ -768,7 +807,7 @@
         }
 
         // Close dropdowns if click outside
-        DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]').forEach(dd => {
+        _openDropdowns.forEach(dd => {
             if (hasState(dd, 'closing')) return;
             const menu = dd.querySelector('.nds-dropdown-menu');
             if (![dd, menu].some(el => el?.contains(target))) {
@@ -794,7 +833,7 @@
             updateNavMaxWidth();
 
             if (modeChanged) {
-                document.querySelectorAll('.nds-dropdown[data-state~="open"]').forEach(dd => dropdown.toggle(dd, false));
+                _openDropdowns.forEach(dd => dropdown.toggle(dd, false));
                 if (hasState(DOM.dgaDigitalStamp, 'open')) dga.toggle();
 
                 if (hasState(DOM.collapse, 'open')) {
@@ -845,8 +884,9 @@
             const amount = (state.isMinimal ? DOM.primary.clientHeight : DOM.primary.clientWidth) * 0.8;
 
             if (state.isMinimal) {
-                DOM.nav.querySelectorAll('.nds-nav-actions .nds-dropdown[data-state~="open"]')
-                    .forEach(dd => dropdown.toggle(dd, false));
+                _openDropdowns.forEach(dd => {
+                    if (dd.closest('.nds-nav-actions')) dropdown.toggle(dd, false);
+                });
                 DOM.primary.scrollTo({ top: atEnd ? 0 : DOM.primary.scrollTop + amount, behavior: 'smooth' });
             } else {
                 const dir = state.css.isRTL ? -1 : 1;
@@ -1004,12 +1044,12 @@
             e.preventDefault();
 
             const wasNavOpen = hasState(DOM.collapse, 'open');
-            const openDropdowns = DOM.nav.querySelectorAll('.nds-dropdown[data-state~="open"]');
+            const openCount = _openDropdowns.size;
 
             if (wasNavOpen) toggleNavbar();
-            else openDropdowns.forEach(dd => dropdown.toggle(dd, false));
+            else _openDropdowns.forEach(dd => dropdown.toggle(dd, false));
 
-            const delay = wasNavOpen || openDropdowns.length ? state.css.speed + 100 : 0;
+            const delay = wasNavOpen || openCount ? state.css.speed + 100 : 0;
 
             setTimeout(() => {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
