@@ -366,7 +366,7 @@ NDS.CityWeather.updateCity();     // re-fetch city name
 // Opens or closes the digital stamp panel.
 // Automatically closes the navbar or open dropdowns
 // first to prevent overlapping panels.
-window.toggleDGA();
+NDS.Mainnav.toggleDGA();
 
 // ── Hijri Date API ──────────────────────────
 // Pass true for Arabic, false for English.

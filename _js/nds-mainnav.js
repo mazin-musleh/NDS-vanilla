@@ -47,6 +47,13 @@
         pendingAction: null,
         pendingOverflowCheck: null,
         pendingUpdate: null,
+        // Flipped true by the navChanged DOM-mutation debounce; consumed in
+        // scheduleUpdate to gate the toggler-visibility recompute. Reset there.
+        _navChanged: false,
+        // Set true after the first updateNavMaxWidth rAF completes. Gates the
+        // ResizeObserver handler so the initial measurement pass doesn't
+        // recurse into another scheduleUpdate while init is still settling.
+        _initDone: false,
 
         _css: null,
         get css() {
@@ -299,7 +306,7 @@
         toggle(open) {
             if (!DOM.collapse) return;
 
-            const collapseContent = DOM.collapse.querySelector('.nds-collapse-content');
+            const collapseContent = DOM.collapseContent;
             const toggleButton = DOM.toggler?.querySelector('button[aria-controls="ndsNavCollapse"]');
 
             if (open) {
@@ -453,7 +460,7 @@
         }
 
         if (state.isMinimal) {
-            const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
+            const collapseContent = DOM.collapseContent;
             afterDelay(state.getDuration(collapseContent || DOM.collapse) + 50, () => overflow.schedule());
         }
     }
@@ -650,7 +657,7 @@
                 });
 
                 const dropdownCloseDelay = state.reducedMotion ? 0 : dropdown.closeAll();
-                const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
+                const collapseContent = DOM.collapseContent;
                 const totalNavbarDuration = dropdownCloseDelay + state.getDuration(collapseContent || DOM.collapse);
 
                 navbar.toggle(false);
@@ -678,7 +685,7 @@
         cancelToggleAction();
 
         const isOpen = hasState(DOM.collapse, 'open');
-        const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
+        const collapseContent = DOM.collapseContent;
         const duration = state.getDuration(collapseContent || DOM.collapse);
 
         if (!isOpen) {
@@ -710,7 +717,7 @@
     }
 
     function toggleDGA() {
-        const collapseContent = DOM.collapse?.querySelector('.nds-collapse-content');
+        const collapseContent = DOM.collapseContent;
         const duration = state.getDuration(collapseContent || DOM.collapse);
 
         if (hasState(DOM.collapse, 'open')) {
@@ -1079,6 +1086,12 @@
         if (!DOM.primary) {
             removeCollapseHidden();
         } else {
+            // Safety-net fallback: overflow.check's first-run path also calls
+            // removeCollapseHidden after 100–500ms, so this almost always
+            // no-ops. Covers the rare case where overflow.check never runs
+            // (e.g. nav initially has zero-width container — display:none
+            // ancestor — so the cache-miss branch in updateNavMaxWidth that
+            // schedules the check never fires).
             setTimeout(() => removeCollapseHidden(), 2000);
         }
 
@@ -1090,6 +1103,5 @@
             ?.addEventListener('change', (e) => { state.reducedMotion = !!e.matches; });
     } catch { }
 
-    Object.assign(window, { toggleNavbar, toggleDropdown, toggleDGA });
-    NDS.Mainnav = { init };
+    NDS.Mainnav = { init, toggleNavbar, toggleDropdown, toggleDGA };
 })();

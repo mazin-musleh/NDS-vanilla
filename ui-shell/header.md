@@ -541,19 +541,19 @@ header
                     <div class="nds-expandable-content">
                         <code class="lang-javascript line-numbers">
 // ── Toggle Functions ─────────────────────────
-// All three are on `window` so they can be called
-// from inline onclick handlers or external scripts.
+// Exposed on the NDS.Mainnav namespace for external scripts
+// and integrations. Bind to your own triggers as needed.
 
 // Toggle the mobile hamburger collapse.
 // Opens the collapse panel if closed, closes it if open.
 // Queues the action if an animation is already running.
-window.toggleNavbar();
+NDS.Mainnav.toggleNavbar();
 
 // Toggle a dropdown menu.
 // Pass the native click event from the trigger element.
 // The function finds the closest .nds-dropdown ancestor,
 // closes any other open dropdown first, then opens the target.
-window.toggleDropdown(event);
+NDS.Mainnav.toggleDropdown(event);
 
 // ── Re-initialize ────────────────────────────
 // Call after dynamically adding or removing nav items.
