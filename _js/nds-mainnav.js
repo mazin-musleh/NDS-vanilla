@@ -195,18 +195,34 @@
     // SCSS centers via `left: 50%` + `transform: translateX(-50%)`; this helper
     // overrides the transform inline only when the centered rect would clip
     // either edge. Bails on mobile (mobile uses `position: fixed; inset-inline: 0`).
-    const FIT_SHIFT_PAD = 8;
+    // Edge buffer for the .nds-fit dropdown shift. Keeps the menu this many
+    // pixels from the inner viewport edge (i.e. the edge of the visible content
+    // area, not the scrollbar area).
+    const FIT_SHIFT_PAD = 16;
     function applyFitShift(dd) {
-        if (state.isMinimal) return;
         const menu = dd.querySelector('.nds-dropdown-menu.nds-fit');
         if (!menu) return;
+        // Clear any leftover inline transform BEFORE the minimal-mode bail. Minimal
+        // mode uses `position: fixed; inset-inline: 0` and a stale shift from a
+        // prior desktop open would push the fixed full-width menu off-screen.
         menu.style.removeProperty('transform');
+        if (state.isMinimal) return;
         requestAnimationFrame(() => {
             const r = menu.getBoundingClientRect();
-            const vw = window.innerWidth;
+
+            // Use the inner viewport (excludes the vertical scrollbar) for bounds.
+            // window.innerWidth includes the scrollbar; landing the menu's edge at
+            // `innerWidth - PAD` puts it behind the scrollbar — flush with the
+            // visible edge with no real gap. The scrollbar lives on the right in
+            // LTR, on the left in RTL.
+            const innerW = window.innerWidth;
+            const sb = innerW - document.documentElement.clientWidth;
+            const left = NDS.isRTL ? sb : 0;
+            const right = NDS.isRTL ? innerW : innerW - sb;
+
             let shift = 0;
-            if (r.left < FIT_SHIFT_PAD) shift = FIT_SHIFT_PAD - r.left;
-            else if (r.right > vw - FIT_SHIFT_PAD) shift = (vw - FIT_SHIFT_PAD) - r.right;
+            if (r.left < left + FIT_SHIFT_PAD) shift = (left + FIT_SHIFT_PAD) - r.left;
+            else if (r.right > right - FIT_SHIFT_PAD) shift = (right - FIT_SHIFT_PAD) - r.right;
             if (shift) menu.style.transform = `translateX(calc(-50% + ${shift}px))`;
         });
     }
@@ -444,6 +460,11 @@
 
     let _navMaxWidthLast = 0;
     let _containerLayoutCache = null;
+    // Cached container.offsetWidth across calls. Invalidated by the existing
+    // ResizeObserver in setupEventListeners — most scheduleUpdate triggers
+    // (mode changes, transitionend, modal opens, scrollend) don't actually
+    // resize the container, so the read can be skipped.
+    let _containerWCached = null;
 
     function updateNavMaxWidth() {
         if (!DOM.primary || !DOM.nav) return;
@@ -455,7 +476,10 @@
         }
 
         const container = DOM.container;
-        const containerW = container?.offsetWidth || 0;
+        if (_containerWCached === null) {
+            _containerWCached = container?.offsetWidth || 0;
+        }
+        const containerW = _containerWCached;
         if (containerW === _navMaxWidthLast) return;
         _navMaxWidthLast = containerW;
 
@@ -513,26 +537,27 @@
     function checkTogglerVisibility() {
         if (!DOM.toggler) return;
 
-        const primary = DOM.primary ? Array.from(DOM.primary.children) : [];
-        const secondary = DOM.secondary ? Array.from(DOM.secondary.children) : [];
-        const all = [DOM.primary, DOM.secondary, ...primary, ...secondary].filter(Boolean);
-        const styles = all.map(el => getComputedStyle(el));
+        // Pure markup check — no layout reads, no style recalcs.
+        // The mainnav SCSS doesn't conditionally hide individual .nds-nav-item
+        // via media queries; PABs are MOVED between containers by
+        // managePABPlacement (not CSS-hidden), and only the .nds-label inside
+        // .nds-nav-link is hidden in icon-only mode (the item itself stays).
+        // So "are there items the toggler would expose" reduces to
+        // "is the parent not [hidden] and does it have at least one real,
+        // non-placeholder, non-show-more child".
+        const hasItems = (parent) => {
+            if (!parent || parent.hasAttribute('hidden')) return false;
+            for (const child of parent.children) {
+                if (child.classList.contains('nds-show-more')) continue;
+                // PAB placeholder left behind when managePABPlacement moves a
+                // PAB out to .nds-nav-minimal in mobile mode.
+                if (child.hasAttribute('data-pab-ph')) continue;
+                return true;
+            }
+            return false;
+        };
 
-        let idx = 0;
-        const pStyle = DOM.primary ? styles[idx++] : null;
-        const sStyle = DOM.secondary ? styles[idx++] : null;
-
-        const pCount = primary.filter((c, i) =>
-            !c.classList.contains('nds-show-more') && styles[idx + i]?.display !== 'none'
-        ).length;
-
-        const sCount = secondary.filter((_, i) =>
-            styles[idx + primary.length + i]?.display !== 'none'
-        ).length;
-
-        const show = (pStyle?.display !== 'none' && pCount > 0) ||
-            (sStyle?.display !== 'none' && sCount > 0);
-
+        const show = hasItems(DOM.primary) || hasItems(DOM.secondary);
         DOM.toggler.style.display = show ? '' : 'none';
     }
 
@@ -1001,6 +1026,9 @@
             const last = entry.target._lastSize;
             if (!last || Math.abs(width - last.w) > 5 || Math.abs(height - last.h) > 5) {
                 entry.target._lastSize = { w: width, h: height };
+                // Container is a child of nav/primary, so a meaningful size
+                // change here means the cached container width is stale.
+                _containerWCached = null;
                 if (state._initDone) {
                     state.invalidateCache();
                     _navMaxWidthLast = 0;
@@ -1033,6 +1061,13 @@
         // both document-click listeners detach atomically on teardown.
         document.addEventListener('click', handleDocumentClick, { signal: _eventsAC.signal });
         if (!bodyClassChanged) managePABPlacement();
+        // Set toggler visibility now that PABs (if any) have been placed.
+        // scheduleUpdate's only call site for this fires on width/mode/nav
+        // changes — none of which trigger on first load — so without this,
+        // a page that loads in minimal with an empty collapse panel (e.g.
+        // primary empty, secondary all PABs) would leave the toggler
+        // CSS-visible with nothing to expose.
+        checkTogglerVisibility();
         DOM.dgaTab?.addEventListener('click', toggleDGA, { signal: _eventsAC.signal });
 
         if (hasState(DOM.collapse, 'open')) updatePositions();

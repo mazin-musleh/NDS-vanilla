@@ -168,6 +168,11 @@
         /* gap: var(--spacing-xs); */
     }
 
+    :is(.nds-nav-actions, .nds-nav-minimal):not([hidden]) {
+        margin-inline-start: auto;
+    }
+
+
     .nds-nav-minimal {
         .nds-nav-item {
             border-bottom: unset !important;
