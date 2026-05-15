@@ -13,7 +13,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Hero Slider</h2>
-            <p class="nds-section-description">Full-bleed single-slide carousel for the top of a page. Use this when each slide is a marketing message, banner, or call to action that should fill the hero area.</p>
+            <p class="nds-section-description">Full-bleed hero carousel showing one slide at a time. Use this when each slide is a marketing message, banner, or call to action that should fill the hero area.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -73,7 +73,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-swiper-slide">
+                                <div class="nds-swiper-slide" hidden>
                                     <div class="slide-content"
                                         style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;">
                                         <div style="max-width: 800px; text-align: center;">
@@ -89,7 +89,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-swiper-slide">
+                                <div class="nds-swiper-slide" hidden>
                                     <div class="slide-content"
                                         style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;">
                                         <div style="max-width: 800px; text-align: center;">
@@ -127,13 +127,14 @@ direction: ltr
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-basic-1"
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-basic-1"
                             aria-labelledby="tab-basic-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
+                            <div class="nds-expandable-content">
                             <code class="lang-html code">
 &lt;div class="nds-swiper nds-hero nds-oncolor"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
@@ -149,7 +150,7 @@ direction: ltr
                 &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
-        &lt;div class="nds-swiper-slide"&gt;
+        &lt;div class="nds-swiper-slide" hidden&gt;
             &lt;div class="slide-content"
                 style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;"&gt;
                 &lt;div style="max-width: 800px; text-align: center;"&gt;
@@ -161,7 +162,7 @@ direction: ltr
                 &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
-        &lt;div class="nds-swiper-slide"&gt;
+        &lt;div class="nds-swiper-slide" hidden&gt;
             &lt;div class="slide-content"
                 style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;"&gt;
                 &lt;div style="max-width: 800px; text-align: center;"&gt;
@@ -183,6 +184,7 @@ direction: ltr
     &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -246,19 +248,19 @@ direction: ltr
                                     <img data-src="https://picsum.photos/id/1015/800/450" alt="Landscape 1"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
-                                <div class="nds-swiper-slide">
+                                <div class="nds-swiper-slide" hidden>
                                     <img data-src="https://picsum.photos/id/1018/800/450" alt="Landscape 2"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
-                                <div class="nds-swiper-slide">
+                                <div class="nds-swiper-slide" hidden>
                                     <img data-src="https://picsum.photos/id/1039/800/450" alt="Landscape 3"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
-                                <div class="nds-swiper-slide">
+                                <div class="nds-swiper-slide" hidden>
                                     <img data-src="https://picsum.photos/id/1043/800/450" alt="Landscape 4"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
-                                <div class="nds-swiper-slide">
+                                <div class="nds-swiper-slide" hidden>
                                     <img data-src="https://picsum.photos/id/870/800/450" alt="Landscape 5"
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
@@ -284,13 +286,14 @@ direction: ltr
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-images-1"
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-images-1"
                             aria-labelledby="tab-images-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
+                            <div class="nds-expandable-content">
                             <code class="lang-html code">
 &lt;div class="nds-swiper nds-hero nds-oncolor"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
@@ -298,19 +301,19 @@ direction: ltr
             &lt;img data-src="https://picsum.photos/id/1015/800/450" alt="Landscape 1"
                 style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
         &lt;/div&gt;
-        &lt;div class="nds-swiper-slide"&gt;
+        &lt;div class="nds-swiper-slide" hidden&gt;
             &lt;img data-src="https://picsum.photos/id/1018/800/450" alt="Landscape 2"
                 style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
         &lt;/div&gt;
-        &lt;div class="nds-swiper-slide"&gt;
+        &lt;div class="nds-swiper-slide" hidden&gt;
             &lt;img data-src="https://picsum.photos/id/1039/800/450" alt="Landscape 3"
                 style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
         &lt;/div&gt;
-        &lt;div class="nds-swiper-slide"&gt;
+        &lt;div class="nds-swiper-slide" hidden&gt;
             &lt;img data-src="https://picsum.photos/id/1043/800/450" alt="Landscape 4"
                 style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
         &lt;/div&gt;
-        &lt;div class="nds-swiper-slide"&gt;
+        &lt;div class="nds-swiper-slide" hidden&gt;
             &lt;img data-src="https://picsum.photos/id/870/800/450" alt="Landscape 5"
                 style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
         &lt;/div&gt;
@@ -324,6 +327,7 @@ direction: ltr
     &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -456,13 +460,14 @@ direction: ltr
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-multi-1"
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-multi-1"
                             aria-labelledby="tab-multi-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
+                            <div class="nds-expandable-content">
                             <code class="lang-html code">
 &lt;div class="nds-swiper" hidden slides-max="4" slides-mid="3" slides-min="1" peek="0"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
@@ -524,6 +529,7 @@ direction: ltr
     &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -655,13 +661,14 @@ direction: ltr
                         </nav>
                     </div>
                     <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-peek-1"
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-peek-1"
                             aria-labelledby="tab-peek-1">
                             <div class="nds-code-action">
                                 <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
                             </div>
+                            <div class="nds-expandable-content">
                             <code class="lang-html code">
 &lt;div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
@@ -723,6 +730,7 @@ direction: ltr
     &lt;/div&gt;
 &lt;/div&gt;
                             </code>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -786,9 +794,9 @@ direction: ltr
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-play-circle"></i>
-                        <span class="nds-label">Visibility Handling</span>
+                        <span class="nds-label">Lazy Slide Reveal</span>
                     </span>
-                    <p class="nds-item-desc">Swipers inside hidden containers like tabs or modals re-measure and render correctly when they become visible.</p>
+                    <p class="nds-item-desc">Hero slides marked with <code class="nds-inline-code lang-html">hidden</code> are revealed automatically on first visibility, deferring image decoding for off-screen slides until the carousel scrolls into view.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -834,6 +842,9 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-hero</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Full-width single-slide hero mode with overlay navigation absolutely positioned at the bottom</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td><code class="nds-inline-code lang-html">.nds-swiper</code></td><td>Adjusts pagination bullets and navigation contrast for dark or image backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-center</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-navigation</code></td><td>Centers the bullets and pushes the prev/next buttons to the outer edges of the navigation row</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Large pagination bullets (16px). Default size when no modifier is applied</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Medium pagination bullets (12px)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-swiper-pagination</code></td><td>Small pagination bullets (8px)</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -883,8 +894,16 @@ const swiper = document.querySelector('.nds-swiper')._ndsSwiper;
 // ── Navigation ──
 swiper.slideTo(2);       // Scroll to slide at index 2 (animated)
 swiper.slideTo(0, false); // Jump to first slide (no animation)
+swiper.goTo(4);          // Snap to a page-aligned index (clamped to bounds)
 swiper.prev();           // Go to previous page
 swiper.next();           // Go to next page
+
+// ── Boundary state (for CSS hooks) ──
+// The container exposes data-state as the user scrolls:
+//   data-state="at-start"          first page is showing
+//   data-state="at-end"            last page is showing
+//   data-state="at-start at-end"   only one page (no scroll possible)
+// Style with: .nds-swiper[data-state~="at-end"] { ... }
 
 // ── Cleanup ──
 swiper.destroy();        // Remove listeners, pagination, and reset state
