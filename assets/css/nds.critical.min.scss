@@ -31,6 +31,7 @@
 
 // Section layout - spacing tokens, dimensions, wrapper, layouts (center, horizontal)
 @use 'layout/section-layout';
+@use 'components/sideinfo';
 
 // Content layout - grid, layout variants, striping, section context overrides
 @use 'layout/content-layout';
