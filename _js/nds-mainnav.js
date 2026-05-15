@@ -10,22 +10,29 @@
     // ==============================================
     // DOM REFERENCES
     // ==============================================
+    // Mainnav is a singleton with a stable markup tree, so all node references
+    // are cached eagerly at module load (script runs after DOMContentLoaded via
+    // the loader). Previously every reference re-ran querySelector — `DOM.collapse`
+    // alone is touched ~25× across this file.
+    // The two dynamic refs (`minimal`, created on first mobile pass; reset to null
+    // when removed) are kept in sync by managePABPlacement().
+    const _nav = document.querySelector('.nds-main-nav');
     const DOM = {
-        nav: document.querySelector('.nds-main-nav'),
+        nav: _nav,
         dgaTab: document.querySelector('.nds-digitalStamp-tab'),
         topbar: document.querySelector('.nds-topbar'),
         dgaDigitalStamp: document.querySelector('#nds-digitalStamp'),
-
-        get collapse() { return this.nav?.querySelector('#ndsNavCollapse'); },
-        get collapseContent() { return this.nav?.querySelector('.nds-collapse-content'); },
-        get container() { return this.nav?.querySelector('.nds-nav-container'); },
-        get primary() { return this.nav?.querySelector('.nds-nav-primary'); },
-        get secondary() { return this.nav?.querySelector('.nds-nav-actions'); },
-        get minimal() { return this.nav?.querySelector('.nds-nav-minimal'); },
-        get toggler() { return this.nav?.querySelector('.nds-mainNav-toggler'); },
-        get brand() { return this.nav?.querySelector('.nds-brand'); },
-        get showMore() { return this.collapseContent?.querySelector('.nds-show-more'); }
+        collapse: _nav?.querySelector('#ndsNavCollapse') || null,
+        collapseContent: _nav?.querySelector('.nds-collapse-content') || null,
+        container: _nav?.querySelector('.nds-nav-container') || null,
+        primary: _nav?.querySelector('.nds-nav-primary') || null,
+        secondary: _nav?.querySelector('.nds-nav-actions') || null,
+        brand: _nav?.querySelector('.nds-brand') || null,
+        toggler: _nav?.querySelector('.nds-mainNav-toggler') || null,
+        minimal: _nav?.querySelector('.nds-nav-minimal') || null,
+        showMore: null,
     };
+    DOM.showMore = DOM.collapseContent?.querySelector('.nds-show-more') || null;
 
     // State helpers — delegated to NDS.State (nds-core.js)
     const { add: addState, remove: removeState, has: hasState } = NDS.State;
@@ -207,6 +214,11 @@
     // ==============================================
     // DROPDOWN MANAGEMENT
     // ==============================================
+    // Tracks how many dropdowns are currently open (or in the open→closing
+    // transition). Lets handleDocumentClick exit in O(1) instead of running a
+    // full querySelectorAll on every click anywhere in the document.
+    let _openDropdownCount = 0;
+
     const dropdown = {
         closeAll(except = null) {
             let maxDuration = 0;
@@ -223,6 +235,13 @@
         toggle(el, open) {
             const { animTarget, isInMinimal } = getDropdownAnimTarget(el);
             const navLink = el.querySelector('.nds-nav-link');
+
+            // Maintain the open-count whenever toggle actually flips state.
+            // Clamp to 0 so any bookkeeping drift is self-correcting.
+            const wasOpen = hasState(el, 'open');
+            if (open !== wasOpen) {
+                _openDropdownCount = Math.max(0, _openDropdownCount + (open ? 1 : -1));
+            }
 
             if (open) addState(navLink, 'active');
             else removeState(navLink, 'active');
@@ -543,6 +562,7 @@
                 minNav = document.createElement('ul');
                 minNav.className = 'nds-nav-minimal';
                 DOM.nav?.insertBefore(minNav, DOM.nav.firstChild);
+                DOM.minimal = minNav;
             }
 
             const cta = Array.from(pabs).filter(p => p.classList.contains('nds-CTA'));
@@ -559,7 +579,10 @@
                 }
             });
             const minNav = DOM.minimal;
-            if (minNav && !minNav.children.length) minNav.remove();
+            if (minNav && !minNav.children.length) {
+                minNav.remove();
+                DOM.minimal = null;
+            }
         }
     }
 
@@ -685,17 +708,25 @@
     // ==============================================
     function handleDocumentClick(event) {
         if (state.isAnimating) return;
+
+        // Fast-bail: if nothing is open, the document click can't be an
+        // outside-close. Saves a full DOM scan + per-dropdown closest()
+        // checks on the overwhelming majority of page clicks.
+        const dgaOpen = hasState(DOM.dgaDigitalStamp, 'open');
+        const collapseOpen = DOM.toggler && hasState(DOM.collapse, 'open');
+        if (!dgaOpen && !collapseOpen && _openDropdownCount === 0) return;
+
         const target = event.target;
 
         // Close DGA if click outside
-        if (hasState(DOM.dgaDigitalStamp, 'open')) {
+        if (dgaOpen) {
             if (![DOM.dgaTab, DOM.dgaDigitalStamp].some(el => el?.contains(target))) {
                 toggleDGA();
             }
         }
 
         // Close navbar if click outside
-        if (DOM.toggler && hasState(DOM.collapse, 'open')) {
+        if (collapseOpen) {
             const elements = [DOM.collapse, DOM.toggler];
             if (state.isMinimal) {
                 DOM.collapse?.querySelectorAll('.nds-nav-actions .nds-dropdown[data-state~="open"] .nds-dropdown-menu')
@@ -861,21 +892,22 @@
             document.addEventListener('mouseup', dragUp);
         });
 
-        // Dropdown hover tracking — per-element guard prevents stacking when
-        // trackDropdowns() re-runs on DOM mutations (runs on every onDOMAdd/Remove).
-        const trackDropdowns = () => {
-            document.querySelectorAll('.nds-dropdown-menu').forEach(menu => {
-                if (menu._ndsHoverTracked) return;
-                menu._ndsHoverTracked = true;
-                menu.addEventListener('mouseenter', () => state.isMouseOverDropdown = true);
-                menu.addEventListener('mouseleave', () => state.isMouseOverDropdown = false);
-            });
-        };
-        trackDropdowns();
-
-        const trackDD = NDS.debounce(() => trackDropdowns(), 150);
-        NDS.onDOMAdd('.nds-dropdown-menu', trackDD);
-        NDS.onDOMRemove('.nds-dropdown-menu', trackDD);
+        // Dropdown hover tracking — single delegated pair on DOM.nav.
+        // mouseover/mouseout bubble (mouseenter/mouseleave do not), so we filter
+        // via closest. The relatedTarget guard ignores intra-menu transitions
+        // and menu-to-sibling-menu moves (state stays correct without flicker).
+        // Replaces N×2 per-menu listeners + a debounced onDOMAdd/onDOMRemove
+        // re-scan that ran on every nav-tree mutation.
+        DOM.nav.addEventListener('mouseover', (e) => {
+            if (!e.target.closest('.nds-dropdown-menu')) return;
+            if (e.relatedTarget?.closest?.('.nds-dropdown-menu')) return;
+            state.isMouseOverDropdown = true;
+        }, { signal: _interactionsSignal });
+        DOM.nav.addEventListener('mouseout', (e) => {
+            if (!e.target.closest('.nds-dropdown-menu')) return;
+            if (e.relatedTarget?.closest?.('.nds-dropdown-menu')) return;
+            state.isMouseOverDropdown = false;
+        }, { signal: _interactionsSignal });
     }
 
     // All document/window/element listeners attached in setupEventListeners +
