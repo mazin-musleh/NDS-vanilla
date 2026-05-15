@@ -7,18 +7,6 @@
 (function () {
     'use strict';
 
-    // Fallback used only if --nds-content-MaxWidth is undefined at runtime.
-    // Should match the CSS default; any mismatch indicates a token-source drift.
-    const CONTENT_MAX_WIDTH_FALLBACK = 1280;
-
-    // Slide-count breakpoints (viewport-width thresholds). Kept as numeric literals
-    // because calculateSlidesPerView receives a numeric `width` argument and does
-    // direct numeric comparison, not a matchMedia query. These must mirror the
-    // NDS.breakpoints definitions: SLIDES_MAX_WIDTH ↔ NDS.breakpoints.desktop
-    // (min-width: 960px), SLIDES_MID_WIDTH ↔ NDS.breakpoints.tablet (min-width: 600px).
-    const SLIDES_MAX_WIDTH = 960;
-    const SLIDES_MID_WIDTH = 600;
-
     // ==============================================
     // UTILITIES
     // ==============================================
@@ -26,35 +14,65 @@
     function fixSrcsetSpaces(srcsetValue) {
         if (!srcsetValue) return srcsetValue;
 
-        // Split by comma to get individual candidates
         return srcsetValue.split(',').map(candidate => {
             const trimmed = candidate.trim();
-            // Split by space to separate URL from descriptor (e.g., "600w")
             const lastSpaceIndex = trimmed.lastIndexOf(' ');
 
             if (lastSpaceIndex === -1) {
-                // No descriptor, just encode the URL
                 return trimmed.replace(/ /g, '%20');
             }
 
-            // Separate URL and descriptor
             const url = trimmed.substring(0, lastSpaceIndex);
             const descriptor = trimmed.substring(lastSpaceIndex + 1);
-
-            // Encode spaces in URL, keep descriptor as-is
             return url.replace(/ /g, '%20') + ' ' + descriptor;
         }).join(', ');
+    }
+
+    // ==============================================
+    // SHARED DOCUMENT KEYDOWN + BREAKPOINT
+    // ==============================================
+    // One document listener and one breakpoint subscription serve every initialized
+    // swiper. Without these, N swipers attach N keydown listeners and N resize
+    // callbacks — wasted work on every keystroke and every resize tick.
+    const _activeSwipers = new Set();
+    let _sharedKeydownAttached = false;
+
+    function ensureSharedKeydown() {
+        if (_sharedKeydownAttached) return;
+        _sharedKeydownAttached = true;
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' &&
+                e.key !== 'Home' && e.key !== 'End') return;
+            for (const inst of _activeSwipers) {
+                const isFocused = inst.container.contains(document.activeElement);
+                if (!isFocused && !inst._isHovered) continue;
+                inst._handleKeydown(e);
+                return;
+            }
+        });
+    }
+
+    // slidesPerView only changes when the viewport crosses one of
+    // NDS.breakpoints.{tablet,desktop} — MediaQueryList `change` fires only on
+    // those transitions, skipping the resize bus's every-tick fan-out entirely.
+    const _mqDesktop = window.matchMedia(NDS.breakpoints.desktop);
+    const _mqTablet = window.matchMedia(NDS.breakpoints.tablet);
+    let _resizeAttached = false;
+
+    function ensureSharedResize() {
+        if (_resizeAttached) return;
+        _resizeAttached = true;
+        const trigger = () => _activeSwipers.forEach(inst => inst._handleResize());
+        _mqDesktop.addEventListener('change', trigger);
+        _mqTablet.addEventListener('change', trigger);
     }
 
     // ==============================================
     // MAIN CLASS
     // ==============================================
 
-    let instanceCounter = 0;
-
     class NDSSwiper {
         constructor(container) {
-            this.id = ++instanceCounter;
             this.container = container;
             this.wrapper = container.querySelector('.nds-swiper-wrapper');
             this.slides = Array.from(container.querySelectorAll('.nds-swiper-slide'));
@@ -65,16 +83,18 @@
 
             this.isHero = container.classList.contains('nds-hero');
             this._cachedGap = null;
+            this.currentIndex = 0;
 
             if (!this.wrapper || this.slides.length === 0) {
                 console.warn('NDS Swiper: No wrapper or slides found');
                 return;
             }
 
-            // Set initial slides per view BEFORE any layout calculations to prevent CLS
-            this.currentIndex = 0;
-            this.slidesPerView = 1;
-            this.setInitialSlidesPerView();
+            // Static attributes — read once, reused on every breakpoint change.
+            this._slidesMax = parseInt(container.getAttribute('slides-max')) || 1;
+            this._slidesMid = parseInt(container.getAttribute('slides-mid')) || 1;
+            this._slidesMin = parseInt(container.getAttribute('slides-min')) || 1;
+            this._peek = parseInt(container.getAttribute('peek')) || 0;
 
             this.init();
         }
@@ -83,14 +103,10 @@
         // BREAKPOINT CALCULATION
         // ==============================================
 
-        calculateSlidesPerView(width) {
-            const max = parseInt(this.container.getAttribute('slides-max')) || 1;
-            const mid = parseInt(this.container.getAttribute('slides-mid')) || 1;
-            const min = parseInt(this.container.getAttribute('slides-min')) || 1;
-
-            if (width >= SLIDES_MAX_WIDTH) return max;
-            if (width > SLIDES_MID_WIDTH) return mid;
-            return min;
+        calculateSlidesPerView() {
+            if (_mqDesktop.matches) return this._slidesMax;
+            if (_mqTablet.matches) return this._slidesMid;
+            return this._slidesMin;
         }
 
         getGap() {
@@ -100,43 +116,49 @@
             return this._cachedGap;
         }
 
-        setInitialSlidesPerView() {
-            // Read slides count directly from attributes and set CSS variable immediately
-            const width = window.innerWidth;
-            const initial = this.calculateSlidesPerView(width);
-
-            // Set both CSS variable and instance property to prevent CLS
-            this.container.style.setProperty('--slides', initial);
-            this.slidesPerView = initial;
-        }
-
         init() {
-            // One AbortController per instance — every addEventListener below passes its signal so
-            // destroy() can detach all listeners atomically (prevents the O(n) document-keydown leak
-            // on reinit and the swiper-local hover/scroll/nav listeners from lingering).
             this._ac = new AbortController();
-
+            this.container.style.setProperty('--total', this.slides.length);
             this.updateSlidesPerView();
 
-            // Set total slides count as CSS custom property
-            this.container.style.setProperty('--total', this.slides.length);
+            // Single-slide swipers can never navigate; bail before nav/observer/keyboard
+            // setup. updateSlidesPerView already ran so --slides/--peek are correct.
+            if (this.slides.length === 1) {
+                this.container.setAttribute('data-swiper-initialized', 'true');
+                return;
+            }
 
             this.setupNavigation();
-            this.setupPagination();
             this.setupScrollSync();
             this.setupKeyboard();
             this.setupResize();
-            this.setupLazyLoading();
-            this.setupContentObserver();
-            this.setupVisibilityObserver();
-            this.updateState();
+
+            // Gate observers — only register when they have work to do.
+            const lazySlides = this.slides.filter(s =>
+                s.querySelector('img[data-src], img[data-srcset]')
+            );
+            if (lazySlides.length) this.setupLazyLoading(lazySlides);
+            // setupContentObserver only catches scrollWidth shifts from late-loading
+            // content; for static-content swipers (no lazy images) it's pure noise.
+            // Hero updatePeekStyles is a no-op anyway, so hero never needs it.
+            if (!this.isHero && lazySlides.length) this.setupContentObserver();
+            // setupVisibilityObserver only does meaningful work for heroes that have
+            // [hidden] slides to reveal on visibility (the WebKit RTL fix). Non-hero
+            // peek/state was set synchronously above — no late update needed.
+            if (this.isHero && this.slides.some(s => s.hasAttribute('hidden'))) {
+                this.setupVisibilityObserver();
+            }
+
+            // Initial state. setupPagination (called inside updateSlidesPerView) already
+            // set the active bullet; only buttons + boundary classes remain.
+            this.updateButtons();
+            this.updateBoundaryClasses();
+            this.lastIndex = this.currentIndex;
+
             this.updatePeekStyles();
 
             this.container.setAttribute('data-swiper-initialized', 'true');
 
-            // Reveal pagination/nav buttons that were hidden in markup to avoid
-            // a flash of unstyled controls before init. Skip when there's
-            // nothing to navigate to (single-slide / fits-in-view).
             if (this.slides.length > this.slidesPerView) {
                 if (this.pagination) this.pagination.removeAttribute('hidden');
                 if (this.prevBtn) this.prevBtn.removeAttribute('hidden');
@@ -163,145 +185,116 @@
             }, 100);
 
             const off = NDS.onElementResize(this.wrapper, checkScrollWidth);
-
-            // Disconnect after 500ms
             setTimeout(off, 500);
         }
 
         setupVisibilityObserver() {
-            // Track if peek styles have been applied after becoming visible
-            this.peekStylesApplied = false;
-
-            // Shared viewport IO detects when swiper becomes visible
-            // Handles tabs, modals, accordions, and any hidden container
+            // One-shot: fires once when the hero becomes visible, reveals [hidden]
+            // slides, then unsubscribes. Only registered when the hero actually has
+            // [hidden] slides (gated at init).
             this._offVisibility = NDS.onIntersect(this.container, (entry) => {
-                if (entry.isIntersecting && entry.intersectionRatio > 0) {
-                    if (this.container && this.container.hasAttribute('hidden')) {
-                        this.container.removeAttribute('hidden');
+                if (!entry.isIntersecting) return;
+                this._offVisibility();
+                this._offVisibility = null;
+
+                // rAF so the forced reflow below lands on the next paint frame,
+                // not on the IO callback's task.
+                requestAnimationFrame(() => {
+                    if (NDS.isRTL) {
+                        // WebKit RTL: keep scroll-behavior: auto through the entire
+                        // update so Safari/WebKit doesn't jump scroll on reflow.
+                        this.wrapper.style.scrollBehavior = 'auto';
+                        this.slides.forEach(s => { if (s.hasAttribute('hidden')) s.removeAttribute('hidden'); });
+                        this.wrapper.scrollLeft = 0;
+                        void this.wrapper.offsetHeight;
+                        this.wrapper.scrollLeft = 0;
+                        void this.wrapper.offsetHeight;
+                        this.wrapper.style.scrollBehavior = '';
+                    } else {
+                        this.slides.forEach(s => { if (s.hasAttribute('hidden')) s.removeAttribute('hidden'); });
                     }
-
-                    if (!this.peekStylesApplied) {
-                        setTimeout(() => {
-                            const hasHiddenSlides = this.isHero && this.slides.some(slide => slide.hasAttribute('hidden'));
-
-                            if (hasHiddenSlides && NDS.isRTL) {
-                                // WebKit RTL fix: keep scroll-behavior: auto through entire update
-                                // to prevent Safari/WebKit from jumping scroll position on reflow
-                                this.wrapper.style.scrollBehavior = 'auto';
-
-                                this.slides.forEach(slide => { if (slide.hasAttribute('hidden')) slide.removeAttribute('hidden'); });
-                                this.wrapper.scrollLeft = 0;
-                                void this.wrapper.offsetHeight;
-
-                                this.updatePeekStyles();
-                                this.updateState();
-                                this.peekStylesApplied = true;
-
-                                this.wrapper.scrollLeft = 0;
-                                void this.wrapper.offsetHeight;
-
-                                this.wrapper.style.scrollBehavior = '';
-                            } else {
-                                if (hasHiddenSlides) {
-                                    this.slides.forEach(slide => { if (slide.hasAttribute('hidden')) slide.removeAttribute('hidden'); });
-                                }
-                                this.updatePeekStyles();
-                                this.updateState();
-                                this.peekStylesApplied = true;
-                            }
-                        }, 50);
-                    }
-                }
+                });
             }, { threshold: 0.01 });
         }
-
 
         // ==============================================
         // RESPONSIVE SLIDES PER VIEW
         // ==============================================
 
         updateSlidesPerView() {
-            const width = window.innerWidth;
-            const peek = parseInt(this.container.getAttribute('peek')) || 0;
+            const newSlidesPerView = this.calculateSlidesPerView();
 
-            const newSlidesPerView = this.calculateSlidesPerView(width);
-
-            // Only update if changed (prevents unnecessary recalculation during init)
             if (newSlidesPerView !== this.slidesPerView) {
                 this.slidesPerView = newSlidesPerView;
                 this.container.style.setProperty('--slides', this.slidesPerView);
             }
 
-            // Calculate number of pages
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
 
-            // getGap() reads getComputedStyle and forces a sync reflow — only
-            // call it when the result will actually be used (peek mode).
-            const effectivePeek = (peek > 0 && pageCount > 1) ? peek + this.getGap() : 0;
-
+            // getGap() reads getComputedStyle and forces a sync reflow — only call
+            // it when the result is actually used (peek mode with multiple pages).
+            const effectivePeek = (this._peek > 0 && pageCount > 1) ? this._peek + this.getGap() : 0;
             this.container.style.setProperty('--peek', `${effectivePeek}px`);
 
-            // Rebuild pagination when slides per view changes
-            if (this.pagination) {
-                this.setupPagination();
-            }
+            if (this.pagination) this.setupPagination();
         }
 
         updatePeekStyles() {
-            // Skip hero sliders
-            if (this.container.classList.contains('nds-hero')) {
-                return;
-            }
+            if (this.isHero) return;
 
-            const hasPeek = this.container.hasAttribute('peek');
+            const hasPeek = this._peek > 0;
             const hasOneSlidePage = this.slidesPerView === 1;
 
-           /* // If parent has nds-max-width but narrower than content area (e.g. side menu), add padding
-            const parent = this.container.parentElement;
-            const parentHasMaxWidth = parent?.classList.contains('nds-max-width');
-            const styles = getComputedStyle(document.documentElement);
-            const contentMaxWidth = parseInt(styles.getPropertyValue('--nds-content-MaxWidth')) || CONTENT_MAX_WIDTH_FALLBACK;
-            const viewportPadding = parseInt(styles.getPropertyValue('--nds-viewport-padding')) || 32;
-            const parentWidth = parent?.clientWidth || 0;
-
-             if (parentHasMaxWidth && parentWidth < contentMaxWidth) {
-                this.container.style.setProperty('--padding', 'var(--nds-viewport-padding)');
-            } else {
-                this.container.style.removeProperty('--padding');
-            }
- */
-            // If not peek and not single slide, remove gap if present
             if (!hasPeek && !hasOneSlidePage) {
                 this.container.style.removeProperty('--gap');
                 return;
             }
 
-            // For non-peek single slide mode: set gap to viewport padding
             if (!hasPeek && hasOneSlidePage) {
                 this.container.style.setProperty('--gap', 'var(--nds-viewport-padding)');
             }
         }
 
         setupResize() {
-            this._offResize = NDS.onResize(() => {
-                this._cachedGap = null; // Invalidate gap cache on resize
-                this._measuredStep = null; // Invalidate step cache on resize
-                const oldSlidesPerView = this.slidesPerView;
-                this.updateSlidesPerView();
+            // Subscription is shared via ensureSharedResize; instance is invoked
+            // through _activeSwipers membership (added by setupKeyboard).
+            ensureSharedResize();
+        }
 
-                // If slides per view changed, update buttons and pagination
-                if (oldSlidesPerView !== this.slidesPerView) {
-                    this.updateButtons();
-                    this.updatePagination();
-                    this.updateBoundaryClasses();
+        _handleResize() {
+            this._cachedGap = null;
+            this._measuredStep = null;
+            const oldSlidesPerView = this.slidesPerView;
+            this.updateSlidesPerView();
+
+            if (oldSlidesPerView !== this.slidesPerView) {
+                this.updateButtons();
+                this.updateBoundaryClasses();
+            }
+
+            this.updatePeekStyles();
+        }
+
+        // ==============================================
+        // ACTIVATION HELPER (nav buttons + bullets)
+        // ==============================================
+        // pointerdown unifies mouse + touch + pen; preventDefault prevents focus-
+        // on-click (preserves keyboard nav) and suppresses synthetic mouse events on
+        // touch. Touch-scroll on the button itself is blocked by `touch-action:
+        // manipulation` in _swiper.scss.
+        _attachActivation(btn, action) {
+            const { signal } = this._ac;
+            btn.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                e.preventDefault();
+                action();
+            }, { signal });
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    action();
                 }
-
-                // Update peek styles and max-width class on resize
-                this.updatePeekStyles();
-
-                // Reset visibility flag to allow update on next visibility
-                this.peekStylesApplied = false;
-            });
+            }, { signal });
         }
 
         // ==============================================
@@ -309,41 +302,11 @@
         // ==============================================
 
         setupNavigation() {
-            const { signal } = this._ac;
-            // Helper to handle navigation action
-            const handleNav = (btn, action) => {
-                // Use mousedown for immediate response on press
-                btn.addEventListener('mousedown', (e) => {
-                    if (e.button !== 0) return; // Only left mouse button
-                    e.preventDefault();
-                    action();
-                }, { signal });
-
-                // Use touchstart for immediate response on touch devices
-                btn.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    action();
-                }, { passive: false, signal });
-
-                // Keep keyboard support (Enter/Space keys trigger click naturally)
-                btn.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        action();
-                    }
-                }, { signal });
-            };
-
-            if (this.prevBtn) {
-                handleNav(this.prevBtn, () => this.prev());
-            }
-            if (this.nextBtn) {
-                handleNav(this.nextBtn, () => this.next());
-            }
+            if (this.prevBtn) this._attachActivation(this.prevBtn, () => this.prev());
+            if (this.nextBtn) this._attachActivation(this.nextBtn, () => this.next());
         }
 
         prev() {
-            // Snap to nearest page-aligned boundary going backward
             this.goTo(Math.floor((this.currentIndex - 1) / this.slidesPerView) * this.slidesPerView);
         }
 
@@ -358,8 +321,8 @@
             const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;
 
-            // Use offsetLeft difference from first slide — static DOM property,
-            // unaffected by scroll animation, accounts for wrapper padding
+            // offsetLeft difference from first slide — static DOM property,
+            // unaffected by scroll animation, accounts for wrapper padding.
             const offset = Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
             this.wrapper.scrollTo({
@@ -382,7 +345,7 @@
         detectCurrentSlide() {
             if (this.slides.length === 0) return;
 
-            // Measure actual step from DOM once (accounts for fractional widths + gap)
+            // Measure actual step from DOM once (accounts for fractional widths + gap).
             if (this.slides.length > 1 && !this._measuredStep) {
                 this._measuredStep = Math.abs(this.slides[1].offsetLeft - this.slides[0].offsetLeft);
             }
@@ -405,64 +368,29 @@
 
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
 
-            // Hide pagination and navigation buttons if only one page
             if (pageCount <= 1) {
                 this.pagination.style.display = 'none';
                 this.pagination.innerHTML = '';
                 if (this.navigation) this.navigation.style.display = 'none';
                 if (this.prevBtn) this.prevBtn.style.display = 'none';
                 if (this.nextBtn) this.nextBtn.style.display = 'none';
-                // Disable overflow on wrapper when only one page
                 this.wrapper.style.overflow = 'unset';
                 return;
             }
 
-            // Show pagination and navigation buttons
             this.pagination.style.display = '';
             this.pagination.innerHTML = '';
             if (this.navigation) this.navigation.style.display = '';
             if (this.prevBtn) this.prevBtn.style.display = '';
             if (this.nextBtn) this.nextBtn.style.display = '';
-            // Re-enable overflow on wrapper
             this.wrapper.style.overflow = '';
-
-            // Helper to handle navigation action (same as in setupNavigation)
-            const { signal } = this._ac;
-            const handleNav = (btn, action) => {
-                // Use mousedown for immediate response on press
-                btn.addEventListener('mousedown', (e) => {
-                    if (e.button !== 0) return; // Only left mouse button
-                    e.preventDefault();
-                    action();
-                }, { signal });
-
-                // Use touchstart for immediate response on touch devices
-                btn.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    action();
-                }, { passive: false, signal });
-
-                // Keep keyboard support (Enter/Space keys trigger click naturally)
-                btn.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        action();
-                    }
-                }, { signal });
-            };
 
             for (let i = 0; i < pageCount; i++) {
                 const bullet = document.createElement('button');
                 bullet.className = 'nds-bullet';
                 bullet.type = 'button';
                 bullet.setAttribute('aria-label', `Go to slide ${i + 1}`);
-
-                // Apply handleNav for immediate response on dots
-                handleNav(bullet, () => {
-                    const targetIndex = i * this.slidesPerView;
-                    this.goTo(targetIndex);
-                });
-
+                this._attachActivation(bullet, () => this.goTo(i * this.slidesPerView));
                 this.pagination.appendChild(bullet);
             }
 
@@ -475,8 +403,8 @@
             const bullets = this.pagination.querySelectorAll('.nds-bullet');
             const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
 
-            // Map currentIndex to page based on proximity to page start indices
-            // For 6 slides, 4 per view: page 0 starts at index 0, page 1 starts at index 2
+            // Map currentIndex to page based on proximity to page start indices.
+            // For 6 slides, 4 per view: page 0 starts at index 0, page 1 starts at index 2.
             let currentPage = 0;
             let closestDistance = Infinity;
 
@@ -508,58 +436,50 @@
             }
 
             const { signal } = this._ac;
+            this._isHovered = false;
+            this.container.addEventListener('mouseenter', () => this._isHovered = true, { signal });
+            this.container.addEventListener('mouseleave', () => this._isHovered = false, { signal });
 
-            // Track if mouse is over swiper for keyboard navigation
-            let isHovered = false;
-            this.container.addEventListener('mouseenter', () => isHovered = true, { signal });
-            this.container.addEventListener('mouseleave', () => isHovered = false, { signal });
+            _activeSwipers.add(this);
+            ensureSharedKeydown();
+        }
 
-            document.addEventListener('keydown', (e) => {
-                // Only respond if swiper is focused or hovered
-                const isFocused = this.container.contains(document.activeElement);
-                if (!isFocused && !isHovered) return;
-
-                const rtl = NDS.isRTL;
-
-                switch (e.key) {
-                    case 'ArrowLeft':
-                        e.preventDefault();
-                        const leftBtn = rtl ? this.nextBtn : this.prevBtn;
-                        if (leftBtn && !leftBtn.disabled) leftBtn.click();
-                        break;
-                    case 'ArrowRight':
-                        e.preventDefault();
-                        const rightBtn = rtl ? this.prevBtn : this.nextBtn;
-                        if (rightBtn && !rightBtn.disabled) rightBtn.click();
-                        break;
-                    case 'Home':
-                        e.preventDefault();
-                        this.goTo(0);
-                        break;
-                    case 'End':
-                        e.preventDefault();
-                        this.goTo(this.slides.length - this.slidesPerView);
-                        break;
+        _handleKeydown(e) {
+            const rtl = NDS.isRTL;
+            switch (e.key) {
+                case 'ArrowLeft': {
+                    e.preventDefault();
+                    const leftBtn = rtl ? this.nextBtn : this.prevBtn;
+                    if (leftBtn && !leftBtn.disabled) leftBtn.click();
+                    break;
                 }
-            }, { signal });
+                case 'ArrowRight': {
+                    e.preventDefault();
+                    const rightBtn = rtl ? this.prevBtn : this.nextBtn;
+                    if (rightBtn && !rightBtn.disabled) rightBtn.click();
+                    break;
+                }
+                case 'Home':
+                    e.preventDefault();
+                    this.goTo(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    this.goTo(this.slides.length - this.slidesPerView);
+                    break;
+            }
         }
 
         // ==============================================
         // LAZY LOADING
         // ==============================================
 
-        setupLazyLoading() {
-            const lazySlides = this.slides.filter(slide =>
-                slide.querySelector('img[data-src], img[data-srcset]')
-            );
-
-            if (lazySlides.length === 0) return;
-
+        setupLazyLoading(lazySlides) {
             const offs = [];
             lazySlides.forEach(slide => {
                 const off = NDS.onIntersect(slide, (entry) => {
                     if (entry.isIntersecting) {
-                        // Activate <source> elements inside <picture> first
+                        // Activate <source> elements inside <picture> first.
                         entry.target.querySelectorAll('source[data-srcset]').forEach(source => {
                             source.srcset = fixSrcsetSpaces(source.dataset.srcset);
                             delete source.dataset.srcset;
@@ -581,7 +501,6 @@
         // ==============================================
 
         updateState() {
-            // Skip if index hasn't changed
             if (this.lastIndex === this.currentIndex) return;
             this.lastIndex = this.currentIndex;
 
@@ -592,7 +511,6 @@
 
         updateButtons() {
             const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
-
             if (this.prevBtn) this.prevBtn.disabled = this.currentIndex <= 0;
             if (this.nextBtn) this.nextBtn.disabled = this.currentIndex >= maxIndex;
         }
@@ -616,20 +534,13 @@
             const targetSlide = this.slides[index];
             if (!targetSlide) return;
 
-            // Calculate scroll position relative to wrapper
             const wrapperRect = this.wrapper.getBoundingClientRect();
             const slideRect = targetSlide.getBoundingClientRect();
 
-            const rtl = NDS.isRTL;
-            let scrollDelta;
+            const scrollDelta = NDS.isRTL
+                ? slideRect.right - wrapperRect.right
+                : slideRect.left - wrapperRect.left;
 
-            if (rtl) {
-                scrollDelta = slideRect.right - wrapperRect.right;
-            } else {
-                scrollDelta = slideRect.left - wrapperRect.left;
-            }
-
-            // Scroll wrapper
             this.wrapper.scrollBy({
                 left: scrollDelta,
                 behavior: animate ? 'smooth' : 'instant'
@@ -640,18 +551,16 @@
         // CLEANUP
         // ==============================================
 
-        // Instance becomes unusable after destroy(): _ac is nulled so any subsequent call to a setup
-        // method that reads `this._ac.signal` will throw. Re-initialize via `NDS.Swiper.create(el)`
-        // (constructs a fresh instance) rather than calling instance methods directly.
+        // Instance becomes unusable after destroy(): _ac is nulled so any subsequent call
+        // to a setup method that reads `this._ac.signal` will throw. Re-initialize via
+        // `NDS.Swiper.create(el)` (constructs a fresh instance).
         destroy() {
             this.container.removeAttribute('data-swiper-initialized');
             this.container.removeAttribute('tabindex');
-            if (this.pagination) {
-                this.pagination.innerHTML = '';
-            }
+            if (this.pagination) this.pagination.innerHTML = '';
+            _activeSwipers.delete(this);
             if (this._offVisibility) { this._offVisibility(); this._offVisibility = null; }
             if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
-            if (this._offResize) { this._offResize(); this._offResize = null; }
             if (this._ac) { this._ac.abort(); this._ac = null; }
         }
     }
@@ -661,30 +570,22 @@
     // ==============================================
 
     function initializeComponents() {
-        // First, fix any existing srcset attributes with spaces
         document.querySelectorAll('img[srcset]').forEach(img => {
             const srcset = img.getAttribute('srcset');
             if (srcset && srcset.includes(' ') && !srcset.includes('%20')) {
-                // Check if it needs encoding (has spaces but not already encoded)
                 const fixed = fixSrcsetSpaces(srcset);
-                if (fixed !== srcset) {
-                    img.setAttribute('srcset', fixed);
-                }
+                if (fixed !== srcset) img.setAttribute('srcset', fixed);
             }
         });
 
-        // Then initialize swipers
         const swipers = document.querySelectorAll('.nds-swiper');
         swipers.forEach(swiper => {
             if (swiper.closest('code, .code-example')) return;
-            if (!swiper.hasAttribute('data-swiper-initialized')) {
-                const instance = new NDSSwiper(swiper);
-                swiper._ndsSwiper = instance;
-            }
+            if (swiper.hasAttribute('data-swiper-initialized')) return;
+            swiper._ndsSwiper = new NDSSwiper(swiper);
         });
     }
 
-    // Export to window
     NDS.Swiper = {
         init: initializeComponents,
         reinit: initializeComponents,
