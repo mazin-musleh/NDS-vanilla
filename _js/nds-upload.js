@@ -60,7 +60,6 @@
 
             this.container = container;
             this._files = [];
-            this._observer = null;
             this._dragListenersActive = false;
 
             // Cache DOM references
@@ -311,10 +310,6 @@
             // Tear down drag and observer
             this._removeDragAndDrop();
             if (this._offAttrChange) { this._offAttrChange(); this._offAttrChange = null; }
-            if (this._observer) {
-                this._observer.disconnect();
-                this._observer = null;
-            }
 
             // Abort in-progress uploads
             this._files.forEach(f => { if (f._xhr) f._xhr.abort(); });

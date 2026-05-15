@@ -103,7 +103,7 @@
             menu.setAttribute('role', 'listbox');
             menu.setAttribute('hidden', '');
 
-            var menuId = 'nds-ac-' + (this.input.id || Math.random().toString(36).substring(2, 11));
+            var menuId = 'nds-ac-' + (this.input.id || NDS.uniqueId());
             menu.id = menuId;
 
             // Scrollable container for items

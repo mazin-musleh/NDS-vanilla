@@ -395,21 +395,13 @@
 
             if (this._offIntersect) { this._offIntersect(); this._offIntersect = null; }
 
-            if (this.resizeTimer) {
-                clearTimeout(this.resizeTimer);
-            }
-
-            if (this.visibilityTimer) {
-                clearTimeout(this.visibilityTimer);
-            }
-
             NDS.State.clear(this.wrapper);
             this.currentScrollState = null;
         }
     }
 
     // Global class-change observer so mask toggle reflects without a scroll event
-    if (!window.ndsTableClassObserverInitialized && NDS.onAttrChange) {
+    if (!window.ndsTableClassObserverInitialized) {
         window.ndsTableClassObserverInitialized = true;
         NDS.onAttrChange('.nds-table[data-nds-responsive-initialized]', ['class'], (hits) => {
             hits.forEach(table => {

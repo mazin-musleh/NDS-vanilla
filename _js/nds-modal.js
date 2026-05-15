@@ -91,7 +91,7 @@
       modal.setAttribute('hidden', '');
       NDS.State.clear(modal);
       modal.dispatchEvent(new CustomEvent('nds-modal-closed', { bubbles: true }));
-    }, 300);
+    }, NDS.transitionSpeed() + 100);
 
     activeModal = null;
   }

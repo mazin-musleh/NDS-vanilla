@@ -203,25 +203,6 @@
         },
 
         /**
-         * Initialize existing feedback elements in DOM
-         * Enhances hardcoded HTML feedback with interactive features
-         */
-        init() {
-            const feedbackElements = document.querySelectorAll('.nds-feedback');
-            if (feedbackElements.length === 0) return;
-
-            feedbackElements.forEach(feedback => {
-                // Skip already initialized, code examples
-                if (feedback.hasAttribute('data-nds-feedback-init') || feedback.closest('code, .code-example')) {
-                    return;
-                }
-
-                // Mark as initialized
-                feedback.setAttribute('data-nds-feedback-init', 'true');
-            });
-        },
-
-        /**
          * Internal: Attach feedback to target element
          * @private
          */
