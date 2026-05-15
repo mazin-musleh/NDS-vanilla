@@ -322,6 +322,6 @@
     }
 
     if (typeof window !== 'undefined') {
-        NDS.Sidemenu = { init: initializeSideMenu };
+        NDS.Sidemenu = { init: initializeSideMenu, destroy };
     }
 })();
