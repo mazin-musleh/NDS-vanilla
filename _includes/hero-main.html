@@ -11,7 +11,7 @@ Determine hero sliders source:
 {%- assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" -%}
 {%- assign hero_sliders = site.data.hero[hero_file_name] -%}
 {%- endif -%}
-<section class="nds-hero-section" aria-label="قسم العرض الرئيسي">
+<section class="nds-hero-section" aria-label="Hero Section">
     <div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">
             {%- for slide in hero_sliders %}

@@ -2,10 +2,12 @@
 
 // ── Base ──
 .nds-hero-section {
+    --_hero-height: var(--hero-height, 550px);
     background-color: var(--background-sa-flag);
     position: relative;
     background-position: 50% 50%;
     --section-padding-block: 0;
+    height: var(--_hero-height);
     max-height: 550px;
 
     &:not(.nds-sub) {
@@ -15,9 +17,6 @@
         --section-description-FS: var(--typo-text-clamp-xl-FS);
         --section-description-LH: var(--typo-text-clamp-xl-LH);
         overflow: hidden;
-        aspect-ratio: 16 / 9;
-        height: 60svh;
-        min-height: 400px;
 
         img {
             pointer-events: none;
@@ -76,9 +75,9 @@
         --section-title-FS: var(--typo-display-clamp-md-FS);
         --section-title-LH: var(--typo-display-clamp-md-LH);
         --section-title-MB: var(--typo-display-clamp-md-MB);
+        --hero-height: fit-content;
         isolation: isolate;
         background-color: var(--background-sub-hero);
-        height: fit-content;
         min-height: 100px;
         box-shadow: var(--shadow-inset, inset 0px -2px 4px rgba(0, 0, 0, 0.05)) !important;
         border-radius: 0 !important;

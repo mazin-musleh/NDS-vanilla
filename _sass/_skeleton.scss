@@ -51,6 +51,10 @@
     width: 100%;
 }
 
+.nds-swiper.nds-hero .nds-swiper-slide {
+    flex: 1;
+}
+
 /* ── Hide chrome / reserve layout until JS + main CSS land ── */
 :is(.nds-brand-name, .nds-hero-section :is(.nds-section-wrapper, .nds-section-head)) {
     visibility: hidden;
