@@ -191,9 +191,4 @@
         create: (el) => { el._ndsToc = new NDSToc(el); return el._ndsToc; }
     };
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeComponents);
-    } else {
-        initializeComponents();
-    }
 })();

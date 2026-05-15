@@ -397,13 +397,6 @@
         goTo: (id, step) => control(id, 'goto', step)
     };
 
-    // Auto-initialize on DOMContentLoaded
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-
 })();
 
 /**

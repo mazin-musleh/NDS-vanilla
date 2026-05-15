@@ -145,10 +145,17 @@
         }
 
         setupContentObserver() {
-            let lastScrollWidth = this.wrapper.scrollWidth;
+            // Establish the baseline on the first observer callback rather than
+            // synchronously here — a scrollWidth read during init forces layout
+            // after the CSS-variable writes earlier in the chain.
+            let lastScrollWidth = -1;
 
             const checkScrollWidth = NDS.debounce(() => {
                 const currentScrollWidth = this.wrapper.scrollWidth;
+                if (lastScrollWidth === -1) {
+                    lastScrollWidth = currentScrollWidth;
+                    return;
+                }
                 if (currentScrollWidth !== lastScrollWidth) {
                     lastScrollWidth = currentScrollWidth;
                     this.updatePeekStyles();
@@ -228,11 +235,9 @@
             // Calculate number of pages
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
 
-            // Get swiper gap
-            const gap = this.getGap();
-
-            // Set peek to 0 if no peek attr, only one page, otherwise add gap to peek
-            const effectivePeek = (peek > 0 && pageCount > 1) ? peek + gap : 0;
+            // getGap() reads getComputedStyle and forces a sync reflow — only
+            // call it when the result will actually be used (peek mode).
+            const effectivePeek = (peek > 0 && pageCount > 1) ? peek + this.getGap() : 0;
 
             this.container.style.setProperty('--peek', `${effectivePeek}px`);
 
@@ -689,12 +694,5 @@
             return instance;
         }
     };
-
-    // Auto-initialize
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeComponents);
-    } else {
-        initializeComponents();
-    }
 
 })();

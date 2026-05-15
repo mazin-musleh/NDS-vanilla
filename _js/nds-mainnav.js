@@ -992,12 +992,15 @@
         if (_initialized || !DOM.collapse) return;
         _initialized = true;
 
-        updateBodyClass();
+        // updateBodyClass calls managePABPlacement when the state transitions;
+        // only run the explicit pass when it didn't, otherwise PAB placement
+        // walks every .nds-PAB twice and re-prepends nodes already in place.
+        const bodyClassChanged = updateBodyClass();
         setupEventListeners();
         // handleDocumentClick shares the setupEventListeners AbortController so
         // both document-click listeners detach atomically on teardown.
         document.addEventListener('click', handleDocumentClick, { signal: _eventsAC.signal });
-        managePABPlacement();
+        if (!bodyClassChanged) managePABPlacement();
         DOM.dgaTab?.addEventListener('click', toggleDGA, { signal: _eventsAC.signal });
 
         if (hasState(DOM.collapse, 'open')) updatePositions();

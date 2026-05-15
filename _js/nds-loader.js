@@ -2,9 +2,8 @@
 (() => {
     'use strict';
 
-    // Component registry with dependencies and selectors
-    // Priority is automatically assigned based on array order (first = highest priority)
-    // To change initialization order, simply reorder components in this array
+    // Component registry. Array order = init order (first runs first).
+    // To change initialization order, reorder this array.
     //
     // Standard component API contract:
     //   Factory components (per-element):  init(), reinit(), create(el)
@@ -102,8 +101,10 @@
             init: () => NDS.Numbers?.init?.(),
         },
         {
+            // Targets the three NDS code hooks (block, tabs-wrapped block, inline).
+            // Avoids bare `code` so detection doesn't sweep every <code> on docs pages.
             name: 'code',
-            selector: 'code',
+            selector: '.code-example, .nds-code, code.nds-inline-code',
             init: () => NDS.Code?.init?.(),
         },
         {
@@ -120,6 +121,7 @@
             name: 'share',
             selector: '.nds-share',
             init: () => NDS.Share?.init?.(),
+            idle: true,
         },
         {
             name: 'datePicker',
@@ -207,11 +209,13 @@
             name: 'userFeedback',
             selector: '.nds-user-feedback',
             init: () => NDS.UserFeedback?.init?.(),
+            idle: true,
         },
         {
             name: 'chart',
             selector: '.nds-chart',
             init: () => NDS.Chart?.init?.(),
+            idle: true,
         },
         {
             name: 'empty',
@@ -219,6 +223,8 @@
             init: () => NDS.Empty?.init?.(),
         },
         {
+            // Eager: enforces single-submit. A click in the idle gap would
+            // bypass the cooldown.
             name: 'cooldownButton',
             selector: '.nds-cooldown',
             init: () => NDS.CooldownButton?.init?.(),
@@ -232,21 +238,42 @@
             name: 'cityWeather',
             selector: '#nds-weatherInfo, #nds-cityName',
             init: () => NDS.CityWeather?.init?.(),
+            idle: true,
         },
         {
             name: 'timeDate',
             selector: '#nds-date, #nds-realTimeClock',
             init: () => NDS.TimeDate?.init?.(),
+            idle: true,
         },
         {
+            // Eager: a11y users often interact first; the panel must be
+            // reachable without waiting for idle.
             name: 'accessibility',
             selector: '[data-accessibility-panel]',
             init: () => NDS.Accessibility?.init?.(),
         },
-    ].map((component, index) => ({
-        ...component,
-        priority: index + 1  // Auto-assign priority based on array order
-    }));
+    ];
+
+    // NDS components revealed in one batch after eager init completes. Kept at
+    // module scope so the string isn't rebuilt on every initializeNDS() call.
+    // .nds-swiper-slide is intentionally excluded — swiper controls slide
+    // visibility to prevent CLS during its own init.
+    const HIDDEN_NDS_SELECTOR =
+        '[hidden].nds-tabs, ' +
+        '[hidden].nds-drawer, ' +
+        '[hidden].nds-breadcrumb-nav, ' +
+        '[hidden].nds-form-group, ' +
+        '[hidden].nds-form-container, ' +
+        '[hidden].nds-form-action, ' +
+        '[hidden].nds-user-feedback, ' +
+        '[hidden].nds-dropmenu-menu, ' +
+        '[hidden].nds-nav-container, ' +
+        '[hidden].nds-swiper, ' +
+        '[hidden].nds-paged-content, ' +
+        '[hidden].nds-footer, ' +
+        '[hidden].nds-sideinfo, ' +
+        '[hidden].nds-digitalStamp-tab';
 
     function initializeNDS() {
         if (CONFIG.disableAll === true) {
@@ -257,79 +284,52 @@
         }
         const startTime = performance.now();
 
-        // PERFORMANCE: Single DOM query sweep with batched existence checks
+        // Detect which components are on the page. Per-component querySelector
+        // is the fast path: it short-circuits at the first match and uses the
+        // browser's native class/ID indices for absent selectors — no JS-level
+        // matches() loop needed.
         const existingComponents = new Map();
-
-        // Build one comprehensive selector for all components
-        const allSelectors = COMPONENTS
-            .filter((c) => c.selector && !c.universal)
-            .map((c) => c.selector)
-            .join(', ');
-
-        if (allSelectors) {
-            const allElements = document.querySelectorAll(allSelectors);
-
-            // Check which components have elements
-            COMPONENTS.forEach((component) => {
-                if (component.universal) {
-                    existingComponents.set(component.name, true);
-                } else if (component.selector) {
-                    if (component.name === 'code') {
-                        // For code component, check directly for code elements
-                        const hasElements = document.querySelectorAll('code').length > 0;
-                        existingComponents.set(component.name, hasElements);
-                    } else {
-                        // For other components, filter out elements inside code blocks
-                        const filteredElements = Array.from(allElements).filter(
-                            (el) => !el.closest('code')
-                        );
-                        const hasElements = filteredElements.some((el) =>
-                            el.matches(component.selector)
-                        );
-                        existingComponents.set(component.name, hasElements);
-                    }
-                }
-            });
-        } else {
-            // Only universal components
-            COMPONENTS.forEach((component) => {
-                existingComponents.set(
-                    component.name,
-                    component.universal || false
-                );
-            });
+        for (const c of COMPONENTS) {
+            if (c.universal) {
+                existingComponents.set(c.name, true);
+            } else if (c.selector && document.querySelector(c.selector)) {
+                existingComponents.set(c.name, true);
+            }
         }
 
-        // PERFORMANCE: Sort by priority and initialize
-        const toInitialize = COMPONENTS
-            .filter((component) => existingComponents.get(component.name))
-            .sort((a, b) => a.priority - b.priority);
+        // Source order is priority order (assigned at line 248), and .filter
+        // preserves order — no sort needed.
+        const toInitialize = COMPONENTS.filter((c) => existingComponents.get(c.name));
+        const eagerComponents = toInitialize.filter((c) => !c.idle);
+        const idleComponents = toInitialize.filter((c) => c.idle);
 
         if (CONFIG.enableLogging) {
             console.log(
-                `[NDS] Initializing ${toInitialize.length}/${COMPONENTS.length} components`
+                `[NDS] Initializing ${toInitialize.length}/${COMPONENTS.length} components ` +
+                `(${eagerComponents.length} eager, ${idleComponents.length} idle)`
             );
         }
 
-        // Staggered initialization to keep the main thread responsive
-        let index = 0;
-        function initNext() {
-            if (index >= toInitialize.length) {
-                // All components initialized - now batch remove hidden attributes
-                batchRemoveHidden();
+        // MessageChannel yield: resumes within ~1ms vs setTimeout's ≥4ms clamp,
+        // while still letting the browser interleave input/layout/paint.
+        const yieldChannel = new MessageChannel();
+        let queuedYieldCallback = null;
+        yieldChannel.port1.onmessage = () => {
+            const cb = queuedYieldCallback;
+            queuedYieldCallback = null;
+            if (cb) cb();
+        };
+        const yieldToBrowser = (cb) => {
+            queuedYieldCallback = cb;
+            yieldChannel.port2.postMessage(null);
+        };
 
-                if (CONFIG.enableTiming) {
-                    const endTime = performance.now();
-                    console.log(
-                        `[NDS] All components initialized in ${Math.round(
-                            endTime - startTime
-                        )}ms`
-                    );
-                }
-                return;
-            }
+        // rIC fallback for older Safari (<18); behaves like a deferred macrotask
+        // with a fake deadline so the loop still drains.
+        const scheduleIdle = window.requestIdleCallback ||
+            ((cb) => setTimeout(() => cb({ timeRemaining: () => 50, didTimeout: false }), 1));
 
-            const component = toInitialize[index++];
+        const runInit = (component) => {
             try {
                 component.init();
                 if (CONFIG.enableLogging) {
@@ -338,65 +338,84 @@
             } catch (error) {
                 console.warn(`[NDS:init] ${component.name} failed:`, error);
             }
+        };
 
-            // Stagger next component to avoid blocking the main thread
-            if (index < toInitialize.length) {
-                setTimeout(initNext, CONFIG.staggerDelay);
+        // Eager pass: time-sliced. Small inits share a task; a heavy init lands
+        // alone. Yields when the per-batch budget is exceeded.
+        let eagerIndex = 0;
+        function initEagerBatch() {
+            const batchStart = performance.now();
+            while (
+                eagerIndex < eagerComponents.length &&
+                performance.now() - batchStart < CONFIG.initBudgetMs
+            ) {
+                runInit(eagerComponents[eagerIndex++]);
+            }
+            if (eagerIndex < eagerComponents.length) {
+                yieldToBrowser(initEagerBatch);
             } else {
-                initNext(); // Finish immediately
+                batchRemoveHidden();
+                if (idleComponents.length) {
+                    scheduleIdle(drainIdle, { timeout: 2000 });
+                } else {
+                    logAllDone();
+                }
             }
         }
 
-        // Batch removal of hidden attributes - single reflow instead of multiple
+        // Idle pass: drains as many components as fit in each idle slot. The
+        // timeout ensures these still run if the page never goes idle.
+        let idleIndex = 0;
+        function drainIdle(deadline) {
+            while (
+                idleIndex < idleComponents.length &&
+                (deadline.didTimeout || deadline.timeRemaining() > 1)
+            ) {
+                runInit(idleComponents[idleIndex++]);
+            }
+            if (idleIndex < idleComponents.length) {
+                scheduleIdle(drainIdle, { timeout: 2000 });
+            } else {
+                logAllDone();
+            }
+        }
+
+        function logAllDone() {
+            if (CONFIG.enableTiming) {
+                console.log(
+                    `[NDS] All components initialized in ${Math.round(performance.now() - startTime)}ms`
+                );
+            }
+        }
+
+        // Reveal hidden NDS components in one rAF — single reflow vs many.
         function batchRemoveHidden() {
-            const batchStart = performance.now();
+            const measure = CONFIG.enableTiming || CONFIG.enableLogging;
+            const t0 = measure ? performance.now() : 0;
 
             requestAnimationFrame(() => {
-                const collectStart = performance.now();
+                const t1 = measure ? performance.now() : 0;
+                const hiddenElements = document.querySelectorAll(HIDDEN_NDS_SELECTOR);
+                const t2 = measure ? performance.now() : 0;
+                hiddenElements.forEach((el) => el.removeAttribute('hidden'));
 
-                // Collect all NDS components with hidden attribute
-                // Note: .nds-swiper-slide excluded - swiper controls slide visibility to prevent CLS
-                const hiddenElements = document.querySelectorAll(
-                    '[hidden].nds-tabs, ' +
-                    '[hidden].nds-drawer, ' +
-                    '[hidden].nds-breadcrumb-nav, ' +
-                    '[hidden].nds-form-group, ' +
-                    '[hidden].nds-form-container, ' +
-                    '[hidden].nds-form-action, ' +
-                    '[hidden].nds-user-feedback, ' +
-                    '[hidden].nds-dropmenu-menu, ' +
-                    '[hidden].nds-nav-container, ' +
-                    '[hidden].nds-swiper, ' +
-                    '[hidden].nds-paged-content, ' +
-                    '[hidden].nds-footer, ' +
-                    '[hidden].nds-sideinfo, ' +
-                    '[hidden].nds-digitalStamp-tab '
-                );
-
-                const collectEnd = performance.now();
-                const removeStart = performance.now();
-
-                // Remove all hidden attributes in one batch - triggers single reflow
-                hiddenElements.forEach(el => el.removeAttribute('hidden'));
-
-                const removeEnd = performance.now();
-                const batchEnd = performance.now();
-
-                // Performance logging
-                if (CONFIG.enableTiming && hiddenElements.length > 0) {
+                if (!measure || hiddenElements.length === 0) return;
+                const t3 = performance.now();
+                if (CONFIG.enableTiming) {
                     console.group(`[NDS:Performance] Batch Reveal (${hiddenElements.length} elements)`);
-                    console.log(`  Collection time: ${(collectEnd - collectStart).toFixed(2)}ms`);
-                    console.log(`  Removal time: ${(removeEnd - removeStart).toFixed(2)}ms`);
-                    console.log(`  Total batch time: ${(batchEnd - batchStart).toFixed(2)}ms`);
+                    console.log(`  Collection time: ${(t2 - t1).toFixed(2)}ms`);
+                    console.log(`  Removal time: ${(t3 - t2).toFixed(2)}ms`);
+                    console.log(`  Total batch time: ${(t3 - t0).toFixed(2)}ms`);
                     console.groupEnd();
-                } else if (CONFIG.enableLogging && hiddenElements.length > 0) {
-                    console.log(`[NDS] Revealed ${hiddenElements.length} hidden components in ${(batchEnd - batchStart).toFixed(2)}ms`);
+                } else {
+                    console.log(`[NDS] Revealed ${hiddenElements.length} hidden components in ${(t3 - t0).toFixed(2)}ms`);
                 }
             });
         }
 
-        // Start initialization chain
-        requestAnimationFrame(initNext);
+        // Start initialization chain after the next paint so the browser has
+        // committed at least one frame before we touch the DOM.
+        requestAnimationFrame(initEagerBatch);
     }
 
     // Configuration options
@@ -409,7 +428,10 @@
     const GLOBAL = (typeof window !== 'undefined' && window.NDSInitConfig) ? window.NDSInitConfig : {};
 
     const CONFIG = {
-        staggerDelay: 3, // ms between component initializations
+        // Per-batch budget: eager components init in a tight loop until this
+        // many ms elapse, then yield. Keep below ~40 to stay clear of TBT's
+        // 50ms long-task threshold even on throttled CPUs.
+        initBudgetMs: GLOBAL.initBudgetMs ?? 5,
         enableLogging: GLOBAL.enableLogging ?? false,
         enableTiming: GLOBAL.enableTiming ?? false,
         // When false, prevents automatic initialization on DOM ready
@@ -446,34 +468,16 @@
                 console.warn(`[NDS:init] Component '${name}' not found`);
             }
         },
-
-        getStatus: () => {
-            const status = {};
-            COMPONENTS.forEach((component) => {
-                const elements = component.selector
-                    ? document.querySelectorAll(component.selector).length
-                    : component.universal
-                    ? 'universal'
-                    : 0;
-                status[component.name] = {
-                    priority: component.priority,
-                    elements: elements,
-                    // Heuristic: check NDS namespace property referenced in init() string
-                    available: !!NDS[
-                        component.init.toString().match(/NDS\.(\w+)/)?.[1]
-                    ],
-                };
-            });
-            return status;
-        },
     };
 
-    // Initialize when ready (if enabled)
+    // Initialize when ready (if enabled). When the bundle runs as a defer script,
+    // readyState is 'interactive' and DOMContentLoaded has not yet fired — wait for
+    // it so detection + init don't pile onto the bundle's eval task.
     if (CONFIG.autoInitialize) {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeNDS);
+        if (document.readyState === 'complete') {
+            setTimeout(initializeNDS, 0);
         } else {
-            initializeNDS();
+            document.addEventListener('DOMContentLoaded', initializeNDS);
         }
     }
 })();

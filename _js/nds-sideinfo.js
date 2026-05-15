@@ -166,11 +166,4 @@
         }
     };
 
-    // Auto-initialize
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeComponents);
-    } else {
-        initializeComponents();
-    }
-
 })();
