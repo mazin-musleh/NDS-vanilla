@@ -108,7 +108,12 @@
             window.addEventListener('scroll', this._onScroll, { passive: true });
             this._offResize = NDS.onResize(this.update);
 
-            this.update();
+            // The first highlight pass measures heading positions
+            // (getBoundingClientRect + nav.offsetHeight). Deferring it to an
+            // idle slot keeps that read out of the component-init burst, where
+            // the DOM is dirty and the read would force a synchronous reflow.
+            // The scrollspy itself is already live via the scroll listener.
+            NDS.onIdle(this.update, 2000);
             this.toc.setAttribute('data-toc-initialized', 'true');
         }
 

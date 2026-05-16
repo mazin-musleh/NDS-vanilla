@@ -310,6 +310,7 @@
         }
 
         drawer._ndsDrawerInitialized = true;
+        NDS.reveal(drawer);
     }
 
     function initAllDrawers() {

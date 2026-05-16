@@ -50,10 +50,6 @@
         // Flipped true by the navChanged DOM-mutation debounce; consumed in
         // scheduleUpdate to gate the toggler-visibility recompute. Reset there.
         _navChanged: false,
-        // Set true after the first updateNavMaxWidth rAF completes. Gates the
-        // ResizeObserver handler so the initial measurement pass doesn't
-        // recurse into another scheduleUpdate while init is still settling.
-        _initDone: false,
 
         _css: null,
         get css() {
@@ -435,16 +431,36 @@
                 hasOverflow = scrollWidth > clientWidth;
             }
 
-            // Remove hidden from collapse after primary nav settles (first check only)
-            if (!this._initialCheckDone) {
+            // Reveal the collapse once the overflow calc has settled for this
+            // pass — first check only; NDS.reveal coalesces it into a rAF.
+            const revealOnce = () => {
+                if (this._initialCheckDone) return;
                 this._initialCheckDone = true;
-                setTimeout(() => removeCollapseHidden(), hasOverflow ? 500 : 100);
+                removeCollapseHidden();
+            };
+
+            if (hasOverflow === wasOverflowing) {
+                // Overflow state stable — the nav layout is already final.
+                revealOnce();
+                return;
             }
 
-            if (hasOverflow === wasOverflowing) return;
             if (hasOverflow) addState(DOM.primary, 'has-more'); else removeState(DOM.primary, 'has-more');
 
-            if (!state.isMinimal) updateNavMaxWidth();
+            if (!state.isMinimal) {
+                // has-more just flipped the show-more button between
+                // display:none and display:flex — that changes the flex space
+                // it claims from .nds-nav-primary, so the cached width is now
+                // stale. Force the recompute (the _navMaxWidthLast guard would
+                // otherwise skip it) so the primary max-width accounts for the
+                // show-more in this same synchronous pass — no ResizeObserver
+                // round-trip, no unconstrained-nav flash before it settles.
+                _navMaxWidthLast = 0;
+                updateNavMaxWidth();
+            }
+
+            // Width calc has finished — the layout is final, reveal now.
+            revealOnce();
 
             if (!hasOverflow) {
                 removeState(DOM.primary, 'at-start', 'at-end');
@@ -476,7 +492,7 @@
     // LAYOUT UPDATES
     // ==============================================
     function removeCollapseHidden() {
-        DOM.collapse?.removeAttribute('hidden');
+        NDS.reveal(DOM.collapse);
     }
 
     function updatePositions() {
@@ -1069,21 +1085,36 @@
         NDS.onDOMAdd('.nds-nav-item, .nds-dropdown', navChanged);
         NDS.onDOMRemove('.nds-nav-item, .nds-dropdown', navChanged);
 
-        const navResizeHandler = NDS.debounce((entry) => {
+        // Steady-state resize: coalesce storms before the recompute.
+        const onNavResize = NDS.debounce(() => {
+            state.invalidateCache();
+            _navMaxWidthLast = 0;
+            scheduleUpdate();
+        }, 100);
+
+        // The first RO delivery carries the initial nav measurement. It fires
+        // once nav/primary have a real box, inside the RO callback where
+        // layout is already clean — so updateNavMaxWidth's offsetWidth reads
+        // are free. Running this measurement in init() (or an init-time rAF)
+        // would instead force a synchronous reflow during the component-init
+        // burst. Not debounced: the read has to land in the RO callback to
+        // stay free, and a debounced setTimeout would lose that guarantee.
+        let firstNavMeasure = true;
+        const navResizeHandler = (entry) => {
             const { width, height } = entry.contentRect;
             const last = entry.target._lastSize;
-            if (!last || Math.abs(width - last.w) > 5 || Math.abs(height - last.h) > 5) {
-                entry.target._lastSize = { w: width, h: height };
-                // Container is a child of nav/primary, so a meaningful size
-                // change here means the cached container width is stale.
-                _containerWCached = null;
-                if (state._initDone) {
-                    state.invalidateCache();
-                    _navMaxWidthLast = 0;
-                    scheduleUpdate();
-                }
+            if (last && Math.abs(width - last.w) <= 5 && Math.abs(height - last.h) <= 5) return;
+            entry.target._lastSize = { w: width, h: height };
+            // Container is a child of nav/primary, so a meaningful size
+            // change here means the cached container width is stale.
+            _containerWCached = null;
+            if (firstNavMeasure) {
+                firstNavMeasure = false;
+                updateNavMaxWidth();
+                return;
             }
-        }, 100);
+            onNavResize();
+        };
 
         [DOM.nav, DOM.primary].filter(Boolean).forEach(el => {
             _offElementResizes.push(NDS.onElementResize(el, navResizeHandler));
@@ -1121,8 +1152,8 @@
         if (hasState(DOM.collapse, 'open')) updatePositions();
         setupInteractions();
 
-        state._initDone = false;
-        requestAnimationFrame(() => { updateNavMaxWidth(); state._initDone = true; });
+        // The initial updateNavMaxWidth runs from the ResizeObserver's first
+        // delivery (see navResizeHandler) — a free read, no init-time reflow.
 
         if (!DOM.primary) {
             removeCollapseHidden();
@@ -1136,6 +1167,10 @@
             setTimeout(() => removeCollapseHidden(), 2000);
         }
 
+        // FOUC guards revealed now the nav is wired: the nav inner container
+        // and the topbar digital-stamp toggle. NDS.reveal coalesces these with
+        // every other component's reveal into one rAF flush.
+        NDS.reveal(DOM.container, DOM.dgaTab);
     }
 
     // Keep reduced-motion in sync

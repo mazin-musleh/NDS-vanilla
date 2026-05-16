@@ -268,26 +268,6 @@
         },
     ];
 
-    // NDS components revealed in one batch after eager init completes. Kept at
-    // module scope so the string isn't rebuilt on every initializeNDS() call.
-    // .nds-swiper-slide is intentionally excluded — swiper controls slide
-    // visibility to prevent CLS during its own init.
-    const HIDDEN_NDS_SELECTOR =
-        '[hidden].nds-tabs, ' +
-        '[hidden].nds-drawer, ' +
-        '[hidden].nds-breadcrumb-nav, ' +
-        '[hidden].nds-form-group, ' +
-        '[hidden].nds-form-container, ' +
-        '[hidden].nds-form-action, ' +
-        '[hidden].nds-user-feedback, ' +
-        '[hidden].nds-dropmenu-menu, ' +
-        '[hidden].nds-nav-container, ' +
-        '[hidden].nds-swiper, ' +
-        '[hidden].nds-paged-content, ' +
-        '[hidden].nds-footer, ' +
-        '[hidden].nds-sideinfo, ' +
-        '[hidden].nds-digitalStamp-tab';
-
     // Shared MessageChannel for cross-batch yielding — allocated once per page
     // lifetime instead of per initializeNDS() call. Reinitialize-heavy
     // consumers (SPA route changes) would otherwise leak the prior channel +
@@ -369,7 +349,6 @@
             if (eagerIndex < eagerComponents.length) {
                 yieldToBrowser(initEagerBatch);
             } else {
-                batchRemoveHidden();
                 if (idleComponents.length) {
                     scheduleIdle(drainIdle, { timeout: 2000 });
                 } else {
@@ -401,31 +380,6 @@
                     `[NDS] All components initialized in ${Math.round(performance.now() - startTime)}ms`
                 );
             }
-        }
-
-        // Reveal hidden NDS components in one rAF — single reflow vs many.
-        function batchRemoveHidden() {
-            const measure = CONFIG.enableTiming || CONFIG.enableLogging;
-            const t0 = measure ? performance.now() : 0;
-
-            requestAnimationFrame(() => {
-                const t1 = measure ? performance.now() : 0;
-                const hiddenElements = document.querySelectorAll(HIDDEN_NDS_SELECTOR);
-                const t2 = measure ? performance.now() : 0;
-                hiddenElements.forEach((el) => el.removeAttribute('hidden'));
-
-                if (!measure || hiddenElements.length === 0) return;
-                const t3 = performance.now();
-                if (CONFIG.enableTiming) {
-                    console.group(`[NDS:Performance] Batch Reveal (${hiddenElements.length} elements)`);
-                    console.log(`  Collection time: ${(t2 - t1).toFixed(2)}ms`);
-                    console.log(`  Removal time: ${(t3 - t2).toFixed(2)}ms`);
-                    console.log(`  Total batch time: ${(t3 - t0).toFixed(2)}ms`);
-                    console.groupEnd();
-                } else {
-                    console.log(`[NDS] Revealed ${hiddenElements.length} hidden components in ${(t3 - t0).toFixed(2)}ms`);
-                }
-            });
         }
 
         // Start initialization chain after the next paint so the browser has

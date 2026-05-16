@@ -79,6 +79,7 @@ NDS.UserFeedback = (() => {
             showStatus('success');
             // Mark as initialized
             feedbackComponent.setAttribute('data-nds-user-feedback-initialized', 'true');
+            NDS.reveal(feedbackComponent);
             return; // Don't initialize interaction handlers
         }
 
@@ -231,6 +232,7 @@ NDS.UserFeedback = (() => {
 
         // Mark as initialized
         feedbackComponent.setAttribute('data-nds-user-feedback-initialized', 'true');
+        NDS.reveal(feedbackComponent);
     }
 
     function init() {

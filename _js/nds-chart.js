@@ -121,8 +121,11 @@
             this._activeHover = null;
             this._ac = new AbortController();
             this._setupDelegation();
+            // The first render is triggered by the ResizeObserver's initial
+            // delivery (_setupResize): it reads clientWidth post-layout and
+            // schedules render() off a rAF, so construction never forces a
+            // synchronous reflow during the component-init burst.
             this._setupResize();
-            this.render();
         }
 
         _resolveOpts(opts) {

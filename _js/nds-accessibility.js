@@ -170,7 +170,7 @@
     const MASK_BAND_STEP = 20;
     const MASK_KEY_NUDGE = 20;
     const MASK_KEY_PAGE = 100;
-    const MASK_TOOLBAR_H = 56;       // fallback if offsetHeight returns 0
+    const MASK_TOOLBAR_H = 56;       // reading-mask toolbar height (fixed 4-button bar)
 
     function load() {
         try {
@@ -342,8 +342,10 @@
             }
 
             const grabBtn = maskControlsEl.querySelector('[data-action="grab"]');
-            // One-time layout read; used by the fit-check below.
-            const measuredToolbarH = maskControlsEl.offsetHeight || MASK_TOOLBAR_H;
+            // Fixed-size 4-button control bar — its height is constant, so the
+            // MASK_TOOLBAR_H constant stands in for an offsetHeight read that
+            // would otherwise force a reflow when the mask activates during init.
+            const toolbarH = MASK_TOOLBAR_H;
 
             let currentY = state.settings['mask-y'];
             if (typeof currentY !== 'number' || currentY < 0 || currentY > window.innerHeight) {
@@ -376,7 +378,7 @@
                 // no room. CSS supplies `inset-block-start: var(--spacing-md)`
                 // (= toolbarGap), so the flip-above branch subtracts 2× to
                 // keep the gap symmetric without a hardcoded toolbar height.
-                const fitsBelow = bandBottom + measuredToolbarH + toolbarGap <= vh;
+                const fitsBelow = bandBottom + toolbarH + toolbarGap <= vh;
                 maskControlsEl.style.transform = fitsBelow
                     ? `translate3d(-50%, ${bandBottom}px, 0)`
                     : `translate3d(-50%, calc(${bandTop - 2 * toolbarGap}px - 100%), 0)`;

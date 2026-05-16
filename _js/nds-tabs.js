@@ -52,6 +52,7 @@
             this.setupEventListeners();
             this.setupInitialState();
             this.setupWheelAndDrag();
+            NDS.reveal(this.tabsContainer);
         }
 
         findActiveTabIndex() {

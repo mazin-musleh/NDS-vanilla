@@ -38,13 +38,18 @@
         }
 
         init() {
-            this.updatePosition();
-            this.updateStickyState();
+            // The initial position + sticky-fit measurement runs from the
+            // ResizeObserver first deliveries below — setupHeroResize fires
+            // updatePosition + updateStickyState, setupContentResize fires
+            // updateStickyState — each post-layout, so the rect and
+            // getComputedStyle reads are free. Running them here would force a
+            // synchronous reflow during the component-init burst.
             this.setupHeroResize();
             this.setupResize();
             this.setupContentResize();
             this.setupLateRecompute();
             this.sideInfo.setAttribute('data-sideinfo-initialized', 'true');
+            NDS.reveal(this.sideInfo);
         }
 
         // Sticky breaks down when the side info is taller than the viewport

@@ -978,11 +978,42 @@
     };
 
     // ── Lazy Reveal ────────────────────────────────────────────────────
-    // Remove hidden from [data-nds-lazy] once DOM is ready
+    // Strip `hidden` once the DOM is ready from any [data-nds-lazy] element.
+    // The opt-in marker for [hidden] elements that have no JS component to
+    // reveal themselves (every component-owned [hidden] self-reveals via
+    // NDS.reveal). Current consumer: the static footer.
     document.addEventListener('DOMContentLoaded', () => {
         const els = document.querySelectorAll('[data-nds-lazy]');
         for (let i = 0; i < els.length; i++) els[i].removeAttribute('hidden');
     });
+
+    // ── Batched Reveal ──────────────────────────────────────────────────
+    // Strips the `hidden` attribute from one or more elements, coalescing
+    // every call within a frame into a single rAF flush — so a burst of
+    // component inits produces one layout pass, not one reveal per element.
+    // Components that ship `[hidden]` as a FOUC guard call this at the end
+    // of their own init()/create(): the reveal is then init-gated per
+    // component and dynamically-added instances self-reveal too.
+    // Usage: NDS.reveal(el)  |  NDS.reveal(el1, el2, …)
+    NDS.reveal = (() => {
+        let queue = [];
+        let scheduled = false;
+        const flush = () => {
+            scheduled = false;
+            const els = queue;
+            queue = [];
+            for (let i = 0; i < els.length; i++) els[i].removeAttribute('hidden');
+        };
+        return (...els) => {
+            for (let i = 0; i < els.length; i++) {
+                if (els[i]) queue.push(els[i]);
+            }
+            if (!scheduled) {
+                scheduled = true;
+                requestAnimationFrame(flush);
+            }
+        };
+    })();
 
     // ── Grid Last Row ────────────────────────────────────────────────
     // Marks items in the last row of a grid with .nds-last-row

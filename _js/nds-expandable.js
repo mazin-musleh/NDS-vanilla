@@ -31,7 +31,10 @@
         }
 
         init() {
-            this.checkContentHeight();
+            // checkContentHeight (scrollHeight + getComputedStyle) runs from the
+            // ResizeObserver's first delivery in setupEventListeners — a free
+            // post-layout read. Calling it here would force a reflow during the
+            // component-init burst.
             this.setupEventListeners();
         }
 
@@ -161,10 +164,20 @@
         }
 
         setupEventListeners() {
-            // Watch content element for size changes
-            this._offResize = NDS.onElementResize(this.contentElement, NDS.debounce(() => {
-                this.checkContentHeight();
-            }, 100));
+            // The RO's first delivery runs the initial checkContentHeight — it
+            // fires once contentElement has a real box, post-layout, so the
+            // scrollHeight/getComputedStyle reads are free. Later deliveries are
+            // debounced to coalesce resize storms.
+            let firstMeasure = true;
+            const debounced = NDS.debounce(() => this.checkContentHeight(), 100);
+            this._offResize = NDS.onElementResize(this.contentElement, () => {
+                if (firstMeasure) {
+                    firstMeasure = false;
+                    this.checkContentHeight();
+                } else {
+                    debounced();
+                }
+            });
         }
 
         dispatchEvent(eventType) {

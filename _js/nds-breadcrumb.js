@@ -27,6 +27,7 @@
             if (this.items.length > this.threshold) {
                 this.collapseBreadcrumb();
             }
+            NDS.reveal(this.breadcrumbNav);
         }
 
         collapseBreadcrumb() {

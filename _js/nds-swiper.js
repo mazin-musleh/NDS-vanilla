@@ -125,6 +125,7 @@
             // setup. updateSlidesPerView already ran so --slides/--peek are correct.
             if (this.slides.length === 1) {
                 this.container.setAttribute('data-swiper-initialized', 'true');
+                NDS.reveal(this.container);
                 return;
             }
 
@@ -164,6 +165,8 @@
                 if (this.prevBtn) this.prevBtn.removeAttribute('hidden');
                 if (this.nextBtn) this.nextBtn.removeAttribute('hidden');
             }
+
+            NDS.reveal(this.container);
         }
 
         setupContentObserver() {

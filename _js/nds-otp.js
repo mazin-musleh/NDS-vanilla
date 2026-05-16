@@ -237,9 +237,11 @@
             input.addEventListener('focus', handleFocus, { signal: signal });
         });
 
-        // Restore autofocus — browser native autofocus may be lost due to staggered init
+        // Restore autofocus — browser native autofocus may be lost due to staggered init.
+        // preventScroll: a plain focus() scrolls the element into view, forcing a
+        // synchronous layout during the component-init burst.
         var autofocusInput = group.querySelector('input[autofocus]');
-        if (autofocusInput) autofocusInput.focus();
+        if (autofocusInput) autofocusInput.focus({ preventScroll: true });
     }
 
     // ==============================================

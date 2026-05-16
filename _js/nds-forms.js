@@ -1542,13 +1542,21 @@
 
         forms.forEach(initForm);
 
-        // Restore autofocus — browser native autofocus may be lost during init
+        // Restore autofocus — browser native autofocus may be lost during init.
+        // preventScroll: a plain focus() scrolls the element into view, which
+        // forces a synchronous layout in the middle of the component-init burst.
         var autofocusEl = container.querySelector('input[autofocus], textarea[autofocus], select[autofocus]');
         if (autofocusEl) {
-            autofocusEl.focus();
+            autofocusEl.focus({ preventScroll: true });
             var fc = autofocusEl.closest('.nds-form-container');
             if (fc) NDS.State.add(fc, 'focus');
         }
+
+        // Reveal the [hidden] FOUC-guard wrappers now their controls carry
+        // state. NDS.reveal coalesces every queued element into one rAF flush.
+        var ndsHiddenWrappers = container.querySelectorAll(
+            '.nds-form-group[hidden], .nds-form-container[hidden], .nds-form-action[hidden]');
+        if (ndsHiddenWrappers.length) NDS.reveal.apply(null, ndsHiddenWrappers);
     }
 
     // ==============================================

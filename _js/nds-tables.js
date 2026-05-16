@@ -253,7 +253,6 @@
 
         init() {
             this.setupWrapper();
-            this.checkTableWidth();
             this.setupEventListeners();
         }
 
@@ -276,9 +275,6 @@
                 // Copy max-width from table to wrapper
                 this.copyMaxWidthToWrapper();
             }
-
-            // Lock column widths for paginated tables
-            this.lockColumnWidths();
         }
 
         lockColumnWidths() {
@@ -364,10 +360,24 @@
             // Scroll event listener with requestAnimationFrame throttling
             this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => this.handleScroll()));
 
-            // Watch table and wrapper for size changes
+            // The RO's first delivery runs the initial measurement — the
+            // column-width lock + overflow check. It fires post-layout, so the
+            // rect and scrollWidth reads are free; running them in init() would
+            // force a reflow during the component-init burst. Later deliveries
+            // are debounced to coalesce resize storms.
+            let firstMeasure = true;
             const checkTable = NDS.debounce(() => this.checkTableWidth(), 100);
-            this._offResizeTable = NDS.onElementResize(this.table, checkTable);
-            this._offResizeWrapper = NDS.onElementResize(this.wrapper, checkTable);
+            const onSizeChange = () => {
+                if (firstMeasure) {
+                    firstMeasure = false;
+                    this.lockColumnWidths();
+                    this.checkTableWidth();
+                } else {
+                    checkTable();
+                }
+            };
+            this._offResizeTable = NDS.onElementResize(this.table, onSizeChange);
+            this._offResizeWrapper = NDS.onElementResize(this.wrapper, onSizeChange);
 
             // Detect visibility changes (when tab becomes visible)
             const onVisibleDebounced = NDS.debounce(() => this.checkTableWidth(), 150);
