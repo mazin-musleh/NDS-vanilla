@@ -323,8 +323,8 @@ sidemenu_mode: false
         </div>
 
         <aside class="nds-sideinfo nds-card nds-stroke nds-shadow" aria-label="Contact information">
-            <div class="nds-contact-group">
-                <h3 class="nds-card-title">Contact Amer</h3>
+            <div class="nds-sideinfo-group">
+                <span class="nds-sideinfo-title">Contact Amer</span>
                 <dl class="nds-definition-list">
                     <div class="nds-definition-item">
                         <dt>
@@ -400,10 +400,8 @@ sidemenu_mode: false
                 </dl>
             </div>
 
-            <hr class="nds-divider">
-
-            <div class="nds-contact-group">
-                <h3 class="nds-card-title">Follow us</h3>
+            <div class="nds-sideinfo-group">
+                <span class="nds-sideinfo-title">Follow us</span>
                 <div class="nds-social-links">
                     <a href="https://x.com/" target="_blank" rel="noopener" class="nds-btn nds-subtle nds-icon-only nds-md" aria-label="Follow us on X">
                         <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
@@ -417,10 +415,10 @@ sidemenu_mode: false
                 </div>
             </div>
 
-            <hr class="nds-divider">
+            <div class="nds-divider"></div>
 
-            <div class="nds-contact-group">
-                <h3 class="nds-card-title">Emergency contacts</h3>
+            <div class="nds-sideinfo-group">
+                <span class="nds-sideinfo-title">Emergency contacts</span>
                 <dl class="nds-definition-list nds-tableView">
                     <div class="nds-definition-item">
                         <dt>
@@ -468,10 +466,6 @@ sidemenu_mode: false
                         </dd>
                     </div>
                 </dl>
-                <a href="#view-more" class="nds-btn nds-transparent nds-color nds-trail-icon">
-                    <span class="nds-label">View more</span>
-                    <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
-                </a>
             </div>
         </aside>
     </div>

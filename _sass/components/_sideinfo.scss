@@ -60,6 +60,19 @@
         &.nds-md { --nds-sideinfo-width: 300px; }
         &.nds-lg { --nds-sideinfo-width: 400px; }
 
+        .nds-sideinfo-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        .nds-sideinfo-title {
+            font-size: var(--typo-text-lg-FS);
+            line-height: var(--typo-text-lg-LH);
+            color: var(--text-display);
+            font-weight: 700;
+        }
+
         .nds-definition-list {
             --dl-icon-size: 24px;
             --dl-icon-gap: var(--spacing-md);
