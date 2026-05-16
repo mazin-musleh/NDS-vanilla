@@ -888,6 +888,10 @@
             // on close (Escape, Tab past last item) lands back on the
             // focusable input rather than the form-control <div>.
             selectInput.classList.add('nds-dropmenu-trigger');
+            // role="combobox" so the aria-expanded / aria-haspopup the
+            // dropmenu stamps on the trigger are valid here — an <input>'s
+            // default textbox role allows neither.
+            selectInput.setAttribute('role', 'combobox');
             dropdown.classList.add('nds-dropmenu-menu');
             // The dropdown is shown/hidden via dropmenu's data-state, not
             // the `hidden` attribute, so strip it.
