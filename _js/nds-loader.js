@@ -64,6 +64,7 @@
             name: 'upload',
             selector: '.nds-file-upload',
             init: () => NDS.Upload?.init?.(),
+            idle: true,
         },
         {
             name: 'sidemenu',
@@ -111,6 +112,7 @@
             name: 'copy',
             selector: '.nds-copy',
             init: () => NDS.Copy?.init?.(),
+            idle: true,
         },
         {
             name: 'showcase',
@@ -127,23 +129,27 @@
             name: 'datePicker',
             selector: '.nds-date-input',
             init: () => NDS.DatePicker?.init?.(),
+            idle: true,
         },
         {
             name: 'fontLoading',
             selector: null,
             init: () => NDS.FontLoading?.init?.(),
             universal: true,
+            idle: true,
         },
         {
             name: 'link',
             selector: null,
             init: () => NDS.Link?.init?.(),
             universal: true,
+            idle: true,
         },
         {
             name: 'cookies',
             selector: '#ndsCookiesAcceptBtn',
             init: () => NDS.Cookies?.init?.(),
+            idle: true,
         },
         {
             name: 'rating',
@@ -164,11 +170,13 @@
             name: 'dropmenu',
             selector: '.nds-dropmenu',
             init: () => NDS.Dropmenu?.init?.(),
+            idle: true,
         },
         {
             name: 'tooltip',
             selector: '.nds-tooltip',
             init: () => NDS.Tooltip?.init?.(),
+            idle: true,
         },
         {
             name: 'multiselect',
@@ -189,16 +197,19 @@
             name: 'ipv',
             selector: '.nds-ipv-thumbnail',
             init: () => NDS.Ipv?.init?.(),
+            idle: true,
         },
         {
             name: 'modal',
             selector: '.nds-modal',
             init: () => NDS.Modal?.init?.(),
+            idle: true,
         },
         {
             name: 'alert',
             selector: '.nds-alert',
             init: () => NDS.Alert?.init?.(),
+            idle: true,
         },
         {
             name: 'filter',
@@ -247,11 +258,13 @@
             idle: true,
         },
         {
-            // Eager: a11y users often interact first; the panel must be
-            // reachable without waiting for idle.
+            // Idle: the panel is display:none until opened, and persisted a11y
+            // modes apply early via the FOUC guard — so the wiring can wait out
+            // the eager burst.
             name: 'accessibility',
             selector: '[data-accessibility-panel]',
             init: () => NDS.Accessibility?.init?.(),
+            idle: true,
         },
     ];
 

@@ -107,7 +107,7 @@
 // ----------------------------------------------
 // Panel — fixed, full-height, slides in from inline-end (default).
 // ----------------------------------------------
-.nds-accessibility-panel {
+.nds-accessibility-panel:not([hidden]) {
     --a11y-panel-width: min(420px, 100vw);
     // JS overrides at runtime by measuring sticky-header bottom; falls
     // back to --nds-nav-height before JS hydrates.

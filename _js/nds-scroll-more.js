@@ -138,8 +138,6 @@
             wrapper.insertBefore(divider, btn);
         }
 
-        checkOverflow(wrapper);
-
         wrapper._ac = new AbortController();
         const { signal } = wrapper._ac;
 
@@ -149,6 +147,9 @@
             btn.addEventListener('click', () => scrollStep(wrapper), { signal });
         }
 
+        // Cold init: no synchronous checkOverflow() here — this observer's
+        // initial callback runs the first measure, so init stays free of
+        // forced layout and hidden (display:none) instances measure on reveal.
         wrapper._offResizeObs = NDS.onElementResize(content, () => checkOverflow(wrapper));
         wrapper._ndsScrollMoreInitialized = true;
     }

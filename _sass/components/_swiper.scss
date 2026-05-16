@@ -14,7 +14,7 @@
     --swiper-total: var(--total, 1);
     --swiper-slides: var(--slides, 1);
     --swiper-gap: var(--gap, var(--spacing-xl));
-    --swiper-peek: var(--peek, 0px);
+    --swiper-peek: 0px;
     --swiper-padding: var(--padding, 0);
 
     display: flex;
@@ -25,6 +25,13 @@
 
     .nds-max-width & {
         --swiper-padding: var(--padding, var(--nds-viewport-padding));
+    }
+
+    // Peek width = the raw --peek px + one gap. JS sets --peek and toggles
+    // [data-swiper-peek]; doing the gap addition here keeps swiper init free
+    // of a getComputedStyle('--gap') read (a forced reflow).
+    &[data-swiper-peek] {
+        --swiper-peek: calc(var(--peek, 0px) + var(--swiper-gap));
     }
 
     // Pre-init guard: a swiper container in the DOM but without

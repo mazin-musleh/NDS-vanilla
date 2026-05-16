@@ -231,10 +231,11 @@
 
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
 
-            // getGap() reads getComputedStyle and forces a sync reflow — only call
-            // it when the result is actually used (peek mode with multiple pages).
-            const effectivePeek = (this._peek > 0 && pageCount > 1) ? this._peek + this.getGap() : 0;
-            this.container.style.setProperty('--peek', `${effectivePeek}px`);
+            // Peek width = raw --peek + one gap; the addition is done in CSS
+            // (calc on [data-swiper-peek]) so init never reads getComputedStyle.
+            const peekActive = this._peek > 0 && pageCount > 1;
+            this.container.toggleAttribute('data-swiper-peek', peekActive);
+            this.container.style.setProperty('--peek', `${this._peek}px`);
 
             if (this.pagination) this.setupPagination();
         }

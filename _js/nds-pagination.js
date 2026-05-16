@@ -376,15 +376,15 @@
             // Get items
             const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
 
-            // Remove hidden from container (developer adds hidden to prevent FOUC)
-            contentContainer.hidden = false;
-
-            // Store last perPage to detect changes
+            // Read --per-page while the container is still hidden: a
+            // display:none element has no layout box, so this is a style-only
+            // read with no forced reflow. Assumes media-query-driven --per-page
+            // (a container-query consumer would need the box).
             let lastPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
 
-            // Function to update pagination based on current --per-page
-            function updatePagination() {
-                const perPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
+            // Rebuild pagination for the given --per-page. The caller reads
+            // the value once and passes it in, so each update measures once.
+            function updatePagination(perPage) {
                 const totalPages = Math.ceil(items.length / perPage);
 
                 // Store current page before regenerating
@@ -455,8 +455,10 @@
                 });
             }
 
-            // Initial pagination setup
-            updatePagination();
+            // Build pagination while still hidden, then reveal in its final
+            // state — no all-items → paginated flash, no forced reflow.
+            updatePagination(lastPerPage);
+            contentContainer.hidden = false;
 
             // Watch for --per-page changes on resize. Stored handle lets the
             // module-level `.nds-paged-content` removal listener release the
@@ -465,7 +467,7 @@
                 const currentPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
                 if (currentPerPage !== lastPerPage) {
                     lastPerPage = currentPerPage;
-                    updatePagination();
+                    updatePagination(currentPerPage);
                 }
             }, 150));
 

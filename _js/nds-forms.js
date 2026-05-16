@@ -1563,7 +1563,6 @@
     }
 
     function initializeAllForms() {
-        NDS.VoiceRecognition.audioFeedback.init();
         initFormControlClasses();
         initInputAutoFill();
         initDynamicContentObserver();

@@ -278,14 +278,14 @@
 
     function handleResize(drawer) {
         const currentWidth = window.innerWidth;
-        const previousWidth = drawer._previousWidth || currentWidth;
-
-        // Ignore height-only changes (mobile address bar show/hide)
-        if (currentWidth === previousWidth) {
-            return;
-        }
-
+        const previousWidth = drawer._previousWidth;
         drawer._previousWidth = currentWidth;
+
+        // Skip height-only changes (mobile address bar show/hide) — width is
+        // unchanged. A first resize has no baseline (previousWidth undefined),
+        // so it never equals currentWidth and correctly re-evaluates.
+        if (currentWidth === previousWidth) return;
+
         initResponsiveState(drawer);
     }
 
@@ -300,8 +300,9 @@
         initToggles(drawer);
         initActiveStates(drawer);
 
-        // Store initial window width to detect width-only changes
-        drawer._previousWidth = window.innerWidth;
+        // Cold init: no window.innerWidth read here — it would force a
+        // synchronous reflow of every setState write above. handleResize
+        // establishes the width baseline lazily on its first call instead.
 
         // Add resize listener for responsive state updates
         if (drawer.hasAttribute('data-open-on') || drawer.hasAttribute('data-always-open-on') || drawer.querySelector('[data-open-on]')) {
@@ -319,7 +320,7 @@
     }
 
     function destroyDrawer(drawer) {
-        // Release pooled resize subscription stored at initDrawer L308.
+        // Release pooled resize subscription stored in initDrawer.
         if (drawer._offResize) {
             drawer._offResize();
             delete drawer._offResize;
