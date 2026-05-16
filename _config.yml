@@ -102,7 +102,8 @@ herosliders: herosliders
 
 
 # Debug tools
-debug: false  # Set to true to enable perf monitor overlay
+debug: false          # true -> unminified JS bundle + loader [NDS:init] console logging (rerun js_processor.rb after toggling)
+perf_monitor: false  # true -> on-page perf-monitor overlay panel (independent of debug)
 
 # Plugins
 plugins: []

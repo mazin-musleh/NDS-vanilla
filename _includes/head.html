@@ -71,8 +71,13 @@
         <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     {%- endunless %}
-    {%- if site.debug %}
+    {%- if site.perf_monitor %}
     {%- include perf-monitor.html %}
+    {%- endif %}
+    {%- if site.debug %}
+    <!-- Debug: switch on the loader's per-component init logging ([NDS:init] <name>)
+         and timing. Inline + before the deferred bundle so it lands pre-eval. -->
+    <script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
     {%- endif %}
     <!-- Blocking scripts — FOUC / direction-mismatch prevention. Placed last so resource preloads kick off first. -->
     <!-- Demo-only: paired with the auth FOUC guard in head-inline-scripts.html. Safe to remove in production. -->

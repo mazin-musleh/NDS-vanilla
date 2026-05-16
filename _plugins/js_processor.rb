@@ -57,16 +57,20 @@ class JSProcessor
     end
   end
 
-  # Helper function to compress JavaScript using Terser
+  # Compress JavaScript with Terser. When site.debug is on the bundle is left
+  # unminified so DevTools profiles and stack traces map to real per-statement
+  # lines and every function keeps its name — accurate attribution over size.
   def compress_with_terser(js_content)
+    return js_content if @config['debug']
+
     begin
       require 'tempfile'
-      
+
       # Create temporary files for input and output
       input_file = Tempfile.new(['input', '.js'])
       input_file.write(js_content)
       input_file.close
-      
+
       # Run Terser command
       result = `npx terser "#{input_file.path}" --compress drop_console=false,drop_debugger=false --mangle --format beautify=false,comments=false 2>&1`
       
@@ -233,8 +237,12 @@ class JSProcessor
         # Write bundle file to assets/js
         bundle_path = File.join(@output_dir, bundle_name)
         File.write(bundle_path, final_content)
-        compression_percentage = ((bundle_size - final_content.length).to_f / bundle_size * 100).round(1)
-        puts "Updated bundle: #{bundle_name} (#{bundle_size} → #{final_content.length} bytes, #{compression_percentage}% reduction from #{processed_files.length} files)"
+        if @config['debug']
+          puts "Updated bundle: #{bundle_name} (#{final_content.length} bytes, unminified — debug mode, #{processed_files.length} files)"
+        else
+          compression_percentage = ((bundle_size - final_content.length).to_f / bundle_size * 100).round(1)
+          puts "Updated bundle: #{bundle_name} (#{bundle_size} → #{final_content.length} bytes, #{compression_percentage}% reduction from #{processed_files.length} files)"
+        end
         
         # Remove processed files from changed_files so they don't get processed individually
         source_files.each do |bundled_file|
@@ -281,8 +289,12 @@ class JSProcessor
         filename = File.basename(file_path, '.js')
         min_file = File.join(@output_dir, "#{filename}.min.js")
         File.write(min_file, compressed_content)
-        compression_percentage = ((original_content.length - compressed_content.length).to_f / original_content.length * 100).round(1)
-        puts "Updated: #{File.basename(min_file)} (#{original_content.length} → #{compressed_content.length} bytes, #{compression_percentage}% reduction)"
+        if @config['debug']
+          puts "Updated: #{File.basename(min_file)} (#{compressed_content.length} bytes, unminified — debug mode)"
+        else
+          compression_percentage = ((original_content.length - compressed_content.length).to_f / original_content.length * 100).round(1)
+          puts "Updated: #{File.basename(min_file)} (#{original_content.length} → #{compressed_content.length} bytes, #{compression_percentage}% reduction)"
+        end
       rescue => compression_error
         puts "Failed to compress #{File.basename(file_path)}: #{compression_error.message}"
       end

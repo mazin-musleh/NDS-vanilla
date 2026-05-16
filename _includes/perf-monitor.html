@@ -10,26 +10,61 @@
 
     function elKey(el) {
         if (!el || !el.tagName) return 'window';
-        var tag = el.tagName.toLowerCase(), cn = el.className;
+        var tag = el.tagName.toLowerCase();
+        if (el.id) return tag + '#' + el.id;                       // id is unique
+        var nm = el.getAttribute('name');
+        if (nm) return tag + '[name="' + nm + '"]';                // form controls
+        var cn = el.className;
         if (typeof cn === 'string' && cn) {
             var cl = cn.split(/\s+/).filter(function (x) {
                 return x && (x.indexOf('nds-') === 0 || x.indexOf('hgi') === 0 || x.indexOf('nav') === 0 || x.indexOf('side') === 0);
             }).slice(0, 2);
-            if (cl.length) return tag + '.' + cl.join('.');
+            if (cl.length) {
+                var key = tag + '.' + cl.join('.');
+                // A class often repeats across the page (e.g. two .nds-swiper-
+                // wrapper). Append a 1-based index so instances read distinctly.
+                var same = document.getElementsByClassName(cl[0]);
+                if (same.length > 1) {
+                    for (var i = 0; i < same.length; i++) {
+                        if (same[i] === el) { key += '[' + (i + 1) + ']'; break; }
+                    }
+                }
+                return key;
+            }
         }
-        return el.id ? tag + '#' + el.id : tag;
+        return tag;
     }
 
+    // First stack frame outside this monitor. Returns the function name
+    // (intact when site.debug ships the unminified bundle), or file:line
+    // for anonymous frames. Handles V8 "at NAME (loc)" and FF/Safari "NAME@loc".
     function caller() {
         var lines = ((new Error()).stack || '').split('\n');
         for (var i = 2; i < lines.length; i++) {
-            if (lines[i].indexOf('nds-perf') !== -1) continue;
-            var m = lines[i].match(/(?:at\s+)?(?:.*?\s+\()?(.+?):(\d+)(?::\d+)?\)?$/);
-            if (m) return m[1].split('/').pop().split('?')[0] + ':' + m[2];
+            var ln = lines[i].trim();
+            if (!ln || ln.indexOf('ndsPerf') !== -1) continue;  // our wrapper frames
+
+            var fn = '', loc = '', m;
+            if ((m = ln.match(/^at\s+(.+?)\s+\((.+)\)$/))) { fn = m[1]; loc = m[2]; }
+            else if ((m = ln.match(/^(.*?)@(.+)$/))) { fn = m[1]; loc = m[2]; }
+            else { loc = ln.replace(/^at\s+/, ''); }
+
+            // Strip V8 frame decorations: "new Foo", "async Foo", "Foo [as bar]".
+            fn = fn.replace(/^(?:new|async)\s+/, '').replace(/\s+\[as\s+[^\]]+\]$/, '');
+            if (fn === '<anonymous>') fn = '';
+
+            m = loc.match(/^(.*?):(\d+)(?::\d+)?$/);
+            var where = m ? m[1].split(/[\/\\]/).pop().split('?')[0] + ':' + m[2] : '';
+
+            if (fn || where) return fn || where;
         }
         return '?';
     }
 
+    // The log panel is flex-direction: column-reverse, so the newest line is
+    // prepended (DOM-first) and the browser pins the view to it natively —
+    // no scrollTop/scrollHeight is ever touched, so logging never forces a
+    // reflow into the task that triggered it. Trim drops the oldest (last).
     function log(text, cls) {
         var ts = '+' + (performance.now() / 1000).toFixed(2) + 's  ';
         if (!logEl) { pending.push([text, cls, ts]); return; }
@@ -38,9 +73,8 @@
         var el = document.createElement('div');
         if (cls) el.className = cls;
         el.textContent = ts + text;
-        logEl.appendChild(el);
-        while (logEl.children.length > MAX) logEl.removeChild(logEl.firstChild);
-        if (logEl.scrollHeight - logEl.scrollTop - logEl.clientHeight < 60) logEl.scrollTop = logEl.scrollHeight;
+        logEl.insertBefore(el, logEl.firstChild);
+        while (logEl.children.length > MAX) logEl.removeChild(logEl.lastChild);
     }
 
     // ── Panel UI ────────────────────────────────────────────────────
@@ -60,8 +94,8 @@
         '#nds-perf-btns{display:flex;gap:4px;padding:4px 10px;border-bottom:1px solid #333;flex-shrink:0;background:rgba(0,0,0,.95);}',
         '#nds-perf-btns button{background:#333;color:#fff;border:none;border-radius:4px;padding:4px 8px;font:11px monospace;cursor:pointer;touch-action:manipulation;min-height:28px;}',
         '#nds-perf-btns button:active{background:#555;}',
-        '#nds-perf-log{overflow-y:auto;padding:4px 10px 10px;flex:1;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}',
-        '#nds-perf-log div{padding:2px 0;border-bottom:1px solid rgba(255,255,255,.05);word-break:break-all;}',
+        '#nds-perf-log{display:flex;flex-direction:column-reverse;overflow-y:auto;padding:4px 10px 10px;flex:1;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}',
+        '#nds-perf-log div{flex-shrink:0;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.05);word-break:break-all;}',
         '.g{color:#4caf50;}.w{color:#ff9800;}.b{color:#f44336;}.i{color:#64b5f6;}.d{color:#777;}',
         '</style>',
         '<div id="nds-perf-bar">',
@@ -100,7 +134,7 @@
             var el = document.createElement('div');
             if (p[1]) el.className = p[1];
             el.textContent = ts + p[0];
-            logEl.appendChild(el);
+            logEl.insertBefore(el, logEl.firstChild);
         }
         pending = [];
 
@@ -143,7 +177,14 @@
         $('pf-cls').addEventListener('click', function () { logEl.innerHTML = ''; logLines = []; });
     }
 
-    if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
+    // Mount as soon as <body> is parsed. Waiting for DOMContentLoaded would
+    // delay the panel until the whole document parses and every defer script
+    // (incl. the NDS bundle) has run. rAF-polling lands within a frame of
+    // <body> appearing, so the panel is visible during early page load.
+    (function awaitBody() {
+        if (document.body) { mount(); return; }
+        requestAnimationFrame(awaitBody);
+    })();
 
     // ── 1. FPS ──────────────────────────────────────────────────────
     var frames = 0, lastT = performance.now(), minFps = Infinity, fpsH = [], curFps = 0;
@@ -168,14 +209,19 @@
         try {
             new PerformanceObserver(function (l) {
                 l.getEntries().forEach(function (e) {
-                    if (!e.hadRecentInput) {
-                        clsTotal += e.value;
-                        if (e.value > 0.05) {
-                            log('CLS  ' + e.value.toFixed(4) + '  (total: ' + clsTotal.toFixed(4) + ')', 'w');
-                            if (e.sources) e.sources.slice(0, 2).forEach(function (s) {
-                                if (s.node) log('  → ' + elKey(s.node), 'd');
-                            });
-                        }
+                    if (e.hadRecentInput) return;
+                    // Skip shifts whose sources are all inside our own panel
+                    // (it grows as log lines append) — they'd inflate clsTotal.
+                    var srcs = e.sources || [];
+                    if (srcs.length && srcs.every(function (s) {
+                        return s.node && panel.contains(s.node);
+                    })) return;
+                    clsTotal += e.value;
+                    if (e.value > 0.05) {
+                        log('CLS  ' + e.value.toFixed(4) + '  (total: ' + clsTotal.toFixed(4) + ')', 'w');
+                        srcs.slice(0, 2).forEach(function (s) {
+                            if (s.node) log('  → ' + elKey(s.node), 'd');
+                        });
                     }
                 });
             }).observe({ type: 'layout-shift', buffered: true });
@@ -228,7 +274,7 @@
             new PerformanceObserver(function (l) {
                 l.getEntries().forEach(function (e) {
                     var d = Math.round(e.duration);
-                    if (d < 100) return;
+                    if (d < 50) return;  // 50ms = the long-task threshold
                     var label = 'LONG TASK  ' + d + 'ms';
                     var blk = Math.round(e.blockingDuration || 0);
                     if (blk) label += '  block:' + blk;
@@ -242,9 +288,14 @@
                         for (var i = 0; i < e.scripts.length; i++) {
                             var s = e.scripts[i];
                             var src = s.sourceURL || '', fn = s.sourceFunctionName || '';
-                            var sd = Math.round(s.duration || 0);
+                            var sd = Math.round(s.duration || 0), it = s.invokerType || '';
+                            var isEval = it === 'classic-script' || it === 'module-script';
                             if (src) { var p = src.split('/'); src = p[p.length - 1].split('?')[0]; }
-                            if (src || fn) label += '  → ' + (fn || '?') + (src ? '(' + src + ')' : '') + (sd ? ' ' + sd + 'ms' : '');
+                            // Top-level script eval has no function name — fall back to invoker.
+                            var who = fn || (isEval ? 'eval ' + (s.invoker || src || '?') : (s.invoker || '?'));
+                            label += '  → ' + who + (src ? '(' + src + ')' : '') + (sd ? ' ' + sd + 'ms' : '');
+                            var fl = Math.round(s.forcedStyleAndLayoutDuration || 0);
+                            if (fl > 5) label += ' [forced-layout:' + fl + 'ms]';
                         }
                     } else {
                         // No script attribution → log timing buckets so non-script
@@ -265,7 +316,7 @@
                 new PerformanceObserver(function (l) {
                     l.getEntries().forEach(function (e) {
                         var d = Math.round(e.duration);
-                        if (d > 100) log('LONG TASK  ' + d + 'ms  (longtask API; LoAF unavailable)', d > 200 ? 'b' : 'w');
+                        if (d > 50) log('LONG TASK  ' + d + 'ms  (longtask API; LoAF unavailable)', d > 200 ? 'b' : 'w');
                     });
                 }).observe({ type: 'longtask', buffered: true });
             } catch (e) { }
@@ -297,7 +348,7 @@
     var _RO;
     if (window.ResizeObserver) {
         _RO = window.ResizeObserver;
-        window.ResizeObserver = function (cb) {
+        window.ResizeObserver = function ndsPerfRO(cb) {
             var src = caller(), id = 'R' + (++rId);
             var inst = new _RO(function (entries, obs) {
                 var t0 = performance.now();
@@ -315,7 +366,7 @@
 
     // MutationObserver
     var _MO = window.MutationObserver;
-    window.MutationObserver = function (cb) {
+    window.MutationObserver = function ndsPerfMO(cb) {
         var src = caller(), id = 'M' + (++mId), target = null;
         var inst = new _MO(function (mutations, obs) {
             var real = mutations.filter(function (m) { return !panel.contains(m.target); });
@@ -336,7 +387,7 @@
     var _IO;
     if (window.IntersectionObserver) {
         _IO = window.IntersectionObserver;
-        window.IntersectionObserver = function (cb, opts) {
+        window.IntersectionObserver = function ndsPerfIO(cb, opts) {
             var src = caller(), id = 'I' + (++iId);
             var inst = new _IO(function (entries, obs) {
                 var t0 = performance.now();
@@ -355,7 +406,7 @@
     // High-frequency event listeners
     var hotEvents = { scroll: 1, resize: 1, mousemove: 1, touchmove: 1, pointermove: 1 };
     var _ael = EventTarget.prototype.addEventListener;
-    EventTarget.prototype.addEventListener = function (type) {
+    EventTarget.prototype.addEventListener = function ndsPerfAEL(type) {
         if (hotEvents[type]) {
             evtLog[type] = (evtLog[type] || 0) + 1;
             log('LISTEN ' + type + '  → ' + elKey(this) + '  ← ' + caller(), 'd');
@@ -378,6 +429,7 @@
     window.addEventListener('load', function () {
         var max = 0, deepEl = null;
         (function walk(el, d) {
+            if (el === panel) return;  // don't count the monitor's own panel
             if (d > max) { max = d; deepEl = el; }
             for (var ch = el.children, i = 0; i < ch.length; i++) walk(ch[i], d + 1);
         })(document.body, 1);
@@ -385,9 +437,17 @@
     });
 
     // ── Bar Metrics ─────────────────────────────────────────────────
+    // Node count minus the monitor's own panel, so the reading reflects
+    // the page and not page + perf overlay.
+    function pageNodes() {
+        var n = document.querySelectorAll('*').length;
+        if (panel.isConnected) n -= panel.getElementsByTagName('*').length + 1;
+        return n;
+    }
+
     setInterval(function () {
         if (domEl) {
-            var n = document.querySelectorAll('*').length;
+            var n = pageNodes();
             domEl.textContent = 'DOM ' + n;
             domEl.style.color = n > 3000 ? '#f44336' : n > 1500 ? '#ff9800' : '#ccc';
         }
@@ -402,7 +462,7 @@
             log('═══ SUMMARY ═══', 'i');
             log('  FPS avg:' + avg + '  min:' + (minFps === Infinity ? 'N/A' : minFps), 'i');
             log('  Janks: ' + janks + '  CLS: ' + clsTotal.toFixed(4), 'i');
-            log('  DOM: ' + document.querySelectorAll('*').length, 'i');
+            log('  DOM: ' + pageNodes(), 'i');
             log('════════════════', 'i');
         },
         reset: function () {
