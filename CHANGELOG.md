@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-05-16
+
+### Added
+- Accessibility — new optional site-wide Accessibility Panel: presets, typography tuning (text size, spacing, line-height, font), high-contrast mode, reduced-animations, and dyslexia-friendly fonts (Maqroo, OpenDyslexic). Bilingual (English/Arabic). Ships as a separate `nds-accessibility.min.js` bundle — see the [Accessibility doc page](https://mazin-musleh.github.io/NDS-vanilla/components/accessibility.html).
+
+### Fixed
+- Button — long labels grow instead of clipping.
+- Link — long links wrap instead of overflowing their container.
+- Grid — only the default gap halves at the tablet breakpoint; custom gaps keep their value.
+- Scroll-more — vertical show-more button height clamps to its content.
+
+### Changed
+- Performance — broad pass across the loader and components: components cold-init (register cheaply, defer measurement until shown), a smaller eager-init burst, shared observers in swiper, cached DOM lookups and delegated hover in mainnav, a debounced resize bus, and deferred topbar widget calls. Lower init-time total blocking time — pages now score 100 for Performance on Google PageSpeed Insights. No markup changes.
+
+### Migrating from v1.0.4
+
+Replace your bundled `nds-main.min.css` and `nds-main.min.js` with the v1.0.5 versions.
+
 ## [1.0.4] - 2026-05-04
 
 ### Fixed
@@ -149,7 +167,8 @@ Replace your bundled `nds-main.min.css` and `nds-main.min.js` with the v1.0.1 ve
 - Five project-specific Claude Code skills for contributors.
 - MIT license, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policies.
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.4...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.1...v1.0.2
