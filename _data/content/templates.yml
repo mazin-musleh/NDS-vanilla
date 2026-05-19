@@ -58,6 +58,20 @@
   tags: ["DGA", "Grid", "Cards"]
   url: "/templates/e-participation-template.html"
 
+- title: "Social Media Template"
+  description: "Social channels hub with a flat sub-hero and a responsive grid of platform cards, each with a featured icon, name, and navigation arrow."
+  icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
+  category: "Content"
+  tags: ["DGA", "Grid", "Cards", "Featured Icons"]
+  url: "/templates/social-media-template.html"
+
+- title: "KPIs Template"
+  description: "Performance dashboard combining KPI counter tiles, pie, donut, line, and bar charts, and responsive data tables for portal and service statistics."
+  icon: '<i class="hgi hgi-stroke hgi-analytics-up"></i>'
+  category: "Dashboard"
+  tags: ["DGA", "Charts", "Tables", "Statistics", "Grid"]
+  url: "/templates/kpis-template.html"
+
 - title: "Search Template"
   description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
   icon: '<i class="hgi hgi-stroke hgi-search-01"></i>'

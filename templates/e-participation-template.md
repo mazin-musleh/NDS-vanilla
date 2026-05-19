@@ -105,7 +105,7 @@ sidemenu_mode: false
                             <h3 class="nds-card-title">Website and Services Statistics</h3>
                         </div>
                         <div class="nds-card-actions nds-end">
-                            <a href="#website-statistics" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Website and Services Statistics">
+                            <a href="{{ '/templates/kpis-template.html' | relative_url }}" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Website and Services Statistics">
                                 <i class="nds-icon nds-hgi-arrow-left-02"></i>
                             </a>
                         </div>
@@ -118,7 +118,7 @@ sidemenu_mode: false
                             <h3 class="nds-card-title">Social Media</h3>
                         </div>
                         <div class="nds-card-actions nds-end">
-                            <a href="#social-media" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Social Media">
+                            <a href="{{ '/templates/social-media-template.html' | relative_url }}" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Social Media">
                                 <i class="nds-icon nds-hgi-arrow-left-02"></i>
                             </a>
                         </div>
