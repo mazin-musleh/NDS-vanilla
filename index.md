@@ -42,7 +42,7 @@ exclude_showcase: true
             <p class="nds-section-description">Every component adheres to the official design tokens, typography, spacing, and interaction patterns. The templates below cover the most common government service screens, ready to copy, populate with your content, and publish.</p>
         </div>
         <div class="nds-section-body  nds-max-width">
-            <div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40">
+            <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
                 <div class="nds-swiper-wrapper">
                     {% for tpl in site.data.content.templates %}
                     <div class="nds-swiper-slide">
@@ -91,7 +91,7 @@ exclude_showcase: true
             <p class="nds-section-description">{{ site.data.content.examples | size }} composed pages showing NDS components working together in real government service contexts.</p>
         </div>
         <div class="nds-section-body  nds-max-width">
-            <div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40">
+            <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
                 <div class="nds-swiper-wrapper">
                     {% for ex in site.data.content.examples %}
                     <div class="nds-swiper-slide">

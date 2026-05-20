@@ -31,7 +31,11 @@
 
 // Section layout - spacing tokens, dimensions, wrapper, layouts (center, horizontal)
 @use 'layout/section-layout';
+// Block - content grouping primitive (margins/sizing in critical to avoid CLS)
+@use 'layout/block';
 @use 'components/sideinfo';
+// Search box - above-the-fold nav chrome (avoid CLS)
+@use 'components/search-box';
 
 // Content layout - grid, layout variants, striping, section context overrides
 @use 'layout/content-layout';

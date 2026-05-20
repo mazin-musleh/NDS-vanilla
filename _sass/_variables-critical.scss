@@ -129,6 +129,14 @@
     --spacing-9xl: var(--spacing-24, 96px);
     --spacing-10xl: var(--spacing-32, 128px);
     --spacing-11xl: var(--spacing-40, 160px);
+
+    // Skeleton placeholder — static diagonal gradient shown on cards until the
+    // loader stamps body[data-nds-loaded]. Self-contained literal hex because
+    // critical CSS carries no --background-neutral-* / --radius-* tokens.
+    --nds-skeleton-fill: linear-gradient(20deg, rgba(229, 231, 235, 0.2) 0%, rgba(210, 214, 219, 0.2) 50%, rgba(157, 164, 174, 0.2) 100%);
+    --nds-skeleton-border: #e5e7eb;
+    --nds-skeleton-radius: 4px;
+    --nds-skeleton-card-radius: 16px;
 }
 
 // Critical dark mode overrides — prevent white flash before main CSS loads
@@ -139,6 +147,8 @@
     --text-default: #f9fafb;
     --text-display: #f3f4f6;
     --text-oncolor-primary: #fff;
+    --nds-skeleton-fill: linear-gradient(20deg, rgba(43, 54, 67, 0.2) 0%, rgba(56, 66, 80, 0.2) 50%, rgba(77, 87, 97, 0.2) 100%);
+    --nds-skeleton-border: #2b3643;
 }
 
 @include mobile {

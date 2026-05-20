@@ -64,6 +64,8 @@
     align-items: center;
     font-size: var(--_section-title-FS);
     line-height: var(--_section-title-LH);
+    font-weight: bold;
+    letter-spacing: -0.02rem;
     margin-top: 0;
     flex-wrap: wrap;
 
@@ -102,6 +104,8 @@
 .nds-section-subtitle {
     font-size: var(--_section-subtitle-FS);
     line-height: var(--_section-subtitle-LH);
+    font-weight: 500;
+    letter-spacing: -0.01rem;
 
     &:not(:last-child) {
         margin-bottom: var(--_section-subtitle-MB);
@@ -121,6 +125,55 @@
     justify-content: center;
     flex-shrink: 0;
     margin-bottom: 0;
+}
+
+/* ── Section body ──
+   In critical CSS so content spacing/sizing is present from first paint —
+   moved here from layout/_section.scss to avoid CLS. */
+
+.nds-section-brief {
+    font-size: var(--typo-text-lg-FS);
+    line-height: var(--typo-text-lg-LH);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.nds-section-body {
+
+    margin-block-end: 2rem;
+
+    &:last-child {
+        margin-block-end: 0;
+    }
+
+    & :not(nav, .nds-scroll-more, .nds-drawer, .nds-drawer-list li)>ul,
+    & :not(nav, .nds-scroll-more, .nds-drawer, .nds-drawer-list li)>ol {
+
+        &.nds-divided li {
+            border-bottom: 1px solid var(--divider-color);
+        }
+
+        li {
+            padding-block: var(--spacing-md);
+
+            &:first-child {
+                padding-block-start: 0;
+            }
+
+            &:last-child {
+                padding-block-end: 0;
+                border-bottom: none;
+            }
+        }
+    }
+
+    :is(p, ul, ol, .nds-table-wrapper, .nds-table, .nds-tabs, .nds-code, .nds-definition-list):not(.nds-scroll-more-content) {
+        margin-block-end: 1rem;
+
+        &:is(:last-child, :has(+ .nds-divider), :has(+ hr)) {
+            margin-block-end: 0;
+        }
+    }
 }
 
 /* ── Section meta ── */

@@ -349,6 +349,10 @@
             if (eagerIndex < eagerComponents.length) {
                 yieldToBrowser(initEagerBatch);
             } else {
+                // Eager pass done — card-revealing components (swiper,
+                // pagination) are up. Stamp the body so critical-CSS skeletons
+                // hand off to the real, now-styled components.
+                document.body.setAttribute('data-nds-loaded', '');
                 if (idleComponents.length) {
                     scheduleIdle(drainIdle, { timeout: 2000 });
                 } else {

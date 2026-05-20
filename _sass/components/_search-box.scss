@@ -1,0 +1,63 @@
+/**
+ * NDS Search Box
+ * In critical CSS — above-the-fold nav chrome, kept here to avoid CLS.
+ */
+
+@use '../mixins' as *;
+
+.nds-search-box {
+    display: flex;
+    gap: var(--spacing-2xl) !important;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+
+    @include mobile {
+        gap: var(--spacing-xl);
+
+        .nds-main-nav & {
+            padding-inline: var(--spacing-xl);
+        }
+    }
+
+    .nds-search-content {
+        display: flex;
+        gap: var(--spacing-lg);
+        width: 100%;
+
+        .nds-form-control {
+            flex: 1;
+        }
+
+        @include mobile {
+            gap: var(--spacing-md);
+
+            :is(.nds-search-btn, .nds-filter-btn) > .nds-label {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+        }
+    }
+
+    .nds-auto-fill:not([hidden]) {
+        flex-direction: row;
+        flex: 1 1 100%;
+        align-items: center;
+        flex-wrap: wrap;
+
+        >.nds-label {
+            font-size: var(--typo-text-clamp-lg-FS);
+            font-weight: 500;
+            color: var(--text-default);
+        }
+    }
+}

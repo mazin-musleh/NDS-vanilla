@@ -34,16 +34,9 @@
         --swiper-peek: calc(var(--peek, 0px) + var(--swiper-gap));
     }
 
-    // Pre-init guard: a swiper container in the DOM but without
-    // `data-swiper-initialized` (the JS constructor hasn't run yet — e.g., a
-    // lazy-init hero between paint and IO callback, or any swiper whose markup
-    // doesn't carry `[hidden]` to keep it invisible until init) should only
-    // show its first slide. Otherwise the wrapper renders all slides
-    // side-by-side until JS scroll-snaps. Once init lands the attribute, this
-    // selector stops matching and slides take their normal positions.
-    &:not([data-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
-        display: none;
-    }
+    // Pre-init guard lives in _skeleton.scss (critical CSS) so it applies
+    // before main CSS — see the .nds-swiper:not([data-swiper-initialized])
+    // rules there.
 }
 
 // ==============================================

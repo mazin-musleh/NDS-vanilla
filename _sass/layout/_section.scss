@@ -65,67 +65,16 @@
 /* ── Section title polish ── */
 
 .nds-section-title {
-    letter-spacing: -0.02rem;
-    font-weight: bold;
     color: var(--_section-title-color);
 }
 
 /* ── Section subtitle + description polish ── */
 
 .nds-section-subtitle {
-    font-weight: 500;
-    letter-spacing: -0.01rem;
     color: var(--_section-subtitle-color);
 }
 
 .nds-section-description {
     color: var(--_section-description-color);
-}
-
-.nds-section-brief {
-    font-size: var(--typo-text-lg-FS);
-    line-height: var(--typo-text-lg-LH);
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-/* ── Section body content formatting ── */
-
-.nds-section-body {
-
-    margin-block-end: 2rem;
-
-    &:last-child {
-        margin-block-end: 0;
-    }
-
-    & :not(nav, .nds-scroll-more, .nds-drawer, .nds-drawer-list li)>ul,
-    & :not(nav, .nds-scroll-more, .nds-drawer, .nds-drawer-list li)>ol {
-
-        &.nds-divided li {
-            border-bottom: 1px solid var(--divider-color);
-        }
-
-        li {
-            padding-block: var(--spacing-md);
-
-            &:first-child {
-                padding-block-start: 0;
-            }
-
-            &:last-child {
-                padding-block-end: 0;
-                border-bottom: none;
-            }
-        }
-    }
-
-    :is(p, ul, ol, .nds-table-wrapper, .nds-table, .nds-tabs, .nds-code, .nds-definition-list):not(.nds-scroll-more-content) {
-        margin-block-end: 1rem;
-
-        &:is(:last-child, :has(+ .nds-divider), :has(+ hr)) {
-            margin-block-end: 0;
-        }
-    }
 }
 

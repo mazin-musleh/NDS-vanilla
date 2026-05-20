@@ -1,10 +1,20 @@
 /* ========================================
-   SKELETON
-   Temporary layout reservations to prevent
-   CLS before main CSS loads.
-   Safe to remove — nothing breaks without it.
+   SKELETON  ·  critical CSS
+   Two CLS-elimination layers:
+   1. Pre-init reservations — mirror layout-affecting rules from main CSS
+      and reserve space for components revealed by JS.
+   2. Skeleton state — until nds-loader.js stamps body[data-nds-loaded],
+      components paint as static-gradient placeholders.
+   Cosmetic only — removing this file reintroduces CLS, breaks nothing.
    ======================================== */
 @use './mixins' as *;
+
+/* Paint a (transparent-text) element as a skeleton bar. */
+@mixin skeleton-bar {
+    color: transparent;
+    background: var(--nds-skeleton-fill);
+    border-radius: var(--nds-skeleton-radius);
+}
 
 /* ── Navigation ── */
 .nds-main-nav {
@@ -55,6 +65,85 @@
     flex: 1;
 }
 
+/* Swiper pre-init — applies in critical CSS until JS sets
+   data-swiper-initialized. Hero collapses to its first slide (full-bleed);
+   a non-hero swiper shows a clipped row of card-width slides — a pinned
+   width is required, else the slide collapses to the card's tiny
+   intrinsic max-content. */
+.nds-swiper.nds-hero:not([data-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
+    display: none;
+}
+
+/* Swiper pagination bullets are JS-generated — faux skeleton dots while
+   the container is still empty (prev/next buttons skeleton themselves via
+   the atomic .nds-btn rule). A radial-gradient mask matches the round
+   .nds-bullet shape — 16px circles tiled every 24px. */
+.nds-swiper:not([data-swiper-initialized]) .nds-swiper-pagination:empty {
+    height: 16px;
+    width: 120px;
+    margin-inline: auto;
+    background: var(--nds-skeleton-fill);
+    mask: radial-gradient(circle 8px at 8px center, #000 99%, #0000) 0 0 / 24px 100% repeat-x;
+}
+
+.nds-swiper:not(.nds-hero):not([data-swiper-initialized]) {
+    /* --swiper-padding is set in _swiper.scss (main CSS); define it here
+       too so the wrapper padding below resolves during the skeleton */
+    --swiper-padding: var(--padding, 0);
+    /* mirror _swiper.scss .nds-swiper layout — column + gap to the nav */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl, 20px);
+    overflow: hidden;
+
+    /* mirror _swiper.scss --swiper-gap (var(--gap, var(--spacing-xl)))
+       and reserve inline room so the overflow:hidden above doesn't clip
+       the first/last card's shadow */
+    .nds-swiper-wrapper {
+        gap: var(--gap, var(--spacing-xl, 16px));
+        padding-inline: max(2px, var(--swiper-padding));
+    }
+
+    .nds-swiper-slide {
+        flex: 0 0 min(100%, 360px);
+
+        /* fill the stretched slide so every card is equal height
+           (mirrors _swiper.scss) */
+        >.nds-card {
+            height: 100%;
+        }
+    }
+}
+
+/* .nds-max-width swipers inset to the content gutter — mirror the
+   --swiper-padding override in _swiper.scss */
+.nds-max-width .nds-swiper:not(.nds-hero):not([data-swiper-initialized]) {
+    --swiper-padding: var(--padding, var(--nds-viewport-padding));
+}
+
+/* Swiper nav (non-hero) — mirror _swiper.scss structure + inline padding
+   so the nav lays out (prev / bullets / next) and aligns to the content
+   gutter. Hero swiper navs are position:absolute overlays — left to
+   _swiper.scss. :not([hidden]) so a hidden nav isn't un-hidden by the
+   display:flex below. */
+.nds-swiper:not(.nds-hero) .nds-swiper-navigation:not([hidden]) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: var(--spacing-xl, 16px);
+    padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+
+    .nds-swiper-buttons {
+        display: flex;
+        gap: var(--spacing-md, 8px);
+        flex: 1;
+    }
+}
+
+.nds-max-width .nds-swiper:not(.nds-hero) .nds-swiper-navigation:not([hidden]) {
+    padding-inline: max(calc(var(--nds-viewport-padding) + var(--spacing-lg)), calc((100% - var(--nds-content-MaxWidth)) / 2));
+}
+
 /* ── Hide chrome / reserve layout until JS + main CSS land ── */
 :is(.nds-brand-name, .nds-hero-section :is(.nds-section-wrapper, .nds-section-head)) {
     visibility: hidden;
@@ -83,4 +172,654 @@
    breakpoint-scoped variant class: nds-{horizontal|vertical|radial}-{sm|md|lg}. */
 .nds-stepper:is([class*="nds-horizontal-"], [class*="nds-vertical-"], [class*="nds-radial-"]):not([data-layout-ready]) {
     visibility: hidden;
+}
+
+/* ── Accordion / tabs ──
+   Layout + the accordion collapse mechanism live in main CSS; mirror the
+   layout-affecting parts into critical so content doesn't shift when main
+   CSS lands (tabs stack→row, accordion answers expanded→collapsed). */
+.nds-tabs:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+}
+
+.nds-tab-list {
+    display: flex;
+}
+
+/* Card-view tab content/panel — _tabs.scss spaces it off the tab list with
+   a block-start margin (inline-start when the tabs are vertical). Mirror it
+   so the panel doesn't shift when main CSS lands. */
+:is(.nds-tab-content, .nds-tab-panel).nds-card {
+    margin-block-start: var(--spacing-xl, 16px);
+}
+
+.nds-vertical > :is(.nds-tab-content, .nds-tab-panel).nds-card {
+    margin-block-start: 0;
+    margin-inline-start: var(--spacing-xl, 16px);
+}
+
+.nds-accordion {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+}
+
+/* the header is an <h3> — drop the reset's heading margin-bottom so the
+   collapse sits flush against it */
+.nds-accordion-header {
+    margin-bottom: 0;
+}
+
+.nds-accordion.nds-lg { --accordion-header-height: 56px; --accordion-header-padding: 16px; }
+.nds-accordion.nds-md { --accordion-header-height: 48px; --accordion-header-padding: 12px; }
+.nds-accordion.nds-sm { --accordion-header-height: 40px; --accordion-header-padding: 8px; }
+
+/* keep accordion items collapsed from first paint — mirrors _accordion.scss */
+.nds-accordion-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: clip;
+}
+
+.nds-accordion-collapse .nds-accordion-content {
+    grid-row: 1 / span 2;
+    overflow: hidden;
+}
+
+.nds-accordion-collapse:not([data-state]) .nds-accordion-content {
+    display: none;
+}
+
+/* ── Scroll-more ──
+   Overflow wrapper (e.g. the tab-list container). Mirror the flex layout
+   so content + show-more sit on one axis instead of the button wrapping
+   to its own line. JS sets data-axis. */
+.nds-scroll-more:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+}
+
+.nds-scroll-more[data-axis="horizontal"] {
+    flex-direction: row;
+}
+
+.nds-scroll-more-content {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SKELETON STATE
+   nds-loader.js stamps body[data-nds-loaded] once init completes.
+   Until then, components paint as static-gradient placeholders so
+   content resolves with no layout shift.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Atomic components ──
+   Button / tag / chip / featured-icon / feedback-icon / avatar skeleton
+   themselves wherever they appear — composite components (card, alert…)
+   never re-declare them. --_sk-size is set first in every rule, so the
+   shared name never leaks across nested atoms. */
+body:not([data-nds-loaded]) {
+
+    /* Buttons — sizes mirror --btn-size in _buttons.scss */
+    .nds-btn:not([hidden]) {
+        --_sk-size: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--_sk-size);
+        padding-inline: var(--spacing-xl, 16px);
+        border: 1px solid transparent;
+        border-radius: var(--nds-skeleton-radius);
+        background: var(--nds-skeleton-fill);
+
+        &.nds-md { --_sk-size: 32px; }
+        &.nds-sm { --_sk-size: 24px; }
+
+        &.nds-icon-only {
+            width: var(--_sk-size);
+            padding-inline: 0;
+        }
+
+        &.nds-circle { border-radius: 9999px; }
+
+        /* hide child elements AND pseudo-elements (indicator / spinner) */
+        >*,
+        &::before,
+        &::after {
+            visibility: hidden;
+        }
+    }
+
+    /* Tags — heights mirror --tag-height in _tags.scss */
+    .nds-tag:not([hidden]) {
+        --_sk-size: 32px;
+        display: inline-flex;
+        align-items: center;
+        height: var(--_sk-size);
+        padding-inline: var(--spacing-xl, 16px);
+        border: 1px solid transparent;
+        border-radius: var(--nds-skeleton-radius);
+        background: var(--nds-skeleton-fill);
+
+        &.nds-sm { --_sk-size: 24px; padding-inline: var(--spacing-md, 8px); }
+        &.nds-xs { --_sk-size: 20px; padding-inline: var(--spacing-md, 8px); }
+
+        >* {
+            visibility: hidden;
+        }
+    }
+
+    /* Chips — sizes mirror --chip-size in _chips.scss */
+    .nds-chip:not([hidden]) {
+        --_sk-size: 24px;
+        display: inline-flex;
+        align-items: center;
+        height: var(--_sk-size);
+        padding-inline: var(--spacing-lg, 12px);
+        border: 1px solid transparent;
+        border-radius: var(--nds-skeleton-radius);
+        background: var(--nds-skeleton-fill);
+
+        &.nds-sm { --_sk-size: 20px; }
+        &.nds-lg { --_sk-size: 32px; }
+
+        >* {
+            visibility: hidden;
+        }
+    }
+
+    /* Featured icon — sizes mirror _featured-icons.scss */
+    .nds-featured-icon:not([hidden]) {
+        --_sk-size: 40px;
+        display: inline-flex;
+        flex-shrink: 0;
+        width: var(--_sk-size);
+        height: var(--_sk-size);
+        border-radius: calc((var(--_sk-size) / 4) - 2px);
+        background: var(--nds-skeleton-fill);
+
+        &.nds-sm { --_sk-size: 32px; }
+        &.nds-lg { --_sk-size: 48px; }
+        &.nds-xl { --_sk-size: 56px; }
+        &.nds-circle { border-radius: 50%; }
+
+        >* {
+            visibility: hidden;
+        }
+    }
+
+    /* Feedback icon — default size mirrors _feedback-icons.scss */
+    .nds-feedback-icon:not([hidden]) {
+        --_sk-size: 24px;
+        display: inline-flex;
+        flex-shrink: 0;
+        width: var(--_sk-size);
+        height: var(--_sk-size);
+        border-radius: 50%;
+        background: var(--nds-skeleton-fill);
+
+        >* {
+            visibility: hidden;
+        }
+    }
+
+    /* Avatar — sizes mirror _avatar.scss */
+    .nds-avatar:not([hidden]) {
+        --_sk-size: 40px;
+        display: inline-flex;
+        flex-shrink: 0;
+        width: var(--_sk-size);
+        height: var(--_sk-size);
+        border-radius: 50%;
+        background: var(--nds-skeleton-fill);
+
+        &.nds-xs  { --_sk-size: 24px; }
+        &.nds-sm  { --_sk-size: 32px; }
+        &.nds-lg  { --_sk-size: 48px; }
+        &.nds-xl  { --_sk-size: 64px; }
+        &.nds-2xl { --_sk-size: 80px; }
+        &.nds-3xl { --_sk-size: 120px; }
+        &.nds-square { border-radius: var(--nds-skeleton-radius); }
+
+        >* {
+            visibility: hidden;
+        }
+    }
+
+    /* Swiper bullets — JS-generated, so they appear mid-skeleton; paint
+       as plain dots. Size + shape mirror _swiper.scss — --_bullet-size is
+       set there per .nds-sm/md/lg pagination variant. */
+    .nds-bullet {
+        width: var(--_bullet-size, 16px);
+        height: var(--_bullet-size, 16px);
+        border: 1px solid transparent;
+        border-radius: 50%;
+        background: var(--nds-skeleton-fill);
+        opacity: 1;
+    }
+}
+
+/* Drawer buttons — clip the skeleton fill to the content box so it
+   insets by the button's padding (a bar within the row, not a full-
+   bleed block). */
+body:not([data-nds-loaded]) .nds-drawer .nds-btn:not([hidden]) {
+    background-clip: content-box;
+}
+
+/* Accordion header button — a full-row bar, not the atomic 40px button.
+   Clip the fill to the content box so it insets by the button padding. */
+body:not([data-nds-loaded]) .nds-btn.nds-accordion-btn {
+    width: 100%;
+    min-height: var(--accordion-header-height, 56px);
+    /* match the real accordion button — square corners + header padding
+       (the content-box clip then insets the fill on every side) */
+    padding-block: var(--accordion-header-padding, 16px);
+    border-radius: 0;
+    background-clip: content-box;
+}
+
+/* Show-more button — stays hidden until JS measures overflow; without
+   this the atomic .nds-btn skeleton reveals it (wrapping to its own
+   line). The .nds-btn.nds-show-more pair out-specifies the atomic rule. */
+body:not([data-nds-loaded]) .nds-scroll-more .nds-btn.nds-show-more {
+    display: none;
+}
+
+/* Tab buttons — clip the skeleton fill to the content box so it insets
+   by the button padding (like the drawer buttons). padding-block added
+   so the inset applies vertically too. */
+body:not([data-nds-loaded]) .nds-tab-list .nds-btn {
+    padding-block: var(--spacing-md, 8px);
+    background-clip: content-box;
+}
+
+/* ── Card skeleton ──
+   Atomic parts inside (icon, avatar, tags, buttons) are painted by the
+   rules above — this block only handles the card's own structure. */
+body:not([data-nds-loaded]) {
+
+    .nds-card:not([hidden]) {
+        display: flex;
+        flex-direction: column;
+        /* mirror _cards.scss tokens — honours inline --card-* overrides
+           so the box doesn't reflow when main CSS lands */
+        gap: var(--card-gap, var(--spacing-3xl, 24px));
+        padding: var(--card-padding, var(--spacing-xl, 16px));
+        border: 1px solid var(--nds-skeleton-border);
+        border-radius: var(--card-radius, var(--components-card-radius, var(--nds-skeleton-card-radius)));
+        width: var(--card-width, 100%);
+        min-width: var(--card-width-min, 0);
+        max-width: var(--card-width-max, var(--card-width, 360px));
+    }
+
+    .nds-card.nds-user:not([hidden]) {
+        width: var(--card-width, 224px);
+    }
+
+    .nds-card:is(.nds-full-width, .nds-full):not([hidden]) {
+        --card-width: 100%;
+    }
+
+    /* Tabs card-view — .nds-tabs / .nds-tab-content / .nds-tab-panel can be
+       co-classed .nds-card. _tabs.scss sets --card-width:100% but that's
+       main CSS — mirror it here so the skeleton card spans full width
+       (with the card-rule padding) instead of capping at the 360px atom. */
+    .nds-card:is(.nds-tabs, .nds-tab-content, .nds-tab-panel):not([hidden]) {
+        --card-width: 100%;
+    }
+
+    /* Section layout — match the real card's vertical rhythm. width:100%
+       is required so a centered (statistic) card doesn't shrink-wrap the
+       text column. */
+    :is(.nds-card-content, .nds-card-meta):not([hidden]) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--card-gap, var(--spacing-3xl, 24px));
+        width: 100%;
+    }
+
+    :is(.nds-card-content, .nds-card-text):not([hidden]) {
+        flex: 1;
+    }
+
+    .nds-card-text:not([hidden]) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md, 8px);
+        width: 100%;
+    }
+
+    .nds-card-header:not([hidden]) {
+        display: flex;
+        gap: var(--spacing-md, 8px);
+    }
+
+    .nds-card-tags:not([hidden]) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md, 8px);
+    }
+
+    .nds-card-actions:not([hidden]) {
+        display: flex;
+        gap: var(--spacing-xl, 16px);
+        margin-top: auto;
+    }
+
+    /* Center / statistic cards — mirror the centering in _cards.scss */
+    .nds-card:is(.nds-center, .nds-statistic):not([hidden]) :is(
+        .nds-card-header,
+        .nds-card-content > *,
+        .nds-card-text > *,
+        .nds-card-tags,
+        .nds-card-actions
+    ) {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .nds-card.nds-statistic:not([hidden]) {
+
+        :is(.nds-card-header, .nds-card-content) {
+            align-items: center;
+        }
+
+        .nds-card-featured-icon {
+            align-self: center;
+        }
+
+        /* Half-width bars — a full-width block reads oddly for a single
+           stat; centred by the card's align-items:center */
+        :is(.nds-card-number, .nds-card-description) {
+            width: 50%;
+        }
+    }
+
+    /* Text → gradient bars (real text kept transparent → true height).
+       The :not([hidden]) on .nds-card lifts specificity to (0,4,1) so
+       transparent wins over the card's own (0,4,0) text-colour rules. */
+    .nds-card:not([hidden]) :is(.nds-card-title, .nds-card-subtitle,
+        .nds-card-description, .nds-card-number, .nds-card-rating-text) {
+        @include skeleton-bar;
+    }
+
+    /* Explicit width — without it a centered (statistic) card's
+       align-items:center shrink-wraps these bars to glyph width */
+    .nds-card:not([hidden]) :is(.nds-card-title, .nds-card-subtitle,
+        .nds-card-description, .nds-card-number) {
+        width: 100%;
+    }
+
+    .nds-card .nds-card-title {
+        min-height: var(--typo-text-lg-LH);
+    }
+
+    .nds-card :is(.nds-card-subtitle, .nds-card-description) {
+        min-height: var(--typo-text-md-LH);
+    }
+
+    /* number / rating-text are <span>s — force block flow so the bar's
+       min-height applies before main CSS lands */
+    .nds-card .nds-card-number:not([hidden]) {
+        display: block;
+        min-height: var(--typo-display-clamp-lg-LH);
+    }
+
+    .nds-card .nds-card-rating-text:not([hidden]) {
+        display: inline-block;
+        min-height: var(--typo-text-xs-LH);
+    }
+
+    /* Image → filled 2:1 rectangle */
+    .nds-card .nds-card-image:not(.nds-avatar):not([hidden]) {
+        aspect-ratio: 2 / 1;
+        border-radius: var(--radius-md, 8px);
+        background: var(--nds-skeleton-fill);
+        overflow: hidden;
+
+        img {
+            visibility: hidden;
+        }
+    }
+}
+
+/* ── Alert skeleton ──
+   Alerts are .nds-alert.nds-card, so the card skeleton bleeds onto them —
+   restore the alert's row layout and paint its own parts. The feedback
+   icon is painted by the atomic rule; only its alert size is set here. */
+body:not([data-nds-loaded]) .nds-alert.nds-card:not([hidden]) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--spacing-lg, 12px);
+    padding: var(--spacing-lg, 12px);
+    padding-inline-start: calc(var(--spacing-lg, 12px) + 8px);
+    border-radius: var(--radius-md, 8px);
+    width: 100%;
+    max-width: 100%;
+
+    /* status stripe + close button — colour/position need main CSS */
+    &::after,
+    .nds-alert-close {
+        visibility: hidden;
+    }
+
+    /* alert feedback icon is 40px (2× the standalone default) */
+    .nds-feedback-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Content / text columns */
+    :is(.nds-alert-content, .nds-alert-text) {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm, 6px);
+    }
+
+    .nds-alert-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .nds-alert-actions {
+        display: flex;
+        gap: var(--spacing-md, 8px);
+    }
+
+    /* Title + description → gradient bars */
+    :is(.nds-alert-title, .nds-alert-description) {
+        @include skeleton-bar;
+    }
+
+    .nds-alert-title {
+        width: 30%;
+        min-height: var(--typo-text-md-LH);
+    }
+
+    .nds-alert-description {
+        width: 100%;
+        min-height: var(--typo-text-sm-LH);
+    }
+}
+
+/* Inline alert — title + description flow as inline text (not stacked
+   bars), smaller icon. Overrides the default alert skeleton above. */
+body:not([data-nds-loaded]) .nds-alert.nds-card.nds-inline:not([hidden]) {
+    align-items: center;
+    padding: var(--spacing-md, 8px) var(--spacing-lg, 12px);
+    padding-inline-start: var(--spacing-lg, 12px);
+
+    .nds-feedback-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .nds-alert-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .nds-alert-text {
+        display: block;
+    }
+
+    /* inline flow — transparent text keeps real wrapping/height, the
+       gradient paints the run; width/min-height from above go inert */
+    :is(.nds-alert-title, .nds-alert-description) {
+        display: inline;
+    }
+}
+
+/* ── Form input + switch skeleton ──
+   .nds-form-control is a bordered <div> that collapses to the bare
+   <input> height before main CSS; paint it as a bar. Selection
+   containers (check / radio / switch) have a borderless, fit-content
+   form-control — excluded here. The switch is painted as a pill. */
+body:not([data-nds-loaded]) {
+
+    /* Text / select inputs — sizes mirror --input-size in _forms.scss */
+    .nds-form-container:not(.nds-check-container, .nds-radio-container, .nds-switch-container) .nds-form-control:not([hidden]) {
+        --_sk-size: 40px;
+        height: var(--_sk-size);
+        min-height: var(--_sk-size);
+        border: 1px solid transparent;
+        border-radius: var(--nds-skeleton-radius);
+        background: var(--nds-skeleton-fill);
+
+        >*,
+        &::before,
+        &::after {
+            visibility: hidden;
+        }
+    }
+
+    .nds-form-container.nds-md .nds-form-control:not([hidden]) {
+        --_sk-size: 32px;
+    }
+
+    /* Textarea grows with content — reserve a few rows */
+    .nds-form-container.nds-textarea .nds-form-control:not([hidden]) {
+        height: auto;
+        min-height: 96px;
+    }
+
+    /* Switch → filled pill. Track dimensions mirror _switch.scss */
+    .nds-switch:not([hidden]) {
+        --_sk-w: 48px;
+        --_sk-h: 24px;
+        display: inline-block;
+        flex-shrink: 0;
+        width: var(--_sk-w);
+        height: var(--_sk-h);
+        border-radius: 9999px;
+        background: var(--nds-skeleton-fill);
+
+        >*,
+        &::before,
+        &::after {
+            visibility: hidden;
+        }
+    }
+
+    .nds-switch-container.nds-sm .nds-switch:not([hidden]) {
+        --_sk-w: 36px;
+        --_sk-h: 18px;
+    }
+
+    .nds-switch-container.nds-lg .nds-switch:not([hidden]) {
+        --_sk-w: 56px;
+        --_sk-h: 28px;
+    }
+}
+
+/* ── Definition list skeleton ──
+   Reproduce the default (stacked) dl/item flow and paint the term + value
+   as content-width bars; real (transparent) text keeps each row's height.
+   tableView / rowView keep their own layout — only the bars are painted. */
+body:not([data-nds-loaded]) {
+
+    .nds-definition-list:not([hidden]):not(.nds-rowView):not([class*="nds-tableView"]) {
+        display: flex;
+        flex-direction: column;
+        row-gap: var(--row-gap, var(--gap, var(--spacing-lg, 12px)));
+
+        &.nds-md { --row-gap: var(--spacing-md, 8px); }
+        &.nds-sm { --row-gap: var(--spacing-sm, 6px); }
+
+        .nds-definition-item:not([hidden]) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs, 4px);
+            width: 100%;
+        }
+
+        :is(dt, .nds-item-title) {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md, 8px);
+        }
+    }
+
+    /* Term label → content-width bar */
+    .nds-definition-list :is(dt, .nds-item-title) .nds-label {
+        flex: none;
+        @include skeleton-bar;
+    }
+
+    /* Value → content-width bar */
+    .nds-definition-list :is(dd, .nds-item-desc) {
+        width: fit-content;
+        @include skeleton-bar;
+    }
+}
+
+/* ── Paged grid skeleton ──
+   .nds-paged-content carries [hidden] until pagination JS reveals it —
+   display:none → zero height → a jump when it reveals. While [hidden],
+   show it as a grid of skeleton cards capped to one page (~6 items) so
+   it reserves roughly the real height. _grid.scss gates display:grid +
+   grid-template-columns behind :not([hidden]); the --_cols / --_tracks /
+   gap custom properties are set unconditionally, so re-asserting display
+   + columns is enough. The [hidden] scope drops these rules the moment
+   JS reveals + paginates, handing control back cleanly. */
+body:not([data-nds-loaded]) {
+
+    .nds-paged-content.nds-grid[hidden] {
+        display: grid;
+        grid-template-columns: var(--_tracks, repeat(var(--_cols), minmax(var(--min-width, 0), 1fr)));
+    }
+
+    /* cap to one page — items past the 6th wait until JS paginates */
+    .nds-paged-content[hidden] .nds-page-item:nth-child(n + 7) {
+        display: none;
+    }
+
+    /* Pagination — page buttons are JS-generated, so the nav is empty
+       pre-init (_pagination.scss display:none's an empty nav). Show a
+       faux skeleton row: masked repeating-gradient draws the page pills.
+       Drops once JS adds .nds-pagination-list. */
+    .nds-pagination:not(:has(> .nds-pagination-list)) {
+        display: flex;
+        justify-content: center;
+        /* mirror _pagination.scss — width + margin-top to the grid */
+        width: 100%;
+        margin-top: var(--pagination-margin-top, var(--spacing-2xl, 20px));
+
+        /* rounded-rect pills — rx matches the .nds-btn radius (--radius-sm,
+           4px). A repeating-linear-gradient can't round corners, so the
+           mask tile is an SVG rounded rect. */
+        &::before {
+            content: "";
+            height: 40px;
+            width: min(100%, 360px);
+            background: var(--nds-skeleton-fill);
+            mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='40'%3E%3Crect%20width='40'%20height='40'%20rx='4'%20fill='white'/%3E%3C/svg%3E") 0 0 / 48px 100% repeat-x;
+        }
+    }
 }
