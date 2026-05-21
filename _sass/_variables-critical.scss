@@ -130,10 +130,21 @@
     --spacing-10xl: var(--spacing-32, 128px);
     --spacing-11xl: var(--spacing-40, 160px);
 
-    // Skeleton placeholder — static diagonal gradient shown on cards until the
-    // loader stamps body[data-nds-loaded]. Self-contained literal hex because
-    // critical CSS carries no --background-neutral-* / --radius-* tokens.
-    --nds-skeleton-fill: linear-gradient(20deg, rgba(229, 231, 235, 0.2) 0%, rgba(210, 214, 219, 0.2) 50%, rgba(157, 164, 174, 0.2) 100%);
+    // Skeleton placeholder — animated diagonal gradient shown on cards
+    // until the loader stamps body[data-nds-loaded]. Stops mirror the
+    // design-token values at 20% alpha. Mirrored (200→300→400→300→200)
+    // so the gradient tiles seamlessly when background-repeat repeats it —
+    // the shimmer keyframe slides background-position with no visible seam.
+    //   neutral-200  #e5e7eb  rgb(229,231,235)
+    //   neutral-300  #d2d6db  rgb(210,214,219)
+    //   neutral-400  #9da4ae  rgb(157,164,174)
+    --nds-skeleton-fill: linear-gradient(90deg,
+        rgba(229, 231, 235, 0.2) 0%,
+        rgba(210, 214, 219, 0.2) 25%,
+        rgba(157, 164, 174, 0.2) 50%,
+        rgba(210, 214, 219, 0.2) 75%,
+        rgba(229, 231, 235, 0.2) 100%
+    );
     --nds-skeleton-border: #e5e7eb;
     --nds-skeleton-radius: 4px;
     --nds-skeleton-card-radius: 16px;
@@ -147,8 +158,41 @@
     --text-default: #f9fafb;
     --text-display: #f3f4f6;
     --text-oncolor-primary: #fff;
-    --nds-skeleton-fill: linear-gradient(20deg, rgba(43, 54, 67, 0.2) 0%, rgba(56, 66, 80, 0.2) 50%, rgba(77, 87, 97, 0.2) 100%);
+    // Dark stops use neutral-600/500/400 at 20% alpha, mirrored for the
+    // same seamless tile as the light theme:
+    //   neutral-600  #4d5761  rgb(77,87,97)
+    //   neutral-500  #6c727e  rgb(108,114,126)
+    //   neutral-400  #9da4ae  rgb(157,164,174)
+    --nds-skeleton-fill: linear-gradient(90deg,
+        rgba(77, 87, 97, 0.2) 0%,
+        rgba(108, 114, 126, 0.2) 25%,
+        rgba(157, 164, 174, 0.2) 50%,
+        rgba(108, 114, 126, 0.2) 75%,
+        rgba(77, 87, 97, 0.2) 100%
+    );
     --nds-skeleton-border: #2b3643;
+}
+
+// LTR — flip the gradient direction. 90deg in CSS sweeps left → right; in
+// LTR we want right → left (mirror of RTL's visual), so use 270deg.
+:root[dir="ltr"] {
+    --nds-skeleton-fill: linear-gradient(270deg,
+        rgba(229, 231, 235, 0.2) 0%,
+        rgba(210, 214, 219, 0.2) 25%,
+        rgba(157, 164, 174, 0.2) 50%,
+        rgba(210, 214, 219, 0.2) 75%,
+        rgba(229, 231, 235, 0.2) 100%
+    );
+
+    &[data-theme="dark"] {
+        --nds-skeleton-fill: linear-gradient(270deg,
+            rgba(77, 87, 97, 0.2) 0%,
+            rgba(108, 114, 126, 0.2) 25%,
+            rgba(157, 164, 174, 0.2) 50%,
+            rgba(108, 114, 126, 0.2) 75%,
+            rgba(77, 87, 97, 0.2) 100%
+        );
+    }
 }
 
 @include mobile {

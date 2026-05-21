@@ -9,11 +9,54 @@
    ======================================== */
 @use './mixins' as *;
 
-/* Paint a (transparent-text) element as a skeleton bar. */
-@mixin skeleton-bar {
-    color: transparent;
+/* Paint anything (atom, image, masked surface) with the animated
+   skeleton gradient. Single source of truth — every direct usage of
+   --nds-skeleton-fill in this file goes through this mixin so the
+   shimmer animation can't drift out of sync. */
+@mixin skeleton-fill {
     background: var(--nds-skeleton-fill);
+    background-size: 200% 100%;
+    animation: nds-skeleton-shimmer 3s linear infinite;
+}
+
+/* Paint a (transparent-text) element as a skeleton bar — used by text
+   bars in cards / alerts / definition lists / sidemenu-toggle label. */
+@mixin skeleton-bar {
+    @include skeleton-fill;
+    color: transparent;
     border-radius: var(--nds-skeleton-radius);
+}
+
+/* Slow shimmer — slides the gradient by one full tile-width. The fill
+   is a mirrored gradient (lightest→darker→lightest) and background-size
+   is 200% wide, so sliding 200% lands on the next tile boundary with
+   the same visual state at start and end → seamless loop. RTL/LTR are
+   handled by the gradient angle flip in _variables-critical.scss. */
+@keyframes nds-skeleton-shimmer {
+    from { background-position: 0 0; }
+    to   { background-position: -200% 0; }
+}
+
+/* Mirror of _definition-list.scss @mixin dl-tableView — only the
+   layout-affecting rules (grid switch + subgrid item rows). Used inside
+   body:not([data-nds-loaded]) per breakpoint. */
+@mixin sk-dl-tableView {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100%;
+
+    .nds-definition-item {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: subgrid;
+        row-gap: var(--row-gap, var(--gap, var(--spacing-lg, 12px)));
+        column-gap: var(--col-gap, var(--gap, var(--spacing-xl, 16px)));
+    }
+
+    :is(dd, .nds-item-desc) {
+        display: flex;
+        align-items: center;
+    }
 }
 
 /* ── Navigation ── */
@@ -44,9 +87,23 @@
     display: flex;
 }
 
-.nds-breadcrumb li::after {
+/* Reserve the separator slot (mirrors _breadcrumb.scss — width:24px,
+   inline-block, skipped on the last crumb). min-width on an inline
+   ::after is inert; needs display:inline-block + width. */
+.nds-breadcrumb li:not(:last-child)::after {
     content: "";
-    min-width: 24px;
+    display: inline-block;
+    width: 24px;
+}
+
+/* ── Section background ──
+   _section.scss (main CSS) sets background-color: var(--section-bg,
+   var(--background-default)). Mirror with a fallback so content sections
+   paint their bg pre-init. Hero is excluded — _hero.scss paints its own
+   --background-sa-flag in the critical bundle. .nds-ghost is excluded —
+   _section.scss resets it via @include reset-section-style. */
+body:not([data-nds-loaded]) .nds-content-section:not(.nds-ghost) {
+    background-color: var(--section-bg, var(--background-default));
 }
 
 /* ── Hero ── */
@@ -82,7 +139,7 @@
     height: 16px;
     width: 120px;
     margin-inline: auto;
-    background: var(--nds-skeleton-fill);
+    @include skeleton-fill;
     mask: radial-gradient(circle 8px at 8px center, #000 99%, #0000) 0 0 / 24px 100% repeat-x;
 }
 
@@ -149,11 +206,80 @@
     visibility: hidden;
 }
 
-.nds-sidemenu {
-    background-color: var(--background-menu);
+body:not([data-nds-loaded]) .nds-sidemenu {
+    /* Shell layout — mirrors _sidemenu.scss. Width + padding are the
+       layout-affecting bits; box-shadow / z-index / min-height aren't in
+       critical and stay with main CSS. --background-menu isn't critical;
+       fall back to --background-default so the bg paints pre-init and
+       still tracks dark-mode (--background-default has a dark override
+       in _variables-critical.scss). */
+    width: var(--nds-sidemenu-width);
+    padding: var(--spacing-md);
+    background-color: var(--background-menu, var(--background-default));
+}
 
-    @include tablet(max) {
-        position: absolute;
+/* Tablet/mobile: _sidemenu.scss slides the menu off-canvas via
+   position:absolute + translateX(-100%). Pre-init the transform isn't
+   applied (lives in main CSS), so the menu would overlap content. Hide
+   it during the skeleton state only — the rule drops once loader.js
+   stamps body[data-nds-loaded] so the toggle can later reveal it.
+   .nds-top is excluded — it has its own top-bar mode (rule below). */
+@include tablet(max) {
+    body:not([data-nds-loaded]) .nds-sidemenu:not(.nds-top) {
+        display: none;
+    }
+
+    /* Top-submenu mode — _sidemenu.scss:180 turns the sidemenu into a
+       full-width sticky toggle bar in tablet/mobile. Mirror the shell
+       (width:100%, toggle-height, no padding, clip-overflow) so the
+       drawer dropdown inside is clipped to the toggle row pre-init.
+       Paint the menu bg on the bar so it doesn't flash transparent —
+       main CSS sets the shell to bg:unset and the inner toggle to
+       --background-nav, both of which resolve to the same colour as
+       --background-menu in light + dark themes. */
+    body:not([data-nds-loaded]) .nds-sidemenu.nds-top {
+        width: 100%;
+        height: var(--nds-sidemenu-toggle-height, 56px);
+        min-height: 40px;
+        padding: 0;
+        background-color: var(--background-menu, var(--background-default));
+        overflow: clip;
+    }
+
+    /* Toggle button — markup carries [hidden] (atomic .nds-btn skeleton
+       skips it) and the inner .nds-label also carries [hidden]. Lay out
+       the button as a transparent row at toggle-height and paint only
+       the icon + label as skeleton blocks — the button surface itself
+       stays clear so the shell's --background-menu reads through. */
+    body:not([data-nds-loaded]) .nds-sidemenu.nds-top .nds-sidemenu-toggle {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md, 8px);
+        width: 100%;
+        height: var(--nds-sidemenu-toggle-height, 56px);
+        padding: 0 var(--nds-viewport-padding, 32px);
+        justify-content: flex-start;
+
+        /* Icon → square block (mirrors the 24px hgi icon size) */
+        .nds-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            border-radius: var(--nds-skeleton-radius);
+            @include skeleton-fill;
+            color: transparent;
+            margin: 0;
+        }
+
+        /* Label → content-width bar. Higher specificity than the UA
+           [hidden] { display:none } so the [hidden] label still paints. */
+        .nds-label {
+            display: block;
+            flex: unset;
+            width: fit-content;
+            @include skeleton-bar;
+        }
     }
 }
 
@@ -199,6 +325,20 @@
     margin-inline-start: var(--spacing-xl, 16px);
 }
 
+/* Full-width tabs in ghost cardView / max-width sections — _tabs.scss
+   adds tablet-max inline padding to the tab-list and tab-content so they
+   align with the viewport gutter. Mirror here so the tabs don't snap
+   inward when main CSS lands. Guarded so the rule drops once main takes
+   over. */
+@include tablet(max) {
+    body:not([data-nds-loaded]) :is(.nds-content-layout.nds-cardView .nds-ghost, section > .nds-max-width) .nds-tabs:not(.nds-card) {
+        .nds-tab-content:not(.nds-card, :has(.nds-max-width)),
+        .nds-tab-list {
+            padding-inline: var(--nds-viewport-padding);
+        }
+    }
+}
+
 .nds-accordion {
     display: flex;
     flex-direction: column;
@@ -232,6 +372,17 @@
     display: none;
 }
 
+/* ── Drawer / sidemenu submenus ──
+   Nested .nds-drawer-list li > ul is closed-by-default in _drawer.scss
+   (display: none until JS sets data-state~="open"). Mirror here so the
+   sidemenu paints only its top-level items pre-init — otherwise the full
+   nested tree shows and collapses on init, causing a large CLS. As a
+   side-effect, the atomic .nds-btn skeleton paints only the top-level
+   row, not every nested item. */
+body:not([data-nds-loaded]) .nds-drawer-list li > ul {
+    display: none;
+}
+
 /* ── Scroll-more ──
    Overflow wrapper (e.g. the tab-list container). Mirror the flex layout
    so content + show-more sit on one axis instead of the button wrapping
@@ -249,6 +400,31 @@
     flex: 1;
     min-width: 0;
     overflow: hidden;
+}
+
+/* ── Chart ──
+   .nds-chart source markup is an empty <div>; nds-chart.js appends
+   .nds-chart-body on init, so :empty is the natural pre-init hook (it
+   drops the moment the chart renders). Lives outside the data-nds-loaded
+   scope because charts auto-init via ResizeObserver and may render after
+   the loader flag flips. Heights approximate _js/nds-chart.js TYPE_DEFAULTS
+   (pie/donut: 300, bar/line: 350) plus room for legend / axis title rows;
+   custom options.height charts will shift by the delta on init. */
+.nds-chart:empty {
+    display: block;
+    width: 100%;
+    min-height: 400px;
+    @include skeleton-fill;
+    border-radius: var(--radius-md, 8px);
+
+    &[data-chart-type="pie"],
+    &[data-chart-type="donut"] {
+        aspect-ratio: 1;
+        max-width: 400px;
+        min-height: 0;
+        margin-inline: auto;
+        border-radius: 50%;
+    }
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -275,7 +451,7 @@ body:not([data-nds-loaded]) {
         padding-inline: var(--spacing-xl, 16px);
         border: 1px solid transparent;
         border-radius: var(--nds-skeleton-radius);
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
 
         &.nds-md { --_sk-size: 32px; }
         &.nds-sm { --_sk-size: 24px; }
@@ -304,7 +480,7 @@ body:not([data-nds-loaded]) {
         padding-inline: var(--spacing-xl, 16px);
         border: 1px solid transparent;
         border-radius: var(--nds-skeleton-radius);
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
 
         &.nds-sm { --_sk-size: 24px; padding-inline: var(--spacing-md, 8px); }
         &.nds-xs { --_sk-size: 20px; padding-inline: var(--spacing-md, 8px); }
@@ -323,7 +499,7 @@ body:not([data-nds-loaded]) {
         padding-inline: var(--spacing-lg, 12px);
         border: 1px solid transparent;
         border-radius: var(--nds-skeleton-radius);
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
 
         &.nds-sm { --_sk-size: 20px; }
         &.nds-lg { --_sk-size: 32px; }
@@ -341,7 +517,7 @@ body:not([data-nds-loaded]) {
         width: var(--_sk-size);
         height: var(--_sk-size);
         border-radius: calc((var(--_sk-size) / 4) - 2px);
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
 
         &.nds-sm { --_sk-size: 32px; }
         &.nds-lg { --_sk-size: 48px; }
@@ -361,7 +537,7 @@ body:not([data-nds-loaded]) {
         width: var(--_sk-size);
         height: var(--_sk-size);
         border-radius: 50%;
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
 
         >* {
             visibility: hidden;
@@ -376,7 +552,7 @@ body:not([data-nds-loaded]) {
         width: var(--_sk-size);
         height: var(--_sk-size);
         border-radius: 50%;
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
 
         &.nds-xs  { --_sk-size: 24px; }
         &.nds-sm  { --_sk-size: 32px; }
@@ -399,8 +575,26 @@ body:not([data-nds-loaded]) {
         height: var(--_bullet-size, 16px);
         border: 1px solid transparent;
         border-radius: 50%;
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
         opacity: 1;
+    }
+
+    /* HGI icons — <i class="hgi hgi-stroke hgi-NAME">. The font CSS lives
+       in a separate bundle and font-display:swap shows tofu fallbacks
+       until the woff2 lands; paint as a square placeholder at 1em (floor
+       16px) so an icon never collapses to zero or flashes a fallback
+       glyph. color:transparent suppresses the fallback char. Hidden
+       inside atomic skeletons by their own >* { visibility:hidden }. */
+    i.hgi-stroke {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        min-width: 16px;
+        min-height: 16px;
+        vertical-align: middle;
+        border-radius: var(--nds-skeleton-radius);
+        @include skeleton-fill;
+        color: transparent;
     }
 }
 
@@ -409,6 +603,19 @@ body:not([data-nds-loaded]) {
    bleed block). */
 body:not([data-nds-loaded]) .nds-drawer .nds-btn:not([hidden]) {
     background-clip: content-box;
+}
+
+/* Drawer-list items — _drawer.scss makes these buttons full-width,
+   start-aligned, with a 36px min-height (not the atomic 40px) and
+   padding-block: calc(var(--_btn-padding)/2). The private --_btn-padding
+   chain in _mixins.scss isn't in critical, so the public --btn-padding /
+   --btn-size chain is re-expressed inline here — a consumer override on
+   either still propagates. */
+body:not([data-nds-loaded]) .nds-drawer-list li > .nds-btn:not([hidden]) {
+    min-height: var(--btn-height-min, 36px);
+    padding-block: calc(var(--btn-padding, calc((var(--btn-size, 32px) - 8px) / 2)) / 2);
+    justify-content: flex-start;
+    width: fit-content;
 }
 
 /* Accordion header button — a full-row bar, not the atomic 40px button.
@@ -455,6 +662,9 @@ body:not([data-nds-loaded]) {
         width: var(--card-width, 100%);
         min-width: var(--card-width-min, 0);
         max-width: var(--card-width-max, var(--card-width, 360px));
+        /* --background-card isn't critical; fall back to --background-default
+           (which has a dark-mode override in _variables-critical.scss). */
+        background-color: var(--card-bg, var(--background-card, var(--background-default)));
     }
 
     .nds-card.nds-user:not([hidden]) {
@@ -580,7 +790,7 @@ body:not([data-nds-loaded]) {
     .nds-card .nds-card-image:not(.nds-avatar):not([hidden]) {
         aspect-ratio: 2 / 1;
         border-radius: var(--radius-md, 8px);
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
         overflow: hidden;
 
         img {
@@ -690,7 +900,7 @@ body:not([data-nds-loaded]) {
         min-height: var(--_sk-size);
         border: 1px solid transparent;
         border-radius: var(--nds-skeleton-radius);
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
 
         >*,
         &::before,
@@ -718,7 +928,7 @@ body:not([data-nds-loaded]) {
         width: var(--_sk-w);
         height: var(--_sk-h);
         border-radius: 9999px;
-        background: var(--nds-skeleton-fill);
+        @include skeleton-fill;
 
         >*,
         &::before,
@@ -739,12 +949,14 @@ body:not([data-nds-loaded]) {
 }
 
 /* ── Definition list skeleton ──
-   Reproduce the default (stacked) dl/item flow and paint the term + value
-   as content-width bars; real (transparent) text keeps each row's height.
-   tableView / rowView keep their own layout — only the bars are painted. */
+   Mirror _definition-list.scss layout for every view so the list doesn't
+   reflow when main CSS lands, then paint term + value as content-width
+   bars; real (transparent) text keeps each row's height. */
 body:not([data-nds-loaded]) {
 
-    .nds-definition-list:not([hidden]):not(.nds-rowView):not([class*="nds-tableView"]) {
+    /* Base — list as flex column, items as flex column. tableView below
+       overrides to grid; rowView keeps the column list and flips items. */
+    .nds-definition-list:not([hidden]) {
         display: flex;
         flex-direction: column;
         row-gap: var(--row-gap, var(--gap, var(--spacing-lg, 12px)));
@@ -764,6 +976,28 @@ body:not([data-nds-loaded]) {
             align-items: center;
             gap: var(--spacing-md, 8px);
         }
+    }
+
+    /* tableView (always-on + responsive variants) — list becomes grid,
+       items become subgrid rows. Breakpoint scopes mirror _definition-list.scss. */
+    .nds-definition-list.nds-tableView:not([class*="nds-tableView-"]):not([hidden]) {
+        @include sk-dl-tableView;
+    }
+    .nds-definition-list.nds-tableView-sm:not([hidden]) {
+        @include mobile { @include sk-dl-tableView; }
+    }
+    .nds-definition-list.nds-tableView-md:not([hidden]) {
+        @include tablet { @include sk-dl-tableView; }
+    }
+    .nds-definition-list.nds-tableView-lg:not([hidden]) {
+        @include desktop('min') { @include sk-dl-tableView; }
+    }
+
+    /* rowView — items flip to row + wrap (list stays column). */
+    .nds-definition-list.nds-rowView:not([hidden]) .nds-definition-item {
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: var(--col-gap, var(--gap, var(--spacing-sm, 6px)));
     }
 
     /* Term label → content-width bar */
@@ -818,7 +1052,7 @@ body:not([data-nds-loaded]) {
             content: "";
             height: 40px;
             width: min(100%, 360px);
-            background: var(--nds-skeleton-fill);
+            @include skeleton-fill;
             mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='40'%3E%3Crect%20width='40'%20height='40'%20rx='4'%20fill='white'/%3E%3C/svg%3E") 0 0 / 48px 100% repeat-x;
         }
     }
