@@ -24,6 +24,11 @@
 @mixin skeleton-bar {
     @include skeleton-fill;
     border-radius: var(--nds-skeleton-radius);
+    color: transparent;
+
+    >* {
+        color: transparent;
+    }
 }
 
 /* Mirror of _definition-list.scss @mixin dl-tableView — only the
@@ -38,8 +43,8 @@
         grid-column: 1 / -1;
         display: grid;
         grid-template-columns: subgrid;
-        row-gap: var(--row-gap, var(--gap, var(--spacing-lg, 12px)));
-        column-gap: var(--col-gap, var(--gap, var(--spacing-xl, 16px)));
+        row-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
+        column-gap: var(--col-gap, var(--gap, var(--spacing-xl)));
     }
 
     :is(dd, .nds-item-desc) {
@@ -49,40 +54,67 @@
 }
 
 /* ── Navigation ── */
-.nds-main-nav {
+body:not([data-nds-loaded]) .nds-main-nav {
     height: var(--nds-nav-height);
+    background-color: var(--background-nav);
 
-    .nds-nav-container:not([hidden]) {
+    .nds-brand {
+        display: flex;
+        align-items: center;
+        height: var(--nds-nav-height);
+        padding-block: var(--spacing-lg);
+        font-weight: bold;
+        gap: var(--spacing-lg);
+        align-content: center;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+
+        .nds-brand-name {
+            line-height: var(--typo-text-clamp-md-LH);
+            font-size: var(--typo-text-clamp-md-FS);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-2xs, 2px);
+
+
+            .nds-brand-slogan {
+                font-size: var(--typo-text-sm-FS);
+                line-height: var(--typo-text-sm-LH);
+                font-weight: 400;
+                display: block;
+            }
+        }
+    }
+
+}
+
+
+body:not([data-nds-loaded]) {
+    .nds-topbar {
+        height: 40px;
+        background-color: var(--background-topbar);
+
+        >* {
+            visibility: hidden;
+        }
+    }
+}
+
+body:not([data-nds-loaded]) {
+
+    .nds-breadcrumb,
+    .nds-pagination-list {
         display: flex;
     }
 
-    .nds-brand {
-        height: var(--nds-nav-height);
-        padding-block: var(--spacing-lg, 12px);
-    }
-}
-
-.nds-topbar {
-    height: 40px;
-    background-color: var(--background-topbar);
-
-    >* {
-        visibility: hidden;
-    }
-}
-
-.nds-breadcrumb,
-.nds-pagination-list {
-    display: flex;
-}
-
-/* Reserve the separator slot (mirrors _breadcrumb.scss — width:24px,
+    /* Reserve the separator slot (mirrors _breadcrumb.scss — width:24px,
    inline-block, skipped on the last crumb). min-width on an inline
    ::after is inert; needs display:inline-block + width. */
-.nds-breadcrumb li:not(:last-child)::after {
-    content: "";
-    display: inline-block;
-    width: 24px;
+    .nds-breadcrumb li:not(:last-child)::after {
+        content: "";
+        display: inline-block;
+        width: 24px;
+    }
 }
 
 /* ── Section background ──
@@ -128,14 +160,14 @@ body:not([data-nds-loaded]) {
         /* mirror _swiper.scss .nds-swiper layout — column + gap to the nav */
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-2xl, 20px);
+        gap: var(--spacing-2xl);
         overflow: hidden;
 
         /* mirror _swiper.scss --swiper-gap (var(--gap, var(--spacing-xl)))
        and reserve inline room so the overflow:hidden above doesn't clip
        the first/last card's shadow */
         .nds-swiper-wrapper {
-            gap: var(--gap, var(--spacing-xl, 16px));
+            gap: var(--gap, var(--spacing-xl));
             padding-inline: max(2px, var(--swiper-padding));
         }
 
@@ -166,12 +198,12 @@ body:not([data-nds-loaded]) {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        gap: var(--spacing-xl, 16px);
+        gap: var(--spacing-xl);
         padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
 
         .nds-swiper-buttons {
             display: flex;
-            gap: var(--spacing-md, 8px);
+            gap: var(--spacing-md);
             flex: 1;
         }
     }
@@ -181,9 +213,11 @@ body:not([data-nds-loaded]) {
     }
 
     /* ── Hide chrome / reserve layout until JS + main CSS land ── */
-    :is(.nds-brand-name, .nds-hero-section :is(.nds-section-wrapper, .nds-section-head)) {
-        visibility: hidden;
-    }
+    /*  :is(.nds-brand-name, .nds-hero-section :is(.nds-section-wrapper, .nds-section-head)) {
+        @include skeleton-bar();
+
+    } */
+
 }
 
 body:not([data-nds-loaded]) .nds-sidemenu {
@@ -238,7 +272,7 @@ body:not([data-nds-loaded]) .nds-sidemenu {
     body:not([data-nds-loaded]) .nds-sidemenu.nds-top .nds-sidemenu-toggle {
         display: flex;
         align-items: center;
-        gap: var(--spacing-md, 8px);
+        gap: var(--spacing-md);
         width: 100%;
         height: var(--nds-sidemenu-toggle-height, 56px);
         padding: 0 var(--nds-viewport-padding, 32px);
@@ -302,12 +336,12 @@ body:not([data-nds-loaded]) {
    a block-start margin (inline-start when the tabs are vertical). Mirror it
    so the panel doesn't shift when main CSS lands. */
     :is(.nds-tab-content, .nds-tab-panel).nds-card {
-        margin-block-start: var(--spacing-xl, 16px);
+        margin-block-start: var(--spacing-xl);
     }
 
     .nds-vertical> :is(.nds-tab-content, .nds-tab-panel).nds-card {
         margin-block-start: 0;
-        margin-inline-start: var(--spacing-xl, 16px);
+        margin-inline-start: var(--spacing-xl);
     }
 }
 
@@ -450,20 +484,37 @@ body:not([data-nds-loaded]) {
         align-items: center;
         justify-content: center;
         min-height: var(--_sk-size);
-        padding-inline: var(--spacing-xl, 16px);
+        padding-inline: var(--spacing-xl);
         border: 1px solid transparent;
         border-radius: var(--nds-skeleton-radius);
 
-        &:not(.nds-subtle, .nds-transparent) { @include skeleton-fill; }
-        &:is(.nds-subtle, .nds-transparent) > *:is(.nds-label, i) { @include skeleton-bar; }
+        &:not(.nds-subtle, .nds-transparent) {
+            @include skeleton-fill;
+        }
 
-        &.nds-md { --_sk-size: 32px; }
-        &.nds-sm { --_sk-size: 24px; }
-        &.nds-icon-only { width: var(--_sk-size); padding-inline: 0; }
-        &.nds-circle { border-radius: 9999px; }
+        &:is(.nds-subtle, .nds-transparent)>*:is(.nds-label) {
+            @include skeleton-bar;
+        }
+
+        &.nds-md {
+            --_sk-size: 32px;
+        }
+
+        &.nds-sm {
+            --_sk-size: 24px;
+        }
+
+        &.nds-icon-only {
+            width: var(--_sk-size);
+            padding-inline: 0;
+        }
+
+        &.nds-circle {
+            border-radius: 9999px;
+        }
 
         /* hide child elements AND pseudo-elements (indicator / spinner) */
-        >*:not(.nds-label, i),
+        >*:not(.nds-label),
         &::before,
         &::after {
             visibility: hidden;
@@ -484,18 +535,30 @@ body:not([data-nds-loaded]) {
 
     .nds-tag:not([hidden]) {
         --_sk-size: 32px;
-        padding-inline: var(--spacing-xl, 16px);
+        padding-inline: var(--spacing-xl);
 
-        &.nds-sm { --_sk-size: 24px; padding-inline: var(--spacing-md, 8px); }
-        &.nds-xs { --_sk-size: 20px; padding-inline: var(--spacing-md, 8px); }
+        &.nds-sm {
+            --_sk-size: 24px;
+            padding-inline: var(--spacing-md);
+        }
+
+        &.nds-xs {
+            --_sk-size: 20px;
+            padding-inline: var(--spacing-md);
+        }
     }
 
     .nds-chip:not([hidden]) {
         --_sk-size: 24px;
-        padding-inline: var(--spacing-lg, 12px);
+        padding-inline: var(--spacing-lg);
 
-        &.nds-sm { --_sk-size: 20px; }
-        &.nds-lg { --_sk-size: 32px; }
+        &.nds-sm {
+            --_sk-size: 20px;
+        }
+
+        &.nds-lg {
+            --_sk-size: 32px;
+        }
     }
 
     /* Featured-icon / feedback-icon / avatar — shared filled block;
@@ -515,10 +578,21 @@ body:not([data-nds-loaded]) {
         --_sk-size: 40px;
         border-radius: calc((var(--_sk-size) / 4) - 2px);
 
-        &.nds-sm { --_sk-size: 32px; }
-        &.nds-lg { --_sk-size: 48px; }
-        &.nds-xl { --_sk-size: 56px; }
-        &.nds-circle { border-radius: 50%; }
+        &.nds-sm {
+            --_sk-size: 32px;
+        }
+
+        &.nds-lg {
+            --_sk-size: 48px;
+        }
+
+        &.nds-xl {
+            --_sk-size: 56px;
+        }
+
+        &.nds-circle {
+            border-radius: 50%;
+        }
     }
 
     .nds-feedback-icon:not([hidden]) {
@@ -530,35 +604,38 @@ body:not([data-nds-loaded]) {
         --_sk-size: 40px;
         border-radius: 50%;
 
-        &.nds-xs { --_sk-size: 24px; }
-        &.nds-sm { --_sk-size: 32px; }
-        &.nds-lg { --_sk-size: 48px; }
-        &.nds-xl { --_sk-size: 64px; }
-        &.nds-2xl { --_sk-size: 80px; }
-        &.nds-3xl { --_sk-size: 120px; }
-        &.nds-square { border-radius: var(--nds-skeleton-radius); }
+        &.nds-xs {
+            --_sk-size: 24px;
+        }
+
+        &.nds-sm {
+            --_sk-size: 32px;
+        }
+
+        &.nds-lg {
+            --_sk-size: 48px;
+        }
+
+        &.nds-xl {
+            --_sk-size: 64px;
+        }
+
+        &.nds-2xl {
+            --_sk-size: 80px;
+        }
+
+        &.nds-3xl {
+            --_sk-size: 120px;
+        }
+
+        &.nds-square {
+            border-radius: var(--nds-skeleton-radius);
+        }
     }
 
     /* hide real content inside every non-button atom skeleton */
-    :is(.nds-tag, .nds-chip, .nds-featured-icon, .nds-feedback-icon, .nds-avatar) > * {
+    :is(.nds-tag, .nds-chip, .nds-featured-icon, .nds-feedback-icon, .nds-avatar)>* {
         visibility: hidden;
-    }
-
-    /* HGI icons — <i class="hgi hgi-stroke hgi-NAME">. The font CSS lives
-       in a separate bundle and font-display:swap shows tofu fallbacks
-       until the woff2 lands; paint as a square placeholder at 1em (floor
-       16px) so an icon never collapses to zero or flashes a fallback
-       glyph. skeleton-fill's color:transparent suppresses the fallback
-       char. Hidden inside atomic skeletons by the >* rule above. */
-    i.hgi-stroke {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        min-width: 16px;
-        min-height: 16px;
-        vertical-align: middle;
-        border-radius: var(--nds-skeleton-radius);
-        @include skeleton-fill;
     }
 }
 
@@ -585,13 +662,21 @@ body:not([data-nds-loaded]) .nds-drawer-list li>.nds-btn:not([hidden]) {
 /* Accordion header button — a full-row bar, not the atomic 40px button.
    Clip the fill to the content box so it insets by the button padding. */
 body:not([data-nds-loaded]) .nds-btn.nds-accordion-btn {
+    display: flex;
+    justify-content: flex-start;
     width: 100%;
     min-height: var(--accordion-header-height, 56px);
     /* match the real accordion button — square corners + header padding
        (the content-box clip then insets the fill on every side) */
     padding-block: var(--accordion-header-padding, 16px);
     border-radius: 0;
-    background-clip: content-box;
+
+    .nds-accordion-title {
+        width: fit-content;
+        background-clip: padding-box;
+        visibility: visible;
+        @include skeleton-bar();
+    }
 }
 
 /* Show-more button — stays hidden until JS measures overflow; without
@@ -605,8 +690,9 @@ body:not([data-nds-loaded]) .nds-scroll-more .nds-btn.nds-show-more {
    by the button padding (like the drawer buttons). padding-block added
    so the inset applies vertically too. */
 body:not([data-nds-loaded]) .nds-tab-list .nds-btn {
-    padding-block: var(--spacing-md, 8px);
+    padding-block: var(--spacing-md);
     background-clip: content-box;
+    white-space: nowrap;
 }
 
 /* ── Card skeleton ──
@@ -619,8 +705,8 @@ body:not([data-nds-loaded]) {
         flex-direction: column;
         /* mirror _cards.scss tokens — honours inline --card-* overrides
            so the box doesn't reflow when main CSS lands */
-        gap: var(--card-gap, var(--spacing-3xl, 24px));
-        padding: var(--card-padding, var(--spacing-xl, 16px));
+        gap: var(--card-gap, var(--spacing-3xl));
+        padding: var(--card-padding, var(--spacing-xl));
         border: 1px solid var(--nds-skeleton-border);
         border-radius: var(--card-radius, var(--components-card-radius, var(--nds-skeleton-card-radius)));
         width: var(--card-width, 100%);
@@ -653,7 +739,7 @@ body:not([data-nds-loaded]) {
     :is(.nds-card-content, .nds-card-meta):not([hidden]) {
         display: flex;
         flex-direction: column;
-        gap: var(--card-gap, var(--spacing-3xl, 24px));
+        gap: var(--card-gap, var(--spacing-3xl));
         width: 100%;
     }
 
@@ -664,24 +750,31 @@ body:not([data-nds-loaded]) {
     .nds-card-text:not([hidden]) {
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-md, 8px);
+        justify-content: flex-start;
+        white-space: wrap;
+        gap: var(--spacing-md);
         width: 100%;
     }
 
+    .nds-card-title {
+        margin-bottom: 0;
+    }
+
+
     .nds-card-header:not([hidden]) {
         display: flex;
-        gap: var(--spacing-md, 8px);
+        gap: var(--spacing-md);
     }
 
     .nds-card-tags:not([hidden]) {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--spacing-md, 8px);
+        gap: var(--spacing-md);
     }
 
     .nds-card-actions:not([hidden]) {
         display: flex;
-        gap: var(--spacing-xl, 16px);
+        gap: var(--spacing-xl);
         margin-top: auto;
     }
 
@@ -709,287 +802,407 @@ body:not([data-nds-loaded]) {
         /* Half-width bars — a full-width block reads oddly for a single
            stat; centred by the card's align-items:center */
         :is(.nds-card-number, .nds-card-description) {
-            width: 50%;
+            min-width: 50%;
+            width: fit-content;
+        }
+
+        :is(.nds-card-number, .nds-counter-value, .nds-number-format) {
+            font-size: var(--typo-display-clamp-lg-FS);
+            line-height: 1;
+
+            &.nds-md {
+                font-size: var(--typo-display-clamp-md-FS);
+            }
+
+            &.nds-sm {
+                font-size: var(--typo-display-clamp-sm-FS);
+            }
+
         }
     }
 
-    /* Text → gradient bars (real text kept transparent → true height).
+        /* Text → gradient bars (real text kept transparent → true height).
        The :not([hidden]) on .nds-card lifts specificity to (0,4,1) so
        transparent wins over the card's own (0,4,0) text-colour rules. */
-    .nds-card:not([hidden]) :is(.nds-card-title, .nds-card-subtitle,
-        .nds-card-description, .nds-card-number, .nds-card-rating-text) {
-        @include skeleton-bar;
-    }
+        .nds-card:not([hidden]) :is(.nds-card-title, .nds-card-subtitle,
+            .nds-card-description, .nds-card-number, .nds-card-rating-text) {
+            @include skeleton-bar;
+        }
 
-    /* Explicit width — without it a centered (statistic) card's
+        /* Explicit width — without it a centered (statistic) card's
        align-items:center shrink-wraps these bars to glyph width */
-    .nds-card:not([hidden]) :is(.nds-card-title, .nds-card-subtitle,
-        .nds-card-description, .nds-card-number) {
-        width: 100%;
-    }
+        .nds-card:not([hidden]) :is(.nds-card-title, .nds-card-subtitle,
+            .nds-card-description, .nds-card-number) {
+            width: 100%;
+        }
 
-    .nds-card .nds-card-title {
-        min-height: var(--typo-text-lg-LH);
-    }
 
-    .nds-card :is(.nds-card-subtitle, .nds-card-description) {
-        min-height: var(--typo-text-md-LH);
-    }
-
-    /* number / rating-text are <span>s — force block flow so the bar's
+        /* number / rating-text are <span>s — force block flow so the bar's
        min-height applies before main CSS lands */
-    .nds-card .nds-card-number:not([hidden]) {
-        display: block;
-        min-height: var(--typo-display-clamp-lg-LH);
-    }
+        .nds-card .nds-card-number:not([hidden]) {
+            display: block;
+        }
 
-    .nds-card .nds-card-rating-text:not([hidden]) {
-        display: inline-block;
-        min-height: var(--typo-text-xs-LH);
-    }
+        .nds-card .nds-card-rating-text:not([hidden]) {
+            display: inline-block;
+        }
 
-    /* Image → filled 2:1 rectangle */
-    .nds-card .nds-card-image:not(.nds-avatar):not([hidden]) {
-        aspect-ratio: 2 / 1;
-        border-radius: var(--radius-md, 8px);
-        @include skeleton-fill;
-        overflow: hidden;
+        /* Image → filled 2:1 rectangle */
+        .nds-card .nds-card-image:not(.nds-avatar):not([hidden]) {
+            aspect-ratio: 2 / 1;
+            border-radius: var(--radius-md, 8px);
+            @include skeleton-fill;
+            overflow: hidden;
 
-        img {
-            visibility: hidden;
+            img {
+                visibility: hidden;
+            }
         }
     }
-}
 
-/* ── Alert skeleton ──
+    /* ── Side info ──
+   _sideinfo.scss lays .nds-sideinfo-section > .nds-section-body as a flex
+   row (article + aside), stacking on tablet-max. Mirror the row and the
+   aside's column width so the article column doesn't reflow, then hide
+   the aside with visibility:hidden — its hero-aside transform / sticky
+   positioning is JS-driven and can't be resolved pre-init. visibility
+   (not display:none) keeps the box, so the column stays reserved. */
+    body:not([data-nds-loaded]) {
+
+        .nds-sideinfo-section .nds-section-body {
+            display: flex;
+            gap: var(--spacing-4xl);
+
+            @include tablet(max) {
+                flex-direction: column;
+            }
+        }
+
+        .nds-sideinfo-section .nds-info-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Hide the aside but reserve its column — width covers a non-card
+       sideinfo, --card-width feeds the card skeleton when it's co-classed
+       .nds-card. Size variants + tablet 100% mirror _sideinfo.scss. */
+        .nds-sideinfo {
+            visibility: hidden;
+            width: var(--nds-sideinfo-width);
+            --card-width: var(--nds-sideinfo-width);
+
+            @include tablet(max) {
+                --nds-sideinfo-width: 100%;
+            }
+
+            &.nds-sm {
+                --nds-sideinfo-width: 200px;
+            }
+
+            &.nds-md {
+                --nds-sideinfo-width: 300px;
+            }
+
+            &.nds-lg {
+                --nds-sideinfo-width: 400px;
+            }
+        }
+    }
+
+    /* ── Alert skeleton ──
    Alerts are .nds-alert.nds-card, so the card skeleton bleeds onto them —
    restore the alert's row layout and paint its own parts. The feedback
    icon is painted by the atomic rule; only its alert size is set here. */
-body:not([data-nds-loaded]) .nds-alert.nds-card:not([hidden]) {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: var(--spacing-lg, 12px);
-    padding: var(--spacing-lg, 12px);
-    padding-inline-start: calc(var(--spacing-lg, 12px) + 8px);
-    border-radius: var(--radius-md, 8px);
-    width: 100%;
-    max-width: 100%;
-
-    /* status stripe + close button — colour/position need main CSS */
-    &::after,
-    .nds-alert-close {
-        visibility: hidden;
-    }
-
-    /* alert feedback icon is 40px (2× the standalone default) */
-    .nds-feedback-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    /* Content / text columns */
-    :is(.nds-alert-content, .nds-alert-text) {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-sm, 6px);
-    }
-
-    .nds-alert-content {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .nds-alert-actions {
-        display: flex;
-        gap: var(--spacing-md, 8px);
-    }
-
-    /* Title + description → gradient bars */
-    :is(.nds-alert-title, .nds-alert-description) {
-        @include skeleton-bar;
-    }
-
-    .nds-alert-title {
-        width: 30%;
-        min-height: var(--typo-text-md-LH);
-    }
-
-    .nds-alert-description {
-        width: 100%;
-        min-height: var(--typo-text-sm-LH);
-    }
-}
-
-/* Inline alert — title + description flow as inline text (not stacked
-   bars), smaller icon. Overrides the default alert skeleton above. */
-body:not([data-nds-loaded]) .nds-alert.nds-card.nds-inline:not([hidden]) {
-    align-items: center;
-    padding: var(--spacing-md, 8px) var(--spacing-lg, 12px);
-    padding-inline-start: var(--spacing-lg, 12px);
-
-    .nds-feedback-icon {
-        width: 20px;
-        height: 20px;
-    }
-
-    .nds-alert-content {
+    body:not([data-nds-loaded]) .nds-alert.nds-card:not([hidden]) {
         flex-direction: row;
-        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg);
+        padding-inline-start: calc(var(--spacing-lg) + 8px);
+        border-radius: var(--radius-md, 8px);
+        width: 100%;
+        max-width: 100%;
+
+        /* status stripe + close button — colour/position need main CSS */
+        &::after,
+        .nds-alert-close {
+            visibility: hidden;
+        }
+
+        /* alert feedback icon is 40px (2× the standalone default) */
+        .nds-feedback-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Content / text columns */
+        :is(.nds-alert-content, .nds-alert-text) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .nds-alert-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nds-alert-actions {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        /* Title + description → gradient bars */
+        :is(.nds-alert-title, .nds-alert-description) {
+            @include skeleton-bar;
+        }
+
+        .nds-alert-title {
+            width: 30%;
+            min-height: var(--typo-text-md-LH);
+        }
+
+        .nds-alert-description {
+            width: 100%;
+            min-height: var(--typo-text-sm-LH);
+        }
     }
 
-    .nds-alert-text {
-        display: block;
-    }
+    /* Inline alert — title + description flow as inline text (not stacked
+   bars), smaller icon. Overrides the default alert skeleton above. */
+    body:not([data-nds-loaded]) .nds-alert.nds-card.nds-inline:not([hidden]) {
+        align-items: center;
+        padding: var(--spacing-md) var(--spacing-lg);
+        padding-inline-start: var(--spacing-lg);
 
-    /* inline flow — transparent text keeps real wrapping/height, the
+        .nds-feedback-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nds-alert-content {
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .nds-alert-text {
+            display: block;
+        }
+
+        /* inline flow — transparent text keeps real wrapping/height, the
        gradient paints the run; width/min-height from above go inert */
-    :is(.nds-alert-title, .nds-alert-description) {
-        display: inline;
+        :is(.nds-alert-title, .nds-alert-description) {
+            display: inline;
+        }
     }
-}
 
-/* ── Form input + switch skeleton ──
+    /* ── Form input + switch skeleton ──
    .nds-form-control is a bordered <div> that collapses to the bare
    <input> height before main CSS; paint it as a bar. Selection
    containers (check / radio / switch) have a borderless, fit-content
    form-control — excluded here. The switch is painted as a pill. */
-body:not([data-nds-loaded]) {
+    body:not([data-nds-loaded]) {
 
-    /* Text / select inputs — sizes mirror --input-size in _forms.scss */
-    .nds-form-container:not(.nds-check-container, .nds-radio-container, .nds-switch-container) .nds-form-control:not([hidden]) {
-        --_sk-size: 40px;
-        height: var(--_sk-size);
-        min-height: var(--_sk-size);
-        border: 1px solid transparent;
-        border-radius: var(--nds-skeleton-radius);
-        @include skeleton-fill;
+        .nds-form-container:not([hidden]) {
+            --_form-width: var(--form-width, 100%);
+            display: flex;
+            gap: var(--spacing-md);
+            flex-direction: column;
+            width: var(--_form-width);
+        }
 
-        >*,
-        &::before,
-        &::after {
+        /* Text / select inputs — sizes mirror --input-size in _forms.scss */
+        .nds-form-container:not(.nds-check-container, .nds-radio-container, .nds-switch-container) .nds-form-control:not([hidden]) {
+            --_sk-size: 40px;
+            height: var(--_sk-size);
+            min-height: var(--_sk-size);
+            border: 1px solid transparent;
+            border-radius: var(--nds-skeleton-radius);
+            @include skeleton-fill;
+
+            >*,
+            &::before,
+            &::after {
+                visibility: hidden;
+            }
+        }
+
+        .nds-form-container.nds-md .nds-form-control:not([hidden]) {
+            --_sk-size: 32px;
+        }
+
+        /* Textarea grows with content — reserve a few rows */
+        .nds-form-container.nds-textarea .nds-form-control:not([hidden]) {
+            height: auto;
+            min-height: 96px;
+        }
+
+        /* Switch → filled pill. Track dimensions mirror _switch.scss */
+        .nds-switch:not([hidden]) {
+            --_sk-w: 48px;
+            --_sk-h: 24px;
+            display: inline-block;
+            flex-shrink: 0;
+            width: var(--_sk-w);
+            height: var(--_sk-h);
+            border-radius: 9999px;
+            @include skeleton-fill;
+
+            >*,
+            &::before,
+            &::after {
+                visibility: hidden;
+            }
+        }
+
+        .nds-switch-container.nds-sm .nds-switch:not([hidden]) {
+            --_sk-w: 36px;
+            --_sk-h: 18px;
+        }
+
+        .nds-switch-container.nds-lg .nds-switch:not([hidden]) {
+            --_sk-w: 56px;
+            --_sk-h: 28px;
+        }
+
+        .nds-feedback {
+            visibility: hidden;
+            font-size: var(--typo-text-sm-FS);
+            line-height: var(--typo-text-sm-LH);
+            gap: var(--spacing-sm);
+        }
+
+        .nds-form:not([hidden]) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        .nds-user-feedback {
             visibility: hidden;
         }
     }
 
-    .nds-form-container.nds-md .nds-form-control:not([hidden]) {
-        --_sk-size: 32px;
-    }
-
-    /* Textarea grows with content — reserve a few rows */
-    .nds-form-container.nds-textarea .nds-form-control:not([hidden]) {
-        height: auto;
-        min-height: 96px;
-    }
-
-    /* Switch → filled pill. Track dimensions mirror _switch.scss */
-    .nds-switch:not([hidden]) {
-        --_sk-w: 48px;
-        --_sk-h: 24px;
-        display: inline-block;
-        flex-shrink: 0;
-        width: var(--_sk-w);
-        height: var(--_sk-h);
-        border-radius: 9999px;
-        @include skeleton-fill;
-
-        >*,
-        &::before,
-        &::after {
-            visibility: hidden;
-        }
-    }
-
-    .nds-switch-container.nds-sm .nds-switch:not([hidden]) {
-        --_sk-w: 36px;
-        --_sk-h: 18px;
-    }
-
-    .nds-switch-container.nds-lg .nds-switch:not([hidden]) {
-        --_sk-w: 56px;
-        --_sk-h: 28px;
-    }
-}
-
-/* ── Definition list skeleton ──
+    /* ── Definition list skeleton ──
    Mirror _definition-list.scss layout for every view so the list doesn't
    reflow when main CSS lands, then paint term + value as content-width
    bars; real (transparent) text keeps each row's height. */
-body:not([data-nds-loaded]) {
+    body:not([data-nds-loaded]) {
 
-    /* Base — list as flex column, items as flex column. tableView below
+        /* Base — list as flex column, items as flex column. tableView below
        overrides to grid; rowView keeps the column list and flips items. */
-    .nds-definition-list:not([hidden]) {
-        display: flex;
-        flex-direction: column;
-        row-gap: var(--row-gap, var(--gap, var(--spacing-lg, 12px)));
-
-        &.nds-md {
-            --row-gap: var(--spacing-md, 8px);
-        }
-
-        &.nds-sm {
-            --row-gap: var(--spacing-sm, 6px);
-        }
-
-        .nds-definition-item:not([hidden]) {
+        .nds-definition-list:not([hidden]) {
+            /* --_dl-icon-size mirrors _definition-list.scss — re-declared
+           because that file isn't in the critical bundle; the term-icon
+           rule below reads it. */
+            --_dl-icon-size: var(--dl-icon-size, 20px);
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-xs, 4px);
-            width: 100%;
+            row-gap: var(--row-gap, var(--gap, var(--spacing-lg)));
+
+            &.nds-md {
+                --row-gap: var(--spacing-md);
+                --dl-icon-size: 18px;
+            }
+
+            &.nds-sm {
+                --row-gap: var(--spacing-sm);
+                --dl-icon-size: 18px;
+            }
+
+            .nds-definition-item:not([hidden]) {
+                display: flex;
+                flex-direction: column;
+                gap: var(--spacing-xs);
+                width: 100%;
+            }
+
+            :is(dt, .nds-item-title) {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-md);
+            }
         }
 
-        :is(dt, .nds-item-title) {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md, 8px);
-        }
-    }
-
-    /* tableView (always-on + responsive variants) — list becomes grid,
+        /* tableView (always-on + responsive variants) — list becomes grid,
        items become subgrid rows. Breakpoint scopes mirror _definition-list.scss. */
-    .nds-definition-list.nds-tableView:not([class*="nds-tableView-"]):not([hidden]) {
-        @include sk-dl-tableView;
-    }
-
-    .nds-definition-list.nds-tableView-sm:not([hidden]) {
-        @include mobile {
+        .nds-definition-list.nds-tableView:not([class*="nds-tableView-"]):not([hidden]) {
             @include sk-dl-tableView;
+        }
+
+        .nds-definition-list.nds-tableView-sm:not([hidden]) {
+            @include mobile {
+                @include sk-dl-tableView;
+            }
+        }
+
+        .nds-definition-list.nds-tableView-md:not([hidden]) {
+            @include tablet {
+                @include sk-dl-tableView;
+            }
+        }
+
+        .nds-definition-list.nds-tableView-lg:not([hidden]) {
+            @include desktop('min') {
+                @include sk-dl-tableView;
+            }
+        }
+
+        /* rowView — items flip to row + wrap (list stays column). */
+        .nds-definition-list.nds-rowView:not([hidden]) .nds-definition-item {
+            flex-direction: row;
+            flex-wrap: wrap;
+            column-gap: var(--col-gap, var(--gap, var(--spacing-sm)));
+        }
+
+        /* divided — _definition-list.scss gives each item (bar the last) a
+       bottom border + gap. Mirror the 1px + padding so rows don't shift;
+       the border is transparent (--divider-color isn't critical) and
+       takes its colour from main CSS. --_dl-gap is re-expressed as its
+       --row-gap / --gap / --spacing-lg fallback chain. */
+        .nds-definition-list.nds-divided:not([hidden]) .nds-definition-item {
+            padding-bottom: var(--row-gap, var(--gap, var(--spacing-lg)));
+            border-bottom: 1px solid transparent;
+
+            &:is(:last-child, .nds-last-row) {
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+        }
+
+        /* tableView divided — _definition-list.scss drops the list gap and
+       pads each item instead (padding-block, both sides). Mirror that so
+       row spacing matches; this padding-block overrides the stacked
+       .nds-divided padding-bottom. */
+        .nds-definition-list.nds-divided:is(.nds-tableView, [class*="nds-tableView-"]):not([hidden]) {
+            gap: 0;
+
+            .nds-definition-item {
+                padding-block: var(--spacing-md);
+            }
+        }
+
+        /* Term icon — _definition-list.scss floors the dt icon at 18px and
+       sizes it to --_dl-icon-size (20px default, 18px on nds-sm/md) so the
+       term row height matches pre/post-init. */
+        .nds-definition-list :is(dt, .nds-item-title) :is(.nds-icon, i) {
+            min-width: 18px;
+            width: max(18px, var(--_dl-icon-size));
+            height: max(18px, var(--_dl-icon-size));
+            font-size: max(18px, var(--_dl-icon-size));
+        }
+
+        /* Term + value → content-width bars. The term bar paints the whole
+       dt, so it covers the term's icon and label as one block. */
+        .nds-definition-list :is(dt, .nds-item-title, dd, .nds-item-desc) {
+            width: fit-content;
+            @include skeleton-bar;
         }
     }
 
-    .nds-definition-list.nds-tableView-md:not([hidden]) {
-        @include tablet {
-            @include sk-dl-tableView;
-        }
-    }
-
-    .nds-definition-list.nds-tableView-lg:not([hidden]) {
-        @include desktop('min') {
-            @include sk-dl-tableView;
-        }
-    }
-
-    /* rowView — items flip to row + wrap (list stays column). */
-    .nds-definition-list.nds-rowView:not([hidden]) .nds-definition-item {
-        flex-direction: row;
-        flex-wrap: wrap;
-        column-gap: var(--col-gap, var(--gap, var(--spacing-sm, 6px)));
-    }
-
-    /* Term label → content-width bar */
-    .nds-definition-list :is(dt, .nds-item-title) .nds-label {
-        flex: none;
-        @include skeleton-bar;
-    }
-
-    /* Value → content-width bar */
-    .nds-definition-list :is(dd, .nds-item-desc) {
-        width: fit-content;
-        @include skeleton-bar;
-    }
-}
-
-/* ── Paged grid skeleton ──
+    /* ── Paged grid skeleton ──
    .nds-paged-content carries [hidden] until pagination JS reveals it —
    display:none → zero height → a jump when it reveals. While [hidden],
    show it as a grid of skeleton cards capped to one page (~6 items) so
@@ -998,38 +1211,26 @@ body:not([data-nds-loaded]) {
    gap custom properties are set unconditionally, so re-asserting display
    + columns is enough. The [hidden] scope drops these rules the moment
    JS reveals + paginates, handing control back cleanly. */
-body:not([data-nds-loaded]) {
+    body:not([data-nds-loaded]) {
 
-    .nds-paged-content.nds-grid[hidden] {
-        display: grid;
-        grid-template-columns: var(--_tracks, repeat(var(--_cols), minmax(var(--min-width, 0), 1fr)));
-    }
+        .nds-paged-content.nds-grid[hidden] {
+            display: grid;
+            grid-template-columns: var(--_tracks, repeat(var(--_cols), minmax(var(--min-width, 0), 1fr)));
+        }
 
-    /* cap to one page — items past the 6th wait until JS paginates */
-    .nds-paged-content[hidden] .nds-page-item:nth-child(n + 7) {
-        display: none;
-    }
+        /* cap to one page — items past the 6th wait until JS paginates */
+        .nds-paged-content[hidden] .nds-page-item:nth-child(n + 7) {
+            display: none;
+        }
 
-    /* Pagination — page buttons are JS-generated, so the nav is empty
-       pre-init (_pagination.scss display:none's an empty nav). Show a
-       faux skeleton row: masked repeating-gradient draws the page pills.
-       Drops once JS adds .nds-pagination-list. */
-    .nds-pagination:not(:has(> .nds-pagination-list)) {
-        display: flex;
-        justify-content: center;
-        /* mirror _pagination.scss — width + margin-top to the grid */
-        width: 100%;
-        margin-top: var(--pagination-margin-top, var(--spacing-2xl, 20px));
-
-        /* rounded-rect pills — rx matches the .nds-btn radius (--radius-sm,
-           4px). A repeating-linear-gradient can't round corners, so the
-           mask tile is an SVG rounded rect. */
-        &::before {
-            content: "";
-            height: 40px;
-            width: min(100%, 360px);
-            @include skeleton-fill;
-            mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='40'%3E%3Crect%20width='40'%20height='40'%20rx='4'%20fill='white'/%3E%3C/svg%3E") 0 0 / 48px 100% repeat-x;
+        /* Pagination — page buttons are JS-generated, so the nav is empty
+       pre-init (_pagination.scss display:none's an empty nav). Un-hide it
+       and reserve the row (height + margin-top to the grid) so content
+       below doesn't shift when JS adds .nds-pagination-list. */
+        .nds-pagination:not(:has(> .nds-pagination-list)) {
+            display: flex;
+            width: 100%;
+            min-height: 40px;
+            margin-top: var(--pagination-margin-top, var(--spacing-2xl));
         }
     }
-}

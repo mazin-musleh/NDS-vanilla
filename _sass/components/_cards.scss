@@ -357,7 +357,7 @@
     :is(.nds-card-number, .nds-counter-value, .nds-number-format) {
       color: var(--_card-number);
       font-size: var(--typo-display-clamp-lg-FS);
-      line-height: var(--typo-display-clamp-lg-LH);
+      line-height: 1;
       font-weight: 500;
       letter-spacing: -0.96px;
       direction: ltr;
@@ -366,12 +366,10 @@
 
       &.nds-md {
         font-size: var(--typo-display-clamp-md-FS);
-        line-height: var(--typo-display-clamp-md-LH);
       }
 
       &.nds-sm {
         font-size: var(--typo-display-clamp-sm-FS);
-        line-height: var(--typo-display-clamp-sm-LH);
       }
     }
 

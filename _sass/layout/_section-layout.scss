@@ -87,8 +87,7 @@
 
 /* ── Section subtitle + description ── */
 
-.nds-section-subtitle,
-.nds-section-description {
+:is(.nds-section-subtitle, .nds-section-description) {
     margin-block-start: 0;
     max-width: var(--maxwidth-paragraph-max-width, 720px);
 
@@ -187,8 +186,7 @@
     align-items: center;
 }
 
-.nds-section-tags,
-.nds-section-rating {
+:is(.nds-section-tags, .nds-section-rating) {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-sm);

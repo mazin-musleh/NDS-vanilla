@@ -124,8 +124,7 @@
         z-index: var(--_nav-z-brand);
 
         :is(img, svg) {
-            height: 100%;
-            width: auto;
+            height: auto;
             max-width: unset;
         }
 
