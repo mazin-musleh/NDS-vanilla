@@ -357,12 +357,13 @@
                 toggleButton?.setAttribute('aria-expanded', 'false');
                 const closeDelay = state.reducedMotion ? 0 : dropdown.closeAll();
 
-                hideNavBackdrop('navbar');
-
                 afterDelay(closeDelay, () => {
                     animate.run(DOM.collapse, false, {
                         getMenu: () => state.isMinimal ? (collapseContent || DOM.collapse) : null,
-                        onComplete: () => { updatePositions(); overflow.schedule('low', 100); }
+                        // Defer hideNavBackdrop until the drawer finishes closing —
+                        // Backdrop.hide()'s synchronous scrollLock.unlock() reflow would
+                        // otherwise land in the toggle click frame and inflate INP.
+                        onComplete: () => { hideNavBackdrop('navbar'); updatePositions(); overflow.schedule('low', 100); }
                     });
                 });
             }

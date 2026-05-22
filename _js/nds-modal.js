@@ -83,11 +83,11 @@
     NDS.State.set(modal, 'closing');
     modal.setAttribute('aria-hidden', 'true');
 
-    // Hide backdrop
-    NDS.Backdrop.hide();
-
-    // Hide modal after animation
+    // Tear down backdrop + modal only after the close animation finishes.
+    // Backdrop.hide() runs a synchronous scrollLock.unlock() (full-page reflow);
+    // keeping it out of the click frame is what holds the close INP down.
     setTimeout(() => {
+      NDS.Backdrop.hide();
       modal.setAttribute('hidden', '');
       NDS.State.clear(modal);
       modal.dispatchEvent(new CustomEvent('nds-modal-closed', { bubbles: true }));
