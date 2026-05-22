@@ -167,9 +167,9 @@
     border: 1px solid var(--_bullet-bcolor);
     opacity: var(--_bullet-opacity);
     cursor: pointer;
-    transition: opacity var(--nds-transition),
-                background-color var(--nds-transition),
-                border-color var(--nds-transition);
+    /* opacity only — composited. background-color / border-color snap on
+       state change (paint-bound, can't run on the compositor). */
+    transition: opacity var(--nds-transition);
     padding: 0;
     user-select: none;
     touch-action: manipulation;
