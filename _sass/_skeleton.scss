@@ -260,7 +260,7 @@ body:not([data-nds-loaded]) .nds-sidemenu {
         overflow: clip;
     }
 
-    body[data-nds-loaded] .nds-sidemenu:not(.nds-top) .nds-sidemenu-toggle {
+    body:not([data-nds-loaded]) .nds-sidemenu:not(.nds-top) .nds-sidemenu-toggle {
         display: none;
     }
 
