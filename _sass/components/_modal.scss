@@ -30,7 +30,7 @@
   margin: auto;
   overflow: visible;
   transition: transform var(--nds-transition), opacity var(--nds-transition);
-  opacity: 1;
+  opacity: 0; // base hidden state; mobile overrides to 1 (slides instead)
 
   // Extend card component styles
   &.nds-card {
@@ -40,6 +40,11 @@
 
     // Desktop: centered with margin auto
     transform: translateY(0);
+
+    // Desktop: fade in on open (base opacity is 0)
+    &[data-state="open"] {
+      opacity: 1;
+    }
 
     // Closing state - fade out on desktop
     &[data-state="closing"] {
@@ -76,9 +81,13 @@
         transform: translateY(0);
       }
 
-      // When closing - slide back down
+      // When closing - slide back down. Keep it opaque: the desktop
+      // [data-state="closing"] opacity:0 rule out-specifities the mobile
+      // base, and a fade-while-sliding makes the sheet vanish before the
+      // slide finishes — reads as a shorter close than the open.
       &[data-state="closing"] {
         transform: translateY(100%);
+        opacity: 1;
       }
     }
   }
