@@ -144,6 +144,7 @@
     let resetDoneTimer = null;      // post-reset visible-flash
     let resetCountdownTimer = null; // mid-arming SR announcement
     let _initDone = false;
+    let _openLoadingTimer = null; // FAB loading-state delay before each open
 
     function defaultState() {
         return {
@@ -922,7 +923,17 @@
     }
 
     function toggle() {
-        hasState(panel, 'open') ? close() : open();
+        if (hasState(panel, 'open')) { close(); return; }
+        if (_openLoadingTimer) return;            // mid loading-delay — ignore re-clicks
+        // Every open re-lays-out the panel (its subtree is display:none while
+        // closed). Show the FAB's loading state for instant click feedback and
+        // run the heavy open() off the interaction frame.
+        addState(toggleBtn, 'loading');
+        _openLoadingTimer = setTimeout(() => {
+            _openLoadingTimer = null;
+            removeState(toggleBtn, 'loading');
+            open();
+        }, 500);
     }
 
     // ----------------------------------------------
@@ -934,6 +945,8 @@
         if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
         if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; }
         if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
+        if (_openLoadingTimer) { clearTimeout(_openLoadingTimer); _openLoadingTimer = null; }
+        if (toggleBtn) removeState(toggleBtn, 'loading');
         if (ac) { ac.abort(); ac = null; }
         if (openAC) { openAC.abort(); openAC = null; }
         if (maskAC) { maskAC.abort(); maskAC = null; }

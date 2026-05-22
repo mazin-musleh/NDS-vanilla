@@ -22,6 +22,18 @@
         const step = parseInt(c['font-step'], 10) || 0;
         if (step > 0 && step < 4) t.add('font-step-' + step);
         if (c['text-align'] && c['text-align'] !== 'default') t.add('text-align-' + c['text-align']);
+        // Continuous scalars — set the --user-* var + presence token before
+        // paint so persisted spacing doesn't pop in (and shift layout) when
+        // the idle-deferred accessibility component finally inits. Mirrors
+        // SCALAR_PROPS in nds-accessibility.js.
+        const root = document.documentElement;
+        [['line-height', '--user-line-height', 'has-line-height', 'normal'],
+         ['letter-spacing', '--user-letter-spacing', 'has-letter-spacing', '0'],
+         ['word-spacing', '--user-word-spacing', 'has-word-spacing', '0']]
+            .forEach(([k, cssVar, tok, def]) => {
+                const v = c[k];
+                if (v && v !== def) { root.style.setProperty(cssVar, v); t.add(tok); }
+            });
         if (t.size) document.documentElement.setAttribute('data-a11y', [...t].join(' '));
     } catch {} })();
 </script>
