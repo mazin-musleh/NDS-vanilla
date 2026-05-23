@@ -130,20 +130,6 @@
     --spacing-10xl: var(--spacing-32, 128px);
     --spacing-11xl: var(--spacing-40, 160px);
 
-    // Skeleton placeholder — static gradient shown on cards until the
-    // loader stamps body[data-nds-loaded]. Stops mirror the design-token
-    // values at 20% alpha:
-    //   neutral-200  #e5e7eb  rgb(229,231,235)
-    //   neutral-300  #d2d6db  rgb(210,214,219)
-    //   neutral-400  #9da4ae  rgb(157,164,174)
-    --nds-skeleton-fill: linear-gradient(90deg,
-        rgba(229, 231, 235, 0.2) 0%,
-        rgba(210, 214, 219, 0.2) 50%,
-        rgba(157, 164, 174, 0.2) 100%
-    );
-    --nds-skeleton-border: #e5e7eb;
-    --nds-skeleton-radius: 4px;
-    --nds-skeleton-card-radius: 16px;
 }
 
 // Critical dark mode overrides — prevent white flash before main CSS loads
@@ -154,34 +140,6 @@
     --text-default: #f9fafb;
     --text-display: #f3f4f6;
     --text-oncolor-primary: #fff;
-    // Dark stops use neutral-600/500/400 at 20% alpha:
-    //   neutral-600  #4d5761  rgb(77,87,97)
-    //   neutral-500  #6c727e  rgb(108,114,126)
-    //   neutral-400  #9da4ae  rgb(157,164,174)
-    --nds-skeleton-fill: linear-gradient(90deg,
-        rgba(77, 87, 97, 0.2) 0%,
-        rgba(108, 114, 126, 0.2) 50%,
-        rgba(157, 164, 174, 0.2) 100%
-    );
-    --nds-skeleton-border: #2b3643;
-}
-
-// LTR — flip the gradient. The 3-stop ramp is directional; 90deg sweeps
-// light → dark left-to-right (RTL default), so LTR uses 270deg to mirror it.
-:root[dir="ltr"] {
-    --nds-skeleton-fill: linear-gradient(270deg,
-        rgba(229, 231, 235, 0.2) 0%,
-        rgba(210, 214, 219, 0.2) 50%,
-        rgba(157, 164, 174, 0.2) 100%
-    );
-
-    &[data-theme="dark"] {
-        --nds-skeleton-fill: linear-gradient(270deg,
-            rgba(77, 87, 97, 0.2) 0%,
-            rgba(108, 114, 126, 0.2) 50%,
-            rgba(157, 164, 174, 0.2) 100%
-        );
-    }
 }
 
 @include mobile {

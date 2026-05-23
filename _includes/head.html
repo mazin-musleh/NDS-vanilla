@@ -23,8 +23,13 @@
     {%- endif -%}
     {%- endif -%}
     {%- endif -%}
-    <!-- Critical CSS - Blocking (small, cacheable) -->
-    <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    {%- include critical-inline.html -%}
+    <!-- Critical CSS - Non-blocking; inline gate in critical-inline.html holds layout until this arrives -->
+    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    </noscript>
     <!-- Icons — UI icons inlined (core) + HGI font (content/demo/doc) -->
     <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
         onload="this.onload=null;this.rel='stylesheet'">
@@ -79,11 +84,6 @@
          and timing. Inline + before the deferred bundle so it lands pre-eval. -->
     <script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
     {%- endif %}
-    <!-- Blocking scripts — FOUC / direction-mismatch prevention. Placed last so resource preloads kick off first. -->
-    <!-- Demo-only: paired with the auth FOUC guard in head-inline-scripts.html. Safe to remove in production. -->
-    <style>
-        html:not([data-auth]) .nds-auth { display: none; }
-        html[data-auth] .nds-guest { display: none; }
-    </style>
+    <!-- Theme stamp (FOUC guard) — placed last so resource preloads kick off first. -->
     {%- include head-inline-scripts.html -%}
 </head>

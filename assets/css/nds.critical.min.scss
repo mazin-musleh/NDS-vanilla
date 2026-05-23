@@ -1,7 +1,6 @@
 ---
 # Critical CSS for NDS (National Design System)
-# This file contains above-the-fold styles for faster initial page render
-# Includes: hero, content-layout
+# Minimal payload: variables, fonts, reset, hero. Everything else lives in main.
 ---
 /*!
  * National Design System — Critical CSS
@@ -21,27 +20,95 @@
 // Import CSS reset - Essential normalization
 @use 'reset';
 
-// Skeleton - Reserve layout space to prevent CLS
-@use 'skeleton';
-
-// ====================================================================
-// CRITICAL ABOVE-THE-FOLD COMPONENTS
-// ====================================================================
-// These components are loaded first for optimal perceived performance
-
-// Section layout - spacing tokens, dimensions, wrapper, layouts (center, horizontal)
+// Section layout - hero text/wrapper/action structure
 @use 'layout/section-layout';
-// Block - content grouping primitive (margins/sizing in critical to avoid CLS)
-@use 'layout/block';
-
-// Search box - above-the-fold nav chrome (avoid CLS)
-@use 'components/search-box';
-
-// Content layout - grid, layout variants, striping, section context overrides
-@use 'layout/content-layout';
 
 // Hero section - First visual element on most pages
 @use 'components/hero';
 
-// Grid system - Moved to main CSS
-@use 'grid';
+/* ── Hero skeleton (pre-init, scoped to body:not([data-nds-loaded])) ──
+   Pre-init overrides — not part of the hero component's permanent design.
+   Kept here (not in _hero.scss / _skeleton.scss) so they travel with crit
+   without polluting canonical source files. */
+body:not([data-nds-loaded]) {
+    .nds-hero-section:not(.nds-sub) :is(.nds-section-title, .nds-section-description) {
+        color: var(--text-oncolor-primary);
+    }
+
+    /* Content wrapper padding — mirrors layout/_content-layout.scss so the
+       slide / hero-section reserves the horizontal viewport gutter pre-init.
+       Without it, hero overlay text starts at the viewport edge and jumps in
+       once main applies the padding. */
+    :is(.nds-content-wrapper, .nds-hero-section) {
+        --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+        width: 100%;
+        padding-inline: var(--_wrapper-padding);
+
+        .nds-full-width {
+            width: 100vw !important;
+            margin-inline: calc(50% - 50vw);
+        }
+
+        .nds-max-width {
+            margin-inline: calc(var(--_wrapper-padding) * -1);
+        }
+    }
+
+    /* Breadcrumb skeleton — sub-hero's <nav class="nds-breadcrumb-nav" hidden>
+       collapses to display:none with the [hidden] attribute, so layout shifts
+       when JS removes hidden. Reserve the space by overriding to display:block
+       + visibility:hidden. Crumb separator slot mirrors _breadcrumb.scss. */
+    [hidden].nds-breadcrumb-nav {
+        display: block;
+        visibility: hidden;
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    .nds-breadcrumb {
+        display: flex;
+    }
+
+    .nds-breadcrumb li:not(:last-child)::after {
+        content: "";
+        display: inline-block;
+        width: 24px;
+    }
+
+    :is(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    .nds-swiper.nds-hero .nds-swiper-slide {
+        flex: 1;
+    }
+
+    /* Hero collapses to its first slide (full-bleed) until JS sets
+       data-swiper-initialized. */
+    .nds-swiper.nds-hero:not([data-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
+        display: none;
+    }
+}
+
+// Hide gate for non-hero chrome — duplicates _includes/critical-inline.html
+// for sites that haven't migrated to the inline payload. Released by main's
+// body[data-nds-loaded] :where(...) reveal once JS init completes.
+:where(
+    .nds-topbar > *,
+    .nds-main-nav > *,
+    .nds-content-layout,
+    .nds-user-feedback-section
+) {
+    visibility: hidden;
+}
+
+// Reveal gate for hero content set by _includes/critical-inline.html.
+// Fires when crit lands — hero text/CTA paint with full hero styling.
+// (Hero is intentionally NOT in the hide gate above so this rule is only
+// active for the inline-payload path; on the non-inline path nothing hides
+// hero in the first place.)
+:where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) {
+    visibility: visible;
+}

@@ -24,7 +24,6 @@
     }
 
     .nds-section-head {
-        visibility: visible;
 
         .nds-section-title {
             position: relative;
@@ -42,7 +41,6 @@
         justify-content: center;
         max-width: var(--nds-content-MaxWidth);
         margin: auto;
-        visibility: visible;
     }
 
     // ── Image & overlay ──
@@ -78,7 +76,7 @@
         --hero-height: fit-content;
         isolation: isolate;
         background-color: var(--background-sub-hero);
-        min-height: 100px;
+        min-height: 260px;
         box-shadow: var(--shadow-inset, inset 0px -2px 4px rgba(0, 0, 0, 0.05)) !important;
         border-radius: 0 !important;
         display: flex;

@@ -10,8 +10,9 @@
  * Author: {{ site.author }}
  * Profile: {{ site.author_profile }}
  */
-// Note: fonts, reset, hero, grid, content-layout, section-layout
-// are in nds.critical.min.scss (loaded as blocking CSS)
+// Note: variables-critical, fonts, reset, and hero are in nds.critical.min.scss.
+// Everything else — including skeleton, section-layout, block, content-layout,
+// grid, and search-box — lives here.
 
 // Import variables (CSS custom properties)
 // NOTE: a11y mode overrides (variables-a11y) + the accessibility panel
@@ -20,6 +21,12 @@
 @use 'variables-dga';
 @use 'variables';
 @use 'variables-dark';
+
+// Layout primitives (moved from critical). section-layout stays in crit
+// because hero depends on it; block/content-layout/grid stay here.
+@use 'layout/block';
+@use 'layout/content-layout';
+@use 'grid';
 
 // Section styles - visual tokens, color variants, meta, actions, 404, sideInfo
 @use 'layout/section';
@@ -79,6 +86,7 @@
 @use 'components/tooltip';
 @use 'components/empty';
 @use 'components/scroll-more';
+@use 'components/search-box';
 @use 'components/user-feedback.scss';
 @use 'components/footer';
 @use 'components/cookie';
@@ -90,3 +98,16 @@
 
 // Import utilities
 @use 'utilities';
+
+// Reveal gate set by _includes/critical-inline.html. Scoped to
+// body[data-nds-loaded] so content waits not just for main CSS to load
+// but also for JS init to complete — pairs with the body:not([data-nds-loaded])
+// skeleton scope in nds.critical.min.scss.
+body[data-nds-loaded] :where(
+    .nds-topbar > *,
+    .nds-main-nav > *,
+    .nds-content-layout,
+    .nds-user-feedback-section
+) {
+    visibility: visible;
+}

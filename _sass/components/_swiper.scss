@@ -34,9 +34,10 @@
         --swiper-peek: calc(var(--peek, 0px) + var(--swiper-gap));
     }
 
-    // Pre-init guard lives in _skeleton.scss (critical CSS) so it applies
-    // before main CSS — see the .nds-swiper:not([data-swiper-initialized])
-    // rules there.
+    // Pre-init guard for the hero variant lives in nds.critical.min.scss
+    // (body:not([data-nds-loaded]) scope) so it applies before main CSS.
+    // Non-hero swipers no longer have a pre-init guard — content is
+    // gated by visibility:hidden until JS init completes.
 }
 
 // ==============================================
