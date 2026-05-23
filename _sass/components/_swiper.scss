@@ -145,18 +145,12 @@
 
 .nds-bullet {
 
-    // Theme-resolved color tokens (with public override slots)
-    --_bullet-default: var(--bullet-default, var(--colors-neutral-200));
-    --_bullet-active: var(--bullet-active, var(--colors-primary-sa-flag-600-primary));
-    --_bullet-border: var(--bullet-border, transparent);
-
-    @include dark {
-        --_bullet-default: var(--bullet-default, var(--colors-neutral-700));
-    }
-
-    // Per-property tokens; states only rebind these (no property restatement)
-    --_bullet-bg: var(--_bullet-default);
-    --_bullet-bcolor: var(--_bullet-border);
+    // States mirror button neutral (inactive) / primary (active) tokens —
+    // theming + a11y overrides come for free via the button-token chain.
+    // Public override slots: --bullet-default, --bullet-default-hover,
+    //                        --bullet-active, --bullet-active-hover, --bullet-border.
+    --_bullet-bg: var(--bullet-default, var(--button-background-neutral-default));
+    --_bullet-bcolor: var(--bullet-border, transparent);
     --_bullet-opacity: 0.6;
     --_bullet-size: 16px;
 
@@ -167,19 +161,26 @@
     border: 1px solid var(--_bullet-bcolor);
     opacity: var(--_bullet-opacity);
     cursor: pointer;
-    /* opacity only — composited. background-color / border-color snap on
-       state change (paint-bound, can't run on the compositor). */
+    /* opacity only — composited. bg / border-color snap on state change
+       (paint-bound, can't run on the compositor). */
     transition: opacity var(--nds-transition);
     padding: 0;
     user-select: none;
     touch-action: manipulation;
 
-    &:hover { --_bullet-opacity: 0.8; }
+    &:hover {
+        --_bullet-bg: var(--bullet-default-hover, var(--button-background-neutral-pressed));
+        --_bullet-opacity: 0.8;
+    }
 
     &[data-status="active"] {
-        --_bullet-bg: var(--_bullet-active);
-        --_bullet-bcolor: var(--_bullet-active);
+        --_bullet-bg: var(--bullet-active, var(--button-background-primary-default));
+        --_bullet-bcolor: var(--_bullet-bg);
         --_bullet-opacity: 1;
+
+        &:hover {
+            --_bullet-bg: var(--bullet-active-hover, var(--button-background-primary-hovered));
+        }
     }
 }
 
@@ -224,8 +225,10 @@
     }
 
     .nds-bullet {
-        --_bullet-default: var(--bullet-default, var(--colors-alpha-alpha-white-60));
-        --_bullet-active: var(--bullet-active, var(--colors-base-white));
+        --bullet-default: var(--alpha-white-60);
+        --bullet-default-hover: var(--alpha-white-80);
+        --bullet-active: var(--alpha-white-100);
+        --bullet-active-hover: var(--alpha-white-80);
     }
 }
 
