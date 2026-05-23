@@ -76,7 +76,7 @@
         // Get message and title from data attributes or use language-specific defaults
         const acceptBtn = document.getElementById('ndsCookiesAcceptBtn');
         const defaultTitle = isArabic ? 'تم القبول' : 'Accepted';
-        const defaultMessage = isArabic ? 'تم قبول ملفات تعريف الارتباط' : 'Cookies have been accepted';
+        const defaultMessage = isArabic ? 'تم قبول ملفات تعريف الارتباط' : 'Cookies accepted';
         const title = acceptBtn?.dataset.acceptTitle || defaultTitle;
         const message = acceptBtn?.dataset.acceptMessage || defaultMessage;
         ndsShowMessage(message, 'success', title);
@@ -92,8 +92,8 @@
 
         // Get message and title from data attributes or use language-specific defaults
         const declineBtn = document.getElementById('ndsCookiesDeclineBtn');
-        const defaultTitle = isArabic ? 'تم الرفض' : 'Declined';
-        const defaultMessage = isArabic ? 'تم رفض ملفات تعريف الارتباط الاختيارية' : 'Optional cookies have been declined';
+        const defaultTitle = isArabic ? 'تم رفض غير الضرورية' : 'Non-essential rejected';
+        const defaultMessage = isArabic ? 'تم رفض ملفات تعريف الارتباط غير الضرورية' : 'Non-essential cookies rejected';
         const title = declineBtn?.dataset.declineTitle || defaultTitle;
         const message = declineBtn?.dataset.declineMessage || defaultMessage;
         ndsShowMessage(message, 'info', title);
