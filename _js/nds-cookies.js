@@ -229,7 +229,7 @@
         if (!consent) {
             setTimeout(() => {
                 ndsShowPopup();
-            }, 2000);
+            }, 6000);
         }
     }
 
