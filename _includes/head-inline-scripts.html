@@ -1,48 +1,8 @@
 <script>
-    // Apply cached theme before rendering to prevent FOUC
+    // [data-theme] pre-paint stamp — the inline <style> in critical-inline.html
+    // reads it for body/sub-flat-hero bg.
     (function() {
         var t = localStorage.getItem('nds-theme');
         if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
-    })();
-</script>
-{%- unless site.accessibility == false %}
-<script>
-    // Apply cached a11y state before paint to prevent FOUC. The bundle
-    // table below is generated from MODE_BUNDLES in _js/nds-accessibility.js
-    // by _plugins/js_processor.rb — single source of truth, no drift.
-    (() => { try {
-        const s = JSON.parse(localStorage.getItem('nds-a11y') || '{}');
-        {%- include a11y-fouc-bundles.html %}
-        const t = new Set([
-            ...(s.modes || []),
-            ...(s.bundles || []).flatMap(b => b in R ? (R[b].length ? R[b] : [b]) : []),
-        ]);
-        (s.excluded || []).forEach(e => t.delete(e));
-        const c = s.settings || {};
-        const step = parseInt(c['font-step'], 10) || 0;
-        if (step > 0 && step < 4) t.add('font-step-' + step);
-        if (c['text-align'] && c['text-align'] !== 'default') t.add('text-align-' + c['text-align']);
-        // Continuous scalars — set the --user-* var + presence token before
-        // paint so persisted spacing doesn't pop in (and shift layout) when
-        // the idle-deferred accessibility component finally inits. Mirrors
-        // SCALAR_PROPS in nds-accessibility.js.
-        const root = document.documentElement;
-        [['line-height', '--user-line-height', 'has-line-height', 'normal'],
-         ['letter-spacing', '--user-letter-spacing', 'has-letter-spacing', '0'],
-         ['word-spacing', '--user-word-spacing', 'has-word-spacing', '0']]
-            .forEach(([k, cssVar, tok, def]) => {
-                const v = c[k];
-                if (v && v !== def) { root.style.setProperty(cssVar, v); t.add(tok); }
-            });
-        if (t.size) document.documentElement.setAttribute('data-a11y', [...t].join(' '));
-    } catch {} })();
-</script>
-{%- endunless %}
-<script>
-    // Stamp [data-auth] from cookie before paint so .nds-guest / .nds-auth show the correct variant. Demo-only.
-    (function() {
-        if (document.cookie.indexOf('nds_auth=true') !== -1) {
-            document.documentElement.setAttribute('data-auth', 'true');
-        }
     })();
 </script>

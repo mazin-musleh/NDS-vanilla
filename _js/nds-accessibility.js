@@ -61,10 +61,7 @@
     // { primitives: [...], settings: { ... } }. `[...]` is sugar for
     // `{ primitives: [...] }`.
     //
-    // SOURCE OF TRUTH for the bundle → primitives mapping. The FOUC guard
-    // include at _includes/a11y-fouc-bundles.html is REGENERATED from this
-    // literal by _plugins/js_processor.rb on every JS rebuild — edit here,
-    // run `ruby _plugins/js_processor.rb`, commit both files. The summary
+    // SOURCE OF TRUTH for the bundle → primitives mapping. The summary
     // block at the bottom of _variables-a11y.scss is documentation only.
     //
     // `settings` is the bundle's "opening position" — applied on activation

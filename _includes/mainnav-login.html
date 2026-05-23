@@ -89,8 +89,11 @@
 
         // Cookie check must wait until the whole nav (incl. .nds-auth items
         // that come after this template in source order) is in the DOM.
+        // Always call setAuth so guest variant is toggled too — mainnav is
+        // gated by visibility:hidden until JS init releases it, so the
+        // [hidden] toggle happens while invisible.
         function checkAuthCookie() {
-            if (document.cookie.indexOf('nds_auth=true') !== -1) setAuth(true);
+            setAuth(document.cookie.indexOf('nds_auth=true') !== -1);
         }
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', checkAuthCookie);
