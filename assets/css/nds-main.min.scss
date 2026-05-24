@@ -103,11 +103,19 @@
 // body[data-nds-loaded] so content waits not just for main CSS to load
 // but also for JS init to complete — pairs with the body:not([data-nds-loaded])
 // skeleton scope in nds.critical.min.scss.
+
 body[data-nds-loaded] :where(
     .nds-topbar > *,
     .nds-main-nav > *,
     .nds-content-layout,
     .nds-user-feedback-section
 ) {
+    visibility: visible;
+}
+
+// Hero section-action revealed on main-load (not waiting for JS init).
+// Its only dependency was main's .nds-btn styling for the inner buttons;
+// as soon as main parses, painting it is safe — no FOUC of unstyled CTAs.
+:where(.nds-hero-section .nds-section-action){
     visibility: visible;
 }

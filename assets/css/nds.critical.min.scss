@@ -92,12 +92,18 @@ body:not([data-nds-loaded]) {
     }
 }
 
-// Hide gate for non-hero chrome — duplicates _includes/critical-inline.html
-// for sites that haven't migrated to the inline payload. Released by main's
-// body[data-nds-loaded] :where(...) reveal once JS init completes.
+// Hide gate for non-hero chrome + hero action — duplicates
+// _includes/critical-inline.html for sites that haven't migrated to the
+// inline payload. Released by main's reveal rules.
+//
+// Why .nds-hero-section .nds-section-action is here (not in the hero reveal
+// below): its <button> children need .nds-btn styling from main. Revealing
+// at crit-load would flash unstyled buttons. Main paints them styled, then
+// reveals.
 :where(
     .nds-topbar > *,
     .nds-main-nav > *,
+    .nds-hero-section .nds-section-action,
     .nds-content-layout,
     .nds-user-feedback-section
 ) {
