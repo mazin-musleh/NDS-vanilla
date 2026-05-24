@@ -105,7 +105,8 @@ body:not([data-nds-loaded]) {
     .nds-main-nav > *,
     .nds-hero-section .nds-section-action,
     .nds-content-layout,
-    .nds-user-feedback-section
+    .nds-user-feedback-section,
+    .nds-accessibility-toggle
 ) {
     visibility: hidden;
 }

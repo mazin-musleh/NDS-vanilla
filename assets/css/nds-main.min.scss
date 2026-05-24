@@ -108,7 +108,8 @@ body[data-nds-loaded] :where(
     .nds-topbar > *,
     .nds-main-nav > *,
     .nds-content-layout,
-    .nds-user-feedback-section
+    .nds-user-feedback-section,
+    .nds-accessibility-toggle
 ) {
     visibility: visible;
 }
