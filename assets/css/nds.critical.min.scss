@@ -85,9 +85,10 @@ body:not([data-nds-loaded]) {
         flex: 1;
     }
 
-    /* Hero collapses to its first slide (full-bleed) until JS sets
-       data-swiper-initialized. */
-    .nds-swiper.nds-hero:not([data-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
+    /* Swipers collapse to their first slide until JS sets
+       data-swiper-initialized. Prevents pre-init flex layout from
+       widening the document and triggering a horizontal scrollbar. */
+    .nds-swiper:not([data-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
         display: none;
     }
 }
