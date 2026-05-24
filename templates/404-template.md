@@ -1,18 +1,18 @@
 ---
 exclude_showcase: true
-layout: empty
+layout: hero
 title: "Page not found"
 lang: en
 direction: ltr
 ---
 
-<section id="404" class="nds-404 nds-content-section">
-  <div class="nds-grid" style="--max-col:1;">
+<section id="404" class="nds-404 nds-hero-section nds-sub nds-flat">
+  <div class="nds-section-wrapper nds-col">
       <div class="nds-section-image">
           <img src="{{ 'assets/img/404.svg' | relative_url }}" width="458" height="324" alt="404 Error">
       </div>
       <div class="nds-section-head">
-          <h2 class="nds-section-title">Something went wrong</h2>
+          <h1 class="nds-section-title">Something went wrong</h1>
           <p class="nds-section-description">
               Sorry, we couldn't find the page you're looking for
           </p>

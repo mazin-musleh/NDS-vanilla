@@ -37,7 +37,7 @@
     position: relative;
     column-gap: var(--spacing-xl);
 
-    .nds-section-image ~ & {
+    .nds-section-image~& {
         display: flex;
         text-align: start;
         align-items: flex-start;
@@ -240,7 +240,7 @@
         align-items: self-start;
         align-self: self-start;
 
-       > .nds-btn > .nds-label {
+        >.nds-btn>.nds-label {
             text-align: center;
         }
     }
@@ -251,6 +251,7 @@
     }
 
     @include mobile {
+
         >.nds-section-action {
             flex: 1 0 100%;
             flex-direction: row;
@@ -296,7 +297,7 @@
 
 /* ── Float action ── */
 
-.nds-section-wrapper > .nds-section-head > .nds-section-action {
+.nds-section-wrapper>.nds-section-head>.nds-section-action {
     float: inline-end;
     margin-inline-start: var(--_section-col-gap);
     margin-block-end: calc(var(--_section-col-gap) / 2);
@@ -310,13 +311,13 @@
     }
 }
 
-.nds-section-wrapper > .nds-section-head:has(> .nds-section-action) ~ .nds-section-action {
+.nds-section-wrapper>.nds-section-head:has(> .nds-section-action)~.nds-section-action {
     flex: 1 0 100%;
     flex-direction: row;
     --btn-width: unset;
 }
 
-:is(.nds-center, .nds-horizontal) > .nds-section-wrapper > .nds-section-head > .nds-section-action {
+:is(.nds-center, .nds-horizontal)>.nds-section-wrapper>.nds-section-head>.nds-section-action {
     float: none;
     order: 1;
     margin-inline-start: 0;
@@ -324,13 +325,14 @@
 }
 
 @include mobile {
+
     // .nds-wrap: collapse float to its own row below the title
     .nds-section-head:has(> .nds-section-action.nds-wrap) {
         display: flex;
         flex-direction: column;
     }
 
-    .nds-section-head > .nds-section-action.nds-wrap {
+    .nds-section-head>.nds-section-action.nds-wrap {
         float: none;
         order: 1;
         margin-inline-start: 0;
@@ -342,27 +344,27 @@
     // .nds-minimal: hide trigger button labels (icon-only).
     // Applies when placed on the section-action wrapper (covers bare .nds-btn
     // and buttons wrapped in a .nds-dropmenu, e.g. share) or directly on a button.
-    :is(
-        .nds-section-head > .nds-section-action.nds-minimal > .nds-btn,
+    :is(.nds-section-head > .nds-section-action.nds-minimal > .nds-btn,
         .nds-section-head > .nds-section-action.nds-minimal > .nds-dropmenu > .nds-btn,
-        .nds-btn.nds-minimal
-    ) > .nds-label {
+        .nds-btn.nds-minimal)>.nds-label {
         display: none;
     }
 }
 
 /* ── 404 ── */
 
-.nds-content-section.nds-404 {
-
-    .nds-grid {
-        row-gap: var(--spacing-6xl);
-    }
+:is(.nds-hero-section, .nds-content-section).nds-404 {
+    max-height: unset;
 
     * {
         text-align: center;
         margin-inline: auto;
         justify-content: center;
+        flex-direction: column;
+    }
+
+    .nds-section-action {
+        flex: 1;
     }
 }
 
