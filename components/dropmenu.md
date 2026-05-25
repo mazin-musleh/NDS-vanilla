@@ -34,7 +34,7 @@ direction: ltr
                                     <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                                     <span class="nds-label">Actions</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-edit-02"></i>
@@ -59,7 +59,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -83,7 +83,7 @@ direction: ltr
     &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Actions&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" hidden&gt;
+  &lt;div class="nds-dropmenu-menu"&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
         &lt;i class="hgi hgi-stroke hgi-edit-02"&gt;&lt;/i&gt;
@@ -143,7 +143,7 @@ direction: ltr
                                     <span class="nds-label">Account</span>
                                     <i class="hgi hgi-stroke hgi-user-circle"></i>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-user-account"></i>
@@ -168,7 +168,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -192,7 +192,7 @@ direction: ltr
     &lt;span class="nds-label"&gt;Account&lt;/span&gt;
     &lt;i class="hgi hgi-stroke hgi-user-circle"&gt;&lt;/i&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" hidden&gt;
+  &lt;div class="nds-dropmenu-menu"&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
         &lt;i class="hgi hgi-stroke hgi-user-account"&gt;&lt;/i&gt;
@@ -251,7 +251,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-settings-02"></i>
                                     <span class="nds-label">Settings</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden style="min-width: 220px;">
+                                <div class="nds-dropmenu-menu" style="min-width: 220px;">
                                     <div class="nds-dropmenu-scroll">
                                         <fieldset class="nds-dropmenu-group nds-form-group nds-check-group" data-no-auto-close>
                                             <legend class="nds-label">Notifications</legend>
@@ -372,7 +372,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -396,7 +396,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-settings-02"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" hidden style="min-width: 220px;"&gt;
+  &lt;div class="nds-dropmenu-menu" style="min-width: 220px;"&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- data-no-auto-close keeps menu open on interaction --&gt;
       &lt;fieldset class="nds-dropmenu-group nds-form-group nds-check-group"
@@ -503,7 +503,7 @@ direction: ltr
                                                 <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
                                                     <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
                                                 </button>
-                                                <div class="nds-dropmenu-menu" hidden>
+                                                <div class="nds-dropmenu-menu">
                                                     <div class="nds-dropmenu-scroll">
                                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                                             <i class="hgi hgi-stroke hgi-edit-02"></i>
@@ -532,7 +532,7 @@ direction: ltr
                                                 <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
                                                     <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
                                                 </button>
-                                                <div class="nds-dropmenu-menu" hidden>
+                                                <div class="nds-dropmenu-menu">
                                                     <div class="nds-dropmenu-scroll">
                                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                                             <i class="hgi hgi-stroke hgi-edit-02"></i>
@@ -561,7 +561,7 @@ direction: ltr
                                                 <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
                                                     <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
                                                 </button>
-                                                <div class="nds-dropmenu-menu" hidden>
+                                                <div class="nds-dropmenu-menu">
                                                     <div class="nds-dropmenu-scroll">
                                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                                             <i class="hgi hgi-stroke hgi-edit-02"></i>
@@ -586,7 +586,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -629,7 +629,7 @@ direction: ltr
             aria-label="Row actions"&gt;
             &lt;i class="hgi hgi-stroke hgi-more-horizontal-circle-01"&gt;&lt;/i&gt;
           &lt;/button&gt;
-          &lt;div class="nds-dropmenu-menu" hidden&gt;
+          &lt;div class="nds-dropmenu-menu"&gt;
             &lt;div class="nds-dropmenu-scroll"&gt;
               &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
                 &lt;i class="hgi hgi-stroke hgi-edit-02"&gt;&lt;/i&gt;

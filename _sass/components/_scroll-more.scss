@@ -9,7 +9,7 @@
 // so all rules target children via attribute + combinator.
 // ==============================================
 
-.nds-scroll-more:not([hidden]) {
+.nds-scroll-more {
     // Reset public tokens so nested wrappers don't inherit from a parent.
     --scroll-fade: initial;
     --scroll-max-height: initial;

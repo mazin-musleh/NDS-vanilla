@@ -193,7 +193,7 @@ $a11y-filters: (
 // Avatars: inset --_hc-fg ring. outline (not box-shadow) so it paints
 // over the avatar's <img> too; negative offset pulls it inside the edge;
 // modern browsers clip the outline to the 50% radius.
-:root[data-a11y~="high-contrast"] .nds-avatar:not([hidden]) {
+:root[data-a11y~="high-contrast"] .nds-avatar {
     outline: 2px solid var(--_hc-fg);
     outline-offset: -2px;
 }

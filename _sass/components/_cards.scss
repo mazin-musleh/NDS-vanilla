@@ -66,12 +66,10 @@
   position: relative;
 
   // Display properties only for standard cards (cards with nds-card-* children)
-  &:not([hidden]) {
-    display: flex;
-    flex-direction: column;
-    gap: var(--_card-gap);
-    flex-wrap: nowrap;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: var(--_card-gap);
+  flex-wrap: nowrap;
 
   // Shadow variant
   &.nds-shadow {
@@ -135,7 +133,7 @@
   // CARD HEADER SECTION
   // ==============================================
 
-  .nds-card-header:not([hidden]) {
+  .nds-card-header {
     position: relative;
     display: flex;
     gap: var(--spacing-md);
@@ -185,7 +183,7 @@
   // CARD CONTENT SECTION
   // ==============================================
 
-  .nds-card-content:not([hidden]) {
+  .nds-card-content {
     display: flex;
     flex-direction: column;
     gap: var(--_card-gap);
@@ -193,7 +191,7 @@
     flex: 1;
   }
 
-  .nds-card-text:not([hidden]) {
+  .nds-card-text {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -232,7 +230,7 @@
     }
   }
 
-  .nds-card-meta:not([hidden]) {
+  .nds-card-meta {
     display: flex;
     flex-direction: column;
     gap: var(--_card-gap);
@@ -243,7 +241,7 @@
   // CARD TAGS SECTION
   // ==============================================
 
-  .nds-card-tags:not([hidden]) {
+  .nds-card-tags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-md, 8px);
@@ -254,7 +252,7 @@
   // CARD RATING SECTION
   // ==============================================
 
-  .nds-card-rating:not([hidden]) {
+  .nds-card-rating {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs, 4px);
@@ -295,7 +293,7 @@
   // CARD ACTIONS SECTION
   // ==============================================
 
-  .nds-card-actions:not([hidden]) {
+  .nds-card-actions {
     display: flex;
     gap: var(--spacing-xl, 16px);
     align-items: flex-start;
@@ -317,8 +315,8 @@
 // Form wrapper inside a card — matches card's own flex-column layout so
 // wrapping .nds-card-content / .nds-card-actions in a <form class="nds-form">
 // doesn't break the card's vertical rhythm.
-.nds-card>.nds-form:not([hidden]),
-.nds-card-form:not([hidden]) {
+.nds-card>.nds-form,
+.nds-card-form {
   display: flex;
   flex-direction: column;
   width: 100%;

@@ -433,7 +433,7 @@
             }
 
             // Reveal the collapse once the overflow calc has settled for this
-            // pass — first check only; NDS.reveal coalesces it into a rAF.
+            // pass — first check only.
             const revealOnce = () => {
                 if (this._initialCheckDone) return;
                 this._initialCheckDone = true;
@@ -493,7 +493,7 @@
     // LAYOUT UPDATES
     // ==============================================
     function removeCollapseHidden() {
-        NDS.reveal(DOM.collapse);
+        DOM.collapse?.removeAttribute('hidden');
     }
 
     function updatePositions() {
@@ -1168,10 +1168,6 @@
             setTimeout(() => removeCollapseHidden(), 2000);
         }
 
-        // FOUC guards revealed now the nav is wired: the nav inner container
-        // and the topbar digital-stamp toggle. NDS.reveal coalesces these with
-        // every other component's reveal into one rAF flush.
-        NDS.reveal(DOM.container, DOM.dgaTab);
     }
 
     // Keep reduced-motion in sync

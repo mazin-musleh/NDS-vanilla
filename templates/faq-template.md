@@ -41,7 +41,7 @@ sidemenu_mode: false
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
-                    <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
+                    <div class="nds-dropmenu-menu" style="min-width: 260px;">
                         <div class="nds-dropmenu-scroll">
                             <div data-filter="tag" data-filter-legend="Tags"
                                 data-filter-type="checkbox" data-no-auto-close></div>

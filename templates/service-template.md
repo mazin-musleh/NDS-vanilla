@@ -9,6 +9,9 @@ hero_description: A comprehensive digital service platform showcasing National D
 breadcrumb:
 - ["DGA Templates", "/templates"]
 - ["Services List", "/examples/services-list"]
+- ["Services List", "/examples/services-list"]
+- ["Services List", "/examples/services-list"]
+- ["Services List", "/examples/services-list"]
 lang: en
 direction: ltr
 heroaction: heroaction-service

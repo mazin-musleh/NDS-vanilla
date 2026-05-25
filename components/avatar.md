@@ -24,7 +24,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">LG</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "avatarSize"]'>
@@ -75,7 +75,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -121,7 +121,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">LG</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "iconAvatarSize"]'>
@@ -172,7 +172,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -218,7 +218,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">LG</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "imgAvatarSize"]'>
@@ -273,7 +273,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -319,7 +319,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">LG</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "linkAvatarSize"]'>
@@ -370,7 +370,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -416,7 +416,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">LG</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar", "btnAvatarSize"]'>
@@ -465,7 +465,7 @@ direction: ltr
                                 <button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu">
                                     <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <a href="#" class="nds-btn nds-subtle nds-dropmenu-item">
                                             <span class="nds-label">Profile</span>
@@ -482,7 +482,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -507,7 +507,7 @@ direction: ltr
     &lt;button type="button" class="nds-avatar nds-lg nds-dropmenu-trigger" aria-label="Open user menu"&gt;
         &lt;i class="nds-icon nds-icon-avatar" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden&gt;
+    &lt;div class="nds-dropmenu-menu"&gt;
         &lt;div class="nds-dropmenu-scroll"&gt;
             &lt;a href="#" class="nds-btn nds-subtle nds-dropmenu-item"&gt;
                 &lt;span class="nds-label"&gt;Profile&lt;/span&gt;
@@ -549,7 +549,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">MD</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-avatar-group", "groupSize"]'>
@@ -617,7 +617,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

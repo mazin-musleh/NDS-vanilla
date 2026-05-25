@@ -49,7 +49,6 @@
             this.setupContentResize();
             this.setupLateRecompute();
             this.sideInfo.setAttribute('data-sideinfo-initialized', 'true');
-            NDS.reveal(this.sideInfo);
         }
 
         // Sticky breaks down when the side info is taller than the viewport

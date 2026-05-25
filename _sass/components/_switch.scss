@@ -9,7 +9,7 @@
 // SWITCH CONTAINER
 // ==============================================
 
-.nds-form-container.nds-switch-container:not([hidden]) {
+.nds-form-container.nds-switch-container {
     // Private ← public aliases for size (switch has unique track/thumb dimensions)
     --_nds-input-size: var(--nds-input-size, 20px);
     --_switch-width:   var(--switch-width,   48px);

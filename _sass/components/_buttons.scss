@@ -112,10 +112,8 @@
   // ==============================================
 
   // nds-lg is the default size — no explicit .nds-lg class needed
-  & {
-    --btn-size: 40px;
-    --btn-indicator-size: 3px;
-  }
+  --btn-size: 40px;
+  --btn-indicator-size: 3px;
 
   &.nds-md {
     --btn-size: 32px;

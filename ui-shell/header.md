@@ -88,7 +88,7 @@ header
                         <div class="demo-label">Navigation Bar</div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-nav-bar-1" id="tab-nav-bar-1">
@@ -178,7 +178,7 @@ header
                         <div class="demo-label">Column View — Categories with Titles</div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dropdown-col-1" id="tab-dropdown-col-1">
@@ -248,7 +248,7 @@ header
                         <div class="demo-label">Row View — Flat Horizontal List</div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dropdown-row-1" id="tab-dropdown-row-1">
@@ -301,7 +301,7 @@ header
                         <div class="demo-label">Multi-Column List — 3-Column Grid Inside a Column</div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dropdown-mcl-1" id="tab-dropdown-mcl-1">

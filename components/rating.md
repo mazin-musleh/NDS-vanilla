@@ -24,7 +24,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Medium</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-rating", "ratingDisplaySize"]'>
@@ -67,7 +67,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -119,7 +119,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Medium</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-xs", ".nds-rating", "ratingInteractiveSize"]'>
@@ -165,7 +165,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -236,7 +236,7 @@ direction: ltr
                                     </div>
                                     <span class="nds-label"><span class="nds-total-rate">4.5</span> - (<span class="nds-total-votes">18</span>) Votes</span>
                                 </button>
-                                <div class="nds-dropmenu-menu nds-rating-dropmenu" hidden="">
+                                <div class="nds-dropmenu-menu nds-rating-dropmenu">
                                     <div class="nds-dropmenu-item" data-no-auto-close>
                                         <span class="nds-label">Rate this service</span>
                                         <div class="nds-rating" data-rating="0">
@@ -260,7 +260,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -290,7 +290,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;span class="nds-label"&gt;&lt;span class="nds-total-rate"&gt;4.5&lt;/span&gt; - (&lt;span class="nds-total-votes"&gt;18&lt;/span&gt;) Votes&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu nds-rating-dropmenu" hidden=""&gt;
+    &lt;div class="nds-dropmenu-menu nds-rating-dropmenu"&gt;
         &lt;div class="nds-dropmenu-item" data-no-auto-close&gt;
             &lt;span class="nds-label"&gt;Rate this service&lt;/span&gt;
             &lt;div class="nds-rating" data-rating="0"&gt;

@@ -16,7 +16,7 @@
 // ALERT COMPONENT (extends card)
 // ==============================================
 
-.nds-alert.nds-card:not([hidden]) {
+.nds-alert.nds-card {
   // Alert-only internal tokens (not in card)
   --_alert-stripe: var(--alert-stripe, var(--border-neutral-primary));
   --_alert-icon-bg: var(--alert-icon-bg, var(--background-neutral-light));

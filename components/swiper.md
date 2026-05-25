@@ -24,7 +24,7 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
                                 <span class="nds-label">Bullets: Large</span>
                             </button>
-                            <div class="nds-dropmenu-menu" hidden>
+                            <div class="nds-dropmenu-menu">
                                 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                     data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
                                     <span class="nds-label">Large</span>
@@ -117,7 +117,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -211,7 +211,7 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
                                 <span class="nds-label">Bullets: Large</span>
                             </button>
-                            <div class="nds-dropmenu-menu" hidden>
+                            <div class="nds-dropmenu-menu">
                                 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                     data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
                                     <span class="nds-label">Large</span>
@@ -276,7 +276,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -355,7 +355,7 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
                                 <span class="nds-label">Bullets: Large</span>
                             </button>
-                            <div class="nds-dropmenu-menu" hidden>
+                            <div class="nds-dropmenu-menu">
                                 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                     data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
                                     <span class="nds-label">Large</span>
@@ -386,7 +386,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper" hidden slides-max="4" slides-mid="3" slides-min="1" peek="0">
+                        <div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1" peek="0">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
@@ -450,7 +450,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -469,7 +469,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                             <code class="lang-html code">
-&lt;div class="nds-swiper" hidden slides-max="4" slides-mid="3" slides-min="1" peek="0"&gt;
+&lt;div class="nds-swiper" slides-max="4" slides-mid="3" slides-min="1" peek="0"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
@@ -558,7 +558,7 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
                                 <span class="nds-label">Bullets: Large</span>
                             </button>
-                            <div class="nds-dropmenu-menu" hidden>
+                            <div class="nds-dropmenu-menu">
                                 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                     data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
                                     <span class="nds-label">Large</span>
@@ -589,7 +589,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40">
+                        <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
                             <div class="nds-swiper-wrapper">
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
@@ -651,7 +651,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -670,7 +670,7 @@ direction: ltr
                             </div>
                             <div class="nds-expandable-content">
                             <code class="lang-html code">
-&lt;div class="nds-swiper" hidden slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
+&lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;

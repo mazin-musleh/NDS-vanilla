@@ -42,7 +42,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-filter"></i>
                                             <span class="nds-label">Filter</span>
                                         </button>
-                                        <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-menu">
                                             <div class="nds-dropmenu-scroll">
                                                 <div data-filter="department"
                                                     data-filter-type="checkbox" data-filter-legend="Department"
@@ -96,7 +96,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -136,7 +136,7 @@ direction: ltr
         &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
         &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
       &lt;/button&gt;
-      &lt;div class="nds-dropmenu-menu" hidden&gt;
+      &lt;div class="nds-dropmenu-menu"&gt;
         &lt;div class="nds-dropmenu-scroll"&gt;
           &lt;div data-filter="department"
             data-filter-type="checkbox"
@@ -225,7 +225,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
+                                <div class="nds-dropmenu-menu" style="min-width: 260px;">
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="status"
                                             data-filter-type="checkbox" data-filter-legend="Status"
@@ -292,7 +292,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -317,7 +317,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
+  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;"&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Checkbox: multi-select, OR logic --&gt;
       &lt;div data-filter="status"
@@ -418,7 +418,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
+                                <div class="nds-dropmenu-menu" style="min-width: 260px;">
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="priority"
                                             data-filter-type="radio" data-filter-legend="Priority"
@@ -485,7 +485,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -510,7 +510,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
+  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;"&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Radio: single-select --&gt;
       &lt;div data-filter="priority"
@@ -610,7 +610,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
+                                <div class="nds-dropmenu-menu" style="min-width: 260px;">
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="feature"
                                             data-filter-type="switch" data-filter-legend="Features"
@@ -689,7 +689,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -714,7 +714,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
+  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;"&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Switch: toggle, OR logic --&gt;
       &lt;div data-filter="feature"
@@ -832,7 +832,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="category"
                                             data-filter-type="radio" data-filter-legend="Category"
@@ -918,7 +918,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -943,7 +943,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" hidden&gt;
+  &lt;div class="nds-dropmenu-menu"&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;div data-filter="category"
         data-filter-type="radio"
@@ -1018,7 +1018,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1047,7 +1047,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" hidden&gt;
+  &lt;div class="nds-dropmenu-menu"&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;div data-filter="system"
         data-filter-type="checkbox"
@@ -1109,7 +1109,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1179,7 +1179,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1227,7 +1227,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
           &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
           &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
         &lt;/button&gt;
-        &lt;div class="nds-dropmenu-menu" hidden&gt;
+        &lt;div class="nds-dropmenu-menu"&gt;
           &lt;div class="nds-dropmenu-scroll"&gt;
             &lt;div data-filter="category"
               data-filter-type="checkbox"
@@ -1332,7 +1332,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1397,7 +1397,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                                         <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
                                         <span class="nds-label">Sort</span>
                                     </button>
-                                    <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-menu">
                                         <div class="nds-dropmenu-scroll">
                                             <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort>
                                                 <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
@@ -1464,7 +1464,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-filter-sort-1" id="tab-filter-sort-1">
@@ -1487,7 +1487,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
       &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;span class="nds-label"&gt;Sort&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden&gt;
+    &lt;div class="nds-dropmenu-menu"&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort&gt;
           &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;

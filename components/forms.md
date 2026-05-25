@@ -24,7 +24,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -49,7 +49,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -70,7 +70,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -110,7 +110,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -173,7 +173,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -198,7 +198,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -219,7 +219,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -236,7 +236,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
                   <span class="nds-label">Fix: Subtle</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-subtle", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixStyle"]'>
@@ -253,7 +253,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
                   <span class="nds-label">Fix: LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixSize"]'>
@@ -270,7 +270,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
                   <span class="nds-label">Fix: Both</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item" data-form-fix="prefix">
                       <span class="nds-label">Prefix</span>
@@ -314,7 +314,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -374,7 +374,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -399,7 +399,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -420,7 +420,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -437,7 +437,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
                   <span class="nds-label">Fix: Subtle</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-subtle", ".nds-prefix > .nds-btn", "fixStyle"]'>
@@ -454,7 +454,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
                   <span class="nds-label">Fix: LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-prefix > .nds-btn", "fixSize"]'>
@@ -486,7 +486,7 @@ direction: ltr
                     <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
                       <span class="nds-label">+966</span>
                     </button>
-                    <div class="nds-dropmenu-menu" hidden>
+                    <div class="nds-dropmenu-menu">
                       <div class="nds-dropmenu-scroll">
                         <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966">
                           <span class="nds-label">Saudi Arabia (+966)</span>
@@ -521,7 +521,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -551,7 +551,7 @@ direction: ltr
       &lt;button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger"&gt;
         &lt;span class="nds-label"&gt;+966&lt;/span&gt;
       &lt;/button&gt;
-      &lt;div class="nds-dropmenu-menu" hidden&gt;
+      &lt;div class="nds-dropmenu-menu"&gt;
         &lt;div class="nds-dropmenu-scroll"&gt;
           &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966"&gt;
             &lt;span class="nds-label"&gt;Saudi Arabia (+966)&lt;/span&gt;
@@ -611,7 +611,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -636,7 +636,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -657,7 +657,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -674,7 +674,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
                   <span class="nds-label">Fix: Solid</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-subtle", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixStyle"]'>
@@ -691,7 +691,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Fix: ">
                   <span class="nds-label">Fix: LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-prefix > .nds-btn, .nds-suffix > .nds-btn", "fixSize"]'>
@@ -732,7 +732,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -792,7 +792,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -817,7 +817,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -838,7 +838,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -883,7 +883,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -950,7 +950,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -975,7 +975,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -996,7 +996,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -1037,7 +1037,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1101,7 +1101,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -1126,7 +1126,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -1147,7 +1147,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -1196,7 +1196,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1264,7 +1264,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -1289,7 +1289,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -1310,7 +1310,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -1346,7 +1346,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1404,7 +1404,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>
@@ -1429,7 +1429,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">Style</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formStyle"]'>
@@ -1450,7 +1450,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">LG</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
@@ -1505,7 +1505,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1615,7 +1615,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1740,7 +1740,7 @@ var status = NDS.Forms.getStatus(field);
             </div>
           </div>
           <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided" hidden>
+            <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                   <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

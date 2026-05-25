@@ -29,7 +29,7 @@ direction: ltr
                                         <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
                                         <span class="nds-label">Sort</span>
                                     </button>
-                                    <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-menu">
                                         <div class="nds-dropmenu-scroll">
                                             <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort>
                                                 <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
@@ -96,7 +96,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sort-direct-1" id="tab-sort-direct-1">
@@ -122,7 +122,7 @@ direction: ltr
       &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;span class="nds-label"&gt;Sort&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden&gt;
+    &lt;div class="nds-dropmenu-menu"&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort&gt;
           &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sort-cycle-1" id="tab-sort-cycle-1">
@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sort-table-1" id="tab-sort-table-1">

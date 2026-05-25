@@ -144,7 +144,6 @@
             this.setupEventListeners();
             this.setupSelectMode();
             this.dropmenu.setAttribute('data-nds-dropmenu-initialized', 'true');
-            NDS.reveal(this.menu);
         }
 
         // ==============================================

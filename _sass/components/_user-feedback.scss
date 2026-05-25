@@ -6,11 +6,11 @@
     gap: var(--spacing-4xl);
 
     // Sub-views — visible unless [hidden] (state-driven on -status/-details/-submit/-close)
-    :is(&-question, &-answer-btn, &-statistic, &-status, &-details, &-submit, &-close):not([hidden]) {
+    :is(&-question, &-answer-btn, &-statistic, &-status, &-details, &-submit, &-close) {
         display: flex;
     }
 
-    &-close:not([hidden]) {
+    &-close {
         @include mobile {
             order: -1;
             align-self: end;

@@ -36,7 +36,7 @@ exclude_showcase: false
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
-                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-menu" style="min-width: 300px;">
                         <div class="nds-dropmenu-scroll">
                             <!-- Filter by Most Used -->
                             <div data-filter="most-used" data-filter-legend="Most Used"

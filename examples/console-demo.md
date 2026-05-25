@@ -226,7 +226,7 @@ hideFeedback: true
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
-                    <div class="nds-dropmenu-menu" hidden>
+                    <div class="nds-dropmenu-menu">
                         <div class="nds-dropmenu-scroll">
                             <div data-filter="category" data-filter-type="checkbox"
                                 data-filter-legend="Category"
@@ -358,7 +358,7 @@ hideFeedback: true
                                     <button class="nds-btn nds-subtle nds-sm nds-icon-only nds-dropmenu-trigger" aria-label="Row actions">
                                         <i class="hgi hgi-stroke hgi-edit-02"></i>
                                     </button>
-                                    <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-menu">
                                         <div class="nds-dropmenu-scroll">
                                             <button class="nds-btn nds-subtle nds-dropmenu-item">
                                                 <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
@@ -422,7 +422,7 @@ hideFeedback: true
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
-                    <div class="nds-dropmenu-menu" hidden>
+                    <div class="nds-dropmenu-menu">
                         <div class="nds-dropmenu-scroll">
                             <div data-filter="department" data-filter-type="checkbox"
                                 data-filter-legend="Department"

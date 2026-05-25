@@ -28,7 +28,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="#">Components</a></li>
@@ -38,7 +38,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -56,7 +56,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
   &lt;ol class="nds-breadcrumb"&gt;
     &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href="#"&gt;Components&lt;/a&gt;&lt;/li&gt;
@@ -94,7 +94,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li aria-current="page">Components</li>
@@ -103,7 +103,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -121,7 +121,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
   &lt;ol class="nds-breadcrumb"&gt;
     &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
     &lt;li aria-current="page"&gt;Components&lt;/li&gt;
@@ -158,7 +158,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="#">Components</a></li>
@@ -168,7 +168,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -186,7 +186,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
   &lt;ol class="nds-breadcrumb"&gt;
     &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href="#"&gt;Components&lt;/a&gt;&lt;/li&gt;
@@ -224,7 +224,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="#">Services</a></li>
@@ -238,7 +238,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -260,7 +260,7 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;!-- Write the full breadcrumb. JS collapses 5+ levels automatically --&gt;
-&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+&lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
   &lt;ol class="nds-breadcrumb"&gt;
     &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href="#"&gt;Services&lt;/a&gt;&lt;/li&gt;

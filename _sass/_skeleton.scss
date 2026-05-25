@@ -1,0 +1,130 @@
+/* ========================================
+   SKELETON  ·  critical CSS
+   Pre-init layout reservations — mirror final-state layout for
+   components that ship without [hidden] so the parent visibility
+   gate (.nds-content-layout etc.) hides paint while layout settles.
+   Scoped to body:not([data-nds-loaded]) so rules deactivate once
+   the loader stamps the page-ready signal.
+   ======================================== */
+@use './mixins' as *;
+
+/* Paint anything (atom, image, masked surface) with the static
+   skeleton gradient. Single source of truth — every direct usage of
+   --nds-skeleton-fill goes through this mixin.
+   color:transparent hides any real/fallback glyph the gradient covers
+   (icon tofu, transparent-text bars); harmless on image surfaces. */
+@mixin skeleton-fill {
+    background: var(--nds-skeleton-fill);
+    color: transparent !important;
+}
+
+/* Paint a (transparent-text) element as a skeleton bar — used by text
+   bars in cards / alerts / definition lists / sidemenu-toggle label. */
+@mixin skeleton-bar {
+    @include skeleton-fill;
+    border-radius: var(--nds-skeleton-radius);
+    color: transparent;
+
+    >* {
+        color: transparent;
+    }
+}
+
+body:not([data-nds-loaded]) {
+
+    /* ── Content Layout ──
+       Mirrors layout/_content-layout.scss base — grid track + min-height
+       so the page reserves its viewport block before main CSS lands. */
+    .nds-content-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 400px;
+        width: 100%;
+
+        &.nds-wSideMenu {
+            grid-template-columns: var(--nds-sidemenu-width, 260px) 1fr;
+        }
+    }
+
+    /* ── Hero ──
+       Hero text starts white-on-image; theme tokens flip later for sub-flat. */
+    .nds-hero-section:not(.nds-sub) :is(.nds-section-title, .nds-section-description) {
+        color: var(--text-oncolor-primary);
+    }
+
+    /* Content wrapper padding — mirrors layout/_content-layout.scss so the
+       slide / hero-section reserves the horizontal viewport gutter pre-init.
+       Without it, hero overlay text starts at the viewport edge and jumps in
+       once main applies the padding. */
+    :is(.nds-content-wrapper, .nds-hero-section) {
+        --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+        width: 100%;
+        padding-inline: var(--_wrapper-padding);
+
+        .nds-full-width {
+            width: 100vw !important;
+            margin-inline: calc(50% - 50vw);
+        }
+
+        .nds-max-width {
+            margin-inline: calc(var(--_wrapper-padding) * -1);
+        }
+    }
+
+    /* ── Breadcrumb ──
+       Reserve flex row + crumb-separator slot so the breadcrumb-nav's height
+       and inline width are stable before main CSS lands. */
+    .nds-breadcrumb {
+        display: flex;
+    }
+
+    .nds-breadcrumb li:not(:last-child)::after {
+        content: "";
+        display: inline-block;
+        width: 24px;
+    }
+
+    /* ── Swiper ──
+       Hero swiper + wrapper get their flex skeleton so the slide image fills
+       the hero box. All swipers collapse to their first slide until JS marks
+       data-swiper-initialized — prevents pre-init flex layout from widening
+       the document. */
+    :is(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    .nds-swiper:not([data-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
+        display: none;
+    }
+
+}
+
+/* ── Hide gate ──
+   Fallback for sites without the inline critical-inline.html payload.
+   Duplicates the inline `:where(...){visibility:hidden}` so consumers
+   using only the external crit get the same FOUC protection.
+
+   .nds-hero-section .nds-section-action lives here (not in the reveal
+   below) because its <button> children need main's .nds-btn styling —
+   revealing at crit-load would flash unstyled CTAs. Released by main. */
+:where(
+    .nds-topbar > *,
+    .nds-main-nav > *,
+    .nds-hero-section .nds-section-action,
+    .nds-content-layout,
+    .nds-user-feedback-section,
+    .nds-accessibility-toggle,
+    .nds-footer
+) {
+    visibility: hidden;
+}
+
+/* ── Reveal at crit-load ──
+   Hero text/wrapper paint as soon as crit lands (no JS-init wait).
+   Hero itself isn't in the hide gate, so this rule only matters for
+   the inline-crit payload path which DOES hide these. */
+:where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper)) {
+    visibility: visible;
+}

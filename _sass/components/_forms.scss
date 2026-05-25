@@ -1,12 +1,12 @@
 @use '../mixins' as *;
 
-.nds-form:not([hidden]) {
+.nds-form {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xl);
 }
 
-.nds-form-container:not([hidden]) {
+.nds-form-container {
     --_form-width: var(--form-width, 100%);
     display: flex;
     gap: var(--spacing-md);
@@ -354,10 +354,8 @@ fieldset {
             translate: 0 -50%;
 
             @include ltr {
-                & {
-                    left: unset;
-                    right: var(--spacing-md);
-                }
+                left: unset;
+                right: var(--spacing-md);
             }
         }
     }
@@ -374,7 +372,7 @@ fieldset {
         cursor: pointer;
     }
 
-    .nds-form-action:not([hidden]) {
+    .nds-form-action {
         display: flex;
         gap: var(--spacing-sm);
         flex-direction: row;
@@ -392,7 +390,7 @@ fieldset {
             }
         }
 
-        >*:not([hidden]):not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
+        >*:not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
             --btn-height: 100%;
             --btn-height-min: var(--btn-height);
             --btn-radius: var(--_input-radius);
@@ -420,7 +418,7 @@ fieldset {
             gap: 0;
             white-space: nowrap;
 
-            >*:not([hidden]):not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
+            >*:not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
                 --btn-radius: 0 !important;
 
                 &:not(:first-child)::before {
@@ -554,7 +552,7 @@ fieldset {
 // ==============================================
 
 :is(.nds-check-container, .nds-radio-container, .nds-switch-container) {
-    &.nds-form-container:not([hidden]) {
+    &.nds-form-container {
         flex-direction: row-reverse;
         width: fit-content;
         flex-wrap: nowrap;
@@ -581,7 +579,7 @@ fieldset {
 
 // Shared ripple (checkbox + radio)
 :is(.nds-check-container, .nds-radio-container) {
-    &.nds-form-container:not([hidden]) .nds-form-control {
+    &.nds-form-container .nds-form-control {
         &::before {
             content: "";
             position: absolute;

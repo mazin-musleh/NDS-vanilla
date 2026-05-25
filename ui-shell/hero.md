@@ -23,7 +23,7 @@ direction: ltr
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
                         <section class="nds-hero-section nds-sub" aria-label="Page Hero">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="#">UI Shell</a></li>
@@ -39,7 +39,7 @@ direction: ltr
                         </section>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -58,7 +58,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub" aria-label="Page Hero"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href="/parent"&gt;Parent Section&lt;/a&gt;&lt;/li&gt;
@@ -84,7 +84,7 @@ direction: ltr
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
                         <section class="nds-hero-section nds-sub nds-flat" aria-label="Page Hero">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="#">UI Shell</a></li>
@@ -99,7 +99,7 @@ direction: ltr
                                                 <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                                                 <span class="nds-label">Share Page</span>
                                             </button>
-                                            <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-menu">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
                                                     <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
                                                     <span class="nds-label">X</span>
@@ -127,7 +127,7 @@ direction: ltr
                         </section>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -146,7 +146,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub nds-flat" aria-label="Page Hero"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href="/parent"&gt;Parent Section&lt;/a&gt;&lt;/li&gt;
@@ -161,7 +161,7 @@ direction: ltr
             &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
             &lt;span class="nds-label"&gt;Share Page&lt;/span&gt;
           &lt;/button&gt;
-          &lt;div class="nds-dropmenu-menu" hidden&gt;
+          &lt;div class="nds-dropmenu-menu"&gt;
             &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X"&gt;
               &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
               &lt;span class="nds-label"&gt;X&lt;/span&gt;
@@ -199,7 +199,7 @@ direction: ltr
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
                         <section class="nds-hero-section nds-sub" aria-label="Page Hero">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="#">UI Shell</a></li>
@@ -216,7 +216,7 @@ direction: ltr
                         </section>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -235,7 +235,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub" aria-label="Page Hero"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href="/parent"&gt;Parent Section&lt;/a&gt;&lt;/li&gt;
@@ -277,7 +277,7 @@ direction: ltr
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
                         <section class="nds-hero-section nds-sub" aria-label="Page Hero"
                             style="--hero_image: url('{{ '/assets/img/riyadhcenter_ai.webp' | relative_url }}')">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="#">About</a></li>
@@ -293,7 +293,7 @@ direction: ltr
                         </section>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -313,7 +313,7 @@ direction: ltr
                                     <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub" aria-label="Page Hero"
     style="--hero_image: url('assets/img/hero.webp')"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href="/parent"&gt;Parent Section&lt;/a&gt;&lt;/li&gt;
@@ -353,7 +353,7 @@ direction: ltr
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
                         <section class="nds-hero-section nds-sub" aria-label="Page Hero">
-                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden>
+                            <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="#">Services</a></li>
@@ -382,7 +382,7 @@ direction: ltr
                         </section>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -401,7 +401,7 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 &lt;section class="nds-hero-section nds-sub" aria-label="Page Hero"&gt;
-  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb" hidden&gt;
+  &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;&lt;a href="/services"&gt;Services&lt;/a&gt;&lt;/li&gt;
@@ -455,7 +455,7 @@ direction: ltr
                         <div class="demo-label">Main Hero Slider</div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

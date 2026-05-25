@@ -1556,11 +1556,10 @@
             if (fc) NDS.State.add(fc, 'focus');
         }
 
-        // Reveal the [hidden] FOUC-guard wrappers now their controls carry
-        // state. NDS.reveal coalesces every queued element into one rAF flush.
-        var ndsHiddenWrappers = container.querySelectorAll(
-            '.nds-form-group[hidden], .nds-form-container[hidden], .nds-form-action[hidden]');
-        if (ndsHiddenWrappers.length) NDS.reveal.apply(null, ndsHiddenWrappers);
+        // Reveal [hidden] FOUC-guard wrappers now their controls carry state.
+        container.querySelectorAll(
+            '.nds-form-group[hidden], .nds-form-container[hidden], .nds-form-action[hidden]'
+        ).forEach(function(el) { el.removeAttribute('hidden'); });
     }
 
     // ==============================================

@@ -26,11 +26,8 @@
     --_transition: var(--drawer-transition, var(--nds-transition));
     --_max-height: var(--drawer-max-height, 400px);
 
-    &:not([hidden]) {
-        display: flex;
-        flex-direction: column;
-    }
-
+    display: flex;
+    flex-direction: column;
     width: 100%;
 
     /* Scrollbar Hiding */

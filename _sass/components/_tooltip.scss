@@ -86,24 +86,22 @@
   }
 
   // Balloon is marked `hidden` in source; the attribute controls visibility.
-  &:not([hidden]) {
-    display: flex;
-    gap: var(--_tooltip-gap);
-    align-items: flex-start;
-    position: fixed;
-    z-index: 1000;
-    width: max-content;
-    max-width: var(--_tooltip-max-width);
-    padding: var(--_tooltip-padding);
-    background-color: var(--_tooltip-bg);
-    color: var(--_tooltip-body);
-    border: 1px solid var(--border-neutral-secondary);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
+  display: flex;
+  gap: var(--_tooltip-gap);
+  align-items: flex-start;
+  position: fixed;
+  z-index: 1000;
+  width: max-content;
+  max-width: var(--_tooltip-max-width);
+  padding: var(--_tooltip-padding);
+  background-color: var(--_tooltip-bg);
+  color: var(--_tooltip-body);
+  border: 1px solid var(--border-neutral-secondary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
 
-    font-size: var(--typo-text-xs-FS);
-    line-height: var(--typo-text-xs-LH);
-  }
+  font-size: var(--typo-text-xs-FS);
+  line-height: var(--typo-text-xs-LH);
 
   // CSS-only arrow: rotated square inheriting background + border so only
   // the two edges facing away from the balloon body are visible.

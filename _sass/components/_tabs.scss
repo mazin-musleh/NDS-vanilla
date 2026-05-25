@@ -25,11 +25,8 @@
 
 .nds-tabs {
   --btn-indicator-size: 3px;
-
-  &:not([hidden]) {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
 
   // ---- Divider ----
   // Base rail for horizontal tabs. `.nds-vertical.nds-divided` below overrides

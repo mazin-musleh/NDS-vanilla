@@ -1,0 +1,87 @@
+NDS [hidden] Removal Map
+========================
+
+Component markup that previously shipped `[hidden]` as a FOUC guard
+no longer does. The chrome / content-layout / hero parent visibility
+gates handle pre-init invisibility instead — keeps layout stable
+(no CLS on reveal).
+
+A new universal hide primitive in crit makes `[hidden]` always win
+over author display rules, so the per-selector `:not([hidden])` guards
+across SCSS are no longer needed.
+
+Universal Hide Primitive (NEW, in crit)
+---------------------------------------
+:is(.nds-hidden, [hidden], [data-state~=hidden]) {
+    display: none !important;
+}
+
+  [hidden]                  → standard HTML attribute, now reliably hides
+  .nds-hidden               → utility class equivalent (JS-friendly)
+  [data-state~=hidden]      → state-machine token (composes with other states)
+
+All three behave identically. Pick whichever idiom fits the call site.
+
+Markup: [hidden] removed from component roots (FOUC guards)
+-----------------------------------------------------------
+<X class="nds-tabs"             hidden>  → <X class="nds-tabs">
+<X class="nds-swiper"           hidden>  → <X class="nds-swiper">
+<X class="nds-drawer"           hidden>  → <X class="nds-drawer">
+<X class="nds-breadcrumb-nav"   hidden>  → <X class="nds-breadcrumb-nav">
+<X class="nds-dropmenu-menu"    hidden>  → <X class="nds-dropmenu-menu">
+<X class="nds-digitalStamp-tab" hidden>  → <X class="nds-digitalStamp-tab">
+<X id="ndsNavCollapse"          hidden>  → <X id="ndsNavCollapse">
+<X class="nds-footer"           hidden>  → <X class="nds-footer">
+
+Consumers using these classes in custom markup should also drop the
+`[hidden]` attribute — the parent visibility gate handles FOUC.
+
+Markup: [hidden] KEPT (intrinsic state, user-driven)
+----------------------------------------------------
+<X class="nds-modal"                       hidden>  → keep (closed until opened)
+<X class="nds-tooltip"                     hidden>  → keep (closed until hover/focus)
+<X class="nds-accessibility-panel"         hidden>  → keep (closed until FAB click)
+<X class="nds-nav-minimal"                 hidden>  → keep (toggled by overflow logic)
+<X id="nds-digitalStamp"                   hidden>  → keep (closed until tab click)
+<X class="nds-user-feedback-status"        hidden>  → keep (state machine)
+<X class="nds-user-feedback-close"         hidden>  → keep (state machine)
+<X class="nds-user-feedback-details"       hidden>  → keep (state machine)
+<X class="nds-user-feedback-submit"        hidden>  → keep (state machine)
+<X class="nds-form-footer" data-feedback-target hidden>  → keep (NDS.Feedback target)
+
+JS API removed
+--------------
+NDS.reveal(el, ...)         → removed; use el.removeAttribute('hidden') directly
+
+The shared reveal helper batched into a rAF flush. With the new universal
+hide rule + `[hidden]`-free FOUC markup, the batch is unnecessary.
+Components that need to strip `[hidden]` at runtime (e.g. mainnav's
+collapse-after-overflow-check, forms revealing wrappers) now call
+`removeAttribute('hidden')` directly.
+
+SCSS guards removed (no longer needed)
+--------------------------------------
+.foo:not([hidden]) { display: flex; }   → .foo { display: flex; }
+
+The universal `!important` rule makes `[hidden]` always win, so the
+per-selector guard is redundant. 46 occurrences removed across 24
+SCSS files. Component CSS is now simpler:
+
+  Was:  .nds-drawer:not([hidden]) { display: flex; flex-direction: column; }
+  Now:  .nds-drawer            { display: flex; flex-direction: column; }
+
+Consumers with their own `.foo:not([hidden])` patterns can drop the
+guard the same way.
+
+Why this works (CLS-friendly)
+------------------------------
+[hidden] = display:none. Stripping it via JS at init makes the element
+join the layout, pushing surrounding content → CLS.
+
+The chrome / content-layout / hero parent gates use visibility:hidden,
+which DOES participate in layout (only paint is suppressed). When the
+parent flips to visible (via body[data-nds-loaded] or main CSS load),
+the element paints in place — no layout shift.
+
+`[hidden]` is now reserved for state changes (intrinsic open/close,
+state machines) where layout-shift IS the intended user-driven outcome.

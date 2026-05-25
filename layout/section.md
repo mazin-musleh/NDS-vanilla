@@ -72,7 +72,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -119,7 +119,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier1" id="tab-tier1">
@@ -170,7 +170,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -221,7 +221,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier2" id="tab-tier2">
@@ -276,7 +276,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -332,7 +332,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier3" id="tab-tier3">
@@ -392,7 +392,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -457,7 +457,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-float" id="tab-float">
@@ -518,7 +518,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -583,7 +583,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dual" id="tab-dual">
@@ -652,7 +652,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -704,7 +704,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-nowrap" id="tab-nowrap">
@@ -764,7 +764,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -825,7 +825,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier4" id="tab-tier4">
@@ -890,7 +890,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -940,7 +940,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                     </div>
                                 </div>
                                 <div class="nds-section-body nds-max-width">
-                                    <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden>
+                                    <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
                                         <div class="nds-swiper-wrapper">
                                             {% for service in site.data.content.services limit:6 %}
                                             <div class="nds-swiper-slide">
@@ -983,7 +983,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier5" id="tab-tier5">
@@ -1013,7 +1013,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
         &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-section-body nds-max-width"&gt;
-        &lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40" hidden&gt;
+        &lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
             &lt;div class="nds-swiper-wrapper"&gt;
                 &lt;div class="nds-swiper-slide"&gt;
                     &lt;div class="nds-card nds-stroke"&gt;
@@ -1077,7 +1077,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Variant</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -1133,7 +1133,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier6" id="tab-tier6">

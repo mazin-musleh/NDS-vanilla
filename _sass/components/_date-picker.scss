@@ -51,11 +51,8 @@
             translate: 0 -50%;
 
             @include ltr {
-                & {
-                    left: unset;
-
-                    right: var(--spacing-md);
-                }
+                left: unset;
+                right: var(--spacing-md);
             }
         }
 

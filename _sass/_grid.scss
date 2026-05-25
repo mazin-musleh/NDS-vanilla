@@ -17,11 +17,8 @@
   --_row-gap: var(--row-gap, var(--gap, var(--spacing-2xl)));
   --_col-gap: var(--col-gap, var(--gap, var(--spacing-2xl)));
 
-  &:not([hidden]) {
-    display: grid !important;
-    grid-template-columns: var(--_tracks, repeat(var(--_cols), minmax(var(--min-width, 0), 1fr)));
-  }
-
+  display: grid !important;
+  grid-template-columns: var(--_tracks, repeat(var(--_cols), minmax(var(--min-width, 0), 1fr)));
   row-gap: var(--_row-gap);
   column-gap: var(--_col-gap);
   justify-items: var(--justify, stretch);

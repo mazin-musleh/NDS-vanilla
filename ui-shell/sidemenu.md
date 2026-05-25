@@ -83,7 +83,7 @@ aside.nds-sidemenu
                         <div class="demo-label">Side Menu with Accordion Groups</div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sidenav-default-1" id="tab-sidenav-default-1">
@@ -105,7 +105,7 @@ aside.nds-sidemenu
     &lt;i class="nds-icon nds-hgi-menu-02" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;span class="nds-label nds-truncate" hidden&gt;Side menu&lt;/span&gt;
   &lt;/button&gt;
-  &lt;nav class="nds-drawer nds-divided nds-full-height" hidden&gt;
+  &lt;nav class="nds-drawer nds-divided nds-full-height"&gt;
     &lt;div class="nds-scroll-more nds-divided"&gt;
       &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
         &lt;!-- Flat link --&gt;
@@ -249,7 +249,7 @@ aside.nds-sidemenu
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sidenav-grouped-1" id="tab-sidenav-grouped-1">
@@ -356,7 +356,7 @@ aside.nds-sidemenu
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sidemenu-modes-1" id="tab-sidemenu-modes-1">
@@ -430,7 +430,7 @@ aside.nds-sidemenu
                         <div class="demo-label">Active Item in a Nested Group</div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-sidenav-active-1" id="tab-sidenav-active-1">

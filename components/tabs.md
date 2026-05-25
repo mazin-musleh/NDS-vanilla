@@ -36,7 +36,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
                                     <span class="nds-label">Card View: None</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-tabs", "nds-cardView"]'>
@@ -56,7 +56,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-container">
-                        <div class="nds-tabs" id="tabs-standard-1" hidden>
+                        <div class="nds-tabs" id="tabs-standard-1">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -217,7 +217,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -238,7 +238,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-tabs" hidden&gt;
+&lt;div class="nds-tabs"&gt;
     &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
         &lt;nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation"&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -438,7 +438,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
                                     <span class="nds-label">Card View: None</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-tabs", "nds-cardView"]'>
@@ -458,7 +458,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-container">
-                        <div class="nds-tabs" id="tabs-icons-1" hidden>
+                        <div class="nds-tabs" id="tabs-icons-1">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -506,7 +506,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided" hidden>
+                    <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -527,7 +527,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-tabs" hidden&gt;
+&lt;div class="nds-tabs"&gt;
     &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
         &lt;nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation"&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

@@ -54,7 +54,7 @@
     }
 
     /* Side Menu Toggle Button */
-    .nds-sidemenu-toggle:not([hidden]) {
+    .nds-sidemenu-toggle {
         --btn-size: 40px;
         border: unset;
         outline: none;

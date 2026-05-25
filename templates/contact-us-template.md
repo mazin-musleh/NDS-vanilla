@@ -87,7 +87,7 @@ sidemenu_mode: false
                                 <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">+966</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <!-- GCC — home region first -->
                                         <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-value="+966" data-trigger-label="+966">

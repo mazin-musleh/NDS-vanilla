@@ -60,7 +60,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -219,7 +219,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -435,7 +435,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -669,7 +669,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -838,7 +838,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -966,7 +966,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1082,7 +1082,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1206,7 +1206,7 @@ direction: ltr
                                 <i class="hgi hgi-stroke hgi-filter"></i>
                                 <span class="nds-label">Filter</span>
                             </button>
-                            <div class="nds-dropmenu-menu" hidden>
+                            <div class="nds-dropmenu-menu">
                                 <div class="nds-dropmenu-scroll">
                                     <div data-filter="system" data-filter-type="checkbox"
                                         data-filter-legend="System"
@@ -1292,7 +1292,7 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided" hidden>
+                <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -1318,7 +1318,7 @@ direction: ltr
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
       &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden&gt;
+    &lt;div class="nds-dropmenu-menu"&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
         &lt;div data-filter="system" data-filter-type="checkbox"
           data-filter-legend="System"

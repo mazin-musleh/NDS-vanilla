@@ -102,7 +102,7 @@
         overflow-x: clip;
     }
 
-    >.nds-nav-container:not([hidden]) {
+    >.nds-nav-container {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -160,14 +160,14 @@
     }
 
     /* Navigation Lists */
-    :is(.nds-nav-primary, .nds-nav-actions, .nds-nav-minimal):not([hidden]) {
+    :is(.nds-nav-primary, .nds-nav-actions, .nds-nav-minimal) {
         display: flex;
         align-items: center;
         list-style: none;
         /* gap: var(--spacing-xs); */
     }
 
-    :is(.nds-nav-actions, .nds-nav-minimal):not([hidden]) {
+    :is(.nds-nav-actions, .nds-nav-minimal) {
         margin-inline-start: auto;
     }
 

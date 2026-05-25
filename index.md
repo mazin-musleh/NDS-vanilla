@@ -168,7 +168,7 @@ exclude_showcase: true
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
-                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                    <div class="nds-dropmenu-menu" style="min-width: 300px;">
                         <div class="nds-dropmenu-scroll">
                             <div data-filter="category" data-filter-legend="Category"
                                 data-filter-type="checkbox" data-no-auto-close></div>

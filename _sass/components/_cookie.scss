@@ -12,17 +12,15 @@
     --card-gap: var(--spacing-lg);
     --card-radius: var(--components-card-radius) var(--components-card-radius) 0 0;
 
-    &:not([hidden]) {
-        position: fixed;
-        bottom: 0;
-        inset-inline: 0;
-        box-shadow: var(--shadow-md-top);
-        z-index: 1000;
-        animation: slideUp var(--nds-transition);
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    box-shadow: var(--shadow-md-top);
+    z-index: 1000;
+    animation: slideUp var(--nds-transition);
 
-        @include reduced-motion {
-            animation: none;
-        }
+    @include reduced-motion {
+        animation: none;
     }
 
     &.nds-compact {

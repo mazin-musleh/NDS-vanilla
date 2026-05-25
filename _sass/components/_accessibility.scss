@@ -48,7 +48,7 @@
 // Mirror the source-rule structure so each override wins specificity
 // over _accordion.scss / _forms.scss without !important.
 .nds-accessibility-panel .nds-accordion .nds-accordion-btn,
-.nds-accessibility-panel .nds-form-container.nds-switch-container:not([hidden]) .nds-form-header .nds-label {
+.nds-accessibility-panel .nds-form-container.nds-switch-container .nds-form-header .nds-label {
     font-size:   var(--a11y-section-FS);
     line-height: var(--a11y-section-LH);
 }
@@ -107,7 +107,7 @@
 // ----------------------------------------------
 // Panel — fixed, full-height, slides in from inline-end (default).
 // ----------------------------------------------
-.nds-accessibility-panel:not([hidden]) {
+.nds-accessibility-panel {
     --a11y-panel-width: min(420px, 100vw);
     // JS overrides at runtime by measuring sticky-header bottom; falls
     // back to --nds-nav-height before JS hydrates.

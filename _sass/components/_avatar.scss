@@ -11,7 +11,7 @@
 // BASE AVATAR STYLES
 // ==============================================
 
-.nds-avatar:not([hidden]) {
+.nds-avatar {
   --_avatar-size: var(--avatar-size, 40px);
   display: inline-flex;
   align-items: center;

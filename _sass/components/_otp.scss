@@ -4,7 +4,7 @@
 // OTP INPUT CONTAINER (individual input wrapper)
 // ==============================================
 
-.nds-form-container.nds-otp-container:not([hidden]) {
+.nds-form-container.nds-otp-container {
     display: flex;
     width: fit-content;
     gap: 0;

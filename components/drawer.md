@@ -25,7 +25,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
                                     <span class="nds-label">Size: Medium</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu">
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-drawer", "drawerSize"]'
@@ -59,7 +59,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-drawer" hidden>
+                            <nav class="nds-drawer">
                                 <div class="nds-scroll-more nds-divided">
                                     <ul class="nds-drawer-list nds-scroll-more-content">
                                         <li data-state="active">
@@ -146,7 +146,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -165,7 +165,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;nav class="nds-drawer" hidden&gt;
+&lt;nav class="nds-drawer"&gt;
   &lt;div class="nds-scroll-more nds-divided"&gt;
     &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
       &lt;li data-state="active"&gt;
@@ -282,7 +282,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-drawer nds-divided" data-always-open-on="tablet" hidden>
+                            <nav class="nds-drawer nds-divided" data-always-open-on="tablet">
                                 <div class="nds-scroll-more nds-divided">
                                     <ul class="nds-drawer-list nds-scroll-more-content">
                                         <li>
@@ -325,7 +325,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -344,7 +344,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;nav class="nds-drawer nds-divided" data-always-open-on="tablet" hidden&gt;
+&lt;nav class="nds-drawer nds-divided" data-always-open-on="tablet"&gt;
   &lt;div class="nds-scroll-more nds-divided"&gt;
     &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
       &lt;li&gt;
@@ -417,7 +417,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;" hidden>
+                            <nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;">
                                 <div class="nds-scroll-more nds-divided">
                                     <ul class="nds-drawer-list nds-scroll-more-content">
                                         <li>
@@ -478,7 +478,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -497,7 +497,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;" hidden&gt;
+&lt;nav class="nds-drawer nds-divided" style="--drawer-max-height: 200px;"&gt;
   &lt;div class="nds-scroll-more nds-divided"&gt;
     &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
       &lt;li&gt;
@@ -591,7 +591,7 @@ direction: ltr
                             <div class="nds-grid" style="--max-col: 2;--mid-col: 1;--min-col: 1;--row-gap: var(--spacing-6xl);">
                                 <div class="nds-flex nds-col" style="--align: start;--gap: 0;">
                                     <h4>Latest Updates</h4>
-                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
+                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
                                         style="--drawer-max-height:100%; --drawer-truncate:2;">
                                         <div class="nds-scroll-more nds-divided">
                                             <ul class="nds-drawer-list nds-scroll-more-content">
@@ -636,7 +636,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-flex nds-col" style="--align: start;--gap: 0;">
                                     <h4>Quick Links</h4>
-                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
+                                    <nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
                                         style="--drawer-max-height:100%; --drawer-truncate:2;">
                                         <div class="nds-scroll-more nds-divided">
                                             <ul class="nds-drawer-list nds-scroll-more-content">
@@ -705,7 +705,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -727,7 +727,7 @@ direction: ltr
 &lt;div class="nds-grid" style="--max-col: 2;--mid-col: 1;--min-col: 1;--row-gap: var(--spacing-6xl);"&gt;
   &lt;div class="nds-flex nds-col" style="--align: start;--gap: 0;"&gt;
     &lt;h4&gt;Latest Updates&lt;/h4&gt;
-    &lt;nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
+    &lt;nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
       style="--drawer-max-height:100%; --drawer-truncate:2;"&gt;
       &lt;div class="nds-scroll-more nds-divided"&gt;
         &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
@@ -772,7 +772,7 @@ direction: ltr
   &lt;/div&gt;
   &lt;div class="nds-flex nds-col" style="--align: start;--gap: 0;"&gt;
     &lt;h4&gt;Quick Links&lt;/h4&gt;
-    &lt;nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke" hidden
+    &lt;nav class="nds-drawer nds-divided nds-fit nds-card nds-stroke"
       style="--drawer-max-height:100%; --drawer-truncate:2;"&gt;
       &lt;div class="nds-scroll-more nds-divided"&gt;
         &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
@@ -866,7 +866,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-flex nds-col" style="--gap: 0; width: 420px; max-width: 100%;">
-                            <nav class="nds-drawer" style="--drawer-max-height: 360px;" hidden>
+                            <nav class="nds-drawer" style="--drawer-max-height: 360px;">
                                 <div class="nds-scroll-more nds-divided">
                                     <ul class="nds-drawer-list nds-scroll-more-content">
                                         <li data-status="success">
@@ -961,7 +961,7 @@ direction: ltr
                         </div>
                     </div>
                     <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided" hidden>
+                        <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -981,7 +981,7 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;div class="nds-flex nds-col" style="--gap: 0;"&gt;
-  &lt;nav class="nds-drawer" style="--drawer-max-height: 360px;" hidden&gt;
+  &lt;nav class="nds-drawer" style="--drawer-max-height: 360px;"&gt;
     &lt;div class="nds-scroll-more nds-divided"&gt;
       &lt;ul class="nds-drawer-list nds-scroll-more-content"&gt;
         &lt;li data-status="success"&gt;

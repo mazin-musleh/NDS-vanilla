@@ -26,94 +26,12 @@
 // Hero section - First visual element on most pages
 @use 'components/hero';
 
-/* ── Hero skeleton (pre-init, scoped to body:not([data-nds-loaded])) ──
-   Pre-init overrides — not part of the hero component's permanent design.
-   Kept here (not in _hero.scss / _skeleton.scss) so they travel with crit
-   without polluting canonical source files. */
-body:not([data-nds-loaded]) {
-    .nds-hero-section:not(.nds-sub) :is(.nds-section-title, .nds-section-description) {
-        color: var(--text-oncolor-primary);
-    }
+// Skeleton - pre-init layout reservations (body:not([data-nds-loaded]) scope)
+@use 'skeleton';
 
-    /* Content wrapper padding — mirrors layout/_content-layout.scss so the
-       slide / hero-section reserves the horizontal viewport gutter pre-init.
-       Without it, hero overlay text starts at the viewport edge and jumps in
-       once main applies the padding. */
-    :is(.nds-content-wrapper, .nds-hero-section) {
-        --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
-        width: 100%;
-        padding-inline: var(--_wrapper-padding);
-
-        .nds-full-width {
-            width: 100vw !important;
-            margin-inline: calc(50% - 50vw);
-        }
-
-        .nds-max-width {
-            margin-inline: calc(var(--_wrapper-padding) * -1);
-        }
-    }
-
-    /* Breadcrumb skeleton — sub-hero's <nav class="nds-breadcrumb-nav" hidden>
-       collapses to display:none with the [hidden] attribute, so layout shifts
-       when JS removes hidden. Reserve the space by overriding to display:block
-       + visibility:hidden. Crumb separator slot mirrors _breadcrumb.scss. */
-    [hidden].nds-breadcrumb-nav {
-        display: block;
-        visibility: hidden;
-        overflow-x: hidden;
-        max-width: 100%;
-    }
-
-    .nds-breadcrumb {
-        display: flex;
-    }
-
-    .nds-breadcrumb li:not(:last-child)::after {
-        content: "";
-        display: inline-block;
-        width: 24px;
-    }
-
-    :is(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
-        display: flex;
-        height: 100%;
-        width: 100%;
-    }
-
-    /* Swipers collapse to their first slide until JS sets
-       data-swiper-initialized. Prevents pre-init flex layout from
-       widening the document and triggering a horizontal scrollbar. */
-    .nds-swiper:not([data-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
-        display: none;
-    }
-}
-
-// Hide gate for non-hero chrome + hero action — duplicates
-// _includes/critical-inline.html for sites that haven't migrated to the
-// inline payload. Released by main's reveal rules.
-//
-// Why .nds-hero-section .nds-section-action is here (not in the hero reveal
-// below): its <button> children need .nds-btn styling from main. Revealing
-// at crit-load would flash unstyled buttons. Main paints them styled, then
-// reveals.
-:where(
-    .nds-topbar > *,
-    .nds-main-nav > *,
-    .nds-hero-section .nds-section-action,
-    .nds-content-layout,
-    .nds-user-feedback-section,
-    .nds-accessibility-toggle,
-    .nds-footer
-) {
-    visibility: hidden;
-}
-
-// Reveal gate for hero content set by _includes/critical-inline.html.
-// Fires when crit lands — hero text/CTA paint with full hero styling.
-// (Hero is intentionally NOT in the hide gate above so this rule is only
-// active for the inline-payload path; on the non-inline path nothing hides
-// hero in the first place.)
-:where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) {
-    visibility: visible;
+// Universal hide primitive. !important so author display rules can't
+// override the hidden semantic. Removes the need for :not([hidden])
+// guards across component CSS.
+:is(.nds-hidden, [hidden], [data-state~=hidden]) {
+    display: none !important;
 }

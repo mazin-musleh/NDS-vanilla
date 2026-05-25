@@ -24,7 +24,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">MD</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
@@ -77,7 +77,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
+          <div class="nds-tabs nds-code nds-divided">
             <div class="nds-tab-list-container nds-scroll-more">
               <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
@@ -140,7 +140,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">MD</span>
                 </button>
-                <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-menu">
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                       data-toggler='["nds-sm", ".nds-switch-container", "sizeToggle"]'>
@@ -225,7 +225,7 @@ direction: ltr
             </div>
           </div>
           <div class="demo-code">
-          <div class="nds-tabs nds-code nds-divided" hidden>
+          <div class="nds-tabs nds-code nds-divided">
             <div class="nds-tab-list-container nds-scroll-more">
               <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"

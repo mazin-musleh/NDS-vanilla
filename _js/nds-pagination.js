@@ -455,10 +455,8 @@
                 });
             }
 
-            // Build pagination while still hidden, then reveal in its final
-            // state — no all-items → paginated flash, no forced reflow.
+            // Build pagination in final state — no all-items → paginated flash.
             updatePagination(lastPerPage);
-            NDS.reveal(contentContainer);
 
             // Watch for --per-page changes on resize. Stored handle lets the
             // module-level `.nds-paged-content` removal listener release the

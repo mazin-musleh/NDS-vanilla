@@ -9,7 +9,7 @@
 // FILTER CONTAINER IN DROPMENU
 // ==============================================
 
-.nds-auto-fill:not([hidden]) {
+.nds-auto-fill {
     display: flex;
     gap: var(--spacing-md);
     flex-direction: column;
@@ -36,7 +36,7 @@
 // APPLIED FILTERS (standalone)
 // ==============================================
 
-.nds-filter-applied:not([hidden]) {
+.nds-filter-applied {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-md);
