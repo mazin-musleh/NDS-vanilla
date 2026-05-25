@@ -1062,7 +1062,12 @@
             if (!listening && document.querySelector(SEL)) startListening();
         }
 
-        document.addEventListener('DOMContentLoaded', () => update());
+        // Defer initial scan to idle — the last-row class is cosmetic (removes
+        // bottom borders on last-row items), not critical for first paint.
+        // Reading offsetTop/offsetParent on DOMContentLoaded forced a 15ms+
+        // layout pass that competed with the eager init batch.
+        const idleScan = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+        document.addEventListener('DOMContentLoaded', () => idleScan(() => update()));
 
         return { update };
     })();
