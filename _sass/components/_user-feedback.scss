@@ -5,18 +5,8 @@
     flex-direction: column;
     gap: var(--spacing-4xl);
 
-    // Visible by default
-    &-question,
-    &-answer-btn,
-    &-statistic {
-        display: flex;
-    }
-
-    // Hidden via [hidden] attr - show when visible
-    &-status:not([hidden]),
-    &-details:not([hidden]),
-    &-submit:not([hidden]),
-    &-close:not([hidden]) {
+    // Sub-views — visible unless [hidden] (state-driven on -status/-details/-submit/-close)
+    :is(&-question, &-answer-btn, &-statistic, &-status, &-details, &-submit, &-close):not([hidden]) {
         display: flex;
     }
 
@@ -29,7 +19,6 @@
 
     // STATE: Details
     &[data-state="details"] {
-
         :is(.nds-user-feedback-statistic, .nds-why-yes, .nds-why-no) {
             display: none;
         }
@@ -41,15 +30,8 @@
     }
 
     // STATE: Status
-    &[data-state="status"] {
-
-        :is(.nds-user-feedback-question, .nds-user-feedback-answer-btn) {
-            display: none;
-        }
-
-        .nds-user-feedback-statistic {
-            display: flex;
-        }
+    &[data-state="status"] :is(.nds-user-feedback-question, .nds-user-feedback-answer-btn) {
+        display: none;
     }
 
     // Structure
