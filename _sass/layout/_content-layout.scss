@@ -216,19 +216,3 @@ main {
     }
 }
 
-/* ── Content wrapper ── */
-
-:is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) {
-    --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
-    width: 100%;
-    padding-inline: var(--_wrapper-padding);
-
-    .nds-full-width {
-        width: 100vw !important;
-        margin-inline: calc(50% - 50vw);
-    }
-
-    .nds-max-width {
-        margin-inline: calc(var(--_wrapper-padding) * -1);
-    }
-}

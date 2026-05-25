@@ -8,28 +8,6 @@
    ======================================== */
 @use './mixins' as *;
 
-/* Paint anything (atom, image, masked surface) with the static
-   skeleton gradient. Single source of truth — every direct usage of
-   --nds-skeleton-fill goes through this mixin.
-   color:transparent hides any real/fallback glyph the gradient covers
-   (icon tofu, transparent-text bars); harmless on image surfaces. */
-@mixin skeleton-fill {
-    background: var(--nds-skeleton-fill);
-    color: transparent !important;
-}
-
-/* Paint a (transparent-text) element as a skeleton bar — used by text
-   bars in cards / alerts / definition lists / sidemenu-toggle label. */
-@mixin skeleton-bar {
-    @include skeleton-fill;
-    border-radius: var(--nds-skeleton-radius);
-    color: transparent;
-
-    >* {
-        color: transparent;
-    }
-}
-
 body:not([data-nds-loaded]) {
 
     /* ── Content Layout ──
@@ -47,41 +25,23 @@ body:not([data-nds-loaded]) {
     }
 
     /* ── Hero ──
-       Hero text starts white-on-image; theme tokens flip later for sub-flat. */
+       Full-bleed hero text paints white over the image; sub variants
+       pick up their own theme tokens once main lands. */
     .nds-hero-section:not(.nds-sub) :is(.nds-section-title, .nds-section-description) {
         color: var(--text-oncolor-primary);
     }
 
-    /* Content wrapper padding — mirrors layout/_content-layout.scss so the
-       slide / hero-section reserves the horizontal viewport gutter pre-init.
-       Without it, hero overlay text starts at the viewport edge and jumps in
-       once main applies the padding. */
-    :is(.nds-content-wrapper, .nds-hero-section) {
-        --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
-        width: 100%;
-        padding-inline: var(--_wrapper-padding);
-
-        .nds-full-width {
-            width: 100vw !important;
-            margin-inline: calc(50% - 50vw);
-        }
-
-        .nds-max-width {
-            margin-inline: calc(var(--_wrapper-padding) * -1);
-        }
-    }
-
     /* ── Breadcrumb ──
-       Reserve flex row + crumb-separator slot so the breadcrumb-nav's height
-       and inline width are stable before main CSS lands. */
+       Reserve flex row + crumb-separator slot so the breadcrumb-nav's
+       height and inline width are stable before main CSS lands. */
     .nds-breadcrumb {
         display: flex;
-    }
 
-    .nds-breadcrumb li:not(:last-child)::after {
-        content: "";
-        display: inline-block;
-        width: 24px;
+        li:not(:last-child)::after {
+            content: "";
+            display: inline-block;
+            width: 24px;
+        }
     }
 
     /* ── Swiper ──
@@ -101,14 +61,41 @@ body:not([data-nds-loaded]) {
 
 }
 
-/* ── Hide gate ──
-   Fallback for sites without the inline critical-inline.html payload.
-   Duplicates the inline `:where(...){visibility:hidden}` so consumers
-   using only the external crit get the same FOUC protection.
+/* ── Wrapper padding ──
+   Every section (hero, content, content-wrapper) gets the same horizontal
+   viewport gutter — clamps to the outer viewport-padding, with a max-width
+   stop. .nds-full-width children break out to the full viewport;
+   .nds-max-width children pull back to the gutter edge. */
+:is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) {
+    --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+    width: 100%;
+    padding-inline: var(--_wrapper-padding);
 
-   .nds-hero-section .nds-section-action lives here (not in the reveal
-   below) because its <button> children need main's .nds-btn styling —
-   revealing at crit-load would flash unstyled CTAs. Released by main. */
+    .nds-full-width {
+        width: 100vw !important;
+        margin-inline: calc(50% - 50vw);
+    }
+
+    .nds-max-width {
+        margin-inline: calc(var(--_wrapper-padding) * -1);
+    }
+}
+
+/* ── Nav background + shadow ──
+   Paint the main-nav bar from first byte. Both --background-nav and
+   --shadow-md live in variables-critical so the var() refs resolve. */
+.nds-main-nav {
+    background-color: var(--background-nav);
+    box-shadow: var(--shadow-md);
+    z-index: 1;
+}
+
+/* ── Hide gate ──
+   Fallback for sites without inline crit. Mirrors the inline payload's
+   visibility-hidden gate so consumers using only the external crit get
+   the same FOUC protection. Hero section-action sits here (not below)
+   because its CTA buttons need main's .nds-btn styling — revealing pre-main
+   would flash unstyled buttons. */
 :where(
     .nds-topbar > *,
     .nds-main-nav > *,
@@ -122,9 +109,11 @@ body:not([data-nds-loaded]) {
 }
 
 /* ── Reveal at crit-load ──
-   Hero text/wrapper paint as soon as crit lands (no JS-init wait).
-   Hero itself isn't in the hide gate, so this rule only matters for
-   the inline-crit payload path which DOES hide these. */
+   Hero body + wrapper (containing title / description / breadcrumb)
+   paint as soon as crit lands. Only matters for the inline-crit payload
+   path, which hides these in its own gate. Scoped to hero — revealing
+   anything inside .nds-content-layout opens the slope where every
+   below-the-fold CLS demands its own skeleton. */
 :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper)) {
     visibility: visible;
 }
