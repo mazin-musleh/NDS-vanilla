@@ -24,7 +24,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Spacing: ">
                                     <span class="nds-label">Spacing: Default</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-divider", "dividerSize"]'
@@ -128,7 +128,7 @@ direction: ltr
                                     <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                                     <span class="nds-label">Actions</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item">
                                             <i class="hgi hgi-stroke hgi-edit-02"></i>
@@ -176,7 +176,7 @@ direction: ltr
     &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Actions&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu"&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;button class="nds-btn nds-subtle nds-dropmenu-item"&gt;
         &lt;i class="hgi hgi-stroke hgi-edit-02"&gt;&lt;/i&gt;

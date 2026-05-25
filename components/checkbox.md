@@ -25,7 +25,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">SM</span>
                 </button>
-                <div class="nds-dropmenu-menu">
+                <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-check-container", "sizeToggle"]'>
@@ -54,7 +54,7 @@ direction: ltr
                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                   <span class="nds-label">State</span>
                 </button>
-                <div class="nds-dropmenu-menu">
+                <div class="nds-dropmenu-menu" hidden>
                   <div class="nds-dropmenu-scroll">
                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                       data-toggler='["", ".nds-form-container", "formState"]'>

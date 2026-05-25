@@ -25,7 +25,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Success</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".nds-alert", "alertVariant", "attr"]'>
@@ -169,7 +169,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Critical</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=success", ".nds-alert", "inlineVariant", "attr"]'>
@@ -444,7 +444,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">Success</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=success", ".nds-alert", "toastVariant", "attr"]'>

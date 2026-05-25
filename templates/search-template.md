@@ -46,7 +46,7 @@ exclude_showcase: false
                     <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
                     <span class="nds-label">Sort</span>
                 </button>
-                <div class="nds-dropmenu-menu">
+                <div class="nds-dropmenu-menu" hidden>
                     <div class="nds-dropmenu-scroll">
                         <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort data-filter-target="search_results_content">
                             <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
@@ -69,7 +69,7 @@ exclude_showcase: false
                     <i class="hgi hgi-stroke hgi-filter"></i>
                     <span class="nds-label">Filter</span>
                 </button>
-                <div class="nds-dropmenu-menu" style="min-width: 260px;">
+                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                     <div class="nds-dropmenu-scroll">
                         <div data-filter="category" data-filter-legend="Category"
                             data-filter-type="checkbox" data-no-auto-close></div>

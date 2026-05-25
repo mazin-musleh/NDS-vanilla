@@ -36,7 +36,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
                                     <span class="nds-label">Card View: None</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-tabs", "nds-cardView"]'>
@@ -438,7 +438,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
                                     <span class="nds-label">Card View: None</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["", ".nds-tabs", "nds-cardView"]'>

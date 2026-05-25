@@ -42,7 +42,7 @@ direction: ltr
                                             <i class="hgi hgi-stroke hgi-filter"></i>
                                             <span class="nds-label">Filter</span>
                                         </button>
-                                        <div class="nds-dropmenu-menu">
+                                        <div class="nds-dropmenu-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <div data-filter="department"
                                                     data-filter-type="checkbox" data-filter-legend="Department"
@@ -136,7 +136,7 @@ direction: ltr
         &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
         &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
       &lt;/button&gt;
-      &lt;div class="nds-dropmenu-menu"&gt;
+      &lt;div class="nds-dropmenu-menu" hidden&gt;
         &lt;div class="nds-dropmenu-scroll"&gt;
           &lt;div data-filter="department"
             data-filter-type="checkbox"
@@ -225,7 +225,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;">
+                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="status"
                                             data-filter-type="checkbox" data-filter-legend="Status"
@@ -317,7 +317,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;"&gt;
+  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Checkbox: multi-select, OR logic --&gt;
       &lt;div data-filter="status"
@@ -418,7 +418,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;">
+                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="priority"
                                             data-filter-type="radio" data-filter-legend="Priority"
@@ -510,7 +510,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;"&gt;
+  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Radio: single-select --&gt;
       &lt;div data-filter="priority"
@@ -610,7 +610,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" style="min-width: 260px;">
+                                <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="feature"
                                             data-filter-type="switch" data-filter-legend="Features"
@@ -714,7 +714,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;"&gt;
+  &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;!-- Switch: toggle, OR logic --&gt;
       &lt;div data-filter="feature"
@@ -832,7 +832,7 @@ direction: ltr
                                     <i class="hgi hgi-stroke hgi-filter"></i>
                                     <span class="nds-label">Filter</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <div data-filter="category"
                                             data-filter-type="radio" data-filter-legend="Category"
@@ -943,7 +943,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu"&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;div data-filter="category"
         data-filter-type="radio"
@@ -1047,7 +1047,7 @@ direction: ltr
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
     &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu"&gt;
+  &lt;div class="nds-dropmenu-menu" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
       &lt;div data-filter="system"
         data-filter-type="checkbox"
@@ -1227,7 +1227,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
           &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
           &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
         &lt;/button&gt;
-        &lt;div class="nds-dropmenu-menu"&gt;
+        &lt;div class="nds-dropmenu-menu" hidden&gt;
           &lt;div class="nds-dropmenu-scroll"&gt;
             &lt;div data-filter="category"
               data-filter-type="checkbox"
@@ -1397,7 +1397,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                                         <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
                                         <span class="nds-label">Sort</span>
                                     </button>
-                                    <div class="nds-dropmenu-menu">
+                                    <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
                                             <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort>
                                                 <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
@@ -1487,7 +1487,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
       &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;span class="nds-label"&gt;Sort&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu"&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort&gt;
           &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;

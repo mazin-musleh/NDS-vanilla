@@ -25,7 +25,7 @@ direction: ltr
                             <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                 <span class="nds-label">Start</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <div class="nds-dropmenu-scroll">
                                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                         data-toggler='["--justify:flex-start", ".nds-flex", "flexJustify", "style"]'>
@@ -110,7 +110,7 @@ direction: ltr
                             <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                 <span class="nds-label">Row</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <div class="nds-dropmenu-scroll">
                                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                         data-toggler='["nds-row", ".nds-flex", "flexDirection"]'>
@@ -203,7 +203,7 @@ direction: ltr
                             <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
                                 <span class="nds-label">Wrap</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <div class="nds-dropmenu-scroll">
                                     <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                         data-toggler='["nds-wrap", ".nds-flex", "flexWrap"]'>

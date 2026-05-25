@@ -26,7 +26,7 @@ direction: ltr
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Background: ">
                                     <span class="nds-label">Background: Default</span>
                                 </button>
-                                <div class="nds-dropmenu-menu">
+                                <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item" data-state="selected" data-quote-bg="default">
                                             <span class="nds-label">Default</span>

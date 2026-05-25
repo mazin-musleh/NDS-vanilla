@@ -46,7 +46,7 @@
                             <span class="nds-label">{{ item.label }}</span>
                         </a>
                         {%- if item.type == 'dropdown' %}
-                        <div class="nds-dropdown-menu">
+                        <div class="nds-dropdown-menu" hidden>
                             <div class="nds-dropdown-content nds-content-wrapper">
                                 {%- if item.template %}
                                 {%- include {{ item.template }} item=item %}
@@ -112,7 +112,7 @@
                         {%- endif %}
                         {%- endif %}
                         {%- if item.type == 'dropdown' %}
-                        <div class="nds-dropdown-menu{%- if item.content_class %} {{ item.content_class }}{%- endif %}">
+                        <div class="nds-dropdown-menu{%- if item.content_class %} {{ item.content_class }}{%- endif %}" hidden>
                             <div class="nds-dropdown-content">
                                 {%- if item.template %}
                                 {%- include {{ item.template }} item=item %}

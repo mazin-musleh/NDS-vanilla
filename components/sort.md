@@ -29,7 +29,7 @@ direction: ltr
                                         <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
                                         <span class="nds-label">Sort</span>
                                     </button>
-                                    <div class="nds-dropmenu-menu">
+                                    <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
                                             <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort>
                                                 <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
@@ -122,7 +122,7 @@ direction: ltr
       &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;span class="nds-label"&gt;Sort&lt;/span&gt;
     &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu"&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
         &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort&gt;
           &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;

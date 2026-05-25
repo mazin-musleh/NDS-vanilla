@@ -286,7 +286,7 @@
         },
 
         toggle(el, open) {
-            const { animTarget, isInMinimal } = getDropdownAnimTarget(el);
+            const { animTarget, isInMinimal, menu } = getDropdownAnimTarget(el);
             const navLink = el.querySelector('.nds-nav-link');
 
             // Maintain the open set when toggle actually flips state.
@@ -311,14 +311,24 @@
                 blockWhileAnimating: open,
                 onStart: () => {
                     overflow.schedule('high', 10);
-                    if (open) applyFitShift(el);
+                    if (open) {
+                        // Drop intrinsic [hidden] before the open transition so
+                        // display:none doesn't kill the animation.
+                        menu?.removeAttribute('hidden');
+                        applyFitShift(el);
+                    }
                 },
                 onComplete: () => {
                     if (!isInMinimal) updatePositions();
                     overflow.schedule('low', 100);
 
-                    if (!open && !collapseHandlesBackdrop) {
-                        if (_openDropdowns.size === 0 && !hasState(DOM.collapse, 'open') && !_pendingToggleTimer) {
+                    if (!open) {
+                        // Restore [hidden] after the close transition ends.
+                        menu?.setAttribute('hidden', '');
+                        if (!collapseHandlesBackdrop &&
+                            _openDropdowns.size === 0 &&
+                            !hasState(DOM.collapse, 'open') &&
+                            !_pendingToggleTimer) {
                             hideNavBackdrop('dropdown');
                         }
                     }
@@ -382,10 +392,21 @@
                 getMenu: () => DOM.dgaDigitalStamp,
                 onStart: () => {
                     DOM.dgaTab?.setAttribute('aria-expanded', String(!isOpen));
-                    if (!isOpen) NDS.State.add(DOM.dgaTab, 'expanded');
-                    else NDS.State.remove(DOM.dgaTab, 'expanded');
+                    if (!isOpen) {
+                        NDS.State.add(DOM.dgaTab, 'expanded');
+                        // Drop intrinsic [hidden] before the open transition so
+                        // display:none doesn't kill the animation.
+                        DOM.dgaDigitalStamp.removeAttribute('hidden');
+                    } else {
+                        NDS.State.remove(DOM.dgaTab, 'expanded');
+                    }
                 },
-                onComplete: () => { updatePositions(); overflow.schedule(); }
+                onComplete: () => {
+                    updatePositions();
+                    overflow.schedule();
+                    // Restore [hidden] after the close transition ends.
+                    if (isOpen) DOM.dgaDigitalStamp.setAttribute('hidden', '');
+                }
             });
         }
     };

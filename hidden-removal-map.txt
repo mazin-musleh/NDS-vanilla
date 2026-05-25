@@ -28,7 +28,6 @@ Markup: [hidden] removed from component roots (FOUC guards)
 <X class="nds-swiper"           hidden>  → <X class="nds-swiper">
 <X class="nds-drawer"           hidden>  → <X class="nds-drawer">
 <X class="nds-breadcrumb-nav"   hidden>  → <X class="nds-breadcrumb-nav">
-<X class="nds-dropmenu-menu"    hidden>  → <X class="nds-dropmenu-menu">
 <X class="nds-digitalStamp-tab" hidden>  → <X class="nds-digitalStamp-tab">
 <X id="ndsNavCollapse"          hidden>  → <X id="ndsNavCollapse">
 <X class="nds-footer"           hidden>  → <X class="nds-footer">
@@ -40,9 +39,18 @@ Markup: [hidden] KEPT (intrinsic state, user-driven)
 ----------------------------------------------------
 <X class="nds-modal"                       hidden>  → keep (closed until opened)
 <X class="nds-tooltip"                     hidden>  → keep (closed until hover/focus)
+<X class="nds-dropmenu-menu"               hidden>  → keep (closed until trigger click)
+<X class="nds-dropdown-menu"               hidden>  → keep (closed until nav-link click)
 <X class="nds-accessibility-panel"         hidden>  → keep (closed until FAB click)
 <X class="nds-nav-minimal"                 hidden>  → keep (toggled by overflow logic)
 <X id="nds-digitalStamp"                   hidden>  → keep (closed until tab click)
+<X id="ndsCookiesPopup"                    hidden>  → keep (cookie consent — JS toggles after consent check)
+<X class="nds-sidemenu-toggle"             hidden>  → keep (mobile-only — JS reveals at small viewports)
+<X class="nds-swiper-button-prev"          hidden>  → keep (revealed by NDS.Swiper.init when nav is needed)
+<X class="nds-swiper-button-next"          hidden>  → keep (revealed by NDS.Swiper.init when nav is needed)
+<X class="nds-swiper-pagination"           hidden>  → keep (revealed by NDS.Swiper.init when bullets are needed)
+<X class="nds-clear"                       hidden>  → keep (input clear button — JS reveals when input has value)
+<X class="nds-progress-circle"             hidden>  → keep (loading indicator — JS reveals during async work)
 <X class="nds-user-feedback-status"        hidden>  → keep (state machine)
 <X class="nds-user-feedback-close"         hidden>  → keep (state machine)
 <X class="nds-user-feedback-details"       hidden>  → keep (state machine)

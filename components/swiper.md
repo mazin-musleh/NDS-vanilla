@@ -24,7 +24,7 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
                                 <span class="nds-label">Bullets: Large</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                     data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
                                     <span class="nds-label">Large</span>
@@ -211,7 +211,7 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
                                 <span class="nds-label">Bullets: Large</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                     data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
                                     <span class="nds-label">Large</span>
@@ -355,7 +355,7 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
                                 <span class="nds-label">Bullets: Large</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                     data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
                                     <span class="nds-label">Large</span>
@@ -558,7 +558,7 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Bullets: ">
                                 <span class="nds-label">Bullets: Large</span>
                             </button>
-                            <div class="nds-dropmenu-menu">
+                            <div class="nds-dropmenu-menu" hidden>
                                 <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                     data-toggler='[["nds-md", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-sm", ".nds-swiper-pagination", "bulletSize", "remove"], ["nds-lg", ".nds-swiper-pagination", "bulletSize", "add"]]'>
                                     <span class="nds-label">Large</span>

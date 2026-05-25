@@ -199,7 +199,7 @@ header
   &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
     &lt;span class="nds-label"&gt;Services&lt;/span&gt;
   &lt;/a&gt;
-  &lt;div class="nds-dropdown-menu"&gt;
+  &lt;div class="nds-dropdown-menu" hidden&gt;
     &lt;div class="nds-dropdown-content nds-content-wrapper"&gt;
       &lt;div class="nds-dropdown-columns nds-colView"&gt;
 
@@ -268,7 +268,7 @@ header
   &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
     &lt;span class="nds-label"&gt;Tools&lt;/span&gt;
   &lt;/a&gt;
-  &lt;div class="nds-dropdown-menu nds-fit"&gt;
+  &lt;div class="nds-dropdown-menu nds-fit" hidden&gt;
     &lt;div class="nds-dropdown-content"&gt;
       &lt;div class="nds-dropdown-columns nds-rowView"&gt;
         &lt;div class="nds-list"&gt;
@@ -322,7 +322,7 @@ header
   &lt;a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"&gt;
     &lt;span class="nds-label"&gt;All Services&lt;/span&gt;
   &lt;/a&gt;
-  &lt;div class="nds-dropdown-menu"&gt;
+  &lt;div class="nds-dropdown-menu" hidden&gt;
     &lt;div class="nds-dropdown-content nds-content-wrapper"&gt;
       &lt;div class="nds-dropdown-columns nds-colView"&gt;
         &lt;div class="nds-column"&gt;

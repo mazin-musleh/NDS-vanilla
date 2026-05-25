@@ -99,7 +99,7 @@ direction: ltr
                                                 <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                                                 <span class="nds-label">Share Page</span>
                                             </button>
-                                            <div class="nds-dropmenu-menu">
+                                            <div class="nds-dropmenu-menu" hidden>
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X">
                                                     <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
                                                     <span class="nds-label">X</span>
@@ -161,7 +161,7 @@ direction: ltr
             &lt;i class="nds-icon nds-hgi-share-01" aria-hidden="true"&gt;&lt;/i&gt;
             &lt;span class="nds-label"&gt;Share Page&lt;/span&gt;
           &lt;/button&gt;
-          &lt;div class="nds-dropmenu-menu"&gt;
+          &lt;div class="nds-dropmenu-menu" hidden&gt;
             &lt;button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X"&gt;
               &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
               &lt;span class="nds-label"&gt;X&lt;/span&gt;

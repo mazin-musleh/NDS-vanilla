@@ -33,7 +33,7 @@ direction: ltr
                                             <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                                             <span class="nds-label">Select</span>
                                         </button>
-                                        <div class="nds-dropmenu-menu">
+                                        <div class="nds-dropmenu-menu" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-no-auto-close>
                                                     <legend class="nds-label">Technology</legend>
@@ -141,7 +141,7 @@ direction: ltr
         &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;span class="nds-label"&gt;Select&lt;/span&gt;
       &lt;/button&gt;
-      &lt;div class="nds-dropmenu-menu"&gt;
+      &lt;div class="nds-dropmenu-menu" hidden&gt;
         &lt;div class="nds-dropmenu-scroll"&gt;
           &lt;fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-no-auto-close&gt;
             &lt;legend class="nds-label"&gt;Technology&lt;/legend&gt;

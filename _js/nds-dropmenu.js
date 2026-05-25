@@ -460,6 +460,10 @@
             removeState(this.menu,     'closing');
             this.isOpen = true;
 
+            // Menu ships with [hidden] (intrinsic-state markup) — drop it
+            // before measurement so applyPosition() reads real dimensions.
+            this.menu.removeAttribute('hidden');
+
             // Portal first so subsequent measurement happens in <body>'s
             // containing block, free of any container-type/transform ancestor.
             // `data-portal-scope` on the wrapper opts in to mirroring parent
@@ -527,6 +531,9 @@
                 // markup queries (e.g. `dropmenu.querySelector(...)`) still
                 // resolve while closed.
                 NDS.unportal(this.menu);
+                // Restore the intrinsic [hidden] state so the menu can't
+                // flash on the next paint if it re-enters the viewport.
+                this.menu.setAttribute('hidden', '');
                 this.emitEvent('nds:dropmenu:closed');
             };
 
