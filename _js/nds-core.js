@@ -977,16 +977,6 @@
         };
     };
 
-    // ── Lazy Reveal ────────────────────────────────────────────────────
-    // Strip `hidden` once the DOM is ready from any [data-nds-lazy] element.
-    // The opt-in marker for [hidden] elements that have no JS component to
-    // reveal themselves (every component-owned [hidden] self-reveals via
-    // NDS.reveal). Current consumer: the static footer.
-    document.addEventListener('DOMContentLoaded', () => {
-        const els = document.querySelectorAll('[data-nds-lazy]');
-        for (let i = 0; i < els.length; i++) els[i].removeAttribute('hidden');
-    });
-
     // ── Batched Reveal ──────────────────────────────────────────────────
     // Strips the `hidden` attribute from one or more elements, coalescing
     // every call within a frame into a single rAF flush — so a burst of

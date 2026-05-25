@@ -114,9 +114,10 @@ body[data-nds-loaded] :where(
     visibility: visible;
 }
 
-// Hero section-action revealed on main-load (not waiting for JS init).
-// Its only dependency was main's .nds-btn styling for the inner buttons;
-// as soon as main parses, painting it is safe — no FOUC of unstyled CTAs.
-:where(.nds-hero-section .nds-section-action){
+// Revealed at main-load (no JS-init dependency). Hero section-action's
+// buttons just need .nds-btn styling from main; footer is static markup
+// that needs nothing beyond CSS. Painting either is safe the moment main
+// parses.
+:where(.nds-hero-section .nds-section-action, .nds-footer){
     visibility: visible;
 }

@@ -103,7 +103,8 @@ body:not([data-nds-loaded]) {
     .nds-hero-section .nds-section-action,
     .nds-content-layout,
     .nds-user-feedback-section,
-    .nds-accessibility-toggle
+    .nds-accessibility-toggle,
+    .nds-footer
 ) {
     visibility: hidden;
 }
