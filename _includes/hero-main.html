@@ -17,7 +17,7 @@ Determine hero sliders source:
             {%- for slide in hero_sliders %}
             <div class="nds-swiper-slide nds-content-wrapper{%- if slide.class %} {{ slide.class }}{%- endif %}"{%- unless forloop.first %} hidden{%- endunless %}>
                 <div class="nds-hero-image-wrapper"
-                    style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    style="--overlay:{{ slide.overlay | default: 0.7 }}; position: absolute; inset: 0;">
                     {%- if forloop.first %}
                     <picture>
                         {%- if slide.src_small %}
