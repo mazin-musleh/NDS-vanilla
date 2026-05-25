@@ -24,11 +24,9 @@
     --_section-image-MB: var(--section-image-MB, var(--spacing-2xl));
 
     width: 100%;
-    padding-block-start: var(--_section-padding-block-start);
-    padding-block-end: var(--_section-padding-block-end);
+    padding-block: var(--_section-padding-block-start) var(--_section-padding-block-end);
     padding-inline: 0;
-    margin-block-start: var(--_section-margin-block-start);
-    margin-block-end: var(--_section-margin-block-end);
+    margin-block: var(--_section-margin-block-start) var(--_section-margin-block-end);
 }
 
 /* ── Section head ── */
