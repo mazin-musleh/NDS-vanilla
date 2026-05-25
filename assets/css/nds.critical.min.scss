@@ -81,10 +81,6 @@ body:not([data-nds-loaded]) {
         width: 100%;
     }
 
-    .nds-swiper.nds-hero .nds-swiper-slide {
-        flex: 1;
-    }
-
     /* Swipers collapse to their first slide until JS sets
        data-swiper-initialized. Prevents pre-init flex layout from
        widening the document and triggering a horizontal scrollbar. */
