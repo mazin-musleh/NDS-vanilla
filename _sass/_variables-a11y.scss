@@ -500,6 +500,13 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     transition-duration: 0.3s !important;
 }
 
+// Loading spinner — "still working" indicator (not decoration). Same
+// W3C-exempt class as progress; restores the native 1s infinite rotation.
+:root[data-a11y~="reduce-motion"] :is(.nds-loading, [data-state~="loading"])::after {
+    animation-duration: 1s !important;
+    animation-iteration-count: infinite !important;
+}
+
 // ----------------------------------------------
 // Bundle composition lives in MODE_BUNDLES (_js/nds-accessibility.js):
 //   epilepsy-safe        → reduce-motion, low-saturation         (WCAG 2.3.1)
