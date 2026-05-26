@@ -129,6 +129,7 @@ exclude:
   - standard-page.md
   - subsite.md
   - class-rename-map.txt
+  - hidden-removal-map.txt
   - README.md
   - CONTRIBUTING.md
   - CODE_OF_CONDUCT.md
