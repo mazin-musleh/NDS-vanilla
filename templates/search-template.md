@@ -95,7 +95,7 @@ exclude_showcase: false
             <div class="nds-chips"></div>
         </div>
         <div class="nds-section-body">
-            <div id="search_results_content" class="nds-paged-content nds-grid" hidden
+            <div id="search_results_content" class="nds-paged-content nds-grid"
                 style="--per-page: 10; --max-col: 1; --mid-col: 1; --min-col: 1;">
                 {% for item in site.data.content["search-results"] %}
                 <div class="nds-page-item nds-card nds-stroke" data-sort-title="{{ item.title }}">

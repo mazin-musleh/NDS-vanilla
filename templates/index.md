@@ -64,7 +64,7 @@ sidemenu_mode: false
             </div>
         </div>
         <div class="nds-section-body">
-            <div id="templates_list" class="nds-paged-content nds-grid" hidden
+            <div id="templates_list" class="nds-paged-content nds-grid"
                 style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
                 {% for tpl in site.data.content.templates %}

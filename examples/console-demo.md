@@ -261,7 +261,7 @@ hideFeedback: true
             </div>
         </div>
         <div class="nds-section-body">
-            <div class="nds-paged-content" hidden>
+            <div class="nds-paged-content">
                 <table class="nds-table nds-compact nds-sortable">
                     <thead>
                         <tr>
@@ -457,7 +457,7 @@ hideFeedback: true
             </div>
         </div>
         <div class="nds-section-body">
-            <div class="nds-paged-content" style="--per-page:6;" hidden>
+            <div class="nds-paged-content" style="--per-page:6;">
                 <div class="nds-grid" id="teamDirectoryGrid" data-filter-items=".nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
                     {% for user in site.data.content.users %}
                     <div class="nds-card nds-stroke nds-rowView nds-page-item">

@@ -85,7 +85,7 @@ exclude_showcase: false
             </div>
         </div>
         <div class="nds-section-body">
-        <div id="services_list_content" class="nds-paged-content nds-grid" hidden
+        <div id="services_list_content" class="nds-paged-content nds-grid"
             style="--per-page: 12; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
             {% for service in site.data.content.services %}

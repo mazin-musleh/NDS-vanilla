@@ -63,7 +63,7 @@ sidemenu_mode: false
             </div>
         </div>
         <div class="nds-section-body">
-        <div id="components_list" class="nds-paged-content nds-grid" hidden
+        <div id="components_list" class="nds-paged-content nds-grid"
             style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
             {% for comp in site.data.content.components %}

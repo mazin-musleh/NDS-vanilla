@@ -481,7 +481,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-paged-content nds-grid" hidden
+                            <div class="nds-paged-content nds-grid"
                                 style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;">
                                 <div class="nds-page-item nds-card nds-stroke">Card 1</div>
                                 <div class="nds-page-item nds-card nds-stroke">Card 2</div>
@@ -527,7 +527,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div class="nds-paged-content nds-grid" hidden
+&lt;div class="nds-paged-content nds-grid"
     style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;"&gt;
     &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 1&lt;/div&gt;
     &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 2&lt;/div&gt;
@@ -605,7 +605,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-paged-content" style="--per-page: 5;" hidden>
+                            <div class="nds-paged-content" style="--per-page: 5;">
                                 <table class="nds-table nds-sortable">
                                     <thead>
                                         <tr>
@@ -673,7 +673,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div class="nds-paged-content" style="--per-page: 5;" hidden&gt;
+&lt;div class="nds-paged-content" style="--per-page: 5;"&gt;
     &lt;table class="nds-table"&gt;
         &lt;thead&gt;
             &lt;tr&gt;
