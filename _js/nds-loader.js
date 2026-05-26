@@ -257,15 +257,11 @@
             init: () => NDS.TimeDate?.init?.(),
             idle: true,
         },
-        {
-            // Idle: the panel is display:none until opened, and persisted a11y
-            // modes apply early via the FOUC guard — so the wiring can wait out
-            // the eager burst.
-            name: 'accessibility',
-            selector: '[data-accessibility-panel]',
-            init: () => NDS.Accessibility?.init?.(),
-            idle: true,
-        },
+        // Note: accessibility is intentionally NOT registered here. The
+        // optional assets/js/nds-accessibility.min.js bundle self-boots via
+        // its own IIFE — arms on localStorage-saved prefs (apply on load) or
+        // on FAB click (lazy init). Loader has zero references; the bundle
+        // can be omitted entirely without touching core.
     ];
 
     // Shared MessageChannel for cross-batch yielding — allocated once per page

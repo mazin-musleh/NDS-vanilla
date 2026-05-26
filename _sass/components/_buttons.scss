@@ -693,6 +693,15 @@
     display: none;
   }
 
+  // Override the universal `[hidden]{display:none!important}` rule for
+  // legacy markup that still ships `<div class="nds-progress-circle" hidden>`.
+  // Visibility is controlled by the `.nds-progress` parent class — the [hidden]
+  // attribute is redundant and was dropped from current markup; this keeps old
+  // consumer markup working during arming/loading states.
+  &.nds-progress .nds-progress-circle[hidden] {
+    display: block !important;
+  }
+
   // ==============================================
   // NOTIFICATION BADGE
   // ==============================================

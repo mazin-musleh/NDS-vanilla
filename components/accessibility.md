@@ -392,7 +392,7 @@ direction: ltr
     &lt;div class="nds-accessibility-panel-footer"&gt;
         &lt;button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset"&gt;
             &lt;span class="nds-label" data-i18n="reset"&gt;Reset Settings&lt;/span&gt;
-            &lt;div class="nds-progress-circle" hidden&gt;
+            &lt;div class="nds-progress-circle"&gt;
                 &lt;svg width="100%" height="100%" viewBox="0 0 24 24"&gt;
                     &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"&gt;&lt;/circle&gt;
                     &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"&gt;&lt;/circle&gt;

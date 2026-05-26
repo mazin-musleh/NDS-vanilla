@@ -1088,3 +1088,28 @@
         get state() { return JSON.parse(JSON.stringify(state)); },
     };
 })();
+
+// ── Boot gate ──
+// Runs outside the main IIFE — only uses the public NDS.Accessibility API.
+// Loader skips accessibility unless the panel carries [data-armed]. Two ways
+// to arm: localStorage already has saved prefs (apply on load via loader),
+// or user clicks the FAB (lazy init on demand). No-pref + no-click sessions
+// pay zero init cost.
+(function bootAccessibility() {
+    const STORAGE_KEY = 'nds-a11y';
+    const panel = document.querySelector('[data-accessibility-panel]');
+    const fab = document.querySelector('[data-accessibility-toggle]');
+    if (!panel || !fab) return;
+
+    const arm = () => {
+        if (!panel.hasAttribute('data-armed')) panel.setAttribute('data-armed', '');
+        NDS.Accessibility?.init?.();
+    };
+
+    try { if (localStorage.getItem(STORAGE_KEY)) arm(); } catch (e) {}
+
+    fab.addEventListener('click', () => {
+        arm();
+        NDS.Accessibility?.toggle?.();
+    }, { once: true });
+})();

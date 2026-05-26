@@ -737,7 +737,7 @@ direction: ltr
                         <button class="nds-btn nds-primary nds-icon-only nds-progress nds-lg"
                             style="--progress-duration: 4000ms;" aria-label="Close">
                             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                            <div class="nds-progress-circle" hidden>
+                            <div class="nds-progress-circle">
                                 <svg width="100%" height="100%" viewBox="0 0 24 24">
                                     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
                                     <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -772,7 +772,7 @@ direction: ltr
         style="--progress-duration: 4000ms;"
         aria-label="Close"&gt;
   &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;div class="nds-progress-circle" hidden&gt;
+  &lt;div class="nds-progress-circle"&gt;
     &lt;svg width="100%" height="100%" viewBox="0 0 24 24"&gt;
       &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"&gt;&lt;/circle&gt;
       &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -876,7 +876,7 @@ direction: ltr
                         <button class="nds-btn nds-primary nds-icon-only nds-progress nds-progress-static nds-lg"
                             style="--progress-value: 25;" aria-label="Upload">
                             <i class="hgi hgi-stroke hgi-upload-02"></i>
-                            <div class="nds-progress-circle" hidden>
+                            <div class="nds-progress-circle">
                                 <svg width="100%" height="100%" viewBox="0 0 24 24">
                                     <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
                                     <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -911,7 +911,7 @@ direction: ltr
         style="--progress-value: 25;"
         aria-label="Upload"&gt;
   &lt;i class="hgi hgi-stroke hgi-upload-02"&gt;&lt;/i&gt;
-  &lt;div class="nds-progress-circle" hidden&gt;
+  &lt;div class="nds-progress-circle"&gt;
     &lt;svg width="100%" height="100%" viewBox="0 0 24 24"&gt;
       &lt;circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"&gt;&lt;/circle&gt;
       &lt;circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
