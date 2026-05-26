@@ -29,7 +29,6 @@ Markup: [hidden] removed from component roots (FOUC guards)
 <X class="nds-drawer"           hidden>  → <X class="nds-drawer">
 <X class="nds-breadcrumb-nav"   hidden>  → <X class="nds-breadcrumb-nav">
 <X class="nds-digitalStamp-tab" hidden>  → <X class="nds-digitalStamp-tab">
-<X id="ndsNavCollapse"          hidden>  → <X id="ndsNavCollapse">
 <X class="nds-footer"           hidden>  → <X class="nds-footer">
 
 Consumers using these classes in custom markup should also drop the
@@ -41,6 +40,7 @@ Markup: [hidden] KEPT (intrinsic state, user-driven)
 <X class="nds-tooltip"                     hidden>  → keep (closed until hover/focus)
 <X class="nds-dropmenu-menu"               hidden>  → keep (closed until trigger click)
 <X class="nds-dropdown-menu"               hidden>  → keep (closed until nav-link click)
+<X id="ndsNavCollapse"                     hidden>  → keep (skip layout pre-init; removeCollapseHidden() in nds-mainnav.js strips after main loads, then main CSS controls display per breakpoint)
 <X class="nds-accessibility-panel"         hidden>  → keep (closed until FAB click)
 <X class="nds-nav-minimal"                 hidden>  → keep (toggled by overflow logic)
 <X id="nds-digitalStamp"                   hidden>  → keep (closed until tab click)

@@ -597,11 +597,12 @@
         const should = state.isMinimal;
         const isBodyMin = document.body.classList.contains('nds-minimal');
         const wantsHidden = !should;
-        // Layouts server-render <body class="nds-minimal"> as a mobile-first
-        // FOUC default, so on init the body class can already match `should`
-        // while .nds-nav-minimal[hidden] hasn't been toggled yet. Compare
-        // both states so the first sync still fires when only the hidden
-        // attribute is out of step.
+        // Layouts render <body> without `nds-minimal` (desktop-first default;
+        // .nds-nav-minimal is gated by [hidden] in markup so no FOUC). On
+        // init the body class state can already match `should` while
+        // .nds-nav-minimal[hidden] hasn't been toggled yet. Compare both
+        // states so the first sync still fires when only the hidden attr
+        // is out of step.
         const isHidden = DOM.minimal ? DOM.minimal.hasAttribute('hidden') : wantsHidden;
         if (should !== isBodyMin || wantsHidden !== isHidden) {
             document.body.classList.toggle('nds-minimal', should);
@@ -1157,6 +1158,15 @@
         // only run the explicit pass when it didn't, otherwise PAB placement
         // walks every .nds-PAB twice and re-prepends nodes already in place.
         const bodyClassChanged = updateBodyClass();
+
+        // Strip [hidden] from #ndsNavCollapse so the universal
+        // `[hidden]{display:none!important}` rule no longer blocks the
+        // hamburger open transition. Markup ships with [hidden] to skip
+        // layout pre-init; placed after updateBodyClass so the body's
+        // minimal mode is set first, then the collapse becomes visible in
+        // its correct breakpoint layout (display:none mobile /
+        // display:flex desktop). Hamburger click can now animate freely.
+        removeCollapseHidden();
         setupEventListeners();
         // handleDocumentClick shares the setupEventListeners AbortController so
         // both document-click listeners detach atomically on teardown.
@@ -1176,19 +1186,6 @@
 
         // The initial updateNavMaxWidth runs from the ResizeObserver's first
         // delivery (see navResizeHandler) — a free read, no init-time reflow.
-
-        if (!DOM.primary) {
-            removeCollapseHidden();
-        } else {
-            // Safety-net fallback: overflow.check's first-run path also calls
-            // removeCollapseHidden after 100–500ms, so this almost always
-            // no-ops. Covers the rare case where overflow.check never runs
-            // (e.g. nav initially has zero-width container — display:none
-            // ancestor — so the cache-miss branch in updateNavMaxWidth that
-            // schedules the check never fires).
-            setTimeout(() => removeCollapseHidden(), 2000);
-        }
-
     }
 
     // Keep reduced-motion in sync
