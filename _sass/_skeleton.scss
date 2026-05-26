@@ -19,8 +19,10 @@ body:not([data-nds-loaded]) {
         min-height: 400px;
         width: 100%;
 
-        &.nds-wSideMenu {
-            grid-template-columns: var(--nds-sidemenu-width, 260px) 1fr;
+        @include desktop(min) {
+            &:where(.nds-wSideMenu) {
+                grid-template-columns: var(--nds-sidemenu-width, 260px) 1fr;
+            }
         }
     }
 
@@ -29,6 +31,35 @@ body:not([data-nds-loaded]) {
        pick up their own theme tokens once main lands. */
     .nds-hero-section:not(.nds-sub) :is(.nds-section-title, .nds-section-description) {
         color: var(--text-oncolor-primary);
+    }
+
+    /* ── Brand (nav logo + name) ──
+       Paint the brand identity from first byte — it's often the LCP
+       element above the fold. Mirrors layout/_mainnav.scss .nds-brand. */
+    .nds-main-nav .nds-brand {
+        display: flex;
+        align-items: center;
+        height: var(--nds-nav-height);
+        padding-block: var(--spacing-lg);
+        font-weight: bold;
+        gap: var(--spacing-lg);
+        flex-wrap: nowrap;
+        white-space: nowrap;
+
+        .nds-brand-name {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: var(--typo-text-clamp-md-FS);
+            line-height: var(--typo-text-clamp-md-LH);
+
+            .nds-brand-slogan {
+                display: block;
+                font-size: var(--typo-text-sm-FS);
+                line-height: var(--typo-text-sm-LH);
+                font-weight: 400;
+            }
+        }
     }
 
     /* ── Breadcrumb ──
@@ -110,10 +141,12 @@ body:not([data-nds-loaded]) {
 
 /* ── Reveal at crit-load ──
    Hero body + wrapper (containing title / description / breadcrumb)
-   paint as soon as crit lands. Only matters for the inline-crit payload
-   path, which hides these in its own gate. Scoped to hero — revealing
-   anything inside .nds-content-layout opens the slope where every
-   below-the-fold CLS demands its own skeleton. */
-:where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper)) {
+   and the nav brand (logo + name) paint as soon as crit lands. The
+   hide gate above blanket-hides `.nds-main-nav > *`; .nds-brand opts
+   back in here because it's typically the LCP element above the fold.
+   Scoped to hero + brand — revealing anything inside .nds-content-layout
+   opens the slope where every below-the-fold CLS demands its own
+   skeleton. */
+:where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper), .nds-brand) {
     visibility: visible;
 }
