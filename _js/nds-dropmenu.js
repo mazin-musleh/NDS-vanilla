@@ -305,6 +305,17 @@
                 this.trigger.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
+                    // Stash the click x so applyPosition() can horizontally
+                    // anchor the menu to where the user actually clicked
+                    // (matters on wide triggers — without this the menu
+                    // centers on the trigger and drifts from the click point).
+                    // Cleared in close(); keyboard / programmatic opens fall
+                    // back to trigger-center automatically. Consumers using
+                    // data-dropmenu-no-click can stash via instance._lastClickX
+                    // before calling toggle()/open() — see date-picker.
+                    this._lastClickX = (typeof e.clientX === 'number' && e.clientX > 0)
+                        ? e.clientX
+                        : null;
                     this.toggle();
                 });
             }
@@ -572,6 +583,7 @@
         close() {
             this.isOpen = false;
             _openDropmenus.delete(this.dropmenu);
+            this._lastClickX = null;
             this._closeCancelled = false;
 
             if (this.menu.contains(document.activeElement)) this.trigger.focus();
@@ -679,12 +691,21 @@
             let top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
             top = Math.max(topEdge, Math.min(top, p.viewportHeight - mr2.height - pad));
 
-            // Horizontal: center the menu on the trigger, then clamp inward
-            // if the centered position would clip a viewport edge (the same
-            // "centered + shifted on clip" pattern as the mainnav .nds-fit
-            // dropdown). Matches user expectation that a wide menu over a
-            // narrow trigger sits centered, not corner-anchored.
-            let leftPx = p.triggerRect.left + (p.triggerRect.width - mr2.width) / 2;
+            // Horizontal: anchor the menu on the click x (so wide triggers
+            // open near where the user clicked), falling back to trigger
+            // center for keyboard / programmatic opens. When the menu fits
+            // inside the trigger (narrow menu, wide trigger), additionally
+            // clamp the menu inside the trigger's horizontal bounds so it
+            // never overshoots past the trigger edges. Then clamp to the
+            // viewport ("centered + shifted on clip", same pattern as the
+            // mainnav .nds-fit dropdown).
+            const anchorX = (this._lastClickX != null)
+                ? this._lastClickX
+                : p.triggerRect.left + p.triggerRect.width / 2;
+            let leftPx = anchorX - mr2.width / 2;
+            if (mr2.width <= p.triggerRect.width) {
+                leftPx = Math.max(p.triggerRect.left, Math.min(leftPx, p.triggerRect.right - mr2.width));
+            }
             leftPx = Math.max(pad, Math.min(leftPx, vw - mr2.width - pad));
 
             // Cache flip direction so the scroll-tracker can reuse it without

@@ -571,13 +571,13 @@
                     self.setupDropmenu();
                 }
 
-                // Capture click x so the calendar opens centered on the
-                // click point (matters on wide desktop inputs — without this
-                // it'd center on the form-control and drift away from where
-                // the user actually clicked). Keyboard-driven toggle (no
-                // mouse event) falls back to form-control center via the
-                // adjustCalendarPosition default below.
-                self._lastClickX = (e && typeof e.clientX === 'number' && e.clientX > 0)
+                // Stash click x on the dropmenu instance so its applyPosition
+                // horizontally anchors the calendar on the click point
+                // (matters on wide desktop inputs — without this it'd center
+                // on the form-control and drift away from where the user
+                // actually clicked). Keyboard-driven toggle (no mouse event)
+                // leaves _lastClickX null and falls back to trigger center.
+                self.dropmenuInstance._lastClickX = (e && typeof e.clientX === 'number' && e.clientX > 0)
                     ? e.clientX
                     : null;
 
@@ -618,15 +618,6 @@
 
             this.dropmenuInstance = NDS.Dropmenu.create(formControl);
 
-            // Replace NDSDropmenu's measure-and-write applyPosition with the
-            // calendar-specific one: width matches the form-control, vertical
-            // flip is based on calendar height vs viewport space, and we use
-            // absolute coords (top: 100% / bottom: 100%) so the calendar
-            // scrolls naturally with its trigger — no viewport tracking needed.
-            this.dropmenuInstance.applyPosition = function () {
-                self.adjustCalendarPosition();
-            };
-
             // Calendar lifecycle hooks (replace the old toggleDropdown branches).
             // Guard `e.target !== formControl` — these events bubble, so the
             // inner month/year sub-dropmenus' open/close events would otherwise
@@ -638,7 +629,7 @@
                 self.initializeCalendar();
                 // Calendar grid was empty when applyPosition first ran; re-run
                 // after content is built so flip direction reflects real height.
-                self.adjustCalendarPosition();
+                self.dropmenuInstance.applyPosition();
             });
 
             formControl.addEventListener('nds:dropmenu:closed', function (e) {
@@ -948,59 +939,6 @@
             }
 
             return this._cachedTodaysHijriDate;
-        },
-
-        // Calendar position writer — bound onto the NDSDropmenu instance as
-        // applyPosition. Width and clamps come from CSS tokens
-        // (`--dropmenu-width: 100%`, --dropmenu-min/max-width), so JS writes
-        // vertical placement + a horizontal shift when the SCSS min-width
-        // forces the dropdown wider than the form-control. Coordinates are
-        // form-control-relative — the dropdown lives inside its wrapper
-        // (`position: absolute`) so it scrolls with the trigger naturally.
-        adjustCalendarPosition: function () {
-            var dropdown = this.elements.dropdown;
-            var formControl = this.elements.formControl;
-            if (!dropdown || !formControl) return;
-
-            // Flip direction: prefer below; flip up only when below is tight
-            // AND above has more room (avoids oscillation near the threshold).
-            var fcRect = formControl.getBoundingClientRect();
-            var ddRect = dropdown.getBoundingClientRect();
-            var ddHeight = ddRect.height;
-            var ddWidth = ddRect.width;
-            var gap = 4, pad = 8;
-            var spaceBelow = window.innerHeight - fcRect.bottom - gap;
-            var spaceAbove = fcRect.top - gap;
-            var flipUp = ddHeight > spaceBelow && spaceAbove > spaceBelow;
-
-            if (flipUp) {
-                dropdown.style.top = 'auto';
-                dropdown.style.bottom = (formControl.offsetHeight + gap) + 'px';
-            } else {
-                dropdown.style.top = (formControl.offsetHeight + gap) + 'px';
-                dropdown.style.bottom = 'auto';
-            }
-
-            // Horizontal anchor: prefer the click x (so wide desktop inputs
-            // open the calendar near where the user clicked), fall back to
-            // the form-control center (keyboard-driven open, or when the
-            // form-control is narrower than the calendar).
-            var anchorX = (this._lastClickX != null)
-                ? this._lastClickX
-                : fcRect.left + fcRect.width / 2;
-            var leftViewport = anchorX - ddWidth / 2;
-            // If the dropdown fits inside the form-control, keep it inside
-            // (avoids overshooting past the input edges on wide forms).
-            // Otherwise (narrow form, dropdown wider than input) only the
-            // viewport clamp applies.
-            if (ddWidth <= fcRect.width) {
-                leftViewport = Math.max(fcRect.left, Math.min(leftViewport, fcRect.right - ddWidth));
-            }
-            leftViewport = Math.max(pad, Math.min(leftViewport, window.innerWidth - ddWidth - pad));
-            // Convert viewport coord → form-control-relative (the dropdown's
-            // containing block via `position: absolute`).
-            dropdown.style.left = (leftViewport - fcRect.left) + 'px';
-            dropdown.style.right = 'auto';
         },
 
         initializeCalendar: function () {
