@@ -19,8 +19,7 @@
             closed: '',
             active: 'active'
         },
-        breakpoints: NDS.breakpoints,
-        transitionDuration: 250
+        breakpoints: NDS.breakpoints
     };
 
 
@@ -142,7 +141,7 @@
         submenu.addEventListener('transitionend', cleanup);
         setTimeout(() => {
             if (NDS.State.has(submenu, CONFIG.states.opening)) cleanup();
-        }, CONFIG.transitionDuration + 50);
+        }, NDS.transitionSpeed() + 50);
     }
 
     function hideSubmenu(listItem, button, submenu) {
@@ -164,7 +163,7 @@
         submenu.addEventListener('transitionend', cleanup);
         setTimeout(() => {
             if (NDS.State.has(submenu, CONFIG.states.closing)) cleanup();
-        }, CONFIG.transitionDuration + 50);
+        }, NDS.transitionSpeed() + 50);
     }
 
     function dispatchDrawerEvent(listItem, eventType, data = {}) {

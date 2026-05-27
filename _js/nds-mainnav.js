@@ -936,7 +936,13 @@
                 const dir = state.css.isRTL ? -1 : 1;
                 DOM.primary.scrollTo({ left: atEnd ? 0 : DOM.primary.scrollLeft + amount * dir, behavior: 'smooth' });
             }
-            setTimeout(() => overflow.checkEnd(), 300);
+            // Fallback for browsers without `scrollend` (the listener below
+            // covers modern browsers). The smooth-scroll duration is
+            // browser-controlled, so a fixed 300 ms is a worst-case settle
+            // estimate — not derived from --nds-transition-speed.
+            if (!('onscrollend' in DOM.primary)) {
+                setTimeout(() => overflow.checkEnd(), 300);
+            }
         });
 
         // Scroll handling

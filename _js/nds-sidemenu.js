@@ -160,7 +160,7 @@
         };
 
         animTarget.addEventListener('transitionend', onClosed);
-        setTimeout(() => { if (!done) cleanup(); }, 300);
+        setTimeout(() => { if (!done) cleanup(); }, NDS.transitionSpeed() + 50);
     };
 
     function updateToggleLabel(accMenu, toggleBtn, isTopMode) {

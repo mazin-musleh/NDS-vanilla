@@ -598,8 +598,9 @@
         scrollToContent(pagination);
     }
 
-    // Global click handler for manual pagination (not auto-pagination)
-    const _paginationGlobalAC = new AbortController();
+    // Global click handler for manual pagination (not auto-pagination).
+    // Module-lifetime — the loader fires once per page and pagination has no
+    // teardown, so a plain listener (no AbortController) is correct here.
     document.addEventListener('click', (e) => {
         // Portaled dropmenu items don't bubble through .nds-pagination-list;
         // nds-dropmenu re-dispatches a synthetic click on the wrapper carrying
@@ -686,7 +687,7 @@
                 scrollToContent(pagination);
             }
         }
-    }, { signal: _paginationGlobalAC.signal });
+    });
 
     // Refresh auto-pagination for a specific content container (used by filters)
     function refreshAutoPagination(contentContainer) {
@@ -792,22 +793,20 @@
     }
 
     // Expose global API for unified init system
-    if (typeof window !== 'undefined') {
-        NDS.Pagination = {
-            init: initializePagination,
-            initAuto: initializeAutoPagination,
-            create: (container) => new NDSPagination(container),
-            refresh: refreshAutoPagination,
-            setPage: function(container, pageNumber) {
-                const pagination = container.querySelector('.nds-pagination-list') || container;
-                const allPages = getAllPageElements(pagination);
-                const pageNumbers = allPages.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
-                if (pageNumbers.length === 0) return;
-                setActivePage(pagination, pageNumber);
-                updatePrevNextStates(pagination, pageNumber, Math.min(...pageNumbers), Math.max(...pageNumbers));
-            }
-        };
-    }
+    NDS.Pagination = {
+        init: initializePagination,
+        initAuto: initializeAutoPagination,
+        create: (container) => new NDSPagination(container),
+        refresh: refreshAutoPagination,
+        setPage: function(container, pageNumber) {
+            const pagination = container.querySelector('.nds-pagination-list') || container;
+            const allPages = getAllPageElements(pagination);
+            const pageNumbers = allPages.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+            if (pageNumbers.length === 0) return;
+            setActivePage(pagination, pageNumber);
+            updatePrevNextStates(pagination, pageNumber, Math.min(...pageNumbers), Math.max(...pageNumbers));
+        }
+    };
 
     // Note: Initialization now handled by nds-loader.js unified system
 })();

@@ -615,7 +615,7 @@
             const onEnd = (e) => { if (e.target === this.menu) cleanup(); };
 
             this.menu.addEventListener('transitionend', onEnd);
-            setTimeout(cleanup, 200);
+            setTimeout(cleanup, NDS.transitionSpeed() + 50);
         }
 
         // ==============================================
