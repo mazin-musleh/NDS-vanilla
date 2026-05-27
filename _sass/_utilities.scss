@@ -60,6 +60,14 @@ $all-spacers: $spacers;
   flex-wrap: nowrap !important;
 }
 
+// Container query opt-in — establishes an inline-size container so descendants
+// (e.g. .nds-grid) can respond to ancestor width. Apply only when needed:
+// `container-type: inline-size` also makes the element a containing block for
+// position:fixed descendants, which can trap modals/dropmenus/tooltips.
+.nds-cq {
+  container-type: inline-size;
+}
+
 .nds-number-format {
   --_number-icon-size: var(--number-icon-size, 1em);
   display: inline-flex;

@@ -44,12 +44,12 @@
     --_tracks: var(--min-track, var(--mid-track, var(--max-track)));
   }
 
-  /* Container query overrides — progressive enhancement on top of media queries.
-     Unnamed @container finds the nearest container ancestor: a block when the
-     grid is inside one (e.g. inner grid), the section-wrapper otherwise (e.g.
-     outer grid directly in section-body). When no container ancestor exists
-     at all, these rules are ignored and the @media rules above remain the
-     fallback. */
+  /* Container query overrides — opt-in via a `.nds-cq` ancestor.
+     Unnamed @container resolves to the nearest container ancestor; when none
+     exists these rules are silently skipped and the @media rules above remain
+     the fallback. Opt-in (rather than putting `container-type` on every
+     section/block) avoids globally establishing containing blocks for
+     position:fixed descendants — a footgun for downstream consumers. */
   @container (width <= 768px) {
     --_cols: var(--mid-col, var(--max-col, auto-fit));
     --_tracks: var(--mid-track, var(--max-track));

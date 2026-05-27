@@ -31,7 +31,7 @@ layout_class: nds-cardView
         <div class="nds-section-head">
             <h2 class="nds-section-title">Program Details</h2>
         </div>
-        <div class="nds-section-body">
+        <div class="nds-section-body nds-cq">
             <div class="nds-grid" style="--mid-track: 1fr;">
                 <div class="nds-block">
                     <dl class="nds-definition-list nds-divided">
@@ -97,7 +97,7 @@ layout_class: nds-cardView
                     </dl>
                 </div>
 
-                <div class="nds-block">
+                <div class="nds-block nds-cq">
                     <div class="program-overview-cards nds-grid" style="--max-col: 2;--mid-col: 4;--min-col: 2;--min-width: 100px;--gap: 12px;height: auto;">
                         <div class="nds-card nds-stroke nds-statistic">
                             <div class="nds-card-header">

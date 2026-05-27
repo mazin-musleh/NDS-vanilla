@@ -99,7 +99,7 @@
     }
 }
 
-@container block (width <= 480px) {
+@include mobile {
     .nds-quote {
         --quote-mark-size: 28px;
         --quote-padding: var(--spacing-xl);

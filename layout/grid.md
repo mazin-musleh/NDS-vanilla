@@ -283,7 +283,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Breakpoints</h2>
-            <p class="nds-section-description">The grid switches between <code class="nds-inline-code lang-html">--max-*</code>, <code class="nds-inline-code lang-html">--mid-*</code>, and <code class="nds-inline-code lang-html">--min-*</code> tokens based on two triggers: the viewport width (standard media queries) and, when placed inside a <a class="nds-color" href="{{ 'layout/section' | relative_url }}">section wrapper</a> or <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a>, the nearest container's width (CSS container queries). Whichever trigger crosses first collapses to the narrower token. Gap values halve at the mid breakpoint.</p>
+            <p class="nds-section-description">The grid switches between <code class="nds-inline-code lang-html">--max-*</code>, <code class="nds-inline-code lang-html">--mid-*</code>, and <code class="nds-inline-code lang-html">--min-*</code> tokens based on viewport width (standard media queries) by default. To make the grid respond to its <em>container's</em> width instead — useful for grids inside narrowed columns or sidebars — add the <code class="nds-inline-code lang-html">nds-cq</code> utility to any ancestor. The grid then prefers the nearest <code class="nds-inline-code lang-html">nds-cq</code> ancestor's width over the viewport. Gap values halve at the mid breakpoint.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -297,7 +297,7 @@ direction: ltr
                                 <tr>
                                     <th>Active Token</th>
                                     <th>Viewport (media query)</th>
-                                    <th>Container (nearest section/block)</th>
+                                    <th>Container (inside <code class="nds-inline-code lang-html">.nds-cq</code>)</th>
                                     <th>Fallback Chain</th>
                                 </tr>
                             </thead>
@@ -429,7 +429,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
                         <span class="nds-label">Responsive Column Tokens</span>
                     </span>
-                    <p class="nds-item-desc">Set different column counts with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, and <code class="nds-inline-code lang-html">--min-col</code>, triggered by viewport or the nearest container width, each cascading to the next as a fallback.</p>
+                    <p class="nds-item-desc">Set different column counts with <code class="nds-inline-code lang-html">--max-col</code>, <code class="nds-inline-code lang-html">--mid-col</code>, and <code class="nds-inline-code lang-html">--min-col</code>, triggered by viewport (or the nearest <code class="nds-inline-code lang-html">.nds-cq</code> ancestor's width when opted in), each cascading to the next as a fallback.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -443,7 +443,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-arrow-shrink"></i>
                         <span class="nds-label">Adaptive Gap Scaling</span>
                     </span>
-                    <p class="nds-item-desc">Gap and row-gap values halve automatically at the mid breakpoint (tablet viewport or a 768px-wide container), keeping spacing proportional in narrower contexts.</p>
+                    <p class="nds-item-desc">Gap and row-gap values halve automatically at the mid breakpoint (tablet viewport, or a 768px-wide <code class="nds-inline-code lang-html">.nds-cq</code> ancestor), keeping spacing proportional in narrower contexts.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -455,9 +455,9 @@ direction: ltr
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-frame"></i>
-                        <span class="nds-label">Container-Aware</span>
+                        <span class="nds-label">Container-Aware (opt-in)</span>
                     </span>
-                    <p class="nds-item-desc">When placed inside a <a class="nds-color" href="{{ 'layout/section' | relative_url }}">section wrapper</a> or <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a>, the grid responds to the nearest container's width via CSS container queries — correct column counts in sidebar layouts without viewport-only media queries.</p>
+                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-cq</code> to any ancestor (section wrapper, block, or custom element) to make the grid respond to that ancestor's width via CSS container queries — correct column counts inside sidebars or narrowed columns. Opt-in to avoid globally trapping <code class="nds-inline-code lang-html">position: fixed</code> descendants.</p>
                 </div>
             </div>
         </div>
@@ -484,6 +484,7 @@ direction: ltr
                     <li>Do not nest <code class="nds-inline-code lang-html">.nds-grid</code> inside <code class="nds-inline-code lang-html">.nds-grid</code> for complex page structures. Use <a class="nds-color" href="{{ 'layout/section' | relative_url }}">Section</a> to organize content into visual blocks</li>
                     <li>Always set <code class="nds-inline-code lang-html">--min-col</code> or <code class="nds-inline-code lang-html">--min-track</code> (commonly to <code class="nds-inline-code lang-html">1</code> or <code class="nds-inline-code lang-html">1fr</code>) when using responsive tokens, so layouts collapse cleanly on narrow viewports</li>
                     <li>Override <code class="nds-inline-code lang-html">--gap</code> with a spacing token when the default <code class="nds-inline-code lang-html">var(--spacing-2xl)</code> is too wide for compact layouts like form fields or icon grids</li>
+                    <li>Add <code class="nds-inline-code lang-html">nds-cq</code> to a wrapper only when a nested grid sits inside a narrowed column and needs to respond to the column's width, not the viewport. Skip it for top-level grids that already span the page — viewport media queries handle those cleanly and avoid trapping fixed-position descendants in a new containing block</li>
                 </ul>
             </div>
 
