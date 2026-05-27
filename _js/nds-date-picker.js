@@ -561,15 +561,30 @@
 
                     self.isDropdownCreated = true;
 
-                    // Bind dropdown events (including outside click) after a small delay
-                    // to avoid catching the current click event
-                    setTimeout(function() {
-                        self.bindBasicEvents();
-                    }, 0);
+                    // Wire the form-control as an NDSDropmenu so we get
+                    // open/close/auto-close-others/outside-click/escape for free.
+                    // `data-dropmenu-no-click` — we drive toggle from the input
+                    //   and toggle-button click handlers below.
+                    // `data-dropmenu-no-keys` — calendar grid keyboard nav is
+                    //   2D; NDSDropmenu's flat trigger/menu key handling would
+                    //   conflict with both input typing and day-cell movement.
+                    self.setupDropmenu();
                 }
 
-                // Now toggle the dropdown
-                self.toggleDropdown();
+                // Capture click x so the calendar opens centered on the
+                // click point (matters on wide desktop inputs — without this
+                // it'd center on the form-control and drift away from where
+                // the user actually clicked). Keyboard-driven toggle (no
+                // mouse event) falls back to form-control center via the
+                // adjustCalendarPosition default below.
+                self._lastClickX = (e && typeof e.clientX === 'number' && e.clientX > 0)
+                    ? e.clientX
+                    : null;
+
+                // Toggle through the NDSDropmenu instance so auto-close-others
+                // and other dropmenu invariants apply uniformly.
+                if (e) e.stopPropagation();
+                self.dropmenuInstance.toggle();
             };
 
             // Bind to input click only (focus will trigger click anyway)
@@ -581,6 +596,56 @@
             }
 
             this.handlers.ensureDropdownAndToggle = ensureDropdownAndToggle;
+        },
+
+        // Adopt NDSDropmenu for the calendar's open/close/escape/outside-click
+        // lifecycle. The form-control becomes the dropmenu wrapper and the
+        // dropdown becomes the dropmenu menu; the instance's `applyPosition`
+        // is swapped for the calendar's own (width-matched, no viewport clamp,
+        // simple flip).
+        setupDropmenu: function () {
+            var self = this;
+            var formControl = this.elements.formControl;
+            var dropdown = this.elements.dropdown;
+
+            formControl.classList.add('nds-dropmenu');
+            formControl.setAttribute('data-dropmenu-no-click', '');
+            formControl.setAttribute('data-dropmenu-no-keys', '');
+            dropdown.classList.add('nds-dropmenu-menu');
+            // Drop the legacy [hidden] state — NDSDropmenu uses [data-state~="open"]
+            // for visibility now.
+            NDS.State.remove(dropdown, 'hidden');
+
+            this.dropmenuInstance = NDS.Dropmenu.create(formControl);
+
+            // Replace NDSDropmenu's measure-and-write applyPosition with the
+            // calendar-specific one: width matches the form-control, vertical
+            // flip is based on calendar height vs viewport space, and we use
+            // absolute coords (top: 100% / bottom: 100%) so the calendar
+            // scrolls naturally with its trigger — no viewport tracking needed.
+            this.dropmenuInstance.applyPosition = function () {
+                self.adjustCalendarPosition();
+            };
+
+            // Calendar lifecycle hooks (replace the old toggleDropdown branches).
+            // Guard `e.target !== formControl` — these events bubble, so the
+            // inner month/year sub-dropmenus' open/close events would otherwise
+            // re-init or tear down the calendar every time the user picks a
+            // month or year.
+            formControl.addEventListener('nds:dropmenu:opened', function (e) {
+                if (e.target !== formControl) return;
+                NDS.State.add(self.elements.container, 'open');
+                self.initializeCalendar();
+                // Calendar grid was empty when applyPosition first ran; re-run
+                // after content is built so flip direction reflects real height.
+                self.adjustCalendarPosition();
+            });
+
+            formControl.addEventListener('nds:dropmenu:closed', function (e) {
+                if (e.target !== formControl) return;
+                NDS.State.remove(self.elements.container, 'open');
+                self.cleanup();
+            });
         },
 
         // Create dropdown DOM structure
@@ -885,142 +950,57 @@
             return this._cachedTodaysHijriDate;
         },
 
-        // Calendar lifecycle
-        bindBasicEvents: function () {
-            var self = this;
-
-            // Outside click handler
-            this.handlers.outsideClick = function (e) {
-                self.handleOutsideClick(e);
-            };
-            document.addEventListener('click', this.handlers.outsideClick);
-
-            // Prevent dropdown from closing when clicking inside
-            if (this.elements.dropdown) {
-                this.handlers.dropdownClick = function (e) {
-                    e.stopPropagation();
-                };
-                this.elements.dropdown.addEventListener('click', this.handlers.dropdownClick);
-            }
-        },
-
-        toggleDropdown: function () {
-            var isNowOpen = NDS.State.has(this.elements.dropdown, 'hidden');
-
-            if (isNowOpen) {
-                // Portal first so subsequent measurement happens in <body>'s
-                // containing block, free of any container-type/transform
-                // ancestor (the same trap dropmenu/tooltip hit on Safari).
-                NDS.portal(this.elements.dropdown);
-
-                NDS.State.remove(this.elements.dropdown, 'hidden');
-                NDS.State.add(this.elements.container, 'open');
-
-                this.initializeCalendar();
-                this.adjustDropdownPosition();
-                this.bindViewportTracking();
-            } else {
-                this.unbindViewportTracking();
-                NDS.State.add(this.elements.dropdown, 'hidden');
-                NDS.State.remove(this.elements.container, 'open');
-                this.cleanup();
-                NDS.unportal(this.elements.dropdown);
-            }
-        },
-
-        // Keep the fixed-positioned dropdown anchored to its trigger as the
-        // page (or any ancestor scroll container) scrolls — emulating the
-        // natural scroll-with-trigger behaviour without giving up the
-        // portal + measure-and-correct stack. Capture-phase scroll picks up
-        // inner scroll containers too. rAF-throttled so the listener cost
-        // is bounded to one read/write per frame.
-        bindViewportTracking: function () {
-            var self = this;
-            this._onViewportChange = NDS.rafThrottle(function () {
-                self.repositionDropdown();
-            });
-            window.addEventListener('scroll', this._onViewportChange, { passive: true, capture: true });
-            window.addEventListener('resize', this._onViewportChange, { passive: true });
-        },
-
-        unbindViewportTracking: function () {
-            if (!this._onViewportChange) return;
-            window.removeEventListener('scroll', this._onViewportChange, { capture: true });
-            window.removeEventListener('resize', this._onViewportChange);
-            this._onViewportChange = null;
-        },
-
-        adjustDropdownPosition: function () {
-            var dropdown = this.elements.dropdown;
-            var formControl = this.elements.formControl;
-
-            if (!dropdown || !formControl) return;
-
-            // Match the dropdown's width to the form-control. SCSS clamps via
-            // min-width 350 / max-width 500, so on narrow form-controls the
-            // dropdown ends up wider than the trigger and we'll center it
-            // below.
-            var fcRect = formControl.getBoundingClientRect();
-            dropdown.style.width = fcRect.width + 'px';
-
-            var gap = 4, pad = 8;
-
-            // respectNav: false — the dropdown is positioned beneath its
-            // form-control, so the sticky mainnav doesn't apply as a top
-            // boundary.
-            var p = NDS.flipPosition(formControl, dropdown, { respectNav: false });
-            var bH = p.menuRect.height;
-            var bW = p.menuRect.width;
-
-            // Flip above when not enough space below AND more space above.
-            // Cache the direction so scroll updates don't oscillate the
-            // dropdown above/below as the trigger crosses thresholds.
-            var flipUp = p.spaceBelow < bH + gap && p.triggerRect.top - pad > p.spaceBelow;
-            this._flipUp = flipUp;
-
-            var top = flipUp ? p.triggerRect.top - bH - gap : p.triggerRect.bottom + gap;
-            // No vertical viewport clamp — the dropdown is anchored to its
-            // trigger via the scroll listener, so any portion that exceeds
-            // the viewport is reachable by normal page scroll. Clamping
-            // would desync the dropdown from the trigger.
-
-            // Default: align dropdown's left edge with form-control's left.
-            // When the dropdown is wider than the trigger (mobile, narrow
-            // form-controls), center it on the trigger so it doesn't shoot
-            // off one side. Horizontal clamp stays — users can't scroll
-            // sideways to reveal clipped content.
-            var left = bW > fcRect.width
-                ? p.triggerRect.left + (fcRect.width / 2) - (bW / 2)
-                : p.triggerRect.left;
-            left = Math.max(pad, Math.min(left, p.viewportWidth - bW - pad));
-
-            NDS.placeFixed(dropdown, top, left);
-        },
-
-        // Lightweight scroll-time placement: keeps the cached flip direction
-        // and only re-reads the trigger rect + dropdown size, so we don't
-        // re-evaluate layout decisions that the user already saw on open.
-        repositionDropdown: function () {
+        // Calendar position writer — bound onto the NDSDropmenu instance as
+        // applyPosition. Width and clamps come from CSS tokens
+        // (`--dropmenu-width: 100%`, --dropmenu-min/max-width), so JS writes
+        // vertical placement + a horizontal shift when the SCSS min-width
+        // forces the dropdown wider than the form-control. Coordinates are
+        // form-control-relative — the dropdown lives inside its wrapper
+        // (`position: absolute`) so it scrolls with the trigger naturally.
+        adjustCalendarPosition: function () {
             var dropdown = this.elements.dropdown;
             var formControl = this.elements.formControl;
             if (!dropdown || !formControl) return;
-            if (NDS.State.has(dropdown, 'hidden')) return;
 
+            // Flip direction: prefer below; flip up only when below is tight
+            // AND above has more room (avoids oscillation near the threshold).
             var fcRect = formControl.getBoundingClientRect();
             var ddRect = dropdown.getBoundingClientRect();
-            var pad = 8, gap = 4;
-            var bW = ddRect.width;
+            var ddHeight = ddRect.height;
+            var ddWidth = ddRect.width;
+            var gap = 4, pad = 8;
+            var spaceBelow = window.innerHeight - fcRect.bottom - gap;
+            var spaceAbove = fcRect.top - gap;
+            var flipUp = ddHeight > spaceBelow && spaceAbove > spaceBelow;
 
-            var top = this._flipUp
-                ? fcRect.top - ddRect.height - gap
-                : fcRect.bottom + gap;
+            if (flipUp) {
+                dropdown.style.top = 'auto';
+                dropdown.style.bottom = (formControl.offsetHeight + gap) + 'px';
+            } else {
+                dropdown.style.top = (formControl.offsetHeight + gap) + 'px';
+                dropdown.style.bottom = 'auto';
+            }
 
-            var left = bW > fcRect.width
-                ? fcRect.left + (fcRect.width / 2) - (bW / 2)
-                : fcRect.left;
-            left = Math.max(pad, Math.min(left, window.innerWidth - bW - pad));
-
-            NDS.placeFixed(dropdown, top, left);
+            // Horizontal anchor: prefer the click x (so wide desktop inputs
+            // open the calendar near where the user clicked), fall back to
+            // the form-control center (keyboard-driven open, or when the
+            // form-control is narrower than the calendar).
+            var anchorX = (this._lastClickX != null)
+                ? this._lastClickX
+                : fcRect.left + fcRect.width / 2;
+            var leftViewport = anchorX - ddWidth / 2;
+            // If the dropdown fits inside the form-control, keep it inside
+            // (avoids overshooting past the input edges on wide forms).
+            // Otherwise (narrow form, dropdown wider than input) only the
+            // viewport clamp applies.
+            if (ddWidth <= fcRect.width) {
+                leftViewport = Math.max(fcRect.left, Math.min(leftViewport, fcRect.right - ddWidth));
+            }
+            leftViewport = Math.max(pad, Math.min(leftViewport, window.innerWidth - ddWidth - pad));
+            // Convert viewport coord → form-control-relative (the dropdown's
+            // containing block via `position: absolute`).
+            dropdown.style.left = (leftViewport - fcRect.left) + 'px';
+            dropdown.style.right = 'auto';
         },
 
         initializeCalendar: function () {
@@ -1100,12 +1080,13 @@
         // Cleanup on close - Clear all cache
         cleanup: function () {
             // Remove event listeners for calendar-specific elements
-            var handlers = ['todayBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'dropdownClick'];
-            var elements = ['todayBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'dropdown'];
+            var handlers = ['todayBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'gridKeydown'];
+            var elements = ['todayBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'datesContainer'];
 
             for (var i = 0; i < handlers.length; i++) {
                 if (this.handlers[handlers[i]] && this.elements[elements[i]]) {
-                    this.elements[elements[i]].removeEventListener('click', this.handlers[handlers[i]]);
+                    var ev = handlers[i] === 'gridKeydown' ? 'keydown' : 'click';
+                    this.elements[elements[i]].removeEventListener(ev, this.handlers[handlers[i]]);
                     delete this.handlers[handlers[i]];
                 }
             }
@@ -1117,8 +1098,6 @@
             if (this.yearDropmenuInstance && this.yearDropmenuInstance.isOpen) {
                 this.yearDropmenuInstance.close();
             }
-
-            // Note: Keep ensureDropdownAndToggle and outsideClick handlers - they persist
 
             // Clear rendered content
             if (this.elements.monthDropdownMenu) this.elements.monthDropdownMenu.innerHTML = '';
@@ -1198,7 +1177,7 @@
             this.bindActionEvents();
         },
 
-        // Bind navigation events (prev/next month)
+        // Bind navigation events (prev/next month) + day-grid keyboard nav
         bindNavigationEvents: function () {
             var self = this;
 
@@ -1215,6 +1194,150 @@
                 };
                 this.elements.nextBtn.addEventListener('click', this.handlers.nextBtn);
             }
+
+            // 2D keyboard navigation for the day grid (WAI-ARIA Date Picker
+            // Dialog pattern). Bound on the container so re-renders don't
+            // require rebinding — events bubble from the focused day button.
+            if (this.elements.datesContainer) {
+                this.handlers.gridKeydown = function (e) {
+                    self.handleGridKeydown(e);
+                };
+                this.elements.datesContainer.addEventListener('keydown', this.handlers.gridKeydown);
+            }
+        },
+
+        // Move focus within the day grid by `offset` cells. If the target
+        // would fall outside the rendered grid, navigate to the adjacent
+        // month/year and focus the corresponding position after re-render.
+        // `offset` is in cells (1 = next day, 7 = next week). Maintains the
+        // roving tabindex: only the focused cell stays tabbable.
+        focusDayCell: function (currentBtn, offset) {
+            var cells = Array.prototype.slice.call(
+                this.elements.datesContainer.querySelectorAll('.nds-date-cell')
+            );
+            var idx = cells.indexOf(currentBtn);
+            if (idx === -1) return;
+
+            var target = idx + offset;
+            var moveFocus = function (newBtn) {
+                if (!newBtn) return;
+                currentBtn.tabIndex = -1;
+                newBtn.tabIndex = 0;
+                newBtn.focus();
+            };
+
+            // Within the rendered 42-cell grid — focus directly.
+            if (target >= 0 && target < cells.length) {
+                moveFocus(cells[target]);
+                return;
+            }
+
+            // Outside the grid: navigate to the adjacent month, then re-pick
+            // a cell at the equivalent position. The grid is 6 weeks × 7 days
+            // = 42 cells; moving "off the top" by N cells = move into previous
+            // month then focus index (42 + target). Moving "off the bottom" by
+            // N = move into next month then focus index (target - 42).
+            var direction = target < 0 ? -1 : 1;
+            this.navigateMonth(direction);
+            var newCells = Array.prototype.slice.call(
+                this.elements.datesContainer.querySelectorAll('.nds-date-cell')
+            );
+            var newIdx = direction === -1
+                ? newCells.length + target  // target is negative
+                : target - newCells.length;
+            newIdx = Math.max(0, Math.min(newCells.length - 1, newIdx));
+            // Clear the auto-set tabindex=0 on the re-rendered grid's anchor
+            // so we don't end up with two tabbable cells.
+            newCells.forEach(function (c) { c.tabIndex = -1; });
+            if (newCells[newIdx]) {
+                newCells[newIdx].tabIndex = 0;
+                newCells[newIdx].focus();
+            }
+        },
+
+        // WAI-ARIA Date Picker Dialog grid keys.
+        handleGridKeydown: function (e) {
+            var btn = e.target.closest('.nds-date-cell');
+            if (!btn) return;
+
+            switch (e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    // RTL flips left/right semantics so the focus moves with
+                    // the day order on screen.
+                    this.focusDayCell(btn, NDS.isRTL ? 1 : -1);
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    this.focusDayCell(btn, NDS.isRTL ? -1 : 1);
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    this.focusDayCell(btn, -7);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    this.focusDayCell(btn, 7);
+                    break;
+                case 'Home': {
+                    e.preventDefault();
+                    // First day of the week the focused cell is on. Walk
+                    // back until index % 7 === 0 (Sunday in the grid).
+                    var cells = Array.prototype.slice.call(
+                        this.elements.datesContainer.querySelectorAll('.nds-date-cell')
+                    );
+                    var idx = cells.indexOf(btn);
+                    if (idx === -1) return;
+                    var weekStart = idx - (idx % 7);
+                    cells[weekStart].focus();
+                    break;
+                }
+                case 'End': {
+                    e.preventDefault();
+                    var cells2 = Array.prototype.slice.call(
+                        this.elements.datesContainer.querySelectorAll('.nds-date-cell')
+                    );
+                    var idx2 = cells2.indexOf(btn);
+                    if (idx2 === -1) return;
+                    var weekEnd = idx2 - (idx2 % 7) + 6;
+                    cells2[Math.min(cells2.length - 1, weekEnd)].focus();
+                    break;
+                }
+                case 'PageUp': {
+                    e.preventDefault();
+                    // Shift = jump a year. navigateMonth only handles ±1
+                    // (its month-wrap logic doesn't roll the year on larger
+                    // steps), so loop instead of passing ±12.
+                    var stepsUp = e.shiftKey ? 12 : 1;
+                    for (var u = 0; u < stepsUp; u++) this.navigateMonth(-1);
+                    this.focusFirstCurrentMonthDay();
+                    break;
+                }
+                case 'PageDown': {
+                    e.preventDefault();
+                    var stepsDn = e.shiftKey ? 12 : 1;
+                    for (var d = 0; d < stepsDn; d++) this.navigateMonth(1);
+                    this.focusFirstCurrentMonthDay();
+                    break;
+                }
+                // Enter / Space fall through to the native button click,
+                // which selectDate handles via the existing click listener.
+            }
+        },
+
+        // After a PageUp/PageDown month switch, drop focus on the first day
+        // of the new month so the user has somewhere to continue arrow nav.
+        // Re-anchors the roving tabindex to the newly-focused cell.
+        focusFirstCurrentMonthDay: function () {
+            if (!this.elements.datesContainer) return;
+            var firstDay = this.elements.datesContainer.querySelector(
+                '.nds-date-cell:not([data-state~="other-month"])'
+            );
+            if (!firstDay) return;
+            this.elements.datesContainer
+                .querySelectorAll('.nds-date-cell').forEach(function (c) { c.tabIndex = -1; });
+            firstDay.tabIndex = 0;
+            firstDay.focus();
         },
 
         // Navigate month (unified for Gregorian and Hijri)
@@ -1306,10 +1429,10 @@
             }
         },
 
-        // Save and close calendar (reuse close path from toggleDropdown)
+        // Save and close calendar
         saveAndClose: function () {
-            if (!NDS.State.has(this.elements.dropdown, 'hidden')) {
-                this.toggleDropdown();
+            if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
+                this.dropmenuInstance.close();
             }
         },
 
@@ -1423,6 +1546,31 @@
             for (var j = 1; usedCells < 42; j++, usedCells++) {
                 this.createDateCell(makeDate(nextYear, nextMonth, j), 'other-month');
             }
+
+            // Promote one cell to tabindex=0 so the user can Tab into the grid.
+            this.setActiveDayCell();
+        },
+
+        // Roving tabindex anchor: pick the most meaningful cell to be the
+        // tab-entry point. Priority: selected day → today (current month) →
+        // first day of current month → first cell.
+        setActiveDayCell: function () {
+            if (!this.elements.datesContainer) return;
+            var cells = this.elements.datesContainer.querySelectorAll('.nds-date-cell');
+            if (!cells.length) return;
+
+            // Find by state priority
+            var selected = this.elements.datesContainer.querySelector(
+                '.nds-date-cell[data-state~="selected"], .nds-date-cell[data-state~="range-start"]'
+            );
+            var today = this.elements.datesContainer.querySelector(
+                '.nds-date-cell[data-state~="today"]:not([data-state~="other-month"])'
+            );
+            var firstCurrent = this.elements.datesContainer.querySelector(
+                '.nds-date-cell:not([data-state~="other-month"])'
+            );
+            var anchor = selected || today || firstCurrent || cells[0];
+            anchor.tabIndex = 0;
         },
 
         // Create individual date cell
@@ -1431,6 +1579,11 @@
             var btn = document.createElement('button');
             btn.className = 'nds-btn nds-subtle nds-date-cell';
             btn.type = 'button';
+            // Roving tabindex (WAI-ARIA grid pattern): all cells start
+            // non-tabbable; setActiveDayCell() promotes one cell per render
+            // so Tab from outside the grid lands on the meaningful day
+            // (selected / today / first day) instead of cycling all 42.
+            btn.tabIndex = -1;
 
             // Day number display — built imperatively so the value flows through
             // .textContent (text-only) and never reaches the HTML parser.
@@ -1660,36 +1813,6 @@
                 date1.getFullYear() === date2.getFullYear();
         },
 
-        // Handle outside clicks
-        handleOutsideClick: function (e) {
-            var self = this;
-            var clickTarget = e.target;
-
-            setTimeout(function () {
-                // Don't process if clicked on input or toggle button
-                if (clickTarget === self.elements.input ||
-                    (self.elements.toggleBtn && self.elements.toggleBtn.contains(clickTarget))) {
-                    return;
-                }
-
-                // Close entire calendar if clicked outside container — also
-                // exclude clicks inside the dropdown itself, since while open
-                // it's portaled to <body> and no longer a descendant of the
-                // container.
-                if (self.isDropdownCreated
-                    && !self.elements.container.contains(clickTarget)
-                    && !(self.elements.dropdown && self.elements.dropdown.contains(clickTarget))) {
-                    self.unbindViewportTracking();
-                    if (self.elements.dropdown) {
-                        NDS.State.add(self.elements.dropdown, 'hidden');
-                    }
-                    NDS.State.remove(self.elements.container, 'open');
-                    self.cleanup();
-                    NDS.unportal(self.elements.dropdown);
-                }
-            }, 0);
-        },
-
         // Dropdown rendering methods
         renderMonthOptions: function () {
             if (!this.elements.monthDropdownMenu) return;
@@ -1872,12 +1995,27 @@
 
         // Destroy instance
         destroy: function () {
-            // If the dropdown is open at destroy time, close it first so the
-            // close branch of toggleDropdown releases viewport tracking +
-            // portal state. Without this, raw window scroll + resize
-            // listeners from bindViewportTracking leak for the page lifetime.
-            if (this.elements.dropdown && !NDS.State.has(this.elements.dropdown, 'hidden')) {
-                this.toggleDropdown();
+            // Destroy inner month/year dropmenus FIRST — they hold their own
+            // document-level outside-click listeners, and the outer destroy
+            // below replaces formControl with a clone that detaches their
+            // DOM. Tearing them down while still attached keeps NDSDropmenu's
+            // own cleanup path (removeEventListener) unambiguous.
+            if (this.monthDropmenuInstance) {
+                this.monthDropmenuInstance.destroy();
+                this.monthDropmenuInstance = null;
+            }
+            if (this.yearDropmenuInstance) {
+                this.yearDropmenuInstance.destroy();
+                this.yearDropmenuInstance = null;
+            }
+
+            // Close before destroying so the dropmenu instance gets a chance
+            // to fire its closed event (which runs cleanup() via the listener
+            // wired in setupDropmenu).
+            if (this.dropmenuInstance) {
+                if (this.dropmenuInstance.isOpen) this.dropmenuInstance.close();
+                this.dropmenuInstance.destroy();
+                this.dropmenuInstance = null;
             }
 
             // Remove persistent event listeners
@@ -1888,14 +2026,17 @@
                 }
             }
 
-            if (this.handlers.outsideClick) {
-                document.removeEventListener('click', this.handlers.outsideClick);
-            }
-
             // Release the lang-attr subscriber registered in setupLanguageObserver.
             // Lives across open/close cycles (cleanup() doesn't drop it), so the
             // release belongs in destroy() — instance-lifetime, not panel-lifetime.
             if (this._offLangChange) { this._offLangChange(); this._offLangChange = null; }
+
+            // Drop the back-ref on the input so the DatePickerCalendar can
+            // be GC'd. Without this the input retains a chain to all the
+            // detached DOM nodes the calendar held.
+            if (this.elements.input && this.elements.input._ndsDatePicker === this) {
+                delete this.elements.input._ndsDatePicker;
+            }
 
             this.cleanup();
         }

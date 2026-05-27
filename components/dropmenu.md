@@ -469,7 +469,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Dropmenu Inside Table</h2>
-            <p class="nds-section-description">Row-level action menus work inside tables without being clipped by the table's rounded corners or overflow boundary. The menu auto-detects the clipping ancestor and switches to viewport-anchored positioning; scroll or resize dismisses the menu.</p>
+            <p class="nds-section-description">Row-level action menus inside tables need <code class="nds-inline-code lang-html">data-portal</code> on the wrapper. The menu then moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> on open (viewport-anchored, <code class="nds-inline-code lang-html">position: fixed</code>) so it escapes the table cell's overflow clipping and stacking context, and it follows the trigger as the page scrolls — no auto-close on scroll. Without <code class="nds-inline-code lang-html">data-portal</code> the default in-place mode would clip behind the row border or hide under an adjacent z-indexed cell.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -499,7 +499,7 @@ direction: ltr
                                         <td>Administrator</td>
                                         <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Active</span></span></td>
                                         <td>
-                                            <div class="nds-dropmenu">
+                                            <div class="nds-dropmenu" data-portal>
                                                 <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
                                                     <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
                                                 </button>
@@ -528,7 +528,7 @@ direction: ltr
                                         <td>Editor</td>
                                         <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Away</span></span></td>
                                         <td>
-                                            <div class="nds-dropmenu">
+                                            <div class="nds-dropmenu" data-portal>
                                                 <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
                                                     <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
                                                 </button>
@@ -557,7 +557,7 @@ direction: ltr
                                         <td>Viewer</td>
                                         <td><span class="nds-tag nds-sm" data-status="error"><span class="nds-label">Offline</span></span></td>
                                         <td>
-                                            <div class="nds-dropmenu">
+                                            <div class="nds-dropmenu" data-portal>
                                                 <button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger" aria-label="Row actions">
                                                     <i class="hgi hgi-stroke hgi-more-horizontal-circle-01"></i>
                                                 </button>
@@ -624,7 +624,9 @@ direction: ltr
         &lt;/span&gt;
       &lt;/td&gt;
       &lt;td&gt;
-        &lt;div class="nds-dropmenu"&gt;
+        &lt;!-- data-portal: escape the table cell's clipping/stacking context
+             so the menu can extend beyond the row when opened. --&gt;
+        &lt;div class="nds-dropmenu" data-portal&gt;
           &lt;button class="nds-btn nds-sm nds-subtle nds-dropmenu-trigger"
             aria-label="Row actions"&gt;
             &lt;i class="hgi hgi-stroke hgi-more-horizontal-circle-01"&gt;&lt;/i&gt;
@@ -789,8 +791,18 @@ direction: ltr
                             <td><code class="nds-inline-code lang-html">data-no-auto-close</code></td>
                             <td>Set on a <code class="nds-inline-code lang-html">.nds-dropmenu-item</code> to prevent the menu from closing when that item is clicked. Use for checkboxes, inputs, and filter controls that need multiple interactions.</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-portal</code></td>
+                            <td>Set on the <code class="nds-inline-code lang-html">.nds-dropmenu</code> wrapper to move the menu to <code class="nds-inline-code lang-html">&lt;body&gt;</code> on open. Use only when the menu must escape an ancestor stacking context (a card or modal with <code class="nds-inline-code lang-html">z-index</code>, a transformed wrapper). The portaled menu uses <code class="nds-inline-code lang-html">position: fixed</code> and tracks its trigger on scroll (rAF-throttled) so it stays anchored without closing.</td>
+                        </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Positioning &amp; Portal</h3>
+                <p>By default the menu uses <code class="nds-inline-code lang-html">position: absolute</code> anchored to its wrapper. It scrolls with the trigger like a native <code class="nds-inline-code lang-html">&lt;select&gt;</code> — no close-on-scroll, no DOM reparenting. Initial placement is viewport-aware: the menu flips above the trigger when space below is tight, and clamps horizontally so it never overflows the viewport.</p>
+                <p>Add <code class="nds-inline-code lang-html">data-portal</code> to the wrapper only when the menu needs to escape an ancestor stacking context (a card or modal with <code class="nds-inline-code lang-html">z-index</code>, a transformed or filtered wrapper). Portaled menus use <code class="nds-inline-code lang-html">position: fixed</code> at <code class="nds-inline-code lang-html">&lt;body&gt;</code> level and follow the trigger on scroll (rAF-throttled) instead of closing.</p>
             </div>
 
             <div class="nds-block">

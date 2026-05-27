@@ -95,13 +95,11 @@
             const li = document.createElement('li');
             li.className = 'nds-pagination-item nds-pagination-ellipsis';
 
-            // Create nds-dropmenu structure. `data-portal-scope` survives the
-            // menu's portal-to-<body> move by mirroring the parent context as
-            // a class on the menu — see `.nds-dropmenu-menu.nds-pagination-ellipsis`
-            // selectors in `_pagination.scss`.
+            // Create nds-dropmenu structure. Default no-portal: the menu lives
+            // inside `.nds-pagination-ellipsis`, so the descendant SCSS selector
+            // applies naturally.
             const dropmenu = document.createElement('div');
             dropmenu.className = 'nds-dropmenu';
-            dropmenu.dataset.portalScope = 'nds-pagination-ellipsis';
 
             const button = document.createElement('button');
             button.type = 'button';

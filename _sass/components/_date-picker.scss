@@ -9,338 +9,231 @@
 // ==============================================
 // DATE PICKER WRAPPER (form-control container)
 // ==============================================
-// The dropdown is portaled to <body> while open (escapes container-type
-// stacking traps), so its styles must apply via the dropdown's own
-// selector — we can't rely on `.nds-date-picker` as an ancestor.
+// The calendar dropdown lives inside `.nds-form-control` (which date-picker.js
+// promotes to an NDSDropmenu wrapper). The dropdown carries both
+// `.nds-date-picker-dropdown` and `.nds-dropmenu-menu`, so dropmenu's
+// default positioning (`position: absolute`, anchored to the form-control)
+// applies — the calendar scrolls naturally with its trigger.
 
 .nds-date-picker {
     position: relative;
-
     // Arrow styling for date picker input (same as select)
     .nds-form-control {
-
         &>input,
         &>i {
             cursor: pointer;
         }
-
-
         &::after {
             content: "";
-
             pointer-events: none;
             position: absolute;
-
             left: var(--spacing-md);
-
             transition: transform 0.1s ease;
-
             display: inline-block;
-
             width: 20px;
-
             height: 20px;
-
             background: currentColor;
-
             mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
             rotate: -90deg;
-
             top: 50%;
-
             translate: 0 -50%;
-
             @include ltr {
                 left: unset;
                 right: var(--spacing-md);
             }
         }
-
     }
-
     &[data-state~="open"] .nds-form-control::after {
         transform: rotate(180deg);
     }
 }
 
 // ==============================================
-// DATE PICKER DROPDOWN (portaled to <body> while open)
+// DATE PICKER DROPDOWN (anchored to .nds-form-control)
 // ==============================================
 
 .nds-date-picker-dropdown {
     --btn-size: 32px;
-
-    position: fixed;
-    z-index: 1000;
-    padding: 0;
-    max-width: 500px;
-    min-width: 350px;
+    // Drive sizing through NDSDropmenu tokens so the menu picks up the
+    // calendar's width/clamp/padding without an inline-style stomp from JS.
+    // `--dropmenu-width: 100%` fills the form-control (the absolute-positioned
+    // wrapper); min/max-width clamp it on narrow / wide screens. menu-padding
+    // is 0 because the calendar sections supply their own internal padding.
+    --dropmenu-width: 100%;
+    --dropmenu-min-width: 350px;
+    --dropmenu-max-width: 500px;
+    --menu-padding: 0;
     background-color: var(--form-field-background-default);
     border: 1px solid var(--form-field-border-default);
-    border-radius: var(--radius-md, 8px);
     box-shadow: var(--shadow-md);
-
-    &[data-state~="hidden"] {
-        display: none;
-    }
-
     // ==============================================
     // CALENDAR HEADER STYLES
     // ==============================================
-
     .nds-calendar-header {
         display: flex;
-
         align-items: center;
-
         justify-content: space-between;
-
         padding: var(--spacing-md);
-
         border-bottom: 1px solid var(--divider-color);
     }
-
     .nds-calendar-title {
         flex: 1;
-
         display: flex;
-
         justify-content: space-between;
     }
-
     .nds-month-year-selectors {
         display: flex;
     }
-
     .nds-calendar-month-switch {
         display: flex;
     }
-
     // Trigger label — wrapper scoping is fine; trigger never portals.
     :is(.nds-month-dropmenu, .nds-year-dropmenu) .nds-dropmenu-trigger .nds-label {
         @include mobile {
-            max-width: 100px;
-
+            max-width: 70px;
             overflow: clip;
-
             text-overflow: ellipsis;
         }
     }
-
     // ==============================================
     // CALENDAR BODY STYLES
     // ==============================================
-
     .nds-calendar-body {
         padding: var(--spacing-md);
     }
-
     .nds-calendar-weekdays {
         display: grid;
-
         grid-template-columns: repeat(7, 1fr);
-
         gap: 4px;
-
         margin-bottom: 8px;
-
         .nds-weekday {
-
             text-align: center;
-
             font-size: var(--typo-text-md-FS);
-
             font-weight: 400;
-
             color: var(--text-primary-paragraph);
-
             padding: var(--spacing-md) var(--spacing-xs);
-
             min-width: var(--btn-size);
-
             @include mobile {
                 font-size: var(--typo-text-sm-FS);
             }
         }
     }
-
     .nds-calendar-dates {
         display: grid;
-
         grid-template-columns: repeat(7, 1fr);
-
         gap: 4px;
-
         justify-items: center;
-
         overflow: hidden;
-
         .nds-date-cell {
-
             border-radius: 50% !important;
-
             width: var(--btn-size);
-
             height: var(--btn-size);
-
             font-weight: 400;
-
             padding: 0;
-
             .nds-label {
                 text-align: center;
             }
-
             &::before {
                 display: none;
-
                 content: "";
-
                 position: absolute;
-
                 background-color: var(--form-datecell-background-100);
-
                 width: var(--btn-size);
-
                 height: var(--btn-size);
-
                 z-index: -1;
             }
-
             &[data-state~="other-month"] {
                 color: var(--text-default-disabled);
             }
-
             &[data-state~="today"] {
                 background-color: unset;
-
                 border: 2px solid var(--button-background-primary-default);
-
                 color: var(--text-primary);
-
                 font-weight: 700;
-
                 &[data-state~="selected"] {
                     outline: 2px solid var(--button-background-primary-default);
-
                     outline-offset: -2px !important;
-
                     box-shadow: inset 0 0 0 2px var(--colors-base-white);
                 }
-
                 &[data-state~="selected"]:hover {
                     outline: 2px solid var(--button-background-primary-hover);
                 }
             }
-
             &[data-state~="selected"] {
                 background-color: var(--button-background-primary-default);
-
                 color: var(--text-oncolor-primary);
-
                 &:hover {
                     background-color: var(--form-datecell-background-hovered);
                 }
             }
-
             // ==============================================
             // DATE RANGE STYLES
             // ==============================================
-
             &:is([data-state~="range-start"], [data-state~="range-end"]) {
                 background-color: var(--form-datecell-background-default);
-
                 color: var(--text-oncolor-primary);
-
                 &[data-state~="today"] {
                     outline: 2px solid var(--form-datecell-background-default);
-
                     outline-offset: -2px !important;
-
                     &:hover {
                         background-color: var(--form-datecell-background-hovered);
-
                         outline: 2px solid var(--form-datecell-background-hovered);
                     }
                 }
-
                 &:hover {
                     background-color: var(--form-datecell-background-hovered);
                 }
             }
-
             &[data-state~="range-start"]:not([data-state~="range-end"])[data-state~="has-range-end"] {
                 &::before {
                     display: block;
-
                     transform: scaleX(1) translateX(-50%);
-
                     @include ltr {
                         transform: scaleX(1) translateX(50%);
                     }
                 }
             }
-
             &[data-state~="range-end"]:not([data-state~="range-start"])[data-state~="has-range-start"] {
                 &::before {
                     content: "";
-
                     display: block;
-
                     transform: scaleX(1) translateX(50%);
-
                     @include ltr {
                         transform: scaleX(1) translateX(-50%);
                     }
                 }
             }
-
             &[data-state~="in-range"]:not([data-state~="range-start"], [data-state~="range-end"]) {
                 background-color: var(--form-datecell-today-background-default);
-
                 &::before {
                     content: "";
-
                     display: block;
-
                     transform: scaleX(2);
                 }
-
                 &:hover {
                     background-color: var(--form-datecell-background-200);
                 }
-
                 &:active {
                     background-color: var(--form-datecell-background-300);
                 }
             }
-
             --btn-size: 40px;
-
             @include mobile {
                 --btn-size: 32px;
             }
         }
     }
-
     // ==============================================
     // CALENDAR FOOTER STYLES
     // ==============================================
-
     .nds-calendar-footer {
         display: flex;
-
         justify-content: space-between;
-
         padding: var(--spacing-md);
-
         border-top: 1px solid var(--divider-color);
-
         gap: var(--spacing-2xl);
-
         :is(.nds-calendar-action-start, .nds-calendar-action-end) {
             display: flex;
-
             gap: var(--spacing-md);
         }
     }
@@ -349,13 +242,23 @@
 // Month/year dropmenu — class-on-menu so styles match whether the menu
 // is nested in `.nds-date-picker-dropdown` or portaled to <body>.
 .nds-dropmenu-menu:is(.nds-month-dropmenu, .nds-year-dropmenu) {
-    min-width: unset;
+    // Reset all `--dropmenu-*` tokens — the parent .nds-date-picker-dropdown
+    // sets them for the calendar (width: 100%, min: 350, max: 500, padding: 0)
+    // and CSS custom property inheritance carries those into THIS nested
+    // sub-dropmenu. Use `initial` to fall back to .nds-dropmenu-menu's own
+    // defaults so the month/year menu sizes to its content.
+    --dropmenu-width: initial;
+    --dropmenu-min-width: initial;
+    --dropmenu-max-width: initial;
+    --menu-padding: initial;
     padding: var(--spacing-md);
-
     .nds-dropmenu-scroll {
         max-height: 200px;
         display: flex;
         flex-direction: column;
         gap: var(--spacing-xs);
+        // Reserve scrollbar gutter so items keep their full width even on
+        // engines/OSes that overlay the scrollbar over the content area.
+        scrollbar-gutter: stable;
     }
 }

@@ -97,20 +97,14 @@
 // ELLIPSIS WITH DROPDOWN
 // ==============================================
 
-// Trigger lives inside the wrapper, never portaled — descendant selectors
-// from `.nds-pagination-ellipsis` are safe.
+// Trigger + menu live inside `.nds-pagination-ellipsis` — the dropmenu
+// defaults to no-portal so descendant selectors are safe in both states.
 .nds-pagination-ellipsis .nds-dropmenu-trigger>.nds-label {
   display: none;
 }
 
-// Menu + items: target both nested (closed/in-place) and portaled
-// (`data-portal-scope="nds-pagination-ellipsis"` adds the matching class
-// to the menu when it moves to <body>).
-.nds-pagination-ellipsis .nds-dropmenu-menu,
-.nds-dropmenu-menu.nds-pagination-ellipsis {
+.nds-pagination-ellipsis .nds-dropmenu-menu {
   min-width: 60px;
-  /* max-height: 300px;
-  overflow: hidden auto; */
 
   .nds-dropmenu-item {
     --btn-indicator-selected: var(--button-background-primary-default);
@@ -121,8 +115,6 @@
     &:is([aria-current="page"], [data-state~="active"]):not(.nds-dropmenu-trigger:hover) {
       background-color: unset;
     }
-
-
   }
 }
 

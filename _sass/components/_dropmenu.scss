@@ -65,9 +65,13 @@
 // ==============================================
 // 2. MENU CONTAINER
 // ==============================================
-// The menu lives at body level while open (portal), so its variables and
-// state-driven rules must apply via the menu's own data-state — we can't
-// rely on the wrapper as an ancestor selector.
+// Default positioning is `absolute` — the menu is anchored to its `.nds-dropmenu`
+// wrapper (which has `position: relative`) and scrolls with the trigger.
+// When the wrapper opts in to portaling (`data-portal`), JS mirrors the
+// attribute onto the menu and moves it to <body>; the `[data-portal]` rule
+// below switches to `position: fixed` so JS can write viewport coords.
+// State-driven rules apply via the menu's own data-state — we can't rely
+// on the wrapper as an ancestor selector once the menu is portaled.
 
 .nds-dropmenu-menu {
   // Variables — defined on the menu itself so portaling to body doesn't
@@ -77,14 +81,21 @@
   --_menu-padding: var(--menu-padding, var(--spacing-md, 8px));
   --_dropmenu-offset: var(--spacing-xs, 4px);
   --_dropmenu-slide: calc(var(--dropmenu-slide, 8px) * -1);
-  --_dropmenu-width: var(--dropmenu-width, fit-content);
+  --_dropmenu-width: var(--dropmenu-width, min-content);
   --_dropmenu-min-width: var(--dropmenu-min-width, max-content);
   --_dropmenu-max-width: var(--dropmenu-max-width, calc(100vw - 16px));
   --divider: var(--_menu-padding);
 
   display: none;
-  position: fixed;
+  position: absolute;
   z-index: 1000;
+
+  // Portal opt-in (via wrapper's `data-portal`, mirrored by JS on open).
+  // Switches to viewport-anchored placement so JS can write top/left in
+  // viewport pixels via NDS.placeFixed.
+  &[data-portal] {
+    position: fixed;
+  }
   width: var(--_dropmenu-width);
   min-width: var(--_dropmenu-min-width);
   max-width: var(--_dropmenu-max-width);
