@@ -301,24 +301,11 @@
         }
         const startTime = performance.now();
 
-        // Detect + partition in one pass. Per-component querySelector is the
-        // fast path: it short-circuits at the first match and uses the
-        // browser's native class/ID indices for absent selectors. Source
-        // order (registry above) is priority order; push preserves it.
-        const eagerComponents = [], idleComponents = [];
-        for (const c of COMPONENTS) {
-            const present = c.universal || (c.selector && document.querySelector(c.selector));
-            if (!present) continue;
-            (c.idle ? idleComponents : eagerComponents).push(c);
-        }
-
-        if (CONFIG.enableLogging) {
-            const total = eagerComponents.length + idleComponents.length;
-            console.log(
-                `[NDS] Initializing ${total}/${COMPONENTS.length} components ` +
-                `(${eagerComponents.length} eager, ${idleComponents.length} idle)`
-            );
-        }
+        // Partition arrays are populated inside the rAF below (see L387) so
+        // the detection sweep moves off the DCL handler task. The init-loop
+        // closures capture these bindings; both are assigned before
+        // initEagerBatch is called.
+        let eagerComponents, idleComponents;
 
         const runInit = (component) => {
             try {
@@ -383,8 +370,31 @@
         }
 
         // Start initialization chain after the next paint so the browser has
-        // committed at least one frame before we touch the DOM.
-        requestAnimationFrame(initEagerBatch);
+        // committed at least one frame before we touch the DOM. Detection +
+        // partition also run inside the rAF — per-component querySelector
+        // (the fast path: short-circuits at first match, uses native
+        // class/ID indices for absent selectors) joins the first eager
+        // batch's wall clock instead of extending the DCL handler task.
+        // Source order (registry above) is priority order; push preserves it.
+        requestAnimationFrame(() => {
+            eagerComponents = [];
+            idleComponents = [];
+            for (const c of COMPONENTS) {
+                const present = c.universal || (c.selector && document.querySelector(c.selector));
+                if (!present) continue;
+                (c.idle ? idleComponents : eagerComponents).push(c);
+            }
+
+            if (CONFIG.enableLogging) {
+                const total = eagerComponents.length + idleComponents.length;
+                console.log(
+                    `[NDS] Initializing ${total}/${COMPONENTS.length} components ` +
+                    `(${eagerComponents.length} eager, ${idleComponents.length} idle)`
+                );
+            }
+
+            initEagerBatch();
+        });
     }
 
     // Configuration options
