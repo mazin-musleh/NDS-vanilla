@@ -189,9 +189,13 @@
             init: () => NDS.Autocomplete?.init?.(),
         },
         {
+            // Idle: pagination's collapse + dropmenu setup is the heaviest
+            // eager init (~105ms median at 6.6× CPU throttle, ~18ms idle).
+            // CLS mitigation pending.
             name: 'pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
+            idle: true,
         },
         {
             name: 'ipv',
@@ -308,10 +312,14 @@
         let eagerComponents, idleComponents;
 
         const runInit = (component) => {
+            const start = CONFIG.enableTiming ? performance.now() : 0;
             try {
                 component.init();
                 if (CONFIG.enableLogging) {
-                    console.log(`[NDS:init] ${component.name}`);
+                    const timing = CONFIG.enableTiming
+                        ? ` ${(performance.now() - start).toFixed(1)}ms`
+                        : '';
+                    console.log(`[NDS:init] ${component.name}${timing}`);
                 }
             } catch (error) {
                 console.warn(`[NDS:init] ${component.name} failed:`, error);

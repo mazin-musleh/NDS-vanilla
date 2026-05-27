@@ -483,6 +483,10 @@
             }, 150));
 
             paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
+            // Mark the paged content too — lets the pre-init skeleton rule
+            // gate on a single attribute without crossing sibling boundaries.
+            // Mirrors swiper's data-swiper-initialized convention.
+            contentContainer.setAttribute('data-paged-initialized', '');
         });
     }
 
