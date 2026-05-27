@@ -264,21 +264,21 @@
         // can be omitted entirely without touching core.
     ];
 
-    // Shared MessageChannel for cross-batch yielding — allocated once per page
-    // lifetime instead of per initializeNDS() call. Reinitialize-heavy
-    // consumers (SPA route changes) would otherwise leak the prior channel +
-    // its onmessage handler on every call. FIFO queue handles overlapping
-    // init chains (reinit fired while a previous chain is still draining).
+    // Cross-batch yielding. Prefers scheduler.yield() (Chrome 129+) so the
+    // browser can preempt for input/paint between batches; falls back to a
+    // shared MessageChannel — allocated once per page lifetime instead of
+    // per initializeNDS() call so reinit-heavy consumers (SPA route changes)
+    // don't leak channels. FIFO queue handles overlapping init chains
+    // (reinit fired while a previous chain is still draining).
     const _yieldChannel = new MessageChannel();
     const _yieldQueue = [];
     _yieldChannel.port1.onmessage = () => {
         const cb = _yieldQueue.shift();
         if (cb) cb();
     };
-    const yieldToBrowser = (cb) => {
-        _yieldQueue.push(cb);
-        _yieldChannel.port2.postMessage(null);
-    };
+    const yieldToBrowser = (typeof scheduler !== 'undefined' && scheduler.yield)
+        ? (cb) => scheduler.yield().then(cb)
+        : (cb) => { _yieldQueue.push(cb); _yieldChannel.port2.postMessage(null); };
 
     // rIC fallback for older Safari (<18). Deadline counts down a real 5ms
     // slot so drainIdle yields like native rIC instead of running every
@@ -301,28 +301,21 @@
         }
         const startTime = performance.now();
 
-        // Detect which components are on the page. Per-component querySelector
-        // is the fast path: it short-circuits at the first match and uses the
-        // browser's native class/ID indices for absent selectors — no JS-level
-        // matches() loop needed.
-        const existingComponents = new Map();
+        // Detect + partition in one pass. Per-component querySelector is the
+        // fast path: it short-circuits at the first match and uses the
+        // browser's native class/ID indices for absent selectors. Source
+        // order (registry above) is priority order; push preserves it.
+        const eagerComponents = [], idleComponents = [];
         for (const c of COMPONENTS) {
-            if (c.universal) {
-                existingComponents.set(c.name, true);
-            } else if (c.selector && document.querySelector(c.selector)) {
-                existingComponents.set(c.name, true);
-            }
+            const present = c.universal || (c.selector && document.querySelector(c.selector));
+            if (!present) continue;
+            (c.idle ? idleComponents : eagerComponents).push(c);
         }
 
-        // Source order is priority order (assigned at line 248), and .filter
-        // preserves order — no sort needed.
-        const toInitialize = COMPONENTS.filter((c) => existingComponents.get(c.name));
-        const eagerComponents = toInitialize.filter((c) => !c.idle);
-        const idleComponents = toInitialize.filter((c) => c.idle);
-
         if (CONFIG.enableLogging) {
+            const total = eagerComponents.length + idleComponents.length;
             console.log(
-                `[NDS] Initializing ${toInitialize.length}/${COMPONENTS.length} components ` +
+                `[NDS] Initializing ${total}/${COMPONENTS.length} components ` +
                 `(${eagerComponents.length} eager, ${idleComponents.length} idle)`
             );
         }
