@@ -163,8 +163,19 @@
     if (icon) icon.className = getIconClass(container);
   }
 
+  // One-shot init guard. NDS.Init.initializeComponent('empty') (loader public
+  // API) would otherwise re-stack the four pool subscriptions below on every
+  // re-call — onDOMAdd / onChildrenChange / onAttrChange all push
+  // unconditionally with no (selector, fn) dedup in core. The single init at
+  // page load wires the subscribers; subsequent .nds-empty mutations are
+  // already handled by those long-lived subscribers, so a re-call has nothing
+  // to do beyond what they're already doing.
+  let _initDone = false;
+
   const NDSEmpty = {
     init() {
+      if (_initDone) return;
+      _initDone = true;
       document.querySelectorAll('.nds-empty').forEach(evaluate);
       NDS.onDOMAdd('.nds-empty', hits => hits.forEach(evaluate));
       NDS.onChildrenChange('.nds-empty', hits => hits.forEach(evaluate));

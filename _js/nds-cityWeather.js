@@ -165,12 +165,24 @@
         }
     }
 
+    // One-shot init guard. NDS.Init.initializeComponent('cityWeather') (loader
+    // public API) would otherwise re-stack the setInterval and the
+    // NDS.onAttrChange subscription on every re-call — none of those have
+    // (selector, fn) dedup in core, so a stable function reference alone
+    // wouldn't help. Page lifecycle is single-shot anyway; the guard keeps
+    // re-call honest without changing any normal-load behavior.
+    let _initDone = false;
+
     function initializeCityWeather() {
+        if (_initDone) return;
+
         const weatherEl = document.getElementById('nds-weatherInfo');
         const cityEl = document.getElementById('nds-cityName');
 
         // Only run if both weather and city elements exist (they depend on each other)
         if (weatherEl && cityEl) {
+            _initDone = true;
+
             // Defer the initial fetches to an idle slot — on cache miss
             // these hit open-meteo and nominatim, and we don't want them
             // racing critical resources during post-DCL hydration. The

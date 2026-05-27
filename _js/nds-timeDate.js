@@ -194,11 +194,21 @@
         clockTimer = null;
     }
 
+    // Per-branch init guards. NDS.Init.initializeComponent('timeDate') (loader
+    // public API) would otherwise re-stack setInterval + NDS.onAttrChange (no
+    // dedup in core for either) and document.addEventListener('visibilitychange')
+    // (no removal path) on every re-call. The date and clock topbar widgets can
+    // appear independently, so the latches are separate — a page that ships
+    // only one widget can still wire the other if it's injected later.
+    let _dateInitDone = false;
+    let _clockInitDone = false;
+
     function initializeTimeDate() {
         const dateEl = document.getElementById('nds-date');
         const clockEl = document.getElementById('nds-realTimeClock');
 
-        if (dateEl) {
+        if (dateEl && !_dateInitDone) {
+            _dateInitDone = true;
             // Defer the initial fetch to an idle slot — on cache miss
             // updateDate hits api.aladhan.com, and we don't want that
             // racing critical resources during post-DCL hydration. The
@@ -209,7 +219,8 @@
             NDS.onAttrChange('html', ['lang'], updateDate);
         }
 
-        if (clockEl) {
+        if (clockEl && !_clockInitDone) {
+            _clockInitDone = true;
             // Skip the tick loop while the tab is hidden — no point burning
             // per-second DOM mutations no one can see. On resume, startClock()
             // ticks immediately so the time isn't a second stale.
