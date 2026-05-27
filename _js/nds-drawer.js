@@ -112,12 +112,12 @@
             // Accordion: close siblings
             const parentList = listItem.parentElement;
             if (parentList) {
-                parentList.querySelectorAll(':scope > li[data-state="open"], :scope > li[data-state="opening"]').forEach(sibling => {
-                    if (sibling !== listItem) {
-                        const btn = sibling.querySelector(':scope > .nds-btn');
-                        const sub = sibling.querySelector(':scope > ul');
-                        if (btn && sub) hideSubmenu(sibling, btn, sub);
-                    }
+                parentList.querySelectorAll(':scope > li').forEach(sibling => {
+                    if (sibling === listItem) return;
+                    if (!isOpen(sibling)) return;
+                    const btn = sibling.querySelector(':scope > .nds-btn');
+                    const sub = sibling.querySelector(':scope > ul');
+                    if (btn && sub) hideSubmenu(sibling, btn, sub);
                 });
             }
             showSubmenu(listItem, button, submenu);

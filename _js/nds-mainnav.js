@@ -840,8 +840,12 @@
         if (collapseOpen) {
             const elements = [DOM.collapse, DOM.toggler];
             if (state.isMinimal) {
-                DOM.collapse?.querySelectorAll('.nds-nav-actions .nds-dropdown[data-state~="open"] .nds-dropdown-menu')
-                    .forEach(m => { if (!m.closest('.nds-nav-minimal')) elements.push(m); });
+                _openDropdowns.forEach(dd => {
+                    if (!dd.closest('.nds-nav-actions')) return;
+                    if (DOM.collapse && !DOM.collapse.contains(dd)) return;
+                    const menu = dd.querySelector('.nds-dropdown-menu');
+                    if (menu && !menu.closest('.nds-nav-minimal')) elements.push(menu);
+                });
             }
             if (!elements.some(el => el?.contains(target))) toggleNavbar();
         }

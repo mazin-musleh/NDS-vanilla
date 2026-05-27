@@ -76,8 +76,21 @@
                 NDS.Dropmenu.create(dropmenuElement);
             }
 
-            // If active page is inside the dropdown, activate the ellipsis trigger
-            const activeDropdownItem = dropdownContainer.querySelector('.nds-dropmenu-item[aria-current="page"], .nds-dropmenu-item[data-state~="active"]');
+            // If active page is inside the dropdown, activate the ellipsis trigger.
+            // Two equally-acceptable signals: aria-current="page" (semantic) or
+            // data-state's 'active' token (state-vocab). Iterate once in DOM order
+            // and break on whichever matches first — preserves the union-selector
+            // semantics of the prior code without coupling to the State vocab via
+            // attribute selector.
+            let activeDropdownItem = null;
+            const dropdownItems = dropdownContainer.querySelectorAll('.nds-dropmenu-item');
+            for (let i = 0; i < dropdownItems.length; i++) {
+                const item = dropdownItems[i];
+                if (item.getAttribute('aria-current') === 'page' || NDS.State.has(item, 'active')) {
+                    activeDropdownItem = item;
+                    break;
+                }
+            }
             if (activeDropdownItem) {
                 const trigger = dropdownContainer.querySelector('.nds-dropmenu-trigger');
                 if (trigger) {
@@ -194,6 +207,7 @@
                     // Auto-generate pagination HTML
                     const paginationHTML = generatePaginationHTML(totalPages, activePage);
                     container.innerHTML = paginationHTML;
+                    markActivePage(container, activePage);
                 }
 
                 const paginationInstance = new NDSPagination(container);
@@ -403,6 +417,7 @@
                 // Generate pagination HTML
                 const paginationHTML = generatePaginationHTML(totalPages, newCurrentPage);
                 paginationNav.innerHTML = paginationHTML;
+                markActivePage(paginationNav, newCurrentPage);
 
                 // Show current page items
                 showPage(items, newCurrentPage, perPage);
@@ -471,6 +486,14 @@
         });
     }
 
+    // Stamp data-state="active" on the active page button after innerHTML.
+    // Paired with generatePaginationHTML which intentionally omits the attr.
+    function markActivePage(host, activePage) {
+        if (!host) return;
+        const btn = host.querySelector(`.page_${activePage} .nds-btn`);
+        if (btn) NDS.State.set(btn, 'active');
+    }
+
     function generatePaginationHTML(totalPages, activePage = 1) {
         // Ensure activePage is within valid range
         activePage = Math.max(1, Math.min(activePage, totalPages));
@@ -486,13 +509,14 @@
                 </button>
             </li>`;
 
-        // Page numbers
+        // Page numbers. data-state for the active page is NOT baked into the
+        // template — callers stamp it via markActivePage() after innerHTML so
+        // the State vocab stays inside NDS.State.set rather than a literal attr.
         for (let i = 1; i <= totalPages; i++) {
-            const activeAttr = i === activePage ? ' data-state="active"' : '';
             const ariaCurrent = i === activePage ? ' aria-current="page"' : '';
             html += `
             <li class="nds-pagination-item page_${i}">
-                <button type="button" class="nds-btn nds-subtle nds-indicator"${activeAttr}${ariaCurrent} aria-label="Page ${i}">
+                <button type="button" class="nds-btn nds-subtle nds-indicator"${ariaCurrent} aria-label="Page ${i}">
                     <span class="nds-label">${i}</span>
                 </button>
             </li>`;
@@ -693,6 +717,7 @@
         // Generate pagination HTML
         const paginationHTML = generatePaginationHTML(totalPages, 1);
         paginationNav.innerHTML = paginationHTML;
+        markActivePage(paginationNav, 1);
 
         // Show first page items
         showPageFiltered(visibleItems, 1, perPage);

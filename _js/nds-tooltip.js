@@ -17,6 +17,10 @@
 
     const { add: addState, remove: removeState } = NDS.State;
 
+    // Only one tooltip is open at a time — track it module-locally so open()
+    // doesn't need to sweep the DOM by attribute selector.
+    let _openTooltip = null;
+
     class NDSTooltip {
         constructor(root) {
             this.root = root;
@@ -166,9 +170,8 @@
             this.isOpen = true;
 
             // Only one tooltip open at a time
-            document.querySelectorAll('.nds-tooltip[data-state~="open"]').forEach(el => {
-                if (el !== this.root && el.ndsTooltip) el.ndsTooltip.close();
-            });
+            if (_openTooltip && _openTooltip !== this) _openTooltip.close();
+            _openTooltip = this;
 
             // Portal first so subsequent measurement happens in <body>'s
             // containing block, free of any container-type/transform ancestor.
@@ -199,6 +202,7 @@
         close() {
             if (!this.isOpen) return;
             this.isOpen = false;
+            if (_openTooltip === this) _openTooltip = null;
 
             removeState(this.root, 'open');
             this.balloon.hidden = true;

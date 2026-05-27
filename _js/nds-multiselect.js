@@ -214,7 +214,7 @@
         }
 
         isOpen() {
-            return this.dropmenu.matches('[data-state~="open"]');
+            return NDS.State.has(this.dropmenu, 'open');
         }
 
         // Re-sync the panel's checkbox visuals to the committed Applied set on

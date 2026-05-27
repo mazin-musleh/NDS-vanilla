@@ -25,6 +25,11 @@
         '--dropmenu-slide',
     ];
 
+    // Currently-open dropmenu wrappers, tracked module-locally so open() can
+    // close peers without a DOM sweep by attribute selector. Maintained in
+    // open()/close(); also cleared by destroy() via the close() it dispatches.
+    const _openDropmenus = new Set();
+
 
     // ==============================================
     // DROPMENU CLASS
@@ -227,7 +232,8 @@
                 });
             }
             if (!initialItem) {
-                initialItem = this.menu.querySelector('.nds-dropmenu-item[data-state~="selected"]');
+                initialItem = Array.from(this.menu.querySelectorAll('.nds-dropmenu-item'))
+                    .find(el => NDS.State.has(el, 'selected')) || null;
             }
             if (initialItem) this.applySelection(initialItem, { silent: true });
 
@@ -505,7 +511,7 @@
             // Close other open dropmenus — but skip ancestors of this one.
             // Date-picker has month/year sub-dropmenus inside the calendar's
             // dropmenu; opening a sub-dropmenu must not close its parent.
-            document.querySelectorAll('.nds-dropmenu[data-state~="open"]').forEach(el => {
+            _openDropmenus.forEach(el => {
                 if (el === this.dropmenu) return;
                 if (el.contains(this.dropmenu)) return; // ancestor — keep open
                 if (el.ndsDropmenu) el.ndsDropmenu.close();
@@ -514,6 +520,7 @@
             removeState(this.dropmenu, 'closing');
             removeState(this.menu,     'closing');
             this.isOpen = true;
+            _openDropmenus.add(this.dropmenu);
 
             // Menu ships with [hidden] (intrinsic-state markup) — drop it
             // before measurement so applyPosition() reads real dimensions.
@@ -564,6 +571,7 @@
 
         close() {
             this.isOpen = false;
+            _openDropmenus.delete(this.dropmenu);
             this._closeCancelled = false;
 
             if (this.menu.contains(document.activeElement)) this.trigger.focus();

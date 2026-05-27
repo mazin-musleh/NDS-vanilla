@@ -1390,7 +1390,7 @@
                 this.elements.monthDropmenu.ndsDropmenu = this.monthDropmenuInstance;
                 this.elements.monthDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderMonthOptions();
-                    self.scrollToSelected(self.elements.monthDropdownMenu, '.nds-month-option[data-state~="selected"]');
+                    self.scrollToSelected(self.elements.monthDropdownMenu, '.nds-month-option', 'selected');
                     // Re-measure after content is appended — applyPosition
                     // ran with an empty menu (width 0), so the inline width
                     // it wrote is wrong until we re-trigger positioning.
@@ -1403,7 +1403,7 @@
                 this.elements.yearDropmenu.ndsDropmenu = this.yearDropmenuInstance;
                 this.elements.yearDropmenu.addEventListener('nds:dropmenu:opened', function () {
                     self.renderYearOptions();
-                    self.scrollToSelected(self.elements.yearDropdownMenu, '.nds-year-option[data-state~="selected"]');
+                    self.scrollToSelected(self.elements.yearDropdownMenu, '.nds-year-option', 'selected');
                     self.yearDropmenuInstance.applyPosition();
                 });
             }
@@ -1559,10 +1559,18 @@
             var cells = this.elements.datesContainer.querySelectorAll('.nds-date-cell');
             if (!cells.length) return;
 
-            // Find by state priority
-            var selected = this.elements.datesContainer.querySelector(
-                '.nds-date-cell[data-state~="selected"], .nds-date-cell[data-state~="range-start"]'
-            );
+            // Find by state priority. 'selected' / 'range-start' are state-vocab
+            // tokens, so the lookup iterates and filters via NDS.State.has rather
+            // than embedding the tokens in attribute selectors. 'today' /
+            // 'other-month' are component-private (non-vocab) tokens; selectors
+            // over them stay as-is.
+            var selected = null;
+            for (var i = 0; i < cells.length; i++) {
+                if (NDS.State.has(cells[i], 'selected') || NDS.State.has(cells[i], 'range-start')) {
+                    selected = cells[i];
+                    break;
+                }
+            }
             var today = this.elements.datesContainer.querySelector(
                 '.nds-date-cell[data-state~="today"]:not([data-state~="other-month"])'
             );
@@ -1946,9 +1954,21 @@
         },
 
         // Scroll to selected options
-        scrollToSelected: function (container, selector) {
+        // When `stateToken` is provided, candidates are matched by selector then
+        // filtered via NDS.State.has — keeps state-vocab queries (e.g. 'selected')
+        // out of the raw selector string. Without it, falls back to a plain
+        // querySelector for callers that don't need a state filter.
+        scrollToSelected: function (container, selector, stateToken) {
             setTimeout(function () {
-                var selected = container.querySelector(selector);
+                var selected;
+                if (stateToken) {
+                    var candidates = container.querySelectorAll(selector);
+                    for (var i = 0; i < candidates.length; i++) {
+                        if (NDS.State.has(candidates[i], stateToken)) { selected = candidates[i]; break; }
+                    }
+                } else {
+                    selected = container.querySelector(selector);
+                }
                 if (selected) {
                     var cr = container.getBoundingClientRect();
                     var sr = selected.getBoundingClientRect();
