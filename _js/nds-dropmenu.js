@@ -545,13 +545,15 @@
             // behavior so users don't see the menu close mid-scroll.
             // In-place dropmenus scroll naturally with their wrapper; no
             // listener needed.
-            // Resize-close still applies in both modes — placement math runs
-            // once at open and stale positions look broken after a resize.
             if (this.shouldPortal) {
                 const reposition = NDS.rafThrottle(() => this.trackPosition());
                 this._offScroll = NDS.onOutsideScroll(this.menu, reposition);
             }
-            this._unsubResize = NDS.onResize(() => this.close());
+            // Resize-reposition (not close) — mobile browsers fire resize as
+            // the address bar shows/hides during scroll, which would close
+            // the menu mid-interaction otherwise. NDS.onResize is debounced
+            // 150ms so the heavy applyPosition only runs once resize settles.
+            this._unsubResize = NDS.onResize(() => this.applyPosition());
 
             requestAnimationFrame(() => {
                 removeState(this.dropmenu, 'opening');
