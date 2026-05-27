@@ -198,7 +198,7 @@ sidemenu_mode: false
                 </div>
                 {% endfor %}
             </div>
-            <div class="nds-swiper-navigation">
+            <div class="nds-swiper-navigation" hidden>
                 <div class="nds-swiper-buttons">
                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev"
                         type="button" aria-label="Previous slide"></button>

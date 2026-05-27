@@ -970,7 +970,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             </div>
                                             {% endfor %}
                                         </div>
-                                        <div class="nds-swiper-navigation">
+                                        <div class="nds-swiper-navigation" hidden>
                                             <div class="nds-swiper-buttons">
                                                 <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"></button>
                                                 <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"></button>
@@ -1038,7 +1038,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                 &lt;/div&gt;
                 &lt;!-- more slides... --&gt;
             &lt;/div&gt;
-            &lt;div class="nds-swiper-navigation"&gt;
+            &lt;div class="nds-swiper-navigation" hidden&gt;
                 &lt;div class="nds-swiper-buttons"&gt;
                     &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
                     &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;

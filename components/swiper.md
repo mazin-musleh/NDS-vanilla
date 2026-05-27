@@ -106,7 +106,7 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-swiper-navigation">
+                            <div class="nds-swiper-navigation" hidden>
                                 <div class="nds-swiper-buttons">
                                     <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"></button>
                                     <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"></button>
@@ -175,7 +175,7 @@ direction: ltr
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-swiper-navigation"&gt;
+    &lt;div class="nds-swiper-navigation" hidden&gt;
         &lt;div class="nds-swiper-buttons"&gt;
             &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
@@ -265,7 +265,7 @@ direction: ltr
                                         style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;">
                                 </div>
                             </div>
-                            <div class="nds-swiper-navigation">
+                            <div class="nds-swiper-navigation" hidden>
                                 <div class="nds-swiper-buttons">
                                     <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"></button>
                                     <button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"></button>
@@ -318,7 +318,7 @@ direction: ltr
                 style="width: 100%; height: 450px; object-fit: cover; border-radius: 8px;"&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-swiper-navigation"&gt;
+    &lt;div class="nds-swiper-navigation" hidden&gt;
         &lt;div class="nds-swiper-buttons"&gt;
             &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev" aria-label="Previous slide"&gt;&lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next" aria-label="Next slide"&gt;&lt;/button&gt;
@@ -439,7 +439,7 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-swiper-navigation">
+                            <div class="nds-swiper-navigation" hidden>
                                 <div class="nds-swiper-buttons">
                                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"></button>
                                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"></button>
@@ -520,7 +520,7 @@ direction: ltr
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-swiper-navigation"&gt;
+    &lt;div class="nds-swiper-navigation" hidden&gt;
         &lt;div class="nds-swiper-buttons"&gt;
             &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
             &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
@@ -640,7 +640,7 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-swiper-navigation">
+                            <div class="nds-swiper-navigation" hidden>
                                 <div class="nds-swiper-buttons">
                                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"></button>
                                     <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"></button>
@@ -721,7 +721,7 @@ direction: ltr
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class="nds-swiper-navigation"&gt;
+    &lt;div class="nds-swiper-navigation" hidden&gt;
         &lt;div class="nds-swiper-buttons"&gt;
             &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
             &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;

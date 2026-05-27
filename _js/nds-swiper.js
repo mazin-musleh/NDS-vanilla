@@ -159,10 +159,8 @@
 
             this.container.setAttribute('data-swiper-initialized', 'true');
 
-            if (this.slides.length > this.slidesPerView) {
-                if (this.pagination) this.pagination.removeAttribute('hidden');
-                if (this.prevBtn) this.prevBtn.removeAttribute('hidden');
-                if (this.nextBtn) this.nextBtn.removeAttribute('hidden');
+            if (this.navigation && this.slides.length > this.slidesPerView) {
+                this.navigation.removeAttribute('hidden');
             }
         }
 

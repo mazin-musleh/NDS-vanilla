@@ -517,14 +517,14 @@ direction: ltr
       &lt;/div&gt;
 
     &lt;/div&gt;
-    &lt;div class="nds-swiper-navigation"&gt;
+    &lt;div class="nds-swiper-navigation" hidden&gt;
       &lt;div class="nds-swiper-buttons"&gt;
         &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-prev"
-            aria-label="Previous slide" hidden&gt;&lt;/button&gt;
+            aria-label="Previous slide"&gt;&lt;/button&gt;
         &lt;button class="nds-btn nds-subtle nds-icon-only nds-oncolor nds-next"
-            aria-label="Next slide" hidden&gt;&lt;/button&gt;
+            aria-label="Next slide"&gt;&lt;/button&gt;
       &lt;/div&gt;
-      &lt;div class="nds-swiper-pagination" hidden&gt;&lt;/div&gt;
+      &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/section&gt;

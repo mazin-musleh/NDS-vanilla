@@ -71,7 +71,7 @@ exclude_showcase: true
                     </div>
                     {% endfor %}
                 </div>
-                <div class="nds-swiper-navigation">
+                <div class="nds-swiper-navigation" hidden>
                     <div class="nds-swiper-buttons">
                         <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous template"></button>
                         <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next template"></button>
@@ -130,7 +130,7 @@ exclude_showcase: true
                     </div>
                     {% endfor %}
                 </div>
-                <div class="nds-swiper-navigation">
+                <div class="nds-swiper-navigation" hidden>
                     <div class="nds-swiper-buttons">
                         <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous example"></button>
                         <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next example"></button>
