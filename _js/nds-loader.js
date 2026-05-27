@@ -280,10 +280,17 @@
         _yieldChannel.port2.postMessage(null);
     };
 
-    // rIC fallback for older Safari (<18); behaves like a deferred macrotask
-    // with a fake deadline so the loop still drains.
+    // rIC fallback for older Safari (<18). Deadline counts down a real 5ms
+    // slot so drainIdle yields like native rIC instead of running every
+    // idle component in one macrotask.
     const scheduleIdle = window.requestIdleCallback ||
-        ((cb) => setTimeout(() => cb({ timeRemaining: () => 50, didTimeout: false }), 1));
+        ((cb) => {
+            const start = performance.now();
+            setTimeout(() => cb({
+                didTimeout: false,
+                timeRemaining: () => Math.max(0, 5 - (performance.now() - start))
+            }), 1);
+        });
 
     function initializeNDS() {
         if (CONFIG.disableAll === true) {
