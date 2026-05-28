@@ -146,12 +146,17 @@
 
         // ── Item / container resolution ──────────────────────────────────
 
-        _resolveItems() {
-            const src = this.opts.items;
+        // Shared dispatch for the flexible `selector | NodeList | Array | () => NodeList`
+        // shape that both `opts.items` and `opts.triggers` accept.
+        _resolveLike(src) {
             if (typeof src === 'function') return Array.from(src() || []);
             if (typeof src === 'string') return Array.from(this.root.querySelectorAll(src));
             if (src && typeof src.length === 'number') return Array.from(src);
             return [];
+        }
+
+        _resolveItems() {
+            return this._resolveLike(this.opts.items);
         }
 
         _resolveContainer(items) {
@@ -162,11 +167,7 @@
         // ── Trigger resolution / wiring ──────────────────────────────────
 
         _resolveTriggers() {
-            const src = this.opts.triggers;
-            if (typeof src === 'function') return Array.from(src() || []);
-            if (typeof src === 'string') return Array.from(this.root.querySelectorAll(src));
-            if (src && typeof src.length === 'number') return Array.from(src);
-            return [];
+            return this._resolveLike(this.opts.triggers);
         }
 
         _bindTriggers() {

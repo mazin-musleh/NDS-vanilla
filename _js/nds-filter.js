@@ -670,73 +670,86 @@
 
         setupActionButtons() {
             const actionButtons = this.queryAll('[data-filter-action]');
-            const { signal } = this.abortController;
 
             actionButtons.forEach(button => {
                 const action = button.getAttribute('data-filter-action');
 
                 switch (action) {
-                    case 'apply':
-                        this.applyButton = button;
-                        // Tag as the dropmenu's primary action so Enter inside
-                        // any filter dropmenu panel triggers Apply.
-                        button.setAttribute('data-dropmenu-primary', '');
-                        const labelEl = button.querySelector('.nds-label');
-                        this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
-
-                        // In form mode, turn the apply button into a submit for the
-                        // submission form — works whether the button is inside the form
-                        // or externally associated via HTML's `form="id"` attribute.
-                        if (this.isFormMode && button.type !== 'submit') {
-                            button.type = 'submit';
-                        }
-                        if (this.isFormMode && this.submissionForm.id && button.form !== this.submissionForm) {
-                            button.setAttribute('form', this.submissionForm.id);
-                        }
-
-                        button.addEventListener('click', (e) => {
-                            // Update search criteria from dropmenu input
-                            if (this.searchInputs.dropmenu) {
-                                this.criteria.search = this.searchInputs.dropmenu.input.value.trim().toLowerCase();
-                                if (this.searchInputs.direct) {
-                                    this.searchInputs.direct.input.value = this.searchInputs.dropmenu.input.value;
-                                    this.updateClearButtonVisibility(
-                                        this.searchInputs.direct.input,
-                                        this.searchInputs.direct.clearBtn
-                                    );
-                                }
-                            }
-
-                            // In form mode, update hidden inputs then trigger submission.
-                            // We submit programmatically so it works even if the button
-                            // isn't natively form-associated.
-                            if (this.isFormMode) {
-                                e.preventDefault();
-                                this.updateHiddenInputs();
-                                this.submitForm();
-                                return;
-                            }
-
-                            // Standard client-side filtering mode
-                            e.preventDefault();
-                            this.applyFilters();
-                        }, { signal });
-                        break;
-                    case 'clear':
-                        button.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            this.clearDropmenuFilters();
-                        }, { signal });
-                        break;
-                    case 'reset':
-                        button.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            this.reset();
-                        }, { signal });
-                        break;
+                    case 'apply':  this._bindApplyButton(button); break;
+                    case 'clear':  this._bindClearButton(button); break;
+                    case 'reset':  this._bindResetButton(button); break;
                 }
             });
+        }
+
+        _bindApplyButton(button) {
+            const { signal } = this.abortController;
+
+            this.applyButton = button;
+            // Tag as the dropmenu's primary action so Enter inside
+            // any filter dropmenu panel triggers Apply.
+            button.setAttribute('data-dropmenu-primary', '');
+            const labelEl = button.querySelector('.nds-label');
+            this.applyButtonBaseLabel = labelEl ? labelEl.textContent : 'Apply';
+
+            // In form mode, turn the apply button into a submit for the
+            // submission form — works whether the button is inside the form
+            // or externally associated via HTML's `form="id"` attribute.
+            if (this.isFormMode && button.type !== 'submit') {
+                button.type = 'submit';
+            }
+            if (this.isFormMode && this.submissionForm.id && button.form !== this.submissionForm) {
+                button.setAttribute('form', this.submissionForm.id);
+            }
+
+            button.addEventListener('click', (e) => {
+                this._syncSearchFromDropmenu();
+
+                // In form mode, update hidden inputs then trigger submission.
+                // We submit programmatically so it works even if the button
+                // isn't natively form-associated.
+                if (this.isFormMode) {
+                    e.preventDefault();
+                    this.updateHiddenInputs();
+                    this.submitForm();
+                    return;
+                }
+
+                // Standard client-side filtering mode
+                e.preventDefault();
+                this.applyFilters();
+            }, { signal });
+        }
+
+        _bindClearButton(button) {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.clearDropmenuFilters();
+            }, { signal: this.abortController.signal });
+        }
+
+        _bindResetButton(button) {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.reset();
+            }, { signal: this.abortController.signal });
+        }
+
+        // Mirror the dropmenu search input's value into criteria.search and the
+        // direct search box (when both exist). No-op when there is no dropmenu
+        // search input. Used by the apply button and any other path that needs
+        // to settle search state from the dropmenu surface.
+        _syncSearchFromDropmenu() {
+            if (!this.searchInputs.dropmenu) return;
+            this.criteria.search = this.searchInputs.dropmenu.input.value.trim().toLowerCase();
+            if (this.searchInputs.direct) {
+                this.searchInputs.direct.input.value = this.searchInputs.dropmenu.input.value;
+                this.updateClearButtonVisibility(
+                    this.searchInputs.direct.input,
+                    this.searchInputs.direct.clearBtn
+                );
+            }
         }
 
         // ==============================================
@@ -1424,8 +1437,7 @@
                 || (NDS.isArabic ? 'الكل' : 'All');
             const values = includeAllOption ? ['', ...collectedValues] : collectedValues;
 
-            // Create the wrapper structure
-            let wrapper = container;
+            // Build the fieldset that holds the generated inputs
             let fieldset;
 
             // Check if container should get dropmenu-group spacing
@@ -1470,7 +1482,6 @@
                     fieldset.appendChild(legend);
                 }
                 container.replaceWith(fieldset);
-                wrapper = fieldset;
             } else {
                 // Single value: keep as div, treat as dropmenu item
                 fieldset = container;
@@ -1871,6 +1882,22 @@
             }
         }
 
+        // Uncheck every filter input, zero out the criteria entries, and
+        // re-check the "All" radio (value="") so radio groups keep a valid
+        // selection after clearing. Shared by clear() and clearDropmenuFilters().
+        _resetFilterInputs() {
+            for (const [filterName, filterData] of Object.entries(this.filterInputs)) {
+                filterData.inputs.forEach(input => {
+                    input.checked = false;
+                });
+                if (filterData.type === 'radio') {
+                    const allInput = filterData.inputs.find(i => i.value === '');
+                    if (allInput) allInput.checked = true;
+                }
+                this.criteria.filters[filterName] = [];
+            }
+        }
+
         clearDropmenuFilters() {
             if (this.searchInputs.dropmenu) {
                 this.searchInputs.dropmenu.input.value = '';
@@ -1879,19 +1906,7 @@
                 }
             }
 
-            // Clear all filter inputs
-            for (const [filterName, filterData] of Object.entries(this.filterInputs)) {
-                filterData.inputs.forEach(input => {
-                    input.checked = false;
-                });
-                // Re-check the "All" radio (value="") so radio groups keep a valid
-                // selection after clearing.
-                if (filterData.type === 'radio') {
-                    const allInput = filterData.inputs.find(i => i.value === '');
-                    if (allInput) allInput.checked = true;
-                }
-                this.criteria.filters[filterName] = [];
-            }
+            this._resetFilterInputs();
 
             this.updateApplyButtonLabel();
             this.dispatchClearEvent();
@@ -1921,19 +1936,7 @@
 
             this.criteria.search = '';
 
-            // Clear all filter inputs
-            for (const [filterName, filterData] of Object.entries(this.filterInputs)) {
-                filterData.inputs.forEach(input => {
-                    input.checked = false;
-                });
-                // Re-check the "All" radio (value="") so radio groups keep a valid
-                // selection after clearing.
-                if (filterData.type === 'radio') {
-                    const allInput = filterData.inputs.find(i => i.value === '');
-                    if (allInput) allInput.checked = true;
-                }
-                this.criteria.filters[filterName] = [];
-            }
+            this._resetFilterInputs();
 
             // Clear sort and restore original DOM order (NDS.Sort handles snapshot + restore + a11y)
             if (this.sort && this.sort.getState().key) {
