@@ -14,6 +14,7 @@
   // State
   let activeModal = null;
   let initAbortController = null;
+  let _initDone = false;
 
   // Tab focus trap — delegates to the shared NDS.trapFocus factory.
   // The arrow form re-evaluates `activeModal` on every Tab press, so this
@@ -100,7 +101,7 @@
    * Initialize event listeners
    */
   function init() {
-    if (document.body.hasAttribute('data-nds-modal-initialized')) return;
+    if (_initDone) return;
 
     // Soft dependency — modal init no-ops (with a loud console.error) if NDS.Backdrop
     // isn't bundled. Modal needs Backdrop's overlay layer to function; failing loudly
@@ -110,9 +111,8 @@
       return;
     }
 
-    // Scope all document-level listeners to an AbortController so any future re-init
-    // (e.g., NDS.Init.initializeComponent('modal') after removing the init marker)
-    // detaches the prior batch atomically instead of stacking listeners.
+    // Scope all document-level listeners to an AbortController so any future
+    // re-init detaches the prior batch atomically instead of stacking listeners.
     if (initAbortController) initAbortController.abort();
     initAbortController = new AbortController();
     const { signal } = initAbortController;
@@ -143,7 +143,7 @@
       }
     }, { signal });
 
-    document.body.setAttribute('data-nds-modal-initialized', 'true');
+    _initDone = true;
   }
 
   /**
