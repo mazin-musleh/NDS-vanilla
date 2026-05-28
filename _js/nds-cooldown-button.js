@@ -54,6 +54,13 @@
     const WIRED_ATTR = 'data-cooldown-wired';
     const DEFAULT_TEMPLATE = '{s}';
 
+    // One-shot init guard. NDS.Init.reinitialize() / .initializeComponent
+    // would otherwise re-stack the two pool subscriptions in init() — onDOMAdd
+    // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
+    // The single init at page load wires the subscribers; subsequent button
+    // mutations are already handled by those long-lived subscribers.
+    let _initDone = false;
+
     // Per-button runtime: { loadingTimer, tickTimer, labelEl, originalLabel }
     const active = new WeakMap();
 
@@ -209,6 +216,8 @@
 
     const CooldownButton = {
         init() {
+            if (_initDone) return;
+            _initDone = true;
             document.querySelectorAll(SEL).forEach(wire);
             NDS.onDOMAdd(SEL, (nodes) => nodes.forEach(wire));
             NDS.onDOMRemove(SEL, (nodes) => nodes.forEach(unwire));

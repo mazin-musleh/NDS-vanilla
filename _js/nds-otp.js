@@ -4,6 +4,13 @@
 (function () {
     'use strict';
 
+    // One-shot init guard. NDS.Init.reinitialize() / .initializeComponent
+    // would otherwise re-stack the two pool subscriptions in init() — onDOMAdd
+    // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
+    // The single init at page load wires the subscribers; subsequent .nds-otp-group
+    // mutations are already handled by those long-lived subscribers.
+    var _initDone = false;
+
     // ==============================================
     // HELPERS
     // ==============================================
@@ -249,6 +256,8 @@
     // ==============================================
 
     function init() {
+        if (_initDone) return;
+        _initDone = true;
         document.querySelectorAll('.nds-otp-group').forEach(initOtpGroup);
 
         NDS.onDOMAdd('.nds-otp-group', function (nodes) {
