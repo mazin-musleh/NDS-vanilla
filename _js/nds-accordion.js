@@ -38,13 +38,18 @@
         }
 
         setupInitialState() {
-            // Ensure proper initial state for all accordion items
+            // The init-time 0fr → 1fr transition is suppressed by a CSS
+            // gate keyed on `:not([data-nds-accordion-initialized])` on the
+            // container. initializeAccordions defers the marker stamp by two
+            // rAFs so the browser commits the state change in a paint where
+            // the rule still applies; the marker then lands in the next
+            // paint and future user clicks animate normally.
             this.buttons.forEach((button, index) => {
                 const collapse = this.collapses[index];
                 if (!collapse) return;
 
                 const isExpanded = button.getAttribute('aria-expanded') === 'true';
-                
+
                 if (isExpanded) {
                     NDS.State.set(collapse, 'open');
                     NDS.State.set(button, 'open');
@@ -324,7 +329,13 @@
             if (!container.hasAttribute('data-nds-accordion-initialized')) {
                 const accordionInstance = new NDSAccordion(container);
                 container.ndsAccordion = accordionInstance;
-                container.setAttribute('data-nds-accordion-initialized', 'true');
+                // Defer the marker by one rAF so the browser commits the
+                // setupInitialState state change in a paint where the CSS
+                // gate (.nds-accordion:not([data-nds-accordion-initialized]))
+                // still applies — suppressing the init-time animation.
+                requestAnimationFrame(() => {
+                    container.setAttribute('data-nds-accordion-initialized', 'true');
+                });
             }
         });
     }

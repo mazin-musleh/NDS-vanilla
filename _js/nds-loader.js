@@ -31,14 +31,20 @@
             init: () => NDS.Forms?.init?.(),
         },
         {
+            // Idle: input wiring fires on user typing — no first-paint
+            // visual. The input[autofocus] restore is opt-in; pages that
+            // ship autofocus on an OTP input will see the restore delayed
+            // by one idle slot. Acceptable for the common case.
             name: 'otp',
             selector: '.nds-otp-group',
             init: () => NDS.OTP?.init?.(),
+            idle: true,
         },
         {
             name: 'tabs',
             selector: '.nds-tabs',
             init: () => NDS.Tabs?.init?.(),
+            idle: true,
         },
         {
             name: 'tables',
@@ -46,6 +52,8 @@
             init: () => NDS.Tables?.init?.(),
         },
         {
+            // Eager: auto-expand state would CLS if applied in idle (panels
+            // paint collapsed-by-default then expand on init).
             name: 'accordion',
             selector: '.nds-accordion',
             init: () => NDS.Accordion?.init?.(),
@@ -92,14 +100,18 @@
             init: () => NDS.ScrollMore?.init?.(),
         },
         {
+            // Idle: progress animations are cosmetic on-scroll work.
             name: 'progress',
             selector: '.nds-progress-circle, .nds-progress-bar',
             init: () => NDS.Progress?.init?.(),
+            idle: true,
         },
         {
+            // Idle: counter animations are cosmetic on-scroll work.
             name: 'numbers',
             selector: '.nds-number-format, .nds-counter-value',
             init: () => NDS.Numbers?.init?.(),
+            idle: true,
         },
         {
             // Targets the three NDS code hooks (block, tabs-wrapped block, inline).
@@ -184,9 +196,11 @@
             init: () => NDS.Multiselect?.init?.(),
         },
         {
+            // Idle: results fetch on user typing — no first-paint visual.
             name: 'autocomplete',
             selector: '.nds-form-container[data-url]',
             init: () => NDS.Autocomplete?.init?.(),
+            idle: true,
         },
         {
             // Idle: pagination's collapse + dropmenu setup is heavy when
