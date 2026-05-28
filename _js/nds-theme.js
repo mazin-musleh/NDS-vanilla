@@ -50,7 +50,7 @@
             const cb = el.querySelector('.nds-switch-input');
             if (cb) cb.checked = isDark;
             // Button toggles: sync aria
-            el.setAttribute('aria-pressed', isDark);
+            NDS.aria.pressed(el, isDark);
             // Icon swap
             const icon = el.querySelector('.nds-icon');
             if (icon) {

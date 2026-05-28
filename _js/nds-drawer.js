@@ -126,7 +126,7 @@
     function showSubmenu(listItem, button, submenu) {
         setState(submenu, CONFIG.states.opening);
         setState(listItem, CONFIG.states.opening);
-        button.setAttribute('aria-expanded', 'true');
+        NDS.aria.expanded(button, true);
         setState(button, CONFIG.states.active);
         submenu.style.height = submenu.scrollHeight + 'px';
 
@@ -150,7 +150,7 @@
         setState(submenu, CONFIG.states.closing);
         submenu.style.height = '0px';
         setState(listItem, CONFIG.states.closed);
-        button.setAttribute('aria-expanded', 'false');
+        NDS.aria.expanded(button, false);
         NDS.State.clear(button);
 
         const cleanup = () => {
@@ -194,12 +194,12 @@
             if (shouldBeOpen) {
                 setState(item, CONFIG.states.open);
                 setState(submenu, CONFIG.states.open);
-                button.setAttribute('aria-expanded', 'true');
+                NDS.aria.expanded(button, true);
                 setState(button, CONFIG.states.active);
             } else {
                 setState(item, CONFIG.states.closed);
                 setState(submenu, CONFIG.states.closed);
-                button.setAttribute('aria-expanded', 'false');
+                NDS.aria.expanded(button, false);
                 NDS.State.clear(button);
             }
         });
@@ -261,7 +261,7 @@
 
                     setState(parent, CONFIG.states.open);
                     if (btn) {
-                        btn.setAttribute('aria-expanded', 'true');
+                        NDS.aria.expanded(btn, true);
                         setState(btn, CONFIG.states.active);
                     }
                     if (submenu) setState(submenu, CONFIG.states.open);

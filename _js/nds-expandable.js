@@ -78,8 +78,8 @@
             // Create the expand button
             this.expandButton = document.createElement('button');
             this.expandButton.className = 'nds-btn nds-subtle nds-expand-btn nds-menu-btn nds-md';
-            this.expandButton.setAttribute('aria-label', 'Expand content');
-            this.expandButton.setAttribute('aria-expanded', 'false');
+            NDS.aria.label(this.expandButton, 'Expand content');
+            NDS.aria.expanded(this.expandButton, false);
 
             this.expandButton.innerHTML = `<span class="nds-label">${labels[NDS.langKey].showMore}</span>`;
 
@@ -109,8 +109,8 @@
 
             // Update button state
             if (this.expandButton) {
-                this.expandButton.setAttribute('aria-expanded', 'true');
-                this.expandButton.setAttribute('aria-label', 'Menu');
+                NDS.aria.expanded(this.expandButton, true);
+                NDS.aria.label(this.expandButton, 'Menu');
                 this.expandButton.querySelector('.nds-label').textContent = labels[NDS.langKey].showLess;
             }
 
@@ -131,8 +131,8 @@
 
             // Update button state
             if (this.expandButton) {
-                this.expandButton.setAttribute('aria-expanded', 'false');
-                this.expandButton.setAttribute('aria-label', 'Menu');
+                NDS.aria.expanded(this.expandButton, false);
+                NDS.aria.label(this.expandButton, 'Menu');
                 this.expandButton.querySelector('.nds-label').textContent = labels[NDS.langKey].showMore;
             }
 

@@ -286,7 +286,7 @@
 
             const icon = document.createElement('i');
             icon.className = 'nds-icon nds-hgi-cancel-01';
-            icon.setAttribute('aria-hidden', 'true');
+            NDS.aria.hidden(icon, true);
 
             const label = document.createElement('span');
             label.className = 'nds-label';

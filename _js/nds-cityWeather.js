@@ -11,7 +11,7 @@
         while (parent.firstChild) parent.removeChild(parent.firstChild);
         const icon = document.createElement('i');
         icon.className = 'nds-icon ' + payload.icon;
-        icon.setAttribute('aria-hidden', 'true');
+        NDS.aria.hidden(icon, true);
         const span = document.createElement('span');
         span.className = 'text';
         span.textContent = payload.desc + ', ' + payload.temp + '°C';
@@ -23,7 +23,7 @@
         while (parent.firstChild) parent.removeChild(parent.firstChild);
         const icon = document.createElement('i');
         icon.className = 'nds-icon nds-hgi-location-01';
-        icon.setAttribute('aria-hidden', 'true');
+        NDS.aria.hidden(icon, true);
         const span = document.createElement('span');
         span.className = 'text';
         span.textContent = city;

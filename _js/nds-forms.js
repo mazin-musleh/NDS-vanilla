@@ -14,7 +14,7 @@
     NDS.State.onAdd('disabled', FORM_SCOPE, function(el) {
         el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.disabled = true; });
         el.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
-            btn.setAttribute('aria-disabled', 'true');
+            NDS.aria.disabled(btn, true);
             if (btn.tagName === 'BUTTON') btn.disabled = true;
         });
     });
@@ -22,7 +22,7 @@
     NDS.State.onRemove('disabled', FORM_SCOPE, function(el) {
         el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.disabled = false; });
         el.querySelectorAll('.nds-form-action .nds-btn').forEach(function(btn) {
-            btn.setAttribute('aria-disabled', 'false');
+            NDS.aria.disabled(btn, false);
             if (btn.tagName === 'BUTTON') btn.disabled = false;
         });
     });
@@ -1041,8 +1041,8 @@
             var startLabel = isArabic ? 'بدء إدخال الصوت (' + langName + ')' : 'Start voice input (' + langName + ')';
             var stopLabel = isArabic ? 'إيقاف إدخال الصوت' : 'Stop voice input';
 
-            voiceButton.setAttribute('aria-label', startLabel);
-            voiceButton.setAttribute('aria-pressed', 'false');
+            NDS.aria.label(voiceButton, startLabel);
+            NDS.aria.pressed(voiceButton, false);
             voiceButton.title = startLabel;
 
             function showMessage(message, duration) {
@@ -1070,8 +1070,8 @@
                 }
 
                 NDS.State.remove(formContainer, 'listening');
-                voiceButton.setAttribute('aria-pressed', 'false');
-                voiceButton.setAttribute('aria-label', startLabel);
+                NDS.aria.pressed(voiceButton, false);
+                NDS.aria.label(voiceButton, startLabel);
 
                 if (input) {
                     input.style.fontStyle = '';
@@ -1087,8 +1087,8 @@
 
                 isListening = true;
                 NDS.State.add(formContainer, 'listening');
-                voiceButton.setAttribute('aria-pressed', 'true');
-                voiceButton.setAttribute('aria-label', stopLabel);
+                NDS.aria.pressed(voiceButton, true);
+                NDS.aria.label(voiceButton, stopLabel);
                 input.focus();
 
                 timeout = setTimeout(function() {
@@ -1165,7 +1165,7 @@
                 var isPassword = passwordInput.type === 'password';
                 passwordInput.type = isPassword ? 'text' : 'password';
                 passwordToggle.classList.toggle('show', isPassword);
-                passwordToggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+                NDS.aria.label(passwordToggle, isPassword ? 'Hide password' : 'Show password');
             });
         },
 

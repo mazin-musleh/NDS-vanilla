@@ -17,7 +17,7 @@
       // Set data-value on stars for delegation lookups
       for (let i = 0; i < this.stars.length; i++) {
         this.stars[i].dataset.value = i + 1;
-        this.stars[i].setAttribute('aria-label', `${i + 1} star${i > 0 ? 's' : ''}`);
+        NDS.aria.label(this.stars[i], `${i + 1} star${i > 0 ? 's' : ''}`);
       }
 
       // Auto-detect interactive from button elements
@@ -172,8 +172,8 @@
     setDisabled(disabled) {
       for (let i = 0; i < this.stars.length; i++) {
         this.stars[i].disabled = disabled;
-        if (disabled) this.stars[i].setAttribute('aria-disabled', 'true');
-        else this.stars[i].removeAttribute('aria-disabled');
+        if (disabled) NDS.aria.disabled(this.stars[i], true);
+        else NDS.aria.disabled(this.stars[i], null);
       }
 
       if (disabled) {

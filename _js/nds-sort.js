@@ -279,16 +279,16 @@
                 }
 
                 if (a11y === 'pressed') {
-                    trigger.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                    NDS.aria.pressed(trigger, isActive);
                     if (isActive) NDS.State.set(trigger, 'selected');
                     else NDS.State.remove(trigger, 'selected');
                 } else if (a11y === 'sort') {
                     const target = this.opts.a11yTarget ? this.opts.a11yTarget(trigger) : null;
                     if (target) {
                         if (isActive && this.state.dir) {
-                            target.setAttribute('aria-sort', this.state.dir === 'asc' ? 'ascending' : 'descending');
+                            NDS.aria.sort(target, this.state.dir === 'asc' ? 'ascending' : 'descending');
                         } else {
-                            target.setAttribute('aria-sort', 'none');
+                            NDS.aria.sort(target, 'none');
                         }
                     }
                     if (isActive) NDS.State.add(trigger, 'active');

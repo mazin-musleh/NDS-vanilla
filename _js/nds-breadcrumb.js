@@ -71,11 +71,11 @@
 
             const button = document.createElement('button');
             button.className = 'nds-btn nds-subtle nds-ellipsis nds-dropmenu-trigger';
-            button.setAttribute('aria-label', 'More');
+            NDS.aria.label(button, 'More');
 
             const menu = document.createElement('div');
             menu.className = 'nds-dropmenu-menu';
-            menu.setAttribute('aria-hidden', 'true');
+            NDS.aria.hidden(menu, true);
 
             const scroll = document.createElement('div');
             scroll.className = 'nds-dropmenu-scroll';

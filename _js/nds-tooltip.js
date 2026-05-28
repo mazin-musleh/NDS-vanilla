@@ -83,7 +83,7 @@
                 icon.className = 'nds-feedback-icon';
                 const i = document.createElement('i');
                 i.className = 'nds-icon';
-                i.setAttribute('aria-hidden', 'true');
+                NDS.aria.hidden(i, true);
                 icon.appendChild(i);
                 wrap.appendChild(icon);
                 return wrap;
@@ -95,7 +95,7 @@
                 const trigger = document.createElement('button');
                 trigger.type = 'button';
                 trigger.className = 'nds-tooltip-trigger';
-                trigger.setAttribute('aria-label', title || 'More info');
+                NDS.aria.label(trigger, title || 'More info');
                 trigger.appendChild(buildChip());
                 this.root.prepend(trigger);
             }

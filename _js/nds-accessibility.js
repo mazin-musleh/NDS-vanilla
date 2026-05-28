@@ -300,13 +300,13 @@
             if (!maskTopEl) {
                 maskTopEl = document.createElement('div');
                 maskTopEl.className = 'nds-a11y-mask nds-a11y-mask-top';
-                maskTopEl.setAttribute('aria-hidden', 'true');
+                NDS.aria.hidden(maskTopEl, true);
                 document.body.appendChild(maskTopEl);
             }
             if (!maskBottomEl) {
                 maskBottomEl = document.createElement('div');
                 maskBottomEl.className = 'nds-a11y-mask nds-a11y-mask-bottom';
-                maskBottomEl.setAttribute('aria-hidden', 'true');
+                NDS.aria.hidden(maskBottomEl, true);
                 document.body.appendChild(maskBottomEl);
             }
             if (!maskControlsEl) {
@@ -318,7 +318,7 @@
                 // open the panel and toggle the mask first). Built via
                 // createElement so JSON-sourced labels can't break out of the
                 // attribute via innerHTML string concat.
-                maskControlsEl.setAttribute('aria-label', A11Y_I18N.mask_toolbar);
+                NDS.aria.label(maskControlsEl, A11Y_I18N.mask_toolbar);
                 [
                     { action: 'size-down', icon: 'nds-icon nds-hgi-zoom-out-area',         label: A11Y_I18N.mask_size_down },
                     { action: 'size-up',   icon: 'nds-icon nds-hgi-zoom-in-area',          label: A11Y_I18N.mask_size_up   },
@@ -329,10 +329,10 @@
                     btn.type = 'button';
                     btn.className = 'nds-btn nds-subtle nds-icon-only';
                     btn.dataset.action = action;
-                    btn.setAttribute('aria-label', label || '');
+                    NDS.aria.label(btn, label || '');
                     const i = document.createElement('i');
                     i.className = icon;
-                    i.setAttribute('aria-hidden', 'true');
+                    NDS.aria.hidden(i, true);
                     btn.appendChild(i);
                     maskControlsEl.appendChild(btn);
                 });
@@ -509,7 +509,7 @@
         // Tile buttons reflect active state via aria-pressed + data-state~="selected"
         // in lockstep — ARIA for SR, data-state for the NDS button SCSS.
         const setPressed = (el, on) => {
-            el.setAttribute('aria-pressed', on ? 'true' : 'false');
+            NDS.aria.pressed(el, on);
             if (on) addState(el, 'selected');
             else removeState(el, 'selected');
         };
@@ -763,7 +763,7 @@
             const icon = document.createElement('i');
             icon.className = 'nds-icon';
             icon.dataset.flashIcon = '';
-            icon.setAttribute('aria-hidden', 'true');
+            NDS.aria.hidden(icon, true);
             btn.insertBefore(icon, lbl);
         }
         lbl.textContent = A11Y_I18N.reset_done;
@@ -877,7 +877,7 @@
         // No inert / no backdrop — Disclosure pattern, page stays
         // interactive so users can watch tiles affect live content.
 
-        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'true');
+        NDS.aria.expanded(toggleBtn, true);
 
         // Force reflow so the from-state paints before the to-state transition.
         // eslint-disable-next-line no-unused-expressions
@@ -907,7 +907,7 @@
             panel.setAttribute('hidden', '');
             panel.removeEventListener('transitionend', onClosed);
 
-            if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+            NDS.aria.expanded(toggleBtn, false);
 
             if (openerEl && typeof openerEl.focus === 'function') openerEl.focus();
             openerEl = null;

@@ -44,7 +44,7 @@
 
     // Show modal
     modal.removeAttribute('hidden');
-    modal.setAttribute('aria-hidden', 'false');
+    NDS.aria.hidden(modal, false);
 
     // Force reflow to ensure initial state is painted before transition
     modal.offsetHeight;
@@ -81,7 +81,7 @@
 
     // Trigger closing animation
     NDS.State.set(modal, 'closing');
-    modal.setAttribute('aria-hidden', 'true');
+    NDS.aria.hidden(modal, true);
 
     // Tear down backdrop + modal only after the close animation finishes.
     // Backdrop.hide() runs a synchronous scrollLock.unlock() (full-page reflow);

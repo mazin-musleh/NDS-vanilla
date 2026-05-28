@@ -48,7 +48,7 @@
                 const collapse = this.collapses[index];
                 if (!collapse) return;
 
-                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                const isExpanded = button.ariaExpanded === 'true';
 
                 if (isExpanded) {
                     NDS.State.set(collapse, 'open');
@@ -56,7 +56,7 @@
                 } else {
                     NDS.State.clear(collapse);
                     NDS.State.clear(button);
-                    button.setAttribute('aria-expanded', 'false');
+                    NDS.aria.expanded(button, false);
                 }
             });
         }
@@ -132,7 +132,7 @@
             // Prevent toggling while animation is in progress
             if (this.isAnimating) return;
 
-            const isCurrentlyExpanded = button.getAttribute('aria-expanded') === 'true';
+            const isCurrentlyExpanded = button.ariaExpanded === 'true';
             
             if (isCurrentlyExpanded) {
                 this.hide(index);
@@ -163,7 +163,7 @@
             }
 
             // Update button state immediately
-            button.setAttribute('aria-expanded', 'true');
+            NDS.aria.expanded(button, true);
             NDS.State.set(button, 'open');
 
             // Set collapse to opening, then open after animation
@@ -194,7 +194,7 @@
             }
 
             // Update button state immediately
-            button.setAttribute('aria-expanded', 'false');
+            NDS.aria.expanded(button, false);
             NDS.State.clear(button);
 
             // Set collapse to closing, then remove after animation
@@ -210,7 +210,7 @@
 
         hideAll(excludeIndex = -1) {
             this.buttons.forEach((button, index) => {
-                if (index !== excludeIndex && button.getAttribute('aria-expanded') === 'true') {
+                if (index !== excludeIndex && button.ariaExpanded === 'true') {
                     this.hide(index);
                 }
             });
@@ -306,7 +306,7 @@
                     index,
                     button,
                     collapse: this.collapses[index],
-                    isOpen: button.getAttribute('aria-expanded') === 'true'
+                    isOpen: button.ariaExpanded === 'true'
                 }))
                 .filter(item => item.isOpen);
         }

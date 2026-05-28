@@ -494,6 +494,40 @@
         clear: (el) => { if (el) el.removeAttribute('data-status'); }
     };
 
+    // ── aria-* setter namespace ──────────────────────────────────────
+    // Null-safe setters for aria-* attributes. Factory-built per attribute:
+    //   - boolean attrs (expanded/hidden/pressed/selected/disabled) coerce
+    //     the value via Boolean() → 'true' / 'false'
+    //   - string attrs (label/current/sort) pass the value through as-is
+    //   - null / undefined / '' → removeAttribute (idiomatic for aria-*)
+    //   - null el → no-op (callers don't need to guard ahead of the call)
+    // Reads use the DOM IDL property directly — `el.ariaExpanded === 'true'`,
+    // `el.ariaLabel`, etc. — no NDS wrapper needed. Supported in every
+    // evergreen browser since 2021.
+    // Usage: NDS.aria.expanded(button, true);
+    //        NDS.aria.expanded(toggleButton, !isOpen);
+    //        NDS.aria.label(button, 'Open menu');
+    //        NDS.aria.label(button, '');           // removes the attribute
+    //        if (button.ariaExpanded === 'true') { ... }   // read via IDL
+    // To add a new aria-* helper, extend the NDS.aria object below with
+    // `<name>: _aria('aria-<name>', <isBool>)`. Do NOT add a flat
+    // NDS.aria<Name> at the top level.
+    const _aria = (attr, isBool) => (el, value) => {
+        if (!el) return;
+        if (value == null || value === '') return el.removeAttribute(attr);
+        el.setAttribute(attr, isBool ? String(Boolean(value)) : value);
+    };
+    NDS.aria = {
+        expanded: _aria('aria-expanded', true),
+        hidden:   _aria('aria-hidden',   true),
+        pressed:  _aria('aria-pressed',  true),
+        selected: _aria('aria-selected', true),
+        disabled: _aria('aria-disabled', true),
+        label:    _aria('aria-label',    false),
+        current:  _aria('aria-current',  false),
+        sort:     _aria('aria-sort',     false),
+    };
+
     // ── HTML Escape ──────────────────────────────────────────────────
     // Escape a string for safe insertion into an HTML context (innerHTML, template literals).
     // Uses the browser's textContent serializer so every edge case the parser cares about

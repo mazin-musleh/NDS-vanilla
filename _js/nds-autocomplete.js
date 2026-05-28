@@ -123,7 +123,7 @@
 
         setupAria() {
             this.input.setAttribute('role', 'combobox');
-            this.input.setAttribute('aria-expanded', 'false');
+            NDS.aria.expanded(this.input, false);
             this.input.setAttribute('aria-autocomplete', 'list');
             this.input.setAttribute('aria-controls', this.menuId);
             this.input.removeAttribute('aria-activedescendant');
@@ -195,10 +195,10 @@
 
             // Sync aria-expanded when dropmenu opens/closes
             this._onDropmenuOpened = () => {
-                this.input.setAttribute('aria-expanded', 'true');
+                NDS.aria.expanded(this.input, true);
             };
             this._onDropmenuClosed = () => {
-                this.input.setAttribute('aria-expanded', 'false');
+                NDS.aria.expanded(this.input, false);
                 this.input.removeAttribute('aria-activedescendant');
                 this.activeIndex = -1;
             };
@@ -360,7 +360,7 @@
                 btn.type = 'button';
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item';
                 btn.setAttribute('role', 'option');
-                btn.setAttribute('aria-selected', 'false');
+                NDS.aria.selected(btn, false);
                 btn.id = this.menuId + '-item-' + index;
 
                 var labelSpan = document.createElement('span');
@@ -548,14 +548,14 @@
         setActiveItem(index, items) {
             // Clear previous
             if (this.activeIndex >= 0 && items[this.activeIndex]) {
-                items[this.activeIndex].setAttribute('aria-selected', 'false');
+                NDS.aria.selected(items[this.activeIndex], false);
                 removeState(items[this.activeIndex], 'active');
             }
 
             this.activeIndex = index;
 
             if (index >= 0 && items[index]) {
-                items[index].setAttribute('aria-selected', 'true');
+                NDS.aria.selected(items[index], true);
                 addState(items[index], 'active');
                 items[index].scrollIntoView({ block: 'nearest' });
                 this.input.setAttribute('aria-activedescendant', items[index].id);

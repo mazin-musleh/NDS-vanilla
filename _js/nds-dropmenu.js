@@ -551,8 +551,8 @@
             addState(this.dropmenu, 'open', 'opening');
             addState(this.menu,     'open', 'opening');
             addState(this.trigger,  'open');
-            this.trigger.setAttribute('aria-expanded', 'true');
-            this.menu.setAttribute('aria-hidden', 'false');
+            NDS.aria.expanded(this.trigger, true);
+            NDS.aria.hidden(this.menu, false);
 
             this.applyPosition();
 
@@ -590,7 +590,7 @@
 
             addState(this.dropmenu, 'closing');
             addState(this.menu,     'closing');
-            this.trigger.setAttribute('aria-expanded', 'false');
+            NDS.aria.expanded(this.trigger, false);
 
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
             if (this._unsubResize) { this._unsubResize(); this._unsubResize = null; }
@@ -608,7 +608,7 @@
                 this.menu.style.cssText = '';
                 const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
                 if (scroll) scroll.style.maxHeight = '';
-                this.menu.setAttribute('aria-hidden', 'true');
+                NDS.aria.hidden(this.menu, true);
                 this.menu.removeEventListener('transitionend', onEnd);
                 // Restore the menu to its original location so authored
                 // markup queries (e.g. `dropmenu.querySelector(...)`) still

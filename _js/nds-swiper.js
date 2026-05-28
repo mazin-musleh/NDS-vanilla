@@ -388,7 +388,7 @@
                 const bullet = document.createElement('button');
                 bullet.className = 'nds-bullet';
                 bullet.type = 'button';
-                bullet.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                NDS.aria.label(bullet, `Go to slide ${i + 1}`);
                 this._attachActivation(bullet, () => this.goTo(i * this.slidesPerView));
                 this.pagination.appendChild(bullet);
             }
@@ -421,7 +421,7 @@
                 const isActive = i === currentPage;
                 if (isActive) NDS.Status.set(bullet, 'active');
                 else NDS.Status.clear(bullet);
-                bullet.setAttribute('aria-current', isActive ? 'true' : 'false');
+                NDS.aria.current(bullet, isActive ? 'true' : null);
             });
         }
 

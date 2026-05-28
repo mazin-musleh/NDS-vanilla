@@ -19,7 +19,7 @@
         while (parent.firstChild) parent.removeChild(parent.firstChild);
         const icon = document.createElement('i');
         icon.className = 'nds-icon nds-hgi-calendar-03';
-        icon.setAttribute('aria-hidden', 'true');
+        NDS.aria.hidden(icon, true);
         const span = document.createElement('span');
         span.className = 'text';
         span.textContent = content;
@@ -156,7 +156,7 @@
         if (!el) return false;
         const icon = document.createElement('i');
         icon.className = 'nds-icon nds-hgi-clock-01';
-        icon.setAttribute('aria-hidden', 'true');
+        NDS.aria.hidden(icon, true);
         clockText = document.createTextNode('');
         const span = document.createElement('span');
         span.className = 'text';

@@ -349,7 +349,7 @@
 
             if (open) {
                 addState(DOM.toggler, 'open');
-                toggleButton?.setAttribute('aria-expanded', 'true');
+                NDS.aria.expanded(toggleButton, true);
 
                 if (state.isMinimal) {
                     showNavBackdrop('navbar', () => {
@@ -364,7 +364,7 @@
                 });
             } else {
                 removeState(DOM.toggler, 'open');
-                toggleButton?.setAttribute('aria-expanded', 'false');
+                NDS.aria.expanded(toggleButton, false);
                 const closeDelay = state.reducedMotion ? 0 : dropdown.closeAll();
 
                 afterDelay(closeDelay, () => {
@@ -391,7 +391,7 @@
             animate.run(DOM.dgaDigitalStamp, !isOpen, {
                 getMenu: () => DOM.dgaDigitalStamp,
                 onStart: () => {
-                    DOM.dgaTab?.setAttribute('aria-expanded', String(!isOpen));
+                    NDS.aria.expanded(DOM.dgaTab, !isOpen);
                     if (!isOpen) {
                         NDS.State.add(DOM.dgaTab, 'expanded');
                         // Drop intrinsic [hidden] before the open transition so

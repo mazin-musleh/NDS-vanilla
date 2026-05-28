@@ -76,7 +76,7 @@
   function buildInner(message, iconClass) {
     const icon = document.createElement('i');
     icon.className = iconClass;
-    icon.setAttribute('aria-hidden', 'true');
+    NDS.aria.hidden(icon, true);
     const span = document.createElement('span');
     span.className = 'nds-empty-message';
     span.textContent = message;

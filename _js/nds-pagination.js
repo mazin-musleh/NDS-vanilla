@@ -86,7 +86,7 @@
             const dropdownItems = dropdownContainer.querySelectorAll('.nds-dropmenu-item');
             for (let i = 0; i < dropdownItems.length; i++) {
                 const item = dropdownItems[i];
-                if (item.getAttribute('aria-current') === 'page' || NDS.State.has(item, 'active')) {
+                if (item.ariaCurrent === 'page' || NDS.State.has(item, 'active')) {
                     activeDropdownItem = item;
                     break;
                 }
@@ -118,11 +118,11 @@
             button.type = 'button';
             button.className = 'nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger';
             button.innerHTML = '<span class="nds-label"></span>';
-            button.setAttribute('aria-label', 'More pages');
+            NDS.aria.label(button, 'More pages');
 
             const menu = document.createElement('div');
             menu.className = 'nds-dropmenu-menu';
-            menu.setAttribute('aria-hidden', 'true');
+            NDS.aria.hidden(menu, true);
 
             const scroll = document.createElement('div');
             scroll.className = 'nds-dropmenu-scroll';
@@ -137,14 +137,14 @@
                     const menuItem = document.createElement(isAnchor ? 'a' : 'button');
                     menuItem.className = 'nds-btn nds-subtle nds-indicator nds-dropmenu-item';
                     menuItem.innerHTML = element.innerHTML;
-                    menuItem.setAttribute('aria-label', element.getAttribute('aria-label') || `Page ${element.textContent}`);
+                    NDS.aria.label(menuItem, element.ariaLabel || `Page ${element.textContent}`);
 
                     // Preserve active state and aria-current from original element
                     if (NDS.State.has(element, 'active')) {
                         NDS.State.set(menuItem, 'active');
                     }
                     if (element.hasAttribute('aria-current')) {
-                        menuItem.setAttribute('aria-current', element.getAttribute('aria-current'));
+                        NDS.aria.current(menuItem, element.ariaCurrent);
                     }
 
                     // Copy href for anchors
@@ -250,7 +250,7 @@
         const inListClickables = pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-trigger');
         [...inListClickables, ...dropmenuItems].forEach(el => {
             NDS.State.clear(el);
-            el.removeAttribute('aria-current');
+            NDS.aria.current(el, null);
         });
 
         // Reset all ellipsis triggers (icon is CSS ::after, just clear page number)
@@ -267,7 +267,7 @@
             const elementPageNumber = parseInt(element.querySelector('.nds-label')?.textContent || element.textContent);
             if (elementPageNumber === pageNumber) {
                 NDS.State.set(element, 'active');
-                element.setAttribute('aria-current', 'page');
+                NDS.aria.current(element, 'page');
 
                 // Check if this element is inside a dropdown
                 if (element.classList.contains('nds-dropmenu-item')) {
@@ -298,10 +298,10 @@
                 prevBtn.disabled = currentPageNum === minPage;
             } else {
                 if (currentPageNum === minPage) {
-                    prevBtn.setAttribute('aria-disabled', 'true');
+                    NDS.aria.disabled(prevBtn, true);
                     NDS.State.add(prevBtn, 'disabled');
                 } else {
-                    prevBtn.removeAttribute('aria-disabled');
+                    NDS.aria.disabled(prevBtn, null);
                     NDS.State.remove(prevBtn, 'disabled');
                 }
             }
@@ -312,10 +312,10 @@
                 nextBtn.disabled = currentPageNum === maxPage;
             } else {
                 if (currentPageNum === maxPage) {
-                    nextBtn.setAttribute('aria-disabled', 'true');
+                    NDS.aria.disabled(nextBtn, true);
                     NDS.State.add(nextBtn, 'disabled');
                 } else {
-                    nextBtn.removeAttribute('aria-disabled');
+                    NDS.aria.disabled(nextBtn, null);
                     NDS.State.remove(nextBtn, 'disabled');
                 }
             }
@@ -337,7 +337,7 @@
         const maxPage = Math.max(...pageNumbers);
 
         // Find the active page (portal-aware)
-        const activePage = allPageElements.find(el => el.getAttribute('aria-current') === 'page');
+        const activePage = allPageElements.find(el => el.ariaCurrent === 'page');
 
         // Get current page number (or default to first page if none active)
         let currentPageNum;
@@ -555,7 +555,7 @@
     function getCurrentPage(pagination) {
         // Portal-aware: searches both in-list items and dropmenu items
         // (whether the menu is nested or currently portaled to <body>).
-        const active = getAllPageElements(pagination).find(el => el.getAttribute('aria-current') === 'page');
+        const active = getAllPageElements(pagination).find(el => el.ariaCurrent === 'page');
         if (active) {
             return parseInt(active.querySelector('.nds-label')?.textContent || active.textContent) || 1;
         }
@@ -637,7 +637,7 @@
         // Handle prev/next clicks
         if (prevElement || nextElement) {
             const allPageElements = getAllPageElements(pagination);
-            const currentActive = allPageElements.find(el => el.getAttribute('aria-current') === 'page');
+            const currentActive = allPageElements.find(el => el.ariaCurrent === 'page');
             if (!currentActive) return;
 
             const currentPageNum = parseInt(currentActive.querySelector('.nds-label')?.textContent || currentActive.textContent);

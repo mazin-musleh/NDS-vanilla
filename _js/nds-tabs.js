@@ -55,7 +55,7 @@
         }
 
         findActiveTabIndex() {
-            const activeTab = this.tabs.find(tab => tab.getAttribute('aria-selected') === 'true');
+            const activeTab = this.tabs.find(tab => tab.ariaSelected === 'true');
             return activeTab ? this.tabs.indexOf(activeTab) : 0;
         }
 
@@ -270,10 +270,10 @@
             const panel = this.panels[index];
             if (!panel) return;
 
-            tab.setAttribute('aria-selected', 'true');
+            NDS.aria.selected(tab, true);
             tab.setAttribute('tabindex', '0');
 
-            panel.removeAttribute('aria-hidden');
+            NDS.aria.hidden(panel, null);
             panel.removeAttribute('hidden');
             panel.setAttribute('tabindex', '0');
 
@@ -285,10 +285,10 @@
             const panel = this.panels[index];
             if (!panel) return;
 
-            tab.setAttribute('aria-selected', 'false');
+            NDS.aria.selected(tab, false);
             tab.setAttribute('tabindex', '-1');
 
-            panel.setAttribute('aria-hidden', 'true');
+            NDS.aria.hidden(panel, true);
             panel.setAttribute('hidden', '');
             panel.setAttribute('tabindex', '-1');
         }
