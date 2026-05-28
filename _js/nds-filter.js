@@ -109,7 +109,12 @@
             // fresh results with stale ones.
             this._fetchAC = null;
 
-            this._buildItemCache();
+            // Per-item match cache (_ndsFilterValues + _ndsSearchText) is
+            // built lazily on the first applyFilters() pass that has criteria
+            // — pages where the user never interacts with the filter skip the
+            // cost entirely. Flipped to false whenever this.items is
+            // reassigned (AJAX HTML inject, refresh()).
+            this._cacheBuilt = false;
             this.init();
         }
 
@@ -388,7 +393,7 @@
                 this.targetContainer.replaceWith(newContainer);
                 this.targetContainer = newContainer;
                 this.items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()));
-                this._buildItemCache();
+                this._cacheBuilt = false;
                 this._revealTargetContainer();
                 eventDetail.html = newContainer.innerHTML;
             } else {
@@ -1644,6 +1649,8 @@
 
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
 
+            this._ensureCacheBuilt();
+
             let visibleCount = 0;
 
             this.items.forEach(item => {
@@ -1757,11 +1764,20 @@
             return true;
         }
 
+        // Build the cache on demand — the first applyFilters() with criteria
+        // triggers it via _ensureCacheBuilt. Sites that reassign this.items
+        // flip _cacheBuilt to false; this method then re-runs on the next
+        // applyFilters pass.
+        _ensureCacheBuilt() {
+            if (this._cacheBuilt) return;
+            this._buildItemCache();
+            this._cacheBuilt = true;
+        }
+
         // Walk each item once and stash its filter values + lowercased search
         // text on the element itself. applyFilters() then matches against the
         // cache instead of re-querying every item's [data-filter] descendants
-        // and re-walking textContent on every pass. Rebuilt at every site
-        // that reassigns this.items (constructor, refresh, AJAX HTML inject).
+        // and re-walking textContent on every pass.
         _buildItemCache() {
             for (const item of this.items) {
                 const filterValues = {};
@@ -2050,7 +2066,7 @@
             this.items = this.targetContainer
                 ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
                 : [];
-            this._buildItemCache();
+            this._cacheBuilt = false;
 
             // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
             const filterElements = this.queryAll('[data-filter-type]');
