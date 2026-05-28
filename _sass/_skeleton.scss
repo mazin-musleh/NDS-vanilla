@@ -90,6 +90,16 @@ body:not([data-nds-loaded]) {
         display: none;
     }
 
+    :where(.nds-link,a):not(.nds-card):where(.nds-icon,.nds-external)::after {
+        content: "";
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        background: transparent;
+        vertical-align: text-bottom;
+        margin-inline-start: var(--spacing-xs);
+    }
+
 
 }
 

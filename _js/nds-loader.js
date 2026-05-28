@@ -19,6 +19,7 @@
             name: 'Main Navigation',
             selector: '.nds-main-nav',
             init: () => NDS.Mainnav?.init?.(),
+            idle: true,
         },
         {
             name: 'theme',
@@ -159,7 +160,6 @@
             selector: null,
             init: () => NDS.Link?.init?.(),
             universal: true,
-            idle: true,
         },
         {
             name: 'cookies',

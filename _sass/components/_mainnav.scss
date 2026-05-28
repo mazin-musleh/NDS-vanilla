@@ -464,12 +464,8 @@ body:not(.nds-minimal) .nds-main-nav {
     }
 
     .nds-collapse {
-        display: flex !important;
+        display: flex;
         width: 100%;
-
-        &[hidden] {
-            visibility: hidden;
-        }
 
         .nds-collapse-content {
             display: flex;
