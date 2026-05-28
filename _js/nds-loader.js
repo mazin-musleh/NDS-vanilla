@@ -189,9 +189,10 @@
             init: () => NDS.Autocomplete?.init?.(),
         },
         {
-            // Idle: pagination's collapse + dropmenu setup is the heaviest
-            // eager init (~105ms median at 6.6× CPU throttle, ~18ms idle).
-            // CLS mitigation pending.
+            // Idle: pagination's collapse + dropmenu setup is heavy when
+            // run on dirty layout from prior eager components. Loading
+            // state + skeleton CSS reserve the layout slot until idle init
+            // settles.
             name: 'pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
@@ -216,9 +217,13 @@
             idle: true,
         },
         {
+            // Idle: per-input listener setup + URL-param apply is a heavy
+            // eager init. Pairs with idle-tier pagination — Pagination.refresh
+            // is stateless so order between them doesn't matter.
             name: 'filter',
             selector: '.nds-filter',
             init: () => NDS.Filter?.init?.(),
+            idle: true,
         },
         {
             name: 'userFeedback',
