@@ -35,7 +35,7 @@
         const counters = document.querySelectorAll('.nds-counter-value');
         if (!counters.length) return;
 
-        const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false;
+        const prefersReducedMotion = NDS.prefersReducedMotion;
 
         function parseTarget(el) {
             let targetStr = el.getAttribute('data-target');

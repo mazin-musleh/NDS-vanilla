@@ -69,6 +69,18 @@
         get() { return NDS.isArabic ? 'ar' : 'en'; }
     });
 
+    // ── Reduced-motion preference (live getter) ──────────────────────
+    // Reads the user's prefers-reduced-motion preference live so callers
+    // react to runtime toggles (OS setting changes, DevTools Rendering
+    // panel). Mirrors NDS.isRTL — a live boolean derived from a single
+    // system source. Components that need to re-render on a runtime
+    // toggle still want raw `window.matchMedia(...).addEventListener` —
+    // this getter only exposes the snapshot read.
+    // Usage: if (NDS.prefersReducedMotion) callback(); else animate();
+    Object.defineProperty(NDS, 'prefersReducedMotion', {
+        get() { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+    });
+
     // ── i18n ─────────────────────────────────────────────────────────
     // Component-scoped runtime localization. Each consumer:
     //   1. Bakes English defaults into its HTML alongside data-i18n keys.

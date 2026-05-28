@@ -169,8 +169,7 @@
             this.setActive(entry);
 
             const top = entry.target.getBoundingClientRect().top + window.scrollY - this.navOffset();
-            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
+            window.scrollTo({ top, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
             history.replaceState(null, '', link.getAttribute('href'));
         }
 

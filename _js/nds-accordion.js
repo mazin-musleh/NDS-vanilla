@@ -33,10 +33,6 @@
             return NDS.State.has(this.accordionContainer, 'always-open');
         }
 
-        get prefersReducedMotion() {
-            return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        }
-
         setupInitialState() {
             // The init-time 0fr → 1fr transition is suppressed by a CSS
             // gate keyed on `:not([data-nds-accordion-initialized])` on the
@@ -153,7 +149,7 @@
             }
 
             // Set animation flag — skip lock when reduced motion is active
-            if (this.prefersReducedMotion) {
+            if (NDS.prefersReducedMotion) {
                 this.isAnimating = false;
             } else {
                 this.isAnimating = true;
@@ -184,7 +180,7 @@
             if (!button || !collapse) return;
 
             // Set animation flag — skip lock when reduced motion is active
-            if (this.prefersReducedMotion) {
+            if (NDS.prefersReducedMotion) {
                 this.isAnimating = false;
             } else {
                 this.isAnimating = true;
@@ -217,12 +213,12 @@
         }
 
         animateShow(collapse, callback) {
-            if (this.prefersReducedMotion) { callback(); return; }
+            if (NDS.prefersReducedMotion) { callback(); return; }
             NDS.onTransitionEnd(collapse, callback);
         }
 
         animateHide(collapse, callback) {
-            if (this.prefersReducedMotion) { callback(); return; }
+            if (NDS.prefersReducedMotion) { callback(); return; }
             NDS.onTransitionEnd(collapse, callback);
         }
 
