@@ -96,14 +96,18 @@ body:not([data-nds-loaded]) {
 /* ── Auto-paginated content ──
    Pagination is idle-tier — runs AFTER body[data-nds-loaded], so the
    body-state gate above deactivates too early. JS stamps
-   data-nds-paginated on the paged-content once init completes (see
+   data-paged-initialized on the paged-content once init completes (see
    _js/nds-pagination.js initializeAutoPagination); gate on that.
    Hides items past index 6 (matches most NDS demo pages' --per-page: 6
    default) until that signal lands. Without it, all items paint first
    then the content area shrinks when JS hides items past --per-page —
-   visible vertical CLS. Pages with --per-page != 6 see a small bounded
-   shift (much less than all-items → first-N). */
-.nds-paged-content:not([data-paged-initialized]) > .nds-page-item:nth-child(n + 7) {
+   visible vertical CLS. Descendant selector covers both grid layouts
+   (.nds-page-item as direct child) and tables (tr.nds-page-item inside
+   <tbody>). :nth-child counts among siblings of the actual parent
+   (tbody or paged-content), so the index matches what JS hides. Pages
+   with --per-page != 6 see a small bounded shift (much less than
+   all-items → first-N). */
+.nds-paged-content:not([data-paged-initialized]) .nds-page-item:nth-child(n + 7) {
     display: none;
 }
 

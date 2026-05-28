@@ -221,7 +221,7 @@ hideFeedback: true
                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <span class="nds-label">Search</span>
                 </button>
-                <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody">
+                <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody" data-portal>
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
@@ -354,7 +354,7 @@ hideFeedback: true
                                 {% endif %}
                             </td>
                             <td class="actions-column">
-                                <div class="nds-dropmenu">
+                                <div class="nds-dropmenu" data-portal>
                                     <button class="nds-btn nds-subtle nds-sm nds-icon-only nds-dropmenu-trigger" aria-label="Row actions">
                                         <i class="hgi hgi-stroke hgi-edit-02"></i>
                                     </button>

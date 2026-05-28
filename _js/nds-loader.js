@@ -47,9 +47,13 @@
             idle: true,
         },
         {
+            // Idle: wraps table in .nds-table-wrapper (DOM reparent) + sets
+            // up sort/select. Risk: wide tables on narrow viewports overflow
+            // pre-wrap. CSS skeleton mitigation may be needed.
             name: 'tables',
             selector: '.nds-table',
             init: () => NDS.Tables?.init?.(),
+            idle: true,
         },
         {
             // Eager: auto-expand state would CLS if applied in idle (panels

@@ -1201,7 +1201,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody">
+                        <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal>
                             <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                 <i class="hgi hgi-stroke hgi-filter"></i>
                                 <span class="nds-label">Filter</span>
