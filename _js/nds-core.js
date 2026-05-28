@@ -574,6 +574,51 @@
         };
     })();
 
+    // ── Transition End (with safety-net) ─────────────────────────────
+    // Subscribe to `el`'s next `transitionend`, filtering out events that
+    // bubble up from descendants. The callback runs at most once: a real
+    // transitionend fires it, OR a safety-net setTimeout fires it after
+    // `opts.fallbackMs` if the real event is missed (reduce-motion,
+    // mid-flight display:none, etc.). Idempotent — re-firing is a no-op.
+    //
+    //   opts.fallbackMs — defaults to NDS.transitionSpeed() + 50.
+    //
+    // Returns a cancel() handle that aborts both the listener and the
+    // pending fallback timer without invoking fn. Use when a re-open
+    // mid-close scenario needs to discard the close cleanup.
+    //
+    // Usage:
+    //   NDS.onTransitionEnd(submenu, () => {
+    //       NDS.State.set(submenu, 'open');
+    //       submenu.style.height = '';
+    //   });
+    //   // Custom safety-net delay:
+    //   NDS.onTransitionEnd(panel, cleanup, { fallbackMs: NDS.transitionSpeed() + 100 });
+    //   // Cancellable mid-flight:
+    //   this._cancelClose = NDS.onTransitionEnd(menu, cleanup);
+    //   // ... if user re-opens: this._cancelClose();
+    NDS.onTransitionEnd = (el, fn, opts = {}) => {
+        const fallbackMs = opts.fallbackMs ?? NDS.transitionSpeed() + 50;
+        let done = false;
+        let timer;
+        const run = () => {
+            if (done) return;
+            done = true;
+            clearTimeout(timer);
+            el.removeEventListener('transitionend', onEnd);
+            fn();
+        };
+        const onEnd = (e) => { if (e.target === el) run(); };
+        el.addEventListener('transitionend', onEnd);
+        timer = setTimeout(run, fallbackMs);
+        return () => {
+            if (done) return;
+            done = true;
+            clearTimeout(timer);
+            el.removeEventListener('transitionend', onEnd);
+        };
+    };
+
     // ── Focusable Selector + Tab Focus Trap ──────────────────────────
     // Standard "tabbable element" selector — matches the elements a Tab/
     // Shift+Tab traversal will land on. Excludes [tabindex="-1"] (unreachable

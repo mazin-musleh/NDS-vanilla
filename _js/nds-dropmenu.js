@@ -517,7 +517,9 @@
 
 
         open() {
-            this._closeCancelled = true;
+            // Abort any in-flight close so its cleanup doesn't tear down the
+            // menu we're about to re-open. No-op when no close is pending.
+            this._cancelClose?.();
 
             // Close other open dropmenus — but skip ancestors of this one.
             // Date-picker has month/year sub-dropmenus inside the calendar's
@@ -584,7 +586,6 @@
             this.isOpen = false;
             _openDropmenus.delete(this.dropmenu);
             this._lastClickX = null;
-            this._closeCancelled = false;
 
             if (this.menu.contains(document.activeElement)) this.trigger.focus();
 
@@ -595,11 +596,10 @@
             if (this._offScroll) { this._offScroll(); this._offScroll = null; }
             if (this._unsubResize) { this._unsubResize(); this._unsubResize = null; }
 
-            let done = false;
-            const cleanup = () => {
-                if (done || this._closeCancelled) return;
-                done = true;
-
+            // Stored so open() can call this._cancelClose() to abort the
+            // in-flight close if the user re-opens before the transition
+            // finishes. Cleared at the end of the cleanup body.
+            this._cancelClose = NDS.onTransitionEnd(this.menu, () => {
                 removeState(this.dropmenu, 'open', 'opening', 'closing');
                 removeState(this.menu,     'open', 'opening', 'closing');
                 removeState(this.trigger, 'open');
@@ -609,7 +609,6 @@
                 const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
                 if (scroll) scroll.style.maxHeight = '';
                 NDS.aria.hidden(this.menu, true);
-                this.menu.removeEventListener('transitionend', onEnd);
                 // Restore the menu to its original location so authored
                 // markup queries (e.g. `dropmenu.querySelector(...)`) still
                 // resolve while closed. No-op when the menu wasn't portaled
@@ -622,12 +621,8 @@
                 // flash on the next paint if it re-enters the viewport.
                 this.menu.setAttribute('hidden', '');
                 this.emitEvent('nds:dropmenu:closed');
-            };
-
-            const onEnd = (e) => { if (e.target === this.menu) cleanup(); };
-
-            this.menu.addEventListener('transitionend', onEnd);
-            setTimeout(cleanup, NDS.transitionSpeed() + 50);
+                this._cancelClose = null;
+            });
         }
 
         // ==============================================

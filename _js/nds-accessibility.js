@@ -899,24 +899,15 @@
 
         if (openAbortController) { openAbortController.abort(); openAbortController = null; }
 
-        let done = false;
-        const cleanup = () => {
-            if (done) return;
-            done = true;
+        NDS.onTransitionEnd(panel, () => {
             clearState(panel);
             panel.setAttribute('hidden', '');
-            panel.removeEventListener('transitionend', onClosed);
 
             NDS.aria.expanded(toggleBtn, false);
 
             if (openerEl && typeof openerEl.focus === 'function') openerEl.focus();
             openerEl = null;
-        };
-
-        const onClosed = (e) => { if (e && e.target !== panel) return; cleanup(); };
-        panel.addEventListener('transitionend', onClosed);
-        // Safety-net for missed transitionend (reduce-motion, display:none mid-transition).
-        setTimeout(() => { if (!done) cleanup(); }, NDS.transitionSpeed() + 100);
+        }, { fallbackMs: NDS.transitionSpeed() + 100 });
     }
 
     function toggle() {

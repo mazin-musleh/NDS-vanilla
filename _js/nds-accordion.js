@@ -217,49 +217,13 @@
         }
 
         animateShow(collapse, callback) {
-            // If reduced motion is preferred, skip animation
-            if (this.prefersReducedMotion) {
-                callback();
-                return;
-            }
-
-            // Clean up after animation
-            const handleTransitionEnd = () => {
-                collapse.removeEventListener('transitionend', handleTransitionEnd);
-                callback();
-            };
-
-            collapse.addEventListener('transitionend', handleTransitionEnd);
-
-            // Fallback in case transitionend doesn't fire
-            setTimeout(() => {
-                if (NDS.State.has(collapse, 'opening')) {
-                    handleTransitionEnd();
-                }
-            }, NDS.transitionSpeed());
+            if (this.prefersReducedMotion) { callback(); return; }
+            NDS.onTransitionEnd(collapse, callback);
         }
 
         animateHide(collapse, callback) {
-            // If reduced motion is preferred, skip animation
-            if (this.prefersReducedMotion) {
-                callback();
-                return;
-            }
-
-            // Clean up after animation
-            const handleTransitionEnd = () => {
-                collapse.removeEventListener('transitionend', handleTransitionEnd);
-                callback();
-            };
-
-            collapse.addEventListener('transitionend', handleTransitionEnd);
-
-            // Fallback in case transitionend doesn't fire
-            setTimeout(() => {
-                if (NDS.State.has(collapse, 'closing')) {
-                    handleTransitionEnd();
-                }
-            }, NDS.transitionSpeed());
+            if (this.prefersReducedMotion) { callback(); return; }
+            NDS.onTransitionEnd(collapse, callback);
         }
 
         dispatchToggleEvent(index, button, collapse, isShown) {

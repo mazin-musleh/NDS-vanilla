@@ -130,11 +130,7 @@
         if (isTopMode) addState(accMenu, 'closing');
         addState(animTarget, 'closing');
 
-        let done = false;
-        const cleanup = () => {
-            if (done) return;
-            done = true;
-
+        NDS.onTransitionEnd(animTarget, () => {
             clearState(animTarget);
             if (isTopMode) {
                 clearState(accMenu);
@@ -151,16 +147,7 @@
             // Soft dependency — sidemenu skips dimming overlay if NDS.Backdrop isn't bundled.
             if (NDS.Backdrop) NDS.Backdrop.hide();
             setTimeout(() => { if (closeEpoch === menuEpoch) accMenu.style.removeProperty('z-index'); }, 300);
-            animTarget.removeEventListener('transitionend', onClosed);
-        };
-
-        const onClosed = (e) => {
-            if (e && e.target !== animTarget) return;
-            cleanup();
-        };
-
-        animTarget.addEventListener('transitionend', onClosed);
-        setTimeout(() => { if (!done) cleanup(); }, NDS.transitionSpeed() + 50);
+        });
     };
 
     function updateToggleLabel(accMenu, toggleBtn, isTopMode) {

@@ -130,18 +130,12 @@
         setState(button, CONFIG.states.active);
         submenu.style.height = submenu.scrollHeight + 'px';
 
-        const cleanup = () => {
-            submenu.removeEventListener('transitionend', cleanup);
+        NDS.onTransitionEnd(submenu, () => {
             setState(submenu, CONFIG.states.open);
             setState(listItem, CONFIG.states.open);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'shown');
-        };
-
-        submenu.addEventListener('transitionend', cleanup);
-        setTimeout(() => {
-            if (NDS.State.has(submenu, CONFIG.states.opening)) cleanup();
-        }, NDS.transitionSpeed() + 50);
+        });
     }
 
     function hideSubmenu(listItem, button, submenu) {
@@ -153,17 +147,11 @@
         NDS.aria.expanded(button, false);
         NDS.State.clear(button);
 
-        const cleanup = () => {
-            submenu.removeEventListener('transitionend', cleanup);
+        NDS.onTransitionEnd(submenu, () => {
             setState(submenu, CONFIG.states.closed);
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'hidden');
-        };
-
-        submenu.addEventListener('transitionend', cleanup);
-        setTimeout(() => {
-            if (NDS.State.has(submenu, CONFIG.states.closing)) cleanup();
-        }, NDS.transitionSpeed() + 50);
+        });
     }
 
     function dispatchDrawerEvent(listItem, eventType, data = {}) {
