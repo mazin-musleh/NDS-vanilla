@@ -22,12 +22,9 @@
     function init() {
         document.querySelectorAll('a').forEach(function (a) {
             if (!a.href || a.hostname === '') return;
-            if (!a.classList.contains('nds-btn') && !a.classList.contains('nds-card')) {
-                a.classList.add('nds-link');
-            }
+            if (a.hostname === location.hostname) return;
             if (NAV_EXCLUSIONS && a.closest(NAV_EXCLUSIONS)) return;
             if (a.closest('[data-no-external]')) return;
-            if (a.hostname === location.hostname) return;
             if (a.classList.contains('nds-btn') && a.classList.contains('nds-icon-only')) return;
             if (!a.classList.contains('nds-external') && isIconOrImageOnly(a)) return;
             a.classList.add('nds-external');
