@@ -106,7 +106,7 @@
     // isn't bundled. Modal needs Backdrop's overlay layer to function; failing loudly
     // surfaces the bundle misconfiguration without crashing the whole page.
     if (!NDS.Backdrop) {
-      console.error('NDSModal requires NDSBackdrop API. Please include nds-backdrop.js first.');
+      console.error('NDS Modal: requires NDSBackdrop API. Please include nds-backdrop.js first.');
       return;
     }
 

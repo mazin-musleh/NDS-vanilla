@@ -397,7 +397,7 @@
                 this._revealTargetContainer();
                 eventDetail.html = newContainer.innerHTML;
             } else {
-                console.warn(`[NDS Filter AJAX] Target container #${this.targetId} not found in server response. Emptying target container.`);
+                console.warn(`NDS Filter: target container #${this.targetId} not found in server response. Emptying target container.`);
                 this.targetContainer.innerHTML = '';
                 const id = this.targetContainer.id;
                 while (this.targetContainer.attributes.length > 0) {
@@ -459,7 +459,7 @@
         _handleAjaxError(error) {
             if (error.name === 'AbortError') return;
 
-            console.error('Filter AJAX submission failed:', error);
+            console.error('NDS Filter: AJAX submission failed:', error);
 
             if (this.targetContainer) {
                 this.targetContainer.classList.remove('nds-loading');

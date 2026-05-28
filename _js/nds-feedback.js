@@ -209,7 +209,7 @@
         _attachToTarget(feedback, target, position) {
             const targetEl = typeof target === 'string' ? document.querySelector(target) : target;
             if (!targetEl) {
-                console.warn('NDSFeedback: target element not found', target);
+                console.warn('NDS Feedback: target element not found', target);
                 return false;
             }
 

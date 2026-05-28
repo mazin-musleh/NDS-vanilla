@@ -142,7 +142,7 @@ NDS.UserFeedback = (() => {
                 if (submitEl) submitEl.setAttribute('hidden', '');
             } else {
                 // Fallback if NDSFeedback is not available
-                console.warn('NDSFeedback API not available');
+                console.warn('NDS UserFeedback: NDSFeedback API not available');
                 NDS.Status.set(feedbackComponent, status);
                 if (statusEl) statusEl.removeAttribute('hidden');
                 if (closeButton) closeButton.setAttribute('hidden', '');

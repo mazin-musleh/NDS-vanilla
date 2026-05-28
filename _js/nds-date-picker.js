@@ -203,14 +203,14 @@
                         return createHijriDate(day, month, year);
                     }
                 } catch (e) {
-                    console.warn('Hijri conversion via Intl failed, using mathematical fallback:', e.message);
+                    console.warn('NDS DatePicker: Hijri conversion via Intl failed, using mathematical fallback:', e.message);
                 }
 
                 // Mathematical fallback using Julian Day method
                 try {
                     return this.julianToHijri(this.gregorianToJulian(gDate));
                 } catch (e) {
-                    console.error('All Hijri conversion methods failed:', e.message);
+                    console.error('NDS DatePicker: all Hijri conversion methods failed:', e.message);
                     throw new Error('Unable to convert Gregorian date to Hijri');
                 }
             },
@@ -521,7 +521,7 @@
     function DatePickerCalendar(dateInput, formControl) {
         var container = formControl.closest(UIConfig.selectors.container);
         if (!container) {
-            console.warn('Calendar container not found');
+            console.warn('NDS DatePicker: calendar container not found');
             return;
         }
 
@@ -555,7 +555,7 @@
                     // Re-cache all elements
                     self.elements = self.cacheElements(self.elements.input, self.elements.formControl);
                     if (!self.elements.dropdown) {
-                        console.error('Failed to create dropdown');
+                        console.error('NDS DatePicker: failed to create dropdown');
                         return;
                     }
 
@@ -714,7 +714,7 @@
         cacheElements: function (dateInput, formControl) {
             var container = formControl.closest(UIConfig.selectors.container);
             if (!container) {
-                console.warn('Calendar container not found');
+                console.warn('NDS DatePicker: calendar container not found');
                 return {};
             }
 
@@ -751,7 +751,7 @@
             for (var key in requiredSelectors) {
                 var element = container.querySelector(requiredSelectors[key]);
                 if (!element) {
-                    console.error('Required calendar element not found:', key, requiredSelectors[key]);
+                    console.error('NDS DatePicker: required calendar element not found:', key, requiredSelectors[key]);
                     return {};
                 }
                 elements[key] = element;
@@ -763,7 +763,7 @@
                 if (element) {
                     elements[key] = element;
                 } else {
-                    console.warn('Optional calendar element not found:', key, optionalSelectors[key]);
+                    console.warn('NDS DatePicker: optional calendar element not found:', key, optionalSelectors[key]);
                 }
             }
 
