@@ -260,7 +260,8 @@
         }
 
         /**
-         * Handle AJAX form submission
+         * Handle AJAX form submission. Thin orchestrator — each step lives in
+         * a private helper so the fetch chain stays scannable.
          */
         handleAjaxSubmit() {
             // Update hidden inputs, URL params, and UI state
@@ -281,23 +282,28 @@
                 },
                 cancelable: true
             });
+            if (!this.filterContainer.dispatchEvent(ajaxEvent)) return;
 
-            const shouldContinue = this.filterContainer.dispatchEvent(ajaxEvent);
-
-            if (!shouldContinue) {
-                return;
-            }
-
-            // Set submitting state
             NDS.State.set(this.filterContainer, 'submitting');
             NDS.Status.clear(this.filterContainer);
+            if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
 
-            // Add loading class to target container (similar to client-side filter)
-            if (this.targetContainer) {
-                this.targetContainer.classList.add('nds-loading');
-            }
+            const { url, options } = this._buildAjaxRequest();
+            fetch(url, options)
+                .then(response => this._parseAjaxResponse(response))
+                .then(({ isJson, data }) => {
+                    const eventDetail = this._applyAjaxResponse({ isJson, data });
+                    this._finishAjaxSubmit(eventDetail, isJson);
+                })
+                .catch(error => this._handleAjaxError(error));
+        }
 
-            // Build request URL and options (read from the submission form)
+        /**
+         * Build the fetch URL + options for the current form state. Resets
+         * this._fetchAC so a previous in-flight submission can be aborted
+         * before the new one starts.
+         */
+        _buildAjaxRequest() {
             const method = this.submissionForm.method.toUpperCase() || 'GET';
             let action = this.submissionForm.action || window.location.href;
 
@@ -308,13 +314,12 @@
 
             // Abort any in-flight submission so a faster second Apply click
             // can't be overtaken by the slower first response (replaceWith
-            // below would otherwise install stale results).
+            // in _applyAjaxResponse would otherwise install stale results).
             if (this._fetchAC) this._fetchAC.abort();
             this._fetchAC = new AbortController();
 
-            let url = action;
-            let options = {
-                method: method,
+            const options = {
+                method,
                 headers: {},
                 signal: this._fetchAC.signal
             };
@@ -323,146 +328,149 @@
             // attribute on scattered inputs associated with this form).
             const formData = new FormData(this.submissionForm);
 
+            let url = action;
             if (method === 'GET') {
-                // Build query string from form data
                 const params = new URLSearchParams(formData);
                 url = action + (action.includes('?') ? '&' : '?') + params.toString();
             } else {
-                // POST/PUT - send FormData in body
                 options.body = formData;
             }
 
-            // Send AJAX request
-            fetch(url, options)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
+            return { url, options };
+        }
 
-                    // Detect response type from Content-Type header
-                    const contentType = response.headers.get('Content-Type') || '';
-                    const isJson = contentType.includes('application/json');
+        /**
+         * Validate response status and branch on Content-Type. Throws on
+         * non-OK so the catch handler routes through _handleAjaxError.
+         */
+        _parseAjaxResponse(response) {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            const contentType = response.headers.get('Content-Type') || '';
+            const isJson = contentType.includes('application/json');
+            return isJson
+                ? response.json().then(data => ({ isJson: true, data }))
+                : response.text().then(data => ({ isJson: false, data }));
+        }
 
-                    return isJson
-                        ? response.json().then(data => ({ isJson: true, data }))
-                        : response.text().then(data => ({ isJson: false, data }));
-                })
-                .then(({ isJson, data }) => {
-                    let eventDetail = {
-                        success: true,
-                        form: this.filterContainer,
-                        isJson: isJson
-                    };
+        /**
+         * Apply the parsed response to the DOM. JSON leaves rendering to the
+         * consumer (via the complete event); HTML swaps the target container
+         * with the response's matching #id subtree. Returns the eventDetail
+         * object that _finishAjaxSubmit will dispatch.
+         */
+        _applyAjaxResponse({ isJson, data }) {
+            const eventDetail = {
+                success: true,
+                form: this.filterContainer,
+                isJson
+            };
 
-                    if (isJson) {
-                        // JSON response — dispatch raw data via event for developer rendering
-                        eventDetail.data = data;
+            if (isJson) {
+                eventDetail.data = data;
+                this._revealTargetContainer();
+                return eventDetail;
+            }
 
-                        if (this.targetContainer) {
-                            this.targetContainer.removeAttribute('hidden');
-                            if (this.targetContainer.style.display === 'none') {
-                                this.targetContainer.style.display = '';
-                            }
-                        }
-                    } else {
-                        // HTML response — inject into target container
-                        eventDetail.html = data;
-                        eventDetail.fullHtml = data;
+            // HTML response — inject into target container
+            eventDetail.html = data;
+            eventDetail.fullHtml = data;
 
-                        if (this.targetContainer && this.targetId) {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(data, 'text/html');
-                            const targetInResponse = doc.getElementById(this.targetId);
+            if (!this.targetContainer || !this.targetId) return eventDetail;
 
-                            if (targetInResponse) {
-                                const newContainer = targetInResponse.cloneNode(true);
-                                this.targetContainer.replaceWith(newContainer);
-                                this.targetContainer = newContainer;
-                                this.items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()));
-                                this._buildItemCache();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const targetInResponse = doc.getElementById(this.targetId);
 
-                                this.targetContainer.removeAttribute('hidden');
-                                if (this.targetContainer.style.display === 'none') {
-                                    this.targetContainer.style.display = '';
-                                }
+            if (targetInResponse) {
+                const newContainer = targetInResponse.cloneNode(true);
+                this.targetContainer.replaceWith(newContainer);
+                this.targetContainer = newContainer;
+                this.items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()));
+                this._buildItemCache();
+                this._revealTargetContainer();
+                eventDetail.html = newContainer.innerHTML;
+            } else {
+                console.warn(`[NDS Filter AJAX] Target container #${this.targetId} not found in server response. Emptying target container.`);
+                this.targetContainer.innerHTML = '';
+                const id = this.targetContainer.id;
+                while (this.targetContainer.attributes.length > 0) {
+                    this.targetContainer.removeAttribute(this.targetContainer.attributes[0].name);
+                }
+                this.targetContainer.id = id;
+                this.targetContainer.setAttribute('hidden', '');
+                eventDetail.html = '';
+            }
 
-                                eventDetail.html = newContainer.innerHTML;
-                            } else {
-                                console.warn(`[NDS Filter AJAX] Target container #${this.targetId} not found in server response. Emptying target container.`);
-                                this.targetContainer.innerHTML = '';
+            return eventDetail;
+        }
 
-                                const id = this.targetContainer.id;
-                                while (this.targetContainer.attributes.length > 0) {
-                                    this.targetContainer.removeAttribute(this.targetContainer.attributes[0].name);
-                                }
-                                this.targetContainer.id = id;
-                                this.targetContainer.setAttribute('hidden', '');
+        /**
+         * Ensure the target container is visible (server responses sometimes
+         * keep hidden/display:none on the placeholder shell).
+         */
+        _revealTargetContainer() {
+            if (!this.targetContainer) return;
+            this.targetContainer.removeAttribute('hidden');
+            if (this.targetContainer.style.display === 'none') {
+                this.targetContainer.style.display = '';
+            }
+        }
 
-                                eventDetail.html = '';
-                            }
-                        }
-                    }
+        /**
+         * Settle UI state after a successful response: clear loading, set
+         * success status, refresh dependent UI, fire the complete event,
+         * schedule status auto-clear.
+         */
+        _finishAjaxSubmit(eventDetail, isJson) {
+            if (this.targetContainer) {
+                this.targetContainer.classList.remove('nds-loading');
+            }
 
-                    // Remove loading class from target container
-                    if (this.targetContainer) {
-                        this.targetContainer.classList.remove('nds-loading');
-                    }
+            NDS.Status.set(this.filterContainer, 'success');
+            NDS.State.clear(this.filterContainer);
 
-                    // Set success state
-                    NDS.Status.set(this.filterContainer, 'success');
-                    NDS.State.clear(this.filterContainer);
+            this.updateUrlParams();
+            this.updateFilterButtonLabel();
+            this.updateAppliedChips();
 
-                    // Update UI elements
-                    this.updateUrlParams();
-                    this.updateFilterButtonLabel();
-                    this.updateAppliedChips();
+            this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
+                detail: eventDetail
+            }));
 
-                    // Dispatch complete event
-                    this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
-                        detail: eventDetail
-                    }));
+            // JSON developers render inside the complete-event handler and may set
+            // data-total-count on the target container there — re-run the count so
+            // the slots reflect their updates.
+            if (isJson) this.updateFilterCount();
 
-                    // JSON developers render inside the complete-event handler and may set
-                    // data-total-count on the target container there — re-run the count so
-                    // the slots reflect their updates.
-                    if (isJson) {
-                        this.updateFilterCount();
-                    }
+            setTimeout(() => NDS.Status.clear(this.filterContainer), 3000);
+        }
 
-                    // Clear success state after 3 seconds
-                    setTimeout(() => {
-                        NDS.Status.clear(this.filterContainer);
-                    }, 3000);
-                })
-                .catch(error => {
-                    // Superseded by a newer submit — keep the loading state
-                    // owned by the in-flight request that aborted us.
-                    if (error.name === 'AbortError') return;
+        /**
+         * Settle UI state on AJAX failure. AbortError is silent — the newer
+         * request that aborted us owns the loading state.
+         */
+        _handleAjaxError(error) {
+            if (error.name === 'AbortError') return;
 
-                    console.error('Filter AJAX submission failed:', error);
+            console.error('Filter AJAX submission failed:', error);
 
-                    // Remove loading class from target container
-                    if (this.targetContainer) {
-                        this.targetContainer.classList.remove('nds-loading');
-                    }
+            if (this.targetContainer) {
+                this.targetContainer.classList.remove('nds-loading');
+            }
 
-                    // Set error state
-                    NDS.Status.set(this.filterContainer, 'error');
-                    NDS.State.clear(this.filterContainer);
+            NDS.Status.set(this.filterContainer, 'error');
+            NDS.State.clear(this.filterContainer);
 
-                    // Dispatch error event
-                    this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
-                        detail: {
-                            error: error.message,
-                            form: this.filterContainer
-                        }
-                    }));
+            this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
+                detail: {
+                    error: error.message,
+                    form: this.filterContainer
+                }
+            }));
 
-                    // Clear error state after 5 seconds
-                    setTimeout(() => {
-                        NDS.Status.clear(this.filterContainer);
-                    }, 5000);
-                });
+            setTimeout(() => NDS.Status.clear(this.filterContainer), 5000);
         }
 
         /**
