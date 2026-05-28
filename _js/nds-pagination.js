@@ -606,13 +606,17 @@
     // Module-lifetime — the loader fires once per page and pagination has no
     // teardown, so a plain listener (no AbortController) is correct here.
     document.addEventListener('click', (e) => {
-        // Portaled dropmenu items don't bubble through .nds-pagination-list;
-        // nds-dropmenu re-dispatches a synthetic click on the wrapper carrying
-        // `e.ndsDropmenuItem` so we can resolve the original item here.
-        const portaledItem = e.ndsDropmenuItem
-            && e.target.closest?.('.nds-pagination-list')
-            ? e.ndsDropmenuItem
-            : null;
+        // Early-exit for clicks outside any pagination. Portaled dropmenu
+        // re-dispatch (nds-dropmenu fires a synthetic click on the wrapper,
+        // which sits inside .nds-pagination-list and carries
+        // `e.ndsDropmenuItem`) still satisfies this gate, so portaled items
+        // aren't filtered out. The captured `pagination` is reused below as
+        // the resolved container — closest() from any descendant resolves to
+        // the same ancestor (paginations don't nest), so no second walk.
+        const pagination = e.target.closest?.('.nds-pagination-list');
+        if (!pagination) return;
+
+        const portaledItem = e.ndsDropmenuItem || null;
 
         const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a');
         const dropdownItem = portaledItem || e.target.closest('.nds-pagination-list .nds-dropmenu-item');
@@ -623,13 +627,6 @@
 
         // If neither page element nor prev/next clicked, return
         if (!clickedElement && !prevElement && !nextElement) return;
-
-        // Find the pagination container — for portaled dropmenu items, walk
-        // through the wrapper (which is `e.target` of the re-dispatched click).
-        const pagination = portaledItem
-            ? e.target.closest('.nds-pagination-list')
-            : (clickedElement || prevElement || nextElement).closest('.nds-pagination-list');
-        if (!pagination) return;
 
         // Skip if this is an auto-pagination (handled by its own listener)
         const paginationNav = pagination.closest('.nds-pagination');
