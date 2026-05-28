@@ -1103,13 +1103,13 @@
 
     const arm = () => {
         if (!panel.hasAttribute('data-armed')) panel.setAttribute('data-armed', '');
-        NDS.Accessibility?.init?.();
+        NDS.Accessibility.init();
     };
 
     try { if (localStorage.getItem(STORAGE_KEY)) arm(); } catch (e) {}
 
     fab.addEventListener('click', () => {
         arm();
-        NDS.Accessibility?.toggle?.();
+        NDS.Accessibility.toggle();
     }, { once: true });
 })();
