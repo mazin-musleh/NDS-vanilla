@@ -13,7 +13,7 @@
 
   // State
   let activeModal = null;
-  let initAC = null;
+  let initAbortController = null;
 
   // Tab focus trap — delegates to the shared NDS.trapFocus factory.
   // The arrow form re-evaluates `activeModal` on every Tab press, so this
@@ -113,9 +113,9 @@
     // Scope all document-level listeners to an AbortController so any future re-init
     // (e.g., NDS.Init.initializeComponent('modal') after removing the init marker)
     // detaches the prior batch atomically instead of stacking listeners.
-    if (initAC) initAC.abort();
-    initAC = new AbortController();
-    const { signal } = initAC;
+    if (initAbortController) initAbortController.abort();
+    initAbortController = new AbortController();
+    const { signal } = initAbortController;
 
     // Trigger buttons
     document.addEventListener('click', (e) => {

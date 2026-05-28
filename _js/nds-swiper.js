@@ -117,7 +117,7 @@
         }
 
         init() {
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
             this.container.style.setProperty('--total', this.slides.length);
             this.updateSlidesPerView();
 
@@ -282,7 +282,7 @@
         // touch. Touch-scroll on the button itself is blocked by `touch-action:
         // manipulation` in _swiper.scss.
         _attachActivation(btn, action) {
-            const { signal } = this._ac;
+            const { signal } = this.abortController;
             btn.addEventListener('pointerdown', (e) => {
                 if (e.pointerType === 'mouse' && e.button !== 0) return;
                 e.preventDefault();
@@ -338,7 +338,7 @@
             this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => {
                 this.detectCurrentSlide();
                 this.updateState();
-            }), { passive: true, signal: this._ac.signal });
+            }), { passive: true, signal: this.abortController.signal });
         }
 
         detectCurrentSlide() {
@@ -434,7 +434,7 @@
                 this.container.setAttribute('tabindex', '0');
             }
 
-            const { signal } = this._ac;
+            const { signal } = this.abortController;
             this._isHovered = false;
             this.container.addEventListener('mouseenter', () => this._isHovered = true, { signal });
             this.container.addEventListener('mouseleave', () => this._isHovered = false, { signal });
@@ -550,9 +550,9 @@
         // CLEANUP
         // ==============================================
 
-        // Instance becomes unusable after destroy(): _ac is nulled so any subsequent call
-        // to a setup method that reads `this._ac.signal` will throw. Re-initialize via
-        // `NDS.Swiper.create(el)` (constructs a fresh instance).
+        // Instance becomes unusable after destroy(): this.abortController is nulled, so any
+        // subsequent call to a setup method that reads `this.abortController.signal` will
+        // throw. Re-initialize via `NDS.Swiper.create(el)` (constructs a fresh instance).
         destroy() {
             this.container.removeAttribute('data-swiper-initialized');
             this.container.removeAttribute('tabindex');
@@ -560,7 +560,7 @@
             _activeSwipers.delete(this);
             if (this._offVisibility) { this._offVisibility(); this._offVisibility = null; }
             if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
-            if (this._ac) { this._ac.abort(); this._ac = null; }
+            if (this.abortController) { this.abortController.abort(); this.abortController = null; }
         }
     }
 

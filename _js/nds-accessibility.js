@@ -130,9 +130,9 @@
     let navEl = null;          // .nds-main-nav  — sticky-header reference
     let topbarEl = null;       // .nds-topbar    — sticky-header reference
     let openerEl = null;       // element that opened the panel — focus returns here
-    let ac = null;             // AbortController for listeners scoped to current init
-    let openAC = null;         // listeners that only run while the panel is open
-    let maskAC = null;         // reading-mask pointer listener (lifecycle = mode on/off)
+    let initAbortController = null;             // AbortController for listeners scoped to current init
+    let openAbortController = null;         // listeners that only run while the panel is open
+    let maskAbortController = null;         // reading-mask pointer listener (lifecycle = mode on/off)
     let maskTopEl = null;
     let maskBottomEl = null;
     let maskControlsEl = null;
@@ -296,7 +296,7 @@
     // grab-handle drag or arrow-key nudge. Layout: [size−] [grab] [size+]
     // [close] horizontally. Persists mask-y on drag-end, mask-band on size click.
     function applyReadingMask(active) {
-        if (active && !maskAC) {
+        if (active && !maskAbortController) {
             if (!maskTopEl) {
                 maskTopEl = document.createElement('div');
                 maskTopEl.className = 'nds-a11y-mask nds-a11y-mask-top';
@@ -391,8 +391,8 @@
                 save();
             };
 
-            maskAC = new AbortController();
-            const { signal } = maskAC;
+            maskAbortController = new AbortController();
+            const { signal } = maskAbortController;
 
             // Global Esc closes the mask when the panel isn't capturing it.
             document.addEventListener('keydown', (e) => {
@@ -487,9 +487,9 @@
 
             render();
 
-        } else if (!active && maskAC) {
-            maskAC.abort();
-            maskAC = null;
+        } else if (!active && maskAbortController) {
+            maskAbortController.abort();
+            maskAbortController = null;
             maskLastY = null;
             if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
             if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
@@ -869,10 +869,10 @@
         updateHeaderOffset();
 
         // Track topbar appearance/disappearance during scroll. Scoped to
-        // openAC so it tears down on close — zero scroll cost when closed.
-        openAC = new AbortController();
+        // openAbortController so it tears down on close — zero scroll cost when closed.
+        openAbortController = new AbortController();
         const onPanelScroll = NDS.rafThrottle(updateHeaderOffset);
-        window.addEventListener('scroll', onPanelScroll, { passive: true, signal: openAC.signal });
+        window.addEventListener('scroll', onPanelScroll, { passive: true, signal: openAbortController.signal });
 
         // No inert / no backdrop — Disclosure pattern, page stays
         // interactive so users can watch tiles affect live content.
@@ -897,7 +897,7 @@
         if (!panel || !hasState(panel, 'open')) return;
         addState(panel, 'closing');
 
-        if (openAC) { openAC.abort(); openAC = null; }
+        if (openAbortController) { openAbortController.abort(); openAbortController = null; }
 
         let done = false;
         const cleanup = () => {
@@ -937,16 +937,16 @@
     // Init / destroy
     // ----------------------------------------------
     function destroy() {
-        // Route through close() first so the open-state cleanup runs before AC abort.
+        // Route through close() first so the open-state cleanup runs before the AbortController aborts.
         if (panel && hasState(panel, 'open')) close();
         if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
         if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; }
         if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
         if (_openLoadingTimer) { clearTimeout(_openLoadingTimer); _openLoadingTimer = null; }
         if (toggleBtn) removeState(toggleBtn, 'loading');
-        if (ac) { ac.abort(); ac = null; }
-        if (openAC) { openAC.abort(); openAC = null; }
-        if (maskAC) { maskAC.abort(); maskAC = null; }
+        if (initAbortController) { initAbortController.abort(); initAbortController = null; }
+        if (openAbortController) { openAbortController.abort(); openAbortController = null; }
+        if (maskAbortController) { maskAbortController.abort(); maskAbortController = null; }
         if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
         if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
         if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
@@ -1018,8 +1018,8 @@
         state = load();
         apply();
 
-        ac = new AbortController();
-        const { signal } = ac;
+        initAbortController = new AbortController();
+        const { signal } = initAbortController;
 
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();

@@ -32,7 +32,7 @@
             // AbortController for the change-listeners attached in
             // setupEventListeners — aborted in destroy() so the per-row
             // bookkeeping detaches cleanly when the table is torn down.
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
 
             this.init();
         }
@@ -128,7 +128,7 @@
         setupEventListeners() {
             // Selectable table listeners (sort listeners are owned by NDS.Sort)
             if (this.isSelectable) {
-                const { signal } = this._ac;
+                const { signal } = this.abortController;
 
                 // Select all checkbox
                 this.selectAllCheckbox.addEventListener('change', (e) => {
@@ -235,7 +235,7 @@
 
         destroy() {
             this.sort?.destroy();
-            this._ac?.abort();
+            this.abortController?.abort();
         }
     }
 

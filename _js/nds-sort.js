@@ -119,7 +119,7 @@
                 keyFrom: (t) => t.getAttribute('data-sort') || '',
             }, options || {});
 
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
             this.state = { key: null, dir: null };
             this._originalOrder = null;
 
@@ -171,7 +171,7 @@
 
         _bindTriggers() {
             const triggers = this._resolveTriggers();
-            const { signal } = this._ac;
+            const { signal } = this.abortController;
             triggers.forEach(trigger => {
                 trigger.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -358,7 +358,7 @@
         }
 
         destroy() {
-            this._ac.abort();
+            this.abortController.abort();
             if (this.root) {
                 this.root.ndsSort = null;
                 this.root.removeAttribute('data-nds-sort-initialized');

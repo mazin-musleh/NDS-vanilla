@@ -138,8 +138,8 @@
             wrapper.insertBefore(divider, btn);
         }
 
-        wrapper._ac = new AbortController();
-        const { signal } = wrapper._ac;
+        wrapper._abortController = new AbortController();
+        const { signal } = wrapper._abortController;
 
         content.addEventListener('scroll', NDS.rafThrottle(() => checkScrollPosition(wrapper)), { passive: true, signal });
 
@@ -162,9 +162,9 @@
     }
 
     function destroy(wrapper) {
-        if (wrapper._ac) {
-            wrapper._ac.abort();
-            delete wrapper._ac;
+        if (wrapper._abortController) {
+            wrapper._abortController.abort();
+            delete wrapper._abortController;
         }
         if (wrapper._offResizeObs) {
             wrapper._offResizeObs();

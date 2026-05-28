@@ -42,11 +42,11 @@
             // One AbortController per instance — every addEventListener in
             // bindEvents() passes its signal so destroy() can detach all
             // trigger listeners atomically. Open-lifecycle subscriptions
-            // (this._onDocClick, this._offScroll) sit outside this AC
+            // (this._onDocClick, this._offScroll) sit outside this AbortController
             // because they're already torn down by close() per open/close
             // cycle, so adding a signal would duplicate the bookkeeping
             // close() already does.
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
 
             this.init();
         }
@@ -151,7 +151,7 @@
         }
 
         bindEvents() {
-            const { signal } = this._ac;
+            const { signal } = this.abortController;
             this.trigger.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.isOpen ? this.close() : this.open();
@@ -290,7 +290,7 @@
         // the page lifetime.
         destroy() {
             if (this.isOpen) this.close();
-            if (this._ac) { this._ac.abort(); this._ac = null; }
+            if (this.abortController) { this.abortController.abort(); this.abortController = null; }
             this.root.removeAttribute('data-nds-tooltip-initialized');
             delete this.root.ndsTooltip;
         }

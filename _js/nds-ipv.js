@@ -38,10 +38,10 @@
             };
 
             // Instance-lifetime controller for thumbnail and control listeners.
-            // Separate from this._ac (which attachGlobalEvents resets on reinit)
+            // Separate from this.abortController (which attachGlobalEvents resets on reinit)
             // so these listeners survive any future reinit and only detach on
             // destroy().
-            this._instanceAc = new AbortController();
+            this.instanceAbortController = new AbortController();
 
             this.init();
         }
@@ -357,7 +357,7 @@
                 return !thumb.closest('code, .code-example');
             });
 
-            const { signal } = this._instanceAc;
+            const { signal } = this.instanceAbortController;
             this.state.thumbnails.forEach(thumb => {
                 thumb.addEventListener('click', () => this.open(thumb), { signal });
             });
@@ -374,7 +374,7 @@
                 '.nds-ipv-next-btn': () => this.showNext()
             };
 
-            const { signal } = this._instanceAc;
+            const { signal } = this.instanceAbortController;
             Object.entries(buttons).forEach(([sel, fn]) => {
                 const btn = document.querySelector(sel);
                 if (btn) {
@@ -390,9 +390,9 @@
             // Scope listeners to an AbortController so any future reinit (currently blocked by
             // the data-nds-ipv-initialized guard at L455, but defense-in-depth) detaches the
             // prior batch atomically instead of stacking on document.
-            if (this._ac) this._ac.abort();
-            this._ac = new AbortController();
-            const { signal } = this._ac;
+            if (this.abortController) this.abortController.abort();
+            this.abortController = new AbortController();
+            const { signal } = this.abortController;
 
             if (this.el.overlay) {
                 this.el.overlay.addEventListener('wheel', (e) => this.handleWheel(e), { passive: false, signal });
@@ -403,8 +403,8 @@
         }
 
         destroy() {
-            if (this._ac) this._ac.abort();
-            if (this._instanceAc) this._instanceAc.abort();
+            if (this.abortController) this.abortController.abort();
+            if (this.instanceAbortController) this.instanceAbortController.abort();
         }
 
         // Static factory method

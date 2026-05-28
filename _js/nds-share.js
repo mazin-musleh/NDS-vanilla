@@ -97,17 +97,17 @@
 
     const TARGET_SELECTOR = '.nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy';
 
-    let _ac = null;
+    let _abortController = null;
     function init() {
-        if (_ac) _ac.abort();
-        _ac = new AbortController();
+        if (_abortController) _abortController.abort();
+        _abortController = new AbortController();
         document.addEventListener('click', (e) => {
             const button = e.target.closest(TARGET_SELECTOR);
             if (!button) return;
             const wrapper = shareWrapperFrom(button);
             if (!wrapper) return;
             handleClick(button);
-        }, { signal: _ac.signal });
+        }, { signal: _abortController.signal });
     }
 
     NDS.Share = { init };

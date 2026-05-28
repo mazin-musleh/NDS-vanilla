@@ -156,13 +156,13 @@
         const opts = options || {};
 
         if (_controllers.has(sel)) _controllers.get(sel).abort();
-        const ac = new AbortController();
-        _controllers.set(sel, ac);
+        const abortController = new AbortController();
+        _controllers.set(sel, abortController);
 
         document.addEventListener('click', (e) => {
             const btn = e.target.closest(sel);
             if (btn) copyFrom(btn, opts);
-        }, { signal: ac.signal });
+        }, { signal: abortController.signal });
     }
 
     function init() {

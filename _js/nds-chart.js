@@ -119,7 +119,7 @@
             this._lastW = 0;
             this._rafPending = false;
             this._activeHover = null;
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
             this._setupDelegation();
             // The first render is triggered by the ResizeObserver's initial
             // delivery (_setupResize): it reads clientWidth post-layout and
@@ -156,8 +156,8 @@
         }
 
         destroy() {
-            this._ac.abort();
-            if (this._renderAC) { this._renderAC.abort(); this._renderAC = null; }
+            this.abortController.abort();
+            if (this.renderAbortController) { this.renderAbortController.abort(); this.renderAbortController = null; }
             if (this._offResize) { this._offResize(); this._offResize = null; }
             this.el.innerHTML = '';
             delete this.el.ndsChart;
@@ -166,7 +166,7 @@
         // ── Event delegation ──────────────────────────────────────
 
         _setupDelegation() {
-            const signal = this._ac.signal;
+            const signal = this.abortController.signal;
 
             this.el.addEventListener('mouseover', (e) => {
                 const data = tipData.get(e.target);
@@ -387,9 +387,9 @@
             this._activeHover = null;
             // Per-render AbortController: overlay pointer listeners attach to this
             // signal so the prior overlay's listener entries release on each rebuild
-            // instead of accumulating on the instance-lifetime this._ac until destroy.
-            if (this._renderAC) this._renderAC.abort();
-            this._renderAC = new AbortController();
+            // instead of accumulating on the instance-lifetime this.abortController until destroy.
+            if (this.renderAbortController) this.renderAbortController.abort();
+            this.renderAbortController = new AbortController();
             this.el.innerHTML = '';
             this.el.classList.add('nds-chart');
             this.el.setAttribute('data-chart-type', this.opts.type);
@@ -807,7 +807,7 @@
                 svg.appendChild(overlay);
 
                 let lastIdx = -1;
-                const signal = this._renderAC.signal;
+                const signal = this.renderAbortController.signal;
 
                 // Touch tooltips pin to the top of the chart and follow the crosshair X
                 // so the user's finger never covers them. Mouse keeps the cursor-follow

@@ -39,7 +39,7 @@
                 return;
             }
 
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
             this.currentTabIndex = this.findActiveTabIndex();
             this.init();
         }
@@ -124,7 +124,7 @@
                     }
                 };
                 requestAnimationFrame(animate);
-            }, { passive: false, signal: this._ac.signal });
+            }, { passive: false, signal: this.abortController.signal });
 
             // Drag scroll.
             const handleMouseMove = (e) => {
@@ -156,7 +156,7 @@
                 Object.assign(this.tabList.style, { cursor: 'grabbing', userSelect: 'none', scrollBehavior: 'auto' });
                 document.addEventListener('mousemove', handleMouseMove);
                 document.addEventListener('mouseup', handleMouseUp);
-            }, { signal: this._ac.signal });
+            }, { signal: this.abortController.signal });
         }
 
         // ==============================================
@@ -183,11 +183,11 @@
                     if (!this.isVertical && this.needsScroll()) {
                         setTimeout(() => this.scrollToTarget(tab), 10);
                     }
-                }, { signal: this._ac.signal });
-                tab.addEventListener('focus', () => this.handleTabFocus(index), { signal: this._ac.signal });
+                }, { signal: this.abortController.signal });
+                tab.addEventListener('focus', () => this.handleTabFocus(index), { signal: this.abortController.signal });
             });
 
-            this.tabList.addEventListener('keydown', (e) => this.handleKeyDown(e), { signal: this._ac.signal });
+            this.tabList.addEventListener('keydown', (e) => this.handleKeyDown(e), { signal: this.abortController.signal });
         }
 
         handleKeyDown(e) {
@@ -316,7 +316,7 @@
         switchTo(index) { this.switchToTab(index); }
 
         destroy() {
-            if (this._ac) this._ac.abort();
+            if (this.abortController) this.abortController.abort();
             this.tabsContainer.removeAttribute('data-nds-tabs-initialized');
             delete this.tabsContainer.ndsTabs;
         }

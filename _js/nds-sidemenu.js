@@ -182,7 +182,7 @@
         }
     }
 
-    function setupScrollPeek(toggleBtn, ac) {
+    function setupScrollPeek(toggleBtn, abortController) {
         if (!toggleBtn.classList.contains('nds-peek')) return;
 
         // Flash peek on page load
@@ -216,7 +216,7 @@
         const offResize = NDS.onResize(invalidate);
         window.addEventListener('mousemove', mousemoveHandler, { passive: true });
 
-        ac.signal.addEventListener('abort', () => {
+        abortController.signal.addEventListener('abort', () => {
             window.removeEventListener('scroll', scrollHandler);
             window.removeEventListener('mousemove', mousemoveHandler);
             offResize();
@@ -225,7 +225,7 @@
 
     function destroy() {
         if (currentInstance) {
-            const { ac, _offResize, accMenu, animTarget, toggleBtn, isTopMode, drawer } = currentInstance;
+            const { abortController, _offResize, accMenu, animTarget, toggleBtn, isTopMode, drawer } = currentInstance;
 
             // Close menu if open before destroying
             if (hasState(animTarget, 'open')) {
@@ -249,7 +249,7 @@
             if (_offResize) _offResize();
 
             // Abort all listeners registered via this AbortController
-            ac.abort();
+            abortController.abort();
             currentInstance = null;
         }
     }
@@ -261,7 +261,7 @@
         // Destroy previous instance to prevent duplicate listeners
         destroy();
 
-        const ac = new AbortController();
+        const abortController = new AbortController();
 
         const toggleBtn = accMenu.querySelector(".nds-sidemenu-toggle");
         const isTopMode = accMenu.classList.contains('nds-top');
@@ -269,7 +269,7 @@
         const drawer = accMenu.querySelector('.nds-drawer');
 
         // Shared context object passed to open/close
-        const ctx = { accMenu, animTarget, toggleBtn, isTopMode, drawer, ac };
+        const ctx = { accMenu, animTarget, toggleBtn, isTopMode, drawer, abortController };
 
         // Store for cleanup
         currentInstance = ctx;
@@ -280,10 +280,10 @@
                 e.stopPropagation();
                 hasState(animTarget, 'open') ? closeMenu(ctx) : openMenu(ctx);
             };
-            toggleBtn.addEventListener("click", toggleHandler, { signal: ac.signal });
+            toggleBtn.addEventListener("click", toggleHandler, { signal: abortController.signal });
             toggleBtn.removeAttribute('hidden');
             updateToggleLabel(accMenu, toggleBtn, isTopMode);
-            setupScrollPeek(toggleBtn, ac);
+            setupScrollPeek(toggleBtn, abortController);
         }
 
         // Click outside
@@ -298,13 +298,13 @@
             }
             closeMenu(ctx);
         };
-        document.addEventListener("click", outsideHandler, { signal: ac.signal });
+        document.addEventListener("click", outsideHandler, { signal: abortController.signal });
 
         // Escape key
         const escapeHandler = (e) => {
             if (e.key === "Escape" && hasState(animTarget, 'open')) closeMenu(ctx);
         };
-        document.addEventListener("keydown", escapeHandler, { signal: ac.signal });
+        document.addEventListener("keydown", escapeHandler, { signal: abortController.signal });
 
         // Close on width change
         let prevWidth = window.innerWidth;

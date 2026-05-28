@@ -913,8 +913,8 @@
 
         // Scope all listeners attached in this function to a single AbortController
         // so teardown can detach them atomically if setupInteractions is ever re-run.
-        const _interactionsAC = new AbortController();
-        const _interactionsSignal = _interactionsAC.signal;
+        const _interactionsAbortController = new AbortController();
+        const _interactionsSignal = _interactionsAbortController.signal;
 
         // Show More button
         const clickTarget = DOM.collapseContent || DOM.primary;
@@ -1038,16 +1038,16 @@
     // (the JSP-06 sub-shape (c) hazard). Pooled subscribers from NDS.onResize
     // and NDS.onElementResize return their own unsubscribe handles — tracked
     // separately because they can't use the AbortController signal.
-    let _eventsAC = null;
+    let _eventsAbortController = null;
     let _offResize = null;
     const _offElementResizes = [];
     let _initialized = false;
 
     function setupEventListeners() {
         // Abort prior subscriptions so a re-run doesn't stack listeners.
-        if (_eventsAC) _eventsAC.abort();
-        _eventsAC = new AbortController();
-        const { signal } = _eventsAC;
+        if (_eventsAbortController) _eventsAbortController.abort();
+        _eventsAbortController = new AbortController();
+        const { signal } = _eventsAbortController;
 
         if (_offResize) { _offResize(); _offResize = null; }
         _offResize = NDS.onResize(() => { state.invalidateCache(); scheduleUpdate(); });
@@ -1180,7 +1180,7 @@
         setupEventListeners();
         // handleDocumentClick shares the setupEventListeners AbortController so
         // both document-click listeners detach atomically on teardown.
-        document.addEventListener('click', handleDocumentClick, { signal: _eventsAC.signal });
+        document.addEventListener('click', handleDocumentClick, { signal: _eventsAbortController.signal });
         if (!bodyClassChanged) managePABPlacement();
         // Set toggler visibility now that PABs (if any) have been placed.
         // scheduleUpdate's only call site for this fires on width/mode/nav
@@ -1189,7 +1189,7 @@
         // primary empty, secondary all PABs) would leave the toggler
         // CSS-visible with nothing to expose.
         checkTogglerVisibility();
-        DOM.dgaTab?.addEventListener('click', toggleDGA, { signal: _eventsAC.signal });
+        DOM.dgaTab?.addEventListener('click', toggleDGA, { signal: _eventsAbortController.signal });
 
         if (hasState(DOM.collapse, 'open')) updatePositions();
         setupInteractions();

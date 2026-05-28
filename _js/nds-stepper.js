@@ -6,7 +6,7 @@
 (function () {
     'use strict';
 
-    let _stepperControlsAC = null;
+    let _stepperControlsAbortController = null;
 
     class NDSStepper {
         constructor(element) {
@@ -253,8 +253,8 @@
 
         setupControls() {
             // Global event delegation — one-time module-level binding with abortable signal
-            if (_stepperControlsAC) return;
-            _stepperControlsAC = new AbortController();
+            if (_stepperControlsAbortController) return;
+            _stepperControlsAbortController = new AbortController();
             document.addEventListener('click', (e) => {
                 const control = e.target.closest('[data-stepper-control]');
                 if (!control) return;
@@ -283,7 +283,7 @@
                     case 'previous': stepperInstance.previous(); break;
                     case 'goto': stepperInstance.goTo(parseInt(value)); break;
                 }
-            }, { signal: _stepperControlsAC.signal });
+            }, { signal: _stepperControlsAbortController.signal });
         }
 
         dispatchEvent() {

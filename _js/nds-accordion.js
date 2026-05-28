@@ -19,7 +19,7 @@
                 return;
             }
 
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
             this.init();
         }
 
@@ -66,14 +66,14 @@
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.toggle(index);
-                }, { signal: this._ac.signal });
+                }, { signal: this.abortController.signal });
             });
         }
 
         setupKeyboardNavigation() {
             this.accordionContainer.addEventListener('keydown', (e) => {
                 this.handleKeyDown(e);
-            }, { signal: this._ac.signal });
+            }, { signal: this.abortController.signal });
         }
 
         handleKeyDown(e) {
@@ -312,7 +312,7 @@
         }
 
         destroy() {
-            if (this._ac) this._ac.abort();
+            if (this.abortController) this.abortController.abort();
         }
     }
 

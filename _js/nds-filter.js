@@ -95,7 +95,7 @@
 
             this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
             // Pool subscriber handles from setupManualFilter's NDS.onDOMAdd
             // calls; released atomically in destroy() so the per-element
             // closures don't outlive the filter instance.
@@ -107,7 +107,7 @@
             // In-flight AJAX submission controller. Re-created per submit so a
             // newer Apply click aborts the prior request before it can replace
             // fresh results with stale ones.
-            this._fetchAC = null;
+            this.fetchAbortController = null;
 
             // Per-item match cache (_ndsFilterValues + _ndsSearchText) is
             // built lazily on the first applyFilters() pass that has criteria
@@ -215,7 +215,7 @@
                 } else {
                     this.handleFormSubmit(e);
                 }
-            }, { signal: this._ac.signal });
+            }, { signal: this.abortController.signal });
         }
 
         /**
@@ -305,7 +305,7 @@
 
         /**
          * Build the fetch URL + options for the current form state. Resets
-         * this._fetchAC so a previous in-flight submission can be aborted
+         * this.fetchAbortController so a previous in-flight submission can be aborted
          * before the new one starts.
          */
         _buildAjaxRequest() {
@@ -320,13 +320,13 @@
             // Abort any in-flight submission so a faster second Apply click
             // can't be overtaken by the slower first response (replaceWith
             // in _applyAjaxResponse would otherwise install stale results).
-            if (this._fetchAC) this._fetchAC.abort();
-            this._fetchAC = new AbortController();
+            if (this.fetchAbortController) this.fetchAbortController.abort();
+            this.fetchAbortController = new AbortController();
 
             const options = {
                 method,
                 headers: {},
-                signal: this._fetchAC.signal
+                signal: this.fetchAbortController.signal
             };
 
             // Collect form data from the submission form (respects HTML `form="id"`
@@ -670,7 +670,7 @@
 
         setupActionButtons() {
             const actionButtons = this.queryAll('[data-filter-action]');
-            const { signal } = this._ac;
+            const { signal } = this.abortController;
 
             actionButtons.forEach(button => {
                 const action = button.getAttribute('data-filter-action');
@@ -1104,7 +1104,7 @@
         }
 
         setupDropmenuSearch(searchInput, clearBtn) {
-            const signal = this._ac.signal;
+            const signal = this.abortController.signal;
             searchInput.addEventListener('input', () => {
                 if (clearBtn) {
                     this.updateClearButtonVisibility(searchInput, clearBtn);
@@ -1146,7 +1146,7 @@
         }
 
         setupDirectSearch(searchInput, clearBtn) {
-            const signal = this._ac.signal;
+            const signal = this.abortController.signal;
             const searchContainer = searchInput.closest('.nds-search-box, .nds-form-control')?.parentElement ||
                                    searchInput.closest('.nds-search-content')?.parentElement ||
                                    searchInput.parentElement;
@@ -1325,7 +1325,7 @@
             // cascades may re-call setupManualFilter on the same element with a
             // fresh input set (or the same set after innerHTML='' rebuild).
             // Aborting+resetting here releases the prior listener-target entries
-            // atomically so they don't accumulate on the long-lived this._ac.signal
+            // atomically so they don't accumulate on the long-lived this.abortController.signal
             // until destroy(). The per-input _ndsFilterBound flag is preserved
             // (it's used by the onDOMAdd filter above to distinguish moves from
             // genuine inserts), but it no longer gates the bind itself — every
@@ -1867,7 +1867,7 @@
                 resetButton.addEventListener('click', (e) => {
                     e.preventDefault();
                     this.reset();
-                }, { signal: this._ac.signal });
+                }, { signal: this.abortController.signal });
             }
         }
 
@@ -2146,8 +2146,8 @@
         }
 
         destroy() {
-            this._ac.abort();
-            if (this._fetchAC) this._fetchAC.abort();
+            this.abortController.abort();
+            if (this.fetchAbortController) this.fetchAbortController.abort();
             // Release pooled NDS.onDOMAdd subscribers registered per filter
             // element by setupManualFilter; without this, each filter instance
             // would leak one closure per filter element for the page lifetime.

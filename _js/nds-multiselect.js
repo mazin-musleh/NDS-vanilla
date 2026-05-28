@@ -84,7 +84,7 @@
             this.applied = [];
             this.draft = [];
 
-            this._ac = new AbortController();
+            this.abortController = new AbortController();
             this.init();
         }
 
@@ -118,7 +118,7 @@
         }
 
         bindEvents() {
-            const { signal } = this._ac;
+            const { signal } = this.abortController;
 
             // Mirror the focus/active visual states that nds-forms.js wires up
             // from native input focus/mousedown. Multiselect has no input in
@@ -209,7 +209,7 @@
         }
 
         destroy() {
-            this._ac?.abort();
+            this.abortController?.abort();
             this.root.removeAttribute('data-nds-multiselect-initialized');
         }
 

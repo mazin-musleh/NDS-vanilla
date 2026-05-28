@@ -35,8 +35,8 @@
     init() {
       if (this._initialized) return;
       this._initialized = true;
-      this._ac = new AbortController();
-      const signal = this._ac.signal;
+      this.abortController = new AbortController();
+      const signal = this.abortController.signal;
 
       // Delegated listeners on the container
       this.rating.addEventListener('click', (e) => {
@@ -63,7 +63,7 @@
     }
 
     destroy() {
-      if (this._ac) { this._ac.abort(); this._ac = null; }
+      if (this.abortController) { this.abortController.abort(); this.abortController = null; }
       this._initialized = false;
     }
 
