@@ -104,6 +104,12 @@
             // themselves (element._ndsFilterAC); tracked here so destroy()
             // can release them all in one sweep.
             this._filterElementACs = new Set();
+            // In-flight AJAX submission controller. Re-created per submit so a
+            // newer Apply click aborts the prior request before it can replace
+            // fresh results with stale ones.
+            this._fetchAC = null;
+
+            this._buildItemCache();
             this.init();
         }
 
@@ -300,10 +306,17 @@
                 action = window.location.origin + window.location.pathname;
             }
 
+            // Abort any in-flight submission so a faster second Apply click
+            // can't be overtaken by the slower first response (replaceWith
+            // below would otherwise install stale results).
+            if (this._fetchAC) this._fetchAC.abort();
+            this._fetchAC = new AbortController();
+
             let url = action;
             let options = {
                 method: method,
-                headers: {}
+                headers: {},
+                signal: this._fetchAC.signal
             };
 
             // Collect form data from the submission form (respects HTML `form="id"`
@@ -366,6 +379,7 @@
                                 this.targetContainer.replaceWith(newContainer);
                                 this.targetContainer = newContainer;
                                 this.items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()));
+                                this._buildItemCache();
 
                                 this.targetContainer.removeAttribute('hidden');
                                 if (this.targetContainer.style.display === 'none') {
@@ -421,6 +435,10 @@
                     }, 3000);
                 })
                 .catch(error => {
+                    // Superseded by a newer submit — keep the loading state
+                    // owned by the in-flight request that aborted us.
+                    if (error.name === 'AbortError') return;
+
                     console.error('Filter AJAX submission failed:', error);
 
                     // Remove loading class from target container
@@ -731,15 +749,7 @@
                 urlSync: { keyParam: 'sort', dirParam: 'dir' },
                 onChange: ({ orderedItems }) => {
                     this.items = orderedItems;
-
-                    // Synchronous pagination refresh — bypasses the 50ms setTimeout in
-                    // updatePagination() that would otherwise leave pagination-hidden
-                    // items sitting at the wrong DOM positions (visible as gaps) until
-                    // the deferred refresh caught up.
-                    const pagedContent = this.targetContainer.closest('.nds-paged-content') ||
-                                         this.targetContainer.parentElement?.closest('.nds-paged-content');
-                    NDS.Pagination.refresh(pagedContent || this.targetContainer);
-
+                    this.updatePagination();
                     this.dispatchFilterEvent();
                 }
             });
@@ -1733,49 +1743,69 @@
             return true;
         }
 
+        // Walk each item once and stash its filter values + lowercased search
+        // text on the element itself. applyFilters() then matches against the
+        // cache instead of re-querying every item's [data-filter] descendants
+        // and re-walking textContent on every pass. Rebuilt at every site
+        // that reassigns this.items (constructor, refresh, AJAX HTML inject).
+        _buildItemCache() {
+            for (const item of this.items) {
+                const filterValues = {};
+
+                const filterEls = item.querySelectorAll('[data-filter]');
+                for (let i = 0; i < filterEls.length; i++) {
+                    const el = filterEls[i];
+                    const name = el.getAttribute('data-filter');
+                    if (!filterValues[name]) filterValues[name] = [];
+                    filterValues[name].push(this.getFilterValue(el).toLowerCase());
+                }
+
+                const itemFilter = item.getAttribute('data-filter');
+                if (itemFilter) {
+                    if (!filterValues[itemFilter]) filterValues[itemFilter] = [];
+                    filterValues[itemFilter].push(this.getFilterValue(item).toLowerCase());
+                }
+
+                // Legacy .nds-card-tags fallback — only contributes when no
+                // data-filter="tags" markers exist on this card.
+                if (!filterValues.tags) {
+                    const cardTags = item.querySelector('.nds-card-tags');
+                    if (cardTags) {
+                        const tagLabels = cardTags.querySelectorAll('.nds-tag .nds-label');
+                        if (tagLabels.length) {
+                            const vals = [];
+                            for (let i = 0; i < tagLabels.length; i++) {
+                                vals.push(tagLabels[i].textContent.trim().toLowerCase());
+                            }
+                            filterValues.tags = vals;
+                        }
+                    }
+                }
+
+                item._ndsFilterValues = filterValues;
+
+                const textSource = item.querySelector('.nds-card-content') || item;
+                item._ndsSearchText = textSource.textContent.toLowerCase();
+            }
+        }
+
         itemMatchesSearch(item) {
             const searchText = this.criteria.search;
             if (!searchText) return true;
-
-            // Try .nds-card-content first, fall back to full item text
-            const textSource = item.querySelector('.nds-card-content') || item;
-            return textSource.textContent.toLowerCase().includes(searchText);
+            return (item._ndsSearchText || '').includes(searchText);
         }
 
         itemMatchesFilter(item, filterName, selectedValues) {
             if (selectedValues.length === 0) return true;
 
-            // Look for elements with data-filter attribute
-            const filterElements = item.querySelectorAll(`[data-filter="${filterName}"]`);
-            const itemHasFilter = item.getAttribute('data-filter') === filterName;
+            const itemValues = item._ndsFilterValues?.[filterName];
+            if (!itemValues || itemValues.length === 0) return false;
 
-            let itemValues = [];
-
-            if (filterElements.length > 0 || itemHasFilter) {
-                itemValues = Array.from(filterElements).map(el => this.getFilterValue(el).toLowerCase());
-                if (itemHasFilter) {
-                    itemValues.push(this.getFilterValue(item).toLowerCase());
-                }
-            } else if (filterName === 'tags') {
-                // Fallback for tags: traditional .nds-card-tags structure
-                const cardTags = item.querySelector('.nds-card-tags');
-                if (!cardTags) return false;
-
-                const tagElements = cardTags.querySelectorAll('.nds-tag .nds-label');
-                itemValues = Array.from(tagElements).map(tag => tag.textContent.trim().toLowerCase());
-            }
-
-            if (itemValues.length === 0) return false;
-
-            // Check filter type for logic (radio = AND, checkbox = OR)
-            const filterData = this.filterInputs[filterName];
-            if (filterData && filterData.type === 'radio') {
-                // Radio: item must match the single selected value
-                return selectedValues.some(val => itemValues.includes(val.toLowerCase()));
-            } else {
-                // Checkbox: item must match ANY of the selected values (OR logic)
-                return selectedValues.some(val => itemValues.includes(val.toLowerCase()));
-            }
+            // Radio (AND-style single selection) and checkbox (OR) share the
+            // same expression — at least one selected value matches one of the
+            // item's values. Radio's "single selection" constraint is enforced
+            // at the input layer, not here.
+            return selectedValues.some(val => itemValues.includes(val.toLowerCase()));
         }
 
         // ==============================================
@@ -1973,9 +2003,7 @@
             const container = pagedContent || this.targetContainer;
             const paginationNav = container.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
             if (paginationNav) {
-                setTimeout(() => {
-                    NDS.Pagination.refresh(container);
-                }, 50);
+                NDS.Pagination.refresh(container);
             }
         }
 
@@ -2008,6 +2036,7 @@
             this.items = this.targetContainer
                 ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
                 : [];
+            this._buildItemCache();
 
             // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
             const filterElements = this.queryAll('[data-filter-type]');
@@ -2088,6 +2117,7 @@
 
         destroy() {
             this._ac.abort();
+            if (this._fetchAC) this._fetchAC.abort();
             // Release pooled NDS.onDOMAdd subscribers registered per filter
             // element by setupManualFilter; without this, each filter instance
             // would leak one closure per filter element for the page lifetime.
