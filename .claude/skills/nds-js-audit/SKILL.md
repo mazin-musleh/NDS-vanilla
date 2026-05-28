@@ -67,7 +67,7 @@ Do not begin Phase 2 or any file reads until the user responds.
 
 **Excluded-file rejection.** If the resolved file is `nds-showcase.js` or any `.min.js`, reply: *"`<file>` is excluded from audits — see the 'Excluded files' section below for why."* and stop. Don't attempt a partial audit on a hard-excluded file.
 
-**Direct-named core/loader advisory.** If the resolved file is `nds-core.js` or `nds-loader.js`, proceed with the single-file audit but print this one-line advisory at the top of the Phase 4 report (above the Summary block): *"Auditing `<file>` directly — note: the rule catalog is derived from core's patterns, so findings should be read as 'is this pattern still right for this file' rather than as automatic regressions."* These two files are excluded from full-tree `js` mode (the bulk run would treat the catalog's source-of-truth as a violation target), but single-file mode IS supported for deliberate review.
+**Direct-named core/loader advisory.** If the resolved file is `nds-core.js` or `nds-loader.js`, proceed with the single-file audit but print this one-line advisory at the top of the Phase 4 report (above the Summary block): *"Auditing `<file>` directly — note: the rule catalog is derived from core's patterns, so findings should be read as 'is this pattern still right for this file' rather than as automatic regressions."* These two files are excluded from full-tree `js` mode (the bulk run would treat the catalog's source-of-truth as a violation target), but single-file mode IS supported for deliberate review. For `performance` single-file runs on these two files, **Phase 3.5's architectural sweep is the primary value** — the catalog typically passes cleanly, but the sweep surfaces design-tradeoff observations the catalog can't generalize.
 
 Unfiltered full audits across all three rule groups in one run are not supported through this skill — too expensive for routine use. Always run one rule group at a time, single-file or full-tree.
 
@@ -195,6 +195,104 @@ JSS-01 is the highest-false-positive rule in the catalog — static-analysis can
 
 ---
 
+## Phase 3.5: ARCHITECTURAL SWEEP (single-file `performance` mode only)
+
+After Phase 3's rule catalog runs, single-file `performance` audits do a second pass that asks broader questions the per-pattern catalog cannot answer. The catalog catches known anti-patterns; the architectural sweep catches per-file design decisions that affect performance — patterns the catalog cannot generalize because they only matter in the context of a specific file's role.
+
+**When this phase runs:** ONLY single-file `performance` mode. Skipped in:
+
+- Full-tree `js performance` runs — at 40+ files the sweep would explode the report or get formulaic.
+- Single-file `dry` runs — the JSD catalog format works for that scope; architectural concerns there are usually JSD-05 promotion candidates instead.
+- Single-file `security` runs — the JSS catalog format works for that scope; threat-modeling questions belong to a separate audit shape if needed.
+
+**Mindset.** Walk through the 9 categories below applying them to the target file. Record an observation when a pattern is present AND material — that is, present in a way that affects this specific file's role on a real page. Do NOT pad the report with observations that are "technically true but irrelevant for this file." The goal is to surface the 2-5 things a staff engineer would raise in code review, not to mechanically enumerate every possible architectural concern. If a category has nothing material to flag, omit it from the report entirely.
+
+**Severity assignment:**
+
+- **ARCH-HIGH** — blocking the critical path (LCP / INP / TBT); fixing materially improves real metrics under typical page conditions.
+- **ARCH-MEDIUM** — bounded but real perf concern; fixing matters for hot paths or many users; not a critical-path blocker.
+- **ARCH-LOW** — tradeoff worth surfacing; the current choice may be correct but the reader should understand what was traded.
+
+**Classification within each observation:**
+
+- **actionable** — a concrete change would improve performance with bounded risk. Include a proposed fix with file:line and a sketch of the diff shape.
+- **tradeoff** — the current pattern is a deliberate design choice; the observation acknowledges what was traded. Include rationale for accepting it; do NOT propose changing it unless trading the other direction is now preferable.
+
+`fix all` (Phase 5) targets actionable ARCH-HIGH / ARCH-MEDIUM observations along with catalog findings, file by file. Tradeoff observations and ARCH-LOW are SKIPPED by `fix all` — they exist to be acknowledged, not auto-fixed.
+
+### Sweep categories
+
+#### 1. Blocking scripting (TBT impact)
+
+- Are there synchronous loops over collections at module-eval time or in `init()` that exceed ~50 elements without yielding?
+- Does the file run `JSON.parse` on caller-supplied payloads >100KB without size limits or streaming?
+- Are there expensive regex compilations (`new RegExp(...)` with complex patterns) at module-eval time that could be lazily compiled?
+- Does any synchronous code path do >40 sequential `document.querySelector(...)` / `getBoundingClientRect()` / similar without batching or slicing?
+- (JSP-10 covers the narrow case of DOM-walking at IIFE body. This category covers wider blocking patterns: arrays, parses, regex, sequential queries elsewhere in the file.)
+
+#### 2. Layout thrashing beyond loop form
+
+- Do any sequences interleave style reads (`offsetHeight` / `offsetTop` / `scrollHeight` / `clientHeight` / `getBoundingClientRect()`) with style writes (`style.*=` / `classList.add/remove/toggle` / `setAttribute('class' or 'style', ...)`) in straight-line code (not just loops)?
+- (JSD-06 catches the loop form — N writes × N reads. This question catches the linear sequence form — write, read, write, read in straight-line code that runs per-event or per-render.)
+
+#### 3. Memory growth
+
+- Are there caches / maps that grow unboundedly with no LRU / TTL / disposal mechanism (e.g., a `Map` of selector → element results that never evicts)?
+- Are there per-instance arrays / Sets / Maps that accumulate without periodic compaction (e.g., a `seen` list that grows for the page lifetime)?
+- Do closures capture large objects unnecessarily (e.g., a `state` object retained by an event handler set up at init and never released, even when the handler only reads one field)?
+- (JSP-04(b)/(c) and JSD-09 catch listener-pool leaks. This category catches data-structure leaks the catalog misses.)
+
+#### 4. Scheduling primitive choice
+
+- Where is `setTimeout(fn, 0)` used? Could `queueMicrotask` (no paint between, faster), `requestAnimationFrame` (aligned with paint), or `MessageChannel.port.postMessage` (microtask-level yield, see `_js/nds-loader.js:272-281`) be more appropriate?
+- Where is `requestIdleCallback` used or polyfilled? Does the polyfill defeat the optimization on unsupported browsers (e.g., `setTimeout(cb, 1)` runs as a near-immediate macrotask, not in actual idle)?
+- Are scheduled timers paired with `clearTimeout` on teardown / cancel paths? (See JSP-07 carve-outs for legitimate single-pending-action latches.)
+- For animations: are step loops using `requestAnimationFrame` (vsync-aligned) or `setTimeout(16)` (drift-prone)?
+
+#### 5. Critical-path positioning
+
+- Does any work in this file affect LCP (large content paint)? If so, can it be deferred to `requestIdleCallback` / after first paint / on first interaction?
+- Does any work in this file affect INP (interaction responsiveness)? If so, is it sliced to stay below the 50ms long-task threshold per batch?
+- Could the file's main work be deferred without harming UX (e.g., is it acceptable for a tooltip to initialize on first hover rather than at page load)?
+- For loader-registered components, is the `idle: true` flag set in `_js/nds-loader.js`'s COMPONENTS array when this component is non-critical chrome? If not, should it be?
+
+#### 6. Network / IO efficiency
+
+- Are `fetch` calls properly aborted via `AbortController` when superseded (e.g., debounced search input fires fetch N+1 before N completes)?
+- Are sequential `fetch` chains that could parallelize via `Promise.all`?
+- Are response payloads size-capped to prevent runaway downloads (e.g., `Content-Length` check before `response.json()` — see `_js/nds-autocomplete.js:290-312` for the canonical pattern)?
+- Are cached responses (via `NDS.cache` / `localStorage` / `IndexedDB`) honored before the network round-trip?
+- Do retry paths use exponential backoff, or do they hammer the server on transient errors?
+
+#### 7. DOM API choice
+
+- Are there `innerHTML = '<...>...</...>'` writes where `replaceChildren(...nodes)` would be safer (no parser pass, no XSS risk) and faster (no string serialization)?
+- Are there `forEach(el => el.style.X = Y)` loops where `el.classList.toggle('foo')` + a CSS rule would batch into one composite layer?
+- Are there `setAttribute('class', cur + ' new')` patterns where `classList.add('new')` would skip the string round-trip?
+- Are `DocumentFragment`s used when appending many siblings in a loop, or does each `appendChild` cause a separate reflow?
+
+#### 8. Algorithmic complexity
+
+- Are there nested loops over DOM collections that degrade to O(n²) on large lists (e.g., `forEach(a => forEach(b => ...))` where both iterate the same collection)?
+- Are there `.find` / `.some` / `.filter` calls inside hot loops over the same collection where a `Map` lookup would be O(1)?
+- Are there `querySelectorAll` calls inside event handlers (per-click DOM walks) where a cached selector reference would suffice?
+- For sorts: is `Array.prototype.sort` invoked on collections that won't change (sort once at init vs sort per access)?
+
+#### 9. Polyfill / fallback fidelity
+
+- Where polyfills exist for browser features (Scheduler API, IntersectionObserver, ResizeObserver, `requestIdleCallback`, etc.), does the fallback degrade quietly or noisily?
+- Does the fallback's behavior model the same perf characteristics as the native API, or does it secretly defeat the optimization (e.g., `requestIdleCallback` polyfilled to `setTimeout(1)` runs as a near-immediate macrotask, not idle — see `_js/nds-loader.js:285-286` for the canonical example)?
+- For browser-specific bugs, is the workaround scoped to the buggy version, or does it apply universally and pay cost on browsers that don't need it?
+
+### Discipline notes
+
+- **Two-to-five observations is the typical output.** Zero is acceptable for a clean small file. Ten+ is a sign the agent is padding — re-read with a tighter "material to this file's role" filter.
+- **Cite specific file:line.** Vague observations ("this file has memory growth concerns") are not useful. "L487: `this._seenElements` Set grows for the page lifetime with no eviction; per page-visit growth is bounded but matters on long-lived SPA navigation" is useful.
+- **Distinguish actionable from tradeoff.** Marking a deliberate design as "actionable" then proposing a fix wastes the user's time on a debate they already had. When unsure, mark as tradeoff and explain what was traded — the user can re-classify if they disagree.
+- **Cross-reference catalog findings.** If an architectural observation is fundamentally the same concern as a JSP rule, note that the rule covers part of it and the architectural observation extends it (e.g., "JSP-10 covers IIFE-body DOM walks; this observation extends to in-`init()` walks").
+
+---
+
 ## Phase 4: REPORT
 
 **STOP. Emit the report. Do not edit any files yet.**
@@ -231,6 +329,31 @@ single-file `performance` / `security` runs where JSD-05 wasn't in scope to begi
 ## LOW
 (same grouping)
 
+## Architectural observations (single-file `performance` mode only)
+(Omit this whole section in full-tree runs and in single-file `dry` / `security` runs.
+Phase 3.5 produces these. Group by ARCH-HIGH → ARCH-MEDIUM → ARCH-LOW. Within each tier
+group by file then line. Each observation carries its `type:` field — actionable / tradeoff.)
+
+### ARCH-HIGH
+- _js/nds-foo.js:L42 — One-sentence description tied to user-facing impact (LCP/INP/TBT/memory).
+  **Type:** actionable
+  **Why it matters:** {1-sentence: who feels this and when}
+  **Fix:** {proposed remediation with diff shape — what to change, what to keep}
+
+### ARCH-MEDIUM
+- _js/nds-foo.js:L88 — Sequence interleaves style reads with writes in straight-line code.
+  **Type:** actionable
+  **Why it matters:** Each iteration forces a synchronous layout; on N=20 items the cost compounds.
+  **Fix:** Batch reads to an array first, then apply writes from the array. See `_js/nds-drawer.js:77-99`.
+
+- _js/nds-foo.js:L120 — `requestIdleCallback` polyfill runs idle work as a near-immediate macrotask on Safari <18.
+  **Type:** tradeoff
+  **Why it matters:** Idle-tier components don't actually defer on older Safari; they run via `setTimeout(1)` with a fake 50ms deadline.
+  **Rationale for accepting:** Safari 18 (Sept 2024) ships native rIC. Older-Safari support is the constraint; the polyfill behavior degrades quietly there, but the eager pass still completes correctly.
+
+### ARCH-LOW
+(same shape; ARCH-LOW observations are almost always `type: tradeoff`)
+
 ## Promotion candidates (JSD-05)
 - NDS.trapFocus(el, opts)
   Sites: _js/nds-modal.js:42-88, _js/nds-drawer.js:131-177
@@ -250,7 +373,7 @@ single-file `performance` / `security` runs where JSD-05 wasn't in scope to begi
 
 Other options:
 
-1. `fix all` — apply every finding in the report. Excludes JSD-05 promotion candidates by default — those edit core + migrate multiple call sites, so they go through `promote <api-name>` with per-candidate approval.
+1. `fix all` — apply every catalog finding in the report PLUS every actionable ARCH-HIGH / ARCH-MEDIUM architectural observation. Excludes JSD-05 promotion candidates (those go through `promote <api-name>` with per-candidate approval), tradeoff architectural observations (those are acknowledged, not auto-fixed), and ARCH-LOW (low-leverage tradeoffs by definition).
 2. `promote <api-name>` — apply one JSD-05 promotion: edit `_js/nds-core.js` to add the proposed helper, migrate every call site listed in the report, and follow the file-by-file rhythm (rebundle + agent review + pause between files). Only offered when the report has "Promotion candidates (JSD-05)" entries.
 3. `evolve` — apply the proposed rule-catalog edits to SKILL.md (Phase 7). Only listed if the report has "Gaps observed" or "Dead-rule candidates" entries.
 4. `save` — persist this report to `.claude/audit-reports/` (see "Saving the report" subsection below).
@@ -258,9 +381,11 @@ Other options:
 6. `skip` — end the audit here; nothing is written, nothing is changed.
 
 Finer-grained fix filters (type the literal, no number):
-- `fix HIGH` / `fix MEDIUM` / `fix LOW` — by severity
+- `fix HIGH` / `fix MEDIUM` / `fix LOW` — catalog findings by severity
+- `fix ARCH-HIGH` / `fix ARCH-MEDIUM` — actionable architectural observations by tier (single-file `performance` only; tradeoff observations skipped)
 - `fix JSP` / `fix JSD` / `fix JSS` — by rule group
-- `fix <file>` (e.g., `fix _js/nds-alert.js`) — one file only
+- `fix arch` — every actionable architectural observation (ARCH-HIGH + ARCH-MEDIUM, both tiers; tradeoff skipped). Only offered when the report has actionable architectural observations.
+- `fix <file>` (e.g., `fix _js/nds-alert.js`) — one file only (includes both catalog findings and actionable arch observations in that file)
 - `fix all then promote <api-name>` — chain a plain fix batch and a promotion application in one session (each still follows its own file-by-file rhythm and user pauses)
 ```
 
@@ -274,8 +399,9 @@ Pick the recommendation by walking this table top-to-bottom and stopping at the 
 |---|---|---|
 | Has "Gaps observed" OR "Dead-rule candidates" entries | `save and evolve` | "preserves this report and applies {N} catalog refinement(s) before the next run" |
 | Has "Promotion candidates (JSD-05)" entries | `save and evolve` (the catalog refinements still come first; promotions are a follow-up turn) | "preserves the snapshot and sharpens rules; reply `promote <api>` next turn to apply the {N} promotion(s)" |
-| Has findings (HIGH / MEDIUM / LOW) AND no catalog evolutions | `save` | "persists the report; reply `fix all` next turn to apply the {N} finding(s) file-by-file" |
-| Clean run — zero findings, zero gaps, zero dead-rule candidates | `save` | "keeps the diff trail. Even clean runs are worth saving — Run N+1's diff vs. this one will show whether the codebase stayed clean" |
+| Has catalog findings (HIGH / MEDIUM / LOW) OR actionable architectural observations (ARCH-HIGH / ARCH-MEDIUM), AND no catalog evolutions | `save` | "persists the report; reply `fix all` next turn to apply the {N} finding(s) + {M} actionable observation(s) file-by-file" (omit the "+ M actionable observation(s)" clause when M = 0) |
+| Tradeoff-only architectural observations (any tier) AND no catalog findings AND no catalog evolutions | `save` | "persists the report; the {N} tradeoff observation(s) document deliberate design choices — no action needed unless you want to reconsider the tradeoff" |
+| Clean run — zero catalog findings, zero actionable arch observations, zero gaps, zero dead-rule candidates | `save` | "keeps the diff trail. Even clean runs are worth saving — Run N+1's diff vs. this one will show whether the codebase stayed clean" |
 
 The recommendation is opinionated, not exclusive: the user can still pick any of the numbered options. Phrase the reason in plain language tied to the actual numbers from THIS run (e.g., "preserves this report and applies 2 catalog refinements before the next run") so the user can read the recommendation without scrolling back through the report.
 
@@ -327,12 +453,16 @@ If the run surfaces zero findings in a rule group, omit that section rather than
 
 Only enter this phase when the user replies with an explicit fix instruction. Recognized forms:
 
-- `fix HIGH` / `fix MEDIUM` / `fix LOW` — by severity
-- `fix JSP` / `fix JSD` / `fix JSS` — by rule group
-- `fix <file>` — every finding in one file
-- `fix all` — the entire report except Promotion candidates
+- `fix HIGH` / `fix MEDIUM` / `fix LOW` — catalog findings by severity
+- `fix ARCH-HIGH` / `fix ARCH-MEDIUM` — actionable architectural observations by tier (single-file `performance` reports only; tradeoff observations are skipped regardless)
+- `fix JSP` / `fix JSD` / `fix JSS` — catalog findings by rule group
+- `fix arch` — every actionable architectural observation in the report (ARCH-HIGH + ARCH-MEDIUM, tradeoffs and ARCH-LOW skipped)
+- `fix <file>` — every catalog finding AND every actionable arch observation in one file
+- `fix all` — the entire report: every catalog finding + every actionable ARCH-HIGH / ARCH-MEDIUM observation. Excludes JSD-05 promotion candidates, tradeoff arch observations, and ARCH-LOW.
 - `promote <api-name>` — apply one JSD-05 promotion candidate (edits `_js/nds-core.js` to add the helper, then migrates every listed call site). Covered separately in "Applying promotion candidates" below — the flow diverges from plain fix batches because it spans core plus N files.
 - `fix all then promote <api-name>` — chain a plain fix batch and one promotion in a single session. Each segment still follows its own file-by-file rhythm; the user `next`s through both.
+
+**Architectural observations follow the same file-by-file rhythm as catalog findings.** Each actionable observation has a proposed fix in the Phase 4 report; applying it goes through the same Apply → Rebundle → Agent review → Per-file summary → STOP-for-`next` cycle as catalog findings (see "Application order" below). When a file has both catalog findings AND actionable arch observations, both are addressed in that file's slot before advancing. Tradeoff observations and ARCH-LOW are never auto-fixed; they exist in the report to be acknowledged.
 
 ### Before applying (safety checkpoint)
 
@@ -560,6 +690,9 @@ This skill deliberately does not cover:
 - `_data/content/` YAML demo data.
 - UX copy, hero descriptions, or visual design review.
 - Replacing eslint. No lint config is authored; the rules are NDS-specific conventions enforced through an agent loop.
+- Architectural sweep in full-tree runs. Phase 3.5 runs ONLY in single-file `performance` mode. Full-tree `js performance` skips it because at 40+ files the architectural questions either explode the report or get formulaic. If broad architectural review is needed, run single-file `performance` on the files of interest.
+- Architectural sweep in `dry` / `security` modes. Phase 3.5 is scoped to performance concerns (TBT/INP/LCP/memory/scheduling/network/DOM/complexity/polyfill fidelity). It does NOT cover DRY/maintainability concerns (the JSD catalog and its JSD-05 promotion-candidate flow cover those) or threat modeling (the JSS catalog covers known web-security sinks; broader threat modeling is out of scope for any mode of this skill).
+- Profiler-driven analysis. The architectural sweep is a static-read heuristic checklist. It cannot replace running the page in DevTools Performance / Lighthouse / WebPageTest — those measure actual user-visible cost. Use the sweep to surface candidates; use a profiler to confirm material impact before investing in fixes.
 - Including `_js/nds-core.js` or `_js/nds-loader.js` in full-tree `js` runs. Single-file audits on either (e.g. `/nds-js-audit nds-core.js performance`) ARE supported for deliberate review of the helper surface or loader internals — see the "Excluded files" section in Phase 1 for the carve-out and advisory shape. Phase 5 `promote <api-name>` also edits core under per-candidate user approval.
 - Running Jekyll unless the user explicitly asks. `ruby _plugins/js_processor.rb` IS run automatically per-file as part of Phase 5/6.
 - Editing files outside Phase 5 / Phase 7 / the audit-reports path. Phase 5 may edit `_js/nds-*.js` target files (for fixes) and `_js/nds-core.js` (for `promote <api-name>` candidates). Phase 7 may revise the rule catalog in this `SKILL.md` after explicit per-proposal approval. The Phase 4 "Saving the report" step may write new (never overwrite) report files in `.claude/audit-reports/`. Nothing else.
