@@ -1,59 +1,21 @@
 /**
- * NDS Multiselect Component
- * Multi-option select built on top of an existing prefix .nds-dropmenu.
+ * NDS Multiselect — multi-option select built on top of .nds-dropmenu.
  *
- * Markup contract:
- *   <div class="nds-form-container nds-multiselect" data-multiselect-name="...">
- *     <div class="nds-form-control">
- *       <div class="nds-form-action nds-prefix nds-dropmenu" data-multiselect-dropmenu>
- *         <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">…</button>
- *         <div class="nds-dropmenu-menu" hidden>
- *           <div class="nds-dropmenu-scroll">
- *             <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-no-auto-close>
- *               <legend class="nds-label">Group A</legend>
- *               <div class="nds-form-container nds-check-container">
- *                 <div class="nds-form-header">
- *                   <label for="opt-a1"><span class="nds-label">Option A1</span></label>
- *                 </div>
- *                 <div class="nds-form-control">
- *                   <input type="checkbox" id="opt-a1" class="nds-check"
- *                          value="a1" data-label="Option A1">
- *                 </div>
- *               </div>
- *               …
- *             </fieldset>
- *           </div>
- *           <div class="nds-dropmenu-footer">
- *             <hr class="nds-divider">
- *             <div class="nds-dropmenu-action nds-grid">
- *               <button class="nds-btn nds-secondary nds-dropmenu-item"
- *                       data-multiselect-action="reset" data-no-auto-close>Reset</button>
- *               <button class="nds-btn nds-primary nds-dropmenu-item"
- *                       data-multiselect-action="apply">Apply</button>
- *             </div>
- *           </div>
- *         </div>
- *       </div>
- *       <div class="nds-chips nds-multiselect-chips" data-multiselect-chips></div>
- *       <span class="nds-multiselect-placeholder">Select options…</span>
- *     </div>
- *     <div class="nds-form-footer" data-feedback-target hidden></div>
- *   </div>
+ * Semantics: toggling stages into Draft; Apply commits Draft → Applied;
+ * Reset clears Draft only; closing without Apply discards Draft; removing
+ * a chip drops from both sets immediately.
  *
- * Selection semantics (filter-dropmenu pattern):
- *   - Toggling a checkbox stages the change in the per-instance Draft set.
- *   - Apply commits Draft → Applied; chips render; hidden inputs ship.
- *   - Reset clears the panel (Draft = []); Applied is untouched until Apply.
- *   - Closing the panel without Apply discards the Draft (reset on next open).
- *   - Removing a chip drops the value from both Applied and Draft and fires
- *     `nds:multiselect:change` immediately.
- *
- * Events: dispatches `nds:multiselect:change` with detail
- *   { name, values, labels } whenever Applied changes.
+ * Event: `nds:multiselect:change` with { name, values, labels } on commit.
  */
 
 (function () {
     'use strict';
+
+    const STRINGS = {
+        en: { none: 'No selection', added: 'Added',     removed: 'Removed',   cleared: 'Selection cleared' },
+        ar: { none: 'لا تحديد',     added: 'تمت إضافة', removed: 'تمت إزالة', cleared: 'تم مسح التحديد' }
+    };
+    const S = () => STRINGS[NDS.langKey];
 
     class NDSMultiselect {
         constructor(root) {
@@ -65,8 +27,7 @@
             this.formControl = root.querySelector('.nds-form-control');
             this.chipsEl = root.querySelector('[data-multiselect-chips]')
                 || root.querySelector('.nds-multiselect-chips');
-            this.trigger = this.dropmenu
-                && this.dropmenu.querySelector('.nds-dropmenu-trigger');
+            this.trigger = this.dropmenu && this.dropmenu.querySelector('.nds-dropmenu-trigger');
             this.applyBtn = root.querySelector('[data-multiselect-action="apply"]');
             this.resetBtn = root.querySelector('[data-multiselect-action="reset"]');
             this.checkboxes = Array.from(
@@ -80,16 +41,17 @@
 
             this.name = root.getAttribute('data-multiselect-name') || '';
             this.chipClass = root.getAttribute('data-chip-class') || 'nds-primary nds-sm';
-
             this.applied = [];
             this.draft = [];
-
             this.abortController = new AbortController();
             this.init();
         }
 
         init() {
             if (!this.dropmenu.ndsDropmenu) NDS.Dropmenu.create(this.dropmenu);
+            this.triggerLabelOriginal = (
+                this.trigger?.querySelector('.nds-label')?.textContent || ''
+            ).trim();
             this.ensureValuesContainer();
             this.seedFromMarkup();
             this.bindEvents();
@@ -98,8 +60,7 @@
             this.root.setAttribute('data-nds-multiselect-initialized', 'true');
         }
 
-        // The hidden-input host. Lives inside the form-control so the rendered
-        // <input type="hidden"> values ship with any wrapping <form>.
+        // Hidden-input host lives inside form-control so values post with any wrapping <form>.
         ensureValuesContainer() {
             let container = this.root.querySelector('.nds-multiselect-values');
             if (!container) {
@@ -110,23 +71,43 @@
             this.valuesEl = container;
         }
 
+        // Seed Applied from (1) pre-existing hidden inputs (server-rendered restore),
+        // (2) pre-checked checkboxes. Orphan values are dropped.
         seedFromMarkup() {
-            this.applied = this.checkboxes
-                .filter(cb => cb.checked)
-                .map(cb => cb.value);
-            this.draft = this.applied.slice();
+            const validValues = new Set(this.checkboxes.map(cb => cb.value));
+            const seeded = [];
+
+            if (this.name) {
+                const escaped = CSS.escape(this.name);
+                this.formControl.querySelectorAll(
+                    `input[type="hidden"][name="${escaped}[]"], input[type="hidden"][name="${escaped}"]`
+                ).forEach(h => {
+                    if (h.value && validValues.has(h.value) && !seeded.includes(h.value)) {
+                        seeded.push(h.value);
+                    }
+                    h.remove();
+                });
+            }
+
+            this.checkboxes.forEach(cb => {
+                if (cb.checked && !seeded.includes(cb.value)) seeded.push(cb.value);
+            });
+
+            this.applied = seeded;
+            this.draft = seeded.slice();
+            this._syncCheckboxes();
+        }
+
+        // Mirror this.applied onto the DOM checkboxes — called whenever the
+        // committed selection changes shape (seed, panel re-open).
+        _syncCheckboxes() {
+            this.checkboxes.forEach(cb => { cb.checked = this.applied.includes(cb.value); });
         }
 
         bindEvents() {
             const { signal } = this.abortController;
 
-            // Mirror the focus/active visual states that nds-forms.js wires up
-            // from native input focus/mousedown. Multiselect has no input in
-            // the form-control — the interaction happens on the trigger button
-            // and the dropmenu panel — so we drive those states manually here.
-            // `active` is held only while the pointer is pressed on the
-            // trigger (matches forms.js). `focus` stays on while the panel is
-            // open so that clicking a checkbox inside doesn't visually blur.
+            // ── Dropmenu lifecycle ──────────────────────────────────
             this.dropmenu.addEventListener('nds:dropmenu:opened', () => {
                 NDS.State.add(this.root, 'focus');
                 this.openSync();
@@ -135,6 +116,7 @@
                 NDS.State.remove(this.root, 'focus');
             }, { signal });
 
+            // ── Trigger interaction states ──────────────────────────
             if (this.trigger) {
                 this.trigger.addEventListener('mousedown', () => {
                     NDS.State.add(this.root, 'active');
@@ -148,38 +130,29 @@
                     NDS.State.add(this.root, 'focus');
                 }, { signal });
                 this.trigger.addEventListener('blur', () => {
-                    // Don't clear focus while the panel is open — the user is
-                    // interacting with checkboxes/actions inside it.
+                    // Keep focus state while the panel is open — user is in the panel.
                     if (!this.isOpen()) NDS.State.remove(this.root, 'focus');
                 }, { signal });
             }
 
+            // ── Checkbox change ─────────────────────────────────────
             this.checkboxes.forEach(cb => {
                 cb.addEventListener('change', () => this.handleCheckboxChange(cb), { signal });
             });
 
-            // Click anywhere on the form-container opens the dropmenu, so
-            // the whole field reads as one interactive surface. Exclusions:
-            //   - the dropmenu itself (trigger + panel drive their own logic)
-            //   - chips (own click removes the value, stopPropagation belt+braces)
-            //   - when the panel is already open (avoid toggle-closing on stray clicks)
-            // stopPropagation is needed because the dropmenu's document-level
-            // outside-click handler would otherwise see this click bubble past
-            // the dropmenu (its host form-container isn't inside this.dropmenu)
-            // and immediately close the menu we just opened.
+            // ── Surface-delegated open ──────────────────────────────
+            // Click anywhere on the field opens the dropmenu. stopPropagation
+            // is required because this click bubbles past the dropmenu host and
+            // the dropmenu's outside-click handler would close what we just opened.
             const isDelegatedSurface = (target) =>
                 !this.dropmenu.contains(target) && !target.closest('.nds-chip');
 
             this.root.addEventListener('click', (e) => {
-                if (!isDelegatedSurface(e.target)) return;
-                if (this.isOpen()) return;
+                if (!isDelegatedSurface(e.target) || this.isOpen()) return;
                 e.stopPropagation();
                 this.trigger?.click();
             }, { signal });
 
-            // Mirror the trigger's press feedback on the whole surface so
-            // holding the mouse down anywhere on the field feels the same
-            // as pressing the trigger button.
             this.root.addEventListener('mousedown', (e) => {
                 if (!isDelegatedSurface(e.target)) return;
                 NDS.State.add(this.root, 'active');
@@ -190,9 +163,9 @@
                 }, { signal });
             });
 
+            // ── Action buttons ──────────────────────────────────────
             if (this.applyBtn) {
-                // Tag as the dropmenu's primary action so Enter inside the
-                // panel triggers Apply (generic dropmenu behavior).
+                // Tag as dropmenu's primary action so Enter inside the panel triggers Apply.
                 this.applyBtn.setAttribute('data-dropmenu-primary', '');
                 this.applyBtn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -210,6 +183,7 @@
 
         destroy() {
             this.abortController?.abort();
+            NDS.aria.label(this.trigger, '');
             this.root.removeAttribute('data-nds-multiselect-initialized');
         }
 
@@ -217,13 +191,10 @@
             return NDS.State.has(this.dropmenu, 'open');
         }
 
-        // Re-sync the panel's checkbox visuals to the committed Applied set on
-        // every open, discarding any uncommitted draft from a previous session.
+        // Re-sync panel to Applied on every open — discards uncommitted draft from prior session.
         openSync() {
             this.draft = this.applied.slice();
-            this.checkboxes.forEach(cb => {
-                cb.checked = this.applied.includes(cb.value);
-            });
+            this._syncCheckboxes();
         }
 
         handleCheckboxChange(cb) {
@@ -235,19 +206,30 @@
         }
 
         apply() {
+            const before = new Set(this.applied);
             this.applied = this.draft.slice();
             this.renderChips();
             this.renderHiddenInputs();
             this.emitChange();
+
+            const added   = this.applied.filter(v => !before.has(v));
+            const removed = [...before].filter(v => !this.applied.includes(v));
+            const s = S();
+            const parts = [];
+            if (added.length)   parts.push(s.added   + ' ' + added  .map(v => this.labelFor(v)).join(', '));
+            if (removed.length) parts.push(s.removed + ' ' + removed.map(v => this.labelFor(v)).join(', '));
+            if (parts.length) NDS.announce(parts.join('. '));
+            else if (before.size > 0 && this.applied.length === 0) NDS.announce(s.cleared);
         }
 
-        // Reset clears the panel only — Applied stays put until the user Applies.
+        // Reset clears the panel only — Applied stays put until Apply.
         reset() {
             this.checkboxes.forEach(cb => { cb.checked = false; });
             this.draft = [];
         }
 
         removeValue(value) {
+            const label = this.labelFor(value);
             this.applied = this.applied.filter(v => v !== value);
             this.draft = this.draft.filter(v => v !== value);
             const cb = this.checkboxes.find(c => c.value === value);
@@ -255,6 +237,7 @@
             this.renderChips();
             this.renderHiddenInputs();
             this.emitChange();
+            NDS.announce(S().removed + ' ' + label);
         }
 
         labelFor(value) {
@@ -268,13 +251,13 @@
 
         renderChips() {
             while (this.chipsEl.firstChild) this.chipsEl.removeChild(this.chipsEl.firstChild);
-            this.applied.forEach(value => {
-                this.chipsEl.appendChild(this.buildChip(value));
-            });
-            if (this.applied.length) {
-                NDS.State.add(this.root, 'filled');
-            } else {
-                NDS.State.remove(this.root, 'filled');
+            this.applied.forEach(value => { this.chipsEl.appendChild(this.buildChip(value)); });
+            NDS.State[this.applied.length ? 'add' : 'remove'](this.root, 'filled');
+
+            if (this.trigger && this.triggerLabelOriginal) {
+                const labels = this.applied.map(v => this.labelFor(v));
+                const summary = labels.length ? labels.join(', ') : S().none;
+                NDS.aria.label(this.trigger, this.triggerLabelOriginal + ': ' + summary);
             }
         }
 

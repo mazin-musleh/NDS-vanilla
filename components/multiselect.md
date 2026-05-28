@@ -28,6 +28,9 @@ direction: ltr
                                     <label><span class="nds-label">Interests</span></label>
                                 </div>
                                 <div class="nds-form-control">
+                                    <!-- Server-rendered restored selection: picked up on init -->
+                                    <input type="hidden" name="interests[]" value="ai">
+                                    <input type="hidden" name="interests[]" value="ux">
                                     <div class="nds-form-action nds-prefix nds-dropmenu" data-multiselect-dropmenu>
                                         <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger" type="button">
                                             <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
@@ -136,6 +139,9 @@ direction: ltr
     &lt;label&gt;&lt;span class="nds-label"&gt;Interests&lt;/span&gt;&lt;/label&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-control"&gt;
+    &lt;!-- Restore selection from a previous submit: read once on init --&gt;
+    &lt;input type="hidden" name="interests[]" value="ai"&gt;
+    &lt;input type="hidden" name="interests[]" value="ux"&gt;
     &lt;div class="nds-form-action nds-prefix nds-dropmenu" data-multiselect-dropmenu&gt;
       &lt;button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
         &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
@@ -274,6 +280,20 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-database-01"></i>
+                        <span class="nds-label">Server-Rendered Restore</span>
+                    </span>
+                    <p class="nds-item-desc">On init the field reads any pre-existing <code class="nds-inline-code lang-html">&lt;input type="hidden" name="field[]"&gt;</code> rows inside the form-control and seeds the applied set from them. A server-rendered form re-displays a persisted selection without inline JS. Pre-<code class="nds-inline-code lang-html">checked</code> checkboxes are layered in too.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-voice"></i>
+                        <span class="nds-label">Screen-Reader Updates</span>
+                    </span>
+                    <p class="nds-item-desc">The trigger button's <code class="nds-inline-code lang-html">aria-label</code> reflects the current selection on every render, so screen readers announce the applied values instead of the static button label. Apply, chip removal, and clear-all also announce through the shared NDS live region in both English and Arabic.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
@@ -302,7 +322,8 @@ direction: ltr
                     <li>Set <code class="nds-inline-code lang-html">data-multiselect-name</code> when the field lives inside a <code class="nds-inline-code lang-html">&lt;form&gt;</code>. Without it, no hidden inputs are rendered and the selection does not post</li>
                     <li>Set a meaningful <code class="nds-inline-code lang-html">data-label</code> on each checkbox so chip text stays readable when the surrounding label changes, wraps, or contains extra markup</li>
                     <li>Keep the placeholder short (two to four words). It shares the row with chips once any are applied, so a long placeholder fights for space</li>
-                    <li>Add a <code class="nds-inline-code lang-html">&lt;hr class="nds-divider"&gt;</code> between fieldsets in the panel to make the grouping visually clear, matching the provided markup contract</li>
+                    <li>Add a <code class="nds-inline-code lang-html">&lt;hr class="nds-divider"&gt;</code> between fieldsets in the panel to make the grouping visually clear</li>
+                    <li>For a server-rendered form re-displaying a saved selection (after a validation error, edit screen), emit the persisted values as <code class="nds-inline-code lang-html">&lt;input type="hidden" name="field[]" value="&hellip;"&gt;</code> rows inside <code class="nds-inline-code lang-html">.nds-form-control</code>. The field seeds itself from them on init, no inline JS needed</li>
                     <li>When the number of selections carries meaning (quota, pricing tier), listen for <code class="nds-inline-code lang-js">nds:multiselect:change</code> and show a count or validation hint outside the field rather than overloading the placeholder</li>
                 </ul>
             </div>
@@ -356,6 +377,12 @@ instance.draft;     // ['ai', 'cloud']  // in-panel staging set
 instance.apply();               // promote draft → applied, emit change
 instance.reset();               // clear draft only (applied untouched)
 instance.removeValue('cloud');  // drop value from both sets, emit change
+
+// ── Tear down an instance ──────────────────────────────
+// Releases listeners, clears the trigger aria-label, and unlocks
+// the field for a fresh init. Call before removing the markup
+// from the DOM in dynamic flows.
+NDS.Multiselect.destroy(field);
 
 // ── Listen for committed selection changes ─────────────
 // Fires on apply() and on chip removal, never on draft toggles.
