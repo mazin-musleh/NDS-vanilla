@@ -55,7 +55,7 @@ direction: ltr
                                 <div class="nds-otp">
                                     <div class="nds-form-container nds-otp-container">
                                         <div class="nds-form-control">
-                                            <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
+                                            <input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" autofocus>
                                         </div>
                                     </div>
                                     <div class="nds-form-container nds-otp-container">
@@ -102,7 +102,7 @@ direction: ltr
   &lt;div class="nds-otp"&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
       &lt;div class="nds-form-control"&gt;
-        &lt;input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code"&gt;
+        &lt;input type="text" name="otp-digit-1" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" autofocus&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-form-container nds-otp-container"&gt;
@@ -465,6 +465,13 @@ document.getElementById('clear-btn').addEventListener('click', function() {
                         <span class="nds-label">Auto-initialization</span>
                     </span>
                     <p class="nds-item-desc">Initializes on page load and detects dynamically added groups via MutationObserver. No manual setup needed.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
+                        <span class="nds-label">Auto-focus</span>
+                    </span>
+                    <p class="nds-item-desc">Opt-in via <code class="nds-inline-code lang-html">autofocus</code> on any digit input. The component restores focus after init to recover from cases where the browser's native autofocus is lost to staggered component initialization.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
