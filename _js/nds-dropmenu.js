@@ -517,6 +517,27 @@
 
 
         open() {
+            // Delayed-first-open mode (opt-in via data-delay="<ms>"). The first
+            // open shows a loading state on the trigger, emits nds:dropmenu:prepare
+            // so a consumer can populate the menu, then opens after <ms>. One-shot:
+            // data-delay is removed once it fires, so later opens are immediate.
+            // Lets components build menu content lazily without the open animation
+            // racing a fast re-click or briefly showing an empty/mis-sized menu.
+            if (this._delaying) return;   // a delayed open is already in flight
+            if (this.dropmenu.hasAttribute('data-delay')) {
+                const delay = parseInt(this.dropmenu.getAttribute('data-delay'), 10) || 0;
+                this._delaying = true;
+                addState(this.trigger, 'loading');
+                this._delayTimer = setTimeout(() => {
+                    this._delaying = false;
+                    this.dropmenu.removeAttribute('data-delay');
+                    this.emitEvent('nds:dropmenu:prepare');   // consumer builds content now
+                    removeState(this.trigger, 'loading');
+                    this.open();                              // real open — content is ready
+                }, delay);
+                return;
+            }
+
             // Abort any in-flight close so its cleanup doesn't tear down the
             // menu we're about to re-open. No-op when no close is pending.
             this._cancelClose?.();
@@ -762,6 +783,9 @@
         }
 
         destroy() {
+            // Cancel a pending delayed-open timer so it can't fire on the
+            // detached/cloned wrapper after teardown.
+            clearTimeout(this._delayTimer);
             // Drain the open-lifecycle subscriptions before tearing the
             // wrapper down. close() releases this._offScroll (NDS.onOutsideScroll)
             // and this._unsubResize (NDS.onResize) synchronously at the top of

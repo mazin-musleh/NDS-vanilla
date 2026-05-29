@@ -260,8 +260,11 @@
             // Idle: per-input listener setup + URL-param apply is a heavy
             // eager init. Pairs with idle-tier pagination — Pagination.refresh
             // is stateless so order between them doesn't matter.
+            // Gate on [data-filter-target] (not .nds-filter): a filter is defined
+            // by its target link, so it must init even when there's no .nds-filter
+            // dropdown (e.g. a search-only filter).
             name: 'filter',
-            selector: '.nds-filter',
+            selector: '[data-filter-target]',
             init: () => NDS.Filter?.init?.(),
             idle: true,
         },

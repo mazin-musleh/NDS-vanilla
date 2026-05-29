@@ -34,6 +34,14 @@
             this.targetId = filterContainer.getAttribute('data-filter-target');
             this.targetContainer = this.targetId ? document.getElementById(this.targetId) : null;
 
+            // Every element carrying this filter's data-filter-target — the
+            // filter's surfaces (search box, dropmenu, applied-chips, auto-fill,
+            // sort toolbar). The representative element passed to the constructor
+            // is included too; there is no privileged "container", just the target
+            // set. queryAll searches these subtrees instead of sweeping the whole
+            // document. Recomputed in refresh() for the dynamic-DOM path.
+            this._targetRoots = this.resolveTargetRoots();
+
             // Get all filterable items (empty array if no target)
             this.items = this.targetContainer
                 ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
@@ -115,6 +123,16 @@
             // cost entirely. Flipped to false whenever this.items is
             // reassigned (AJAX HTML inject, refresh()).
             this._cacheBuilt = false;
+
+            // Auto-populated filters (data-filter-type without data-filter-values)
+            // whose options come from a full item scan via collectFilterValues.
+            // When such a filter is hidden at rest (inside a dropmenu, or behind a
+            // search input) AND not active in the URL, its option build is deferred
+            // here and triggered on first engagement (buildDeferredFilters). Manual,
+            // static-values, and URL-active filters build eagerly during init.
+            this._deferredFilters = [];
+            this._deferredBuilt = false;
+
             this.init();
         }
 
@@ -126,29 +144,38 @@
             return el.getAttribute('data-filter-value') || el.textContent.trim();
         }
 
+        // Resolve this filter's surfaces: every element carrying its
+        // data-filter-target. The representative element is always included (it
+        // carries the target too, but unshift guarantees it even if markup ever
+        // diverges) so a query never misses the element the instance was built on.
+        resolveTargetRoots() {
+            const roots = this.targetId
+                ? Array.from(document.querySelectorAll(`[data-filter-target="${this.targetId}"]`))
+                : [];
+            if (!roots.includes(this.filterContainer)) roots.unshift(this.filterContainer);
+            return roots;
+        }
+
         /**
          * Find all elements matching `selector` that belong to this filter instance.
-         * Matches either descendants of the .nds-filter container OR any elements
-         * across the document linked via data-filter-target. Elements inside the
-         * target container (e.g. <span data-filter> markers on cards) are excluded.
+         * A filter is the set of elements carrying its data-filter-target (its
+         * surfaces); this searches each surface's subtree uniformly — there is no
+         * privileged container. Elements inside the target list (e.g. <span
+         * data-filter> markers on cards) are excluded so they aren't mistaken for
+         * controls.
          *
-         * Multi-selectors ("a, b, c") are handled correctly — the target scope is
-         * applied to each comma-separated branch, not just the last one.
+         * Searches the small linked subtrees (this._targetRoots) rather than
+         * sweeping the whole document, so cost scales with the filter's own UI
+         * regions, not the page.
          */
         queryAll(selector) {
-            const inside = Array.from(this.filterContainer.querySelectorAll(selector));
-            let matches = inside;
-
-            if (this.targetId) {
-                const parts = selector.split(',').map(s => s.trim()).filter(Boolean);
-                const scoped = parts.flatMap(p => [
-                    `${p}[data-filter-target="${this.targetId}"]`,
-                    `[data-filter-target="${this.targetId}"] ${p}`
-                ]).join(', ');
-                const external = Array.from(document.querySelectorAll(scoped));
-                matches = Array.from(new Set([...inside, ...external]));
+            const set = new Set();
+            for (const root of this._targetRoots) {
+                if (root.matches(selector)) set.add(root);
+                root.querySelectorAll(selector).forEach(el => set.add(el));
             }
 
+            let matches = Array.from(set);
             if (this.targetContainer) {
                 matches = matches.filter(el => !this.targetContainer.contains(el));
             }
@@ -529,6 +556,18 @@
                 .substring(0, 100);
         }
 
+        // Sanitize a URL-supplied value for *matching* against existing DOM
+        // input values (filter checkboxes/radios/switches). Unlike sanitizeInput
+        // — which strips & " ' < > for free-text search — this keeps characters
+        // that are legitimately part of a filter value (e.g. "Healthcare & Social")
+        // so the equality match against input.value succeeds. Safe because the
+        // value is only compared, never rendered as HTML (stored criteria come
+        // from input.value itself).
+        sanitizeFilterValue(str) {
+            if (!str) return '';
+            return str.replace(/<[^>]*>/g, '').substring(0, 100);
+        }
+
         applyUrlParams() {
             const params = new URLSearchParams(window.location.search);
             let hasParams = false;
@@ -568,31 +607,41 @@
                 if (key === searchParamName || key === 'sort' || key === 'dir') continue;
 
                 if (this.filterInputs[key]) {
-                    const values = value.split(',').map(v => this.sanitizeInput(v).trim());
-                    const filterData = this.filterInputs[key];
-
-                    filterData.inputs.forEach(input => {
-                        if (values.some(v => v.toLowerCase() === input.value.toLowerCase())) {
-                            input.checked = true;
-                        }
-                    });
-
+                    this._checkInputsForValues(this.filterInputs[key], value);
                     this.updateFilterCriteria(key);
                     hasParams = true;
                 }
             }
 
             if (hasParams) {
-                this.updateApplyButtonLabel();
+                this._settleAfterCriteriaChange();
+            }
+        }
 
-                if (this.isFormMode) {
-                    // In form mode, only update UI — don't rewrite the URL we just read from
-                    this.updateHiddenInputs();
-                    this.updateFilterButtonLabel();
-                    this.updateAppliedChips();
-                } else {
-                    this.applyFilters();
+        // Check every input in a filter group whose value matches one of the
+        // comma-separated values in `rawValue` (URL-param sourced). Values are
+        // length-capped via sanitizeFilterValue but keep their literal chars so
+        // matching against trusted input.value succeeds (e.g. "Healthcare & Social").
+        _checkInputsForValues(filterData, rawValue) {
+            const values = rawValue.split(',').map(v => this.sanitizeFilterValue(v).trim());
+            filterData.inputs.forEach(input => {
+                if (values.some(v => v.toLowerCase() === input.value.toLowerCase())) {
+                    input.checked = true;
                 }
+            });
+        }
+
+        // Settle filter UI after a criteria change sourced from URL params.
+        // In form mode we update UI only — calling applyFilters() would run
+        // updateUrlParams() and rewrite the URL we just read from.
+        _settleAfterCriteriaChange() {
+            this.updateApplyButtonLabel();
+            if (this.isFormMode) {
+                this.updateHiddenInputs();
+                this.updateFilterButtonLabel();
+                this.updateAppliedChips();
+            } else {
+                this.applyFilters();
             }
         }
 
@@ -609,26 +658,9 @@
             if (!filterData) return;
             this.setupManualFilter(filterData.element, filterName);
 
-            const freshData = this.filterInputs[filterName];
-            const values = value.split(',').map(v => this.sanitizeInput(v).trim());
-
-            freshData.inputs.forEach(input => {
-                if (values.some(v => v.toLowerCase() === input.value.toLowerCase())) {
-                    input.checked = true;
-                }
-            });
-
+            this._checkInputsForValues(this.filterInputs[filterName], value);
             this.updateFilterCriteria(filterName);
-
-            this.updateApplyButtonLabel();
-
-            if (this.isFormMode) {
-                this.updateHiddenInputs();
-                this.updateFilterButtonLabel();
-                this.updateAppliedChips();
-            } else {
-                this.applyFilters();
-            }
+            this._settleAfterCriteriaChange();
         }
 
         updateUrlParams() {
@@ -937,8 +969,18 @@
                 return;
             }
 
-            // Count from the cached item list (refreshed on init and after AJAX
-            // injection) so transient UI like the no-results alert — which also
+            // No active criteria → nothing is filtered out, so the visible count
+            // is just the item total. Skip the per-item State scan (it would only
+            // ever return items.length here) — this is the common first-load case.
+            const hasCriteria = (this.criteria.search && this.criteria.search.trim() !== '')
+                || Object.values(this.criteria.filters).some(arr => arr.length > 0);
+            if (!hasCriteria) {
+                countSlot.textContent = this.items.length;
+                return;
+            }
+
+            // Filtered: count from the cached item list (refreshed on init and after
+            // AJAX injection) so transient UI like the no-results alert — which also
             // carries .nds-card — isn't counted as a result. `item.hidden` is
             // pagination-driven for non-current-page items; those are still matches.
             let visible = 0;
@@ -1026,6 +1068,7 @@
             // queryAll already excludes elements inside the target container
             // (e.g. <span data-filter> markers on cards).
             const filterElements = this.queryAll('[data-filter]');
+            const params = new URLSearchParams(window.location.search);
 
             filterElements.forEach(element => {
                 const filterName = element.getAttribute('data-filter');
@@ -1047,6 +1090,12 @@
                             this.filterLabels[filterName] = raw;
                         }
                         this.setupDynamicFilter(element, filterName, filterType, values);
+                    } else if (!params.has(filterName) && element.closest('.nds-dropmenu-menu')) {
+                        // Auto-populated, hidden at rest (inside a dropmenu), and not
+                        // URL-active: defer the collectFilterValues scan to first
+                        // engagement. URL-active filters fall through to the eager
+                        // build below so applyUrlParams can check their inputs on load.
+                        this._deferredFilters.push({ element, filterName, filterType });
                     } else {
                         this.setupDynamicFilter(element, filterName, filterType);
                     }
@@ -1077,6 +1126,44 @@
                     break;
                 }
             }
+
+            // Build deferred auto-populated filters via the dropmenu's delayed-open
+            // mode: mark the dropmenu data-delay="500" so the user's first open
+            // shows a loading state and waits before opening, and build the options
+            // on the nds:dropmenu:prepare hook it fires just before opening. The menu
+            // therefore opens already populated and correctly measured — the build
+            // never races the open animation, and the dropmenu clears data-delay
+            // after the first open so later opens are immediate. Released via the
+            // shared abort signal in destroy().
+            if (this._deferredFilters.length) {
+                const { signal } = this.abortController;
+                const dropmenus = new Set();
+                this._deferredFilters.forEach(({ element }) => {
+                    const dm = element.closest('.nds-dropmenu');
+                    if (dm) dropmenus.add(dm);
+                });
+                dropmenus.forEach(dm => {
+                    dm.setAttribute('data-delay', '500');
+                    dm.addEventListener('nds:dropmenu:prepare', () => this.buildDeferredFilters(), { signal });
+                });
+            }
+        }
+
+        // Build options for filters whose collectFilterValues scan was deferred
+        // at init (see setupFilterElements). Idempotent: the first engagement
+        // event builds the whole set; later events no-op. Deferred filters are
+        // never URL-active, so there is no URL state to re-apply after building.
+        buildDeferredFilters() {
+            if (this._deferredBuilt) return;
+            this._deferredBuilt = true;
+            const deferred = this._deferredFilters;
+            this._deferredFilters = [];
+            deferred.forEach(({ element, filterName, filterType }) => {
+                // Skip if already built (e.g. refresh() rebuilt it eagerly before
+                // first engagement) — re-running would scan + wire into a stale node.
+                if (this.filterInputs[filterName]) return;
+                this.setupDynamicFilter(element, filterName, filterType);
+            });
         }
 
         // ==============================================
@@ -1437,19 +1524,57 @@
                 || (NDS.isArabic ? 'الكل' : 'All');
             const values = includeAllOption ? ['', ...collectedValues] : collectedValues;
 
-            // Build the fieldset that holds the generated inputs
-            let fieldset;
-
-            // Check if container should get dropmenu-group spacing
             const isInDropmenu = container.closest('.nds-dropmenu-menu') !== null;
+            const multiple = values.length > 1;
 
+            const fieldset = this._resolveFilterFieldset(container, { legendText, isInDropmenu, multiple });
+
+            // Add group class for groups (multiple inputs) — match input type
+            if (multiple) {
+                const groupClass = inputType === 'radio'
+                    ? 'nds-radio-group'
+                    : inputType === 'switch'
+                        ? 'nds-switch-group'
+                        : 'nds-check-group';
+                if (!fieldset.classList.contains(groupClass)) {
+                    fieldset.classList.add(groupClass);
+                }
+            }
+
+            // Add data-no-auto-close if in dropmenu
+            if (isInDropmenu) {
+                fieldset.setAttribute('data-no-auto-close', '');
+            }
+
+            const ctx = {
+                inputType,
+                groupName: `filter-${filterName}-${NDS.uniqueId()}`,
+                filterName,
+                variant,
+                includeAllOption,
+                allLabel,
+                labelMap: this.filterLabels[filterName] || {},
+            };
+
+            values.forEach((value, index) => {
+                fieldset.appendChild(this._buildFilterInput(value, index, ctx));
+            });
+
+            return fieldset;
+        }
+
+        // Resolve the element that will hold the generated inputs. Three shapes:
+        //   - container is already a <fieldset> → clear it, re-add legend
+        //   - multiple values → build a real <fieldset>, copy the placeholder's
+        //     class/data attributes onto it, and replace the placeholder
+        //   - single value → keep the placeholder div as a dropmenu item
+        // Returns the element to append inputs into.
+        _resolveFilterFieldset(container, { legendText, isInDropmenu, multiple }) {
             if (container.tagName === 'FIELDSET') {
-                fieldset = container;
-                // Add nds-dropmenu-group if in dropmenu and not already has it
+                const fieldset = container;
                 if (isInDropmenu && !fieldset.classList.contains('nds-dropmenu-group')) {
                     fieldset.classList.add('nds-dropmenu-group');
                 }
-                // Clear existing content
                 const existingLegend = fieldset.querySelector('legend');
                 fieldset.innerHTML = '';
                 if (existingLegend || legendText) {
@@ -1458,12 +1583,12 @@
                     legend.textContent = legendText || (existingLegend ? existingLegend.textContent : '');
                     fieldset.appendChild(legend);
                 }
-            } else if (values.length > 1) {
-                // Multiple values: convert to fieldset for semantic grouping
-                fieldset = document.createElement('fieldset');
-                // Copy classes from container
+                return fieldset;
+            }
+
+            if (multiple) {
+                const fieldset = document.createElement('fieldset');
                 fieldset.className = container.className;
-                // Copy data attributes
                 Array.from(container.attributes).forEach(attr => {
                     if (attr.name !== 'class' && attr.name !== 'id') {
                         fieldset.setAttribute(attr.name, attr.value);
@@ -1482,117 +1607,96 @@
                     fieldset.appendChild(legend);
                 }
                 container.replaceWith(fieldset);
-            } else {
-                // Single value: keep as div, treat as dropmenu item
-                fieldset = container;
-                if (isInDropmenu) {
-                    fieldset.classList.remove('nds-dropmenu-group');
-                    if (!fieldset.classList.contains('nds-dropmenu-item')) {
-                        fieldset.classList.add('nds-dropmenu-item');
-                    }
-                }
-                container.innerHTML = '';
+                return fieldset;
             }
 
-            // Add group class for groups (multiple inputs) — match input type
-            if (values.length > 1) {
-                const groupClass = inputType === 'radio'
-                    ? 'nds-radio-group'
-                    : inputType === 'switch'
-                        ? 'nds-switch-group'
-                        : 'nds-check-group';
-                if (!fieldset.classList.contains(groupClass)) {
-                    fieldset.classList.add(groupClass);
-                }
-            }
-
-            // Add data-no-auto-close if in dropmenu
+            // Single value: keep as div, treat as dropmenu item
             if (isInDropmenu) {
-                fieldset.setAttribute('data-no-auto-close', '');
+                container.classList.remove('nds-dropmenu-group');
+                if (!container.classList.contains('nds-dropmenu-item')) {
+                    container.classList.add('nds-dropmenu-item');
+                }
             }
+            container.innerHTML = '';
+            return container;
+        }
 
-            // Determine input class and structure based on type
-            const groupName = `filter-${filterName}-${NDS.uniqueId()}`;
-            const labelMap = this.filterLabels[filterName] || {};
+        // Build one .nds-form-container holding a single checkbox / radio /
+        // switch input for `value`. `index` drives the id and "All"-option
+        // detection; `ctx` carries the shared per-group settings.
+        _buildFilterInput(value, index, ctx) {
+            const { inputType, groupName, filterName, variant, includeAllOption, allLabel, labelMap } = ctx;
+            const id = `${groupName}-${index}`;
+            const isAllOption = includeAllOption && index === 0;
 
-            // Generate input for each unique value
-            values.forEach((value, index) => {
-                const id = `${groupName}-${index}`;
-                const isAllOption = includeAllOption && index === 0;
+            const formContainer = document.createElement('div');
+            formContainer.className = inputType === 'switch'
+                ? 'nds-form-container nds-switch-container'
+                : inputType === 'radio'
+                    ? 'nds-form-container nds-radio-container'
+                    : 'nds-form-container nds-check-container';
 
-                const formContainer = document.createElement('div');
-                formContainer.className = inputType === 'switch'
-                    ? 'nds-form-container nds-switch-container'
-                    : inputType === 'radio'
-                        ? 'nds-form-container nds-radio-container'
-                        : 'nds-form-container nds-check-container';
+            const formHeader = document.createElement('div');
+            formHeader.className = 'nds-form-header';
 
-                const formHeader = document.createElement('div');
-                formHeader.className = 'nds-form-header';
+            const label = document.createElement('label');
+            label.setAttribute('for', id);
 
-                const label = document.createElement('label');
-                label.setAttribute('for', id);
+            const labelSpan = document.createElement('span');
+            labelSpan.className = 'nds-label';
+            labelSpan.textContent = isAllOption ? allLabel : (labelMap[value] || value);
 
-                const labelSpan = document.createElement('span');
-                labelSpan.className = 'nds-label';
-                labelSpan.textContent = isAllOption ? allLabel : (labelMap[value] || value);
+            label.appendChild(labelSpan);
+            formHeader.appendChild(label);
 
-                label.appendChild(labelSpan);
-                formHeader.appendChild(label);
+            const formControl = document.createElement('div');
+            formControl.className = 'nds-form-control';
 
-                const formControl = document.createElement('div');
-                formControl.className = 'nds-form-control';
-
-                if (inputType === 'switch') {
-                    // Create switch structure
-                    const switchWrapper = document.createElement('div');
-                    switchWrapper.className = 'nds-switch';
-                    if (variant) {
-                        switchWrapper.classList.add(variant);
-                    }
-
-                    const input = document.createElement('input');
-                    input.type = 'checkbox';
-                    input.id = id;
-                    input.name = `filter-${filterName}`;
-                    input.value = value;
-                    input.className = 'nds-switch-input';
-
-                    const track = document.createElement('div');
-                    track.className = 'nds-switch-track';
-
-                    const thumb = document.createElement('div');
-                    thumb.className = 'nds-switch-thumb';
-
-                    track.appendChild(thumb);
-                    switchWrapper.appendChild(input);
-                    switchWrapper.appendChild(track);
-                    formControl.appendChild(switchWrapper);
-                } else {
-                    // Create checkbox or radio
-                    const inputClass = inputType === 'radio' ? 'nds-radio' : 'nds-check';
-                    const input = document.createElement('input');
-                    input.type = inputType;
-                    input.id = id;
-                    input.name = inputType === 'radio' ? groupName : `filter-${filterName}`;
-                    input.value = value;
-                    input.className = inputClass;
-                    if (variant) {
-                        input.classList.add(variant);
-                    }
-                    if (isAllOption) {
-                        input.checked = true;
-                    }
-
-                    formControl.appendChild(input);
+            if (inputType === 'switch') {
+                const switchWrapper = document.createElement('div');
+                switchWrapper.className = 'nds-switch';
+                if (variant) {
+                    switchWrapper.classList.add(variant);
                 }
 
-                formContainer.appendChild(formHeader);
-                formContainer.appendChild(formControl);
-                fieldset.appendChild(formContainer);
-            });
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.id = id;
+                input.name = `filter-${filterName}`;
+                input.value = value;
+                input.className = 'nds-switch-input';
 
-            return fieldset;
+                const track = document.createElement('div');
+                track.className = 'nds-switch-track';
+
+                const thumb = document.createElement('div');
+                thumb.className = 'nds-switch-thumb';
+
+                track.appendChild(thumb);
+                switchWrapper.appendChild(input);
+                switchWrapper.appendChild(track);
+                formControl.appendChild(switchWrapper);
+            } else {
+                const inputClass = inputType === 'radio' ? 'nds-radio' : 'nds-check';
+                const input = document.createElement('input');
+                input.type = inputType;
+                input.id = id;
+                input.name = inputType === 'radio' ? groupName : `filter-${filterName}`;
+                input.value = value;
+                input.className = inputClass;
+                if (variant) {
+                    input.classList.add(variant);
+                }
+                if (isAllOption) {
+                    input.checked = true;
+                }
+
+                formControl.appendChild(input);
+            }
+
+            formContainer.appendChild(formHeader);
+            formContainer.appendChild(formControl);
+            return formContainer;
         }
 
         updateFilterCriteria(filterName) {
@@ -1891,7 +1995,9 @@
                     input.checked = false;
                 });
                 if (filterData.type === 'radio') {
-                    const allInput = filterData.inputs.find(i => i.value === '');
+                    // filterData.inputs is a NodeList (querySelectorAll) — wrap
+                    // before .find, matching updateFilterCriteria's Array.from use.
+                    const allInput = Array.from(filterData.inputs).find(i => i.value === '');
                     if (allInput) allInput.checked = true;
                 }
                 this.criteria.filters[filterName] = [];
@@ -2065,6 +2171,9 @@
                 this.targetContainer = document.getElementById(this.targetId);
             }
 
+            // Re-resolve target surfaces in case the surrounding UI changed
+            this._targetRoots = this.resolveTargetRoots();
+
             // Update items list
             this.items = this.targetContainer
                 ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
@@ -2161,7 +2270,18 @@
             });
             this._filterElementACs.clear();
             this.items.forEach(item => this.showItem(item));
-            this.filterContainer.removeAttribute('data-nds-filter-initialized');
+            // Only release shared registry/backref state when THIS instance owns it.
+            // A raw NDS.Filter.create() duplicate on an already-registered target
+            // shares the representative element + targetId; destroying it must not
+            // clobber the registered instance's backref, init attribute, or map entry.
+            if (this.filterContainer.ndsFilter === this) {
+                this.filterContainer.removeAttribute('data-nds-filter-initialized');
+                delete this.filterContainer.ndsFilter;
+            }
+            if (this.targetId && _instancesByTarget.get(this.targetId) === this) {
+                _initializedTargets.delete(this.targetId);
+                _instancesByTarget.delete(this.targetId);
+            }
         }
     }
 
@@ -2169,25 +2289,50 @@
     // AUTO-INITIALIZATION
     // ==============================================
 
+    // A filter is identified by its data-filter-target, not by a container.
+    // These track the live instances so init is idempotent per target and so
+    // getByTarget/getInstance can resolve without depending on a .nds-filter
+    // element existing (e.g. a search-only filter).
+    const _initializedTargets = new Set();
+    const _instancesByTarget = new Map();
+
+    // Construct an instance on `representative` (the element that carries the
+    // backref, init-guard attribute, and dispatches the filter's events) and
+    // register it by target id.
+    function createInstance(representative) {
+        const instance = new NDSFilter(representative);
+        representative.ndsFilter = instance;
+        representative.setAttribute('data-nds-filter-initialized', 'true');
+        if (instance.targetId) {
+            _initializedTargets.add(instance.targetId);
+            _instancesByTarget.set(instance.targetId, instance);
+        }
+        representative.dispatchEvent(new CustomEvent('nds:filter:ready', {
+            detail: instance,
+            bubbles: true
+        }));
+        return instance;
+    }
+
     function initializeFilters() {
-        const filterContainers = document.querySelectorAll('.nds-filter');
+        // One filter per unique data-filter-target. Group every linked surface
+        // (search box, dropmenu, applied-chips, auto-fill, sort toolbar) by target,
+        // then build once per target. The representative is the .nds-filter surface
+        // when present — keeping events, backref, and the init guard on it preserves
+        // backward compatibility — otherwise the first surface (e.g. a lone search
+        // box), so a filter needs no .nds-filter element at all.
+        const groups = new Map();
+        document.querySelectorAll('[data-filter-target]').forEach(el => {
+            if (el.closest('code, .code-example')) return;
+            const id = el.getAttribute('data-filter-target');
+            if (!id || _initializedTargets.has(id)) return;
+            if (!groups.has(id)) groups.set(id, []);
+            groups.get(id).push(el);
+        });
 
-        filterContainers.forEach(container => {
-            if (container.hasAttribute('data-nds-filter-initialized')) {
-                return;
-            }
-
-            if (container.closest('code, .code-example')) {
-                return;
-            }
-
-            const filterInstance = new NDSFilter(container);
-            container.ndsFilter = filterInstance;
-            container.setAttribute('data-nds-filter-initialized', 'true');
-            container.dispatchEvent(new CustomEvent('nds:filter:ready', {
-                detail: filterInstance,
-                bubbles: true
-            }));
+        groups.forEach(surfaces => {
+            const representative = surfaces.find(el => el.classList.contains('nds-filter')) || surfaces[0];
+            createInstance(representative);
         });
     }
 
@@ -2209,18 +2354,20 @@
                 if (typeof container === 'string') {
                     container = document.querySelector(container);
                 }
-                return container?.ndsFilter || null;
+                if (!container) return null;
+                // Direct backref (representative element), else resolve via the
+                // element's target linkage so any surface element works.
+                if (container.ndsFilter) return container.ndsFilter;
+                const id = container.getAttribute('data-filter-target');
+                return id ? (_instancesByTarget.get(id) || null) : null;
             },
 
-            getByTarget: (targetId) => {
-                const filterContainer = document.querySelector(`.nds-filter[data-filter-target="${targetId}"]`);
-                return filterContainer?.ndsFilter || null;
-            },
+            getByTarget: (targetId) => _instancesByTarget.get(targetId) || null,
 
             /**
              * Execute callback when a filter is ready, handling the race condition
              * where the filter may already be initialized before the listener is added.
-             * @param {string|Element} container - Selector or element
+             * @param {string|Element} container - Selector or element (any surface)
              * @param {Function} callback - Receives the filter instance
              */
             whenReady: (container, callback) => {
@@ -2229,13 +2376,14 @@
                 }
                 if (!container) return;
 
-                // Already initialized — call immediately
-                if (container.ndsFilter) {
-                    callback(container.ndsFilter);
+                // Already initialized — resolve immediately (backref or target map)
+                const existing = NDS.Filter.getInstance(container);
+                if (existing) {
+                    callback(existing);
                     return;
                 }
 
-                // Not yet — wait for the event
+                // Not yet — ready bubbles from the representative element
                 container.addEventListener('nds:filter:ready', (e) => {
                     callback(e.detail);
                 }, { once: true });
