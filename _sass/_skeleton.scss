@@ -33,6 +33,14 @@ body:not([data-nds-loaded]) {
         color: var(--text-oncolor-primary);
     }
 
+    /* Reserve the CTA row height. The action buttons are held visibility:hidden
+       until main lands (see hide gate), then snap to the 40px --btn-size; without
+       this the centered hero body shifts when they appear. min-height (not height)
+       so wrapped CTAs on narrow viewports aren't clipped. */
+    .nds-hero-section .nds-section-action {
+        min-height: 40px
+    }
+
     /* ── Brand (nav logo + name) ──
        Paint the brand identity from first byte — it's often the LCP
        element above the fold. Mirrors layout/_mainnav.scss .nds-brand. */

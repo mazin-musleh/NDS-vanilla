@@ -31,20 +31,20 @@
         <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     <!-- Icons — UI icons inlined (core) + HGI font (content/demo/doc) -->
-    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     <!-- Main CSS - Deferred loading for below-the-fold content -->
-    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     {%- if site.use_hgi_font or page.use_hgi_font %}
     <style>i.hgi-stroke{opacity:0}body[data-font-loaded~="hgi-stroke-rounded"] i.hgi-stroke{opacity:1}</style>
-    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}">
@@ -52,7 +52,7 @@
     {%- endif %}
     {%- unless site.accessibility == false %}
     <!-- Accessibility add-on (optional) - a11y panel + mode overrides -->
-    <link rel="preload" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-accessibility.min.css' | relative_url }}?ver={{ site.asset_ver }}">
@@ -70,7 +70,7 @@
     <!-- Favicon - low-priority fetch so it doesn't compete with critical assets -->
     <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}" fetchpriority="low">
     {%- unless page.exclude_showcase == true %}
-    <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
+    <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}">
