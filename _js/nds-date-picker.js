@@ -2000,8 +2000,20 @@
         }
     };
 
-    // No-op: calendar instances are created by nds-forms.js on each .nds-date-input
-    function initializeCalendar() {}
+    function createInstance(dateInput, formControl) {
+        if (!dateInput) return null;
+        if (dateInput._ndsDatePicker) return dateInput._ndsDatePicker;
+        formControl = formControl || dateInput.closest('.nds-form-control');
+        if (!formControl) return null;
+        dateInput._ndsDatePicker = new DatePickerCalendar(dateInput, formControl);
+        return dateInput._ndsDatePicker;
+    }
+
+    // Self-driven: sweep every .nds-date-input and attach a calendar. create()
+    // is idempotent (skips inputs already wired) so this is reinit-safe.
+    function initializeCalendar() {
+        document.querySelectorAll('.nds-date-input').forEach((input) => createInstance(input));
+    }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
@@ -2013,14 +2025,7 @@
             createHijriDate,
             init: initializeCalendar,
             reinit: initializeCalendar,
-            create: (dateInput, formControl) => {
-                if (!dateInput) return null;
-                if (dateInput._ndsDatePicker) return dateInput._ndsDatePicker;
-                formControl = formControl || dateInput.closest('.nds-form-control');
-                if (!formControl) return null;
-                dateInput._ndsDatePicker = new DatePickerCalendar(dateInput, formControl);
-                return dateInput._ndsDatePicker;
-            }
+            create: createInstance
         };
     }
 

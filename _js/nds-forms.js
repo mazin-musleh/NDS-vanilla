@@ -756,9 +756,8 @@
             if (input.classList.contains('nds-select-input')) {
                 this.initCustomSelectDropdown(input, formControl);
             }
-            if (input.classList.contains('nds-date-input')) {
-                this.initDatePicker(input, formControl);
-            }
+            // Date inputs are wired by NDS.DatePicker's own loader-driven sweep
+            // (selector .nds-date-input) — forms no longer reaches into it.
         },
 
         _setupPropertyWatchers: function(input, formControl) {
@@ -1014,10 +1013,6 @@
                     FormState.update(selectInput, formControl);
                 }
             }
-        },
-
-        initDatePicker: function(dateInput, formControl) {
-            NDS.DatePicker.create(dateInput, formControl);
         },
 
         initVoiceInput: function(formControl) {
