@@ -9,7 +9,7 @@
 @use './mixins' as *;
 
 body:not([data-nds-loaded]) {
-
+    overflow-x: clip;
     /* ── Content Layout ──
        Mirrors layout/_content-layout.scss base — grid track + min-height
        so the page reserves its viewport block before main CSS lands. */
