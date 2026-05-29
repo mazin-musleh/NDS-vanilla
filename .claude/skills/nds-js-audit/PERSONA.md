@@ -196,10 +196,11 @@ Component-emitted diagnostics carry the component's identity at the start of the
 **Carve-outs (NOT divergence)**
 
 - `_js/nds-core.js` and `_js/nds-loader.js` use the bracket form `[NDS.<api>]` / `[NDS]` / `[NDS:init]` because they're API namespaces and orchestration, not components. Out of scope of this entry.
+- **Programmatic-API-namespace modules** whose public surface is invoked as `NDS.<Name>.<method>(...)` (a sub-API, not a DOM-attached per-element component instance) may use the bracket form `[NDS.<Name>]` — same shape as core's `[NDS.i18n]`. The diagnostics read as sub-API output, so the bracket form matches the module's actual identity. Cite: [_js/nds-export.js:141,326,380,422](_js/nds-export.js#L141) — `NDS.Export` (`export`/`csv`/`xls`/`pdf`/`collect`) is a stateless library/API namespace, not a per-element component, so it emits `[NDS.Export] …` like core's `[NDS.i18n] …`. (This carve-out tends to coincide with JSD-07's "declarative-delegation library" exemption — a module that is an API namespace there is usually one here too.)
 
 **Audit behavior**
 
-Flag any component-file `console.warn(...)` or `console.error(...)` whose first string argument does not match `/^NDS [A-Z][A-Za-z]*: /`. Files using the bracket form for component output (e.g. `'[NDS Filter] ...'`) are flagged for migration.
+Flag any component-file `console.warn(...)` or `console.error(...)` whose first string argument does not match `/^NDS [A-Z][A-Za-z]*: /`. Files using the bracket form for component output (e.g. `'[NDS Filter] ...'`) are flagged for migration. **Exception:** a module that is a programmatic-API namespace (public surface invoked as `NDS.<Name>.<method>(...)`, not a per-element DOM component — confirm via the carve-out) may use the bracket form `[NDS.<Name>]` and is NOT flagged.
 
 **Current adoption:** 21+ component warns/errors use this exact form across the corpus. Zero component-level divergence post commit `1a194e4`. Tallied 2026-05-28.
 
