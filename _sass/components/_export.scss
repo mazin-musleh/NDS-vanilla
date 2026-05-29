@@ -1,0 +1,16 @@
+@use '../mixins' as *;
+
+// Wrapper for the export-format button group that sits above a table or list.
+// Anchors the buttons to the trailing edge of the section body so they don't
+// fight the table's leading column. Works in RTL via logical properties.
+//
+// Typical markup:
+//   <div class="nds-export nds-btn-group">
+//       <button data-export="csv"  data-export-target="#orders">CSV</button>
+//       <button data-export="xls"  data-export-target="#orders">Excel</button>
+//       <button data-export="pdf"  data-export-target="#orders">PDF</button>
+//   </div>
+.nds-export {
+    margin-inline-start: auto;
+    margin-block-end: var(--spacing-md);
+}

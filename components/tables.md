@@ -568,7 +568,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Selection</h2>
-            <p class="nds-section-description">Row checkboxes with a select-all header for bulk operations. The header checkbox shows an indeterminate state when some rows are selected.</p>
+            <p class="nds-section-description">Row checkboxes with a select-all header for bulk operations. The header checkbox shows an indeterminate state when some rows are selected. Pair with the <a class="nds-color" href="{{ 'components/export' | relative_url }}">Export</a> component to ship CSV, Excel, or PDF files of the selected rows.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -590,8 +590,22 @@ direction: ltr
                     </div>
                 </div>
                 <div class="demo-container">
-                    <div class="state-demo">
-                        <table class="nds-table">
+                    <div class="state-demo" style="gap: 0;">
+                        <div class="nds-export nds-btn-group">
+                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                data-export="csv" data-export-target="#selectionTable">
+                                <span class="nds-label">CSV</span>
+                            </button>
+                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                data-export="xls" data-export-target="#selectionTable">
+                                <span class="nds-label">Excel</span>
+                            </button>
+                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                data-export="pdf" data-export-target="#selectionTable">
+                                <span class="nds-label">PDF</span>
+                            </button>
+                        </div>
+                        <table id="selectionTable" class="nds-table" data-export-name="selection">
                             <thead>
                                 <tr>
                                     <th>
@@ -1239,7 +1253,7 @@ direction: ltr
                             <span class="nds-label">Applied Filters:</span>
                             <div class="nds-chips"></div>
                         </div>
-                        <div class="nds-paged-content" style="--per-page: 5;" hidden>
+                        <div class="nds-paged-content" style="--per-page: 5;">
                             <table class="nds-table nds-compact nds-sortable">
                                 <thead>
                                     <tr>
@@ -1353,7 +1367,7 @@ direction: ltr
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="nds-paged-content" style="--per-page: 5;" hidden&gt;
+&lt;div class="nds-paged-content" style="--per-page: 5;"&gt;
   &lt;table class="nds-table nds-compact nds-sortable"&gt;
     &lt;thead&gt;
       &lt;tr&gt;
@@ -1496,7 +1510,106 @@ direction: ltr
                     </span>
                     <p class="nds-item-desc">Access sort state, reset sorting, and reinitialize tables after dynamic content changes through the <code class="nds-inline-code lang-js">NDS.Tables</code> namespace.</p>
                 </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-download-01"></i>
+                        <span class="nds-label">Row Export</span>
+                    </span>
+                    <p class="nds-item-desc">Export selected rows (or all rows, across paginated pages) to CSV, Excel, or PDF via the <code class="nds-inline-code lang-js">NDS.Export</code> namespace. Arabic UTF-8 and RTL print are handled natively; zero runtime dependencies.</p>
+                </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Programmatic Export -->
+<section id="tableExport" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Programmatic Export</h2>
+            <p class="nds-section-description">Call <code class="nds-inline-code lang-js">NDS.Export.export(source, format, scope?)</code> from any button to download CSV, Excel, or print to PDF. Works on any <code class="nds-inline-code lang-html">&lt;table&gt;</code>, plus any container marked with <code class="nds-inline-code lang-html">data-export-rows</code> (card lists, definition lists, custom layouts).</p>
+        </div>
+        <div class="nds-section-body">
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Wire up export buttons</h3>
+                <p>Consumers wire their own buttons via a single declarative attribute pair — no inline JS, no per-page binding. The library installs one document-level click listener at load time that catches any <code class="nds-inline-code lang-html">[data-export]</code> button anywhere on the page (including dynamically injected ones). Row selection is read from <code class="nds-inline-code lang-html">data-state~="selected"</code> or checked <code class="nds-inline-code lang-html">input.nds-check</code>.</p>
+<pre><code class="lang-html">&lt;button data-export="csv" data-export-target="#orders"&gt;CSV&lt;/button&gt;
+&lt;button data-export="xls" data-export-target="#orders"&gt;Excel&lt;/button&gt;
+&lt;button data-export="pdf" data-export-target="#orders"&gt;PDF&lt;/button&gt;
+
+&lt;!-- Optional: force the scope regardless of selection state --&gt;
+&lt;button data-export="csv" data-export-target="#orders" data-export-scope="all"&gt;CSV (all)&lt;/button&gt;
+
+&lt;!-- Or skip data-export-target when the button lives INSIDE the source --&gt;
+&lt;div data-export-rows=".item"&gt;
+    &lt;button data-export="csv"&gt;Export this list&lt;/button&gt;
+    &lt;div class="item"&gt;&hellip;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Programmatic API still available for non-button triggers --&gt;
+&lt;script&gt;NDS.Export.csv('#orders')&lt;/script&gt;
+
+&lt;table id="orders" class="nds-table" data-export-name="orders"&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;input type="checkbox" class="nds-check"&gt;&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th data-export-label="Amount (SAR)"&gt;Amount&lt;/th&gt;&lt;th data-export-skip&gt;Actions&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;input type="checkbox" class="nds-check"&gt;&lt;/td&gt;&lt;td&gt;Hassan&lt;/td&gt;&lt;td data-export-value="240"&gt;240 SAR&lt;/td&gt;&lt;td&gt;&hellip;&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Attributes</h3>
+                <table class="nds-table nds-compact">
+                    <thead>
+                        <tr><th>Attribute</th><th>Where</th><th>Purpose</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-export-name</code></td><td>Source element</td><td>Filename stem (default <code class="nds-inline-code lang-html">nds-export</code>). Final name: <code class="nds-inline-code lang-html">{name}-{YYYY-MM-DD}.{ext}</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-export-value</code></td><td><code class="nds-inline-code lang-html">&lt;td&gt;</code> / field element</td><td>Overrides the cell's exported value (e.g. raw ISO date when the cell renders a localized one, or raw number when the cell renders a currency string). This is the only way to substitute a raw value — <code class="nds-inline-code lang-html">data-sort-value</code> is intentionally not consulted (it's a sort signal, not an export signal).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-export-label</code></td><td><code class="nds-inline-code lang-html">&lt;th&gt;</code> / field element</td><td>Overrides the column heading used in the export.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-export-skip</code></td><td><code class="nds-inline-code lang-html">&lt;th&gt;</code>/<code class="nds-inline-code lang-html">&lt;td&gt;</code> / field element</td><td>Drops that column or field from the export.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-export-rows</code></td><td>Generic source (non-table)</td><td>Selector that picks the row elements within the source. Required to opt a non-table container in.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-export-field</code></td><td>Inside each row (generic)</td><td>Identifies a field. The set of field keys across rows becomes the export's columns.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Scope &amp; selection</h3>
+                <ul>
+                    <li><code class="nds-inline-code lang-js">scope</code> defaults to <code class="nds-inline-code lang-js">'auto'</code>: a row counts as selected if it carries <code class="nds-inline-code lang-html">data-state~="selected"</code> OR if it contains a checked <code class="nds-inline-code lang-html">input.nds-check</code>. Any selection → export selection; none → export all.</li>
+                    <li>For card lists and other generic sources, just use the canonical <code class="nds-inline-code lang-html">.nds-card-checkbox</code> / <code class="nds-inline-code lang-html">.nds-check</code> markup inside each row — checkbox state is read directly, no state-sync JavaScript required.</li>
+                    <li>Tables get this for free through the existing checkbox column wired up by <code class="nds-inline-code lang-js">NDS.Tables</code>.</li>
+                    <li>Pass <code class="nds-inline-code lang-js">'selected'</code> or <code class="nds-inline-code lang-js">'all'</code> explicitly to override the auto inference.</li>
+                </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Format notes</h3>
+                <ul>
+                    <li><strong>CSV</strong> — UTF-8 with BOM, RFC 4180 quoting. Opens in Excel with Arabic columns intact.</li>
+                    <li><strong>Excel</strong> — HTML-table payload with <code class="nds-inline-code lang-html">application/vnd.ms-excel</code> MIME; Excel shows a one-time format warning on open.</li>
+                    <li><strong>PDF</strong> — Triggers the browser's native print dialog with a print-only view (no checkbox column, no card chrome, no sort buttons). User picks "Save as PDF". Arabic shaping and RTL come from the parent page's font stack.</li>
+                </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Low-level API</h3>
+                <p>For consumers that want to transform or pipe the data themselves:</p>
+<pre><code class="lang-js">// Normalized data → { columns: [{key, label}], rows: [Record] }
+const data = NDS.Export.collect('#orders', 'all');
+
+// Convert + download
+NDS.Export.download(data, 'csv');
+NDS.Export.download(data, 'xls', { filename: 'q2-orders.xls' });
+NDS.Export.openPrint(data, { title: 'Q2 Orders' });
+
+// Pure converters (no download)
+const csvString = NDS.Export.toCSV(data);
+const xlsHtml   = NDS.Export.toXLSHtml(data, { dir: 'rtl' });</code></pre>
+            </div>
+
         </div>
     </div>
 </section>

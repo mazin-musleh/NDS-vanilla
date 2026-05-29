@@ -7,6 +7,19 @@
 (function() {
     'use strict';
 
+    // Shared cell-text reader. Prefer direct text nodes over textContent so
+    // nested sort buttons / icons / badges don't pollute the value used for
+    // sorting (NDS.Sort accessor) or exporting (NDS.Export tableAdapter).
+    function getCellText(cell) {
+        if (!cell) return '';
+        const textNode = Array.from(cell.childNodes)
+            .filter(node => node.nodeType === Node.TEXT_NODE)
+            .map(node => node.textContent.trim())
+            .filter(Boolean)
+            .join(' ');
+        return textNode || cell.textContent.trim();
+    }
+
     class NDSTables {
         constructor(tableElement) {
             this.table = tableElement;
@@ -116,13 +129,7 @@
         }
 
         getCellText(cell) {
-            if (!cell) return '';
-            // Ignore nested tags/icons; prefer direct text nodes, fall back to full text
-            const textNode = Array.from(cell.childNodes)
-                .filter(node => node.nodeType === Node.TEXT_NODE)
-                .map(node => node.textContent.trim())
-                .join(' ');
-            return textNode || cell.textContent.trim();
+            return getCellText(cell);
         }
 
         setupEventListeners() {
@@ -503,7 +510,8 @@
             reinit: reinitializeTables,
             recheckWidths: recheckAllWidths,
             create: (table) => new NDSTables(table),
-            createResponsive: (table) => new NDSResponsiveTable(table)
+            createResponsive: (table) => new NDSResponsiveTable(table),
+            getCellText
         };
     }
 

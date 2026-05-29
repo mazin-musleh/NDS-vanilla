@@ -199,12 +199,6 @@ hideFeedback: true
 <section id="recentTransactions" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <div class="nds-section-action nds-minimal">
-                <button class="nds-btn nds-primary nds-lead-icon">
-                    <i class="hgi hgi-stroke hgi-download-04"></i>
-                    <span class="nds-label">Export</span>
-                </button>
-            </div>
             <h2 class="nds-section-title">Recent Transactions</h2>
             <p class="nds-section-description">Latest financial records across all government service categories.</p>
         </div>
@@ -261,10 +255,31 @@ hideFeedback: true
             </div>
         </div>
         <div class="nds-section-body">
+            <div class="nds-export nds-btn-group">
+                <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                        data-export="csv" data-export-target="#consoleTransactions">
+                    <span class="nds-label">CSV</span>
+                </button>
+                <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                        data-export="xls" data-export-target="#consoleTransactions">
+                    <span class="nds-label">Excel</span>
+                </button>
+                <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                        data-export="pdf" data-export-target="#consoleTransactions">
+                    <span class="nds-label">PDF</span>
+                </button>
+            </div>
             <div class="nds-paged-content">
-                <table class="nds-table nds-compact nds-sortable">
+                <table id="consoleTransactions" class="nds-table nds-compact nds-sortable" data-export-name="transactions">
                     <thead>
                         <tr>
+                            <th>
+                                <div class="nds-form-container nds-check-container">
+                                    <div class="nds-form-control">
+                                        <input type="checkbox" class="nds-check" aria-label="Select all transactions">
+                                    </div>
+                                </div>
+                            </th>
                             <th>
                                 <div class="nds-col-header">
                                     <span class="nds-label">Reference</span>
@@ -289,7 +304,7 @@ hideFeedback: true
                                     </div>
                                 </div>
                             </th>
-                            <th>
+                            <th data-export-label="Amount (SAR)">
                                 <div class="nds-col-header">
                                     <span class="nds-label">Amount</span>
                                     <div class="nds-col-actions">
@@ -313,7 +328,7 @@ hideFeedback: true
                                     </div>
                                 </div>
                             </th>
-                            <th class="actions-column">
+                            <th class="actions-column" data-export-skip>
                                 <div class="nds-col-header">
                                     <span class="nds-label">Action</span>
                                 </div>
@@ -323,6 +338,13 @@ hideFeedback: true
                     <tbody id="transactionsTableBody" data-filter-items="tr">
                         {% for txn in site.data.content.transactions %}
                         <tr class="nds-page-item">
+                            <td>
+                                <div class="nds-form-container nds-check-container">
+                                    <div class="nds-form-control">
+                                        <input type="checkbox" class="nds-check" aria-label="Select transaction {{ txn.id }}">
+                                    </div>
+                                </div>
+                            </td>
                             <td>{{ txn.id }}</td>
                             <td>{{ txn.name }}</td>
                             <td>

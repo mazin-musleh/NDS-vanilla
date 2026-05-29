@@ -356,6 +356,13 @@
   tags: ["JS", "CSS"]
   url: "/components/chart.html"
 
+- title: "Export"
+  description: "Declarative CSV, Excel, and PDF downloads from any table, card list, or marked-up container"
+  icon: '<i class="hgi hgi-stroke hgi-file-export"></i>'
+  category: "Data"
+  tags: ["JS", "CSS"]
+  url: "/components/export.html"
+
 # Layout Components
 - title: "Section"
   description: "Page content sections with head, body, and action areas"
