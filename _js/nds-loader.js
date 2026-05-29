@@ -55,6 +55,7 @@
             selector: '.nds-table',
             init: () => NDS.Tables?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             // Eager: auto-expand state would CLS if applied in idle (panels
@@ -110,6 +111,7 @@
             selector: '.nds-progress-circle, .nds-progress-bar',
             init: () => NDS.Progress?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             // Idle: counter animations are cosmetic on-scroll work.
@@ -117,6 +119,7 @@
             selector: '.nds-number-format, .nds-counter-value',
             init: () => NDS.Numbers?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             // Targets the three NDS code hooks (block, tabs-wrapped block, inline).
@@ -143,10 +146,20 @@
             idle: true,
         },
         {
+            // Detection-only: presence of a [data-export] button loads the
+            // extras bundle; export's init wires the delegated click handler.
+            name: 'export',
+            selector: '[data-export]',
+            init: () => NDS.Export?.init?.(),
+            idle: true,
+            bundle: 'extras',
+        },
+        {
             name: 'datePicker',
             selector: '.nds-date-input',
             init: () => NDS.DatePicker?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             name: 'fontLoading',
@@ -156,16 +169,16 @@
             idle: true,
         },
         {
-            // Eager: NDS.Link.init() partitions anchors by viewport — visible
-            // anchors tag synchronously so the .nds-external CSS ::after badge
-            // paints on the first frame (no CLS). Off-screen anchors are
-            // observed via NDS.onIntersect inside init() to tag just before
-            // scrolling into view. Idle-tier registration would push visible
-            // tagging past first paint → CLS for above-the-fold external links.
+            // Idle: NDS.Link.init() reads getBoundingClientRect for every anchor
+            // to partition by viewport, which forces a layout reflow (heavy on
+            // link-dense pages). Kept off the eager/reveal path so that cost lands
+            // after the page is revealed. Trade: above-the-fold external-link
+            // badges (.nds-external ::after) tag on idle rather than first frame.
             name: 'link',
             selector: null,
             init: () => NDS.Link?.init?.(),
             universal: true,
+            idle: true,
         },
         {
             name: 'cookies',
@@ -199,6 +212,7 @@
             selector: '.nds-tooltip',
             init: () => NDS.Tooltip?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             name: 'multiselect',
@@ -211,6 +225,7 @@
             selector: '.nds-form-container[data-url]',
             init: () => NDS.Autocomplete?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             // Idle: pagination's collapse + dropmenu setup is heavy when
@@ -227,6 +242,7 @@
             selector: '.nds-ipv-thumbnail',
             init: () => NDS.Ipv?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             name: 'modal',
@@ -254,12 +270,14 @@
             selector: '.nds-user-feedback',
             init: () => NDS.UserFeedback?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             name: 'chart',
             selector: '.nds-chart',
             init: () => NDS.Chart?.init?.(),
             idle: true,
+            bundle: 'extras',
         },
         {
             name: 'empty',
@@ -325,6 +343,29 @@
             }), 1);
         });
 
+    // Loads the opt-in extras bundle once and resolves when it's ready. Idempotent
+    // — returns the in-flight/settled promise on repeat calls, so the auto-load
+    // (when an extras component is detected, see below) and the public
+    // NDS.loadExtras() (for content injected after load) share one fetch. Resolves
+    // on load OR error so callers never hang; a missing bundle leaves inits as ?.
+    // no-ops. Usage for dynamic content: await NDS.loadExtras(); NDS.Chart.init();
+    function loadExtras() {
+        if (window._ndsExtrasReady) return window._ndsExtrasReady;
+        if (!window.NDSExtras) return Promise.resolve();
+        window._ndsExtrasReady = new Promise((resolve) => {
+            const s = document.createElement('script');
+            s.src = window.NDSExtras;
+            s.fetchPriority = 'low';
+            s.onload = resolve;
+            s.onerror = () => {
+                console.warn(`[NDS] extras bundle failed to load (${window.NDSExtras})`);
+                resolve();
+            };
+            document.head.appendChild(s);
+        });
+        return window._ndsExtrasReady;
+    }
+
     function initializeNDS() {
         if (CONFIG.disableAll === true) {
             if (CONFIG.enableLogging) {
@@ -336,9 +377,10 @@
 
         // Partition arrays are populated inside the rAF below (see L387) so
         // the detection sweep moves off the DCL handler task. The init-loop
-        // closures capture these bindings; both are assigned before
-        // initEagerBatch is called.
-        let eagerComponents, idleComponents;
+        // closures capture these bindings; all are assigned before
+        // initEagerBatch is called. extrasComponents (opt-in bundle) init in
+        // their own pass once that bundle loads — see initEagerBatch.
+        let eagerComponents, idleComponents, extrasComponents;
 
         const runInit = (component) => {
             const start = CONFIG.enableTiming ? performance.now() : 0;
@@ -373,29 +415,39 @@
                 // pagination) are up. Stamp the body so critical-CSS skeletons
                 // hand off to the real, now-styled components.
                 document.body.setAttribute('data-nds-loaded', '');
-                if (idleComponents.length) {
-                    scheduleIdle(drainIdle, { timeout: 2000 });
-                } else {
-                    logAllDone();
+
+                // Main idle components drain immediately — never gated on the
+                // extras fetch.
+                if (idleComponents.length) drainList(idleComponents, logAllDone);
+                else logAllDone();
+
+                // Extras-bundle components init in a separate pass once their
+                // bundle arrives, so the (low-priority) extras download never
+                // delays the main idle components above. _ndsExtrasReady
+                // resolves on load OR error (missing bundle → inits no-op via ?.).
+                if (extrasComponents.length && window._ndsExtrasReady) {
+                    window._ndsExtrasReady.then(() => drainList(extrasComponents));
                 }
             }
         }
 
-        // Idle pass: drains as many components as fit in each idle slot. The
-        // timeout ensures these still run if the page never goes idle.
-        let idleIndex = 0;
-        function drainIdle(deadline) {
-            while (
-                idleIndex < idleComponents.length &&
-                (deadline.didTimeout || deadline.timeRemaining() > 1)
-            ) {
-                runInit(idleComponents[idleIndex++]);
+        // Idle drain: runs a component list across idle slots, as many as fit
+        // each slot. Self-schedules until the list is exhausted; the timeout
+        // ensures it still runs if the page never goes idle. Shared by the main
+        // idle list and the extras-bundle list (each gets its own index/onDone).
+        function drainList(list, onDone) {
+            let i = 0;
+            function drain(deadline) {
+                while (
+                    i < list.length &&
+                    (deadline.didTimeout || deadline.timeRemaining() > 1)
+                ) {
+                    runInit(list[i++]);
+                }
+                if (i < list.length) scheduleIdle(drain, { timeout: 2000 });
+                else if (onDone) onDone();
             }
-            if (idleIndex < idleComponents.length) {
-                scheduleIdle(drainIdle, { timeout: 2000 });
-            } else {
-                logAllDone();
-            }
+            scheduleIdle(drain, { timeout: 2000 });
         }
 
         function logAllDone() {
@@ -416,17 +468,25 @@
         requestAnimationFrame(() => {
             eagerComponents = [];
             idleComponents = [];
+            extrasComponents = [];
             for (const c of COMPONENTS) {
                 const present = c.universal || (c.selector && document.querySelector(c.selector));
                 if (!present) continue;
-                (c.idle ? idleComponents : eagerComponents).push(c);
+                if (c.bundle === 'extras') extrasComponents.push(c);
+                else (c.idle ? idleComponents : eagerComponents).push(c);
             }
 
+            // Auto-load the extras bundle only when the page actually uses one of
+            // its components. loadExtras() is idempotent + low-priority; the fetch
+            // overlaps the eager pass and the components init in a separate pass on
+            // load (see initEagerBatch).
+            if (extrasComponents.length) loadExtras();
+
             if (CONFIG.enableLogging) {
-                const total = eagerComponents.length + idleComponents.length;
+                const total = eagerComponents.length + idleComponents.length + extrasComponents.length;
                 console.log(
                     `[NDS] Initializing ${total}/${COMPONENTS.length} components ` +
-                    `(${eagerComponents.length} eager, ${idleComponents.length} idle)`
+                    `(${eagerComponents.length} eager, ${idleComponents.length} idle, ${extrasComponents.length} extras)`
                 );
             }
 
@@ -455,6 +515,11 @@
         // When true, disables initializing any component (manual calls still respected if caller overrides)
         disableAll: GLOBAL.disableAll ?? (attrDisableAll != null ? attrDisableAll === 'true' : false),
     };
+
+    // On-demand extras loader for content injected after page load:
+    //   await NDS.loadExtras(); NDS.Chart.init();
+    // Cheaper than NDS.Init.reinitialize() (no full re-sweep / re-tag).
+    NDS.loadExtras = loadExtras;
 
     // Expose global API immediately
     NDS.Init = {

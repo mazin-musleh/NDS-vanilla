@@ -1,7 +1,9 @@
 /**
  * NDS Export — source-agnostic CSV / Excel / PDF export.
  *
- * Library only (no markup, no loader entry, no auto-init). Consumers call:
+ * Declarative: place a [data-export] button (data-export="csv|xls|pdf",
+ * data-export-target="<selector>") and the loader-registered init() wires a
+ * delegated click handler. Imperative API also available — consumers call:
  *   NDS.Export.export(source, format, scope?, opts?)
  *     source: Element | selector  (a <table>, .nds-table, or any container with data-export-rows)
  *     format: 'csv' | 'xls' | 'pdf'
@@ -431,10 +433,15 @@
         document.addEventListener('click', onExportClick);
     }
 
-    if (document.querySelector('[data-export]')) installClickListener();
-    if (NDS.onDOMAdd) NDS.onDOMAdd('[data-export]', installClickListener);
+    // Loader-driven (registered on selector [data-export], extras bundle):
+    // install the delegated click handler + watch for buttons added later.
+    function init() {
+        installClickListener();
+        if (NDS.onDOMAdd) NDS.onDOMAdd('[data-export]', installClickListener);
+    }
 
     NDS.Export = {
+        init,
         export: exportFrom,
         // Per-format shortcuts — thin wrappers around export() so callers can
         // write NDS.Export.csv('#orders') instead of .export('#orders','csv').
