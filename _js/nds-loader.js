@@ -156,6 +156,12 @@
             idle: true,
         },
         {
+            // Eager: NDS.Link.init() partitions anchors by viewport — visible
+            // anchors tag synchronously so the .nds-external CSS ::after badge
+            // paints on the first frame (no CLS). Off-screen anchors are
+            // observed via NDS.onIntersect inside init() to tag just before
+            // scrolling into view. Idle-tier registration would push visible
+            // tagging past first paint → CLS for above-the-fold external links.
             name: 'link',
             selector: null,
             init: () => NDS.Link?.init?.(),
