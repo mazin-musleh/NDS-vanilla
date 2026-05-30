@@ -17,6 +17,18 @@
     // One-shot guard for the auto-pagination DOM-removal listener.
     let _autoCleanupReady = false;
 
+    // Read --per-page for a paged-content container. Prefers the inline style —
+    // the common case is a consumer setting style="--per-page:N", and an inline
+    // read costs nothing. Only media-query-driven values (no inline) fall through
+    // to getComputedStyle, which forces a style recalc on the (laid-out) container.
+    // Defaults to 5. The container itself isn't display:none pre-init — the
+    // skeleton hides individual items past --per-page, so the read is not free.
+    function readPerPage(el) {
+        const inline = el.style.getPropertyValue('--per-page');
+        const v = parseInt(inline || getComputedStyle(el).getPropertyValue('--per-page'), 10);
+        return v > 0 ? v : 5;
+    }
+
     class NDSPagination {
         constructor(paginationNav) {
             this.paginationNav = paginationNav;
@@ -388,11 +400,10 @@
             // Get items
             const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
 
-            // Read --per-page while the container is still hidden: a
-            // display:none element has no layout box, so this is a style-only
-            // read with no forced reflow. Assumes media-query-driven --per-page
-            // (a container-query consumer would need the box).
-            let lastPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
+            // Read --per-page (inline-first; see readPerPage) and cache it on the
+            // container so filter-triggered refresh() reads it back without a recalc.
+            let lastPerPage = readPerPage(contentContainer);
+            contentContainer._ndsPerPage = lastPerPage;
 
             // Rebuild pagination for the given --per-page. The caller reads
             // the value once and passes it in, so each update measures once.
@@ -475,9 +486,10 @@
             // module-level `.nds-paged-content` removal listener release the
             // pooled ResizeObserver entry when this container leaves the DOM.
             contentContainer._offResize = NDS.onElementResize(contentContainer, NDS.debounce(() => {
-                const currentPerPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
+                const currentPerPage = readPerPage(contentContainer);
                 if (currentPerPage !== lastPerPage) {
                     lastPerPage = currentPerPage;
+                    contentContainer._ndsPerPage = currentPerPage;
                     updatePagination(currentPerPage);
                 }
             }, 150));
@@ -700,9 +712,9 @@
 
         // Get only visible (non-filtered) items
         const allItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
-        const visibleItems = allItems.filter(item => !item.hasAttribute('data-filtered') && !item.classList.contains('nds-filtered-out'));
+        const visibleItems = allItems.filter(item => !item.hasAttribute('data-filtered'));
 
-        const perPage = parseInt(getComputedStyle(contentContainer).getPropertyValue('--per-page')) || 5;
+        const perPage = contentContainer._ndsPerPage || readPerPage(contentContainer);
         const totalPages = Math.ceil(visibleItems.length / perPage);
 
         // If no pagination needed (0 or 1 page), hide pagination and show all visible items
@@ -736,7 +748,7 @@
         newPagination.addEventListener('click', (e) => {
             // Re-get visible items in case filter changed
             const currentVisibleItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'))
-                .filter(item => !item.hasAttribute('data-filtered') && !item.classList.contains('nds-filtered-out'));
+                .filter(item => !item.hasAttribute('data-filtered'));
 
             // Portaled dropmenu items arrive via the wrapper's re-dispatch.
             const pageElement = e.ndsDropmenuItem
