@@ -228,14 +228,14 @@
             bundle: 'extras',
         },
         {
-            // Idle: pagination's collapse + dropmenu setup is heavy when
-            // run on dirty layout from prior eager components. Loading
-            // state + skeleton CSS reserve the layout slot until idle init
-            // settles.
+            // Eager: init now reads --per-page inline-first (no forced recalc)
+            // and generates the collapsed list directly, so it no longer needs a
+            // settled idle layout; the skeleton CSS still reserves the slot until
+            // data-paged-initialized, so no CLS. Registered before filter so
+            // filter's Pagination.refresh runs after pagination is up.
             name: 'pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
-            idle: true,
         },
         {
             name: 'ipv',
@@ -257,16 +257,17 @@
             idle: true,
         },
         {
-            // Idle: per-input listener setup + URL-param apply is a heavy
-            // eager init. Pairs with idle-tier pagination — Pagination.refresh
-            // is stateless so order between them doesn't matter.
+            // Eager: init is cheap now (scoped surface lookups + deferred option
+            // builds) and filtering controls visible content, so wiring it before
+            // first paint keeps URL-active filters and interactions ready. Drives
+            // pagination via Pagination.refresh; pagination is eager and
+            // registered above, so it inits first.
             // Gate on [data-filter-target] (not .nds-filter): a filter is defined
             // by its target link, so it must init even when there's no .nds-filter
             // dropdown (e.g. a search-only filter).
             name: 'filter',
             selector: '[data-filter-target]',
             init: () => NDS.Filter?.init?.(),
-            idle: true,
         },
         {
             name: 'userFeedback',
