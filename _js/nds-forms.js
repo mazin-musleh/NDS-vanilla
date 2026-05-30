@@ -569,6 +569,174 @@
     };
 
     // ==============================================
+    // INPUT EVENT DELEGATION
+    // ==============================================
+    // Generic per-input chrome (active/focus/typing data-state, value
+    // sanitize, validation) is wired ONCE at the document level rather than
+    // per element — see installFormDelegation(). Each handler re-resolves the
+    // owning form-control from the event target, reproducing the original
+    // binding scope (a direct-child input/textarea/select of a non-code
+    // `.nds-form-control`). Specialized controls (custom-select, number-input,
+    // switch, password toggle, clear button, groups) keep their own
+    // per-element wiring; only the generic chrome moved here.
+    var _delegationInstalled = false;
+
+    // The select-input is `readonly` to prevent typing but is still
+    // interactive (click opens the dropdown), so treat it as active for
+    // state-visualization. Recomputed per event — never cached.
+    function statesActive(input) {
+        return !input.readOnly || input.classList.contains('nds-select-input');
+    }
+
+    // Resolve the form-control an event belongs to, matching the original
+    // `:scope > input/textarea/select` of a `.nds-form-control` not inside a
+    // code sample. Returns null (handler no-ops) otherwise.
+    function resolveControl(target) {
+        if (!target || !target.matches || !target.matches('input, textarea, select')) return null;
+        var formControl = target.parentElement;
+        if (!formControl || !formControl.classList || !formControl.classList.contains('nds-form-control')) return null;
+        if (formControl.closest('code, .code-example')) return null;
+        return { input: target, formControl: formControl, formContainer: formControl.closest('.nds-form-container') };
+    }
+
+    function installFormDelegation() {
+        if (_delegationInstalled) return;
+        _delegationInstalled = true;
+        var doc = document;
+
+        // Mouse press → `active` token. mousedown adds; mouseup/mouseout
+        // remove. mouseout stands in for the old per-element mouseleave —
+        // inputs have no element children, so mouseout fires only when the
+        // pointer actually leaves the control.
+        doc.addEventListener('mousedown', function(e) {
+            var c = resolveControl(e.target);
+            if (c && c.formContainer && statesActive(c.input)) NDS.State.add(c.formContainer, 'active');
+        });
+        ['mouseup', 'mouseout'].forEach(function(evt) {
+            doc.addEventListener(evt, function(e) {
+                var c = resolveControl(e.target);
+                if (c && c.formContainer && statesActive(c.input)) NDS.State.remove(c.formContainer, 'active');
+            });
+        });
+
+        // Focus / blur via the bubbling focusin / focusout.
+        doc.addEventListener('focusin', function(e) {
+            var c = resolveControl(e.target);
+            if (c && c.formContainer && statesActive(c.input)) NDS.State.add(c.formContainer, 'focus');
+        });
+        doc.addEventListener('focusout', function(e) {
+            var c = resolveControl(e.target);
+            if (!c) return;
+            var input = c.input, formControl = c.formControl, formContainer = c.formContainer;
+            if (formContainer && statesActive(input)) {
+                NDS.State.remove(formContainer, 'focus');
+                NDS.State.remove(formContainer, 'typing');
+            }
+            // Clamp number input value to min/max on blur
+            if (formControl.querySelector('.nds-number-increment, .nds-number-decrement')) {
+                var val = parseInt(input.value);
+                if (isNaN(val)) { input.value = ''; }
+                else {
+                    var rangeError = Utils.validateNumberRange(input);
+                    if (rangeError) {
+                        input.value = rangeError.clamped;
+                        StatusManager.set({ element: formContainer, status: 'error', message: rangeError.message });
+                    }
+                }
+            }
+            // Only validate on blur if the field already has an error (to clear it when fixed)
+            var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
+            if (statesActive(input)) FieldSync.update(input, formControl, !hasError);
+        });
+
+        // Typing state - indicates real user input
+        doc.addEventListener('keydown', function(e) {
+            var c = resolveControl(e.target);
+            if (c && c.formContainer && statesActive(c.input)) NDS.State.add(c.formContainer, 'typing');
+        });
+        doc.addEventListener('paste', function(e) {
+            var c = resolveControl(e.target);
+            if (c && c.formContainer) NDS.State.add(c.formContainer, 'typing');
+        });
+
+        // Numeric-only enforcement for inputmode="numeric"
+        doc.addEventListener('beforeinput', function(e) {
+            var c = resolveControl(e.target);
+            if (c && c.input.getAttribute('inputmode') === 'numeric' && e.data && /\D/.test(e.data)) e.preventDefault();
+        });
+
+        // Input changes - clear errors but don't validate while typing
+        doc.addEventListener('input', function(e) {
+            var c = resolveControl(e.target);
+            if (!c) return;
+            var input = c.input, formControl = c.formControl;
+
+            // Strip Arabic characters from password fields
+            if (input.type === 'password' || input.dataset.type === 'password') {
+                var cleaned = input.value.replace(/[\u0600-\u06FF]/g, '');
+                if (cleaned !== input.value) {
+                    input.value = cleaned;
+                    var fc = formControl.closest('.nds-form-container');
+                    if (fc) {
+                        var msg = NDS.isArabic ? 'الأحرف العربية غير مسموح بها' : 'Arabic characters are not allowed';
+                        StatusManager.set({ element: fc, status: 'error', message: msg });
+                    }
+                    return;
+                }
+            }
+
+            // .nds-phone — local-format phone input paired with a separate
+            // country-code prefix:
+            //   1. allow only digits — strips spaces/dashes/+ from paste
+            //   2. strip leading zero(s) — the local-format leading 0 is
+            //      redundant when the country code is already prepended
+            // The browser enforces any maxlength on the input itself.
+            if (input.classList.contains('nds-phone')) {
+                var caret = input.selectionStart;
+                var original = input.value;
+                var stripped = original.replace(/\D/g, '').replace(/^0+/, '');
+                if (stripped !== original) {
+                    var diff = original.length - stripped.length;
+                    input.value = stripped;
+                    try {
+                        input.setSelectionRange(Math.max(0, caret - diff), Math.max(0, caret - diff));
+                    } catch (_) {}
+                }
+            }
+
+            FieldSync.update(input, formControl, true);
+
+            var formContainer = formControl.closest('.nds-form-container');
+            if (formContainer && NDS.Status.get(formContainer) !== '') {
+                StatusManager.clear(formContainer);
+            }
+
+            // Auto-clear group-level status on input (skip groups with own validation)
+            var formGroup = formControl.closest('.nds-form-group');
+            if (formGroup && NDS.Status.get(formGroup) !== ''
+                && !formGroup.hasAttribute('data-min-checked')
+                && !formGroup.hasAttribute('data-max-checked')
+                && !formGroup.hasAttribute('data-required')) {
+                StatusManager.clear(formGroup);
+            }
+        });
+
+        // Change event - update state only, validate on submit
+        doc.addEventListener('change', function(e) {
+            var c = resolveControl(e.target);
+            if (!c) return;
+            var input = c.input, formControl = c.formControl, formContainer = c.formContainer;
+            var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
+            FieldSync.update(input, formControl, !hasError);
+            FieldSync.updateRadioGroup(input);
+            // Auto-clear indeterminate on user interaction
+            if (input.type === 'checkbox' && !input.indeterminate) {
+                FieldSync.setIndeterminate(input, false);
+            }
+        });
+    }
+
+    // ==============================================
     // CUSTOM SELECT CONTROLLER
     // ==============================================
     // Wraps a `.nds-select-input` + its `.nds-select-dropdown` and grafts
@@ -757,156 +925,11 @@
                 input.setAttribute('aria-required', 'true');
             }
 
-            this._bindInteractionState(input, formControl, formContainer);
-            this._bindInputProcessing(input, formControl, formContainer);
+            // Generic input listeners (active/focus/typing, sanitize,
+            // validation) are wired once at the document level — see
+            // installFormDelegation(). Only the initial sync + specialized
+            // control dispatch is per-element.
             this._syncInitialState(input, formControl, formContainer);
-        },
-
-        // data-state interaction machine (active/focus/typing) + blur-time
-        // number clamp. statesActive() lives here because only these listeners
-        // consult it.
-        _bindInteractionState: function(input, formControl, formContainer) {
-            // The select-input is `readonly` to prevent typing, but the field
-            // is still interactive — clicking opens the dropdown. Treat it
-            // as not-readonly for state-visualization purposes so it picks
-            // up active/focus/filled like any other input.
-            function statesActive() {
-                return !input.readOnly || input.classList.contains('nds-select-input');
-            }
-
-            // Mouse interaction - use data-state on container
-            input.addEventListener('mousedown', function() {
-                if (formContainer && statesActive()) {
-                    NDS.State.add(formContainer, 'active');
-                }
-            });
-
-            ['mouseup', 'mouseleave'].forEach(function(event) {
-                input.addEventListener(event, function() {
-                    if (formContainer && statesActive()) {
-                        NDS.State.remove(formContainer, 'active');
-                    }
-                });
-            });
-
-            // Focus states - use data-state on container
-            input.addEventListener('focus', function() {
-                if (formContainer && statesActive()) {
-                    NDS.State.add(formContainer, 'focus');
-                }
-            });
-
-            input.addEventListener('blur', function() {
-                if (formContainer && statesActive()) {
-                    NDS.State.remove(formContainer, 'focus');
-                    NDS.State.remove(formContainer, 'typing');
-                }
-
-                // Clamp number input value to min/max on blur
-                if (formControl.querySelector('.nds-number-increment, .nds-number-decrement')) {
-                    var val = parseInt(input.value);
-                    if (isNaN(val)) { input.value = ''; }
-                    else {
-                        var rangeError = Utils.validateNumberRange(input);
-                        if (rangeError) {
-                            input.value = rangeError.clamped;
-                            StatusManager.set({ element: formContainer, status: 'error', message: rangeError.message });
-                        }
-                    }
-                }
-
-                // Only validate on blur if field already has an error (to clear it when fixed)
-                var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
-                if (statesActive()) FieldSync.update(input, formControl, !hasError);
-            });
-
-            // Typing state - indicates real user input
-            input.addEventListener('keydown', function() {
-                if (formContainer && statesActive()) {
-                    NDS.State.add(formContainer, 'typing');
-                }
-            });
-
-            input.addEventListener('paste', function() {
-                if (formContainer) {
-                    NDS.State.add(formContainer, 'typing');
-                }
-            });
-        },
-
-        // Value-processing listeners: numeric-only guard, input sanitize +
-        // error-clear, and the change handler.
-        _bindInputProcessing: function(input, formControl, formContainer) {
-            // Numeric-only enforcement for inputmode="numeric"
-            if (input.getAttribute('inputmode') === 'numeric') {
-                input.addEventListener('beforeinput', function(e) {
-                    if (e.data && /\D/.test(e.data)) e.preventDefault();
-                });
-            }
-
-            // Input changes - clear errors but don't validate while typing
-            input.addEventListener('input', function() {
-                // Strip Arabic characters from password fields
-                if (input.type === 'password' || input.dataset.type === 'password') {
-                    var cleaned = input.value.replace(/[\u0600-\u06FF]/g, '');
-                    if (cleaned !== input.value) {
-                        input.value = cleaned;
-                        var fc = formControl.closest('.nds-form-container');
-                        if (fc) {
-                            var msg = NDS.isArabic ? 'الأحرف العربية غير مسموح بها' : 'Arabic characters are not allowed';
-                            StatusManager.set({ element: fc, status: 'error', message: msg });
-                        }
-                        return;
-                    }
-                }
-
-                // .nds-phone — local-format phone input paired with a separate
-                // country-code prefix:
-                //   1. allow only digits — strips spaces/dashes/+ from paste
-                //   2. strip leading zero(s) — the local-format leading 0 is
-                //      redundant when the country code is already prepended
-                // The browser enforces any maxlength on the input itself.
-                if (input.classList.contains('nds-phone')) {
-                    var caret = input.selectionStart;
-                    var original = input.value;
-                    var stripped = original.replace(/\D/g, '').replace(/^0+/, '');
-                    if (stripped !== original) {
-                        var diff = original.length - stripped.length;
-                        input.value = stripped;
-                        try {
-                            input.setSelectionRange(Math.max(0, caret - diff), Math.max(0, caret - diff));
-                        } catch (_) {}
-                    }
-                }
-
-                FieldSync.update(input, formControl, true);
-
-                var formContainer = formControl.closest('.nds-form-container');
-                if (formContainer && NDS.Status.get(formContainer) !== '') {
-                    StatusManager.clear(formContainer);
-                }
-
-                // Auto-clear group-level status on input (skip groups with own validation)
-                var formGroup = formControl.closest('.nds-form-group');
-                if (formGroup && NDS.Status.get(formGroup) !== ''
-                    && !formGroup.hasAttribute('data-min-checked')
-                    && !formGroup.hasAttribute('data-max-checked')
-                    && !formGroup.hasAttribute('data-required')) {
-                    StatusManager.clear(formGroup);
-                }
-            });
-
-            // Change event - update state only, validate on submit
-            input.addEventListener('change', function() {
-                var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
-                FieldSync.update(input, formControl, !hasError);
-                FieldSync.updateRadioGroup(input);
-
-                // Auto-clear indeterminate on user interaction
-                if (input.type === 'checkbox' && !input.indeterminate) {
-                    FieldSync.setIndeterminate(input, false);
-                }
-            });
         },
 
         // Two-way initial sync + specialized control dispatch.
@@ -1380,6 +1403,7 @@
         // re-init every auto-fill container at startup. The standalone pass stays
         // wired to the dynamic-content observer (initDynamicContentObserver) for
         // .nds-auto-fill nodes added after load.
+        installFormDelegation();
         initFormControlClasses();
         initDynamicContentObserver();
     }
