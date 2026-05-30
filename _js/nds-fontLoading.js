@@ -64,99 +64,46 @@
             currentState.callbacks = [];
         }
 
-        // Trigger font loading with high priority if API available
-        if (document.fonts && document.fonts.load) {
-            // Load multiple weights to ensure download starts
-            const fontSpecs = [
-                '1em "' + fontName + '"',
-                'bold 1em "' + fontName + '"',
-                '16px "' + fontName + '"'
-            ];
-
-            fontSpecs.forEach(spec => {
-                document.fonts.load(spec).catch(() => {
-                    // Ignore errors
-                });
-            });
+        // Notify callers a check ended without a confirmed load, WITHOUT flipping
+        // the gate. data-font-loaded gates icon reveal: an unloaded HGI font
+        // falls back to CJK glyphs, so on error/timeout the safe state is hidden,
+        // never "reveal anyway".
+        function fail() {
+            const currentState = fontStates.get(fontName);
+            if (!currentState) return;
+            currentState.isChecking = false;
+            currentState.callbacks.forEach(cb => cb(false));
+            currentState.callbacks = [];
         }
 
-        // Wait for actual font file to load using polling
-        waitForActualFontFile(fontName, markAsLoaded, timeout);
-    }
+        // Resolve via the Font Loading API — event-driven, no polling.
+        // document.fonts.load(spec) triggers the download and resolves once the
+        // face settles; fonts.ready waits out any in-flight loads; fonts.check
+        // confirms the font is genuinely available before we flip the gate.
+        if (document.fonts && document.fonts.load && document.fonts.ready) {
+            const spec = '1em "' + fontName + '"';
+            let settled = false;
+            const timer = setTimeout(() => { if (!settled) { settled = true; fail(); } }, timeout);
+            const finish = (didLoad) => {
+                if (settled) return;
+                settled = true;
+                clearTimeout(timer);
+                if (didLoad && document.fonts.check(spec)) markAsLoaded();
+                else fail();
+            };
 
-    // Wait for actual font file to be downloaded
-    function waitForActualFontFile(fontName, markAsLoaded, timeout) {
-        const startTime = Date.now();
-        let checkCount = 0;
-
-        function check() {
-            checkCount++;
-            const elapsed = Date.now() - startTime;
-
-            // Check 1: CSS file with @font-face is loaded
-            const cssLoaded = Array.from(document.styleSheets).some(sheet => {
-                try {
-                    return sheet.href && sheet.href.toLowerCase().includes('hgi');
-                } catch (e) {
-                    return false;
-                }
-            });
-
-            // Check 2: Actual font file in Performance API (works on first load)
-            const resources = performance.getEntriesByType('resource');
-            const fontFileLoaded = resources.some(resource => {
-                const url = resource.name.toLowerCase();
-                return url.includes(fontName.toLowerCase()) &&
-                       (url.includes('.woff2') || url.includes('.woff') || url.includes('.ttf') || url.includes('.otf')) &&
-                       resource.responseEnd > 0;
-            });
-
-            // Check 3: Font Loading API verification (works for cached fonts)
-            const fontApiReady = document.fonts && document.fonts.check &&
-                                document.fonts.check('1em "' + fontName + '"');
-
-            // Font is loaded if: (CSS loaded AND font file loaded) OR (CSS loaded AND font API confirms on cached)
-            if (cssLoaded && (fontFileLoaded || fontApiReady)) {
-                // Double-check with fonts.ready if available
-                if (document.fonts && document.fonts.ready) {
-                    document.fonts.ready.then(() => {
-                        markAsLoaded();
-                    }).catch(() => {
-                        markAsLoaded(); // Still mark as loaded even if error
-                    });
-                } else {
-                    markAsLoaded();
-                }
-                return;
-            }
-
-            // Check if timeout exceeded
-            if (elapsed > timeout) {
-                const state = fontStates.get(fontName);
-                if (state) {
-                    state.isChecking = false;
-                    state.callbacks.forEach(cb => cb(false));
-                    state.callbacks = [];
-                }
-                return;
-            }
-
-            // Adaptive polling: faster initially, slower over time for slow connections
-            let nextCheckDelay;
-            if (elapsed < 1000) {
-                nextCheckDelay = 50; // Check every 50ms for first second (fast connections)
-            } else if (elapsed < 3000) {
-                nextCheckDelay = 100; // Check every 100ms for next 2 seconds
-            } else if (elapsed < 8000) {
-                nextCheckDelay = 250; // Check every 250ms for next 5 seconds
-            } else {
-                nextCheckDelay = 500; // Check every 500ms for remaining time (slow connections)
-            }
-
-            setTimeout(check, nextCheckDelay);
+            Promise.all([
+                document.fonts.load(spec),
+                document.fonts.load('bold ' + spec),
+            ])
+                .then(() => document.fonts.ready)
+                .then(() => finish(true))
+                .catch(() => finish(false));
+        } else {
+            // No Font Loading API (pre-2016 browser): the CJK-fallback boundary
+            // can't be detected, so reveal rather than hide icons indefinitely.
+            markAsLoaded();
         }
-
-        check();
     }
 
     function initializeFontLoading() {
@@ -207,7 +154,7 @@
 
         // Listen for pageshow to handle bfcache restoration (live server navigation)
         window.addEventListener('pageshow', handlePageShow);
-        
+
         // Create global font loading API
         NDS.FontLoading = {
             waitForFontFile,
