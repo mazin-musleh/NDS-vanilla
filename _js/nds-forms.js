@@ -773,6 +773,9 @@
                 // form-control input's value/checked programmatically WITHOUT
                 // dispatching input/change, and rely on these setters to sync the
                 // container chrome (clear button, validation, radio-group paint).
+                // Only value/checked need this: disabled/readonly/required reach a
+                // form-control input only via markup or NDS.State (the cascade hooks
+                // + init handle those), never raw-assigned by other components.
                 if (valueDescriptor && valueDescriptor.set) {
                     Object.defineProperty(input, 'value', {
                         get: valueDescriptor.get,
@@ -794,42 +797,6 @@
                             if (val && !wasChecked) {
                                 FieldSync.updateRadioGroup(this);
                             }
-                        },
-                        configurable: true
-                    });
-                }
-
-                var disabledDescriptor = Object.getOwnPropertyDescriptor(proto, 'disabled');
-                if (disabledDescriptor && disabledDescriptor.set) {
-                    Object.defineProperty(input, 'disabled', {
-                        get: disabledDescriptor.get,
-                        set: function(val) {
-                            disabledDescriptor.set.call(this, val);
-                            FieldSync.update(this, formControl, true);
-                        },
-                        configurable: true
-                    });
-                }
-
-                var requiredDescriptor = Object.getOwnPropertyDescriptor(proto, 'required');
-                if (requiredDescriptor && requiredDescriptor.set) {
-                    Object.defineProperty(input, 'required', {
-                        get: requiredDescriptor.get,
-                        set: function(val) {
-                            requiredDescriptor.set.call(this, val);
-                            FieldSync.update(this, formControl, true);
-                        },
-                        configurable: true
-                    });
-                }
-
-                var readOnlyDescriptor = Object.getOwnPropertyDescriptor(proto, 'readOnly');
-                if (readOnlyDescriptor && readOnlyDescriptor.set) {
-                    Object.defineProperty(input, 'readOnly', {
-                        get: readOnlyDescriptor.get,
-                        set: function(val) {
-                            readOnlyDescriptor.set.call(this, val);
-                            FieldSync.update(this, formControl, true);
                         },
                         configurable: true
                     });
