@@ -169,16 +169,16 @@
             idle: true,
         },
         {
-            // Idle: NDS.Link.init() reads getBoundingClientRect for every anchor
-            // to partition by viewport, which forces a layout reflow (heavy on
-            // link-dense pages). Kept off the eager/reveal path so that cost lands
-            // after the page is revealed. Trade: above-the-fold external-link
-            // badges (.nds-external ::after) tag on idle rather than first frame.
+            // Eager: NDS.Link.init() tags external links with no layout reads
+            // (guards are hostname/classList only), so it forces no reflow and is
+            // safe before first paint — above-the-fold external badges are present
+            // on the first frame (no pop-in CLS). NOTE: keep it layout-read-free;
+            // an earlier getBoundingClientRect viewport-partition forced a full
+            // page layout here (~110ms@6.6x on index) and had to be removed.
             name: 'link',
             selector: null,
             init: () => NDS.Link?.init?.(),
             universal: true,
-            idle: true,
         },
         {
             name: 'cookies',

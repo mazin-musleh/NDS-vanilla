@@ -19,6 +19,9 @@
         return true;
     }
 
+    // Tag an external link: add the .nds-external badge class + safe target/rel.
+    // Guards are layout-free (hostname/closest/classList), ordered hostname-first
+    // so internal links short-circuit immediately.
     function tagExternal(a) {
         if (!a.href || a.hostname === '') return;
         if (a.hostname === location.hostname) return;
@@ -31,41 +34,15 @@
         a.setAttribute('rel', 'noopener noreferrer');
     }
 
-    // Viewport-aware tagging: anchors in the initial viewport tag synchronously
-    // so the .nds-external CSS ::after badge paints on the first frame (no CLS).
-    // Off-screen anchors are observed via NDS.onIntersect with a 200px rootMargin
-    // so each tags just before scrolling into view — no CLS even on fast scrolls,
-    // and the eager-pass sync cost stays bounded by visible-anchor count
-    // instead of total anchor count.
-    //
-    // Three-pass shape (reads-then-writes per JSD-06 batched-reads pattern):
-    //   1. Read every rect into visible/offscreen arrays — no writes interleaved,
-    //      so the rect-read pass amortizes to a single layout flush.
-    //   2. Write tagExternal() for the visible partition.
-    //   3. Register NDS.onIntersect for the offscreen partition.
+    // Tag every external anchor in one straight pass. No getBoundingClientRect —
+    // the guards never read layout, so this forces no reflow and can run eagerly
+    // (before first paint), tagging above-the-fold links so the .nds-external
+    // ::after badge is present on the first frame with no CLS. Off-screen links
+    // tag in the same pass; their badge shifts only below the fold (no visible
+    // CLS) and is already in place by the time they scroll into view.
     function init() {
         const anchors = document.querySelectorAll('a');
-        if (!anchors.length) return;
-        const viewportH = window.innerHeight;
-        const visible = [];
-        const offscreen = [];
-        for (let i = 0; i < anchors.length; i++) {
-            const a = anchors[i];
-            const rect = a.getBoundingClientRect();
-            if (rect.bottom > 0 && rect.top < viewportH) {
-                visible.push(a);
-            } else {
-                offscreen.push(a);
-            }
-        }
-        for (let i = 0; i < visible.length; i++) tagExternal(visible[i]);
-        for (let i = 0; i < offscreen.length; i++) {
-            const a = offscreen[i];
-            const off = NDS.onIntersect(a, () => {
-                tagExternal(a);
-                off();
-            }, { rootMargin: '200px' });
-        }
+        for (let i = 0; i < anchors.length; i++) tagExternal(anchors[i]);
     }
 
     NDS.Link = { init };
