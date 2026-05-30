@@ -63,7 +63,6 @@
         INFO: 'info'
     };
 
-    var VOICE_TIMEOUT = 30000; // 30 seconds
 
     // ==============================================
     // UTILITY FUNCTIONS
@@ -83,11 +82,6 @@
             element.dispatchEvent(new Event('input', { bubbles: true }));
             element.dispatchEvent(new Event('change', { bubbles: true }));
         },
-
-        findPrimaryInput: function(container) {
-            return container.querySelector(':scope > input[type="text"], :scope > input[type="email"], :scope > input[type="search"], :scope > textarea') ||
-                container.querySelector(':scope > input, :scope > textarea');
-        }
     };
 
     // ==============================================
@@ -942,137 +936,6 @@
             }
         },
 
-        initVoiceInput: function(formControl) {
-            var voiceButton = formControl.querySelector('.nds-form-action .nds-voice-input');
-            if (!voiceButton || !NDS.VoiceRecognition.isSupported()) {
-                if (voiceButton) voiceButton.style.display = 'none';
-                return;
-            }
-            if (voiceButton._ndsVoiceInit) return;
-            voiceButton._ndsVoiceInit = true;
-
-            var isListening = false;
-            var recognition = null;
-            var timeout = null;
-            var formContainer = formControl.closest('.nds-form-container') || formControl;
-            var input = Utils.findPrimaryInput(formControl);
-            var originalPlaceholder = input ? input.placeholder : '';
-
-            var isArabic = NDS.isArabic;
-            var langName = isArabic ? 'العربية' : 'English';
-            var startLabel = isArabic ? 'بدء إدخال الصوت (' + langName + ')' : 'Start voice input (' + langName + ')';
-            var stopLabel = isArabic ? 'إيقاف إدخال الصوت' : 'Stop voice input';
-
-            NDS.aria.label(voiceButton, startLabel);
-            NDS.aria.pressed(voiceButton, false);
-            voiceButton.title = startLabel;
-
-            function showMessage(message, duration) {
-                if (!input) return;
-                input.placeholder = message;
-                input.style.fontStyle = 'italic';
-                input.style.opacity = '0.7';
-
-                setTimeout(function() {
-                    input.placeholder = originalPlaceholder;
-                    input.style.fontStyle = '';
-                    input.style.opacity = '';
-                }, duration || 3000);
-            }
-
-            function stop() {
-                isListening = false;
-                if (recognition) {
-                    try { recognition.abort(); } catch (e) {}
-                    recognition = null;
-                }
-                if (timeout) {
-                    clearTimeout(timeout);
-                    timeout = null;
-                }
-
-                NDS.State.remove(formContainer, 'listening');
-                NDS.aria.pressed(voiceButton, false);
-                NDS.aria.label(voiceButton, startLabel);
-
-                if (input) {
-                    input.style.fontStyle = '';
-                    input.style.opacity = '';
-                }
-            }
-
-            function start() {
-                if (!input) return;
-
-                recognition = NDS.VoiceRecognition.create();
-                if (!recognition) return;
-
-                isListening = true;
-                NDS.State.add(formContainer, 'listening');
-                NDS.aria.pressed(voiceButton, true);
-                NDS.aria.label(voiceButton, stopLabel);
-                input.focus();
-
-                timeout = setTimeout(function() {
-                    stop();
-                    var msg = NDS.isArabic ? 'انتهت مهلة إدخال الصوت' : 'Voice input timed out';
-                    showMessage(msg, 4000);
-                }, VOICE_TIMEOUT);
-
-                NDS.VoiceRecognition.startListening(recognition, {
-                    onResult: function(result) {
-                        var value = result.isFinal ? result.final.trim() : result.interim;
-                        input.style.fontStyle = result.isFinal ? '' : 'italic';
-                        input.style.opacity = result.isFinal ? '' : '0.7';
-                        input.value = value;
-
-                        if (result.isFinal) {
-                            stop();
-                            Utils.triggerEvents(input);
-                            FieldSync.update(input, formControl);
-                        }
-                    },
-                    onError: function(error) {
-                        stop();
-                        var errorType = typeof error === 'string' ? error : (error && error.error);
-                        var messages = {
-                            ar: {
-                                'no-speech': 'لم يتم اكتشاف صوت',
-                                'not-allowed': 'مطلوب إذن الميكروفون',
-                                'audio-capture': 'تم رفض الوصول للميكروفون',
-                                'network': 'خطأ في الشبكة',
-                                'aborted': 'تم إلغاء إدخال الصوت',
-                                'language-not-supported': 'اللغة غير مدعومة',
-                                'default': 'خطأ في إدخال الصوت'
-                            },
-                            en: {
-                                'no-speech': 'No speech detected',
-                                'not-allowed': 'Microphone permission required',
-                                'audio-capture': 'Microphone access denied',
-                                'network': 'Network error',
-                                'aborted': 'Voice input cancelled',
-                                'language-not-supported': 'Language not supported',
-                                'default': 'Voice input error'
-                            }
-                        };
-                        var lang = NDS.langKey;
-                        var msg = messages[lang][errorType] || messages[lang]['default'];
-                        showMessage(msg);
-                    },
-                    onEnd: stop
-                });
-            }
-
-            voiceButton.addEventListener('click', function() {
-                if (isListening) {
-                    stop();
-                    NDS.VoiceRecognition.stopListening(recognition);
-                } else {
-                    start();
-                }
-            });
-        },
-
         initPasswordToggle: function(formControl) {
             var passwordToggle = formControl.querySelector('.nds-form-action .nds-toggle-password');
             if (!passwordToggle || passwordToggle._ndsPasswordToggle) return;
@@ -1440,7 +1303,6 @@
                 FormControls.initializeInput(input, formControl);
             });
 
-            FormControls.initVoiceInput(formControl);
             FormControls.initPasswordToggle(formControl);
             FormControls.initNumberInput(formControl);
             FormControls.initClearButton(formControl, inputElements);

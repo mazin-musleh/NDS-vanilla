@@ -80,6 +80,18 @@
             idle: true,
         },
         {
+            // Extras + idle: a self-contained, page-specific leaf (the Web Speech
+            // engine + button live in nds-voice-input.js, consumed by nothing
+            // else). Loaded on demand only where a voice button exists. Voice is
+            // interaction-driven (recognition starts on click), so the on-demand
+            // fetch lands well before the user clicks.
+            name: 'voiceInput',
+            selector: '.nds-voice-input',
+            init: () => NDS.VoiceInput?.init?.(),
+            idle: true,
+            bundle: 'extras',
+        },
+        {
             name: 'sidemenu',
             selector: '.nds-sidemenu',
             init: () => NDS.Sidemenu?.init?.(),

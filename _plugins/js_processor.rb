@@ -38,11 +38,11 @@ class JSProcessor
     @source_dir = '_js'
     @output_dir = 'assets/js'
     @bundles = {
-      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-share.js', 'nds-copy.js', 'nds-cookies.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-voice-recognition.js', 'nds-forms.js', 'nds-otp.js', 'nds-upload.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-tables.js', 'nds-backdrop.js', 'nds-modal.js', 'nds-alert.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
+      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-share.js', 'nds-copy.js', 'nds-cookies.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-upload.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-tables.js', 'nds-backdrop.js', 'nds-modal.js', 'nds-alert.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
       # Opt-in extras — heavy, page-specific, zero-inbound leaf components.
       # Injected on demand by nds-loader.js (window.NDSExtras) only when the
       # page contains one of these, so plain pages never download/parse them.
-      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-tooltip.js', 'nds-export.js', 'nds-user-feedback.js', 'nds-progress.js', 'nds-numbers.js']
+      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-tooltip.js', 'nds-export.js', 'nds-user-feedback.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js']
       # NOTE: nds-accessibility.js is intentionally NOT bundled here — it
       # builds to its own assets/js/nds-accessibility.min.js (optional add-on,
       # loaded by a separate <script> gated on site.accessibility).
