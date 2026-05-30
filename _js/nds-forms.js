@@ -1582,11 +1582,6 @@
             }
         },
 
-        // Low-level data-state toggle (works on any element)
-        updateDataState: function(el, state, add) {
-            (add !== false) ? NDS.State.add(el, state) : NDS.State.remove(el, state);
-        },
-
         // Checkbox Indeterminate State
         setIndeterminate: FieldSync.setIndeterminate.bind(FieldSync),
 
