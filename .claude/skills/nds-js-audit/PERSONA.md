@@ -251,6 +251,7 @@ A factory creates per-element instances; the guard must distinguish "this specif
 **Carve-outs (NOT divergence)**
 
 - **Window-scope flags for tree-wide observers.** [_js/nds-tables.js:414](_js/nds-tables.js#L414) (`window.ndsTableClassObserverInitialized`) and [_js/nds-tables.js:427](_js/nds-tables.js#L427) (`window.ndsTabChangeHandlerInitialized`) coordinate two cross-module observers (responsive-table class mutations, tab-change events). The window flag is the right shape for that specific concern because there's no per-element target AND the guard needs to coordinate with sibling modules. Not divergence.
+- **JS-property per-element guards on document-sweeping controllers.** A factory-style controller that sweeps the whole document (rather than a registered per-instance selector) MAY mark each visited element with a JS property (`el._ndsXxxInitialized`) instead of the canonical `data-nds-<name>-initialized` attribute. The property IS on the element (satisfying 5.1's principle that per-element state lives on the element) and distinguishes per-element init; it just isn't CSS-selectable, so re-sweeps visit every element and check the flag inline rather than filtering via `:not([data-…-initialized])`. Accepted for whole-document controllers where a selector-filtered rescan isn't used. Exemplar: [_js/nds-forms.js](_js/nds-forms.js) marks inputs/forms/switches with `_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized` etc. Not divergence. (A *registered* factory with a per-instance selector should still prefer the attribute form so the loader's rescan can selector-filter.)
 
 **Audit behavior**
 
@@ -258,6 +259,7 @@ A factory creates per-element instances; the guard must distinguish "this specif
 2. Factory using `_initDone` or `window.<flag>` → flag.
 3. Singleton using `data-nds-<name>-initialized` → flag.
 4. Window-global flag requires an inline comment within 3 lines naming the cross-module observer concern; otherwise flag.
+5. Singleton using a module-scope closure flag NOT named `_initDone` (e.g. `_installed`, `_wired`, `_ready`) → flag as a name divergence. The shape is correct; only the name diverges. Resolve per file: migrate to `_initDone`, or open a Phase 7 revision to admit the name. Motivating finding: [_js/nds-voice-input.js:290](_js/nds-voice-input.js#L290) uses `var _installed` against the canonical `_initDone`.
 
 **Current adoption:** 16/16 factory components use the DOM attribute form; 4/4 singleton modules (accessibility, empty, cityWeather, theme) use `_initDone`. Tallied 2026-05-28.
 
