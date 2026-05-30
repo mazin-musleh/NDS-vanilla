@@ -425,16 +425,14 @@
                 // Keep user on approximately the same content position
                 const newCurrentPage = Math.min(currentPage, totalPages);
 
-                // Generate pagination HTML
-                const paginationHTML = generatePaginationHTML(totalPages, newCurrentPage);
-                paginationNav.innerHTML = paginationHTML;
-                markActivePage(paginationNav, newCurrentPage);
+                // Generate the collapsed list directly (no build-all-then-collapse)
+                paginationNav.innerHTML = generatePaginationHTML(totalPages, newCurrentPage, true);
 
                 // Show current page items
                 showPage(items, newCurrentPage, perPage);
 
-                // Initialize pagination component
-                new NDSPagination(paginationNav);
+                // Wire the ellipsis dropmenu + stamp active state
+                wireGeneratedPagination(paginationNav, newCurrentPage);
 
                 // Store perPage for click handler closure
                 const finalPerPage = perPage;
@@ -510,45 +508,78 @@
         if (btn) NDS.State.set(btn, 'active');
     }
 
-    function generatePaginationHTML(totalPages, activePage = 1) {
-        // Ensure activePage is within valid range
-        activePage = Math.max(1, Math.min(activePage, totalPages));
+    // ── HTML builders ────────────────────────────────────────────────
+    // data-state for the active page is NOT baked into the template — it stays
+    // inside NDS.State.set (markActivePage / activateGeneratedPage) so the State
+    // vocab never leaks into a literal attribute. aria-current IS emitted; it's
+    // semantic and valid pre-JS.
+    const _prevLi = (disabled) =>
+        `<li class="nds-pagination-item nds-pagination-prev"><button type="button" class="nds-btn nds-subtle" aria-label="Previous page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button></li>`;
+    const _nextLi = (disabled) =>
+        `<li class="nds-pagination-item nds-pagination-next"><button type="button" class="nds-btn nds-subtle" aria-label="Next page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button></li>`;
+    const _pageLi = (i, activePage) =>
+        `<li class="nds-pagination-item page_${i}"><button type="button" class="nds-btn nds-subtle nds-indicator"${i === activePage ? ' aria-current="page"' : ''} aria-label="Page ${i}"><span class="nds-label">${i}</span></button></li>`;
 
-        let html = '<ul class="nds-pagination-list">';
-
-        // Prev button
-        const prevDisabled = activePage === 1 ? ' disabled' : '';
-        html += `
-            <li class="nds-pagination-item nds-pagination-prev">
-                <button type="button" class="nds-btn nds-subtle" aria-label="Previous page"${prevDisabled}>
-                    <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
-                </button>
-            </li>`;
-
-        // Page numbers. data-state for the active page is NOT baked into the
-        // template — callers stamp it via markActivePage() after innerHTML so
-        // the State vocab stays inside NDS.State.set rather than a literal attr.
-        for (let i = 1; i <= totalPages; i++) {
+    // Ellipsis <li>: a dropmenu whose items are the collapsed page range
+    // [from, to]. Structure mirrors createDropdown() (the manual-collapse path)
+    // exactly, so NDS.Dropmenu.create and the click handler treat them the same.
+    function _ellipsisLi(from, to, activePage) {
+        let items = '';
+        for (let i = from; i <= to; i++) {
             const ariaCurrent = i === activePage ? ' aria-current="page"' : '';
-            html += `
-            <li class="nds-pagination-item page_${i}">
-                <button type="button" class="nds-btn nds-subtle nds-indicator"${ariaCurrent} aria-label="Page ${i}">
-                    <span class="nds-label">${i}</span>
-                </button>
-            </li>`;
+            items += `<button type="button" class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" aria-label="Page ${i}"${ariaCurrent}><span class="nds-label">${i}</span></button>`;
         }
+        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="More pages"><span class="nds-label"></span></button><div class="nds-dropmenu-menu" aria-hidden="true"><div class="nds-dropmenu-scroll">${items}</div></div></div></li>`;
+    }
 
-        // Next button
-        const nextDisabled = activePage === totalPages ? ' disabled' : '';
-        html += `
-            <li class="nds-pagination-item nds-pagination-next">
-                <button type="button" class="nds-btn nds-subtle" aria-label="Next page"${nextDisabled}>
-                    <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
-                </button>
-            </li>
-        </ul>`;
-
+    // Build a pagination list. With collapse=true and >5 pages, emits the
+    // collapsed shape directly — [Prev] 1 2 3 [ellipsis of 4..N-1] N [Next] — so
+    // auto-pagination skips the build-all-then-collapse round-trip (no
+    // NDSPagination needed). The manual path passes collapse=false and keeps
+    // collapsePagination() for author-written markup.
+    function generatePaginationHTML(totalPages, activePage = 1, collapse = false) {
+        activePage = Math.max(1, Math.min(activePage, totalPages));
+        let html = '<ul class="nds-pagination-list">' + _prevLi(activePage === 1);
+        if (collapse && totalPages > 5) {
+            html += _pageLi(1, activePage) + _pageLi(2, activePage) + _pageLi(3, activePage);
+            html += _ellipsisLi(4, totalPages - 1, activePage);
+            html += _pageLi(totalPages, activePage);
+        } else {
+            for (let i = 1; i <= totalPages; i++) html += _pageLi(i, activePage);
+        }
+        html += _nextLi(activePage === totalPages) + '</ul>';
         return html;
+    }
+
+    // Wire a directly-generated collapsed list: create the ellipsis dropmenu (if
+    // present) and stamp active state. Replaces `new NDSPagination` for the
+    // auto-pagination paths — the collapse already lives in the markup.
+    function wireGeneratedPagination(paginationNav, activePage) {
+        const dm = paginationNav.querySelector('.nds-pagination-ellipsis .nds-dropmenu');
+        // Soft dependency — ellipsis stays plain markup if NDS.Dropmenu isn't bundled.
+        if (dm && NDS.Dropmenu) NDS.Dropmenu.create(dm);
+        activateGeneratedPage(paginationNav, activePage);
+    }
+
+    // Stamp data-state active for the current page on a freshly generated list:
+    // a visible page button, or — when the page is collapsed into the ellipsis —
+    // the dropmenu item plus the ellipsis trigger (whose label then shows the number).
+    function activateGeneratedPage(host, activePage) {
+        const visibleBtn = host.querySelector(`.page_${activePage} .nds-btn`);
+        if (visibleBtn) { NDS.State.set(visibleBtn, 'active'); return; }
+        const items = host.querySelectorAll('.nds-pagination-ellipsis .nds-dropmenu-item');
+        for (let i = 0; i < items.length; i++) {
+            if (parseInt(items[i].querySelector('.nds-label')?.textContent) === activePage) {
+                NDS.State.set(items[i], 'active');
+                const trigger = host.querySelector('.nds-pagination-ellipsis .nds-dropmenu-trigger');
+                if (trigger) {
+                    NDS.State.set(trigger, 'active');
+                    const label = trigger.querySelector('.nds-label');
+                    if (label) label.textContent = activePage;
+                }
+                return;
+            }
+        }
     }
 
     function showPage(items, pageNumber, perPage) {
@@ -728,16 +759,14 @@
         // Show pagination
         paginationNav.style.display = '';
 
-        // Generate pagination HTML
-        const paginationHTML = generatePaginationHTML(totalPages, 1);
-        paginationNav.innerHTML = paginationHTML;
-        markActivePage(paginationNav, 1);
+        // Generate the collapsed list directly (no build-all-then-collapse)
+        paginationNav.innerHTML = generatePaginationHTML(totalPages, 1, true);
 
         // Show first page items
         showPageFiltered(visibleItems, 1, perPage);
 
-        // Initialize pagination component
-        new NDSPagination(paginationNav);
+        // Wire the ellipsis dropmenu + stamp active state
+        wireGeneratedPagination(paginationNav, 1);
 
         // Store for click handler closure
         const finalPerPage = perPage;
