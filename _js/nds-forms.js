@@ -501,7 +501,6 @@
 
             // Update data-state on container
             if (formContainer) {
-                hasValue ? NDS.State.add(formContainer, 'filled') : NDS.State.remove(formContainer, 'filled');
                 input.disabled ? NDS.State.add(formContainer, 'disabled') : NDS.State.remove(formContainer, 'disabled');
                 // Skip readonly sync for select-input — its readonly prevents typing, not interaction
                 if (!input.classList.contains('nds-select-input')) {
@@ -766,6 +765,10 @@
                 var valueDescriptor = Object.getOwnPropertyDescriptor(proto, 'value');
                 var checkedDescriptor = Object.getOwnPropertyDescriptor(proto, 'checked');
 
+                // Sibling components (autocomplete, filter, multiselect, otp) set a
+                // form-control input's value/checked programmatically WITHOUT
+                // dispatching input/change, and rely on these setters to sync the
+                // container chrome (clear button, validation, radio-group paint).
                 if (valueDescriptor && valueDescriptor.set) {
                     Object.defineProperty(input, 'value', {
                         get: valueDescriptor.get,
@@ -1569,8 +1572,12 @@
     }
 
     function initializeAllForms() {
+        // initFormControlClasses() -> initializeContainer(document.body) already
+        // sweeps .nds-auto-fill, so a separate initInputAutoFill() pass here would
+        // re-init every auto-fill container at startup. The standalone pass stays
+        // wired to the dynamic-content observer (initDynamicContentObserver) for
+        // .nds-auto-fill nodes added after load.
         initFormControlClasses();
-        initInputAutoFill();
         initDynamicContentObserver();
     }
 
