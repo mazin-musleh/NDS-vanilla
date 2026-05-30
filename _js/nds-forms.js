@@ -749,9 +749,6 @@
             // Input → container: sync current input state to data-state
             FieldSync.update(input, formControl, true);
 
-            // Property change detection for programmatic updates
-            this._setupPropertyWatchers(input, formControl);
-
             // Initialize specialized controls
             if (input.tagName.toLowerCase() === 'select') {
                 this.initSelectDropdown(input, formControl);
@@ -761,50 +758,6 @@
             }
             // Date inputs are wired by NDS.DatePicker's own loader-driven sweep
             // (selector .nds-date-input) — forms no longer reaches into it.
-        },
-
-        _setupPropertyWatchers: function(input, formControl) {
-            try {
-                var proto = Object.getPrototypeOf(input);
-                var valueDescriptor = Object.getOwnPropertyDescriptor(proto, 'value');
-                var checkedDescriptor = Object.getOwnPropertyDescriptor(proto, 'checked');
-
-                // Sibling components (autocomplete, filter, multiselect, otp) set a
-                // form-control input's value/checked programmatically WITHOUT
-                // dispatching input/change, and rely on these setters to sync the
-                // container chrome (clear button, validation, radio-group paint).
-                // Only value/checked need this: disabled/readonly/required reach a
-                // form-control input only via markup or NDS.State (the cascade hooks
-                // + init handle those), never raw-assigned by other components.
-                if (valueDescriptor && valueDescriptor.set) {
-                    Object.defineProperty(input, 'value', {
-                        get: valueDescriptor.get,
-                        set: function(val) {
-                            valueDescriptor.set.call(this, val);
-                            FieldSync.update(this, formControl, true);
-                        },
-                        configurable: true
-                    });
-                }
-
-                if (checkedDescriptor && checkedDescriptor.set && (input.type === 'radio' || input.type === 'checkbox')) {
-                    Object.defineProperty(input, 'checked', {
-                        get: checkedDescriptor.get,
-                        set: function(val) {
-                            var wasChecked = this.checked;
-                            checkedDescriptor.set.call(this, val);
-                            FieldSync.update(this, formControl, true);
-                            if (val && !wasChecked) {
-                                FieldSync.updateRadioGroup(this);
-                            }
-                        },
-                        configurable: true
-                    });
-                }
-
-            } catch (e) {
-                // Silent fail if property definition not supported
-            }
         },
 
         initSelectDropdown: function(selectElement, formControl) {
@@ -1580,6 +1533,20 @@
             } else {
                 add ? NDS.State.add(container, stateName) : NDS.State.remove(container, stateName);
             }
+        },
+
+        // Re-sync a form-control's chrome (clear button, validation, radio-group
+        // paint) after its value/checked is set programmatically. Call this — or
+        // dispatch an input/change event — when changing a field's value from JS;
+        // raw assignment alone no longer notifies the field. Dispatches nothing
+        // itself, so it can't re-enter a caller's own input handler. No-op outside
+        // a form-control.
+        syncState: function(input) {
+            if (!input || !input.closest) return;
+            var formControl = input.closest('.nds-form-control');
+            if (!formControl) return;
+            FieldSync.update(input, formControl, true);
+            if (input.type === 'radio' && input.checked) FieldSync.updateRadioGroup(input);
         },
 
         // Checkbox Indeterminate State

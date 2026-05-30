@@ -6,9 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
-### Removed
-- Forms — `NDS.Forms.updateDataState(el, state, add)` removed. It was a thin pass-through to the core state API, left over from before form state management moved to `NDS.State`. Use `NDS.State.add(el, state)` / `NDS.State.remove(el, state)` directly.
-
 ## [1.0.5] - 2026-05-16
 
 ### Added
