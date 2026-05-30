@@ -55,7 +55,6 @@
             selector: '.nds-table',
             init: () => NDS.Tables?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
             // Eager: auto-expand state would CLS if applied in idle (panels
