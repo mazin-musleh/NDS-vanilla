@@ -29,7 +29,7 @@
     'use strict';
 
     class NDSFilter {
-        constructor(filterContainer) {
+        constructor(filterContainer, surfaces = null) {
             this.filterContainer = filterContainer;
             this.targetId = filterContainer.getAttribute('data-filter-target');
             this.targetContainer = this.targetId ? document.getElementById(this.targetId) : null;
@@ -40,7 +40,9 @@
             // is included too; there is no privileged "container", just the target
             // set. queryAll searches these subtrees instead of sweeping the whole
             // document. Recomputed in refresh() for the dynamic-DOM path.
-            this._targetRoots = this.resolveTargetRoots();
+            // `surfaces` (when passed by the loader) is this target's already-grouped
+            // surface set, so the constructor skips re-scanning the document for them.
+            this._targetRoots = this.resolveTargetRoots(surfaces);
 
             // Get all filterable items (empty array if no target)
             this.items = this.targetContainer
@@ -67,9 +69,11 @@
             // .nds-filter is always a pure anchor; form mode is driven by a separate
             // <form data-filter-target="X" data-filter-submit> element linked via the
             // same target id. Add data-ajax on that form for AJAX submission.
-            this.submissionForm = this.targetId
-                ? document.querySelector(`form[data-filter-target="${this.targetId}"][data-filter-submit]`)
-                : null;
+            // Surface lookups resolve from _targetRoots (the elements carrying
+            // this filter's data-filter-target) rather than re-scanning the whole
+            // document — a root IS the linked element, so .matches() on the small
+            // root set replaces a document-wide attribute query per surface.
+            this.submissionForm = this._targetRoots.find(r => r.matches('form[data-filter-submit]')) || null;
 
             this.isFormMode = !!this.submissionForm;
             this.isAjaxMode = this.isFormMode && this.submissionForm.hasAttribute('data-ajax');
@@ -77,29 +81,19 @@
             // Hidden inputs container for form mode
             this.hiddenInputsContainer = null;
 
-            // Resolve applied-chips container: inside filter first, then external with matching target
+            // Resolve applied-chips container: inside filter first, then a linked root.
             this.appliedContainer = filterContainer.querySelector('.nds-filter-applied')
-                || (this.targetId && document.querySelector(`.nds-filter-applied[data-filter-target="${this.targetId}"]`));
+                || this._targetRoots.find(r => r.matches('.nds-filter-applied'))
+                || null;
 
-            // Resolve external search box linked by data-filter-target
-            this.searchBoxElement = this.targetId
-                ? document.querySelector(`.nds-search-box[data-filter-target="${this.targetId}"]`)
-                : null;
+            // Resolve external search box / auto-fill linked by data-filter-target.
+            this.searchBoxElement = this._targetRoots.find(r => r.matches('.nds-search-box')) || null;
+            this.autoFillElement = this._targetRoots.find(r => r.matches('.nds-auto-fill')) || null;
 
-            // Resolve external auto-fill linked by data-filter-target
-            this.autoFillElement = this.targetId
-                ? document.querySelector(`.nds-auto-fill[data-filter-target="${this.targetId}"]`)
-                : null;
-
-            // Resolve search-query slot via data-filter-target linking (same pattern as
-            // .nds-filter-applied / .nds-search-box). When present, the search keyword is
-            // routed into this slot instead of the applied-chips row.
-            this.searchQuerySlot = this.targetId
-                ? document.querySelector(
-                    `[data-filter-query][data-filter-target="${this.targetId}"],`
-                    + ` [data-filter-target="${this.targetId}"] [data-filter-query]`
-                )
-                : null;
+            // Resolve search-query slot — a root carrying [data-filter-query] or one
+            // holding it as a descendant. When present, the search keyword is routed
+            // into this slot instead of the applied-chips row.
+            this.searchQuerySlot = this.query('[data-filter-query]');
 
             this.filterLabels = {};  // { filterName: { value: label } } — auto-built from data-filter-value
 
@@ -148,10 +142,15 @@
         // data-filter-target. The representative element is always included (it
         // carries the target too, but unshift guarantees it even if markup ever
         // diverges) so a query never misses the element the instance was built on.
-        resolveTargetRoots() {
-            const roots = this.targetId
-                ? Array.from(document.querySelectorAll(`[data-filter-target="${this.targetId}"]`))
-                : [];
+        // `surfaces`, when supplied (loader init path), is the pre-grouped set for
+        // this target — used as-is to avoid a redundant document scan; refresh()
+        // and create() pass nothing, so they re-scan for the current DOM.
+        resolveTargetRoots(surfaces = null) {
+            const roots = surfaces
+                ? surfaces.slice()
+                : (this.targetId
+                    ? Array.from(document.querySelectorAll(`[data-filter-target="${this.targetId}"]`))
+                    : []);
             if (!roots.includes(this.filterContainer)) roots.unshift(this.filterContainer);
             return roots;
         }
@@ -950,13 +949,8 @@
                 this.searchQuerySlot.textContent = q ? '\u201C' + q + '\u201D' : '';
             }
 
-            // Count slot resolution via data-filter-target linking
-            const countSlot = this.targetId
-                ? document.querySelector(
-                    `[data-filter-count][data-filter-target="${this.targetId}"],`
-                    + ` [data-filter-target="${this.targetId}"] [data-filter-count]`
-                )
-                : null;
+            // Count slot — a linked root carrying [data-filter-count] or holding it.
+            const countSlot = this.query('[data-filter-count]');
             if (!countSlot || !this.targetContainer) return;
 
             // Count source priority:
@@ -1070,6 +1064,21 @@
             const filterElements = this.queryAll('[data-filter]');
             const params = new URLSearchParams(window.location.search);
 
+            // Dropmenus that will defer an auto-populated filter (hidden + not
+            // URL-active). Their first open already pays a prepare/delay pass, so a
+            // static-values filter in the same menu can defer its DOM build onto that
+            // same hook for free. A static filter in a menu that wouldn't otherwise
+            // defer stays eager — deferring it would add a needless first-open delay
+            // for no real init saving (static builds skip the collectFilterValues scan).
+            const deferringMenus = new Set();
+            filterElements.forEach(element => {
+                const type = element.getAttribute('data-filter-type');
+                if (!type || element.hasAttribute('data-filter-values')) return;
+                const name = element.getAttribute('data-filter');
+                const menu = element.closest('.nds-dropmenu-menu');
+                if (menu && !params.has(name)) deferringMenus.add(menu);
+            });
+
             filterElements.forEach(element => {
                 const filterName = element.getAttribute('data-filter');
                 const filterType = element.getAttribute('data-filter-type');
@@ -1079,9 +1088,9 @@
                 } else if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
                     // Check for explicit values via data-filter-values (array or object)
                     const staticValues = element.getAttribute('data-filter-values');
+                    let values = null;
                     if (staticValues) {
                         const raw = JSON.parse(staticValues);
-                        let values;
                         if (Array.isArray(raw)) {
                             values = raw;
                         } else {
@@ -1089,15 +1098,22 @@
                             values = Object.keys(raw);
                             this.filterLabels[filterName] = raw;
                         }
-                        this.setupDynamicFilter(element, filterName, filterType, values);
-                    } else if (!params.has(filterName) && element.closest('.nds-dropmenu-menu')) {
-                        // Auto-populated, hidden at rest (inside a dropmenu), and not
-                        // URL-active: defer the collectFilterValues scan to first
-                        // engagement. URL-active filters fall through to the eager
-                        // build below so applyUrlParams can check their inputs on load.
-                        this._deferredFilters.push({ element, filterName, filterType });
+                    }
+
+                    // Hidden at rest (inside a dropmenu) and not URL-active: defer the
+                    // option build to first engagement. Auto-populated filters defer the
+                    // collectFilterValues scan; static-values filters defer the DOM build
+                    // but only when their menu already defers an auto filter (see
+                    // deferringMenus above). The parsed `values` ride along so the prepare
+                    // hook builds without re-reading the attribute. URL-active filters fall
+                    // through to the eager build so applyUrlParams can check inputs on load.
+                    const menu = element.closest('.nds-dropmenu-menu');
+                    const canDefer = !!menu && !params.has(filterName)
+                        && (!values || deferringMenus.has(menu));
+                    if (canDefer) {
+                        this._deferredFilters.push({ element, filterName, filterType, values });
                     } else {
-                        this.setupDynamicFilter(element, filterName, filterType);
+                        this.setupDynamicFilter(element, filterName, filterType, values);
                     }
                 } else {
                     this.setupManualFilter(element, filterName);
@@ -1149,20 +1165,21 @@
             }
         }
 
-        // Build options for filters whose collectFilterValues scan was deferred
-        // at init (see setupFilterElements). Idempotent: the first engagement
-        // event builds the whole set; later events no-op. Deferred filters are
-        // never URL-active, so there is no URL state to re-apply after building.
+        // Build options for filters whose option build was deferred at init (see
+        // setupFilterElements) — auto-populated (collectFilterValues scan) and
+        // static-values (DOM build) alike. Idempotent: the first engagement event
+        // builds the whole set; later events no-op. Deferred filters are never
+        // URL-active, so there is no URL state to re-apply after building.
         buildDeferredFilters() {
             if (this._deferredBuilt) return;
             this._deferredBuilt = true;
             const deferred = this._deferredFilters;
             this._deferredFilters = [];
-            deferred.forEach(({ element, filterName, filterType }) => {
+            deferred.forEach(({ element, filterName, filterType, values }) => {
                 // Skip if already built (e.g. refresh() rebuilt it eagerly before
                 // first engagement) — re-running would scan + wire into a stale node.
                 if (this.filterInputs[filterName]) return;
-                this.setupDynamicFilter(element, filterName, filterType);
+                this.setupDynamicFilter(element, filterName, filterType, values || null);
             });
         }
 
@@ -2299,8 +2316,8 @@
     // Construct an instance on `representative` (the element that carries the
     // backref, init-guard attribute, and dispatches the filter's events) and
     // register it by target id.
-    function createInstance(representative) {
-        const instance = new NDSFilter(representative);
+    function createInstance(representative, surfaces) {
+        const instance = new NDSFilter(representative, surfaces);
         representative.ndsFilter = instance;
         representative.setAttribute('data-nds-filter-initialized', 'true');
         if (instance.targetId) {
@@ -2332,7 +2349,7 @@
 
         groups.forEach(surfaces => {
             const representative = surfaces.find(el => el.classList.contains('nds-filter')) || surfaces[0];
-            createInstance(representative);
+            createInstance(representative, surfaces);
         });
     }
 
