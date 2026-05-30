@@ -314,10 +314,12 @@
         }
 
         copyMaxWidthToWrapper() {
-            // Get max-width from table's inline style or computed style
-            const tableMaxWidth = this.table.style.getPropertyValue('--max-width') ||
-                                 getComputedStyle(this.table).getPropertyValue('--max-width');
-
+            // --max-width is only ever set inline — the SCSS consumes it via
+            // var(--max-width, 100%) and never sets it as a rule — so read the
+            // inline style directly. getComputedStyle here forced a full style
+            // recalc of the just-reparented table (~46ms@6.6x on a 100-row table)
+            // to read a value that's almost always unset.
+            const tableMaxWidth = this.table.style.getPropertyValue('--max-width');
             if (tableMaxWidth && tableMaxWidth.trim()) {
                 this.wrapper.style.setProperty('--max-width', tableMaxWidth.trim());
             }
