@@ -967,6 +967,18 @@
 
                 var formContainer = formControl.closest('.nds-form-container');
 
+                // Toggle + notify — shared by track-click, keyboard, and label-click.
+                function toggleSwitch() {
+                    if (switchInput.disabled || switchElement.classList.contains('disabled')) return;
+                    switchInput.checked = !switchInput.checked;
+                    Utils.triggerEvents(switchInput);
+                    FieldSync.update(switchInput, formControl);
+                    switchElement.dispatchEvent(new CustomEvent('switchChange', {
+                        detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
+                        bubbles: true
+                    }));
+                }
+
                 switchTrack.addEventListener('mousedown', function() {
                     if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
                         if (formContainer) {
@@ -986,33 +998,13 @@
                 switchTrack.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-
-                    if (switchInput.disabled || switchElement.classList.contains('disabled')) return;
-
-                    switchInput.checked = !switchInput.checked;
-                    Utils.triggerEvents(switchInput);
-                    FieldSync.update(switchInput, formControl);
-
-                    switchElement.dispatchEvent(new CustomEvent('switchChange', {
-                        detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
-                        bubbles: true
-                    }));
+                    toggleSwitch();
                 });
 
                 switchInput.addEventListener('keydown', function(e) {
                     if (e.key === ' ' || e.key === 'Enter') {
                         e.preventDefault();
-
-                        if (!this.disabled && !switchElement.classList.contains('disabled')) {
-                            this.checked = !this.checked;
-                            Utils.triggerEvents(this);
-                            FieldSync.update(this, formControl);
-
-                            switchElement.dispatchEvent(new CustomEvent('switchChange', {
-                                detail: { checked: this.checked, value: this.value, input: this },
-                                bubbles: true
-                            }));
-                        }
+                        toggleSwitch();
                     }
                 });
 
@@ -1020,17 +1012,7 @@
                 if (label && !switchElement.contains(label)) {
                     label.addEventListener('click', function(e) {
                         e.preventDefault();
-
-                        if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
-                            switchInput.checked = !switchInput.checked;
-                            Utils.triggerEvents(switchInput);
-                            FieldSync.update(switchInput, formControl);
-
-                            switchElement.dispatchEvent(new CustomEvent('switchChange', {
-                                detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
-                                bubbles: true
-                            }));
-                        }
+                        toggleSwitch();
                     });
                 }
 
@@ -1094,15 +1076,15 @@
                     holdTimer = setTimeout(function() {
                         holdInterval = setInterval(function() { stepValue(btn, currentMultiplier); }, currentSpeed);
 
-                        // Schedule tier upgrades
-                        for (var i = 1; i < tiers.length; i++) {
-                            (function(tier) {
-                                tierTimers.push(setTimeout(function() {
-                                    currentMultiplier = tier[1];
-                                    clearInterval(holdInterval);
-                                    holdInterval = setInterval(function() { stepValue(btn, currentMultiplier); }, tier[2]);
-                                }, tier[0]));
-                            })(tiers[i]);
+                        // Schedule tier upgrades. let-scoped `tier` gives each
+                        // iteration its own binding — no closure-capture IIFE.
+                        for (let t = 1; t < tiers.length; t++) {
+                            const tier = tiers[t];
+                            tierTimers.push(setTimeout(function() {
+                                currentMultiplier = tier[1];
+                                clearInterval(holdInterval);
+                                holdInterval = setInterval(function() { stepValue(btn, currentMultiplier); }, tier[2]);
+                            }, tier[0]));
                         }
                     }, 400);
                 });
