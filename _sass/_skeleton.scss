@@ -119,14 +119,24 @@ body:not([data-nds-loaded]) {
    Hides items past index 6 (matches most NDS demo pages' --per-page: 6
    default) until that signal lands. Without it, all items paint first
    then the content area shrinks when JS hides items past --per-page —
-   visible vertical CLS. Descendant selector covers both grid layouts
-   (.nds-page-item as direct child) and tables (tr.nds-page-item inside
-   <tbody>). :nth-child counts among siblings of the actual parent
-   (tbody or paged-content), so the index matches what JS hides. Pages
-   with --per-page != 6 see a small bounded shift (much less than
-   all-items → first-N). */
-.nds-paged-content:not([data-paged-initialized]) .nds-page-item:nth-child(n + 7) {
+   visible vertical CLS. :nth-child counts among siblings of the actual
+   parent (tbody or paged-content), so the index matches what JS hides.
+   Pages with --per-page != 6 see a small bounded shift (much less than
+   all-items → first-N).
+
+   Grids and tables differ on HOW the overflow is hidden:
+   - grid/card items are removed from flow (display:none);
+   - table rows are COLLAPSED (visibility:collapse) — same height removal,
+     but the row stays in the layout tree and keeps contributing to column
+     sizing. That lets pagination lock column widths with a free read of
+     the full-content widths, with no un-hide reflow (see lockTableColumns
+     in _js/nds-pagination.js). collapse on a non-table element behaves like
+     visibility:hidden (keeps space), so it must stay table-row-scoped. */
+.nds-paged-content:not([data-paged-initialized]) .nds-page-item:not(tr):nth-child(n + 7) {
     display: none;
+}
+.nds-paged-content:not([data-paged-initialized]) tr.nds-page-item:nth-child(n + 7) {
+    visibility: collapse;
 }
 
 /* ── Wrapper padding ──

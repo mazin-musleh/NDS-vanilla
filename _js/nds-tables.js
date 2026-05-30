@@ -284,35 +284,6 @@
             }
         }
 
-        lockColumnWidths() {
-            // Only lock if table has pagination items (paginated table)
-            if (!this.table.querySelector('tr.nds-page-item')) return;
-
-            // Temporarily show all rows to measure true max column widths
-            const rows = this.table.querySelectorAll('tr.nds-page-item');
-            const hiddenRows = [];
-            rows.forEach(row => {
-                if (row.hidden) {
-                    hiddenRows.push(row);
-                    row.hidden = false;
-                }
-            });
-
-            // Measure each header cell's computed width with all rows visible.
-            // Batch reads first, writes second, so a write to header N doesn't
-            // dirty layout for the read of header N+1.
-            const headers = this.table.querySelectorAll('thead th');
-            const widths = Array.from(headers).map(th => th.getBoundingClientRect().width);
-            headers.forEach((th, i) => {
-                th.style.width = widths[i] + 'px';
-            });
-
-            // Re-hide the rows that were hidden
-            hiddenRows.forEach(row => {
-                row.hidden = true;
-            });
-        }
-
         copyMaxWidthToWrapper() {
             // --max-width is only ever set inline — the SCSS consumes it via
             // var(--max-width, 100%) and never sets it as a rule — so read the
@@ -369,17 +340,16 @@
             // Scroll event listener with requestAnimationFrame throttling
             this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => this.handleScroll()));
 
-            // The RO's first delivery runs the initial measurement — the
-            // column-width lock + overflow check. It fires post-layout, so the
-            // rect and scrollWidth reads are free; running them in init() would
-            // force a reflow during the component-init burst. Later deliveries
-            // are debounced to coalesce resize storms.
+            // The RO's first delivery runs the initial overflow check
+            // immediately — it fires post-layout so the scrollWidth read is free.
+            // Column-width locking is owned by pagination now (it locks before
+            // hiding rows; see lockTableColumns in nds-pagination.js). Later
+            // deliveries are debounced to coalesce resize storms.
             let firstMeasure = true;
             const checkTable = NDS.debounce(() => this.checkTableWidth(), 100);
             const onSizeChange = () => {
                 if (firstMeasure) {
                     firstMeasure = false;
-                    this.lockColumnWidths();
                     this.checkTableWidth();
                 } else {
                     checkTable();

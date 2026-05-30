@@ -366,6 +366,23 @@
         updatePrevNextStates(pagination, currentPageNum, minPage, maxPage);
     }
 
+    // Lock a paged table's column widths before pagination hides its rows.
+    // The skeleton collapses overflow rows with `visibility: collapse` (not
+    // display:none), so they stay in the layout tree and the column widths
+    // already reflect every row's content — this read is free, no un-hide
+    // reflow. Once showPage hides the off-page rows, the explicit widths stop
+    // columns jumping page to page. No-op for non-table (card) paged content.
+    function lockTableColumns(items) {
+        const first = items[0];
+        if (!first || first.tagName !== 'TR') return;
+        const table = first.closest('table');
+        const headers = table && table.querySelectorAll('thead th');
+        if (!headers || !headers.length) return;
+        const widths = [];
+        for (let i = 0; i < headers.length; i++) widths.push(headers[i].getBoundingClientRect().width);
+        for (let i = 0; i < headers.length; i++) headers[i].style.width = widths[i] + 'px';
+    }
+
     // Auto-Pagination Generator for content-based pagination
     function initializeAutoPagination() {
         // Release pooled ResizeObserver subscriptions when paged-content
@@ -400,10 +417,11 @@
             // Get items
             const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
 
-            // Read --per-page (inline-first; see readPerPage) and cache it on the
-            // container so filter-triggered refresh() reads it back without a recalc.
-            let lastPerPage = readPerPage(contentContainer);
-            contentContainer._ndsPerPage = lastPerPage;
+            // --per-page is read inside paginate() below (deferred a frame for
+            // tables) so readPerPage's getComputedStyle fallback lands post-paint,
+            // where the collapsed table is already laid out — no synchronous forced
+            // recalc during the init burst. Cached on the container for refresh().
+            let lastPerPage;
 
             // Rebuild pagination for the given --per-page. The caller reads
             // the value once and passes it in, so each update measures once.
@@ -477,15 +495,34 @@
                 });
             }
 
-            // Build pagination in final state — no all-items → paginated flash.
-            updatePagination(lastPerPage);
+            // Build the paginated UI in final state — no all-items → paginated
+            // flash. For a table, lockTableColumns first freezes column widths
+            // from the full-content layout (the collapsed skeleton rows still
+            // size columns) so they don't jump page to page. data-paged-initialized
+            // is released only AFTER paginating, so the collapse — and thus the
+            // all-rows column sizing — survives through the lock.
+            const paginate = () => {
+                lastPerPage = readPerPage(contentContainer);
+                contentContainer._ndsPerPage = lastPerPage;
+                lockTableColumns(items);
+                updatePagination(lastPerPage);
+                contentContainer.setAttribute('data-paged-initialized', '');
+            };
+
+            // Tables defer one frame: by the next paint the collapsed table is
+            // already laid out, so lockTableColumns' width read is free — no
+            // pre-paint forced reflow. The skeleton shows the first rows in the
+            // meantime, so the one-frame defer is invisible. Grids have no column
+            // lock, so they paginate synchronously.
+            if (items[0] && items[0].tagName === 'TR') requestAnimationFrame(paginate);
+            else paginate();
 
             // Watch for --per-page changes on resize. Stored handle lets the
             // module-level `.nds-paged-content` removal listener release the
             // pooled ResizeObserver entry when this container leaves the DOM.
             contentContainer._offResize = NDS.onElementResize(contentContainer, NDS.debounce(() => {
                 const currentPerPage = readPerPage(contentContainer);
-                if (currentPerPage !== lastPerPage) {
+                if (lastPerPage !== undefined && currentPerPage !== lastPerPage) {
                     lastPerPage = currentPerPage;
                     contentContainer._ndsPerPage = currentPerPage;
                     updatePagination(currentPerPage);
@@ -493,10 +530,6 @@
             }, 150));
 
             paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
-            // Mark the paged content too — lets the pre-init skeleton rule
-            // gate on a single attribute without crossing sibling boundaries.
-            // Mirrors swiper's data-swiper-initialized convention.
-            contentContainer.setAttribute('data-paged-initialized', '');
         });
     }
 
