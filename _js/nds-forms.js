@@ -268,6 +268,22 @@
             return isArabic ? 'الحد الأقصى ' + value : 'Maximum value is ' + value;
         },
 
+        // Shared tail for group validators: apply the data-error-message
+        // override, dispatch the showMessage status update, and return the
+        // merged result. Each validator supplies its distinct validity/message
+        // computation, then hands off here.
+        _finishGroupValidation: function(group, options, isValid, message, extra) {
+            var customMessage = group.getAttribute('data-error-message');
+            if (!isValid && customMessage) message = customMessage;
+
+            if (options.showMessage) {
+                if (!isValid) StatusManager.set({ element: group, status: 'error', message: message });
+                else StatusManager.clear(group);
+            }
+
+            return Object.assign({ valid: isValid, message: message }, extra);
+        },
+
         validateCheckboxGroup: function(groupElement, options) {
             options = options || { showMessage: true };
 
@@ -297,15 +313,7 @@
                 }
             }
 
-            var customMessage = group.getAttribute('data-error-message');
-            if (!isValid && customMessage) message = customMessage;
-
-            if (options.showMessage) {
-                if (!isValid) StatusManager.set({ element: group, status: 'error', message: message });
-                else StatusManager.clear(group);
-            }
-
-            return { valid: isValid, checked: checkedCount, min: minChecked, max: maxChecked, message: message };
+            return this._finishGroupValidation(group, options, isValid, message, { checked: checkedCount, min: minChecked, max: maxChecked });
         },
 
         validateRadioGroup: function(groupElement, options) {
@@ -324,15 +332,7 @@
                 message = isArabic ? 'يرجى اختيار خيار واحد' : 'Please select an option';
             }
 
-            var customMessage = group.getAttribute('data-error-message');
-            if (!isValid && customMessage) message = customMessage;
-
-            if (options.showMessage) {
-                if (!isValid) StatusManager.set({ element: group, status: 'error', message: message });
-                else StatusManager.clear(group);
-            }
-
-            return { valid: isValid, selected: isSelected, message: message };
+            return this._finishGroupValidation(group, options, isValid, message, { selected: isSelected });
         },
 
         validateOtpGroup: function(groupElement, options) {
@@ -350,15 +350,7 @@
                 message = isArabic ? 'يرجى إدخال جميع الأرقام' : 'Please enter all ' + inputs.length + ' digits';
             }
 
-            var customMessage = group.getAttribute('data-error-message');
-            if (!isValid && customMessage) message = customMessage;
-
-            if (options.showMessage) {
-                if (!isValid) StatusManager.set({ element: group, status: 'error', message: message });
-                else StatusManager.clear(group);
-            }
-
-            return { valid: isValid, filled: isAllFilled, message: message };
+            return this._finishGroupValidation(group, options, isValid, message, { filled: isAllFilled });
         },
 
         validateForm: function(formElement, options) {
@@ -594,6 +586,15 @@
                 input.setAttribute('aria-required', 'true');
             }
 
+            this._bindInteractionState(input, formControl, formContainer);
+            this._bindInputProcessing(input, formControl, formContainer);
+            this._syncInitialState(input, formControl, formContainer);
+        },
+
+        // data-state interaction machine (active/focus/typing) + blur-time
+        // number clamp. statesActive() lives here because only these listeners
+        // consult it.
+        _bindInteractionState: function(input, formControl, formContainer) {
             // The select-input is `readonly` to prevent typing, but the field
             // is still interactive — clicking opens the dropdown. Treat it
             // as not-readonly for state-visualization purposes so it picks
@@ -660,7 +661,11 @@
                     NDS.State.add(formContainer, 'typing');
                 }
             });
+        },
 
+        // Value-processing listeners: numeric-only guard, input sanitize +
+        // error-clear, and the change handler.
+        _bindInputProcessing: function(input, formControl, formContainer) {
             // Numeric-only enforcement for inputmode="numeric"
             if (input.getAttribute('inputmode') === 'numeric') {
                 input.addEventListener('beforeinput', function(e) {
@@ -731,7 +736,10 @@
                     FieldSync.setIndeterminate(input, false);
                 }
             });
+        },
 
+        // Two-way initial sync + specialized control dispatch.
+        _syncInitialState: function(input, formControl, formContainer) {
             // Initialize state - two-way sync
             // Container → input: propagate data-required and pre-existing data-state
             if (formContainer) {
