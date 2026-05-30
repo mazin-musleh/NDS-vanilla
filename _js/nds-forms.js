@@ -489,9 +489,13 @@
     };
 
     // ==============================================
-    // FORM STATE MANAGEMENT
+    // FIELD STATE SYNC
     // ==============================================
-    var FormState = {
+    // Derives a field's container chrome from its input's DOM state — which
+    // data-state tokens apply (disabled/readonly/required), clear-button
+    // visibility, validation. The data-state token CRUD lives in core
+    // (NDS.State); this is the form-specific policy layered on top of it.
+    var FieldSync = {
         update: function(input, formControl, skipValidation) {
             var hasValue = (input.type === 'checkbox' || input.type === 'radio')
                 ? input.checked
@@ -571,7 +575,7 @@
                 if (radio !== changedRadio) {
                     var radioFormControl = radio.closest('.nds-form-control');
                     if (radioFormControl) {
-                        FormState.update(radio, radioFormControl);
+                        FieldSync.update(radio, radioFormControl);
                     }
                 }
             });
@@ -647,7 +651,7 @@
 
                 // Only validate on blur if field already has an error (to clear it when fixed)
                 var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
-                if (statesActive()) FormState.update(input, formControl, !hasError);
+                if (statesActive()) FieldSync.update(input, formControl, !hasError);
             });
 
             // Typing state - indicates real user input
@@ -705,7 +709,7 @@
                     }
                 }
 
-                FormState.update(input, formControl, true);
+                FieldSync.update(input, formControl, true);
 
                 var formContainer = formControl.closest('.nds-form-container');
                 if (formContainer && NDS.Status.get(formContainer) !== '') {
@@ -725,12 +729,12 @@
             // Change event - update state only, validate on submit
             input.addEventListener('change', function() {
                 var hasError = formContainer && NDS.Status.get(formContainer) === 'error';
-                FormState.update(input, formControl, !hasError);
-                FormState.updateRadioGroup(input);
+                FieldSync.update(input, formControl, !hasError);
+                FieldSync.updateRadioGroup(input);
 
                 // Auto-clear indeterminate on user interaction
                 if (input.type === 'checkbox' && !input.indeterminate) {
-                    FormState.setIndeterminate(input, false);
+                    FieldSync.setIndeterminate(input, false);
                 }
             });
 
@@ -743,7 +747,7 @@
                 NDS.State.apply(formContainer, 'disabled', 'readonly');
             }
             // Input → container: sync current input state to data-state
-            FormState.update(input, formControl, true);
+            FieldSync.update(input, formControl, true);
 
             // Property change detection for programmatic updates
             this._setupPropertyWatchers(input, formControl);
@@ -774,7 +778,7 @@
                         get: valueDescriptor.get,
                         set: function(val) {
                             valueDescriptor.set.call(this, val);
-                            FormState.update(this, formControl, true);
+                            FieldSync.update(this, formControl, true);
                         },
                         configurable: true
                     });
@@ -786,9 +790,9 @@
                         set: function(val) {
                             var wasChecked = this.checked;
                             checkedDescriptor.set.call(this, val);
-                            FormState.update(this, formControl, true);
+                            FieldSync.update(this, formControl, true);
                             if (val && !wasChecked) {
-                                FormState.updateRadioGroup(this);
+                                FieldSync.updateRadioGroup(this);
                             }
                         },
                         configurable: true
@@ -801,7 +805,7 @@
                         get: disabledDescriptor.get,
                         set: function(val) {
                             disabledDescriptor.set.call(this, val);
-                            FormState.update(this, formControl, true);
+                            FieldSync.update(this, formControl, true);
                         },
                         configurable: true
                     });
@@ -813,7 +817,7 @@
                         get: requiredDescriptor.get,
                         set: function(val) {
                             requiredDescriptor.set.call(this, val);
-                            FormState.update(this, formControl, true);
+                            FieldSync.update(this, formControl, true);
                         },
                         configurable: true
                     });
@@ -825,7 +829,7 @@
                         get: readOnlyDescriptor.get,
                         set: function(val) {
                             readOnlyDescriptor.set.call(this, val);
-                            FormState.update(this, formControl, true);
+                            FieldSync.update(this, formControl, true);
                         },
                         configurable: true
                     });
@@ -933,7 +937,7 @@
                 Utils.triggerEvents(selectInput);
                 if (hiddenInput) Utils.triggerEvents(hiddenInput);
 
-                FormState.update(selectInput, formControl);
+                FieldSync.update(selectInput, formControl);
 
                 formControl.dispatchEvent(new CustomEvent('selectChange', {
                     detail: { value: value, text: text }
@@ -1013,7 +1017,7 @@
                     var text = optionText ? optionText.textContent : initialValue;
                     selectInput.value = text;
                     updateSelectedOptions();
-                    FormState.update(selectInput, formControl);
+                    FieldSync.update(selectInput, formControl);
                 }
             }
         },
@@ -1105,7 +1109,7 @@
                         if (result.isFinal) {
                             stop();
                             Utils.triggerEvents(input);
-                            FormState.update(input, formControl);
+                            FieldSync.update(input, formControl);
                         }
                     },
                     onError: function(error) {
@@ -1204,7 +1208,7 @@
 
                     switchInput.checked = !switchInput.checked;
                     Utils.triggerEvents(switchInput);
-                    FormState.update(switchInput, formControl);
+                    FieldSync.update(switchInput, formControl);
 
                     switchElement.dispatchEvent(new CustomEvent('switchChange', {
                         detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
@@ -1219,7 +1223,7 @@
                         if (!this.disabled && !switchElement.classList.contains('disabled')) {
                             this.checked = !this.checked;
                             Utils.triggerEvents(this);
-                            FormState.update(this, formControl);
+                            FieldSync.update(this, formControl);
 
                             switchElement.dispatchEvent(new CustomEvent('switchChange', {
                                 detail: { checked: this.checked, value: this.value, input: this },
@@ -1237,7 +1241,7 @@
                         if (!switchInput.disabled && !switchElement.classList.contains('disabled')) {
                             switchInput.checked = !switchInput.checked;
                             Utils.triggerEvents(switchInput);
-                            FormState.update(switchInput, formControl);
+                            FieldSync.update(switchInput, formControl);
 
                             switchElement.dispatchEvent(new CustomEvent('switchChange', {
                                 detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
@@ -1247,7 +1251,7 @@
                     });
                 }
 
-                FormState.update(switchInput, formControl, true);
+                FieldSync.update(switchInput, formControl, true);
             });
         },
 
@@ -1350,7 +1354,7 @@
                         input.value = '';
                     }
                     Utils.triggerEvents(input);
-                    FormState.update(input, formControl);
+                    FieldSync.update(input, formControl);
                 });
             });
         }
@@ -1476,7 +1480,7 @@
 
                     var formControl = targetInput.closest('.nds-form-control');
                     if (formControl) {
-                        FormState.update(targetInput, formControl);
+                        FieldSync.update(targetInput, formControl);
                     }
                 }
             };
@@ -1617,7 +1621,7 @@
         },
 
         // Checkbox Indeterminate State
-        setIndeterminate: FormState.setIndeterminate.bind(FormState),
+        setIndeterminate: FieldSync.setIndeterminate.bind(FieldSync),
 
         // Checkbox Group Validation
         validateCheckboxGroup: Validator.validateCheckboxGroup.bind(Validator),
