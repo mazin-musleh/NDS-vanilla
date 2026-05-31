@@ -819,14 +819,9 @@
         }
 
         getActiveFilterCount() {
-            let count = 0;
-            if (this.searchInputs.dropmenu && this.searchInputs.dropmenu.input.value.trim()) {
-                count++;
-            }
-            for (const values of Object.values(this.criteria.filters)) {
-                count += values.length;
-            }
-            return count;
+            const searchActive = this.searchInputs.dropmenu
+                && this.searchInputs.dropmenu.input.value.trim();
+            return this.getAppliedFilterCount() + (searchActive ? 1 : 0);
         }
 
         getAppliedFilterCount() {
