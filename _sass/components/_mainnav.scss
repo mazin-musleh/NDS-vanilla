@@ -298,6 +298,7 @@
         /* Fallback for older browsers */
         overflow-y: clip;
         padding-bottom: 1rem; // fix shadow flicker
+        margin-block-start: -1px; //fix 1px gap in low cpu
 
         // Dropdown-content is a positioned container only — scrolling is the
         // consumer's responsibility. Wrap long content in <div class="nds-scroll-more">
