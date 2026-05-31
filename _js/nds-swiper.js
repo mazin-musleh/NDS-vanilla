@@ -556,10 +556,18 @@
                 ? slideRect.right - wrapperRect.right
                 : slideRect.left - wrapperRect.left;
 
-            this.wrapper.scrollBy({
-                left: scrollDelta,
-                behavior: animate ? 'smooth' : 'instant'
-            });
+            if (animate) {
+                this.wrapper.scrollBy({ left: scrollDelta, behavior: 'smooth' });
+                return;
+            }
+
+            // Instant jump, cross-engine: the 'instant' behavior keyword degrades to
+            // the wrapper's CSS scroll-behavior (smooth) on Safari <15.4. Toggling
+            // scroll-behavior: auto inline forces a real instant scroll everywhere.
+            const prev = this.wrapper.style.scrollBehavior;
+            this.wrapper.style.scrollBehavior = 'auto';
+            this.wrapper.scrollBy({ left: scrollDelta });
+            this.wrapper.style.scrollBehavior = prev;
         }
 
         // ==============================================
@@ -572,11 +580,23 @@
         destroy() {
             this.container.removeAttribute('data-swiper-initialized');
             this.container.removeAttribute('tabindex');
-            if (this.pagination) this.pagination.innerHTML = '';
+
+            // Reverse the inline state init/setupPagination wrote, so destroy() restores
+            // the pre-init DOM for consumers that tear down without re-creating.
+            this.container.removeAttribute('data-swiper-peek');
+            ['--total', '--slides', '--peek', '--gap'].forEach(p => this.container.style.removeProperty(p));
+            if (this.wrapper) this.wrapper.style.removeProperty('overflow');
+            if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }
+            if (this.navigation) this.navigation.style.removeProperty('display');
+            if (this.prevBtn) this.prevBtn.style.removeProperty('display');
+            if (this.nextBtn) this.nextBtn.style.removeProperty('display');
+
             _activeSwipers.delete(this);
             if (this._offVisibility) { this._offVisibility(); this._offVisibility = null; }
             if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
+
+            delete this.container._ndsSwiper;
         }
     }
 
