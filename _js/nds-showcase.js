@@ -2722,4 +2722,14 @@
         if (window.NDS && NDS.Numbers) NDS.Numbers.reinit();
     });
 
+    // Self-boot: showcase ships as its own defer bundle, so it initializes itself
+    // rather than relying on the main loader — whose init is decoupled from
+    // DOMContentLoaded and could otherwise run before this bundle has executed
+    // (leaving the demos un-wired). Defer guarantees the DOM is parsed here.
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeShowcase);
+    } else {
+        initializeShowcase();
+    }
+
 })();

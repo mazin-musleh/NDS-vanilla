@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    // One-shot init guard. NDS.Init.reinitialize() / .initializeComponent
+    // One-shot init guard. A re-run of init (e.g. NDS.Init.initialize())
     // would otherwise re-stack the two pool subscriptions in init() — onDOMAdd
     // and onDOMRemove push unconditionally with no (selector, fn) dedup in core.
     // The single init at page load wires the subscribers; subsequent .nds-otp-group

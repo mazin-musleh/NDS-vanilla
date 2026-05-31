@@ -165,8 +165,8 @@
         }
     }
 
-    // One-shot init guard. NDS.Init.initializeComponent('cityWeather') (loader
-    // public API) would otherwise re-stack the setInterval and the
+    // One-shot init guard. A re-run of init (e.g. NDS.Init.initialize())
+    // would otherwise re-stack the setInterval and the
     // NDS.onAttrChange subscription on every re-call — none of those have
     // (selector, fn) dedup in core, so a stable function reference alone
     // wouldn't help. Page lifecycle is single-shot anyway; the guard keeps

@@ -16,29 +16,29 @@
     // Only exception: window.NDSInitConfig (pre-boot config, set before bundle loads)
     const COMPONENTS = [
         {
-            name: 'Main Navigation',
+            name: 'Mainnav',
             selector: '.nds-main-nav',
             init: () => NDS.Mainnav?.init?.(),
             idle: true,
         },
         {
-            name: 'theme',
+            name: 'Theme',
             selector: '[data-theme-toggle], #ndsThemeToggle',
             init: () => NDS.Theme?.init?.(),
         },
         {
-            name: 'forms',
+            name: 'Forms',
             selector: '.nds-form-control',
             init: () => NDS.Forms?.init?.(),
         },
         {
-            // Idle + delegated + self-contained: init() installs two document
-            // listeners and restores pre-selected labels (cosmetic — the submit
-            // value is already in the hidden input, so a brief restore flash on
-            // the idle pass is fine). Each select's NDS.Dropmenu builds lazily on
-            // first focusin, so init stays cheap. Idle keeps the eager pass lean;
-            // forms doesn't reach in, so there's no eager→idle dependency.
-            name: 'customSelect',
+            // Idle but stays in MAIN (no bundle): init() restores pre-selected
+            // labels, which are JS-derived from the option text. A delegated/extras
+            // bundle loads after the eager pass, so a pre-filled select would flash
+            // empty until then on slow links — keep the code in main so the restore
+            // runs on the local idle pass. Each select's NDS.Dropmenu builds lazily
+            // on first focusin; forms doesn't reach in, so no eager→idle dependency.
+            name: 'CustomSelect',
             selector: '.nds-select-input',
             init: () => NDS.CustomSelect?.init?.(),
             idle: true,
@@ -48,13 +48,13 @@
             // visual. The input[autofocus] restore is opt-in; pages that
             // ship autofocus on an OTP input will see the restore delayed
             // by one idle slot. Acceptable for the common case.
-            name: 'otp',
+            name: 'OTP',
             selector: '.nds-otp-group',
             init: () => NDS.OTP?.init?.(),
             idle: true,
         },
         {
-            name: 'tabs',
+            name: 'Tabs',
             selector: '.nds-tabs',
             init: () => NDS.Tabs?.init?.(),
             idle: true,
@@ -63,7 +63,7 @@
             // Idle: wraps table in .nds-table-wrapper (DOM reparent) + sets
             // up sort/select. Risk: wide tables on narrow viewports overflow
             // pre-wrap. CSS skeleton mitigation may be needed.
-            name: 'tables',
+            name: 'Tables',
             selector: '.nds-table',
             init: () => NDS.Tables?.init?.(),
             idle: true,
@@ -71,99 +71,93 @@
         {
             // Eager: auto-expand state would CLS if applied in idle (panels
             // paint collapsed-by-default then expand on init).
-            name: 'accordion',
+            name: 'Accordion',
             selector: '.nds-accordion',
             init: () => NDS.Accordion?.init?.(),
         },
         {
-            name: 'stepper',
+            name: 'Stepper',
             selector: '.nds-stepper',
             init: () => NDS.Stepper?.init?.(),
         },
         {
-            name: 'swiper',
+            name: 'Swiper',
             selector: '.nds-swiper',
             init: () => NDS.Swiper?.init?.(),
         },
         {
-            name: 'upload',
+            name: 'Upload',
             selector: '.nds-file-upload',
             init: () => NDS.Upload?.init?.(),
             idle: true,
         },
         {
-            // Extras + idle: a self-contained, page-specific leaf (the Web Speech
-            // engine + button live in nds-voice-input.js, consumed by nothing
-            // else). Loaded on demand only where a voice button exists. Voice is
-            // interaction-driven (recognition starts on click), so the on-demand
-            // fetch lands well before the user clicks.
-            name: 'voiceInput',
+            // Idle + self-contained: the Web Speech engine + button live in
+            // nds-voice-input.js, consumed by nothing else. Interaction-driven
+            // (recognition starts on click), so a late wire lands before the click.
+            name: 'VoiceInput',
             selector: '.nds-voice-input',
             init: () => NDS.VoiceInput?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
-            name: 'sidemenu',
+            name: 'Sidemenu',
             selector: '.nds-sidemenu',
             init: () => NDS.Sidemenu?.init?.(),
         },
         {
-            name: 'sideInfo',
+            name: 'Sideinfo',
             selector: '.nds-sideinfo',
             init: () => NDS.Sideinfo?.init?.(),
         },
         {
-            name: 'drawer',
+            name: 'Drawer',
             selector: '.nds-drawer',
             init: () => NDS.Drawer?.init?.(),
         },
         {
-            name: 'toc',
+            name: 'Toc',
             selector: '.nds-toc',
             init: () => NDS.Toc?.init?.(),
         },
         {
-            name: 'scrollMore',
+            name: 'ScrollMore',
             selector: '.nds-scroll-more',
             init: () => NDS.ScrollMore?.init?.(),
         },
         {
             // Idle: progress animations are cosmetic on-scroll work.
-            name: 'progress',
+            name: 'Progress',
             selector: '.nds-progress-circle, .nds-progress-bar',
             init: () => NDS.Progress?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
             // Idle: counter animations are cosmetic on-scroll work.
-            name: 'numbers',
+            name: 'Numbers',
             selector: '.nds-number-format, .nds-counter-value',
             init: () => NDS.Numbers?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
             // Targets the three NDS code hooks (block, tabs-wrapped block, inline).
             // Avoids bare `code` so detection doesn't sweep every <code> on docs pages.
-            name: 'code',
+            name: 'Code',
             selector: '.code-example, .nds-code, code.nds-inline-code',
             init: () => NDS.Code?.init?.(),
         },
         {
-            name: 'copy',
+            name: 'Copy',
             selector: '.nds-copy',
             init: () => NDS.Copy?.init?.(),
             idle: true,
         },
+        // Note: showcase is intentionally NOT registered here. Like accessibility,
+        // it ships as its own defer bundle (nds-showcase.min.js) and self-boots.
+        // The loader's init is decoupled from DOMContentLoaded, so registering it
+        // would risk init() running before that sibling bundle has executed.
         {
-            name: 'showcase',
-            selector: '.nds-demo-card, .demo-toggle-btn, .nds-demo-showcase',
-            init: () => NDS.Showcase?.init?.(),
-        },
-        {
-            name: 'share',
+            name: 'Share',
             selector: '.nds-share',
             init: () => NDS.Share?.init?.(),
             idle: true,
@@ -171,21 +165,19 @@
         {
             // Detection-only: presence of a [data-export] button loads the
             // extras bundle; export's init wires the delegated click handler.
-            name: 'export',
+            name: 'Export',
             selector: '[data-export]',
             init: () => NDS.Export?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
-            name: 'datePicker',
+            name: 'DatePicker',
             selector: '.nds-date-input',
             init: () => NDS.DatePicker?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
-            name: 'fontLoading',
+            name: 'FontLoading',
             selector: null,
             init: () => NDS.FontLoading?.init?.(),
             universal: true,
@@ -198,57 +190,55 @@
             // on the first frame (no pop-in CLS). NOTE: keep it layout-read-free;
             // an earlier getBoundingClientRect viewport-partition forced a full
             // page layout here (~110ms@6.6x on index) and had to be removed.
-            name: 'link',
+            name: 'Link',
             selector: null,
             init: () => NDS.Link?.init?.(),
             universal: true,
         },
         {
-            name: 'cookies',
+            name: 'Cookies',
             selector: '#ndsCookiesAcceptBtn',
             init: () => NDS.Cookies?.init?.(),
             idle: true,
         },
         {
-            name: 'rating',
+            name: 'Rating',
             selector: '.nds-rating',
             init: () => NDS.Rating?.init?.(),
         },
         {
-            name: 'expandable',
+            name: 'Expandable',
             selector: '.nds-expandable',
             init: () => NDS.Expandable?.init?.(),
         },
         {
-            name: 'breadcrumb',
+            name: 'Breadcrumb',
             selector: '.nds-breadcrumb-nav',
             init: () => NDS.Breadcrumb?.init?.(),
         },
         {
-            name: 'dropmenu',
+            name: 'Dropmenu',
             selector: '.nds-dropmenu',
             init: () => NDS.Dropmenu?.init?.(),
             idle: true,
         },
         {
-            name: 'tooltip',
+            name: 'Tooltip',
             selector: '.nds-tooltip',
             init: () => NDS.Tooltip?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
-            name: 'multiselect',
+            name: 'Multiselect',
             selector: '.nds-multiselect',
             init: () => NDS.Multiselect?.init?.(),
         },
         {
             // Idle: results fetch on user typing — no first-paint visual.
-            name: 'autocomplete',
+            name: 'Autocomplete',
             selector: '.nds-form-container[data-url]',
             init: () => NDS.Autocomplete?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
             // Eager: init now reads --per-page inline-first (no forced recalc)
@@ -256,25 +246,24 @@
             // settled idle layout; the skeleton CSS still reserves the slot until
             // data-paged-initialized, so no CLS. Registered before filter so
             // filter's Pagination.refresh runs after pagination is up.
-            name: 'pagination',
+            name: 'Pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
         },
         {
-            name: 'ipv',
+            name: 'Ipv',
             selector: '.nds-ipv-thumbnail',
             init: () => NDS.Ipv?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
-            name: 'modal',
+            name: 'Modal',
             selector: '.nds-modal',
             init: () => NDS.Modal?.init?.(),
             idle: true,
         },
         {
-            name: 'alert',
+            name: 'Alert',
             selector: '.nds-alert',
             init: () => NDS.Alert?.init?.(),
             idle: true,
@@ -288,33 +277,31 @@
             // Gate on [data-filter-target] (not .nds-filter): a filter is defined
             // by its target link, so it must init even when there's no .nds-filter
             // dropdown (e.g. a search-only filter).
-            name: 'filter',
+            name: 'Filter',
             selector: '[data-filter-target]',
             init: () => NDS.Filter?.init?.(),
         },
         {
-            name: 'userFeedback',
+            name: 'UserFeedback',
             selector: '.nds-user-feedback',
             init: () => NDS.UserFeedback?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
-            name: 'chart',
+            name: 'Chart',
             selector: '.nds-chart',
             init: () => NDS.Chart?.init?.(),
             idle: true,
-            bundle: 'extras',
         },
         {
-            name: 'empty',
+            name: 'Empty',
             selector: '.nds-empty',
             init: () => NDS.Empty?.init?.(),
         },
         {
             // Eager: enforces single-submit. A click in the idle gap would
             // bypass the cooldown.
-            name: 'cooldownButton',
+            name: 'CooldownButton',
             selector: '.nds-cooldown',
             init: () => NDS.CooldownButton?.init?.(),
         },
@@ -324,13 +311,13 @@
         // (modal, tooltip, filter, pagination…) keeps the early init chain
         // focused on what the user can click.
         {
-            name: 'cityWeather',
+            name: 'CityWeather',
             selector: '#nds-weatherInfo, #nds-cityName',
             init: () => NDS.CityWeather?.init?.(),
             idle: true,
         },
         {
-            name: 'timeDate',
+            name: 'TimeDate',
             selector: '#nds-date, #nds-realTimeClock',
             init: () => NDS.TimeDate?.init?.(),
             idle: true,
@@ -370,27 +357,108 @@
             }), 1);
         });
 
-    // Loads the opt-in extras bundle once and resolves when it's ready. Idempotent
-    // — returns the in-flight/settled promise on repeat calls, so the auto-load
-    // (when an extras component is detected, see below) and the public
-    // NDS.loadExtras() (for content injected after load) share one fetch. Resolves
-    // on load OR error so callers never hang; a missing bundle leaves inits as ?.
-    // no-ops. Usage for dynamic content: await NDS.loadExtras(); NDS.Chart.init();
-    function loadExtras() {
-        if (window._ndsExtrasReady) return window._ndsExtrasReady;
-        if (!window.NDSExtras) return Promise.resolve();
-        window._ndsExtrasReady = new Promise((resolve) => {
+    // Asset base + version derived from the loader's own <script>. nds-loader.js
+    // is bundled last into nds-main.min.js, so during this IIFE's synchronous
+    // eval document.currentScript IS the main bundle's element. Captured here at
+    // eval time — currentScript is null inside the async callbacks below. Sibling
+    // bundles reuse main's origin (so they pass a consumer's CSP 'self'/host
+    // allowlist for free — no new origin) and its ?ver= cache-bust. Fallbacks:
+    // find the main script by src, then a window.NDSAssetBase override.
+    const SELF = document.currentScript ||
+        [...document.scripts].find((s) => /nds-main(\.min)?\.js/.test(s.src));
+    const ASSET = (() => {
+        if (SELF && SELF.src) {
+            const u = new URL(SELF.src, location.href);
+            return { dir: u.href.slice(0, u.href.lastIndexOf('/') + 1), ver: u.search };
+        }
+        return { dir: window.NDSAssetBase || '', ver: '' };
+    })();
+    const bundleUrl = (file) => ASSET.dir + file + ASSET.ver;
+
+    // Injected (non-main) bundles + the namespaces each ships, generated by the
+    // build from the actual bundle file lists and prepended to this bundle as
+    // window.__NDS_BUNDLES = { delegated: { file, ns:[...] }, extras: {...} }.
+    // Bundle membership (location) is owned entirely by the build — the loader and
+    // the component registry never hardcode it. Each injected bundle loads after
+    // the eager pass (never a render-blocking <script defer>), so its download
+    // never gates the reveal.
+    const MAP = window.__NDS_BUNDLES || {};
+    // namespace → bundle name, for the lazy stubs + the partition's location lookup.
+    const nsToBundle = {};
+    for (const b in MAP) for (const ns of (MAP[b].ns || [])) nsToBundle[ns] = b;
+
+    // Trusted Types passthrough for script.src — a TrustedScriptURL sink when
+    // require-trusted-types-for 'script' is enforced and no default policy exists.
+    // Same-origin, known filenames only. try/catch: a consumer's trusted-types
+    // directive may not allowlist this policy name (then we fall back to a string,
+    // which their default policy handles, or the assignment throws and the bundle
+    // is simply skipped — inits no-op via ?.).
+    let _ttPolicy;
+    if (window.trustedTypes && trustedTypes.createPolicy) {
+        try {
+            _ttPolicy = trustedTypes.createPolicy('nds', { createScriptURL: (u) => u });
+        } catch (e) { /* policy name not allowed — fall back to plain string */ }
+    }
+
+    // Loads an injected bundle once and resolves when it's ready. Idempotent —
+    // returns the in-flight/settled promise on repeat calls, so the auto-load
+    // (when a present component needs it, see below) and the public
+    // NDS.loadBundle() (for content injected after load) share one fetch.
+    // Resolves on load OR error so callers never hang; a missing/blocked bundle
+    // leaves inits as ?. no-ops. Skips injection when a <script> for the bundle
+    // already exists — a consumer under a no-injection CSP can self-host it with
+    // their own nonce/integrity and the loader still drives init. Propagates
+    // main's nonce so it passes nonce-only policies without 'strict-dynamic'.
+    // Usage for dynamic content: await NDS.loadBundle('extras'); NDS.Chart.init();
+    const _bundlePromises = {};
+    function loadBundle(name) {
+        if (_bundlePromises[name]) return _bundlePromises[name];
+        const file = MAP[name] && MAP[name].file;
+        if (!file || !ASSET.dir) return (_bundlePromises[name] = Promise.resolve());
+        if ([...document.scripts].some((s) => s.src && s.src.includes(file))) {
+            return (_bundlePromises[name] = Promise.resolve());
+        }
+        _bundlePromises[name] = new Promise((resolve) => {
+            const url = bundleUrl(file);
             const s = document.createElement('script');
-            s.src = window.NDSExtras;
+            s.src = _ttPolicy ? _ttPolicy.createScriptURL(url) : url;
             s.fetchPriority = 'low';
+            if (SELF && SELF.nonce) s.nonce = SELF.nonce;
             s.onload = resolve;
             s.onerror = () => {
-                console.warn(`[NDS] extras bundle failed to load (${window.NDSExtras})`);
+                console.warn(`[NDS] bundle '${name}' failed to load (${url})`);
                 resolve();
             };
             document.head.appendChild(s);
         });
-        return window._ndsExtrasReady;
+        return _bundlePromises[name];
+    }
+
+    // Transparent lazy stubs: expose each injected namespace BEFORE its bundle
+    // loads, so existing public usage (e.g. NDS.Chart.create(...)) keeps working
+    // unchanged — the call triggers the right bundle (resolved from the build
+    // manifest; nothing is hardcoded in consumer code) and runs once it's ready.
+    // The bundle overwrites the stub when it executes, so every post-load call is
+    // the native, synchronous object; the stub only bridges calls made before the
+    // bundle arrives. A method invoked while stubbed returns a Promise (resolves
+    // after load) — fine for fire-and-forget calls. If the bundle is missing the
+    // call no-ops with a warning (the __ndsStub guard stops it recursing).
+    for (const ns in nsToBundle) {
+        if (NDS[ns]) continue;
+        const bundle = nsToBundle[ns];
+        NDS[ns] = new Proxy({ __ndsStub: true }, {
+            get(target, prop) {
+                if (prop === '__ndsStub') return true;
+                if (prop === 'then' || typeof prop === 'symbol') return undefined;
+                return (...args) => loadBundle(bundle).then(() => {
+                    const real = NDS[ns];
+                    if (real && !real.__ndsStub && typeof real[prop] === 'function') {
+                        return real[prop](...args);
+                    }
+                    console.warn(`[NDS] ${ns}.${String(prop)}() unavailable — bundle '${bundle}' missing`);
+                });
+            },
+        });
     }
 
     function initializeNDS() {
@@ -402,12 +470,12 @@
         }
         const startTime = performance.now();
 
-        // Partition arrays are populated inside the rAF below (see L387) so
-        // the detection sweep moves off the DCL handler task. The init-loop
-        // closures capture these bindings; all are assigned before
-        // initEagerBatch is called. extrasComponents (opt-in bundle) init in
-        // their own pass once that bundle loads — see initEagerBatch.
-        let eagerComponents, idleComponents, extrasComponents;
+        // Partition collections are populated inside the rAF below so the
+        // detection sweep moves off the DCL handler task. The init-loop closures
+        // capture these bindings; all are assigned before initEagerBatch is
+        // called. Injected-bundle groups init in their own pass once each bundle
+        // loads — see initEagerBatch.
+        let eagerComponents, mainIdleComponents, injectedGroups;
 
         const runInit = (component) => {
             const start = CONFIG.enableTiming ? performance.now() : 0;
@@ -443,17 +511,18 @@
                 // hand off to the real, now-styled components.
                 document.body.setAttribute('data-nds-loaded', '');
 
-                // Main idle components drain immediately — never gated on the
-                // extras fetch.
-                if (idleComponents.length) drainList(idleComponents, logAllDone);
+                // Idle components whose code is already in main drain immediately
+                // — never gated on an injected-bundle fetch.
+                if (mainIdleComponents.length) drainList(mainIdleComponents, logAllDone);
                 else logAllDone();
 
-                // Extras-bundle components init in a separate pass once their
-                // bundle arrives, so the (low-priority) extras download never
-                // delays the main idle components above. _ndsExtrasReady
-                // resolves on load OR error (missing bundle → inits no-op via ?.).
-                if (extrasComponents.length && window._ndsExtrasReady) {
-                    window._ndsExtrasReady.then(() => drainList(extrasComponents));
+                // Injected-bundle components init in their own pass once that
+                // bundle arrives, so a (low-priority) download never delays the
+                // main idle drain above. loadBundle resolves on load OR error
+                // (missing/blocked bundle → inits no-op via ?.).
+                for (const name in injectedGroups) {
+                    const group = injectedGroups[name];
+                    loadBundle(name).then(() => drainList(group));
                 }
             }
         }
@@ -461,7 +530,7 @@
         // Idle drain: runs a component list across idle slots, as many as fit
         // each slot. Self-schedules until the list is exhausted; the timeout
         // ensures it still runs if the page never goes idle. Shared by the main
-        // idle list and the extras-bundle list (each gets its own index/onDone).
+        // idle list and each injected-bundle group (each gets its own index/onDone).
         function drainList(list, onDone) {
             let i = 0;
             function drain(deadline) {
@@ -494,26 +563,35 @@
         // Source order (registry above) is priority order; push preserves it.
         requestAnimationFrame(() => {
             eagerComponents = [];
-            idleComponents = [];
-            extrasComponents = [];
+            mainIdleComponents = [];
+            injectedGroups = {};
             for (const c of COMPONENTS) {
                 const present = c.universal || (c.selector && document.querySelector(c.selector));
                 if (!present) continue;
-                if (c.bundle === 'extras') extrasComponents.push(c);
-                else (c.idle ? idleComponents : eagerComponents).push(c);
+                if (!c.idle) {
+                    eagerComponents.push(c);                          // eager → ships in main
+                    continue;
+                }
+                const bundle = nsToBundle[c.name];                   // location from the build manifest
+                if (bundle) (injectedGroups[bundle] ||= []).push(c); // idle → injected bundle
+                else mainIdleComponents.push(c);                     // idle, code already in main
             }
 
-            // Auto-load the extras bundle only when the page actually uses one of
-            // its components. loadExtras() is idempotent + low-priority; the fetch
-            // overlaps the eager pass and the components init in a separate pass on
-            // load (see initEagerBatch).
-            if (extrasComponents.length) loadExtras();
+            // Kick off each needed bundle now so its (low-priority) download
+            // overlaps the eager pass. loadBundle is idempotent; its components
+            // init in a per-bundle pass once it lands (see initEagerBatch) — the
+            // fetch never gates the reveal.
+            for (const name in injectedGroups) loadBundle(name);
 
             if (CONFIG.enableLogging) {
-                const total = eagerComponents.length + idleComponents.length + extrasComponents.length;
+                const names = Object.keys(injectedGroups);
+                const injected = names.reduce((n, name) => n + injectedGroups[name].length, 0);
+                const total = eagerComponents.length + mainIdleComponents.length + injected;
+                const detail = names.map((name) => `${name}:${injectedGroups[name].length}`);
                 console.log(
                     `[NDS] Initializing ${total}/${COMPONENTS.length} components ` +
-                    `(${eagerComponents.length} eager, ${idleComponents.length} idle, ${extrasComponents.length} extras)`
+                    `(${eagerComponents.length} eager, ${mainIdleComponents.length} idle` +
+                    `${detail.length ? ', ' + detail.join(', ') : ''})`
                 );
             }
 
@@ -543,49 +621,33 @@
         disableAll: GLOBAL.disableAll ?? (attrDisableAll != null ? attrDisableAll === 'true' : false),
     };
 
-    // On-demand extras loader for content injected after page load:
-    //   await NDS.loadExtras(); NDS.Chart.init();
-    // Cheaper than NDS.Init.reinitialize() (no full re-sweep / re-tag).
-    NDS.loadExtras = loadExtras;
+    // On-demand bundle loader for content injected after page load:
+    //   await NDS.loadBundle('extras'); NDS.Chart.init();
+    // Cheaper than re-running NDS.Init.initialize() (no full re-sweep / re-tag).
+    NDS.loadBundle = loadBundle;
+    // Back-compat shim for consumers of the built bundle still calling the old
+    // extras-specific API.
+    NDS.loadExtras = () => loadBundle('extras');
 
     // Expose global API immediately
     NDS.Init = {
         initialize: initializeNDS,
         components: COMPONENTS,
         config: CONFIG,
-
-        // Utility methods
-        reinitialize: () => {
-            console.log('[NDS] Reinitializing...');
-            initializeNDS();
-        },
-
-        initializeComponent: (name) => {
-            const component = COMPONENTS.find((c) => c.name === name);
-            if (component) {
-                try {
-                    component.init();
-                    console.log(`[NDS:init] ${name} reinitialized`);
-                } catch (error) {
-                    console.warn(
-                        `[NDS:init] ${name} reinitialization failed:`,
-                        error
-                    );
-                }
-            } else {
-                console.warn(`[NDS:init] Component '${name}' not found`);
-            }
-        },
     };
 
-    // Initialize when ready (if enabled). When the bundle runs as a defer script,
-    // readyState is 'interactive' and DOMContentLoaded has not yet fired — wait for
-    // it so detection + init don't pile onto the bundle's eval task.
+    // Initialize when ready (if enabled). main runs as a defer script, so when
+    // this executes the DOM is already fully parsed (readyState 'interactive') —
+    // we do NOT wait for DOMContentLoaded, because DCL also waits for every OTHER
+    // defer script (showcase, accessibility, page custom_js) to download + execute,
+    // which would let them gate the reveal. Kicking off via a macrotask starts the
+    // reveal off main alone, off main's eval task. Only the rare sync-in-<head>
+    // case (readyState 'loading', DOM not yet parsed) waits for DCL.
     if (CONFIG.autoInitialize) {
-        if (document.readyState === 'complete') {
-            setTimeout(initializeNDS, 0);
-        } else {
+        if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initializeNDS);
+        } else {
+            setTimeout(initializeNDS, 0);
         }
     }
 })();

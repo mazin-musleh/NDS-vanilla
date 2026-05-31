@@ -194,8 +194,8 @@
         clockTimer = null;
     }
 
-    // Per-branch init guards. NDS.Init.initializeComponent('timeDate') (loader
-    // public API) would otherwise re-stack setInterval + NDS.onAttrChange (no
+    // Per-branch init guards. A re-run of init (e.g. NDS.Init.initialize())
+    // would otherwise re-stack setInterval + NDS.onAttrChange (no
     // dedup in core for either) and document.addEventListener('visibilitychange')
     // (no removal path) on every re-call. The date and clock topbar widgets can
     // appear independently, so the latches are separate — a page that ships

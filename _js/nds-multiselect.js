@@ -48,7 +48,10 @@
         }
 
         init() {
-            if (!this.dropmenu.ndsDropmenu) NDS.Dropmenu.create(this.dropmenu);
+            // Soft dependency — NDS.Dropmenu ships in the main bundle (present
+            // during the eager pass), so this normally runs; the guard just keeps
+            // the unbuilt-but-functional fallback if it's ever absent.
+            if (NDS.Dropmenu && !this.dropmenu.ndsDropmenu) NDS.Dropmenu.create(this.dropmenu);
             this.triggerLabelOriginal = (
                 this.trigger?.querySelector('.nds-label')?.textContent || ''
             ).trim();

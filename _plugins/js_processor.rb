@@ -38,11 +38,29 @@ class JSProcessor
     @source_dir = '_js'
     @output_dir = 'assets/js'
     @bundles = {
-      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-share.js', 'nds-copy.js', 'nds-cookies.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-upload.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-tables.js', 'nds-backdrop.js', 'nds-modal.js', 'nds-alert.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
-      # Opt-in extras — heavy, page-specific, zero-inbound leaf components.
-      # Injected on demand by nds-loader.js (window.NDSExtras) only when the
-      # page contains one of these, so plain pages never download/parse them.
-      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-tooltip.js', 'nds-export.js', 'nds-user-feedback.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js']
+      # Critical bundle — loaded via <script defer>. Carries core, the loader,
+      # shared utils (backdrop/sort/feedback), every eager component, dropmenu
+      # (idle, but an eager-init dependency of breadcrumb/pagination/multiselect),
+      # and idle components deliberately kept in main: mainnav + fontLoading
+      # (first-paint critical), tables + cookies (pending refactor), customselect
+      # (JS-derived label would flash if async), otp (auto-advance/paste is
+      # first-interaction-critical on OTP/2FA pages). They stay so they wire on the
+      # local idle pass, not after an injected bundle. Reveal is gated on this
+      # bundle, so it's kept lean.
+      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-accordion.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-rating.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-tables.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
+      # Delegated — idle components verified safe to load late. Injected by
+      # nds-loader.js AFTER the eager pass (never a render-blocking defer tag), so
+      # its download never gates the reveal. Components migrate in here over time
+      # as each is confirmed cold-init / late-init-safe; move the file here and
+      # mark its loader registry entry `idle` (location is owned here, not the
+      # registry — the build generates the namespace→bundle map from these lists).
+      'nds-delegated.min.js' => ['nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js'],
+      # Extras — heavy, page-specific, zero-inbound leaf components. Injected by
+      # nds-loader.js only when the page contains one of them (selector-gated), so
+      # plain pages never download/parse them. May later be split into smaller
+      # per-component bundles (add a bundle here; the loader picks it up from the
+      # generated manifest).
+      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-tooltip.js', 'nds-export.js', 'nds-upload.js']
       # NOTE: nds-accessibility.js is intentionally NOT bundled here — it
       # builds to its own assets/js/nds-accessibility.min.js (optional add-on,
       # loaded by a separate <script> gated on site.accessibility).
@@ -59,6 +77,62 @@ class JSProcessor
     else
       {}
     end
+  end
+
+  # Logical bundle name from the output filename: 'nds-delegated.min.js' -> 'delegated'.
+  def bundle_key(bundle_name)
+    bundle_name.sub(/\Ands-/, '').sub(/\.min\.js\z/, '')
+  end
+
+  # Injected (non-main) bundles — everything that isn't the critical main bundle.
+  def injected_bundles
+    @bundles.reject { |name, _| name == 'nds-main.min.js' }
+  end
+
+  # Namespaces a set of source files export via `NDS.<Name> = ...` (the de-facto
+  # export convention). Over-listing helper namespaces is harmless downstream.
+  def scan_namespaces(source_files)
+    source_files.each_with_object([]) do |sf, ns|
+      path = File.join(@source_dir, sf)
+      next unless File.exist?(path)
+      File.read(path).scan(/\bNDS\.([A-Z][A-Za-z0-9_]*)\s*=(?!=)/) { |m| ns << m[0] }
+    end.uniq
+  end
+
+  # window.__NDS_BUNDLES — the namespace→bundle map the loader reads for its lazy
+  # stubs + partition. Generated from the actual bundle file lists, so the runtime
+  # location can never drift from the build. Shape:
+  #   { 'delegated' => { 'file' => 'nds-delegated.min.js', 'ns' => [...] }, 'extras' => {...} }
+  def bundle_manifest
+    injected_bundles.each_with_object({}) do |(bundle_name, files), m|
+      m[bundle_key(bundle_name)] = { 'file' => bundle_name, 'ns' => scan_namespaces(files) }
+    end
+  end
+
+  # Build guard: location (build) must not contradict classification (loader
+  # registry). A namespace packed into an injected bundle must not belong to an
+  # `eager` component — eager code must ship in main, or it would init before its
+  # bundle loads. Fails the build on violation. The registry `name` IS the NDS
+  # namespace, and an entry is eager iff it has no `idle: true`.
+  def assert_no_eager_in_injected!
+    loader_path = File.join(@source_dir, 'nds-loader.js')
+    return unless File.exist?(loader_path)
+    region = File.read(loader_path)[/const COMPONENTS = \[(.*?)\n    \];/m, 1]
+    return unless region
+
+    eager = region.split(/\},/).each_with_object([]) do |entry, acc|
+      name = entry[/name:\s*'([^']+)'/, 1]
+      acc << name if name && entry !~ /idle:\s*true/
+    end
+
+    violations = injected_bundles.flat_map do |bundle_name, files|
+      scan_namespaces(files).select { |ns| eager.include?(ns) }.map { |ns| "#{ns} (in #{bundle_name})" }
+    end
+    return if violations.empty?
+
+    abort("[js_processor] BUILD FAILED — eager components cannot ship in an injected bundle:\n  " +
+          violations.join("\n  ") +
+          "\n  Fix: classify them `idle` in _js/nds-loader.js, or move their file back to nds-main.min.js.")
   end
 
   # Compress JavaScript with Terser. When site.debug is on the bundle is left
@@ -109,7 +183,10 @@ class JSProcessor
 
     # Get all JS files from source directory
     js_files = Dir.glob(File.join(@source_dir, '*.js'))
-    
+
+    # Fail fast if location (build) contradicts classification (registry).
+    assert_no_eager_in_injected!
+
     # Check if any changed files are part of bundles
     bundles_to_process = []
     @bundles.each do |bundle_name, source_files|
@@ -157,7 +234,11 @@ class JSProcessor
         header_comment += " * Author: #{author_name}\n"
         header_comment += " * Profile: #{author_profile}\n" unless author_profile.empty?
         header_comment += " */\n"
-        final_content = header_comment + final_content
+        # The loader reads window.__NDS_BUNDLES (namespace→bundle map) before any
+        # component or the loader itself runs, so it must be prepended ahead of the
+        # code. Only the critical main bundle carries it.
+        manifest_js = bundle_name == 'nds-main.min.js' ? "window.__NDS_BUNDLES=#{JSON.generate(bundle_manifest)};\n" : ''
+        final_content = header_comment + manifest_js + final_content
 
         # Write bundle file to assets/js
         bundle_path = File.join(@output_dir, bundle_name)
