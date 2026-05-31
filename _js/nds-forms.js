@@ -737,177 +737,6 @@
     }
 
     // ==============================================
-    // CUSTOM SELECT CONTROLLER
-    // ==============================================
-    // Wraps a `.nds-select-input` + its `.nds-select-dropdown` and grafts
-    // NDS.Dropmenu hooks (positioning, animation, outside-click, keyboard
-    // nav) onto the author markup. Shared state lives on the instance so the
-    // augment / event-binding / value-restore concerns stay separated.
-    function CustomSelect(selectInput, formControl) {
-        this.selectInput = selectInput;
-        this.formControl = formControl;
-        this.dropdown = formControl.querySelector('.nds-select-dropdown');
-        this.hiddenInput = formControl.querySelector('.nds-select-value');
-        this.options = formControl.querySelectorAll('.nds-select-option');
-        this.formContainer = formControl.closest('.nds-form-container') || formControl;
-        this.selectedValue = '';
-        this.dropmenuInstance = null;
-    }
-
-    CustomSelect.prototype.init = function() {
-        if (!this.dropdown || !this.options.length) return;
-        this._augmentMarkup();
-        this.dropmenuInstance = NDS.Dropmenu.create(this.formControl);
-        this._bindDropmenuMirror();
-        this._bindTrigger();
-        this._bindOptions();
-        this._restoreInitialValue();
-    };
-
-    // Augment the existing markup with NDS.Dropmenu hooks so we inherit
-    // positioning (placeFixed + portal), animation, outside-click, and
-    // keyboard nav — same approach as nds-autocomplete. Author markup is
-    // unchanged; the legacy `nds-select-*` classes stay alongside.
-    CustomSelect.prototype._augmentMarkup = function() {
-        this.formControl.classList.add('nds-dropmenu');
-        // Skip dropmenu's own click-to-toggle on the trigger; the <input>
-        // already drives toggle via its own listeners below.
-        this.formControl.setAttribute('data-dropmenu-no-click', '');
-        // Mark the input as the dropmenu trigger so focus restoration on
-        // close (Escape, Tab past last item) lands back on the focusable
-        // input rather than the form-control <div>.
-        this.selectInput.classList.add('nds-dropmenu-trigger');
-        // role="combobox" so the aria-expanded / aria-haspopup the dropmenu
-        // stamps on the trigger are valid here — an <input>'s default textbox
-        // role allows neither.
-        this.selectInput.setAttribute('role', 'combobox');
-        this.dropdown.classList.add('nds-dropmenu-menu');
-        // Shown/hidden via dropmenu's data-state, not the `hidden` attribute.
-        this.dropdown.removeAttribute('hidden');
-
-        // Inner scroll wrapper — dropmenu's `.nds-dropmenu-scroll` styles
-        // handle max-height + overscroll-behavior.
-        var optionsContainer = this.dropdown.querySelector('.nds-select-options');
-        if (optionsContainer) optionsContainer.classList.add('nds-dropmenu-scroll');
-
-        // Item class so dropmenu's keyboard nav + auto-close-on-click pick
-        // the buttons up.
-        this.options.forEach(function(option) {
-            option.classList.add('nds-dropmenu-item');
-        });
-    };
-
-    CustomSelect.prototype.updateSelectedOptions = function() {
-        var selectedValue = this.selectedValue;
-        this.options.forEach(function(option) {
-            if (option.dataset.value === selectedValue) {
-                NDS.State.add(option, 'selected');
-            } else {
-                NDS.State.remove(option, 'selected');
-            }
-        });
-    };
-
-    CustomSelect.prototype.selectValue = function(value, text) {
-        this.selectedValue = value;
-        this.selectInput.value = text;
-        if (this.hiddenInput) this.hiddenInput.value = value;
-        this.updateSelectedOptions();
-
-        Utils.triggerEvents(this.selectInput);
-        if (this.hiddenInput) Utils.triggerEvents(this.hiddenInput);
-
-        FieldSync.update(this.selectInput, this.formControl);
-
-        this.formControl.dispatchEvent(new CustomEvent('selectChange', {
-            detail: { value: value, text: text }
-        }));
-    };
-
-    // Match the dropdown's min-width to the form-control before opening —
-    // without this the fixed-positioned menu sizes to its content rather than
-    // the input it anchors to.
-    CustomSelect.prototype.syncWidth = function() {
-        this.dropdown.style.minWidth = this.formControl.offsetWidth + 'px';
-    };
-
-    // Mirror dropmenu open/close onto the form-container so the arrow rotation
-    // rule and any consumer styling that hooks `[data-state~="open"]` on
-    // `.nds-form-container` keeps working.
-    CustomSelect.prototype._bindDropmenuMirror = function() {
-        var self = this;
-        this.formControl.addEventListener('nds:dropmenu:opened', function() {
-            NDS.State.add(self.formContainer, 'open');
-            self.updateSelectedOptions();
-            if (self.options[0]) self.options[0].focus();
-        });
-        this.formControl.addEventListener('nds:dropmenu:closed', function() {
-            NDS.State.remove(self.formContainer, 'open');
-        });
-    };
-
-    CustomSelect.prototype._bindTrigger = function() {
-        var self = this;
-        // Sync width on focus so any subsequent open path (mouse click via our
-        // handler, or keyboard via dropmenu's handleTriggerKeydown) uses the
-        // right width.
-        this.selectInput.addEventListener('focus', function() { self.syncWidth(); });
-
-        // Click → toggle. Dropmenu's own click-to-toggle is disabled via
-        // data-dropmenu-no-click, so this is the only click path. syncWidth is
-        // redundant for users who clicked (focus fires first) but covers
-        // programmatic / direct-click cases where focus hasn't settled.
-        this.selectInput.addEventListener('click', function(e) {
-            if (self.selectInput.disabled) return;
-            e.preventDefault();
-            if (!self.dropmenuInstance.isOpen) self.syncWidth();
-            self.dropmenuInstance.toggle();
-        });
-    };
-
-    CustomSelect.prototype._bindOptions = function() {
-        var self = this;
-        // Scoped AbortController so per-option listeners can be detached as a
-        // group if the control is re-initialized.
-        if (this.selectInput._ndsOptionsAC) this.selectInput._ndsOptionsAC.abort();
-        this.selectInput._ndsOptionsAC = new AbortController();
-        var optionsSignal = this.selectInput._ndsOptionsAC.signal;
-
-        this.options.forEach(function(option) {
-            option.addEventListener('click', function(e) {
-                e.preventDefault();
-                var value = this.dataset.value || '';
-                var optionText = this.querySelector('.nds-option-text');
-                var text = optionText ? optionText.textContent : value;
-                self.selectValue(value, text);
-                // Dropmenu's item-click handler auto-closes after 100ms;
-                // restore focus to the input after that. With
-                // `nds-dropmenu-trigger` on the input, dropmenu's close also
-                // calls trigger.focus() — this setTimeout is belt-and-braces
-                // for the "click-to-select" path.
-                setTimeout(function() { self.selectInput.focus(); }, 110);
-            }, { signal: optionsSignal });
-            // Enter/Space/Arrow/Home/End/Tab/Escape are all handled by
-            // NDS.Dropmenu — no per-option or input keydown wiring here.
-        });
-    };
-
-    CustomSelect.prototype._restoreInitialValue = function() {
-        var initialValue = (this.hiddenInput ? this.hiddenInput.value : '') || this.selectInput.value;
-        if (!initialValue) return;
-        var matchingOption = Array.from(this.options).find(function(opt) {
-            return opt.dataset.value === initialValue;
-        });
-        if (!matchingOption) return;
-        this.selectedValue = initialValue;
-        var optionText = matchingOption.querySelector('.nds-option-text');
-        var text = optionText ? optionText.textContent : initialValue;
-        this.selectInput.value = text;
-        this.updateSelectedOptions();
-        FieldSync.update(this.selectInput, this.formControl);
-    };
-
-    // ==============================================
     // FORM CONTROLS INITIALIZATION
     // ==============================================
     var FormControls = {
@@ -949,11 +778,9 @@
             if (input.tagName.toLowerCase() === 'select') {
                 this.initSelectDropdown(input, formControl);
             }
-            if (input.classList.contains('nds-select-input')) {
-                this.initCustomSelectDropdown(input, formControl);
-            }
-            // Date inputs are wired by NDS.DatePicker's own loader-driven sweep
-            // (selector .nds-date-input) — forms no longer reaches into it.
+            // Custom selects (.nds-select-input) and date inputs (.nds-date-input)
+            // are wired by their own loader-driven components (NDS.CustomSelect,
+            // NDS.DatePicker) — forms no longer reaches into them.
         },
 
         initSelectDropdown: function(selectElement, formControl) {
@@ -988,10 +815,6 @@
                     updateOpenState();
                 });
             });
-        },
-
-        initCustomSelectDropdown: function(selectInput, formControl) {
-            new CustomSelect(selectInput, formControl).init();
         },
 
         initPasswordToggle: function(formControl) {

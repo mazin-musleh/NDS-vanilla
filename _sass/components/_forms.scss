@@ -164,6 +164,16 @@
     }
 }
 
+// Custom select: size the in-place dropmenu menu to the field. The menu is a
+// descendant of the position:relative .nds-form-control, so min-width:100% —
+// applied via the dropmenu's own --dropmenu-min-width hook — matches the input
+// width on every open. It's a stylesheet rule, so it survives the dropmenu
+// clearing the menu's inline styles on close (a one-time JS inline width did
+// not). Same hook filter/date-picker use.
+.nds-select {
+    --dropmenu-min-width: 100%;
+}
+
 :is(.nds-form-container, .nds-form-group) {
     .nds-label+.nds-info {
         color: var(--text-primary-paragraph);

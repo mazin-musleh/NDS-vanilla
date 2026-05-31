@@ -32,6 +32,18 @@
             init: () => NDS.Forms?.init?.(),
         },
         {
+            // Idle + delegated + self-contained: init() installs two document
+            // listeners and restores pre-selected labels (cosmetic — the submit
+            // value is already in the hidden input, so a brief restore flash on
+            // the idle pass is fine). Each select's NDS.Dropmenu builds lazily on
+            // first focusin, so init stays cheap. Idle keeps the eager pass lean;
+            // forms doesn't reach in, so there's no eager→idle dependency.
+            name: 'customSelect',
+            selector: '.nds-select-input',
+            init: () => NDS.CustomSelect?.init?.(),
+            idle: true,
+        },
+        {
             // Idle: input wiring fires on user typing — no first-paint
             // visual. The input[autofocus] restore is opt-in; pages that
             // ship autofocus on an OTP input will see the restore delayed
