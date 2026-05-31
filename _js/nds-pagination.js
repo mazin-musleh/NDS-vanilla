@@ -29,6 +29,12 @@
         return v > 0 ? v : 5;
     }
 
+    // Page number from a clickable page element: prefer the `.nds-label`
+    // text, fall back to the element's own text (prev/next, bare anchors).
+    function pageNumberOf(el) {
+        return parseInt(el.querySelector('.nds-label')?.textContent || el.textContent);
+    }
+
     class NDSPagination {
         constructor(paginationNav) {
             this.paginationNav = paginationNav;
@@ -276,7 +282,7 @@
 
         const inListPages = pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a');
         [...inListPages, ...dropmenuItems].forEach(element => {
-            const elementPageNumber = parseInt(element.querySelector('.nds-label')?.textContent || element.textContent);
+            const elementPageNumber = pageNumberOf(element);
             if (elementPageNumber === pageNumber) {
                 NDS.State.set(element, 'active');
                 NDS.aria.current(element, 'page');
@@ -342,7 +348,7 @@
         const allPageElements = getAllPageElements(pagination);
         if (allPageElements.length === 0) return;
 
-        const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+        const pageNumbers = allPageElements.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
         if (pageNumbers.length === 0) return;
 
         const minPage = Math.min(...pageNumbers);
@@ -354,7 +360,7 @@
         // Get current page number (or default to first page if none active)
         let currentPageNum;
         if (activePage) {
-            currentPageNum = parseInt(activePage.querySelector('.nds-label')?.textContent || activePage.textContent);
+            currentPageNum = pageNumberOf(activePage);
         } else {
             currentPageNum = minPage;
         }
@@ -470,7 +476,7 @@
                             e.preventDefault();
                         }
 
-                        const pageNumber = parseInt(pageElement.querySelector('.nds-label')?.textContent || pageElement.textContent);
+                        const pageNumber = pageNumberOf(pageElement);
                         if (pageNumber) {
                             goToPage(newPagination, items, pageNumber, finalPerPage, finalTotalPages);
                         }
@@ -633,7 +639,7 @@
         // (whether the menu is nested or currently portaled to <body>).
         const active = getAllPageElements(pagination).find(el => el.ariaCurrent === 'page');
         if (active) {
-            return parseInt(active.querySelector('.nds-label')?.textContent || active.textContent) || 1;
+            return pageNumberOf(active) || 1;
         }
         return 1;
     }
@@ -716,14 +722,14 @@
             const currentActive = allPageElements.find(el => el.ariaCurrent === 'page');
             if (!currentActive) return;
 
-            const currentPageNum = parseInt(currentActive.querySelector('.nds-label')?.textContent || currentActive.textContent);
+            const currentPageNum = pageNumberOf(currentActive);
             if (isNaN(currentPageNum)) return;
 
             const targetPageNum = prevElement ? currentPageNum - 1 : currentPageNum + 1;
 
             // Find the target page element (portal-aware)
             const targetElement = allPageElements.find(el => {
-                const pageNum = parseInt(el.querySelector('.nds-label')?.textContent || el.textContent);
+                const pageNum = pageNumberOf(el);
                 return pageNum === targetPageNum;
             });
 
@@ -733,7 +739,7 @@
             setActivePage(pagination, targetPageNum);
 
             // Update prev/next button states
-            const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+            const pageNumbers = allPageElements.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
             const minPage = Math.min(...pageNumbers);
             const maxPage = Math.max(...pageNumbers);
 
@@ -747,14 +753,14 @@
 
         // Handle direct page clicks
         if (clickedElement) {
-            const clickedPageNum = parseInt(clickedElement.querySelector('.nds-label')?.textContent || clickedElement.textContent);
+            const clickedPageNum = pageNumberOf(clickedElement);
             if (!isNaN(clickedPageNum)) {
                 // Set active page with aria-current
                 setActivePage(pagination, clickedPageNum);
 
                 // Update prev/next button states (portal-aware)
                 const allPageElements = getAllPageElements(pagination);
-                const pageNumbers = allPageElements.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+                const pageNumbers = allPageElements.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
                 const minPage = Math.min(...pageNumbers);
                 const maxPage = Math.max(...pageNumbers);
 
@@ -796,7 +802,7 @@
         paginationNav.innerHTML = generatePaginationHTML(totalPages, 1, true);
 
         // Show first page items
-        showPageFiltered(visibleItems, 1, perPage);
+        showPage(visibleItems, 1, perPage);
 
         // Wire the ellipsis dropmenu + stamp active state
         wireGeneratedPagination(paginationNav, 1);
@@ -821,9 +827,9 @@
                     e.preventDefault();
                 }
 
-                const pageNumber = parseInt(pageElement.querySelector('.nds-label')?.textContent || pageElement.textContent);
+                const pageNumber = pageNumberOf(pageElement);
                 if (pageNumber) {
-                    goToPageFiltered(newPagination, currentVisibleItems, pageNumber, finalPerPage, finalTotalPages);
+                    goToPage(newPagination, currentVisibleItems, pageNumber, finalPerPage, finalTotalPages);
                 }
             } else {
                 const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
@@ -833,38 +839,16 @@
                 if (prevElement) {
                     e.preventDefault();
                     if (currentPage > 1) {
-                        goToPageFiltered(newPagination, currentVisibleItems, currentPage - 1, finalPerPage, finalTotalPages);
+                        goToPage(newPagination, currentVisibleItems, currentPage - 1, finalPerPage, finalTotalPages);
                     }
                 } else if (nextElement) {
                     e.preventDefault();
                     if (currentPage < finalTotalPages) {
-                        goToPageFiltered(newPagination, currentVisibleItems, currentPage + 1, finalPerPage, finalTotalPages);
+                        goToPage(newPagination, currentVisibleItems, currentPage + 1, finalPerPage, finalTotalPages);
                     }
                 }
             }
         });
-    }
-
-    function showPageFiltered(visibleItems, pageNumber, perPage) {
-        const start = (pageNumber - 1) * perPage;
-        const end = start + perPage;
-
-        visibleItems.forEach((item, index) => {
-            if (index >= start && index < end) {
-                item.hidden = false;
-            } else {
-                item.hidden = true;
-            }
-        });
-    }
-
-    function goToPageFiltered(pagination, visibleItems, pageNumber, perPage, totalPages) {
-        setActivePage(pagination, pageNumber);
-        updatePrevNextStates(pagination, pageNumber, 1, totalPages);
-        showPageFiltered(visibleItems, pageNumber, perPage);
-
-        // Scroll to top of content
-        scrollToContent(pagination);
     }
 
     // Expose global API for unified init system
@@ -876,7 +860,7 @@
         setPage: function(container, pageNumber) {
             const pagination = container.querySelector('.nds-pagination-list') || container;
             const allPages = getAllPageElements(pagination);
-            const pageNumbers = allPages.map(el => parseInt(el.querySelector('.nds-label')?.textContent || el.textContent)).filter(n => !isNaN(n));
+            const pageNumbers = allPages.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
             if (pageNumbers.length === 0) return;
             setActivePage(pagination, pageNumber);
             updatePrevNextStates(pagination, pageNumber, Math.min(...pageNumbers), Math.max(...pageNumbers));
