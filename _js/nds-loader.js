@@ -60,9 +60,12 @@
             idle: true,
         },
         {
-            // Idle: wraps table in .nds-table-wrapper (DOM reparent) + sets
-            // up sort/select. Risk: wide tables on narrow viewports overflow
-            // pre-wrap. CSS skeleton mitigation may be needed.
+            // Idle: init reparents the table into .nds-table-wrapper (the
+            // overflow-x scroll container) + wires sort/select. The reparent is
+            // layout-neutral (wrapper adds overflow only, no box-size change), so
+            // it forces no reflow and measured ~0 CLS in the delegated bundle —
+            // safe to load late. Sort/select clicks in the pre-bundle gap no-op
+            // and recover on the next click.
             name: 'Tables',
             selector: '.nds-table',
             init: () => NDS.Tables?.init?.(),
@@ -116,6 +119,12 @@
             init: () => NDS.Drawer?.init?.(),
         },
         {
+            // Eager: data-toc-source TOCs build their list from page headings at
+            // init (populate → replaceChildren), a structural height change that
+            // CLSs if it lands after the eager pass — and the list count is
+            // arbitrary, so no CSS skeleton can reserve the slot. Ships in main so
+            // it wires in the first burst; init does no layout reads (the measuring
+            // pass is deferred to onIdle), so it adds no forced reflow.
             name: 'Toc',
             selector: '.nds-toc',
             init: () => NDS.Toc?.init?.(),
@@ -202,9 +211,12 @@
             idle: true,
         },
         {
+            // Idle + self-contained: nothing consumes NDS.Rating and the stars
+            // paint from markup/CSS — click-to-rate wiring lands before interaction.
             name: 'Rating',
             selector: '.nds-rating',
             init: () => NDS.Rating?.init?.(),
+            idle: true,
         },
         {
             name: 'Expandable',

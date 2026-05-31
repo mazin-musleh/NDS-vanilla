@@ -9,7 +9,10 @@
 @use './mixins' as *;
 
 body:not([data-nds-loaded]) {
-    overflow-x: clip;
+    main {
+        overflow-x: clip;
+    }
+
     /* ── Content Layout ──
        Mirrors layout/_content-layout.scss base — grid track + min-height
        so the page reserves its viewport block before main CSS lands. */
@@ -98,7 +101,7 @@ body:not([data-nds-loaded]) {
         display: none;
     }
 
-    :where(.nds-link,a):not(.nds-card):where(.nds-icon,.nds-external)::after {
+    :where(.nds-link, a):not(.nds-card):where(.nds-icon, .nds-external)::after {
         content: "";
         display: inline-block;
         width: 1em;
@@ -135,6 +138,7 @@ body:not([data-nds-loaded]) {
 .nds-paged-content:not([data-paged-initialized]) .nds-page-item:not(tr):nth-child(n + 7) {
     display: none;
 }
+
 .nds-paged-content:not([data-paged-initialized]) tr.nds-page-item:nth-child(n + 7) {
     visibility: collapse;
 }
@@ -174,15 +178,13 @@ body:not([data-nds-loaded]) {
    the same FOUC protection. Hero section-action sits here (not below)
    because its CTA buttons need main's .nds-btn styling — revealing pre-main
    would flash unstyled buttons. */
-:where(
-    .nds-topbar > *,
+:where(.nds-topbar > *,
     .nds-main-nav > *,
     .nds-hero-section .nds-section-action,
     .nds-content-layout,
     .nds-user-feedback-section,
     .nds-accessibility-toggle,
-    .nds-footer
-) {
+    .nds-footer) {
     visibility: hidden;
 }
 
