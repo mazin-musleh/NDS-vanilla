@@ -572,12 +572,13 @@
                 }
 
                 // Stash click x on the dropmenu instance so its applyPosition
-                // horizontally anchors the calendar on the click point
-                // (matters on wide desktop inputs — without this it'd center
-                // on the form-control and drift away from where the user
-                // actually clicked). Keyboard-driven toggle (no mouse event)
-                // leaves _lastClickX null and falls back to trigger center.
-                self.dropmenuInstance._lastClickX = (e && typeof e.clientX === 'number' && e.clientX > 0)
+                // horizontally anchors the calendar on the click point (wide
+                // desktop inputs). Gated on `data-anchor-cursor` (set in
+                // setupDropmenu) — the uniform cursor-anchor opt-in flag, since
+                // the native click handler is skipped for this no-click consumer.
+                // Keyboard-driven toggle (no mouse event) → null → trigger center.
+                self.dropmenuInstance._lastClickX = (self.dropmenuInstance.dropmenu.hasAttribute('data-anchor-cursor')
+                    && e && typeof e.clientX === 'number' && e.clientX > 0)
                     ? e.clientX
                     : null;
 
@@ -611,6 +612,10 @@
             formControl.classList.add('nds-dropmenu');
             formControl.setAttribute('data-dropmenu-no-click', '');
             formControl.setAttribute('data-dropmenu-no-keys', '');
+            // Opt into cursor anchoring via the dropmenu's uniform flag. The
+            // native click handler is skipped here (no-click), so the toggle
+            // handler stashes _lastClickX itself — gated on this same attribute.
+            formControl.setAttribute('data-anchor-cursor', '');
             dropdown.classList.add('nds-dropmenu-menu');
             // Drop the legacy [hidden] state — NDSDropmenu uses [data-state~="open"]
             // for visibility now.

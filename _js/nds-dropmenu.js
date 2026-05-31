@@ -305,15 +305,15 @@
                 this.trigger.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    // Stash the click x so applyPosition() can horizontally
-                    // anchor the menu to where the user actually clicked
-                    // (matters on wide triggers — without this the menu
-                    // centers on the trigger and drifts from the click point).
-                    // Cleared in close(); keyboard / programmatic opens fall
-                    // back to trigger-center automatically. Consumers using
-                    // data-dropmenu-no-click can stash via instance._lastClickX
-                    // before calling toggle()/open() — see date-picker.
-                    this._lastClickX = (typeof e.clientX === 'number' && e.clientX > 0)
+                    // Cursor anchoring is opt-in via `data-anchor-cursor`: when
+                    // set, stash the click x so applyPosition() anchors the menu
+                    // under the cursor (useful for wide triggers). Default — and
+                    // keyboard / programmatic opens — fall back to trigger-center.
+                    // Cleared in close(). no-click consumers opt in by stashing
+                    // instance._lastClickX themselves before toggle()/open() —
+                    // see date-picker.
+                    this._lastClickX = (this.dropmenu.hasAttribute('data-anchor-cursor')
+                        && typeof e.clientX === 'number' && e.clientX > 0)
                         ? e.clientX
                         : null;
                     this.toggle();
