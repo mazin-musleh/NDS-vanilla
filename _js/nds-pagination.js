@@ -405,137 +405,133 @@
             });
         }
 
-        const autoPaginationContainers = document.querySelectorAll('.nds-pagination[data-auto-pagination]');
+        document.querySelectorAll('.nds-pagination[data-auto-pagination]').forEach(setupAutoContainer);
+    }
 
-        autoPaginationContainers.forEach(paginationNav => {
-            // Skip if already initialized or inside code examples
-            if (paginationNav.hasAttribute('data-nds-auto-pagination-initialized') ||
-                paginationNav.closest('code, .code-example')) {
-                return;
+    // Wire one auto-pagination container: paginate to final state now, then
+    // track --per-page changes on resize. Skips already-initialized navs and
+    // code-example fixtures; the content container is the previous sibling.
+    function setupAutoContainer(paginationNav) {
+        if (paginationNav.hasAttribute('data-nds-auto-pagination-initialized') ||
+            paginationNav.closest('code, .code-example')) {
+            return;
+        }
+
+        const contentContainer = paginationNav.previousElementSibling;
+        if (!contentContainer || !contentContainer.classList.contains('nds-paged-content')) {
+            return;
+        }
+
+        const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
+
+        // --per-page is read inside paginate() below (deferred a frame for
+        // tables) so readPerPage's getComputedStyle fallback lands post-paint,
+        // where the collapsed table is already laid out — no synchronous forced
+        // recalc during the init burst. Cached on the container for refresh().
+        let lastPerPage;
+
+        // Build the paginated UI in final state — no all-items → paginated
+        // flash. For a table, lockTableColumns first freezes column widths
+        // from the full-content layout (the collapsed skeleton rows still
+        // size columns) so they don't jump page to page. data-paged-initialized
+        // is released only AFTER paginating, so the collapse — and thus the
+        // all-rows column sizing — survives through the lock.
+        const paginate = () => {
+            lastPerPage = readPerPage(contentContainer);
+            contentContainer._ndsPerPage = lastPerPage;
+            lockTableColumns(items);
+            updateAutoPagination(paginationNav, items, lastPerPage);
+            contentContainer.setAttribute('data-paged-initialized', '');
+        };
+
+        // Tables defer one frame: by the next paint the collapsed table is
+        // already laid out, so lockTableColumns' width read is free — no
+        // pre-paint forced reflow. The skeleton shows the first rows in the
+        // meantime, so the one-frame defer is invisible. Grids have no column
+        // lock, so they paginate synchronously.
+        if (items[0] && items[0].tagName === 'TR') requestAnimationFrame(paginate);
+        else paginate();
+
+        // Watch for --per-page changes on resize. Stored handle lets the
+        // module-level `.nds-paged-content` removal listener release the
+        // pooled ResizeObserver entry when this container leaves the DOM.
+        contentContainer._offResize = NDS.onElementResize(contentContainer, NDS.debounce(() => {
+            const currentPerPage = readPerPage(contentContainer);
+            if (lastPerPage !== undefined && currentPerPage !== lastPerPage) {
+                lastPerPage = currentPerPage;
+                contentContainer._ndsPerPage = currentPerPage;
+                updateAutoPagination(paginationNav, items, currentPerPage);
             }
+        }, 150));
 
-            // Find the content container (previous sibling)
-            const contentContainer = paginationNav.previousElementSibling;
-            if (!contentContainer || !contentContainer.classList.contains('nds-paged-content')) {
-                return;
-            }
+        paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
+    }
 
-            // Get items
-            const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
+    // Rebuild an auto-pagination nav for the given --per-page, preserving the
+    // current page, then (re)wire its clicks over `items`. Used by the initial
+    // build and the resize handler; the filter-refresh path shares the same
+    // click wiring via wireAutoClicks.
+    function updateAutoPagination(paginationNav, items, perPage) {
+        const totalPages = Math.ceil(items.length / perPage);
 
-            // --per-page is read inside paginate() below (deferred a frame for
-            // tables) so readPerPage's getComputedStyle fallback lands post-paint,
-            // where the collapsed table is already laid out — no synchronous forced
-            // recalc during the init burst. Cached on the container for refresh().
-            let lastPerPage;
+        // Preserve the current page across a --per-page change.
+        const pagination = paginationNav.querySelector('.nds-pagination-list');
+        const currentPage = pagination ? getCurrentPage(pagination) : 1;
 
-            // Rebuild pagination for the given --per-page. The caller reads
-            // the value once and passes it in, so each update measures once.
-            function updatePagination(perPage) {
-                const totalPages = Math.ceil(items.length / perPage);
+        // No pagination needed — show every item.
+        if (totalPages <= 1) {
+            items.forEach(item => item.hidden = false);
+            paginationNav.innerHTML = '';
+            return;
+        }
 
-                // Store current page before regenerating
-                const pagination = paginationNav.querySelector('.nds-pagination-list');
-                const currentPage = pagination ? getCurrentPage(pagination) : 1;
+        const newCurrentPage = Math.min(currentPage, totalPages);
 
-                // If no pagination needed, show all items
-                if (totalPages <= 1) {
-                    items.forEach(item => item.hidden = false);
-                    paginationNav.innerHTML = '';
-                    return;
+        // Generate the collapsed list directly (no build-all-then-collapse),
+        // show the page's items, wire the ellipsis dropmenu + active state.
+        paginationNav.innerHTML = generatePaginationHTML(totalPages, newCurrentPage, true);
+        showPage(items, newCurrentPage, perPage);
+        wireGeneratedPagination(paginationNav, newCurrentPage);
+
+        const newPagination = paginationNav.querySelector('.nds-pagination-list');
+        wireAutoClicks(newPagination, () => items, perPage, totalPages);
+    }
+
+    // Shared click handler for both auto-pagination paths (initial/resize and
+    // filter refresh). getItems() returns the current set to page over — the
+    // static list for the initial build, a re-filtered list for refresh.
+    // Portaled dropmenu items reach this listener via the wrapper's
+    // re-dispatched click (see nds-dropmenu.js).
+    function wireAutoClicks(newPagination, getItems, perPage, totalPages) {
+        newPagination.addEventListener('click', (e) => {
+            const pageElement = e.ndsDropmenuItem
+                || e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
+
+            if (pageElement) {
+                // Prevent default for anchors in auto-pagination.
+                if (pageElement.tagName.toLowerCase() === 'a') e.preventDefault();
+                const pageNumber = pageNumberOf(pageElement);
+                if (pageNumber) {
+                    goToPage(newPagination, getItems(), pageNumber, perPage, totalPages);
                 }
+            } else {
+                // Prev/next (support both buttons and anchors).
+                const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
+                const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
+                const currentPage = getCurrentPage(newPagination);
 
-                // Calculate which page the current page should map to with new perPage
-                // Keep user on approximately the same content position
-                const newCurrentPage = Math.min(currentPage, totalPages);
-
-                // Generate the collapsed list directly (no build-all-then-collapse)
-                paginationNav.innerHTML = generatePaginationHTML(totalPages, newCurrentPage, true);
-
-                // Show current page items
-                showPage(items, newCurrentPage, perPage);
-
-                // Wire the ellipsis dropmenu + stamp active state
-                wireGeneratedPagination(paginationNav, newCurrentPage);
-
-                // Store perPage for click handler closure
-                const finalPerPage = perPage;
-                const finalTotalPages = totalPages;
-
-                // Add click handlers
-                const newPagination = paginationNav.querySelector('.nds-pagination-list');
-                newPagination.addEventListener('click', (e) => {
-                    // Portaled dropmenu items reach this listener via the
-                    // wrapper's re-dispatched click (see nds-dropmenu.js).
-                    const pageElement = e.ndsDropmenuItem
-                        || e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
-
-                    if (pageElement) {
-                        // Prevent default for anchors in auto-pagination
-                        if (pageElement.tagName.toLowerCase() === 'a') {
-                            e.preventDefault();
-                        }
-
-                        const pageNumber = pageNumberOf(pageElement);
-                        if (pageNumber) {
-                            goToPage(newPagination, items, pageNumber, finalPerPage, finalTotalPages);
-                        }
-                    } else {
-                        // Handle prev/next (support both buttons and anchors)
-                        const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
-                        const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
-                        const currentPage = getCurrentPage(newPagination);
-
-                        if (prevElement) {
-                            e.preventDefault();
-                            if (currentPage > 1) {
-                                goToPage(newPagination, items, currentPage - 1, finalPerPage, finalTotalPages);
-                            }
-                        } else if (nextElement) {
-                            e.preventDefault();
-                            if (currentPage < finalTotalPages) {
-                                goToPage(newPagination, items, currentPage + 1, finalPerPage, finalTotalPages);
-                            }
-                        }
+                if (prevElement) {
+                    e.preventDefault();
+                    if (currentPage > 1) {
+                        goToPage(newPagination, getItems(), currentPage - 1, perPage, totalPages);
                     }
-                });
-            }
-
-            // Build the paginated UI in final state — no all-items → paginated
-            // flash. For a table, lockTableColumns first freezes column widths
-            // from the full-content layout (the collapsed skeleton rows still
-            // size columns) so they don't jump page to page. data-paged-initialized
-            // is released only AFTER paginating, so the collapse — and thus the
-            // all-rows column sizing — survives through the lock.
-            const paginate = () => {
-                lastPerPage = readPerPage(contentContainer);
-                contentContainer._ndsPerPage = lastPerPage;
-                lockTableColumns(items);
-                updatePagination(lastPerPage);
-                contentContainer.setAttribute('data-paged-initialized', '');
-            };
-
-            // Tables defer one frame: by the next paint the collapsed table is
-            // already laid out, so lockTableColumns' width read is free — no
-            // pre-paint forced reflow. The skeleton shows the first rows in the
-            // meantime, so the one-frame defer is invisible. Grids have no column
-            // lock, so they paginate synchronously.
-            if (items[0] && items[0].tagName === 'TR') requestAnimationFrame(paginate);
-            else paginate();
-
-            // Watch for --per-page changes on resize. Stored handle lets the
-            // module-level `.nds-paged-content` removal listener release the
-            // pooled ResizeObserver entry when this container leaves the DOM.
-            contentContainer._offResize = NDS.onElementResize(contentContainer, NDS.debounce(() => {
-                const currentPerPage = readPerPage(contentContainer);
-                if (lastPerPage !== undefined && currentPerPage !== lastPerPage) {
-                    lastPerPage = currentPerPage;
-                    contentContainer._ndsPerPage = currentPerPage;
-                    updatePagination(currentPerPage);
+                } else if (nextElement) {
+                    e.preventDefault();
+                    if (currentPage < totalPages) {
+                        goToPage(newPagination, getItems(), currentPage + 1, perPage, totalPages);
+                    }
                 }
-            }, 150));
-
-            paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
+            }
         });
     }
 
@@ -807,48 +803,16 @@
         // Wire the ellipsis dropmenu + stamp active state
         wireGeneratedPagination(paginationNav, 1);
 
-        // Store for click handler closure
-        const finalPerPage = perPage;
-        const finalTotalPages = totalPages;
-
-        // Add click handlers
+        // Wire clicks; re-filter the item set on each click in case the
+        // filter changed since this nav was generated.
         const newPagination = paginationNav.querySelector('.nds-pagination-list');
-        newPagination.addEventListener('click', (e) => {
-            // Re-get visible items in case filter changed
-            const currentVisibleItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'))
-                .filter(item => !item.hasAttribute('data-filtered'));
-
-            // Portaled dropmenu items arrive via the wrapper's re-dispatch.
-            const pageElement = e.ndsDropmenuItem
-                || e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
-
-            if (pageElement) {
-                if (pageElement.tagName.toLowerCase() === 'a') {
-                    e.preventDefault();
-                }
-
-                const pageNumber = pageNumberOf(pageElement);
-                if (pageNumber) {
-                    goToPage(newPagination, currentVisibleItems, pageNumber, finalPerPage, finalTotalPages);
-                }
-            } else {
-                const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
-                const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
-                const currentPage = getCurrentPage(newPagination);
-
-                if (prevElement) {
-                    e.preventDefault();
-                    if (currentPage > 1) {
-                        goToPage(newPagination, currentVisibleItems, currentPage - 1, finalPerPage, finalTotalPages);
-                    }
-                } else if (nextElement) {
-                    e.preventDefault();
-                    if (currentPage < finalTotalPages) {
-                        goToPage(newPagination, currentVisibleItems, currentPage + 1, finalPerPage, finalTotalPages);
-                    }
-                }
-            }
-        });
+        wireAutoClicks(
+            newPagination,
+            () => Array.from(contentContainer.querySelectorAll('.nds-page-item'))
+                .filter(item => !item.hasAttribute('data-filtered')),
+            perPage,
+            totalPages
+        );
     }
 
     // Expose global API for unified init system
