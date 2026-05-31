@@ -369,22 +369,15 @@
 
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
 
-            if (pageCount <= 1) {
-                this.pagination.style.display = 'none';
-                this.pagination.innerHTML = '';
-                if (this.navigation) this.navigation.style.display = 'none';
-                if (this.prevBtn) this.prevBtn.style.display = 'none';
-                if (this.nextBtn) this.nextBtn.style.display = 'none';
-                this.wrapper.style.overflow = 'unset';
-                return;
-            }
-
-            this.pagination.style.display = '';
+            const hidden = pageCount <= 1;
+            const display = hidden ? 'none' : '';
+            this.pagination.style.display = display;
             this.pagination.innerHTML = '';
-            if (this.navigation) this.navigation.style.display = '';
-            if (this.prevBtn) this.prevBtn.style.display = '';
-            if (this.nextBtn) this.nextBtn.style.display = '';
-            this.wrapper.style.overflow = '';
+            if (this.navigation) this.navigation.style.display = display;
+            if (this.prevBtn) this.prevBtn.style.display = display;
+            if (this.nextBtn) this.nextBtn.style.display = display;
+            this.wrapper.style.overflow = hidden ? 'unset' : '';
+            if (hidden) return;
 
             // Delegated activation — one listener on the container, attached once.
             // Bullets are rebuilt on every breakpoint change (setupPagination re-runs
