@@ -401,11 +401,9 @@
 
         open() {
             if (!this.dropmenuInstance || this.dropmenuInstance.isOpen) return;
-            // Match the menu width to the form-control before opening so the
-            // fixed-positioned dropmenu sizes to the input rather than to the
-            // viewport.
-            var menu = this.formControl.querySelector('.nds-autocomplete-menu');
-            if (menu) menu.style.minWidth = this.formControl.offsetWidth + 'px';
+            // Width tracks the form-control via the dropmenu's --dropmenu-min-width
+            // hook (_autocomplete.scss), same as custom-select — no inline
+            // width-fighting here (the dropmenu wipes inline styles on close).
             this.dropmenuInstance.open();
         }
 
@@ -613,17 +611,31 @@
     // AUTO-INITIALIZATION
     // ==============================================
 
+    // Build a container's autocomplete instance (once). Shared by the delegated
+    // focusin and the programmatic create().
+    function buildAutocomplete(container) {
+        if (!container || container.hasAttribute('data-nds-autocomplete-initialized')) return;
+        if (container.closest('code') || container.closest('.code-example')) return;
+        if (!container.querySelector('input[autocomplete="on"]')) return;
+        new NDSAutocomplete(container);
+    }
+
+    var _delegated = false;
+
+    // Delegated + lazy (custom-select / voice-input pattern): instead of sweeping
+    // and constructing every [data-url] container up front, build a container's
+    // instance on its FIRST focusin. focusin fires before the first keystroke, so
+    // the input/keydown listeners are wired before the user types, and
+    // dynamically-added containers are covered for free. The instance itself
+    // stays per-element — it holds results / activeIndex / in-flight abort,
+    // runtime state that (unlike the custom-select's value) isn't in the DOM.
     function initializeAutocompletes() {
-        var containers = document.querySelectorAll('.nds-form-container[data-url]');
-
-        containers.forEach(function (container) {
-            if (container.hasAttribute('data-nds-autocomplete-initialized')) return;
-            if (container.closest('code') || container.closest('.code-example')) return;
-
-            var input = container.querySelector('input[autocomplete="on"]');
-            if (!input) return;
-
-            new NDSAutocomplete(container);
+        if (_delegated) return;
+        _delegated = true;
+        document.addEventListener('focusin', function (e) {
+            var t = e.target;
+            if (!t || !t.closest) return;
+            buildAutocomplete(t.closest('.nds-form-container[data-url]'));
         });
     }
 

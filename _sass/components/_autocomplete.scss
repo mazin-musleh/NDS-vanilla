@@ -13,9 +13,13 @@
 
 .nds-form-container {
 
-    // Note: width is matched to the form-control via JS in open() since the
-    // dropmenu uses position:fixed and CSS percentages would resolve against
-    // the viewport, blowing the menu out to full page width.
+    // Menu width tracks the form-control via the dropmenu's --dropmenu-min-width
+    // hook: the menu is in-place (position: absolute, no data-portal), so 100%
+    // resolves against the position:relative .nds-form-control — same approach
+    // as custom-select (.nds-select).
+    .nds-autocomplete-menu {
+        --dropmenu-min-width: 100%;
+    }
 
     // ==============================================
     // HIGHLIGHT & EMPTY STATE
