@@ -281,17 +281,19 @@
         // on-click (preserves keyboard nav) and suppresses synthetic mouse events on
         // touch. Touch-scroll on the button itself is blocked by `touch-action:
         // manipulation` in _swiper.scss.
+        // `action` receives the triggering event so delegated callers (the
+        // pagination container) can resolve e.target; direct callers ignore it.
         _attachActivation(btn, action) {
             const { signal } = this.abortController;
             btn.addEventListener('pointerdown', (e) => {
                 if (e.pointerType === 'mouse' && e.button !== 0) return;
                 e.preventDefault();
-                action();
+                action(e);
             }, { signal });
             btn.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    action();
+                    action(e);
                 }
             }, { signal });
         }
@@ -384,12 +386,26 @@
             if (this.nextBtn) this.nextBtn.style.display = '';
             this.wrapper.style.overflow = '';
 
+            // Delegated activation — one listener on the container, attached once.
+            // Bullets are rebuilt on every breakpoint change (setupPagination re-runs
+            // via updateSlidesPerView); binding per-bullet would stack listeners on the
+            // instance signal until destroy.
+            if (!this._paginationBound) {
+                this._paginationBound = true;
+                this._attachActivation(this.pagination, (e) => {
+                    const bullet = e.target.closest('.nds-bullet');
+                    if (bullet && this.pagination.contains(bullet)) {
+                        this.goTo(Number(bullet.dataset.page) * this.slidesPerView);
+                    }
+                });
+            }
+
             for (let i = 0; i < pageCount; i++) {
                 const bullet = document.createElement('button');
                 bullet.className = 'nds-bullet';
                 bullet.type = 'button';
+                bullet.dataset.page = i;
                 NDS.aria.label(bullet, `Go to slide ${i + 1}`);
-                this._attachActivation(bullet, () => this.goTo(i * this.slidesPerView));
                 this.pagination.appendChild(bullet);
             }
 
@@ -569,12 +585,19 @@
     // ==============================================
 
     function initializeComponents() {
-        document.querySelectorAll('img[srcset]').forEach(img => {
-            const srcset = img.getAttribute('srcset');
-            if (srcset && srcset.includes(' ') && !srcset.includes('%20')) {
-                const fixed = fixSrcsetSpaces(srcset);
-                if (fixed !== srcset) img.setAttribute('srcset', fixed);
-            }
+        // Defer the page-wide srcset-space normalization to idle: it only rewrites
+        // malformed srcsets (unencoded spaces), so it never needs to block the eager
+        // init task, and the sweep is unbounded (every srcset-bearing node on the page).
+        // Covers both img[srcset] and <picture> source[srcset] — the lazy path handles
+        // the data-srcset variants, this catches eager (non-lazy) srcsets.
+        NDS.onIdle(() => {
+            document.querySelectorAll('img[srcset], source[srcset]').forEach(el => {
+                const srcset = el.getAttribute('srcset');
+                if (srcset && srcset.includes(' ') && !srcset.includes('%20')) {
+                    const fixed = fixSrcsetSpaces(srcset);
+                    if (fixed !== srcset) el.setAttribute('srcset', fixed);
+                }
+            });
         });
 
         const swipers = document.querySelectorAll('.nds-swiper');
