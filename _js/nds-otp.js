@@ -115,31 +115,16 @@
         dispatch(group, 'nds:otpChange', { filled: isAllFilled(group) });
     }
 
-    function handlePaste(e, group) {
-        e.preventDefault();
-        autoClearStatus(group);
-        var digits = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
-        if (!digits.length) return;
-
-        clearInputs(group);
-        var inputs = getOtpInputs(group);
-        var last = distributeDigits(group, digits, 0);
-
-        if (!isAllFilled(group)) {
-            var next = inputs[last + 1];
-            if (next) next.focus();
-        } else {
-            focusAndComplete(group, inputs);
-        }
-
-        dispatch(group, 'nds:otpChange', { filled: isAllFilled(group) });
-    }
-
     function handleBeforeInput(e, group, input, inputs) {
-        if (!e.data || e.data.length <= 1) return;
+        // Multi-char insert = paste or autofill. Paste text rides on
+        // dataTransfer (e.data is null for insertFromPaste), so fall back to it.
+        // Handling it here lets the paste event itself proceed un-prevented —
+        // calling preventDefault on `paste` trips the "prevents pasting" audit.
+        var data = e.data || (e.dataTransfer && e.dataTransfer.getData('text')) || '';
+        if (data.length <= 1) return;
         e.preventDefault();
 
-        var digits = e.data.replace(/\D/g, '');
+        var digits = data.replace(/\D/g, '');
         if (!digits.length) return;
 
         var last = distributeDigits(group, digits, inputs.indexOf(input));
@@ -238,7 +223,6 @@
                 handleBeforeInput(e, group, input, inputs);
             }, { signal: signal });
             input.addEventListener('input', function (e) { handleInput(e, group); }, { signal: signal });
-            input.addEventListener('paste', function (e) { handlePaste(e, group); }, { signal: signal });
             input.addEventListener('keydown', function (e) { handleKeydown(e, group); }, { signal: signal });
             input.addEventListener('click', function (e) { handleClick(e, group); }, { signal: signal });
             input.addEventListener('focus', handleFocus, { signal: signal });
