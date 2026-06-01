@@ -39,20 +39,20 @@ class JSProcessor
     @output_dir = 'assets/js'
     @bundles = {
       # Critical bundle — loaded via <script defer>. Carries core, the loader,
-      # shared utils (backdrop/sort/feedback), every eager component, dropmenu
-      # (idle, but an eager-init dependency of breadcrumb/pagination/multiselect),
-      # and idle components deliberately kept in main: mainnav + fontLoading
+      # shared utils (backdrop/sort/feedback), every critical component, dropmenu
+      # (deferred, but a critical-init dependency of breadcrumb/pagination/multiselect),
+      # and deferred components deliberately kept in main: mainnav + fontLoading
       # (first-paint critical), tables + cookies (pending refactor), customselect
       # (JS-derived label would flash if async), otp (auto-advance/paste is
       # first-interaction-critical on OTP/2FA pages). They stay so they wire on the
       # local idle pass, not after an injected bundle. Reveal is gated on this
       # bundle, so it's kept lean.
       'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-accordion.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
-      # Delegated — idle components verified safe to load late. Injected by
-      # nds-loader.js AFTER the eager pass (never a render-blocking defer tag), so
+      # Delegated — deferred components verified safe to load late. Injected by
+      # nds-loader.js AFTER the critical pass (never a render-blocking defer tag), so
       # its download never gates the reveal. Components migrate in here over time
       # as each is confirmed cold-init / late-init-safe; move the file here and
-      # mark its loader registry entry `idle` (location is owned here, not the
+      # drop `critical: true` from its loader registry entry (location is owned here, not the
       # registry — the build generates the namespace→bundle map from these lists).
       'nds-delegated.min.js' => ['nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js'],
       # Extras — heavy, page-specific, zero-inbound leaf components. Injected by
@@ -110,29 +110,30 @@ class JSProcessor
   end
 
   # Build guard: location (build) must not contradict classification (loader
-  # registry). A namespace packed into an injected bundle must not belong to an
-  # `eager` component — eager code must ship in main, or it would init before its
-  # bundle loads. Fails the build on violation. The registry `name` IS the NDS
-  # namespace, and an entry is eager iff it has no `idle: true`.
-  def assert_no_eager_in_injected!
+  # registry). A namespace packed into an injected bundle must not belong to a
+  # `critical` component — critical code must ship in main, or it would init
+  # before its bundle loads. Fails the build on violation. The registry `name` IS
+  # the NDS namespace, and an entry is critical iff it has `critical: true` (the
+  # reveal checklist); everything else is deferred and safe to inject.
+  def assert_no_critical_in_injected!
     loader_path = File.join(@source_dir, 'nds-loader.js')
     return unless File.exist?(loader_path)
     region = File.read(loader_path)[/const COMPONENTS = \[(.*?)\n    \];/m, 1]
     return unless region
 
-    eager = region.split(/\},/).each_with_object([]) do |entry, acc|
+    critical = region.split(/\},/).each_with_object([]) do |entry, acc|
       name = entry[/name:\s*'([^']+)'/, 1]
-      acc << name if name && entry !~ /idle:\s*true/
+      acc << name if name && entry =~ /critical:\s*true/
     end
 
     violations = injected_bundles.flat_map do |bundle_name, files|
-      scan_namespaces(files).select { |ns| eager.include?(ns) }.map { |ns| "#{ns} (in #{bundle_name})" }
+      scan_namespaces(files).select { |ns| critical.include?(ns) }.map { |ns| "#{ns} (in #{bundle_name})" }
     end
     return if violations.empty?
 
-    abort("[js_processor] BUILD FAILED — eager components cannot ship in an injected bundle:\n  " +
+    abort("[js_processor] BUILD FAILED — critical components cannot ship in an injected bundle:\n  " +
           violations.join("\n  ") +
-          "\n  Fix: classify them `idle` in _js/nds-loader.js, or move their file back to nds-main.min.js.")
+          "\n  Fix: drop `critical: true` from their entry in _js/nds-loader.js (so they default to deferred), or move their file back to nds-main.min.js.")
   end
 
   # Compress JavaScript with Terser. When site.debug is on the bundle is left
@@ -185,7 +186,7 @@ class JSProcessor
     js_files = Dir.glob(File.join(@source_dir, '*.js'))
 
     # Fail fast if location (build) contradicts classification (registry).
-    assert_no_eager_in_injected!
+    assert_no_critical_in_injected!
 
     # Check if any changed files are part of bundles
     bundles_to_process = []

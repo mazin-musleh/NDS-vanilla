@@ -19,48 +19,46 @@
             name: 'Mainnav',
             selector: '.nds-main-nav',
             init: () => NDS.Mainnav?.init?.(),
-            idle: true,
         },
         {
             name: 'Theme',
             selector: '[data-theme-toggle], #ndsThemeToggle',
             init: () => NDS.Theme?.init?.(),
+            critical: true,
         },
         {
             name: 'Forms',
             selector: '.nds-form-control',
             init: () => NDS.Forms?.init?.(),
+            critical: true,
         },
         {
-            // Idle but stays in MAIN (no bundle): init() restores pre-selected
+            // Deferred but stays in MAIN (no bundle): init() restores pre-selected
             // labels, which are JS-derived from the option text. A delegated/extras
-            // bundle loads after the eager pass, so a pre-filled select would flash
+            // bundle loads after the critical pass, so a pre-filled select would flash
             // empty until then on slow links — keep the code in main so the restore
             // runs on the local idle pass. Each select's NDS.Dropmenu builds lazily
-            // on first focusin; forms doesn't reach in, so no eager→idle dependency.
+            // on first focusin; forms doesn't reach in, so no critical→deferred dependency.
             name: 'CustomSelect',
             selector: '.nds-select-input',
             init: () => NDS.CustomSelect?.init?.(),
-            idle: true,
         },
         {
-            // Idle: input wiring fires on user typing — no first-paint
+            // Deferred: input wiring fires on user typing — no first-paint
             // visual. The input[autofocus] restore is opt-in; pages that
             // ship autofocus on an OTP input will see the restore delayed
             // by one idle slot. Acceptable for the common case.
             name: 'OTP',
             selector: '.nds-otp-group',
             init: () => NDS.OTP?.init?.(),
-            idle: true,
         },
         {
             name: 'Tabs',
             selector: '.nds-tabs',
             init: () => NDS.Tabs?.init?.(),
-            idle: true,
         },
         {
-            // Idle: init reparents the table into .nds-table-wrapper (the
+            // Deferred: init reparents the table into .nds-table-wrapper (the
             // overflow-x scroll container) + wires sort/select. The reparent is
             // layout-neutral (wrapper adds overflow only, no box-size change), so
             // it forces no reflow and measured ~0 CLS in the delegated bundle —
@@ -69,84 +67,92 @@
             name: 'Tables',
             selector: '.nds-table',
             init: () => NDS.Tables?.init?.(),
-            idle: true,
         },
         {
-            // Eager: auto-expand state would CLS if applied in idle (panels
+            // Critical: auto-expand state would CLS if deferred (panels
             // paint collapsed-by-default then expand on init).
             name: 'Accordion',
             selector: '.nds-accordion',
             init: () => NDS.Accordion?.init?.(),
+            critical: true,
         },
         {
             name: 'Stepper',
             selector: '.nds-stepper',
             init: () => NDS.Stepper?.init?.(),
+            critical: true,
         },
         {
             name: 'Swiper',
             selector: '.nds-swiper',
             init: () => NDS.Swiper?.init?.(),
+            critical: true,
         },
         {
             name: 'Upload',
             selector: '.nds-file-upload',
             init: () => NDS.Upload?.init?.(),
-            idle: true,
         },
         {
-            // Idle + self-contained: the Web Speech engine + button live in
+            // Deferred + self-contained: the Web Speech engine + button live in
             // nds-voice-input.js, consumed by nothing else. Interaction-driven
             // (recognition starts on click), so a late wire lands before the click.
             name: 'VoiceInput',
             selector: '.nds-voice-input',
             init: () => NDS.VoiceInput?.init?.(),
-            idle: true,
         },
         {
             name: 'Sidemenu',
             selector: '.nds-sidemenu',
             init: () => NDS.Sidemenu?.init?.(),
+            critical: true,
         },
         {
             name: 'Sideinfo',
             selector: '.nds-sideinfo',
             init: () => NDS.Sideinfo?.init?.(),
+            critical: true,
         },
         {
+            // Critical: initActiveStates expands the active-page path at init so
+            // the current page is visible without a manual expand (ease of
+            // use). The server marks the active leaf but paints its ancestors
+            // collapsed, so deferral would pop the path open post-paint
+            // (CLS) and hide the active item. Init is cold (no layout reads).
             name: 'Drawer',
             selector: '.nds-drawer',
             init: () => NDS.Drawer?.init?.(),
+            critical: true,
         },
         {
-            // Eager: data-toc-source TOCs build their list from page headings at
+            // Critical: data-toc-source TOCs build their list from page headings at
             // init (populate → replaceChildren), a structural height change that
-            // CLSs if it lands after the eager pass — and the list count is
+            // CLSs if it lands after the critical pass — and the list count is
             // arbitrary, so no CSS skeleton can reserve the slot. Ships in main so
             // it wires in the first burst; init does no layout reads (the measuring
             // pass is deferred to onIdle), so it adds no forced reflow.
             name: 'Toc',
             selector: '.nds-toc',
             init: () => NDS.Toc?.init?.(),
+            critical: true,
         },
         {
             name: 'ScrollMore',
             selector: '.nds-scroll-more',
             init: () => NDS.ScrollMore?.init?.(),
+            critical: true,
         },
         {
-            // Idle: progress animations are cosmetic on-scroll work.
+            // Deferred: progress animations are cosmetic on-scroll work.
             name: 'Progress',
             selector: '.nds-progress-circle, .nds-progress-bar',
             init: () => NDS.Progress?.init?.(),
-            idle: true,
         },
         {
-            // Idle: counter animations are cosmetic on-scroll work.
+            // Deferred: counter animations are cosmetic on-scroll work.
             name: 'Numbers',
             selector: '.nds-number-format, .nds-counter-value',
             init: () => NDS.Numbers?.init?.(),
-            idle: true,
         },
         {
             // Targets the three NDS code hooks (block, tabs-wrapped block, inline).
@@ -154,12 +160,12 @@
             name: 'Code',
             selector: '.code-example, .nds-code, code.nds-inline-code',
             init: () => NDS.Code?.init?.(),
+            critical: true,
         },
         {
             name: 'Copy',
             selector: '.nds-copy',
             init: () => NDS.Copy?.init?.(),
-            idle: true,
         },
         // Note: showcase is intentionally NOT registered here. Like accessibility,
         // it ships as its own defer bundle (nds-showcase.min.js) and self-boots.
@@ -169,7 +175,6 @@
             name: 'Share',
             selector: '.nds-share',
             init: () => NDS.Share?.init?.(),
-            idle: true,
         },
         {
             // Detection-only: presence of a [data-export] button loads the
@@ -177,23 +182,20 @@
             name: 'Export',
             selector: '[data-export]',
             init: () => NDS.Export?.init?.(),
-            idle: true,
         },
         {
             name: 'DatePicker',
             selector: '.nds-date-input',
             init: () => NDS.DatePicker?.init?.(),
-            idle: true,
         },
         {
             name: 'FontLoading',
             selector: null,
             init: () => NDS.FontLoading?.init?.(),
             universal: true,
-            idle: true,
         },
         {
-            // Eager: NDS.Link.init() tags external links with no layout reads
+            // Critical: NDS.Link.init() tags external links with no layout reads
             // (guards are hostname/classList only), so it forces no reflow and is
             // safe before first paint — above-the-fold external badges are present
             // on the first frame (no pop-in CLS). NOTE: keep it layout-read-free;
@@ -203,57 +205,56 @@
             selector: null,
             init: () => NDS.Link?.init?.(),
             universal: true,
+            critical: true,
         },
         {
             name: 'Cookies',
             selector: '#ndsCookiesAcceptBtn',
             init: () => NDS.Cookies?.init?.(),
-            idle: true,
         },
         {
-            // Idle + self-contained: nothing consumes NDS.Rating and the stars
+            // Deferred + self-contained: nothing consumes NDS.Rating and the stars
             // paint from markup/CSS — click-to-rate wiring lands before interaction.
             name: 'Rating',
             selector: '.nds-rating',
             init: () => NDS.Rating?.init?.(),
-            idle: true,
         },
         {
             name: 'Expandable',
             selector: '.nds-expandable',
             init: () => NDS.Expandable?.init?.(),
+            critical: true,
         },
         {
             name: 'Breadcrumb',
             selector: '.nds-breadcrumb-nav',
             init: () => NDS.Breadcrumb?.init?.(),
+            critical: true,
         },
         {
             name: 'Dropmenu',
             selector: '.nds-dropmenu',
             init: () => NDS.Dropmenu?.init?.(),
-            idle: true,
         },
         {
             name: 'Tooltip',
             selector: '.nds-tooltip',
             init: () => NDS.Tooltip?.init?.(),
-            idle: true,
         },
         {
             name: 'Multiselect',
             selector: '.nds-multiselect',
             init: () => NDS.Multiselect?.init?.(),
+            critical: true,
         },
         {
-            // Idle: results fetch on user typing — no first-paint visual.
+            // Deferred: results fetch on user typing — no first-paint visual.
             name: 'Autocomplete',
             selector: '.nds-form-container[data-url]',
             init: () => NDS.Autocomplete?.init?.(),
-            idle: true,
         },
         {
-            // Eager: init now reads --per-page inline-first (no forced recalc)
+            // Critical: init now reads --per-page inline-first (no forced recalc)
             // and generates the collapsed list directly, so it no longer needs a
             // settled idle layout; the skeleton CSS still reserves the slot until
             // data-paged-initialized, so no CLS. Registered before filter so
@@ -261,30 +262,28 @@
             name: 'Pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
+            critical: true,
         },
         {
             name: 'Ipv',
             selector: '.nds-ipv-thumbnail',
             init: () => NDS.Ipv?.init?.(),
-            idle: true,
         },
         {
             name: 'Modal',
             selector: '.nds-modal',
             init: () => NDS.Modal?.init?.(),
-            idle: true,
         },
         {
             name: 'Alert',
             selector: '.nds-alert',
             init: () => NDS.Alert?.init?.(),
-            idle: true,
         },
         {
-            // Eager: init is cheap now (scoped surface lookups + deferred option
+            // Critical: init is cheap now (scoped surface lookups + deferred option
             // builds) and filtering controls visible content, so wiring it before
             // first paint keeps URL-active filters and interactions ready. Drives
-            // pagination via Pagination.refresh; pagination is eager and
+            // pagination via Pagination.refresh; pagination is critical and
             // registered above, so it inits first.
             // Gate on [data-filter-target] (not .nds-filter): a filter is defined
             // by its target link, so it must init even when there's no .nds-filter
@@ -292,30 +291,31 @@
             name: 'Filter',
             selector: '[data-filter-target]',
             init: () => NDS.Filter?.init?.(),
+            critical: true,
         },
         {
             name: 'UserFeedback',
             selector: '.nds-user-feedback',
             init: () => NDS.UserFeedback?.init?.(),
-            idle: true,
         },
         {
             name: 'Chart',
             selector: '.nds-chart',
             init: () => NDS.Chart?.init?.(),
-            idle: true,
         },
         {
             name: 'Empty',
             selector: '.nds-empty',
             init: () => NDS.Empty?.init?.(),
+            critical: true,
         },
         {
-            // Eager: enforces single-submit. A click in the idle gap would
+            // Critical: enforces single-submit. A click in the deferred gap would
             // bypass the cooldown.
             name: 'CooldownButton',
             selector: '.nds-cooldown',
             init: () => NDS.CooldownButton?.init?.(),
+            critical: true,
         },
         // Topbar widgets — placed last because they're non-critical chrome
         // (clock, hijri date, weather, city). Their network-bound updates
@@ -326,13 +326,11 @@
             name: 'CityWeather',
             selector: '#nds-weatherInfo, #nds-cityName',
             init: () => NDS.CityWeather?.init?.(),
-            idle: true,
         },
         {
             name: 'TimeDate',
             selector: '#nds-date, #nds-realTimeClock',
             init: () => NDS.TimeDate?.init?.(),
-            idle: true,
         },
         // Note: accessibility is intentionally NOT registered here. The
         // optional assets/js/nds-accessibility.min.js bundle self-boots via
@@ -359,7 +357,12 @@
 
     // rIC fallback for older Safari (<18). Deadline counts down a real 5ms
     // slot so drainIdle yields like native rIC instead of running every
-    // idle component in one macrotask.
+    // idle component in one macrotask. Fidelity gap: unlike native rIC this
+    // fires ~immediately (setTimeout 1ms), NOT at true idle — so on those
+    // engines deferred components init right after the critical pass, competing with
+    // the post-load window (the 5ms slot still caps each task). The {timeout}
+    // arg is ignored (didTimeout stays false): setTimeout always fires, so no
+    // timeout-forced run is needed.
     const scheduleIdle = window.requestIdleCallback ||
         ((cb) => {
             const start = performance.now();
@@ -392,7 +395,7 @@
     // window.__NDS_BUNDLES = { delegated: { file, ns:[...] }, extras: {...} }.
     // Bundle membership (location) is owned entirely by the build — the loader and
     // the component registry never hardcode it. Each injected bundle loads after
-    // the eager pass (never a render-blocking <script defer>), so its download
+    // the critical pass (never a render-blocking <script defer>), so its download
     // never gates the reveal.
     const MAP = window.__NDS_BUNDLES || {};
     // namespace → bundle name, for the lazy stubs + the partition's location lookup.
@@ -482,12 +485,11 @@
         }
         const startTime = performance.now();
 
-        // Partition collections are populated inside the rAF below so the
-        // detection sweep moves off the DCL handler task. The init-loop closures
-        // capture these bindings; all are assigned before initEagerBatch is
-        // called. Injected-bundle groups init in their own pass once each bundle
-        // loads — see initEagerBatch.
-        let eagerComponents, mainIdleComponents, injectedGroups;
+        // Partition buckets. The init-loop closures capture these bindings; all
+        // are assigned (below) before initCriticalBatch runs. Injected-bundle
+        // groups init in their own pass once each bundle loads — see
+        // initCriticalBatch.
+        let criticalComponents, deferredComponents, injectedGroups;
 
         const runInit = (component) => {
             const start = CONFIG.enableTiming ? performance.now() : 0;
@@ -504,28 +506,29 @@
             }
         };
 
-        // Eager pass: time-sliced. Small inits share a task; a heavy init lands
-        // alone. Yields when the per-batch budget is exceeded.
-        let eagerIndex = 0;
-        function initEagerBatch() {
+        // Critical pass (the reveal checklist): time-sliced. Small inits share a
+        // task; a heavy init lands alone. Yields when the per-batch budget is
+        // exceeded.
+        let criticalIndex = 0;
+        function initCriticalBatch() {
             const batchStart = performance.now();
             while (
-                eagerIndex < eagerComponents.length &&
+                criticalIndex < criticalComponents.length &&
                 performance.now() - batchStart < CONFIG.initBudgetMs
             ) {
-                runInit(eagerComponents[eagerIndex++]);
+                runInit(criticalComponents[criticalIndex++]);
             }
-            if (eagerIndex < eagerComponents.length) {
-                yieldToBrowser(initEagerBatch);
+            if (criticalIndex < criticalComponents.length) {
+                yieldToBrowser(initCriticalBatch);
             } else {
-                // Eager pass done — card-revealing components (swiper,
+                // Checklist complete — card-revealing components (swiper,
                 // pagination) are up. Stamp the body so critical-CSS skeletons
-                // hand off to the real, now-styled components.
+                // hand off to the real, now-styled components: this is the reveal.
                 document.body.setAttribute('data-nds-loaded', '');
 
-                // Idle components whose code is already in main drain immediately
-                // — never gated on an injected-bundle fetch.
-                if (mainIdleComponents.length) drainList(mainIdleComponents, logAllDone);
+                // Deferred components whose code is already in main drain in idle
+                // slots immediately — never gated on an injected-bundle fetch.
+                if (deferredComponents.length) drainList(deferredComponents, logAllDone);
                 else logAllDone();
 
                 // Injected-bundle components init in their own pass once that
@@ -539,10 +542,10 @@
             }
         }
 
-        // Idle drain: runs a component list across idle slots, as many as fit
-        // each slot. Self-schedules until the list is exhausted; the timeout
-        // ensures it still runs if the page never goes idle. Shared by the main
-        // idle list and each injected-bundle group (each gets its own index/onDone).
+        // Idle-slot drain: runs a component list across idle slots, as many as
+        // fit each slot. Self-schedules until the list is exhausted; the timeout
+        // ensures it still runs if the page never goes idle. Shared by the
+        // deferred list and each injected-bundle group (each gets its own index/onDone).
         function drainList(list, onDone) {
             let i = 0;
             function drain(deadline) {
@@ -566,49 +569,50 @@
             }
         }
 
-        // Start initialization chain after the next paint so the browser has
-        // committed at least one frame before we touch the DOM. Detection +
-        // partition also run inside the rAF — per-component querySelector
-        // (the fast path: short-circuits at first match, uses native
-        // class/ID indices for absent selectors) joins the first eager
-        // batch's wall clock instead of extending the DCL handler task.
+        // Run detection + the critical pass directly — no rAF. The page is CSS-
+        // hidden behind the critical-CSS skeleton until the critical pass stamps
+        // data-nds-loaded, so there's nothing visible to protect with a pre-
+        // paint frame: the rAF only pushed the reveal back a frame and froze
+        // init entirely in a hidden tab (rAF never fires for a hidden document,
+        // so a background-opened tab would never initialize). We already run off
+        // the eval/DCL task via the setTimeout(0) kickoff below; detection's
+        // per-component querySelector (fast path: short-circuits at first match)
+        // joins the first critical batch's wall clock.
         // Source order (registry above) is priority order; push preserves it.
-        requestAnimationFrame(() => {
-            eagerComponents = [];
-            mainIdleComponents = [];
-            injectedGroups = {};
-            for (const c of COMPONENTS) {
-                const present = c.universal || (c.selector && document.querySelector(c.selector));
-                if (!present) continue;
-                if (!c.idle) {
-                    eagerComponents.push(c);                          // eager → ships in main
-                    continue;
-                }
-                const bundle = nsToBundle[c.name];                   // location from the build manifest
-                if (bundle) (injectedGroups[bundle] ||= []).push(c); // idle → injected bundle
-                else mainIdleComponents.push(c);                     // idle, code already in main
+        criticalComponents = [];
+        deferredComponents = [];
+        injectedGroups = {};
+        for (const c of COMPONENTS) {
+            const present = c.universal || (c.selector && document.querySelector(c.selector));
+            if (!present) continue;
+            if (c.critical) {
+                criticalComponents.push(c);                          // on the checklist → ships in main
+                continue;
             }
+            const bundle = nsToBundle[c.name];                   // location from the build manifest
+            if (bundle) (injectedGroups[bundle] ||= []).push(c); // deferred → injected bundle
+            else deferredComponents.push(c);                     // deferred → already in main
+        }
 
-            // Kick off each needed bundle now so its (low-priority) download
-            // overlaps the eager pass. loadBundle is idempotent; its components
-            // init in a per-bundle pass once it lands (see initEagerBatch) — the
-            // fetch never gates the reveal.
-            for (const name in injectedGroups) loadBundle(name);
+        // Kick off each needed bundle now so its (low-priority) download
+        // overlaps the critical pass. loadBundle is idempotent; its components
+        // init in a per-bundle pass once it lands (see initCriticalBatch) — the
+        // fetch never gates the reveal.
+        for (const name in injectedGroups) loadBundle(name);
 
-            if (CONFIG.enableLogging) {
-                const names = Object.keys(injectedGroups);
-                const injected = names.reduce((n, name) => n + injectedGroups[name].length, 0);
-                const total = eagerComponents.length + mainIdleComponents.length + injected;
-                const detail = names.map((name) => `${name}:${injectedGroups[name].length}`);
-                console.log(
-                    `[NDS] Initializing ${total}/${COMPONENTS.length} components ` +
-                    `(${eagerComponents.length} eager, ${mainIdleComponents.length} idle` +
-                    `${detail.length ? ', ' + detail.join(', ') : ''})`
-                );
-            }
+        if (CONFIG.enableLogging) {
+            const names = Object.keys(injectedGroups);
+            const injected = names.reduce((n, name) => n + injectedGroups[name].length, 0);
+            const total = criticalComponents.length + deferredComponents.length + injected;
+            const detail = names.map((name) => `${name}:${injectedGroups[name].length}`);
+            console.log(
+                `[NDS] Initializing ${total}/${COMPONENTS.length} components ` +
+                `(${criticalComponents.length} critical, ${deferredComponents.length} deferred` +
+                `${detail.length ? ', ' + detail.join(', ') : ''})`
+            );
+        }
 
-            initEagerBatch();
-        });
+        initCriticalBatch();
     }
 
     // Configuration options
@@ -621,7 +625,7 @@
     const GLOBAL = (typeof window !== 'undefined' && window.NDSInitConfig) ? window.NDSInitConfig : {};
 
     const CONFIG = {
-        // Per-batch budget: eager components init in a tight loop until this
+        // Per-batch budget: critical components init in a tight loop until this
         // many ms elapse, then yield. Keep below ~40 to stay clear of TBT's
         // 50ms long-task threshold even on throttled CPUs.
         initBudgetMs: GLOBAL.initBudgetMs ?? 5,

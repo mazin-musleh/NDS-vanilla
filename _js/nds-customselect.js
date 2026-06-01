@@ -29,9 +29,9 @@
     // is the source of truth (it submits); the visible `.nds-select-input` is a
     // readonly, non-submitting display surface, so its label is DERIVED from the
     // matching option's text — never hand-authored. Display-only: no dropmenu
-    // build. No-op once a label is present. Forms invokes this from its eager
+    // build. No-op once a label is present. Forms invokes this from its critical
     // per-input init (it already iterates every select-input), so a pre-filled
-    // label paints at first paint rather than after the idle build.
+    // label paints at first paint rather than after a deferred build.
     function restoreDisplay(selectInput) {
         if (!selectInput || selectInput.value || !selectInput.closest) return;
         var formControl = selectInput.closest('.nds-form-control');
