@@ -943,7 +943,7 @@
             if (!('onscrollend' in DOM.primary)) {
                 setTimeout(() => overflow.checkEnd(), 300);
             }
-        });
+        }, { signal: _interactionsSignal });
 
         // Scroll handling
         const onScroll = NDS.rafThrottle(() => {
@@ -1012,7 +1012,7 @@
             e.preventDefault();
             document.addEventListener('mousemove', dragMove);
             document.addEventListener('mouseup', dragUp);
-        });
+        }, { signal: _interactionsSignal });
 
         // Dropdown hover tracking — single delegated pair on DOM.nav.
         // mouseover/mouseout bubble (mouseenter/mouseleave do not), so we filter
