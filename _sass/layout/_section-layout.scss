@@ -342,7 +342,7 @@
     :is(.nds-section-head > .nds-section-action.nds-minimal > .nds-btn,
         .nds-section-head > .nds-section-action.nds-minimal > .nds-dropmenu > .nds-btn,
         .nds-btn.nds-minimal)>.nds-label {
-        display: none;
+        @include label-hidden;
     }
 }
 

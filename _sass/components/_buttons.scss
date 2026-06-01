@@ -587,7 +587,7 @@
   }
 
   &:is(.nds-icon-only) .nds-label {
-    display: none;
+    @include label-hidden;
   }
 
   :is(&.nds-label-only, .nds-label-only) :is(i, svg, img) {

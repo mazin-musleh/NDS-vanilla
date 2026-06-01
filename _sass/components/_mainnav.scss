@@ -221,7 +221,7 @@
 
         &.nds-icon-only {
             .nds-nav-link .nds-label {
-                display: none;
+                @include label-hidden;
             }
         }
 
@@ -583,7 +583,7 @@ body:not(.nds-minimal) .nds-main-nav {
         :is(.nds-nav-actions, .nds-nav-minimal) {
             .nds-nav-item:not(.nds-CTA) {
                 .nds-nav-link .nds-label {
-                    display: none;
+                    @include label-hidden;
                 }
             }
         }
