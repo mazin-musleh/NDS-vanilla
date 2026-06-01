@@ -163,6 +163,17 @@
         }
     }
 
+    // Diagnostic snapshot of font-loading state — one definition shared by the
+    // global API and the CommonJS export so the two shapes can't drift. The
+    // document guard keeps it safe under the module.exports path (no DOM there).
+    const getFontLoadingState = () => ({
+        loadedFonts: Array.from(loadedFonts),
+        fontStates: Object.fromEntries(fontStates),
+        dataAttribute: typeof document !== 'undefined'
+            ? document.body.getAttribute('data-font-loaded')
+            : null
+    });
+
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         window.waitForFontFile = waitForFontFile;
@@ -173,11 +184,7 @@
         // Create global font loading API
         NDS.FontLoading = {
             waitForFontFile,
-            getFontLoadingState: () => ({
-                loadedFonts: Array.from(loadedFonts),
-                fontStates: Object.fromEntries(fontStates),
-                dataAttribute: document.body.getAttribute('data-font-loaded')
-            }),
+            getFontLoadingState,
             init: initializeFontLoading,
             getLoadedFonts,
             isFontLoaded
@@ -190,10 +197,7 @@
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = {
             waitForFontFile,
-            getFontLoadingState: () => ({
-                loadedFonts: Array.from(loadedFonts),
-                fontStates: Object.fromEntries(fontStates)
-            }),
+            getFontLoadingState,
             getLoadedFonts,
             isFontLoaded
         };
