@@ -17,7 +17,7 @@ Each entry has six fields, each doing one job:
 - **Audit behavior** — the literal check `nds-js-audit` performs. A yes/no test, not a judgment call.
 - **Current adoption** — informational dashboard. Refactor-progress signal. Never the source of the canonical; the canonical is the canonical even when adoption is 30%.
 
-If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, with explicit user approval.
+If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, which auto-applies a revision only when the divergent file's cited reasoning clears the evolve quality bar and records it in the `## Catalog evolved` block.
 
 ---
 
@@ -160,7 +160,7 @@ The pair reads as the concept reads. `open` evokes a doorway; `show` evokes reve
 For each component file:
 1. Apply the discriminators (`NDS.trapFocus` / `NDS.Backdrop.show` invocation → 3.1; multi-instance no-backdrop → 3.2; factory-create with finite lifetime → 3.3; `toggle()`-only → 3.4).
 2. Check the file's exposed lifecycle pair against the bucket's canonical.
-3. If the file's concept is ambiguous (multiple discriminators match, or none match), surface as a Phase 7 question rather than flagging.
+3. If the file's concept is ambiguous (multiple discriminators match, or none match), record it as an open question in the report rather than flagging a finding — ambiguity does not clear the evolve bar, so nothing auto-changes.
 
 **Current adoption:**
 - 3.1 (modal-like): 6/6 use `open()` / `close()`
@@ -260,6 +260,7 @@ A factory creates per-element instances; the guard must distinguish "this specif
 3. Singleton using `data-nds-<name>-initialized` → flag.
 4. Window-global flag requires an inline comment within 3 lines naming the cross-module observer concern; otherwise flag.
 5. Singleton using a module-scope closure flag NOT named `_initDone` (e.g. `_installed`, `_wired`, `_ready`) → flag as a name divergence. The shape is correct; only the name diverges. Resolve per file: migrate to `_initDone`, or open a Phase 7 revision to admit the name. Motivating finding: [_js/nds-voice-input.js:290](_js/nds-voice-input.js#L290) uses `var _installed` against the canonical `_initDone`.
+6. Factory whose per-element guard IS a DOM attribute but does NOT match `data-nds-<name>-initialized` (e.g. missing the `nds-` namespace infix, like `data-swiper-initialized`) → flag as a name divergence. The shape is correct (marker lives on the element); only the name diverges. Resolve per file: migrate to `data-nds-<name>-initialized`, or open a Phase 7 revision to admit the name. Does NOT apply to the JS-property carve-out (`el._ndsXxxInitialized` on whole-document controllers, per carve-out above). Motivating finding: [_js/nds-swiper.js:127,160,583](_js/nds-swiper.js#L127) uses `data-swiper-initialized` against the canonical `data-nds-swiper-initialized`.
 
 **Current adoption:** 16/16 factory components use the DOM attribute form; 4/4 singleton modules (accessibility, empty, cityWeather, theme) use `_initDone`. Tallied 2026-05-28.
 
@@ -309,30 +310,19 @@ Flag any `this.handlers.<key> = fn` pattern in a file where the component does N
 
 When `nds-js-audit` runs:
 
-- **Single-file `dry`:** reads PERSONA.md, runs JSD-15 against the canonicals via each entry's "Audit behavior" check. The skip banner ("JSD-15 skipped in single-file mode") goes away. A finding looks like: *"L227 uses `this._ac` against entry 1's canonical `this.abortController` ([SKILL.md PERSONA.md entry 1](.claude/skills/nds-js-audit/PERSONA.md)). Migrate, or open a Phase 7 EVOLVE proposal to revise."*
-- **Full-tree `dry`:** runs the same checks across every file. Output additionally reports the per-entry "current adoption" — a refactor-progress signal. Adoption drift surfaces as a Phase 7 EVOLVE proposal: "Entry N adoption dropped from X/Y to (X−2)/Y; new files in `_js/nds-foo.js`, `_js/nds-bar.js` diverge. Migrate or revise?"
-- **Phase 7 EVOLVE:** third proposal source (alongside "Gaps observed" and "Dead-rule candidates"). Persona drift surfaces when (a) the corpus has diverged from a canonical and a migration is now a meaningful refactor, OR (b) new evidence suggests revising the canonical itself.
+- **Single-file `dry`:** reads PERSONA.md and runs JSD-15 against the canonicals via each entry's "Audit behavior" check (no skip banner). A finding looks like: *"L227 uses `this._ac` against entry 1's canonical `this.abortController`. Migrate, or revise the canonical (Phase 7)."*
+- **Full-tree `dry`:** same checks across every file, plus the per-entry "current adoption" as a refactor-progress signal. Adoption drift can surface as a Phase 7 persona-drift refinement.
+- **Phase 7 EVOLVE:** persona drift is the third refinement source (alongside "Gaps observed" and "Dead-rule candidates"), surfaced when (a) the corpus has diverged from a canonical and a migration is now a meaningful refactor, OR (b) new evidence suggests revising the canonical itself.
 
-The persona never silently changes. Edits go through Phase 7 with explicit user approval, same as catalog rule changes.
+Persona edits are never silent: Phase 7 auto-applies a canonical revision **only** when the divergent file's cited reasoning clears the evolve quality bar, and records every change in the report's `## Catalog evolved` block. The user reverts via git if they disagree.
 
 ---
 
 ## Update workflow
 
-PERSONA.md updates flow through four patterns:
+- **Audit flags a divergent file.** Either the file is wrong → a fix batch migrates it (canonical unchanged), or the canonical is wrong/incomplete → Phase 7 auto-revises it when the file's cited reasoning clears the bar (otherwise the file is the migration target).
+- **Audit surfaces an unanticipated concept.** Phase 7 adds a new entry or a carve-out, with motivating findings cited.
+- **User makes a deliberate decision** (e.g. "switch entry 3.2 to `expand()`/`collapse()`"). The edit lands directly per instruction.
+- **A tree-wide refactor lands.** Persona unchanged — the canonical was already the target; "Current adoption" updates on the next full-tree run.
 
-**Pattern A — audit flags a divergent file.** Two outcomes, user picks per file:
-- File is wrong → fix batch migrates. Canonical unchanged.
-- Canonical is wrong/incomplete → Phase 7 EVOLVE proposes a revision. The proposal includes the file's reasoning ("here's why this code chose differently") so the user can argue from data. Accept = canonical revised; reject = file gets migrated.
-
-**Pattern B — audit surfaces a concept the persona doesn't anticipate.** New entry needed, or existing entry needs a new carve-out. Phase 7 EVOLVE proposes the addition with motivating findings cited inline.
-
-**Pattern C — user makes a deliberate decision.** User explicitly directs an edit (e.g., "switch entry 3.2 canonical from `show()`/`hide()` to `expand()`/`collapse()`"). The edit lands directly per the user's instruction; the audit-report trail records when and why.
-
-**Pattern D — tree-wide refactor lands.** A future commit migrates files to match a canonical. Persona unchanged — the canonical was already the target. The "Current adoption" lines update on the next full-tree run; no PERSONA.md edit needed.
-
-**What never triggers an update:**
-- "11 new files used `_ac`" — migration target, not canonical revision. The canonical doesn't track adoption percentages.
-- "The corpus changed" — would chase noise. The canonical is the deliberate choice; the corpus catches up.
-
-The audit-report trail in `.claude/audit-reports/` is the history. Each saved report is a marker: "as of this commit, the codebase looked like X against the persona." Diff-vs-Run-N sections record convergence (or drift) over time.
+**What never triggers a canonical revision:** raw adoption counts ("11 new files used `_ac`") or "the corpus changed" — those are migration targets, not canonical revisions. The canonical is the deliberate choice; the corpus catches up. The saved audit-report trail in `.claude/audit-reports/` is the history.

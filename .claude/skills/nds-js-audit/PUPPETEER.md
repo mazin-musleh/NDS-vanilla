@@ -120,7 +120,6 @@ For a **perf fix**, add a `perf` line per measured rule: the metric, the before 
 
 ## Hygiene
 
-- One browser per script run; always `browser.close()` (even on assertion failure — wrap in `try/finally`).
-- Delete the `c:\tmp\nds-pup-*.mjs` scratch file after the run.
-- Leave the dev server running across the batch; if you started it, stop it only when the batch ends (`stop`/last file) or note that it's still running.
+- One browser per script run; always `browser.close()` in a `try/finally` (even on assertion failure), and delete the `c:\tmp\nds-pup-*.mjs` scratch file after.
+- Leave the dev server running across the batch; if you started it, stop it only at batch end (`stop`/last file) or note that it's still running.
 - Keep each script focused on the rules that fired in **this** file — don't sweep the whole component surface.
