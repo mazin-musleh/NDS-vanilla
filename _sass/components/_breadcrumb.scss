@@ -21,9 +21,10 @@
     align-items: center;
     color: var(--text-secondary-paragraph);
 
-    &:last-child {
+    /* Disabled-token color fails AA contrast for the current-page crumb */
+    /* &:last-child {
         color: var(--text-default-disabled);
-    }
+    } */
 }
 
 /* ========================================
