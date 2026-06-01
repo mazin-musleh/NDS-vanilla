@@ -331,7 +331,7 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
                             <span class="nds-label">Phone</span>
                         </dt>
-                        <dd>
+                        <dd class="nds-item-action">
                             <a href="tel:9200343222" class="nds-primary">
                                 <span class="nds-label">9200343222</span>
                             </a>
@@ -346,7 +346,7 @@ sidemenu_mode: false
                             <i class="hgi hgi-stroke hgi-message-01"></i>
                             <span class="nds-label">SMS</span>
                         </dt>
-                        <dd>
+                        <dd class="nds-item-action">
                             <a href="sms:199099" class="nds-primary">
                                 <span class="nds-label">199099</span>
                             </a>
@@ -361,7 +361,7 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                             <span class="nds-label">Email</span>
                         </dt>
-                        <dd>
+                        <dd class="nds-item-action">
                             <a href="mailto:help@company.sa" class="nds-primary">
                                 <span class="nds-label">help@company.sa</span>
                             </a>
@@ -376,7 +376,7 @@ sidemenu_mode: false
                             <i class="hgi hgi-stroke hgi-printer"></i>
                             <span class="nds-label">FAX</span>
                         </dt>
-                        <dd>
+                        <dd class="nds-item-action">
                             <a href="tel:+966114346654" class="nds-primary">
                                 <span class="nds-label">00966-11-434-6654</span>
                             </a>
@@ -425,7 +425,7 @@ sidemenu_mode: false
                             <i class="hgi hgi-stroke hgi-fire-security"></i>
                             <span class="nds-label">Civil defence</span>
                         </dt>
-                        <dd>
+                        <dd class="nds-item-action">
                             <a href="tel:998" class="nds-primary">
                                 <span class="nds-label">998</span>
                             </a>
@@ -440,7 +440,7 @@ sidemenu_mode: false
                             <i class="hgi hgi-stroke hgi-police-badge"></i>
                             <span class="nds-label">Police</span>
                         </dt>
-                        <dd>
+                        <dd class="nds-item-action">
                             <a href="tel:999" class="nds-primary">
                                 <span class="nds-label">999</span>
                             </a>
@@ -455,7 +455,7 @@ sidemenu_mode: false
                             <i class="hgi hgi-stroke hgi-ambulance"></i>
                             <span class="nds-label">Ambulance</span>
                         </dt>
-                        <dd>
+                        <dd class="nds-item-action">
                             <a href="tel:997" class="nds-primary">
                                 <span class="nds-label">997</span>
                             </a>
