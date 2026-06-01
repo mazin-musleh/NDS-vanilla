@@ -94,10 +94,10 @@ mark {
 
 
 /* ========================================
-   MINIMAL LAYOUT
+   PAGE BACKGROUND (full-bleed image + overlay)
    ======================================== */
 
-body.nds-minimal[style*="--bg-img"] {
+body.nds-page-bg {
     background:
         linear-gradient(color-mix(in srgb, var(--background-body) var(--bg-opacity-top, 80%), transparent),
             color-mix(in srgb, var(--background-body) var(--bg-opacity-bottom, 80%), transparent)),

@@ -4,7 +4,7 @@ title: Create your account
 lang: en
 direction: ltr
 layout_class: nds-middle
-hero_image: assets/img/riyadhcenter.webp
+page_bg: assets/img/riyadhcenter.webp
 bg_opacity_top: 60%
 bg_opacity_bottom: 90%
 exclude_showcase: true
