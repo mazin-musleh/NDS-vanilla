@@ -436,8 +436,10 @@ fieldset {
                 }
             }
 
+            // Static (non-interactive) prefix/suffix: was --text-secondary-paragraph,
+            // bumped to primary for AA contrast
             > :not(button):not(a) {
-                --btn-color: var(--text-secondary-paragraph);
+                --btn-color: var(--text-primary-paragraph);
             }
         }
 
