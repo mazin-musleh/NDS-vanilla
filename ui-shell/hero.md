@@ -22,7 +22,7 @@ direction: ltr
                         <div class="demo-label">Default</div>
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub" aria-label="Page Hero">
+                        <section class="nds-hero-section nds-sub">
                             <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
@@ -57,7 +57,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub" aria-label="Page Hero"&gt;
+&lt;section class="nds-hero-section nds-sub"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -83,7 +83,7 @@ direction: ltr
                         <div class="demo-label">Flat</div>
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub nds-flat" aria-label="Page Hero">
+                        <section class="nds-hero-section nds-sub nds-flat">
                             <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
@@ -145,7 +145,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub nds-flat" aria-label="Page Hero"&gt;
+&lt;section class="nds-hero-section nds-sub nds-flat"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -198,7 +198,7 @@ direction: ltr
                         <div class="demo-label">With Brief</div>
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub" aria-label="Page Hero">
+                        <section class="nds-hero-section nds-sub">
                             <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
@@ -234,7 +234,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub" aria-label="Page Hero"&gt;
+&lt;section class="nds-hero-section nds-sub"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -275,8 +275,7 @@ direction: ltr
                         <div class="demo-label">With Background Image</div>
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub" aria-label="Page Hero"
-                            style="--hero_image: url('{{ '/assets/img/riyadhcenter_ai.webp' | relative_url }}')">
+                        <section class="nds-hero-section nds-sub" style="--hero_image: url('{{ '/assets/img/riyadhcenter_ai.webp' | relative_url }}')">
                             <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
@@ -311,8 +310,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub" aria-label="Page Hero"
-    style="--hero_image: url('assets/img/hero.webp')"&gt;
+&lt;section class="nds-hero-section nds-sub" style="--hero_image: url('assets/img/hero.webp')"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -352,7 +350,7 @@ direction: ltr
                         <div class="demo-label">With Actions</div>
                     </div>
                     <div class="demo-container" style="padding: 0; overflow: hidden;">
-                        <section class="nds-hero-section nds-sub" aria-label="Page Hero">
+                        <section class="nds-hero-section nds-sub">
                             <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
                                 <ol class="nds-breadcrumb">
                                     <li><a href="/">Home</a></li>
@@ -400,7 +398,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;section class="nds-hero-section nds-sub" aria-label="Page Hero"&gt;
+&lt;section class="nds-hero-section nds-sub"&gt;
   &lt;nav class="nds-breadcrumb-nav" aria-label="Breadcrumb"&gt;
     &lt;ol class="nds-breadcrumb"&gt;
       &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
@@ -474,7 +472,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;section class="nds-hero-section" aria-label="Page Hero"&gt;
+&lt;section class="nds-hero-section"&gt;
   &lt;div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: 2"&gt;
     &lt;div class="nds-swiper-wrapper"&gt;
 
