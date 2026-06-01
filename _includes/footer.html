@@ -8,8 +8,8 @@
         {%- for column in footer_data.columns -%}
         {%- if column.links %}
         <div class="nds-footer-column">
-            <h3 class="nds-footer-heading">{{ column.heading }}</h3>
-            <ul class="nds-footer-list">
+            <span class="nds-footer-heading" id="nds-footer-col-{{ forloop.index }}">{{ column.heading }}</span>
+            <ul class="nds-footer-list" aria-labelledby="nds-footer-col-{{ forloop.index }}">
                 {%- for link in column.links %}
                 {%- assign link_url = link.url -%}
                 {%- unless link.url contains "http" or link.url contains "mailto:" or link.url contains "tel:" or link.url contains "#" -%}
@@ -34,17 +34,17 @@
         <div class="nds-footer-column nds-footer-icons">
             {%- for column in icon_cols %}
             <div class="nds-footer-icon-group">
-                <h3 class="nds-footer-heading">{{ column.heading }}</h3>
-                <div class="nds-footer-icon-row">
+                <span class="nds-footer-heading" id="nds-footer-iconcol-{{ forloop.index }}">{{ column.heading }}</span>
+                <div class="nds-footer-icon-row" role="group" aria-labelledby="nds-footer-iconcol-{{ forloop.index }}">
                     {%- for social in column.social_icons %}
                     <a class="nds-btn nds-secondary-outline nds-icon-only" href="{{ social.url }}"
-                        target="_blank" aria-label="{{ social.label }}">
+                        target="_blank" rel="noopener noreferrer" aria-label="{{ social.label }}">
                         <i class="nds-icon {{ social.icon }}" aria-hidden="true"></i>
                     </a>
                     {%- endfor %}
                     {%- for app in column.mobile_apps.apps %}
                     <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only"
-                        href="{{ app.url }}" target="_blank" aria-label="{{ app.label }}">
+                        href="{{ app.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ app.label }}">
                         <i class="nds-icon {{ app.icon }}" aria-hidden="true"></i>
                     </a>
                     {%- endfor %}
@@ -97,7 +97,7 @@
         <div class="nds-footer-logos">
             {%- for logo in footer_logos %}
             {%- if logo.url %}
-            <a href="{{ logo.url | relative_url }}"{%- if logo.url contains 'http' %} target="_blank"{%- endif %}{%- if logo.nofollow %} rel="nofollow noopener"{%- endif %}>
+            <a href="{{ logo.url | relative_url }}"{%- if logo.url contains 'http' %} target="_blank" rel="{% if logo.nofollow %}nofollow {% endif %}noopener noreferrer"{%- endif %}>
                 <img{%- if logo.class %} class="{{ logo.class }}"{%- endif %} src="{{ logo.image | relative_url }}" loading="lazy" width="{{ logo.width }}"
                     height="{{ logo.height }}" alt="{{ logo.alt }}">
             </a>
