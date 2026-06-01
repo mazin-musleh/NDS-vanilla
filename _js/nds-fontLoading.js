@@ -77,28 +77,43 @@
         }
 
         // Resolve via the Font Loading API — event-driven, no polling.
-        // document.fonts.load(spec) triggers the download and resolves once the
-        // face settles; fonts.ready waits out any in-flight loads; fonts.check
-        // confirms the font is genuinely available before we flip the gate.
         if (document.fonts && document.fonts.load && document.fonts.ready) {
             const spec = '1em "' + fontName + '"';
             let settled = false;
-            const timer = setTimeout(() => { if (!settled) { settled = true; fail(); } }, timeout);
-            const finish = (didLoad) => {
-                if (settled) return;
+
+            // Stamp ONLY when a real @font-face for this family has actually loaded.
+            // We can't gate on document.fonts.check(): when no face matches yet — e.g.
+            // the icon stylesheet is deferred and hasn't applied — check() returns true
+            // *vacuously* ("nothing to load"), which would flip the reveal gate before
+            // the font exists and flash CJK-fallback glyphs. Scanning for a loaded face
+            // is the unambiguous signal.
+            const hasLoadedFace = () => {
+                let ok = false;
+                document.fonts.forEach((f) => { if (f.family === fontName && f.status === 'loaded') ok = true; });
+                return ok;
+            };
+            const onDone = () => {
+                if (settled || !hasLoadedFace()) return;
                 settled = true;
                 clearTimeout(timer);
-                if (didLoad && document.fonts.check(spec)) markAsLoaded();
-                else fail();
+                document.fonts.removeEventListener('loadingdone', onDone);
+                markAsLoaded();
             };
+            const timer = setTimeout(() => {
+                if (settled) return;
+                settled = true;
+                document.fonts.removeEventListener('loadingdone', onDone);
+                fail();
+            }, timeout);
 
-            Promise.all([
-                document.fonts.load(spec),
-                document.fonts.load('bold ' + spec),
-            ])
-                .then(() => document.fonts.ready)
-                .then(() => finish(true))
-                .catch(() => finish(false));
+            // The icons' own usage starts the download once the (possibly deferred)
+            // face applies; `loadingdone` fires when it completes. load() kicks the
+            // already-present case; the immediate onDone() catches an already-loaded
+            // font (whose loadingdone may have fired before we subscribed).
+            document.fonts.addEventListener('loadingdone', onDone);
+            document.fonts.load(spec).catch(() => {});
+            document.fonts.load('bold ' + spec).catch(() => {});
+            onDone();
         } else {
             // No Font Loading API (pre-2016 browser): the CJK-fallback boundary
             // can't be detected, so reveal rather than hide icons indefinitely.
