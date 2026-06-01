@@ -17,6 +17,9 @@ sidemenu_mode: false
 
 <section id="faqList" class="nds-content-section">
     <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Browse questions</h2>
+        </div>
         <div class="nds-form-container nds-search-box" data-filter-target="faq-all-items">
             <div class="nds-search-content">
                 <div class="nds-form-control">
