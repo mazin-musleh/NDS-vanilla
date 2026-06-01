@@ -116,6 +116,10 @@
             return this._cachedGap;
         }
 
+        get maxIndex() {
+            return Math.max(0, this.slides.length - this.slidesPerView);
+        }
+
         init() {
             this.abortController = new AbortController();
             this.container.style.setProperty('--total', this.slides.length);
@@ -316,8 +320,7 @@
         }
 
         goTo(index) {
-            const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
-            const clampedIndex = Math.max(0, Math.min(index, maxIndex));
+            const clampedIndex = Math.max(0, Math.min(index, this.maxIndex));
 
             const targetSlide = this.slides[clampedIndex];
             if (!targetSlide) return;
@@ -356,7 +359,7 @@
 
             this.currentIndex = Math.max(0, Math.min(
                 Math.round(scrollPos / step),
-                this.slides.length - this.slidesPerView
+                this.maxIndex
             ));
         }
 
@@ -409,7 +412,7 @@
             if (!this.pagination) return;
 
             const bullets = this.pagination.querySelectorAll('.nds-bullet');
-            const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
+            const maxIndex = this.maxIndex;
 
             // Map currentIndex to page based on proximity to page start indices.
             // For 6 slides, 4 per view: page 0 starts at index 0, page 1 starts at index 2.
@@ -473,7 +476,7 @@
                     break;
                 case 'End':
                     e.preventDefault();
-                    this.goTo(this.slides.length - this.slidesPerView);
+                    this.goTo(this.maxIndex);
                     break;
             }
         }
@@ -518,16 +521,14 @@
         }
 
         updateButtons() {
-            const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
             if (this.prevBtn) this.prevBtn.disabled = this.currentIndex <= 0;
-            if (this.nextBtn) this.nextBtn.disabled = this.currentIndex >= maxIndex;
+            if (this.nextBtn) this.nextBtn.disabled = this.currentIndex >= this.maxIndex;
         }
 
         updateBoundaryClasses() {
-            const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
             const tokens = [];
             if (this.currentIndex <= 0) tokens.push('at-start');
-            if (this.currentIndex >= maxIndex) tokens.push('at-end');
+            if (this.currentIndex >= this.maxIndex) tokens.push('at-end');
             NDS.State.set(this.container, ...tokens);
         }
 
@@ -536,8 +537,7 @@
         // ==============================================
 
         slideTo(index, animate = true) {
-            const maxIndex = Math.max(0, this.slides.length - this.slidesPerView);
-            index = Math.max(0, Math.min(index, maxIndex));
+            index = Math.max(0, Math.min(index, this.maxIndex));
 
             const targetSlide = this.slides[index];
             if (!targetSlide) return;
