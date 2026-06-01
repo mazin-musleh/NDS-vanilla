@@ -391,7 +391,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 1</h4>
+                                            <span class="nds-card-title">Card 1</span>
                                             <p class="nds-card-description">Multi-slide example with responsive
                                                 breakpoints.</p>
                                         </div>
@@ -400,7 +400,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 2</h4>
+                                            <span class="nds-card-title">Card 2</span>
                                             <p class="nds-card-description">Resize the browser to see responsive
                                                 behavior.</p>
                                         </div>
@@ -409,7 +409,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 3</h4>
+                                            <span class="nds-card-title">Card 3</span>
                                             <p class="nds-card-description">Drag or use arrows to navigate.</p>
                                         </div>
                                     </div>
@@ -417,7 +417,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 4</h4>
+                                            <span class="nds-card-title">Card 4</span>
                                             <p class="nds-card-description">Native scroll-snap behavior.</p>
                                         </div>
                                     </div>
@@ -425,7 +425,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 5</h4>
+                                            <span class="nds-card-title">Card 5</span>
                                             <p class="nds-card-description">Full RTL/LTR support.</p>
                                         </div>
                                     </div>
@@ -433,7 +433,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 6</h4>
+                                            <span class="nds-card-title">Card 6</span>
                                             <p class="nds-card-description">Touch and keyboard navigation.</p>
                                         </div>
                                     </div>
@@ -474,7 +474,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 1&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 1&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Multi-slide example with responsive breakpoints.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -482,7 +482,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 2&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 2&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Resize the browser to see responsive behavior.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -490,7 +490,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 3&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 3&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Drag or use arrows to navigate.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -498,7 +498,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 4&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 4&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Native scroll-snap behavior.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -506,7 +506,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 5&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 5&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Full RTL/LTR support.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -514,7 +514,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 6&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 6&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Touch and keyboard navigation.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -594,7 +594,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 1</h4>
+                                            <span class="nds-card-title">Card 1</span>
                                             <p class="nds-card-description">Peek mode shows partial adjacent slides.</p>
                                         </div>
                                     </div>
@@ -602,7 +602,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 2</h4>
+                                            <span class="nds-card-title">Card 2</span>
                                             <p class="nds-card-description">Users can see there's more content.</p>
                                         </div>
                                     </div>
@@ -610,7 +610,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 3</h4>
+                                            <span class="nds-card-title">Card 3</span>
                                             <p class="nds-card-description">This encourages scrolling/navigation.</p>
                                         </div>
                                     </div>
@@ -618,7 +618,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 4</h4>
+                                            <span class="nds-card-title">Card 4</span>
                                             <p class="nds-card-description">Configurable peek amount in pixels.</p>
                                         </div>
                                     </div>
@@ -626,7 +626,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 5</h4>
+                                            <span class="nds-card-title">Card 5</span>
                                             <p class="nds-card-description">Works with any slides-per-view.</p>
                                         </div>
                                     </div>
@@ -634,7 +634,7 @@ direction: ltr
                                 <div class="nds-swiper-slide">
                                     <div class="nds-card nds-stroke nds-shadow">
                                         <div class="nds-card-content">
-                                            <h4 class="nds-card-title">Card 6</h4>
+                                            <span class="nds-card-title">Card 6</span>
                                             <p class="nds-card-description">Last slide in the carousel.</p>
                                         </div>
                                     </div>
@@ -675,7 +675,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 1&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 1&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Peek mode shows partial adjacent slides.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -683,7 +683,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 2&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 2&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Users can see there's more content.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -691,7 +691,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 3&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 3&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;This encourages scrolling/navigation.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -699,7 +699,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 4&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 4&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Configurable peek amount in pixels.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -707,7 +707,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 5&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 5&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Works with any slides-per-view.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -715,7 +715,7 @@ direction: ltr
         &lt;div class="nds-swiper-slide"&gt;
             &lt;div class="nds-card nds-stroke nds-shadow"&gt;
                 &lt;div class="nds-card-content"&gt;
-                    &lt;h4 class="nds-card-title"&gt;Card 6&lt;/h4&gt;
+                    &lt;span class="nds-card-title"&gt;Card 6&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Last slide in the carousel.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;

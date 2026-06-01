@@ -159,7 +159,7 @@ direction: ltr
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <p class="nds-card-description">Application reference</p>
-                                    <h3 class="nds-card-title" id="copy-target-ref">REF-2026-04-19-7A3F</h3>
+                                    <span class="nds-card-title" id="copy-target-ref">REF-2026-04-19-7A3F</span>
                                     <div class="nds-card-actions">
                                         <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"
                                             data-copy-target="#copy-target-ref" aria-label="Copy reference">
@@ -195,7 +195,7 @@ direction: ltr
     &lt;div class="nds-card-content"&gt;
         &lt;div class="nds-card-text"&gt;
             &lt;p class="nds-card-description"&gt;Application reference&lt;/p&gt;
-            &lt;h3 class="nds-card-title" id="copy-target-ref"&gt;REF-2026-04-19-7A3F&lt;/h3&gt;
+            &lt;span class="nds-card-title" id="copy-target-ref"&gt;REF-2026-04-19-7A3F&lt;/span&gt;
         &lt;/div&gt;
         &lt;div class="nds-card-actions"&gt;
             &lt;button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy"

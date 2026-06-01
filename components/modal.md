@@ -66,7 +66,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <h3 class="nds-card-title" id="modal-basic-title">Confirm Action</h3>
+                                        <span class="nds-card-title" id="modal-basic-title">Confirm Action</span>
                                         <p class="nds-card-description">Are you sure you want to proceed with this
                                             action?
                                             This cannot be undone.</p>
@@ -141,7 +141,7 @@ direction: ltr
   &lt;/div&gt;
   &lt;div class="nds-card-content"&gt;
     &lt;div class="nds-card-text"&gt;
-      &lt;h3 class="nds-card-title" id="modal-basic-title"&gt;Confirm Action&lt;/h3&gt;
+      &lt;span class="nds-card-title" id="modal-basic-title"&gt;Confirm Action&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;Are you sure you want to proceed with this action?
           This cannot be undone.&lt;/p&gt;
     &lt;/div&gt;

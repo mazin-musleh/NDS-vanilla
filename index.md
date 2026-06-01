@@ -56,7 +56,7 @@ exclude_showcase: true
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <h3 class="nds-card-title">{{ tpl.title }}</h3>
+                                    <span class="nds-card-title">{{ tpl.title }}</span>
                                     <p class="nds-card-description">{{ tpl.description }}</p>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@ exclude_showcase: true
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <h3 class="nds-card-title">{{ ex.title }}</h3>
+                                    <span class="nds-card-title">{{ ex.title }}</span>
                                     <p class="nds-card-description">{{ ex.description }}</p>
                                 </div>
                                 <div class="nds-card-tags">
@@ -205,7 +205,7 @@ exclude_showcase: true
             <div class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">{{ comp.title }}</h3>
+                        <span class="nds-card-title">{{ comp.title }}</span>
                         <p class="nds-card-description">{{ comp.description }}</p>
                     </div>
                     <div class="nds-card-tags">
@@ -383,7 +383,7 @@ exclude_showcase: true
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Download</h3>
+                            <span class="nds-card-title">Download</span>
                             <p class="nds-card-description">Compiled HTML, CSS, and JavaScript ready to use. Source files included as reference.</p>
                         </div>
                         <div class="nds-card-actions">
@@ -403,7 +403,7 @@ exclude_showcase: true
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Fork</h3>
+                            <span class="nds-card-title">Fork</span>
                             <p class="nds-card-description">Full source code with build system, templates, and tooling.</p>
                         </div>
                         <div class="nds-card-actions">
@@ -423,7 +423,7 @@ exclude_showcase: true
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Contribute</h3>
+                            <span class="nds-card-title">Contribute</span>
                             <p class="nds-card-description">Report issues, suggest improvements, or submit pull requests on GitHub.</p>
                         </div>
                         <div class="nds-card-actions">

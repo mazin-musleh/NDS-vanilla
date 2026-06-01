@@ -78,7 +78,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">{{ tpl.title }}</h3>
+                            <span class="nds-card-title">{{ tpl.title }}</span>
                             <p class="nds-card-description">{{ tpl.description }}</p>
                         </div>
                         <div class="nds-card-tags">

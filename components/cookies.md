@@ -43,7 +43,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <h3 class="nds-card-title">Cookies</h3>
+                                        <span class="nds-card-title">Cookies</span>
                                         <p class="nds-card-description">This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.</p>
                                     </div>
                                     <div class="nds-cookie-popup-links">
@@ -94,7 +94,7 @@ direction: ltr
   &lt;/div&gt;
   &lt;div class="nds-card-content"&gt;
     &lt;div class="nds-card-text"&gt;
-      &lt;h3 class="nds-card-title" id="ndsCookiesTitle"&gt;Cookies&lt;/h3&gt;
+      &lt;span class="nds-card-title" id="ndsCookiesTitle"&gt;Cookies&lt;/span&gt;
       &lt;p class="nds-card-description" id="ndsCookiesContent"&gt;This website uses cookies to ensure ease of use and provide an enhanced browsing experience. By continuing to browse this site, you acknowledge and accept the use of cookies.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class="nds-cookie-popup-links"&gt;

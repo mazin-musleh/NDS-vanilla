@@ -954,7 +954,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                                     </div>
                                                     <div class="nds-card-content">
                                                         <div class="nds-card-text">
-                                                            <h3 class="nds-card-title nds-truncate">{{ service.title }}</h3>
+                                                            <span class="nds-card-title nds-truncate">{{ service.title }}</span>
                                                             <span class="nds-card-description nds-truncate">{{ service.description }}</span>
                                                         </div>
                                                         <div class="nds-card-actions">
@@ -1026,7 +1026,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         &lt;/div&gt;
                         &lt;div class="nds-card-content"&gt;
                             &lt;div class="nds-card-text"&gt;
-                                &lt;h3 class="nds-card-title nds-truncate"&gt;Identity Verification&lt;/h3&gt;
+                                &lt;span class="nds-card-title nds-truncate"&gt;Identity Verification&lt;/span&gt;
                                 &lt;span class="nds-card-description nds-truncate"&gt;Verify your national identity and obtain digital certificates.&lt;/span&gt;
                             &lt;/div&gt;
                         &lt;/div&gt;

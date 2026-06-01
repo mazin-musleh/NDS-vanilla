@@ -27,7 +27,7 @@ direction: ltr
                         <div class="nds-card nds-stroke" style="max-width: 360px;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <h3 class="nds-card-title nds-truncate">National Digital Transformation Strategy Overview and Implementation Roadmap</h3>
+                                    <span class="nds-card-title nds-truncate">National Digital Transformation Strategy Overview and Implementation Roadmap</span>
                                     <p class="nds-card-description nds-truncate">Complete documentation and guidelines for all ministry digital services including API references, implementation guides, best practices for developers, and integration specifications for government applications.</p>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@ direction: ltr
 &lt;div class="nds-card nds-stroke" style="max-width: 360px;"&gt;
     &lt;div class="nds-card-content"&gt;
         &lt;div class="nds-card-text"&gt;
-            &lt;h3 class="nds-card-title nds-truncate"&gt;National Digital Transformation Strategy Overview and Implementation Roadmap&lt;/h3&gt;
+            &lt;span class="nds-card-title nds-truncate"&gt;National Digital Transformation Strategy Overview and Implementation Roadmap&lt;/span&gt;
             &lt;p class="nds-card-description nds-truncate"&gt;Complete documentation and guidelines for all ministry digital services including API references, implementation guides, best practices for developers, and integration specifications for government applications.&lt;/p&gt;
         &lt;/div&gt;
     &lt;/div&gt;
@@ -118,7 +118,7 @@ direction: ltr
                         <div class="nds-card nds-stroke" style="max-width: 400px;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <h3 class="nds-card-title">Citizen Services Portal</h3>
+                                    <span class="nds-card-title">Citizen Services Portal</span>
                                     <p class="nds-card-description nds-truncate" style="--truncate: 2;">The unified portal provides access to over 200 government services across 35 ministries. Citizens can submit applications, track requests, schedule appointments, and receive notifications about their active transactions. The platform supports biometric authentication, digital signatures, and secure document uploads for a seamless end-to-end experience.</p>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@ direction: ltr
 &lt;div class="nds-card nds-stroke" style="max-width: 400px;"&gt;
     &lt;div class="nds-card-content"&gt;
         &lt;div class="nds-card-text"&gt;
-            &lt;h3 class="nds-card-title"&gt;Citizen Services Portal&lt;/h3&gt;
+            &lt;span class="nds-card-title"&gt;Citizen Services Portal&lt;/span&gt;
             &lt;p class="nds-card-description nds-truncate" style="--truncate: 2;"&gt;The unified portal provides access to over 200 government services across 35 ministries. Citizens can submit applications, track requests, schedule appointments, and receive notifications about their active transactions. The platform supports biometric authentication, digital signatures, and secure document uploads for a seamless end-to-end experience.&lt;/p&gt;
         &lt;/div&gt;
     &lt;/div&gt;

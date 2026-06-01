@@ -24,7 +24,7 @@ breadcrumb: [["Examples", "/examples"]]
   <form id="registration-form-1" class="nds-form" data-ajax>
     <div class="nds-card-content">
       <div class="nds-card-text nds-center">
-        <h3 class="nds-card-title">Create your account</h3>
+        <h1 class="nds-card-title">Create your account</h1>
         <p class="nds-card-description">Enter your details to get started.</p>
       </div>
 
@@ -150,7 +150,7 @@ breadcrumb: [["Examples", "/examples"]]
   <form id="login-form" class="nds-form" data-ajax>
     <div class="nds-card-content">
       <div class="nds-card-text nds-center">
-        <h3 class="nds-card-title">Welcome back</h3>
+        <h1 class="nds-card-title">Welcome back</h1>
         <p class="nds-card-description">Sign in to access your account.</p>
       </div>
 
@@ -221,7 +221,7 @@ breadcrumb: [["Examples", "/examples"]]
   <form id="forgot-form" class="nds-form" data-ajax>
     <div class="nds-card-content">
       <div class="nds-card-text nds-center">
-        <h3 class="nds-card-title">Reset your password</h3>
+        <h1 class="nds-card-title">Reset your password</h1>
         <p class="nds-card-description">Enter your email and we'll send you a link to reset your password.</p>
       </div>
 
@@ -264,7 +264,7 @@ breadcrumb: [["Examples", "/examples"]]
   <form id="registration-form-2" class="nds-form" data-ajax>
     <div class="nds-card-content">
       <div class="nds-card-text nds-center">
-        <h3 class="nds-card-title">Verify your email</h3>
+        <h1 class="nds-card-title">Verify your email</h1>
         <p class="nds-card-description">Enter the 4-digit code we just sent you to continue.</p>
       </div>
 
@@ -322,7 +322,7 @@ breadcrumb: [["Examples", "/examples"]]
       <span class="nds-featured-icon nds-xl nds-circle nds-center" data-status="success">
         <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
       </span>
-      <h3 class="nds-card-title">Account created</h3>
+      <h1 class="nds-card-title">Account created</h1>
       <p class="nds-card-description">Your email has been verified. You're all set.</p>
     </div>
 

@@ -58,37 +58,37 @@ direction: ltr
                             <div id="sortDirectItems" class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:1;">
                                 <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Zakat Payment</h3>
+                                        <span class="nds-card-title">Zakat Payment</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">75</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Passport Renewal</h3>
+                                        <span class="nds-card-title">Passport Renewal</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">300</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Birth Certificate</h3>
+                                        <span class="nds-card-title">Birth Certificate</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">25</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Identity Verification</h3>
+                                        <span class="nds-card-title">Identity Verification</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR" data-free>Free</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Driver License</h3>
+                                        <span class="nds-card-title">Driver License</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">150</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Business Registration</h3>
+                                        <span class="nds-card-title">Business Registration</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">1200</span></p>
                                     </div>
                                 </div>
@@ -152,37 +152,37 @@ direction: ltr
 &lt;div id="sortDirectItems" class="nds-grid"&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Zakat Payment&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Zakat Payment&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;75&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Passport Renewal&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Passport Renewal&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;300&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Birth Certificate&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Birth Certificate&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;25&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Identity Verification&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Identity Verification&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR" data-free&gt;Free&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Driver License&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Driver License&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;150&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Business Registration&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Business Registration&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;1200&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -258,37 +258,37 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div id="sortCycleItems" class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:1;">
                                 <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Zakat Payment</h3>
+                                        <span class="nds-card-title">Zakat Payment</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">75</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Passport Renewal</h3>
+                                        <span class="nds-card-title">Passport Renewal</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">300</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Birth Certificate</h3>
+                                        <span class="nds-card-title">Birth Certificate</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">25</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Identity Verification</h3>
+                                        <span class="nds-card-title">Identity Verification</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR" data-free>Free</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Driver License</h3>
+                                        <span class="nds-card-title">Driver License</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">150</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Business Registration</h3>
+                                        <span class="nds-card-title">Business Registration</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">1200</span></p>
                                     </div>
                                 </div>
@@ -330,37 +330,37 @@ document.addEventListener('DOMContentLoaded', function () {
 &lt;div id="sortCycleItems" class="nds-grid"&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Zakat Payment&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Zakat Payment&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;75&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Passport Renewal&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Passport Renewal&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;300&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Birth Certificate&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Birth Certificate&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;25&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Identity Verification&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Identity Verification&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR" data-free&gt;Free&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Driver License&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Driver License&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;150&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Business Registration&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Business Registration&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;1200&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;

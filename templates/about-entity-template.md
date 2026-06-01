@@ -27,7 +27,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">About us</h3>
+                            <span class="nds-card-title">About us</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#about-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open About us">
@@ -48,7 +48,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Organizational Structure</h3>
+                            <span class="nds-card-title">Organizational Structure</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#organizational-structure" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Organizational Structure">
@@ -69,7 +69,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Strategy, Policies, and Regulations</h3>
+                            <span class="nds-card-title">Strategy, Policies, and Regulations</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#strategy-policies" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Strategy, Policies, and Regulations">
@@ -90,7 +90,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Budget and Expenditures</h3>
+                            <span class="nds-card-title">Budget and Expenditures</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#budget" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Budget and Expenditures">
@@ -111,7 +111,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Tenders and Procurements</h3>
+                            <span class="nds-card-title">Tenders and Procurements</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#tenders" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Tenders and Procurements">
@@ -132,7 +132,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">E-Participation</h3>
+                            <span class="nds-card-title">E-Participation</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#e-participation" class="nds-btn nds-secondary nds-icon-only" aria-label="Open E-Participation">
@@ -153,7 +153,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Our Partners / Partnerships</h3>
+                            <span class="nds-card-title">Our Partners / Partnerships</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#partners" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Our Partners / Partnerships">
@@ -174,7 +174,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Sustainable Development</h3>
+                            <span class="nds-card-title">Sustainable Development</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#sustainable-development" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Sustainable Development">
@@ -195,7 +195,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Careers</h3>
+                            <span class="nds-card-title">Careers</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#careers" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Careers">
@@ -216,7 +216,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">News and Events</h3>
+                            <span class="nds-card-title">News and Events</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#news" class="nds-btn nds-secondary nds-icon-only" aria-label="Open News and Events">
@@ -237,7 +237,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Contact Us</h3>
+                            <span class="nds-card-title">Contact Us</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#contact-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Contact Us">

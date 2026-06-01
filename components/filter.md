@@ -80,7 +80,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">{{ user.name }}</h3>
+                                            <span class="nds-card-title">{{ user.name }}</span>
                                             <span class="nds-card-description">{{ user.role }}</span>
                                         </div>
                                         <div class="nds-card-tags">
@@ -178,7 +178,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;User Name&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;User Name&lt;/span&gt;
         &lt;span class="nds-card-description"&gt;Role Title&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
@@ -255,7 +255,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Task A</h3>
+                                            <span class="nds-card-title">Task A</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
                                                     class="nds-label" data-filter="status">Active</span></span></div>
@@ -264,7 +264,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Task B</h3>
+                                            <span class="nds-card-title">Task B</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-gray nds-sm"><span
                                                     class="nds-label" data-filter="status">Pending</span></span></div>
@@ -273,7 +273,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Task C</h3>
+                                            <span class="nds-card-title">Task C</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
                                                     class="nds-label" data-filter="status">Complete</span></span></div>
@@ -282,7 +282,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Task D</h3>
+                                            <span class="nds-card-title">Task D</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
                                                     class="nds-label" data-filter="status">Active</span></span></div>
@@ -352,7 +352,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;Task A&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;Task A&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-green nds-sm"&gt;
@@ -364,7 +364,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;Task B&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;Task B&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-gray nds-sm"&gt;
@@ -376,7 +376,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;Task C&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;Task C&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-blue nds-sm"&gt;
@@ -388,7 +388,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;Task D&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;Task D&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-green nds-sm"&gt;
@@ -448,7 +448,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Feature Request</h3>
+                                            <span class="nds-card-title">Feature Request</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-red nds-sm"><span
                                                     class="nds-label" data-filter="priority">High</span></span></div>
@@ -457,7 +457,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Bug Fix</h3>
+                                            <span class="nds-card-title">Bug Fix</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
                                                     class="nds-label" data-filter="priority">Medium</span></span></div>
@@ -466,7 +466,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Documentation</h3>
+                                            <span class="nds-card-title">Documentation</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-gray nds-sm"><span
                                                     class="nds-label" data-filter="priority">Low</span></span></div>
@@ -475,7 +475,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Security Patch</h3>
+                                            <span class="nds-card-title">Security Patch</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-red nds-sm"><span
                                                     class="nds-label" data-filter="priority">High</span></span></div>
@@ -544,7 +544,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;Feature Request&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;Feature Request&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-red nds-sm"&gt;
@@ -556,7 +556,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;Bug Fix&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;Bug Fix&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-yellow nds-sm"&gt;
@@ -568,7 +568,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;Documentation&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;Documentation&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-gray nds-sm"&gt;
@@ -580,7 +580,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;Security Patch&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;Security Patch&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-red nds-sm"&gt;
@@ -640,7 +640,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">App Alpha</h3>
+                                            <span class="nds-card-title">App Alpha</span>
                                         </div>
                                         <div class="nds-card-tags">
                                             <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
@@ -653,7 +653,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">App Beta</h3>
+                                            <span class="nds-card-title">App Beta</span>
                                         </div>
                                         <div class="nds-card-tags">
                                             <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
@@ -664,7 +664,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">App Gamma</h3>
+                                            <span class="nds-card-title">App Gamma</span>
                                         </div>
                                         <div class="nds-card-tags">
                                             <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
@@ -677,7 +677,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">App Delta</h3>
+                                            <span class="nds-card-title">App Delta</span>
                                         </div>
                                         <div class="nds-card-tags">
                                             <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
@@ -748,7 +748,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;App Alpha&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;App Alpha&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-blue nds-sm"&gt;
@@ -763,7 +763,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;App Beta&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;App Beta&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-blue nds-sm"&gt;
@@ -775,7 +775,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;App Gamma&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;App Gamma&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-blue nds-sm"&gt;
@@ -790,7 +790,7 @@ direction: ltr
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
-        &lt;h3 class="nds-card-title"&gt;App Delta&lt;/h3&gt;
+        &lt;span class="nds-card-title"&gt;App Delta&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-card-tags"&gt;
         &lt;span class="nds-tag nds-blue nds-sm"&gt;
@@ -863,7 +863,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">AI Research</h3>
+                                            <span class="nds-card-title">AI Research</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
                                                     class="nds-label" data-filter="category" data-filter-value="tech">Technology</span></span></div>
@@ -872,7 +872,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Brand Identity</h3>
+                                            <span class="nds-card-title">Brand Identity</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
                                                     class="nds-label" data-filter="category" data-filter-value="design">Design</span></span></div>
@@ -881,7 +881,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Market Analysis</h3>
+                                            <span class="nds-card-title">Market Analysis</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
                                                     class="nds-label" data-filter="category" data-filter-value="biz">Business</span></span></div>
@@ -890,7 +890,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Cloud Migration</h3>
+                                            <span class="nds-card-title">Cloud Migration</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span
                                                     class="nds-label" data-filter="category" data-filter-value="tech">Technology</span></span></div>
@@ -899,7 +899,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">UX Audit</h3>
+                                            <span class="nds-card-title">UX Audit</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span
                                                     class="nds-label" data-filter="category" data-filter-value="design">Design</span></span></div>
@@ -908,7 +908,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Revenue Report</h3>
+                                            <span class="nds-card-title">Revenue Report</span>
                                         </div>
                                         <div class="nds-card-tags"><span class="nds-tag nds-yellow nds-sm"><span
                                                     class="nds-label" data-filter="category" data-filter-value="biz">Business</span></span></div>
@@ -1302,7 +1302,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                     card.className = 'nds-card nds-stroke';
                     card.innerHTML = `
           &lt;div class="nds-card-content"&gt;
-            &lt;h3 class="nds-card-title"&gt;${item.Title}&lt;/h3&gt;
+            &lt;span class="nds-card-title"&gt;${item.Title}&lt;/span&gt;
             &lt;p class="nds-card-description"&gt;${item.Description}&lt;/p&gt;
           &lt;/div&gt;`;
                     container.appendChild(card);
@@ -1426,37 +1426,37 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                             <div id="sortDemoList" class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:1;">
                                 <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Zakat Payment</h3>
+                                        <span class="nds-card-title">Zakat Payment</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">75</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Passport Renewal</h3>
+                                        <span class="nds-card-title">Passport Renewal</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">300</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Birth Certificate</h3>
+                                        <span class="nds-card-title">Birth Certificate</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">25</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Identity Verification</h3>
+                                        <span class="nds-card-title">Identity Verification</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR" data-free>Free</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Driver License</h3>
+                                        <span class="nds-card-title">Driver License</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">150</span></p>
                                     </div>
                                 </div>
                                 <div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200">
                                     <div class="nds-card-content">
-                                        <h3 class="nds-card-title">Business Registration</h3>
+                                        <span class="nds-card-title">Business Registration</span>
                                         <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">1200</span></p>
                                     </div>
                                 </div>
@@ -1517,7 +1517,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
 &lt;div id="sortDemoList" class="nds-grid"&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75"&gt;
     &lt;div class="nds-card-content"&gt;
-      &lt;h3 class="nds-card-title"&gt;Zakat Payment&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Zakat Payment&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;75&lt;/span&gt;&lt;/p&gt;
     &lt;/div&gt;
   &lt;/div&gt;

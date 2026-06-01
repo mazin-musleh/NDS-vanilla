@@ -306,7 +306,7 @@ direction: ltr
                             <div class="nds-card nds-shadow nds-stroke" style="--card-width: 400px;">
                                 <div class="nds-card-content">
                                     <div class="nds-card-text nds-center">
-                                        <h3 class="nds-card-title">Sign in with National Single Sign-On</h3>
+                                        <span class="nds-card-title">Sign in with National Single Sign-On</span>
                                         <p class="nds-card-description">Use the credentials from your Nafath account to access the services provided by the university.</p>
                                         <div class="nds-card-actions nds-row">
                                             <a href="#" class="nds-btn nds-primary nds-lg nds-full">
@@ -346,7 +346,7 @@ direction: ltr
 &lt;div class="nds-card nds-shadow nds-stroke" style="--card-width: 400px;"&gt;
   &lt;div class="nds-card-content"&gt;
     &lt;div class="nds-card-text nds-center"&gt;
-      &lt;h3 class="nds-card-title"&gt;Sign in with National Single Sign-On&lt;/h3&gt;
+      &lt;span class="nds-card-title"&gt;Sign in with National Single Sign-On&lt;/span&gt;
       &lt;p class="nds-card-description"&gt;Use the credentials from your Nafath account to access the services provided by the university.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class="nds-card-actions nds-row"&gt;

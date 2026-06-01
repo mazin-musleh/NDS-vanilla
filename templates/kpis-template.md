@@ -95,7 +95,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Operating Systems</h3>
+                            <span class="nds-card-title">Operating Systems</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -109,7 +109,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Device Types</h3>
+                            <span class="nds-card-title">Device Types</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -123,7 +123,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Mobile Devices</h3>
+                            <span class="nds-card-title">Mobile Devices</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -137,7 +137,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Browser Type</h3>
+                            <span class="nds-card-title">Browser Type</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -156,7 +156,7 @@ sidemenu_mode: false
             <div class="nds-card nds-stroke" style="--card-width:100%;">
                 <div class="nds-card-header">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">Most Used Search Terms</h3>
+                        <span class="nds-card-title">Most Used Search Terms</span>
                         <p class="nds-card-description">(up to 10 search terms)</p>
                     </div>
                 </div>
@@ -219,7 +219,7 @@ sidemenu_mode: false
             <div class="nds-card nds-stroke" style="--card-width:100%;">
                 <div class="nds-card-header">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">Most Visited Pages</h3>
+                        <span class="nds-card-title">Most Visited Pages</span>
                         <p class="nds-card-description">(up to 10 pages)</p>
                     </div>
                 </div>
@@ -250,7 +250,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Was the page useful (59.26% | 24,313)</h3>
+                            <span class="nds-card-title">Was the page useful (59.26% | 24,313)</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -264,7 +264,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Was the page useful (59.26% | 24,313)</h3>
+                            <span class="nds-card-title">Was the page useful (59.26% | 24,313)</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -278,7 +278,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Highest Rated Content</h3>
+                            <span class="nds-card-title">Highest Rated Content</span>
                             <p class="nds-card-description">(up to 5 pages)</p>
                         </div>
                     </div>
@@ -293,7 +293,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Lowest Rated Content</h3>
+                            <span class="nds-card-title">Lowest Rated Content</span>
                             <p class="nds-card-description">(up to 5 pages)</p>
                         </div>
                     </div>
@@ -420,7 +420,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Completion Rate (59.26% | 24,313)</h3>
+                            <span class="nds-card-title">Completion Rate (59.26% | 24,313)</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -434,7 +434,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Transactions (59.26% | 24,313)</h3>
+                            <span class="nds-card-title">Transactions (59.26% | 24,313)</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -454,7 +454,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">User Satisfaction (59.26% | 24,313)</h3>
+                            <span class="nds-card-title">User Satisfaction (59.26% | 24,313)</span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -468,7 +468,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width:100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Digital Acquisition (59.26% | 24,313)</h3>
+                            <span class="nds-card-title">Digital Acquisition (59.26% | 24,313)</span>
                         </div>
                     </div>
                     <div class="nds-card-content">

@@ -208,7 +208,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">Comments &amp; suggestions</h3>
+                        <span class="nds-card-title">Comments &amp; suggestions</span>
                         <p class="nds-card-description">For any inquiry or feedback on Government Services, please fill the required information.</p>
                     </div>
                     <div class="nds-card-actions">

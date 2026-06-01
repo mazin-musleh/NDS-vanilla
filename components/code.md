@@ -35,7 +35,7 @@ direction: ltr
                                 <code class="lang-html code">
 &lt;div class="nds-card nds-stroke"&gt;
   &lt;div class="nds-card-content"&gt;
-    &lt;h3 class="nds-card-title"&gt;Card Title&lt;/h3&gt;
+    &lt;span class="nds-card-title"&gt;Card Title&lt;/span&gt;
     &lt;p class="nds-card-description"&gt;Card description text&lt;/p&gt;
   &lt;/div&gt;
 &lt;/div&gt;

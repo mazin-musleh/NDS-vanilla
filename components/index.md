@@ -70,7 +70,7 @@ sidemenu_mode: false
             <div class="nds-page-item nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">{{ comp.title }}</h3>
+                        <span class="nds-card-title">{{ comp.title }}</span>
                         <p class="nds-card-description">{{ comp.description }}</p>
                     </div>
                     <div class="nds-card-tags">

@@ -338,7 +338,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-content">
                             <div class="nds-card-text">
-                                <h2 class="nds-card-title">Application submitted</h2>
+                                <span class="nds-card-title">Application submitted</span>
                                 <p class="nds-card-description">
                                     Thank you. Your application has been received and is now being processed.
                                     You will receive an SMS update within 3 working days.

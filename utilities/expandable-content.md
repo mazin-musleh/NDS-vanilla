@@ -119,7 +119,7 @@ direction: ltr
                             <div class="nds-expandable-content" style="--max-height:200px">
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <h3 class="nds-card-title">Ministry Services Documentation</h3>
+                                        <span class="nds-card-title">Ministry Services Documentation</span>
                                         <p class="nds-card-description">Complete documentation and guidelines for
                                             all ministry digital services including API references, implementation
                                             guides, best practices for developers, integration specifications,
@@ -156,7 +156,7 @@ direction: ltr
     &lt;div class="nds-expandable-content" style="--max-height:200px"&gt;
         &lt;div class="nds-card-content"&gt;
             &lt;div class="nds-card-text"&gt;
-                &lt;h3 class="nds-card-title"&gt;Ministry Services Documentation&lt;/h3&gt;
+                &lt;span class="nds-card-title"&gt;Ministry Services Documentation&lt;/span&gt;
                 &lt;p class="nds-card-description"&gt;Complete documentation and guidelines for
                     all ministry digital services including API references, implementation
                     guides, best practices for developers, integration specifications,
@@ -201,7 +201,7 @@ direction: ltr
                                 <div class="nds-expandable-content" style="--max-height: 80px;">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Digital Identity Standards</h3>
+                                            <span class="nds-card-title">Digital Identity Standards</span>
                                             <p class="nds-card-description">Comprehensive guidelines for implementing digital identity verification across government platforms, including biometric authentication protocols, single sign-on integration, and multi-factor authentication requirements for all public-facing services.</p>
                                         </div>
                                     </div>
@@ -211,7 +211,7 @@ direction: ltr
                                 <div class="nds-expandable-content" style="--max-height: 80px;">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
-                                            <h3 class="nds-card-title">Data Classification Policy</h3>
+                                            <span class="nds-card-title">Data Classification Policy</span>
                                             <p class="nds-card-description">Standards for categorizing, handling, and protecting government data assets including classification levels, access control matrices, encryption requirements, and retention schedules for sensitive and public information.</p>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@ direction: ltr
         &lt;div class="nds-expandable-content" style="--max-height: 80px;"&gt;
             &lt;div class="nds-card-content"&gt;
                 &lt;div class="nds-card-text"&gt;
-                    &lt;h3 class="nds-card-title"&gt;Digital Identity Standards&lt;/h3&gt;
+                    &lt;span class="nds-card-title"&gt;Digital Identity Standards&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Comprehensive guidelines for implementing digital identity verification across government platforms, including biometric authentication protocols, single sign-on integration, and multi-factor authentication requirements for all public-facing services.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
@@ -255,7 +255,7 @@ direction: ltr
         &lt;div class="nds-expandable-content" style="--max-height: 80px;"&gt;
             &lt;div class="nds-card-content"&gt;
                 &lt;div class="nds-card-text"&gt;
-                    &lt;h3 class="nds-card-title"&gt;Data Classification Policy&lt;/h3&gt;
+                    &lt;span class="nds-card-title"&gt;Data Classification Policy&lt;/span&gt;
                     &lt;p class="nds-card-description"&gt;Standards for categorizing, handling, and protecting government data assets including classification levels, access control matrices, encryption requirements, and retention schedules for sensitive and public information.&lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;

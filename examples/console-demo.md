@@ -48,7 +48,7 @@ hideFeedback: true
             <div class="nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">Monthly Transactions</h3>
+                        <span class="nds-card-title">Monthly Transactions</span>
                     </div>
                 </div>
                 <div class="nds-chart"
@@ -58,7 +58,7 @@ hideFeedback: true
             <div class="nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">Requests Over Time</h3>
+                        <span class="nds-card-title">Requests Over Time</span>
                     </div>
                 </div>
                 <div class="nds-chart"
@@ -68,7 +68,7 @@ hideFeedback: true
             <div class="nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">Service Categories</h3>
+                        <span class="nds-card-title">Service Categories</span>
                     </div>
                 </div>
                 <div class="nds-chart"
@@ -78,7 +78,7 @@ hideFeedback: true
             <div class="nds-card nds-stroke">
                 <div class="nds-card-content">
                     <div class="nds-card-text">
-                        <h3 class="nds-card-title">Department Workload</h3>
+                        <span class="nds-card-title">Department Workload</span>
                     </div>
                 </div>
                 <div class="nds-chart"
@@ -507,7 +507,7 @@ hideFeedback: true
                         </div>
                         <div class="nds-card-content">
                             <div class="nds-card-text">
-                                <h3 class="nds-card-title">{{ user.name }}</h3>
+                                <span class="nds-card-title">{{ user.name }}</span>
                                 <p class="nds-card-description">{{ user.role }}</p>
                             </div>
                             <div class="nds-card-meta">

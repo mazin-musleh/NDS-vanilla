@@ -221,7 +221,7 @@ direction: ltr
                                         </div>
                                         <div class="nds-card-content">
                                             <div class="nds-card-text">
-                                                <h3 class="nds-card-title">{{ service.title }}</h3>
+                                                <span class="nds-card-title">{{ service.title }}</span>
                                                 <p class="nds-card-description">{{ service.description }}</p>
                                             </div>
                                         </div>
@@ -268,7 +268,7 @@ direction: ltr
       &lt;/div&gt;
       &lt;div class="nds-card-content"&gt;
         &lt;div class="nds-card-text"&gt;
-          &lt;h3 class="nds-card-title"&gt;{% raw %}{{ service.title }}{% endraw %}&lt;/h3&gt;
+          &lt;span class="nds-card-title"&gt;{% raw %}{{ service.title }}{% endraw %}&lt;/span&gt;
           &lt;p class="nds-card-description"&gt;{% raw %}{{ service.description }}{% endraw %}&lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;

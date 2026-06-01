@@ -47,7 +47,7 @@ direction: ltr
                                             <i class="nds-icon nds-hgi-trade-up" aria-hidden="true"></i>
                                         </span>
                                     </div>
-                                    <h3 class="nds-card-title">24h Views</h3>
+                                    <span class="nds-card-title">24h Views</span>
                                     <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="More options">
                                         <i class="nds-icon nds-hgi-more-vertical" aria-hidden="true"></i>
                                     </button>
@@ -108,7 +108,7 @@ direction: ltr
         &lt;i class="nds-icon nds-hgi-trade-up" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/span&gt;
     &lt;/div&gt;
-    &lt;h3 class="nds-card-title"&gt;24h Views&lt;/h3&gt;
+    &lt;span class="nds-card-title"&gt;24h Views&lt;/span&gt;
     &lt;button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="More options"&gt;
       &lt;i class="nds-icon nds-hgi-more-vertical" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
@@ -191,7 +191,7 @@ direction: ltr
                                             <i class="nds-icon nds-hgi-trade-down" aria-hidden="true"></i>
                                         </span>
                                     </div>
-                                    <h3 class="nds-card-title">24h Views</h3>
+                                    <span class="nds-card-title">24h Views</span>
                                     <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="More options">
                                         <i class="nds-icon nds-hgi-more-vertical" aria-hidden="true"></i>
                                     </button>
@@ -252,7 +252,7 @@ direction: ltr
         &lt;i class="nds-icon nds-hgi-trade-down" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/span&gt;
     &lt;/div&gt;
-    &lt;h3 class="nds-card-title"&gt;24h Views&lt;/h3&gt;
+    &lt;span class="nds-card-title"&gt;24h Views&lt;/span&gt;
     &lt;button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="More options"&gt;
       &lt;i class="nds-icon nds-hgi-more-vertical" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;

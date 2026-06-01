@@ -101,7 +101,7 @@ exclude_showcase: false
                 <div class="nds-page-item nds-card nds-stroke" data-sort-title="{{ item.title }}">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">{{ item.title }}</h3>
+                            <span class="nds-card-title">{{ item.title }}</span>
                             <span class="nds-card-description">{{ item.description }}</span>
                         </div>
                         <div class="nds-card-tags">

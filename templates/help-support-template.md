@@ -27,7 +27,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Contact us</h3>
+                            <span class="nds-card-title">Contact us</span>
                             <p class="nds-card-description">Send us a detailed message through our contact form. Our support team reviews every request and will reach out with a tailored response.</p>
                         </div>
                         <dl class="nds-definition-list nds-md" style="--row-gap: var(--spacing-xs);">
@@ -65,7 +65,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">FAQs</h3>
+                            <span class="nds-card-title">FAQs</span>
                             <p class="nds-card-description">Browse answers to the most common questions about government services, eligibility, required documents, and application steps.</p>
                         </div>
                         <dl class="nds-definition-list nds-md" style="--row-gap: var(--spacing-xs);">
@@ -103,7 +103,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Live chat</h3>
+                            <span class="nds-card-title">Live chat</span>
                             <p class="nds-card-description">Chat directly with a support agent for real-time help on service enquiries, technical issues, and application status updates.</p>
                         </div>
                         <dl class="nds-definition-list nds-md" style="--row-gap: var(--spacing-xs);">
@@ -141,7 +141,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Call center</h3>
+                            <span class="nds-card-title">Call center</span>
                             <p class="nds-card-description">Speak with an agent on our unified support line. Available around the clock for urgent enquiries and immediate assistance.</p>
                         </div>
                         <dl class="nds-definition-list nds-md" style="--row-gap: var(--spacing-xs);">
@@ -179,7 +179,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Visit an office</h3>
+                            <span class="nds-card-title">Visit an office</span>
                             <p class="nds-card-description">Meet with a service representative in person at one of our branch offices for documents, signatures, and complex cases.</p>
                         </div>
                         <dl class="nds-definition-list nds-md" style="--row-gap: var(--spacing-xs);">
@@ -217,7 +217,7 @@ sidemenu_mode: false
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Report an issue</h3>
+                            <span class="nds-card-title">Report an issue</span>
                             <p class="nds-card-description">File a formal complaint about a service outage, data concern, or incorrect information. Every report is tracked until resolved.</p>
                         </div>
                         <dl class="nds-definition-list nds-md" style="--row-gap: var(--spacing-xs);">

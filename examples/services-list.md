@@ -99,7 +99,7 @@ exclude_showcase: false
                 </div>
                 <div class="nds-card-content">
                     <div class="nds-card-text" style="--truncate: 2;">
-                        <h3 class="nds-card-title nds-truncate">{{ service.title }}</h3>
+                        <span class="nds-card-title nds-truncate">{{ service.title }}</span>
                         <span class="nds-card-description nds-truncate">{{ service.description }}</span>
                     </div>
                     <div class="nds-card-tags">

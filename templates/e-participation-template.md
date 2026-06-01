@@ -24,7 +24,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">e-Participation Policy</h3>
+                            <span class="nds-card-title">e-Participation Policy</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#e-participation-policy" class="nds-btn nds-secondary nds-icon-only" aria-label="Open e-Participation Policy">
@@ -37,7 +37,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Consultations</h3>
+                            <span class="nds-card-title">Consultations</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#consultations" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Consultations">
@@ -50,7 +50,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Co-Creation and Ideas</h3>
+                            <span class="nds-card-title">Co-Creation and Ideas</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#co-creation" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Co-Creation and Ideas">
@@ -63,7 +63,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Open Data</h3>
+                            <span class="nds-card-title">Open Data</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#open-data" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Open Data">
@@ -76,7 +76,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Complaints and Suggestions</h3>
+                            <span class="nds-card-title">Complaints and Suggestions</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#complaints" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Complaints and Suggestions">
@@ -89,7 +89,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Beneficiary Voice Reports</h3>
+                            <span class="nds-card-title">Beneficiary Voice Reports</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#beneficiary-voice" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Beneficiary Voice Reports">
@@ -102,7 +102,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Website and Services Statistics</h3>
+                            <span class="nds-card-title">Website and Services Statistics</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="{{ '/templates/kpis-template.html' | relative_url }}" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Website and Services Statistics">
@@ -115,7 +115,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-shadow">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <h3 class="nds-card-title">Social Media</h3>
+                            <span class="nds-card-title">Social Media</span>
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="{{ '/templates/social-media-template.html' | relative_url }}" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Social Media">
