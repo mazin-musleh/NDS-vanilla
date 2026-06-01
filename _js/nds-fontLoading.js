@@ -77,7 +77,7 @@
         }
 
         // Resolve via the Font Loading API — event-driven, no polling.
-        if (document.fonts && document.fonts.load && document.fonts.ready) {
+        if (document.fonts && document.fonts.load && 'ready' in document.fonts) {
             const spec = '1em "' + fontName + '"';
             let settled = false;
 
