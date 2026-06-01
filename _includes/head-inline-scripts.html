@@ -6,3 +6,15 @@
         if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
     })();
 </script>
+{%- if site.use_hgi_font or page.use_hgi_font %}
+<script>
+    // Deferred asset loader — invoked from the main-CSS onload (head.html) so the
+    // HGI icon woff2 never competes with the critical bundle during the LCP window.
+    function loadDeferredAssets() {
+        var hgi = document.createElement('link');
+        hgi.rel = 'stylesheet';
+        hgi.href = '{{ "assets/css/hgi-rounded-stroke-min.css" | relative_url }}?ver={{ site.asset_ver }}';
+        document.head.appendChild(hgi);
+    }
+</script>
+{%- endif %}
