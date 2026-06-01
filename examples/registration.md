@@ -273,22 +273,22 @@ breadcrumb: [["Examples", "/examples"]]
         <div class="nds-otp">
           <div class="nds-form-container nds-otp-container">
             <div class="nds-form-control">
-              <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code">
+              <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" aria-label="Digit 1 of 4">
             </div>
           </div>
           <div class="nds-form-container nds-otp-container">
             <div class="nds-form-control">
-              <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+              <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 4">
             </div>
           </div>
           <div class="nds-form-container nds-otp-container">
             <div class="nds-form-control">
-              <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+              <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 4">
             </div>
           </div>
           <div class="nds-form-container nds-otp-container">
             <div class="nds-form-control">
-              <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]">
+              <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 4">
             </div>
           </div>
         </div>
