@@ -144,6 +144,17 @@
     gap: var(--spacing-xs);
     text-align: start;
     width: 100%;
+
+    // A value (dd / .nds-item-desc) paired with one or more trailing action
+    // buttons (copy, edit, share…). Flex row so any number of buttons share one
+    // gap and stay aligned with the value — keeps small tap targets spaced apart
+    // without per-button margins.
+    .nds-item-action {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+    }
 }
 
 // ==============================================

@@ -11,8 +11,7 @@
         white-space: nowrap;
     }
 
-    transition: color 150ms ease;
-
+    // No color transition — it's non-composited; the icon scale below carries the feedback
     &[data-status="success"] {
         color: var(--text-success);
 
