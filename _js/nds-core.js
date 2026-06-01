@@ -206,6 +206,10 @@
     // setTimeout fallback for environments without rIC. Use for non-critical
     // init-time work (topbar widget API calls, post-load analytics, etc.)
     // that shouldn't compete with the post-DCL hydration window.
+    // Fallback fidelity gap: without rIC (older Safari <18) the setTimeout(fn, 1)
+    // path fires ~immediately as a macrotask — NOT at true idle — and ignores the
+    // `timeout` arg, so idle-tier work runs right after the critical pass there.
+    // nds-loader.js `scheduleIdle` has a deadline-aware shim if a path must defer.
     // Usage: NDS.onIdle(() => fetchWeather(), 2000)
     NDS.onIdle = (fn, timeout = 2000) => {
         if (typeof requestIdleCallback === 'function') {
@@ -423,8 +427,8 @@
     //        NDS.State.get(el)            → 'open active' (raw string)
     //        NDS.State.clear(el)           → removes data-state entirely
     //        NDS.State.apply(el, ...states) → fire onAdd hooks for existing states (init-time)
-    //        NDS.State.onAdd(state, scope, fn)    → register hook: fn(el) fires when state added on el matching scope
-    //        NDS.State.onRemove(state, scope, fn) → register hook: fn(el) fires when state removed
+    //        NDS.State.onAdd(state, scope, fn)    → register hook: fn(el) fires when state added on el matching scope; returns off()
+    //        NDS.State.onRemove(state, scope, fn) → register hook: fn(el) fires when state removed; returns off()
     NDS.State = (() => {
         const _onAdd = {};    // { 'disabled': [{ scope, fn }, ...] }
         const _onRemove = {};
@@ -485,11 +489,17 @@
         };
 
         const onAdd = (state, scope, fn) => {
-            (_onAdd[state] || (_onAdd[state] = [])).push({ scope, fn });
+            const sub = { scope, fn };
+            const list = (_onAdd[state] || (_onAdd[state] = []));
+            list.push(sub);
+            return () => { const i = list.indexOf(sub); if (i !== -1) list.splice(i, 1); };
         };
 
         const onRemove = (state, scope, fn) => {
-            (_onRemove[state] || (_onRemove[state] = [])).push({ scope, fn });
+            const sub = { scope, fn };
+            const list = (_onRemove[state] || (_onRemove[state] = []));
+            list.push(sub);
+            return () => { const i = list.indexOf(sub); if (i !== -1) list.splice(i, 1); };
         };
 
         return { parse, add, remove, has, get, set, clear, apply, onAdd, onRemove };
@@ -830,21 +840,30 @@
     // when nothing is portaled (the common case on most pages).
     let _portaledCount = 0;
 
+    // Portaled `.nds-dropmenu-menu` elements whose owner wrapper descends from
+    // `root`. Shared discovery scaffold for queryAll / querySelector — both gate
+    // the call behind their own `_portaledCount === 0` fast path, so this runs
+    // only when something is portaled.
+    const _portaledMenusIn = (root) => {
+        const out = [];
+        if (!document.body) return out;
+        const portaled = document.body.querySelectorAll(':scope > .nds-dropmenu-menu');
+        for (let i = 0; i < portaled.length; i++) {
+            const owner = portaled[i]._ownerDropmenu;
+            if (owner && root.contains(owner)) out.push(portaled[i]);
+        }
+        return out;
+    };
+
     NDS.queryAll = (root, selector) => {
         if (!root) return [];
         if (_portaledCount === 0) return Array.from(root.querySelectorAll(selector));
         const set = new Set();
         root.querySelectorAll(selector).forEach(el => set.add(el));
-        if (document.body) {
-            const portaled = document.body.querySelectorAll(':scope > .nds-dropmenu-menu');
-            for (let i = 0; i < portaled.length; i++) {
-                const menu = portaled[i];
-                const owner = menu._ownerDropmenu;
-                if (!owner || !root.contains(owner)) continue;
-                if (menu.matches(selector)) set.add(menu);
-                menu.querySelectorAll(selector).forEach(el => set.add(el));
-            }
-        }
+        _portaledMenusIn(root).forEach(menu => {
+            if (menu.matches(selector)) set.add(menu);
+            menu.querySelectorAll(selector).forEach(el => set.add(el));
+        });
         return Array.from(set);
     };
 
@@ -853,16 +872,12 @@
         const direct = root.querySelector(selector);
         if (direct) return direct;
         if (_portaledCount === 0) return null;
-        if (document.body) {
-            const portaled = document.body.querySelectorAll(':scope > .nds-dropmenu-menu');
-            for (let i = 0; i < portaled.length; i++) {
-                const menu = portaled[i];
-                const owner = menu._ownerDropmenu;
-                if (!owner || !root.contains(owner)) continue;
-                if (menu.matches(selector)) return menu;
-                const found = menu.querySelector(selector);
-                if (found) return found;
-            }
+        const menus = _portaledMenusIn(root);
+        for (let i = 0; i < menus.length; i++) {
+            const menu = menus[i];
+            if (menu.matches(selector)) return menu;
+            const found = menu.querySelector(selector);
+            if (found) return found;
         }
         return null;
     };
@@ -1100,8 +1115,7 @@
         // bottom borders on last-row items), not critical for first paint.
         // Reading offsetTop/offsetParent on DOMContentLoaded forced a 15ms+
         // layout pass that competed with the critical init batch.
-        const idleScan = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
-        document.addEventListener('DOMContentLoaded', () => idleScan(() => update()));
+        document.addEventListener('DOMContentLoaded', () => NDS.onIdle(() => update()));
 
         return { update };
     })();
