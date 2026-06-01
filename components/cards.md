@@ -184,7 +184,7 @@ direction: ltr
                                 </div>
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
-                                        <h3 class="nds-card-title">Card Title</h3>
+                                        <span class="nds-card-title">Card Title</span>
                                         <p class="nds-card-description">Short description of this card content goes here for demonstration.</p>
                                     </div>
                                     <div class="nds-card-meta">
@@ -250,7 +250,7 @@ direction: ltr
     &lt;/div&gt;
     &lt;div class="nds-card-content"&gt;
         &lt;div class="nds-card-text"&gt;
-            &lt;h3 class="nds-card-title"&gt;Card Title&lt;/h3&gt;
+            &lt;span class="nds-card-title"&gt;Card Title&lt;/span&gt;
             &lt;p class="nds-card-description"&gt;Short description of this card content goes here for demonstration.&lt;/p&gt;
         &lt;/div&gt;
         &lt;div class="nds-card-meta"&gt;
