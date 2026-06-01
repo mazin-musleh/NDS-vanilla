@@ -208,7 +208,7 @@ hideFeedback: true
                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <input type="text" class="nds-search-input" placeholder="Search transactions...">
                     <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                        <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <button class="nds-btn nds-primary nds-search-btn" type="button">
@@ -432,7 +432,7 @@ hideFeedback: true
                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <input type="text" class="nds-search-input" placeholder="Search team members...">
                     <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                        <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <button class="nds-btn nds-primary nds-search-btn" type="button">

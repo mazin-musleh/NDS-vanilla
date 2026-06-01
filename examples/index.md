@@ -22,7 +22,7 @@ sidemenu_mode: false
                     <input id="exampleSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
                         placeholder="Search examples...">
                     <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                        <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <button class="nds-btn nds-primary nds-search-btn" type="button">
