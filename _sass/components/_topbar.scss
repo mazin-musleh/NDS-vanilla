@@ -1,0 +1,74 @@
+@use '../mixins' as *;
+
+/* ========================================
+   TOPBAR STYLES
+   ======================================== */
+
+.nds-topbar {
+    background-color: var(--background-topbar);
+    height: 40px;
+    z-index: 1000;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Fallback for older browsers */
+    overflow-y: clip;
+
+    >* {
+        visibility: visible;
+    }
+
+    .nds-btn {
+        align-self: center;
+        --btn-size: 32px;
+    }
+
+    .nds-topbar-info {
+        display: flex;
+        gap: var(--spacing-xl);
+        margin-inline-start: auto;
+    }
+
+
+    .nds-text-icon {
+        height: 40px;
+        min-width: 40px;
+        --loading-size: 24px;
+
+        &>.text {
+            font-size: var(--typo-text-clamp-md-FS);
+            line-height: var(--typo-text-clamp-md-LH);
+            white-space: nowrap;
+        }
+
+        &>i {
+            font-size: var(--typo-text-lg-FS);
+            line-height: var(--typo-text-lg-LH);
+            width: var(--typo-text-lg-FS);
+        }
+    }
+
+    .generalInfo .nds-text-icon svg {
+        color: var(--icon-default);
+    }
+}
+
+/* Tablet: 960px and down */
+@include tablet(max) {
+    .nds-topbar {
+        .nds-topbar-info {
+
+            >:is(#nds-cityName, #nds-date) {
+                display: none;
+            }
+        }
+    }
+}
+
+/* Small Mobile Screens */
+@include mobile {
+    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab)> :not(.nds-theme-toggle-wrap) {
+        display: none;
+    }
+}
