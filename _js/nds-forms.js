@@ -117,10 +117,8 @@
                 NDS.Status.set(container, status);
                 if (message) {
                     container.setAttribute('data-message', message);
-                }
 
-                // Create feedback using NDSFeedback API
-                if (message) {
+                    // Create feedback using NDSFeedback API.
                     // Dynamic target selection using data-feedback-target attribute
                     var targetSelector = container.getAttribute('data-feedback-target');
                     var target = container;
@@ -1047,14 +1045,9 @@
     function initGroupState(group) {
         if (!group) return;
 
-        // Handle data-required attribute - propagate to inputs
-        // Note: For groups (radio, checkbox, switch), we DON'T add required to individual inputs
-        // because the group is validated as a whole, not individual inputs
-        // This prevents HTML5 validation from showing errors on each individual input
-        if (group.hasAttribute('data-required') || group.hasAttribute('data-min-checked')) {
-            // Groups are validated as a whole - don't add required to individual inputs
-            // This applies to all group types: radio-group, check-group, switch-group
-        }
+        // Groups (radio/checkbox/switch) validate as a whole, so we deliberately
+        // do NOT propagate data-required to individual inputs — that would make
+        // HTML5 validation flag each input separately.
 
         // Propagate initial data-state to inputs via hooks
         NDS.State.apply(group, 'disabled', 'readonly');
