@@ -362,10 +362,19 @@
             critical: true,
         },
         // Topbar widgets — placed last because they're non-critical chrome
-        // (clock, hijri date, weather, city). Their network-bound updates
-        // are async anyway; ordering them after interactive components
-        // (modal, tooltip, filter, pagination…) keeps the early init chain
-        // focused on what the user can click.
+        // (digital stamp, clock, hijri date, weather, city). Their updates are
+        // interaction- or network-bound anyway; ordering them after interactive
+        // components (modal, tooltip, filter, pagination…) keeps the early init
+        // chain focused on what the user can click.
+        {
+            // Standalone trust-banner disclosure. First paint is correct with JS
+            // deleted (panel ships [hidden]; CSS owns the expand), so it rides the
+            // delegated bundle. Decoupled from Mainnav — mutual exclusion with the
+            // nav comes from each surface's own outside-click handler.
+            name: 'DigitalStamp',
+            selector: '.nds-digitalStamp-tab',
+            init: () => NDS.DigitalStamp?.init?.(),
+        },
         {
             name: 'CityWeather',
             selector: '#nds-weatherInfo, #nds-cityName',

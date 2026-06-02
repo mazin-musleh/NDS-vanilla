@@ -18,9 +18,6 @@
     const _nav = document.querySelector('.nds-main-nav');
     const DOM = {
         nav: _nav,
-        dgaTab: document.querySelector('.nds-digitalStamp-tab'),
-        topbar: document.querySelector('.nds-topbar'),
-        dgaDigitalStamp: document.querySelector('#nds-digitalStamp'),
         collapse: _nav?.querySelector('#ndsNavCollapse') || null,
         collapseContent: _nav?.querySelector('.nds-collapse-content') || null,
         container: _nav?.querySelector('.nds-nav-container') || null,
@@ -372,37 +369,6 @@
     };
 
     // ==============================================
-    // DGA (Government Alert) MANAGEMENT
-    // ==============================================
-    const dga = {
-        toggle() {
-            if (!DOM.topbar || !DOM.dgaDigitalStamp) return;
-            const isOpen = hasState(DOM.dgaDigitalStamp, 'open');
-
-            animate.run(DOM.dgaDigitalStamp, !isOpen, {
-                getMenu: () => DOM.dgaDigitalStamp,
-                onStart: () => {
-                    NDS.aria.expanded(DOM.dgaTab, !isOpen);
-                    if (!isOpen) {
-                        NDS.State.add(DOM.dgaTab, 'expanded');
-                        // Drop intrinsic [hidden] before the open transition so
-                        // display:none doesn't kill the animation.
-                        DOM.dgaDigitalStamp.removeAttribute('hidden');
-                    } else {
-                        NDS.State.remove(DOM.dgaTab, 'expanded');
-                    }
-                },
-                onComplete: () => {
-                    updatePositions();
-                    overflow.schedule();
-                    // Restore [hidden] after the close transition ends.
-                    if (isOpen) DOM.dgaDigitalStamp.setAttribute('hidden', '');
-                }
-            });
-        }
-    };
-
-    // ==============================================
     // OVERFLOW DETECTION
     // ==============================================
     const overflow = {
@@ -625,11 +591,10 @@
     // ==============================================
     // PUBLIC TOGGLE FUNCTIONS
     // ==============================================
-    // Routes an open-dropdown action to one of three cascade modes:
-    //   1. minimal+isInMinimal: close-drawer / close-dga first, then open
-    //   2. desktop+dga-open:    close-dga first, then schedule open
-    //   3. default:             schedule open after the closeAll settles
-    function _scheduleDropdownOpen(duration, isInMinimal, closeDelay, open) {
+    // Routes an open-dropdown action to one of two modes:
+    //   1. minimal+isInMinimal+drawer-open: close the drawer first, then open
+    //   2. default:                         schedule open after the closeAll settles
+    function _scheduleDropdownOpen(isInMinimal, closeDelay, open) {
         if (isInMinimal && state.isMinimal) {
             let delay = 0;
 
@@ -650,15 +615,7 @@
                 delay = Math.max(delay, closeDelay);
             }
 
-            if (hasState(DOM.dgaDigitalStamp, 'open')) {
-                dga.toggle();
-                delay = Math.max(delay, duration);
-            }
-
             scheduleToggleAction(delay, open);
-        } else if (!state.isMinimal && hasState(DOM.dgaDigitalStamp, 'open')) {
-            toggleDGA();
-            afterDelay(duration, () => scheduleToggleAction(closeDelay, open));
         } else {
             scheduleToggleAction(closeDelay, open);
         }
@@ -690,7 +647,7 @@
             if (isInPrimary && hasState(DOM.collapse, 'open')) afterDelay(duration * 0.1, updatePositions);
         };
 
-        _scheduleDropdownOpen(duration, isInMinimal, closeDelay, open);
+        _scheduleDropdownOpen(isInMinimal, closeDelay, open);
     }
 
     function toggleNavbar() {
@@ -698,54 +655,24 @@
         cancelToggleAction();
 
         const isOpen = hasState(DOM.collapse, 'open');
-        const collapseContent = DOM.collapseContent;
-        const duration = state.getDuration(collapseContent || DOM.collapse);
 
         if (!isOpen) {
             const minimalDropdowns = [..._openDropdowns].filter(d => d.closest('.nds-nav-minimal'));
             if (minimalDropdowns.length) {
+                const collapseContent = DOM.collapseContent;
+                const duration = state.getDuration(collapseContent || DOM.collapse);
+
                 showNavBackdrop('navbar', () => {
                     if (hasState(DOM.collapse, 'open')) toggleNavbar();
                 });
 
                 minimalDropdowns.forEach(d => dropdown.toggle(d, false));
-                scheduleToggleAction(duration, () => {
-                    if (hasState(DOM.dgaDigitalStamp, 'open')) {
-                        toggleDGA();
-                        scheduleToggleAction(duration, () => navbar.toggle(true));
-                    } else {
-                        navbar.toggle(true);
-                    }
-                });
+                scheduleToggleAction(duration, () => navbar.toggle(true));
                 return;
             }
         }
 
-        if (hasState(DOM.dgaDigitalStamp, 'open')) {
-            toggleDGA();
-            scheduleToggleAction(duration, () => navbar.toggle(!isOpen));
-        } else {
-            navbar.toggle(!isOpen);
-        }
-    }
-
-    function toggleDGA() {
-        const collapseContent = DOM.collapseContent;
-        const duration = state.getDuration(collapseContent || DOM.collapse);
-
-        if (hasState(DOM.collapse, 'open')) {
-            navbar.toggle(false);
-            afterDelay(duration * 1.2 + 50, () => dga.toggle());
-        } else {
-            if (_openDropdowns.size) {
-                const first = _openDropdowns.values().next().value;
-                const ddDuration = state.getDuration(getDropdownAnimTarget(first).animTarget);
-                _openDropdowns.forEach(d => dropdown.toggle(d, false));
-                afterDelay(ddDuration, () => dga.toggle());
-            } else {
-                dga.toggle();
-            }
-        }
+        navbar.toggle(!isOpen);
     }
 
     // ==============================================
@@ -757,18 +684,10 @@
         // Fast-bail: if nothing is open, the document click can't be an
         // outside-close. Saves a full DOM scan + per-dropdown closest()
         // checks on the overwhelming majority of page clicks.
-        const dgaOpen = hasState(DOM.dgaDigitalStamp, 'open');
         const collapseOpen = DOM.toggler && hasState(DOM.collapse, 'open');
-        if (!dgaOpen && !collapseOpen && _openDropdowns.size === 0) return;
+        if (!collapseOpen && _openDropdowns.size === 0) return;
 
         const target = event.target;
-
-        // Close DGA if click outside
-        if (dgaOpen) {
-            if (![DOM.dgaTab, DOM.dgaDigitalStamp].some(el => el?.contains(target))) {
-                toggleDGA();
-            }
-        }
 
         // Close navbar if click outside
         if (collapseOpen) {
@@ -807,7 +726,6 @@
 
             if (modeChanged) {
                 _openDropdowns.forEach(dd => dropdown.toggle(dd, false));
-                if (hasState(DOM.dgaDigitalStamp, 'open')) dga.toggle();
 
                 if (hasState(DOM.collapse, 'open')) {
                     _navBackdropOwner = 'navbar';
@@ -1139,7 +1057,6 @@
         // primary empty, secondary all PABs) would leave the toggler
         // CSS-visible with nothing to expose.
         checkTogglerVisibility();
-        DOM.dgaTab?.addEventListener('click', toggleDGA, { signal: _eventsAbortController.signal });
 
         if (hasState(DOM.collapse, 'open')) updatePositions();
         setupInteractions();
@@ -1169,5 +1086,5 @@
         scheduleUpdate();
     });
 
-    NDS.Mainnav = { init, toggleNavbar, toggleDropdown, toggleDGA };
+    NDS.Mainnav = { init, toggleNavbar, toggleDropdown };
 })();

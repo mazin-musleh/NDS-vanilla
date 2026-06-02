@@ -363,10 +363,11 @@ NDS.CityWeather.updateWeather();  // re-fetch weather data
 NDS.CityWeather.updateCity();     // re-fetch city name
 
 // ── DGA Stamp Toggle ────────────────────────
-// Opens or closes the digital stamp panel.
-// Automatically closes the navbar or open dropdowns
-// first to prevent overlapping panels.
-NDS.Mainnav.toggleDGA();
+// Standalone component — opens/closes the digital
+// stamp panel. Opening it (or the nav) closes the
+// other automatically via each surface's own
+// outside-click handling.
+NDS.DigitalStamp.toggle();   // also: .open(), .close(), .isOpen()
 
 // ── Hijri Date API ──────────────────────────
 // Pass true for Arabic, false for English.
