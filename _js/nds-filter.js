@@ -1007,22 +1007,8 @@
         removeSearchFilter() {
             this.criteria.search = '';
 
-            if (this.searchInputs.direct) {
-                this.searchInputs.direct.input.value = '';
-                this.updateClearButtonVisibility(
-                    this.searchInputs.direct.input,
-                    this.searchInputs.direct.clearBtn
-                );
-            }
-
-            if (this.searchInputs.dropmenu) {
-                this.searchInputs.dropmenu.input.value = '';
-                this.updateClearButtonVisibility(
-                    this.searchInputs.dropmenu.input,
-                    this.searchInputs.dropmenu.clearBtn
-                );
-                this.updateApplyButtonLabel();
-            }
+            this._mirrorSearchInputs('');
+            if (this.searchInputs.dropmenu) this.updateApplyButtonLabel();
 
             // In AJAX mode, resubmit form to get updated results
             if (this.isAjaxMode) {
@@ -1362,6 +1348,26 @@
             }
         }
 
+        // Write `value` into whichever search inputs exist (direct + dropmenu) and
+        // sync each one's clear button. Callers handle apply-label / filter
+        // application / form submission separately.
+        _mirrorSearchInputs(value) {
+            if (this.searchInputs.direct) {
+                this.searchInputs.direct.input.value = value;
+                this.updateClearButtonVisibility(
+                    this.searchInputs.direct.input,
+                    this.searchInputs.direct.clearBtn
+                );
+            }
+            if (this.searchInputs.dropmenu) {
+                this.searchInputs.dropmenu.input.value = value;
+                this.updateClearButtonVisibility(
+                    this.searchInputs.dropmenu.input,
+                    this.searchInputs.dropmenu.clearBtn
+                );
+            }
+        }
+
         // ==============================================
         // DYNAMIC FILTER (AUTO-GENERATED)
         // ==============================================
@@ -1492,16 +1498,7 @@
                     }
                 } else if (filterName === 'tags') {
                     // Fallback for tags: traditional .nds-card-tags structure
-                    const cardTags = card.querySelector('.nds-card-tags');
-                    if (cardTags) {
-                        const tagElements = cardTags.querySelectorAll('.nds-tag .nds-label');
-                        tagElements.forEach(el => {
-                            const value = el.textContent.trim();
-                            if (value) {
-                                values.add(value);
-                            }
-                        });
-                    }
+                    this._collectCardTagLabels(card).forEach(value => values.add(value));
                 }
             });
 
@@ -1511,6 +1508,21 @@
             }
 
             return Array.from(values).sort((a, b) => a.localeCompare(b, 'ar'));
+        }
+
+        // Harvest legacy .nds-card-tags labels from a card: the trimmed
+        // .nds-tag .nds-label text of each tag, original case. Shared by
+        // collectFilterValues (option build) and _buildItemCache (match cache);
+        // callers lowercase as needed.
+        _collectCardTagLabels(card) {
+            const cardTags = card.querySelector('.nds-card-tags');
+            if (!cardTags) return [];
+            const labels = [];
+            cardTags.querySelectorAll('.nds-tag .nds-label').forEach(el => {
+                const value = el.textContent.trim();
+                if (value) labels.push(value);
+            });
+            return labels;
         }
 
         generateFilterInputs(container, filterName, inputType, explicitValues = null) {
@@ -1749,12 +1761,8 @@
 
             // If no criteria, show all items and update UI
             if (!hasCriteria) {
-                // Remove any filter-related attributes/classes from all items
-                this.items.forEach(item => {
-                    item.removeAttribute('data-filtered');
-                    NDS.State.remove(item, 'filtered-out');
-                    item.style.display = '';
-                });
+                // Un-hide every item — same as showItem() (used by reset()/destroy()).
+                this.items.forEach(item => this.showItem(item));
 
                 // Update hidden inputs if in form mode
                 if (this.isFormMode) {
@@ -1926,16 +1934,9 @@
                 // Legacy .nds-card-tags fallback — only contributes when no
                 // data-filter="tags" markers exist on this card.
                 if (!filterValues.tags) {
-                    const cardTags = item.querySelector('.nds-card-tags');
-                    if (cardTags) {
-                        const tagLabels = cardTags.querySelectorAll('.nds-tag .nds-label');
-                        if (tagLabels.length) {
-                            const vals = [];
-                            for (let i = 0; i < tagLabels.length; i++) {
-                                vals.push(tagLabels[i].textContent.trim().toLowerCase());
-                            }
-                            filterValues.tags = vals;
-                        }
+                    const tagLabels = this._collectCardTagLabels(item);
+                    if (tagLabels.length) {
+                        filterValues.tags = tagLabels.map(v => v.toLowerCase());
                     }
                 }
 
@@ -1970,13 +1971,13 @@
         // ==============================================
 
         showItem(item) {
-            item.style.display = '';
+            // Visual hide is owned by CSS: `[data-filtered]{display:none!important}`
+            // in the critical layer. Clearing the attribute un-hides; no inline style.
             item.removeAttribute('data-filtered');
             NDS.State.remove(item, 'filtered-out');
         }
 
         hideItem(item) {
-            item.style.display = 'none';
             item.setAttribute('data-filtered', 'true');
             NDS.State.add(item, 'filtered-out');
         }
@@ -2038,19 +2039,7 @@
         }
 
         clear() {
-            if (this.searchInputs.direct) {
-                this.searchInputs.direct.input.value = '';
-                if (this.searchInputs.direct.clearBtn) {
-                    this.searchInputs.direct.clearBtn.hidden = true;
-                }
-            }
-
-            if (this.searchInputs.dropmenu) {
-                this.searchInputs.dropmenu.input.value = '';
-                if (this.searchInputs.dropmenu.clearBtn) {
-                    this.searchInputs.dropmenu.clearBtn.hidden = true;
-                }
-            }
+            this._mirrorSearchInputs('');
 
             this.criteria.search = '';
 
@@ -2215,21 +2204,7 @@
         setSearchValue(value) {
             this.criteria.search = value.trim().toLowerCase();
 
-            if (this.searchInputs.direct) {
-                this.searchInputs.direct.input.value = value;
-                this.updateClearButtonVisibility(
-                    this.searchInputs.direct.input,
-                    this.searchInputs.direct.clearBtn
-                );
-            }
-
-            if (this.searchInputs.dropmenu) {
-                this.searchInputs.dropmenu.input.value = value;
-                this.updateClearButtonVisibility(
-                    this.searchInputs.dropmenu.input,
-                    this.searchInputs.dropmenu.clearBtn
-                );
-            }
+            this._mirrorSearchInputs(value);
 
             this.updateApplyButtonLabel();
             this.applyFilters();

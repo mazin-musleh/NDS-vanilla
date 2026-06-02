@@ -31,7 +31,10 @@
 
 // Universal hide primitive. !important so author display rules can't
 // override the hidden semantic. Removes the need for :not([hidden])
-// guards across component CSS.
-:is(.nds-hidden, [hidden], [data-state~=hidden]) {
+// guards across component CSS. [data-filtered] is filter's own hide hook
+// (set in nds-filter.js, also read by nds-pagination.js) — it lives here so
+// URL-active filters, which mark items in the critical init pass, hide at
+// first paint instead of flashing then collapsing when the main bundle loads.
+:is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) {
     display: none !important;
 }
