@@ -128,7 +128,7 @@
             // Single-slide swipers can never navigate; bail before nav/observer/keyboard
             // setup. updateSlidesPerView already ran so --slides/--peek are correct.
             if (this.slides.length === 1) {
-                this.container.setAttribute('data-swiper-initialized', 'true');
+                this.container.setAttribute('data-nds-swiper-initialized', 'true');
                 return;
             }
 
@@ -161,7 +161,7 @@
 
             this.updatePeekStyles();
 
-            this.container.setAttribute('data-swiper-initialized', 'true');
+            this.container.setAttribute('data-nds-swiper-initialized', 'true');
 
             if (this.navigation && this.slides.length > this.slidesPerView) {
                 this.navigation.removeAttribute('hidden');
@@ -571,7 +571,7 @@
         // subsequent call to a setup method that reads `this.abortController.signal` will
         // throw. Re-initialize via `NDS.Swiper.create(el)` (constructs a fresh instance).
         destroy() {
-            this.container.removeAttribute('data-swiper-initialized');
+            this.container.removeAttribute('data-nds-swiper-initialized');
             this.container.removeAttribute('tabindex');
 
             // Reverse the inline state init/setupPagination wrote, so destroy() restores
@@ -616,7 +616,7 @@
         const swipers = document.querySelectorAll('.nds-swiper');
         swipers.forEach(swiper => {
             if (swiper.closest('code, .code-example')) return;
-            if (swiper.hasAttribute('data-swiper-initialized')) return;
+            if (swiper.hasAttribute('data-nds-swiper-initialized')) return;
             swiper._ndsSwiper = new NDSSwiper(swiper);
         });
     }

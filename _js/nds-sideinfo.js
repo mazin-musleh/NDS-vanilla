@@ -25,12 +25,12 @@
             this.wantsSticky = element.classList.contains('nds-sticky');
 
             if (!this.sectionHead) {
-                console.warn('NDS Side Info: .nds-hero-section .nds-section-head not found');
+                console.warn('NDS Sideinfo: .nds-hero-section .nds-section-head not found');
                 return;
             }
 
             if (!this.sideInfoParent) {
-                console.warn('NDS Side Info: parent element not found');
+                console.warn('NDS Sideinfo: parent element not found');
                 return;
             }
 
@@ -48,7 +48,7 @@
             this.setupResize();
             this.setupContentResize();
             this.setupLateRecompute();
-            this.sideInfo.setAttribute('data-sideinfo-initialized', 'true');
+            this.sideInfo.setAttribute('data-nds-sideinfo-initialized', 'true');
         }
 
         // Sticky breaks down when the side info is taller than the viewport
@@ -134,7 +134,7 @@
         // ==============================================
 
         destroy() {
-            this.sideInfo.removeAttribute('data-sideinfo-initialized');
+            this.sideInfo.removeAttribute('data-nds-sideinfo-initialized');
             this.sideInfo.style.removeProperty('--nds-sideinfo-top');
             if (this.wantsSticky) this.sideInfo.classList.add('nds-sticky');
 
@@ -152,7 +152,7 @@
         const sideInfoElements = document.querySelectorAll('.nds-sideinfo');
         sideInfoElements.forEach(element => {
             if (element.closest('code, .code-example')) return;
-            if (!element.hasAttribute('data-sideinfo-initialized')) {
+            if (!element.hasAttribute('data-nds-sideinfo-initialized')) {
                 const instance = new NDSSideInfo(element);
                 element._ndsSideInfo = instance;
             }

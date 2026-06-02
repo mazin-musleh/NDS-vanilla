@@ -114,7 +114,7 @@
             // the DOM is dirty and the read would force a synchronous reflow.
             // The scrollspy itself is already live via the scroll listener.
             NDS.onIdle(this.update, 2000);
-            this.toc.setAttribute('data-toc-initialized', 'true');
+            this.toc.setAttribute('data-nds-toc-initialized', 'true');
         }
 
         // Live nav height + breathing room. scrollspy threshold and click
@@ -177,14 +177,14 @@
             this.links.forEach(link => link.removeEventListener('click', this.onClick));
             if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
             if (this._offResize) this._offResize();
-            this.toc.removeAttribute('data-toc-initialized');
+            this.toc.removeAttribute('data-nds-toc-initialized');
         }
     }
 
     function initializeComponents() {
         document.querySelectorAll('.nds-toc').forEach(toc => {
             if (toc.closest('code, .code-example')) return;
-            if (toc.hasAttribute('data-toc-initialized')) return;
+            if (toc.hasAttribute('data-nds-toc-initialized')) return;
             toc._ndsToc = new NDSToc(toc);
         });
     }

@@ -89,7 +89,7 @@ body:not([data-nds-loaded]) {
     /* ── Swiper ──
        Hero swiper + wrapper get their flex skeleton so the slide image fills
        the hero box. All swipers collapse to their first slide until JS marks
-       data-swiper-initialized — prevents pre-init flex layout from widening
+       data-nds-swiper-initialized — prevents pre-init flex layout from widening
        the document. */
     :is(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
         display: flex;
@@ -97,7 +97,7 @@ body:not([data-nds-loaded]) {
         width: 100%;
     }
 
-    .nds-swiper:not([data-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
+    .nds-swiper:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
         display: none;
     }
 

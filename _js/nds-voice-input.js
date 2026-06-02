@@ -287,7 +287,7 @@
     }
 
     // ── Delegated click handler (the whole "init") ────────────────────
-    var _installed = false;
+    var _initDone = false;
 
     function onVoiceClick(e) {
         var button = e.target.closest && e.target.closest('.nds-voice-input');
@@ -301,8 +301,8 @@
     }
 
     function init() {
-        if (_installed) return;
-        _installed = true;
+        if (_initDone) return;
+        _initDone = true;
         document.addEventListener('click', onVoiceClick);
         // If a button is removed mid-listening, stop its session so the mic
         // doesn't stay open until the 30s timeout. Pooled observer, fires only

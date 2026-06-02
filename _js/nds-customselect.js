@@ -17,7 +17,7 @@
 (function () {
     'use strict';
 
-    var _installed = false;
+    var _initDone = false;
 
     // Dispatch input + change so forms' delegated handlers sync the field.
     function triggerEvents(element) {
@@ -155,8 +155,8 @@
         // listeners install once. Cosmetic only: the submit value is already in
         // the hidden input from markup — this just paints the derived label.
         document.querySelectorAll('.nds-select-input').forEach(restoreDisplay);
-        if (_installed) return;
-        _installed = true;
+        if (_initDone) return;
+        _initDone = true;
         document.addEventListener('focusin', onFocusIn);
         document.addEventListener('click', onOptionClick);
     }
