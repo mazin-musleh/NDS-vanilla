@@ -123,12 +123,12 @@
   tags: ["CSS"]
   url: "/components/feedback-icons.html"
 
-- title: "Hero"
-  description: "Full-width page banners with slider and call-to-action"
+- title: "Image Popup Viewer"
+  description: "Fullscreen image preview with zoom and navigation"
   icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
   category: "UI"
   tags: ["JS", "CSS"]
-  url: "/ui-shell/hero.html"
+  url: "/components/ipv.html"
 
 - title: "Link"
   description: "Inline navigation with color variants and automatic external-link detection"
@@ -320,13 +320,6 @@
   tags: ["JS", "CSS", "API"]
   url: "/components/multiselect.html"
 
-- title: "Filter"
-  description: "Applied filters with search, URL sync, and remote data"
-  icon: '<i class="hgi hgi-stroke hgi-filter"></i>'
-  category: "Data"
-  tags: ["JS", "CSS", "API"]
-  url: "/components/filter.html"
-
 - title: "User Feedback"
   description: "Satisfaction surveys and inline rating forms"
   icon: '<i class="hgi hgi-stroke hgi-message-edit-01"></i>'
@@ -335,6 +328,13 @@
   url: "/components/user-feedback.html"
 
 # Data Components
+- title: "Filter"
+  description: "Applied filters with search, URL sync, and remote data"
+  icon: '<i class="hgi hgi-stroke hgi-filter"></i>'
+  category: "Data"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/filter.html"
+
 - title: "Tables"
   description: "Data grids with sorting, pagination, and expandable rows"
   icon: '<i class="hgi hgi-stroke hgi-table-02"></i>'
@@ -390,7 +390,7 @@
   description: "One-click clipboard copy with checkmark feedback and screen reader announcement"
   icon: '<i class="hgi hgi-stroke hgi-copy-01"></i>'
   category: "Utilities"
-  tags: ["JS"]
+  tags: ["JS", "CSS"]
   url: "/utilities/copy.html"
 
 - title: "Truncate Text"
@@ -453,7 +453,7 @@
   description: "Social share dropmenu for X, LinkedIn, WhatsApp, and copy link"
   icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
   category: "Utilities"
-  tags: ["JS"]
+  tags: ["JS", "CSS"]
   url: "/utilities/share.html"
 
 # UI Shell
@@ -470,6 +470,13 @@
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/header.html#navBar"
+
+- title: "Hero"
+  description: "Full-width page banners with slider and call-to-action"
+  icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS"]
+  url: "/ui-shell/hero.html"
 
 - title: "DGA Digital Stamp"
   description: "Government authority verification panel"
@@ -508,7 +515,7 @@
   url: "/components/date-picker.html"
 
 - title: "Voice Input"
-  description: "Voice input supporting Arabic and English"
+  description: "Voice-to-text button that dictates into a text field, with Arabic/English auto-detection"
   icon: '<i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>'
   category: "Plugins"
   tags: ["JS", "API"]
@@ -534,11 +541,4 @@
   category: "Plugins"
   tags: ["JS", "CSS"]
   url: "/components/cookies.html"
-
-- title: "Image Popup Viewer"
-  description: "Fullscreen image preview with zoom and navigation"
-  icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
-  category: "UI"
-  tags: ["JS", "CSS"]
-  url: "/components/ipv.html"
 
