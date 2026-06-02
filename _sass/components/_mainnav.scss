@@ -177,7 +177,7 @@
             border-bottom: unset !important;
 
             @include mobile {
-                .nds-btn {
+                >.nds-btn {
                     --btn-size: 32px;
                 }
             }
