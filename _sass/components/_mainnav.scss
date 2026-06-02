@@ -467,18 +467,37 @@ body:not(.nds-minimal) .nds-main-nav {
     .nds-collapse {
         display: flex;
         width: 100%;
+        // min-width: 0 lets this flex item shrink below its content's
+        // intrinsic size inside .nds-nav-container. Without it,
+        // min-width: auto would resolve to the min-content of its
+        // descendants (.nds-nav-primary items), and the shrink chain
+        // toward primary's `flex: 1 1 0` would never propagate.
+        min-width: 0;
 
         .nds-collapse-content {
             display: flex;
             justify-content: flex-start;
             align-items: center;
             width: 100%;
+            // Same reasoning — let collapse-content shrink against
+            // collapse so .nds-nav-primary's flex: 1 1 0 + min-width: 0
+            // can settle at the budget (collapse-content - show-more).
+            min-width: 0;
         }
     }
 
     .nds-nav-primary {
+        // flex: 1 1 0 + min-width: 0 lets this list shrink against its
+        // .nds-collapse-content sibling (.nds-show-more) so the items
+        // overflow into overflow-x: auto instead of pushing the nav
+        // container wider. Replaces the JS-computed inline max-width
+        // that updateNavMaxWidth() used to write on every resize / DOM
+        // mutation. The min-width: 0 is essential — without it, the
+        // flex item's min-width: auto resolves to its intrinsic content
+        // width (sum of nav items), which defeats the shrink.
+        flex: 1 1 0;
+        min-width: 0;
         overflow-x: auto;
-        width: 100%;
         touch-action: pan-x;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;

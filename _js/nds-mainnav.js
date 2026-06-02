@@ -4,8 +4,7 @@
 
     // Fallback values used only if corresponding CSS custom properties are undefined at runtime.
     // These should match the CSS defaults; any mismatch indicates a token-source drift.
-    const MINIMAL_NAV_BP_FALLBACK = 768;
-    const CONTENT_MAX_WIDTH_FALLBACK = 1280;
+    const MINIMAL_NAV_BP_FALLBACK = 960;
 
     // ==============================================
     // DOM REFERENCES
@@ -37,11 +36,21 @@
     // State helpers — delegated to NDS.State (nds-core.js)
     const { add: addState, remove: removeState, has: hasState } = NDS.State;
 
+    // Minimal-mode breakpoint. Reads the canonical `--nds-minimal-nav-bp`
+    // CSS var once at module load, then drives mode detection via
+    // matchMedia so the flip fires as an event rather than being polled
+    // inside scheduleUpdate. Consumers that override `--nds-minimal-nav-bp`
+    // still get honored (the override is what we read here). The
+    // matchMedia change listener is attached at the bottom of the file
+    // alongside the reduced-motion listener.
+    const _minimalBp = parseInt(getComputedStyle(document.documentElement)
+        .getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BP_FALLBACK;
+    const _mqMinimal = window.matchMedia(`(max-width: ${_minimalBp}px)`);
+
     // ==============================================
     // STATE MANAGEMENT
     // ==============================================
     const state = {
-        windowWidth: window.innerWidth,
         isMouseOverDropdown: false,
         isAnimating: false,
         pendingAction: null,
@@ -51,20 +60,7 @@
         // scheduleUpdate to gate the toggler-visibility recompute. Reset there.
         _navChanged: false,
 
-        _css: null,
-        get css() {
-            if (!this._css) {
-                const styles = getComputedStyle(document.documentElement);
-                this._css = {
-                    minimalBp: parseInt(styles.getPropertyValue('--nds-minimal-nav-bp')) || MINIMAL_NAV_BP_FALLBACK,
-                    speed: NDS.transitionSpeed(),
-                    isRTL: NDS.isRTL
-                };
-            }
-            return this._css;
-        },
-
-        get isMinimal() { return this.windowWidth <= this.css.minimalBp; },
+        get isMinimal() { return _mqMinimal.matches; },
 
         _reducedMotion: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false,
         get reducedMotion() { return this._reducedMotion; },
@@ -78,19 +74,14 @@
                 cached = parseFloat(getComputedStyle(el).transitionDuration) || 0;
                 this._durations.set(el, cached);
             }
-            return cached > 0 ? this.css.speed : 0;
+            return cached > 0 ? NDS.transitionSpeed() : 0;
         },
-
-        invalidateCache() {
-            _containerLayoutCache = null;
-            _primaryMaxHeightCached = null;
-            this._css = null;
-        }
     };
 
-    // Cache of getComputedStyle(DOM.primary).maxHeight (parsed). Driven by CSS,
-    // doesn't change at runtime; invalidated alongside the other layout caches
-    // when state.invalidateCache() fires (mode change, resize, etc.).
+    // Cache of getComputedStyle(DOM.primary).maxHeight (parsed). The CSS
+    // max-height uses `svh` units which vary with viewport height, so the
+    // cache is reset wherever a resize may have invalidated it (mode flip,
+    // orientationchange, primary RO callback, window resize bus).
     let _primaryMaxHeightCached = null;
     function getPrimaryMaxHeight() {
         if (_primaryMaxHeightCached === null) {
@@ -469,19 +460,10 @@
 
             if (hasOverflow) addState(DOM.primary, 'has-more'); else removeState(DOM.primary, 'has-more');
 
-            if (!state.isMinimal) {
-                // has-more just flipped the show-more button between
-                // display:none and display:flex — that changes the flex space
-                // it claims from .nds-nav-primary, so the cached width is now
-                // stale. Force the recompute (the _navMaxWidthLast guard would
-                // otherwise skip it) so the primary max-width accounts for the
-                // show-more in this same synchronous pass — no ResizeObserver
-                // round-trip, no unconstrained-nav flash before it settles.
-                _navMaxWidthLast = 0;
-                updateNavMaxWidth();
-            }
-
-            // Width calc has finished — the layout is final, reveal now.
+            // CSS flex (`.nds-nav-primary { flex: 1 1 0; min-width: 0 }`) re-lays
+            // out automatically when the show-more sibling flips between
+            // display:none and display:flex on the has-more state change above.
+            // No JS width recompute needed here.
             revealOnce();
 
             if (!hasOverflow) {
@@ -537,62 +519,6 @@
         }
     }
 
-    let _navMaxWidthLast = 0;
-    let _containerLayoutCache = null;
-    // Cached container.offsetWidth across calls. Invalidated by the existing
-    // ResizeObserver in setupEventListeners — most scheduleUpdate triggers
-    // (mode changes, transitionend, modal opens, scrollend) don't actually
-    // resize the container, so the read can be skipped.
-    let _containerWCached = null;
-
-    function updateNavMaxWidth() {
-        if (!DOM.primary || !DOM.nav) return;
-
-        if (state.isMinimal) {
-            DOM.primary.style.maxWidth = '';
-            overflow.schedule('immediate');
-            return;
-        }
-
-        const container = DOM.container;
-        if (_containerWCached === null) {
-            _containerWCached = container?.offsetWidth || 0;
-        }
-        const containerW = _containerWCached;
-        if (containerW === _navMaxWidthLast) return;
-        _navMaxWidthLast = containerW;
-
-        const navW = DOM.nav?.offsetWidth || 0;
-        const brandW = DOM.brand?.offsetWidth || 0;
-        const secW = DOM.secondary?.offsetWidth || 0;
-        const minW = DOM.minimal?.offsetWidth || 0;
-        const showMoreW = DOM.showMore && hasState(DOM.primary, 'has-more') ? DOM.showMore.offsetWidth : 0;
-
-        if (!_containerLayoutCache || _containerLayoutCache.containerW !== containerW) {
-            const containerStyles = container ? getComputedStyle(container) : null;
-            const children = container ? Array.from(container.children) : [];
-            let padding = 0, gap = 0;
-            if (containerStyles) {
-                padding = parseFloat(containerStyles.paddingLeft || 0) + parseFloat(containerStyles.paddingRight || 0);
-                gap = parseFloat(containerStyles.gap || containerStyles.columnGap || 0) || 0;
-            }
-            const visibleCount = children.filter(c => c.offsetWidth > 0 || c.offsetHeight > 0).length;
-            _containerLayoutCache = { containerW, padding, gap, visibleCount };
-        }
-
-        const { padding, gap, visibleCount } = _containerLayoutCache;
-        const constraint = Math.min(navW, containerW || CONTENT_MAX_WIDTH_FALLBACK);
-        const used = brandW + secW + minW + showMoreW + padding + (gap * Math.max(0, visibleCount - 1));
-        const available = constraint - used;
-        const newMax = available > 0 ? `${available}px` : '';
-
-        if (DOM.primary.style.maxWidth !== newMax) {
-            DOM.primary.style.maxWidth = newMax;
-            state.invalidateCache();
-            overflow.schedule('immediate');
-        }
-    }
-
     function updateBodyClass() {
         const should = state.isMinimal;
         const isBodyMin = document.body.classList.contains('nds-minimal');
@@ -607,7 +533,7 @@
         if (should !== isBodyMin || wantsHidden !== isHidden) {
             document.body.classList.toggle('nds-minimal', should);
             if (DOM.minimal) DOM.minimal.toggleAttribute('hidden', wantsHidden);
-            state.invalidateCache();
+            _primaryMaxHeightCached = null;
             managePABPlacement();
             return true;
         }
@@ -877,12 +803,7 @@
         state.pendingUpdate = requestAnimationFrame(() => {
             state.pendingUpdate = null;
 
-            const newWidth = window.innerWidth;
-            const widthChanged = newWidth !== state.windowWidth;
-            if (widthChanged) state.windowWidth = newWidth;
-
             const modeChanged = updateBodyClass();
-            updateNavMaxWidth();
 
             if (modeChanged) {
                 _openDropdowns.forEach(dd => dropdown.toggle(dd, false));
@@ -906,7 +827,11 @@
                 updatePositions();
             }
 
-            if (widthChanged || modeChanged || state._navChanged) {
+            // Toggler visibility is a pure markup check (no layout reads) that
+            // depends on what's in primary/secondary, not on viewport width.
+            // It only needs to re-run when the markup composition changes
+            // (PAB placement / mode flip / DOM mutations), not on every resize.
+            if (modeChanged || state._navChanged) {
                 state._navChanged = false;
                 checkTogglerVisibility();
             }
@@ -933,7 +858,7 @@
                 });
                 DOM.primary.scrollTo({ top: atEnd ? 0 : DOM.primary.scrollTop + amount, behavior: 'smooth' });
             } else {
-                const dir = state.css.isRTL ? -1 : 1;
+                const dir = NDS.isRTL ? -1 : 1;
                 DOM.primary.scrollTo({ left: atEnd ? 0 : DOM.primary.scrollLeft + amount * dir, behavior: 'smooth' });
             }
             // Fallback for browsers without `scrollend` (the listener below
@@ -977,7 +902,7 @@
             DOM.primary.style.scrollBehavior = 'auto';
 
             const start = DOM.primary.scrollLeft;
-            const mult = state.css.isRTL ? -0.8 : 0.8;
+            const mult = NDS.isRTL ? -0.8 : 0.8;
             const delta = e.deltaY * mult;
             let frame = 0;
 
@@ -1065,7 +990,7 @@
 
     function _bindGlobalEvents(signal) {
         window.addEventListener('orientationchange', () => {
-            state.invalidateCache();
+            _primaryMaxHeightCached = null;
             setTimeout(scheduleUpdate, 150);
         }, { passive: true, signal });
 
@@ -1109,7 +1034,7 @@
             if (wasNavOpen) toggleNavbar();
             else _openDropdowns.forEach(dd => dropdown.toggle(dd, false));
 
-            const delay = wasNavOpen || openCount ? state.css.speed + 100 : 0;
+            const delay = wasNavOpen || openCount ? NDS.transitionSpeed() + 100 : 0;
 
             setTimeout(() => {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1131,39 +1056,37 @@
         NDS.onDOMRemove('.nds-nav-item, .nds-dropdown', navChanged);
 
         // Steady-state resize: coalesce storms before the recompute.
+        // CSS flex owns the width budget, but JS still owns the has-more
+        // overflow flag — `.nds-nav-primary`'s clientWidth changes whenever
+        // the container shrinks, and only `overflow.check()` flips has-more
+        // (which un-hides `.nds-show-more` via the sibling selector at
+        // _mainnav.scss:281). Without this call, resizing past the items'
+        // intrinsic width leaves the nav scroll-only with no show-more.
         const onNavResize = NDS.debounce(() => {
-            state.invalidateCache();
-            _navMaxWidthLast = 0;
+            _primaryMaxHeightCached = null;
             scheduleUpdate();
+            overflow.schedule('immediate');
         }, 100);
 
-        // The first RO delivery carries the initial nav measurement. It fires
-        // once nav/primary have a real box, inside the RO callback where
-        // layout is already clean — so updateNavMaxWidth's offsetWidth reads
-        // are free. Running this measurement in init() (or an init-time rAF)
-        // would instead force a synchronous reflow during the component-init
-        // burst. Not debounced: the read has to land in the RO callback to
-        // stay free, and a debounced setTimeout would lose that guarantee.
-        let firstNavMeasure = true;
+        // Routes primary's ResizeObserver entries to onNavResize when primary
+        // changes size meaningfully (≥ 5px on either axis to drop spurious
+        // sub-pixel deliveries). CSS flex sizing owns primary's width budget;
+        // this handler only triggers downstream JS work (mode-flip check,
+        // toggler visibility, overflow recheck) via scheduleUpdate.
+        // Pre-JSA-18 this also observed DOM.nav (for updateNavMaxWidth's
+        // navW input). With that gone, NDS.onResize fully covers window-level
+        // size changes — observing just primary is enough.
         const navResizeHandler = (entry) => {
             const { width, height } = entry.contentRect;
             const last = entry.target._lastSize;
             if (last && Math.abs(width - last.w) <= 5 && Math.abs(height - last.h) <= 5) return;
             entry.target._lastSize = { w: width, h: height };
-            // Container is a child of nav/primary, so a meaningful size
-            // change here means the cached container width is stale.
-            _containerWCached = null;
-            if (firstNavMeasure) {
-                firstNavMeasure = false;
-                updateNavMaxWidth();
-                return;
-            }
             onNavResize();
         };
 
-        [DOM.nav, DOM.primary].filter(Boolean).forEach(el => {
-            _offElementResizes.push(NDS.onElementResize(el, navResizeHandler));
-        });
+        if (DOM.primary) {
+            _offElementResizes.push(NDS.onElementResize(DOM.primary, navResizeHandler));
+        }
     }
 
     function setupEventListeners() {
@@ -1173,7 +1096,7 @@
         const { signal } = _eventsAbortController;
 
         if (_offResize) { _offResize(); _offResize = null; }
-        _offResize = NDS.onResize(() => { state.invalidateCache(); scheduleUpdate(); });
+        _offResize = NDS.onResize(() => { _primaryMaxHeightCached = null; scheduleUpdate(); });
 
         _offElementResizes.splice(0).forEach(off => off());
 
@@ -1221,8 +1144,13 @@
         if (hasState(DOM.collapse, 'open')) updatePositions();
         setupInteractions();
 
-        // The initial updateNavMaxWidth runs from the ResizeObserver's first
-        // delivery (see navResizeHandler) — a free read, no init-time reflow.
+        // Initial overflow check on the next paint. The ResizeObserver
+        // first-delivery path is debounced 100ms, which would otherwise
+        // leave the nav unflagged for ~100ms after init at desktop widths
+        // where items overflow (e.g. 1040px on a dense nav). Running it
+        // here lets has-more (and the show-more button) settle in the
+        // first rendered frame instead.
+        overflow.schedule('immediate');
     }
 
     // Keep reduced-motion in sync
@@ -1230,6 +1158,16 @@
         window.matchMedia?.('(prefers-reduced-motion: reduce)')
             ?.addEventListener('change', (e) => { state.reducedMotion = !!e.matches; });
     } catch { }
+
+    // Mode-flip listener: fires only when the viewport crosses
+    // `--nds-minimal-nav-bp`. scheduleUpdate's updateBodyClass call then
+    // sees the mismatch between body.nds-minimal and the new state.isMinimal
+    // and runs the mode-transition logic (close dropdowns, drawer cleanup,
+    // PAB placement). Replaces the old windowWidth-vs-minimalBp poll.
+    _mqMinimal.addEventListener('change', () => {
+        _primaryMaxHeightCached = null;
+        scheduleUpdate();
+    });
 
     NDS.Mainnav = { init, toggleNavbar, toggleDropdown, toggleDGA };
 })();
