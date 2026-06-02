@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Speech Recognition
-hero_title: Speech Recognition - National Design System
-hero_description: A voice-to-text plugin that lets users dictate into any text input, with automatic language detection for Arabic and English, audio feedback, and a programmatic API for custom integrations.
+title: Voice Input
+hero_title: Voice Input - National Design System
+hero_description: An auto-wired voice-to-text button that lets users dictate into a text field, with automatic Arabic and English language detection, audio feedback tones, and an isSupported() check for gating the button on unsupported browsers.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
@@ -136,10 +136,10 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-api"></i>
-                        <span class="nds-label">Programmatic Control</span>
+                        <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
+                        <span class="nds-label">Support Detection</span>
                     </span>
-                    <p class="nds-item-desc">Access <code class="nds-inline-code lang-js">NDS.VoiceRecognition</code> directly to create recognition instances, handle transcript callbacks, and wire voice input to custom UI elements outside the standard form container.</p>
+                    <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">NDS.VoiceInput.isSupported()</code> to check whether the browser provides the Web Speech API, so you can hide or omit the microphone button on browsers that cannot use it.</p>
                 </div>
             </div>
         </div>
@@ -162,10 +162,10 @@ direction: ltr
                     <li>Do not add voice input to password fields, OTP fields, or other security-sensitive inputs where dictation could expose credentials to bystanders or screen-recording software.</li>
                     <li>Do not add voice input to <code class="nds-inline-code lang-html">&lt;select&gt;</code>, <code class="nds-inline-code lang-html">&lt;textarea&gt;</code>, or read-only inputs. The plugin targets the primary text input inside the form control and relies on setting <code class="nds-inline-code lang-html">.value</code> directly.</li>
                     <li>Always provide a visible microphone icon in the button so users can identify it without reading the <code class="nds-inline-code lang-html">aria-label</code>. Use the <code class="nds-inline-code lang-html">nds-hgi-mic-01</code> UI icon for consistency with the rest of NDS.</li>
-                    <li>Graceful degradation is automatic: if the browser does not support the Web Speech API the button is hidden and the input works as a normal text field. Do not write your own feature-detect.</li>
+                    <li>On browsers without the Web Speech API the button is left in place: a click shows a localized "not supported" message in the field and the input keeps working as a normal text field. To omit the button entirely on those browsers, gate it with <code class="nds-inline-code lang-js">NDS.VoiceInput.isSupported()</code>.</li>
                     <li>The plugin requires microphone permission from the browser. Pair it with a visible permission explanation or tooltip when the feature is prominent in a service flow, so users understand why they are being prompted.</li>
                     <li>In Arabic layouts the plugin sets <code class="nds-inline-code lang-html">lang="ar-SA"</code> on the recognition instance automatically. You do not need to set <code class="nds-inline-code lang-html">dir</code> or <code class="nds-inline-code lang-html">lang</code> on the input itself.</li>
-                    <li>For custom integrations using the <code class="nds-inline-code lang-js">VoiceRecognition</code> API directly, always call <code class="nds-inline-code lang-js">isSupported()</code> first and guard the rest of your code behind it.</li>
+                    <li>The button links to its input automatically when it sits inside an <code class="nds-inline-code lang-html">nds-form-control</code>. To place the button elsewhere on the page, point it at the field with <code class="nds-inline-code lang-html">data-voice-target</code> set to the input's <code class="nds-inline-code lang-html">id</code> or <code class="nds-inline-code lang-html">name</code>.</li>
                 </ul>
             </div>
 
@@ -186,66 +186,40 @@ direction: ltr
             </div>
 
             <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <p>The button finds its input automatically when it sits inside an <code class="nds-inline-code lang-html">nds-form-control</code>. Use a data attribute to link a button that lives elsewhere on the page.</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-voice-target="field-id"</code></td><td>Set on the button to point it at a specific input by <code class="nds-inline-code lang-html">id</code> or <code class="nds-inline-code lang-html">name</code>. Lets the button sit anywhere on the page, not just inside the form control.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-target="field-id"</code></td><td>The shared NDS targeting convention, accepted as a fallback when <code class="nds-inline-code lang-html">data-voice-target</code> is absent.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.VoiceRecognition</strong> module is exposed for custom integrations. Use it to attach voice input to elements outside the standard NDS form container, or to build custom recording UI with full control over transcript handling.</p>
-                <div class="nds-code nds-expandable">
+                <p>Voice input wires itself up: when the <strong>NDS.VoiceInput</strong> module loads it installs a single document-level click handler, so every <code class="nds-inline-code lang-html">nds-voice-input</code> button (present now or added later) works with no per-button setup. The public surface is intentionally small.</p>
+                <div class="nds-code">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
-                    <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
-const VR = NDS.VoiceRecognition;
+                    <code class="lang-javascript line-numbers">
+// ── Install the delegated click handler (idempotent) ──
+// Called automatically on load; only call it yourself after
+// injecting markup before the module has initialized.
+NDS.VoiceInput.init();
+NDS.VoiceInput.reinit();   // alias for init(), safe to call again
 
 // ── Browser support check ─────────────────────────────
-if (!VR.isSupported()) {
-    // Web Speech API not available — hide mic UI
+// true when the Web Speech API is available. Use it to gate
+// your own UI: hide or omit the mic button when unsupported.
+if (!NDS.VoiceInput.isSupported()) {
+    // e.g. don't render the voice-input button at all
 }
-
-// ── Detected language ────────────────────────────────
-// Returns 'ar-SA' on Arabic pages, 'en-US' on English pages
-const lang = VR.getLanguage();
-
-// ── Create a recognition instance ────────────────────
-// Accepts any SpeechRecognition property as an override
-const recognition = VR.create({
-    continuous: false,       // stop after first utterance (default)
-    interimResults: true,    // stream partial transcripts (default)
-    maxAlternatives: 1       // number of alternatives (default)
-});
-
-// ── Start listening ───────────────────────────────────
-VR.startListening(recognition, {
-    onStart: function() {
-        // Microphone is open, audio tone plays automatically
-    },
-    onResult: function(result) {
-        // result.final       — committed transcript so far
-        // result.interim     — partial transcript in progress
-        // result.isFinal     — true when the utterance is complete
-        myInput.value = result.isFinal ? result.final : result.interim;
-    },
-    onError: function(errorCode) {
-        // errorCode: 'no-speech' | 'not-allowed' | 'audio-capture'
-        //            | 'network' | 'aborted' | 'language-not-supported'
-        console.warn('Voice error:', errorCode);
-    },
-    onEnd: function(finalTranscript) {
-        // Called when recognition session ends (normally or on error)
-        // finalTranscript — the full committed text
-    }
-});
-
-// ── Stop listening ────────────────────────────────────
-VR.stopListening(recognition);
-
-// ── Audio feedback tones (called automatically by the plugin) ─
-VR.audioFeedback.start();   // high-pitch tone — microphone open
-VR.audioFeedback.end();     // low-pitch tone  — session ended
-VR.audioFeedback.error();   // very low tone   — error occurred
 </code>
-                    </div>
                 </div>
             </div>
 

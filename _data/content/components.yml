@@ -507,12 +507,12 @@
   tags: ["JS", "CSS", "API"]
   url: "/components/date-picker.html"
 
-- title: "Speech Recognition"
+- title: "Voice Input"
   description: "Voice input supporting Arabic and English"
   icon: '<i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>'
   category: "Plugins"
   tags: ["JS", "API"]
-  url: "/components/speech-recognition.html"
+  url: "/components/voice-input.html"
 
 - title: "Weather Widget"
   description: "Live weather display from GPS coordinates"

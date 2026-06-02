@@ -227,9 +227,9 @@
         - label: "Date Picker"
           url: "/components/date-picker"
           href: "/components/date-picker.html"
-        - label: "Speech Recognition"
-          url: "/components/speech-recognition"
-          href: "/components/speech-recognition.html"
+        - label: "Voice Input"
+          url: "/components/voice-input"
+          href: "/components/voice-input.html"
     - label: "UI Shell"
       is_group: true
       children:
