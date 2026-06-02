@@ -352,15 +352,19 @@
 
         // Event attachment
         attachThumbnailEvents() {
-            // Get all thumbnails and store them
+            // Get all thumbnails and store them (drives prev/next index nav)
             this.state.thumbnails = Array.from(document.querySelectorAll('.nds-ipv-thumbnail')).filter(thumb => {
                 return !thumb.closest('code, .code-example');
             });
 
+            // One delegated click instead of a per-thumbnail listener (O(1) wiring).
+            // Gate on the known set so the code-block exclusion and open()'s
+            // indexOf-based currentIndex lookup stay correct.
             const { signal } = this.instanceAbortController;
-            this.state.thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', () => this.open(thumb), { signal });
-            });
+            document.addEventListener('click', (e) => {
+                const thumb = e.target.closest('.nds-ipv-thumbnail');
+                if (thumb && this.state.thumbnails.includes(thumb)) this.open(thumb);
+            }, { signal });
         }
 
         attachControlEvents() {

@@ -688,14 +688,17 @@
             const flipUp = spaceBelow < 400 && spaceAbove > spaceBelow;
             const available = flipUp ? spaceAbove : spaceBelow;
 
+            let clamped = false;
             if (scroll && p.menuRect.height > available) {
                 const chrome = p.menuRect.height - scroll.getBoundingClientRect().height;
                 scroll.style.maxHeight = Math.max(80, available - chrome) + 'px';
+                clamped = true;
             }
 
-            // Re-measure after the max-height clamp so placement uses the
-            // final size.
-            const mr2 = this.menu.getBoundingClientRect();
+            // Re-measure only when the clamp changed the height; otherwise the
+            // menu is unchanged since p.menuRect (no DOM write since), so reuse
+            // it and skip a forced reflow.
+            const mr2 = clamped ? this.menu.getBoundingClientRect() : p.menuRect;
             if (flipUp) {
                 this.dropmenu.setAttribute('data-position-vertical', 'top');
                 this.menu.setAttribute('data-position-vertical', 'top');

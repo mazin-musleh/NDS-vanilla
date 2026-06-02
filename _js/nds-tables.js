@@ -142,14 +142,15 @@
                     this.handleSelectAll(e.target.checked);
                 }, { signal });
 
-                // Individual row checkboxes
-                this.rowCheckboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', () => {
-                        this.updateSelectAllState();
-                        this.updateRowSelectedStates();
-                        this.dispatchSelectionEvent();
-                    }, { signal });
-                });
+                // Individual row checkboxes — one delegated change listener on
+                // tbody instead of a per-row bind (O(1) wiring; change bubbles,
+                // and thead's select-all is handled above so it never reaches here).
+                this.tbody.addEventListener('change', (e) => {
+                    if (!e.target.matches('input[type="checkbox"].nds-check')) return;
+                    this.updateSelectAllState();
+                    this.updateRowSelectedStates();
+                    this.dispatchSelectionEvent();
+                }, { signal });
             }
         }
 
