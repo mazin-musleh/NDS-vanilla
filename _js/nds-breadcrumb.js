@@ -38,19 +38,7 @@
             // Create dropdown container using nds-dropmenu
             const dropdownContainer = this.createDropdown(hiddenItems);
 
-            // Clear and rebuild breadcrumb
-            this.breadcrumb.innerHTML = '';
-
-            // Add first item (Home)
-            this.breadcrumb.appendChild(firstItem);
-
-            // Add dropdown
-            this.breadcrumb.appendChild(dropdownContainer);
-
-            // Add last two items
-            lastTwoItems.forEach(item => {
-                this.breadcrumb.appendChild(item);
-            });
+            this.breadcrumb.replaceChildren(firstItem, dropdownContainer, ...lastTwoItems);
 
             // Initialize only the newly created dropdown menu
             const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
@@ -127,16 +115,11 @@
         });
     }
 
-    // Re-initialize when new content is added
-    function reinitializeBreadcrumbs() {
-        initializeBreadcrumbs();
-    }
-
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         NDS.Breadcrumb = {
             init: initializeBreadcrumbs,
-            reinit: reinitializeBreadcrumbs,
+            reinit: initializeBreadcrumbs,
             create: (nav) => new NDSBreadcrumb(nav)
         };
     }
