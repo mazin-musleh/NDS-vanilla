@@ -55,8 +55,8 @@ direction: ltr
                                         <button class="nds-btn nds-primary nds-full" data-accept-title="Accepted" data-accept-message="Cookies have been accepted">
                                             <span class="nds-label">Accept</span>
                                         </button>
-                                        <button class="nds-btn nds-secondary nds-full" data-decline-title="Declined" data-decline-message="Optional cookies have been declined">
-                                            <span class="nds-label">Decline</span>
+                                        <button class="nds-btn nds-secondary nds-full" data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected">
+                                            <span class="nds-label">Reject Non-Essential</span>
                                         </button>
                                     </div>
                                 </div>
@@ -109,8 +109,8 @@ direction: ltr
       &lt;span class="nds-label"&gt;Accept&lt;/span&gt;
     &lt;/button&gt;
     &lt;button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn"
-      data-decline-title="Declined" data-decline-message="Optional cookies have been declined"&gt;
-      &lt;span class="nds-label"&gt;Decline&lt;/span&gt;
+      data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected"&gt;
+      &lt;span class="nds-label"&gt;Reject Non-Essential&lt;/span&gt;
     &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -197,8 +197,8 @@ direction: ltr
                     <li>Choose <code class="nds-inline-code lang-html">nds-compact</code> for desktop-first products where the bottom banner would cover a fixed footer, chatbot, or data table. The compact card sits above content as a floating dialog rather than a bar</li>
                     <li>Keep the body text to one or two sentences. Lead with the "why", then link to the Terms and Privacy pages for the full policy. Users skim, not read, consent banners</li>
                     <li>Always include both <strong>Terms &amp; Conditions</strong> and <strong>Privacy Policy</strong> links. Regulations in most jurisdictions require them to be reachable at the moment of consent, not only after. The bundled include points to <code class="nds-inline-code lang-html">/terms-and-conditions</code> and <code class="nds-inline-code lang-html">/privacy-policy</code>; override <code class="nds-inline-code lang-html">_includes/cookie-popup.html</code> if your site uses different paths</li>
-                    <li>Wire <strong>Accept</strong> as the primary button and <strong>Decline</strong> as the secondary. This matches user expectation and keeps keyboard focus order predictable</li>
-                    <li>Register your Google Analytics property ID through <code class="nds-inline-code lang-js">window.GA_TRACKING_ID</code> (string or array) or a <code class="nds-inline-code lang-html">data-ga-tracking-id</code> attribute so Decline can set the <code class="nds-inline-code lang-js">ga-disable-&lt;ID&gt;</code> flag. Without a registered ID, Decline still clears the cookies but GA keeps running</li>
+                    <li>Wire <strong>Accept</strong> as the primary button and <strong>Reject Non-Essential</strong> as the secondary. This matches user expectation and keeps keyboard focus order predictable</li>
+                    <li>Register your Google Analytics property ID through <code class="nds-inline-code lang-js">window.GA_TRACKING_ID</code> (string or array) or a <code class="nds-inline-code lang-html">data-ga-tracking-id</code> attribute so <strong>Reject Non-Essential</strong> can set the <code class="nds-inline-code lang-js">ga-disable-&lt;ID&gt;</code> flag. Without a registered ID, the reject action still clears the cookies but GA keeps running</li>
                     <li>Treat the close (<strong>&times;</strong>) button as "decide later", not "decline". It hides the banner for the current page load without writing a consent value, so the popup re-appears on the next visit</li>
                     <li>Do not use this banner as a blocking gate. The page must remain readable and interactive behind it. For mandatory decisions (age gates, payment confirmations) use the <a class="nds-color" href="{{ 'components/modal' | relative_url }}">Modal</a> component with a backdrop instead</li>
                     <li>Do not stack multiple cookie banners on the same page. The component is already included in the site layout, so you do not need to add it to individual pages</li>
@@ -224,8 +224,8 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-accept-title</code></td><td>Set on <code class="nds-inline-code lang-html">#ndsCookiesAcceptBtn</code> to override the toast title shown after Accept. Falls back to a language-aware default (EN: "Accepted", AR: "تم القبول")</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-accept-message</code></td><td>Set on <code class="nds-inline-code lang-html">#ndsCookiesAcceptBtn</code> to override the toast description after Accept</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-decline-title</code></td><td>Set on <code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code> to override the toast title shown after Decline</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-decline-message</code></td><td>Set on <code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code> to override the toast description after Decline</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-decline-title</code></td><td>Set on <code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code> to override the toast title shown after Reject Non-Essential</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-decline-message</code></td><td>Set on <code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code> to override the toast description after Reject Non-Essential</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-ga-tracking-id</code></td><td>Set on any element to register a Google Analytics tracking ID that should be disabled when the user declines. Multiple IDs are supported (one per element)</td></tr>
                     </tbody>
                 </table>
@@ -239,7 +239,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">#ndsCookiesPopup</code></td><td>Root <code class="nds-inline-code lang-html">.nds-cookie-popup</code> container. Target of <code class="nds-inline-code lang-js">NDS.Cookies.show()</code> and the <code class="nds-inline-code lang-html">hidden</code> attribute toggle</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">#ndsCookiesAcceptBtn</code></td><td>Primary Accept button. Also the selector the loader watches to know when to initialize</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code></td><td>Secondary Decline button</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">#ndsCookiesDeclineBtn</code></td><td>Secondary Reject Non-Essential button</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">#ndsCookiesCloseBtn</code></td><td>Close (&times;) button. Dismisses the popup without persisting a consent value</td></tr>
                     </tbody>
                 </table>
@@ -288,7 +288,7 @@ NDS.Cookies.delete('my-preference');
 
 // ── Register a Google Analytics property ID ──────────
 // Set before nds-main.min.js loads (e.g. in &lt;head&gt;).
-// String or array; Decline sets window['ga-disable-&lt;ID&gt;'] = true
+// String or array; Reject Non-Essential sets window['ga-disable-&lt;ID&gt;'] = true
 // for every registered ID and emits gtag('consent', 'update', …).
 window.GA_TRACKING_ID = 'G-XXXXXXXXXX';
 // or

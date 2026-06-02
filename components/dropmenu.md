@@ -795,6 +795,10 @@ direction: ltr
                             <td><code class="nds-inline-code lang-html">data-portal</code></td>
                             <td>Set on the <code class="nds-inline-code lang-html">.nds-dropmenu</code> wrapper to move the menu to <code class="nds-inline-code lang-html">&lt;body&gt;</code> on open. Use only when the menu must escape an ancestor stacking context (a card or modal with <code class="nds-inline-code lang-html">z-index</code>, a transformed wrapper). The portaled menu uses <code class="nds-inline-code lang-html">position: fixed</code> and tracks its trigger on scroll (rAF-throttled) so it stays anchored without closing.</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-anchor-cursor</code></td>
+                            <td>Set on the <code class="nds-inline-code lang-html">.nds-dropmenu</code> wrapper to anchor the menu horizontally to the click position, opening it under the cursor like a context menu. Useful for wide triggers where the default trigger-centered placement feels disconnected from the click. Applies to mouse clicks only: keyboard and programmatic opens fall back to trigger-center.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

@@ -156,7 +156,7 @@ aside.nds-sidemenu
           &lt;/ul&gt;
         &lt;/li&gt;
       &lt;/ul&gt;
-      &lt;button class="nds-show-more nds-btn nds-subtle"&gt;
+      &lt;button class="nds-show-more nds-btn nds-subtle" aria-label="Show more"&gt;
         &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/button&gt;
     &lt;/div&gt;

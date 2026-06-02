@@ -33,16 +33,16 @@ direction: ltr
 footer.nds-footer.nds-content-wrapper
 ├── nav.nds-footer-content
 │   ├── div.nds-footer-column (link column)
-│   │   ├── h3.nds-footer-heading
+│   │   ├── span.nds-footer-heading
 │   │   └── ul.nds-footer-list
 │   │       └── li > a.nds-link.nds-footer-link
 │   └── div.nds-footer-column.nds-footer-icons (merged icons column)
 │       ├── div.nds-footer-icon-group (social)
-│       │   ├── h3.nds-footer-heading
+│       │   ├── span.nds-footer-heading
 │       │   └── div.nds-footer-icon-row
 │       │       └── a.nds-btn.nds-secondary-outline.nds-icon-only
 │       └── div.nds-footer-icon-group (mobile apps)
-│           ├── h3.nds-footer-heading
+│           ├── span.nds-footer-heading
 │           └── div.nds-footer-icon-row
 │               └── a.nds-btn.nds-secondary-outline.nds-xl.nds-icon-only
 │
@@ -101,7 +101,7 @@ footer.nds-footer.nds-content-wrapper
   &lt;nav class="nds-footer-content" aria-label="Footer navigation"&gt;
     &lt;!-- Link column --&gt;
     &lt;div class="nds-footer-column"&gt;
-      &lt;h3 class="nds-footer-heading"&gt;Services&lt;/h3&gt;
+      &lt;span class="nds-footer-heading"&gt;Services&lt;/span&gt;
       &lt;ul class="nds-footer-list"&gt;
         &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/services/individuals"&gt;&lt;span class="nds-label"&gt;Individuals&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
         &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="/services/businesses"&gt;&lt;span class="nds-label"&gt;Businesses&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
@@ -112,7 +112,7 @@ footer.nds-footer.nds-content-wrapper
 
     &lt;!-- Contact column with leading icons --&gt;
     &lt;div class="nds-footer-column"&gt;
-      &lt;h3 class="nds-footer-heading"&gt;Contact Us&lt;/h3&gt;
+      &lt;span class="nds-footer-heading"&gt;Contact Us&lt;/span&gt;
       &lt;ul class="nds-footer-list"&gt;
         &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="#"&gt;&lt;i class="nds-icon nds-hgi-location-01" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;Riyadh, King Fahd Road&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
         &lt;li&gt;&lt;a class="nds-link nds-footer-link" href="tel:920000000"&gt;&lt;i class="nds-icon nds-hgi-headphones" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;920 000 000&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
@@ -168,18 +168,18 @@ footer.nds-footer.nds-content-wrapper
 &lt;!-- Merged icons column with social + mobile-app groups --&gt;
 &lt;div class="nds-footer-column nds-footer-icons"&gt;
   &lt;div class="nds-footer-icon-group"&gt;
-    &lt;h3 class="nds-footer-heading"&gt;Follow Us&lt;/h3&gt;
+    &lt;span class="nds-footer-heading"&gt;Follow Us&lt;/span&gt;
     &lt;div class="nds-footer-icon-row"&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Twitter"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"&gt;
         &lt;i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Facebook"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"&gt;
         &lt;i class="nds-icon nds-hgi-facebook-02" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="YouTube"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube"&gt;
         &lt;i class="nds-icon nds-hgi-youtube" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
-      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="LinkedIn"&gt;
+      &lt;a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"&gt;
         &lt;i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"&gt;&lt;/i&gt;
       &lt;/a&gt;
     &lt;/div&gt;
@@ -217,12 +217,12 @@ footer.nds-footer.nds-content-wrapper
                                     <code class="lang-html code">
 &lt;!-- Mobile-app group (sibling of social inside .nds-footer-icons) --&gt;
 &lt;div class="nds-footer-icon-group"&gt;
-  &lt;h3 class="nds-footer-heading"&gt;Mobile App&lt;/h3&gt;
+  &lt;span class="nds-footer-heading"&gt;Mobile App&lt;/span&gt;
   &lt;div class="nds-footer-icon-row"&gt;
-    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" aria-label="Apple App Store"&gt;
+    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="Apple App Store"&gt;
       &lt;svg&gt;...&lt;/svg&gt;
     &lt;/a&gt;
-    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" aria-label="Google Play Store"&gt;
+    &lt;a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" rel="noopener noreferrer" aria-label="Google Play Store"&gt;
       &lt;svg&gt;...&lt;/svg&gt;
     &lt;/a&gt;
   &lt;/div&gt;
@@ -293,7 +293,7 @@ footer.nds-footer.nds-content-wrapper
     &lt;a href="#"&gt;
       &lt;img src="assets/img/logo.svg" loading="lazy" width="40" height="40" alt="Authority Logo"&gt;
     &lt;/a&gt;
-    &lt;a href="https://www.vision2030.gov.sa/" target="_blank"&gt;
+    &lt;a href="https://www.vision2030.gov.sa/" target="_blank" rel="noopener noreferrer"&gt;
       &lt;img src="assets/img/vision-2030.svg" loading="lazy" width="60" height="40" alt="Saudi Vision 2030"&gt;
     &lt;/a&gt;
   &lt;/div&gt;
