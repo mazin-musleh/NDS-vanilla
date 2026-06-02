@@ -4,6 +4,13 @@ layout: home
 lang: en
 direction: ltr
 exclude_showcase: true
+
+# Bundle sizes shown in the Architecture section (gzipped KB). Update when bundles change:
+#   gzip -c assets/js/nds-main.min.js | wc -c   (and delegated/extras, _site/.../nds.critical.min.css)
+bundle_sizes:
+  critical_css: 6   # nds.critical.min.css
+  core_js: 51       # nds-main.min.js (loads on every page)
+  total_js: 91      # main + delegated + extras (full library, demand-loaded)
 ---
 
 <!-- Implementation Solution -->
@@ -256,7 +263,7 @@ exclude_showcase: true
                         <i class="hgi hgi-stroke hgi-cpu-charge"></i>
                         <span class="nds-label">Smart Component Loader</span>
                     </span>
-                    <p class="nds-item-desc">A single DOM sweep on page load detects which components are present and initializes them in priority order. The rest remain idle with zero runtime cost. Resources are only allocated for what the page actually uses.</p>
+                    <p class="nds-item-desc">A single DOM sweep detects which components a page uses and initializes them in priority tiers: critical ones first to unblock first paint, then the rest on idle. Deferred and page-specific bundles are fetched only when their components are present, so each page downloads and runs only the JavaScript it actually uses.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -275,16 +282,16 @@ exclude_showcase: true
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-zap"></i>
-                        <span class="nds-label">~6 KB Critical CSS (gzipped)</span>
+                        <span class="nds-label">~{{ page.bundle_sizes.critical_css }} KB Critical CSS (gzipped)</span>
                     </span>
                     <p class="nds-item-desc">Critical styles load immediately for instant render. The rest is deferred and loads asynchronously without blocking the page. Styles are split between critical and non-critical at the build level.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-code-circle"></i>
-                        <span class="nds-label">~84 KB Total JS (gzipped)</span>
+                        <span class="nds-label">~{{ page.bundle_sizes.core_js }} KB Core JS (gzipped)</span>
                     </span>
-                    <p class="nds-item-desc">The full component library in a single bundle for better compression, simpler deployment, and minimum requests. Components initialize as needed.</p>
+                    <p class="nds-item-desc">The full library is ~{{ page.bundle_sizes.total_js }} KB gzipped, but it never ships at once. A lean ~{{ page.bundle_sizes.core_js }} KB core loads on every page, while late-safe and page-specific components live in separate bundles the loader fetches only when their markup is present. A typical page runs a fraction of the library.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -329,7 +336,7 @@ exclude_showcase: true
                         <i class="hgi hgi-stroke hgi-code"></i>
                         <span class="nds-label">Modular JavaScript</span>
                     </span>
-                    <p class="nds-item-desc">Vanilla JavaScript with one file per component, controlled by a smart loader. Only active components initialize on each page. A Ruby processor bundles and minifies using <a href="https://terser.org/" target="_blank">Terser</a>.</p>
+                    <p class="nds-item-desc">Vanilla JavaScript with one file per component, controlled by a smart loader. Only active components initialize on each page. A Ruby processor bundles and minifies with <a href="https://terser.org/" target="_blank">Terser</a> into tiered outputs: a lean core plus deferred and page-specific bundles loaded on demand.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
