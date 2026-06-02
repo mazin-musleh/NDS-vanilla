@@ -79,6 +79,24 @@ class JSProcessor
     end
   end
 
+  # Banner version: `git describe` of the LAST commit that touched the CSS/JS
+  # *source* — so the in-file `/*! Version */` moves only when the assets change
+  # (docs/config commits don't bump it), and matches the CSS banner because both
+  # use the same source paths. Mirrors _plugins/asset_ver.rb (keep paths in sync).
+  # Falls back to the config version outside a git repo. Memoized — git runs once.
+  ASSET_SOURCE_PATHS = '_sass assets/css _js _plugins/js_processor.rb _plugins/css_banner_format.rb'
+  def build_version
+    @build_version ||= begin
+      sha = `git log -1 --format=%H -- #{ASSET_SOURCE_PATHS} 2>&1`.strip
+      if $?.success? && !sha.empty?
+        desc = `git describe --tags --always --long #{sha} 2>&1`.strip
+        ($?.success? && !desc.empty?) ? desc.sub(/\Av/, '') : (@config['version'] || '')
+      else
+        @config['version'] || ''
+      end
+    end
+  end
+
   # Logical bundle name from the output filename: 'nds-delegated.min.js' -> 'delegated'.
   def bundle_key(bundle_name)
     bundle_name.sub(/\Ands-/, '').sub(/\.min\.js\z/, '')
@@ -221,7 +239,7 @@ class JSProcessor
 
         # Header comment (no timestamp — keeps git diffs stable on rebuild)
         project_title = @config['title'] || 'National Design System'
-        version = @config['version'] || ''
+        version = build_version
         author_name = @config['author'] || 'Unknown'
         author_profile = @config['author_profile'] || ''
         license = @config['license'] || 'MIT'
@@ -276,7 +294,7 @@ class JSProcessor
 
         # Header comment (no timestamp — keeps git diffs stable on rebuild)
         project_title = @config['title'] || 'National Design System'
-        version = @config['version'] || ''
+        version = build_version
         author_name = @config['author'] || 'Unknown'
         author_profile = @config['author_profile'] || ''
         license = @config['license'] || 'MIT'
