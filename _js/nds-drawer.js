@@ -212,9 +212,7 @@
             const button = li.querySelector(':scope > .nds-btn');
             if (!button) return;
 
-            if (!button.classList.contains('nds-menu-btn')) {
-                button.classList.add('nds-menu-btn');
-            }
+            button.classList.add('nds-menu-btn');
 
             button.addEventListener('click', (e) => {
                 // Don't toggle if drawer is in always-open mode
@@ -281,7 +279,7 @@
     // ==============================================
 
     function initDrawer(drawer) {
-        if (drawer._ndsDrawerInitialized) return;
+        if (drawer.hasAttribute('data-nds-drawer-initialized')) return;
 
         initResponsiveState(drawer);
         initToggles(drawer);
@@ -296,7 +294,7 @@
             drawer._offResize = NDS.onResize(() => handleResize(drawer));
         }
 
-        drawer._ndsDrawerInitialized = true;
+        drawer.setAttribute('data-nds-drawer-initialized', 'true');
     }
 
     function initAllDrawers() {
@@ -321,7 +319,7 @@
 
         // Clean up stored width
         delete drawer._previousWidth;
-        delete drawer._ndsDrawerInitialized;
+        drawer.removeAttribute('data-nds-drawer-initialized');
     }
 
     // ==============================================
