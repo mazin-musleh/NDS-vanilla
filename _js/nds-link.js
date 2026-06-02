@@ -3,8 +3,6 @@
     if (typeof window === 'undefined') return;
     window.NDS = window.NDS || {};
 
-    const NAV_EXCLUSIONS = ''; /* .nds-main-nav, .nds-sidemenu, .nds-footer */
-
     // Image/icon-only links (e.g. `<a><img></a>`, `<a><i class="hgi …"></i></a>`)
     // skip auto-tagging because the trailing badge clashes visually. Authors can
     // still force the badge by adding `nds-external` themselves.
@@ -25,7 +23,6 @@
     function tagExternal(a) {
         if (!a.href || a.hostname === '') return;
         if (a.hostname === location.hostname) return;
-        if (NAV_EXCLUSIONS && a.closest(NAV_EXCLUSIONS)) return;
         if (a.closest('[data-no-external]')) return;
         if (a.classList.contains('nds-btn') && a.classList.contains('nds-icon-only')) return;
         if (!a.classList.contains('nds-external') && isIconOrImageOnly(a)) return;
