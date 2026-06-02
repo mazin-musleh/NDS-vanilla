@@ -63,9 +63,7 @@
         // the live classList on every tick so runtime mutations (e.g. a demo
         // toggle swapping nds-radial-sm for nds-vertical-sm) take effect
         // immediately. A MutationObserver re-triggers apply() when the
-        // breakpoint-scoped classes change. Critical-CSS guard in
-        // _skeleton.scss hides the stepper until the first apply lands
-        // data-layout-ready on the element.
+        // breakpoint-scoped classes change.
         setupResponsiveLayout() {
             const el = this.element;
 
@@ -101,8 +99,6 @@
                 }
                 this.updateProgress();
                 this.syncStepStates();
-
-                el.setAttribute('data-layout-ready', 'true');
             };
 
             this._applyLayout = apply;
@@ -184,11 +180,8 @@
             }
 
             if (this.progressText) {
-                const isRTL = NDS.isRTL;
                 const displayCurrent = Math.min(this.currentStep, this.totalSteps);
-                this.progressText.innerHTML = isRTL ?
-                    `${displayCurrent} / ${this.totalSteps}` :
-                    `${displayCurrent} / ${this.totalSteps}`;
+                this.progressText.textContent = `${displayCurrent} / ${this.totalSteps}`;
             }
         }
 
@@ -314,12 +307,6 @@
 
             const stepper = new NDSStepper(element);
             element.setAttribute('data-initialized', 'true');
-            // Release the critical-CSS visibility guard for every stepper, not
-            // just responsive ones — otherwise a non-responsive stepper that
-            // later gains a breakpoint class (via a runtime toggle) would be
-            // caught by the guard with data-layout-ready still missing, and
-            // would disappear until the page reloads.
-            element.setAttribute('data-layout-ready', 'true');
             element.ndsStepper = stepper;
 
             if (element.id) {

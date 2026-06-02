@@ -21,12 +21,20 @@
             init: () => NDS.Mainnav?.init?.(),
         },
         {
+            // Deferred: the saved theme is stamped pre-paint by the inline FOUC
+            // script (head-inline-scripts.html) and critical-inline CSS paints the
+            // [data-theme="dark"] body/hero bg, so first paint is correct with no JS.
+            // init() only syncs toggle-widget UI (icon/checkbox/aria) and wires the
+            // toggle — no page-color repaint; theme application fires on interaction.
             name: 'Theme',
             selector: '[data-theme-toggle], #ndsThemeToggle',
             init: () => NDS.Theme?.init?.(),
-            critical: true,
         },
         {
+            // Critical: init un-hides [hidden] FOUC-guard form wrappers and reveals
+            // the .nds-clear button on pre-filled fields — first-paint writes that
+            // CLS if deferred (forms have no own skeleton; the content-layout gate
+            // hides them until reveal). Init is cold (no layout reads).
             name: 'Forms',
             selector: '.nds-form-control',
             init: () => NDS.Forms?.init?.(),
@@ -77,12 +85,19 @@
             critical: true,
         },
         {
+            // Critical: steps ship with no data-state; syncStepStates() stamps
+            // current/completed/upcoming at init and CSS turns those into the step
+            // highlight + connector fill (radial display:none's non-current steps).
+            // Deferral paints every step active, then recolors post-reveal = flash/CLS.
             name: 'Stepper',
             selector: '.nds-stepper',
             init: () => NDS.Stepper?.init?.(),
             critical: true,
         },
         {
+            // Critical: the skeleton collapses multi-slide swipers to slide 1
+            // until init writes --slides; deferral would re-expand the track
+            // post-reveal (CLS). Hero swipers are above-the-fold LCP.
             name: 'Swiper',
             selector: '.nds-swiper',
             init: () => NDS.Swiper?.init?.(),
@@ -102,12 +117,20 @@
             init: () => NDS.VoiceInput?.init?.(),
         },
         {
+            // Critical: init un-hides the [hidden] mobile toggle and fills its
+            // collapsed label from the server-rendered active item. Deferral = toggle
+            // CLS + a hidden nav affordance until the idle pass.
             name: 'Sidemenu',
             selector: '.nds-sidemenu',
             init: () => NDS.Sidemenu?.init?.(),
             critical: true,
         },
         {
+            // Critical: the hero-aside variant paints the panel at a -180px
+            // placeholder (--nds-sideinfo-top fallback); init's first updatePosition
+            // writes the measured hero-head offset. Deferral lands that correction
+            // post-reveal = vertical jump of an above-the-fold aside (CLS). Cold-init
+            // (first measure rides the onElementResize initial callback).
             name: 'Sideinfo',
             selector: '.nds-sideinfo',
             init: () => NDS.Sideinfo?.init?.(),
@@ -137,6 +160,12 @@
             critical: true,
         },
         {
+            // Critical: the overflow affordance (has-more edge-mask + sticky
+            // show-more button) is applied via the onElementResize initial
+            // callback, which the critical pass front-loads. Deferral would pop
+            // it in post-reveal (CLS) for above-the-fold overflow content (e.g.
+            // tab bars in nds-tabs). Init is cold — no synchronous layout reads
+            // (the first measure runs in the ResizeObserver callback).
             name: 'ScrollMore',
             selector: '.nds-scroll-more',
             init: () => NDS.ScrollMore?.init?.(),
@@ -220,12 +249,21 @@
             init: () => NDS.Rating?.init?.(),
         },
         {
+            // Deferred: the collapsed clamp is pure CSS (_utilities.scss base
+            // max-height/overflow, server-rendered + in main), so the box paints
+            // correctly with no JS. init() is registration-only; the height read +
+            // "show more" button + 'expandable' stamp run from the ResizeObserver's
+            // first delivery (post-reveal in either tier) and are layout-neutral
+            // (absolute button + paint-only mask) — no expand↔collapse height swap.
             name: 'Expandable',
             selector: '.nds-expandable',
             init: () => NDS.Expandable?.init?.(),
-            critical: true,
         },
         {
+            // Critical: server renders all crumbs; init() collapses 6+ into an
+            // ellipsis dropdown via replaceChildren (horizontal restructure, no layout
+            // reads). Deferral paints the full breadcrumb, then collapses it
+            // post-reveal = horizontal CLS. Skeleton reserves only row height.
             name: 'Breadcrumb',
             selector: '.nds-breadcrumb-nav',
             init: () => NDS.Breadcrumb?.init?.(),
@@ -242,6 +280,10 @@
             init: () => NDS.Tooltip?.init?.(),
         },
         {
+            // Critical: pre-selected chips are JS-built at init (server markup
+            // ships the chip track empty) and grow the field height, which has
+            // no reserved space in CSS — deferral would inject them post-reveal
+            // (CLS). The empty case is stable, but registration can't know which.
             name: 'Multiselect',
             selector: '.nds-multiselect',
             init: () => NDS.Multiselect?.init?.(),
@@ -304,6 +346,8 @@
             init: () => NDS.Chart?.init?.(),
         },
         {
+            // Critical: init() BUILDS the placeholder DOM (icon + message) into empty
+            // containers — it isn't server-rendered. Deferral injects it post-reveal = CLS.
             name: 'Empty',
             selector: '.nds-empty',
             init: () => NDS.Empty?.init?.(),

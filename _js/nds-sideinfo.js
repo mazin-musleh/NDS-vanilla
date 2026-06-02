@@ -24,11 +24,9 @@
             // it after a viewport/content change makes it fit again.
             this.wantsSticky = element.classList.contains('nds-sticky');
 
-            if (!this.sectionHead) {
-                console.warn('NDS Sideinfo: .nds-hero-section .nds-section-head not found');
-                return;
-            }
-
+            // A sideinfo without a hero is a valid plain sticky-aside config — it
+            // skips the hero-alignment offset but still gets sticky-fit + resize
+            // wiring (init guards the hero-only observer). Only the parent is required.
             if (!this.sideInfoParent) {
                 console.warn('NDS Sideinfo: parent element not found');
                 return;
@@ -44,7 +42,7 @@
             // updateStickyState — each post-layout, so the rect and
             // getComputedStyle reads are free. Running them here would force a
             // synchronous reflow during the component-init burst.
-            this.setupHeroResize();
+            if (this.sectionHead) this.setupHeroResize();
             this.setupResize();
             this.setupContentResize();
             this.setupLateRecompute();
@@ -69,6 +67,9 @@
                 this.sideInfo.style.removeProperty('--nds-sideinfo-top');
                 return;
             }
+            // No cached hero head (sideinfo built before a hero existed) — nothing
+            // to align against; leave the placeholder offset in place.
+            if (!this.sectionHead) return;
 
             // Early return for mobile/tablet with reset
             if (!window.matchMedia(NDS.breakpoints.desktop).matches) {
