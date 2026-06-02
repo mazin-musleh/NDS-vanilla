@@ -699,32 +699,11 @@
     // ==============================================
     // PUBLIC TOGGLE FUNCTIONS
     // ==============================================
-    function toggleDropdown(event) {
-        event.preventDefault();
-        const dd = event.target.closest('.nds-dropdown');
-        if (!dd) return;
-
-        const isOpen = hasState(dd, 'open');
-        const { animTarget, isInMinimal, isInPrimary } = getDropdownAnimTarget(dd);
-        const duration = state.getDuration(animTarget);
-
-        if (state.isAnimating) { animate.queue('dropdown', event); return; }
-        cancelToggleAction();
-
-        if (isOpen) {
-            dropdown.toggle(dd, false);
-            if (isInPrimary && hasState(DOM.collapse, 'open')) afterDelay(duration, updatePositions);
-            return;
-        }
-
-        const closeDelay = dropdown.closeAll(dd);
-
-        const open = () => {
-            if (animate._activeCount === 0) state.isAnimating = false;
-            dropdown.toggle(dd, true);
-            if (isInPrimary && hasState(DOM.collapse, 'open')) afterDelay(duration * 0.1, updatePositions);
-        };
-
+    // Routes an open-dropdown action to one of three cascade modes:
+    //   1. minimal+isInMinimal: close-drawer / close-dga first, then open
+    //   2. desktop+dga-open:    close-dga first, then schedule open
+    //   3. default:             schedule open after the closeAll settles
+    function _scheduleDropdownOpen(duration, isInMinimal, closeDelay, open) {
         if (isInMinimal && state.isMinimal) {
             let delay = 0;
 
@@ -757,6 +736,35 @@
         } else {
             scheduleToggleAction(closeDelay, open);
         }
+    }
+
+    function toggleDropdown(event) {
+        event.preventDefault();
+        const dd = event.target.closest('.nds-dropdown');
+        if (!dd) return;
+
+        const isOpen = hasState(dd, 'open');
+        const { animTarget, isInMinimal, isInPrimary } = getDropdownAnimTarget(dd);
+        const duration = state.getDuration(animTarget);
+
+        if (state.isAnimating) { animate.queue('dropdown', event); return; }
+        cancelToggleAction();
+
+        if (isOpen) {
+            dropdown.toggle(dd, false);
+            if (isInPrimary && hasState(DOM.collapse, 'open')) afterDelay(duration, updatePositions);
+            return;
+        }
+
+        const closeDelay = dropdown.closeAll(dd);
+
+        const open = () => {
+            if (animate._activeCount === 0) state.isAnimating = false;
+            dropdown.toggle(dd, true);
+            if (isInPrimary && hasState(DOM.collapse, 'open')) afterDelay(duration * 0.1, updatePositions);
+        };
+
+        _scheduleDropdownOpen(duration, isInMinimal, closeDelay, open);
     }
 
     function toggleNavbar() {
@@ -908,15 +916,7 @@
     // ==============================================
     // INTERACTIONS SETUP
     // ==============================================
-    function setupInteractions() {
-        if (!DOM.primary) return;
-
-        // Scope all listeners attached in this function to a single AbortController
-        // so teardown can detach them atomically if setupInteractions is ever re-run.
-        const _interactionsAbortController = new AbortController();
-        const _interactionsSignal = _interactionsAbortController.signal;
-
-        // Show More button
+    function _bindShowMore(signal) {
         const clickTarget = DOM.collapseContent || DOM.primary;
         clickTarget.addEventListener('click', (e) => {
             const showMore = e.target.closest('.nds-nav-item.nds-show-more');
@@ -943,23 +943,25 @@
             if (!('onscrollend' in DOM.primary)) {
                 setTimeout(() => overflow.checkEnd(), 300);
             }
-        }, { signal: _interactionsSignal });
+        }, { signal });
+    }
 
-        // Scroll handling
+    function _bindScrollTracking(signal) {
         const onScroll = NDS.rafThrottle(() => {
             if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
             overflow.checkEnd();
         });
-        DOM.primary.addEventListener('scroll', onScroll, { passive: true, signal: _interactionsSignal });
+        DOM.primary.addEventListener('scroll', onScroll, { passive: true, signal });
 
         if ('onscrollend' in DOM.primary) {
             DOM.primary.addEventListener('scrollend', () => {
                 if (state.isMinimal && !hasState(DOM.collapse, 'open')) return;
                 requestAnimationFrame(() => overflow.checkEnd());
-            }, { signal: _interactionsSignal });
+            }, { signal });
         }
+    }
 
-        // Wheel scroll conversion (vertical → horizontal)
+    function _bindWheelConversion(signal) {
         DOM.primary.style.scrollBehavior = 'smooth';
         let scrolling = false;
 
@@ -987,9 +989,10 @@
                 else { scrolling = false; DOM.primary.style.scrollBehavior = 'smooth'; }
             };
             requestAnimationFrame(step);
-        }, { passive: false, signal: _interactionsSignal });
+        }, { passive: false, signal });
+    }
 
-        // Drag scrolling
+    function _bindDragScroll(signal) {
         let drag = { active: false, startX: 0, scrollLeft: 0 };
 
         const dragUp = () => {
@@ -1012,24 +1015,41 @@
             e.preventDefault();
             document.addEventListener('mousemove', dragMove);
             document.addEventListener('mouseup', dragUp);
-        }, { signal: _interactionsSignal });
+        }, { signal });
+    }
 
-        // Dropdown hover tracking — single delegated pair on DOM.nav.
-        // mouseover/mouseout bubble (mouseenter/mouseleave do not), so we filter
-        // via closest. The relatedTarget guard ignores intra-menu transitions
-        // and menu-to-sibling-menu moves (state stays correct without flicker).
-        // Replaces N×2 per-menu listeners + a debounced onDOMAdd/onDOMRemove
-        // re-scan that ran on every nav-tree mutation.
+    // Dropdown hover tracking — single delegated pair on DOM.nav.
+    // mouseover/mouseout bubble (mouseenter/mouseleave do not), so we filter
+    // via closest. The relatedTarget guard ignores intra-menu transitions
+    // and menu-to-sibling-menu moves (state stays correct without flicker).
+    // Replaces N×2 per-menu listeners + a debounced onDOMAdd/onDOMRemove
+    // re-scan that ran on every nav-tree mutation.
+    function _bindHoverTracking(signal) {
         DOM.nav.addEventListener('mouseover', (e) => {
             if (!e.target.closest('.nds-dropdown-menu')) return;
             if (e.relatedTarget?.closest?.('.nds-dropdown-menu')) return;
             state.isMouseOverDropdown = true;
-        }, { signal: _interactionsSignal });
+        }, { signal });
         DOM.nav.addEventListener('mouseout', (e) => {
             if (!e.target.closest('.nds-dropdown-menu')) return;
             if (e.relatedTarget?.closest?.('.nds-dropdown-menu')) return;
             state.isMouseOverDropdown = false;
-        }, { signal: _interactionsSignal });
+        }, { signal });
+    }
+
+    function setupInteractions() {
+        if (!DOM.primary) return;
+
+        // Scope all listeners attached in this function to a single AbortController
+        // so teardown can detach them atomically if setupInteractions is ever re-run.
+        const _interactionsAbortController = new AbortController();
+        const { signal } = _interactionsAbortController;
+
+        _bindShowMore(signal);
+        _bindScrollTracking(signal);
+        _bindWheelConversion(signal);
+        _bindDragScroll(signal);
+        _bindHoverTracking(signal);
     }
 
     // All document/window/element listeners attached in setupEventListeners +
@@ -1041,19 +1061,9 @@
     let _eventsAbortController = null;
     let _offResize = null;
     const _offElementResizes = [];
-    let _initialized = false;
+    let _initDone = false;
 
-    function setupEventListeners() {
-        // Abort prior subscriptions so a re-run doesn't stack listeners.
-        if (_eventsAbortController) _eventsAbortController.abort();
-        _eventsAbortController = new AbortController();
-        const { signal } = _eventsAbortController;
-
-        if (_offResize) { _offResize(); _offResize = null; }
-        _offResize = NDS.onResize(() => { state.invalidateCache(); scheduleUpdate(); });
-
-        _offElementResizes.splice(0).forEach(off => off());
-
+    function _bindGlobalEvents(signal) {
         window.addEventListener('orientationchange', () => {
             state.invalidateCache();
             setTimeout(scheduleUpdate, 150);
@@ -1110,7 +1120,9 @@
         DOM.collapse?.addEventListener('transitionend', (e) => {
             if (e.target === DOM.collapse && e.propertyName === 'height') scheduleUpdate();
         }, { signal });
+    }
 
+    function _bindMutationAndResizeObservers() {
         // mainnav is a singleton so the init-guard below prevents duplicate
         // registrations; that's why the unsubscribe handles NDS.onDOMAdd /
         // onDOMRemove now return aren't captured here.
@@ -1154,6 +1166,21 @@
         });
     }
 
+    function setupEventListeners() {
+        // Abort prior subscriptions so a re-run doesn't stack listeners.
+        if (_eventsAbortController) _eventsAbortController.abort();
+        _eventsAbortController = new AbortController();
+        const { signal } = _eventsAbortController;
+
+        if (_offResize) { _offResize(); _offResize = null; }
+        _offResize = NDS.onResize(() => { state.invalidateCache(); scheduleUpdate(); });
+
+        _offElementResizes.splice(0).forEach(off => off());
+
+        _bindGlobalEvents(signal);
+        _bindMutationAndResizeObservers();
+    }
+
     // ==============================================
     // INITIALIZATION
     // ==============================================
@@ -1161,8 +1188,8 @@
         // Entry guard: mainnav is a singleton; a second init() call would stack
         // pooled subscribers because the unsubscribe handles from
         // NDS.onDOMAdd / onDOMRemove aren't captured (see setupEventListeners).
-        if (_initialized || !DOM.collapse) return;
-        _initialized = true;
+        if (_initDone || !DOM.collapse) return;
+        _initDone = true;
 
         // updateBodyClass calls managePABPlacement when the state transitions;
         // only run the explicit pass when it didn't, otherwise PAB placement
