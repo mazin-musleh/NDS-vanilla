@@ -1564,6 +1564,153 @@ direction: ltr
   </div>
 </section>
 
+<!-- Native Select -->
+<section id="nativeSelect" class="nds-content-section nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Native Select</h2>
+      <p class="nds-section-description">Standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> element wrapped in the form container for native mobile picker behavior</p>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-showcase">
+        <div class="nds-demo-card" data-code-rebuild>
+          <div class="demo-header">
+            <div class="demo-action">
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">State</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formState"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["data-required", ".nds-form-container", "formState", "attr"]'>
+                      <span class="nds-label">Required</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["disabled", ".nds-form-container", "formState", "data-state"]'>
+                      <span class="nds-label">Disabled</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">Style</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Default</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-lighter", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled lighter</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-darker", ".nds-form-container", "formStyle"]'>
+                      <span class="nds-label">Filled darker</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="nds-dropmenu demo-toggle-menu">
+                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                  <span class="nds-label">LG</span>
+                </button>
+                <div class="nds-dropmenu-menu" hidden>
+                  <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                      data-toggler='["nds-lg", ".nds-form-container", "formSize"]'>
+                      <span class="nds-label">LG</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                      data-toggler='["nds-md", ".nds-form-container", "formSize"]'>
+                      <span class="nds-label">MD</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button class="nds-btn nds-subtle demo-toggle-btn"
+                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                <span class="nds-label">Remove bg</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container nds-select">
+                <div class="nds-form-header">
+                  <label for="demo-nativeSelect">
+                    <span class="nds-label">Region</span>
+                  </label>
+                </div>
+                <div class="nds-form-control">
+                  <select id="demo-nativeSelect" name="region" class="nds-input">
+                    <option value="" disabled selected>Choose an option...</option>
+                    <option value="riyadh">Riyadh</option>
+                    <option value="makkah">Makkah</option>
+                    <option value="eastern">Eastern Province</option>
+                    <option value="asir">Asir</option>
+                  </select>
+                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    aria-controls="panel-nativeSelect-1" id="tab-nativeSelect-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-nativeSelect-1"
+                  aria-labelledby="tab-nativeSelect-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
+&lt;div class="nds-form-container nds-select"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="native-select-1"&gt;
+      &lt;span class="nds-label"&gt;Region&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;select id="native-select-1" name="region" class="nds-input"&gt;
+      &lt;option value="" disabled selected&gt;Choose an option...&lt;/option&gt;
+      &lt;option value="riyadh"&gt;Riyadh&lt;/option&gt;
+      &lt;option value="makkah"&gt;Makkah&lt;/option&gt;
+      &lt;option value="eastern"&gt;Eastern Province&lt;/option&gt;
+      &lt;option value="asir"&gt;Asir&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
+                    </code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Form Status API -->
 <section id="formStatusApi" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
@@ -1906,7 +2053,7 @@ NDS.Forms.clearStatus(container);</code>
         <ul>
           <li>Use form inputs for any data collection scenario: registration flows, search interfaces, settings pages, and inline editing. Every input type shares the same container structure, so switching between text, email, password, or select requires minimal markup changes.</li>
           <li>Use <code class="nds-inline-code lang-html">nds-search-input</code> for search fields where voice input and automatic clear actions improve discoverability. The search variant includes a leading icon and optional microphone button out of the box.</li>
-          <li>Use the custom select dropdown (<code class="nds-inline-code lang-html">nds-select</code>) when you need styled option lists that match the design system. For native mobile select behavior, use a standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> element instead.</li>
+          <li>Use the custom select dropdown (<code class="nds-inline-code lang-html">nds-select</code>) for styled option lists that match the design system — it ships with keyboard navigation and a hidden input so it submits with the form. For native mobile picker behavior, wrap a standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> in the same <code class="nds-inline-code lang-html">nds-form-container nds-select</code> shell as shown in the Native Select demo.</li>
           <li>Do not use form inputs for binary choices or toggles. Use <a href="{{ 'components/switch' | relative_url }}" class="nds-color">switches</a> for instant on/off toggles, <a href="{{ 'components/checkbox' | relative_url }}" class="nds-color">checkboxes</a> for multiple selections, or <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> for single selection from a set.</li>
           <li>Do not use plain text inputs for specialized data types. Use <a href="{{ 'components/date-picker' | relative_url }}" class="nds-color">date picker</a> for dates, <a href="{{ 'components/otp' | relative_url }}" class="nds-color">OTP input</a> for verification codes, and <a href="{{ 'components/autocomplete' | relative_url }}" class="nds-color">autocomplete</a> for search-as-you-type with remote data.</li>
           <li>Choose <code class="nds-inline-code lang-html">nds-lg</code> (default) for standalone forms and primary data entry. Use <code class="nds-inline-code lang-html">nds-md</code> for compact layouts like table filters, inline editing, or sidebars where space is limited.</li>

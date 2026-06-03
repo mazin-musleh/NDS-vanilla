@@ -346,6 +346,22 @@ fieldset {
             cursor: pointer;
             width: 100%;
             height: 100%;
+            background-color: transparent;
+            border: 0px;
+            outline: 0px;
+            color: var(--form-field-text-focused);
+            // Leave room for the wrapper's ::after caret so the selected
+            // value doesn't slide under it.
+            padding-inline-end: calc(var(--spacing-md) + 20px);
+
+            // The option popup is OS-rendered and ignores most CSS, but
+            // background/color on <option> are honoured in current
+            // Chromium/Firefox — pin them to form tokens so the menu
+            // doesn't flash white in dark mode.
+            >option {
+                background-color: var(--form-field-background-default);
+                color: var(--form-field-text-focused);
+            }
         }
 
         &::after {
