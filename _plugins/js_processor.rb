@@ -180,6 +180,89 @@ class JSProcessor
           "\n  Fix: drop `critical: true` from their entry in _js/nds-loader.js (so they default to deferred), or move their file back to nds-main.min.js.")
   end
 
+  # Extract the `__deferred: [...]` declaration from a split half: the explicit
+  # list of methods the shell must trap. Returns [] when absent (the trap-coverage
+  # check will then flag the half itself).
+  def half_deferred_methods(half_file)
+    path = File.join(@source_dir, half_file)
+    return [] unless File.exist?(path)
+    region = File.read(path)[/__deferred:\s*\[([^\]]*)\]/m, 1]
+    return [] unless region
+    region.scan(/'([^']+)'|"([^"]+)"/).flatten.compact.uniq
+  end
+
+  # Extract every `_deferBehavior('name', ...)` call site from a split shell: the
+  # set of method names the shell promises to trap.
+  def shell_trapped_methods(shell_file)
+    path = File.join(@source_dir, shell_file)
+    return [] unless File.exist?(path)
+    File.read(path).scan(/_deferBehavior\(\s*['"]([^'"]+)['"]/).flatten.uniq
+  end
+
+  # Build guard: for every split pair, the shell's _deferBehavior trap set must
+  # match the half's __deferred declaration. Catches the two failure modes:
+  #   - half exposes a method with no shell trap → callers hit TypeError until the
+  #     half loads (silent in tests if the bundle is already in flight)
+  #   - shell traps a name the half never implements → silent no-op forever
+  # Both fail the build instead of waiting for a prod report.
+  def assert_trap_coverage!
+    pairs = split_pairs
+    return if pairs.empty?
+
+    errors = []
+    pairs.each do |p|
+      declared = half_deferred_methods(p[:half])
+      trapped = shell_trapped_methods(p[:shell])
+
+      if declared.empty?
+        errors << "#{p[:half]} must declare an `__deferred: [...]` list of shell-trapped method names (returned alongside the methods)"
+        next
+      end
+
+      missing_traps = declared - trapped
+      orphan_traps = trapped - declared
+
+      missing_traps.each do |m|
+        errors << "#{p[:shell]} is missing a trap for `#{m}` declared in #{p[:half]} (add a method that calls `this._deferBehavior('#{m}', arguments)` or the closure-scoped equivalent)"
+      end
+      orphan_traps.each do |m|
+        errors << "#{p[:shell]} traps `#{m}` but #{p[:half]} does not list it in `__deferred` (orphan trap — either remove it or add the method to the half)"
+      end
+    end
+    return if errors.empty?
+
+    abort("[js_processor] BUILD FAILED — split trap coverage mismatch:\n  " + errors.join("\n  "))
+  end
+
+  # Build guard: split files keep their canonical SPLIT COMPONENT banner near the
+  # top of the file. A maintainer who strips the header during a refactor loses
+  # the most visible signal that a boundary exists; this assert catches the drift.
+  SPLIT_HEADER_SHELL = 'SPLIT COMPONENT — EAGER SHELL'
+  SPLIT_HEADER_HALF  = 'SPLIT COMPONENT — LAZY BEHAVIOR HALF'
+  def assert_split_headers!
+    pairs = split_pairs
+    return if pairs.empty?
+
+    errors = []
+    pairs.each do |p|
+      shell_path = File.join(@source_dir, p[:shell])
+      half_path  = File.join(@source_dir, p[:half])
+
+      if File.exist?(shell_path)
+        head = File.read(shell_path).lines.first(30).join
+        errors << "#{p[:shell]} is missing the `#{SPLIT_HEADER_SHELL}` header banner in the first 30 lines" unless head.include?(SPLIT_HEADER_SHELL)
+      end
+
+      if File.exist?(half_path)
+        head = File.read(half_path).lines.first(30).join
+        errors << "#{p[:half]} is missing the `#{SPLIT_HEADER_HALF}` header banner in the first 30 lines" unless head.include?(SPLIT_HEADER_HALF)
+      end
+    end
+    return if errors.empty?
+
+    abort("[js_processor] BUILD FAILED — split header banner missing:\n  " + errors.join("\n  "))
+  end
+
   # Build guard for split components: a `nds-X__delegated.js` behavior half is only
   # valid when its eager shell ships in main, owns a real registry namespace, and
   # the half attaches via _installBehavior rather than redefining NDS.X.
@@ -261,6 +344,8 @@ class JSProcessor
     # Fail fast if location (build) contradicts classification (registry).
     assert_no_critical_in_injected!
     assert_splits_valid!
+    assert_trap_coverage!
+    assert_split_headers!
 
     # Check if any changed files are part of bundles
     bundles_to_process = []

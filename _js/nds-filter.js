@@ -310,21 +310,32 @@
         // loading state, queues, and replays once behavior installs.
         handleAjaxSubmit() {
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
-            this._deferBehavior('handleAjaxSubmit', arguments);
+            return this._deferBehavior('handleAjaxSubmit', arguments);
         }
 
         // Split-behavior bridge: queue a deferred-half call + kick its bundle load;
-        // the queue replays in order once NDS.Filter._installBehavior attaches.
+        // returns a promise resolving with the real method's return value once the
+        // half attaches and the queue replays. Replay is error-safe — a throw on
+        // one entry rejects only that promise; siblings still run.
         _deferBehavior(name, args) {
-            (this._pendingBehavior || (this._pendingBehavior = [])).push({ name, args });
-            NDS.loadSplit('Filter');
+            return new Promise((resolve, reject) => {
+                (this._pendingBehavior || (this._pendingBehavior = [])).push({ name, args, resolve, reject });
+                NDS.loadSplit('Filter');
+            });
         }
 
         _flushPendingBehavior() {
             const q = this._pendingBehavior;
             if (!q) return;
             this._pendingBehavior = null;
-            for (const c of q) this[c.name].apply(this, c.args);
+            for (const c of q) {
+                try {
+                    c.resolve(this[c.name].apply(this, c.args));
+                } catch (e) {
+                    console.warn(`[NDS] Filter split replay failed for ${c.name}:`, e);
+                    c.reject(e);
+                }
+            }
         }
 
         /**
@@ -2166,7 +2177,9 @@
             _installBehavior: (factory) => {
                 if (NDSFilter._behaviorInstalled) return;
                 NDSFilter._behaviorInstalled = true;
-                Object.assign(NDSFilter.prototype, factory(NDSFilter));
+                const spec = factory(NDSFilter);
+                delete spec.__deferred; // build-only contract; never grafted
+                Object.assign(NDSFilter.prototype, spec);
                 _instancesByTarget.forEach((inst) => inst._flushPendingBehavior());
             },
 

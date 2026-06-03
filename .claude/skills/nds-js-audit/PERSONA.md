@@ -306,6 +306,111 @@ Flag any `this.handlers.<key> = fn` pattern in a file where the component does N
 
 ---
 
+### 7. Split-component contract
+
+**Canonical**
+
+A split component is the pair `nds-X.js` (eager shell, ships in `nds-main.min.js`) + `nds-X__delegated.js` (lazy behavior half, ships in `nds-delegated.min.js`). The contract has six structural pieces — all six are required for any split:
+
+```js
+// SHELL — nds-X.js
+// Trap: returns a promise resolving with the real method's return value once
+// the half attaches and replay runs. The `return` is load-bearing — without
+// it, await Instance.method() resolves to undefined.
+handleAjaxSubmit() {
+    if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
+    return this._deferBehavior('handleAjaxSubmit', arguments);
+}
+
+_deferBehavior(name, args) {
+    return new Promise((resolve, reject) => {
+        (this._pendingBehavior || (this._pendingBehavior = [])).push({ name, args, resolve, reject });
+        NDS.loadSplit('X');
+    });
+}
+
+// Per-entry try/catch: one throw rejects only that promise, siblings still run.
+_flushPendingBehavior() {
+    const q = this._pendingBehavior;
+    if (!q) return;
+    this._pendingBehavior = null;
+    for (const c of q) {
+        try {
+            c.resolve(this[c.name].apply(this, c.args));
+        } catch (e) {
+            console.warn(`[NDS] X split replay failed for ${c.name}:`, e);
+            c.reject(e);
+        }
+    }
+}
+
+// Install: strip __deferred (build-only contract) before grafting.
+_installBehavior: (factory) => {
+    if (NDSX._behaviorInstalled) return;
+    NDSX._behaviorInstalled = true;
+    const spec = factory(NDSX);
+    delete spec.__deferred;
+    Object.assign(NDSX.prototype, spec);
+    _instances.forEach((inst) => inst._flushPendingBehavior());
+}
+
+// HALF — nds-X__delegated.js
+// __deferred lists every shell-trapped method name (assert_trap_coverage!
+// matches both directions).
+NDS.X._installBehavior(function (NDSX) {
+    return {
+        __deferred: ['handleAjaxSubmit'],
+        handleAjaxSubmit() { /* real fn */ },
+        _privateHelper() { /* not trapped — no __deferred entry needed */ },
+    };
+});
+```
+
+Six pieces:
+
+1. **Banner.** Each file opens within its first 30 lines with `// SPLIT COMPONENT — EAGER SHELL` (shell) / `// SPLIT COMPONENT — LAZY BEHAVIOR HALF` (half).
+2. **Trap shape.** Every method name the half lists in `__deferred` has a matching method in the shell whose body uses `return this._deferBehavior('<name>', arguments)` (class-based) or `return _deferBehavior('<name>', arguments)` (IIFE-singleton). The `return` is part of the contract.
+3. **Promise-returning `_deferBehavior`.** Returns `new Promise((resolve, reject) => { queue.push({ name, args, resolve, reject }); NDS.loadSplit('<X>'); })`.
+4. **Error-safe `_flushPendingBehavior`.** Loops with per-entry `try { c.resolve(...) } catch (e) { console.warn(...); c.reject(e) }`. A bare loop without try/catch is a contract break.
+5. **`__deferred` array in the half's factory return.** Names every shell-trapped method. `_installBehavior` strips it before `Object.assign`.
+6. **`_installBehavior` with explicit strip.** `const spec = factory(...); delete spec.__deferred; Object.assign(target, spec);` plus an idempotency guard (`if (_behaviorInstalled) return;`) and a replay invocation.
+
+**Discriminator** (mechanically checkable): file pair `nds-X.js` + `nds-X__delegated.js` exists in `_js/`, AND either file contains `_installBehavior` or `_deferBehavior`. A lone `nds-X.js` with no half partner is not a split — it's a regular component.
+
+**Why this canonical (principle)**
+
+A critical component that owns first paint can't simply be wholesale-deferred — the shell must ship eagerly. But its post-init behavior cluster (AJAX, animation, interaction binders) is often the bulk of its bytes and never runs at first paint. The split lets the shell stay lean on the reveal path while the cluster rides the post-reveal delegated bundle. The six structural pieces exist to make that boundary safe in the gap window between reveal and half-attach: traps preserve eager click semantics (preventDefault, "loading" UX); the promise return lets callers `await` across the gap; per-entry error-safe replay prevents one bad call from breaking the rest of the queue; `__deferred` + build asserts catch missing or orphan traps before prod.
+
+**Why not the alternatives**
+
+- **Wholesale-defer (no shell)** — only works when first paint is correct with JS deleted (the Accordion pattern). A critical component that fails that test must split or stay in main.
+- **Trap without queue+replay** — a click in the gap window no-ops silently. Acceptable for a deferred component (Tabs/Tables pattern, recovers on the next click) but unacceptable for a primary interaction.
+- **Free-form `_deferBehavior` (pre-2026-06-03 shape)** — non-promise return, no per-entry error guard, no `__deferred` array. The build couldn't verify trap coverage, callers couldn't await across the gap, and a throwing replay dropped subsequent queued calls. The current shape exists precisely to close those gaps.
+- **`Object.assign(target, factory(...))` without stripping `__deferred`** — leaks the build-only contract array onto the prototype/dispatch, where it then appears as a public property. Harmless but noisy.
+
+**Carve-outs (NOT divergence)**
+
+- **Class-based vs. IIFE-singleton shape.** Filter is class-based (`_deferBehavior` on the prototype, traps use `this.*`, `_installBehavior` grafts onto `NDSFilter.prototype`). Mainnav is IIFE-singleton (`_deferBehavior` in closure scope, traps live on a shared `behavior` dispatch object, `_installBehavior` Object.assigns over the dispatch and the half receives a `ctx` object holding the shell's closed-over bindings). Both are canonical for their structural shape — pick the one that matches the component's existing class/singleton nature; don't force conversion.
+- **Half-private helpers don't need `__deferred` entries.** The factory returns both public methods (reached by shell traps) and private helpers (called only from within the half). Only the public surface goes into `__deferred`. Filter's `_buildAjaxRequest` / `_parseAjaxResponse` / `_applyAjaxResponse` etc. are private helpers; only `handleAjaxSubmit` is declared.
+- **Guarded-direct traps** (Mainnav's `handleDocumentClick`, `closeAll`) conditionally defer based on a shell-side guard (`if (_anyOpen()) return _deferBehavior(...)`). Still canonical — the guard is part of the trap's body, and the `return` still flows through. The condition is fine; what matters is that when `_deferBehavior` IS called, its promise return is propagated.
+
+**Audit behavior**
+
+For each `_js/` file matching the discriminator pair:
+
+1. Verify the banner appears in the first 30 lines of both files. (`assert_split_headers!` also checks; flag locally for co-located fix.)
+2. Parse `__deferred: [...]` from the half's factory return. Parse every `_deferBehavior('<name>'` call from the shell. Both sets must match exactly. (`assert_trap_coverage!` also checks; flag locally.)
+3. For each shell trap method (one whose body calls `_deferBehavior(...)`), verify the body uses `return _deferBehavior(...)` (or `return this._deferBehavior(...)`). A bare statement without `return` is a finding — silently drops the promise.
+4. Verify `_flushPendingBehavior` wraps each queued call in `try/catch` and that the catch path calls both `console.warn` and `c.reject`. A bare loop (`for (const c of q) this[c.name](...)`) is a finding.
+5. Verify `_installBehavior` deletes `__deferred` from the factory's return before `Object.assign`. Missing `delete spec.__deferred` (or equivalent) is a finding.
+6. Verify the half does NOT reassign `NDS.X` anywhere. A `NDS.X = ...` line inside `__delegated.js` is a finding. (`assert_splits_valid!` also checks; flag locally.)
+
+**Refactor-candidate observation (Phase 7 only — not a finding):** during a full-tree run, record any `critical: true` component whose minified source exceeds ~2 KB gz AND whose file contains methods matching `^(handle|fetch|render|submit|animate|bind\w+|setup\w+)` that do no first-paint work AND no synchronous cross-component API. Surface these as Phase 7 "candidates for split" — never as a hard finding, because the four-condition checklist in `CLAUDE.md` is qualitative. The user decides.
+
+**Current adoption:** 2/2 splits use the full six-piece contract. Filter (class-based) and Mainnav (IIFE-singleton). Tallied 2026-06-03.
+
+---
+
 ## Audit integration
 
 When `nds-js-audit` runs:

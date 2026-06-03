@@ -527,7 +527,11 @@
 
         // The shell's `behavior` dispatch traps these by name; _installBehavior
         // Object.assigns them over the trap stubs, then replays any queued calls.
+        // __deferred names every shell-trapped method so the build can verify
+        // the shell has a _deferBehavior('<name>') call for each entry, and vice
+        // versa — catching a forgotten trap before it ships.
         return {
+            __deferred: ['toggleDropdown', 'toggleNavbar', 'setupInteractions', 'updatePositions', 'handleDocumentClick', 'closeAll'],
             toggleDropdown,
             toggleNavbar,
             setupInteractions,

@@ -410,16 +410,26 @@
     let _behaviorInstalled = false;
     let _pendingBehavior = null;
 
-    const _deferBehavior = (name, args) => {
-        (_pendingBehavior || (_pendingBehavior = [])).push({ name, args });
+    // Returns a promise resolving with the real method's return value once the
+    // half attaches and the queue replays. Replay is error-safe — a throw on
+    // one entry rejects only that promise; siblings still run.
+    const _deferBehavior = (name, args) => new Promise((resolve, reject) => {
+        (_pendingBehavior || (_pendingBehavior = [])).push({ name, args, resolve, reject });
         NDS.loadSplit('Mainnav');
-    };
+    });
 
     const _flushPendingBehavior = () => {
         const q = _pendingBehavior;
         if (!q) return;
         _pendingBehavior = null;
-        for (const c of q) behavior[c.name].apply(behavior, c.args);
+        for (const c of q) {
+            try {
+                c.resolve(behavior[c.name].apply(behavior, c.args));
+            } catch (e) {
+                console.warn(`[NDS] Mainnav split replay failed for ${c.name}:`, e);
+                c.reject(e);
+            }
+        }
     };
 
     // True when a dropdown or the drawer is open — the guarded-direct stubs use
@@ -434,15 +444,15 @@
             // so a first dropdown click before the half loads would navigate the
             // link's href. preventDefault here; the real toggleDropdown also does.
             event?.preventDefault?.();
-            _deferBehavior('toggleDropdown', [event]);
+            return _deferBehavior('toggleDropdown', [event]);
         },
-        toggleNavbar() { _deferBehavior('toggleNavbar', arguments); },
-        setupInteractions() { _deferBehavior('setupInteractions', arguments); },
-        updatePositions() { _deferBehavior('updatePositions', arguments); },
+        toggleNavbar() { return _deferBehavior('toggleNavbar', arguments); },
+        setupInteractions() { return _deferBehavior('setupInteractions', arguments); },
+        updatePositions() { return _deferBehavior('updatePositions', arguments); },
 
         // --- Guarded-direct: early-return when nothing is open ---
-        handleDocumentClick(event) { if (_anyOpen()) _deferBehavior('handleDocumentClick', [event]); },
-        closeAll() { if (_anyOpen()) _deferBehavior('closeAll', arguments); },
+        handleDocumentClick(event) { if (_anyOpen()) return _deferBehavior('handleDocumentClick', [event]); },
+        closeAll() { if (_anyOpen()) return _deferBehavior('closeAll', arguments); },
     };
 
     // ==============================================
@@ -720,7 +730,9 @@
         _installBehavior: (factory) => {
             if (_behaviorInstalled) return;
             _behaviorInstalled = true;
-            Object.assign(behavior, factory(ctx));
+            const spec = factory(ctx);
+            delete spec.__deferred; // build-only contract; never grafted
+            Object.assign(behavior, spec);
             _flushPendingBehavior();
         },
     };

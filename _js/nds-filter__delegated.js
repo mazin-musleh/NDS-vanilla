@@ -15,6 +15,12 @@
     if (!NDS.Filter || !NDS.Filter._installBehavior) return;
     NDS.Filter._installBehavior(function (NDSFilter) {
         return {
+        // Methods reached by a shell trap. The build asserts the shell has a
+        // _deferBehavior('<name>') call for every entry here, and that every
+        // shell trap points at an entry here — so a missing trap fails the
+        // build instead of silently no-opping until the half loads.
+        __deferred: ['handleAjaxSubmit'],
+
         /**
          * Handle AJAX form submission. Thin orchestrator — each step lives in
          * a private helper so the fetch chain stays scannable.
