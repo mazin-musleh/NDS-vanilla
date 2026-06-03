@@ -1885,9 +1885,9 @@
     // Stepper Fallback dropmenu: picks the always-on variant that acts as the
     // fallback when no breakpoint override matches. data-stepper-fallback on
     // each dropmenu item carries the variant name (horizontal|vertical|radial).
-    // Delegates the state change to the stepper instance's setFallback()
-    // method so the authored fallback, the always-on class, and apply()'s
-    // live toggle all stay coherent.
+    // Routes through NDS.Stepper.setFallback(id, variant) — the public trap
+    // surface — so the call queues + replays cleanly even when the lazy half
+    // hasn't attached yet (e.g. first click after page reveal).
     function initializeStepperFallbackMenu() {
         document.addEventListener('click', function (e) {
             const btn = e.target.closest('[data-stepper-fallback]');
@@ -1897,10 +1897,10 @@
 
             const targetId = btn.dataset.stepperTarget;
             const stepper = targetId && document.getElementById(targetId);
-            if (!stepper || !stepper.ndsStepper || !stepper.ndsStepper.setFallback) return;
+            if (!stepper) return;
 
             selectDropmenuItem(btn, '[data-stepper-fallback]');
-            stepper.ndsStepper.setFallback(variant);
+            NDS.Stepper.setFallback(targetId, variant);
 
             // Pass the real always-on variant classes so the code-tab update
             // checks each and strips those no longer on the element. Horizontal
@@ -1912,11 +1912,11 @@
 
     // Stepper responsive auto-simplify: minimizes the authored class count
     // while preserving the effective variant at every breakpoint. The fallback
-    // (set via setFallback) absorbs whichever variant appears most often across
-    // BPs, so matching BP classes can be dropped. Remaining BP overrides keep
-    // only the ones that differ from the chosen fallback. Fires on every class
-    // mutation via MutationObserver; the "already optimal" guard prevents a
-    // re-collapse loop.
+    // (read/written via NDS.Stepper.getFallback / setFallback) absorbs whichever
+    // variant appears most often across BPs, so matching BP classes can be
+    // dropped. Remaining BP overrides keep only the ones that differ from the
+    // chosen fallback. Fires on every class mutation via MutationObserver; the
+    // "already optimal" guard prevents a re-collapse loop.
     //
     // Example: nds-stepper nds-vertical-lg nds-radial-md nds-radial-sm
     //   F=horizontal needs 3 BP classes + 0 fallback = 3
@@ -1929,7 +1929,7 @@
         const BP_RE = /^nds-(?:horizontal|vertical|radial)-(?:sm|md|lg)$/;
 
         document.querySelectorAll('[data-stepper-auto-simplify]').forEach(stepper => {
-            const currentFallback = () => (stepper.ndsStepper && stepper.ndsStepper._fallback) || 'horizontal';
+            const currentFallback = () => NDS.Stepper.getFallback(stepper.id) || 'horizontal';
 
             const effectiveAt = (bp, fallback) => {
                 for (const v of VARIANTS) {
@@ -1948,14 +1948,15 @@
             const simplify = (newFb, effective) => {
                 // Strip every BP class, then set the new fallback (which
                 // updates the always-on variant class + instance state and
-                // re-runs apply). Finally, re-add BP overrides only where
-                // effective differs from the new fallback.
+                // re-runs apply via the shell's _applyLayout). Finally,
+                // re-add BP overrides only where effective differs from the
+                // new fallback. NDS.Stepper.setFallback traps + queues
+                // pre-attach, so this is safe to call before the lazy half
+                // has loaded.
                 for (const bp of BPS) {
                     for (const v of VARIANTS) stepper.classList.remove(`nds-${v}-${bp}`);
                 }
-                if (stepper.ndsStepper && stepper.ndsStepper.setFallback) {
-                    stepper.ndsStepper.setFallback(newFb);
-                }
+                NDS.Stepper.setFallback(stepper.id, newFb);
                 effective.forEach((e, i) => {
                     if (e !== newFb) stepper.classList.add(`nds-${e}-${BPS[i]}`);
                 });

@@ -88,10 +88,17 @@
             init: () => NDS.Accordion?.init?.(),
         },
         {
-            // Critical: steps ship with no data-state; syncStepStates() stamps
-            // current/completed/upcoming at init and CSS turns those into the step
-            // highlight + connector fill (radial display:none's non-current steps).
-            // Deferral paints every step active, then recolors post-reveal = flash/CLS.
+            // Critical: SPLIT component. The eager shell (nds-stepper.js) does
+            // only first-paint data-state stamping — radial CSS hides any step
+            // without [data-state~="current"] via display:none, so a stepper
+            // shipping no JS would paint EMPTY. Stamping must hit the reveal
+            // pass to avoid the empty/flash. The shell also wires one
+            // delegated click listener for [data-stepper-control] that traps
+            // into the half. Heavy behavior (NDSStepper class + per-instance
+            // observers + navigation methods) defers to the lazy half
+            // (nds-stepper__delegated.js, joins nds-delegated.min.js, loads
+            // via NDS.loadSplit('Stepper') triggered by the first trapped
+            // call or the click listener firing).
             name: 'Stepper',
             selector: '.nds-stepper',
             init: () => NDS.Stepper?.init?.(),
