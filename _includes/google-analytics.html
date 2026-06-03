@@ -10,12 +10,14 @@
   accepts/declines the cookie banner. If a prior 'accepted' consent cookie exists
   on this load, we lift consent immediately so returning visitors are tracked.
 
-  Perf: placed at end of body (not head), so the head parses faster and the
-  inline cost is paid after most of the document is parsed. dataLayer + gtag +
-  consent default are set synchronously at parse time so any deferred-bundle
-  code (e.g. nds-cookies.js banner clicks) can call gtag() safely — calls queue
-  to dataLayer and replay when gtag.js arrives. The gtag.js network fetch is
-  injected via requestIdleCallback so it never competes during load.
+  Perf: placed in <head> so consent default (Consent Mode v2) lands at the
+  earliest possible moment — required for GDPR/PDPL compliance. dataLayer +
+  gtag + consent default are set synchronously so any later code (e.g.
+  nds-cookies.js banner clicks from the deferred bundle) can call gtag()
+  safely; calls queue to dataLayer and replay when gtag.js arrives. The
+  gtag.js network fetch itself is injected via requestIdleCallback so it
+  never competes during load — that captures ~99% of the perf win without
+  trading off consent timing. Cookie read uses regex (no array allocation).
 {%- endcomment -%}
 {%- if jekyll.environment == "production" and site.google_analytics and site.google_analytics != "" -%}
 {%- assign ga_id = site.google_analytics -%}
