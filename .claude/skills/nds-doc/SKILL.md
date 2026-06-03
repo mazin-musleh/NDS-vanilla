@@ -70,6 +70,13 @@ Read source files to build a complete understanding of the component. **The sour
   - The page must document all of these.
 - **Existing page** (if refining): read it but do NOT trust it. You will validate it against source files in Phase 3.
 
+### Split & de-criticalized components (affect doc accuracy)
+
+Some components are restructured for bundle performance (see `CLAUDE.md` → "JS Bundles & Shrinking the Critical Bundle"). Two cases change what the page must capture:
+
+- **Split component** — the JS is TWO files: `nds-X.js` (eager shell) + `nds-X__delegated.js` (lazy behavior half), each opening with a `// SPLIT COMPONENT` header. **Read BOTH.** The public `NDS.X` surface and first-paint behavior live in the shell, but deferred behavior — including some `CustomEvent`s and their `detail` shapes (e.g. Filter's `nds:filterFormComplete` / `nds:filterFormError` live in `nds-filter__delegated.js`) — lives in the half. The split is transparent to consumers (`NDS.X.method()` is unchanged), so demos and copy-paste markup don't change.
+- **De-criticalized component** (moved to the delegated bundle, e.g. accordion) — its JS now loads AFTER first paint, so any state the JS used to stamp must be **server-rendered in the canonical markup**. The live demo AND the code tab MUST carry those attributes (e.g. a default-open accordion item ships `data-state="open"` on BOTH the toggle button and the `.nds-accordion-collapse`), and the developer-facing ones belong in the **Data Attributes** table. Markup that omits them copies a component that flashes / CLSs on load.
+
 ### MUST read for context
 
 - **`_data/sidemenu/sidemenu.yml`**: read this every time. It is your map of the entire design system: every component, layout, utility, UI shell element, and example page. Use it to:

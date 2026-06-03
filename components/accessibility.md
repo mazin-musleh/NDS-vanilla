@@ -125,12 +125,14 @@ direction: ltr
                     &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn"
                             type="button"
                             aria-expanded="true"
+                            data-state="open"
                             aria-controls="a11yModesCollapse"&gt;
                         &lt;span class="nds-accordion-title"&gt;&lt;span data-i18n="section_modes"&gt;Accessibility Modes&lt;/span&gt; &lt;span class="nds-a11y-count nds-tag nds-green nds-rounded nds-sm" data-a11y-count="modes" aria-hidden="true"&gt;&lt;/span&gt;&lt;span class="nds-sr-only" data-a11y-count-sr="modes"&gt;&lt;/span&gt;&lt;/span&gt;
                     &lt;/button&gt;
                 &lt;/h3&gt;
                 &lt;div class="nds-accordion-collapse"
-                     id="a11yModesCollapse"&gt;
+                     id="a11yModesCollapse"
+                     data-state="open"&gt;
                     &lt;div class="nds-accordion-content"&gt;
                         &lt;div class="nds-accordion-body"&gt;
                             &lt;fieldset class="nds-form-group nds-switch-group"&gt;

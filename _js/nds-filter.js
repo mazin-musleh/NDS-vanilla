@@ -1,3 +1,16 @@
+// ==============================================
+// SPLIT COMPONENT — EAGER SHELL (ships in nds-main.min.js)
+// ==============================================
+// This file gates the page reveal, so it owns ONLY first paint + the primary
+// interaction: construction, URL-active filtering, client-side matching, chips,
+// pagination, and the public API. The init-unnecessary AJAX form-submission
+// cluster lives in the lazy half `nds-filter__delegated.js` (rides
+// nds-delegated.min.js, loads AFTER the reveal) and grafts onto
+// NDSFilter.prototype via NDS.Filter._installBehavior. Deferred entry-points here
+// are TRAPS: they queue the call, NDS.loadSplit('Filter'), and replay on attach.
+// Before moving code across this boundary, read CLAUDE.md →
+// "JS Bundles & Shrinking the Critical Bundle".
+
 /**
  * NDS Filter Component
  * Flexible filtration system for filtering card items based on search and dynamic criteria
@@ -290,218 +303,28 @@
             }));
         }
 
-        /**
-         * Handle AJAX form submission. Thin orchestrator — each step lives in
-         * a private helper so the fetch chain stays scannable.
-         */
+        // AJAX form submission lives in the deferred behavior half
+        // (nds-filter__delegated.js): only form-mode AJAX filters reach it, never
+        // at first paint. The submit listener already preventDefault()s, so a
+        // submit landing before the half attaches is captured here — it shows the
+        // loading state, queues, and replays once behavior installs.
         handleAjaxSubmit() {
-            // Update hidden inputs, URL params, and UI state
-            this.updateHiddenInputs();
-            this.updateUrlParams();
-            this.updateFilterButtonLabel();
-            this.updateAppliedChips();
-
-            // Unified change event (fires in all modes)
-            this.dispatchFilterEvent();
-
-            // Dispatch preventable AJAX submit event
-            const ajaxEvent = new CustomEvent('nds:filterFormAjax', {
-                detail: {
-                    criteria: this.criteria,
-                    form: this.submissionForm,
-                    hiddenInputsContainer: this.hiddenInputsContainer
-                },
-                cancelable: true
-            });
-            if (!this.filterContainer.dispatchEvent(ajaxEvent)) return;
-
-            NDS.State.set(this.filterContainer, 'submitting');
-            NDS.Status.clear(this.filterContainer);
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
-
-            const { url, options } = this._buildAjaxRequest();
-            fetch(url, options)
-                .then(response => this._parseAjaxResponse(response))
-                .then(({ isJson, data }) => {
-                    const eventDetail = this._applyAjaxResponse({ isJson, data });
-                    this._finishAjaxSubmit(eventDetail, isJson);
-                })
-                .catch(error => this._handleAjaxError(error));
+            this._deferBehavior('handleAjaxSubmit', arguments);
         }
 
-        /**
-         * Build the fetch URL + options for the current form state. Resets
-         * this.fetchAbortController so a previous in-flight submission can be aborted
-         * before the new one starts.
-         */
-        _buildAjaxRequest() {
-            const method = this.submissionForm.method.toUpperCase() || 'GET';
-            let action = this.submissionForm.action || window.location.href;
-
-            // Handle # or empty action - use current page URL without hash
-            if (!action || action === '#' || action.endsWith('#')) {
-                action = window.location.origin + window.location.pathname;
-            }
-
-            // Abort any in-flight submission so a faster second Apply click
-            // can't be overtaken by the slower first response (replaceWith
-            // in _applyAjaxResponse would otherwise install stale results).
-            if (this.fetchAbortController) this.fetchAbortController.abort();
-            this.fetchAbortController = new AbortController();
-
-            const options = {
-                method,
-                headers: {},
-                signal: this.fetchAbortController.signal
-            };
-
-            // Collect form data from the submission form (respects HTML `form="id"`
-            // attribute on scattered inputs associated with this form).
-            const formData = new FormData(this.submissionForm);
-
-            let url = action;
-            if (method === 'GET') {
-                const params = new URLSearchParams(formData);
-                url = action + (action.includes('?') ? '&' : '?') + params.toString();
-            } else {
-                options.body = formData;
-            }
-
-            return { url, options };
+        // Split-behavior bridge: queue a deferred-half call + kick its bundle load;
+        // the queue replays in order once NDS.Filter._installBehavior attaches.
+        _deferBehavior(name, args) {
+            (this._pendingBehavior || (this._pendingBehavior = [])).push({ name, args });
+            NDS.loadSplit('Filter');
         }
 
-        /**
-         * Validate response status and branch on Content-Type. Throws on
-         * non-OK so the catch handler routes through _handleAjaxError.
-         */
-        _parseAjaxResponse(response) {
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            const contentType = response.headers.get('Content-Type') || '';
-            const isJson = contentType.includes('application/json');
-            return isJson
-                ? response.json().then(data => ({ isJson: true, data }))
-                : response.text().then(data => ({ isJson: false, data }));
-        }
-
-        /**
-         * Apply the parsed response to the DOM. JSON leaves rendering to the
-         * consumer (via the complete event); HTML swaps the target container
-         * with the response's matching #id subtree. Returns the eventDetail
-         * object that _finishAjaxSubmit will dispatch.
-         */
-        _applyAjaxResponse({ isJson, data }) {
-            const eventDetail = {
-                success: true,
-                form: this.filterContainer,
-                isJson
-            };
-
-            if (isJson) {
-                eventDetail.data = data;
-                this._revealTargetContainer();
-                return eventDetail;
-            }
-
-            // HTML response — inject into target container
-            eventDetail.html = data;
-            eventDetail.fullHtml = data;
-
-            if (!this.targetContainer || !this.targetId) return eventDetail;
-
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data, 'text/html');
-            const targetInResponse = doc.getElementById(this.targetId);
-
-            if (targetInResponse) {
-                const newContainer = targetInResponse.cloneNode(true);
-                this.targetContainer.replaceWith(newContainer);
-                this.targetContainer = newContainer;
-                this.items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()));
-                this._cacheBuilt = false;
-                this._revealTargetContainer();
-                eventDetail.html = newContainer.innerHTML;
-            } else {
-                console.warn(`NDS Filter: target container #${this.targetId} not found in server response. Emptying target container.`);
-                this.targetContainer.innerHTML = '';
-                const id = this.targetContainer.id;
-                while (this.targetContainer.attributes.length > 0) {
-                    this.targetContainer.removeAttribute(this.targetContainer.attributes[0].name);
-                }
-                this.targetContainer.id = id;
-                this.targetContainer.setAttribute('hidden', '');
-                eventDetail.html = '';
-            }
-
-            return eventDetail;
-        }
-
-        /**
-         * Ensure the target container is visible (server responses sometimes
-         * keep hidden/display:none on the placeholder shell).
-         */
-        _revealTargetContainer() {
-            if (!this.targetContainer) return;
-            this.targetContainer.removeAttribute('hidden');
-            if (this.targetContainer.style.display === 'none') {
-                this.targetContainer.style.display = '';
-            }
-        }
-
-        /**
-         * Settle UI state after a successful response: clear loading, set
-         * success status, refresh dependent UI, fire the complete event,
-         * schedule status auto-clear.
-         */
-        _finishAjaxSubmit(eventDetail, isJson) {
-            if (this.targetContainer) {
-                this.targetContainer.classList.remove('nds-loading');
-            }
-
-            NDS.Status.set(this.filterContainer, 'success');
-            NDS.State.clear(this.filterContainer);
-
-            this.updateUrlParams();
-            this.updateFilterButtonLabel();
-            this.updateAppliedChips();
-
-            this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
-                detail: eventDetail
-            }));
-
-            // JSON developers render inside the complete-event handler and may set
-            // data-total-count on the target container there — re-run the count so
-            // the slots reflect their updates.
-            if (isJson) this.updateFilterCount();
-
-            setTimeout(() => NDS.Status.clear(this.filterContainer), 3000);
-        }
-
-        /**
-         * Settle UI state on AJAX failure. AbortError is silent — the newer
-         * request that aborted us owns the loading state.
-         */
-        _handleAjaxError(error) {
-            if (error.name === 'AbortError') return;
-
-            console.error('NDS Filter: AJAX submission failed:', error);
-
-            if (this.targetContainer) {
-                this.targetContainer.classList.remove('nds-loading');
-            }
-
-            NDS.Status.set(this.filterContainer, 'error');
-            NDS.State.clear(this.filterContainer);
-
-            this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
-                detail: {
-                    error: error.message,
-                    form: this.filterContainer
-                }
-            }));
-
-            setTimeout(() => NDS.Status.clear(this.filterContainer), 5000);
+        _flushPendingBehavior() {
+            const q = this._pendingBehavior;
+            if (!q) return;
+            this._pendingBehavior = null;
+            for (const c of q) this[c.name].apply(this, c.args);
         }
 
         /**
@@ -2336,6 +2159,16 @@
             init: initializeFilters,
             reinit: reinitializeFilters,
             create: (container) => new NDSFilter(container),
+
+            // Split: graft the deferred behavior half (nds-filter__delegated.js)
+            // onto NDSFilter.prototype, then replay any calls that queued on live
+            // instances while it was loading. Idempotent; called by the half on load.
+            _installBehavior: (factory) => {
+                if (NDSFilter._behaviorInstalled) return;
+                NDSFilter._behaviorInstalled = true;
+                Object.assign(NDSFilter.prototype, factory(NDSFilter));
+                _instancesByTarget.forEach((inst) => inst._flushPendingBehavior());
+            },
 
             getInstance: (container) => {
                 if (typeof container === 'string') {

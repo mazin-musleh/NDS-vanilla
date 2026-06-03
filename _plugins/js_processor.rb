@@ -47,14 +47,14 @@ class JSProcessor
       # first-interaction-critical on OTP/2FA pages). They stay so they wire on the
       # local idle pass, not after an injected bundle. Reveal is gated on this
       # bundle, so it's kept lean.
-      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-accordion.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
+      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
       # Delegated — deferred components verified safe to load late. Injected by
       # nds-loader.js AFTER the critical pass (never a render-blocking defer tag), so
       # its download never gates the reveal. Components migrate in here over time
       # as each is confirmed cold-init / late-init-safe; move the file here and
       # drop `critical: true` from its loader registry entry (location is owned here, not the
       # registry — the build generates the namespace→bundle map from these lists).
-      'nds-delegated.min.js' => ['nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js'],
+      'nds-delegated.min.js' => ['nds-accordion.js', 'nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js', 'nds-filter__delegated.js'],
       # Extras — heavy, page-specific, zero-inbound leaf components. Injected by
       # nds-loader.js only when the page contains one of them (selector-gated), so
       # plain pages never download/parse them. May later be split into smaller
@@ -91,12 +91,60 @@ class JSProcessor
 
   # Namespaces a set of source files export via `NDS.<Name> = ...` (the de-facto
   # export convention). Over-listing helper namespaces is harmless downstream.
+  #
+  # `*__delegated.js` behavior halves are SKIPPED: a half attaches to its component
+  # via `NDS.<Name>._installBehavior(...)` and never owns a namespace, so its
+  # namespace must not enter an injected bundle's `ns` manifest (the loader would
+  # then mis-classify the split component as wholly-injected and delay its eager
+  # init) nor trip assert_no_critical_in_injected!. See split_manifest for how
+  # split namespaces are mapped instead.
   def scan_namespaces(source_files)
     source_files.each_with_object([]) do |sf, ns|
+      next if sf.end_with?('__delegated.js')
       path = File.join(@source_dir, sf)
       next unless File.exist?(path)
       File.read(path).scan(/\bNDS\.([A-Z][A-Za-z0-9_]*)\s*=(?!=)/) { |m| ns << m[0] }
     end.uniq
+  end
+
+  # The loader COMPONENTS registry, parsed once: every component `name`, and the
+  # subset flagged `critical: true` (the reveal checklist). The registry `name` IS
+  # the NDS namespace.
+  def loader_registry
+    loader_path = File.join(@source_dir, 'nds-loader.js')
+    return { names: [], critical: [] } unless File.exist?(loader_path)
+    region = File.read(loader_path)[/const COMPONENTS = \[(.*?)\n    \];/m, 1]
+    return { names: [], critical: [] } unless region
+
+    names = []
+    critical = []
+    region.split(/\},/).each do |entry|
+      name = entry[/name:\s*'([^']+)'/, 1]
+      next unless name
+      names << name
+      critical << name if entry =~ /critical:\s*true/
+    end
+    { names: names.uniq, critical: critical.uniq }
+  end
+
+  # Split components: a `nds-X__delegated.js` behavior half in an injected bundle is
+  # the sanctioned lazy companion of the eager shell `nds-X.js` (which ships in main
+  # and owns NDS.X). Derives each pair from the bundle file lists.
+  def split_pairs
+    injected_bundles.each_with_object([]) do |(bundle_name, files), pairs|
+      files.select { |f| f.end_with?('__delegated.js') }.each do |half|
+        pairs << { half: half, shell: half.sub(/__delegated\.js\z/, '.js'), bundle: bundle_name }
+      end
+    end
+  end
+
+  # window.__NDS_SPLIT — split namespace → injected-bundle KEY. The loader's
+  # loadSplit(ns) resolves this to loadBundle(key); the half then self-attaches via
+  # _installBehavior. The namespace is read from the SHELL (the half owns none).
+  def split_manifest
+    split_pairs.each_with_object({}) do |p, m|
+      scan_namespaces([p[:shell]]).each { |ns| m[ns] = bundle_key(p[:bundle]) }
+    end
   end
 
   # window.__NDS_BUNDLES — the namespace→bundle map the loader reads for its lazy
@@ -116,16 +164,12 @@ class JSProcessor
   # the NDS namespace, and an entry is critical iff it has `critical: true` (the
   # reveal checklist); everything else is deferred and safe to inject.
   def assert_no_critical_in_injected!
-    loader_path = File.join(@source_dir, 'nds-loader.js')
-    return unless File.exist?(loader_path)
-    region = File.read(loader_path)[/const COMPONENTS = \[(.*?)\n    \];/m, 1]
-    return unless region
+    critical = loader_registry[:critical]
+    return if critical.empty?
 
-    critical = region.split(/\},/).each_with_object([]) do |entry, acc|
-      name = entry[/name:\s*'([^']+)'/, 1]
-      acc << name if name && entry =~ /critical:\s*true/
-    end
-
+    # scan_namespaces already skips `*__delegated.js`, so a split component's
+    # sanctioned behavior half never counts as a violation here; only its eager
+    # shell (a normal `.js`) would, and that must stay in main.
     violations = injected_bundles.flat_map do |bundle_name, files|
       scan_namespaces(files).select { |ns| critical.include?(ns) }.map { |ns| "#{ns} (in #{bundle_name})" }
     end
@@ -134,6 +178,35 @@ class JSProcessor
     abort("[js_processor] BUILD FAILED — critical components cannot ship in an injected bundle:\n  " +
           violations.join("\n  ") +
           "\n  Fix: drop `critical: true` from their entry in _js/nds-loader.js (so they default to deferred), or move their file back to nds-main.min.js.")
+  end
+
+  # Build guard for split components: a `nds-X__delegated.js` behavior half is only
+  # valid when its eager shell ships in main, owns a real registry namespace, and
+  # the half attaches via _installBehavior rather than redefining NDS.X.
+  def assert_splits_valid!
+    pairs = split_pairs
+    return if pairs.empty?
+
+    reg = loader_registry
+    main = @bundles['nds-main.min.js'] || []
+    errors = []
+
+    pairs.each do |p|
+      ns = scan_namespaces([p[:shell]]).first
+      errors << "#{p[:shell]} (eager shell of #{p[:half]}) must be listed in nds-main.min.js" unless main.include?(p[:shell])
+      if ns.nil?
+        errors << "#{p[:shell]} must exist and assign NDS.<Name> (eager shell of #{p[:half]})"
+        next
+      end
+      errors << "#{ns} (#{p[:shell]}) must be a component in the nds-loader.js registry" unless reg[:names].include?(ns)
+      half_path = File.join(@source_dir, p[:half])
+      if File.exist?(half_path) && File.read(half_path) =~ /\bNDS\.#{Regexp.escape(ns)}\s*=(?!=)/
+        errors << "#{p[:half]} must attach via NDS.#{ns}._installBehavior(...), not reassign NDS.#{ns}"
+      end
+    end
+    return if errors.empty?
+
+    abort("[js_processor] BUILD FAILED — invalid split component(s):\n  " + errors.join("\n  "))
   end
 
   # Compress JavaScript with Terser. When site.debug is on the bundle is left
@@ -187,6 +260,7 @@ class JSProcessor
 
     # Fail fast if location (build) contradicts classification (registry).
     assert_no_critical_in_injected!
+    assert_splits_valid!
 
     # Check if any changed files are part of bundles
     bundles_to_process = []
@@ -238,7 +312,12 @@ class JSProcessor
         # The loader reads window.__NDS_BUNDLES (namespace→bundle map) before any
         # component or the loader itself runs, so it must be prepended ahead of the
         # code. Only the critical main bundle carries it.
-        manifest_js = bundle_name == 'nds-main.min.js' ? "window.__NDS_BUNDLES=#{JSON.generate(bundle_manifest)};\n" : ''
+        manifest_js = ''
+        if bundle_name == 'nds-main.min.js'
+          manifest_js = "window.__NDS_BUNDLES=#{JSON.generate(bundle_manifest)};\n"
+          split = split_manifest
+          manifest_js += "window.__NDS_SPLIT=#{JSON.generate(split)};\n" unless split.empty?
+        end
         final_content = header_comment + manifest_js + final_content
 
         # Write bundle file to assets/js

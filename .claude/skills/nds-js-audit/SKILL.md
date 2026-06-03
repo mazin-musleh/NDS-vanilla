@@ -155,6 +155,14 @@ Source files are the single source of truth. Read them fully, not by skimming.
 
 Read each target file top-to-bottom before running the catalog. Pattern-matching alone misses context (a `setTimeout` inside a `NDS.debounce` callback is not a JSP-07 violation). A full read is what separates this skill from a grep script.
 
+### Split components (eager shell + lazy behavior half) — don't mis-flag
+
+Some critical components are **split** into `nds-X.js` (eager shell, ships in `nds-main.min.js`) + `nds-X__delegated.js` (lazy behavior half, rides `nds-delegated.min.js`, loads after the reveal) — see `CLAUDE.md` → "JS Bundles & Shrinking the Critical Bundle". Each file opens with a `// SPLIT COMPONENT — EAGER SHELL / LAZY BEHAVIOR HALF` header. Precedent: **Filter** (`nds-filter.js` + `nds-filter__delegated.js`). When the target is either half:
+
+- **The split scaffolding is the intended contract — never flag it as DRY / dead-guard / contract-conformance violations.** Specifically: the shell's trap methods (a `handleX` that queues + `NDS.loadSplit('X')` + replays via `_deferBehavior`/`_flushPendingBehavior`), the `NDS.X._installBehavior(factory)` graft, the half's `if (!NDS.X || !NDS.X._installBehavior) return` guard, and the two-file structure are all by design — not duplication, dead defensive guards, or a broken factory/singleton shape.
+- A `*__delegated.js` half is a **behavior fragment, not a standalone component**: it has no `init/reinit/create` and references shell methods/state via `this.*` (resolved on the shared prototype/instance after `_installBehavior`). Audit it against its role, not the component contract. Apply the substantive rules (JSP/JSS, real cross-file JSD duplication) normally.
+- **DO flag real split-contract breaks:** a half that reassigns `NDS.X` (must attach only via `_installBehavior`), or does first-paint work / owns the primary interaction (those must stay in the shell), or a shell whose deferred entry-point isn't a queue+replay trap.
+
 ---
 
 ## Phase 3: ANALYZE

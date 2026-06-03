@@ -56,11 +56,11 @@ direction: ltr
                             <div class="nds-accordion-item">
                                 <h3 class="nds-accordion-header" id="accordion-basic-heading-1">
                                     <button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                                        aria-expanded="true" aria-controls="accordion-basic-collapse-1">
+                                        aria-expanded="true" data-state="open" aria-controls="accordion-basic-collapse-1">
                                         <span class="nds-accordion-title">Getting Started</span>
                                     </button>
                                 </h3>
-                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-1">
+                                <div class="nds-accordion-collapse" id="accordion-basic-collapse-1" data-state="open">
                                     <div class="nds-accordion-content">
                                         <div class="nds-accordion-body">
                                             <p>Overview of the service and how to begin your application.</p>
@@ -128,11 +128,11 @@ direction: ltr
     &lt;div class="nds-accordion-item"&gt;
         &lt;h3 class="nds-accordion-header" id="heading-1"&gt;
             &lt;button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button"
-                aria-expanded="true" aria-controls="collapse-1"&gt;
+                aria-expanded="true" data-state="open" aria-controls="collapse-1"&gt;
                 &lt;span class="nds-accordion-title"&gt;Getting Started&lt;/span&gt;
             &lt;/button&gt;
         &lt;/h3&gt;
-        &lt;div class="nds-accordion-collapse" id="collapse-1"&gt;
+        &lt;div class="nds-accordion-collapse" id="collapse-1" data-state="open"&gt;
             &lt;div class="nds-accordion-content"&gt;
                 &lt;div class="nds-accordion-body"&gt;
                     &lt;p&gt;Overview of the service and how to begin.&lt;/p&gt;

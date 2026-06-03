@@ -80,6 +80,28 @@ All page content is built from sections. Read `layout/section.md` before creatin
    - `templates/` → `_data/content/templates.yml`
    Whenever you create a new doc page, check for a sibling YAML in `_data/content/` and add the entry there too.
 
+## JS Bundles & Shrinking the Critical Bundle
+
+**Three bundles, location owned by the build** (`@bundles` in `_plugins/js_processor.rb`): `nds-main.min.js` (a `<script defer>` — **gates the page reveal, keep lean**), `nds-delegated.min.js` + `nds-extras.min.js` (loader-INJECTED *after* the reveal, never gate it). The loader reads `window.__NDS_BUNDLES` (namespace→bundle, build-generated) — **never hardcode bundle membership in JS**. Run `ruby _plugins/js_processor.rb` after any `@bundles` or `_js/` change.
+
+**Two levers move init-unnecessary code off the reveal-gating path** (both keep public usage — `NDS.X.method()` — unchanged):
+
+**1. De-criticalize + move (wholesale)** — for a component that is *delegate-safe*: markup + always-loaded CSS paint it correctly with JS deleted (JS owns behavior, not first paint).
+- Server-render any state JS stamps at first paint (e.g. accordion default-open ships `data-state="open"` on the button **and** the collapse so CSS paints it expanded — no JS, no CLS).
+- Drop `critical: true` from its `_js/nds-loader.js` registry entry.
+- Move its file from the main list to the delegated list in `@bundles`.
+- Clicks in the pre-bundle gap no-op and recover on the next click (the Tabs/Tables pattern). Precedent: **Accordion**.
+
+**2. Split (eager shell + lazy behavior)** — for a `critical: true` component that must keep a first-paint shell but has init-unnecessary behavior.
+- `nds-X.js` (eager shell, **stays in main**): owns/creates `NDS.X`, does first-paint work, wires listeners, exposes the public API. For each deferred entry-point, add a *trap* method that queues the call, calls `NDS.loadSplit('X')`, and replays on attach.
+- `nds-X__delegated.js` (behavior half, **add to the delegated `@bundles` list**): its own IIFE; calls `NDS.X._installBehavior(factory)` and **NEVER reassigns `NDS.X`**. `_installBehavior` grafts the methods (onto the class prototype or a shared methods object) and replays queued calls; it is idempotent.
+- The half is invisible to `__NDS_BUNDLES` (the build skips `*__delegated.js` when scanning namespaces); only `window.__NDS_SPLIT` routes `loadSplit` to it. Precedent: **Filter** (AJAX form-submission cluster).
+- **Announce the split in BOTH files.** Start each with a `// SPLIT COMPONENT — EAGER SHELL` / `// LAZY BEHAVIOR HALF` header stating its bundle, what it owns vs defers, the `_installBehavior`/trap contract, and a pointer back here — so a maintainer or AI opening either file sees the boundary and rules immediately.
+
+**The build guard fails on violation** (`assert_no_critical_in_injected!` / `assert_splits_valid!`): a `critical` component's MAIN code can't ship in an injected bundle; a `*__delegated.js` half's eager shell must be in main, the half must not reassign `NDS.X`, and `X` must be a registry entry.
+
+**Keep EAGER (never defer):** anything affecting first paint (CLS-prevention state stamps, FOUC-guard removal), the component's PRIMARY interaction, or a synchronous cross-component API (e.g. `NDS.Forms.validateForm` is read synchronously at submit). Defer only secondary/late paths.
+
 ## Content Skills
 
 Use `/nds-doc [name]` to create, refine, or audit documentation pages under `components/`, `ui-shell/`, `layout/`, and `utilities/`. See its `SKILL.md` for full usage.
