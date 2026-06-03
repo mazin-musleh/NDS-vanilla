@@ -32,18 +32,28 @@
     </noscript>
     {%- if site.use_hgi_font or page.use_hgi_font %}
     <!-- HGI icon font (content/demo/doc): opacity gate hides icons until the font
-         lands. The font is pulled in by loadDeferredAssets() (head-inline-scripts.html)
-         off the main-CSS onload below, so its large woff2 never competes during the
-         LCP window. -->
+         lands. The HGI sheet itself is deferred-preloaded below; font readiness
+         is detected by nds-fontLoading.js, which stamps data-nds-fonts-loaded. -->
     <style>i.hgi-stroke{opacity:0}html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke{opacity:1}</style>
     {%- endif %}
     <!-- Main CSS - Deferred loading for below-the-fold content -->
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
-        onload="this.onload=null;this.rel='stylesheet';window.loadDeferredAssets&&loadDeferredAssets()">
+        onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
+    <!-- UI icons sheet - deferred preload; onload stamps html[data-nds-icons-loaded]
+         which flips --nds-icons-opacity 0→1 (see _skeleton.scss icon gate). -->
+    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
+        onload="this.onload=null;this.rel='stylesheet';document.documentElement.setAttribute('data-nds-icons-loaded','')">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    </noscript>
     {%- if site.use_hgi_font or page.use_hgi_font %}
+    <!-- HGI icon font sheet - deferred preload; font readiness handled separately
+         by nds-fontLoading.js (data-nds-fonts-loaded). -->
+    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
+        onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>

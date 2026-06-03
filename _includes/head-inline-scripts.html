@@ -6,24 +6,3 @@
         if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
     })();
 </script>
-<script>
-    // Deferred asset loader — invoked from the main-CSS onload (head.html) so
-    // the UI-icon tokens (and the HGI icon woff2 on content pages) never compete
-    // with the critical bundle during the LCP window. The gate in critical-inline
-    // / _skeleton ships --nds-icons-opacity:0; stamping html[data-nds-icons-loaded]
-    // on the icons-sheet onload flips the var to 1, which every masked-pseudo
-    // rule (`opacity: var(--nds-icons-opacity, 1)` next to its `mask:`) reads.
-    function loadDeferredAssets() {
-        var icons = document.createElement('link');
-        icons.rel = 'stylesheet';
-        icons.href = '{{ "assets/css/nds-icons.min.css" | relative_url }}?ver={{ site.asset_ver }}';
-        icons.onload = function () { document.documentElement.setAttribute('data-nds-icons-loaded', ''); };
-        document.head.appendChild(icons);
-        {%- if site.use_hgi_font or page.use_hgi_font %}
-        var hgi = document.createElement('link');
-        hgi.rel = 'stylesheet';
-        hgi.href = '{{ "assets/css/hgi-rounded-stroke-min.css" | relative_url }}?ver={{ site.asset_ver }}';
-        document.head.appendChild(hgi);
-        {%- endif %}
-    }
-</script>
