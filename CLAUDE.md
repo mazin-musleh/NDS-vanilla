@@ -84,27 +84,15 @@ All page content is built from sections. Read `layout/section.md` before creatin
 
 **Three bundles, location owned by the build** (`@bundles` in `_plugins/js_processor.rb`): `nds-main.min.js` (a `<script defer>` — **gates the page reveal, keep lean**), `nds-delegated.min.js` + `nds-extras.min.js` (loader-INJECTED *after* the reveal, never gate it). The loader reads `window.__NDS_BUNDLES` (namespace→bundle, build-generated) — **never hardcode bundle membership in JS**. Run `ruby _plugins/js_processor.rb` after any `@bundles` or `_js/` change.
 
-**Two levers move init-unnecessary code off the reveal-gating path** (both keep public usage — `NDS.X.method()` — unchanged):
-
-**1. De-criticalize + move (wholesale)** — for a component that is *delegate-safe*: markup + always-loaded CSS paint it correctly with JS deleted (JS owns behavior, not first paint).
+**To move init-unnecessary code off the reveal-gating path — de-criticalize + move (wholesale).** For a component that is *delegate-safe*: markup + always-loaded CSS paint it correctly with JS deleted (JS owns behavior, not first paint). Public usage (`NDS.X.method()`) stays unchanged via the loader's lazy proxy stub.
 - Server-render any state JS stamps at first paint (e.g. accordion default-open ships `data-state="open"` on the button **and** the collapse so CSS paints it expanded — no JS, no CLS).
 - Drop `critical: true` from its `_js/nds-loader.js` registry entry.
 - Move its file from the main list to the delegated list in `@bundles`.
 - Clicks in the pre-bundle gap no-op and recover on the next click (the Tabs/Tables pattern). Precedent: **Accordion**.
 
-**2. Split (eager shell + lazy behavior)** — for a `critical: true` component that must keep a first-paint shell but has init-unnecessary behavior.
-- `nds-X.js` (eager shell, **stays in main**): owns/creates `NDS.X`, does first-paint work, wires listeners, exposes the public API. For each deferred entry-point, add a *trap* method that calls `this._deferBehavior('<name>', arguments)` (or the closure-scoped equivalent for IIFE singletons) — that queues the call, kicks `NDS.loadSplit('X')`, and returns a promise that resolves with the real method's return value once the half attaches and replays. Replay is error-safe per entry.
-- `nds-X__delegated.js` (behavior half, **add to the delegated `@bundles` list**): its own IIFE; calls `NDS.X._installBehavior(factory)` and **NEVER reassigns `NDS.X`**. The factory returns an object that includes `__deferred: ['<name>', ...]` — the explicit list of shell-trapped methods. `_installBehavior` strips `__deferred` (build-only contract), grafts the methods (onto the class prototype or a shared methods object) and replays queued calls; it is idempotent.
-- The half is invisible to `__NDS_BUNDLES` (the build skips `*__delegated.js` when scanning namespaces); only `window.__NDS_SPLIT` routes `loadSplit` to it. Precedents: **Filter** (AJAX form-submission cluster), **Mainnav** (dropdown/drawer animation + interaction binders).
-- **Announce the split in BOTH files.** Start each with a `// SPLIT COMPONENT — EAGER SHELL` / `// LAZY BEHAVIOR HALF` header stating its bundle, what it owns vs defers, the `_installBehavior`/trap contract, and a pointer back here — so a maintainer or AI opening either file sees the boundary and rules immediately. (The build asserts these headers exist via `assert_split_headers!`.)
+**Don't split a component into eager-shell + lazy-behavior halves.** A per-component split (a `nds-X__delegated.js` half grafted onto an eager shell via `_installBehavior`/trap stubs + `loadSplit`) was built for Filter/Mainnav/Stepper/Pagination and **removed 2026-06-04**: it saved only ~3 KB gz off main — which the reveal isn't byte-bound on — at the cost of a pre-attach promise-vs-sync gap and ~330 lines of mechanism + build guards + docs. If a `critical` component has init-unnecessary behavior, keep it in main and run that behavior **on interaction with cold-init** (cheap registration at init, no forced layout); wholesale-defer instead only if it's genuinely delegate-safe.
 
-**Reach for split only when ALL of these hold** — otherwise prefer wholesale de-criticalize (lever 1) or keep the code in main:
-- Cluster is ≥ ~2 KB gz. Below that the trap surface + cognitive cost outruns the perf win.
-- Cluster has a clean functional boundary (submit + render + fetch; animation system; interaction binders) — not scattered helpers across the file.
-- The component is genuinely `critical: true` (first paint or primary interaction depends on JS). If it can wholesale-defer, do that instead — half the code, zero trap surface.
-- The pre-attach gap has a natural in-progress affordance (spinner, disabled button, preventDefault) so a click landing before the half loads degrades visibly rather than silently.
-
-**Build guards fail on violation** — a `critical` component's MAIN code can't ship in an injected bundle (`assert_no_critical_in_injected!`); a `*__delegated.js` half's eager shell must be in main, the half must not reassign `NDS.X`, and `X` must be a registry entry (`assert_splits_valid!`); every `__deferred` name in the half must have a matching `_deferBehavior('<name>')` trap in the shell and vice versa (`assert_trap_coverage!`); both files must carry their canonical banner (`assert_split_headers!`).
+**Build guard fails on violation** — a `critical` component's code can't ship in an injected bundle (`assert_no_critical_in_injected!`): fix by dropping `critical: true` or moving the file back to the main list.
 
 **Keep EAGER (never defer):** anything affecting first paint (CLS-prevention state stamps, FOUC-guard removal), the component's PRIMARY interaction, or a synchronous cross-component API (e.g. `NDS.Forms.validateForm` is read synchronously at submit). Defer only secondary/late paths.
 

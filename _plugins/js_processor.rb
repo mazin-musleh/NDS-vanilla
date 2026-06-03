@@ -54,7 +54,7 @@ class JSProcessor
       # as each is confirmed cold-init / late-init-safe; move the file here and
       # drop `critical: true` from its loader registry entry (location is owned here, not the
       # registry — the build generates the namespace→bundle map from these lists).
-      'nds-delegated.min.js' => ['nds-mainnav__delegated.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js', 'nds-stepper__delegated.js', 'nds-filter__delegated.js', 'nds-pagination__delegated.js'],
+      'nds-delegated.min.js' => ['nds-accordion.js', 'nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js'],
       # Extras — heavy, page-specific, zero-inbound leaf components. Injected by
       # nds-loader.js only when the page contains one of them (selector-gated), so
       # plain pages never download/parse them. May later be split into smaller
@@ -91,16 +91,8 @@ class JSProcessor
 
   # Namespaces a set of source files export via `NDS.<Name> = ...` (the de-facto
   # export convention). Over-listing helper namespaces is harmless downstream.
-  #
-  # `*__delegated.js` behavior halves are SKIPPED: a half attaches to its component
-  # via `NDS.<Name>._installBehavior(...)` and never owns a namespace, so its
-  # namespace must not enter an injected bundle's `ns` manifest (the loader would
-  # then mis-classify the split component as wholly-injected and delay its eager
-  # init) nor trip assert_no_critical_in_injected!. See split_manifest for how
-  # split namespaces are mapped instead.
   def scan_namespaces(source_files)
     source_files.each_with_object([]) do |sf, ns|
-      next if sf.end_with?('__delegated.js')
       path = File.join(@source_dir, sf)
       next unless File.exist?(path)
       File.read(path).scan(/\bNDS\.([A-Z][A-Za-z0-9_]*)\s*=(?!=)/) { |m| ns << m[0] }
@@ -127,26 +119,6 @@ class JSProcessor
     { names: names.uniq, critical: critical.uniq }
   end
 
-  # Split components: a `nds-X__delegated.js` behavior half in an injected bundle is
-  # the sanctioned lazy companion of the eager shell `nds-X.js` (which ships in main
-  # and owns NDS.X). Derives each pair from the bundle file lists.
-  def split_pairs
-    injected_bundles.each_with_object([]) do |(bundle_name, files), pairs|
-      files.select { |f| f.end_with?('__delegated.js') }.each do |half|
-        pairs << { half: half, shell: half.sub(/__delegated\.js\z/, '.js'), bundle: bundle_name }
-      end
-    end
-  end
-
-  # window.__NDS_SPLIT — split namespace → injected-bundle KEY. The loader's
-  # loadSplit(ns) resolves this to loadBundle(key); the half then self-attaches via
-  # _installBehavior. The namespace is read from the SHELL (the half owns none).
-  def split_manifest
-    split_pairs.each_with_object({}) do |p, m|
-      scan_namespaces([p[:shell]]).each { |ns| m[ns] = bundle_key(p[:bundle]) }
-    end
-  end
-
   # window.__NDS_BUNDLES — the namespace→bundle map the loader reads for its lazy
   # stubs + partition. Generated from the actual bundle file lists, so the runtime
   # location can never drift from the build. Shape:
@@ -167,9 +139,8 @@ class JSProcessor
     critical = loader_registry[:critical]
     return if critical.empty?
 
-    # scan_namespaces already skips `*__delegated.js`, so a split component's
-    # sanctioned behavior half never counts as a violation here; only its eager
-    # shell (a normal `.js`) would, and that must stay in main.
+    # A namespace is flagged only when it appears in an injected bundle yet
+    # belongs to a `critical` registry entry — critical code must ship in main.
     violations = injected_bundles.flat_map do |bundle_name, files|
       scan_namespaces(files).select { |ns| critical.include?(ns) }.map { |ns| "#{ns} (in #{bundle_name})" }
     end
@@ -178,118 +149,6 @@ class JSProcessor
     abort("[js_processor] BUILD FAILED — critical components cannot ship in an injected bundle:\n  " +
           violations.join("\n  ") +
           "\n  Fix: drop `critical: true` from their entry in _js/nds-loader.js (so they default to deferred), or move their file back to nds-main.min.js.")
-  end
-
-  # Extract the `__deferred: [...]` declaration from a split half: the explicit
-  # list of methods the shell must trap. Returns [] when absent (the trap-coverage
-  # check will then flag the half itself).
-  def half_deferred_methods(half_file)
-    path = File.join(@source_dir, half_file)
-    return [] unless File.exist?(path)
-    region = File.read(path)[/__deferred:\s*\[([^\]]*)\]/m, 1]
-    return [] unless region
-    region.scan(/'([^']+)'|"([^"]+)"/).flatten.compact.uniq
-  end
-
-  # Extract every `_deferBehavior('name', ...)` call site from a split shell: the
-  # set of method names the shell promises to trap.
-  def shell_trapped_methods(shell_file)
-    path = File.join(@source_dir, shell_file)
-    return [] unless File.exist?(path)
-    File.read(path).scan(/_deferBehavior\(\s*['"]([^'"]+)['"]/).flatten.uniq
-  end
-
-  # Build guard: for every split pair, the shell's _deferBehavior trap set must
-  # match the half's __deferred declaration. Catches the two failure modes:
-  #   - half exposes a method with no shell trap → callers hit TypeError until the
-  #     half loads (silent in tests if the bundle is already in flight)
-  #   - shell traps a name the half never implements → silent no-op forever
-  # Both fail the build instead of waiting for a prod report.
-  def assert_trap_coverage!
-    pairs = split_pairs
-    return if pairs.empty?
-
-    errors = []
-    pairs.each do |p|
-      declared = half_deferred_methods(p[:half])
-      trapped = shell_trapped_methods(p[:shell])
-
-      if declared.empty?
-        errors << "#{p[:half]} must declare an `__deferred: [...]` list of shell-trapped method names (returned alongside the methods)"
-        next
-      end
-
-      missing_traps = declared - trapped
-      orphan_traps = trapped - declared
-
-      missing_traps.each do |m|
-        errors << "#{p[:shell]} is missing a trap for `#{m}` declared in #{p[:half]} (add a method that calls `this._deferBehavior('#{m}', arguments)` or the closure-scoped equivalent)"
-      end
-      orphan_traps.each do |m|
-        errors << "#{p[:shell]} traps `#{m}` but #{p[:half]} does not list it in `__deferred` (orphan trap — either remove it or add the method to the half)"
-      end
-    end
-    return if errors.empty?
-
-    abort("[js_processor] BUILD FAILED — split trap coverage mismatch:\n  " + errors.join("\n  "))
-  end
-
-  # Build guard: split files keep their canonical SPLIT COMPONENT banner near the
-  # top of the file. A maintainer who strips the header during a refactor loses
-  # the most visible signal that a boundary exists; this assert catches the drift.
-  SPLIT_HEADER_SHELL = 'SPLIT COMPONENT — EAGER SHELL'
-  SPLIT_HEADER_HALF  = 'SPLIT COMPONENT — LAZY BEHAVIOR HALF'
-  def assert_split_headers!
-    pairs = split_pairs
-    return if pairs.empty?
-
-    errors = []
-    pairs.each do |p|
-      shell_path = File.join(@source_dir, p[:shell])
-      half_path  = File.join(@source_dir, p[:half])
-
-      if File.exist?(shell_path)
-        head = File.read(shell_path).lines.first(30).join
-        errors << "#{p[:shell]} is missing the `#{SPLIT_HEADER_SHELL}` header banner in the first 30 lines" unless head.include?(SPLIT_HEADER_SHELL)
-      end
-
-      if File.exist?(half_path)
-        head = File.read(half_path).lines.first(30).join
-        errors << "#{p[:half]} is missing the `#{SPLIT_HEADER_HALF}` header banner in the first 30 lines" unless head.include?(SPLIT_HEADER_HALF)
-      end
-    end
-    return if errors.empty?
-
-    abort("[js_processor] BUILD FAILED — split header banner missing:\n  " + errors.join("\n  "))
-  end
-
-  # Build guard for split components: a `nds-X__delegated.js` behavior half is only
-  # valid when its eager shell ships in main, owns a real registry namespace, and
-  # the half attaches via _installBehavior rather than redefining NDS.X.
-  def assert_splits_valid!
-    pairs = split_pairs
-    return if pairs.empty?
-
-    reg = loader_registry
-    main = @bundles['nds-main.min.js'] || []
-    errors = []
-
-    pairs.each do |p|
-      ns = scan_namespaces([p[:shell]]).first
-      errors << "#{p[:shell]} (eager shell of #{p[:half]}) must be listed in nds-main.min.js" unless main.include?(p[:shell])
-      if ns.nil?
-        errors << "#{p[:shell]} must exist and assign NDS.<Name> (eager shell of #{p[:half]})"
-        next
-      end
-      errors << "#{ns} (#{p[:shell]}) must be a component in the nds-loader.js registry" unless reg[:names].include?(ns)
-      half_path = File.join(@source_dir, p[:half])
-      if File.exist?(half_path) && File.read(half_path) =~ /\bNDS\.#{Regexp.escape(ns)}\s*=(?!=)/
-        errors << "#{p[:half]} must attach via NDS.#{ns}._installBehavior(...), not reassign NDS.#{ns}"
-      end
-    end
-    return if errors.empty?
-
-    abort("[js_processor] BUILD FAILED — invalid split component(s):\n  " + errors.join("\n  "))
   end
 
   # Compress JavaScript with Terser. When site.debug is on the bundle is left
@@ -343,9 +202,6 @@ class JSProcessor
 
     # Fail fast if location (build) contradicts classification (registry).
     assert_no_critical_in_injected!
-    assert_splits_valid!
-    assert_trap_coverage!
-    assert_split_headers!
 
     # Check if any changed files are part of bundles
     bundles_to_process = []
@@ -400,8 +256,6 @@ class JSProcessor
         manifest_js = ''
         if bundle_name == 'nds-main.min.js'
           manifest_js = "window.__NDS_BUNDLES=#{JSON.generate(bundle_manifest)};\n"
-          split = split_manifest
-          manifest_js += "window.__NDS_SPLIT=#{JSON.generate(split)};\n" unless split.empty?
         end
         final_content = header_comment + manifest_js + final_content
 

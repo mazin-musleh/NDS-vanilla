@@ -1885,9 +1885,9 @@
     // Stepper Fallback dropmenu: picks the always-on variant that acts as the
     // fallback when no breakpoint override matches. data-stepper-fallback on
     // each dropmenu item carries the variant name (horizontal|vertical|radial).
-    // Routes through NDS.Stepper.setFallback(id, variant) — the public trap
-    // surface — so the call queues + replays cleanly even when the lazy half
-    // hasn't attached yet (e.g. first click after page reveal).
+    // Routes through the public NDS.Stepper.setFallback(id, variant) rather than
+    // reaching into the instance, so the authored fallback, the always-on class,
+    // and apply()'s live toggle stay coherent.
     function initializeStepperFallbackMenu() {
         document.addEventListener('click', function (e) {
             const btn = e.target.closest('[data-stepper-fallback]');
@@ -1948,11 +1948,8 @@
             const simplify = (newFb, effective) => {
                 // Strip every BP class, then set the new fallback (which
                 // updates the always-on variant class + instance state and
-                // re-runs apply via the shell's _applyLayout). Finally,
-                // re-add BP overrides only where effective differs from the
-                // new fallback. NDS.Stepper.setFallback traps + queues
-                // pre-attach, so this is safe to call before the lazy half
-                // has loaded.
+                // re-applies the responsive layout). Finally, re-add BP
+                // overrides only where effective differs from the new fallback.
                 for (const bp of BPS) {
                     for (const v of VARIANTS) stepper.classList.remove(`nds-${v}-${bp}`);
                 }
