@@ -1,21 +1,65 @@
 /**
- * NDS Pagination Component
- * Automatically collapses pagination with 5+ pages into dropdown menu
+ * NDS Pagination Component — Eager shell
+ *
+ * SPLIT COMPONENT — EAGER SHELL
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Owns at first paint (rides nds-main.min.js, critical:true so the loader
+ * fires init() during the reveal-gating pass):
+ *   - HTML builders + the manual-collapse path (NDSPagination +
+ *     collapsePagination + createDropdown): 5+ pages collapse to
+ *     [Prev] 1 2 3 [ellipsis] N [Next] so author-written full lists never
+ *     paint then collapse (horizontal CLS).
+ *   - Auto-pagination initial paint (setupAutoContainer → updateAutoPagination):
+ *     generates the collapsed list from data-total-pages, hides items past
+ *     --per-page via showPage, locks table column widths from the all-rows
+ *     skeleton, stamps data-paged-initialized so the skeleton reveals.
+ *   - Initial active-state stamping (setActivePage + updatePrevNextStates +
+ *     initializePaginationStates) so the active page is highlighted and the
+ *     prev/next disabled states are correct on first frame.
+ *   - One capture-phase document click listener — armed only during the
+ *     pre-attach gap; _installBehavior removes it once the half attaches.
+ *     While armed it kicks NDS.loadSplit('Pagination') the moment any
+ *     pagination is clicked, and preventDefaults anchor clicks inside
+ *     auto-paginations (their href is typically "#"; letting them navigate
+ *     in the gap would push that into the URL).
+ *
+ * Defers to the lazy half (nds-pagination__delegated.js, joins
+ * nds-delegated.min.js, loads via NDS.loadSplit('Pagination')):
+ *   - The global delegated click handler for manual pagination navigation
+ *     (prev/next, direct page, portaled dropmenu items)
+ *   - Per-nav click handler for auto-pagination (wireAutoClicks)
+ *   - goToPage (active stamp + prev/next + showPage + scrollToContent)
+ *   - scrollToContent (sticky-nav-aware smooth scroll after a click)
+ *   - refreshAutoPagination (filter-driven refresh; the NDS.Pagination.refresh
+ *     public entry)
+ *   - The per-container --per-page ResizeObserver + the .nds-paged-content
+ *     onDOMRemove cleanup
+ *
+ * Contract: public NDS.Pagination.refresh routes through the closure-scoped
+ * `behavior` dispatch. Pre-attach, each entry on `behavior` is a trap
+ * (queue + NDS.loadSplit + promise). The half installs via
+ * NDS.Pagination._installBehavior(factory) and Object.assigns its `spec` over
+ * `behavior`; spec.__deferred names every trapped method (build asserts
+ * cover both directions). The shell also queues per-auto-pagination wirings
+ * via the internal behavior._wireAutoNav trap so the half can wire clicks +
+ * the --per-page resize observer once it attaches. See CLAUDE.md
+ * "JS Bundles & Shrinking the Critical Bundle" for the broader split-component
+ * rules.
  *
  * Display pattern: [Prev] 1 2 3 ... [Last] [Next]
  * - Always shows first 3 pages and last page
  * - All middle pages (4 to second-to-last) grouped in dropdown menu (...)
  *
- * Supports both <button> and <a> elements for pagination items
- * - Buttons use disabled attribute for prev/next
- * - Anchors use aria-disabled and .disabled class for prev/next
+ * Supports both <button> and <a> elements for pagination items.
  */
 
 (function() {
     'use strict';
 
-    // One-shot guard for the auto-pagination DOM-removal listener.
-    let _autoCleanupReady = false;
+    let _behaviorInstalled = false;
+    let _pendingBehavior = null;
+    let _splitKickWired = false;
+    let _splitKickHandler = null;
 
     // Read --per-page for a paged-content container. Prefers the inline style —
     // the common case is a consumer setting style="--per-page:N", and an inline
@@ -310,34 +354,22 @@
     function updatePrevNextStates(pagination, currentPageNum, minPage, maxPage) {
         const prevBtn = pagination.querySelector('.nds-pagination-prev button, .nds-pagination-prev a');
         const nextBtn = pagination.querySelector('.nds-pagination-next button, .nds-pagination-next a');
+        applyEdgeState(prevBtn, currentPageNum === minPage);
+        applyEdgeState(nextBtn, currentPageNum === maxPage);
+    }
 
-        if (prevBtn) {
-            if (prevBtn.tagName.toLowerCase() === 'button') {
-                prevBtn.disabled = currentPageNum === minPage;
-            } else {
-                if (currentPageNum === minPage) {
-                    NDS.aria.disabled(prevBtn, true);
-                    NDS.State.add(prevBtn, 'disabled');
-                } else {
-                    NDS.aria.disabled(prevBtn, null);
-                    NDS.State.remove(prevBtn, 'disabled');
-                }
-            }
+    // Apply edge (first/last page) disabled state to a prev/next control —
+    // <button> uses the native `disabled` property; <a> can't be disabled
+    // natively, so encode the state via aria + data-state for the SCSS.
+    function applyEdgeState(btn, isEdge) {
+        if (!btn) return;
+        if (btn.tagName.toLowerCase() === 'button') {
+            btn.disabled = isEdge;
+            return;
         }
-
-        if (nextBtn) {
-            if (nextBtn.tagName.toLowerCase() === 'button') {
-                nextBtn.disabled = currentPageNum === maxPage;
-            } else {
-                if (currentPageNum === maxPage) {
-                    NDS.aria.disabled(nextBtn, true);
-                    NDS.State.add(nextBtn, 'disabled');
-                } else {
-                    NDS.aria.disabled(nextBtn, null);
-                    NDS.State.remove(nextBtn, 'disabled');
-                }
-            }
-        }
+        NDS.aria.disabled(btn, isEdge || null);
+        if (isEdge) NDS.State.add(btn, 'disabled');
+        else NDS.State.remove(btn, 'disabled');
     }
 
     // Initialize prev/next button states based on active page
@@ -391,25 +423,12 @@
 
     // Auto-Pagination Generator for content-based pagination
     function initializeAutoPagination() {
-        // Release pooled ResizeObserver subscriptions when paged-content
-        // containers leave the DOM. Wired once for the page; idempotent.
-        if (!_autoCleanupReady) {
-            _autoCleanupReady = true;
-            NDS.onDOMRemove('.nds-paged-content', removed => {
-                removed.forEach(el => {
-                    if (el._offResize) {
-                        el._offResize();
-                        delete el._offResize;
-                    }
-                });
-            });
-        }
-
         document.querySelectorAll('.nds-pagination[data-auto-pagination]').forEach(setupAutoContainer);
     }
 
     // Wire one auto-pagination container: paginate to final state now, then
-    // track --per-page changes on resize. Skips already-initialized navs and
+    // hand off to the half (via behavior._wireAutoNav) for click handlers +
+    // the --per-page resize observer. Skips already-initialized navs and
     // code-example fixtures; the content container is the previous sibling.
     function setupAutoContainer(paginationNav) {
         if (paginationNav.hasAttribute('data-nds-auto-pagination-initialized') ||
@@ -422,13 +441,14 @@
             return;
         }
 
-        const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
-
-        // --per-page is read inside paginate() below (deferred a frame for
-        // tables) so readPerPage's getComputedStyle fallback lands post-paint,
-        // where the collapsed table is already laid out — no synchronous forced
-        // recalc during the init burst. Cached on the container for refresh().
-        let lastPerPage;
+        // Filter-aware: skip [data-filtered] items so a URL-active filter at
+        // page open doesn't paint a full-items nav now, then trim to display:none
+        // via the half's post-reveal refresh-replay → CLS. Filter is registered
+        // before Pagination in nds-loader.js so applyUrlParams() has already
+        // stamped data-filtered by the time we get here; on plain pages this
+        // filter is a no-op (no items carry the attribute).
+        const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'))
+            .filter(item => !item.hasAttribute('data-filtered'));
 
         // Build the paginated UI in final state — no all-items → paginated
         // flash. For a table, lockTableColumns first freezes column widths
@@ -437,11 +457,20 @@
         // is released only AFTER paginating, so the collapse — and thus the
         // all-rows column sizing — survives through the lock.
         const paginate = () => {
-            lastPerPage = readPerPage(contentContainer);
-            contentContainer._ndsPerPage = lastPerPage;
+            const perPage = readPerPage(contentContainer);
+            contentContainer._ndsPerPage = perPage;
             lockTableColumns(items);
-            updateAutoPagination(paginationNav, items, lastPerPage);
+            updateAutoPagination(paginationNav, items, perPage);
             contentContainer.setAttribute('data-paged-initialized', '');
+
+            // Hand off to the half: clicks + the --per-page ResizeObserver.
+            // Pre-attach this is a trap (queues + NDS.loadSplit('Pagination'));
+            // post-attach (e.g. an auto-pagination injected at runtime) it's
+            // the real function and runs synchronously. The half re-queries
+            // items live (per click, per resize), so the spec doesn't carry
+            // the snapshot — only the per-container handles + the perPage
+            // baseline (which the resize observer detects changes against).
+            behavior._wireAutoNav({ paginationNav, contentContainer, perPage });
         };
 
         // Tables defer one frame: by the next paint the collapsed table is
@@ -452,25 +481,13 @@
         if (items[0] && items[0].tagName === 'TR') requestAnimationFrame(paginate);
         else paginate();
 
-        // Watch for --per-page changes on resize. Stored handle lets the
-        // module-level `.nds-paged-content` removal listener release the
-        // pooled ResizeObserver entry when this container leaves the DOM.
-        contentContainer._offResize = NDS.onElementResize(contentContainer, NDS.debounce(() => {
-            const currentPerPage = readPerPage(contentContainer);
-            if (lastPerPage !== undefined && currentPerPage !== lastPerPage) {
-                lastPerPage = currentPerPage;
-                contentContainer._ndsPerPage = currentPerPage;
-                updateAutoPagination(paginationNav, items, currentPerPage);
-            }
-        }, 150));
-
         paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
     }
 
     // Rebuild an auto-pagination nav for the given --per-page, preserving the
-    // current page, then (re)wire its clicks over `items`. Used by the initial
-    // build and the resize handler; the filter-refresh path shares the same
-    // click wiring via wireAutoClicks.
+    // current page. Caller (the shell's initial paint in setupAutoContainer, or
+    // the half's resize callback + refresh entry) is responsible for wiring
+    // click handlers afterwards — wireAutoClicks lives in the half.
     function updateAutoPagination(paginationNav, items, perPage) {
         const totalPages = Math.ceil(items.length / perPage);
 
@@ -492,47 +509,6 @@
         paginationNav.innerHTML = generatePaginationHTML(totalPages, newCurrentPage, true);
         showPage(items, newCurrentPage, perPage);
         wireGeneratedPagination(paginationNav, newCurrentPage);
-
-        const newPagination = paginationNav.querySelector('.nds-pagination-list');
-        wireAutoClicks(newPagination, () => items, perPage, totalPages);
-    }
-
-    // Shared click handler for both auto-pagination paths (initial/resize and
-    // filter refresh). getItems() returns the current set to page over — the
-    // static list for the initial build, a re-filtered list for refresh.
-    // Portaled dropmenu items reach this listener via the wrapper's
-    // re-dispatched click (see nds-dropmenu.js).
-    function wireAutoClicks(newPagination, getItems, perPage, totalPages) {
-        newPagination.addEventListener('click', (e) => {
-            const pageElement = e.ndsDropmenuItem
-                || e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
-
-            if (pageElement) {
-                // Prevent default for anchors in auto-pagination.
-                if (pageElement.tagName.toLowerCase() === 'a') e.preventDefault();
-                const pageNumber = pageNumberOf(pageElement);
-                if (pageNumber) {
-                    goToPage(newPagination, getItems(), pageNumber, perPage, totalPages);
-                }
-            } else {
-                // Prev/next (support both buttons and anchors).
-                const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
-                const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
-                const currentPage = getCurrentPage(newPagination);
-
-                if (prevElement) {
-                    e.preventDefault();
-                    if (currentPage > 1) {
-                        goToPage(newPagination, getItems(), currentPage - 1, perPage, totalPages);
-                    }
-                } else if (nextElement) {
-                    e.preventDefault();
-                    if (currentPage < totalPages) {
-                        goToPage(newPagination, getItems(), currentPage + 1, perPage, totalPages);
-                    }
-                }
-            }
-        });
     }
 
     // Stamp data-state="active" on the active page button after innerHTML.
@@ -622,11 +598,7 @@
         const end = start + perPage;
 
         items.forEach((item, index) => {
-            if (index >= start && index < end) {
-                item.hidden = false;
-            } else {
-                item.hidden = true;
-            }
+            item.hidden = index < start || index >= end;
         });
     }
 
@@ -640,187 +612,68 @@
         return 1;
     }
 
-    // Helper function to scroll to the top of the content list
-    function scrollToContent(pagination) {
-        const nav = document.querySelector('.nds-main-nav');
-        const navHeight = nav ? nav.offsetHeight : 72;
-
-        const paginationNav = pagination.closest('.nds-pagination');
-        if (!paginationNav) return;
-
-        const contentContainer = paginationNav.previousElementSibling;
-        const targetElement = (contentContainer && contentContainer.classList.contains('nds-paged-content'))
-            ? contentContainer
-            : paginationNav;
-
-        // Tunable gap between the sticky nav and the pagination scroll target.
-        // Override per-page or globally via `--pagination-scroll-offset`.
-        const offsetVar = parseFloat(getComputedStyle(paginationNav).getPropertyValue('--pagination-scroll-offset'));
-        const offset = Number.isFinite(offsetVar) ? offsetVar : 120;
-
-        // Only scroll if the top of the content is above the viewport
-        const targetTop = targetElement.getBoundingClientRect().top;
-        if (targetTop < navHeight) {
-            const scrollPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - offset;
-            window.scrollTo({ top: scrollPosition, behavior: 'smooth' });
-        }
-    }
-
-    function goToPage(pagination, items, pageNumber, perPage, totalPages) {
-        // Set active page with aria-current
-        setActivePage(pagination, pageNumber);
-
-        // Update prev/next button states
-        updatePrevNextStates(pagination, pageNumber, 1, totalPages);
-
-        // Show page items
-        showPage(items, pageNumber, perPage);
-
-        // Scroll to top of content
-        scrollToContent(pagination);
-    }
-
-    // Global click handler for manual pagination (not auto-pagination).
-    // Module-lifetime — the loader fires once per page and pagination has no
-    // teardown, so a plain listener (no AbortController) is correct here.
-    document.addEventListener('click', (e) => {
-        // Early-exit for clicks outside any pagination. Portaled dropmenu
-        // re-dispatch (nds-dropmenu fires a synthetic click on the wrapper,
-        // which sits inside .nds-pagination-list and carries
-        // `e.ndsDropmenuItem`) still satisfies this gate, so portaled items
-        // aren't filtered out. The captured `pagination` is reused below as
-        // the resolved container — closest() from any descendant resolves to
-        // the same ancestor (paginations don't nest), so no second walk.
-        const pagination = e.target.closest?.('.nds-pagination-list');
-        if (!pagination) return;
-
-        const portaledItem = e.ndsDropmenuItem || null;
-
-        const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a');
-        const dropdownItem = portaledItem || e.target.closest('.nds-pagination-list .nds-dropmenu-item');
-        const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
-        const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
-
-        const clickedElement = pageElement || dropdownItem;
-
-        // If neither page element nor prev/next clicked, return
-        if (!clickedElement && !prevElement && !nextElement) return;
-
-        // Skip if this is an auto-pagination (handled by its own listener)
-        const paginationNav = pagination.closest('.nds-pagination');
-        if (paginationNav && paginationNav.hasAttribute('data-nds-auto-pagination-initialized')) {
-            return;
-        }
-
-        // Handle prev/next clicks
-        if (prevElement || nextElement) {
-            const allPageElements = getAllPageElements(pagination);
-            const currentActive = allPageElements.find(el => el.ariaCurrent === 'page');
-            if (!currentActive) return;
-
-            const currentPageNum = pageNumberOf(currentActive);
-            if (isNaN(currentPageNum)) return;
-
-            const targetPageNum = prevElement ? currentPageNum - 1 : currentPageNum + 1;
-
-            // Find the target page element (portal-aware)
-            const targetElement = allPageElements.find(el => {
-                const pageNum = pageNumberOf(el);
-                return pageNum === targetPageNum;
-            });
-
-            if (!targetElement) return;
-
-            // Set active page with aria-current
-            setActivePage(pagination, targetPageNum);
-
-            // Update prev/next button states
-            const pageNumbers = allPageElements.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
-            const minPage = Math.min(...pageNumbers);
-            const maxPage = Math.max(...pageNumbers);
-
-            updatePrevNextStates(pagination, targetPageNum, minPage, maxPage);
-
-            // Scroll to top of content
-            scrollToContent(pagination);
-
-            return;
-        }
-
-        // Handle direct page clicks
-        if (clickedElement) {
-            const clickedPageNum = pageNumberOf(clickedElement);
-            if (!isNaN(clickedPageNum)) {
-                // Set active page with aria-current
-                setActivePage(pagination, clickedPageNum);
-
-                // Update prev/next button states (portal-aware)
-                const allPageElements = getAllPageElements(pagination);
-                const pageNumbers = allPageElements.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
-                const minPage = Math.min(...pageNumbers);
-                const maxPage = Math.max(...pageNumbers);
-
-                updatePrevNextStates(pagination, clickedPageNum, minPage, maxPage);
-
-                // Scroll to top of content
-                scrollToContent(pagination);
+    // Capture-phase document click listener — armed only during the pre-attach
+    // gap. Two jobs while the half is loading:
+    //   1. Kick NDS.loadSplit('Pagination') so the user's first click also
+    //      pulls in the behavior bundle (covers the case where init kicked
+    //      it but the user is impatient and clicks before it lands).
+    //   2. preventDefault anchor clicks inside auto-paginations — those hrefs
+    //      are typically "#", and letting the browser navigate in the gap
+    //      would push that into the URL.
+    // Capture runs before bubble and does NOT stop propagation, so the half's
+    // bubble-phase listener still sees the same event after attach.
+    // _installBehavior removes this listener once the half attaches; the
+    // bubble handlers there own click flow from then on.
+    function _wireSplitKick() {
+        if (_splitKickWired) return;
+        _splitKickWired = true;
+        _splitKickHandler = (e) => {
+            const inPagination = e.target.closest?.('.nds-pagination-list');
+            if (!inPagination) return;
+            NDS.loadSplit('Pagination');
+            const a = e.target.closest('a');
+            if (a && a.closest('.nds-pagination[data-auto-pagination]')) {
+                e.preventDefault();
             }
-        }
+        };
+        document.addEventListener('click', _splitKickHandler, true);
+    }
+
+    // ─── Split-behavior bridge ───────────────────────────────────────────
+    // Each entry on `behavior` is initially a trap: queue + NDS.loadSplit +
+    // promise. The half's _installBehavior Object.assigns real methods over
+    // `behavior`; _flushPendingBehavior replays the queue. Per-entry
+    // try/catch keeps one throw from sinking siblings.
+    const _deferBehavior = (name, args) => new Promise((resolve, reject) => {
+        (_pendingBehavior || (_pendingBehavior = [])).push({ name, args, resolve, reject });
+        NDS.loadSplit('Pagination');
     });
 
-    // Refresh auto-pagination for a specific content container (used by filters)
-    function refreshAutoPagination(contentContainer) {
-        if (!contentContainer) return;
-
-        // Find the pagination nav associated with this content container
-        const paginationNav = contentContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
-        if (!paginationNav) return;
-
-        // Get only visible (non-filtered) items
-        const allItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'));
-        const visibleItems = allItems.filter(item => !item.hasAttribute('data-filtered'));
-
-        const perPage = contentContainer._ndsPerPage || readPerPage(contentContainer);
-        const totalPages = Math.ceil(visibleItems.length / perPage);
-
-        // If no pagination needed (0 or 1 page), hide pagination and show all visible items
-        if (totalPages <= 1) {
-            visibleItems.forEach(item => item.hidden = false);
-            paginationNav.innerHTML = '';
-            paginationNav.style.display = 'none';
-            return;
+    const _flushPendingBehavior = () => {
+        const q = _pendingBehavior;
+        if (!q) return;
+        _pendingBehavior = null;
+        for (const c of q) {
+            try {
+                c.resolve(behavior[c.name].apply(behavior, c.args));
+            } catch (e) {
+                console.warn(`NDS Pagination: split replay failed for ${c.name}:`, e);
+                c.reject(e);
+            }
         }
+    };
 
-        // Show pagination
-        paginationNav.style.display = '';
-
-        // Generate the collapsed list directly (no build-all-then-collapse)
-        paginationNav.innerHTML = generatePaginationHTML(totalPages, 1, true);
-
-        // Show first page items
-        showPage(visibleItems, 1, perPage);
-
-        // Wire the ellipsis dropmenu + stamp active state
-        wireGeneratedPagination(paginationNav, 1);
-
-        // Wire clicks; re-filter the item set on each click in case the
-        // filter changed since this nav was generated.
-        const newPagination = paginationNav.querySelector('.nds-pagination-list');
-        wireAutoClicks(
-            newPagination,
-            () => Array.from(contentContainer.querySelectorAll('.nds-page-item'))
-                .filter(item => !item.hasAttribute('data-filtered')),
-            perPage,
-            totalPages
-        );
-    }
+    const behavior = {
+        refresh:      function () { return _deferBehavior('refresh', arguments); },
+        _wireAutoNav: function () { return _deferBehavior('_wireAutoNav', arguments); },
+    };
 
     // Expose global API for unified init system
     NDS.Pagination = {
-        init: initializePagination,
+        init: () => { _wireSplitKick(); initializePagination(); },
         initAuto: initializeAutoPagination,
         create: (container) => new NDSPagination(container),
-        refresh: refreshAutoPagination,
+        refresh: (container) => behavior.refresh(container),
         setPage: function(container, pageNumber) {
             const pagination = container.querySelector('.nds-pagination-list') || container;
             const allPages = getAllPageElements(pagination);
@@ -828,7 +681,37 @@
             if (pageNumbers.length === 0) return;
             setActivePage(pagination, pageNumber);
             updatePrevNextStates(pagination, pageNumber, Math.min(...pageNumbers), Math.max(...pageNumbers));
-        }
+        },
+
+        // Shell-private surface for the half — read at install time, used by
+        // the half's interaction code (manual click handler, goToPage,
+        // refreshAutoPagination, the resize callback).
+        _updateAutoPagination: updateAutoPagination,
+        _generatePaginationHTML: generatePaginationHTML,
+        _showPage: showPage,
+        _wireGeneratedPagination: wireGeneratedPagination,
+        _setActivePage: setActivePage,
+        _updatePrevNextStates: updatePrevNextStates,
+        _getAllPageElements: getAllPageElements,
+        _getCurrentPage: getCurrentPage,
+        _pageNumberOf: pageNumberOf,
+        _readPerPage: readPerPage,
+
+        _installBehavior: (factory) => {
+            if (_behaviorInstalled) return;
+            _behaviorInstalled = true;
+            const spec = factory(NDS.Pagination);
+            delete spec.__deferred;
+            Object.assign(behavior, spec);
+            _flushPendingBehavior();
+            // Pre-attach kick listener has served its purpose — the half's
+            // bubble-phase handlers now own click flow. Drop the capture-phase
+            // listener so future clicks skip its no-op closest() walk.
+            if (_splitKickHandler) {
+                document.removeEventListener('click', _splitKickHandler, true);
+                _splitKickHandler = null;
+            }
+        },
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

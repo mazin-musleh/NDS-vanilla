@@ -306,11 +306,33 @@
             init: () => NDS.Autocomplete?.init?.(),
         },
         {
+            // Critical: init is cheap now (scoped surface lookups + deferred option
+            // builds) and filtering controls visible content, so wiring it before
+            // first paint keeps URL-active filters and interactions ready.
+            // Registered BEFORE Pagination: applyUrlParams() stamps data-filtered
+            // on URL-inactive items, and Pagination's filter-aware setupAutoContainer
+            // reads visible-only items for its initial paint — so a URL-active
+            // filter at page open paints the correct (often smaller, often empty)
+            // nav once, instead of painting full and then trimming via the lazy
+            // half's queued refresh-replay → CLS.
+            // Gate on [data-filter-target] (not .nds-filter): a filter is defined
+            // by its target link, so it must init even when there's no .nds-filter
+            // dropdown (e.g. a search-only filter).
+            name: 'Filter',
+            selector: '[data-filter-target]',
+            init: () => NDS.Filter?.init?.(),
+            critical: true,
+        },
+        {
             // Critical: init now reads --per-page inline-first (no forced recalc)
             // and generates the collapsed list directly, so it no longer needs a
             // settled idle layout; the skeleton CSS still reserves the slot until
-            // data-paged-initialized, so no CLS. Registered before filter so
-            // filter's Pagination.refresh runs after pagination is up.
+            // data-paged-initialized, so no CLS. Registered AFTER Filter so a
+            // URL-active filter has stamped data-filtered before this paint —
+            // setupAutoContainer's filter-aware item read then paints visible-only.
+            // Filter's refresh call during its init is trapped + queued; the half's
+            // post-reveal replay rebuilds with the same visible-only set, so the
+            // mutation is idempotent (no visible CLS).
             name: 'Pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
@@ -330,20 +352,6 @@
             name: 'Alert',
             selector: '.nds-alert',
             init: () => NDS.Alert?.init?.(),
-        },
-        {
-            // Critical: init is cheap now (scoped surface lookups + deferred option
-            // builds) and filtering controls visible content, so wiring it before
-            // first paint keeps URL-active filters and interactions ready. Drives
-            // pagination via Pagination.refresh; pagination is critical and
-            // registered above, so it inits first.
-            // Gate on [data-filter-target] (not .nds-filter): a filter is defined
-            // by its target link, so it must init even when there's no .nds-filter
-            // dropdown (e.g. a search-only filter).
-            name: 'Filter',
-            selector: '[data-filter-target]',
-            init: () => NDS.Filter?.init?.(),
-            critical: true,
         },
         {
             name: 'UserFeedback',

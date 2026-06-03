@@ -54,7 +54,7 @@ class JSProcessor
       # as each is confirmed cold-init / late-init-safe; move the file here and
       # drop `critical: true` from its loader registry entry (location is owned here, not the
       # registry — the build generates the namespace→bundle map from these lists).
-      'nds-delegated.min.js' => ['nds-mainnav__delegated.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js', 'nds-stepper__delegated.js', 'nds-filter__delegated.js'],
+      'nds-delegated.min.js' => ['nds-mainnav__delegated.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js', 'nds-stepper__delegated.js', 'nds-filter__delegated.js', 'nds-pagination__delegated.js'],
       # Extras — heavy, page-specific, zero-inbound leaf components. Injected by
       # nds-loader.js only when the page contains one of them (selector-gated), so
       # plain pages never download/parse them. May later be split into smaller
