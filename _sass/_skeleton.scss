@@ -50,6 +50,7 @@ html:not([data-nds-loaded]) {
     .nds-main-nav .nds-brand {
         display: flex;
         align-items: center;
+        flex-direction: row;
         height: var(--nds-nav-height);
         padding-block: var(--spacing-lg);
         font-weight: bold;
