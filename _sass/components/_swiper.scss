@@ -36,7 +36,7 @@
     }
 
     // Pre-init guard for the hero variant lives in nds.critical.min.scss
-    // (body:not([data-nds-loaded]) scope) so it applies before main CSS.
+    // (html:not([data-nds-loaded]) scope) so it applies before main CSS.
     // Non-hero swipers no longer have a pre-init guard — content is
     // gated by visibility:hidden until JS init completes.
 }

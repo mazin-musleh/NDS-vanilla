@@ -504,6 +504,7 @@
       height: var(--_btn-icon-size);
       background: currentColor;
       mask: var(--nds-icon-more-horizontal) center / contain no-repeat;
+      opacity: var(--nds-icons-opacity, 1);
     }
   }
 
@@ -520,6 +521,7 @@
       height: var(--_btn-icon-size);
       background: currentColor;
       mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
+      opacity: var(--nds-icons-opacity, 1);
       rotate: -90deg;
       transition: transform 0.1s ease;
     }

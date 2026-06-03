@@ -71,6 +71,7 @@
         vertical-align: text-bottom;
         margin-inline-start: var(--spacing-xs);
         mask: var(--_link-icon) center / contain no-repeat;
+        opacity: var(--nds-icons-opacity, 1);
     }
 
     &.nds-icon {

@@ -39,6 +39,7 @@
     height: 1em;
     background: var(--icon-separator);
     mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
+    opacity: var(--nds-icons-opacity, 1);
 }
 
 /* LTR Support - flip arrow direction */

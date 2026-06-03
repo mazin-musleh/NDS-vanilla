@@ -8,7 +8,7 @@
 
     // Helper: Get current loaded fonts from data attribute
     function getLoadedFonts() {
-        const attr = document.body.getAttribute('data-font-loaded');
+        const attr = document.documentElement.getAttribute('data-nds-fonts-loaded');
         return attr ? attr.split(' ').filter(f => f) : [];
     }
 
@@ -17,7 +17,7 @@
         const currentFonts = getLoadedFonts();
         if (!currentFonts.includes(fontName)) {
             currentFonts.push(fontName);
-            document.body.setAttribute('data-font-loaded', currentFonts.join(' '));
+            document.documentElement.setAttribute('data-nds-fonts-loaded', currentFonts.join(' '));
             loadedFonts.add(fontName);
         }
     }
@@ -54,7 +54,7 @@
             const currentState = fontStates.get(fontName);
             if (!currentState || isFontLoaded(fontName)) return; // Prevent double-marking
 
-            // Add font to data-font-loaded attribute
+            // Add font to data-nds-fonts-loaded attribute
             addFontToAttribute(fontName);
 
             currentState.isChecking = false;
@@ -65,7 +65,7 @@
         }
 
         // Notify callers a check ended without a confirmed load, WITHOUT flipping
-        // the gate. data-font-loaded gates icon reveal: an unloaded HGI font
+        // the gate. data-nds-fonts-loaded gates icon reveal: an unloaded HGI font
         // falls back to CJK glyphs, so on error/timeout the safe state is hidden,
         // never "reveal anyway".
         function fail() {
@@ -170,7 +170,7 @@
         loadedFonts: Array.from(loadedFonts),
         fontStates: Object.fromEntries(fontStates),
         dataAttribute: typeof document !== 'undefined'
-            ? document.body.getAttribute('data-font-loaded')
+            ? document.documentElement.getAttribute('data-nds-fonts-loaded')
             : null
     });
 

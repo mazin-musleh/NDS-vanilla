@@ -102,11 +102,11 @@
 @use 'utilities';
 
 // Reveal gate set by _includes/critical-inline.html. Scoped to
-// body[data-nds-loaded] so content waits not just for main CSS to load
-// but also for JS init to complete — pairs with the body:not([data-nds-loaded])
+// html[data-nds-loaded] so content waits not just for main CSS to load
+// but also for JS init to complete — pairs with the html:not([data-nds-loaded])
 // skeleton scope in nds.critical.min.scss.
 
-body[data-nds-loaded] :where(
+html[data-nds-loaded] :where(
     .nds-topbar > *,
     .nds-main-nav > *,
     .nds-content-layout,

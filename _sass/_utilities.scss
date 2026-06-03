@@ -95,6 +95,7 @@ $all-spacers: $spacers;
     height: var(--_number-icon-size);
     background: currentColor;
     mask: var(--nds-icon-riyal) no-repeat center / contain;
+    opacity: var(--nds-icons-opacity, 1);
   }
   &[data-currency="USD"]::after {
     content: "$";

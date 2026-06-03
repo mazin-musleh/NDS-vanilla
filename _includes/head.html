@@ -30,18 +30,12 @@
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
-    <!-- Icons — UI icons inlined (core) + HGI font (content/demo/doc) -->
-    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
     {%- if site.use_hgi_font or page.use_hgi_font %}
     <!-- HGI icon font (content/demo/doc): opacity gate hides icons until the font
          lands. The font is pulled in by loadDeferredAssets() (head-inline-scripts.html)
          off the main-CSS onload below, so its large woff2 never competes during the
          LCP window. -->
-    <style>i.hgi-stroke{opacity:0}body[data-font-loaded~="hgi-stroke-rounded"] i.hgi-stroke{opacity:1}</style>
+    <style>i.hgi-stroke{opacity:0}html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke{opacity:1}</style>
     {%- endif %}
     <!-- Main CSS - Deferred loading for below-the-fold content -->
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"

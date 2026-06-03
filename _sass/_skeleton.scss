@@ -3,12 +3,12 @@
    Pre-init layout reservations — mirror final-state layout for
    components that ship without [hidden] so the parent visibility
    gate (.nds-content-layout etc.) hides paint while layout settles.
-   Scoped to body:not([data-nds-loaded]) so rules deactivate once
+   Scoped to html:not([data-nds-loaded]) so rules deactivate once
    the loader stamps the page-ready signal.
    ======================================== */
 @use './mixins' as *;
 
-body:not([data-nds-loaded]) {
+html:not([data-nds-loaded]) {
     main {
         overflow-x: clip;
     }
@@ -115,7 +115,7 @@ body:not([data-nds-loaded]) {
 }
 
 /* ── Auto-paginated content ──
-   Pagination is idle-tier — runs AFTER body[data-nds-loaded], so the
+   Pagination is idle-tier — runs AFTER html[data-nds-loaded], so the
    body-state gate above deactivates too early. JS stamps
    data-paged-initialized on the paged-content once init completes (see
    _js/nds-pagination.js initializeAutoPagination); gate on that.
@@ -187,6 +187,18 @@ body:not([data-nds-loaded]) {
     .nds-footer) {
     visibility: hidden;
 }
+
+/* ── Icon gate ──
+   Mirrors the inline payload — fallback for sites without inline crit.
+   nds-icons.min.css is JS-injected after main lands; until then the
+   --nds-icon-* tokens are undefined, so any masked pseudo paints as a solid
+   currentColor block. Every masked-icon pseudo writes
+   `opacity: var(--nds-icons-opacity, 1)` next to its `mask:` line; this var
+   ships 0 by default and flips to 1 when the icons sheet's onload
+   (head-inline-scripts.html) stamps html[data-nds-icons-loaded]. New components
+   stay future-proof — just include the opacity line alongside the mask. */
+:root { --nds-icons-opacity: 0; }
+html[data-nds-icons-loaded] { --nds-icons-opacity: 1; }
 
 /* ── Reveal at crit-load ──
    Hero body + wrapper (containing title / description / breadcrumb)

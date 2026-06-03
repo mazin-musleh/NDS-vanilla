@@ -257,6 +257,7 @@
             height: calc(var(--stepper-size)/2);
             background: currentColor;
             mask: var(--nds-icon-checkmark) center / contain no-repeat;
+            opacity: var(--nds-icons-opacity, 1);
         }
     }
 }

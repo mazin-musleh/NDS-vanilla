@@ -589,7 +589,7 @@
                 // Checklist complete — card-revealing components (swiper,
                 // pagination) are up. Stamp the body so critical-CSS skeletons
                 // hand off to the real, now-styled components: this is the reveal.
-                document.body.setAttribute('data-nds-loaded', '');
+                document.documentElement.setAttribute('data-nds-loaded', '');
 
                 // Deferred components whose code is already in main drain in idle
                 // slots immediately — never gated on an injected-bundle fetch.

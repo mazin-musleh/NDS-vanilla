@@ -48,6 +48,7 @@
             height: var(--_quote-mark-size);
             background: var(--_quote-mark-color);
             mask: var(--nds-icon-quote) center / contain no-repeat;
+            opacity: var(--nds-icons-opacity, 1);
             pointer-events: none;
             user-select: none;
         }
