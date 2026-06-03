@@ -44,7 +44,7 @@
         NDS.aria.expanded(tab, true);
         addState(tab, 'expanded');
 
-        requestAnimationFrame(() => requestAnimationFrame(() => removeState(panel, 'opening')));
+        NDS.afterPaint(() => removeState(panel, 'opening'));
 
         panel.dispatchEvent(new CustomEvent('nds-digitalStamp-opened', { bubbles: true }));
     }

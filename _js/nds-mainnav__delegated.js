@@ -64,7 +64,7 @@
                     addState(element, 'open', 'opening');
                     removeState(element, 'closing', 'opened');
                     onStart?.();
-                    requestAnimationFrame(() => requestAnimationFrame(() => removeState(element, 'opening')));
+                    NDS.afterPaint(() => removeState(element, 'opening'));
                     afterDelay(duration, () => { addState(element, 'opened'); finish(); });
                 } else {
                     addState(element, 'closing');

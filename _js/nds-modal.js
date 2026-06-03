@@ -50,12 +50,11 @@
     // Force reflow to ensure initial state is painted before transition
     modal.offsetHeight;
 
-    // Use requestAnimationFrame to trigger animation
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        NDS.State.set(modal, 'open');
-        modal.dispatchEvent(new CustomEvent('nds-modal-opened', { bubbles: true }));
-      });
+    // Schedule the open state for after the from-state paint so the CSS
+    // transition fires instead of jumping.
+    NDS.afterPaint(() => {
+      NDS.State.set(modal, 'open');
+      modal.dispatchEvent(new CustomEvent('nds-modal-opened', { bubbles: true }));
     });
 
     // Enable focus trap

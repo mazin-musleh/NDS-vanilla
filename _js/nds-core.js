@@ -201,6 +201,16 @@
         };
     };
 
+    // ── After Paint ──────────────────────────────────────────────────
+    // Schedules fn to run after the NEXT paint commits — implemented as
+    // two nested requestAnimationFrames. Use when a "from-state" must
+    // paint before a "to-state" mutation triggers a CSS transition
+    // (priming the transition by stamping one state, then removing it
+    // after the browser has painted the from-state so the change to
+    // the to-state animates instead of jumping).
+    // Usage: NDS.afterPaint(() => NDS.State.remove(panel, 'opening'));
+    NDS.afterPaint = (fn) => requestAnimationFrame(() => requestAnimationFrame(fn));
+
     // ── Run-When-Idle ────────────────────────────────────────────────
     // Defers work to a browser-idle slot via requestIdleCallback, with a
     // setTimeout fallback for environments without rIC. Use for non-critical

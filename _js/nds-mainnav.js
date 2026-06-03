@@ -426,7 +426,7 @@
             try {
                 c.resolve(behavior[c.name].apply(behavior, c.args));
             } catch (e) {
-                console.warn(`[NDS] Mainnav split replay failed for ${c.name}:`, e);
+                console.warn(`NDS Mainnav: split replay failed for ${c.name}:`, e);
                 c.reject(e);
             }
         }
