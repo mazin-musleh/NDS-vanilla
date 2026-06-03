@@ -70,6 +70,11 @@ city_longitude: 46.6753
 dga_registration_number: "00000000000"
 dga_registration_url: "#"
 
+# Google Analytics — only rendered when Jekyll runs in production (JEKYLL_ENV=production,
+# which GitHub Pages sets automatically). Leave empty to disable. Local `jekyll serve`
+# defaults to development, so the snippet never ships during local dev.
+google_analytics: "G-RP24HRW7CD"
+
 # Digital Stamp Content (multilingual)
 digital_stamp:
   ar:
