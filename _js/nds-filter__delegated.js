@@ -26,8 +26,7 @@
          * a private helper so the fetch chain stays scannable.
          */
         handleAjaxSubmit() {
-            // Update hidden inputs, URL params, and UI state
-            this.updateHiddenInputs();
+            // Update URL params and UI state
             this.updateUrlParams();
             this.updateFilterButtonLabel();
             this.updateAppliedChips();

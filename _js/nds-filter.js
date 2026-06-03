@@ -291,9 +291,6 @@
                 return;
             }
 
-            // Update hidden inputs before submission
-            this.updateHiddenInputs();
-
             // Set submitting state
             NDS.State.set(this.filterContainer, 'submitting');
 
@@ -332,7 +329,7 @@
                 try {
                     c.resolve(this[c.name].apply(this, c.args));
                 } catch (e) {
-                    console.warn(`[NDS] Filter split replay failed for ${c.name}:`, e);
+                    console.warn(`NDS Filter: split replay failed for ${c.name}`, e);
                     c.reject(e);
                 }
             }
@@ -354,27 +351,6 @@
 
             // Default to 'search'
             return 'search';
-        }
-
-        /**
-         * Update hidden inputs for form submission
-         * In form mode, we don't create hidden inputs since the actual form inputs
-         * (search input, checkboxes) already have the correct 'name' attributes
-         * and will be submitted by the browser automatically.
-         */
-        updateHiddenInputs() {
-            // No hidden inputs needed in form mode
-            // The browser will submit the actual form inputs (search, checkboxes, radios)
-            // based on their 'name' attributes
-            return;
-        }
-
-        /**
-         * Clear hidden inputs (no-op in current implementation)
-         */
-        clearHiddenInputs() {
-            // No hidden inputs to clear - form inputs are cleared directly
-            return;
         }
 
         // ==============================================
@@ -470,7 +446,6 @@
         _settleAfterCriteriaChange() {
             this.updateApplyButtonLabel();
             if (this.isFormMode) {
-                this.updateHiddenInputs();
                 this.updateFilterButtonLabel();
                 this.updateAppliedChips();
             } else {
@@ -570,12 +545,10 @@
             button.addEventListener('click', (e) => {
                 this._syncSearchFromDropmenu();
 
-                // In form mode, update hidden inputs then trigger submission.
-                // We submit programmatically so it works even if the button
-                // isn't natively form-associated.
+                // In form mode, trigger submission programmatically so it works
+                // even if the button isn't natively form-associated.
                 if (this.isFormMode) {
                     e.preventDefault();
-                    this.updateHiddenInputs();
                     this.submitForm();
                     return;
                 }
@@ -1580,7 +1553,6 @@
             // In form mode, just update state (don't submit form programmatically)
             // Form submission only happens from explicit user actions via submitForm()
             if (this.isFormMode) {
-                this.updateHiddenInputs();
                 this.updateUrlParams();
                 this.updateFilterButtonLabel();
                 this.updateAppliedChips();
@@ -1597,11 +1569,6 @@
             if (!hasCriteria) {
                 // Un-hide every item — same as showItem() (used by reset()/destroy()).
                 this.items.forEach(item => this.showItem(item));
-
-                // Update hidden inputs if in form mode
-                if (this.isFormMode) {
-                    this.clearHiddenInputs();
-                }
 
                 // Dismiss no-results alert if exists
                 this.dismissNoResultsAlert();
@@ -1639,11 +1606,6 @@
             this.updateUrlParams();
             this.updateFilterButtonLabel();
             this.updateAppliedChips();
-
-            // Update hidden inputs if in form mode
-            if (this.isFormMode) {
-                this.updateHiddenInputs();
-            }
 
             this._clearLoadingDebounced();
         }
@@ -1884,9 +1846,8 @@
                 this.sort.reset();
             }
 
-            // Clear hidden inputs and form state if in form mode
+            // Clear form state if in form mode
             if (this.isFormMode) {
-                this.clearHiddenInputs();
                 NDS.State.clear(this.filterContainer);
                 NDS.Status.clear(this.filterContainer);
             }
