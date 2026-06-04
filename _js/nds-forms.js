@@ -1,6 +1,4 @@
 // NDS Forms Controller - Form Control Logic
-// File: nds-forms.js
-// Optimized and simplified version
 
 (function () {
     'use strict';
@@ -201,6 +199,7 @@
             if (!element) return { status: '', message: '', isValid: true };
 
             var container = this._findContainer(element);
+            if (!container) return { status: '', message: '', isValid: true };
             var status = NDS.Status.get(container);
             return {
                 status: status,
@@ -220,6 +219,21 @@
     // ==============================================
     // VALIDATION MODULE
     // ==============================================
+
+    // A field is hidden if it — or any ancestor up to the form — carries
+    // [hidden]/.hidden or computed display:none. Used to skip hidden fields
+    // during validation (getComputedStyle is the submit-only read).
+    function isFieldVisible(element, form) {
+        if (!element) return false;
+        var current = element;
+        while (current && current !== form) {
+            if (current.hasAttribute('hidden') || current.hidden) return false;
+            if (window.getComputedStyle(current).display === 'none') return false;
+            current = current.parentElement;
+        }
+        return true;
+    }
+
     var Validator = {
         getMessage: function(input) {
             if (input.hasAttribute('data-error-message')) {
@@ -351,39 +365,12 @@
             return this._finishGroupValidation(group, options, isValid, message, { filled: isAllFilled });
         },
 
-        validateForm: function(formElement, options) {
-            options = options || { showMessages: true, focusFirst: true };
-
-            var form = formElement.closest('.nds-form') || formElement;
-            if (!form) return { valid: true, invalidFields: [], errors: [] };
-
-            var invalidFields = [];
-            var errors = [];
-            var firstInvalidInput = null;
-
-            // Helper function to check if an element is visible
-            function isVisible(element) {
-                if (!element) return false;
-                // Check for hidden attribute on the element or any parent
-                var current = element;
-                while (current && current !== form) {
-                    if (current.hasAttribute('hidden') || current.hidden) {
-                        return false;
-                    }
-                    // Check computed style for display: none
-                    var style = window.getComputedStyle(current);
-                    if (style.display === 'none') {
-                        return false;
-                    }
-                    current = current.parentElement;
-                }
-                return true;
-            }
-
-            // Validate form containers
+        // Validate plain field containers (text/email/number/select/textarea).
+        // Skips hidden fields, OTP containers, and group-managed fields; pushes
+        // each invalid field + message onto the shared accumulator `acc`.
+        _validateContainers: function(form, options, acc) {
             form.querySelectorAll('.nds-form-container').forEach(function(container) {
-                // Skip hidden containers
-                if (!isVisible(container)) return;
+                if (!isFieldVisible(container, form)) return;
 
                 // Skip containers validated at group level (OTP, radio, checkbox)
                 if (container.classList.contains('nds-otp-container')) return;
@@ -405,25 +392,23 @@
                 }
 
                 if (isInvalid) {
-                    invalidFields.push(container);
+                    acc.invalidFields.push(container);
                     var msg = numberMsg || Validator.getMessage(input);
-                    errors.push({
-                        field: container,
-                        input: input,
-                        message: msg
-                    });
+                    acc.errors.push({ field: container, input: input, message: msg });
 
-                    if (!firstInvalidInput) firstInvalidInput = input;
+                    if (!acc.firstInvalidInput) acc.firstInvalidInput = input;
                     if (options.showMessages) {
                         StatusManager.set({ element: container, status: 'error', message: msg });
                     }
                 }
             });
+        },
 
-            // Validate form groups (checkbox, radio)
+        // Validate OTP / checkbox / radio groups; pushes each invalid group +
+        // message onto the shared accumulator `acc`.
+        _validateGroups: function(form, options, acc) {
             form.querySelectorAll('.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required').forEach(function(group) {
-                // Skip hidden groups
-                if (!isVisible(group)) return;
+                if (!isFieldVisible(group, form)) return;
 
                 var hasCheckboxes = group.querySelector('input[type="checkbox"]');
                 var hasRadios = group.querySelector('input[type="radio"]');
@@ -431,43 +416,58 @@
                 if (group.classList.contains('nds-otp-group')) {
                     var result = Validator.validateOtpGroup(group, { showMessage: options.showMessages });
                     if (!result.valid) {
-                        invalidFields.push(group);
+                        acc.invalidFields.push(group);
                         var otpFirst = group.querySelector('.nds-otp-container input');
-                        errors.push({ field: group, input: otpFirst, message: result.message });
-                        if (!firstInvalidInput) firstInvalidInput = otpFirst;
+                        acc.errors.push({ field: group, input: otpFirst, message: result.message });
+                        if (!acc.firstInvalidInput) acc.firstInvalidInput = otpFirst;
                     }
                 } else if (hasCheckboxes) {
                     var result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
                     if (!result.valid) {
-                        invalidFields.push(group);
-                        errors.push({ field: group, input: hasCheckboxes, message: result.message });
-                        if (!firstInvalidInput) firstInvalidInput = hasCheckboxes;
+                        acc.invalidFields.push(group);
+                        acc.errors.push({ field: group, input: hasCheckboxes, message: result.message });
+                        if (!acc.firstInvalidInput) acc.firstInvalidInput = hasCheckboxes;
                     }
                 } else if (hasRadios) {
                     var result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
                     if (!result.valid) {
-                        invalidFields.push(group);
-                        errors.push({ field: group, input: hasRadios, message: result.message });
-                        if (!firstInvalidInput) firstInvalidInput = hasRadios;
+                        acc.invalidFields.push(group);
+                        acc.errors.push({ field: group, input: hasRadios, message: result.message });
+                        if (!acc.firstInvalidInput) acc.firstInvalidInput = hasRadios;
                     }
                 }
             });
+        },
 
-            if (options.focusFirst && firstInvalidInput) {
-                firstInvalidInput.focus();
+        // Thin orchestrator over both validation passes (shared accumulator),
+        // then focus first-invalid + dispatch. Synchronous by contract — the
+        // submit handler reads the result to gate preventDefault.
+        validateForm: function(formElement, options) {
+            options = options || { showMessages: true, focusFirst: true };
+
+            var form = formElement.closest('.nds-form') || formElement;
+            if (!form) return { valid: true, invalidFields: [], errors: [] };
+
+            var acc = { invalidFields: [], errors: [], firstInvalidInput: null };
+
+            this._validateContainers(form, options, acc);
+            this._validateGroups(form, options, acc);
+
+            if (options.focusFirst && acc.firstInvalidInput) {
+                acc.firstInvalidInput.focus();
             }
 
-            var isFormValid = invalidFields.length === 0;
+            var isFormValid = acc.invalidFields.length === 0;
 
             form.dispatchEvent(new CustomEvent('nds:formValidate', {
-                detail: { valid: isFormValid, invalidFields: invalidFields, errors: errors },
+                detail: { valid: isFormValid, invalidFields: acc.invalidFields, errors: acc.errors },
                 bubbles: true
             }));
 
             return {
                 valid: isFormValid,
-                invalidFields: invalidFields,
-                errors: errors
+                invalidFields: acc.invalidFields,
+                errors: acc.errors
             };
         }
     };
@@ -1106,7 +1106,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                var itemText = (item.textContent || item.innerText).trim().replace(/\s+/g, ' ');
+                var itemText = item.textContent.trim().replace(/\s+/g, ' ');
 
                 var targetInput = document.getElementById(targetId) ||
                     document.querySelector('[name="' + targetId + '"]') ||
