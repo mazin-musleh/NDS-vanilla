@@ -47,7 +47,7 @@ Audit like a perf engineer reading the compiled CSS bundle. Every finding either
 
 CSS edits cascade. The skill **suggests, never auto-applies**. Each finding ends with a proposed rewrite the user accepts or skips. Phase 5 APPLY exists but runs ONLY when the user explicitly chooses a numbered action or `apply` filter.
 
-The rule catalog is a living document — Phase 3 tracks gaps and SKIPs during the audit; Phase 6 EVOLVE reconciles them against `MATURITY.md` at the end of every run, surfaces promotion/demotion/refinement candidates, and heals citation drift so the catalog sharpens rather than silently shrinks.
+The rule catalog is a living document — Phase 3 tracks gaps and SKIPs during the audit; Phase 6 EVOLVE reconciles them at the end of the run (session-scoped — it reads no persisted ledger), surfaces promotion/refinement candidates, and flags citation drift so the catalog sharpens rather than silently shrinks. It writes nothing to the repo — a rule's lifecycle and the catalog's lessons live inline in the committed `RULES-*.md` files.
 
 ---
 
@@ -77,7 +77,7 @@ Default to advancing, not asking. Run the audit and emit the report. Pause ONLY 
 
 Read-only / reversible steps (running the audit, emitting the report, `save`-ing it on request) take the recommended action without extra confirmation. `save` is never the recommendation — offer it as a clause when it would pay off, let the user decide.
 
-Phase 6 EVOLVE auto-applies catalog bookkeeping (match counts, status promotions, citation healing) at the end of every run — these are reversible via git if the user disagrees. Controversial changes (deleting a rule, promoting a gap to a new rule) are NEVER auto-applied — they surface as candidates in a `## Catalog evolved` section and require user edits to `RULES-*.md` / `SKILL.md` directly. The user is the only one who adds, removes, or rewrites rules; Phase 6 only records what happened.
+Phase 6 EVOLVE writes NOTHING to the repo — it is session-scoped. It surfaces catalog-change candidates (gap→rule promotions, rule refinements, resolved-example regression-guard annotations, citation drift) in a `## Catalog evolved` section of the report; the user makes any edit to `RULES-*.md` / `SKILL.md` directly. Nothing is auto-applied, so there is nothing to revert. The user is the only one who adds, removes, or rewrites rules.
 
 ---
 
@@ -182,7 +182,7 @@ Source files are the single source of truth. Read fully, not by skimming.
 ### MUST read every run
 
 - **The rule catalog for THIS run's scope** — `RULES-SEL.md` (`SEL`), `RULES-DEAD.md` (`DEAD`), `RULES-DUPE.md` (`DUPE`), `RULES-PERF.md` (`PERF`), `RULES-TOK.md` (`TOK`). A run with no rule-group filter reads all five. Read only what the scope needs.
-- **`MATURITY.md`** — sibling doc tracking per-rule lifecycle (proposed/established/enforced/settled), match-count history, gap recurrences, SKIP repetitions, and citation health. Phase 6 EVOLVE reads and writes it at the end of every run; Phase 3 ANALYZE consults it to decide whether `settled` rules should be skipped in single-file dry runs (they are — see Phase 6 read-back). Always read regardless of scope.
+- **No maturity ledger to read.** A rule's lifecycle — its motivating example, and whether that example was resolved into a regression guard — lives inline in its `RULES-*.md` row, already read as part of the rule catalog above. There is no separate maturity file and no cross-run trail the audit depends on. (A prior saved report in `.claude/audit-reports/` is read ONLY when the user asks for a `Diff vs. Run (N−1)` — an optional comparison export, never an input to detection or EVOLVE.)
 - **The token-source files: `_sass/_variables.scss`, `_sass/_variables-dga.scss`, `_sass/_variables-critical.scss`** — these three files are the canonical token table. **DEAD-05** and **TOK-01/02/03/04** all reference them. The dark-mode and a11y-mode variants (`_variables-dark.scss`, `_variables-a11y.scss`, `_variables-dark-dga.scss`, `_variables-dark-ref.scss`) are mode overrides, NOT token sources — they re-bind existing tokens for a different mode. Do not read them as token definitions; consult them only when checking DEAD-05 carve-outs (mode-conditional token availability) and TOK-02 dead-token analysis (mode-override binding counts as a use).
 
   **Pre-parse the token map** (symmetric to the mixin map in `_mixins.scss` below). Build ONE keyed structure capturing, per token: (a) its resolved concrete value (chasing `var()` aliases down to a literal), (b) which mode-override files re-bind it, (c) whether it's *unconditionally* defined (top-level `:root`, not under `@media` / `@supports` / a mode selector). TOK-01 (value→token lookup), TOK-02 (dead-token), TOK-03 (alias graph), and DEAD-05 (unconditionally-defined check) then READ this one map instead of each re-parsing the three files — their per-rule detection steps consume it rather than re-deriving it. The list above is exemplars for orientation; the map is rebuilt from the current token files each run.
@@ -391,7 +391,7 @@ For each finding, the report MUST emit both lines:
 6. **Pure losses with a third-axis benefit** (TOK-01 literal → token: grows bytes for design-system consistency): valid findings, tagged "size-grower: kept for design-system consistency, not bundle savings" so the user accepts knowingly.
 7. **Neutral on both size and perf** (PERF-04 accept-and-annotate, DUPE-02 `@include` form): valid only when they close a recurring carry-over (annotation stops the rule from re-firing) or document an intent. Cost: near-zero. Benefit: process / future-audit hygiene.
 
-**Accept-and-annotate close-out (generalizes PERF-04's pattern to ANY de-recommended finding).** When the matrix DE-RECOMMENDS a finding (bands 4–6 above: size-grows-perf-improves tradeoffs, cost-exceeds-benefit, or a TOK-01 consistency size-grower the user declines) AND the matched rule already defines a `// <RULE> <reason>` exemption comment (every rule does — see each `RULES-*.md` "Explicitly NOT a finding" carve-out), the finding's per-finding block offers **`accept and annotate`** as the resolution verb: apply the rule's own exemption comment so detection skips it next run. Without this, a de-recommended finding re-surfaces every run and trains skim-past behavior (the JS audit's "lint dump" risk). A report with a de-recommended band therefore carries an `annotate accepted tradeoffs` Next Step action, and Phase 6 heals the closed finding's citation (Step 6.4) rather than re-counting it.
+**Accept-and-annotate close-out (generalizes PERF-04's pattern to ANY de-recommended finding).** When the matrix DE-RECOMMENDS a finding (bands 4–6 above: size-grows-perf-improves tradeoffs, cost-exceeds-benefit, or a TOK-01 consistency size-grower the user declines) AND the matched rule already defines a `// <RULE> <reason>` exemption comment (every rule does — see each `RULES-*.md` "Explicitly NOT a finding" carve-out), the finding's per-finding block offers **`accept and annotate`** as the resolution verb: apply the rule's own exemption comment so detection skips it next run. Without this, a de-recommended finding re-surfaces every run and trains skim-past behavior (the JS audit's "lint dump" risk). A report with a de-recommended band therefore carries an `annotate accepted tradeoffs` Next Step action; once the user applies the exemption comment, the rule's detection carve-out keeps it from re-firing, and Phase 6 surfaces it as a resolved/regression-guard annotation candidate rather than re-reporting it.
 
 **Report ordering:** sort by impact band — pure size wins → pure perf wins (size-neutral) → neutral-on-both (annotation-style) → tradeoff findings (de-recommended) → TOK-01 size-growers (consistency-driven). Within each band, sort by size-delta magnitude.
 
@@ -455,7 +455,7 @@ While analyzing, keep a parallel log:
 - **GAP**: a pattern that looks like a real violation (duplicated, dead, expensive selector) but doesn't match any rule. Record: file, line, snippet, one-sentence description, the group it would belong to.
 - **SKIP**: a rule match where the proposed rewrite doesn't apply in context (e.g., SEL-01 matched two adjacent `:hover`/`:focus-visible` blocks but their declarations differ in a subtle way the parser missed). Record: rule ID, file, line, one-line reason.
 
-These feed the Phase 4 report's "Gaps observed" section AND Phase 6 EVOLVE — gaps get tallied in `MATURITY.md` for promotion-candidate detection; SKIPs get tallied for refinement-candidate detection.
+These feed the Phase 4 report's "Gaps observed" section AND Phase 6 EVOLVE — within a full-tree run, a gap recurring across ≥3 files is a promotion candidate, and a SKIP reason recurring across the run's files is a refinement candidate. Recurrence is counted within the run (and, within one session, across the files you audit) — there is no persisted cross-run ledger.
 
 ### Rule catalog
 
@@ -512,7 +512,7 @@ Close with "Reply with a number; `apply` / `save` filters sit below the numbered
 
 ### Recommending `save`
 
-`save` is never the headline recommendation. It is optional and exists for cross-run comparison (the "Diff vs. Run (N−1)" trail). After the recommendation reason, add a short `save` clause only when it would pay off:
+`save` is never the headline recommendation. It is optional and exists purely for cross-run comparison (the "Diff vs. Run (N−1)" diff) — a user-facing export, NOT a mechanism input. Phase 6 EVOLVE is session-scoped and does not read saved reports, so skipping `save` costs nothing but the optional diff. After the recommendation reason, add a short `save` clause only when it would pay off:
 
 - If a prior saved run for this exact scope exists (a same-`{scope}` file in `.claude/audit-reports/`): "; `save` to extend the comparison trail (Diff vs. Run N−1)."
 - Else (no prior saved run): "; `save` if you want a baseline to diff future runs against."
@@ -664,91 +664,40 @@ The footer is emitted ONLY when Phase 5 actually applied edits. Dry-run reports 
 The Phase 4 Next Step block should mention this so the user knows what comes after: "Applying any number above will produce a Verification footer at the end of the batch with build, byte-delta, and per-finding spot-checks."
 
 ---
-## Phase 6: EVOLVE (auto-apply at run end)
+## Phase 6: EVOLVE (session-scoped — surface candidates at run end)
 
-After Phase 4 REPORT (and Phase 5 APPLY, if it ran), Phase 6 reconciles `MATURITY.md` against the current run's findings, gaps, and SKIPs. Bookkeeping changes (match counts, last-reconciled dates, status promotions, citation healing) auto-apply; controversial changes (rule deletion, gap promotion to a new rule) surface as candidates for user approval in the `## Catalog evolved` section at the bottom of the report.
+After Phase 4 REPORT (and Phase 5 APPLY, if it ran), Phase 6 reconciles the catalog against THIS run's findings, gaps, and SKIPs and **surfaces** what it learns in the report. It is **session-scoped** — it reads no persisted ledger and writes nothing to the repo. (This matches the JS audit's *rule-refinement* track, which is likewise same-session — see "What replaced the committed ledger" below for where CSS deliberately goes leaner than JS.)
 
-**Phase 6 is read-only on `RULES-*.md` and `SKILL.md`. It only writes to `MATURITY.md`.** Adding/removing rules, refining rule text, or changing the framework happens via user-approved candidates surfaced in the report — the user makes those edits to `RULES-*.md` and `SKILL.md` directly, and the next Phase 6 pass reconciles the new state.
+**Where rule lifecycle lives.** A rule's lifecycle is an **inline annotation in its `RULES-*.md` row**, not a computed cross-run ladder:
+- A rule with a live motivating example is proven and active.
+- When the user applies the fix for a rule's motivating example, the rule's row is annotated `Motivating example (resolved) — stands as a regression guard` (the user makes that one-line edit; Phase 6 surfaces it as a candidate). The rule is NOT deleted — a resolved example means the rule now guards against regression, which is its job.
+- The catalog's deleted-rule and declined-pattern lessons live in each group file's "Deleted rules & declined patterns" section (e.g. the DUPE-04 anti-pattern in `RULES-DUPE.md`).
 
-### Step 6.1 — Reconcile per-rule state
+That inline, committed annotation is the durable lifecycle signal — no separate maturity file, no trail to read.
 
-For each rule:
+**Two kinds of output, different gates** (mirrors the rule-judgment half of the JS audit's Phase 7 split — JS additionally has an auto-applied persona-bookkeeping track that the CSS skill, with no ledger, does not):
+- **Observations** (what this run saw — gaps, SKIPs, a resolved motivating example): reported only. Nothing written to the repo.
+- **Catalog change** (judgments — add / delete / narrow a rule, or annotate a resolved example): NEVER auto-applied. Surfaced as candidates in the report's `## Catalog evolved` section; the user makes the edit to `RULES-*.md` / `SKILL.md`.
 
-1. **Update match count.** If this run produced findings for the rule, add the count to the rule's rolling history. Trim the history to the last 7 saved runs per scope.
-2. **Promotion check (auto-applied):**
-   - `proposed` rule with ≥1 match in ≥1 saved run → promote to `established`. Update `Status` + `Last reconciled` in `MATURITY.md`.
-   - `established` rule that had a fix APPLIED by the user (a Closed finding in the run's Diff section) → promote to `enforced`.
-   - `enforced` rule with 0 matches across ≥3 consecutive full-tree saved runs OR ≥5 consecutive single-file saved runs (across different files) → promote to `settled`. Add a Settled streak note.
-3. **Demotion check (surface for user approval):**
-   - `proposed` rule with 0 matches across ≥5 consecutive saved runs AND no gap pattern would have triggered it → surface as "deletion candidate" in the report. User confirms before removing the rule from `RULES-*.md`.
-   - `settled` rule with a new match → auto-demote to `enforced` and record the regression. No user approval needed (catching a regression is the rule's job).
-4. **Last reconciled** updated to today's date for every rule the run touched.
+### Catalog-change candidates (surface for user approval)
 
-### Step 6.2 — Reconcile gap log
+From THIS run's gap and SKIP logs (Phase 3), surface — never auto-apply:
 
-For each gap observation in this run:
+- **Gap → rule promotion:** a gap pattern recurring across ≥3 files in a full-tree run (the strongest signal, fully visible within one run) → a promotion candidate with a draft detection sketch + severity guess. Within one session spanning several single-file runs, a gap seen in ≥2 of them is also a candidate. There is no cross-session counter — if you notice a gap recurring across separate sessions, promote it on sight.
+- **Rule refinement:** a SKIP reason recurring across the run's files → a proposed carve-out.
+- **Resolved motivating example:** a rule whose `RULES-*.md` motivating example was fixed this session → surface the one-line "annotate as regression guard" edit.
+- **Dead-rule candidate:** a rule with NO motivating example in its `RULES-*.md` row that also did not fire here → a *soft* "consider narrowing or removing" note. No hard counter (that needed a cross-run ledger) — narrow before deleting, and only on a clear pattern.
+- **Citation drift:** spot-check each rule's motivating-example citation in its `RULES-*.md` row; if the cited `file:line` moved, note the new line; if it's gone because the fix was applied, surface the regression-guard annotation above.
 
-1. If the gap matches an existing gap entry in `MATURITY.md`, increment its recurrence count.
-2. If the gap is new, add a new entry with recurrence 1 and disposition "Pending."
-3. **Promotion check (surface for user approval):**
-   - Same gap observed in ≥2 saved runs for the same scope → surface as "rule promotion candidate" in `## Catalog evolved`. Include a draft detection sketch and severity guess.
-   - Same gap observed across ≥3 different files (full-tree aggregation) → same promotion candidate, scoped as a cluster-pattern rule.
-4. **Disposition transitions:** when a gap was promoted to a rule (e.g., DEAD-05 in this skill's history), mark it `PROMOTED → <rule-id>. Closed.` and stop counting recurrences.
-5. **Decline disposition:** when a gap was investigated and decided NOT worth promoting (e.g., the cards.scss structural variant-grid duplication — zero compiled-byte payoff), mark it `DECLINED — <one-line reason>. Stands as documentation.` and stop counting recurrences.
+Append a `## Catalog evolved` section to the report when any candidate exists — each line names the candidate + the action the user takes (e.g. "Add DEAD-06 per the draft above" / "Annotate DEAD-03 row: motivating example resolved → regression guard"). The candidates are SUGGESTIONS — Phase 6 never auto-edits the catalog. Omit the section when there are none.
 
-### Step 6.3 — Reconcile SKIP log
+### What replaced the committed ledger
 
-For each SKIP entry in this run:
+The old `MATURITY.md` — a committed file Phase 6 rewrote every run — was removed: it churned git history on pure bookkeeping and taxed every run's read. Its content moved to where each part belongs, by durability:
+- **Lessons & lifecycle** (the deleted DUPE-04 anti-pattern, declined variant-grid patterns, a rule's resolved-→-regression-guard state) → inline in the committed `RULES-*.md` — durable judgments belong in the rule catalog.
+- **Volatile cross-run bookkeeping** (match counts, a 4-rung maturity ladder, per-run reconciliation log) → dropped. It depended on a saved-report trail the skill discourages creating (`save` is never recommended), so it was mostly dormant. (The JS audit's rule refinement is likewise same-session — but JS ALSO keeps a cross-run `PERSONA.md` maturity ladder that DOES read the saved-report trail for its `enforced → settled` streak. The CSS skill deliberately drops that cross-run bookkeeping, ending up leaner than JS here.) Saved reports remain a **purely optional export** (a `Diff vs. Run (N−1)` for users who choose to save), never a mechanism input to CSS detection or EVOLVE.
 
-1. If the SKIP's `(rule, reason)` pair matches an existing entry, increment its repetition count.
-2. If new, add with repetition 1.
-3. **Refinement check (surface for user approval):**
-   - Same SKIP reason repeated ≥3 times across saved runs → surface as "rule refinement candidate" with a proposed carve-out addition.
-
-### Step 6.4 — Citation health
-
-For each rule with a motivating-finding citation in its `RULES-*.md` definition OR in `MATURITY.md`:
-
-1. Read the cited file:line. Verify the original pattern still matches.
-2. If the pattern is gone (because the user applied the fix):
-   - Update the citation in `MATURITY.md` to "Resolved (was the motivating finding): `<file>:<line>` — fix applied in Run N (saved YYYY-MM-DD); rule stands as a regression guard."
-   - DO NOT delete the rule. A rule whose motivating example was resolved is now a regression-guard, which is exactly its job in the catalog.
-3. If the pattern is still present at a different line (because the file was edited but the pattern remains), update the citation's line number.
-4. If the file no longer exists (component deleted), mark the citation "Resolved by component removal" and check whether the rule has any other motivating examples; if zero, surface as a demotion candidate.
-
-**Accept-and-annotate heals like a resolved finding.** When a finding was closed via its `// <RULE> <reason>` exemption comment (the Phase 3 accept-and-annotate close-out), heal its citation in `MATURITY.md` to "Resolved (accepted-and-annotated): `<file>:<line>` — the matched rule's exemption comment was applied in Run N; rule stands as a regression guard" — the same treatment PERF-04 already gets (cards Run 8). The finding then stops re-counting as a recurring finding; the annotation is what suppresses re-detection.
-
-### Step 6.5 — Reconciliation log entry
-
-Append a single row to `MATURITY.md`'s "Phase 6 reconciliation log" table:
-
-```
-| YYYY-MM-DD / Run N ({scope}) | <action summary> | <one-line diff> |
-```
-
-Examples:
-- `| 2026-06-04 / Run 8 (cards) | RECONCILE bookkeeping only | No promotion/demotion candidates. Updated 12 last-reconciled dates. |`
-- `| 2026-06-04 / Run 8 (alert) | PROMOTE TOK-02 proposed → established (1 match in alert) | TOK-02 first real-world match — alert.scss:42 `--status-warning-bg-on-dark` had zero consumers. |`
-
-### Step 6.6 — Surface candidates in the report
-
-If any of the following exist after Steps 7.1–7.5:
-
-- Rule deletion candidates (proposed rules with 5+ run zero-streaks)
-- Gap promotion candidates (gaps with ≥2 saved-run recurrences or ≥3-file coverage)
-- Rule refinement candidates (SKIPs repeated ≥3 times)
-- Citation drift (motivating examples that vanished without explicit user fix attribution)
-
-…append a `## Catalog evolved` section to the report listing each candidate with a one-line description and the action the user needs to take (e.g., "Add DEAD-06 rule per the draft above" or "Delete TOK-04 from RULES-TOK.md; 6-run zero streak, no gaps would have triggered it"). The candidates are SUGGESTIONS — Phase 6 never auto-deletes rules or auto-adds new rules. The user makes those edits.
-
-### Step 6.7 — Read-back on next run
-
-The next run's Phase 2 READ step reads `MATURITY.md` before Phase 3 ANALYZE. Rule statuses inform default behavior:
-- `settled` rules are SKIPPED in single-file dry runs (save attention) — they're spot-scanned in full-tree runs only.
-- `proposed` rules run normally but their findings carry a "still-experimental" tag so the user knows the rule hasn't earned its place yet.
-- The most recent reconciliation log entry primes the audit on what changed between the prior run and this one.
-
-This is what gives the catalog cross-session memory. Without it, every run starts cold; with it, the audit learns.
+The catalog's cross-session memory is the committed `RULES-*.md` itself — its rules, carve-outs, regression-guard annotations, and lesson sections. That's durable and shared across machines without any churning file.
 
 ---
 
