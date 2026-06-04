@@ -2,22 +2,36 @@
 
 The project's chosen conventions for `_js/nds-*.js` component files, documented as concrete canonical forms backed by principle reasoning. Consulted by `nds-js-audit` so JSD-15 ("cross-file pattern consistency") works in single-file mode and so the audit measures code against deliberate choices instead of against the loudest accidental majority.
 
-**Scope:** the 47 component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-showcase.js` (demo-page wiring).
+**Scope:** the 50 component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-showcase.js` (demo-page wiring).
 
 ---
 
 ## How this document is structured
 
-Each entry has six fields, each doing one job:
+Each entry has eight fields, each doing one job. They split into two tracks — **rules** (slow-changing judgments) and **bookkeeping** (facts the audit refreshes for free on every full-tree run):
+
+*Rules — change only through the Phase 7 evolve quality bar:*
 
 - **Canonical** — the concrete form the audit checks against. A literal string, attribute name, method name, or shape. Greppable.
 - **Why this canonical (principle)** — the reasoning. Defends the choice against future revert attempts; not load-bearing for the audit itself.
 - **Why not the alternatives** — rejected forms with their cost. Documents what was considered and ruled out, so a future contributor can argue from data rather than revert from inattention.
 - **Carve-outs (NOT divergence)** — concept-different cases that share surface vocabulary but follow a different principle. The audit must NOT flag these. Cite file:line when possible.
 - **Audit behavior** — the literal check `nds-js-audit` performs. A yes/no test, not a judgment call.
-- **Current adoption** — informational dashboard. Refactor-progress signal. Never the source of the canonical; the canonical is the canonical even when adoption is 30%.
 
-If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, which auto-applies a revision only when the divergent file's cited reasoning clears the evolve quality bar and records it in the `## Catalog evolved` block.
+*Bookkeeping — Phase 7 reconciles silently from the full-tree scan; no quality bar, because these are measured facts, not judgments:*
+
+- **Maturity** — where the entry sits on the confidence ladder (see below). The audit promotes/demotes it from run evidence. This is what makes the persona *mature* rather than just *current*: a new convention enters weak and earns its authority over runs.
+- **Current adoption** — measured conformance + the date it was tallied. Informational dashboard / refactor-progress signal. Never the source of the canonical; the canonical is the canonical even when adoption is 30%.
+- **Last reconciled** — the date the bookkeeping fields (Maturity, adoption, citations, motivating-finding status) were last refreshed against the corpus. A stamp older than the newest commit is a visible "stale" flag, not a guess.
+
+**Maturity ladder** (Phase 7 moves entries between rungs from run evidence — never the source of the canonical):
+
+- `proposed` — one motivating site; the canonical is asserted but unproven across the corpus.
+- `established` — ≥2 conforming sites and adoption has been measured at least once.
+- `enforced` — full (or full-minus-documented-carve-out) adoption; carve-outs cited and stable.
+- `settled` — 100% adoption with zero divergence for ≥3 consecutive full-tree runs. The audit may **skip re-checking** a settled entry every run (spend attention on unsettled conventions); a single later divergence demotes it back to `enforced`.
+
+If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, which auto-applies a revision only when the divergent file's cited reasoning clears the evolve quality bar and records it in the `## Catalog evolved` block. Bookkeeping refreshes (adoption re-tally, maturity promotion, citation healing, expiring a resolved motivating finding) need no bar — they are reported in the `## Catalog evolved` block under a `Bookkeeping reconciled` heading so the change is still never silent.
 
 ---
 
@@ -48,7 +62,7 @@ Clarity beats brevity for fields read during teardown work and code review. A re
 **Carve-outs (NOT divergence)**
 
 - **Secondary controllers** that scope a sub-concern, named for what they scope:
-  - `this.fetchAbortController` ([_js/nds-filter.js:324](_js/nds-filter.js#L324)) — scopes in-flight fetch aborts, paired with the primary `this.abortController` at L98.
+  - `this.fetchAbortController` ([_js/nds-filter.js:347](_js/nds-filter.js#L347)) — scopes in-flight fetch aborts, paired with the primary `this.abortController` at L100.
   - `this.renderAbortController` ([_js/nds-chart.js:392](_js/nds-chart.js#L392)) — scopes one render cycle, paired with the primary at L122.
   - `this.instanceAbortController` ([_js/nds-ipv.js:44](_js/nds-ipv.js#L44)) — secondary to instance teardown.
 - **Per-element AbortControllers stored on the element** (`el._ndsFilterAC = new AbortController()` at [_js/nds-filter.js:1334](_js/nds-filter.js#L1334)) are scoped to the element's lifetime, not the instance's. Structurally different shape; the leading underscore IS correct here because the property is on a foreign element.
@@ -57,7 +71,11 @@ Clarity beats brevity for fields read during teardown work and code review. A re
 
 Flag any `this.<name> = new AbortController()` where `<name>` matches one of: ≤4 characters, OR begins with `_` followed by ≤3 lowercase letters (`_ac`, `_ctrl`, `_fp`), OR equals `controller`. Secondary controllers with domain-named full words (any name containing `AbortController` as a suffix) pass.
 
-**Current adoption:** 13/13 component files using a primary controller use `this.abortController`. Tallied 2026-05-28.
+**Maturity:** `enforced` — full adoption, carve-outs (secondary + per-element controllers) cited and stable.
+
+**Current adoption:** 12/12 component files using a primary controller use `this.abortController`. Tallied 2026-06-04.
+
+**Last reconciled:** 2026-06-04 (adoption re-tallied, filter citations healed L98→L100 / L324→L347).
 
 ---
 
@@ -94,7 +112,11 @@ destroy() {
 
 Flag any component that exposes `teardown()` or `dispose()` as the public instance-lifetime teardown, OR exposes only `cleanup()` without the two-phase shape detectable in the file (i.e., no separate `destroy()` declared AND no separate-subset teardown structure where `cleanup()` removes some handlers and other code removes the rest). Files exposing both `cleanup()` and `destroy()` for the documented two-phase shape are NOT flagged.
 
-**Current adoption:** 22/22 component files with a public teardown method use `destroy()`. Tallied 2026-05-28.
+**Maturity:** `enforced` — no known divergence; two-phase carve-out (date-picker) cited and stable.
+
+**Current adoption:** 22/22 component files with a public teardown method use `destroy()`. Tallied 2026-05-28 (corpus has since grown — adoption pending next full-tree re-tally).
+
+**Last reconciled:** 2026-05-28 (pre-corpus-growth; count not yet refreshed against current tree).
 
 ---
 
@@ -162,13 +184,17 @@ For each component file:
 2. Check the file's exposed lifecycle pair against the bucket's canonical.
 3. If the file's concept is ambiguous (multiple discriminators match, or none match), record it as an open question in the report rather than flagging a finding — ambiguity does not clear the evolve bar, so nothing auto-changes.
 
+**Maturity:** `enforced` — all four buckets fully adopted at last tally; discriminators stable.
+
 **Current adoption:**
 - 3.1 (modal-like): 6/6 use `open()` / `close()`
 - 3.2 (per-section): 2/2 use `show()` / `hide()`
 - 3.3 (transient): 2/2 use `create({...})` + `dismiss(target)`
 - 3.4 (toggle-only): 3/3 use `toggle()` only
 
-Tallied 2026-05-28.
+Tallied 2026-05-28 (corpus has since grown — adoption pending next full-tree re-tally).
+
+**Last reconciled:** 2026-05-28 (pre-corpus-growth; counts not yet refreshed against current tree).
 
 ---
 
@@ -202,7 +228,11 @@ Component-emitted diagnostics carry the component's identity at the start of the
 
 Flag any component-file `console.warn(...)` or `console.error(...)` whose first string argument does not match `/^NDS [A-Z][A-Za-z]*: /`. Files using the bracket form for component output (e.g. `'[NDS Filter] ...'`) are flagged for migration. **Exception:** a module that is a programmatic-API namespace (public surface invoked as `NDS.<Name>.<method>(...)`, not a per-element DOM component — confirm via the carve-out) may use the bracket form `[NDS.<Name>]` and is NOT flagged.
 
-**Current adoption:** 21+ component warns/errors use this exact form across the corpus. Zero component-level divergence post commit `1a194e4`. Tallied 2026-05-28.
+**Maturity:** `enforced` — zero component-level divergence post commit `1a194e4`; API-namespace bracket carve-out (export) verified.
+
+**Current adoption:** 21+ component warns/errors use this exact form across the corpus. Zero component-level divergence post commit `1a194e4`. Tallied 2026-05-28 (corpus has since grown — count pending next full-tree re-tally).
+
+**Last reconciled:** 2026-06-04 (export bracket-form carve-out re-verified; count not yet refreshed).
 
 ---
 
@@ -259,10 +289,14 @@ A factory creates per-element instances; the guard must distinguish "this specif
 2. Factory using `_initDone` or `window.<flag>` → flag.
 3. Singleton using `data-nds-<name>-initialized` → flag.
 4. Window-global flag requires an inline comment within 3 lines naming the cross-module observer concern; otherwise flag.
-5. Singleton using a module-scope closure flag NOT named `_initDone` (e.g. `_installed`, `_wired`, `_ready`) → flag as a name divergence. The shape is correct; only the name diverges. Resolve per file: migrate to `_initDone`, or open a Phase 7 revision to admit the name. Motivating finding: [_js/nds-voice-input.js:290](_js/nds-voice-input.js#L290) uses `var _installed` against the canonical `_initDone`.
-6. Factory whose per-element guard IS a DOM attribute but does NOT match `data-nds-<name>-initialized` (e.g. missing the `nds-` namespace infix, like `data-swiper-initialized`) → flag as a name divergence. The shape is correct (marker lives on the element); only the name diverges. Resolve per file: migrate to `data-nds-<name>-initialized`, or open a Phase 7 revision to admit the name. Does NOT apply to the JS-property carve-out (`el._ndsXxxInitialized` on whole-document controllers, per carve-out above). Motivating finding: [_js/nds-swiper.js:127,160,583](_js/nds-swiper.js#L127) uses `data-swiper-initialized` against the canonical `data-nds-swiper-initialized`.
+5. Singleton using a module-scope closure flag NOT named `_initDone` (e.g. `_installed`, `_wired`, `_ready`) → flag as a name divergence. The shape is correct; only the name diverges. Resolve per file: migrate to `_initDone`, or open a Phase 7 revision to admit the name. Resolved (was the motivating finding): `_js/nds-voice-input.js` previously used `var _installed`; migrated to `var _initDone` (L290). No known divergence remains.
+6. Factory whose per-element guard IS a DOM attribute but does NOT match `data-nds-<name>-initialized` (e.g. missing the `nds-` namespace infix, like `data-swiper-initialized`) → flag as a name divergence. The shape is correct (marker lives on the element); only the name diverges. Resolve per file: migrate to `data-nds-<name>-initialized`, or open a Phase 7 revision to admit the name. Does NOT apply to the JS-property carve-out (`el._ndsXxxInitialized` on whole-document controllers, per carve-out above). Resolved (was the motivating finding): `_js/nds-swiper.js` previously used `data-swiper-initialized`; migrated to `data-nds-swiper-initialized` (L131,164,574,619). No known divergence remains.
 
-**Current adoption:** 16/16 factory components use the DOM attribute form; 4/4 singleton modules (accessibility, empty, cityWeather, theme) use `_initDone`. Tallied 2026-05-28.
+**Maturity:** `enforced` — both motivating divergences (voice-input, swiper) migrated this reconciliation; no known divergence remains. Promotes toward `settled` once a full-tree run confirms zero divergence.
+
+**Current adoption:** 16/16 factory components use the DOM attribute form; singleton modules use `_initDone`. The corpus has grown to 11 files referencing `_initDone` (was 4: accessibility, empty, cityWeather, theme) — the singleton-vs-factory split of the new files (cooldown-button, customselect, digitalStamp, mainnav, modal, otp, voice-input) needs a full-tree classification pass to re-tally precisely. Last precise tally 2026-05-28.
+
+**Last reconciled:** 2026-06-04 (voice-input + swiper divergences confirmed resolved; precise adoption split pending next full-tree re-tally).
 
 ---
 
@@ -302,7 +336,11 @@ Listener teardown should be atomic by default. One `.abort()` releases every lis
 
 Flag any `this.handlers.<key> = fn` pattern in a file where the component does NOT have a detectable two-phase lifecycle (i.e., does NOT have a `cleanup()` method removing a subset of `this.handlers.<key>` keys, paired with a `destroy()` removing the rest). Files with the documented two-phase shape pass.
 
-**Current adoption:** 15/16 files using listener-attachment patterns use the `{ signal }` shape; 1 file (date-picker) uses `this.handlers.<key>` with documented two-phase rationale. Tallied 2026-05-28.
+**Maturity:** `enforced` — `{ signal }` shape dominant; sole exception (date-picker two-phase) cited and principled.
+
+**Current adoption:** 15/16 files using listener-attachment patterns use the `{ signal }` shape; 1 file (date-picker) uses `this.handlers.<key>` with documented two-phase rationale. Tallied 2026-05-28 (corpus has since grown — count pending next full-tree re-tally).
+
+**Last reconciled:** 2026-05-28 (pre-corpus-growth; count not yet refreshed against current tree).
 
 ---
 
@@ -318,7 +356,11 @@ NDS does not use per-component eager-shell + lazy-behavior splits. The mechanism
 
 Flag any discriminator match as a regression — the split pattern is deliberately retired; reintroducing it contradicts CLAUDE.md. Route the fix to cold-init-in-main, or to wholesale de-criticalization if the component is delegate-safe. Wholesale de-criticalization (drop `critical: true` + move the whole file to the delegated `@bundles` list, Accordion-style) is NOT a split and remains valid.
 
-**Current adoption:** 0 splits — Filter, Mainnav, Stepper, Pagination all merged back to main (2026-06-04).
+**Maturity:** `enforced` — prohibition; zero discriminator matches in the tree. Promotes to `settled` after 3 consecutive full-tree runs confirm zero reintroduction.
+
+**Current adoption:** 0 splits — Filter, Mainnav, Stepper, Pagination all merged back to main (2026-06-04). Verified zero `_installBehavior` / `loadSplit` / `__NDS_SPLIT` / `*__delegated.js` matches.
+
+**Last reconciled:** 2026-06-04 (discriminator scan confirmed clean).
 
 ---
 
@@ -326,11 +368,13 @@ Flag any discriminator match as a regression — the split pattern is deliberate
 
 When `nds-js-audit` runs:
 
-- **Single-file `dry`:** reads PERSONA.md and runs JSD-15 against the canonicals via each entry's "Audit behavior" check (no skip banner). A finding looks like: *"L227 uses `this._ac` against entry 1's canonical `this.abortController`. Migrate, or revise the canonical (Phase 7)."*
-- **Full-tree `dry`:** same checks across every file, plus the per-entry "current adoption" as a refactor-progress signal. Adoption drift can surface as a Phase 7 persona-drift refinement.
-- **Phase 7 EVOLVE:** persona drift is the third refinement source (alongside "Gaps observed" and "Dead-rule candidates"), surfaced when (a) the corpus has diverged from a canonical and a migration is now a meaningful refactor, OR (b) new evidence suggests revising the canonical itself.
+- **Single-file `dry`:** reads PERSONA.md and runs JSD-15 against the canonicals via each entry's "Audit behavior" check (no skip banner). A `settled` entry may be skipped to save attention; all others are checked. A finding looks like: *"L227 uses `this._ac` against entry 1's canonical `this.abortController`. Migrate, or revise the canonical (Phase 7)."*
+- **Full-tree `dry`:** same checks across every file, plus the per-entry "current adoption" as a refactor-progress signal. The full-tree classification pass IS the adoption tally — Phase 7 writes the fresh count, maturity rung, and "Last reconciled" date back into each entry as bookkeeping (free, because the scan already computed it). Adoption drift toward divergence can additionally surface as a Phase 7 persona-drift refinement.
+- **Phase 7 EVOLVE — two tracks:**
+  - *Rules* (canonical / carve-out / new entry): persona drift is the third refinement source (alongside "Gaps observed" and "Dead-rule candidates"), surfaced when (a) the corpus has diverged from a canonical and a migration is now a meaningful refactor, OR (b) new evidence suggests revising the canonical itself. Gated by the evolve quality bar.
+  - *Bookkeeping* (adoption count, maturity rung, "Last reconciled" date, expiring a resolved motivating finding, healing a drifted file:line citation): refreshed from the full-tree scan with no quality bar — these are measured facts, not judgments.
 
-Persona edits are never silent: Phase 7 auto-applies a canonical revision **only** when the divergent file's cited reasoning clears the evolve quality bar, and records every change in the report's `## Catalog evolved` block. The user reverts via git if they disagree.
+Persona edits are never silent. Rule edits: Phase 7 auto-applies a canonical revision **only** when the divergent file's cited reasoning clears the evolve quality bar. Bookkeeping edits: applied whenever the scan shows the recorded facts are stale. Both are recorded in the report's `## Catalog evolved` block (bookkeeping under a `Bookkeeping reconciled` sub-heading). The user reverts via git if they disagree.
 
 ---
 
@@ -339,6 +383,8 @@ Persona edits are never silent: Phase 7 auto-applies a canonical revision **only
 - **Audit flags a divergent file.** Either the file is wrong → a fix batch migrates it (canonical unchanged), or the canonical is wrong/incomplete → Phase 7 auto-revises it when the file's cited reasoning clears the bar (otherwise the file is the migration target).
 - **Audit surfaces an unanticipated concept.** Phase 7 adds a new entry or a carve-out, with motivating findings cited.
 - **User makes a deliberate decision** (e.g. "switch entry 3.2 to `expand()`/`collapse()`"). The edit lands directly per instruction.
-- **A tree-wide refactor lands.** Persona unchanged — the canonical was already the target; "Current adoption" updates on the next full-tree run.
+- **A tree-wide refactor lands.** Canonical unchanged — it was already the target. But the bookkeeping moves: the next full-tree run re-tallies "Current adoption", may promote the entry's maturity (e.g. `enforced` → `settled` once divergence stays at zero for 3 runs), and updates "Last reconciled".
+- **A motivating finding's file gets migrated.** The rule stays; Phase 7 expires the stale "Motivating finding:" pointer (rewrites it to "Resolved (was the motivating finding): …") on the next run that observes zero divergence. Precedent: voice-input `_installed`→`_initDone` and swiper `data-swiper-initialized`→`data-nds-swiper-initialized`, both expired 2026-06-04.
+- **A cited file:line drifts.** Phase 7 heals it: if the cited token still sits within a few lines, rewrite the number; if the token is gone, the citation is flagged stale rather than silently trusted.
 
-**What never triggers a canonical revision:** raw adoption counts ("11 new files used `_ac`") or "the corpus changed" — those are migration targets, not canonical revisions. The canonical is the deliberate choice; the corpus catches up. The saved audit-report trail in `.claude/audit-reports/` is the history.
+**What never triggers a canonical revision:** raw adoption counts ("11 new files used `_ac`") or "the corpus changed" — those are migration targets and bookkeeping, not canonical revisions. The canonical is the deliberate choice; the corpus catches up. The saved audit-report trail in `.claude/audit-reports/` is the history.
