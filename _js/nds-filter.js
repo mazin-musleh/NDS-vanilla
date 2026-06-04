@@ -278,10 +278,8 @@
                 return;
             }
 
-            // Set submitting state
             NDS.State.set(this.filterContainer, 'submitting');
 
-            // Dispatch valid event
             this.filterContainer.dispatchEvent(new CustomEvent('nds:formValid', {
                 detail: {}
             }));
@@ -505,17 +503,14 @@
          * Get the custom name for search input or return default
          */
         getSearchInputName() {
-            // Check direct search input first
             if (this.searchInputs.direct && this.searchInputs.direct.input.name) {
                 return this.searchInputs.direct.input.name;
             }
 
-            // Check dropmenu search input
             if (this.searchInputs.dropmenu && this.searchInputs.dropmenu.input.name) {
                 return this.searchInputs.dropmenu.input.name;
             }
 
-            // Default to 'search'
             return 'search';
         }
 
@@ -865,7 +860,6 @@
             const autoFillContainer = this.autoFillElement
                 || this.filterContainer.querySelector('.nds-auto-fill');
 
-            // Clear chips container
             chipsContainer.innerHTML = '';
 
             // When a [data-filter-query] slot is present, the search keyword is routed
@@ -924,7 +918,7 @@
             // Count source priority:
             //   1. Server-provided: data-total-count on the target container
             //      (for SSR pages or JSON-AJAX developers)
-            //   2. DOM enumeration: visible (non-filtered-out) items
+            //   2. DOM enumeration: visible (non-`[data-filtered]`) items
             const totalAttr = this.targetContainer.getAttribute('data-total-count');
             if (totalAttr !== null && totalAttr !== '') {
                 countSlot.textContent = parseInt(totalAttr, 10) || 0;
@@ -932,7 +926,7 @@
             }
 
             // No active criteria → nothing is filtered out, so the visible count
-            // is just the item total. Skip the per-item State scan (it would only
+            // is just the item total. Skip the per-item scan (it would only
             // ever return items.length here) — this is the common first-load case.
             const hasCriteria = (this.criteria.search && this.criteria.search.trim() !== '')
                 || Object.values(this.criteria.filters).some(arr => arr.length > 0);
@@ -947,7 +941,7 @@
             // pagination-driven for non-current-page items; those are still matches.
             let visible = 0;
             for (const item of this.items) {
-                if (!NDS.State.has(item, 'filtered-out')) visible++;
+                if (!item.hasAttribute('data-filtered')) visible++;
             }
             countSlot.textContent = visible;
         }
@@ -1403,7 +1397,6 @@
                 }
             });
 
-            // Store reference
             this.filterInputs[filterName] = {
                 inputs: inputs,
                 type: inputType,
@@ -1936,12 +1929,10 @@
             // Visual hide is owned by CSS: `[data-filtered]{display:none!important}`
             // in the critical layer. Clearing the attribute un-hides; no inline style.
             item.removeAttribute('data-filtered');
-            NDS.State.remove(item, 'filtered-out');
         }
 
         hideItem(item) {
             item.setAttribute('data-filtered', 'true');
-            NDS.State.add(item, 'filtered-out');
         }
 
         // ==============================================
