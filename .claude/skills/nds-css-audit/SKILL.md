@@ -113,7 +113,7 @@ Accept `0` or `exit` as "end here, nothing runs".
 | **filename** (e.g. `_sass/components/_buttons.scss`, `_buttons.scss`, `buttons`) | One file: the resolved target | A rule-group filter (`SEL` / `DEAD` / `DUPE` / `PERF` / `TOK`), or `all`. **When omitted, default to `all`** — single-file `all` is cheap. Full-tree-only rules (DUPE-02, TOK-01, TOK-02, TOK-04) are skipped with a one-line banner. |
 | `full-tree` | All `_sass/components/*.scss` (plus `_variables*.scss` and `_mixins.scss` for reference) | Must be paired with a rule-group filter that contains cross-file rules — only `DUPE` and `TOK`. Other groups rejected in full-tree mode. |
 
-**File resolution.** When `$1` doesn't match `full-tree`, treat as a filename and try in order: (1) literal `$1` if it includes a path separator and exists; (2) `_sass/components/$1` if it ends in `.scss`; (3) `_sass/components/_$1.scss` if it starts with `_`; (4) `_sass/components/_$1.scss` for the bare name. Stop at the first match. If none exist, reply: *"Couldn't resolve `<filename>`. Tried: `_sass/components/_<X>.scss`. Pass the filename as it appears in `_sass/components/`."* and stop.
+**File resolution.** When `$1` doesn't match `full-tree`, treat as a filename and try in order: (1) literal `$1` if it includes a path separator and exists; (2) `_sass/components/$1` if it ends in `.scss`; (3) `_sass/components/_$1.scss` if it starts with `_`; (4) `_sass/components/_$1.scss` for the bare name. Stop at the first match. If none exist, reply: *"Couldn't resolve `<filename>`. Tried: `_sass/components/_<X>.scss`. Pass the filename as it appears in `_sass/components/`."* — and if the target ends in `.js` or names a component that exists only under `_js/`, add: *"For JS behavior, use `/nds-js-audit nds-<name>.js` — this skill audits SCSS only."* Then stop.
 
 **File-tier scoping (THREE tiers):**
 
@@ -156,7 +156,7 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 
 **Tier 3 — Default audit scope** (`_sass/components/*.scss`): all rules apply per their normal definitions and carve-outs. This is the natural target — bare-name resolution (e.g., `cards`) maps here.
 
-**Anything outside `_sass/`** (e.g., `assets/css/nds-main.min.scss` entry, Jekyll page styles in `_includes/`) is also Tier 1-hard-excluded — they're build entrypoints or page wiring, not authored component code. The token table from `_variables*.scss` is READ for reference during component audits regardless of tier (it's the source-of-truth for TOK / DEAD-05).
+**Anything outside `_sass/`** (e.g., `assets/css/nds-main.min.scss` entry, Jekyll page styles in `_includes/`) is also Tier 1-hard-excluded — they're build entrypoints or page wiring, not authored component code. (For a `_js/` source file, point the user at the sibling skill: `/nds-js-audit nds-<name>.js` — this skill suggests CSS rewrites only and cannot apply JS fixes.) The token table from `_variables*.scss` is READ for reference during component audits regardless of tier (it's the source-of-truth for TOK / DEAD-05).
 
 ### Rule-group filter (second argument)
 

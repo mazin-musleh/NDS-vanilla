@@ -139,7 +139,7 @@ Two tiers — direct-named single-file audits behave differently from full-tree 
 
 **Excluded always (no direct-named carve-out):**
 
-- `_js/nds-showcase.js` — demo-page wiring, not a shipped component.
+- `_js/nds-showcase.js` — demo-page wiring, not a shipped component (its SCSS counterpart `_sass/_showcase.scss` is likewise Tier-1-excluded in `nds-css-audit`).
 - Any `.min.js` file.
 
 ---
@@ -210,6 +210,10 @@ Severity (HIGH / MEDIUM / LOW) drives the order fixes are applied in Phase 5: HI
 
 **Merge.** Fold the agent's findings into the Phase 4 report, deduped against the inline pass (inline keeps greppable hits; the agent owns the deep-read rows). Tag agent-sourced rows so the merge is auditable (a trailing `(deep-read agent)` marker on the location cell). Apply the same Type/tradeoff and Gap-vs-finding discipline as the inline pass. If the agent returns nothing, say so — a clean deep-read pass is a real result.
 
+### Consumer reach (pre-recommendation)
+
+Before computing the report's Recommended action, compute **consumer reach** for any finding whose fix touches shared surface — a **JSD-05 promotion candidate** (adds a helper to `_js/nds-core.js` and migrates N call sites), or a **JSA/JSD fix that edits a shared helper** (a function grepped into ≥2 files, or any `_js/nds-core.js` / `_js/nds-loader.js` edit). Grep the call sites / dependents and emit a one-line `Reach: N sites — file:line, …`. When reach is broad, **downgrade the Phase 4 Recommended action** from a plain `fix` to "coordinate first — promote via per-candidate approval" (the CSS audit does the same with its Cross-component-reach line). This is a pre-recommendation signal only — it does not change the apply-time `promote` flow. Bounded to the already-cross-file rules: a normal single-file fix (one component, no shared-surface edit) emits no `Reach` line.
+
 ---
 
 ## Phase 4: REPORT
@@ -274,14 +278,14 @@ Use this structure verbatim:
   Type: tradeoff
   Why it matters: Idle-tier components don't actually defer on older Safari; they run via `setTimeout(1)` with a fake 50ms deadline.
   Proposed solution: replace the `setTimeout(1)` fallback with a `MessageChannel`-based idle shim that estimates a real deadline (pattern at `_js/nds-loader.js:272-281`).
-  Benefit vs cost: LOW benefit — Safari 18 (Sept 2024) ships native rIC, so this only touches shrinking older-Safari traffic, and the shim adds maintenance surface. Cost > benefit → stay put.
+  Benefit vs cost: [INP + maintainability] LOW benefit — Safari 18 (Sept 2024) ships native rIC, so this only touches shrinking older-Safari traffic, vs [maintainability] the shim adds maintenance surface. Cost > benefit → stay put.
   Rationale for accepting: older-Safari degradation is the documented constraint; the polyfill degrades quietly there.
 
 - L42 [JSA-13] Mixed-concern function over 180 lines wires every per-element listener inline
   Type: tradeoff → recommend solving
   Why it matters: ~10 listeners attached per element scale O(n) and the function is hard to edit safely.
   Proposed solution: event-delegation — one document-level handler set resolving `e.target.closest('.nds-foo')`, installed once; per-element init shrinks to state-sync.
-  Benefit vs cost: HIGH benefit — O(n×10) listeners → O(1), faster init, dissolves the long-function smell; cost is a careful refactor of a critical component. Worth solving → saved as a plan and linked.
+  Benefit vs cost: [init-cost + maintainability] HIGH benefit — O(n×10) listeners → O(1), faster init, dissolves the long-function smell, vs [cross-file-reach] a careful refactor of a critical component. Worth solving → saved as a plan and linked.
   Rationale for accepting: only until the refactor lands; tracked at `~/.claude/plans/<name>.md`.
 
 (JSA findings always carry a `Type:` field — `actionable` (include a `Fix:` line) or
@@ -298,6 +302,7 @@ user to decide, and a large solution may be saved as a plan and linked.)
 ## Promotion candidates (JSD-05)
 - NDS.trapFocus(el, opts)
   Sites: _js/nds-modal.js:42-88, _js/nds-drawer.js:131-177
+  Reach: 2 call sites + _js/nds-core.js — broad-surface change; recommend coordinating via per-candidate `promote` approval, not a plain `fix`.
   Rationale: both files implement focus containment with near-identical logic; a shared helper would remove ~90 lines of duplication and let future components opt in trivially.
 
 ## Gaps observed (no rule matched)
