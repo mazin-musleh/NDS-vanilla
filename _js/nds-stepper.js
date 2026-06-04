@@ -47,23 +47,24 @@
         }
     }
 
+    // Write the progress display onto `el`: --current-step / --total-steps CSS
+    // vars + the .nds-progress-number percentage + the "n / total" label. Shared
+    // by first-paint _stampProgress (queries the targets fresh) and the instance
+    // updateProgressDisplay (passes its cached refs) so both stay in lockstep.
+    function _writeProgress(el, current, total, number, text) {
+        el.style.setProperty('--current-step', current);
+        el.style.setProperty('--total-steps', total);
+        if (number) number.textContent = Math.min(100, Math.round((current / total) * 100));
+        if (text) text.textContent = `${Math.min(current, total)} / ${total}`;
+    }
+
     function _stampProgress(el) {
         const current = parseInt(el.dataset.current) || 1;
         const total = parseInt(el.dataset.total) || el.querySelectorAll('.nds-stepper-step').length;
         if (!total) return;
-
-        el.style.setProperty('--current-step', current);
-        el.style.setProperty('--total-steps', total);
-
-        const percentage = Math.min(100, Math.round((current / total) * 100));
-        const number = el.querySelector('.nds-progress-number');
-        if (number) number.textContent = percentage;
-
-        const text = el.querySelector('.nds-progress-steps');
-        if (text) {
-            const displayCurrent = Math.min(current, total);
-            text.textContent = `${displayCurrent} / ${total}`;
-        }
+        _writeProgress(el, current, total,
+            el.querySelector('.nds-progress-number'),
+            el.querySelector('.nds-progress-steps'));
     }
 
     function _resolveFallback(el) {
@@ -165,10 +166,7 @@
             // read is the AUTHORED intent, not the breakpoint-resolved paint).
             // Fall back to the class-state read for elements created dynamically
             // via NDS.Stepper.create(el) on un-stamped markup.
-            this._fallback = element._ndsStepperFallback
-                          || (element.classList.contains('nds-radial') ? 'radial'
-                             : element.classList.contains('nds-vertical') ? 'vertical'
-                             : 'horizontal');
+            this._fallback = element._ndsStepperFallback || _resolveFallback(element);
 
             // Reconcile state with the first-paint stamping. Idempotent when
             // already stamped correctly; needed when authors mutate data-current
@@ -236,11 +234,6 @@
         }
 
         updateProgressDisplay() {
-            const percentage = Math.min(100, Math.round((this.currentStep / this.totalSteps) * 100));
-
-            this.element.style.setProperty('--current-step', this.currentStep);
-            this.element.style.setProperty('--total-steps', this.totalSteps);
-
             // Only mark as completed if not radial
             if (!this.isRadial && this.currentStep >= this.totalSteps) {
                 NDS.State.add(this.element, 'completed');
@@ -248,14 +241,8 @@
                 NDS.State.remove(this.element, 'completed');
             }
 
-            if (this.progressNumber) {
-                this.progressNumber.textContent = percentage;
-            }
-
-            if (this.progressText) {
-                const displayCurrent = Math.min(this.currentStep, this.totalSteps);
-                this.progressText.textContent = `${displayCurrent} / ${this.totalSteps}`;
-            }
+            _writeProgress(this.element, this.currentStep, this.totalSteps,
+                this.progressNumber, this.progressText);
         }
 
         syncStepStates() {
