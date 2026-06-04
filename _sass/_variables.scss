@@ -90,6 +90,18 @@
     --table-background-row-selected: var(--colors-primary-sa-flag-50);
     --table-background-hover-selected: var(--colors-primary-sa-flag-100);
 
+    // Swiper bullet (light) — neutral (inactive) states use the neutral scale (+1 step on hover);
+    // brand (active) states use the SA-flag scale (+1 step darker on hover).
+    // All four get explicit dark overrides in _variables-dark.scss. -oncolor set used on hero.
+    --bullet-background-default: var(--colors-neutral-200);
+    --bullet-background-hover: var(--colors-neutral-300);
+    --bullet-background-active: var(--colors-primary-sa-flag-600-primary);
+    --bullet-background-active-hover: var(--colors-primary-sa-flag-700);
+    --bullet-background-default-oncolor: var(--alpha-white-60);
+    --bullet-background-hover-oncolor: var(--alpha-white-80);
+    --bullet-background-active-oncolor: var(--alpha-white-100);
+    --bullet-background-active-hover-oncolor: var(--alpha-white-80);
+
     // Avatar
     --avatar-background: var(--button-background-neutral-default);
     --avatar-color: var(--icon-default);

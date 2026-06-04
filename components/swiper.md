@@ -870,8 +870,10 @@ direction: ltr
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between slides</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--bullet-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-200)</code></td><td>Inactive pagination bullet color (light theme); auto-shifts to neutral-700 in dark mode and to a translucent white on hero/on-color backgrounds</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--bullet-active</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-sa-flag-600-primary)</code></td><td>Active pagination bullet color; switches to base white on hero/on-color backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bullet-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-200)</code></td><td>Inactive pagination bullet color (light theme); shifts to neutral-700 in dark mode and to translucent white on hero/on-color backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bullet-default-hover</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-300)</code></td><td>Inactive bullet hover color (one step from default: neutral-300 light, neutral-600 dark)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bullet-active</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-sa-flag-600-primary)</code></td><td>Active pagination bullet color (light theme); shifts to green-600 in dark mode and to base white on hero/on-color backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--bullet-active-hover</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-sa-flag-700)</code></td><td>Active bullet hover color (one step darker: SA-flag-700 light, green-700 dark)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--bullet-border</code></td><td><code class="nds-inline-code lang-html">transparent</code></td><td>Border color around the pagination bullets</td></tr>
                     </tbody>
                 </table>

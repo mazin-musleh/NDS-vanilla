@@ -181,13 +181,11 @@ $a11y-filters: (
 
 // Swiper pagination bullets: --bullet-* are public override slots with
 // --colors-* fallbacks, so the token swap doesn't reach them. Inactive →
-// hollow (--_hc-bg fill, --_hc-fg ring); active → solid --_hc-fg. Force
-// full opacity since the 0.6 dim cue reads as nothing in two tones.
+// hollow (--_hc-bg fill, --_hc-fg ring); active → solid --_hc-fg.
 :root[data-a11y~="high-contrast"] .nds-bullet {
     --bullet-default:  var(--_hc-bg);
     --bullet-active:   var(--_hc-fg);
     --bullet-border:   var(--_hc-fg);
-    --_bullet-opacity: 1;
 }
 
 // Avatars: inset --_hc-fg ring. outline (not box-shadow) so it paints

@@ -168,6 +168,14 @@
     --controls-control-ripple-effect: var(--alpha-black-50);
     --controls-control-primary-checked: var(--colors-green-600);
     --controls-control-primary-hovered: var(--colors-green-500);
+
+    // Swiper bullet — dark theme. --background-neutral-* aren't remapped for dark,
+    // so the neutral (inactive) states need explicit dark grays here; hover = +1
+    // lighter to stand out on dark. Active = brand green; hover = +1 darker.
+    --bullet-background-default: var(--colors-neutral-700);
+    --bullet-background-hover: var(--colors-neutral-600);
+    --bullet-background-active: var(--colors-green-600);
+    --bullet-background-active-hover: var(--colors-green-700);
     --controls-control-primary-pressed: var(--colors-green-400);
     --controls-control-primary-focused: var(--colors-green-600);
     --controls-control-neutral-checked: var(--colors-neutral-600);
