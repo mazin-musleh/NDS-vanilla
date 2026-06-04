@@ -1,5 +1,6 @@
 ---
 layout: home
+sitemap: false  # internal dev/test page — keep out of the public sitemap
 title: "النظام الوطني للتصميم — المملكة العربية السعودية"
 hero_title: "النظام الوطني للتصميم"
 hero_description: "نظام تصميم شامل يُمكِّن من بناء تجارب رقمية حكومية متّسقة وقابلة للوصول وعالية الأداء عبر أرجاء المملكة العربية السعودية."

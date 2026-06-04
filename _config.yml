@@ -3,6 +3,7 @@ version: 1.0.5
 description: "An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
 
 baseurl: "/NDS-vanilla"
+url: "https://mazin-musleh.github.io"  # production origin (no trailing slash); used by sitemap.xml / robots.txt
 
 # HGI icon font from CDN: loads the font site-wide when true so any
 # `<i class="hgi hgi-stroke hgi-NAME">` markup in content/demo/doc pages renders.
