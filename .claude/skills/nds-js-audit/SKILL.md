@@ -35,7 +35,7 @@ Reports are scannable, not prose. **This section overrides any verbosity in the 
 - **Disclosures are one line, not banner blocks.** Collapse every skip/coverage note to a single line, e.g. `Skipped: JSD-05 (cross-tree, single-file mode).`
 - **Omit empty sections.** No "Gaps observed: none" headers. Drop "Why it matters" unless the risk is non-obvious in one glance.
 - **End with a numbered Next Step** where item 1 IS the recommended action; close with "Reply with a number."
-- **Numbered-reply discipline** (every numbered prompt — Phase 4 Next Step, Phase 6 per-file, Phase 7): every primary acceptance path gets a number, *including the recommended action itself* — never omit it on the grounds that the user already sees it as the recommendation. Renumber to drop options that are no-ops on this run. Literal filter commands (`fix HIGH`, `fix _js/nds-foo.js`) sit below the numbered block as filters, not inside it. Never close with "reply with the literal action or a number."
+- **Numbered-reply discipline** — applies to **EVERY block that offers the user a choice**: the no-args menu, the Phase 4 Next Step, Phase 6 per-file prompts, Phase 7, the end-of-batch summary, AND any closing "open / optional / your call" block (authorizing a surfaced-but-blocked evolve candidate, committing, running a behavior check, etc.). **If you offer even ONE actionable option, present the options as a NUMBERED list — never as prose bullets or a "your call" list** (that prose-bullet closing is the exact failure mode this rule kills). Every primary acceptance path gets a number, *including the recommended action itself* — never omit it on the grounds that the user already sees it as the recommendation. Renumber to drop options that are no-ops on this run. Literal filter commands (`fix HIGH`, `fix _js/nds-foo.js`) sit below the numbered block as filters, not inside it. Never close with "reply with the literal action or a number."
 
 Target: a report a reader skims in ~15 seconds with the decision obvious. Prefer the shortest version that stays actionable. The same applies to fix-phase replies and the `## Catalog evolved` block — lead with what happened and the next step, not a recap.
 
@@ -585,6 +585,16 @@ When the user replies `stop`, or when every file in the batch has been processed
 ```
 
 Do not mark the audit complete while findings remain open or regressions exist.
+
+**Closing offer — always NUMBERED (this is exactly where the discipline slips).** After the batch summary, any open follow-on action the user can take — authorizing a Phase 7 candidate that was surfaced-not-auto-applied (a blocked catalog/persona heal), committing, running a behavior check — is presented as a numbered list, never as prose bullets or an "open / optional / your call" block. Even ONE open action gets a number, and the recommended one is itself numbered:
+
+```
+Open items — reply with a number:
+
+1. `evolve <RULE>` — authorize the surfaced refinement (e.g. heal the stale `RULES-JSP.md` exemplar). [recommended]
+2. commit — I'll propose the message and wait; I never commit unprompted.
+0. done — nothing further.
+```
 
 ---
 
