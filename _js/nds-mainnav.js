@@ -534,8 +534,14 @@
                     overflow.schedule('low', 100);
 
                     if (!open) {
-                        // Restore [hidden] after the close transition ends.
-                        menu?.setAttribute('hidden', '');
+                        // Restore [hidden] after the close transition ends — but
+                        // only if a queued re-open hasn't already re-opened this
+                        // dropdown. finish() runs processPending() (which can start
+                        // that re-open: dropping [hidden] and re-stamping 'open')
+                        // BEFORE this onComplete, so without the guard a superseded
+                        // close re-hides the freshly-opened menu, leaving the
+                        // trigger 'active' with an invisible menu.
+                        if (!hasState(el, 'open')) menu?.setAttribute('hidden', '');
                         if (!collapseHandlesBackdrop &&
                             _openDropdowns.size === 0 &&
                             !hasState(DOM.collapse, 'open') &&
