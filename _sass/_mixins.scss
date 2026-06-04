@@ -252,7 +252,6 @@ $breakpoints-range: (
   --_btn-LH: var(--btn-LH, calc(var(--_btn-FS) * 1.5));
   --_btn-icon-size: var(--btn-icon-size, calc(var(--_btn-size) / 2 + 4px));
 
-  --btn-indicator-size: calc(var(--_btn-size) * 0.075);
   --_btn-space: calc(var(--_btn-size) - var(--_btn-padding));
   --loading-size: var(--_btn-space) !important;
   --loading-border: max(2px, calc(var(--_btn-space) / 10)) !important;
