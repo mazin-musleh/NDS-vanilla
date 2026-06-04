@@ -1,0 +1,99 @@
+# NDS CSS Audit — Rule maturity, gap log, SKIP log, citation health
+
+Source-of-truth for the catalog's lifecycle. Phase 6 EVOLVE reads, reconciles, and writes this file at every run. Read alongside `SKILL.md` (workflow) and `RULES-*.md` (detection definitions).
+
+## Maturity ladder
+
+Each rule advances through this ladder. Phase 6 EVOLVE applies promotions automatically (bookkeeping); user approval is required only for demotion/deletion.
+
+| Rung | Meaning | Promotion trigger | Demotion trigger |
+|---|---|---|---|
+| `proposed` | Rule exists but hasn't caught a real finding yet. May still over-fire, miss carve-outs, or be redundant. | First real match in ≥1 file → `established` | Rule has 0 matches across ≥5 consecutive saved runs AND no gap observation would have triggered it → demotion candidate (surface for user review; user approves deletion) |
+| `established` | Rule has caught ≥1 real finding. Detection is plausible. | User APPLIED a fix based on this rule in ≥1 saved run → `enforced` | Same as proposed → established demotion: 5-run zero-match streak → demote back to `proposed` |
+| `enforced` | Rule has caught findings that were actioned. Detection AND fix together work in practice. | 0 matches across ≥3 consecutive full-tree runs OR ≥5 consecutive single-file runs across different files → `settled` (rule has done its job; nothing recent to flag) | New match after a `settled` streak → demote to `enforced` (regression detected) |
+| `settled` | Rule is doing its job; nothing recent flags. Skipped from single-file dry runs to save attention; full-tree runs still spot-scan. | (terminal — only demoted) | New match → demote to `enforced` |
+
+**Re-introduction policy:** if a `settled` rule's pattern returns (new match after the dormancy streak), Phase 6 EVOLVE demotes it to `enforced` AND records the regression in the rule's notes. The pattern that was "resolved" is now a regression-guard data point.
+
+## Per-rule state (as of Run 1, buttons.scss audit cycle)
+
+| Rule | Status | First-introduced | Match count (rolling, last 7 saved runs) | Last reconciled | Notes |
+|---|---|---|---|---|---|
+| **SEL-01** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised — buttons.scss already uses `:is()` for state grouping. Awaiting audit against a less-mature component. |
+| **SEL-02** | `established` | Run 1 baseline | 0 across cards 1–7; **1 in buttons Run 1 (L19)** | 2026-06-04 | **Promoted `proposed` → `established` after first real match on buttons.scss:19 (`&:not(button):not(a)`).** Not yet applied. |
+| **SEL-03** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised. |
+| **SEL-04** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | LOW severity; not exercised. |
+| **DEAD-01** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised. |
+| **DEAD-02** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised. |
+| **DEAD-03** | `enforced` | Run 1 baseline | 3 across cards Run 1 (L30/31/32); **1 in buttons Run 1 (mixin-side: mixins.scss:255 vs buttons.scss:116)** | 2026-06-04 | Cards motivating examples resolved (regression guard). New mixin-side match in buttons Run 1: `--btn-indicator-size` defined in `@mixin btn-base` then overridden by every consumer at every size — the mixin's `calc()` form never wins. Not yet applied. |
+| **DEAD-04** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised — buttons.scss `@include ltr` blocks (L544, L555) hold direction-asymmetric transforms. |
+| **DEAD-05** | `enforced` | **Added between cards Run 1 and Run 2** (promoted from gap observation "Redundant `var(--token, <literal>)` fallbacks"). | 7 across cards Run 2 (L153/198/248/259/276/277/299); 0 in buttons Run 1 | 2026-06-04 | All buttons.scss `var(..., <literal>)` fallbacks verified load-bearing — none of the fallback-named tokens (`--nds-icons-opacity`, `--progress-circumference`, `--progress-value`, `--progress-duration`, `--user-font-scale`) are unconditionally defined in the three token-source files; carve-out applies. |
+| **DUPE-01** | `enforced` | Run 1 baseline | 1 across cards Run 1; 0 in buttons Run 1 | 2026-06-04 | Cards motivating example resolved (regression guard). Buttons has near-twin patterns (`.nds-destructive .nds-transparent` state pairs ↔ on-color `.nds-destructive .nds-secondary-outline`/`nds-subtle` pairs) but each block is only 1 declaration — below the 3-decl threshold. |
+| **DUPE-02** | `proposed` | Run 1 baseline | 0 (full-tree only — not run single-file) | 2026-06-04 | Awaiting first full-tree audit. Buttons Run 1 surfaced a gap: `.nds-ellipsis::after` (L500–509) and menu/directional `::after` (L516–528) share 7 declarations differing only in mask token. |
+| **DUPE-03** | `established` | Run 1 baseline | 0 across cards 1–7; **1 in buttons Run 1 (L651–692)** | 2026-06-04 | **Promoted `proposed` → `established` after first real match on buttons.scss:651–692.** The `&{ ... }` wrapper creates a duplicate `.nds-btn` rule emit; the inner `position: relative` is also redundant with `btn-base`. Not yet applied. |
+| **DUPE-04** | **DELETED** between cards Run 6 and Run 7 catalog updates | Added cards Run 6, deleted cards Run 6 | n/a | 2026-06-04 | **Anti-pattern lesson preserved.** Rule was added eagerly to flag isomorphic variant duplication; user pushed back. Honest accounting: source bytes grew, Brotli reduced compiled savings to ~50–100B, dark-mode duplication didn't collapse, idiom-breaking, debugging tax. Net negative. Rule deleted; lesson encoded in the SKILL.md "chasing bytes blindly" guardrail. **Do not re-introduce.** |
+| **PERF-01** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised. |
+| **PERF-02** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised. |
+| **PERF-03** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised. |
+| **PERF-04** | `enforced` | Run 1 baseline | 1 in cards Runs 4–7 (L383, resolved Run 8); **1 in buttons Run 1 (L515, L530–535 — annotate-and-accept proposed, not yet applied)** | 2026-06-04 | Stays `enforced`. New motivating example in buttons: `&:is(.nds-menu-btn, ...):not(.nds-loading, ...)::after` — compound count 4 with structurally-necessary `:not()` loading guard. Recommendation is the same annotate-and-accept pattern that worked for cards L383. |
+| **TOK-01** | `proposed` | Run 1 baseline | 0 (full-tree only) | 2026-06-04 | Awaiting first full-tree audit. |
+| **TOK-02** | `proposed` | Run 1 baseline | 0 (full-tree only) | 2026-06-04 | Awaiting first full-tree audit. |
+| **TOK-03** | `proposed` | Run 1 baseline | 0 across cards 1–7, buttons 1 | 2026-06-04 | Not exercised — buttons.scss already uses component-level `--button-*` tokens consistently. |
+| **TOK-04** | `proposed` | Run 1 baseline | 0 (full-tree only) | 2026-06-04 | Awaiting first full-tree audit. |
+
+## Gap log (gaps observed in saved runs)
+
+Gaps are patterns the audit noticed but no rule caught. Phase 6 EVOLVE promotes a gap to a rule when:
+- Same gap pattern observed in ≥2 saved runs for the same scope, OR
+- Same gap pattern observed across ≥3 different files (full-tree gap aggregation)
+
+Below: every gap surfaced in the cards audit cycle, with its disposition.
+
+| Gap | First observed | Recurrence count | Disposition |
+|---|---|---|---|
+| **Redundant `var(--token, <literal>)` fallback when token is unconditionally defined** | cards.scss Run 1 | 1 (then promoted) | **PROMOTED → DEAD-05** between Runs 1 and 2. Closed. |
+| **Deep variant nesting at L383-L577 (4-segment compound `.nds-card:not(...).nds-gold.nds-color`)** | cards.scss Run 1 | 4 (Runs 1, 2, 3 as gap; Run 4 promoted to PERF-04 finding) | **PROMOTED → PERF-04 finding** between Runs 3 and 4. Closed. |
+| **Structural variant-grid duplication (L383-L568 — 12 emit points with identical property keys, different values)** | cards.scss Run 6 | 2 (Runs 6, 7) | **Investigated and DECLINED.** No compiled-byte win available (values must differ per variant). Phase 6 verdict: gap stands as documentation of a known structural pattern; not promoted to a rule. |
+| **Cross-cluster variant-grid pattern (status-colored cluster: cards/alert/toast/chip)** | cards.scss Run 7 | 1 (newly surfaced via Phase 3 component-relationships preprocessing) | **Pending full-tree DUPE audit.** Phase 6 verdict: defer disposition until cluster siblings are audited. If pattern confirmed in ≥3 cluster members, surface as a cluster-pattern candidate (not a per-file finding). |
+| **Source-only refactor opportunities (parameterized `@mixin card-color-variant` or `@each` loop)** | cards.scss Run 6 | 2 (Runs 6, 7) | **DECLINED for audit scope.** Zero compiled-byte payoff under Size > Perf + tradeoff framework. Source maintainability concern; outside the audit's purview. |
+| **Override block emitting same property+value as parent (non-`@include ltr`)** | buttons.scss Run 1 (L617: `&.nds-lg { padding: 0 var(--spacing-lg); }` under `&.nds-menu-btn { padding: 0 var(--spacing-lg); }`) | 1 | **Pending.** Same shape as DEAD-04 sub-shape (b) but no current rule catches non-`@include ltr` parent-override duplicates. Estimated ~65B compiled if removed. Watch for recurrence in subsequent runs; promote to a rule (e.g., DEAD-06) at ≥2 saved-run recurrence. |
+| **Dead mixin defined but never `@include`d anywhere** | buttons.scss Run 1 (`btn-indicator-styles` in mixins.scss L340–360) | 1 | **Pending.** Outside single-file audit scope (dead-mixin detection is cross-file). Could be a TOK-style rule applied to mixins (TOK-02 analog: dead `@mixin`). Watch for recurrence. |
+| **Existing mixin pattern not `@include`d by file that re-implements it inline** | buttons.scss Run 1 (`.nds-indicator` block L476–490 reimplements `btn-indicator-styles` pattern) | 1 | **Pending.** Zero compiled-byte payoff (mixin would inline anyway). Source-organization concern; DUPE-02 carve-out already mentions this sub-shape ("mixin exists but is not used here"). Track. |
+| **Shared declaration body across pseudo-elements differing only in token (mask/url/etc.)** | buttons.scss Run 1 (`.nds-ellipsis::after` L500–509 and menu/directional `::after` L516–528 share 7 declarations, differ only in `mask` icon token) | 1 | **Pending full-tree DUPE-02 audit.** Could be extracted to a placeholder/mixin with the icon token as a parameter. Defer disposition until full-tree run. |
+| **Self-doubled class via `&.<parent-class>` in nested scope** | buttons.scss Run 2 (L629 `&.nds-btn i` → `.nds-btn.nds-btn i` after `&` resolution; specificity bump with no external defender) | 1 (resolved in same run) | **Investigation applied between Run 1 and Run 2.** Origin: refactoring artifact from commit fcad669 — a top-level `.nds-btn i.hgi { ... }` rule was moved inside `.nds-btn { ... }` but kept `&.nds-btn` instead of simplifying to `& i` / `i`. No competing `.nds-btn i` selector exists in `_sass/`. **Fix applied in Run 2** (drop `&.nds-btn`, leave `i`). Watch for recurrence elsewhere; promote to a rule (e.g., SEL-05: redundant parent-class self-reference) at ≥2 saved-run recurrence. |
+
+## SKIP log (rule matches discarded as not-actually-findings)
+
+When the audit identifies a SKIP repeatedly with the same reason, the rule needs a carve-out refinement.
+
+| Rule | SKIP reason | Repetition count | Disposition |
+|---|---|---|---|
+| (none) | (no SKIPs accumulated yet across saved runs) | — | Empty so far. |
+
+## Citation health (motivating findings resolved by user edits)
+
+When a motivating-example finding is resolved (user applied the fix), Phase 6 rewrites the citation as "Resolved (was the motivating finding): {file}:{line} — fix applied in Run N; rule stands as a regression guard."
+
+| Rule | Motivating finding | Resolution | Status |
+|---|---|---|---|
+| **DEAD-03** | cards.scss L30 (`--icon-color: initial;`), L31 (`--icon-bg-color: initial;`), L32 (`--avatar-color: initial;`) | Resolved between Runs 3 and 4. Cycle-detection reasoning preserved as the rule's worked example. | Resolved — rule stands as regression guard. |
+| **DEAD-05** | cards.scss L153 / L198 / L248 / L259 / L276 / L277 / L299 (redundant `var(--token, <literal>)` fallbacks) | Resolved between Runs 3 and 4. | Resolved — rule stands as regression guard. The rule's value (the var() fallback when the token is unconditionally defined) is preserved in its definition. |
+| **DUPE-01** | cards.scss L234 (`.nds-card .nds-card-meta`) ↔ L319 (`.nds-card>.nds-form, .nds-card-form`) | Resolved between Runs 3 and 4 via selector-list merge to L309-316. | Resolved — rule stands as regression guard. |
+| **PERF-04** | cards.scss L383 (variant-grid 4-segment compound) | **Resolved** (was the motivating finding): `_sass/components/_cards.scss:383` — the `// PERF-04 variant-grid: ...` annotation was applied between Runs 7 and 8 (2026-06-04). The carve-out triggers on the `// PERF-04` prefix; the rule no longer fires on cards. | Resolved — rule stands as regression guard. |
+
+## Phase 6 reconciliation log
+
+Each entry records what Phase 6 EVOLVE applied at the end of a run.
+
+| Date / Run | Action | Diff |
+|---|---|---|
+| 2026-06-04 / Run 2 (cards) | PROMOTE gap "Redundant var() fallback" → DEAD-05 | New rule added to RULES-DEAD.md; gap closed. |
+| 2026-06-04 / Run 4 (cards) | PROMOTE gap "Deep variant nesting" → PERF-04 finding (Type: tradeoff → recommend solving) | Worked example added to RULES-PERF.md; gap promoted to finding. |
+| 2026-06-04 / Run 5 (cards) | REFINE PERF-04 | "Review with design" framing replaced by `Proposed solution:` + `Benefit vs cost:` + `Alternative:` + `When to accept and annotate:` sections. |
+| 2026-06-04 / Run 6 (cards) | ADD then DELETE DUPE-04 | Rule was added eagerly (isomorphic variant duplication); user-driven self-correction within the same run cycle. Lesson encoded as "chasing bytes blindly" guardrail. |
+| 2026-06-04 / Run 6 (cards) | FRAMEWORK rewrite | Tradeoff-vs-benefit decision matrix + Size > Perf sub-rule + per-finding Size/Perf impact lines + Verification footer. |
+| 2026-06-04 / Run 7 (cards) | ADD three-tier file scoping + component-relationships preprocessing + cross-component-reach cost axis | Tier 1 hard-excludes generated/reference/demo files; Tier 2 requires explicit path (foundation/utilities/mixins/tokens/mode-overrides); Tier 3 is the default `_sass/components/*.scss` scope. |
+| 2026-06-04 / Run 7 (cards) | INTRODUCE MATURITY.md + Phase 6 EVOLVE protocol | This file. Captures rule-lifecycle bookkeeping that was previously implicit in the saved-run trail. |
+| 2026-06-04 / Run 8 (cards) | RESOLVE PERF-04 motivating-finding citation; PROMOTE PERF-04 `established` → `enforced` | User APPLIED the accept-and-annotate annotation at `_sass/components/_cards.scss:383` between Runs 7 and 8. PERF-04's carve-out triggers; rule no longer fires on cards. Citation healed to "Resolved." Cards is now Clean across all five rule groups. No deletion / promotion-candidate / refinement-candidate surfaced this run. |
+| 2026-06-04 / Run 1 (buttons) | PROMOTE SEL-02 + DUPE-03 `proposed` → `established`; new motivating findings for DEAD-03 (mixin-side) and PERF-04 (buttons L515); 4 new gap entries | First buttons audit. Findings: SEL-02 (buttons.scss:19 `&:not(button):not(a)`), DEAD-03 (mixins.scss:255 `--btn-indicator-size` calc overridden by every consumer), DUPE-03 (buttons.scss:651–692 `&{}` wrapper duplicate rule emit), PERF-04 (buttons.scss:515 menu/directional `:not()` guard — accept-and-annotate proposed). No fixes applied yet — report saved as Run 1 baseline. Estimated ~76B compiled savings on the wire if findings 1–3 applied. Gaps: (1) parent-override duplicate (L617 `&.nds-lg`), (2) dead mixin `btn-indicator-styles`, (3) inline reimplementation of existing mixin (`.nds-indicator` block), (4) shared pseudo-element body differing only by mask token. None at promotion threshold. |
+| 2026-06-04 / Run 2 (buttons) | APPLY user-actioned fixes from Run 1 (SEL-02, DEAD-03, DUPE-03 — verified −85B compiled); SURFACE + RESOLVE new gap "self-doubled class" at buttons.scss:629 (−8B verified) | PERF-04 (annotate-and-accept) remains the only open finding; user declined to apply (option 2 over option 1). New gap surfaced and investigated within the same run: `&.nds-btn i` at L629 traced to refactoring artifact in commit fcad669 — no external `.nds-btn i` competitor in `_sass/`, doubled-class specificity defends nothing. Fix applied. Total compiled-byte savings across Runs 1+2: −93B. Motivating-finding citations to update: SEL-02 → Resolved (buttons.scss:19), DEAD-03 → Resolved (mixins.scss:255), DUPE-03 → Resolved (buttons.scss:651–692). |
