@@ -164,7 +164,7 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 
 | `$2` | Rule group | Mode |
 |---|---|---|
-| `SEL` | Selector compaction (4 rules) | single-file only |
+| `SEL` | Selector compaction (3 rules) | single-file only |
 | `DEAD` | Dead declarations (4 rules) | single-file only |
 | `DUPE` | Duplicate rule bodies (3 rules — DUPE-02 full-tree) | single-file + DUPE-02 full-tree |
 | `PERF` | Selector performance/complexity (4 rules) | single-file only |
@@ -362,10 +362,9 @@ For each finding, the report MUST emit both lines:
 
 | Rule | Size impact | Perf impact |
 |---|---|---|
-| **SEL-01** (`:is()` merge) | size ↓ | neutral — `:is()` matching is cheap in evergreen engines; specificity equals the highest argument (verify no cascade flip). |
-| **SEL-02** (`:not()` list) | size ↓ | neutral. |
-| **SEL-03** (drop tag qualifier) | size ↓ | perf ↑ — one less segment to match per compound. |
-| **SEL-04** (comma list → `:is()`) | size variable (often near-zero) | neutral. |
+| **SEL-01** (`:is()` merge) | raw ↓ but **wire ≈** (duplicated body gzip-back-referenced) | perf ↑ — one fewer compiled rule to parse/match. **Primary win is structural, not bytes.** |
+| **SEL-02** (`:not()` list) | **wire ~0** (`:not(` recurs → gzip-discounted) | perf ↑ — one `:not()` to evaluate, not a chain. |
+| **SEL-03** (drop tag qualifier) | **wire ~tag-length once** (repeats gzip-back-referenced) | perf ↑ — lower specificity + one less segment per compound. |
 | **DEAD-01 / -02 / -03 / -05** | size ↓ | perf ↑ — one less declaration the cascade evaluates. |
 | **DEAD-04** (empty LTR wrapper) | size ↓ (large) | perf ↑ — one less compiled rule for the matcher. |
 | **DUPE-01 / -03** (selector-list merge) | size ↓ | neutral — selector lists are evaluated efficiently. |
@@ -383,8 +382,8 @@ For each finding, the report MUST emit both lines:
 
 **Recommendation logic** — every finding goes through the cost-vs-benefit decision matrix first; the size/perf classification only determines what gets fed into "benefit":
 
-1. **Size-saving findings with LOW cost** (most DEAD rules, SEL-02 `:not()` lists, most DUPE-01 selector-list merges, DEAD-05 fallback removal): **Apply by default.** Sort by size-delta descending within this band. Standard cost factors apply — the recommendation flips to "do not push" if the specific finding turns out to have a hidden maintenance cost.
-2. **Size-saving findings with MEDIUM cost** (SEL-01 deep merges that change cascade specificity slightly, DUPE-01 with `@extend %placeholder` extraction, SEL-03 dropping tag qualifiers): **Apply with the cost stated explicitly.** User accepts the cost knowingly.
+1. **Size-saving findings with LOW cost** (most DEAD rules, most DUPE-01 selector-list merges, DEAD-05 fallback removal — these remove *unique* content gzip can't reconstruct, so they're real wire wins; SEL-02 `:not()` collapse rides along here as a cleanliness / match-cost win that's gzip-neutral on bytes): **Apply by default.** Sort by size-delta descending within this band. Standard cost factors apply — the recommendation flips to "do not push" if the specific finding turns out to have a hidden maintenance cost.
+2. **Size-saving findings with MEDIUM cost** (DUPE-01 with `@extend %placeholder` extraction; SEL-01 deep merges and SEL-03 tag-qualifier drops — note these two are structural / specificity wins that are gzip-neutral on bytes, not real wire savings): **Apply with the cost stated explicitly.** User accepts the cost knowingly.
 3. **Pure perf wins that are size-neutral and idiom-preserving** (PERF-04 Solution B flatten-nesting, PERF-03 ID→class): recommended. Sub-cost: very low.
 4. **Size-grows-but-perf-improves tradeoffs** (size ↑ AND perf ↑): **DO NOT RECOMMEND** per the size > perf sub-rule. Surface that they exist; recommendation is "skip unless you've measured a real perf bottleneck." Hits PERF-04 Solution A, PERF-01/-02 edge cases.
 5. **Findings where the cost exceeds the benefit** even on the size axis: **DO NOT RECOMMEND.** Catch these before they ship in the report. The benefit isn't worth the maintainability/debuggability/idiom cost. The deleted DUPE-04 rule is the canonical example — `~−50–100B` Brotli-discounted size win for indirection layer + source growth + cascade-flow risk = net loss.
@@ -411,13 +410,11 @@ The audit doesn't run the compiler — it estimates compiled bytes from source b
 
 **For each finding, compute compiled-byte savings as follows:**
 
-- **SEL-01** (`:is()` merge of adjacent state pseudo-classes) — the duplicated **resolved selector chain** + the duplicated body, multiplied by (N−1) merged blocks, minus the `:is(<states>)` overhead. The resolved selector chain is the **full compiled selector**, not the source `&:hover` form — if `&:hover` is nested under `.nds-card .nds-card-header`, the compiled selector is `.nds-card .nds-card-header:hover` (~30B per occurrence). With N=2 and a typical 3-declaration body (~60B), savings are typically 60–150B per merge. **Source-byte counts severely understate this** when the rule is nested deeply.
+- **SEL-01** (`:is()` merge of adjacent state pseudo-classes) — the *raw* delta is `(resolved chain + body) × (N−1) − :is() overhead`, but report the **gzip-discounted wire** figure: the duplicated body and repeated chain are already back-referenced by gzip, so the wire saving is a small fraction of the raw number (≈ the removed back-reference overhead). Lead the finding with the structural win — one fewer compiled rule — not the byte figure. (See the RULES-SEL.md gzip preamble.)
 
-- **SEL-02** (chained `:not()` → list) — 1:1 with source. Each collapsed `:not(` saves ~6B in compiled output.
+- **SEL-02** (chained `:not()` → list) — raw ~6B per collapsed `:not(`, but `:not(` recurs across the sheet so gzip back-references it → **wire ~0**. Report the selector match-cost win, not bytes.
 
-- **SEL-03** (over-qualified type selector) — the tag length × number of compiled selector occurrences (each emit point in the compiled output, after `&` resolution). `button.nds-btn` repeated 5× via `&` chains saves `6B × 5 = 30B` compiled.
-
-- **SEL-04** (comma list → `:is()`) — typically near-zero or negative; verify the `:is()` form is actually shorter post-resolution.
+- **SEL-03** (over-qualified type selector) — raw = tag-length × occurrences, but gzip back-references the repeated `<tag>.nds-name` after the first occurrence → **wire ≈ tag-length once** (`button.nds-btn` ×5 ≈ 6B wire, not 30B). The win is the specificity drop, not bytes.
 
 - **DEAD-01 / DEAD-02 / DEAD-03 / DEAD-05** — the dead declaration's **minified** form (strip leading whitespace, strip the space after `:`, keep the semicolon). `--icon-color: initial;` source = ~25B; minified = `--icon-color:initial;` = ~22B. For DEAD-05, the saved chunk is just `, <literal>` minified (no space) — `, 16px` → `,16px` = 6B.
 
@@ -461,7 +458,7 @@ These feed the Phase 4 report's "Gaps observed" section AND Phase 6 EVOLVE — w
 
 | Group | File | Covers | Rules |
 |---|---|---|---|
-| SEL | `RULES-SEL.md` | Selector compaction — `:is()` grouping, `:not()` lists, over-qualified type selectors | 4 |
+| SEL | `RULES-SEL.md` | Selector compaction — `:is()` grouping, `:not()` lists, over-qualified type selectors | 3 |
 | DEAD | `RULES-DEAD.md` | Dead declarations — shorthand/longhand override, duplicate keys, `@include ltr` re-statements, redundant `var()` token fallbacks | 5 |
 | DUPE | `RULES-DUPE.md` | Duplicate rule bodies — in-file merge, cross-file mixin candidates, in-file selector splits | 3 |
 | PERF | `RULES-PERF.md` | Selector cost/complexity — unanchored `*`/`[attr]`, ID selectors, deep chains | 4 |
@@ -635,7 +632,7 @@ When the batch applied a TOK-02 dead-token deletion, the skill auto-runs a consu
 
 **D. Automatic cascade-flip review (cascade-sensitive batches).**
 
-When the applied batch contains a cascade-sensitive rule — SEL-01 / SEL-03 / SEL-04, DUPE-01 / DUPE-02 / DUPE-03, or PERF-03 / PERF-04 (the rules whose Tier 2 row already says "verify the cascade winner") — AUTO-run ONE read-only review agent (`Agent` tool, `general-purpose` subagent) after the Tier 1 build/byte gate and before emitting the Tier 2 spot-checks. This is the CSS analog of the JS audit's mandatory post-fix static review: it is auto-run, NOT gated behind a reply (the live visual / `verify in browser` drive in Tier 3 stays the user's offered choice; static analysis is the cheap automatic gate). Brief: the edited selectors with their pre/post resolved-`&`-chains plus the three-file token table; ask only "does any merged, dropped, or extracted selector now win or lose against a specificity-equivalent rule sitting between the merged blocks, or change cascade order?" — the failure the static byte-estimator can't see (the Methodology section's "cascade conflicts whose specificity comes from compile-time expansion" case). Output = a ranked list of cascade-flip SUSPECTS that PRIORITIZES which Tier 2 visual spot-checks below actually matter; it does NOT replace the visual checklist and NEVER drives a browser. If it flags a suspect flip, surface it at the top of the footer; do not silently pass. Skip the agent for a single `apply <rule-id>` of a non-cascade rule (e.g. a lone DEAD-05 fallback removal) — same skip-when-low-risk discipline as the Phase 3 deep-read agent.
+When the applied batch contains a cascade-sensitive rule — SEL-01 / SEL-03, DUPE-01 / DUPE-02 / DUPE-03, or PERF-03 / PERF-04 (the rules whose Tier 2 row already says "verify the cascade winner") — AUTO-run ONE read-only review agent (`Agent` tool, `general-purpose` subagent) after the Tier 1 build/byte gate and before emitting the Tier 2 spot-checks. This is the CSS analog of the JS audit's mandatory post-fix static review: it is auto-run, NOT gated behind a reply (the live visual / `verify in browser` drive in Tier 3 stays the user's offered choice; static analysis is the cheap automatic gate). Brief: the edited selectors with their pre/post resolved-`&`-chains plus the three-file token table; ask only "does any merged, dropped, or extracted selector now win or lose against a specificity-equivalent rule sitting between the merged blocks, or change cascade order?" — the failure the static byte-estimator can't see (the Methodology section's "cascade conflicts whose specificity comes from compile-time expansion" case). Output = a ranked list of cascade-flip SUSPECTS that PRIORITIZES which Tier 2 visual spot-checks below actually matter; it does NOT replace the visual checklist and NEVER drives a browser. If it flags a suspect flip, surface it at the top of the footer; do not silently pass. Skip the agent for a single `apply <rule-id>` of a non-cascade rule (e.g. a lone DEAD-05 fallback removal) — same skip-when-low-risk discipline as the Phase 3 deep-read agent.
 
 **Tier 2 — Per-finding spot-checks (one line per applied finding):**
 
@@ -643,7 +640,7 @@ For every edit the batch applied, the verification footer includes a one-line "V
 
 | Applied rule | Verification line the footer emits |
 |---|---|
-| SEL-01 / SEL-02 / SEL-04 | Open the component demo page; trigger every state pseudo-class merged into the `:is()` / `:not()` list (hover, focus, etc.) — appearance must be identical. |
+| SEL-01 / SEL-02 | Open the component demo page; trigger every state pseudo-class merged into the `:is()` / `:not()` list (hover, focus, etc.) — appearance must be identical. |
 | SEL-03 | Specificity dropped from `1,1,0` to `0,1,0`. Grep `.nds-<class>` across the codebase; confirm no other rule was relying on the type-qualified form to win the cascade. **Cross-component check**: list every file that references the class; visual-check each one's affected page after the rebuild. |
 | DEAD-01 / DEAD-02 / DEAD-03 / DEAD-05 | Compiled output unchanged at the affected selector. Open the component demo; appearance must be identical. (DEAD-03 trio: also test parent-cascade — render the component inside a wrapper that sets the same `--var` to confirm the cycle-detection fallback still fires.) |
 | DEAD-04 | Test in BOTH directions. Toggle `<html dir="ltr">` and `<html dir="rtl">` (or apply / remove the `.ltr` class) — appearance must be correct in each. |
