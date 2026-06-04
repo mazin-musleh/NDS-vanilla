@@ -259,9 +259,27 @@
         }
 
         setupResize() {
-            // Subscription is shared via ensureSharedResize; instance is invoked
-            // through _activeSwipers membership (added by setupKeyboard).
+            // Breakpoint-driven slidesPerView: shared via ensureSharedResize; instance
+            // is invoked through _activeSwipers membership (added by setupKeyboard).
             ensureSharedResize();
+
+            // Pixel-geometry caches (_measuredStep, _cachedGap) go stale on ANY size
+            // change, not just breakpoint crosses: a same-band window resize, or the
+            // hero settling to full width after first paint, both change slide spacing
+            // without firing a matchMedia change. A stale step makes detectCurrentSlide's
+            // round(scrollPos/step) overcount, which corrupts currentIndex → wrong nav
+            // disable state, wrong active bullet, and no-op prev/next. Invalidate + re-sync
+            // on every wrapper resize. Shared ResizeObserver via NDS.onElementResize; its
+            // initial callback also covers the cold-init measurement (no forced layout at init).
+            this._offResize = NDS.onElementResize(this.wrapper, () => {
+                this._cachedGap = null;
+                this._measuredStep = null;
+                this.detectCurrentSlide();
+                this.updatePagination();
+                this.updateButtons();
+                this.updateBoundaryClasses();
+                this.lastIndex = this.currentIndex;
+            });
         }
 
         _handleResize() {
@@ -585,6 +603,7 @@
             if (this.nextBtn) this.nextBtn.style.removeProperty('display');
 
             _activeSwipers.delete(this);
+            if (this._offResize) { this._offResize(); this._offResize = null; }
             if (this._offVisibility) { this._offVisibility(); this._offVisibility = null; }
             if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
