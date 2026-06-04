@@ -114,9 +114,9 @@ Flag any component that exposes `teardown()` or `dispose()` as the public instan
 
 **Maturity:** `enforced` — no known divergence; two-phase carve-out (date-picker) cited and stable.
 
-**Current adoption:** 22/22 component files with a public teardown method use `destroy()`. Tallied 2026-05-28 (corpus has since grown — adoption pending next full-tree re-tally).
+**Current adoption:** 22 component files expose `destroy()` as the public instance-lifetime teardown (tables.js declares two, for its two controllers); date-picker adds the two-phase `cleanup()`+`destroy()` carve-out. Zero `teardown()` / `dispose()` divergence across the tree. Tallied 2026-06-04.
 
-**Last reconciled:** 2026-05-28 (pre-corpus-growth; count not yet refreshed against current tree).
+**Last reconciled:** 2026-06-04 (full-tree re-tally; zero divergence — `destroy()` is universal).
 
 ---
 
@@ -230,9 +230,9 @@ Flag any component-file `console.warn(...)` or `console.error(...)` whose first 
 
 **Maturity:** `enforced` — zero component-level divergence post commit `1a194e4`; API-namespace bracket carve-out (export) verified.
 
-**Current adoption:** 21+ component warns/errors use this exact form across the corpus. Zero component-level divergence post commit `1a194e4`. Tallied 2026-05-28 (corpus has since grown — count pending next full-tree re-tally).
+**Current adoption:** 17 component files emit the `NDS <Name>:` form across ~33 warn/error statements (autocomplete, breadcrumb, accordion, date-picker, dropmenu, expandable, feedback, filter, ipv, modal, multiselect, sideinfo, user-feedback, tooltip, swiper, tabs, tables); export uses the `[NDS.Export]` bracket carve-out. Zero component-level divergence. Tallied 2026-06-04.
 
-**Last reconciled:** 2026-06-04 (export bracket-form carve-out re-verified; count not yet refreshed).
+**Last reconciled:** 2026-06-04 (full-tree count refresh; export bracket-form carve-out re-verified; zero divergence).
 
 ---
 
@@ -294,9 +294,9 @@ A factory creates per-element instances; the guard must distinguish "this specif
 
 **Maturity:** `enforced` — both motivating divergences (voice-input, swiper) migrated this reconciliation; no known divergence remains. Promotes toward `settled` once a full-tree run confirms zero divergence.
 
-**Current adoption:** 16/16 factory components use the DOM attribute form; singleton modules use `_initDone`. The corpus has grown to 11 files referencing `_initDone` (was 4: accessibility, empty, cityWeather, theme) — the singleton-vs-factory split of the new files (cooldown-button, customselect, digitalStamp, mainnav, modal, otp, voice-input) needs a full-tree classification pass to re-tally precisely. Last precise tally 2026-05-28.
+**Current adoption:** classification pass complete (2026-06-04). 11 singleton / document-sweeping modules use the `_initDone` closure flag (accessibility, cityWeather, cooldown-button, customselect, digitalStamp, empty, mainnav, modal, otp, theme, voice-input); cooldown-button + otp are delegated document-sweepers that pair `_initDone` with per-element JS-property markers (carve-out 5.2). ~20 factory components use the `data-nds-<name>-initialized` attribute form (autocomplete, accordion, breadcrumb, drawer, dropmenu, expandable, filter, ipv, multiselect, pagination, sideinfo, sort, stepper, swiper, tabs, tables, toc, tooltip, upload, user-feedback). Zero divergence — voice-input (`_installed`→`_initDone`) and swiper (`data-swiper-initialized`→`data-nds-swiper-initialized`) migrations confirmed.
 
-**Last reconciled:** 2026-06-04 (voice-input + swiper divergences confirmed resolved; precise adoption split pending next full-tree re-tally).
+**Last reconciled:** 2026-06-04 (full-tree classification pass complete; zero divergence).
 
 ---
 
@@ -338,9 +338,9 @@ Flag any `this.handlers.<key> = fn` pattern in a file where the component does N
 
 **Maturity:** `enforced` — `{ signal }` shape dominant; sole exception (date-picker two-phase) cited and principled.
 
-**Current adoption:** 15/16 files using listener-attachment patterns use the `{ signal }` shape; 1 file (date-picker) uses `this.handlers.<key>` with documented two-phase rationale. Tallied 2026-05-28 (corpus has since grown — count pending next full-tree re-tally).
+**Current adoption:** every file attaching listeners through an AbortController uses the `{ signal }` shape (~24 instance / per-element / module controllers); date-picker alone uses `this.handlers.<key>`, under the documented two-phase rationale. Zero un-rationalized divergence. Tallied 2026-06-04.
 
-**Last reconciled:** 2026-05-28 (pre-corpus-growth; count not yet refreshed against current tree).
+**Last reconciled:** 2026-06-04 (full-tree re-tally; date-picker is the sole documented exception).
 
 ---
 
