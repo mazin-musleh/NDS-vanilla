@@ -61,6 +61,7 @@ Reports are scannable, not prose.
 - **One-line disclosures.** `Skipped: DUPE-02, TOK-01/02/04 (full-tree only, single-file mode).` No banner blocks.
 - **Omit empty sections.** No "Gaps observed: none" headers.
 - **End with a numbered Next Step** where item 1 IS the recommended action. Close with "Reply with a number."
+- **Numbered-reply discipline** (every numbered prompt — the no-args menu and the Phase 4 Next Step): every primary acceptance path gets a number, *including the recommended action itself* — never demote it to an un-numbered header on the grounds the user already sees it as the recommendation. Renumber to drop no-op options. Literal `apply <rule-id>` / `apply <file>:<line>` / `save` filters sit below the numbered block, not inside it. Never close with "reply with the literal action or a number" — the numbers ARE the apply triggers (suggest-only contract).
 
 Target: a report a reader skims in ~15 seconds with the decision obvious.
 
@@ -151,6 +152,8 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 - **Token-source files**: TOK-02 (dead token) detection runs cross-file; SEL/PERF rules don't apply (the file has no real selectors beyond `:root`). DEAD-02/-03 (duplicate property keys within `:root`) still applies.
 - **Mode override files**: only TOK-02 applies (dead override binding for a non-existent token). DEAD-02/-03 also apply within the `:root[data-theme=...]` scope.
 
+**Tier-2 reduced-catalog advisory (coverage honesty).** A Tier-2 audit runs a *reduced* catalog — the carve-outs above suppress whole rules (PERF-01/-02 on `_reset.scss`, TOK-01 on `_fonts.scss`/`_icons.scss`, the `!important` threshold on `_utilities.scss`, SEL/PERF on token-source files). A clean Tier-2 report would otherwise read as a full all-clear when it isn't. So whenever the resolved target is a Tier-2 file, print ONE advisory line above the Phase 4 header: *"Auditing Tier-2 file `<name>` directly — reduced catalog: its carve-outs suppress `<the rules exempted for this file>`, so 'Clean' here means clean WITHIN those carve-outs, not a full audit."* This is the CSS analog of the JS audit's direct-named core/loader advisory — a coverage banner that converts a misleading "Clean" into honest disclosure.
+
 **Tier 3 — Default audit scope** (`_sass/components/*.scss`): all rules apply per their normal definitions and carve-outs. This is the natural target — bare-name resolution (e.g., `cards`) maps here.
 
 **Anything outside `_sass/`** (e.g., `assets/css/nds-main.min.scss` entry, Jekyll page styles in `_includes/`) is also Tier 1-hard-excluded — they're build entrypoints or page wiring, not authored component code. The token table from `_variables*.scss` is READ for reference during component audits regardless of tier (it's the source-of-truth for TOK / DEAD-05).
@@ -181,6 +184,8 @@ Source files are the single source of truth. Read fully, not by skimming.
 - **The rule catalog for THIS run's scope** — `RULES-SEL.md` (`SEL`), `RULES-DEAD.md` (`DEAD`), `RULES-DUPE.md` (`DUPE`), `RULES-PERF.md` (`PERF`), `RULES-TOK.md` (`TOK`). A run with no rule-group filter reads all five. Read only what the scope needs.
 - **`MATURITY.md`** — sibling doc tracking per-rule lifecycle (proposed/established/enforced/settled), match-count history, gap recurrences, SKIP repetitions, and citation health. Phase 6 EVOLVE reads and writes it at the end of every run; Phase 3 ANALYZE consults it to decide whether `settled` rules should be skipped in single-file dry runs (they are — see Phase 6 read-back). Always read regardless of scope.
 - **The token-source files: `_sass/_variables.scss`, `_sass/_variables-dga.scss`, `_sass/_variables-critical.scss`** — these three files are the canonical token table. **DEAD-05** and **TOK-01/02/03/04** all reference them. The dark-mode and a11y-mode variants (`_variables-dark.scss`, `_variables-a11y.scss`, `_variables-dark-dga.scss`, `_variables-dark-ref.scss`) are mode overrides, NOT token sources — they re-bind existing tokens for a different mode. Do not read them as token definitions; consult them only when checking DEAD-05 carve-outs (mode-conditional token availability) and TOK-02 dead-token analysis (mode-override binding counts as a use).
+
+  **Pre-parse the token map** (symmetric to the mixin map in `_mixins.scss` below). Build ONE keyed structure capturing, per token: (a) its resolved concrete value (chasing `var()` aliases down to a literal), (b) which mode-override files re-bind it, (c) whether it's *unconditionally* defined (top-level `:root`, not under `@media` / `@supports` / a mode selector). TOK-01 (value→token lookup), TOK-02 (dead-token), TOK-03 (alias graph), and DEAD-05 (unconditionally-defined check) then READ this one map instead of each re-parsing the three files — their per-rule detection steps consume it rather than re-deriving it. The list above is exemplars for orientation; the map is rebuilt from the current token files each run.
 - **`_sass/_mixins.scss`** — every mixin in the project. **Required for every run** because mixin resolution affects what every rule detects.
 
   Pre-parse the file and build a **mixin map** keyed by mixin name. For each mixin, capture:
@@ -214,9 +219,15 @@ Source files are the single source of truth. Read fully, not by skimming.
 
 Read each target file top-to-bottom before running the catalog. Nested rules and parent-selector chains (`&`) mean line-level grep can mis-attribute findings; a full read gets the structure right.
 
-### Good-pattern exemplar
+### Good-pattern exemplars
 
-- **`_sass/components/_buttons.scss`** — heavy state-pseudo-class use with `:is()` already in some places, structured token consumption via CSS custom properties, `@include ltr` used correctly for transforms only. Use as the reference for what "clean" looks like when proposing rewrites.
+`_sass/components/_buttons.scss` is the reference component for what "clean" looks like — cite these with `file:line` in proposed rewrites so the user copies a working pattern instead of inventing one. Exemplars for orientation, not a closed set:
+
+- **SEL-01** (`:is()` state-merge): `_buttons.scss:42` — `&:is(:hover, [data-state~="hover"])` groups a pseudo-class with its JS-stamped `data-state` twin in one block.
+- **SEL-02** (collapsed `:not()` list, done right): `_buttons.scss:19` — `&:not(button, a)` already in the single-`:not()` comma-list form SEL-02 targets; cite it as the resolved-state reference.
+- **DUPE-01 / DUPE-02** (`@extend %placeholder` byte win): `%select-caret-after` at `_sass/_mixins.scss:476`, consumed via `@extend` at `_forms.scss:368` and `_date-picker.scss:28` — the placeholder form that dedupes compiled output (the `@include` form would not).
+- **DEAD-04** (`@include ltr` for transforms only): `_buttons.scss:544` and `:555` — direction-asymmetric transforms logical properties can't express, NOT a re-statement of an RTL default.
+- **TOK-03** (component-level token consumption): button state blocks consume `--button-*` component tokens rather than reaching for semantic tokens directly.
 
 ---
 
@@ -273,6 +284,29 @@ Before running any rule's detection, expand `@include` calls inline against the 
 6. **Mixin-side findings**: if the expansion reveals a finding that lives *inside the mixin's definition* (e.g., DEAD-05 fallback inside `@include btn-focus`'s body), file the finding against `_sass/_mixins.scss:<line>` once, not against each call site. Cite call sites in the finding's note.
 
 The expanded view is what every rule's detection operates on. The source view is only used for the proposed rewrite (so the user edits the file they wrote, not the expansion).
+
+### Single-file deep-read pass (dedicated agent)
+
+**Single-file mode only** — the `all` run, or any run that includes a whole-file rule (DUPE-01 / DUPE-03 / PERF-04). After the inline catalog pass completes, spawn ONE dedicated deep-read agent (`Agent` tool, `general-purpose` subagent) that re-reads the target file end-to-end with fresh context and hunts the rules that reward undivided attention. The inline pass owns the fast, mechanically-greppable single-rule hits (most SEL/DEAD matches, single-selector PERF); the agent owns the cross-cutting reads. This is what makes single-file the deepest mode — and it stays read-only, so it never touches the suggest-never-apply contract (it only returns findings the main thread merges into the Phase 4 report).
+
+**Full-tree mode does NOT spawn this agent** — its budget is committed to breadth (cross-file DUPE-02 / TOK hashing IS its whole job), and a second whole-tree re-read would double the most expensive pass.
+
+**Deep-read scope for the agent:**
+- **DUPE-01** — whole-file non-adjacent body-hash matching (a top-of-file rule and a bottom-of-file rule sharing a body but differing in selector root — the case a line-local scan misses).
+- **DUPE-03** — the same fully-resolved selector emitted twice in the file with no intervening cascade-relevant rule.
+- **Transitive mixin expansion** — the depth-5 `@include`-chain resolution from "Mixin resolution" above, where a finding may live inside a mixin definition rather than the call site.
+- **PERF-04** — compound-count / descendant-depth / cascade reasoning on deep variant grids.
+- **Cross-component reach** — the dependency-graph scan (Component relationships, above): list every consumer of a touched token/mixin/class so the recommendation can downgrade to "coordinate first."
+
+**Skip guard.** When the run's only in-scope rules are mechanically-greppable single-rule groups with no whole-file rule (e.g. a lone `SEL` or `PERF` run), skip the agent entirely — there is nothing for it to deep-read.
+
+**Brief template** (self-contained — the agent has no audit context):
+1. **Target** — the resolved `_sass/components/_<name>.scss` path. "Read it top-to-bottom before judging; `&`-chain resolution and nested rules mean line-local matching mis-attributes findings."
+2. **Inputs** — the Phase 2 mixin map and the three-file token table (`_variables.scss`, `_variables-dga.scss`, `_variables-critical.scss`), so byte-deltas and `@extend`/`@include` decisions resolve correctly.
+3. **Rules to apply** — the in-scope subset of the deep-read scope above, each with its detection signature + rewrite shape (copy from the relevant `RULES-*.md` rows). Include the "record a GAP, not a finding, when in doubt" discipline.
+4. **Output contract** — return ONLY a findings table (`file:line`, rule ID, ≤120-char snippet, proposed rewrite, byte-delta estimate) plus a short "Gaps observed" list. No prose; two-to-five findings is typical, ten+ signals padding.
+
+**Merge.** Fold the agent's findings into the Phase 4 report, deduped against the inline pass (inline keeps the greppable single-rule hits; the agent owns the whole-file / cross-component rows). Tag agent-sourced rows with a trailing `(deep-read agent)` marker on the location cell so the merge is auditable. If the agent returns nothing, say so — a clean deep-read pass is a real result.
 
 ### Recommendation framework: weigh tradeoff vs benefit on every finding
 
@@ -357,6 +391,8 @@ For each finding, the report MUST emit both lines:
 6. **Pure losses with a third-axis benefit** (TOK-01 literal → token: grows bytes for design-system consistency): valid findings, tagged "size-grower: kept for design-system consistency, not bundle savings" so the user accepts knowingly.
 7. **Neutral on both size and perf** (PERF-04 accept-and-annotate, DUPE-02 `@include` form): valid only when they close a recurring carry-over (annotation stops the rule from re-firing) or document an intent. Cost: near-zero. Benefit: process / future-audit hygiene.
 
+**Accept-and-annotate close-out (generalizes PERF-04's pattern to ANY de-recommended finding).** When the matrix DE-RECOMMENDS a finding (bands 4–6 above: size-grows-perf-improves tradeoffs, cost-exceeds-benefit, or a TOK-01 consistency size-grower the user declines) AND the matched rule already defines a `// <RULE> <reason>` exemption comment (every rule does — see each `RULES-*.md` "Explicitly NOT a finding" carve-out), the finding's per-finding block offers **`accept and annotate`** as the resolution verb: apply the rule's own exemption comment so detection skips it next run. Without this, a de-recommended finding re-surfaces every run and trains skim-past behavior (the JS audit's "lint dump" risk). A report with a de-recommended band therefore carries an `annotate accepted tradeoffs` Next Step action, and Phase 6 heals the closed finding's citation (Step 6.4) rather than re-counting it.
+
 **Report ordering:** sort by impact band — pure size wins → pure perf wins (size-neutral) → neutral-on-both (annotation-style) → tradeoff findings (de-recommended) → TOK-01 size-growers (consistency-driven). Within each band, sort by size-delta magnitude.
 
 **Header line** leads with size, mentions perf as secondary:
@@ -439,6 +475,8 @@ Severity (HIGH / MEDIUM / LOW) drives display order within each section; byte-de
 
 One scannable report. Sections in this order:
 
+**(Tier-2 advisory, if applicable.)** When the audited file is a Tier-2 foundation file, the one-line reduced-catalog advisory (Phase 1) prints here, ABOVE the header — so the reader sees the coverage caveat before the "Clean"/findings verdict.
+
 1. **Header**: `<N HIGH / N MED / N LOW or "Clean">  →  Compiled CSS bytes saved (est): <N>  →  Recommended: <action>`
 2. **Per-group summary table** — one row per group: count of findings + total bytes saved (for SEL/DEAD/DUPE) or qualitative note (for PERF/TOK). Skip if all groups are clean.
 3. **Output-size findings (SEL + DEAD + DUPE)** — sorted by byte-delta descending. Per-finding block:
@@ -462,12 +500,15 @@ One scannable report. Sections in this order:
    2. Apply all SEL findings (selector compaction only).
    3. Apply all DEAD findings (dead declarations only).
    4. Review TOK findings interactively (token swaps need design judgment).
+   5. Annotate accepted tradeoffs — emit each de-recommended finding's `// <RULE> <reason>` exemption comment so it stops re-firing next run.
    0. Exit.
 
    Filters: apply <rule-id> / apply <file>:<line> / save
    ```
 
-Close with "Reply with a number, or type a filter command. Any apply action ends with a Verification footer (build status, actual compiled-byte delta, per-finding spot-checks)."
+Follow **Numbered-reply discipline** (see Response style): the recommended action is itself numbered, renumber to drop no-ops, and `apply <rule-id>` / `apply <file>:<line>` / `save` stay below the numbered block as filters.
+
+Close with "Reply with a number; `apply` / `save` filters sit below the numbered block. Any apply action ends with a Verification footer (build status, actual compiled-byte delta, per-finding spot-checks)."
 
 ### Recommending `save`
 
@@ -588,6 +629,14 @@ Delta should match the report's "Compiled CSS bytes saved (est)" within ~15%. If
 
 **On stash-pop safety in both flows:** if the audit gets interrupted between `git stash push` and `git stash pop`, the user's fixes are recoverable via `git stash list` → `git stash pop stash@{<index named "css-audit-byte-verify-temp">}`. Always include the `-m` tag so the entry is identifiable.
 
+**C. Dead-token consumer re-check (TOK-02 deletions only).**
+
+When the batch applied a TOK-02 dead-token deletion, the skill auto-runs a consumer re-grep as a mandatory gate. This is a deterministic, read-only `Grep` — NOT a live browser drive — so auto-running it is consistent with the static-gate contract (it's the static analog of the JS audit's automatic post-fix review gate). For each deleted token, `Grep` `var\(--<name>` across `_sass/` (Tier 2 + Tier 3), `_includes/`, `_layouts/`, `assets/css/`, AND the mode-override files (`_variables-dark.scss`, `_variables-a11y.scss`, `_variables-dark-dga.scss`) — the same consumer set the Phase 3 cross-component scan uses before recommending (the file can drift between recommend and apply). If ANY consumer surfaces: `Edit` the token back, report the surviving consumer `file:line`, and STOP the batch — the same revert-and-stop shape as a Tier 1-A build failure.
+
+**D. Automatic cascade-flip review (cascade-sensitive batches).**
+
+When the applied batch contains a cascade-sensitive rule — SEL-01 / SEL-03 / SEL-04, DUPE-01 / DUPE-02 / DUPE-03, or PERF-03 / PERF-04 (the rules whose Tier 2 row already says "verify the cascade winner") — AUTO-run ONE read-only review agent (`Agent` tool, `general-purpose` subagent) after the Tier 1 build/byte gate and before emitting the Tier 2 spot-checks. This is the CSS analog of the JS audit's mandatory post-fix static review: it is auto-run, NOT gated behind a reply (the live visual / `verify in browser` drive in Tier 3 stays the user's offered choice; static analysis is the cheap automatic gate). Brief: the edited selectors with their pre/post resolved-`&`-chains plus the three-file token table; ask only "does any merged, dropped, or extracted selector now win or lose against a specificity-equivalent rule sitting between the merged blocks, or change cascade order?" — the failure the static byte-estimator can't see (the Methodology section's "cascade conflicts whose specificity comes from compile-time expansion" case). Output = a ranked list of cascade-flip SUSPECTS that PRIORITIZES which Tier 2 visual spot-checks below actually matter; it does NOT replace the visual checklist and NEVER drives a browser. If it flags a suspect flip, surface it at the top of the footer; do not silently pass. Skip the agent for a single `apply <rule-id>` of a non-cascade rule (e.g. a lone DEAD-05 fallback removal) — same skip-when-low-risk discipline as the Phase 3 deep-read agent.
+
 **Tier 2 — Per-finding spot-checks (one line per applied finding):**
 
 For every edit the batch applied, the verification footer includes a one-line "Verification:" note telling the user what to check. The line is rule-specific:
@@ -602,14 +651,13 @@ For every edit the batch applied, the verification footer includes a one-line "V
 | DUPE-02 (cross-file `@extend %placeholder`) | Run a grep for `%<placeholder-name>` across all files that previously held the duplicated body; every call site must `@extend %<name>`. Open one demo page per affected component. |
 | PERF-04 (variant-grid restructure) | Full component QA. Open every variant the component supports (e.g., all color × style × dark-mode combinations for cards). Each variant must render identically. If the fix annotated rather than restructured: no visual check needed — confirm the `// PERF-04 complexity-required:` comment landed and reads correctly. |
 | TOK-01 / TOK-03 (token swap) | Confirm the token's compiled value matches the literal it replaced. Inspect the element in DevTools — the resolved property value must be byte-identical to the pre-swap value. |
-| TOK-02 (dead-token deletion) | Re-run a project-wide `grep var\(--<name>` after deletion across `_sass/`, `_includes/`, `_layouts/`, and `assets/css/` to confirm zero consumers. If any hit appears, restore the token immediately — the dead-token detection missed a consumer. **Also check** mode-override files (`_variables-dark.scss` etc.) — a token may be re-bound there without being a primary consumer; those bindings become dead too and should be removed in the same batch. |
+| TOK-02 (dead-token deletion) | Covered automatically by **Tier 1-C** (the consumer re-grep + auto-revert runs as a mandatory gate). This row is the manual fallback when the dev server / `Grep` is unavailable: re-run `grep var\(--<name>` across `_sass/`, `_includes/`, `_layouts/`, `assets/css/`, and the mode-override files (`_variables-dark.scss` etc.); if any hit appears, restore the token. A token re-bound only in a mode-override file is itself now dead — remove those bindings in the same batch. |
 | Any rule with Cross-component reach > 0 (per the Phase 3 cross-component scan) | Each consumer file named in the finding's "Cross-component reach:" line must be visually spot-checked on its demo page after the rebuild. If the finding affects a base component (`_buttons.scss`, `_icons.scss`, `_typography.scss`, foundation files), the spot-check covers the top 3 dependent components by usage frequency, not just the audited file. |
 
 **Tier 3 — Optional ground-truth checks (recommended when estimated savings >100B compiled, or when applying ≥5 findings in one batch):**
 
-- **Browser DOM diff.** Open the affected component demo in Chrome / Firefox. Use DevTools → Elements → Computed pane on a representative element. Snapshot the resolved-style list before applying, then again after. Compare.
+- **Computed-style + visual diff (`verify in browser` — user-elected).** Reply `verify in browser` and the skill drives `puppeteer-core` (env block + `executablePath` fallback + reuse of the running `:4002` server per the sibling skill's `../nds-js-audit/PUPPETEER.md` — cross-reference that boilerplate, don't duplicate it) to `goto` the affected component demo and, against the git-stashed source (BEFORE) vs the applied fix (AFTER): (1) snapshot `getComputedStyle` for a representative element per affected selector and diff the resolved-style maps, reporting any property whose computed value changed; (2) `page.screenshot` each affected variant (per-variant clips for PERF-04 / multi-variant findings, sourced from the Tier 2 spot-check row) and report a pixel-changed/unchanged verdict per variant. The per-selector element targets come from each finding's affected-selector list (there is no per-rule scenario table as in the JS skill). Reuse the Tier 1 stash → build → unstash mechanic (SCSS has no per-fix rebundle; the Jekyll watcher recompiles). This stays **offered, never auto-run** — a computed-style/screenshot drive is the live equivalent of the JS skill's browser drive (match verification to risk); Tier 1 `wc -c` byte-delta remains the automatic gate. Treat the screenshot verdict as a FLAG for human review, not a hard gate — demo-page anti-aliasing / hinting noise makes pixel-diff softer than a DOM assertion. When `verify in browser` isn't elected (or the dev server / Chrome is unavailable), fall back to the manual version: DevTools → Computed pane snapshot before/after, and a manual screenshot pixel-diff.
 - **Compiled CSS diff.** `diff` the `.min.css` before and after. Inspect the affected rules manually to confirm only the intended bytes changed.
-- **Visual regression (manual).** Take a screenshot of the component demo before applying; re-screenshot after the rebuild; pixel-diff (or visual-diff in DevTools' "Layers" panel).
 
 The footer is emitted ONLY when Phase 5 actually applied edits. Dry-run reports (Phase 4 alone, no apply commands) do not emit it — there's nothing to verify yet.
 
@@ -667,6 +715,8 @@ For each rule with a motivating-finding citation in its `RULES-*.md` definition 
    - DO NOT delete the rule. A rule whose motivating example was resolved is now a regression-guard, which is exactly its job in the catalog.
 3. If the pattern is still present at a different line (because the file was edited but the pattern remains), update the citation's line number.
 4. If the file no longer exists (component deleted), mark the citation "Resolved by component removal" and check whether the rule has any other motivating examples; if zero, surface as a demotion candidate.
+
+**Accept-and-annotate heals like a resolved finding.** When a finding was closed via its `// <RULE> <reason>` exemption comment (the Phase 3 accept-and-annotate close-out), heal its citation in `MATURITY.md` to "Resolved (accepted-and-annotated): `<file>:<line>` — the matched rule's exemption comment was applied in Run N; rule stands as a regression guard" — the same treatment PERF-04 already gets (cards Run 8). The finding then stops re-counting as a recurring finding; the annotation is what suppresses re-detection.
 
 ### Step 6.5 — Reconciliation log entry
 
