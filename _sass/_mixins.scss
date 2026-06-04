@@ -464,3 +464,33 @@ $breakpoints-range: (
   --section-border: none #{$important};
   --section-border-radius: 0 #{$important};
 }
+
+// ==============================================
+// SHARED PLACEHOLDERS
+// ==============================================
+
+// Dropdown caret for select-style form controls — extended by the wrapper
+// `::after` in _forms.scss (.nds-select) and _date-picker.scss. @extend
+// collapses both into one compiled selector list (the @include ltr override
+// collapses too), which @include could not — it would inline at each site.
+%select-caret-after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  left: var(--spacing-md);
+  transition: transform 0.1s ease;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
+  opacity: var(--nds-icons-opacity, 1);
+  rotate: -90deg;
+  top: 50%;
+  translate: 0 -50%;
+
+  @include ltr {
+    left: unset;
+    right: var(--spacing-md);
+  }
+}

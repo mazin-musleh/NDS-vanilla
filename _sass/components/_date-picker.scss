@@ -24,24 +24,8 @@
             cursor: pointer;
         }
         &::after {
-            content: "";
-            pointer-events: none;
-            position: absolute;
-            left: var(--spacing-md);
-            transition: transform 0.1s ease;
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            background: currentColor;
-            mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
-            opacity: var(--nds-icons-opacity, 1);
-            rotate: -90deg;
-            top: 50%;
-            translate: 0 -50%;
-            @include ltr {
-                left: unset;
-                right: var(--spacing-md);
-            }
+            // Same caret as .nds-select — see %select-caret-after in _mixins.scss
+            @extend %select-caret-after;
         }
     }
     &[data-state~="open"] .nds-form-control::after {
