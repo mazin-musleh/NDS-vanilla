@@ -82,7 +82,7 @@
             font-size: var(--typo-text-clamp-md-FS);
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-2xs, 2px);
+            gap: var(--spacing-xxs);
         }
 
         .nds-brand-slogan {
@@ -164,7 +164,7 @@
 
         >*:first-child {
             position: relative;
-            border-radius: var(--radius-sm, 4px);
+            border-radius: var(--radius-sm);
         }
 
         &.nds-icon-only {
@@ -635,7 +635,9 @@ body.nds-minimal .nds-main-nav {
 
                     &.nds-oncolor {
                         @at-root {
-
+                            // PERF-04 complexity-required: @at-root can't prepend :root[data-theme]
+                            // via &, so the dark-theme path re-spells the ancestor chain; depth is
+                            // load-bearing (theme gate + minimal-mode + primary-nav scope + specificity).
                             #{&},
                             :root[data-theme="dark"] body.nds-minimal .nds-main-nav .nds-nav-primary .nds-nav-item .nds-nav-link.nds-menu-btn {
                                 --btn-bg-hover: var(--button-background-transparent-hovered);
