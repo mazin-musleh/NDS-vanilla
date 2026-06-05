@@ -11,11 +11,11 @@
     // Additional color tokens
     --text-white: var(--colors-base-white);
     --text-black: var(--colors-base-black);
-    --colors-primary-sa-flag-600: #1b8354;
-    --colors-secondary-gold-600: #dba102;
-    --colors-secondary-gold-primary: var(--colors-secondary-gold-600);
-    --colors-tertiary-lavendar-500: #80519f;
-    --colors-tertiary-lavendar-primary: var(--colors-tertiary-lavendar-500);
+    --colors-primary-sa-flag-600: var(--colors-primary-sa-flag-600-primary);
+    --colors-secondary-gold-600: var(--colors-secondary-gold-600-primary);
+    --colors-secondary-gold-primary: var(--colors-secondary-gold-600-primary);
+    --colors-tertiary-lavendar-500: var(--colors-tertiary-lavendar-500-primary);
+    --colors-tertiary-lavendar-primary: var(--colors-tertiary-lavendar-500-primary);
     --colors-neutral-750: #2b3643;
     --colors-neutral-850: #18212f;
     --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
@@ -88,6 +88,7 @@
     // Table (missing in DGA)
     --table-background-cell: var(--colors-base-white);
     --table-background-row-selected: var(--colors-primary-sa-flag-50);
+    // Override of DGA's neutral-50 — brand tint so hover deepens the selected row (pairs with row-selected)
     --table-background-hover-selected: var(--colors-primary-sa-flag-100);
 
     // Swiper bullet (light) — neutral (inactive) states use the neutral scale (+1 step on hover);
@@ -126,7 +127,6 @@
     --focus-inner: var(--colors-base-white);
 
     --icon-separator: var(--colors-neutral-400);
-    --icon-neutral: var(--colors-neutral-700);
     --icon-neutral-ring: var(--colors-neutral-100);
     --icon-success-ring: var(--colors-green-100);
     --icon-info-ring: var(--colors-blue-100);
