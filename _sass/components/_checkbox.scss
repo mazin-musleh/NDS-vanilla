@@ -9,25 +9,8 @@
 // CHECKBOX CONTAINER
 // ==============================================
 
-.nds-form-container.nds-check-container {
-    // Public API token: --nds-input-size (16/20/24)
-    // Public colour tokens read inline: --checkbox-tile-bg, --checkbox-tile-border, --checkbox-glyph-bg
-
-    // Size variants override the PUBLIC token
-    &.nds-md { --nds-input-size: 20px; gap: var(--spacing-lg); }
-    &.nds-lg { --nds-input-size: 24px; gap: var(--spacing-xl); }
-
-    &>.nds-form-header .nds-label {
-        font-size: var(--typo-text-md-FS);
-        line-height: var(--nds-input-size, 16px);
-    }
-
-    .nds-form-control.focused:focus-visible {
-        outline: 2px solid var(--colors-base-black) !important;
-        outline-offset: -2px !important;
-        box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
-    }
-}
+// Container head (sizes, label, focus) shared with radio in _forms.scss.
+// Public colour tokens read inline below: --checkbox-tile-bg, --checkbox-tile-border, --checkbox-glyph-bg
 
 // ==============================================
 // CHECKBOX GROUP — only component-specific overrides
@@ -51,7 +34,7 @@
     // native outline on the input box surrounds the tile cleanly with a
     // small offset. :focus-visible keeps it keyboard-only.
     &:focus-visible {
-        outline: 2px solid var(--colors-base-black);
+        outline: 2px solid var(--focus-outline);
         outline-offset: 2px;
         border-radius: var(--radius-xs);
     }

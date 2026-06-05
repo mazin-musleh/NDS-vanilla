@@ -103,7 +103,7 @@
         inset: 50% auto auto 50%;
         width:  var(--_switch-width);
         height: var(--_switch-height);
-        border-radius: 9999px;
+        border-radius: var(--radius-full);
         transform: translate(-50%, -50%);
         background-color: var(--controls-control-ripple-effect);
         transition: var(--nds-transition);
@@ -144,7 +144,7 @@
         cursor: pointer;
         background-color: var(--_switch-track-bg);
         border: 1px solid var(--_switch-track-border);
-        border-radius: 9999px;
+        border-radius: var(--radius-full);
         z-index: 2;
     }
 
@@ -157,7 +157,7 @@
         width:  var(--_switch-thumb-size);
         height: var(--_switch-thumb-size);
         background-color: var(--_switch-thumb-bg);
-        border-radius: 9999px;
+        border-radius: var(--radius-full);
         transform: translateY(-50%);
         box-shadow: var(--shadow-sm);
         transition: all 0.1s ease;

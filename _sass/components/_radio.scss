@@ -9,25 +9,8 @@
 // RADIO CONTAINER
 // ==============================================
 
-.nds-form-container.nds-radio-container {
-    // Public API token: --nds-input-size (16/20/24)
-    // Public colour tokens read inline: --radio-tile-bg, --radio-tile-border
-
-    // Size variants override the PUBLIC token.
-    &.nds-md { --nds-input-size: 20px; gap: var(--spacing-lg); }
-    &.nds-lg { --nds-input-size: 24px; gap: var(--spacing-xl); }
-
-    &>.nds-form-header .nds-label {
-        font-size: var(--typo-text-md-FS);
-        line-height: var(--nds-input-size, 16px);
-    }
-
-    .nds-form-control.focused:focus-visible {
-        outline: 2px solid var(--colors-base-black) !important;
-        outline-offset: -2px !important;
-        box-shadow: inset 0 0 0 3px var(--focus-inner) !important;
-    }
-}
+// Container head (sizes, label, focus) shared with checkbox in _forms.scss.
+// Public colour tokens read inline below: --radio-tile-bg, --radio-tile-border
 
 // ==============================================
 // RADIO GROUP — only component-specific overrides
@@ -51,7 +34,7 @@
     // is drawn by ::after, so a circular outline on the input box wraps
     // it cleanly. :focus-visible keeps it keyboard-only.
     &:focus-visible {
-        outline: 2px solid var(--colors-base-black);
+        outline: 2px solid var(--focus-outline);
         outline-offset: 2px;
         border-radius: 50%;
     }
@@ -86,8 +69,8 @@
     .nds-lg &:checked::after { border-width: 5px; }
 
     &:checked:not(:disabled) {
-        &:hover::after  { --radio-tile-bg: var(--controls-control-primary-hovered); }
-        &:active::after { --radio-tile-bg: var(--controls-control-primary-pressed); }
+        &:hover::after  { --radio-tile-bg: var(--radio-primary-hovered); }
+        &:active::after { --radio-tile-bg: var(--radio-primary-pressed); }
     }
 
     // Unchecked hover / pressed

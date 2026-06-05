@@ -242,7 +242,7 @@ fieldset {
         // Exclude checkbox/radio: they use appearance:none so the input
         // IS the visual element and needs its own :focus-visible ring
         // (see _checkbox.scss / _radio.scss).
-        &:not(:disabled):not([type="checkbox"]):not([type="radio"]) {
+        &:not(:disabled, [type="checkbox"], [type="radio"]) {
             color: var(--form-field-text-focused);
             outline: unset !important;
             outline-offset: unset !important;
@@ -410,7 +410,7 @@ fieldset {
             align-items: center;
             justify-content: center;
 
-            &:not(:first-child):not([hidden] + *)::before {
+            &:not(:first-child, [hidden] + *)::before {
                 content: '';
                 width: 1px;
                 background-color: var(--border-neutral-primary);
@@ -437,7 +437,7 @@ fieldset {
 
             // Static (non-interactive) prefix/suffix: was --text-secondary-paragraph,
             // bumped to primary for AA contrast
-            > :not(button):not(a) {
+            > :not(button, a) {
                 --btn-color: var(--text-primary-paragraph);
             }
         }
@@ -609,6 +609,22 @@ fieldset {
             width: calc(var(--nds-input-size, 16px) * 2);
             height: calc(var(--nds-input-size, 16px) * 2);
         }
+    }
+}
+
+// Shared container head (checkbox + radio — switch differs: own sizes + non-!important focus).
+// Public API token: --nds-input-size (16/20/24); size variants override it.
+:is(.nds-check-container, .nds-radio-container).nds-form-container {
+    &.nds-md { --nds-input-size: 20px; gap: var(--spacing-lg); }
+    &.nds-lg { --nds-input-size: 24px; gap: var(--spacing-xl); }
+
+    > .nds-form-header .nds-label {
+        font-size: var(--typo-text-md-FS);
+        line-height: var(--nds-input-size, 16px);
+    }
+
+    .nds-form-control.focused:focus-visible {
+        @include btn-focus;
     }
 }
 

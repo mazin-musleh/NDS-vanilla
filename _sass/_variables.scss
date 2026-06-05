@@ -161,6 +161,8 @@
     --switch-neutral-pressed: var(--controls-control-neutral-pressed);
 
     // Radio-specific (defaults to shared controls tokens)
+    --radio-primary-hovered: var(--controls-control-primary-hovered);
+    --radio-primary-pressed: var(--controls-control-primary-pressed);
     --radio-neutral-checked: var(--controls-control-neutral-checked);
     --radio-neutral-hovered: var(--controls-control-neutral-hovered);
     --radio-neutral-pressed: var(--controls-control-neutral-pressed);
