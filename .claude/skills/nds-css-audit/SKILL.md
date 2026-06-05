@@ -12,7 +12,7 @@ This skill audits NDS SCSS source — files in `_sass/` — for measurable impro
 
 > **Scope this skill narrowly.** Full-tree runs read every file under `_sass/components/` and re-parse the token table from `_variables.scss`. Single-file runs are cheaper (~10–20k tokens) and are the default fit.
 > - `/nds-css-audit _sass/components/_<name>.scss [rule-group]` — single-file audit. Omit the rule-group to run all five groups. ~10–20k tokens. Best fit before merging a new or refactored component.
-> - `/nds-css-audit full-tree <rule-group>` — cross-file rules only. ~30–50k tokens. Best fit for cross-file consistency sweeps (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05).
+> - `/nds-css-audit full-tree <rule-group>` — cross-file rules only. ~30–50k tokens. Best fit for cross-file consistency sweeps (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05, TOK-06).
 
 ---
 
@@ -58,7 +58,7 @@ Reports are scannable, not prose.
 - **Recommendation-first.** Open the report with ONE line: `<N HIGH / N MED / N LOW or "Clean">  →  Compiled CSS bytes saved (est): <N>  →  Recommended: <action>`. Never bury the recommendation.
 - **Findings sorted by impact, not taxonomy.** Top section: SEL/DEAD/DUPE findings ordered by byte-delta (largest first). Middle section: PERF findings by severity. Bottom section: TOK findings.
 - **Per-finding block format.** `### {file}` then `- L{n} [{rule}] {one-line description}` with indented `Snippet:` / `Rewrite:` / `Saves: ~{N}B` lines. Tables only for the per-group summary at the top.
-- **One-line disclosures.** `Skipped: DUPE-02, TOK-01/02/04/05 (full-tree only, single-file mode).` No banner blocks.
+- **One-line disclosures.** `Skipped: DUPE-02, TOK-01/02/04/05/06 (full-tree only, single-file mode).` No banner blocks.
 - **Omit empty sections.** No "Gaps observed: none" headers.
 - **End with a numbered Next Step** where item 1 IS the recommended action. Close with "Reply with a number."
 - **Numbered-reply discipline** — applies to **EVERY block that offers the user a choice**: the no-args menu, the Phase 4 Next Step, AND any closing "open / optional / your call" block (authorizing an evolve candidate, committing, running a verification, etc.). **If you offer even ONE actionable option, present the options as a NUMBERED list — never as prose bullets or a "your call" list** (that prose-bullet closing is the exact failure mode this rule kills). Every primary acceptance path gets a number, *including the recommended action itself* — never demote it to an un-numbered header on the grounds the user already sees it as the recommendation. Renumber to drop no-op options. Literal `apply <rule-id>` / `apply <file>:<line>` / `save` filters sit below the numbered block, not inside it. Never close with "reply with the literal action or a number" — the numbers ARE the apply triggers (suggest-only contract).
@@ -110,7 +110,7 @@ Accept `0` or `exit` as "end here, nothing runs".
 
 | `$1` | Files in scope | Rule groups run |
 |---|---|---|
-| **filename** (e.g. `_sass/components/_buttons.scss`, `_buttons.scss`, `buttons`) | One file: the resolved target | A rule-group filter (`SEL` / `DEAD` / `DUPE` / `PERF` / `TOK`), or `all`. **When omitted, default to `all`** — single-file `all` is cheap. Full-tree-only rules (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05) are skipped with a one-line banner. |
+| **filename** (e.g. `_sass/components/_buttons.scss`, `_buttons.scss`, `buttons`) | One file: the resolved target | A rule-group filter (`SEL` / `DEAD` / `DUPE` / `PERF` / `TOK`), or `all`. **When omitted, default to `all`** — single-file `all` is cheap. Full-tree-only rules (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05, TOK-06) are skipped with a one-line banner. |
 | `full-tree` | All `_sass/components/*.scss` (plus `_variables*.scss` and `_mixins.scss` for reference) | Must be paired with a rule-group filter that contains cross-file rules — only `DUPE` and `TOK`. Other groups rejected in full-tree mode. |
 
 **File resolution.** When `$1` doesn't match `full-tree`, treat as a filename and try in order: (1) literal `$1` if it includes a path separator and exists; (2) `_sass/components/$1` if it ends in `.scss`; (3) `_sass/components/_$1.scss` if it starts with `_`; (4) `_sass/components/_$1.scss` for the bare name. Stop at the first match. If none exist, reply: *"Couldn't resolve `<filename>`. Tried: `_sass/components/_<X>.scss`. Pass the filename as it appears in `_sass/components/`."* — and if the target ends in `.js` or names a component that exists only under `_js/`, add: *"For JS behavior, use `/nds-js-audit nds-<name>.js` — this skill audits SCSS only."* Then stop.
@@ -168,12 +168,12 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 | `DEAD` | Dead declarations (4 rules) | single-file only |
 | `DUPE` | Duplicate rule bodies (3 rules — DUPE-02 full-tree) | single-file + DUPE-02 full-tree |
 | `PERF` | Selector performance/complexity (4 rules) | single-file only |
-| `TOK` | Token consistency (5 rules — TOK-01/02/04/05 full-tree) | single-file + TOK-01/02/04/05 full-tree |
+| `TOK` | Token consistency (6 rules — TOK-01/02/04/05/06 full-tree) | single-file + TOK-01/02/04/05/06 full-tree |
 | `all` (**single-file only**) | SEL + DEAD + DUPE + PERF + TOK against one file → one consolidated report | single-file only |
 
 **If `$2` is missing:** single-file mode defaults to `all`. Full-tree mode has no default — show the Phase 1 menu and wait.
 
-**Full-tree restriction.** Only DUPE-02 (cross-file duplicate rule bodies), TOK-01 (cross-file hardcoded-value duplication), TOK-02 (dead component tokens), TOK-04 (asymmetric state coverage), and TOK-05 (cross-file duplicate keys / upstream-value duplication) work cross-file. If the user passes `full-tree SEL` / `full-tree DEAD` / `full-tree PERF`, reject: *"`SEL`/`DEAD`/`PERF` rules are per-file — full-tree mode applies only to `DUPE` and `TOK`. Run single-file (`/nds-css-audit _sass/components/_<name>.scss <group>`) instead."*
+**Full-tree restriction.** Only DUPE-02 (cross-file duplicate rule bodies), TOK-01 (cross-file hardcoded-value duplication), TOK-02 (dead component tokens), TOK-04 (asymmetric state coverage), TOK-05 (cross-file duplicate keys / upstream-value duplication), and TOK-06 (cross-sibling indirection-token asymmetry) work cross-file. If the user passes `full-tree SEL` / `full-tree DEAD` / `full-tree PERF`, reject: *"`SEL`/`DEAD`/`PERF` rules are per-file — full-tree mode applies only to `DUPE` and `TOK`. Run single-file (`/nds-css-audit _sass/components/_<name>.scss <group>`) instead."*
 
 ## Phase 2: READ
 
@@ -462,7 +462,7 @@ These feed the Phase 4 report's "Gaps observed" section AND Phase 6 EVOLVE — w
 | DEAD | `RULES-DEAD.md` | Dead declarations — shorthand/longhand override, duplicate keys, `@include ltr` re-statements, redundant `var()` token fallbacks | 5 |
 | DUPE | `RULES-DUPE.md` | Duplicate rule bodies — in-file merge, cross-file mixin candidates, in-file selector splits | 3 |
 | PERF | `RULES-PERF.md` | Selector cost/complexity — unanchored `*`/`[attr]`, ID selectors, deep chains | 4 |
-| TOK | `RULES-TOK.md` | Token consistency — hardcoded values, dead tokens, hierarchy direction, state symmetry, cross-file duplicate keys / upstream-hex | 5 |
+| TOK | `RULES-TOK.md` | Token consistency — hardcoded values, dead tokens, hierarchy direction, state symmetry, cross-file duplicate keys / upstream-hex, cross-sibling indirection symmetry | 6 |
 
 Severity (HIGH / MEDIUM / LOW) drives display order within each section; byte-delta drives display order across SEL/DEAD/DUPE.
 
@@ -489,7 +489,7 @@ One scannable report. Sections in this order:
    ```
 4. **Selector performance (PERF)** — sorted by severity. Per-finding block (no byte-delta; qualitative impact note instead).
 5. **Token consistency (TOK)** — sorted by severity. Per-finding block.
-6. **One-line disclosures** — `Skipped: DUPE-02, TOK-01/02/04/05 (full-tree only, single-file mode).`
+6. **One-line disclosures** — `Skipped: DUPE-02, TOK-01/02/04/05/06 (full-tree only, single-file mode).`
 7. **Gaps observed** — one line each, only if non-empty.
 8. **Next step** — numbered list. Item 1 IS the recommended action; renumber to drop options that are no-ops on this run. `save` is NOT a numbered item — it's a literal command that sits below the numbered block as a filter:
    ```
@@ -647,7 +647,7 @@ For every edit the batch applied, the verification footer includes a one-line "V
 | DUPE-01 / DUPE-03 (in-file merge) | Open the component demo page. The merged rule must come at a position where its cascade outcome matches the unmerged source — if the bodies were identical, this is automatic; if any specificity-equivalent rule sits between them, the merge may have changed the winner. Visual diff vs the previous build. |
 | DUPE-02 (cross-file `@extend %placeholder`) | Run a grep for `%<placeholder-name>` across all files that previously held the duplicated body; every call site must `@extend %<name>`. Open one demo page per affected component. |
 | PERF-04 (variant-grid restructure) | Full component QA. Open every variant the component supports (e.g., all color × style × dark-mode combinations for cards). Each variant must render identically. If the fix annotated rather than restructured: no visual check needed — confirm the `// PERF-04 complexity-required:` comment landed and reads correctly. |
-| TOK-01 / TOK-03 (token swap) | Confirm the token's compiled value matches the literal it replaced. Inspect the element in DevTools — the resolved property value must be byte-identical to the pre-swap value. |
+| TOK-01 / TOK-03 / TOK-06 (token swap / added alias) | Confirm the token's compiled value matches the literal it replaced. Inspect the element in DevTools — the resolved property value must be byte-identical to the pre-swap value. |
 | TOK-02 (dead-token deletion) | Covered automatically by **Tier 1-C** (the consumer re-grep + auto-revert runs as a mandatory gate). This row is the manual fallback when the dev server / `Grep` is unavailable: re-run `grep var\(--<name>` across `_sass/`, `_includes/`, `_layouts/`, `assets/css/`, and the mode-override files (`_variables-dark.scss` etc.); if any hit appears, restore the token. A token re-bound only in a mode-override file is itself now dead — remove those bindings in the same batch. |
 | Any rule with Cross-component reach > 0 (per the Phase 3 cross-component scan) | Each consumer file named in the finding's "Cross-component reach:" line must be visually spot-checked on its demo page after the rebuild. If the finding affects a base component (`_buttons.scss`, `_icons.scss`, `_typography.scss`, foundation files), the spot-check covers the top 3 dependent components by usage frequency, not just the audited file. |
 
