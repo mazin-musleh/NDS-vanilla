@@ -30,6 +30,7 @@
  * Data Attributes:
  * - data-success-message: Custom success message (overrides language defaults)
  * - data-error-message: Custom error message (overrides language defaults)
+ * - data-no-persist: Skip cookie persistence (no restore on return, no save on submit)
  */
 
 NDS.UserFeedback = (() => {
@@ -72,8 +73,12 @@ NDS.UserFeedback = (() => {
         const detailsEl = feedbackComponent.querySelector('.nds-user-feedback-details');
         const submitEl = feedbackComponent.querySelector('.nds-user-feedback-submit');
 
+        // Opt out of cookie persistence with data-no-persist: never restore a saved
+        // submission and never write one (used for demos/previews).
+        const persist = !feedbackComponent.hasAttribute('data-no-persist');
+
         // Check if user already submitted feedback for this page
-        const savedStatus = getFeedbackStatus();
+        const savedStatus = persist ? getFeedbackStatus() : null;
         if (savedStatus === 'submitted') {
             // User already submitted feedback, show success status
             showStatus('success');
@@ -150,8 +155,8 @@ NDS.UserFeedback = (() => {
                 if (submitEl) submitEl.setAttribute('hidden', '');
             }
 
-            // Save feedback status to cookie if success
-            if (status === 'success') {
+            // Save feedback status to cookie if success (unless persistence is opted out)
+            if (status === 'success' && persist) {
                 saveFeedbackStatus('submitted');
             }
         }

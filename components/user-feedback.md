@@ -23,9 +23,17 @@ hideFeedback: true
                         <div class="demo-label">Page Satisfaction Survey</div>
                     </div>
                     <div class="demo-container" style="padding: 0;">
-                        <div class="state-demo">
+                        <div class="state-demo" id="uf-demo">
                             {% include user-feedback.html %}
                         </div>
+                        <script>
+                            // Demo only: opt this instance out of cookie persistence so the
+                            // form returns on reload instead of the saved confirmation. Runs
+                            // at parse time, before the loader initializes the component.
+                            document.getElementById('uf-demo')
+                                ?.querySelector('.nds-user-feedback')
+                                ?.setAttribute('data-no-persist', '');
+                        </script>
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
@@ -38,7 +46,7 @@ hideFeedback: true
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-uf-overview-1"
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-uf-overview-1"
                                     aria-labelledby="tab-uf-overview-1">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -290,9 +298,9 @@ hideFeedback: true
             <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Include the widget via <code class="nds-inline-code lang-html">{% raw %}{% include user-feedback.html %}{% endraw %}</code>. It is automatically rendered at the bottom of every <code class="nds-inline-code lang-html">page</code> layout unless <code class="nds-inline-code lang-html">hideFeedback: true</code> is set in the page front matter</li>
-                    <li>Use <code class="nds-inline-code lang-html">hideFeedback: true</code> on transactional pages such as checkout flows, multi-step forms, or confirmation screens where user attention should remain on the task</li>
-                    <li>Tailor the <code class="nds-inline-code lang-html">.nds-why-yes</code> and <code class="nds-why-no">.nds-why-no</code> checkbox options in the include to match the type of content on the page</li>
+                    <li>Copy the markup from the HTML tab above and place it inside a <code class="nds-inline-code lang-html">&lt;form&gt;</code> near the bottom of the page, after the main content, so it reads as a closing prompt</li>
+                    <li>Leave the widget off transactional pages such as checkout flows, multi-step forms, or confirmation screens, where user attention should stay on the task</li>
+                    <li>Tailor the <code class="nds-inline-code lang-html">.nds-why-yes</code> and <code class="nds-inline-code lang-html">.nds-why-no</code> checkbox options in the include to match the type of content on the page</li>
                     <li>Keep both checkbox lists to four to six options. Long lists reduce completion rates and produce noisier data</li>
                     <li>Do not use this as the only feedback channel for critical issues. The widget collects qualitative signals, not bug reports. Pair it with a link to a dedicated support form</li>
                     <li>Connect your data collection endpoint via the form's <code class="nds-inline-code lang-html">action</code> attribute or by intercepting the submit event before the component's handler runs, since the component itself does not make a network request</li>
@@ -336,13 +344,18 @@ hideFeedback: true
                             <td><code class="nds-inline-code lang-html">.nds-user-feedback</code></td>
                             <td>Overrides the default error message. Defaults to "An error occurred, please try again" (English) or "حدث خطأ، يرجى المحاولة مرة أخرى" (Arabic).</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-no-persist</code></td>
+                            <td><code class="nds-inline-code lang-html">.nds-user-feedback</code></td>
+                            <td>Disables cookie persistence: the widget never restores a saved submission and never writes one. Useful for demos, previews, or pages that should ask on every visit.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The component auto-initializes on page load. Call <code class="nds-inline-code lang-js">NDS.UserFeedback.init()</code> again after dynamically adding a widget to the DOM.</p>
+                <p>The component auto-initializes on page load. The methods below cover re-initializing or wiring up a widget added to the DOM after load.</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -350,13 +363,20 @@ hideFeedback: true
                         </button>
                     </div>
                     <code class="lang-javascript line-numbers">
-// Re-initialize after dynamically inserting a .nds-user-feedback element
+// Initialize every .nds-user-feedback on the page. Idempotent: already
+// initialized widgets are skipped, so it is safe to call repeatedly.
 NDS.UserFeedback.init();
 
-// The component depends on two other modules:
-// - NDS.Feedback  — renders the inline success/error confirmation message
-// - NDS.Cookies   — persists submission state per page path for 365 days
-// Both are included in the standard NDS bundle and initialize automatically.
+// Alias of init(), provided for parity with other NDS components.
+NDS.UserFeedback.reinit();
+
+// Initialize a single widget element (also skips if already initialized).
+NDS.UserFeedback.create(document.querySelector('.nds-user-feedback'));
+
+// Dependencies, all in the standard NDS bundle and auto-initialized:
+// - NDS.Feedback: renders the inline success/error confirmation message
+// - NDS.Cookies:  persists submission state per page path for 365 days
+// - NDS.Forms:    validates required fieldsets before submission
 </code>
                 </div>
             </div>
