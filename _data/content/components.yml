@@ -228,6 +228,13 @@
   tags: ["CSS"]
   url: "/components/tags.html"
 
+- title: "Theming"
+  description: "Re-brand the whole system by overriding colour slots — global or scoped, with DGA as the fallback"
+  icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/theming.html"
+
 - title: "TOC"
   description: "Auto-populated in-page table of contents with active-section tracking"
   icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'

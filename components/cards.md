@@ -726,7 +726,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--card-title</code></td><td><code class="nds-inline-code lang-html">--text-display</code></td><td>Title color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-subtitle</code></td><td><code class="nds-inline-code lang-html">--text-primary</code></td><td>Subtitle color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-text</code></td><td><code class="nds-inline-code lang-html">--text-display</code></td><td>Description and body text color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-number</code></td><td><code class="nds-inline-code lang-html">--text-primary-sa-flag</code></td><td>Statistic number color</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--card-number</code></td><td><code class="nds-inline-code lang-html">--text-brand</code></td><td>Statistic number color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-rating</code></td><td><code class="nds-inline-code lang-html">--text-secondary-paragraph</code></td><td>Rating helper text color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--icon-color</code></td><td><code class="nds-inline-code lang-html">--featuredicons-icon-primary</code></td><td>Featured-icon color (also drives the avatar color)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--icon-bg-color</code></td><td><code class="nds-inline-code lang-html">--featuredicons-background-brand-light</code></td><td>Featured-icon background color</td></tr>

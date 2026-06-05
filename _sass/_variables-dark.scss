@@ -16,7 +16,7 @@
     --background-card-hovered: var(--alpha-white-10);
     --background-nav: var(--background-default);
     --background-topbar: var(--colors-neutral-900);
-    --background-footer: var(--colors-alpha-alpha-green-30);
+    --background-footer: var(--colors-primary-alpha-30);
     --background-menu: var(--background-default);
     --background-stripe: var(--colors-neutral-850);
     --background-sub-hero: var(--alpha-primary-10);
@@ -48,7 +48,7 @@
     --link-neutral-visited: var(--colors-neutral-300);
     --link-icon-neutral-visited: var(--colors-neutral-300);
 
-    --text-primary-sa-flag: var(--colors-primary-400);
+    --text-brand: var(--colors-primary-400);
 
     // ─── Status Text ───
     --text-success: var(--colors-green-400);
@@ -118,10 +118,10 @@
     --chip-background-neutral-pressed: var(--alpha-white-30);
     --chip-background-neutral-selected: var(--colors-neutral-300);
     --chip-background-neutral-focused: var(--alpha-white-10);
-    --chip-background-primary-default: var(--colors-alpha-alpha-green-10);
-    --chip-background-primary-hovered: var(--colors-alpha-alpha-green-20);
-    --chip-background-primary-pressed: var(--colors-alpha-alpha-green-30);
-    --chip-background-primary-focused: var(--colors-alpha-alpha-green-10);
+    --chip-background-primary-default: var(--colors-primary-alpha-10);
+    --chip-background-primary-hovered: var(--colors-primary-alpha-20);
+    --chip-background-primary-pressed: var(--colors-primary-alpha-30);
+    --chip-background-primary-focused: var(--colors-primary-alpha-10);
     --chip-text-neutral-default: var(--colors-base-white);
     --chip-text-neutral-selected: var(--colors-base-black);
     --chip-text-primary-default: var(--colors-primary-200);
@@ -144,7 +144,7 @@
     --form-option-background-pressed: var(--colors-neutral-600);
 
     // ─── Autocomplete ───
-    --autocomplete-highlight: var(--colors-alpha-alpha-green-50);
+    --autocomplete-highlight: var(--colors-primary-alpha-50);
     --autocomplete-active: var(--colors-neutral-700);
 
     // ─── Datepicker ───
@@ -231,8 +231,8 @@
     --table-cell-border: var(--colors-neutral-700);
     --table-cell-border-inverse: var(--colors-base-white);
     --table-text-head: var(--colors-neutral-300);
-    --table-background-hover-selected: var(--colors-alpha-alpha-green-40);
-    --table-background-row-selected: var(--colors-alpha-alpha-green-20);
+    --table-background-hover-selected: var(--colors-primary-alpha-40);
+    --table-background-row-selected: var(--colors-primary-alpha-20);
     --table-background-header: var(--colors-neutral-900);
     --table-background-cell: var(--background-default);
     --table-background-row: var(--background-stripe);

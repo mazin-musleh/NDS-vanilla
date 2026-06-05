@@ -40,7 +40,7 @@
   --_card-text: var(--card-text, var(--text-display));
   --_card-title: var(--card-title, var(--text-display));
   --_card-subtitle: var(--card-subtitle, var(--text-primary));
-  --_card-number: var(--card-number, var(--text-primary-sa-flag));
+  --_card-number: var(--card-number, var(--text-brand));
   --_card-icon: var(--icon-color, var(--featuredicons-icon-primary));
   --_card-icon-bg: var(--icon-bg-color, var(--featuredicons-background-brand-light));
   --icon-color: var(--_card-icon);
@@ -456,19 +456,19 @@
       --card-bg: var(--colors-tertiary-50);
       --card-bg-hover: var(--colors-tertiary-100);
       --card-border: var(--colors-tertiary-200);
-      --icon-bg-color: var(--alpha-lavender-10);
+      --icon-bg-color: var(--colors-tertiary-alpha-10);
     }
 
     @include dark {
       --card-title: var(--colors-tertiary-300);
       --card-subtitle: var(--colors-tertiary-300);
       --card-number: var(--colors-tertiary-300);
-      --icon-bg-color: var(--alpha-lavender-10);
+      --icon-bg-color: var(--colors-tertiary-alpha-10);
       --icon-color: var(--colors-tertiary-300);
 
       &.nds-color {
-        --card-bg: var(--alpha-lavender-10);
-        --card-bg-hover: var(--alpha-lavender-20);
+        --card-bg: var(--colors-tertiary-alpha-10);
+        --card-bg-hover: var(--colors-tertiary-alpha-20);
         --card-border: var(--colors-tertiary-500);
       }
     }

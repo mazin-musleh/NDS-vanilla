@@ -1,0 +1,8 @@
+---
+# NDS theme: Crimson — authored-hex full brand (rose / amber / sky / warm stone).
+# Compiles to nds-theme-crimson.min.css. Deploy via _config.yml brand_theme: crimson
+# (loads render-blocking, before paint, on top of the DGA base).
+---
+@use 'themes/crimson' as crimson;
+
+:root { @include crimson.slots; }

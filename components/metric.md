@@ -408,7 +408,7 @@ direction: ltr
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--metric-trend-color</code></td><td><code class="nds-inline-code lang-html">--text-default</code></td><td>Color of the trend arrow icon and the delta value. Overridden by <code class="nds-inline-code lang-html">data-status</code> on the card.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--metric-chart-color</code></td><td><code class="nds-inline-code lang-html">--colors-primary-sa-flag-600</code></td><td>Color of the sparkline line and area gradient. Overridden by <code class="nds-inline-code lang-html">data-status</code> on the card.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--metric-chart-color</code></td><td><code class="nds-inline-code lang-html">--colors-primary-600</code></td><td>Color of the sparkline line and area gradient. Overridden by <code class="nds-inline-code lang-html">data-status</code> on the card.</td></tr>
                     </tbody>
                 </table>
             </div>

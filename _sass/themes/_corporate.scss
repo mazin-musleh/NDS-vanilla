@@ -1,0 +1,33 @@
+@use '../mixins' as *;
+@use 'oklch-template' as oklch;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// NDS example theme — "Corporate" (indigo / teal / violet), SEED-BASED (MODE B)
+// ═══════════════════════════════════════════════════════════════════════════
+// A deliberately NON-green brand defined by just THREE seed colours — the OKLCH
+// helper derives the full 13-step ramps. Proves a whole-system rebrand from a
+// minimal input. Deploy globally:  _config.yml  →  brand_theme: corporate
+//
+// Browser support: relative-colour syntax ≈ Chrome 119 / Safari 16.4 / Firefox
+// 128. On older engines the @supports block is skipped and the page falls back
+// to the DGA base. For guaranteed branding everywhere, add a hex `:root { … }`
+// block BEFORE the @supports gate (authored ramps — see _theme-template.scss
+// MODE A); authored hex is also the higher-fidelity / contrast-verified path.
+
+:root {
+  --brand-primary:   #4f46e5;   // indigo  — anchors the 600 step
+  --brand-secondary: #0d9488;   // teal    — anchors the 600 step
+  --brand-tertiary:  #8b5cf6;   // violet  — anchors the 500 step
+}
+
+@supports (color: oklch(from white l c h)) {
+  :root {
+    @include oklch.brand-ramp('primary',   '--brand-primary');
+    @include oklch.brand-ramp('secondary', '--brand-secondary');
+    @include oklch.brand-ramp('tertiary',  '--brand-tertiary', 500);
+    @include oklch.brand-alpha('primary',  '--brand-primary');
+    @include oklch.brand-alpha('tertiary', '--brand-tertiary');
+    // Deep brand surface (hero / footer) — follow the derived ramp.
+    --background-brand-strong: var(--colors-primary-900);
+  }
+}

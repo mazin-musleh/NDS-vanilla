@@ -137,7 +137,7 @@ direction: ltr
                             </button>
                         </div>
                     </div>
-                    <div class="demo-container" style="background: var(--colors-primary-sa-flag-600-primary);">
+                    <div class="demo-container" style="background: var(--colors-primary-600);">
                         <div class="state-demo oncolor-demo">
                             <div class="nds-loading nds-oncolor"
                                 style="width: 200px; padding: 16px; border-radius: 8px;">

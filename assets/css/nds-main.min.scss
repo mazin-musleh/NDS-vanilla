@@ -18,7 +18,9 @@
 // NOTE: a11y mode overrides (variables-a11y) + the accessibility panel
 // (components/accessibility) live in the optional assets/css/nds-accessibility.min.css
 // bundle — not here. Core only reads --user-* a11y vars with fallbacks.
-@use 'variables-dga';
+// Token layers: base + default brand (variables), then dark-mode overrides.
+// To rebrand, add a brand override file after 'variables' that redefines the
+// --colors-{primary,secondary,tertiary}-* slots.
 @use 'variables';
 @use 'variables-dark';
 

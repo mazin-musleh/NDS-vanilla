@@ -30,6 +30,12 @@
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
+    {%- if site.brand_theme %}
+    <!-- Brand theme override (re-brand). Render-blocking on purpose: it redefines
+         brand COLOR slots, so it must resolve before first paint (no DGA→brand
+         flash). Layers on top of the DGA base; empty site.brand_theme = pure DGA. -->
+    <link rel="stylesheet" href="{{ 'assets/css/nds-theme-' | append: site.brand_theme | append: '.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    {%- endif %}
     {%- if site.use_hgi_font or page.use_hgi_font %}
     <!-- HGI icon font (content/demo/doc): opacity gate hides icons until the font
          lands. The HGI sheet itself is deferred-preloaded below; font readiness

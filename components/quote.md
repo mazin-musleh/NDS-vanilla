@@ -164,7 +164,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-moon"></i>
                         <span class="nds-label">Dark Mode Adaptive</span>
                     </span>
-                    <p class="nds-item-desc">The mark color resolves through <code class="nds-inline-code lang-html">--text-primary-sa-flag</code>, a semantic token that automatically shifts to a lighter green in dark themes without any component-level overrides.</p>
+                    <p class="nds-item-desc">The mark color resolves through <code class="nds-inline-code lang-html">--text-brand</code>, a semantic token that automatically shifts to a lighter green in dark themes without any component-level overrides.</p>
                 </div>
 
                 <div class="nds-definition-item">
@@ -263,7 +263,7 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--quote-mark-color</code></td>
-                            <td><code class="nds-inline-code lang-html">--text-primary-sa-flag</code></td>
+                            <td><code class="nds-inline-code lang-html">--text-brand</code></td>
                             <td>Fill color of the opening and closing icon marks.</td>
                         </tr>
                         <tr>

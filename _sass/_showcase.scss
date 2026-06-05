@@ -4,6 +4,8 @@
  */
 
 @use './mixins' as *;
+@use 'themes/oklch-template' as oklch;
+@use 'themes/crimson' as crimson;
 
 // ==============================================
 // DEMO CARD COMPONENTS
@@ -109,7 +111,7 @@
 .demo-container {
 
   &:is(.green-bg, .dark-bg) {
-    background-color: var(--background-sa-flag);
+    background-color: var(--background-brand-strong);
   }
 
   &.black-bg {
@@ -122,7 +124,7 @@
 }
 
 .oncolor-buttons .demo-container {
-  background-color: var(--background-sa-flag);
+  background-color: var(--background-brand-strong);
 }
 
 
@@ -225,4 +227,29 @@ html[dir="rtl"] {
     border-bottom: 2px solid var(--border-neutral-400);
   }
 }
+
+// ══════════════════════════════════════════════════════════════════════════
+// Theming demo (components/theming) — live brand switcher.
+// Predefined "auto" brands: 3 seeds → OKLCH-derived ramps + a 1% neutral mix.
+// The switcher script (in theming.md) toggles data-brand on <html>.
+// ══════════════════════════════════════════════════════════════════════════
+:root[data-brand="corporate"]{ --brand-primary:#4f46e5; --brand-secondary:#0d9488; --brand-tertiary:#8b5cf6; }
+:root[data-brand="sunset"]   { --brand-primary:#ea580c; --brand-secondary:#db2777; --brand-tertiary:#f59e0b; }
+// Crimson = authored hex (full brand) — no @supports gate, works on every browser.
+:root[data-brand="crimson"]  { @include crimson.slots; }
+@supports (color: oklch(from white l c h)) {
+  // Seed (auto) brands only — must NOT match the hex brand below, or it would
+  // override crimson's slots with undefined-seed oklch() and break it.
+  :root[data-brand="corporate"], :root[data-brand="sunset"] {
+    @include oklch.brand-ramp('primary',   '--brand-primary');
+    @include oklch.brand-ramp('secondary', '--brand-secondary');
+    @include oklch.brand-ramp('tertiary',  '--brand-tertiary', 500);
+    @include oklch.brand-alpha('primary',  '--brand-primary');
+    @include oklch.brand-alpha('tertiary', '--brand-tertiary');
+    @include oklch.neutral-tint('--brand-primary', 1%);
+    --background-brand-strong: var(--colors-primary-900);
+  }
+}
+.theming-switch { display:flex; gap:.5rem; flex-wrap:wrap; margin-block-end:var(--spacing-4); }
+.theming-switch [aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--colors-primary-600); }
 

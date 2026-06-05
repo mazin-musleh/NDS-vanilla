@@ -292,8 +292,8 @@
     --form-datecell-background-300: var(--colors-primary-300);
     --form-datecell-background-200: var(--colors-primary-200);
     --form-datecell-background-100: var(--colors-primary-100);
-    --alpha-primary-10: var(--colors-alpha-alpha-green-10);
-    --alpha-primary-20: var(--colors-alpha-alpha-green-20);
+    --alpha-primary-10: var(--colors-primary-alpha-10);
+    --alpha-primary-20: var(--colors-primary-alpha-20);
     --alpha-warning-10: #dc680319;
     --alpha-warning-20: #dc680333;
     --alpha-error-10: #d92c2019;
@@ -409,15 +409,17 @@
     --background-error-light: var(--colors-red-50);
     --background-error-50: var(--colors-red-50);
     --background-error-25: var(--colors-red-25);
-    --background-sa-flag: var(--colors-green-900);
-    --background-sa-flag-50: var(--colors-green-50);
-    --background-sa-flag-25: var(--colors-green-25);
+    // Deep brand surface (hero, footer). DGA = status green-900 (#074c30), frozen;
+    // a theme overrides --background-brand-strong to rebrand these surfaces.
+    --background-brand-strong: var(--colors-green-900);
+    --background-brand-strong-50: var(--colors-green-50);
+    --background-brand-strong-25: var(--colors-green-25);
     --background-notification-white: var(--colors-base-white);
     --text-default: var(--colors-base-black);
     --text-primary: var(--colors-primary-600);
     --text-secondary: var(--colors-secondary-600);
     --text-tertiary: var(--colors-tertiary-500);
-    --text-primary-sa-flag: var(--colors-primary-800);
+    --text-brand: var(--colors-primary-800);
     --text-display: var(--colors-neutral-800);
     --text-primary-paragraph: var(--colors-neutral-700);
     --text-secondary-paragraph: var(--colors-neutral-500);
@@ -630,16 +632,18 @@
     --colors-alpha-alpha-black-80: #161616cc;
     --colors-alpha-alpha-black-90: #161616e5;
     --colors-alpha-alpha-black-100: #161616;
-    --colors-alpha-alpha-green-10: #1b835419;
-    --colors-alpha-alpha-green-20: #1b835433;
-    --colors-alpha-alpha-green-30: #1b83544c;
-    --colors-alpha-alpha-green-40: #1b835466;
-    --colors-alpha-alpha-green-50: #1b83547f;
-    --colors-alpha-alpha-green-60: #1b835499;
-    --colors-alpha-alpha-green-70: #1b8354b2;
-    --colors-alpha-alpha-green-80: #1b8354cc;
-    --colors-alpha-alpha-green-90: #1b8354e5;
-    --colors-alpha-alpha-green-100: var(--colors-primary-600);
+    // Primary brand-tint alpha ramp. Themeable: a theme overrides these
+    // (hex, or color-mix off --colors-primary-600).
+    --colors-primary-alpha-10: #1b835419;
+    --colors-primary-alpha-20: #1b835433;
+    --colors-primary-alpha-30: #1b83544c;
+    --colors-primary-alpha-40: #1b835466;
+    --colors-primary-alpha-50: #1b83547f;
+    --colors-primary-alpha-60: #1b835499;
+    --colors-primary-alpha-70: #1b8354b2;
+    --colors-primary-alpha-80: #1b8354cc;
+    --colors-primary-alpha-90: #1b8354e5;
+    --colors-primary-alpha-100: var(--colors-primary-600);
 
     // ── Border radius (vanilla base — migrated from DGA) ──
     --radius-0: 0;
@@ -663,12 +667,48 @@
     --colors-secondary-primary: var(--colors-secondary-600);
     --colors-tertiary-primary: var(--colors-tertiary-500);
 
-    // ── Brand ramps (canonical, brand-neutral names) ──
-    // Owned brand ramps. Components/semantics consume these neutral names so a
-    // rebrand rebinds the brand in ONE place. Values currently alias the (now
-    // reference-only) DGA ramps; on full absorption these hold literal values
-    // and _variables-dga.scss drops out of the build.
-
+    // ══ Default brand: DGA (the fallback) ══
+    // The brand SLOTS below carry DGA's palette hex directly — they are the
+    // PUBLIC theming surface. A theme overrides them (globally at :root or scoped
+    // via [data-brand]) to rebrand; semantics, components and dark mode all
+    // re-resolve automatically. DGA values are the compliance baseline — frozen.
+    --colors-primary-25: #f7fdf9;
+    --colors-primary-50: #f3fcf6;
+    --colors-primary-100: #dff6e7;
+    --colors-primary-200: #b8eacb;
+    --colors-primary-300: #88d8ad;
+    --colors-primary-400: #54c08a;
+    --colors-primary-500: #25935f;
+    --colors-primary-500-alpha-10: #25935f19;
+    --colors-primary-600: #1b8354;
+    --colors-primary-700: #166a45;
+    --colors-primary-800: #14573a;
+    --colors-primary-900: #104631;
+    --colors-primary-950: #092a1e;
+    --colors-secondary-25: #fffef7;
+    --colors-secondary-50: #fffef2;
+    --colors-secondary-100: #fffce6;
+    --colors-secondary-200: #fcf3bd;
+    --colors-secondary-300: #fae996;
+    --colors-secondary-400: #f7d54d;
+    --colors-secondary-500: #f5bd02;
+    --colors-secondary-600: #dba102;
+    --colors-secondary-700: #b87b02;
+    --colors-secondary-800: #945c01;
+    --colors-secondary-900: #6e3c00;
+    --colors-secondary-950: #472400;
+    --colors-tertiary-25: #fefcff;
+    --colors-tertiary-50: #f9f5fa;
+    --colors-tertiary-100: #f2e9f5;
+    --colors-tertiary-200: #e1cce8;
+    --colors-tertiary-300: #ccadd9;
+    --colors-tertiary-400: #a57bba;
+    --colors-tertiary-500: #80519f;
+    --colors-tertiary-600: #6d428f;
+    --colors-tertiary-700: #532d75;
+    --colors-tertiary-800: #3d1d5e;
+    --colors-tertiary-900: #281047;
+    --colors-tertiary-950: #16072e;
 
     --colors-neutral-750: #2b3643;
     --colors-neutral-850: #18212f;
@@ -678,7 +718,8 @@
     --background-default: var(--colors-base-white);
     --background-nav: var(--colors-base-white);
     --background-topbar: var(--colors-neutral-100);
-    --background-footer: var(--background-sa-flag);
+    --background-footer: var(--background-brand-strong);
+    --background-hero: var(--background-brand-strong); // own knob; defaults to the shared deep brand surface
     --background-stripe: var(--colors-neutral-50);
     --background-sub-hero: var(--background-brand-light);
     --background-primary-300: var(--colors-primary-300);
@@ -687,8 +728,8 @@
     --background-overlay: var(--colors-alpha-alpha-black-50);
     --divider-color: var(--alpha-black-10);
     --border-focus: var(--colors-base-black);
-    --alpha-lavender-10: #80519f19;
-    --alpha-lavender-20: #80519f33;
+    --colors-tertiary-alpha-10: #80519f19;
+    --colors-tertiary-alpha-20: #80519f33;
 
     // Chip tokens - Added Manualy 
     --chip-background-neutral-default: var(--colors-neutral-100);

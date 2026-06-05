@@ -1,0 +1,84 @@
+@use 'sass:list';
+
+// ═══════════════════════════════════════════════════════════════════════════
+// NDS auto-theme engine — seed → ramp (for predefined / "auto" brands)
+// ═══════════════════════════════════════════════════════════════════════════
+// Derive a full brand ramp from ONE seed colour per family using OKLCH relative
+// colour (perceptually-uniform lightness — unlike HSL). This is the AUTO path:
+// a few seeds → a whole palette, used to ship predefined brands quickly. For a
+// consumer's real, full brand, use authored hex instead (exact + universal).
+//
+// Usage — in your _sass/themes/_<brand>.scss:
+//
+//   @use 'oklch-template' as oklch;
+//   @supports (color: oklch(from white l c h)) {
+//     :root {
+//       --brand-primary: #3538cd;                 // anchor = the 600 step
+//       @include oklch.brand-ramp('primary',  '--brand-primary');
+//       @include oklch.brand-ramp('secondary','--brand-secondary');
+//       @include oklch.brand-ramp('tertiary', '--brand-tertiary', 500);
+//       @include oklch.brand-alpha('primary',  '--brand-primary');
+//       @include oklch.brand-alpha('tertiary', '--brand-tertiary');
+//     }
+//   }
+//
+// ⚠ Browser support: relative-colour syntax ≈ Chrome 119 / Safari 16.4 /
+//   Firefox 128 (mid-2024). The @supports gate makes the fallback automatic —
+//   on older engines the slots keep whatever was set before this block (your
+//   MODE-A hex, or the DGA base). Ship a hex fallback first if you must support
+//   them.
+// ⚠ Derived steps are NOT contrast-guaranteed. Verify WCAG (4.5:1 text / 3:1
+//   UI) for primary-600-on-white and on-colour-on-primary-600 before shipping.
+//
+// NOTE: this partial contains NO literal oklch()/calc() — the mixins emit those
+// as interpolated strings, so the partial itself always compiles. The output
+// only runs in browsers that pass the @supports gate the consumer wraps it in.
+
+// step → (lightness  chroma-scale). Tuned roughly to DGA's lightness curve. The
+// anchor step is replaced by the exact seed, so tune the seed, not this ladder.
+$_ramp: (
+  25:  (0.985 0.16),
+  50:  (0.968 0.28),
+  100: (0.93  0.46),
+  200: (0.87  0.66),
+  300: (0.79  0.82),
+  400: (0.70  0.94),
+  500: (0.62  1),
+  600: (0.55  1),
+  700: (0.47  0.96),
+  800: (0.40  0.88),
+  900: (0.33  0.80),
+  950: (0.24  0.68),
+);
+
+// Emit the 13 ramp steps for one family. $seed is a custom-property NAME (string,
+// e.g. '--brand-primary'); $anchor is the step the seed maps to exactly
+// (600 for primary/secondary, 500 for tertiary).
+@mixin brand-ramp($family, $seed, $anchor: 600) {
+  @each $step, $lc in $_ramp {
+    @if $step == $anchor {
+      --colors-#{$family}-#{$step}: var(#{$seed});
+    } @else {
+      --colors-#{$family}-#{$step}: #{'oklch(from var(' + $seed + ') ' + list.nth($lc, 1) + ' calc(c * ' + list.nth($lc, 2) + ') h)'};
+    }
+  }
+}
+
+// Emit the brand-tint alpha ramp (chips, table-selection, autocomplete, footer).
+@mixin brand-alpha($family, $seed) {
+  @each $a in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
+    --colors-#{$family}-alpha-#{$a}: #{'color-mix(in srgb, var(' + $seed + ') ' + $a + '%, transparent)'};
+  }
+  --colors-#{$family}-alpha-100: var(#{$seed});
+}
+
+// DGA neutral hexes (the gray ramp's base values).
+$_neutrals: (25:'#fcfcfd', 50:'#f9fafb', 100:'#f3f4f6', 200:'#e5e7eb', 300:'#d2d6db', 400:'#9da4ae', 500:'#6c727e', 600:'#4d5761', 700:'#384250', 800:'#1f2a37', 900:'#111927', 950:'#0c111b');
+
+// Temperature-matched neutrals: mix $amount of the brand $seed into each DGA gray,
+// in OKLAB so they stay gray. Keep $amount tiny (~1%) — felt, not seen.
+@mixin neutral-tint($seed, $amount: 1%) {
+  @each $step, $hex in $_neutrals {
+    --colors-neutral-#{$step}: #{'color-mix(in oklab, ' + $hex + ', var(' + $seed + ') ' + $amount + ')'};
+  }
+}
