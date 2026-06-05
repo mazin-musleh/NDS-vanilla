@@ -81,7 +81,7 @@
     }
 
     @include dark {
-      --dark-bg-color: var(--colors-primary-sa-flag-700);
+      --dark-bg-color: var(--colors-primary-700);
       &[data-status="success"] { --dark-bg-color: var(--colors-green-700); }
       &[data-status="info"] { --dark-bg-color: var(--colors-blue-700); }
       &[data-status="warning"] { --dark-bg-color: var(--colors-yellow-700); }

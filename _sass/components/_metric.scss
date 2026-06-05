@@ -13,7 +13,7 @@
 .nds-card-metric {
   // Public custom properties (overridable per-card)
   --_metric-trend-color: var(--metric-trend-color, var(--text-default));
-  --_metric-chart-color: var(--metric-chart-color, var(--colors-primary-sa-flag-600));
+  --_metric-chart-color: var(--metric-chart-color, var(--colors-primary-600));
 
   display: flex;
   flex-wrap: wrap;

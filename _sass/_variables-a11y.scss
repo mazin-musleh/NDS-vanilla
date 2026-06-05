@@ -53,10 +53,10 @@ $a11y-filters: (
 :root[data-a11y~="high-contrast"] {
     --_hc-bg:           var(--colors-base-white);
     --_hc-fg:           var(--colors-base-black);
-    --_hc-link:         var(--colors-primary-sa-flag-800);
-    --_hc-link-hovered: var(--colors-primary-sa-flag-900);
-    --_hc-link-pressed: var(--colors-primary-sa-flag-950);
-    --_hc-link-visited: var(--colors-tertiary-lavendar-900);
+    --_hc-link:         var(--colors-primary-800);
+    --_hc-link-hovered: var(--colors-primary-900);
+    --_hc-link-pressed: var(--colors-primary-950);
+    --_hc-link-visited: var(--colors-tertiary-900);
 
     --background-body:                   var(--_hc-bg);
     --background-default:                var(--_hc-bg);
@@ -130,10 +130,10 @@ $a11y-filters: (
 :root[data-a11y~="high-contrast"][data-theme="dark"] {
     --_hc-bg:           var(--colors-base-black);
     --_hc-fg:           var(--colors-base-white);
-    --_hc-link:         var(--colors-primary-sa-flag-300);
-    --_hc-link-hovered: var(--colors-primary-sa-flag-200);
-    --_hc-link-pressed: var(--colors-primary-sa-flag-100);
-    --_hc-link-visited: var(--colors-secondary-gold-300);
+    --_hc-link:         var(--colors-primary-300);
+    --_hc-link-hovered: var(--colors-primary-200);
+    --_hc-link-pressed: var(--colors-primary-100);
+    --_hc-link-visited: var(--colors-secondary-300);
 }
 
 // Topbar carries a brand-tinted background; the token swap above

@@ -27,17 +27,17 @@
     --text-display: var(--colors-neutral-100);
     --text-primary-paragraph: var(--colors-neutral-300);
     --text-secondary-paragraph: var(--colors-neutral-400);
-    --text-primary: var(--colors-primary-sa-flag-400);
+    --text-primary: var(--colors-primary-400);
 
     // ─── Divider ───
     --divider-color: var(--alpha-white-10);
 
     // ─── Links ───
-    --link-primary: var(--colors-primary-sa-flag-400);
-    --link-primary-hovered: var(--colors-primary-sa-flag-300);
-    --link-primary-pressed: var(--colors-primary-sa-flag-200);
-    --link-primary-focused: var(--colors-primary-sa-flag-400);
-    --link-primary-visited: var(--colors-primary-sa-flag-500);
+    --link-primary: var(--colors-primary-400);
+    --link-primary-hovered: var(--colors-primary-300);
+    --link-primary-pressed: var(--colors-primary-200);
+    --link-primary-focused: var(--colors-primary-400);
+    --link-primary-visited: var(--colors-primary-500);
     --link-neutral: var(--colors-neutral-200);
     --link-neutral-hovered: var(--colors-neutral-400);
     --link-icon-neutral-hovered: var(--colors-neutral-400);
@@ -48,7 +48,7 @@
     --link-neutral-visited: var(--colors-neutral-300);
     --link-icon-neutral-visited: var(--colors-neutral-300);
 
-    --text-primary-sa-flag: var(--colors-primary-sa-flag-400);
+    --text-primary-sa-flag: var(--colors-primary-400);
 
     // ─── Status Text ───
     --text-success: var(--colors-green-400);
@@ -124,8 +124,8 @@
     --chip-background-primary-focused: var(--colors-alpha-alpha-green-10);
     --chip-text-neutral-default: var(--colors-base-white);
     --chip-text-neutral-selected: var(--colors-base-black);
-    --chip-text-primary-default: var(--colors-primary-sa-flag-200);
-    --chip-text-primary-pressed: var(--colors-primary-sa-flag-100);
+    --chip-text-primary-default: var(--colors-primary-200);
+    --chip-text-primary-pressed: var(--colors-primary-100);
     --chip-text-disabled: var(--colors-neutral-600);
 
     // ─── Forms ───
@@ -148,19 +148,19 @@
     --autocomplete-active: var(--colors-neutral-700);
 
     // ─── Datepicker ───
-    --form-datecell-background-default: var(--colors-primary-sa-flag-600-primary);
-    --form-datecell-background-hovered: var(--colors-primary-sa-flag-700);
-    --form-datecell-background-pressed: var(--colors-primary-sa-flag-900);
-    --form-datecell-background-focused: var(--colors-primary-sa-flag-600-primary);
+    --form-datecell-background-default: var(--colors-primary-600);
+    --form-datecell-background-hovered: var(--colors-primary-700);
+    --form-datecell-background-pressed: var(--colors-primary-900);
+    --form-datecell-background-focused: var(--colors-primary-600);
     --form-datecell-today-background-default: var(--alpha-black-10);
     --form-datecell-today-background-hovered: var(--colors-neutral-700);
     --form-datecell-today-background-pressed: var(--colors-neutral-600);
     --form-datecell-today-background-focused: var(--alpha-white-0);
     --form-datecell-background-disabled: var(--colors-neutral-800);
-    --form-datecell-background-600: var(--colors-primary-sa-flag-600-primary);
-    --form-datecell-background-300: var(--colors-primary-sa-flag-300);
-    --form-datecell-background-200: var(--colors-primary-sa-flag-400);
-    --form-datecell-background-100: var(--colors-primary-sa-flag-300);
+    --form-datecell-background-600: var(--colors-primary-600);
+    --form-datecell-background-300: var(--colors-primary-300);
+    --form-datecell-background-200: var(--colors-primary-400);
+    --form-datecell-background-100: var(--colors-primary-300);
 
     // ─── Controls (Checkbox, Radio, Switch) ───
     --controls-control-border: var(--colors-neutral-400);
@@ -184,20 +184,20 @@
     --controls-control-neutral-focused: var(--colors-neutral-600);
 
     // ─── Checkbox (darker for white checkmark contrast) ───
-    --checkbox-primary-hovered: var(--colors-primary-sa-flag-700);
-    --checkbox-primary-pressed: var(--colors-primary-sa-flag-800);
+    --checkbox-primary-hovered: var(--colors-primary-700);
+    --checkbox-primary-pressed: var(--colors-primary-800);
 
     // ─── Switch (darker for white thumb contrast) ───
-    --switch-primary-hovered: var(--colors-primary-sa-flag-700);
-    --switch-primary-pressed: var(--colors-primary-sa-flag-800);
+    --switch-primary-hovered: var(--colors-primary-700);
+    --switch-primary-pressed: var(--colors-primary-800);
     --switch-neutral-default: var(--colors-neutral-400);
 
     // ─── Radio (brighter for dot-with-border style) ───
     --radio-neutral-checked: var(--colors-neutral-400);
     --radio-neutral-hovered: var(--colors-neutral-300);
     --radio-neutral-pressed: var(--colors-neutral-300);
-    --controls-control-icon-hovered: var(--colors-primary-sa-flag-400);
-    --controls-control-icon-pressed: var(--colors-primary-sa-flag-400);
+    --controls-control-icon-hovered: var(--colors-primary-400);
+    --controls-control-icon-pressed: var(--colors-primary-400);
     --controls-control-icon-disabled: var(--colors-neutral-400);
     --controls-control-text-error: var(--colors-red-400);
     --controls-switch-track-background: var(--colors-neutral-950);
@@ -219,7 +219,7 @@
 
     // ─── Disabled ───
     --background-disabled: var(--colors-neutral-700);
-    --background-disabled-primary: var(--colors-primary-sa-flag-900);
+    --background-disabled-primary: var(--colors-primary-900);
     --background-inverse-disabled: var(--colors-neutral-600);
     --border-disabled: var(--colors-neutral-600);
 
@@ -253,9 +253,9 @@
 
 
     // ─── Default Borders ───
-    --border-primary-light: var(--colors-primary-sa-flag-400);
-    --border-secondary-light: var(--colors-secondary-gold-400);
-    --border-tertiary-light: var(--colors-tertiary-lavendar-400);
+    --border-primary-light: var(--colors-primary-400);
+    --border-secondary-light: var(--colors-secondary-400);
+    --border-tertiary-light: var(--colors-tertiary-400);
     --border-success-light: var(--colors-green-400);
     --border-info-light: var(--colors-blue-400);
     --border-warning-light: var(--colors-yellow-400);

@@ -10,23 +10,23 @@
     //   3. base default              — universal fallback when neither is set
     // Type rules MUST set the internal --_chart-type-color-N tokens, never the public
     // --chart-color-N tokens, otherwise they defeat consumer overrides set on parents.
-    --_chart-color-1: var(--chart-color-1, var(--_chart-type-color-1, var(--colors-primary-sa-flag-600)));
-    --_chart-color-2: var(--chart-color-2, var(--_chart-type-color-2, var(--colors-primary-sa-flag-400)));
+    --_chart-color-1: var(--chart-color-1, var(--_chart-type-color-1, var(--colors-primary-600)));
+    --_chart-color-2: var(--chart-color-2, var(--_chart-type-color-2, var(--colors-primary-400)));
     --_chart-color-3: var(--chart-color-3, var(--_chart-type-color-3, var(--colors-neutral-200)));
-    --_chart-color-4: var(--chart-color-4, var(--_chart-type-color-4, var(--colors-primary-sa-flag-500)));
-    --_chart-color-5: var(--chart-color-5, var(--_chart-type-color-5, var(--colors-primary-sa-flag-200)));
-    --_chart-color-6: var(--chart-color-6, var(--_chart-type-color-6, var(--colors-primary-sa-flag-800)));
+    --_chart-color-4: var(--chart-color-4, var(--_chart-type-color-4, var(--colors-primary-500)));
+    --_chart-color-5: var(--chart-color-5, var(--_chart-type-color-5, var(--colors-primary-200)));
+    --_chart-color-6: var(--chart-color-6, var(--_chart-type-color-6, var(--colors-primary-800)));
     --_chart-area-opacity: var(--chart-area-opacity, 0.15);
     --_chart-grid-color: var(--chart-grid-color, var(--colors-neutral-100));
 
     @include dark {
         --_chart-grid-color: var(--chart-grid-color, var(--colors-neutral-700));
-        --_chart-color-1: var(--chart-color-1, var(--_chart-type-color-1, var(--colors-primary-sa-flag-600)));
-        --_chart-color-2: var(--chart-color-2, var(--_chart-type-color-2, var(--colors-primary-sa-flag-400)));
+        --_chart-color-1: var(--chart-color-1, var(--_chart-type-color-1, var(--colors-primary-600)));
+        --_chart-color-2: var(--chart-color-2, var(--_chart-type-color-2, var(--colors-primary-400)));
         --_chart-color-3: var(--chart-color-3, var(--_chart-type-color-3, var(--colors-neutral-200)));
-        --_chart-color-4: var(--chart-color-4, var(--_chart-type-color-4, var(--colors-primary-sa-flag-500)));
-        --_chart-color-5: var(--chart-color-5, var(--_chart-type-color-5, var(--colors-primary-sa-flag-200)));
-        --_chart-color-6: var(--chart-color-6, var(--_chart-type-color-6, var(--colors-primary-sa-flag-300)));
+        --_chart-color-4: var(--chart-color-4, var(--_chart-type-color-4, var(--colors-primary-500)));
+        --_chart-color-5: var(--chart-color-5, var(--_chart-type-color-5, var(--colors-primary-200)));
+        --_chart-color-6: var(--chart-color-6, var(--_chart-type-color-6, var(--colors-primary-300)));
     }
     --_chart-text: var(--chart-text, var(--text-primary-paragraph));
     --_chart-label: var(--chart-label, var(--text-default));
@@ -50,38 +50,38 @@
 
 .nds-chart[data-chart-type="pie"],
 .nds-chart[data-chart-type="donut"] {
-    --_chart-type-color-1: var(--colors-primary-sa-flag-600);
-    --_chart-type-color-2: var(--colors-primary-sa-flag-500);
-    --_chart-type-color-3: var(--colors-primary-sa-flag-400);
-    --_chart-type-color-4: var(--colors-primary-sa-flag-200);
-    --_chart-type-color-5: var(--colors-primary-sa-flag-800);
-    --_chart-type-color-6: var(--colors-primary-sa-flag-900);
+    --_chart-type-color-1: var(--colors-primary-600);
+    --_chart-type-color-2: var(--colors-primary-500);
+    --_chart-type-color-3: var(--colors-primary-400);
+    --_chart-type-color-4: var(--colors-primary-200);
+    --_chart-type-color-5: var(--colors-primary-800);
+    --_chart-type-color-6: var(--colors-primary-900);
 
     @include dark {
-        --_chart-type-color-1: var(--colors-primary-sa-flag-600);
-        --_chart-type-color-2: var(--colors-primary-sa-flag-500);
-        --_chart-type-color-3: var(--colors-primary-sa-flag-400);
-        --_chart-type-color-4: var(--colors-primary-sa-flag-200);
-        --_chart-type-color-5: var(--colors-primary-sa-flag-300);
-        --_chart-type-color-6: var(--colors-primary-sa-flag-100);
+        --_chart-type-color-1: var(--colors-primary-600);
+        --_chart-type-color-2: var(--colors-primary-500);
+        --_chart-type-color-3: var(--colors-primary-400);
+        --_chart-type-color-4: var(--colors-primary-200);
+        --_chart-type-color-5: var(--colors-primary-300);
+        --_chart-type-color-6: var(--colors-primary-100);
     }
 }
 
 .nds-chart[data-chart-type="line"] {
-    --_chart-type-color-1: var(--colors-primary-sa-flag-600);
-    --_chart-type-color-2: var(--colors-primary-sa-flag-900);
-    --_chart-type-color-3: var(--colors-primary-sa-flag-200);
-    --_chart-type-color-4: var(--colors-primary-sa-flag-500);
-    --_chart-type-color-5: var(--colors-primary-sa-flag-400);
-    --_chart-type-color-6: var(--colors-primary-sa-flag-800);
+    --_chart-type-color-1: var(--colors-primary-600);
+    --_chart-type-color-2: var(--colors-primary-900);
+    --_chart-type-color-3: var(--colors-primary-200);
+    --_chart-type-color-4: var(--colors-primary-500);
+    --_chart-type-color-5: var(--colors-primary-400);
+    --_chart-type-color-6: var(--colors-primary-800);
 
     @include dark {
-        --_chart-type-color-1: var(--colors-primary-sa-flag-600);
-        --_chart-type-color-2: var(--colors-primary-sa-flag-400);
-        --_chart-type-color-3: var(--colors-primary-sa-flag-200);
-        --_chart-type-color-4: var(--colors-primary-sa-flag-500);
-        --_chart-type-color-5: var(--colors-primary-sa-flag-300);
-        --_chart-type-color-6: var(--colors-primary-sa-flag-100);
+        --_chart-type-color-1: var(--colors-primary-600);
+        --_chart-type-color-2: var(--colors-primary-400);
+        --_chart-type-color-3: var(--colors-primary-200);
+        --_chart-type-color-4: var(--colors-primary-500);
+        --_chart-type-color-5: var(--colors-primary-300);
+        --_chart-type-color-6: var(--colors-primary-100);
     }
 }
 

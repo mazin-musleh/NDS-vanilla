@@ -33,7 +33,7 @@
     &.nds-gradient-green {
         --_gradient-angle: var(--gradient-angle, -45deg);
         --section-bg: var(--colors-green-900);
-        background: linear-gradient(var(--_gradient-angle), var(--colors-primary-sa-flag-900), var(--colors-primary-sa-flag-600));
+        background: linear-gradient(var(--_gradient-angle), var(--colors-primary-900), var(--colors-primary-600));
 
         @include ltr {
             --gradient-angle: 45deg;

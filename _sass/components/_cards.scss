@@ -383,31 +383,31 @@
 // PERF-04 variant-grid: deliberate 4-axis composition (base × oncolor-guard × variant-color × variant-style); restructuring to Solution A would add ~12 class definitions to the bundle for a sub-ms per-match improvement. Tradeoff resolves toward keeping bytes off the wire.
 .nds-card:not(.nds-oncolor, [disabled]) {
   &.nds-gold {
-    --card-border-hover: var(--colors-secondary-gold-600);
-    --card-border-active: var(--colors-secondary-gold-400);
-    --card-title: var(--colors-secondary-gold-800);
-    --card-subtitle: var(--colors-secondary-gold-800);
-    --card-number: var(--colors-secondary-gold-800);
-    --icon-bg-color: var(--colors-secondary-gold-100);
-    --icon-color: var(--colors-secondary-gold-800);
+    --card-border-hover: var(--colors-secondary-600);
+    --card-border-active: var(--colors-secondary-400);
+    --card-title: var(--colors-secondary-800);
+    --card-subtitle: var(--colors-secondary-800);
+    --card-number: var(--colors-secondary-800);
+    --icon-bg-color: var(--colors-secondary-100);
+    --icon-color: var(--colors-secondary-800);
 
     &.nds-color {
-      --card-bg: var(--colors-secondary-gold-50);
-      --card-bg-hover: var(--colors-secondary-gold-100);
-      --card-border: var(--colors-secondary-gold-300);
+      --card-bg: var(--colors-secondary-50);
+      --card-bg-hover: var(--colors-secondary-100);
+      --card-border: var(--colors-secondary-300);
     }
 
     @include dark {
-      --card-title: var(--colors-secondary-gold-400);
-      --card-subtitle: var(--colors-secondary-gold-400);
-      --card-number: var(--colors-secondary-gold-400);
+      --card-title: var(--colors-secondary-400);
+      --card-subtitle: var(--colors-secondary-400);
+      --card-number: var(--colors-secondary-400);
       --icon-bg-color: var(--alpha-warning-10);
-      --icon-color: var(--colors-secondary-gold-400);
+      --icon-color: var(--colors-secondary-400);
 
       &.nds-color {
         --card-bg: var(--alpha-warning-10);
         --card-bg-hover: var(--alpha-warning-20);
-        --card-border: var(--colors-secondary-gold-700);
+        --card-border: var(--colors-secondary-700);
       }
     }
   }
@@ -444,32 +444,32 @@
   }
 
   &.nds-lavendar {
-    --card-border-hover: var(--colors-tertiary-lavendar-500);
-    --card-border-active: var(--colors-tertiary-lavendar-300);
-    --card-title: var(--colors-tertiary-lavendar-600);
-    --card-subtitle: var(--colors-tertiary-lavendar-600);
-    --card-number: var(--colors-tertiary-lavendar-600);
-    --icon-bg-color: var(--colors-tertiary-lavendar-50);
-    --icon-color: var(--colors-tertiary-lavendar-600);
+    --card-border-hover: var(--colors-tertiary-500);
+    --card-border-active: var(--colors-tertiary-300);
+    --card-title: var(--colors-tertiary-600);
+    --card-subtitle: var(--colors-tertiary-600);
+    --card-number: var(--colors-tertiary-600);
+    --icon-bg-color: var(--colors-tertiary-50);
+    --icon-color: var(--colors-tertiary-600);
 
     &.nds-color {
-      --card-bg: var(--colors-tertiary-lavendar-50);
-      --card-bg-hover: var(--colors-tertiary-lavendar-100);
-      --card-border: var(--colors-tertiary-lavendar-200);
+      --card-bg: var(--colors-tertiary-50);
+      --card-bg-hover: var(--colors-tertiary-100);
+      --card-border: var(--colors-tertiary-200);
       --icon-bg-color: var(--alpha-lavender-10);
     }
 
     @include dark {
-      --card-title: var(--colors-tertiary-lavendar-300);
-      --card-subtitle: var(--colors-tertiary-lavendar-300);
-      --card-number: var(--colors-tertiary-lavendar-300);
+      --card-title: var(--colors-tertiary-300);
+      --card-subtitle: var(--colors-tertiary-300);
+      --card-number: var(--colors-tertiary-300);
       --icon-bg-color: var(--alpha-lavender-10);
-      --icon-color: var(--colors-tertiary-lavendar-300);
+      --icon-color: var(--colors-tertiary-300);
 
       &.nds-color {
         --card-bg: var(--alpha-lavender-10);
         --card-bg-hover: var(--alpha-lavender-20);
-        --card-border: var(--colors-tertiary-lavendar-500);
+        --card-border: var(--colors-tertiary-500);
       }
     }
   }

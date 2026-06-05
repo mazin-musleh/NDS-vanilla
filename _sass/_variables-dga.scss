@@ -55,4 +55,43 @@
   // Featured icons — additional DGA tokens (from @platformscode/core)
 
   // Icon — additional DGA tokens (from @platformscode/core)
+
+  // System brand slots -> DGA palette (consumers reference the neutral names)
+  --colors-primary-25: var(--colors-primary-sa-flag-25);
+  --colors-primary-50: var(--colors-primary-sa-flag-50);
+  --colors-primary-100: var(--colors-primary-sa-flag-100);
+  --colors-primary-200: var(--colors-primary-sa-flag-200);
+  --colors-primary-300: var(--colors-primary-sa-flag-300);
+  --colors-primary-400: var(--colors-primary-sa-flag-400);
+  --colors-primary-500-alpha-10: var(--colors-primary-sa-flag-500-alpha-10);
+  --colors-primary-500: var(--colors-primary-sa-flag-500);
+  --colors-primary-600: var(--colors-primary-sa-flag-600-primary);
+  --colors-primary-700: var(--colors-primary-sa-flag-700);
+  --colors-primary-800: var(--colors-primary-sa-flag-800);
+  --colors-primary-900: var(--colors-primary-sa-flag-900);
+  --colors-primary-950: var(--colors-primary-sa-flag-950);
+  --colors-secondary-25: var(--colors-secondary-gold-25);
+  --colors-secondary-50: var(--colors-secondary-gold-50);
+  --colors-secondary-100: var(--colors-secondary-gold-100);
+  --colors-secondary-200: var(--colors-secondary-gold-200);
+  --colors-secondary-300: var(--colors-secondary-gold-300);
+  --colors-secondary-400: var(--colors-secondary-gold-400);
+  --colors-secondary-500: var(--colors-secondary-gold-500);
+  --colors-secondary-600: var(--colors-secondary-gold-600-primary);
+  --colors-secondary-700: var(--colors-secondary-gold-700);
+  --colors-secondary-800: var(--colors-secondary-gold-800);
+  --colors-secondary-900: var(--colors-secondary-gold-900);
+  --colors-secondary-950: var(--colors-secondary-gold-950);
+  --colors-tertiary-25: var(--colors-tertiary-lavendar-25);
+  --colors-tertiary-50: var(--colors-tertiary-lavendar-50);
+  --colors-tertiary-100: var(--colors-tertiary-lavendar-100);
+  --colors-tertiary-200: var(--colors-tertiary-lavendar-200);
+  --colors-tertiary-300: var(--colors-tertiary-lavendar-300);
+  --colors-tertiary-400: var(--colors-tertiary-lavendar-400);
+  --colors-tertiary-500: var(--colors-tertiary-lavendar-500-primary);
+  --colors-tertiary-600: var(--colors-tertiary-lavendar-600);
+  --colors-tertiary-700: var(--colors-tertiary-lavendar-700);
+  --colors-tertiary-800: var(--colors-tertiary-lavendar-800);
+  --colors-tertiary-900: var(--colors-tertiary-lavendar-900);
+  --colors-tertiary-950: var(--colors-tertiary-lavendar-950);
 }

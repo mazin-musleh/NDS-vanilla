@@ -87,11 +87,11 @@
     --button-background-black-pressed: var(--colors-neutral-600);
     --button-background-black-selected: var(--colors-neutral-700);
     --button-background-black-focused: var(--colors-neutral-950);
-    --button-background-primary-default: var(--colors-primary-sa-flag-600-primary);
-    --button-background-primary-hovered: var(--colors-primary-sa-flag-700);
-    --button-background-primary-pressed: var(--colors-primary-sa-flag-900);
-    --button-background-primary-selected: var(--colors-primary-sa-flag-800);
-    --button-background-primary-focused: var(--colors-primary-sa-flag-600-primary);
+    --button-background-primary-default: var(--colors-primary-600);
+    --button-background-primary-hovered: var(--colors-primary-700);
+    --button-background-primary-pressed: var(--colors-primary-900);
+    --button-background-primary-selected: var(--colors-primary-800);
+    --button-background-primary-focused: var(--colors-primary-600);
     --button-background-neutral-default: var(--colors-neutral-100);
     --button-background-neutral-hovered: var(--colors-neutral-100);
     --button-background-neutral-pressed: var(--colors-neutral-200);
@@ -121,31 +121,31 @@
     --button-background-transparent-selected: var(--alpha-white-30);
     --button-background-transparent-focused: var(--alpha-white-0);
     --button-background-disabled-on-color: var(--alpha-white-20);
-    --button-label-transparent-hovered-on-color: var(--colors-primary-sa-flag-400);
-    --button-label-transparent-pressed-on-color: var(--colors-primary-sa-flag-300);
-    --button-label-transparent-selected-on-color: var(--colors-primary-sa-flag-400);
+    --button-label-transparent-hovered-on-color: var(--colors-primary-400);
+    --button-label-transparent-pressed-on-color: var(--colors-primary-300);
+    --button-label-transparent-selected-on-color: var(--colors-primary-400);
     --button-icon-transparent-hovered-on-color: var(--background-primary-400);
-    --button-icon-transparent-pressed-on-color: var(--colors-primary-sa-flag-300);
-    --button-icon-transparent-selected-on-color: var(--colors-primary-sa-flag-400);
-    --link-primary: var(--colors-primary-sa-flag-600-primary);
-    --link-primary-hovered: var(--colors-primary-sa-flag-400);
-    --link-primary-pressed: var(--colors-primary-sa-flag-300);
-    --link-primary-focused: var(--colors-primary-sa-flag-600-primary);
-    --link-primary-visited: var(--colors-primary-sa-flag-800);
-    --link-icon-primary-hovered: var(--colors-primary-sa-flag-400);
-    --link-icon-primary-pressed: var(--colors-primary-sa-flag-300);
-    --link-icon-primary-focused: var(--colors-primary-sa-flag-600-primary);
-    --link-icon-primary-visited: var(--colors-primary-sa-flag-800);
-    --link-secondary: var(--colors-secondary-gold-600-primary);
-    --link-secondary-hovered: var(--colors-secondary-gold-400);
-    --link-secondary-pressed: var(--colors-secondary-gold-300);
-    --link-secondary-focused: var(--colors-secondary-gold-600-primary);
-    --link-secondary-visited: var(--colors-secondary-gold-900);
-    --link-tertiary: var(--colors-tertiary-lavendar-500-primary);
-    --link-tertiary-hovered: var(--colors-tertiary-lavendar-400);
-    --link-tertiary-pressed: var(--colors-tertiary-lavendar-300);
-    --link-tertiary-focused: var(--colors-tertiary-lavendar-500-primary);
-    --link-tertiary-visited: var(--colors-tertiary-lavendar-800);
+    --button-icon-transparent-pressed-on-color: var(--colors-primary-300);
+    --button-icon-transparent-selected-on-color: var(--colors-primary-400);
+    --link-primary: var(--colors-primary-600);
+    --link-primary-hovered: var(--colors-primary-400);
+    --link-primary-pressed: var(--colors-primary-300);
+    --link-primary-focused: var(--colors-primary-600);
+    --link-primary-visited: var(--colors-primary-800);
+    --link-icon-primary-hovered: var(--colors-primary-400);
+    --link-icon-primary-pressed: var(--colors-primary-300);
+    --link-icon-primary-focused: var(--colors-primary-600);
+    --link-icon-primary-visited: var(--colors-primary-800);
+    --link-secondary: var(--colors-secondary-600);
+    --link-secondary-hovered: var(--colors-secondary-400);
+    --link-secondary-pressed: var(--colors-secondary-300);
+    --link-secondary-focused: var(--colors-secondary-600);
+    --link-secondary-visited: var(--colors-secondary-900);
+    --link-tertiary: var(--colors-tertiary-500);
+    --link-tertiary-hovered: var(--colors-tertiary-400);
+    --link-tertiary-pressed: var(--colors-tertiary-300);
+    --link-tertiary-focused: var(--colors-tertiary-500);
+    --link-tertiary-visited: var(--colors-tertiary-800);
     --link-neutral: var(--colors-neutral-700);
     --link-neutral-hovered: var(--colors-neutral-500);
     --link-icon-neutral-hovered: var(--colors-neutral-500);
@@ -221,7 +221,7 @@
     --form-field-text-label: var(--text-default);
     --form-field-text-placeholder: var(--text-secondary-paragraph);
     --form-field-text-hovered: var(--text-default);
-    --stepper-button-completed: var(--colors-primary-sa-flag-600-primary);
+    --stepper-button-completed: var(--colors-primary-600);
     --tooltip-background-light: var(--colors-base-white);
     --tooltip-text-heading-light: var(--text-display);
     --tooltip-text-paragraph-light: var(--text-primary-paragraph);
@@ -250,17 +250,17 @@
     --alpha-black-80: var(--colors-alpha-alpha-black-80);
     --alpha-black-90: var(--colors-alpha-alpha-black-90);
     --alpha-black-100: var(--colors-alpha-alpha-black-100);
-    --stepper-button-completed-hovered: var(--colors-primary-sa-flag-700);
-    --stepper-button-current: var(--colors-primary-sa-flag-600-primary);
-    --stepper-button-current-hovered: var(--colors-primary-sa-flag-700);
+    --stepper-button-completed-hovered: var(--colors-primary-700);
+    --stepper-button-current: var(--colors-primary-600);
+    --stepper-button-current-hovered: var(--colors-primary-700);
     --stepper-button-upcomming: var(--colors-neutral-300);
     --stepper-button-upcomming-hovered: var(--colors-neutral-400);
     --stepper-button-background: var(--colors-base-white);
     --stepper-text-primary: var(--text-display);
     --stepper-text-secondary: var(--text-primary-paragraph);
     --stepper-text-tertiary: var(--text-secondary-paragraph);
-    --stepper-line-completed: var(--colors-primary-sa-flag-600-primary);
-    --stepper-line-completed-hovered: var(--colors-primary-sa-flag-700);
+    --stepper-line-completed: var(--colors-primary-600);
+    --stepper-line-completed-hovered: var(--colors-primary-700);
     --stepper-line-current: var(--colors-neutral-300);
     --stepper-line-upcomming: var(--colors-neutral-300);
     --stepper-line-upcomming-hovered: var(--colors-neutral-400);
@@ -279,19 +279,19 @@
     --form-field-border-error: var(--border-error);
     --form-option-background-hover: var(--colors-neutral-100);
     --form-option-background-pressed: var(--colors-neutral-200);
-    --form-datecell-background-default: var(--colors-primary-sa-flag-600-primary);
-    --form-datecell-background-hovered: var(--colors-primary-sa-flag-700);
-    --form-datecell-background-pressed: var(--colors-primary-sa-flag-900);
-    --form-datecell-background-focused: var(--colors-primary-sa-flag-600-primary);
+    --form-datecell-background-default: var(--colors-primary-600);
+    --form-datecell-background-hovered: var(--colors-primary-700);
+    --form-datecell-background-pressed: var(--colors-primary-900);
+    --form-datecell-background-focused: var(--colors-primary-600);
     --form-datecell-today-background-default: var(--alpha-white-0);
     --form-datecell-today-background-hovered: var(--colors-neutral-200);
     --form-datecell-today-background-pressed: var(--colors-neutral-300);
     --form-datecell-today-background-focused: var(--alpha-white-0);
     --form-datecell-background-disabled: var(--colors-base-white);
-    --form-datecell-background-600: var(--colors-primary-sa-flag-600-primary);
-    --form-datecell-background-300: var(--colors-primary-sa-flag-300);
-    --form-datecell-background-200: var(--colors-primary-sa-flag-200);
-    --form-datecell-background-100: var(--colors-primary-sa-flag-100);
+    --form-datecell-background-600: var(--colors-primary-600);
+    --form-datecell-background-300: var(--colors-primary-300);
+    --form-datecell-background-200: var(--colors-primary-200);
+    --form-datecell-background-100: var(--colors-primary-100);
     --alpha-primary-10: var(--colors-alpha-alpha-green-10);
     --alpha-primary-20: var(--colors-alpha-alpha-green-20);
     --alpha-warning-10: #dc680319;
@@ -311,9 +311,9 @@
     --featuredicons-background-info-light: var(--colors-blue-50);
     --featuredicons-background-warning-light: var(--colors-yellow-50);
     --featuredicons-background-success-light: var(--colors-green-50);
-    --featuredicons-background-brand-light: var(--colors-primary-sa-flag-50);
+    --featuredicons-background-brand-light: var(--colors-primary-50);
     --featuredicons-background-default-light: var(--colors-neutral-50);
-    --featuredicons-icon-primary: var(--colors-primary-sa-flag-600-primary);
+    --featuredicons-icon-primary: var(--colors-primary-600);
     --featuredicons-icon-neutral: var(--colors-neutral-700);
     --featuredicons-icon-info: var(--colors-blue-700);
     --featuredicons-icon-warning: var(--colors-yellow-700);
@@ -321,13 +321,13 @@
     --notification-background-info-light: var(--colors-blue-50);
     --notification-background-warning-light: var(--colors-yellow-50);
     --notification-background-success-light: var(--colors-green-50);
-    --notification-background-brand-light: var(--colors-primary-sa-flag-50);
+    --notification-background-brand-light: var(--colors-primary-50);
     --notification-background-default-light: var(--colors-neutral-50);
     --notification-background-default-50: var(--background-neutral-50);
     --notification-background-success-50: var(--background-success-50);
     --notification-background-warning-50: var(--background-warning-50);
     --notification-background-error-50: var(--background-error-50);
-    --notification-background-brand-50: var(--colors-primary-sa-flag-50);
+    --notification-background-brand-50: var(--colors-primary-50);
     --notification-background-info-50: var(--background-info-50);
     --notification-background-default-25: var(--background-neutral-25);
     --notification-background-success-25: var(--background-success-25);
@@ -340,20 +340,20 @@
     --notification-text-info: var(--text-info);
     --notification-text-warning: var(--text-warning);
     --notification-text-brand: var(--text-primary);
-    --featuredicons-icon-secondary: var(--colors-secondary-gold-600-primary);
+    --featuredicons-icon-secondary: var(--colors-secondary-600);
     --featuredicons-icon-default-500: var(--colors-neutral-500);
     --featuredicons-icon-default-400: var(--colors-neutral-400);
-    --featuredicons-icon-primary-light: var(--colors-primary-sa-flag-50);
-    --featuredicons-icon-primary-400: var(--colors-primary-sa-flag-400);
+    --featuredicons-icon-primary-light: var(--colors-primary-50);
+    --featuredicons-icon-primary-400: var(--colors-primary-400);
     --featuredicons-icon-neutral-light: var(--colors-neutral-50);
-    --featuredicons-icon-secondary-light: var(--colors-secondary-gold-50);
-    --featuredicons-icon-tertiary: var(--colors-tertiary-lavendar-500-primary);
-    --featuredicons-icon-tertiary-light: var(--colors-tertiary-lavendar-50);
+    --featuredicons-icon-secondary-light: var(--colors-secondary-50);
+    --featuredicons-icon-tertiary: var(--colors-tertiary-500);
+    --featuredicons-icon-tertiary-light: var(--colors-tertiary-50);
     --featuredicons-icon-success-light: var(--colors-green-50);
     --featuredicons-icon-info-light: var(--colors-blue-50);
     --featuredicons-bg-icon-warning-light: var(--background-warning-50);
     --featuredicons-bg-icon-error-light: var(--background-error-50);
-    --featuredicons-bg-icon-brand-light: var(--colors-primary-sa-flag-50);
+    --featuredicons-bg-icon-brand-light: var(--colors-primary-50);
     --featuredicons-bg-icon-info-light: var(--background-info-50);
     --featuredicons-bg-icon-success-light: var(--background-success-50);
 
@@ -374,7 +374,7 @@
     --background-card: var(--colors-base-white);
     --background-surface-oncolor: var(--colors-base-white);
     --background-black: var(--colors-base-black);
-    --background-brand-light: var(--colors-primary-sa-flag-50);
+    --background-brand-light: var(--colors-primary-50);
     --background-neutral-800: var(--colors-neutral-800);
     --background-neutral-400: var(--colors-neutral-400);
     --background-neutral-300: var(--colors-neutral-300);
@@ -382,17 +382,17 @@
     --background-neutral-100: var(--colors-neutral-100);
     --background-neutral-50: var(--colors-neutral-50);
     --background-neutral-25: var(--colors-neutral-25);
-    --background-primary: var(--colors-primary-sa-flag-600-primary);
-    --background-primary-400: var(--colors-primary-sa-flag-400);
-    --background-primary-200: var(--colors-primary-sa-flag-200);
-    --background-primary-50: var(--colors-primary-sa-flag-50);
-    --background-primary-25: var(--colors-primary-sa-flag-25);
-    --background-secondary: var(--colors-secondary-gold-600-primary);
-    --background-secondary-50: var(--colors-secondary-gold-50);
-    --background-secondary-25: var(--colors-secondary-gold-25);
-    --background-tertiary: var(--colors-tertiary-lavendar-600);
-    --background-tertiary-50: var(--colors-tertiary-lavendar-50);
-    --background-tertiary-25: var(--colors-tertiary-lavendar-25);
+    --background-primary: var(--colors-primary-600);
+    --background-primary-400: var(--colors-primary-400);
+    --background-primary-200: var(--colors-primary-200);
+    --background-primary-50: var(--colors-primary-50);
+    --background-primary-25: var(--colors-primary-25);
+    --background-secondary: var(--colors-secondary-600);
+    --background-secondary-50: var(--colors-secondary-50);
+    --background-secondary-25: var(--colors-secondary-25);
+    --background-tertiary: var(--colors-tertiary-600);
+    --background-tertiary-50: var(--colors-tertiary-50);
+    --background-tertiary-25: var(--colors-tertiary-25);
     --background-success: var(--colors-green-600);
     --background-success-light: var(--colors-green-50);
     --background-success-50: var(--colors-green-50);
@@ -414,10 +414,10 @@
     --background-sa-flag-25: var(--colors-green-25);
     --background-notification-white: var(--colors-base-white);
     --text-default: var(--colors-base-black);
-    --text-primary: var(--colors-primary-sa-flag-600-primary);
-    --text-secondary: var(--colors-secondary-gold-600-primary);
-    --text-tertiary: var(--colors-tertiary-lavendar-500-primary);
-    --text-primary-sa-flag: var(--colors-primary-sa-flag-800);
+    --text-primary: var(--colors-primary-600);
+    --text-secondary: var(--colors-secondary-600);
+    --text-tertiary: var(--colors-tertiary-500);
+    --text-primary-sa-flag: var(--colors-primary-800);
     --text-display: var(--colors-neutral-800);
     --text-primary-paragraph: var(--colors-neutral-700);
     --text-secondary-paragraph: var(--colors-neutral-500);
@@ -428,20 +428,20 @@
     --text-info: var(--colors-blue-700);
     --text-warning: var(--colors-yellow-700);
     --text-error: var(--colors-red-700);
-    --text-primary-light: var(--colors-primary-sa-flag-300);
-    --text-secondary-light: var(--colors-secondary-gold-300);
-    --text-tertiary-light: var(--colors-tertiary-lavendar-300);
+    --text-primary-light: var(--colors-primary-300);
+    --text-secondary-light: var(--colors-secondary-300);
+    --text-tertiary-light: var(--colors-tertiary-300);
     --text-default-disabled: var(--colors-neutral-400);
     --text-default-oncolor-disabled: var(--alpha-white-40);
     --border-white: var(--colors-base-white);
     --border-white-40: var(--alpha-white-40);
     --border-black: var(--colors-base-black);
-    --border-primary: var(--colors-primary-sa-flag-600-primary);
-    --border-primary-light: var(--colors-primary-sa-flag-200);
-    --border-secondary: var(--colors-secondary-gold-600-primary);
-    --border-secondary-light: var(--colors-secondary-gold-200);
-    --border-tertiary: var(--colors-tertiary-lavendar-500-primary);
-    --border-tertiary-light: var(--colors-tertiary-lavendar-200);
+    --border-primary: var(--colors-primary-600);
+    --border-primary-light: var(--colors-primary-200);
+    --border-secondary: var(--colors-secondary-600);
+    --border-secondary-light: var(--colors-secondary-200);
+    --border-tertiary: var(--colors-tertiary-500);
+    --border-tertiary-light: var(--colors-tertiary-200);
     --border-neutral-primary: var(--colors-neutral-300);
     --border-neutral-secondary: var(--colors-neutral-200);
     --border-neutral-tertiary: var(--colors-neutral-100);
@@ -460,10 +460,10 @@
     --border-disabled: var(--colors-neutral-400);
     --icon-oncolor: var(--colors-base-white);
     --controls-control-primary: var(--alpha-white-0);
-    --controls-control-primary-checked: var(--colors-primary-sa-flag-600-primary);
-    --controls-control-primary-hovered: var(--colors-primary-sa-flag-800);
-    --controls-control-primary-pressed: var(--colors-primary-sa-flag-800);
-    --controls-control-primary-focused: var(--colors-primary-sa-flag-600-primary);
+    --controls-control-primary-checked: var(--colors-primary-600);
+    --controls-control-primary-hovered: var(--colors-primary-800);
+    --controls-control-primary-pressed: var(--colors-primary-800);
+    --controls-control-primary-focused: var(--colors-primary-600);
     --controls-control-neutral-checked: var(--colors-neutral-950);
     --controls-control-neutral-hovered: var(--colors-neutral-600);
     --controls-control-neutral-pressed: var(--colors-neutral-600);
@@ -473,21 +473,21 @@
     --controls-control-ripple-effect: var(--colors-neutral-200);
     --controls-control-border: var(--colors-neutral-500);
     --background-disabled: var(--colors-neutral-200);
-    --background-disabled-primary: var(--colors-primary-sa-flag-200);
+    --background-disabled-primary: var(--colors-primary-200);
     --background-inverse-disabled: var(--colors-neutral-100);
     --icon-default: var(--colors-base-black);
     --icon-default-500: var(--colors-neutral-500);
     --controls-control-icon-hovered: var(--icon-oncolor);
     --icon-default-400: var(--colors-neutral-400);
-    --icon-primary: var(--colors-primary-sa-flag-600-primary);
-    --icon-primary-light: var(--colors-primary-sa-flag-50);
-    --icon-primary-400: var(--colors-primary-sa-flag-400);
+    --icon-primary: var(--colors-primary-600);
+    --icon-primary-light: var(--colors-primary-50);
+    --icon-primary-400: var(--colors-primary-400);
     --icon-neutral: var(--colors-neutral-700);
     --icon-neutral-light: var(--colors-neutral-50);
-    --icon-secondary: var(--colors-secondary-gold-600-primary);
-    --icon-secondary-light: var(--colors-secondary-gold-50);
-    --icon-tertiary: var(--colors-tertiary-lavendar-500-primary);
-    --icon-tertiary-light: var(--colors-tertiary-lavendar-50);
+    --icon-secondary: var(--colors-secondary-600);
+    --icon-secondary-light: var(--colors-secondary-50);
+    --icon-tertiary: var(--colors-tertiary-500);
+    --icon-tertiary-light: var(--colors-tertiary-50);
     --icon-success: var(--colors-green-700);
     --icon-info: var(--colors-blue-700);
     --icon-warning: var(--colors-yellow-700);
@@ -639,7 +639,7 @@
     --colors-alpha-alpha-green-70: #1b8354b2;
     --colors-alpha-alpha-green-80: #1b8354cc;
     --colors-alpha-alpha-green-90: #1b8354e5;
-    --colors-alpha-alpha-green-100: var(--colors-primary-sa-flag-600-primary);
+    --colors-alpha-alpha-green-100: var(--colors-primary-600);
 
     // ── Border radius (vanilla base — migrated from DGA) ──
     --radius-0: 0;
@@ -660,67 +660,28 @@
     // Additional color tokens
     --text-white: var(--colors-base-white);
     --text-black: var(--colors-base-black);
-    --colors-primary-sa-flag-600: var(--colors-primary-sa-flag-600-primary);
-    --colors-secondary-gold-600: var(--colors-secondary-gold-600-primary);
-    --colors-secondary-gold-primary: var(--colors-secondary-gold-600-primary);
-    --colors-tertiary-lavendar-500: var(--colors-tertiary-lavendar-500-primary);
-    --colors-tertiary-lavendar-primary: var(--colors-tertiary-lavendar-500-primary);
+    --colors-secondary-primary: var(--colors-secondary-600);
+    --colors-tertiary-primary: var(--colors-tertiary-500);
 
     // ── Brand ramps (canonical, brand-neutral names) ──
     // Owned brand ramps. Components/semantics consume these neutral names so a
     // rebrand rebinds the brand in ONE place. Values currently alias the (now
     // reference-only) DGA ramps; on full absorption these hold literal values
     // and _variables-dga.scss drops out of the build.
-    --colors-primary-25:  var(--colors-primary-sa-flag-25);
-    --colors-primary-50:  var(--colors-primary-sa-flag-50);
-    --colors-primary-100: var(--colors-primary-sa-flag-100);
-    --colors-primary-200: var(--colors-primary-sa-flag-200);
-    --colors-primary-300: var(--colors-primary-sa-flag-300);
-    --colors-primary-400: var(--colors-primary-sa-flag-400);
-    --colors-primary-500: var(--colors-primary-sa-flag-500);
-    --colors-primary-600: var(--colors-primary-sa-flag-600);
-    --colors-primary-700: var(--colors-primary-sa-flag-700);
-    --colors-primary-800: var(--colors-primary-sa-flag-800);
-    --colors-primary-900: var(--colors-primary-sa-flag-900);
-    --colors-primary-950: var(--colors-primary-sa-flag-950);
 
-    --colors-secondary-25:  var(--colors-secondary-gold-25);
-    --colors-secondary-50:  var(--colors-secondary-gold-50);
-    --colors-secondary-100: var(--colors-secondary-gold-100);
-    --colors-secondary-200: var(--colors-secondary-gold-200);
-    --colors-secondary-300: var(--colors-secondary-gold-300);
-    --colors-secondary-400: var(--colors-secondary-gold-400);
-    --colors-secondary-500: var(--colors-secondary-gold-500);
-    --colors-secondary-600: var(--colors-secondary-gold-600);
-    --colors-secondary-700: var(--colors-secondary-gold-700);
-    --colors-secondary-800: var(--colors-secondary-gold-800);
-    --colors-secondary-900: var(--colors-secondary-gold-900);
-    --colors-secondary-950: var(--colors-secondary-gold-950);
 
-    --colors-tertiary-25:  var(--colors-tertiary-lavendar-25);
-    --colors-tertiary-50:  var(--colors-tertiary-lavendar-50);
-    --colors-tertiary-100: var(--colors-tertiary-lavendar-100);
-    --colors-tertiary-200: var(--colors-tertiary-lavendar-200);
-    --colors-tertiary-300: var(--colors-tertiary-lavendar-300);
-    --colors-tertiary-400: var(--colors-tertiary-lavendar-400);
-    --colors-tertiary-500: var(--colors-tertiary-lavendar-500);
-    --colors-tertiary-600: var(--colors-tertiary-lavendar-600);
-    --colors-tertiary-700: var(--colors-tertiary-lavendar-700);
-    --colors-tertiary-800: var(--colors-tertiary-lavendar-800);
-    --colors-tertiary-900: var(--colors-tertiary-lavendar-900);
-    --colors-tertiary-950: var(--colors-tertiary-lavendar-950);
     --colors-neutral-750: #2b3643;
     --colors-neutral-850: #18212f;
     --shadow-md-top: 0px -3.288px 6.575px -1.644px rgba(16, 24, 40, 0.10), 0px -1.644px 3.288px -1.644px rgba(16, 24, 40, 0.06);
     --shadow-inset: inset 0px 0 4px 2px rgba(0, 0, 0, 0.05);
-    --background-mark: var(--colors-primary-sa-flag-100);
+    --background-mark: var(--colors-primary-100);
     --background-default: var(--colors-base-white);
     --background-nav: var(--colors-base-white);
     --background-topbar: var(--colors-neutral-100);
     --background-footer: var(--background-sa-flag);
     --background-stripe: var(--colors-neutral-50);
     --background-sub-hero: var(--background-brand-light);
-    --background-primary-300: var(--colors-primary-sa-flag-300);
+    --background-primary-300: var(--colors-primary-300);
     --background-surface-elevated: var(--colors-base-white);
     --background-surface-sunken: var(--colors-neutral-100);
     --background-overlay: var(--colors-alpha-alpha-black-50);
@@ -741,15 +702,15 @@
     --chip-background-on-color-selected: var(--colors-alpha-alpha-white-70);
     --chip-background-on-color-focused: var(--colors-base-white);
     --chip-background-on-color-disabled: var(--colors-alpha-alpha-white-20);
-    --chip-background-primary-default: var(--colors-primary-sa-flag-100);
-    --chip-background-primary-hovered: var(--colors-primary-sa-flag-200);
-    --chip-background-primary-pressed: var(--colors-primary-sa-flag-400);
-    --chip-background-primary-selected: var(--colors-primary-sa-flag-600-primary);
-    --chip-background-primary-focused: var(--colors-primary-sa-flag-100);
+    --chip-background-primary-default: var(--colors-primary-100);
+    --chip-background-primary-hovered: var(--colors-primary-200);
+    --chip-background-primary-pressed: var(--colors-primary-400);
+    --chip-background-primary-selected: var(--colors-primary-600);
+    --chip-background-primary-focused: var(--colors-primary-100);
     --chip-text-neutral-default: var(--colors-base-black);
     --chip-text-neutral-selected: var(--colors-base-white);
-    --chip-text-primary-default: var(--colors-primary-sa-flag-800);
-    --chip-text-primary-pressed: var(--colors-primary-sa-flag-900);
+    --chip-text-primary-default: var(--colors-primary-800);
+    --chip-text-primary-pressed: var(--colors-primary-900);
     --chip-text-oncolor-primary: var(--colors-base-white);
     --chip-text-disabled: var(--colors-neutral-400);
 
@@ -761,36 +722,36 @@
     /* Background/background-neutral-200 equivalent */
     --rating-star-selected-default: var(--background-secondary);
     /* Golden yellow from Figma */
-    --rating-star-pressed-default: var(--colors-secondary-gold-700);
-    --rating-star-hovered-default: var(--colors-secondary-gold-500);
+    --rating-star-pressed-default: var(--colors-secondary-700);
+    --rating-star-hovered-default: var(--colors-secondary-500);
 
     /* Brand Style */
     --rating-star-normal-brand: var(--colors-neutral-300);
-    --rating-star-selected-brand: var(--colors-primary-sa-flag-600-primary);
-    --rating-star-pressed-brand: var(--colors-primary-sa-flag-700);
-    --rating-star-hovered-brand: var(--colors-primary-sa-flag-500);
+    --rating-star-selected-brand: var(--colors-primary-600);
+    --rating-star-pressed-brand: var(--colors-primary-700);
+    --rating-star-hovered-brand: var(--colors-primary-500);
 
     --form-field-border-success: var(--border-success);
     --form-field-border-warning: var(--border-warning);
     --form-field-border-info: var(--border-info);
 
     // Autocomplete
-    --autocomplete-highlight: var(--colors-primary-sa-flag-100);
+    --autocomplete-highlight: var(--colors-primary-100);
     --autocomplete-active: var(--background-neutral-light);
 
     // Table (missing in DGA)
     --table-background-cell: var(--colors-base-white);
-    --table-background-row-selected: var(--colors-primary-sa-flag-50);
+    --table-background-row-selected: var(--colors-primary-50);
     // Override of DGA's neutral-50 — brand tint so hover deepens the selected row (pairs with row-selected)
-    --table-background-hover-selected: var(--colors-primary-sa-flag-100);
+    --table-background-hover-selected: var(--colors-primary-100);
 
     // Swiper bullet (light) — neutral (inactive) states use the neutral scale (+1 step on hover);
     // brand (active) states use the SA-flag scale (+1 step darker on hover).
     // All four get explicit dark overrides in _variables-dark.scss. -oncolor set used on hero.
     --bullet-background-default: var(--colors-neutral-200);
     --bullet-background-hover: var(--colors-neutral-300);
-    --bullet-background-active: var(--colors-primary-sa-flag-600-primary);
-    --bullet-background-active-hover: var(--colors-primary-sa-flag-700);
+    --bullet-background-active: var(--colors-primary-600);
+    --bullet-background-active-hover: var(--colors-primary-700);
     --bullet-background-default-oncolor: var(--alpha-white-60);
     --bullet-background-hover-oncolor: var(--alpha-white-80);
     --bullet-background-active-oncolor: var(--alpha-white-100);
@@ -837,7 +798,7 @@
     // NDS overrides (DGA source values adjusted for NDS)
     /* --button-background-neutral-hovered: var(--colors-neutral-200);
     --button-background-neutral-focused: var(--colors-neutral-200);
-    --controls-control-primary-pressed: var(--colors-primary-sa-flag-900);
+    --controls-control-primary-pressed: var(--colors-primary-900);
     --controls-control-neutral-pressed: var(--colors-neutral-700);
     --controls-control-ripple-effect: var(--colors-neutral-100); */
 
