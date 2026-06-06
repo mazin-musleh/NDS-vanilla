@@ -27,18 +27,11 @@
                     <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="">
                         <span class="nds-label">Default (DGA)</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="corporate">
-                        <span class="nds-label">Corporate</span>
+                    {% for b in site.data.brands %}
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="{{ b.value }}"{% if b.theme %} data-brand-css="{{ b.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% if b.js %} data-brand-js="{{ b.js | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% endif %}{% endif %}>
+                        <span class="nds-label">{{ b.label }}</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="crimson">
-                        <span class="nds-label">Crimson</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="foundation-day">
-                        <span class="nds-label">Foundation Day</span>
-                    </button>
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="sunset">
-                        <span class="nds-label">Sunset</span>
-                    </button>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -50,31 +43,6 @@
         {% endif %}
     </div>
 </div>
-{% if site.brand_switcher %}
-<script>
-// Brand switcher — applies + persists data-brand (the pre-paint script in
-// head-inline-scripts.html restores it on load; here we sync the menu + save).
-(function(){
-    var root = document.documentElement;
-    var KEY = 'nds-brand';
-    var items = document.querySelectorAll('.nds-brand-switcher [data-brand-value]');
-    function sync(brand){
-        items.forEach(function(b){
-            b.setAttribute('aria-current', b.getAttribute('data-brand-value') === brand ? 'true' : 'false');
-        });
-    }
-    sync(root.getAttribute('data-brand') || '');
-    items.forEach(function(b){
-        b.addEventListener('click', function(){
-            var v = b.getAttribute('data-brand-value');
-            if (v) { root.setAttribute('data-brand', v); } else { root.removeAttribute('data-brand'); }
-            try { if (v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY); } catch(e){}
-            sync(v);
-        });
-    });
-})();
-</script>
-{% endif %}
 <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
     <div class="nds-content-wrapper">
         <div class="nds-digitalStamp-notices">

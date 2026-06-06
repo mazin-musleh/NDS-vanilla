@@ -135,7 +135,7 @@
 }
 
 .nds-section-body {
-
+    isolation: isolate; /* fix z-index overlap with ::before/::after content */
     margin-block-end: 2rem;
 
     &:last-child {

@@ -1,12 +1,12 @@
 <script>
-    // Pre-paint stamps from localStorage, before first paint (no flash). The
-    // render-blocking critical CSS reads [data-theme] (skeleton/body bg) and
-    // [data-brand] (brand slots) so the first paint matches the saved choice.
+    // Pre-paint: mirror the saved theme/brand from localStorage to <html> attributes.
     (function() {
         var r = document.documentElement;
         var t = localStorage.getItem('nds-theme');
         if (t === 'dark' || t === 'light') r.setAttribute('data-theme', t);
+        {%- if site.brand_switcher %}
         var b = localStorage.getItem('nds-brand');
         if (b) r.setAttribute('data-brand', b);
+        {%- endif %}
     })();
 </script>

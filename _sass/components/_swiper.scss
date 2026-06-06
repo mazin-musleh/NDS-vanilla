@@ -184,6 +184,7 @@
     justify-content: space-between;
     width: 100%;
     gap: var(--spacing-xl);
+    z-index: 5;
 
     padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
 

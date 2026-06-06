@@ -3,7 +3,9 @@
     'use strict';
 
     const root = document.documentElement;
-    const STORAGE_KEY = 'nds-theme';
+    window.NDS = window.NDS || {};
+    NDS.STORAGE = NDS.STORAGE || { THEME: 'nds-theme', BRAND: 'nds-brand' };
+    const STORAGE_KEY = NDS.STORAGE.THEME;
     const TOGGLE_SEL = '[data-theme-toggle], #ndsThemeToggle';
 
     function getTheme() {
@@ -89,6 +91,5 @@
     }
 
     // Public API
-    window.NDS = window.NDS || {};
     NDS.Theme = { init, get: getTheme, set: setTheme, toggle };
 })();

@@ -37,6 +37,11 @@ class JSProcessor
   def initialize
     @source_dir = '_js'
     @output_dir = 'assets/js'
+    # Per-file output dir overrides (keyed by source basename) — e.g. an event
+    # theme's behaviour script ships in its self-contained event folder.
+    @output_overrides = {
+      'nds-theme-foundation-day.js' => 'assets/events/foundation_day',
+    }
     @bundles = {
       # Critical bundle — loaded via <script defer>. Carries core, the loader,
       # shared utils (backdrop/sort/feedback), every critical component, dropmenu
@@ -47,7 +52,7 @@ class JSProcessor
       # first-interaction-critical on OTP/2FA pages). They stay so they wire on the
       # local idle pass, not after an injected bundle. Reveal is gated on this
       # bundle, so it's kept lean.
-      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
+      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-brand.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
       # Delegated — deferred components verified safe to load late. Injected by
       # nds-loader.js AFTER the critical pass (never a render-blocking defer tag), so
       # its download never gates the reveal. Components migrate in here over time
@@ -310,9 +315,12 @@ class JSProcessor
         header_comment += " */\n"
         compressed_content = header_comment + compressed_content
 
-        # Create minified version with .min.js extension in assets/js
+        # Create minified version with .min.js extension (output dir is overridable
+        # per file so self-contained themes ship beside their assets).
         filename = File.basename(file_path, '.js')
-        min_file = File.join(@output_dir, "#{filename}.min.js")
+        out_dir = @output_overrides[File.basename(file_path)] || @output_dir
+        FileUtils.mkdir_p(out_dir)
+        min_file = File.join(out_dir, "#{filename}.min.js")
         File.write(min_file, compressed_content)
         if @config['debug']
           puts "Updated: #{File.basename(min_file)} (#{compressed_content.length} bytes, unminified — debug mode)"

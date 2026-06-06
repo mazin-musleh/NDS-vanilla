@@ -23,20 +23,16 @@
     {%- endif -%}
     {%- endif -%}
     {%- endif -%}
-    <!-- Critical CSS - render-blocking on purpose: carries the skeleton, hide/reveal
-         gate, foundation tokens and brand [data-brand] slots, so the first paint is
-         correct (including the cookie-selected brand, stamped pre-paint below). -->
+    <!-- Critical CSS — render-blocking: skeleton, reveal gate, foundation tokens + [data-brand] slots, so first paint is correct. -->
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     {%- if site.brand_theme %}
-    <!-- Brand theme override (re-brand). Render-blocking on purpose: it redefines
-         brand COLOR slots, so it must resolve before first paint (no DGA→brand
-         flash). Layers on top of the DGA base; empty site.brand_theme = pure DGA. -->
-    <link rel="stylesheet" href="{{ 'assets/css/nds-theme-' | append: site.brand_theme | append: '.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    <!-- Brand theme override: render-blocking so it resolves before paint (no flash). Path from _data/brands.yml; empty = pure DGA. -->
+    {%- assign _bt = site.data.brands | where: 'value', site.brand_theme | first -%}
+    {%- if _bt.css -%}{%- assign _bt_css = _bt.css -%}{%- else -%}{%- capture _bt_css -%}css/nds-theme-{{ site.brand_theme }}.min.css{%- endcapture -%}{%- endif -%}
+    <link rel="stylesheet" href="{{ _bt_css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
     {%- if site.use_hgi_font or page.use_hgi_font %}
-    <!-- HGI icon font (content/demo/doc): opacity gate hides icons until the font
-         lands. The HGI sheet itself is deferred-preloaded below; font readiness
-         is detected by nds-fontLoading.js, which stamps data-nds-fonts-loaded. -->
+    <!-- HGI icon font: opacity gate hides icons until the font lands (nds-fontLoading.js stamps data-nds-fonts-loaded). -->
     <style>i.hgi-stroke{opacity:0}html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke{opacity:1}</style>
     {%- endif %}
     <!-- Main CSS - Deferred loading for below-the-fold content -->
@@ -45,16 +41,14 @@
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
-    <!-- UI icons sheet - deferred preload; onload stamps html[data-nds-icons-loaded]
-         which flips --nds-icons-opacity 0→1 (see _skeleton.scss icon gate). -->
+    <!-- UI icons sheet — deferred preload; onload stamps data-nds-icons-loaded (flips the icon opacity gate). -->
     <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
         onload="this.onload=null;this.rel='stylesheet';document.documentElement.setAttribute('data-nds-icons-loaded','')">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     {%- if site.use_hgi_font or page.use_hgi_font %}
-    <!-- HGI icon font sheet - deferred preload; font readiness handled separately
-         by nds-fontLoading.js (data-nds-fonts-loaded). -->
+    <!-- HGI icon font sheet — deferred preload; readiness handled by nds-fontLoading.js. -->
     <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
@@ -91,8 +85,7 @@
     {%- include perf-monitor.html %}
     {%- endif %}
     {%- if site.debug %}
-    <!-- Debug: switch on the loader's per-component init logging ([NDS:init] <name>)
-         and timing. Inline + before the deferred bundle so it lands pre-eval. -->
+    <!-- Debug: enable the loader's per-component init logging + timing (pre-eval). -->
     <script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
     {%- endif %}
     <!-- Theme stamp (FOUC guard) — placed last so resource preloads kick off first. -->

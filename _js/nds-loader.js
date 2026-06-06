@@ -31,6 +31,19 @@
             init: () => NDS.Theme?.init?.(),
         },
         {
+            // Critical (ships in main): the brand switcher is a primary topbar
+            // control, wired eagerly so a switch responds with no pre-bundle gap.
+            // First paint is still owned by the pre-paint stamp (head-inline-
+            // scripts.html) — saved token brand → [data-brand], saved theme → its
+            // stylesheet — so init() does no first-paint work: it reconciles state,
+            // syncs aria, and wires the click. Cold init (localStorage read +
+            // listener, no layout reads), so it adds ~0 to the reveal.
+            name: 'Brand',
+            selector: '[data-brand-value]',
+            init: () => NDS.Brand?.init?.(),
+            critical: true,
+        },
+        {
             // Critical: init un-hides [hidden] FOUC-guard form wrappers and reveals
             // the .nds-clear button on pre-filled fields — first-paint writes that
             // CLS if deferred (forms have no own skeleton; the content-layout gate

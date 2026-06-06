@@ -1,0 +1,172 @@
+@use '../mixins' as *;
+@use 'oklch-template' as oklch;
+
+// ════════════════════════════════════════════════════════════════════════════
+// FOUNDATION DAY — event theme (Saudi heritage brown). A standalone brand_theme:
+// enable site-wide for the event via `brand_theme: foundation-day` in _config.yml
+// (loads assets/css/nds-theme-foundation-day.min.css render-blocking, before the
+// first paint). Empty brand_theme = pure DGA.
+//
+// Auto-derived from ONE seed via OKLCH so the ramp sits on DGA's lightness curve
+// (light surfaces stay light). PRIMARY only — secondary/tertiary stay DGA. Add any
+// event-specific CSS (decorations, patterns) under the marker at the bottom.
+// ════════════════════════════════════════════════════════════════════════════
+
+:root {
+  --brand-primary: #5B423B; // seed (anchor = primary-600)
+  --neutral-tint: 0.5; // warm grays, a touch above default
+  // Event surface overrides (literal hex — apply on every browser):
+  --background-footer: #231f20;
+  --background-stripe: #f9f6f2;
+
+  --colors-primary-25:  #fbf9f8;
+  --colors-primary-50: #f8f5f4;
+  --colors-primary-100: #CABFBC;
+  --colors-primary-200: #B3A39F;
+  --colors-primary-300: #9B8781;
+  --colors-primary-400: #846A64;
+  --colors-primary-500: #6C4E46;
+  --colors-primary-600: #5B423B;
+  --colors-primary-700: #493530;
+  --colors-primary-800: #382924;
+  --colors-primary-900: #271C19;
+  --colors-primary-950: #160f0d;
+}
+
+.nds-swiper-slide.nds-foundingDay .nds-section-body {
+  position: relative;
+  z-index: 3;
+  justify-content: flex-end !important;
+  max-width: unset;
+}
+
+.nds-hero-section {
+  background-color: #493530;
+}
+
+.nds-swiper:not([data-nds-swiper-initialized]) .nds-swiper-slide.nds-foundingDay .nds-block {
+  display: none;
+}
+
+.nds-swiper-slide.nds-foundingDay .nds-block {
+  background-color: #271C19;
+  background-image: url(heroContentBg.svg);
+  background-position: bottom center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  padding-block-start: 40px;
+  padding-block-end: 60px;
+  position: relative;
+}
+
+.nds-swiper-slide.nds-foundingDay .nds-section-action {
+  padding-inline: var(--_wrapper-padding);
+  inset-block-end: 50%;
+  inset-inline-end: 0;
+  position: absolute;
+  transform: translateY(50%);
+}
+
+.nds-content-layout:not(.nds-wSideMenu, .nds-cardView) .nds-main-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-green, .nds-neutral, .nds-brand):nth-of-type(even) {
+ &::before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+
+  background: url(services-section.svg);
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: contain;
+  background-color: var(--background-stripe); // cream in light, warm dark-neutral in dark
+
+  @include dark {
+    opacity: 0.2;
+  }
+}
+
+&::after{
+  content: unset;
+}
+
+}
+
+.nds-footer {
+  background: url(footer-backeground.svg), #231F20;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  background-size: auto;
+}
+
+.nds-content-section {
+  position: relative;
+}
+
+.nds-content-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  /* adjust based on SVG height */
+
+  background: url("separator-1.svg") no-repeat center bottom;
+  background-size: contain;
+
+  pointer-events: none;
+
+  /* avoid blocking clicks */
+  @include dark {
+    filter: contrast(0.1);
+  }
+}
+
+.nds-content-section.nds-brand::after {
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+}
+
+@media (max-width: 960px) {
+  .nds-content-section::after {
+    background-size: auto;
+  }
+
+  .nds-swiper-slide.nds-foundingDay .nds-block {
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .nds-swiper-slide.nds-foundingDay .nds-section-action {
+    display: none;
+  }
+}
+
+.nds-swiper-slide.nds-foundingDay .nds-block .nds-section-title {
+  color: #E9DFCF;
+}
+
+.nds-swiper-slide.nds-foundingDay .nds-block .nds-section-description {
+  color: #D6CDCB;
+}
+
+
+
+@supports (color: oklch(from white l c h)) {
+  :root {
+    /* @include oklch.brand-ramp('primary', '--brand-primary'); */
+    @include oklch.brand-alpha('primary', '--brand-primary');
+    @include oklch.neutral-ramp('--brand-primary'); // warm grays (replaces DGA's cool slate)
+    --background-brand-strong: var(--colors-primary-900);
+    --img-overlay-color: var(--colors-neutral-950);
+  }
+}
+
+// ── Event-specific CSS (beyond tokens) ──
+// A separated theme is a full stylesheet, so add real rules here as the event
+// needs them, e.g.:
+//   .nds-footer { background-image: url("#{$baseurl}/assets/img/fd-pattern.svg"); }
