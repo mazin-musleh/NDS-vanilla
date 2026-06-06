@@ -1,0 +1,181 @@
+// ════════════════════════════════════════════════════════════════════════════
+// DGA COLOR PALETTE + DEFAULT BRAND
+// Every --colors-* value lives here, in two zones:
+//   FIXED (universal, never re-branded): base, status (blue/green/yellow/red),
+//     alpha-white / alpha-black.
+//   THEMEABLE brand slots (the PUBLIC re-brand surface): neutral, primary,
+//     secondary, tertiary + brand-tint alphas + deep brand surfaces. A theme
+//     overrides these (globally at :root, or scoped via [data-brand]; see
+//     _sass/themes/) and semantics, components and dark mode all re-resolve.
+//     DGA values are the frozen baseline.
+// ════════════════════════════════════════════════════════════════════════════
+
+:root {
+    // ╌╌ FIXED — universal palette, not re-branded ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+    // ── Base ──
+    --colors-base-white: #ffffff;
+    --colors-base-black: #161616;
+
+    // ── Status: blue ──
+    --colors-blue-25: #f5faff;
+    --colors-blue-50: #eff8ff;
+    --colors-blue-100: #d1e9ff;
+    --colors-blue-200: #b2ddff;
+    --colors-blue-300: #84caff;
+    --colors-blue-400: #53b0fd;
+    --colors-blue-500: #2e90fa;
+    --colors-blue-600: #156fee;
+    --colors-blue-700: #175cd3;
+    --colors-blue-800: #1849a9;
+    --colors-blue-900: #194084;
+    --colors-blue-950: #102a56;
+
+    // ── Status: green ──
+    --colors-green-25: #f6fef9;
+    --colors-green-50: #ecfdf3;
+    --colors-green-100: #dcfae6;
+    --colors-green-200: #abefc6;
+    --colors-green-300: #75dfa6;
+    --colors-green-400: #47cd89;
+    --colors-green-500: #17b169;
+    --colors-green-600: #069454;
+    --colors-green-700: #067647;
+    --colors-green-800: #085d3a;
+    --colors-green-900: #074c30;
+    --colors-green-950: #053321;
+
+    // ── Status: yellow ──
+    --colors-yellow-25: #fffcf5;
+    --colors-yellow-50: #fffaeb;
+    --colors-yellow-100: #fef0c7;
+    --colors-yellow-200: #fedf89;
+    --colors-yellow-300: #fec84b;
+    --colors-yellow-400: #fdb022;
+    --colors-yellow-500: #f79009;
+    --colors-yellow-600: #dc6803;
+    --colors-yellow-700: #b54707;
+    --colors-yellow-800: #93370c;
+    --colors-yellow-900: #7a2e0e;
+    --colors-yellow-950: #4e1d09;
+
+    // ── Status: red ──
+    --colors-red-25: #fffbfa;
+    --colors-red-50: #fef3f2;
+    --colors-red-100: #fee4e2;
+    --colors-red-200: #fecdca;
+    --colors-red-300: #fca19b;
+    --colors-red-400: #f97066;
+    --colors-red-500: #f04437;
+    --colors-red-600: #d92c20;
+    --colors-red-700: #b42318;
+    --colors-red-800: #912018;
+    --colors-red-900: #7a2619;
+    --colors-red-950: #54150c;
+
+    // ── Alpha: white ──
+    --colors-alpha-white-0: #ffffff00;
+    --colors-alpha-white-10: #ffffff19;
+    --colors-alpha-white-20: #ffffff33;
+    --colors-alpha-white-30: #ffffff4c;
+    --colors-alpha-white-40: #ffffff66;
+    --colors-alpha-white-50: #ffffff7f;
+    --colors-alpha-white-60: #ffffff99;
+    --colors-alpha-white-70: #ffffffb2;
+    --colors-alpha-white-80: #ffffffcc;
+    --colors-alpha-white-90: #ffffffe5;
+    --colors-alpha-white-100: #ffffff;
+
+    // ── Alpha: black ──
+    --colors-alpha-black-0: #16161600;
+    --colors-alpha-black-10: #16161619;
+    --colors-alpha-black-20: #16161633;
+    --colors-alpha-black-30: #1616164c;
+    --colors-alpha-black-40: #16161666;
+    --colors-alpha-black-50: #1616167f;
+    --colors-alpha-black-60: #16161699;
+    --colors-alpha-black-70: #161616b2;
+    --colors-alpha-black-80: #161616cc;
+    --colors-alpha-black-90: #161616e5;
+    --colors-alpha-black-100: #161616;
+
+    // ╌╌ THEMEABLE — brand slots, the public re-brand surface ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+    // ── Brand slot: neutral ──
+    --colors-neutral-25: #fcfcfd;
+    --colors-neutral-50: #f9fafb;
+    --colors-neutral-100: #f3f4f6;
+    --colors-neutral-200: #e5e7eb;
+    --colors-neutral-300: #d2d6db;
+    --colors-neutral-400: #9da4ae;
+    --colors-neutral-500: #6c727e;
+    --colors-neutral-600: #4d5761;
+    --colors-neutral-700: #384250;
+    --colors-neutral-750: #2b3643;
+    --colors-neutral-800: #1f2a37;
+    --colors-neutral-850: #18212f;
+    --colors-neutral-900: #111927;
+    --colors-neutral-950: #0c111b;
+
+    // ── Brand slot: primary ──
+    --colors-primary-25: #f7fdf9;
+    --colors-primary-50: #f3fcf6;
+    --colors-primary-100: #dff6e7;
+    --colors-primary-200: #b8eacb;
+    --colors-primary-300: #88d8ad;
+    --colors-primary-400: #54c08a;
+    --colors-primary-500: #25935f;
+    --colors-primary-500-alpha-10: #25935f19;
+    --colors-primary-600: #1b8354;
+    --colors-primary-700: #166a45;
+    --colors-primary-800: #14573a;
+    --colors-primary-900: #104631;
+    --colors-primary-950: #092a1e;
+    --colors-primary-alpha-10: #1b835419;
+    --colors-primary-alpha-20: #1b835433;
+    --colors-primary-alpha-30: #1b83544c;
+    --colors-primary-alpha-40: #1b835466;
+    --colors-primary-alpha-50: #1b83547f;
+    --colors-primary-alpha-60: #1b835499;
+    --colors-primary-alpha-70: #1b8354b2;
+    --colors-primary-alpha-80: #1b8354cc;
+    --colors-primary-alpha-90: #1b8354e5;
+    --colors-primary-alpha-100: var(--colors-primary-600);
+
+    // ── Brand slot: secondary ──
+    --colors-secondary-25: #fffef7;
+    --colors-secondary-50: #fffef2;
+    --colors-secondary-100: #fffce6;
+    --colors-secondary-200: #fcf3bd;
+    --colors-secondary-300: #fae996;
+    --colors-secondary-400: #f7d54d;
+    --colors-secondary-500: #f5bd02;
+    --colors-secondary-600: #dba102;
+    --colors-secondary-700: #b87b02;
+    --colors-secondary-800: #945c01;
+    --colors-secondary-900: #6e3c00;
+    --colors-secondary-950: #472400;
+    --colors-secondary-primary: var(--colors-secondary-600);
+
+    // ── Brand slot: tertiary ──
+    --colors-tertiary-25: #fefcff;
+    --colors-tertiary-50: #f9f5fa;
+    --colors-tertiary-100: #f2e9f5;
+    --colors-tertiary-200: #e1cce8;
+    --colors-tertiary-300: #ccadd9;
+    --colors-tertiary-400: #a57bba;
+    --colors-tertiary-500: #80519f;
+    --colors-tertiary-600: #6d428f;
+    --colors-tertiary-700: #532d75;
+    --colors-tertiary-800: #3d1d5e;
+    --colors-tertiary-900: #281047;
+    --colors-tertiary-950: #16072e;
+    --colors-tertiary-alpha-10: #80519f19;
+    --colors-tertiary-alpha-20: #80519f33;
+    --colors-tertiary-primary: var(--colors-tertiary-500);
+
+    // ── Deep brand surfaces (hero / footer) ──
+    --background-brand-strong: var(--colors-green-900);
+    --background-brand-strong-50: var(--colors-green-50);
+    --background-brand-strong-25: var(--colors-green-25);
+}

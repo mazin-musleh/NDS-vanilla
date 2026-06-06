@@ -23,13 +23,10 @@
     {%- endif -%}
     {%- endif -%}
     {%- endif -%}
-    {%- include critical-inline.html -%}
-    <!-- Critical CSS - Non-blocking; inline gate in critical-inline.html holds layout until this arrives -->
-    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    </noscript>
+    <!-- Critical CSS - render-blocking on purpose: carries the skeleton, hide/reveal
+         gate, foundation tokens and brand [data-brand] slots, so the first paint is
+         correct (including the cookie-selected brand, stamped pre-paint below). -->
+    <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     {%- if site.brand_theme %}
     <!-- Brand theme override (re-brand). Render-blocking on purpose: it redefines
          brand COLOR slots, so it must resolve before first paint (no DGA→brand

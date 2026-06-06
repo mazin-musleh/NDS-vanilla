@@ -15,6 +15,34 @@
         <span id="nds-weatherInfo" class="nds-text-icon" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
             data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
         -->
+        {% if site.brand_switcher %}
+        <!-- Brand switcher. data-portal: the menu must escape the topbar's
+             overflow-y:clip. Brands map to _sass/themes/_brands.scss. -->
+        <div class="nds-dropmenu nds-brand-switcher" data-portal>
+            <button class="nds-btn nds-subtle nds-icon-only nds-dropmenu-trigger" aria-label="Choose a brand theme">
+                <i class="nds-icon nds-hgi-highlighter" aria-hidden="true"></i>
+            </button>
+            <div class="nds-dropmenu-menu nds-brand-menu" hidden>
+                <div class="nds-dropmenu-scroll">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="">
+                        <span class="nds-label">Default (DGA)</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="corporate">
+                        <span class="nds-label">Corporate</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="crimson">
+                        <span class="nds-label">Crimson</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="foundation-day">
+                        <span class="nds-label">Foundation Day</span>
+                    </button>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="sunset">
+                        <span class="nds-label">Sunset</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
         {% if site.theme_switcher %}
         <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode">
             <i class="nds-icon nds-hgi-moon-02" aria-hidden="true"></i>
@@ -22,6 +50,31 @@
         {% endif %}
     </div>
 </div>
+{% if site.brand_switcher %}
+<script>
+// Brand switcher — applies + persists data-brand (the pre-paint script in
+// head-inline-scripts.html restores it on load; here we sync the menu + save).
+(function(){
+    var root = document.documentElement;
+    var KEY = 'nds-brand';
+    var items = document.querySelectorAll('.nds-brand-switcher [data-brand-value]');
+    function sync(brand){
+        items.forEach(function(b){
+            b.setAttribute('aria-current', b.getAttribute('data-brand-value') === brand ? 'true' : 'false');
+        });
+    }
+    sync(root.getAttribute('data-brand') || '');
+    items.forEach(function(b){
+        b.addEventListener('click', function(){
+            var v = b.getAttribute('data-brand-value');
+            if (v) { root.setAttribute('data-brand', v); } else { root.removeAttribute('data-brand'); }
+            try { if (v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY); } catch(e){}
+            sync(v);
+        });
+    });
+})();
+</script>
+{% endif %}
 <div id="nds-digitalStamp" role="region" aria-label="Digital government stamp" hidden>
     <div class="nds-content-wrapper">
         <div class="nds-digitalStamp-notices">

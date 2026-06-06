@@ -38,7 +38,7 @@
         .nds-form-header .nds-label::before,
         >.nds-label::before {
             content: "* ";
-            color: var(--controls-control-text-error);
+            color: var(--controls-text-error);
         }
     }
 
@@ -208,7 +208,7 @@ fieldset {
         >legend>.nds-label::before,
         >.nds-label::before {
             content: "* ";
-            color: var(--controls-control-text-error);
+            color: var(--controls-text-error);
         }
     }
 }
@@ -524,7 +524,7 @@ fieldset {
     &:is([data-required], [data-min-checked], .nds-required) {
         >.nds-label::before {
             content: "* ";
-            color: var(--controls-control-text-error);
+            color: var(--controls-text-error);
         }
     }
 
@@ -599,7 +599,7 @@ fieldset {
             height: var(--nds-input-size, 16px);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            background-color: var(--controls-control-ripple-effect);
+            background-color: var(--controls-ripple-effect);
             transition: width var(--nds-transition), height var(--nds-transition);
             z-index: 0;
             pointer-events: none;

@@ -29,6 +29,10 @@
 // Skeleton - pre-init layout reservations (body:not([data-nds-loaded]) scope)
 @use 'skeleton';
 
+// Runtime brand themes — [data-brand] slot overrides (cookie-selected). In crit
+// so the brand resolves with the first styles (no DGA→brand flash).
+@use 'themes/brands';
+
 // Universal hide primitive. !important so author display rules can't
 // override the hidden semantic. Removes the need for :not([hidden])
 // guards across component CSS. [data-filtered] is filter's own hide hook

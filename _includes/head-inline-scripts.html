@@ -1,8 +1,12 @@
 <script>
-    // [data-theme] pre-paint stamp — the inline <style> in critical-inline.html
-    // reads it for body/sub-flat-hero bg.
+    // Pre-paint stamps from localStorage, before first paint (no flash). The
+    // render-blocking critical CSS reads [data-theme] (skeleton/body bg) and
+    // [data-brand] (brand slots) so the first paint matches the saved choice.
     (function() {
+        var r = document.documentElement;
         var t = localStorage.getItem('nds-theme');
-        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+        if (t === 'dark' || t === 'light') r.setAttribute('data-theme', t);
+        var b = localStorage.getItem('nds-brand');
+        if (b) r.setAttribute('data-brand', b);
     })();
 </script>

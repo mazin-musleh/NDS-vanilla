@@ -9,6 +9,14 @@
 @use './mixins' as *;
 
 html:not([data-nds-loaded]) {
+    /* Skeleton page background + nav/topbar height reservations
+       (migrated from the removed inline crit — prevents a bg flash and CLS
+       before main lands). */
+    background-color: var(--colors-neutral-50, #f9fafb);
+
+    .nds-topbar { height: 40px; }
+    .nds-main-nav { height: var(--nds-nav-height, 72px); }
+
     main {
         overflow-x: clip;
     }
@@ -162,6 +170,11 @@ html:not([data-nds-loaded]) {
     .nds-max-width {
         margin-inline: calc(var(--_wrapper-padding) * -1);
     }
+}
+
+/* Skeleton dark page background (migrated from inline crit). */
+html[data-theme="dark"]:not([data-nds-loaded]) body {
+    background-color: var(--colors-neutral-850, #18212f);
 }
 
 /* ── Nav background + shadow ──

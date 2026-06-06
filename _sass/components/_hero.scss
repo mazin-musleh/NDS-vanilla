@@ -47,10 +47,15 @@
 
     .nds-hero-image-wrapper::before {
         --_overlay: var(--overlay, 0.20);
+        --_overlay-color: var(--hero-overlay-color, var(--colors-primary-950, #092a1e));
         content: "";
         position: absolute;
         inset: 0;
+        // Brand-aware scrim: follows --colors-primary-950 (DGA green as fallback),
+        // overridable via --hero-overlay-color.
+        // rgba() first for engines without color-mix (Baseline 2023).
         background: rgba(9, 42, 30, var(--_overlay));
+        background: color-mix(in srgb, var(--_overlay-color) calc(var(--_overlay) * 100%), transparent);
         pointer-events: none;
     }
 

@@ -43,7 +43,7 @@
     // Checked: 3-band ring via `border: Npx white` creating the gap.
     &::after {
         --_radio-tile-bg:     var(--radio-tile-bg,     var(--background-default));
-        --_radio-tile-border: var(--radio-tile-border, var(--controls-control-border));
+        --_radio-tile-border: var(--radio-tile-border, var(--controls-border));
 
         content: "";
         position: absolute;
@@ -59,7 +59,7 @@
     // ==============================================
 
     &:checked::after {
-        --radio-tile-bg:     var(--controls-control-primary-checked);
+        --radio-tile-bg:     var(--controls-primary-checked);
         --radio-tile-border: var(--radio-tile-bg);
 
         border: 3px solid var(--background-default);
@@ -75,8 +75,8 @@
 
     // Unchecked hover / pressed
     &:not(:checked, :disabled) {
-        &:hover::after  { --radio-tile-border: var(--controls-control-neutral-hovered); }
-        &:active::after { --radio-tile-border: var(--controls-control-neutral-pressed); }
+        &:hover::after  { --radio-tile-border: var(--controls-neutral-hovered); }
+        &:active::after { --radio-tile-border: var(--controls-neutral-pressed); }
     }
 
     // Neutral variant

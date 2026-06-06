@@ -385,7 +385,7 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     // expand/collapse). dvh would re-flow on every scroll tick.
     height: 100vh;
     height: 100lvh;
-    background-color: var(--colors-alpha-alpha-black-80);
+    background-color: var(--colors-alpha-black-80);
     pointer-events: none;
     z-index: 850;
     will-change: transform;

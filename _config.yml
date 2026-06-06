@@ -13,6 +13,11 @@ use_hgi_font: true
 # Set to true to show the dark/light theme toggle button in the topbar.
 theme_switcher: true
 
+# Set to true to show the brand switcher dropdown in the topbar — lets users pick
+# a runtime brand (persisted in localStorage['nds-brand'], stamped pre-paint).
+# Brands are defined in _sass/themes/_brands.scss and ship in the critical bundle.
+brand_switcher: true
+
 # Accessibility add-on (FAB + panel + a11y mode overrides). When true, the page
 # loads assets/css/nds-accessibility.min.css + assets/js/nds-accessibility.min.js,
 # renders the accessibility-panel include, and runs the a11y FOUC guard. Set to

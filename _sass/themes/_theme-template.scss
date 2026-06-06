@@ -8,7 +8,7 @@
 // The full-control path: exact, contrast-checked, works on every browser. Copy
 // this to _sass/themes/_<brand>.scss and replace every hex with your brand's
 // ramps. (For a quick brand from just a few seeds instead, see the seed/auto
-// path — _oklch-template.scss + the corporate example.)
+// path — _oklch-template.scss + the corporate/sunset brands in _brands.scss.)
 //
 // Ship it: compile via a sibling entry point —
 //   assets/css/nds-theme-<brand>.min.scss   →   @use 'themes/<brand>';
@@ -99,18 +99,22 @@
   // Deep brand surface behind the hero + footer. Both default to this; override
   // --background-hero / --background-footer to set each individually.
   --background-brand-strong: var(--colors-primary-900);
+  // Hero image scrim colour (the overlay tinting hero photos); --overlay sets its opacity.
+  --hero-overlay-color: var(--colors-primary-950);
 }
 
 // ── Optional: dark-mode tuning ──
-// Dark mode auto-uses lighter STEPS of your slots, so it mostly themes for free.
-// Override only the accents DGA draws from its status-green ramp in dark:
+// Dark mode themes for free: brand accents (controls, swiper bullets, stepper,
+// featured-icons) inherit your slots and follow the brand in dark automatically.
+// Override a token here only if you want a different dark STEP for contrast:
 // :root[data-theme="dark"] {
-//   --bullet-background-active:         var(--colors-primary-500);
-//   --controls-control-primary-checked: var(--colors-primary-500);
-//   --background-footer:               var(--colors-primary-alpha-30);
+//   --bullet-background-active:  var(--colors-primary-500);
+//   --controls-primary-checked:  var(--colors-primary-500);
 // }
 
-// ── Alternative neutrals: instead of authoring the ramp above, keep DGA's grays
-//    but tint them a touch toward the brand (felt, not seen). Needs
-//    `@use 'oklch-template' as oklch;` at the top (color-mix, Baseline 2023): ──
-// :root { @include oklch.neutral-tint('--colors-primary-600', 1%); }
+// ── Alternative neutrals: instead of authoring the ramp above, derive grays whose
+//    temperature follows the brand — the neutral lightness ladder with the seed's
+//    hue + a whisper of its chroma (felt, not seen). Needs
+//    `@use 'oklch-template' as oklch;` at the top, inside a relative-colour
+//    @supports gate (see _brands.scss): ──
+// :root { @include oklch.neutral-ramp('--colors-primary-600'); }

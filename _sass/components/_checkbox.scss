@@ -50,7 +50,7 @@
     // TILE — reads public token; state rules override it on the same element.
     &::before {
         background-color: var(--checkbox-tile-bg, var(--background-default));
-        box-shadow: 0 0 0 1px var(--checkbox-tile-border, var(--controls-control-border));
+        box-shadow: 0 0 0 1px var(--checkbox-tile-border, var(--controls-border));
         z-index: 1;
     }
 
@@ -67,7 +67,7 @@
 
     &:is(:checked, :indeterminate) {
         &::before {
-            --checkbox-tile-bg:     var(--controls-control-primary-checked);
+            --checkbox-tile-bg:     var(--controls-primary-checked);
             --checkbox-tile-border: var(--checkbox-tile-bg);
         }
         &::after {
@@ -85,17 +85,17 @@
 
     // Unchecked hover / pressed
     &:not(:checked, :indeterminate, :disabled) {
-        &:hover::before  { --checkbox-tile-border: var(--controls-control-neutral-hovered); }
-        &:active::before { --checkbox-tile-border: var(--controls-control-neutral-pressed); }
+        &:hover::before  { --checkbox-tile-border: var(--controls-neutral-hovered); }
+        &:active::before { --checkbox-tile-border: var(--controls-neutral-pressed); }
     }
 
     // Neutral variant
     &.nds-neutral:is(:checked, :indeterminate) {
-        &::before { --checkbox-tile-bg: var(--controls-control-neutral-checked); }
+        &::before { --checkbox-tile-bg: var(--controls-neutral-checked); }
 
         &:not(:disabled) {
-            &:hover::before  { --checkbox-tile-bg: var(--controls-control-neutral-hovered); }
-            &:active::before { --checkbox-tile-bg: var(--controls-control-neutral-pressed); }
+            &:hover::before  { --checkbox-tile-bg: var(--controls-neutral-hovered); }
+            &:active::before { --checkbox-tile-bg: var(--controls-neutral-pressed); }
         }
     }
 
@@ -112,7 +112,7 @@
             --checkbox-tile-bg:     var(--background-disabled);
             --checkbox-tile-border: var(--checkbox-tile-bg);
         }
-        &::after { --checkbox-glyph-bg: var(--controls-control-icon-disabled); }
+        &::after { --checkbox-glyph-bg: var(--controls-icon-disabled); }
     }
 }
 
@@ -140,11 +140,11 @@
     }
 
     &:is(:checked, :indeterminate)::after {
-        --checkbox-glyph-bg: var(--controls-control-primary-checked);
+        --checkbox-glyph-bg: var(--controls-primary-checked);
     }
 
     &.nds-neutral:is(:checked, :indeterminate)::after {
-        --checkbox-glyph-bg: var(--controls-control-neutral-checked);
+        --checkbox-glyph-bg: var(--controls-neutral-checked);
 
         @include dark {
             --checkbox-glyph-bg: var(--icon-oncolor);

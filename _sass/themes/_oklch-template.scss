@@ -34,21 +34,24 @@
 // as interpolated strings, so the partial itself always compiles. The output
 // only runs in browsers that pass the @supports gate the consumer wraps it in.
 
-// step → (lightness  chroma-scale). Tuned roughly to DGA's lightness curve. The
-// anchor step is replaced by the exact seed, so tune the seed, not this ladder.
+// step → (lightness  chroma-scale). Lightness is DGA's OWN primary-ramp curve,
+// measured in OKLCH from the frozen DGA hexes (same anchoring idea as the
+// $_neutral-ramp map below) so a derived brand sits on DGA's contrast-tuned ladder
+// and only carries the seed's hue + scaled chroma. The anchor step is replaced
+// by the exact seed, so tune the seed, not this ladder.
 $_ramp: (
-  25:  (0.985 0.16),
-  50:  (0.968 0.28),
-  100: (0.93  0.46),
-  200: (0.87  0.66),
-  300: (0.79  0.82),
-  400: (0.70  0.94),
-  500: (0.62  1),
-  600: (0.55  1),
-  700: (0.47  0.96),
-  800: (0.40  0.88),
-  900: (0.33  0.80),
-  950: (0.24  0.68),
+  25:  (0.988 0.16),
+  50:  (0.983 0.28),
+  100: (0.952 0.46),
+  200: (0.894 0.66),
+  300: (0.819 0.82),
+  400: (0.730 0.94),
+  500: (0.590 1),
+  600: (0.541 1),
+  700: (0.466 0.96),
+  800: (0.408 0.88),
+  900: (0.353 0.80),
+  950: (0.257 0.68),
 );
 
 // Emit the 13 ramp steps for one family. $seed is a custom-property NAME (string,
@@ -72,13 +75,35 @@ $_ramp: (
   --colors-#{$family}-alpha-100: var(#{$seed});
 }
 
-// DGA neutral hexes (the gray ramp's base values).
-$_neutrals: (25:'#fcfcfd', 50:'#f9fafb', 100:'#f3f4f6', 200:'#e5e7eb', 300:'#d2d6db', 400:'#9da4ae', 500:'#6c727e', 600:'#4d5761', 700:'#384250', 800:'#1f2a37', 900:'#111927', 950:'#0c111b');
+// step → (lightness  chroma) for neutrals. Lightness is the neutral curve (DGA's
+// grays). Chroma is ABSOLUTE (not a fraction of the seed) so the temperature
+// registers the same whether the seed is vivid or muted, warm or cool — the gray
+// just takes the seed's HUE. It's heavier at the DARK end (where DGA's own slate
+// is bluest) so a warm seed overpowers that blue instead of tapering away. Scaled
+// at runtime by var(--neutral-tint, 1) — a per-brand dial (0 = true gray). Keep it
+// small; temperature is felt, not seen.
+$_neutral-ramp: (
+  25:  (0.991 0.002),
+  50:  (0.985 0.003),
+  100: (0.967 0.004),
+  200: (0.928 0.006),
+  300: (0.874 0.008),
+  400: (0.716 0.010),
+  500: (0.551 0.011),
+  600: (0.452 0.012),
+  700: (0.376 0.013),
+  750: (0.328 0.014),
+  800: (0.281 0.014),
+  850: (0.246 0.015),
+  900: (0.213 0.015),
+  950: (0.178 0.014),
+);
 
-// Temperature-matched neutrals: mix $amount of the brand $seed into each DGA gray,
-// in OKLAB so they stay gray. Keep $amount tiny (~1%) — felt, not seen.
-@mixin neutral-tint($seed, $amount: 1%) {
-  @each $step, $hex in $_neutrals {
-    --colors-neutral-#{$step}: #{'color-mix(in oklab, ' + $hex + ', var(' + $seed + ') ' + $amount + ')'};
+// Temperature-matched neutral ramp from the brand $seed (a custom-property NAME,
+// e.g. '--brand-primary'): the seed's HUE + an absolute whisper of chroma (scaled
+// by the per-brand --neutral-tint), on the neutral lightness ladder.
+@mixin neutral-ramp($seed) {
+  @each $step, $lc in $_neutral-ramp {
+    --colors-neutral-#{$step}: #{'oklch(from var(' + $seed + ') ' + list.nth($lc, 1) + ' calc(' + list.nth($lc, 2) + ' * var(--neutral-tint, 1)) h)'};
   }
 }

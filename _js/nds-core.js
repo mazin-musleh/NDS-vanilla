@@ -1055,8 +1055,16 @@
             if (_navEl === undefined || (_navEl && !_navEl.isConnected)) {
                 _navEl = document.querySelector('.nds-main-nav');
             }
-            const navBottom = _navEl ? _navEl.getBoundingClientRect().bottom : 0;
-            if (navBottom > 0) topEdge = navBottom + navGap;
+            if (_navEl) {
+                const navRect = _navEl.getBoundingClientRect();
+                // The sticky nav is a top boundary only for triggers BELOW it. A
+                // trigger ABOVE the nav (e.g. a topbar dropmenu) opens a downward
+                // menu that passes in front of the nav, so the nav must not clamp
+                // it down past itself — leaving a gap below the trigger.
+                if (navRect.bottom > 0 && triggerRect.bottom > navRect.top) {
+                    topEdge = navRect.bottom + navGap;
+                }
+            }
         }
 
         const menuRect = menuEl.getBoundingClientRect();

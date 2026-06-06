@@ -13,7 +13,6 @@
     justify-content: space-between;
     align-items: center;
     /* Fallback for older browsers */
-    overflow-y: clip;
 
     >* {
         visibility: visible;
@@ -54,6 +53,13 @@
     }
 }
 
+/* Brand switcher — active brand. The menu portals to <body>, so scope by the
+   menu's own class (.nds-brand-menu), not the .nds-brand-switcher wrapper. */
+.nds-brand-menu .nds-dropmenu-item[aria-current="true"] {
+    font-weight: 600;
+    background-color: var(--background-neutral-light);
+}
+
 /* Tablet: 960px and down */
 @include tablet(max) {
     .nds-topbar {
@@ -68,7 +74,10 @@
 
 /* Small Mobile Screens */
 @include mobile {
-    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab)> :not(.nds-theme-toggle-wrap) {
+    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab)> :not(.nds-theme-toggle-wrap):not(.nds-brand-switcher) {
         display: none;
     }
+    .nds-topbar .nds-topbar-info {
+    gap: var(--spacing-sm);
+}
 }

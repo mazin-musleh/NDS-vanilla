@@ -71,7 +71,7 @@
         .nds-switch-input:checked + .nds-switch-track {
             --switch-track-bg:     var(--control-disabled);
             --switch-track-border: var(--switch-track-bg);
-            --switch-thumb-bg:     var(--controls-control-icon-disabled);
+            --switch-thumb-bg:     var(--controls-icon-disabled);
         }
     }
 }
@@ -105,7 +105,7 @@
         height: var(--_switch-height);
         border-radius: var(--radius-full);
         transform: translate(-50%, -50%);
-        background-color: var(--controls-control-ripple-effect);
+        background-color: var(--controls-ripple-effect);
         transition: var(--nds-transition);
         z-index: 1;
         pointer-events: none;
@@ -169,17 +169,17 @@
 
     // Unchecked hover / pressed
     .nds-switch-input:not(:disabled, :checked) + .nds-switch-track:hover {
-        --switch-track-border: var(--controls-control-neutral-hovered);
-        --switch-thumb-bg:     var(--controls-control-neutral-hovered);
+        --switch-track-border: var(--controls-neutral-hovered);
+        --switch-thumb-bg:     var(--controls-neutral-hovered);
     }
     .nds-switch-input:not(:disabled, :checked) + .nds-switch-track:active {
-        --switch-track-border: var(--controls-control-neutral-pressed);
-        --switch-thumb-bg:     var(--controls-control-neutral-pressed);
+        --switch-track-border: var(--controls-neutral-pressed);
+        --switch-thumb-bg:     var(--controls-neutral-pressed);
     }
 
     // Checked
     .nds-switch-input:checked + .nds-switch-track {
-        --switch-track-bg:     var(--controls-control-primary-checked);
+        --switch-track-bg:     var(--controls-primary-checked);
         --switch-track-border: var(--switch-track-bg);
         --switch-thumb-bg:     var(--colors-base-white);
 

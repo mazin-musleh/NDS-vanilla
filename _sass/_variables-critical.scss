@@ -13,13 +13,6 @@
     --nds-content-MaxWidth: 1280px;
     --nds-viewport-base-padding: 32px;
     --nds-transition-speed: .2;
-    --background-default: #fff;
-    --background-body: #f9fafb;
-    --background-nav: #fff;
-    --background-sub-hero: #f3fcf6;
-    --text-default: #161616;
-    --text-display: #1f2a37;
-    --text-oncolor-primary: #fff;
 
     --nds-viewport-padding: var(--nds-viewport-base-padding);
 
@@ -134,17 +127,33 @@
     --spacing-10xl: var(--spacing-32, 128px);
     --spacing-11xl: var(--spacing-40, 160px);
 
+    // ════ Semantic colour — critical bootstrap (light) ════
+    // The pre-main copy of these semantic colour tokens (canonical defs live in
+    // tokens/_semantic.scss, main bundle). Each references its brand slot /
+    // palette token so a render-blocking theme recolours before paint; the #hex
+    // is the DGA fallback for the window before the slot is defined.
+    --background-default: var(--colors-base-white, #fff);
+    --background-body: var(--colors-neutral-50, #f9fafb);
+    --background-nav: var(--colors-base-white, #fff);
+    --background-sub-hero: var(--colors-primary-50, #f3fcf6);
+    --text-default: var(--colors-base-black, #161616);
+    --text-display: var(--colors-neutral-800, #1f2a37);
+    --text-oncolor-primary: var(--colors-base-white, #fff);
 }
 
-// Critical dark mode overrides — prevent white flash before main CSS loads
+// ════ Semantic colour — critical bootstrap (dark) ════
+// Dark counterpart of the block above; prevents a white flash before main CSS.
+// Same pattern (dark slot + DGA dark hex fallback). body→neutral-850 and
+// text-default→neutral-50 keep their skeleton steps, which differ from main's
+// loaded dark values by design.
 :root[data-theme="dark"] {
-    --background-default: #1f2a37;
-    --background-body: #18212f;
-    --background-nav: #1f2a37;
-    --background-sub-hero: #166a4519;
-    --text-default: #f9fafb;
-    --text-display: #f3f4f6;
-    --text-oncolor-primary: #fff;
+    --background-default: var(--colors-neutral-800, #1f2a37);
+    --background-body: var(--colors-neutral-850, #18212f);
+    --background-nav: var(--colors-neutral-800, #1f2a37);
+    --background-sub-hero: var(--colors-primary-alpha-10, #1b835419);
+    --text-default: var(--colors-neutral-50, #f9fafb);
+    --text-display: var(--colors-neutral-100, #f3f4f6);
+    --text-oncolor-primary: var(--colors-base-white, #fff);
 }
 
 @include mobile {

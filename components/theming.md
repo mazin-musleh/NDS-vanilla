@@ -82,13 +82,23 @@ direction: ltr
             <script>
             (function(){
                 var root = document.documentElement;
+                var KEY = 'nds-brand';   // persists the chosen brand, like the dark-mode toggle
                 var btns = document.querySelectorAll('[data-theming-brand]');
+                // The pre-paint script in head-inline-scripts.html already applied the
+                // saved brand to <html>; here we just keep the buttons + storage in sync.
+                function sync(brand){
+                    btns.forEach(function(x){
+                        x.setAttribute('aria-pressed', x.getAttribute('data-theming-brand') === brand ? 'true' : 'false');
+                    });
+                }
+                sync(root.getAttribute('data-brand') || '');
                 btns.forEach(function(b){
                     b.addEventListener('click', function(){
                         var brand = b.getAttribute('data-theming-brand');
                         if (brand) { root.setAttribute('data-brand', brand); }
                         else { root.removeAttribute('data-brand'); }
-                        btns.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+                        try { if (brand) localStorage.setItem(KEY, brand); else localStorage.removeItem(KEY); } catch (e) {}
+                        sync(brand);
                     });
                 });
             })();
@@ -232,7 +242,7 @@ brand_theme: acme   # → loads assets/css/nds-theme-acme.min.css</code>
                     <thead><tr><th>Token</th><th>What it controls</th><th>How to re-brand</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-css">--background-brand-strong</code></td><td>Deep brand surface behind the hero + footer. Both default to it; override <code class="nds-inline-code lang-css">--background-hero</code> or <code class="nds-inline-code lang-css">--background-footer</code> to set each individually.</td><td>Set to your brand's deep tone (e.g. <code class="nds-inline-code lang-css">var(--colors-primary-900)</code>).</td></tr>
-                        <tr><td><code class="nds-inline-code lang-css">--bullet-background-active</code>, <code class="nds-inline-code lang-css">--controls-control-primary-checked</code>, <code class="nds-inline-code lang-css">--background-footer</code></td><td>Dark-mode primary accents (swiper bullets, checkboxes/radios, footer wash). DGA draws these from its status-green ramp in dark.</td><td>Override inside <code class="nds-inline-code lang-css">:root[data-theme="dark"]</code> to point at <code class="nds-inline-code lang-css">--colors-primary-*</code> / <code class="nds-inline-code lang-css">--colors-primary-alpha-*</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-css">--bullet-background-active</code>, <code class="nds-inline-code lang-css">--controls-primary-checked</code>, <code class="nds-inline-code lang-css">--background-footer</code></td><td>Dark-mode primary accents (swiper bullets, checkboxes/radios, footer wash). DGA draws these from its status-green ramp in dark.</td><td>Override inside <code class="nds-inline-code lang-css">:root[data-theme="dark"]</code> to point at <code class="nds-inline-code lang-css">--colors-primary-*</code> / <code class="nds-inline-code lang-css">--colors-primary-alpha-*</code>.</td></tr>
                     </tbody>
                 </table>
             </div>
