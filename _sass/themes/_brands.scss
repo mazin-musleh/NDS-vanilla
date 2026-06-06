@@ -1,85 +1,105 @@
+@use 'sass:map';
 @use 'oklch-template' as oklch;
 
 // ════════════════════════════════════════════════════════════════════════════
-// Runtime-selectable brands — emitted as [data-brand] slot overrides so a
-// cookie-stamped data-brand on <html> (head-inline-scripts.html) re-skins the
-// whole page. Lives in the critical bundle so the brand resolves with the page's
-// first styles. DGA = no data-brand (the base default).
+// Runtime-selectable brands — single source of truth for the predefined brands.
+// Emitted as [data-brand] slot overrides so a cookie-stamped data-brand on <html>
+// (head-inline-scripts.html) re-skins the whole page. Lives in the critical bundle
+// so the brand resolves with the page's first styles. DGA = no data-brand (base).
 //
-// Seed brands (crimson/corporate/sunset) derive their ramps via OKLCH (3 seeds →
-// ramps + seed-tinted neutral; relative-colour engines only, else DGA fallback).
-// Authored-hex brands (foundation-day) carry exact ramps and work everywhere.
+// Definitions are data: the $brands map below, expanded by emit(). Names/labels
+// for the switchers live in _data/brands.yml — keep the keys here in sync with it.
+//
+// Record fields:
+//   primary       seed for the primary family (anchor = 600). Required.
+//   secondary     seed for the secondary family (anchor = 600). Omit → stays DGA.
+//   tertiary      seed for the tertiary family (anchor = 500). Omit → stays DGA.
+//   neutral-tint  per-brand gray-temperature dial (var(--neutral-tint)); 0 = true gray.
+//   overrides     map of literal token → value applied on every browser (event surfaces).
+//
+// All ramps derive via OKLCH relative colour (auto path), so engines without it
+// keep the DGA base — these are lean, predefined/demo brands, not authored hex.
+// Brands of the same shape (same families seeded) share one @supports block via a
+// grouped selector, so the compiled CSS stays as compact as a hand-grouped rule.
 // ════════════════════════════════════════════════════════════════════════════
 
-// Seeds (anchor colours) — primary/secondary anchor the 600 step, tertiary the 500.
-:root[data-brand="crimson"]  { --brand-primary:#e11d48; --brand-secondary:#d97706; --brand-tertiary:#0ea5e9; --neutral-tint: 0.2;}
-:root[data-brand="corporate"]{ --brand-primary:#4f46e5; --brand-secondary:#0d9488; --brand-tertiary:#8b5cf6; --neutral-tint: 1.5;}
-:root[data-brand="sunset"]   { --brand-primary:#ea580c; --brand-secondary:#db2777; --brand-tertiary:#f59e0b; --neutral-tint: 0.2;}
+$brands: (
+  "crimson": (
+    primary:      #e11d48,
+    secondary:    #d97706,
+    tertiary:     #0ea5e9,
+    neutral-tint: 0.2,
+  ),
+  "corporate": (
+    primary:      #4f46e5,
+    secondary:    #0d9488,
+    tertiary:     #8b5cf6,
+    neutral-tint: 1.5,
+  ),
+  "sunset": (
+    primary:      #ea580c,
+    secondary:    #db2777,
+    tertiary:     #f59e0b,
+    neutral-tint: 0.2,
+  ),
+);
 
-@supports (color: oklch(from white l c h)) {
-  :root[data-brand="crimson"], :root[data-brand="corporate"], :root[data-brand="sunset"] {
-    @include oklch.brand-ramp('primary',   '--brand-primary');
-    @include oklch.brand-ramp('secondary', '--brand-secondary');
-    @include oklch.brand-ramp('tertiary',  '--brand-tertiary', 500);
-    @include oklch.brand-alpha('primary',  '--brand-primary');
-    @include oklch.brand-alpha('tertiary', '--brand-tertiary');
-    @include oklch.neutral-ramp('--brand-primary');
-    --background-brand-strong: var(--colors-primary-900);
-    --hero-overlay-color: var(--colors-neutral-950);
+// Foundation Day is NOT here — it's a standalone event theme loaded via
+// `brand_theme: foundation-day` (see _sass/themes/_foundation-day.scss), not a
+// runtime-switchable [data-brand].
+
+// Per-brand seeds + literal overrides (apply on every browser).
+@mixin brand-seeds($name, $rec) {
+  :root[data-brand="#{$name}"] {
+    --brand-primary: #{map.get($rec, primary)};
+    @if map.get($rec, secondary)    { --brand-secondary: #{map.get($rec, secondary)}; }
+    @if map.get($rec, tertiary)     { --brand-tertiary: #{map.get($rec, tertiary)}; }
+    @if map.get($rec, neutral-tint) != null { --neutral-tint: #{map.get($rec, neutral-tint)}; }
+    @each $prop, $val in map.get($rec, overrides) or () { #{$prop}: #{$val}; }
   }
 }
 
-// ── Foundation Day — event theme (Saudi heritage brown). PRIMARY only, OKLCH-
-// derived from one seed so the ramp sits on DGA's lightness curve (light surfaces
-// stay light). Neutral + secondary left to DGA; selective exact-Figma overrides
-// are parked below, commented — enable only what the event needs. ──
-:root[data-brand="foundation-day"] {
-  --brand-primary: #6c4e46;        // seed (anchor = primary-600)
-  // Event surface overrides (literal hex — apply on every browser, no @supports):
-  --background-footer: #231f20;
-  --background-stripe: #f9f6f2;
-}
-
-@supports (color: oklch(from white l c h)) {
-  :root[data-brand="foundation-day"] {
-    @include oklch.brand-ramp('primary', '--brand-primary');
-    @include oklch.brand-alpha('primary', '--brand-primary');
-    --background-brand-strong: var(--colors-primary-900);
-    --hero-overlay-color: var(--colors-neutral-950);
-    --neutral-tint: 0.5;                              // event: warm grays, a touch above default
-    @include oklch.neutral-ramp('--brand-primary');   // warm grays (replaces DGA's cool slate)
+// One grouped OKLCH ramp block, shared by every brand of the same shape. $sel is a
+// comma-joined selector list; $secondary/$tertiary toggle the extra families.
+@mixin brand-ramps($sel, $secondary, $tertiary) {
+  @supports (color: oklch(from white l c h)) {
+    #{$sel} {
+      @include oklch.brand-ramp('primary', '--brand-primary');
+      @if $secondary { @include oklch.brand-ramp('secondary', '--brand-secondary'); }
+      @if $tertiary  { @include oklch.brand-ramp('tertiary', '--brand-tertiary', 500); }
+      @include oklch.brand-alpha('primary', '--brand-primary');
+      @if $tertiary  { @include oklch.brand-alpha('tertiary', '--brand-tertiary'); }
+      @include oklch.neutral-ramp('--brand-primary');
+      --background-brand-strong: var(--colors-primary-900);
+      --img-overlay-color: var(--colors-neutral-950);
+    }
   }
 }
 
-// Optional exact-Figma PALETTES (event theme — enable only what you need).
-// Uncomment the wrapper + the lines you want (plain hex, works on every browser):
-// :root[data-brand="foundation-day"] {
-//   // ── Secondary — Beige (anchor #e9dfcf = 600) ──
-//   --colors-secondary-25: #fdfdfc;
-//   --colors-secondary-50: #fdfcfa;
-//   --colors-secondary-100: #f9f6f2;
-//   --colors-secondary-200: #f7f3ee;
-//   --colors-secondary-300: #f4eee6;
-//   --colors-secondary-400: #f0e9de;
-//   --colors-secondary-500: #ede4d7;
-//   --colors-secondary-600: #e9dfcf;
-//   --colors-secondary-700: #c4bbae;
-//   --colors-secondary-800: #9e988d;
-//   --colors-secondary-900: #79746c;
-//   --colors-secondary-950: #54504b;
-//   // ── Neutral — Dark Brown (full grayscale; WARNING: darkens light surfaces) ──
-//   --colors-neutral-25: #d9d9d9;
-//   --colors-neutral-50: #c1c0c1;
-//   --colors-neutral-100: #b0aeaf;
-//   --colors-neutral-200: #8d8b8b;
-//   --colors-neutral-300: #696767;
-//   --colors-neutral-400: #464344;
-//   --colors-neutral-500: #231f20;
-//   --colors-neutral-600: #1d1a1b;
-//   --colors-neutral-700: #181516;
-//   --colors-neutral-750: #151213;
-//   --colors-neutral-800: #121011;
-//   --colors-neutral-850: #0f0d0e;
-//   --colors-neutral-900: #0d0b0c;
-//   --colors-neutral-950: #080607;
-// }
+// Expand the registry: per-brand seed blocks, then one ramp block per shape
+// (brands sharing a shape are merged into a single grouped selector).
+@mixin emit($brands: $brands) {
+  @each $name, $rec in $brands {
+    @include brand-seeds($name, $rec);
+  }
+
+  // Group brand selectors by ramp shape: "<has-secondary>-<has-tertiary>".
+  $groups: ();
+  @each $name, $rec in $brands {
+    $sec: map.get($rec, secondary) != null;
+    $ter: map.get($rec, tertiary) != null;
+    $sig: "#{$sec}-#{$ter}";
+    $sel: ':root[data-brand="#{$name}"]';
+    $g: map.get($groups, $sig);
+    @if $g {
+      $groups: map.set($groups, $sig, map.merge($g, (sel: "#{map.get($g, sel)}, #{$sel}")));
+    } @else {
+      $groups: map.set($groups, $sig, (sel: $sel, secondary: $sec, tertiary: $ter));
+    }
+  }
+  @each $sig, $g in $groups {
+    @include brand-ramps(map.get($g, sel), map.get($g, secondary), map.get($g, tertiary));
+  }
+}
+
+@include emit();

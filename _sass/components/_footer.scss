@@ -8,7 +8,7 @@
     padding-block: var(--spacing-4xl);
     z-index: 1;
 
-    :root[data-theme="dark"] &:not(.nds-green) {
+    :root[data-theme="dark"] &:not(.nds-green, .nds-brand) {
         background: var(--colors-neutral-700);
     }
 }
@@ -182,7 +182,7 @@
         &.nds-oncolor {
 
             :root[data-theme="dark"] &,
-            .nds-footer.nds-green & {
+            .nds-footer:is(.nds-green, .nds-brand) & {
                 filter: brightness(0) invert(1);
             }
         }
@@ -190,10 +190,10 @@
 }
 
 /* ========================================
-   GREEN VARIANT
+   BRAND VARIANT (.nds-green kept for backward-compat)
    ======================================== */
 
-.nds-footer.nds-green {
+.nds-footer:is(.nds-green, .nds-brand) {
     background: var(--background-footer);
 
     // Light mode: force dark-bg appearance since green bg stays dark regardless of theme
