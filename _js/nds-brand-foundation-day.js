@@ -113,5 +113,7 @@
     window.__NDS_BRAND_HOOKS = window.__NDS_BRAND_HOOKS || {};
     window.__NDS_BRAND_HOOKS['foundation-day'] = { inject: inject, teardown: teardown };
 
-    inject();
+    // Self-inject only when the brand is still active at load time — guards against the
+    // race where the user switches away before this async script finished fetching.
+    if (window.NDS && NDS.Brand && NDS.Brand.get() === 'foundation-day') inject();
 })();
