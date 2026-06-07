@@ -25,11 +25,11 @@
     {%- endif -%}
     <!-- Critical CSS — render-blocking: skeleton, reveal gate, foundation tokens + [data-brand] slots, so first paint is correct. -->
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    {%- if site.brand_theme %}
-    <!-- Brand theme override: render-blocking so it resolves before paint (no flash). Path from _data/brands.yml; empty = pure DGA. -->
-    {%- assign _bt = site.data.brands | where: 'value', site.brand_theme | first -%}
-    {%- if _bt.css -%}{%- assign _bt_css = _bt.css -%}{%- else -%}{%- capture _bt_css -%}css/nds-theme-{{ site.brand_theme }}.min.css{%- endcapture -%}{%- endif -%}
-    <link rel="stylesheet" href="{{ _bt_css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}">
+    {%- if site.brand %}
+    <!-- Default brand override: render-blocking so it resolves before paint (no flash). Path from _data/brands.yml; empty = pure DGA. -->
+    {%- assign _brand = site.data.brands | where: 'value', site.brand | first -%}
+    {%- if _brand.css -%}{%- assign _brand_css = _brand.css -%}{%- else -%}{%- capture _brand_css -%}css/nds-brand-{{ site.brand }}.min.css{%- endcapture -%}{%- endif -%}
+    <link rel="stylesheet" href="{{ _brand_css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
     {%- if site.use_hgi_font or page.use_hgi_font %}
     <!-- HGI icon font: opacity gate hides icons until the font lands (nds-fontLoading.js stamps data-nds-fonts-loaded). -->
@@ -86,8 +86,8 @@
     {%- endif %}
     {%- if site.debug %}
     <!-- Debug: enable the loader's per-component init logging + timing (pre-eval). -->
-    <script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
-    {%- endif %}
+    {%- endif %}<script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
+    
     <!-- Theme stamp (FOUC guard) — placed last so resource preloads kick off first. -->
     {%- include head-inline-scripts.html -%}
     {%- include google-analytics.html -%}

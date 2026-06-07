@@ -38,9 +38,9 @@ class JSProcessor
     @source_dir = '_js'
     @output_dir = 'assets/js'
     # Per-file output dir overrides (keyed by source basename) — e.g. an event
-    # theme's behaviour script ships in its self-contained event folder.
+    # brand's behaviour script ships in its self-contained event folder.
     @output_overrides = {
-      'nds-theme-foundation-day.js' => 'assets/events/foundation_day',
+      'nds-brand-foundation-day.js' => 'assets/events/foundation_day',
     }
     @bundles = {
       # Critical bundle — loaded via <script defer>. Carries core, the loader,
@@ -52,14 +52,14 @@ class JSProcessor
       # first-interaction-critical on OTP/2FA pages). They stay so they wire on the
       # local idle pass, not after an injected bundle. Reveal is gated on this
       # bundle, so it's kept lean.
-      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-brand.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
+      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-sort.js', 'nds-stepper.js', 'nds-swiper.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-expandable.js', 'nds-breadcrumb.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-pagination.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-filter.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
       # Delegated — deferred components verified safe to load late. Injected by
       # nds-loader.js AFTER the critical pass (never a render-blocking defer tag), so
       # its download never gates the reveal. Components migrate in here over time
       # as each is confirmed cold-init / late-init-safe; move the file here and
       # drop `critical: true` from its loader registry entry (location is owned here, not the
       # registry — the build generates the namespace→bundle map from these lists).
-      'nds-delegated.min.js' => ['nds-accordion.js', 'nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js'],
+      'nds-delegated.min.js' => ['nds-brand.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-tables.js'],
       # Extras — heavy, page-specific, zero-inbound leaf components. Injected by
       # nds-loader.js only when the page contains one of them (selector-gated), so
       # plain pages never download/parse them. May later be split into smaller
@@ -156,6 +156,48 @@ class JSProcessor
           "\n  Fix: drop `critical: true` from their entry in _js/nds-loader.js (so they default to deferred), or move their file back to nds-main.min.js.")
   end
 
+  # ── Incremental rebuild (mtime staleness) ───────────────────────────
+  # Newest mtime across the given paths (nil when none exist).
+  def newest_mtime(paths)
+    paths.select { |p| File.exist?(p) }.map { |p| File.mtime(p) }.max
+  end
+
+  # Inputs whose change invalidates EVERY output: this script (owns the @bundles
+  # lists + header/manifest logic) and _config.yml (version/title/debug feed the
+  # header and the minify toggle).
+  def global_deps
+    ['_config.yml', __FILE__].select { |p| File.exist?(p) }
+  end
+
+  # Source paths a bundle's output depends on. The main bundle additionally embeds
+  # window.__NDS_BUNDLES, whose namespace lists are scanned from EVERY injected
+  # bundle's files — so an injected file (a changed namespace export, or a file
+  # moving between bundles) restamps main even when no main source changed.
+  def bundle_deps(bundle_name, source_files)
+    deps = source_files.map { |sf| File.join(@source_dir, sf) }
+    deps += injected_bundles.values.flatten.map { |sf| File.join(@source_dir, sf) } if bundle_name == 'nds-main.min.js'
+    (deps + global_deps).uniq
+  end
+
+  # A bundle is stale when its output is missing or older than any dependency.
+  def bundle_stale?(bundle_name, source_files)
+    out = File.join(@output_dir, bundle_name)
+    return true unless File.exist?(out)
+    m = newest_mtime(bundle_deps(bundle_name, source_files))
+    m.nil? || m > File.mtime(out)
+  end
+
+  # A standalone (non-bundled) file is stale on the same rule. Honors the
+  # per-file output-dir override so self-contained themes are checked in place.
+  def individual_stale?(basename)
+    src = File.join(@source_dir, basename)
+    return false unless File.exist?(src)
+    out_dir = @output_overrides[basename] || @output_dir
+    out = File.join(out_dir, "#{File.basename(basename, '.js')}.min.js")
+    return true unless File.exist?(out)
+    newest_mtime([src] + global_deps) > File.mtime(out)
+  end
+
   # Compress JavaScript with Terser. When site.debug is on the bundle is left
   # unminified so DevTools profiles and stack traces map to real per-statement
   # lines and every function keeps its name — accurate attribution over size.
@@ -197,16 +239,31 @@ class JSProcessor
     # Ensure output directory exists
     FileUtils.mkdir_p(@output_dir)
 
-    # If no specific files provided, process all files
-    if changed_files.nil?
-      changed_files = Dir.glob(File.join(@source_dir, '*.js')).map { |f| File.basename(f) }
-    end
-
     # Get all JS files from source directory
     js_files = Dir.glob(File.join(@source_dir, '*.js'))
 
     # Fail fast if location (build) contradicts classification (registry).
     assert_no_critical_in_injected!
+
+    bundled_files = @bundles.values.flatten
+
+    # No explicit list (the plain `ruby _plugins/js_processor.rb` run): rebuild
+    # only what's STALE — a bundle/file whose output is missing or older than any
+    # source input (+ this script + _config.yml). Previously this path treated
+    # every file as changed and rebuilt all bundles on every run.
+    if changed_files.nil?
+      changed_files = []
+      @bundles.each { |bn, sfs| changed_files.concat(sfs) if bundle_stale?(bn, sfs) }
+      js_files.each do |f|
+        b = File.basename(f)
+        changed_files << b if !bundled_files.include?(b) && individual_stale?(b)
+      end
+      changed_files.uniq!
+      if changed_files.empty?
+        puts 'Nothing to rebuild — all bundles up to date. (use `ruby _plugins/js_processor.rb force` to rebuild all)'
+        return
+      end
+    end
 
     # Check if any changed files are part of bundles
     bundles_to_process = []
@@ -214,6 +271,14 @@ class JSProcessor
       if source_files.any? { |sf| changed_files.include?(sf) }
         bundles_to_process << bundle_name
       end
+    end
+
+    # Main embeds window.__NDS_BUNDLES (namespaces scanned from the injected
+    # bundles), so a change to ANY injected file must restamp main even when no
+    # main source changed.
+    if !bundles_to_process.include?('nds-main.min.js') &&
+       injected_bundles.values.flatten.any? { |sf| changed_files.include?(sf) }
+      bundles_to_process << 'nds-main.min.js'
     end
     
     # Process affected bundles
@@ -381,6 +446,11 @@ if __FILE__ == $0
   
   if ARGV[0] == 'watch'
     processor.watch
+  elsif ['force', 'all', '-f'].include?(ARGV[0])
+    # Rebuild every bundle + standalone file regardless of mtimes. Use after a
+    # git checkout/pull (git doesn't preserve mtimes, so staleness can't be
+    # trusted) or to force a clean rebuild.
+    processor.process_files(Dir.glob('_js/*.js').map { |f| File.basename(f) })
   else
     processor.process_files
   end

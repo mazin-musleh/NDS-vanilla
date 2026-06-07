@@ -31,17 +31,16 @@
             init: () => NDS.Theme?.init?.(),
         },
         {
-            // Critical (ships in main): the brand switcher is a primary topbar
-            // control, wired eagerly so a switch responds with no pre-bundle gap.
-            // First paint is still owned by the pre-paint stamp (head-inline-
-            // scripts.html) — saved token brand → [data-brand], saved theme → its
-            // stylesheet — so init() does no first-paint work: it reconciles state,
-            // syncs aria, and wires the click. Cold init (localStorage read +
-            // listener, no layout reads), so it adds ~0 to the reveal.
+            // Delegated (injected after the critical pass): first paint is owned by
+            // the pre-paint stamp (head-inline-scripts.html) — saved token brand →
+            // [data-brand], saved theme → its stylesheet — so init() does no
+            // first-paint work: it reconciles state, syncs aria, and wires the click.
+            // A click landing in the pre-init gap no-ops and recovers on the next
+            // click (Tabs/Tables pattern). Cold init (localStorage read + listener,
+            // no layout reads).
             name: 'Brand',
             selector: '[data-brand-value]',
             init: () => NDS.Brand?.init?.(),
-            critical: true,
         },
         {
             // Critical: init un-hides [hidden] FOUC-guard form wrappers and reveals

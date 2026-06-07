@@ -25,11 +25,11 @@ brand_switcher: true
 # core components (focus rings, ARIA, contrast, reduce-motion) is unaffected.
 accessibility: true
 
-# Brand theme (re-branding). Empty = the built-in DGA default brand (no extra
-# request). Set to a name matching assets/css/nds-theme-<name>.min.css to load
-# that theme's brand-slot overrides render-blocking (before first paint, no
-# DGA→brand flash) on top of the DGA base. See components/theming for authoring.
-brand_theme:
+# Default brand (re-branding). Empty = the built-in DGA default brand (no extra
+# request). Set to a name matching assets/css/nds-brand-<name>.min.css to load
+# that brand's slot overrides render-blocking (before first paint, no DGA→brand
+# flash) on top of the DGA base. See components/theming for authoring.
+brand:
 
 # Jekyll server settings
 port: 4002

@@ -146,7 +146,7 @@ direction: ltr
 
             <div class="nds-block">
                 <h3 class="nds-block-title">2a — Load it (drop-in CSS, no build)</h3>
-                <p>NDS ships as compiled CSS. Save your slot block as <code class="nds-inline-code lang-css">assets/css/nds-theme-<em>acme</em>.min.css</code> and point the config at it. The build links it <strong>render-blocking before paint</strong> so brand colours never flash from DGA. Leave it empty for pure DGA.</p>
+                <p>NDS ships as compiled CSS. Save your slot block as <code class="nds-inline-code lang-css">assets/css/nds-brand-<em>acme</em>.min.css</code> and point the config at it. The build links it <strong>render-blocking before paint</strong> so brand colours never flash from DGA. Leave it empty for pure DGA.</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -155,7 +155,7 @@ direction: ltr
                     </div>
                     <code class="lang-yaml code">
 # _config.yml
-brand_theme: acme   # → loads assets/css/nds-theme-acme.min.css</code>
+brand: acme   # → loads assets/css/nds-brand-acme.min.css</code>
                 </div>
                 <p>Consuming the bundle directly (no Jekyll)? Add the same stylesheet to your <code class="nds-inline-code lang-html">&lt;head&gt;</code> <em>after</em> the NDS critical CSS and <em>before</em> the main CSS, as a normal blocking <code class="nds-inline-code lang-html">&lt;link rel="stylesheet"&gt;</code> — never a deferred/async load (it would flash).</p>
             </div>
@@ -170,7 +170,7 @@ brand_theme: acme   # → loads assets/css/nds-theme-acme.min.css</code>
                         </button>
                     </div>
                     <code class="lang-scss code">
-// assets/css/nds-theme-acme.min.scss  (Jekyll front-matter entry)
+// assets/css/nds-brand-acme.min.scss  (Jekyll front-matter entry)
 // ---
 // ---
 @use 'themes/acme';</code>

@@ -1,6 +1,6 @@
-// Foundation Day theme behaviour — injects the event hero slide into the page's
-// hero swiper while the theme is active, and removes it on teardown. Loaded on
-// demand by NDS.Brand (ensureThemeJS) only when brand = foundation-day; torn down
+// Foundation Day brand behaviour — injects the event hero slide into the page's
+// hero swiper while the brand is active, and removes it on teardown. Loaded on
+// demand by NDS.Brand (ensureBrandJS) only when brand = foundation-day; torn down
 // when switching away. Structure mirrors _includes/hero-main.html (the canonical
 // NDS hero swiper) so NDS.Swiper.create() initializes it.
 (function () {
@@ -36,7 +36,7 @@
     // the later hook calls.
     var BASE = (function () {
         var s = document.currentScript ||
-            document.querySelector('script[src*="nds-theme-foundation-day"]');
+            document.querySelector('script[src*="nds-brand-foundation-day"]');
         return s && s.src ? s.src.slice(0, s.src.lastIndexOf('/') + 1) : '';
     })();
 
@@ -110,8 +110,8 @@
 
     // Register hooks so NDS.Brand can re-inject on re-activation (the script only
     // auto-injects once, below) and remove the slide on switch-away.
-    window.__NDS_THEME_HOOKS = window.__NDS_THEME_HOOKS || {};
-    window.__NDS_THEME_HOOKS['foundation-day'] = { inject: inject, teardown: teardown };
+    window.__NDS_BRAND_HOOKS = window.__NDS_BRAND_HOOKS || {};
+    window.__NDS_BRAND_HOOKS['foundation-day'] = { inject: inject, teardown: teardown };
 
     inject();
 })();

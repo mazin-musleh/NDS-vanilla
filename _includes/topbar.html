@@ -28,7 +28,7 @@
                         <span class="nds-label">Default (DGA)</span>
                     </button>
                     {% for b in site.data.brands %}
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="{{ b.value }}"{% if b.theme %} data-brand-css="{{ b.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% if b.js %} data-brand-js="{{ b.js | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% endif %}{% endif %}>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="{{ b.value }}"{% if b.stylesheet %} data-brand-css="{{ b.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% if b.js %} data-brand-js="{{ b.js | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% endif %}{% endif %}>
                         <span class="nds-label">{{ b.label }}</span>
                     </button>
                     {% endfor %}
