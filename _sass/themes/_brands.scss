@@ -1,6 +1,11 @@
 @use 'sass:map';
 @use 'oklch-template' as oklch;
 
+// Default typeface for the runtime brands (sets --nds-font-brand). DGA and stylesheet
+// brands (Foundation Day) are NOT [data-brand] selectors, so they keep the global
+// --nds-font-brand from _variables-critical.scss. A brand overrides via its `font` field.
+$brand-font: "'Tajawal', sans-serif";
+
 // ════════════════════════════════════════════════════════════════════════════
 // Runtime-selectable brands — single source of truth for the predefined brands.
 // Emitted as [data-brand] slot overrides so a cookie-stamped data-brand on <html>
@@ -15,7 +20,17 @@
 //   secondary     seed for the secondary family (anchor = 600). Omit → stays DGA.
 //   tertiary      seed for the tertiary family (anchor = 500). Omit → stays DGA.
 //   neutral-tint  per-brand gray-temperature dial (var(--neutral-tint)); 0 = true gray.
-//   overrides     map of literal token → value applied on every browser (event surfaces).
+//   font          per-brand typeface — sets --nds-font-brand (a quoted CSS font stack,
+//                 e.g. "'Cairo', sans-serif"). Omit → the shared $brand-font default.
+//                 a11y reads --nds-font-brand, so dyslexia fallback + the a11y panel
+//                 follow it too. The font must be loaded (@font-face in _fonts.scss).
+//   overrides     map of literal token → value, applied on every browser; wins over
+//                 the shared ramp defaults. The brand surface tint defaults to
+//                 --background-brand-light: primary-25 (drives sub-hero + brand
+//                 sections) — set it here to opt this brand to a different step. Also
+//                 --img-overlay-color (neutral by default) and any event surface.
+//   overrides-dark same, but emitted only under [data-theme="dark"] at a higher
+//                 specificity, so it wins over both `overrides` and the base dark tokens.
 //
 // All ramps derive via OKLCH relative colour (auto path), so engines without it
 // keep the DGA base — these are lean, predefined/demo brands, not authored hex.
@@ -44,8 +59,8 @@ $brands: (
   ),
 );
 
-// Foundation Day is NOT here — it's a standalone event theme loaded via
-// `brand_theme: foundation-day` (see _sass/themes/_foundation-day.scss), not a
+// Foundation Day is NOT here — it's a standalone stylesheet brand loaded via
+// `brand: foundation-day` (see _sass/themes/_foundation-day.scss), not a
 // runtime-switchable [data-brand].
 
 // Per-brand seeds + literal overrides (apply on every browser).
@@ -55,7 +70,26 @@ $brands: (
     @if map.get($rec, secondary)    { --brand-secondary: #{map.get($rec, secondary)}; }
     @if map.get($rec, tertiary)     { --brand-tertiary: #{map.get($rec, tertiary)}; }
     @if map.get($rec, neutral-tint) != null { --neutral-tint: #{map.get($rec, neutral-tint)}; }
+    // Runtime-brand typeface KNOB: the brand's `font` override, else the shared
+    // $brand-font default (Tajawal). Sets --nds-font-brand (not --nds-font-family) so
+    // a11y (dyslexia fallback + panel chrome) follows the brand too. Requires the font
+    // to be loaded (see _fonts.scss).
+    --nds-font-brand: #{map.get($rec, font) or $brand-font};
+    // Literal token overrides (apply on every browser). Emitted after the ramp block
+    // (see emit), so they win over the shared defaults — e.g. opt this brand's
+    // --background-brand-light to a different step, or set --img-overlay-color.
     @each $prop, $val in map.get($rec, overrides) or () { #{$prop}: #{$val}; }
+  }
+  // Dark-mode overrides — emitted at [data-brand][data-theme="dark"] so they beat
+  // BOTH the light brand block and the base dark tokens (0,2,0) by specificity, not
+  // source order — winning in the critical bundle and after main alike. The
+  // :not(high-contrast) keeps the mono high-contrast palette in charge: it swaps the
+  // same tokens at lower specificity and would otherwise be overridden by this rule.
+  $dark: map.get($rec, overrides-dark);
+  @if $dark {
+    :root[data-brand="#{$name}"][data-theme="dark"]:not([data-a11y~="high-contrast"]) {
+      @each $prop, $val in $dark { #{$prop}: #{$val}; }
+    }
   }
 }
 
@@ -71,18 +105,23 @@ $brands: (
       @if $tertiary  { @include oklch.brand-alpha('tertiary', '--brand-tertiary'); }
       @include oklch.neutral-ramp('--brand-primary');
       --background-brand-strong: var(--colors-primary-900);
+      // Brand surface tint: paler than DGA's (primary-50) because saturated brand
+      // primaries read too strong at 50. Feeds sub-hero + brand sections. A brand
+      // opts to a different step via its `overrides` map (seed block, emitted after).
+      --background-brand-light: var(--colors-primary-25);
+      // Image overlay: neutral for runtime brands — a primary-tinted overlay reads
+      // too strong on saturated hues. DGA keeps its green (primary-950) in semantic.
       --img-overlay-color: var(--colors-neutral-950);
     }
   }
 }
 
-// Expand the registry: per-brand seed blocks, then one ramp block per shape
-// (brands sharing a shape are merged into a single grouped selector).
+// Expand the registry: one ramp block per shape FIRST (shared defaults), then the
+// per-brand seed blocks LAST — so a brand's `overrides` win over the shared ramp
+// default at equal specificity (source order). Custom-property resolution is by
+// name, not source order, so the ramp's oklch(from var(--brand-primary)…) still
+// reads the seed declared after it.
 @mixin emit($brands: $brands) {
-  @each $name, $rec in $brands {
-    @include brand-seeds($name, $rec);
-  }
-
   // Group brand selectors by ramp shape: "<has-secondary>-<has-tertiary>".
   $groups: ();
   @each $name, $rec in $brands {
@@ -99,6 +138,10 @@ $brands: (
   }
   @each $sig, $g in $groups {
     @include brand-ramps(map.get($g, sel), map.get($g, secondary), map.get($g, tertiary));
+  }
+
+  @each $name, $rec in $brands {
+    @include brand-seeds($name, $rec);
   }
 }
 

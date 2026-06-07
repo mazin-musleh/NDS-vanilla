@@ -46,15 +46,13 @@
 
     &.nds-brand {
         --section-shadow: var(--shadow-inset);
+        // --background-brand-light carries both modes (light: primary-25/50; dark:
+        // alpha-primary-10 — see _variables-dark.scss), so no dark special-case here.
         --section-bg: var(--background-brand-light);
         --section-title-color: var(--text-display);
         --section-subtitle-color: var(--text-default);
         --section-description-color: var(--text-default);
         --section-text-color: var(--text-default);
-
-        @include dark {
-            --section-bg: var(--alpha-primary-10);
-        }
     }
 
     &:is(.nds-ghost, .nds-noBg) {

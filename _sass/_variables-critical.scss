@@ -22,8 +22,12 @@
     --nds-transition-effect: ease;
     --nds-transition: calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
 
-    // Font family
-    --nds-font-family: 'IBM Plex Sans Arabic', sans-serif;
+    // Font family. --nds-font-brand is the brand typeface KNOB (DGA default here;
+    // runtime brands override it — see themes/_brands.scss). --nds-font-family is the
+    // EFFECTIVE font everything consumes; it reads the knob, and the a11y dyslexia
+    // mode overrides it. a11y references --nds-font-brand so it follows the brand.
+    --nds-font-brand: 'IBM Plex Sans Arabic', sans-serif;
+    --nds-font-family: var(--nds-font-brand);
 
     // Global user font scale — set by the accessibility panel's Font
     // Sizing tile (font-step ladder) to reflect the user's chosen
@@ -126,35 +130,12 @@
     --spacing-9xl: var(--spacing-24, 96px);
     --spacing-10xl: var(--spacing-32, 128px);
     --spacing-11xl: var(--spacing-40, 160px);
-
-    // ════ Semantic colour — critical bootstrap (light) ════
-    // The pre-main copy of these semantic colour tokens (canonical defs live in
-    // tokens/_semantic.scss, main bundle). Each references its brand slot /
-    // palette token so a render-blocking theme recolours before paint; the #hex
-    // is the DGA fallback for the window before the slot is defined.
-    --background-default: var(--colors-base-white, #fff);
-    --background-body: var(--colors-neutral-50, #f9fafb);
-    --background-nav: var(--colors-base-white, #fff);
-    --background-sub-hero: var(--colors-primary-50, #f3fcf6);
-    --text-default: var(--colors-base-black, #161616);
-    --text-display: var(--colors-neutral-800, #1f2a37);
-    --text-oncolor-primary: var(--colors-base-white, #fff);
 }
 
-// ════ Semantic colour — critical bootstrap (dark) ════
-// Dark counterpart of the block above; prevents a white flash before main CSS.
-// Same pattern (dark slot + DGA dark hex fallback). body→neutral-850 and
-// text-default→neutral-50 keep their skeleton steps, which differ from main's
-// loaded dark values by design.
-:root[data-theme="dark"] {
-    --background-default: var(--colors-neutral-800, #1f2a37);
-    --background-body: var(--colors-neutral-850, #18212f);
-    --background-nav: var(--colors-neutral-800, #1f2a37);
-    --background-sub-hero: var(--colors-primary-alpha-10, #1b835419);
-    --text-default: var(--colors-neutral-50, #f9fafb);
-    --text-display: var(--colors-neutral-100, #f3f4f6);
-    --text-oncolor-primary: var(--colors-base-white, #fff);
-}
+// Colour tokens now live in the foundation layer (tokens/semantic + variables-dark),
+// also @use'd by the critical bundle — so they resolve at first paint with no
+// bootstrap copy here. The skeleton paints its pre-load surfaces from --colors-*
+// primitives directly (see _skeleton.scss), independent of these semantic tokens.
 
 @include mobile {
     :root {

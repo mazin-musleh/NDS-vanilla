@@ -8,9 +8,10 @@
 
 // ----------------------------------------------
 // Panel-private design tokens. Decoupled from --typo-* so global font
-// scaling can't reach the chrome. Font-family is also pinned panel-
-// locally — the dyslexia mode redefines --nds-font-family at :root,
-// so the panel re-defines it here to break the inheritance chain.
+// scaling can't reach the chrome. Font-family is pinned panel-locally to
+// the brand typeface (--nds-font-brand): dyslexia mode redefines
+// --nds-font-family at :root, so the panel re-pins it to break that chain
+// while still following the active brand font.
 // ----------------------------------------------
 :is(.nds-accessibility-panel, .nds-accessibility-toggle) {
     --a11y-text-FS:        14px;
@@ -20,7 +21,7 @@
     --a11y-title-FS:       20px;
     --a11y-title-LH:       30px;
     --a11y-icon-FS:        24px;
-    --a11y-font-family:    'IBM Plex Sans Arabic', sans-serif;
+    --a11y-font-family:    var(--nds-font-brand);
 
     --a11y-btn-size:       40px;
     --a11y-btn-size-md:    32px;

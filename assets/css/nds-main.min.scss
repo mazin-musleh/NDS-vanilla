@@ -18,11 +18,10 @@
 // NOTE: a11y mode overrides (variables-a11y) + the accessibility panel
 // (components/accessibility) live in the optional assets/css/nds-accessibility.min.css
 // bundle — not here. Core only reads --user-* a11y vars with fallbacks.
-// Token layers: base + default brand (variables), then dark-mode overrides.
-// To rebrand, add a brand override file after 'variables' that redefines the
-// --colors-{primary,secondary,tertiary}-* slots.
+// Component token tier. The foundation tiers (primitives/DGA/semantic/dark) live in
+// the critical bundle now (single source of truth) — render-blocking on every page,
+// so these component tokens resolve their foundation refs from there.
 @use 'variables';
-@use 'variables-dark';
 
 // Layout primitives (moved from critical). section-layout stays in crit
 // because hero depends on it; block/content-layout/grid stay here.

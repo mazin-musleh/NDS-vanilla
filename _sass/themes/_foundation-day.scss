@@ -2,10 +2,10 @@
 @use 'oklch-template' as oklch;
 
 // ════════════════════════════════════════════════════════════════════════════
-// FOUNDATION DAY — event theme (Saudi heritage brown). A standalone brand_theme:
-// enable site-wide for the event via `brand_theme: foundation-day` in _config.yml
-// (loads assets/css/nds-theme-foundation-day.min.css render-blocking, before the
-// first paint). Empty brand_theme = pure DGA.
+// FOUNDATION DAY — event brand (Saudi heritage brown). A standalone stylesheet
+// brand: enable site-wide for the event via `brand: foundation-day` in _config.yml
+// (loads assets/css/nds-brand-foundation-day.min.css render-blocking, before the
+// first paint). Empty brand = pure DGA.
 //
 // Auto-derived from ONE seed via OKLCH so the ramp sits on DGA's lightness curve
 // (light surfaces stay light). PRIMARY only — secondary/tertiary stay DGA. Add any
@@ -162,7 +162,6 @@
     @include oklch.brand-alpha('primary', '--brand-primary');
     @include oklch.neutral-ramp('--brand-primary'); // warm grays (replaces DGA's cool slate)
     --background-brand-strong: var(--colors-primary-900);
-    --img-overlay-color: var(--colors-neutral-950);
   }
 }
 

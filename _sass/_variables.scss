@@ -1,21 +1,22 @@
 // ════════════════════════════════════════════════════════════════════════════
-// NDS DESIGN TOKENS — layered token system (barrel)
+// NDS DESIGN TOKENS — main-bundle token surface (component tier)
 // ────────────────────────────────────────────────────────────────────────────
-// This file is the import surface (nds-main @use 'variables'); the tokens are
-// split into tiers under tokens/. Emission order = tier order below.
+// This file is the main bundle's token import (nds-main @use 'variables'). It now
+// carries ONLY the component tier: the foundation tiers (primitives, DGA palette/
+// slots, semantic, dark) moved to the CRITICAL bundle as the single source of truth
+// (see assets/css/nds.critical.min.scss), so first paint has the real tokens and
+// nothing is duplicated. Critical is render-blocking on every page, so these
+// component tokens resolve their foundation refs from there.
 //
-//   tokens/primitives  spacing/width/radius scales
-//   themes/brand-dga   DGA colour palette + default brand SLOTS (re-brand surface)
-//   tokens/semantic    background/text/border/icon/controls/shadow meanings
-//   tokens/components   all --{component}-* tokens, grouped per component
+//   tokens/components        all --{component}-* tokens, grouped per component
+//   tokens/components-dark   their [data-theme="dark"] overrides
 //
-// Related layers (separate files / compilation units, override at runtime):
-//   _variables-critical.scss  foundation + crit-fallback subset (critical bundle)
-//   _variables-dark.scss      :root[data-theme="dark"] overrides (main bundle)
+// Related layers (separate compilation units):
+//   _variables-critical.scss  layout/typo/spacing tokens (critical bundle)
+//   tokens/primitives, themes/brand-dga, tokens/semantic, _variables-dark.scss
+//                             FOUNDATION token layer (+ its dark) — @use'd by the critical bundle
 //   _variables-a11y.scss      [data-a11y] overrides (accessibility add-on bundle)
 //   themes/*                  brand overrides (global :root entry or [data-brand])
 // ════════════════════════════════════════════════════════════════════════════
-@use 'tokens/primitives';
-@use 'themes/brand-dga';
-@use 'tokens/semantic';
 @use 'tokens/components';
+@use 'tokens/components-dark';

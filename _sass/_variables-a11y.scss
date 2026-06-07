@@ -268,9 +268,11 @@ $a11y-filters: (
 // resolve per-character so both scripts find a face.
 // ----------------------------------------------
 :root[data-a11y~="dyslexia"] {
+    // Dyslexia faces lead (OpenDyslexic Latin + Maqroo Arabic); the active brand's own
+    // typeface — var(--nds-font-brand): Tajawal on a brand, IBM Plex on DGA — is the
+    // regular fallback, so the stack follows the brand.
     --nds-font-family: "OpenDyslexic", "Lexend", "Atkinson Hyperlegible", "Verdana",
-                       "Maqroo", "Tajawal", "IBM Plex Sans Arabic",
-                       system-ui, sans-serif;
+                       "Maqroo", var(--nds-font-brand), system-ui, sans-serif;
 }
 
 // Bump body-text weight: Maqroo Regular reads thinner than IBM Plex
@@ -400,7 +402,7 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 .nds-a11y-mask-controls {
     --a11y-text-FS:     14px;
     --a11y-text-LH:     20px;
-    --a11y-font-family: 'IBM Plex Sans Arabic', sans-serif;
+    --a11y-font-family: var(--nds-font-brand); // brand typeface, breaks the dyslexia chain
     --nds-font-family:  var(--a11y-font-family);
     font-size: var(--a11y-text-FS);
     line-height: var(--a11y-text-LH);

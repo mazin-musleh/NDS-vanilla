@@ -188,6 +188,7 @@
     --background-hero: var(--background-brand-strong); // own knob; defaults to the shared deep brand surface
     --background-stripe: var(--colors-neutral-50);
     --background-sub-hero: var(--background-brand-light);
+    --img-overlay-color: var(--colors-primary-950); // hero/card image overlay — DGA green (mode-invariant); runtime brands switch to neutral (see themes/_brands.scss)
     --background-primary-300: var(--colors-primary-300);
     --background-surface-elevated: var(--colors-base-white);
     --background-surface-sunken: var(--colors-neutral-100);

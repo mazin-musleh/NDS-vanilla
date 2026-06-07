@@ -1,14 +1,14 @@
 @use './mixins' as *;
 
-/* ── Dark Mode – Foundation Tokens ──
-   Only page-level surfaces, default text, borders, and shadows.
-   Component-specific dark overrides will be added per-component
-   using @include dark { ... } over time.
+/* ── Dark Mode — FOUNDATION token overrides ──
+   Page surfaces, default text, links, icons, borders, shadows, focus. The dark
+   counterpart of tokens/_semantic.scss; @use'd by the CRITICAL bundle alongside
+   the light foundation so dark resolves at first paint (single source, no bootstrap).
+   Component dark overrides live in tokens/_components-dark.scss (main bundle).
    Activated via: <html data-theme="dark">
    ── */
 
 :root[data-theme="dark"] {
-
     // ─── Page Surfaces ───
     --background-default: var(--colors-neutral-800);
     --background-body: var(--colors-neutral-900);
@@ -19,7 +19,11 @@
     --background-footer: var(--colors-primary-alpha-30);
     --background-menu: var(--background-default);
     --background-stripe: var(--colors-neutral-850);
-    --background-sub-hero: var(--alpha-primary-10);
+    // Brand surface knob — dark value. sub-hero + brand sections read this in both
+    // modes, so they need no dark special-case of their own. Brand-tracked (alpha
+    // follows the active --colors-primary). Brands @use'd before this layer, so a
+    // brand's light brand-light (primary-25) is overridden here for brand+dark.
+    --background-brand-light: var(--alpha-primary-10);
     --background-overlay: var(--alpha-black-70);
 
     // ─── Default Text ───
@@ -31,22 +35,6 @@
 
     // ─── Divider ───
     --divider-color: var(--alpha-white-10);
-
-    // ─── Links ───
-    --link-primary: var(--colors-primary-400);
-    --link-primary-hovered: var(--colors-primary-300);
-    --link-primary-pressed: var(--colors-primary-200);
-    --link-primary-focused: var(--colors-primary-400);
-    --link-primary-visited: var(--colors-primary-500);
-    --link-neutral: var(--colors-neutral-200);
-    --link-neutral-hovered: var(--colors-neutral-400);
-    --link-icon-neutral-hovered: var(--colors-neutral-400);
-    --link-neutral-pressed: var(--colors-neutral-500);
-    --link-icon-neutral-pressed: var(--colors-neutral-500);
-    --link-neutral-focused: var(--colors-neutral-200);
-    --link-icon-neutral-focused: var(--colors-neutral-200);
-    --link-neutral-visited: var(--colors-neutral-300);
-    --link-icon-neutral-visited: var(--colors-neutral-300);
 
     --text-brand: var(--colors-primary-400);
 
@@ -64,152 +52,23 @@
     --icon-info: var(--colors-blue-400);
     --icon-warning: var(--colors-yellow-400);
     --icon-error: var(--colors-red-400);
-
-    // ─── Featured Icons ───
-    --featuredicons-icon-default: var(--colors-neutral-100);
-    --featuredicons-background-default-light: var(--alpha-white-10);
-    --featuredicons-background-neutral-light: var(--alpha-white-10);
-    --featuredicons-icon-neutral: var(--colors-neutral-300);
-    --featuredicons-background-error-light: var(--alpha-error-10);
-    --featuredicons-background-info-light: var(--alpha-info-10);
-    --featuredicons-background-warning-light: var(--alpha-warning-10);
-    --featuredicons-background-success-light: var(--alpha-success-10);
-    --featuredicons-background-brand-light: var(--alpha-primary-10);
-    --featuredicons-icon-primary: var(--colors-primary-400);
-    --featuredicons-icon-success: var(--colors-green-400);
-    --featuredicons-icon-error: var(--colors-red-400);
-    --featuredicons-icon-info: var(--colors-blue-400);
-    --featuredicons-icon-warning: var(--colors-yellow-400);
     --icon-success-ring: var(--colors-green-900);
     --icon-info-ring: var(--colors-blue-900);
     --icon-warning-ring: var(--colors-yellow-900);
     --icon-error-ring: var(--colors-red-900);
 
-    // ─── Tags ───
-    --tag-background-neutral-light: var(--alpha-white-10);
-    --tag-text-neutral: var(--colors-neutral-100);
-    --tag-icon-neutral: var(--colors-neutral-300);
-    --tag-border-neutral-light: var(--colors-neutral-400);
-    --tag-border-neutral: var(--colors-neutral-300);
-    --tag-background-success-light: var(--alpha-success-10);
-    --tag-text-success: var(--colors-green-400);
-    --tag-icon-success: var(--colors-green-400);
-    --tag-border-success-light: var(--colors-green-400);
-    --tag-border-success: var(--colors-green-400);
-    --tag-background-info-light: var(--alpha-info-10);
-    --tag-text-info: var(--colors-blue-400);
-    --tag-icon-info: var(--colors-blue-400);
-    --tag-border-info-light: var(--colors-blue-400);
-    --tag-border-info: var(--colors-blue-400);
-    --tag-background-warning-light: var(--alpha-warning-10);
-    --tag-text-warning: var(--colors-yellow-400);
-    --tag-icon-warning: var(--colors-yellow-400);
-    --tag-border-warning-light: var(--colors-yellow-400);
-    --tag-border-warning: var(--colors-yellow-400);
-    --tag-background-error-light: var(--alpha-error-10);
-    --tag-text-error: var(--colors-red-400);
-    --tag-icon-error: var(--colors-red-400);
-    --tag-border-error-light: var(--colors-red-400);
-    --tag-border-error: var(--colors-red-400);
-
-    // ─── Chips ───
-    --chip-background-neutral-default: var(--alpha-white-10);
-    --chip-background-neutral-hovered: var(--alpha-white-20);
-    --chip-background-neutral-pressed: var(--alpha-white-30);
-    --chip-background-neutral-selected: var(--colors-neutral-300);
-    --chip-background-neutral-focused: var(--alpha-white-10);
-    --chip-background-primary-default: var(--colors-primary-alpha-10);
-    --chip-background-primary-hovered: var(--colors-primary-alpha-20);
-    --chip-background-primary-pressed: var(--colors-primary-alpha-30);
-    --chip-background-primary-focused: var(--colors-primary-alpha-10);
-    --chip-text-neutral-default: var(--colors-base-white);
-    --chip-text-neutral-selected: var(--colors-base-black);
-    --chip-text-primary-default: var(--colors-primary-200);
-    --chip-text-primary-pressed: var(--colors-primary-100);
-    --chip-text-disabled: var(--colors-neutral-600);
-
-    // ─── Forms ───
-    --form-field-background-default: var(--colors-neutral-800);
-    --form-field-background-lighter: var(--colors-neutral-900);
-    --form-field-background-darker: var(--colors-neutral-700);
-    --form-field-background-pressed: var(--colors-neutral-700);
-    --form-field-border-default: var(--colors-neutral-500);
-    --form-field-border-hovered: var(--colors-neutral-300);
-    --form-field-border-pressed: var(--colors-neutral-100);
-    --form-field-border-error: var(--border-error-light);
-    --form-field-border-success: var(--border-success-light);
-    --form-field-border-warning: var(--border-warning-light);
-    --form-field-border-info: var(--border-info-light);
-    --form-option-background-hover: var(--colors-neutral-700);
-    --form-option-background-pressed: var(--colors-neutral-600);
-
-    // ─── Autocomplete ───
-    --autocomplete-highlight: var(--colors-primary-alpha-50);
-    --autocomplete-active: var(--colors-neutral-700);
-
-    // ─── Datepicker ───
-    --form-datecell-background-default: var(--colors-primary-600);
-    --form-datecell-background-hovered: var(--colors-primary-700);
-    --form-datecell-background-pressed: var(--colors-primary-900);
-    --form-datecell-background-focused: var(--colors-primary-600);
-    --form-datecell-today-background-default: var(--alpha-black-10);
-    --form-datecell-today-background-hovered: var(--colors-neutral-700);
-    --form-datecell-today-background-pressed: var(--colors-neutral-600);
-    --form-datecell-today-background-focused: var(--alpha-white-0);
-    --form-datecell-background-disabled: var(--colors-neutral-800);
-    --form-datecell-background-600: var(--colors-primary-600);
-    --form-datecell-background-300: var(--colors-primary-300);
-    --form-datecell-background-200: var(--colors-primary-400);
-    --form-datecell-background-100: var(--colors-primary-300);
-
     // ─── Controls (Checkbox, Radio, Switch) ───
     --controls-border: var(--colors-neutral-400);
     --controls-pressed: var(--colors-neutral-600);
     --controls-ripple-effect: var(--alpha-black-50);
-
-    // Swiper bullet — dark theme. --background-neutral-* aren't remapped for dark,
-    // so the neutral (inactive) states need explicit dark grays here; hover = +1
-    // lighter to stand out on dark. Active = brand primary at a lighter dark step
-    // (primary-500, ~status-green-600 lightness so it pops); hover = +1 darker.
-    --bullet-background-default: var(--colors-neutral-700);
-    --bullet-background-hover: var(--colors-neutral-600);
-    --bullet-background-active: var(--colors-primary-500);
-    --bullet-background-active-hover: var(--colors-primary-600);
     --controls-neutral-checked: var(--colors-neutral-600);
     --controls-neutral-hovered: var(--colors-neutral-400);
     --controls-neutral-pressed: var(--colors-neutral-400);
     --controls-neutral-focused: var(--colors-neutral-600);
-
-    // ─── Checkbox (darker for white checkmark contrast) ───
-    --checkbox-primary-hovered: var(--colors-primary-700);
-    --checkbox-primary-pressed: var(--colors-primary-800);
-
-    // ─── Switch (darker for white thumb contrast) ───
-    --switch-primary-hovered: var(--colors-primary-700);
-    --switch-primary-pressed: var(--colors-primary-800);
-    --switch-neutral-default: var(--colors-neutral-400);
-
-    // ─── Radio (brighter for dot-with-border style) ───
-    --radio-neutral-checked: var(--colors-neutral-400);
-    --radio-neutral-hovered: var(--colors-neutral-300);
-    --radio-neutral-pressed: var(--colors-neutral-300);
     --controls-icon-hovered: var(--colors-primary-400);
     --controls-icon-pressed: var(--colors-primary-400);
     --controls-icon-disabled: var(--colors-neutral-400);
     --controls-text-error: var(--colors-red-400);
-    --controls-switch-track-background: var(--colors-neutral-950);
-
-    --control-disabled: var(--alpha-white-30);
-
-    // ─── Button Status ───
-    --button-status-success-bg: var(--alpha-success-10);
-    --button-status-success-text: var(--colors-green-400);
-    --button-status-error-bg: var(--alpha-error-10);
-    --button-status-error-text: var(--colors-red-400);
-    --button-status-info-bg: var(--alpha-info-10);
-    --button-status-info-text: var(--colors-blue-400);
-    --button-status-warning-bg: var(--alpha-warning-10);
-    --button-status-warning-text: var(--colors-yellow-400);
 
     // ─── Neutral Background ───
     --background-neutral-light: var(--alpha-white-10);
@@ -224,30 +83,6 @@
     --focus-outline: var(--colors-base-white);
     --focus-inner: var(--colors-base-black);
 
-    // ─── Tables ───
-    --table-cell-border: var(--colors-neutral-700);
-    --table-cell-border-inverse: var(--colors-base-white);
-    --table-text-head: var(--colors-neutral-300);
-    --table-background-hover-selected: var(--colors-primary-alpha-40);
-    --table-background-row-selected: var(--colors-primary-alpha-20);
-    --table-background-header: var(--colors-neutral-900);
-    --table-background-cell: var(--background-default);
-    --table-background-row: var(--background-stripe);
-    --table-background-disabled: var(--colors-neutral-700);
-
-    // ─── Avatar ───
-    --avatar-background: var(--colors-neutral-700);
-    --avatar-color: var(--colors-neutral-300);
-    --avatar-border: var(--colors-neutral-800);
-
-    // ─── Buttons ───
-    --button-background-neutral-default: var(--colors-neutral-700);
-    --button-background-neutral-hovered: var(--colors-neutral-600);
-    --button-background-neutral-pressed: var(--colors-neutral-500);
-    --button-background-neutral-selected: var(--colors-neutral-600);
-    --button-background-neutral-focused: var(--colors-neutral-700);
-    --button-background-black-hovered: var(--colors-neutral-900);
-
 
     // ─── Default Borders ───
     --border-primary-light: var(--colors-primary-400);
@@ -261,19 +96,6 @@
     --border-neutral-primary: var(--colors-neutral-600);
     --border-neutral-secondary: var(--colors-neutral-700);
     --border-neutral-tertiary: var(--colors-neutral-750);
-
-    // ─── Stepper ───
-    --stepper-button-completed: var(--colors-primary-500);
-    --stepper-button-completed-hovered: var(--colors-primary-600);
-    --stepper-button-current: var(--colors-primary-500);
-    --stepper-button-current-hovered: var(--colors-primary-600);
-    --stepper-button-upcomming: var(--colors-neutral-600);
-    --stepper-button-upcomming-hovered: var(--colors-neutral-600);
-    --stepper-button-background: var(--background-default);
-    --stepper-text-primary: var(--text-default);
-    --stepper-line-current: var(--colors-neutral-600);
-    --stepper-line-upcomming: var(--colors-neutral-600);
-    --stepper-line-upcomming-hovered: var(--colors-neutral-600);
 
     // ─── Shadows (~2x light opacity for dark surfaces) ───
     --shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, .10);
