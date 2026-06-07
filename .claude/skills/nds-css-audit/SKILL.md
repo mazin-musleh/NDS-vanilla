@@ -168,7 +168,7 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 | `DEAD` | Dead declarations (4 rules) | single-file only |
 | `DUPE` | Duplicate rule bodies (3 rules — DUPE-02 full-tree) | single-file + DUPE-02 full-tree |
 | `PERF` | Selector performance/complexity (4 rules) | single-file only |
-| `TOK` | Token consistency (6 rules — TOK-01/02/04/05/06 full-tree) | single-file + TOK-01/02/04/05/06 full-tree |
+| `TOK` | Token consistency (7 rules — TOK-01/02/04/05/06 full-tree, +TOK-07 dangling refs single-file+full-tree) | single-file + TOK-01/02/04/05/06 full-tree |
 | `all` (**single-file only**) | SEL + DEAD + DUPE + PERF + TOK against one file → one consolidated report | single-file only |
 
 **If `$2` is missing:** single-file mode defaults to `all`. Full-tree mode has no default — show the Phase 1 menu and wait.
@@ -462,7 +462,7 @@ These feed the Phase 4 report's "Gaps observed" section AND Phase 6 EVOLVE — w
 | DEAD | `RULES-DEAD.md` | Dead declarations — shorthand/longhand override, duplicate keys, `@include ltr` re-statements, redundant `var()` token fallbacks | 5 |
 | DUPE | `RULES-DUPE.md` | Duplicate rule bodies — in-file merge, cross-file mixin candidates, in-file selector splits | 3 |
 | PERF | `RULES-PERF.md` | Selector cost/complexity — unanchored `*`/`[attr]`, ID selectors, deep chains | 4 |
-| TOK | `RULES-TOK.md` | Token consistency — hardcoded values, dead tokens, hierarchy direction, state symmetry, cross-file duplicate keys / upstream-hex, cross-sibling indirection symmetry | 6 |
+| TOK | `RULES-TOK.md` | Token consistency — hardcoded values, dead tokens, hierarchy direction, state symmetry, cross-file duplicate keys / upstream-hex, cross-sibling indirection symmetry, dangling token references | 7 |
 
 Severity (HIGH / MEDIUM / LOW) drives display order within each section; byte-delta drives display order across SEL/DEAD/DUPE.
 

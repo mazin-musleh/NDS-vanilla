@@ -8,7 +8,7 @@
 
 .nds-quote {
     --_quote-bg:          var(--quote-background-default, var(--background-card));
-    --_quote-border:      var(--quote-border, var(--border-default));
+    --_quote-border:      var(--quote-border, var(--border-neutral-primary));
     --_quote-radius:      var(--quote-radius, var(--radius-lg));
     --_quote-padding:     var(--quote-padding, var(--spacing-2xl));
     --_quote-mark-color:  var(--quote-mark-color, var(--text-brand));

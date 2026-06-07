@@ -42,7 +42,7 @@
 }
 
 .nds-ipv-image-title {
-  color: var(--text-primary-default);
+  color: var(--text-primary);
   margin-block-start: var(--spacing-sm);
   font-size: var(--typo-text-md-FS);
   line-height: var(--typo-text-md-LH);
@@ -238,7 +238,7 @@
   background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: var(--spacing-md);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--radius-md);
   font-size: var(--typo-text-sm-FS);
   line-height: var(--typo-text-sm-LH);
   max-width: 250px;

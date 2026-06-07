@@ -86,7 +86,7 @@
 
 :is(.nds-section-subtitle, .nds-section-description) {
     margin-block-start: 0;
-    max-width: var(--maxwidth-paragraph-max-width, 720px);
+    max-width: var(--paragraph-max-width, 720px);
 
     &.nds-full {
         max-width: none;
@@ -135,7 +135,7 @@
 }
 
 .nds-section-body {
-    isolation: isolate; /* fix z-index overlap with ::before/::after content */
+    position: relative;
     margin-block-end: 2rem;
 
     &:last-child {
@@ -212,7 +212,7 @@
 
 .nds-section-wrapper {
     width: 100%;
-
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     column-gap: var(--_section-col-gap);

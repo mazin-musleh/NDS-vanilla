@@ -6,7 +6,6 @@
 @use '../mixins' as *;
 
 :root {
-    --maxwidth-paragraph-max-width: var(--spacing-180);
     --spacing-0: 0px;
     --spacing-0-5: 2px;
     --spacing-1: 4px;
@@ -64,14 +63,4 @@
     --radius-lg: var(--radius-16);
     --radius-xl: var(--radius-24);
     --radius-full: var(--radius-9999);
-}
-
-// ==============================================
-// RESPONSIVE VARIABLES - MOBILE OVERRIDES
-// ==============================================
-
-@include mobile {
-    :root {
-        --nds-viewport-padding: calc(var(--nds-viewport-base-padding)/2);
-    }
 }

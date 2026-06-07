@@ -103,7 +103,7 @@
 
     &:is(:active, .pressed, [data-state~="pressed"]) {
       --chip-bg: var(--chip-background-primary-pressed);
-      --chip-text: var(--chip-text-primary-selected);
+      --chip-text: var(--chip-text-primary-pressed);
     }
 
     &[data-state~="selected"] {

@@ -141,7 +141,7 @@
                     box-shadow: inset 0 0 0 2px var(--colors-base-white);
                 }
                 &[data-state~="selected"]:hover {
-                    outline: 2px solid var(--button-background-primary-hover);
+                    outline: 2px solid var(--button-background-primary-hovered);
                 }
             }
             &[data-state~="selected"] {

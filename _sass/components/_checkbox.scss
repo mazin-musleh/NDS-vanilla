@@ -91,11 +91,11 @@
 
     // Neutral variant
     &.nds-neutral:is(:checked, :indeterminate) {
-        &::before { --checkbox-tile-bg: var(--controls-neutral-checked); }
+        &::before { --checkbox-tile-bg: var(--checkbox-neutral-checked); }
 
         &:not(:disabled) {
-            &:hover::before  { --checkbox-tile-bg: var(--controls-neutral-hovered); }
-            &:active::before { --checkbox-tile-bg: var(--controls-neutral-pressed); }
+            &:hover::before  { --checkbox-tile-bg: var(--checkbox-neutral-hovered); }
+            &:active::before { --checkbox-tile-bg: var(--checkbox-neutral-pressed); }
         }
     }
 
@@ -144,7 +144,7 @@
     }
 
     &.nds-neutral:is(:checked, :indeterminate)::after {
-        --checkbox-glyph-bg: var(--controls-neutral-checked);
+        --checkbox-glyph-bg: var(--checkbox-neutral-checked);
 
         @include dark {
             --checkbox-glyph-bg: var(--icon-oncolor);

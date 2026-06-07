@@ -257,7 +257,7 @@
 .nds-table[data-state~="loading"] {
     tbody tr td {
         background-color: var(--table-background-row);
-        color: var(--text-disabled);
+        color: var(--text-default-disabled);
         animation: tableLoading 1.5s ease-in-out infinite alternate;
     }
 }

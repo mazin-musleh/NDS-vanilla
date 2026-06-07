@@ -33,6 +33,15 @@
   --colors-primary-950: #160f0d;
 }
 
+// Dark-mode component overrides. Foundation Day loads render-blocking BEFORE the main
+// bundle when set globally (brand: foundation-day), so a plain :root[data-theme="dark"]
+// (0,2,0) would be shadowed by main's component-dark tokens. The doubled :root bumps
+// specificity to 0,3,0 so it wins in both the global and runtime-switch load orders.
+:root:root[data-theme="dark"] {
+  --featuredicons-background-brand-light: var(--alpha-primary-20);
+  --featuredicons-icon-primary: var(--colors-primary-300);
+}
+
 .nds-swiper-slide.nds-foundingDay .nds-section-body {
   position: relative;
   z-index: 3;
