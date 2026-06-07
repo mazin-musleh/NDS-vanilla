@@ -13,8 +13,6 @@
 // ════════════════════════════════════════════════════════════════════════════
 
 :root {
-  --brand-primary: #5B423B; // seed (anchor = primary-600)
-  --neutral-tint: 0.5; // warm grays, a touch above default
   // Event surface overrides (literal hex — apply on every browser):
   --background-footer: #231f20;
   --background-stripe: #f9f6f2;
@@ -165,13 +163,10 @@
 
 
 
-@supports (color: oklch(from white l c h)) {
-  :root {
-    /* @include oklch.brand-ramp('primary', '--brand-primary'); */
-    @include oklch.brand-alpha('primary', '--brand-primary');
-    @include oklch.neutral-ramp('--brand-primary'); // warm grays (replaces DGA's cool slate)
-    --background-brand-strong: var(--colors-primary-900);
-  }
+:root {
+  @include oklch.brand-alpha-static('primary', #5B423B);
+  @include oklch.neutral-ramp-static(#5B423B, 0.5); // warm grays (replaces DGA's cool slate)
+  --background-brand-strong: var(--colors-primary-900);
 }
 
 // ── Event-specific CSS (beyond tokens) ──

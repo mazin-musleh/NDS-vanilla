@@ -1,4 +1,6 @@
 @use 'sass:list';
+@use 'sass:math';
+@use 'sass:color';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // NDS auto-theme engine — seed → ramp (for predefined / "auto" brands)
@@ -8,7 +10,7 @@
 // a few seeds → a whole palette, used to ship predefined brands quickly. For a
 // consumer's real, full brand, use authored hex instead (exact + universal).
 //
-// Usage — in your _sass/themes/_<brand>.scss:
+// Usage — in your _sass/brands/_<brand>.scss:
 //
 //   @use 'oklch-template' as oklch;
 //   @supports (color: oklch(from white l c h)) {
@@ -105,5 +107,59 @@ $_neutral-ramp: (
 @mixin neutral-ramp($seed) {
   @each $step, $lc in $_neutral-ramp {
     --colors-neutral-#{$step}: #{'oklch(from var(' + $seed + ') ' + list.nth($lc, 1) + ' calc(' + list.nth($lc, 2) + ' * var(--neutral-tint, 1)) h)'};
+  }
+}
+
+// ─── BUILD-TIME (static) counterparts ────────────────────────────────────────
+// Same curves as the runtime mixins above, but resolved to sRGB hex at Sass
+// compile time. No @supports gate, no browser OKLCH requirement, no silent
+// DGA fallback. Use for dedicated/authored brands; use the runtime mixins for
+// quick event brands where a fallback is acceptable.
+
+// Private: gamut-map an OKLCH color into sRGB and return a legacy rgb() value.
+@function _to-hex($color) {
+  $srgb: color.to-space(
+    color.to-gamut($color, $space: srgb, $method: local-minde),
+    srgb);
+  $r: math.clamp(0, math.round(color.channel($srgb, 'red',   $space: srgb) * 255), 255);
+  $g: math.clamp(0, math.round(color.channel($srgb, 'green', $space: srgb) * 255), 255);
+  $b: math.clamp(0, math.round(color.channel($srgb, 'blue',  $space: srgb) * 255), 255);
+  @return rgb($r, $g, $b);
+}
+
+// Emit the full color ramp for one family as static hex. $seed is a hex color;
+// $anchor is the step the seed maps to exactly (600 for primary/secondary, 500 for tertiary).
+@mixin brand-ramp-static($family, $seed, $anchor: 600) {
+  $seed-oklch: color.to-space($seed, oklch);
+  $c: color.channel($seed-oklch, 'chroma', $space: oklch);
+  @each $step, $lc in $_ramp {
+    $l: list.nth($lc, 1);
+    $c-scale: list.nth($lc, 2);
+    @if $step == $anchor {
+      --colors-#{$family}-#{$step}: #{$seed};
+    } @else {
+      $computed: color.change($seed-oklch, $lightness: $l, $chroma: $c * $c-scale, $space: oklch);
+      --colors-#{$family}-#{$step}: #{_to-hex($computed)};
+    }
+  }
+}
+
+// Emit the brand-tint alpha ramp as static rgba() values.
+@mixin brand-alpha-static($family, $seed) {
+  @each $a in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
+    --colors-#{$family}-alpha-#{$a}: #{color.change($seed, $alpha: $a * 0.01)};
+  }
+  --colors-#{$family}-alpha-100: #{$seed};
+}
+
+// Emit a temperature-tinted neutral ramp as static hex. $seed provides the hue;
+// $neutral-tint scales the chroma (matches the runtime --neutral-tint dial; 0 = true gray).
+@mixin neutral-ramp-static($seed, $neutral-tint: 1) {
+  $seed-oklch: color.to-space($seed, oklch);
+  @each $step, $lc in $_neutral-ramp {
+    $l: list.nth($lc, 1);
+    $c-abs: list.nth($lc, 2) * $neutral-tint;
+    $computed: color.change($seed-oklch, $lightness: $l, $chroma: $c-abs, $space: oklch);
+    --colors-neutral-#{$step}: #{_to-hex($computed)};
   }
 }

@@ -1,6 +1,11 @@
 @use 'sass:map';
 @use 'oklch-template' as oklch;
 
+// Dedicated brands — full authored hex ramps (build-time, no @supports gate).
+@use 'brand-crimson';
+@use 'brand-corporate';
+@use 'brand-sunset';
+
 // Default typeface for the runtime brands (sets --nds-font-brand). DGA and stylesheet
 // brands (Foundation Day) are NOT [data-brand] selectors, so they keep the global
 // --nds-font-brand from _variables-critical.scss. A brand overrides via its `font` field.
@@ -38,29 +43,12 @@ $brand-font: "'Tajawal', sans-serif";
 // grouped selector, so the compiled CSS stays as compact as a hand-grouped rule.
 // ════════════════════════════════════════════════════════════════════════════
 
-$brands: (
-  "crimson": (
-    primary:      #e11d48,
-    secondary:    #d97706,
-    tertiary:     #0ea5e9,
-    neutral-tint: 0.2,
-  ),
-  "corporate": (
-    primary:      #4f46e5,
-    secondary:    #0d9488,
-    tertiary:     #8b5cf6,
-    neutral-tint: 1.5,
-  ),
-  "sunset": (
-    primary:      #ea580c,
-    secondary:    #db2777,
-    tertiary:     #f59e0b,
-    neutral-tint: 0.2,
-  ),
-);
+// Add OKLCH event brands here (seed → auto-ramp, @supports-gated).
+// Dedicated brands live in their own files (brand-crimson, brand-corporate, brand-sunset).
+$brands: ();
 
 // Foundation Day is NOT here — it's a standalone stylesheet brand loaded via
-// `brand: foundation-day` (see _sass/themes/_foundation-day.scss), not a
+// `brand: foundation-day` (see _sass/brands/_foundation-day.scss), not a
 // runtime-switchable [data-brand].
 
 // Per-brand seeds + literal overrides (apply on every browser).
