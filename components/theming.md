@@ -162,7 +162,7 @@ brand: acme   # → loads assets/css/nds-brand-acme.min.css</code>
 
             <div class="nds-block">
                 <h3 class="nds-block-title">2b — Load it (SCSS, for source forks)</h3>
-                <p>Forking the source? Copy the authored-hex full-brand template — <code class="nds-inline-code lang-css">_sass/themes/_theme-template.scss</code> (a complete sample brand with every slot filled in) — to <code class="nds-inline-code lang-css">_sass/themes/_&lt;brand&gt;.scss</code>, replace the hex with yours, and compile it to its own entry point.</p>
+                <p>Forking the source? Copy the authored-hex full-brand template — <code class="nds-inline-code lang-css">_sass/brands/_theme-template.scss</code> (a complete sample brand with every slot filled in) — to <code class="nds-inline-code lang-css">_sass/brands/_&lt;brand&gt;.scss</code>, replace the hex with yours, and compile it to its own entry point.</p>
                 <div class="nds-code">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -173,7 +173,7 @@ brand: acme   # → loads assets/css/nds-brand-acme.min.css</code>
 // assets/css/nds-brand-acme.min.scss  (Jekyll front-matter entry)
 // ---
 // ---
-@use 'themes/acme';</code>
+@use 'brands/acme';</code>
                 </div>
             </div>
 
@@ -199,7 +199,7 @@ brand: acme   # → loads assets/css/nds-brand-acme.min.css</code>
                         </button>
                     </div>
                     <code class="lang-scss code">
-// _sass/themes/_acme.scss
+// _sass/brands/_acme.scss
 @use 'oklch-template' as oklch;
 
 :root { --brand-primary:#3538cd; --brand-secondary:#0e7090; --brand-tertiary:#6938ef; }

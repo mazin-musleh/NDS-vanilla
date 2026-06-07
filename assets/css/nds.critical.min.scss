@@ -15,14 +15,14 @@
 // semantic → dark). Lives in crit, not main, so first paint has the REAL tokens — no
 // bootstrap copies, no DGA hex fallbacks. Stays under the ~14 KB first-RTT budget.
 @use 'tokens/primitives';
-@use 'themes/brand-dga';
+@use 'brands/brand-dga';
 @use 'tokens/semantic';
 
 // Runtime brand slot overrides ([data-brand]) — after the light foundation, and
 // BEFORE the dark layer, so a brand's dark surface (variables-dark) wins over its
 // light --background-brand-light default for brand+dark pages (the knob carries both
 // modes; consumers stay mode-agnostic).
-@use 'themes/brands';
+@use 'brands/register';
 
 // Critical layout / typography / spacing tokens (colour bootstrap removed — now above).
 @use 'variables-critical';

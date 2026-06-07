@@ -13,10 +13,10 @@
 //
 // Related layers (separate compilation units):
 //   _variables-critical.scss  layout/typo/spacing tokens (critical bundle)
-//   tokens/primitives, themes/brand-dga, tokens/semantic, _variables-dark.scss
+//   tokens/primitives, brands/brand-dga, tokens/semantic, _variables-dark.scss
 //                             FOUNDATION token layer (+ its dark) — @use'd by the critical bundle
 //   _variables-a11y.scss      [data-a11y] overrides (accessibility add-on bundle)
-//   themes/*                  brand overrides (global :root entry or [data-brand])
+//   brands/*                  brand overrides (global :root entry or [data-brand])
 // ════════════════════════════════════════════════════════════════════════════
 @use 'tokens/components';
 @use 'tokens/components-dark';

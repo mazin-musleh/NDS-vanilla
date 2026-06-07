@@ -23,7 +23,7 @@
     --nds-transition: calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
 
     // Font family. --nds-font-brand is the brand typeface KNOB (DGA default here;
-    // runtime brands override it — see themes/_brands.scss). --nds-font-family is the
+    // runtime brands override it — see brands/_register.scss). --nds-font-family is the
     // EFFECTIVE font everything consumes; it reads the knob, and the a11y dyslexia
     // mode overrides it. a11y references --nds-font-brand so it follows the brand.
     --nds-font-brand: 'IBM Plex Sans Arabic', sans-serif;
