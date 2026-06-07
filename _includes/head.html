@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     {%- if site.brand %}
     <!-- Default brand override: render-blocking so it resolves before paint (no flash). Path from _data/brands.yml; empty = pure DGA. -->
-    {%- assign _brand = site.data.brands | where: 'value', site.brand | first -%}
+    {%- assign _brands_flat = "" | split: "" -%}{%- for _g in site.data.brands -%}{%- assign _brands_flat = _brands_flat | concat: _g.list -%}{%- endfor -%}
+    {%- assign _brand = _brands_flat | where: 'value', site.brand | first -%}
     {%- if _brand.css -%}{%- assign _brand_css = _brand.css -%}{%- else -%}{%- capture _brand_css -%}css/nds-brand-{{ site.brand }}.min.css{%- endcapture -%}{%- endif -%}
     <link rel="stylesheet" href="{{ _brand_css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}

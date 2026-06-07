@@ -17,7 +17,7 @@
         -->
         {% if site.brand_switcher %}
         <!-- Brand switcher. data-portal: the menu must escape the topbar's
-             overflow-y:clip. Brands map to _sass/themes/_brands.scss. -->
+             overflow-y:clip. Brands map to _sass/brands/_register.scss. -->
         <div class="nds-dropmenu nds-brand-switcher" data-portal>
             <button class="nds-btn nds-subtle nds-icon-only nds-dropmenu-trigger" aria-label="Choose a brand theme">
                 <i class="nds-icon nds-hgi-highlighter" aria-hidden="true"></i>
@@ -27,10 +27,13 @@
                     <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="">
                         <span class="nds-label">Default (DGA)</span>
                     </button>
-                    {% for b in site.data.brands %}
+                    {% for group in site.data.brands %}
+                    {% if group.label %}<div class="nds-divider nds-lg">{{ group.label }}</div>{% endif %}
+                    {% for b in group.list %}
                     <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="{{ b.value }}"{% if b.stylesheet %} data-brand-css="{{ b.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% if b.js %} data-brand-js="{{ b.js | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% endif %}{% endif %}>
                         <span class="nds-label">{{ b.label }}</span>
                     </button>
+                    {% endfor %}
                     {% endfor %}
                 </div>
             </div>

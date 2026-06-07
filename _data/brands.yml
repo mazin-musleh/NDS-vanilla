@@ -1,24 +1,32 @@
 # Selectable brands for the topbar/demo switchers and NDS.Brand validation.
 #
-# Two kinds:
+# Structure: top-level groups with optional `label` + `children`.
+#   label — if present, renders as a visual group separator in the switcher UI.
+#   list  — list of brand entries:
+#
 #   token brand       — recolors via [data-brand] slot overrides defined in the
-#                       $brands map (_sass/themes/_brands.scss); ships in critical.
+#                       $brands map (_sass/brands/_register.scss); ships in critical.
 #   stylesheet: true  — a standalone stylesheet brand (its own nds-brand-<value>.min.css,
-#                       e.g. _sass/themes/_<value>.scss); NDS.Brand loads/unloads the
+#                       e.g. _sass/brands/_<value>.scss); NDS.Brand loads/unloads the
 #                       stylesheet on switch instead of toggling [data-brand].
 #
 # Keep token-brand `value`s in sync with the $brands map keys; stylesheet `value`s with
-# the matching _sass/themes/_<value>.scss + assets/css/nds-brand-<value>.min.scss.
-- value: crimson
-  label: Crimson
-- value: corporate
-  label: Corporate
-- value: sunset
-  label: Sunset
-- value: foundation-day
-  label: Foundation Day
-  stylesheet: true
-  # Self-contained event folder (paths relative to assets/). Omit css/js on a
-  # stylesheet brand to use the default assets/css|js/nds-brand-<value>.min.{css,js}.
-  css: events/foundation_day/nds-brand-foundation-day.min.css
-  js: events/foundation_day/nds-brand-foundation-day.min.js
+# the matching _sass/brands/_<value>.scss + assets/css/nds-brand-<value>.min.scss.
+
+- list:
+    - value: foundation-day
+      label: Foundation Day
+      stylesheet: true
+      # Self-contained event folder (paths relative to assets/). Omit css/js on a
+      # stylesheet brand to use the default assets/css|js/nds-brand-<value>.min.{css,js}.
+      css: events/foundation_day/nds-brand-foundation-day.min.css
+      js: events/foundation_day/nds-brand-foundation-day.min.js
+
+- label: Demo
+  list:
+    - value: crimson
+      label: Crimson
+    - value: corporate
+      label: Corporate
+    - value: sunset
+      label: Sunset
