@@ -228,12 +228,12 @@
   tags: ["CSS"]
   url: "/components/tags.html"
 
-- title: "Theming"
-  description: "Re-brand the whole system by overriding colour slots — global or scoped, with DGA as the fallback"
+- title: "Brands"
+  description: "Runtime brand switcher — re-skin the whole system with token brands (zero-flash) or stylesheet event brands with inject/teardown hooks"
   icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
   category: "UI"
-  tags: ["CSS"]
-  url: "/components/theming.html"
+  tags: ["CSS", "JS"]
+  url: "/components/brands.html"
 
 - title: "TOC"
   description: "Auto-populated in-page table of contents with active-section tracking"
