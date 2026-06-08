@@ -1,0 +1,33 @@
+# Selectable themes for the topbar/demo switcher (_js/nds-showcase.js).
+#
+# A predefined "theme" is a small set of SEED values defined in the $themes map in
+# _sass/themes/_register.scss; the switcher applies one by TOGGLING its token in the
+# data-theme attribute (e.g. <html data-theme="dark crimson">), matched by the
+# runtime OKLCH ramp at :root[data-theme~="<value>"]. Keep the `value`s here in sync
+# with the $themes keys.
+#
+# Structure: top-level groups with an optional `label` (renders as a separator) + `list`.
+# Each entry is one of:
+#   seed theme        — value + label. Seeds live in the SCSS $themes map (toggle a token).
+#   stylesheet: true  — a standalone full-stylesheet theme (its own nds-theme-<value>.min.css,
+#                       e.g. _sass/themes/_<value>.scss); the switcher loads/unloads the
+#                       stylesheet (+ optional js) instead of toggling a token. Use this tier
+#                       for a single-theme site or a bespoke event skin.
+
+- list:
+    - value: foundation-day
+      label: Foundation Day
+      stylesheet: true
+      # Self-contained event folder (paths relative to assets/). Omit css/js to use the
+      # default assets/css|js/nds-theme-<value>.min.{css,js}.
+      css: events/foundation_day/nds-theme-foundation-day.min.css
+      js: events/foundation_day/nds-theme-foundation-day.min.js
+
+- label: Demo
+  list:
+    - value: crimson
+      label: Crimson
+    - value: corporate
+      label: Corporate
+    - value: sunset
+      label: Sunset

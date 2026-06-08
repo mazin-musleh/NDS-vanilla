@@ -1,0 +1,77 @@
+@use 'sass:map';
+@use 'oklch-template' as oklch;
+
+// ════════════════════════════════════════════════════════════════════════════
+// Runtime themes — seed → ramp, keyed on the data-theme attribute.
+//
+// A theme is a set of SEED vars (--brand-primary required; --brand-secondary /
+// --brand-tertiary / --neutral-tint / --nds-font-brand optional). The OKLCH engine
+// derives the full ramp, alphas and a temperature-matched neutral scale; DARK MODE
+// FOLLOWS AUTOMATICALLY (_variables-dark.scss remaps semantic tokens onto the same
+// seed-derived steps — one seed change reskins both modes; rare contrast misses are
+// hand-corrected via the doubled :root:root[data-theme~="dark"]).
+//
+// ACTIVATION — two routes, ONE shared ramp (grouped selector below):
+//   • Predefined theme:  [data-theme~="<name>"]  (seeds from the $themes map). Switch
+//     by toggling the token, e.g. <html data-theme="dark crimson">.
+//   • Inline / custom:    [data-palette] + inline --brand-* on <html>. Also: inline
+//     seeds OVERRIDE a predefined theme (inline beats [data-theme~=] on specificity),
+//     so a predefined theme can be tweaked live.
+// DGA = no theme token, no flag → its frozen hex (themes/_dga.scss, @use'd
+// before this) is untouched. @supports-gated: engines without relative-colour OKLCH
+// fall back to DGA.
+//
+// Theme NAMES here must stay in sync with _data/brands.yml (the switcher labels).
+// A single-theme production site uses a full stylesheet override instead (see
+// themes/_foundation-day.scss), not this slot.
+// ════════════════════════════════════════════════════════════════════════════
+
+// Seed sets — single source of truth for the predefined themes. primary required;
+// the rest optional (secondary/tertiary auto-derive from primary by hue rotation).
+$themes: (
+  'crimson':   ('primary': #be123c, 'secondary': #d97706, 'tertiary': #0ea5e9, 'tint': 0.2, 'font': "'Tajawal', sans-serif"),
+  'corporate': ('primary': #4338ca, 'secondary': #0d9488, 'tertiary': #8b5cf6, 'tint': 1.5, 'font': "'Tajawal', sans-serif"),
+  'sunset':    ('primary': #b45309, 'secondary': #db2777, 'tertiary': #f59e0b, 'tint': 0.2, 'font': "'Tajawal', sans-serif"),
+);
+
+// Grouped activation selector: every predefined theme token + the [data-palette]
+// flag (the inline/custom path). One ramp body shared by all.
+$sel: ':root[data-palette]';
+@each $name, $seeds in $themes {
+  $sel: ':root[data-theme~="#{$name}"], #{$sel}';
+}
+
+@supports (color: oklch(from white l c h)) {
+  #{$sel} {
+    // Derived defaults — overridden by a theme's own seeds (below) or inline. +150°
+    // dodges the flat 180° complement; −30° gives an analogous accent, so a
+    // primary-only / custom seed still resolves a full, coherent palette. Custom-prop
+    // resolution is by name, so the ramps read the final value regardless of order.
+    --brand-secondary: oklch(from var(--brand-primary) l c calc(h + 150));
+    --brand-tertiary:  oklch(from var(--brand-primary) l c calc(h - 30));
+
+    @include oklch.brand-ramp('primary',   '--brand-primary');
+    @include oklch.brand-ramp('secondary', '--brand-secondary');
+    @include oklch.brand-ramp('tertiary',  '--brand-tertiary', 500);
+    @include oklch.brand-alpha('primary',  '--brand-primary');
+    @include oklch.brand-alpha('tertiary', '--brand-tertiary');
+    @include oklch.neutral-ramp('--brand-primary');   // honours --neutral-tint
+
+    --background-brand-strong: var(--colors-primary-900);
+    --background-brand-light:  var(--colors-primary-25);
+    --img-overlay-color:       var(--colors-neutral-950);
+  }
+}
+
+// Per-theme seeds (apply on every browser; emitted AFTER the grouped block so a
+// theme's explicit secondary/tertiary win over the derived defaults at equal
+// specificity). On non-OKLCH engines these set vars nothing reads → DGA.
+@each $name, $seeds in $themes {
+  :root[data-theme~="#{$name}"] {
+    --brand-primary: #{map.get($seeds, 'primary')};
+    @if map.get($seeds, 'secondary')      { --brand-secondary: #{map.get($seeds, 'secondary')}; }
+    @if map.get($seeds, 'tertiary')       { --brand-tertiary:  #{map.get($seeds, 'tertiary')}; }
+    @if map.get($seeds, 'tint') != null   { --neutral-tint:    #{map.get($seeds, 'tint')}; }
+    @if map.get($seeds, 'font')           { --nds-font-brand:  #{map.get($seeds, 'font')}; }
+  }
+}

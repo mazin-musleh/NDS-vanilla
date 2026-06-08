@@ -7,7 +7,7 @@
    Activated via: <html data-theme="dark">
    ── */
 
-:root[data-theme="dark"] {
+:root[data-theme~="dark"] {
     // ─── Links ───
     --link-primary: var(--colors-primary-400);
     --link-primary-hovered: var(--colors-primary-300);

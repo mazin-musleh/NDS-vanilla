@@ -8,7 +8,7 @@
     padding-block: var(--spacing-4xl);
     z-index: 1;
 
-    :root[data-theme="dark"] &:not(.nds-green, .nds-brand) {
+    :root[data-theme~="dark"] &:not(.nds-green, .nds-brand) {
         background: var(--colors-neutral-700);
     }
 }
@@ -181,7 +181,7 @@
         // Invert logos on dark backgrounds when marked with nds-oncolor
         &.nds-oncolor {
 
-            :root[data-theme="dark"] &,
+            :root[data-theme~="dark"] &,
             .nds-footer:is(.nds-green, .nds-brand) & {
                 filter: brightness(0) invert(1);
             }
@@ -197,7 +197,7 @@
     background: var(--background-footer);
 
     // Light mode: force dark-bg appearance since green bg stays dark regardless of theme
-    :root:not([data-theme="dark"]) & {
+    :root:not([data-theme~="dark"]) & {
         color: var(--text-oncolor-primary);
         --divider-color: var(--alpha-white-10);
 

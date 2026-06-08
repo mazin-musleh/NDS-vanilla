@@ -228,7 +228,7 @@ html[dir="rtl"] {
 
 // ══════════════════════════════════════════════════════════════════════════
 // Theming demo (components/theming) — live brand switcher styles.
-// The brand [data-brand] definitions now live in brands/_register.scss (compiled
+// The brand [data-brand] definitions now live in themes/_register.scss (compiled
 // into the critical bundle, loaded on every page). The switcher script in
 // theming.md toggles data-brand on <html>.
 // ══════════════════════════════════════════════════════════════════════════

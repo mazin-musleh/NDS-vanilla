@@ -16,21 +16,23 @@
             data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
         -->
         {% if site.brand_switcher %}
-        <!-- Brand switcher. data-portal: the menu must escape the topbar's
-             overflow-y:clip. Brands map to _sass/brands/_register.scss. -->
-        <div class="nds-dropmenu nds-brand-switcher" data-portal>
-            <button class="nds-btn nds-subtle nds-icon-only nds-dropmenu-trigger" aria-label="Choose a brand theme">
+        <!-- Theme switcher (demo). data-portal: the menu must escape the topbar's
+             overflow-y:clip. Predefined themes toggle a data-theme token (seeds in
+             _sass/themes/_register.scss); stylesheet themes carry data-theme-css/js.
+             Applied by _js/nds-theme.js. -->
+        <div class="nds-dropmenu nds-theme-switcher" data-portal>
+            <button class="nds-btn nds-subtle nds-icon-only nds-dropmenu-trigger" aria-label="Choose a theme">
                 <i class="nds-icon nds-hgi-highlighter" aria-hidden="true"></i>
             </button>
-            <div class="nds-dropmenu-menu nds-brand-menu" hidden>
+            <div class="nds-dropmenu-menu nds-theme-menu" hidden>
                 <div class="nds-dropmenu-scroll">
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="">
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
                         <span class="nds-label">Default (DGA)</span>
                     </button>
-                    {% for group in site.data.brands %}
+                    {% for group in site.data.themes %}
                     {% if group.label %}<div class="nds-divider nds-lg">{{ group.label }}</div>{% endif %}
                     {% for b in group.list %}
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-brand-value="{{ b.value }}"{% if b.stylesheet %} data-brand-css="{{ b.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% if b.js %} data-brand-js="{{ b.js | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% endif %}{% endif %}>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="{{ b.value }}"{% if b.stylesheet %} data-theme-css="{{ b.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% if b.js %} data-theme-js="{{ b.js | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% endif %}{% endif %}>
                         <span class="nds-label">{{ b.label }}</span>
                     </button>
                     {% endfor %}

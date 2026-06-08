@@ -74,13 +74,6 @@
   tags: ["JS", "CSS", "API"]
   url: "/components/cooldown-button.html"
 
-- title: "Dark Mode"
-  description: "Full-page light and dark theme toggle with localStorage persistence and circular reveal animation"
-  icon: '<i class="hgi hgi-stroke hgi-moon-02"></i>'
-  category: "UI"
-  tags: ["JS"]
-  url: "/components/dark-mode.html"
-
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
   icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'
@@ -228,12 +221,12 @@
   tags: ["CSS"]
   url: "/components/tags.html"
 
-- title: "Brands"
-  description: "Runtime brand switcher — re-skin the whole system with token brands (zero-flash) or stylesheet event brands with inject/teardown hooks"
+- title: "Themes"
+  description: "Light/dark mode and the colour palette in one data-theme attribute — toggle dark, switch seed themes (zero-flash), or load a stylesheet theme with inject/teardown hooks"
   icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
   category: "UI"
   tags: ["CSS", "JS"]
-  url: "/components/brands.html"
+  url: "/components/themes.html"
 
 - title: "TOC"
   description: "Auto-populated in-page table of contents with active-section tracking"

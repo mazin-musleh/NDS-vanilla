@@ -1,8 +1,8 @@
-// Foundation Day brand behaviour — injects the event hero slide into the page's
-// hero swiper while the brand is active, and removes it on teardown. Loaded on
-// demand by NDS.Brand (ensureBrandJS) only when brand = foundation-day; torn down
-// when switching away. Structure mirrors _includes/hero-main.html (the canonical
-// NDS hero swiper) so NDS.Swiper.create() initializes it.
+// Foundation Day theme behaviour — injects the event hero slide into the page's
+// hero swiper while the theme is active, and removes it on teardown. Loaded on
+// demand by the theme switcher (_js/nds-showcase.js) only when foundation-day is
+// active; torn down when switching away. Structure mirrors _includes/hero-main.html
+// (the canonical NDS hero swiper) so NDS.Swiper.create() initializes it.
 (function () {
     'use strict';
 
@@ -36,7 +36,7 @@
     // the later hook calls.
     var BASE = (function () {
         var s = document.currentScript ||
-            document.querySelector('script[src*="nds-brand-foundation-day"]');
+            document.querySelector('script[src*="nds-theme-foundation-day"]');
         return s && s.src ? s.src.slice(0, s.src.lastIndexOf('/') + 1) : '';
     })();
 
@@ -108,12 +108,13 @@
         if (swiper.hasAttribute('data-nds-swiper-initialized')) reinit(swiper);
     }
 
-    // Register hooks so NDS.Brand can re-inject on re-activation (the script only
+    // Register hooks so the switcher can re-inject on re-activation (the script only
     // auto-injects once, below) and remove the slide on switch-away.
-    window.__NDS_BRAND_HOOKS = window.__NDS_BRAND_HOOKS || {};
-    window.__NDS_BRAND_HOOKS['foundation-day'] = { inject: inject, teardown: teardown };
+    window.__NDS_THEME_HOOKS = window.__NDS_THEME_HOOKS || {};
+    window.__NDS_THEME_HOOKS['foundation-day'] = { inject: inject, teardown: teardown };
 
-    // Self-inject only when the brand is still active at load time — guards against the
+    // Self-inject only when the theme is still active at load time — guards against the
     // race where the user switches away before this async script finished fetching.
-    if (window.NDS && NDS.Brand && NDS.Brand.get() === 'foundation-day') inject();
+    // __NDS_THEME_ACTIVE is set by the switcher (nds-showcase.js) for stylesheet themes.
+    if (window.__NDS_THEME_ACTIVE === 'foundation-day') inject();
 })();

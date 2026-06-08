@@ -127,7 +127,7 @@ $a11y-filters: (
 }
 
 // Dark HC: invert bg/fg, shift the link ladder.
-:root[data-a11y~="high-contrast"][data-theme="dark"] {
+:root[data-a11y~="high-contrast"][data-theme~="dark"] {
     --_hc-bg:           var(--colors-base-black);
     --_hc-fg:           var(--colors-base-white);
     --_hc-link:         var(--colors-primary-300);
@@ -160,7 +160,7 @@ $a11y-filters: (
     --btn-loading-color:      var(--text-oncolor-primary);
     --btn-loading-track:      var(--alpha-white-20);
 }
-:root[data-a11y~="high-contrast"][data-theme="dark"] .nds-btn:is(.nds-primary,.nds-neutral):not(.nds-oncolor) {
+:root[data-a11y~="high-contrast"][data-theme~="dark"] .nds-btn:is(.nds-primary,.nds-neutral):not(.nds-oncolor) {
     --btn-bg:             var(--button-background-oncolor-default);
     --btn-bg-hover:       var(--button-background-oncolor-hovered);
     --btn-bg-active:      var(--button-background-oncolor-pressed);
@@ -255,7 +255,7 @@ $a11y-filters: (
 // .nds-green variant, which would otherwise invert to a white band — sits
 // flush at --_hc-bg with a --_hc-fg top edge for separation. Comes after
 // the rules above so it wins over the .nds-green inversion in dark mode.
-:root[data-a11y~="high-contrast"][data-theme="dark"] .nds-footer {
+:root[data-a11y~="high-contrast"][data-theme~="dark"] .nds-footer {
     background: var(--_hc-bg) !important;
     color: var(--_hc-fg);
     --text-oncolor-primary:   var(--_hc-fg);
@@ -352,11 +352,11 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 // Dark mode: --border-warning resolves dark on dark — swap to the
 // lighter warning border. Title bg also swaps because --background-
 // warning-25 is neutral-900 in dark, not amber.
-:root[data-a11y~="highlight-titles"][data-theme="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6),
-:root[data-a11y~="highlight-links"][data-theme="dark"] body[class] > :is(header, main, footer) a {
+:root[data-a11y~="highlight-titles"][data-theme~="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6),
+:root[data-a11y~="highlight-links"][data-theme~="dark"] body[class] > :is(header, main, footer) a {
     outline-color: var(--border-warning-light);
 }
-:root[data-a11y~="highlight-titles"][data-theme="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
+:root[data-a11y~="highlight-titles"][data-theme~="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
     background-color: var(--alpha-warning-10);
 }
 

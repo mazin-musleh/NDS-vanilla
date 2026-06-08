@@ -133,7 +133,7 @@ $breakpoints-range: (
   @at-root {
     @each $selector in & {
 
-      :root[data-theme="dark"] #{$selector} {
+      :root[data-theme~="dark"] #{$selector} {
         @content;
       }
     }

@@ -253,7 +253,7 @@
 
   @at-root {
     .nds-btn.nds-oncolor,
-    :where(:root[data-theme="dark"]) .nds-btn:not(.nds-primary, .nds-neutral) {
+    :where(:root[data-theme~="dark"]) .nds-btn:not(.nds-primary, .nds-neutral) {
       --btn-color-disabled: var(--text-default-oncolor-disabled);
       --btn-indicator-color: var(--alpha-white-40);
       --btn-indicator-active: var(--alpha-white-60);
@@ -393,7 +393,7 @@
 
   @at-root {
     .nds-btn.nds-oncolor.nds-destructive,
-    :where(:root[data-theme="dark"]) .nds-btn.nds-destructive {
+    :where(:root[data-theme~="dark"]) .nds-btn.nds-destructive {
       --btn-loading-color: var(--colors-base-white);
       --btn-loading-track: var(--alpha-white-20);
 

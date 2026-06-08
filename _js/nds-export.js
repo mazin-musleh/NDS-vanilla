@@ -234,9 +234,14 @@
     // occurs between them, so the user never sees the flip.
     function readTableTokens() {
         const root = document.documentElement;
+        // data-theme is a token list ("dark crimson"): drop ONLY the dark token for the
+        // read so the printed colours match the on-screen theme in its light variant.
         const prevTheme = root.getAttribute('data-theme');
-        const needsFlip = prevTheme && prevTheme !== 'light';
-        if (needsFlip) root.setAttribute('data-theme', 'light');
+        const needsFlip = !!prevTheme && prevTheme.split(/\s+/).indexOf('dark') !== -1;
+        if (needsFlip) {
+            const light = prevTheme.split(/\s+/).filter(t => t !== 'dark' && t !== 'light').join(' ');
+            if (light) root.setAttribute('data-theme', light); else root.removeAttribute('data-theme');
+        }
         const cs = getComputedStyle(root);
         const v = (name, fallback) => cs.getPropertyValue(name).trim() || fallback;
         const tokens = {

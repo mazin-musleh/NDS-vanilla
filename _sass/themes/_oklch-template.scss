@@ -10,7 +10,7 @@
 // a few seeds → a whole palette, used to ship predefined brands quickly. For a
 // consumer's real, full brand, use authored hex instead (exact + universal).
 //
-// Usage — in your _sass/brands/_<brand>.scss:
+// Usage — in your _sass/themes/_<brand>.scss:
 //
 //   @use 'oklch-template' as oklch;
 //   @supports (color: oklch(from white l c h)) {

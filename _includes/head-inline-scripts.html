@@ -1,12 +1,9 @@
 <script>
-    // Pre-paint: mirror the saved theme/brand from localStorage to <html> attributes.
+    // Pre-paint FOUC guard: stamp the saved data-theme ("dark crimson") before first
+    // paint, so dark mode + predefined themes show with no flash. Stylesheet/custom
+    // themes are (re)applied by NDS.Theme.init (nds-theme.js) after paint.
     (function() {
-        var r = document.documentElement;
-        var t = localStorage.getItem('nds-theme');
-        if (t === 'dark' || t === 'light') r.setAttribute('data-theme', t);
-        {%- if site.brand_switcher %}
-        var b = localStorage.getItem('nds-brand');
-        if (b) r.setAttribute('data-brand', b);
-        {%- endif %}
+        var v = localStorage.getItem('nds-theme');
+        if (v) document.documentElement.setAttribute('data-theme', v);
     })();
 </script>

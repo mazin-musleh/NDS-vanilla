@@ -27,20 +27,8 @@
             // init() only syncs toggle-widget UI (icon/checkbox/aria) and wires the
             // toggle — no page-color repaint; theme application fires on interaction.
             name: 'Theme',
-            selector: '[data-theme-toggle], #ndsThemeToggle',
+            selector: '[data-theme-toggle], #ndsThemeToggle, [data-theme-value]',
             init: () => NDS.Theme?.init?.(),
-        },
-        {
-            // Delegated (injected after the critical pass): first paint is owned by
-            // the pre-paint stamp (head-inline-scripts.html) — saved token brand →
-            // [data-brand], saved theme → its stylesheet — so init() does no
-            // first-paint work: it reconciles state, syncs aria, and wires the click.
-            // A click landing in the pre-init gap no-ops and recovers on the next
-            // click (Tabs/Tables pattern). Cold init (localStorage read + listener,
-            // no layout reads).
-            name: 'Brand',
-            selector: '[data-brand-value]',
-            init: () => NDS.Brand?.init?.(),
         },
         {
             // Critical: init un-hides [hidden] FOUC-guard form wrappers and reveals

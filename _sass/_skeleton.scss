@@ -173,7 +173,7 @@ html:not([data-nds-loaded]) {
 }
 
 /* Skeleton dark page background (migrated from inline crit). */
-html[data-theme="dark"]:not([data-nds-loaded]) body {
+html[data-theme~="dark"]:not([data-nds-loaded]) body {
     background-color: var(--colors-neutral-850, #18212f);
 }
 

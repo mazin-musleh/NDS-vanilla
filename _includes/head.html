@@ -23,14 +23,14 @@
     {%- endif -%}
     {%- endif -%}
     {%- endif -%}
-    <!-- Critical CSS — render-blocking: skeleton, reveal gate, foundation tokens + [data-brand] slots, so first paint is correct. -->
+    <!-- Critical CSS — render-blocking: skeleton, reveal gate, foundation tokens + the [data-palette] theme slot, so first paint is correct. -->
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     {%- if site.brand %}
-    <!-- Default brand override: render-blocking so it resolves before paint (no flash). Only stylesheet brands need their own file; token brands ship inside critical. -->
-    {%- assign _brands_flat = "" | split: "" -%}{%- for _g in site.data.brands -%}{%- assign _brands_flat = _brands_flat | concat: _g.list -%}{%- endfor -%}
+    <!-- Default stylesheet theme: render-blocking so it resolves before paint (no flash). Only stylesheet themes need their own file; seed themes ride the [data-palette] slot in critical. -->
+    {%- assign _brands_flat = "" | split: "" -%}{%- for _g in site.data.themes -%}{%- assign _brands_flat = _brands_flat | concat: _g.list -%}{%- endfor -%}
     {%- assign _brand = _brands_flat | where: 'value', site.brand | first -%}
     {%- if _brand.css %}
-    <link id="nds-brand-stylesheet" rel="stylesheet" href="{{ _brand.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}">
+    <link id="nds-theme-stylesheet" rel="stylesheet" href="{{ _brand.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
     {%- endif %}
     {%- if site.use_hgi_font or page.use_hgi_font %}

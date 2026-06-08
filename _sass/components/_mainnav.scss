@@ -639,7 +639,7 @@ body.nds-minimal .nds-main-nav {
                             // via &, so the dark-theme path re-spells the ancestor chain; depth is
                             // load-bearing (theme gate + minimal-mode + primary-nav scope + specificity).
                             #{&},
-                            :root[data-theme="dark"] body.nds-minimal .nds-main-nav .nds-nav-primary .nds-nav-item .nds-nav-link.nds-menu-btn {
+                            :root[data-theme~="dark"] body.nds-minimal .nds-main-nav .nds-nav-primary .nds-nav-item .nds-nav-link.nds-menu-btn {
                                 --btn-bg-hover: var(--button-background-transparent-hovered);
                                 --btn-bg-active: var(--button-background-transparent-pressed);
                             }

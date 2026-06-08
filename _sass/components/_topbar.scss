@@ -54,8 +54,8 @@
 }
 
 /* Brand switcher — active brand. The menu portals to <body>, so scope by the
-   menu's own class (.nds-brand-menu), not the .nds-brand-switcher wrapper. */
-.nds-brand-menu .nds-dropmenu-item[aria-current="true"] {
+   menu's own class (.nds-theme-menu), not the .nds-theme-switcher wrapper. */
+.nds-theme-menu .nds-dropmenu-item[aria-current="true"] {
     font-weight: 600;
     background-color: var(--background-neutral-light);
 }
@@ -74,7 +74,7 @@
 
 /* Small Mobile Screens */
 @include mobile {
-    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab)> :not(.nds-theme-toggle-wrap):not(.nds-brand-switcher) {
+    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab)> :not(.nds-theme-toggle-wrap):not(.nds-theme-switcher) {
         display: none;
     }
     .nds-topbar .nds-topbar-info {

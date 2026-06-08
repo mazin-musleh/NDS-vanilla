@@ -8,7 +8,7 @@
    Activated via: <html data-theme="dark">
    ── */
 
-:root[data-theme="dark"] {
+:root[data-theme~="dark"] {
     // ─── Page Surfaces ───
     --background-default: var(--colors-neutral-800);
     --background-body: var(--colors-neutral-900);

@@ -15,7 +15,7 @@ theme_switcher: true
 
 # Set to true to show the brand switcher dropdown in the topbar — lets users pick
 # a runtime brand (persisted in localStorage['nds-brand'], stamped pre-paint).
-# Brands are defined in _sass/brands/_register.scss and ship in the critical bundle.
+# Brands are defined in _sass/themes/_register.scss and ship in the critical bundle.
 brand_switcher: true
 
 # Accessibility add-on (FAB + panel + a11y mode overrides). When true, the page
@@ -26,7 +26,7 @@ brand_switcher: true
 accessibility: true
 
 # Default brand (re-branding). Empty = the built-in DGA default brand (no extra
-# request). Set to a name matching assets/css/nds-brand-<name>.min.css to load
+# request). Set to a name matching assets/css/nds-theme-<name>.min.css to load
 # that brand's slot overrides render-blocking (before first paint, no DGA→brand
 # flash) on top of the DGA base. See components/theming for authoring.
 brand:
