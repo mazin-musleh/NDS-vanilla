@@ -276,7 +276,7 @@
         :not(.nds-oncolor)>& {
             @include dark {
                 &::before {
-                    color: var(--text-success);
+                    color: var(--stepper-button-current);
                 }
             }
         }

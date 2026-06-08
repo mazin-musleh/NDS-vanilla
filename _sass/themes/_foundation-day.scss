@@ -38,6 +38,7 @@
 :root:root[data-theme~="dark"] {
   --featuredicons-background-brand-light: var(--alpha-primary-20);
   --featuredicons-icon-primary: var(--colors-primary-300);
+  --stepper-button-current: var(--colors-primary-400);
 }
 
 .nds-swiper-slide.nds-foundingDay .nds-section-body {
