@@ -89,14 +89,8 @@ direction: ltr
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-color="none">
                                             <span class="nds-label">None</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="gold">
-                                            <span class="nds-label">Gold</span>
-                                        </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="neutral">
                                             <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="lavendar">
-                                            <span class="nds-label">Lavendar</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="yellow">
                                             <span class="nds-label">Yellow</span>
@@ -301,14 +295,8 @@ direction: ltr
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected" data-card-color="none">
                                             <span class="nds-label">None</span>
                                         </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="gold">
-                                            <span class="nds-label">Gold</span>
-                                        </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="neutral">
                                             <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="lavendar">
-                                            <span class="nds-label">Lavendar</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="yellow">
                                             <span class="nds-label">Yellow</span>
@@ -614,7 +602,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-colors"></i>
                         <span class="nds-label">Seven Color Variants</span>
                     </span>
-                    <p class="nds-item-desc">Default, gold, neutral, lavender, yellow, red, and blue treatments adjust title, border, and icon tints together. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a tinted fill.</p>
+                    <p class="nds-item-desc">Default, neutral, yellow, red, and blue treatments adjust title, border, and icon tints together. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a tinted fill.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -701,7 +689,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-user</code></td><td>Compact user-card preset with a 224px default width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-full-width</code> / <code class="nds-inline-code lang-html">nds-full</code></td><td>Removes the max-width cap so the card fills its container</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Adapts text, borders, and icon tints for dark or photographic surfaces</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-gold</code>, <code class="nds-inline-code lang-html">nds-neutral</code>, <code class="nds-inline-code lang-html">nds-lavendar</code>, <code class="nds-inline-code lang-html">nds-yellow</code>, <code class="nds-inline-code lang-html">nds-red</code>, <code class="nds-inline-code lang-html">nds-blue</code></td><td>Color variants that retint title, border-hover, and icon. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a matching tinted fill</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code>, <code class="nds-inline-code lang-html">nds-yellow</code>, <code class="nds-inline-code lang-html">nds-red</code>, <code class="nds-inline-code lang-html">nds-blue</code></td><td>Color variants that retint title, border-hover, and icon. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a matching tinted fill</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-disabled</code> / <code class="nds-inline-code lang-html">[disabled]</code></td><td>Mutes colors, dims sub-content, and removes pointer interactions</td></tr>
                     </tbody>
                 </table>

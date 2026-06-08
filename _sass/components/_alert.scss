@@ -154,7 +154,7 @@
   // ==============================================
 
   &.nds-color {
-    &[data-status="success"] {
+    &:is(.nds-green, [data-status="success"]) {
       --card-bg: var(--background-success-25);
       --card-border: var(--border-success-light);
       --card-title: var(--text-success);
@@ -164,7 +164,7 @@
       }
     }
 
-    &[data-status="info"] {
+    &:is(.nds-blue, [data-status="info"]) {
       --card-bg: var(--background-info-25);
       --card-border: var(--border-info-light);
       --card-title: var(--text-info);
@@ -174,7 +174,7 @@
       }
     }
 
-    &[data-status="warning"] {
+    &:is(.nds-yellow, [data-status="warning"]) {
       --card-bg: var(--background-warning-25);
       --card-border: var(--border-warning-light);
       --card-title: var(--text-warning);
@@ -184,7 +184,7 @@
       }
     }
 
-    &:is([data-status="error"], [data-status="critical"]) {
+    &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
       --card-bg: var(--background-error-25);
       --card-border: var(--border-error-light);
       --card-title: var(--text-error);
@@ -194,7 +194,7 @@
       }
     }
 
-    &[data-status="neutral"] {
+    &:is(.nds-neutral, [data-status="neutral"]) {
       --card-bg: var(--background-neutral-light);
       --card-border: var(--border-neutral-secondary);
       --card-title: var(--text-default);
@@ -247,35 +247,35 @@
     }
 
     // Variant tokens: icon bg + card bg/title/description, light + dark
-    &[data-status="success"] {
+    &:is(.nds-green, [data-status="success"]) {
       --alert-icon-bg: var(--background-success);
       --card-bg: var(--background-success-25);
       --card-title: var(--text-success);
       --_inline-desc: var(--text-success);
       @include dark { --alert-icon-bg: var(--background-success); --card-bg: var(--alpha-success-10); }
     }
-    &[data-status="info"] {
+    &:is(.nds-blue, [data-status="info"]) {
       --alert-icon-bg: var(--background-info);
       --card-bg: var(--background-info-25);
       --card-title: var(--text-info);
       --_inline-desc: var(--text-info);
       @include dark { --alert-icon-bg: var(--background-info); --card-bg: var(--alpha-info-10); }
     }
-    &[data-status="warning"] {
+    &:is(.nds-yellow, [data-status="warning"]) {
       --alert-icon-bg: var(--background-warning);
       --card-bg: var(--background-warning-25);
       --card-title: var(--text-warning);
       --_inline-desc: var(--text-warning);
       @include dark { --alert-icon-bg: var(--background-warning); --card-bg: var(--alpha-warning-10); }
     }
-    &:is([data-status="error"], [data-status="critical"]) {
+    &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
       --alert-icon-bg: var(--background-error);
       --card-bg: var(--background-error-25);
       --card-title: var(--text-error);
       --_inline-desc: var(--text-error);
       @include dark { --alert-icon-bg: var(--background-error); --card-bg: var(--alpha-error-10); }
     }
-    &[data-status="neutral"] {
+    &:is(.nds-neutral, [data-status="neutral"]) {
       --alert-icon-bg: var(--icon-neutral);
       --card-bg: var(--background-neutral-light);
       @include dark { --card-bg: var(--alpha-white-10); }
@@ -343,34 +343,29 @@
 // .nds-inline variants inside .nds-alert override these where needed.
 // ==============================================
 
-[data-status="success"] {
+:is(.nds-green, [data-status="success"]) {
   --alert-stripe: var(--background-success);
-  --alert-icon-bg: var(--background-success-light);
-  @include dark { --alert-icon-bg: var(--alpha-success-10); }
+  --alert-icon-bg: var(--featuredicons-background-success-light);
 }
 
-[data-status="info"] {
+:is(.nds-blue, [data-status="info"]) {
   --alert-stripe: var(--background-info);
-  --alert-icon-bg: var(--background-info-light);
-  @include dark { --alert-icon-bg: var(--alpha-info-10); }
+  --alert-icon-bg: var(--featuredicons-background-info-light);
 }
 
-[data-status="warning"] {
+:is(.nds-yellow, [data-status="warning"]) {
   --alert-stripe: var(--background-warning);
-  --alert-icon-bg: var(--background-warning-light);
-  @include dark { --alert-icon-bg: var(--alpha-warning-10); }
+  --alert-icon-bg: var(--featuredicons-background-warning-light);
 }
 
-:is([data-status="error"], [data-status="critical"]) {
+:is(.nds-red, [data-status="error"], [data-status="critical"]) {
   --alert-stripe: var(--background-error);
-  --alert-icon-bg: var(--background-error-light);
-  @include dark { --alert-icon-bg: var(--alpha-error-10); }
+  --alert-icon-bg: var(--featuredicons-background-error-light);
 }
 
-[data-status="neutral"] {
+:is(.nds-neutral, [data-status="neutral"]) {
   --alert-stripe: var(--border-neutral-light);
-  --alert-icon-bg: var(--background-neutral-light);
-  @include dark { --alert-icon-bg: var(--alpha-white-10); }
+  --alert-icon-bg: var(--featuredicons-background-neutral-light);
 }
 
 // ==============================================

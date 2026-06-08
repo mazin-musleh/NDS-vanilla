@@ -1836,7 +1836,7 @@
     }
 
     // Card color dropmenu — mutually exclusive color variants
-    var CARD_COLOR_CLASSES = ['nds-gold', 'nds-neutral', 'nds-lavendar', 'nds-yellow', 'nds-red', 'nds-blue', 'nds-oncolor'];
+    var CARD_COLOR_CLASSES = ['nds-neutral', 'nds-yellow', 'nds-red', 'nds-blue', 'nds-oncolor'];
     function initializeCardColorToggles() {
         document.querySelectorAll('[data-card-color]').forEach(btn => {
             btn.addEventListener('click', function() {
