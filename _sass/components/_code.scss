@@ -140,7 +140,7 @@
   --_syntax-green: var(--syntax-green, var(--colors-green-600));
   --_syntax-blue: var(--syntax-blue, var(--colors-blue-600));
   --_syntax-purple: var(--syntax-purple, var(--colors-tertiary-500));
-  --_syntax-cyan: var(--syntax-cyan);
+  --_syntax-cyan: var(--syntax-cyan, var(--colors-blue-500));
   --_syntax-yellow: var(--syntax-yellow, var(--colors-yellow-600));
   --_syntax-gray: var(--syntax-gray, var(--colors-neutral-500));
   --_syntax-gray-dark: var(--syntax-gray-dark, var(--colors-neutral-600));

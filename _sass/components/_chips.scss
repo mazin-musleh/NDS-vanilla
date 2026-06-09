@@ -51,7 +51,7 @@
     cursor: not-allowed;
     pointer-events: none;
     background-color: var(--background-disabled);
-    color: var(--text-default-disabled);
+    color: var(--chip-text-disabled);
   }
 
   .nds-label {
@@ -139,7 +139,7 @@
 
       &:is(:disabled, [data-state~="disabled"]) {
         background-color: var(--chip-background-on-color-disabled);
-        color: var(--text-default-oncolor-disabled);
+        color: var(--chip-text-oncolor-disabled);
       }
     }
   }
@@ -188,7 +188,7 @@
 
       &:is(:disabled, [data-state~="disabled"]) {
         background-color: var(--chip-background-on-color-disabled);
-        color: var(--text-default-oncolor-disabled);
+        color: var(--chip-text-oncolor-disabled);
       }
     }
   }

@@ -71,6 +71,8 @@
     --btn-bg-hover: var(--button-status-success-bg) !important;
     --btn-bg: var(--button-status-success-bg) !important;
     --btn-color: var(--button-status-success-text) !important;
+    --btn-color-hover: var(--button-status-success-text) !important;
+    --_status-border: var(--button-border-success);
 
     :is(i, .nds-icon) {
       --nds-icon: var(--nds-icon-checkmark-circle-01);
@@ -78,9 +80,11 @@
   }
 
   &[data-status="error"] {
-    --btn-bg-hover: var(--button-status-error-bg) !important;
+    --btn-bg-hover: var(--button-status-error-bg) ;
     --btn-bg: var(--button-status-error-bg) !important;
     --btn-color: var(--button-status-error-text) !important;
+    --btn-color-hover: var(--button-status-error-text) !important;
+    --_status-border: var(--button-border-error);
 
     :is(i, .nds-icon) {
       --nds-icon: var(--nds-icon-cancel-circle);
@@ -91,6 +95,8 @@
     --btn-bg-hover: var(--button-status-info-bg) !important;
     --btn-bg: var(--button-status-info-bg) !important;
     --btn-color: var(--button-status-info-text) !important;
+    --btn-color-hover: var(--button-status-info-text) !important;
+    --_status-border: var(--button-border-info);
 
     :is(i, .nds-icon) {
       --nds-icon: var(--nds-icon-information-circle);
@@ -101,10 +107,20 @@
     --btn-bg-hover: var(--button-status-warning-bg) !important;
     --btn-bg: var(--button-status-warning-bg) !important;
     --btn-color: var(--button-status-warning-text) !important;
+    --btn-color-hover: var(--button-status-warning-text) !important;
+    --_status-border: var(--button-border-warning);
 
     :is(i, .nds-icon) {
       --nds-icon: var(--nds-icon-alert-circle);
     }
+  }
+
+  // Status border paints only on the outline variant; --_status-border is set per status above.
+  &.nds-secondary-outline:is([data-status="success"], [data-status="error"], [data-status="info"], [data-status="warning"]):not(:active) {
+    --btn-border: var(--_status-border) !important;
+    --btn-border-hover: var(--_status-border) !important;
+    --btn-border-active: var(--_status-border) !important;
+    --btn-border-selected: var(--_status-border) !important;
   }
 
   // ==============================================
@@ -349,10 +365,10 @@
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
       --btn-bg-disabled: var(--button-background-transparent-default);
       --btn-color: var(--text-error);
-      --btn-border: var(--button-border-error);
-      --btn-border-hover: var(--button-border-error);
-      --btn-border-active: var(--button-border-error);
-      --btn-border-selected: var(--button-border-error);
+      --btn-border: var(--button-border-danger);
+      --btn-border-hover: var(--button-border-danger);
+      --btn-border-active: var(--button-border-danger);
+      --btn-border-selected: var(--button-border-danger);
       --btn-border-disabled: var(--border-neutral-secondary);
       --btn-loading-color: var(--button-background-danger-primary-default);
     }
@@ -421,10 +437,10 @@
         --btn-bg-disabled: var(--button-background-transparent-default);
         --btn-color: var(--button-label-danger-primary-default-oncolor);
         --btn-color-hover: var(--button-background-danger-primary-hovered);
-        --btn-border: var(--button-border-error);
-        --btn-border-hover: var(--button-border-error);
-        --btn-border-active: var(--button-border-error);
-        --btn-border-selected: var(--button-border-error);
+        --btn-border: var(--button-border-danger);
+        --btn-border-hover: var(--button-border-danger);
+        --btn-border-active: var(--button-border-danger);
+        --btn-border-selected: var(--button-border-danger);
         --btn-border-disabled: var(--border-neutral-secondary);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {

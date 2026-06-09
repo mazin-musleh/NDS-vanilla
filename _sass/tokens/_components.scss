@@ -87,6 +87,7 @@
     --button-status-info-text: var(--text-info);
     --button-status-warning-bg: var(--background-warning-light);
     --button-status-warning-text: var(--text-warning);
+    --button-border-danger: var(--colors-red-200); // destructive outline — separate from error status (no dark brightening)
     --button-border-error: var(--colors-red-200);
     --button-border-success: var(--colors-green-200);
     --button-border-warning: var(--colors-yellow-200);
