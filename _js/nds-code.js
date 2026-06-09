@@ -300,23 +300,68 @@
         return result;
     }
 
-    // CSS Syntax Highlighting
+    // CSS Syntax Highlighting — line-aware. A global-regex pass mis-colors hex
+    // values (`#fbf9f8` matches the `#id` selector pattern → selector colour) while
+    // a digit-led hex (`#231f20`) falls through to the value colour, and it paints
+    // pseudo-class selectors (`:root`) as values. It also lets a value span cross a
+    // newline, which splitHtmlByLines then breaks into a blank line. Walking
+    // line-by-line keeps selector / property / value colours consistent and every
+    // span inside its own line.
     function highlightCSS(text) {
-        let highlighted = NDS.escapeHtml(text);
+        const lines = text.split('\n');
+        const out = [];
+        let inComment = false;
+        for (let i = 0; i < lines.length; i++) {
+            const res = highlightCSSLine(lines[i], inComment);
+            out.push(res.html);
+            inComment = res.open;
+        }
+        return out.join('\n');
+    }
 
-        // Comments
-        highlighted = highlighted.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="syntax-comment">$1</span>');
+    function cssEsc(s) { return NDS.escapeHtml(s); }
+    function cssSpan(type, s) { return '<span class="syntax-' + type + '">' + NDS.escapeHtml(s) + '</span>'; }
 
-        // Selectors
-        highlighted = highlighted.replace(/([.#][a-zA-Z-_][a-zA-Z0-9-_]*)/g, '<span class="syntax-selector">$1</span>');
+    // Highlight one CSS line. `open` in = inside an unclosed `/* */` from a previous
+    // line; returns whether the comment is still open after this line.
+    function highlightCSSLine(line, open) {
+        // Continuation / start of a block comment
+        if (open) {
+            const end = line.indexOf('*/');
+            if (end === -1) return { html: cssSpan('comment', line), open: true };
+            const after = highlightCSSLine(line.slice(end + 2), false);
+            return { html: cssSpan('comment', line.slice(0, end + 2)) + after.html, open: after.open };
+        }
+        const start = line.indexOf('/*');
+        if (start !== -1) {
+            const before = highlightCSSLine(line.slice(0, start), false);
+            const end = line.indexOf('*/', start + 2);
+            if (end === -1) return { html: before.html + cssSpan('comment', line.slice(start)), open: true };
+            const after = highlightCSSLine(line.slice(end + 2), false);
+            return { html: before.html + cssSpan('comment', line.slice(start, end + 2)) + after.html, open: after.open };
+        }
 
-        // Properties
-        highlighted = highlighted.replace(/([a-zA-Z-]+)(\s*:)/g, '<span class="syntax-property">$1</span>$2');
+        // Declaration `prop: value;` — only when the line carries no block braces
+        if (line.indexOf('{') === -1 && line.indexOf('}') === -1) {
+            const decl = line.match(/^(\s*)([\w-]+)(\s*:\s*)(.*?)(;?\s*)$/);
+            if (decl) {
+                return {
+                    html: cssEsc(decl[1]) + cssSpan('property', decl[2]) + cssEsc(decl[3])
+                        + cssSpan('value', decl[4]) + cssEsc(decl[5]),
+                    open: false
+                };
+            }
+        }
 
-        // Values
-        highlighted = highlighted.replace(/(:)(\s*[^;]+)/g, '$1<span class="syntax-value">$2</span>');
+        // Selector line — everything before the `{` is the selector
+        const brace = line.indexOf('{');
+        if (brace !== -1) {
+            const sel = line.slice(0, brace).match(/^(.*?)(\s*)$/);
+            return { html: cssSpan('selector', sel[1]) + cssEsc(sel[2]) + cssEsc(line.slice(brace)), open: false };
+        }
 
-        return highlighted;
+        // `}`, blank, or anything else — plain
+        return { html: cssEsc(line), open: false };
     }
 
     // JavaScript Syntax Highlighting

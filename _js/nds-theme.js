@@ -166,8 +166,14 @@
     // pops in after the ripple — the reveal still plays.)
     function applySelection(el) {
         reveal(() => {
-            const value = el.getAttribute('data-theme-value') || '';
-            const css = el.getAttribute('data-theme-css');
+            // Re-clicking the already-active theme toggles back to the DGA default.
+            // syncSwitcher stamps aria-current="true" on the active item, so this is
+            // type-agnostic (predefined / stylesheet / custom seed). The default item
+            // itself carries no value/css/seed, so it is never a toggle-off.
+            const off = el.getAttribute('aria-current') === 'true'
+                && !!(el.getAttribute('data-theme-value') || el.getAttribute('data-theme-css') || el.getAttribute('data-seed-primary'));
+            const value = off ? '' : (el.getAttribute('data-theme-value') || '');
+            const css = off ? null : el.getAttribute('data-theme-css');
 
             // Leaving a stylesheet theme → tear it down first.
             if (_sheet && _sheet !== value) { runHook(_sheet, 'teardown'); window.__NDS_THEME_ACTIVE = ''; _sheet = ''; }
@@ -180,7 +186,7 @@
                 ensureThemeJS(value, el.getAttribute('data-theme-js'));
                 runHook(value, 'inject');                   // re-activation; first activation self-injects on load
                 _sheet = value;
-            } else if (el.getAttribute('data-seed-primary')) {
+            } else if (!off && el.getAttribute('data-seed-primary')) {
                 removeStylesheet(); setThemeToken('');      // custom rides [data-palette], not a token
                 clearInline();
                 const seeds = {};
