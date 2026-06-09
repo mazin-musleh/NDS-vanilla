@@ -388,21 +388,20 @@
     --card-title: var(--colors-neutral-800);
     --card-subtitle: var(--colors-neutral-600);
     --card-number: var(--colors-neutral-600);
-    --icon-bg-color: var(--colors-neutral-50);
+    --icon-bg-color: var(--featuredicons-background-default-light);
     --icon-color: var(--colors-neutral-600);
 
     &.nds-color {
       --card-bg: var(--colors-neutral-50);
       --card-bg-hover: var(--colors-neutral-100);
       --card-border: var(--colors-neutral-200);
-      --icon-bg-color: var(--colors-neutral-100);
+      --icon-bg-color: var(--featuredicons-background-neutral-light);
     }
 
     @include dark {
       --card-title: var(--colors-neutral-200);
       --card-subtitle: var(--colors-neutral-400);
       --card-number: var(--colors-neutral-400);
-      --icon-bg-color: var(--alpha-white-10);
       --icon-color: var(--colors-neutral-400);
 
       &.nds-color {
@@ -419,27 +418,26 @@
     --card-title: var(--colors-yellow-700);
     --card-subtitle: var(--colors-yellow-700);
     --card-number: var(--colors-yellow-700);
-    --icon-bg-color: var(--colors-yellow-50);
+    --icon-bg-color: var(--featuredicons-background-warning-light);
     --icon-color: var(--colors-yellow-700);
 
     &.nds-color {
-      --card-bg: var(--colors-yellow-25);
-      --card-bg-hover: var(--colors-yellow-50);
+      --card-bg: var(--colors-yellow-50);
+      --card-bg-hover: var(--colors-yellow-100);
       --card-border: var(--colors-yellow-200);
-      --icon-bg-color: var(--colors-yellow-50);
+      --icon-bg-color: var(--alpha-warning-10);
     }
 
     @include dark {
       --card-title: var(--colors-yellow-400);
       --card-subtitle: var(--colors-yellow-400);
       --card-number: var(--colors-yellow-400);
-      --icon-bg-color: var(--alpha-warning-20);
       --icon-color: var(--colors-yellow-400);
 
       &.nds-color {
         --card-bg: var(--alpha-warning-10);
         --card-bg-hover: var(--alpha-warning-20);
-        --card-border: var(--colors-yellow-200);
+        --card-border: var(--colors-yellow-700);
       }
     }
   }
@@ -450,7 +448,7 @@
     --card-title: var(--colors-red-700);
     --card-subtitle: var(--colors-red-700);
     --card-number: var(--colors-red-700);
-    --icon-bg-color: var(--colors-red-50);
+    --icon-bg-color: var(--featuredicons-background-error-light);
     --icon-color: var(--colors-red-700);
 
     &.nds-color {
@@ -464,7 +462,6 @@
       --card-title: var(--colors-red-400);
       --card-subtitle: var(--colors-red-400);
       --card-number: var(--colors-red-400);
-      --icon-bg-color: var(--alpha-error-20);
       --icon-color: var(--colors-red-400);
 
       &.nds-color {
@@ -481,7 +478,7 @@
     --card-title: var(--colors-blue-700);
     --card-subtitle: var(--colors-blue-700);
     --card-number: var(--colors-blue-700);
-    --icon-bg-color: var(--colors-blue-50);
+    --icon-bg-color: var(--featuredicons-background-info-light);
     --icon-color: var(--colors-blue-700);
 
     &.nds-color {
@@ -495,7 +492,6 @@
       --card-title: var(--colors-blue-400);
       --card-subtitle: var(--colors-blue-400);
       --card-number: var(--colors-blue-400);
-      --icon-bg-color: var(--alpha-info-20);
       --icon-color: var(--colors-blue-400);
 
       &.nds-color {
