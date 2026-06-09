@@ -75,7 +75,7 @@
     .nds-quote-title {
         font-size: var(--_quote-title-FS);
         line-height: var(--_quote-title-LH);
-        font-weight: 500;
+        font-weight: var(--font-weight-medium);
         color: var(--_quote-title-color);
         margin: 0;
         text-align: start;

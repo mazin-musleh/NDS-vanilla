@@ -155,7 +155,7 @@
     background-color: var(--stepper-button-background);
     color: var(--stepper-button-current);
     font-size: calc(var(--stepper-size)/2);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     transition: var(--nds-transition);
     position: relative;
     z-index: 1;
@@ -173,7 +173,7 @@
     &::before {
         content: counter(step-counter);
         font-size: calc(var(--stepper-size)/2);
-        font-weight: 500;
+        font-weight: var(--font-weight-medium);
         color: inherit;
     }
 
@@ -185,7 +185,7 @@
         &::before {
             content: attr(data-step-text);
             font-size: calc(var(--stepper-size)/2);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
     }
 }
@@ -209,7 +209,7 @@
 
 .nds-stepper-title {
     font-size: var(--typo-text-md-FS);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--stepper-text-primary);
     line-height: 1;
     margin: 0;
@@ -217,7 +217,7 @@
 
 .nds-stepper-description {
     font-size: var(--typo-text-sm-FS);
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     color: var(--stepper-text-secondary);
     margin: 0;
 }
@@ -516,7 +516,7 @@
             flex-wrap: nowrap;
             justify-content: center;
             font-size: calc(var(--progress-size) / 5);
-            font-weight: 700;
+            font-weight: var(--font-weight-bold);
             white-space: nowrap;
             gap: clamp(2px, calc(var(--progress-size) * 0.05), 4px);
             line-height: 1;

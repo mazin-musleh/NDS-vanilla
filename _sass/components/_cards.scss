@@ -202,7 +202,7 @@
       display: block;
       font-size: var(--typo-text-lg-FS);
       line-height: var(--typo-text-lg-LH);
-      font-weight: 700;
+      font-weight: var(--font-weight-bold);
       color: var(--_card-title);
       margin: 0;
       width: 100%;
@@ -211,7 +211,7 @@
     .nds-card-subtitle {
       font-size: var(--typo-text-md-FS);
       line-height: var(--typo-text-md-LH);
-      font-weight: 600;
+      font-weight: var(--font-weight-semibold);
       color: var(--_card-subtitle);
       margin: 0;
       width: 100%;
@@ -221,7 +221,7 @@
     .nds-card-description {
       font-size: var(--typo-text-md-FS);
       line-height: var(--typo-text-md-LH);
-      font-weight: 400;
+      font-weight: var(--font-weight-regular);
       color: var(--_card-text);
       margin: 0;
       width: 100%;
@@ -252,7 +252,7 @@
   .nds-card-rating-text {
     font-size: var(--typo-text-xs-FS);
     line-height: var(--typo-text-xs-LH);
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     color: var(--_card-rating);
     margin: 0;
   }
@@ -348,7 +348,7 @@
       color: var(--_card-number);
       font-size: var(--typo-display-clamp-lg-FS);
       line-height: 1;
-      font-weight: 500;
+      font-weight: var(--font-weight-medium);
       letter-spacing: -0.96px;
       direction: ltr;
       display: block;

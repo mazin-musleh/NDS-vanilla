@@ -147,7 +147,7 @@
         --btn-bg-selected: var(--button-background-transparent-default);
 
         .nds-label{
-            font-weight: 600;
+            font-weight: var(--font-weight-semibold);
         }
     }
 
@@ -245,7 +245,7 @@
 
         // Increased specificity to avoid !important
         .nds-btn {
-            font-weight: 400;
+            font-weight: var(--font-weight-regular);
 
             &.nds-indicator:not(:hover, :active, [data-state~="active"], [data-state~="selected"]) {
                 &::before {
@@ -283,7 +283,7 @@
     color: inherit;
 
     > .nds-btn {
-        font-weight: 600;
+        font-weight: var(--font-weight-semibold);
     }
 
     > ul {

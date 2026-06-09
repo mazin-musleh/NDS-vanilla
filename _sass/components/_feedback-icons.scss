@@ -14,7 +14,7 @@
     align-items: center;
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     gap: var(--spacing-sm);
 
     // Show when status is set (on self or parent) or no status

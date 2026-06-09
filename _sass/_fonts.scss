@@ -146,7 +146,9 @@ $readex-size-adjust: 100%;
    crit but FETCHED LAZILY: the woff2 only downloads when a [data-brand] sets
    --nds-font-family to Tajawal and text uses it, so DGA pages never request it.
    Tajawal has no 600, so the Medium face covers 500–600 (mirrors the IBM Plex range
-   pattern; no synthetic weight). */
+   pattern; no synthetic weight). Crimson's --font-weight-semibold resolves to 500
+   (themes/_register.scss shifts the scale one step lighter than DGA) and lands on
+   this same Medium face by design — runtime themes intentionally read lighter. */
 @font-face {
   font-family: 'Tajawal';
   size-adjust: $tajawal-size-adjust;

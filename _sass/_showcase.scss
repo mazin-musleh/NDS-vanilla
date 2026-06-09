@@ -30,7 +30,7 @@
   background: var(--background-stripe);
   border-bottom: 1px solid var(--border-neutral-secondary);
   border-radius: var(--radius-md) var(--radius-md) 0 0;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   font-size: var(--typo-text-md-FS);
   color: var(--text-default);
 }
@@ -65,7 +65,7 @@
 
     .nds-dropmenu-item[data-state~="selected"] {
       background-color: var(--background-neutral-light);
-      font-weight: 600;
+      font-weight: var(--font-weight-semibold);
     }
   }
 }

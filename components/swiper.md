@@ -62,7 +62,7 @@ direction: ltr
                                         style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;">
                                         <div style="max-width: 800px; text-align: center;">
                                             <h2
-                                                style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                                                style="color: white; font-size: 2.5rem; font-weight: var(--font-weight-bold); margin-bottom: 1rem;">
                                                 Welcome to Our Platform</h2>
                                             <p
                                                 style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
@@ -78,7 +78,7 @@ direction: ltr
                                         style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;">
                                         <div style="max-width: 800px; text-align: center;">
                                             <h2
-                                                style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                                                style="color: white; font-size: 2.5rem; font-weight: var(--font-weight-bold); margin-bottom: 1rem;">
                                                 Powerful Features</h2>
                                             <p
                                                 style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
@@ -94,7 +94,7 @@ direction: ltr
                                         style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;">
                                         <div style="max-width: 800px; text-align: center;">
                                             <h2
-                                                style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+                                                style="color: white; font-size: 2.5rem; font-weight: var(--font-weight-bold); margin-bottom: 1rem;">
                                                 Start Your Journey</h2>
                                             <p
                                                 style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
@@ -142,7 +142,7 @@ direction: ltr
             &lt;div class="slide-content"
                 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;"&gt;
                 &lt;div style="max-width: 800px; text-align: center;"&gt;
-                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;"&gt;Welcome to Our Platform&lt;/h2&gt;
+                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: var(--font-weight-bold); margin-bottom: 1rem;"&gt;Welcome to Our Platform&lt;/h2&gt;
                     &lt;p style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;"&gt;Discover innovative solutions for your digital needs&lt;/p&gt;
                     &lt;button class="nds-btn nds-primary nds-lg nds-oncolor"&gt;
                         &lt;span class="nds-label"&gt;Get Started&lt;/span&gt;
@@ -154,7 +154,7 @@ direction: ltr
             &lt;div class="slide-content"
                 style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;"&gt;
                 &lt;div style="max-width: 800px; text-align: center;"&gt;
-                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;"&gt;Powerful Features&lt;/h2&gt;
+                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: var(--font-weight-bold); margin-bottom: 1rem;"&gt;Powerful Features&lt;/h2&gt;
                     &lt;p style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;"&gt;Built with the latest technology and best practices&lt;/p&gt;
                     &lt;button class="nds-btn nds-primary nds-lg nds-oncolor"&gt;
                         &lt;span class="nds-label"&gt;Learn More&lt;/span&gt;
@@ -166,7 +166,7 @@ direction: ltr
             &lt;div class="slide-content"
                 style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; padding: 2rem; border-radius: 8px;"&gt;
                 &lt;div style="max-width: 800px; text-align: center;"&gt;
-                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;"&gt;Start Your Journey&lt;/h2&gt;
+                    &lt;h2 style="color: white; font-size: 2.5rem; font-weight: var(--font-weight-bold); margin-bottom: 1rem;"&gt;Start Your Journey&lt;/h2&gt;
                     &lt;p style="color: white; font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;"&gt;Join thousands of satisfied users today&lt;/p&gt;
                     &lt;button class="nds-btn nds-primary nds-lg nds-oncolor"&gt;
                         &lt;span class="nds-label"&gt;Join Now&lt;/span&gt;

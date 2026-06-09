@@ -165,7 +165,7 @@
 
   .nds-tooltip-title {
     display: block;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--_tooltip-title);
     margin-block-end: var(--_tooltip-gap);
   }

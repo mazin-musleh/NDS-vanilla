@@ -47,7 +47,7 @@
     align-items: baseline !important;
 
     .nds-progress-of {
-      font-weight: 400;
+      font-weight: var(--font-weight-regular);
       color: var(--text-secondary-paragraph);
     }
   }
@@ -134,7 +134,7 @@
   .nds-progress-label {
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--text-default);
   }
 
@@ -167,7 +167,7 @@
     padding-inline-end: var(--spacing-xs);
     color: var(--text-oncolor-primary);
     font-size: var(--typo-text-xs-FS);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     white-space: nowrap;
 
     &::after {

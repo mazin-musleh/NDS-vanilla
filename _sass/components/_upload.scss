@@ -116,7 +116,7 @@
             color: var(--text-display);
             font-size: var(--typo-text-md-FS);
             line-height: var(--typo-text-md-LH);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
 
         .nds-upload-hint {
@@ -211,7 +211,7 @@
                 color: var(--text-default);
                 font-size: var(--typo-text-sm-FS);
                 line-height: var(--typo-text-sm-LH);
-                font-weight: 500;
+                font-weight: var(--font-weight-medium);
                 display: flex;
                 align-items: center;
             }
@@ -227,7 +227,7 @@
             gap: var(--spacing-xs);
             color: var(--text-error);
             font-size: var(--typo-text-sm-FS);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
     }
 

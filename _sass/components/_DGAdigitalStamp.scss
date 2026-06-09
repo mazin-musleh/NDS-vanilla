@@ -12,7 +12,7 @@
     cursor: pointer;
     font-size: var(--typo-text-clamp-sm-FS);
     line-height: var(--typo-text-clamp-sm-LH);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-align: start;
     padding-inline: 0;
     gap: var(--spacing-xs);
@@ -131,7 +131,7 @@
 .nds-digitalStamp-heading {
     font-size: var(--typo-text-clamp-lg-FS);
     line-height: var(--typo-text-clamp-lg-LH);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--text-default);
     margin-bottom: var(--spacing-md);
 }
@@ -170,7 +170,7 @@
 
 .nds-digitalStamp-highlight {
     color: var(--text-primary);
-    font-weight: bold;
+    font-weight: var(--font-weight-bold);
 }
 
 

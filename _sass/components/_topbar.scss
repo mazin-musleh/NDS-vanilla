@@ -56,7 +56,7 @@
 /* Brand switcher — active brand. The menu portals to <body>, so scope by the
    menu's own class (.nds-theme-menu), not the .nds-theme-switcher wrapper. */
 .nds-theme-menu .nds-dropmenu-item[aria-current="true"] {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     background-color: var(--background-neutral-light);
 }
 

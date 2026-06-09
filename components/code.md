@@ -694,7 +694,7 @@ NDS.Alert.create({
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     direction: ltr;
     text-align: left;
     white-space: pre;

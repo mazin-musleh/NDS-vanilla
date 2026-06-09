@@ -35,7 +35,7 @@
         font-size: var(--_name-FS);
         line-height: var(--_name-LH);
         color: var(--_name-color);
-        font-weight: 600;
+        font-weight: var(--font-weight-semibold);
     }
 
     .nds-persona-role {

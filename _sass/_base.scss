@@ -133,7 +133,7 @@ body.nds-page-bg {
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
     color: var(--text-secondary-paragraph);
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     white-space: normal;
     text-align: start;
 }

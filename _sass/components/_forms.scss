@@ -27,7 +27,7 @@
             color: var(--form-field-text-label);
             font-size: var(--typo-text-md-FS);
             line-height: var(--typo-text-md-LH);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
             cursor: pointer;
         }
     }
@@ -198,7 +198,7 @@ fieldset {
         padding: 0;
         margin-bottom: var(--spacing-xl);
         font-size: var(--typo-text-lg-FS);
-        font-weight: 500;
+        font-weight: var(--font-weight-medium);
         line-height: 1;
     }
 
@@ -571,7 +571,7 @@ fieldset {
 
         .nds-form-header .nds-label {
             color: var(--text-display);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
 
         .nds-form-control {

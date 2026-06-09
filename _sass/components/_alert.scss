@@ -93,7 +93,7 @@
   .nds-alert-title {
     font-size: var(--typo-text-md-FS);
     line-height: var(--typo-text-md-LH);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--_card-title);
     margin: 0;
   }
@@ -101,7 +101,7 @@
   .nds-alert-description {
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     color: var(--text-secondary-paragraph);
     margin: 0;
   }

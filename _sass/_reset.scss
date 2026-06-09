@@ -21,6 +21,7 @@ html {
 
 body {
     font-family: var(--nds-font-family);
+    font-weight: var(--font-weight-regular);
     background-color: var(--background-body);
     color: var(--text-default);
     font-size: var(--typo-text-md-FS, 16px);
@@ -73,7 +74,7 @@ h3 {
 }
 
 :is(h1, h2, h3, h4, h5, h6) {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--text-display);
 
     &:first-child {

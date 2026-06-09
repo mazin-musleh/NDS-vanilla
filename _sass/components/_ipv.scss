@@ -46,7 +46,7 @@
   margin-block-start: var(--spacing-sm);
   font-size: var(--typo-text-md-FS);
   line-height: var(--typo-text-md-LH);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 // ==============================================
@@ -209,7 +209,7 @@
   border-radius: 25px;
   font-size: var(--typo-text-sm-FS);
   line-height: var(--typo-text-sm-LH);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   backdrop-filter: blur(10px);
   transition: opacity 0.3s ease, visibility 0.3s ease;
 
@@ -246,7 +246,7 @@
   transition: opacity 0.3s ease, visibility 0.3s ease;
 
   strong {
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   @include mobile {

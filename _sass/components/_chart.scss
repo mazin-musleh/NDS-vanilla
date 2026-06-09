@@ -122,7 +122,7 @@
 .nds-chart-axis-title {
     color: var(--_chart-text);
     font-size: var(--typo-text-sm-FS);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-family: inherit;
     white-space: nowrap;
 
@@ -162,7 +162,7 @@
 
 .nds-chart-pie-label {
     font-size: var(--typo-text-sm-FS);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-family: inherit;
     pointer-events: none;
 }
@@ -237,7 +237,7 @@
 .nds-chart-data-label {
     fill: var(--_chart-label);
     font-size: var(--typo-text-sm-FS);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     font-family: inherit;
 }
 

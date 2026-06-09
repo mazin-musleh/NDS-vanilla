@@ -29,6 +29,16 @@
     --nds-font-brand: 'IBM Plex Sans Arabic', sans-serif;
     --nds-font-family: var(--nds-font-brand);
 
+    // Per-theme font-weight scale. DGA defaults (IBM Plex faces: Regular 300-400,
+    // Medium 500, SemiBold 600, Bold 700) sit one step heavier than the runtime
+    // brand fonts; themes/_register.scss shifts each theme's scale down a step
+    // so Tajawal/Cairo/Readex Pro render at their natural lighter baseline. Custom
+    // [data-palette] inline themes inherit the DGA defaults unless they set their own.
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
     // Global user font scale — set by the accessibility panel's Font
     // Sizing tile (font-step ladder) to reflect the user's chosen
     // accessibility scale. Undefined by default

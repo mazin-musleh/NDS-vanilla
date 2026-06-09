@@ -61,7 +61,7 @@
     align-items: center;
     font-size: var(--_section-title-FS);
     line-height: var(--_section-title-LH);
-    font-weight: bold;
+    font-weight: var(--font-weight-bold);
     letter-spacing: -0.02rem;
     margin-top: 0;
     flex-wrap: wrap;
@@ -100,7 +100,7 @@
 .nds-section-subtitle {
     font-size: var(--_section-subtitle-FS);
     line-height: var(--_section-subtitle-LH);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     letter-spacing: -0.01rem;
 
     &:not(:last-child) {
@@ -130,7 +130,7 @@
 .nds-section-brief {
     font-size: var(--typo-text-lg-FS);
     line-height: var(--typo-text-lg-LH);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     margin-bottom: 1rem;
 }
 

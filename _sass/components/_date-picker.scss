@@ -94,7 +94,7 @@
         .nds-weekday {
             text-align: center;
             font-size: var(--typo-text-md-FS);
-            font-weight: 400;
+            font-weight: var(--font-weight-regular);
             color: var(--text-primary-paragraph);
             padding: var(--spacing-md) var(--spacing-xs);
             min-width: var(--btn-size);
@@ -113,7 +113,7 @@
             border-radius: 50% !important;
             width: var(--btn-size);
             height: var(--btn-size);
-            font-weight: 400;
+            font-weight: var(--font-weight-regular);
             padding: 0;
             .nds-label {
                 text-align: center;
@@ -134,7 +134,7 @@
                 background-color: unset;
                 border: 2px solid var(--button-background-primary-default);
                 color: var(--text-primary);
-                font-weight: 700;
+                font-weight: var(--font-weight-bold);
                 &[data-state~="selected"] {
                     outline: 2px solid var(--button-background-primary-default);
                     outline-offset: -2px !important;

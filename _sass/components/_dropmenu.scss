@@ -129,7 +129,7 @@
 
   .nds-dropmenu-group>.nds-label {
     font-size: var(--typo-text-xs-FS);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     line-height: var(--typo-text-xs-LH);
     color: var(--text-display);
   }

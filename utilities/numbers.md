@@ -24,11 +24,11 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap; align-items: baseline;">
-                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">3240000</span>
-                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">1850</span>
-                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">42850.75</span>
-                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">+2500</span>
-                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">-340</span>
+                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">3240000</span>
+                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">1850</span>
+                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">42850.75</span>
+                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">+2500</span>
+                        <span class="nds-number-format" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">-340</span>
                     </div>
                 </div>
                 <div class="demo-code">
@@ -99,15 +99,15 @@ direction: ltr
                 <div class="demo-container">
                     <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap;">
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-target="1850" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-target="1850" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Government Services</p>
                         </div>
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-target="3240000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-target="3240000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Citizens Served</p>
                         </div>
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-target="98.5%" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-target="98.5%" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Satisfaction Rate</p>
                         </div>
                     </div>
@@ -159,15 +159,15 @@ direction: ltr
                 <div class="demo-container">
                     <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap;">
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-target="8500" data-start="5000" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-target="8500" data-start="5000" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Custom start — <code class="nds-inline-code lang-html">data-start="5000"</code></p>
                         </div>
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-target="3240000" data-duration="3000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-target="3240000" data-duration="3000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Custom duration — <code class="nds-inline-code lang-html">data-duration="3000"</code></p>
                         </div>
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-target="42850.75" data-decimals="0" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-target="42850.75" data-decimals="0" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">No decimals — <code class="nds-inline-code lang-html">data-decimals="0"</code></p>
                         </div>
                     </div>
@@ -230,10 +230,10 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap; align-items: baseline;">
-                        <span class="nds-number-format" data-currency="SAR" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">450000</span>
-                        <span class="nds-number-format" data-currency="USD" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">99999.99</span>
-                        <span class="nds-number-format" data-currency="EUR" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">75000</span>
-                        <span class="nds-number-format" data-currency="SAR" data-free style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 600;">Free</span>
+                        <span class="nds-number-format" data-currency="SAR" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">450000</span>
+                        <span class="nds-number-format" data-currency="USD" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">99999.99</span>
+                        <span class="nds-number-format" data-currency="EUR" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">75000</span>
+                        <span class="nds-number-format" data-currency="SAR" data-free style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-semibold);">Free</span>
                     </div>
                 </div>
                 <div class="demo-code">
@@ -283,15 +283,15 @@ direction: ltr
                 <div class="demo-container">
                     <div class="state-demo" style="display: flex; gap: var(--spacing-2xl); flex-wrap: wrap;">
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="450000" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="450000" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Annual Budget</p>
                         </div>
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="128750" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="128750" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Revenue</p>
                         </div>
                         <div style="text-align: center;">
-                            <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="43200" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: 700;">0</span>
+                            <span class="nds-counter-value nds-number-format" data-currency="SAR" data-target="43200" data-duration="2000" style="font-size: var(--typo-display-clamp-sm-FS); font-weight: var(--font-weight-bold);">0</span>
                             <p style="color: var(--text-secondary-default); margin-top: var(--spacing-sm);">Savings</p>
                         </div>
                     </div>

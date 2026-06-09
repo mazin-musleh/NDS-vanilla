@@ -401,7 +401,7 @@ direction: ltr
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p><strong>NDS.Feedback</strong> creates and manages feedback elements programmatically. For form validation, use <a class="nds-color" href="{{ 'components/forms' | relative_url }}">NDS.Forms.setStatus()</a> which calls Feedback internally and also sets form-specific attributes.</p>
 
-                <h4 style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); font-weight: 600;">NDS.Feedback.create(options)</h4>
+                <h4 style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); font-weight: var(--font-weight-semibold);">NDS.Feedback.create(options)</h4>
                 <table class="nds-table nds-responsive">
                     <thead>
                         <tr>
@@ -493,7 +493,7 @@ direction: ltr
                     </tbody>
                 </table>
 
-                <h4 style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); font-weight: 600;">Other Methods</h4>
+                <h4 style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); font-weight: var(--font-weight-semibold);">Other Methods</h4>
                 <table class="nds-table nds-responsive">
                     <thead>
                         <tr>

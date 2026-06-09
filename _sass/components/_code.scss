@@ -58,7 +58,7 @@
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     direction: ltr;
     text-align: left;
     display: none;
@@ -130,7 +130,7 @@
    ======================================== */
 
 .nds-inline-code {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   white-space: nowrap;
 }
 
@@ -152,7 +152,7 @@
 
 :is(.syntax-tag, .syntax-selector) {
   color: var(--_syntax-red);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 :is(.syntax-attr, .syntax-number) {
@@ -169,7 +169,7 @@
 
 :is(.syntax-keyword, .syntax-regex) {
   color: var(--_syntax-purple);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 :is(.syntax-literal, .syntax-operator) {
@@ -178,7 +178,7 @@
 
 :is(.syntax-builtin, .syntax-class) {
   color: var(--_syntax-yellow);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 .syntax-comment {

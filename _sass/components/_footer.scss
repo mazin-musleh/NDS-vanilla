@@ -34,7 +34,7 @@
     display: block;
     font-size: var(--typo-text-md-FS);
     line-height: var(--typo-text-md-LH);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     margin: 0 0 var(--spacing-md);
     padding-block-end: var(--spacing-md);
     border-block-end: 1px solid var(--divider-color);
@@ -133,7 +133,7 @@
 .nds-footer-copyright {
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
 }
 
 .nds-footer-policy {

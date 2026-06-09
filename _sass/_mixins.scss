@@ -282,7 +282,7 @@ $breakpoints-range: (
 
   >.nds-label,
   i {
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     text-decoration: none;
     font-size: var(--_btn-FS);
     line-height: var(--_btn-LH);
@@ -425,7 +425,7 @@ $breakpoints-range: (
 
     :is(.nds-progress-number, .nds-progress-symbol) {
       font-size: clamp(10px, calc(var(--_progress-size, #{$size}) * 0.15 + 6px), 36px) !important;
-      font-weight: 700 !important;
+      font-weight: var(--font-weight-bold) !important;
       line-height: normal;
     }
     .nds-progress-of {

@@ -47,7 +47,7 @@
   display: block;
   font-size: var(--typo-display-clamp-md-FS);
   line-height: var(--typo-display-clamp-md-LH);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   color: var(--text-display);
 }
 
@@ -69,7 +69,7 @@
 
   > strong {
     color: var(--_metric-trend-color);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   // Modifier: swap the trade icon for a plain directional arrow (arrow-left-02 rotated).

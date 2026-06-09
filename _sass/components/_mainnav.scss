@@ -63,7 +63,7 @@
         display: flex;
         align-items: center;
         flex-direction: row;
-        font-weight: bold;
+        font-weight: var(--font-weight-bold);
         text-decoration: none;
         gap: var(--spacing-lg);
         align-content: center;
@@ -88,7 +88,7 @@
         .nds-brand-slogan {
             font-size: var(--typo-text-sm-FS);
             line-height: var(--typo-text-sm-LH);
-            font-weight: 400;
+            font-weight: var(--font-weight-regular);
             display: block;
         }
     }
@@ -330,7 +330,7 @@
             font-size: var(--typo-text-clamp-lg-FS);
             line-height: var(--typo-text-clamp-lg-LH);
             color: var(--_nav-menu-title);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
 
         ul {

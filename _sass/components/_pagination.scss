@@ -55,7 +55,7 @@
 
     // Active state
     &:is([aria-current="page"], [data-state~="active"]) {
-      font-weight: 600;
+      font-weight: var(--font-weight-semibold);
       color: var(--button-label-primary-default);
 
       &:not(.nds-dropmenu-trigger:hover) {
