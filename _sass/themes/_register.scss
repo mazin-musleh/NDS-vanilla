@@ -30,8 +30,8 @@
 // the rest optional (secondary/tertiary auto-derive from primary by hue rotation).
 $themes: (
   'crimson':   ('primary': #be123c, 'secondary': #d97706, 'tertiary': #0ea5e9, 'tint': 0.2, 'font': "'Tajawal', sans-serif"),
-  'corporate': ('primary': #4338ca, 'secondary': #0d9488, 'tertiary': #8b5cf6, 'tint': 1.5, 'font': "'Tajawal', sans-serif"),
-  'sunset':    ('primary': #b45309, 'secondary': #db2777, 'tertiary': #f59e0b, 'tint': 0.2, 'font': "'Tajawal', sans-serif"),
+  'corporate': ('primary': #4338ca, 'secondary': #0d9488, 'tertiary': #8b5cf6, 'tint': 1.5, 'font': "'Cairo', sans-serif"),
+  'sunset':    ('primary': #b45309, 'secondary': #db2777, 'tertiary': #f59e0b, 'tint': 0.2, 'font': "'Readex Pro', sans-serif"),
 );
 
 // Grouped activation selector: every predefined theme token + the [data-palette]
