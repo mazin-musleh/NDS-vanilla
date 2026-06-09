@@ -1,7 +1,5 @@
 <script>
-    // Pre-paint FOUC guard: stamp the saved data-theme ("dark crimson") before first
-    // paint, so dark mode + predefined themes show with no flash. Stylesheet/custom
-    // themes are (re)applied by NDS.Theme.init (nds-theme.js) after paint.
+    // Pre-paint FOUC guard: stamp saved data-theme before first paint (NDS.Theme.init handles the rest).
     (function() {
         var v = localStorage.getItem('nds-theme');
         if (v) document.documentElement.setAttribute('data-theme', v);

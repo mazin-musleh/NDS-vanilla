@@ -58,7 +58,7 @@
     // centre — shared by the dark toggle AND the theme switcher. Runs `apply` (the DOM
     // mutation) inside the transition; degrades to a plain call where unsupported.
     function reveal(apply, el) {
-        if (!document.startViewTransition) return apply();
+        if (NDS.prefersReducedMotion || !document.startViewTransition) return apply();
 
         // Origin point from the trigger element's center, or screen center.
         let x = innerWidth / 2, y = innerHeight / 2;
@@ -217,8 +217,13 @@
         try { const s = localStorage.getItem(PALETTE_KEY); if (s) palette = JSON.parse(s); } catch (e) { /* ignore */ }
 
         if (palette && palette.seeds) {
-            // Custom inline seeds (not flash-free — re-applied here).
-            for (const k in palette.seeds) root.style.setProperty(k, palette.seeds[k]);
+            // Custom inline seeds (not flash-free — re-applied here). Iterate the
+            // known SEED_PROPS, not the stored keys, so a tampered store can't set
+            // arbitrary custom properties on :root.
+            for (const k in SEED_PROPS) {
+                const v = palette.seeds[SEED_PROPS[k]];
+                if (v) root.style.setProperty(SEED_PROPS[k], v);
+            }
             root.setAttribute('data-palette', '');
             syncSwitcher(palette.value || '');
             wireSwitcher();

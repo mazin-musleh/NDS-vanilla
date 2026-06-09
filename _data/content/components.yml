@@ -222,7 +222,7 @@
   url: "/components/tags.html"
 
 - title: "Themes"
-  description: "Light/dark mode and the colour palette in one data-theme attribute — toggle dark, switch seed themes (zero-flash), or load a stylesheet theme with inject/teardown hooks"
+  description: "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet theme"
   icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
   category: "UI"
   tags: ["CSS", "JS"]

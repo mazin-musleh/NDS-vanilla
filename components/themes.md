@@ -2,7 +2,7 @@
 layout: page
 title: Themes
 hero_title: Themes - National Design System
-hero_description: Light and dark mode plus the colour palette, all driven by one data-theme attribute. Keep the DGA default, toggle dark mode, switch to a built-in theme, or apply your own brand colours at runtime.
+hero_description: Keep the DGA default, switch on dark mode, or make the system your own. Define a brand palette from a few seed colours with the OKLCH engine, or ship a full stylesheet theme that overrides the design tokens.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
@@ -247,8 +247,8 @@ direction: ltr
 <section id="themesPalette" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Themes and Custom Palette</h2>
-            <p class="nds-section-description">The bundle ships the DGA default plus three example themes you apply by name with <code class="nds-inline-code lang-html">data-theme</code>. To use your own brand, set a primary seed colour (secondary, tertiary, and a neutral-tint dial are optional) and the <code class="nds-inline-code lang-html">data-palette</code> flag on the root element: the OKLCH engine derives the full ramp and the dark variant for you. The DGA default stays untouched.</p>
+            <h2 class="nds-section-title">Custom Palette</h2>
+            <p class="nds-section-description">Define a complete theme from one to three seed colours. The OKLCH engine derives every ramp step from your seed with CSS relative colour, <code class="nds-inline-code lang-css">oklch(from var(--brand-primary) L C H)</code>: it keeps the seed's hue, sets a perceptually-even lightness, and scales the chroma, so the ramp stays balanced for any colour. Set the seeds plus the <code class="nds-inline-code lang-html">data-palette</code> flag on the root element and the full light palette, the brand-tint alphas, a temperature-matched neutral scale, and the dark variant are all generated. Without the flag the page stays on the frozen DGA default. The engine needs CSS relative colour (Chrome 119, Safari 16.4, Firefox 128; mid-2024); older browsers fall back to the DGA default, so ship a stylesheet theme if you must brand them.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -263,15 +263,6 @@ direction: ltr
                                     <div class="nds-dropmenu-scroll">
                                         <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="">
                                             <span class="nds-label">DGA (default)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="crimson">
-                                            <span class="nds-label">Crimson</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="corporate">
-                                            <span class="nds-label">Corporate</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="sunset">
-                                            <span class="nds-label">Sunset</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="violet" data-seed-primary="#7c3aed" data-seed-secondary="#ec4899" data-seed-tint="0.4">
                                             <span class="nds-label">Custom (Violet)</span>
@@ -299,68 +290,62 @@ direction: ltr
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                        aria-controls="panel-themes-builtin" id="tab-themes-builtin">
-                                        <span class="nds-tab-label">Built-in</span>
+                                        aria-controls="panel-themes-html" id="tab-themes-html">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                                        aria-controls="panel-themes-custom" id="tab-themes-custom">
-                                        <span class="nds-tab-label">Custom palette</span>
+                                        aria-controls="panel-themes-css" id="tab-themes-css">
+                                        <span class="nds-tab-label">CSS</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                                        aria-controls="panel-themes-seed" id="tab-themes-seed">
-                                        <span class="nds-tab-label">Switcher item</span>
+                                        aria-controls="panel-themes-js" id="tab-themes-js">
+                                        <span class="nds-tab-label">JS</span>
                                     </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-builtin"
-                                    aria-labelledby="tab-themes-builtin">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-html"
+                                    aria-labelledby="tab-themes-html">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;html data-theme="crimson"&gt;
-&lt;html data-theme="dark crimson"&gt;
+&lt;!-- Seeds inline on the root element --&gt;
+&lt;html data-palette style="--brand-primary: #7c3aed; --brand-secondary: #ec4899; --neutral-tint: 0.4;"&gt;
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-custom"
-                                    aria-labelledby="tab-themes-custom" hidden>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-css"
+                                    aria-labelledby="tab-themes-css" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-html code">
-&lt;html data-palette
-      style="--brand-primary: #7c3aed;
-             --brand-secondary: #ec4899;
-             --neutral-tint: 0.4;"&gt;
-
-&lt;script&gt;
-  const root = document.documentElement;
-  root.style.setProperty('--brand-primary', '#7c3aed');
-  root.style.setProperty('--neutral-tint', '0.4');
-  root.setAttribute('data-palette', '');
-&lt;/script&gt;
+                                    <code class="lang-css code">
+/* Add data-palette to &lt;html&gt;; only --brand-primary is required. */
+:root[data-palette] {
+  --brand-primary:   #7c3aed;
+  --brand-secondary: #ec4899;
+  --neutral-tint:    0.4;
+}
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-seed"
-                                    aria-labelledby="tab-themes-seed" hidden>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-js"
+                                    aria-labelledby="tab-themes-js" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-html code">
-&lt;button class="nds-btn nds-subtle nds-dropmenu-item"
-        data-theme-value="violet"
-        data-seed-primary="#7c3aed"
-        data-seed-secondary="#ec4899"
-        data-seed-tint="0.4"&gt;
-  &lt;span class="nds-label"&gt;Custom (Violet)&lt;/span&gt;
-&lt;/button&gt;
+                                    <code class="lang-javascript code">
+// Set the seeds, then flip the data-palette flag.
+const root = document.documentElement;
+root.style.setProperty('--brand-primary', '#7c3aed');
+root.style.setProperty('--brand-secondary', '#ec4899');
+root.style.setProperty('--neutral-tint', '0.4');
+root.setAttribute('data-palette', '');
                                     </code>
                                 </div>
                             </div>
@@ -377,74 +362,131 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Stylesheet Themes</h2>
-            <p class="nds-section-description">For exact, contrast-checked colours, the widest browser support, or styling beyond colour (custom hero layouts, patterns, injected content), ship a theme as its own stylesheet that overrides the colour tokens at <code class="nds-inline-code lang-css">:root</code>, plus an optional script for any DOM it adds. In production you load both server-side: a render-blocking <code class="nds-inline-code lang-html">&lt;link&gt;</code> after the NDS critical CSS, and a normal <code class="nds-inline-code lang-html">&lt;script&gt;</code>. For a live multi-theme picker you can instead point a switcher item's <code class="nds-inline-code lang-html">data-theme-css</code> at the stylesheet to load it on demand, as the preview below does.</p>
+            <p class="nds-section-description">For exact, contrast-checked colours, the widest browser support, or styling beyond colour (custom hero layouts, patterns, injected content), ship a theme as its own stylesheet that overrides the colour tokens at <code class="nds-inline-code lang-css">:root</code>. In production you load it server-side as a render-blocking <code class="nds-inline-code lang-html">&lt;link&gt;</code> after the NDS critical CSS. Override the full set of themeable tokens below; the semantic and component tokens re-resolve from them.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Live preview: loads the theme stylesheet at runtime</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <button class="nds-btn nds-secondary-outline nds-sm"
-                                data-theme-value="foundation-day"
-                                data-theme-css="{{ 'assets/events/foundation_day/nds-theme-foundation-day.min.css' | relative_url }}?ver={{ site.asset_ver }}"
-                                data-theme-js="{{ 'assets/events/foundation_day/nds-theme-foundation-day.min.js' | relative_url }}?ver={{ site.asset_ver }}">
-                                <span class="nds-label">Foundation Day</span>
-                            </button>
-                        </div>
+                        <div class="demo-label">Override the colour tokens in your own stylesheet</div>
                     </div>
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                                        aria-controls="panel-themes-ss-html" id="tab-themes-ss-html">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                                         aria-controls="panel-themes-ss-css" id="tab-themes-ss-css">
                                         <span class="nds-tab-label">Theme CSS</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-themes-ss-html" id="tab-themes-ss-html">
+                                        <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-html"
-                                    aria-labelledby="tab-themes-ss-html">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <code class="lang-html code">
-&lt;link rel="stylesheet" href="assets/themes/foundation-day.css"&gt;
-&lt;script src="assets/themes/foundation-day.js" defer&gt;&lt;/script&gt;
-
-&lt;button class="nds-btn nds-secondary-outline nds-sm"
-        data-theme-value="foundation-day"
-        data-theme-css="assets/themes/foundation-day.css"&gt;
-  &lt;span class="nds-label"&gt;Foundation Day&lt;/span&gt;
-&lt;/button&gt;
-                                    </code>
-                                </div>
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-css"
-                                    aria-labelledby="tab-themes-ss-css" hidden>
+                                    aria-labelledby="tab-themes-ss-css">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-css code">
+/* DGA values shown; replace with your brand ramp. Status + base stay on DGA. */
 :root {
-  --colors-primary-25:  #fbf9f8;
-  --colors-primary-600: #5b423b;
+  /* Primary ramp (anchor your brand colour at the 600 step) */
+  --colors-primary-25:  #f7fdf9;
+  --colors-primary-50:  #f3fcf6;
+  --colors-primary-100: #dff6e7;
+  --colors-primary-200: #b8eacb;
+  --colors-primary-300: #88d8ad;
+  --colors-primary-400: #54c08a;
+  --colors-primary-500: #25935f;
+  --colors-primary-600: #1b8354;
+  --colors-primary-700: #166a45;
+  --colors-primary-800: #14573a;
+  --colors-primary-900: #104631;
+  --colors-primary-950: #092a1e;
+  /* Brand-tint alphas (chips, table selection, footer) */
+  --colors-primary-alpha-10: #1b835419;
+  --colors-primary-alpha-20: #1b835433;
+  --colors-primary-alpha-30: #1b83544c;
+  --colors-primary-alpha-40: #1b835466;
+  --colors-primary-alpha-50: #1b83547f;
+  --colors-primary-alpha-60: #1b835499;
+  --colors-primary-alpha-70: #1b8354b2;
+  --colors-primary-alpha-80: #1b8354cc;
+  --colors-primary-alpha-90: #1b8354e5;
+
+  /* Secondary ramp */
+  --colors-secondary-25:  #fffef7;
+  --colors-secondary-50:  #fffef2;
+  --colors-secondary-100: #fffce6;
+  --colors-secondary-200: #fcf3bd;
+  --colors-secondary-300: #fae996;
+  --colors-secondary-400: #f7d54d;
+  --colors-secondary-500: #f5bd02;
+  --colors-secondary-600: #dba102;
+  --colors-secondary-700: #b87b02;
+  --colors-secondary-800: #945c01;
+  --colors-secondary-900: #6e3c00;
+  --colors-secondary-950: #472400;
+
+  /* Tertiary ramp (anchor at the 500 step) */
+  --colors-tertiary-25:  #fefcff;
+  --colors-tertiary-50:  #f9f5fa;
+  --colors-tertiary-100: #f2e9f5;
+  --colors-tertiary-200: #e1cce8;
+  --colors-tertiary-300: #ccadd9;
+  --colors-tertiary-400: #a57bba;
+  --colors-tertiary-500: #80519f;
+  --colors-tertiary-600: #6d428f;
+  --colors-tertiary-700: #532d75;
+  --colors-tertiary-800: #3d1d5e;
+  --colors-tertiary-900: #281047;
+  --colors-tertiary-950: #16072e;
+  --colors-tertiary-alpha-10: #80519f19;
+  --colors-tertiary-alpha-20: #80519f33;
+
+  /* Neutral ramp (grayscale; adds 750 + 850 steps) */
+  --colors-neutral-25:  #fcfcfd;
+  --colors-neutral-50:  #f9fafb;
+  --colors-neutral-100: #f3f4f6;
+  --colors-neutral-200: #e5e7eb;
+  --colors-neutral-300: #d2d6db;
+  --colors-neutral-400: #9da4ae;
+  --colors-neutral-500: #6c727e;
+  --colors-neutral-600: #4d5761;
+  --colors-neutral-700: #384250;
+  --colors-neutral-750: #2b3643;
+  --colors-neutral-800: #1f2a37;
+  --colors-neutral-850: #18212f;
+  --colors-neutral-900: #111927;
+  --colors-neutral-950: #0c111b;
+
+  /* Deep brand surfaces (hero / footer / image overlay) */
   --background-brand-strong: var(--colors-primary-900);
+  --background-brand-light:  var(--colors-primary-50);
+  --img-overlay-color:       var(--colors-neutral-950);
 }
 
+/* Dark-mode corrections; double the :root if this sheet loads first. */
 :root:root[data-theme~="dark"] {
-  --background-footer: #231f20;
+  --background-card:   #1f2a37;
+  --background-footer: #0c111b;
 }
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-themes-ss-html"
+                                    aria-labelledby="tab-themes-ss-html" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;link rel="stylesheet" href="assets/themes/my-brand.css"&gt;
                                     </code>
                                 </div>
                             </div>
@@ -539,7 +581,7 @@ direction: ltr
                     <li>Most government sites need no setup: the DGA default is active out of the box. Add theming only when you need dark mode or your own brand colours</li>
                     <li>Place a dark-mode button toggle in the <a class="nds-color" href="{{ 'ui-shell/topbar' | relative_url }}">Top Bar</a> so it is reachable from every page; use the switch toggle on settings or preferences pages</li>
                     <li>Reach for a <strong>custom palette</strong> (<code class="nds-inline-code lang-html">data-palette</code> + <code class="nds-inline-code lang-css">--brand-primary</code>) when you want your brand colour fast and dark mode handled for you</li>
-                    <li>Reach for a <strong>stylesheet theme</strong> when you need exact, contrast-checked colours, support for older browsers, or styling beyond colour (layouts, patterns, injected content); in production load it server-side as a render-blocking <code class="nds-inline-code lang-html">&lt;link&gt;</code> plus a normal <code class="nds-inline-code lang-html">&lt;script&gt;</code> for any behaviour, rather than injecting at runtime</li>
+                    <li>Reach for a <strong>stylesheet theme</strong> when you need exact, contrast-checked colours, support for older browsers, or styling beyond colour (layouts, patterns, injected content); in production load it server-side as a render-blocking <code class="nds-inline-code lang-html">&lt;link&gt;</code>, rather than injecting at runtime</li>
                     <li>Use <code class="nds-inline-code lang-js">NDS.Theme.toggle()</code> / <code class="nds-inline-code lang-js">NDS.Theme.set()</code> for mode changes instead of writing <code class="nds-inline-code lang-html">data-theme</code> by hand, so the active theme token is preserved</li>
                     <li>Reference semantic tokens (<code class="nds-inline-code lang-css">--background-card</code>, <code class="nds-inline-code lang-css">--text-default</code>) in your own component CSS so it follows both mode and theme automatically</li>
                     <li>Do not hardcode colours in your CSS: hardcoded values respond to neither dark mode nor themes</li>
@@ -576,7 +618,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--neutral-tint</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Gray temperature dial (0 = true gray). Warms or cools the gray scale toward the primary hue.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--nds-font-brand</code></td><td>IBM Plex Sans Arabic</td><td>Theme typeface stack, e.g. <code class="nds-inline-code lang-css">'Cairo', sans-serif</code>. The font must be loaded by the page.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--background-brand-strong</code></td><td><code class="nds-inline-code lang-html">--colors-primary-900</code></td><td>Deep brand surface used by the hero and footer.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--img-overlay-color</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-950</code></td><td>Colour of the translucent overlay on hero images.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--img-overlay-color</code></td><td><code class="nds-inline-code lang-html">--colors-primary-950</code></td><td>Colour of the translucent overlay on hero images.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--colors-*</code></td><td>DGA palette</td><td>The full colour ramps (primary, secondary, tertiary, neutral, status). Override these directly in a stylesheet theme for exact values.</td></tr>
                     </tbody>
                 </table>
