@@ -446,7 +446,6 @@
             options = options || { showMessages: true, focusFirst: true };
 
             var form = formElement.closest('.nds-form') || formElement;
-            if (!form) return { valid: true, invalidFields: [], errors: [] };
 
             var acc = { invalidFields: [], errors: [], firstInvalidInput: null };
 
@@ -1007,36 +1006,34 @@
     // ==============================================
     // GROUP VALIDATION INITIALIZATION
     // ==============================================
-    function initCheckboxGroupValidation(group) {
-        if (!group || group._checkGroupInitialized) return;
-        group._checkGroupInitialized = true;
+    // Shared wiring for checkbox/radio group re-validation: once per group,
+    // each input's change re-runs the group validator — but only when the
+    // group opts into validation (predicate, re-checked per event so runtime
+    // attribute changes are honored) AND already shows a status, so the first
+    // interaction never validates prematurely.
+    function _initGroupValidation(group, flagKey, inputSelector, shouldValidate, validate) {
+        if (!group || group[flagKey]) return;
+        group[flagKey] = true;
 
-        var checkboxes = group.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                if (group.hasAttribute('data-min-checked') || group.hasAttribute('data-max-checked') || group.hasAttribute('data-required')) {
-                    if (NDS.Status.get(group) !== '') {
-                        Validator.validateCheckboxGroup(group);
-                    }
+        group.querySelectorAll(inputSelector).forEach(function(input) {
+            input.addEventListener('change', function() {
+                if (shouldValidate(group) && NDS.Status.get(group) !== '') {
+                    validate(group);
                 }
             });
         });
     }
 
-    function initRadioGroupValidation(group) {
-        if (!group || group._radioGroupInitialized) return;
-        group._radioGroupInitialized = true;
+    function initCheckboxGroupValidation(group) {
+        _initGroupValidation(group, '_checkGroupInitialized', 'input[type="checkbox"]',
+            function(g) { return g.hasAttribute('data-min-checked') || g.hasAttribute('data-max-checked') || g.hasAttribute('data-required'); },
+            Validator.validateCheckboxGroup.bind(Validator));
+    }
 
-        var radios = group.querySelectorAll('input[type="radio"]');
-        radios.forEach(function(radio) {
-            radio.addEventListener('change', function() {
-                if (group.hasAttribute('data-required') || group.classList.contains('nds-required')) {
-                    if (NDS.Status.get(group) !== '') {
-                        Validator.validateRadioGroup(group);
-                    }
-                }
-            });
-        });
+    function initRadioGroupValidation(group) {
+        _initGroupValidation(group, '_radioGroupInitialized', 'input[type="radio"]',
+            function(g) { return g.hasAttribute('data-required') || g.classList.contains('nds-required'); },
+            Validator.validateRadioGroup.bind(Validator));
     }
 
     // ==============================================
@@ -1058,7 +1055,7 @@
     // ==============================================
     function initForm(formElement) {
         var form = formElement.closest('.nds-form') || formElement;
-        if (!form || form._ndsFormInitialized) return;
+        if (form._ndsFormInitialized) return;
         form._ndsFormInitialized = true;
         form.setAttribute('novalidate', '');
 
