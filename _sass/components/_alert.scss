@@ -145,47 +145,50 @@
   }
 
   // ==============================================
-  // COLOR VARIANTS (.nds-color fills the card backdrop)
-  // The base --alert-stripe / --alert-icon-bg tokens are set globally
-  // via [data-status="..."] rules at the bottom of this file.
-  // Card-backdrop tokens stay scoped here because card tokens are
-  // shared across components — only the `.nds-color` opt-in should
-  // apply them to the alert's card.
+  // STATUS VARIANTS — border + title apply to ALL alerts (including
+  // the base stroke-only alert) so [data-status] always tints chrome.
+  // --card-bg is the FILL token (cards read it as background-color);
+  // it's scoped to fill variants below so base alerts stay neutral.
+  // alert-private --alert-stripe / --alert-icon-bg are set globally at
+  // the bottom of this file (shared across components, alert-only readers).
   // ==============================================
 
-  &.nds-color {
-    &:is(.nds-green, [data-status="success"]) {
-      --card-bg: var(--background-success-25);
-      --card-border: var(--border-success-light);
-      --card-title: var(--text-success);
-    }
+  &:is(.nds-green, [data-status="success"]) {
+    --card-border: var(--border-success-light);
+    --card-title: var(--text-success);
+  }
 
-    &:is(.nds-blue, [data-status="info"]) {
-      --card-bg: var(--background-info-25);
-      --card-border: var(--border-info-light);
-      --card-title: var(--text-info);
-    }
+  &:is(.nds-blue, [data-status="info"]) {
+    --card-border: var(--border-info-light);
+    --card-title: var(--text-info);
+  }
 
-    &:is(.nds-yellow, [data-status="warning"]) {
-      --card-bg: var(--background-warning-25);
-      --card-border: var(--border-warning-light);
-      --card-title: var(--text-warning);
-    }
+  &:is(.nds-yellow, [data-status="warning"]) {
+    --card-border: var(--border-warning-light);
+    --card-title: var(--text-warning);
+  }
 
-    &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
-      --card-bg: var(--background-error-25);
-      --card-border: var(--border-error-light);
-      --card-title: var(--text-error);
-    }
+  &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
+    --card-border: var(--border-error-light);
+    --card-title: var(--text-error);
+  }
 
-    &:is(.nds-neutral, [data-status="neutral"]) {
+  &:is(.nds-neutral, [data-status="neutral"]) {
+    --card-border: var(--border-neutral-secondary);
+    --card-title: var(--text-default);
+    @include dark { --card-border: var(--border-neutral-light); }
+  }
+
+  // Fill variants share the same per-status --card-bg map; scoped to
+  // :is(.nds-color, .nds-inline) so base alerts don't paint a fill.
+  &:is(.nds-color, .nds-inline) {
+    &:is(.nds-green, [data-status="success"])  { --card-bg: var(--background-success-25); }
+    &:is(.nds-blue,  [data-status="info"])     { --card-bg: var(--background-info-25); }
+    &:is(.nds-yellow,[data-status="warning"])  { --card-bg: var(--background-warning-25); }
+    &:is(.nds-red,   [data-status="error"], [data-status="critical"]) { --card-bg: var(--background-error-25); }
+    &:is(.nds-neutral,[data-status="neutral"]) {
       --card-bg: var(--background-neutral-light);
-      --card-border: var(--border-neutral-secondary);
-      --card-title: var(--text-default);
-      @include dark {
-        --card-bg: var(--alpha-white-10);
-        --card-border: var(--border-neutral-light);
-      }
+      @include dark { --card-bg: var(--alpha-white-10); }
     }
   }
 
@@ -230,39 +233,26 @@
       z-index: -1;
     }
 
-    // Variant tokens: icon bg + card bg/title/description, light + dark
+    // Inline-only deltas: solid icon bg + colored description.
+    // Card tokens (--card-bg/-title) inherit from alert-level status block above.
     &:is(.nds-green, [data-status="success"]) {
       --alert-icon-bg: var(--background-success);
-      --card-bg: var(--background-success-25);
-      --card-title: var(--text-success);
       --_inline-desc: var(--text-success);
-      @include dark { --alert-icon-bg: var(--background-success); }
     }
     &:is(.nds-blue, [data-status="info"]) {
       --alert-icon-bg: var(--background-info);
-      --card-bg: var(--background-info-25);
-      --card-title: var(--text-info);
       --_inline-desc: var(--text-info);
-      @include dark { --alert-icon-bg: var(--background-info); }
     }
     &:is(.nds-yellow, [data-status="warning"]) {
       --alert-icon-bg: var(--background-warning);
-      --card-bg: var(--background-warning-25);
-      --card-title: var(--text-warning);
       --_inline-desc: var(--text-warning);
-      @include dark { --alert-icon-bg: var(--background-warning); }
     }
     &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
       --alert-icon-bg: var(--background-error);
-      --card-bg: var(--background-error-25);
-      --card-title: var(--text-error);
       --_inline-desc: var(--text-error);
-      @include dark { --alert-icon-bg: var(--background-error); }
     }
     &:is(.nds-neutral, [data-status="neutral"]) {
       --alert-icon-bg: var(--icon-neutral);
-      --card-bg: var(--background-neutral-light);
-      @include dark { --card-bg: var(--alpha-white-10); }
     }
 
     // Critical uses warning triangle icon

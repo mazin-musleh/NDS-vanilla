@@ -82,7 +82,10 @@
   }
 
   // ==============================================
-  // COLOR VARIANTS
+  // COLOR VARIANTS — status defaults set the light fill; .nds-inverted
+  // and .nds-outline overlay only what differs (bg + border style).
+  // Variant chrome is gated to status selectors so a bare .nds-inverted /
+  // .nds-outline (no color) stays inert.
   // ==============================================
 
   &:is(.nds-gray:where(:not([data-status])), [data-status="neutral"]) {
@@ -90,19 +93,6 @@
     --tag-text: var(--tag-text-neutral);
     --tag-border: var(--tag-border-neutral-light);
     --tag-icon: var(--tag-icon-neutral);
-
-    &.nds-inverted {
-      --tag-bg: var(--tag-background-neutral);
-      --tag-text: var(--text-oncolor-primary);
-      --tag-border: transparent;
-      --tag-icon: var(--tag-dot);
-    }
-
-    &.nds-outline {
-      --tag-bg: transparent;
-      --tag-border: var(--tag-border-neutral);
-      --tag-text: var(--tag-text-neutral);
-    }
   }
 
   &:is(.nds-green:where(:not([data-status])), [data-status="success"]) {
@@ -110,19 +100,6 @@
     --tag-text: var(--tag-text-success);
     --tag-border: var(--tag-border-success-light);
     --tag-icon: var(--tag-icon-success);
-
-    &.nds-inverted {
-      --tag-bg: var(--tag-background-success);
-      --tag-text: var(--text-oncolor-primary);
-      --tag-border: transparent;
-      --tag-icon: var(--tag-dot);
-    }
-
-    &.nds-outline {
-      --tag-bg: transparent;
-      --tag-border: var(--tag-border-success);
-      --tag-text: var(--tag-text-success);
-    }
   }
 
   &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) {
@@ -130,19 +107,6 @@
     --tag-text: var(--tag-text-info);
     --tag-border: var(--tag-border-info-light);
     --tag-icon: var(--tag-icon-info);
-
-    &.nds-inverted {
-      --tag-bg: var(--tag-background-info);
-      --tag-text: var(--text-oncolor-primary);
-      --tag-border: transparent;
-      --tag-icon: var(--tag-dot);
-    }
-
-    &.nds-outline {
-      --tag-bg: transparent;
-      --tag-border: var(--tag-border-info);
-      --tag-text: var(--tag-text-info);
-    }
   }
 
   &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) {
@@ -150,19 +114,6 @@
     --tag-text: var(--tag-text-warning);
     --tag-border: var(--tag-border-warning-light);
     --tag-icon: var(--tag-icon-warning);
-
-    &.nds-inverted {
-      --tag-bg: var(--tag-background-warning);
-      --tag-text: var(--text-oncolor-primary);
-      --tag-border: transparent;
-      --tag-icon: var(--tag-dot);
-    }
-
-    &.nds-outline {
-      --tag-bg: transparent;
-      --tag-border: var(--tag-border-warning);
-      --tag-text: var(--tag-text-warning);
-    }
   }
 
   &:is(.nds-red:where(:not([data-status])), [data-status="error"]) {
@@ -170,19 +121,34 @@
     --tag-text: var(--tag-text-error);
     --tag-border: var(--tag-border-error-light);
     --tag-icon: var(--tag-icon-error);
+  }
 
+  // Variant chrome — only applies when the tag also has a status.
+  &:is(.nds-gray, .nds-green, .nds-blue, .nds-yellow, .nds-red, [data-status]) {
     &.nds-inverted {
-      --tag-bg: var(--tag-background-error);
       --tag-text: var(--text-oncolor-primary);
       --tag-border: transparent;
       --tag-icon: var(--tag-dot);
     }
+    &.nds-outline { --tag-bg: transparent; }
+  }
 
-    &.nds-outline {
-      --tag-bg: transparent;
-      --tag-border: var(--tag-border-error);
-      --tag-text: var(--tag-text-error);
-    }
+  // Inverted — per-status solid bg (only value that differs).
+  &.nds-inverted {
+    &:is(.nds-gray:where(:not([data-status])), [data-status="neutral"]) { --tag-bg: var(--tag-background-neutral); }
+    &:is(.nds-green:where(:not([data-status])), [data-status="success"]) { --tag-bg: var(--tag-background-success); }
+    &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) { --tag-bg: var(--tag-background-info); }
+    &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) { --tag-bg: var(--tag-background-warning); }
+    &:is(.nds-red:where(:not([data-status])), [data-status="error"]) { --tag-bg: var(--tag-background-error); }
+  }
+
+  // Outline — per-status full-strength border (only value that differs).
+  &.nds-outline {
+    &:is(.nds-gray:where(:not([data-status])), [data-status="neutral"]) { --tag-border: var(--tag-border-neutral); }
+    &:is(.nds-green:where(:not([data-status])), [data-status="success"]) { --tag-border: var(--tag-border-success); }
+    &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) { --tag-border: var(--tag-border-info); }
+    &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) { --tag-border: var(--tag-border-warning); }
+    &:is(.nds-red:where(:not([data-status])), [data-status="error"]) { --tag-border: var(--tag-border-error); }
   }
 
   &.nds-oncolor {
