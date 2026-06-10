@@ -684,7 +684,7 @@ From THIS run's gap and SKIP logs (Phase 3), surface — never auto-apply:
 - **Rule refinement:** a SKIP reason recurring across the run's files → a proposed carve-out.
 - **Resolved motivating example:** a rule whose `RULES-*.md` motivating example was fixed this session → surface the one-line "annotate as regression guard" edit.
 - **Dead-rule candidate:** a rule with NO motivating example in its `RULES-*.md` row that also did not fire here → a *soft* "consider narrowing or removing" note. No hard counter (that needed a cross-run ledger) — narrow before deleting, and only on a clear pattern.
-- **Citation drift:** spot-check each rule's motivating-example citation in its `RULES-*.md` row; if the cited `file:line` moved, note the new line; if it's gone because the fix was applied, surface the regression-guard annotation above.
+- **Citation drift:** spot-check each rule's motivating-example citation in its `RULES-*.md` row **by its symbol, not its line** — citations are symbol-anchored (the greppable selector / token / mixin name / quoted snippet is authoritative; the line number is a decaying hint). Symbol moved → note the new line; symbol gone because the fix was applied → surface the regression-guard annotation above. Candidate citations a user adds to `RULES-*.md` must name a symbol, never a bare `file:line`.
 
 Append a `## Catalog evolved` section to the report when any candidate exists — each line names the candidate + the action the user takes (e.g. "Add DEAD-06 per the draft above" / "Annotate DEAD-03 row: motivating example resolved → regression guard"). The candidates are SUGGESTIONS — Phase 6 never auto-edits the catalog. Omit the section when there are none.
 
