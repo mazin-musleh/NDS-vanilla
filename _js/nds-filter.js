@@ -86,8 +86,7 @@
                 || this._targetRoots.find(r => r.matches('.nds-filter-applied'))
                 || null;
 
-            // Resolve external search box / auto-fill linked by data-filter-target.
-            this.searchBoxElement = this._targetRoots.find(r => r.matches('.nds-search-box')) || null;
+            // Resolve external auto-fill linked by data-filter-target.
             this.autoFillElement = this._targetRoots.find(r => r.matches('.nds-auto-fill')) || null;
 
             // Resolve search-query slot — a root carrying [data-filter-query] or one
@@ -125,7 +124,6 @@
             // here and triggered on first engagement (buildDeferredFilters). Manual,
             // static-values, and URL-active filters build eagerly during init.
             this._deferredFilters = [];
-            this._deferredBuilt = false;
 
             this.init();
         }
@@ -1119,8 +1117,7 @@
         // builds the whole set; later events no-op. Deferred filters are never
         // URL-active, so there is no URL state to re-apply after building.
         buildDeferredFilters() {
-            if (this._deferredBuilt) return;
-            this._deferredBuilt = true;
+            if (!this._deferredFilters.length) return;
             const deferred = this._deferredFilters;
             this._deferredFilters = [];
             deferred.forEach(({ element, filterName, filterType, values }) => {
@@ -1180,23 +1177,15 @@
             searchInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    // Same flow as the Apply button: settle search state from the
+                    // dropmenu surface, then submit (form mode) or apply.
+                    this._syncSearchFromDropmenu();
 
-                    this.criteria.search = searchInput.value.trim().toLowerCase();
-                    if (this.searchInputs.direct) {
-                        this.searchInputs.direct.input.value = searchInput.value;
-                        this.updateClearButtonVisibility(
-                            this.searchInputs.direct.input,
-                            this.searchInputs.direct.clearBtn
-                        );
-                    }
-
-                    // In form mode, submit the form
                     if (this.isFormMode) {
                         this.submitForm();
                         return;
                     }
 
-                    // Client-side mode: apply filters
                     this.applyFilters();
                 }
             }, { signal });
@@ -1242,26 +1231,9 @@
             }
 
             if (clearBtn) {
-                clearBtn.addEventListener('click', () => {
-                    searchInput.value = '';
-                    this.criteria.search = '';
-                    this.updateClearButtonVisibility(searchInput, clearBtn);
-                    if (this.searchInputs.dropmenu) {
-                        this.searchInputs.dropmenu.input.value = '';
-                        this.updateClearButtonVisibility(
-                            this.searchInputs.dropmenu.input,
-                            this.searchInputs.dropmenu.clearBtn
-                        );
-                        this.updateApplyButtonLabel();
-                    }
-
-                    // In AJAX mode, resubmit form to get updated results
-                    if (this.isAjaxMode) {
-                        this.submitForm();
-                    } else {
-                        this.applyFilters();
-                    }
-                }, { signal });
+                // removeSearchFilter clears criteria, mirrors both search inputs
+                // (incl. this one) + clear buttons, then resubmits/reapplies.
+                clearBtn.addEventListener('click', () => this.removeSearchFilter(), { signal });
             }
         }
 
@@ -1298,7 +1270,11 @@
                 NDS.Feedback.dismissAll(this.filterContainer);
             }
 
-            // Trigger form submission on the actual form element
+            // Trigger form submission on the actual form element.
+            // Fallback gap: .submit() skips the submit event, so without
+            // requestSubmit (pre-2022 engines) the setupFormSubmission listener
+            // never fires — validation is bypassed and AJAX mode degrades to a
+            // full-page navigation.
             if (this.submissionForm.requestSubmit) {
                 this.submissionForm.requestSubmit();
             } else {
@@ -1435,37 +1411,31 @@
             const values = new Set();
             const labelMap = {};
 
+            // Record one marker element's value; map machine value → display
+            // label when data-filter-value provides one.
+            const harvest = el => {
+                const value = this.getFilterValue(el);
+                if (!value) return;
+                values.add(value);
+                const machineValue = el.getAttribute('data-filter-value');
+                if (machineValue) labelMap[machineValue] = el.textContent.trim();
+            };
+
             this.items.forEach(card => {
                 const filterElements = card.querySelectorAll(`[data-filter="${filterName}"]`);
                 const itemHasFilter = card.getAttribute('data-filter') === filterName;
 
-                if (filterElements.length > 0 || itemHasFilter) {
-                    filterElements.forEach(el => {
-                        const value = this.getFilterValue(el);
-                        if (value) {
-                            values.add(value);
-                            // Auto-map label when data-filter-value provides a machine value
-                            const machineValue = el.getAttribute('data-filter-value');
-                            if (machineValue) {
-                                labelMap[machineValue] = el.textContent.trim();
-                            }
-                        }
-                    });
-                    // Also check the item itself (Gap 4)
-                    if (itemHasFilter) {
-                        const value = this.getFilterValue(card);
-                        if (value) {
-                            values.add(value);
-                            const machineValue = card.getAttribute('data-filter-value');
-                            if (machineValue) {
-                                labelMap[machineValue] = card.textContent.trim();
-                            }
-                        }
-                    }
-                } else if (filterName === 'tags') {
+                if (!filterElements.length && !itemHasFilter) {
                     // Fallback for tags: traditional .nds-card-tags structure
-                    this._collectCardTagLabels(card).forEach(value => values.add(value));
+                    if (filterName === 'tags') {
+                        this._collectCardTagLabels(card).forEach(value => values.add(value));
+                    }
+                    return;
                 }
+
+                filterElements.forEach(harvest);
+                // The item itself can carry the marker too
+                if (itemHasFilter) harvest(card);
             });
 
             // Store auto-collected labels for use by generateFilterInputs
@@ -2218,7 +2188,6 @@
                 delete this.filterContainer.ndsFilter;
             }
             if (this.targetId && _instancesByTarget.get(this.targetId) === this) {
-                _initializedTargets.delete(this.targetId);
                 _instancesByTarget.delete(this.targetId);
             }
         }
@@ -2229,10 +2198,9 @@
     // ==============================================
 
     // A filter is identified by its data-filter-target, not by a container.
-    // These track the live instances so init is idempotent per target and so
+    // Tracks the live instances so init is idempotent per target and so
     // getByTarget/getInstance can resolve without depending on a .nds-filter
     // element existing (e.g. a search-only filter).
-    const _initializedTargets = new Set();
     const _instancesByTarget = new Map();
 
     // Construct an instance on `representative` (the element that carries the
@@ -2243,7 +2211,6 @@
         representative.ndsFilter = instance;
         representative.setAttribute('data-nds-filter-initialized', 'true');
         if (instance.targetId) {
-            _initializedTargets.add(instance.targetId);
             _instancesByTarget.set(instance.targetId, instance);
         }
         representative.dispatchEvent(new CustomEvent('nds:filter:ready', {
@@ -2264,7 +2231,7 @@
         document.querySelectorAll('[data-filter-target]').forEach(el => {
             if (el.closest('code, .code-example')) return;
             const id = el.getAttribute('data-filter-target');
-            if (!id || _initializedTargets.has(id)) return;
+            if (!id || _instancesByTarget.has(id)) return;
             if (!groups.has(id)) groups.set(id, []);
             groups.get(id).push(el);
         });
