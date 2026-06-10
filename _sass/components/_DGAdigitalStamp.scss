@@ -43,8 +43,6 @@
 #nds-digitalStamp {
     background-color: var(--background-topbar);
     position: relative;
-    /* box-shadow: var(--shadow-md); */
-    z-index: 1051;
     transition: grid-template-rows var(--nds-transition);
     grid-template-rows: 0fr;
     overflow: clip;

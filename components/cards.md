@@ -713,7 +713,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--card-border-active</code></td><td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td><td>Stroke color when the card is pressed</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Inner padding of the card</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-gap</code></td><td><code class="nds-inline-code lang-html">--spacing-3xl</code></td><td>Vertical gap between header, content, meta, and actions</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--card-radius</code></td><td><code class="nds-inline-code lang-html">--card-radius</code></td><td>Corner radius</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--card-radius</code></td><td><code class="nds-inline-code lang-html">--radius-lg</code></td><td>Corner radius</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-width</code></td><td><code class="nds-inline-code lang-html">100%</code></td><td>Card width inside its container</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-width-min</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Minimum width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--card-width-max</code></td><td><code class="nds-inline-code lang-html">360px</code></td><td>Maximum width cap</td></tr>
