@@ -132,20 +132,20 @@
             }
             &[data-state~="today"] {
                 background-color: unset;
-                border: 2px solid var(--button-background-primary-default);
+                border: 2px solid var(--form-datecell-background-default);
                 color: var(--text-primary);
                 font-weight: var(--font-weight-bold);
                 &[data-state~="selected"] {
-                    outline: 2px solid var(--button-background-primary-default);
+                    outline: 2px solid var(--form-datecell-background-default);
                     outline-offset: -2px !important;
                     box-shadow: inset 0 0 0 2px var(--colors-base-white);
                 }
                 &[data-state~="selected"]:hover {
-                    outline: 2px solid var(--button-background-primary-hovered);
+                    outline: 2px solid var(--form-datecell-background-hovered);
                 }
             }
             &[data-state~="selected"] {
-                background-color: var(--button-background-primary-default);
+                background-color: var(--form-datecell-background-default);
                 color: var(--text-oncolor-primary);
                 &:hover {
                     background-color: var(--form-datecell-background-hovered);

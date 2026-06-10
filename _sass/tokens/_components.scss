@@ -5,17 +5,8 @@
 
 :root {
 
-    // ── accordion ──
-    --accordion-lg-header-padding: var(--spacing-4);
-    --accordion-lg-header-gap: var(--spacing-4);
-    --accordion-md-header-padding: var(--spacing-3);
-    --accordion-md-header-gap: var(--spacing-12);
-    --accordion-sm-header-padding: var(--spacing-2);
-    --accordion-sm-header-gap: var(--spacing-2);
-
     // ── autocomplete ──
     --autocomplete-highlight: var(--colors-primary-100);
-    --autocomplete-active: var(--background-neutral-light);
 
     // ── avatar ──
     --avatar-background: var(--background-neutral-100);
@@ -23,36 +14,22 @@
     --avatar-border: var(--border-white);
 
     // ── button ──
-    --buttons-lg-gap: var(--spacing-1);
-    --buttons-lg-padding: var(--spacing-4);
-    --buttons-md-gap: var(--spacing-1);
-    --buttons-md-padding: var(--spacing-3);
-    --buttons-sm-gap: var(--spacing-1);
-    --buttons-sm-padding: var(--spacing-2);
-    --buttons-group-gap: var(--spacing-2);
-    --button-menu-gap: var(--spacing-2);
-    --button-menu-v-padding: var(--spacing-2);
-    --button-menu-h-padding: var(--spacing-2);
     --button-background-black-default: var(--colors-neutral-950);
     --button-background-black-hovered: var(--colors-neutral-800);
     --button-background-black-pressed: var(--colors-neutral-600);
     --button-background-black-selected: var(--colors-neutral-700);
-    --button-background-black-focused: var(--colors-neutral-950);
     --button-background-primary-default: var(--colors-primary-600);
     --button-background-primary-hovered: var(--colors-primary-700);
     --button-background-primary-pressed: var(--colors-primary-900);
     --button-background-primary-selected: var(--colors-primary-800);
-    --button-background-primary-focused: var(--colors-primary-600);
     --button-background-neutral-default: var(--colors-neutral-100);
     --button-background-neutral-hovered: var(--colors-neutral-100);
     --button-background-neutral-pressed: var(--colors-neutral-200);
     --button-background-neutral-selected: var(--colors-neutral-200);
-    --button-background-neutral-focused: var(--colors-neutral-100);
     --button-background-danger-primary-default: var(--colors-red-600);
     --button-background-danger-primary-hovered: var(--colors-red-700);
     --button-background-danger-primary-pressed: var(--colors-red-900);
     --button-background-danger-primary-selected: var(--colors-red-800);
-    --button-background-danger-primary-focused: var(--colors-red-600);
     --button-label-danger-primary-default-oncolor: var(--colors-red-200);
     --button-label-danger-primary-hovered-oncolor: var(--colors-red-300);
     --button-label-danger-primary-pressed-oncolor: var(--colors-red-400);
@@ -61,24 +38,17 @@
     --button-background-danger-secondary-hovered: var(--colors-red-100);
     --button-background-danger-secondary-pressed: var(--colors-red-200);
     --button-background-danger-secondary-selected: var(--colors-red-50);
-    --button-background-danger-secondary-focused: var(--colors-red-50);
     --button-background-oncolor-default: var(--colors-base-white);
     --button-background-oncolor-hovered: var(--alpha-white-80);
     --button-background-oncolor-pressed: var(--alpha-white-60);
     --button-background-oncolor-selected: var(--alpha-white-70);
-    --button-background-oncolor-focused: var(--alpha-white-100);
     --button-background-transparent-default: var(--alpha-white-0);
     --button-background-transparent-hovered: var(--alpha-white-20);
     --button-background-transparent-pressed: var(--alpha-white-40);
     --button-background-transparent-selected: var(--alpha-white-30);
-    --button-background-transparent-focused: var(--alpha-white-0);
     --button-background-disabled-on-color: var(--alpha-white-20);
     --button-label-transparent-hovered-on-color: var(--colors-primary-400);
     --button-label-transparent-pressed-on-color: var(--colors-primary-300);
-    --button-label-transparent-selected-on-color: var(--colors-primary-400);
-    --button-icon-transparent-hovered-on-color: var(--background-primary-400);
-    --button-icon-transparent-pressed-on-color: var(--colors-primary-300);
-    --button-icon-transparent-selected-on-color: var(--colors-primary-400);
     --button-status-success-bg: var(--background-success-light);
     --button-status-success-text: var(--text-success);
     --button-status-error-bg: var(--background-error-light);
@@ -94,12 +64,6 @@
     --button-border-info: var(--colors-blue-200);
 
     // ── card ──
-    --card-lg-padding: var(--spacing-8);
-    --card-lg-gap: var(--spacing-6);
-    --card-md-padding: var(--spacing-6);
-    --card-md-gap: var(--spacing-4);
-    --card-sm-padding: var(--spacing-4);
-    --card-sm-gap: var(--spacing-2);
     --components-card-radius: var(--spacing-4);
 
     // ── checkbox ──
@@ -137,14 +101,7 @@
     // ── date-picker ──
     --form-datecell-background-default: var(--colors-primary-600);
     --form-datecell-background-hovered: var(--colors-primary-700);
-    --form-datecell-background-pressed: var(--colors-primary-900);
-    --form-datecell-background-focused: var(--colors-primary-600);
     --form-datecell-today-background-default: var(--alpha-white-0);
-    --form-datecell-today-background-hovered: var(--colors-neutral-200);
-    --form-datecell-today-background-pressed: var(--colors-neutral-300);
-    --form-datecell-today-background-focused: var(--alpha-white-0);
-    --form-datecell-background-disabled: var(--colors-base-white);
-    --form-datecell-background-600: var(--colors-primary-600);
     --form-datecell-background-300: var(--colors-primary-300);
     --form-datecell-background-200: var(--colors-primary-200);
     --form-datecell-background-100: var(--colors-primary-100);
@@ -165,127 +122,45 @@
     --featuredicons-icon-neutral: var(--colors-neutral-700);
     --featuredicons-icon-info: var(--colors-blue-700);
     --featuredicons-icon-warning: var(--colors-yellow-700);
-    --featuredicons-icon-secondary: var(--colors-secondary-600);
-    --featuredicons-icon-default-500: var(--colors-neutral-500);
-    --featuredicons-icon-default-400: var(--colors-neutral-400);
-    --featuredicons-icon-primary-light: var(--colors-primary-50);
-    --featuredicons-icon-primary-400: var(--colors-primary-400);
-    --featuredicons-icon-neutral-light: var(--colors-neutral-50);
-    --featuredicons-icon-secondary-light: var(--colors-secondary-50);
-    --featuredicons-icon-tertiary: var(--colors-tertiary-500);
-    --featuredicons-icon-tertiary-light: var(--colors-tertiary-50);
-    --featuredicons-icon-success-light: var(--colors-green-50);
-    --featuredicons-icon-info-light: var(--colors-blue-50);
-    --featuredicons-bg-icon-warning-light: var(--background-warning-50);
-    --featuredicons-bg-icon-error-light: var(--background-error-50);
-    --featuredicons-bg-icon-brand-light: var(--colors-primary-50);
-    --featuredicons-bg-icon-info-light: var(--background-info-50);
-    --featuredicons-bg-icon-success-light: var(--background-success-50);
 
     // ── form-controls ──
-    --control-vertical-gap: var(--spacing-1);
-    --control-title-error-gap: var(--spacing-4);
-    --control-switch-error-icon-gap: var(--spacing-2);
-    --control-radio-error-icon-gap: var(--spacing-4);
-    --control-switch-description-padding: var(--spacing-16);
-    --control-radio-description-padding: var(--spacing-12);
     --control-disabled: var(--colors-neutral-400);
 
     // ── forms ──
-    --form-label-gap: var(--spacing-1);
-    --form-field-label-gap: var(--spacing-2);
-    --form-input-padding: var(--spacing-0);
-    --form-input-gap: var(--spacing-0);
     --form-textarea-padding: var(--spacing-0);
-    --form-textarea-gap: var(--spacing-0);
-    --form-select-padding: var(--spacing-0);
-    --form-select-gap: var(--spacing-0);
-    --form-text-form-title: var(--text-default);
-    --form-text-form-paragraph: var(--text-secondary-paragraph);
     --form-field-text-label: var(--text-default);
     --form-field-text-placeholder: var(--text-secondary-paragraph);
     --form-field-text-hovered: var(--text-default);
     --form-field-text-focused: var(--text-primary-paragraph);
     --form-field-text-pressed: var(--text-primary-paragraph);
-    --form-field-text-filled: var(--text-default);
     --form-field-text-readonly: var(--text-default);
-    --form-field-text-helper: var(--text-secondary-paragraph);
     --form-field-background-default: var(--background-card);
     --form-field-background-lighter: var(--colors-neutral-25);
     --form-field-background-darker: var(--colors-neutral-100);
-    --form-field-background-pressed: var(--colors-neutral-100);
     --form-field-border-default: var(--colors-neutral-400);
     --form-field-border-hovered: var(--colors-neutral-700);
     --form-field-border-pressed: var(--colors-neutral-950);
     --form-field-border-error: var(--border-error);
-    --form-option-background-hover: var(--colors-neutral-100);
-    --form-option-background-pressed: var(--colors-neutral-200);
     --form-field-border-success: var(--border-success);
     --form-field-border-warning: var(--border-warning);
     --form-field-border-info: var(--border-info);
 
     // ── link ──
-    --link-md-gap: var(--spacing-2);
-    --link-sm-gap: var(--spacing-1);
-    --link-links-group-gap: var(--spacing-3);
     --link-primary: var(--colors-primary-600);
     --link-primary-hovered: var(--colors-primary-400);
     --link-primary-pressed: var(--colors-primary-300);
     --link-primary-focused: var(--colors-primary-600);
     --link-primary-visited: var(--colors-primary-800);
-    --link-icon-primary-hovered: var(--colors-primary-400);
-    --link-icon-primary-pressed: var(--colors-primary-300);
-    --link-icon-primary-focused: var(--colors-primary-600);
-    --link-icon-primary-visited: var(--colors-primary-800);
-    --link-secondary: var(--colors-secondary-600);
-    --link-secondary-hovered: var(--colors-secondary-400);
-    --link-secondary-pressed: var(--colors-secondary-300);
-    --link-secondary-focused: var(--colors-secondary-600);
-    --link-secondary-visited: var(--colors-secondary-900);
-    --link-tertiary: var(--colors-tertiary-500);
-    --link-tertiary-hovered: var(--colors-tertiary-400);
-    --link-tertiary-pressed: var(--colors-tertiary-300);
-    --link-tertiary-focused: var(--colors-tertiary-500);
-    --link-tertiary-visited: var(--colors-tertiary-800);
     --link-neutral: var(--colors-neutral-700);
     --link-neutral-hovered: var(--colors-neutral-500);
-    --link-icon-neutral-hovered: var(--colors-neutral-500);
     --link-neutral-pressed: var(--colors-neutral-400);
-    --link-icon-neutral-pressed: var(--colors-neutral-400);
     --link-neutral-focused: var(--colors-neutral-700);
-    --link-icon-neutral-focused: var(--colors-neutral-700);
     --link-neutral-visited: var(--colors-neutral-600);
-    --link-icon-neutral-visited: var(--colors-neutral-600);
-    --link-danger: var(--colors-red-600);
-    --link-danger-hovered: var(--colors-red-700);
-    --link-icon-danger-hovered: var(--colors-red-700);
-    --link-danger-pressed: var(--colors-red-900);
-    --link-icon-danger-pressed: var(--colors-red-900);
-    --link-danger-focused: var(--colors-red-600);
-    --link-icon-danger-focused: var(--colors-red-600);
-    --link-danger-visited: var(--colors-red-800);
-    --link-icon-danger-visited: var(--colors-red-800);
     --link-oncolor: var(--colors-base-white);
     --link-oncolor-hovered: var(--colors-alpha-white-80);
-    --link-icon-oncolor-hovered: var(--alpha-white-80);
     --link-oncolor-pressed: var(--colors-alpha-white-60);
-    --link-icon-oncolor-pressed: var(--alpha-white-60);
     --link-oncolor-focused: var(--colors-base-white);
     --link-oncolor-visited: var(--colors-alpha-white-90);
-    --link-icon-oncolor-visited: var(--alpha-white-90);
-    --link-oncolor-disabled: var(--colors-alpha-white-30);
-    --link-icon-oncolor-disabled: var(--alpha-white-30);
-
-    // ── modal ──
-    --model-padding: var(--spacing-6);
-    --model-gap: var(--spacing-2);
-    --model-content-bottom-padding: var(--spacing-4);
-
-    // ── pagination ──
-    --pagination-item-sm-padding: var(--spacing-1);
-    --pagination-item-md-padding: var(--spacing-1-5);
-    --pagination-item-lg-padding: var(--spacing-2);
-    --pagination-items-padding: var(--spacing-2);
 
     // ── radio ──
     --radio-primary-hovered: var(--controls-primary-hovered);
@@ -304,10 +179,6 @@
     --rating-star-pressed-brand: var(--colors-primary-700);
     --rating-star-hovered-brand: var(--colors-primary-500);
 
-    // ── section ──
-    --section-padding: var(--spacing-8);
-    --section-gap: var(--spacing-8);
-
     // ── stepper ──
     --progressindicator-progress-indicator-gap: var(--spacing-2);
     --progressindicator-progress-text-content-side-padding: var(--spacing-4);
@@ -322,10 +193,8 @@
     --stepper-text-secondary: var(--text-primary-paragraph);
     --stepper-text-tertiary: var(--text-secondary-paragraph);
     --stepper-line-completed: var(--colors-primary-600);
-    --stepper-line-completed-hovered: var(--colors-primary-700);
     --stepper-line-current: var(--colors-neutral-300);
     --stepper-line-upcomming: var(--colors-neutral-300);
-    --stepper-line-upcomming-hovered: var(--colors-neutral-400);
 
     // ── swiper ──
     --bullet-background-default: var(--colors-neutral-200);
@@ -346,14 +215,11 @@
     --switch-neutral-pressed: var(--controls-neutral-pressed);
 
     // ── table ──
-    --table-cell-gap: var(--spacing-2);
     --table-cell-v-padding: var(--spacing-2);
     --table-cell-h-padding: var(--spacing-4);
     --table-cell-border: var(--colors-neutral-300);
-    --table-cell-border-inverse: var(--border-black);
     --table-text-head: var(--colors-neutral-700);
     --table-text-body: var(--text-default);
-    --table-background-disabled: var(--background-disabled);
     --table-background-hover-selected: var(--colors-primary-100);
     --table-background-header: var(--colors-neutral-100);
     --table-background-row: var(--colors-neutral-50);
@@ -364,12 +230,6 @@
     --tab-button-gap: var(--spacing-1);
     --tab-horizontal-tab-md-button-v-padding: var(--spacing-3);
     --tab-horizontal-tab-md-button-h-padding: var(--spacing-4);
-    --tab-horizontal-tab-sm-button-v-padding: var(--spacing-2);
-    --tab-horizontal-tab-sm-button-h-padding: var(--spacing-3);
-    --tab-vertical-tab-md-button-v-padding: var(--spacing-1-5);
-    --tab-vertical-tab-md-button-h-padding: var(--spacing-3);
-    --tab-vertical-tab-sm-button-v-padding: var(--spacing-0-5);
-    --tab-vertical-tab-sm-button-h-padding: var(--spacing-1-5);
 
     // ── tag ──
     --tag-background-neutral: var(--colors-neutral-600);

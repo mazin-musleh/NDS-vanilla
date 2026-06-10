@@ -16,13 +16,9 @@
     --link-primary-visited: var(--colors-primary-500);
     --link-neutral: var(--colors-neutral-200);
     --link-neutral-hovered: var(--colors-neutral-400);
-    --link-icon-neutral-hovered: var(--colors-neutral-400);
     --link-neutral-pressed: var(--colors-neutral-500);
-    --link-icon-neutral-pressed: var(--colors-neutral-500);
     --link-neutral-focused: var(--colors-neutral-200);
-    --link-icon-neutral-focused: var(--colors-neutral-200);
     --link-neutral-visited: var(--colors-neutral-300);
-    --link-icon-neutral-visited: var(--colors-neutral-300);
 
     // ─── Featured Icons ───
     --featuredicons-icon-default: var(--colors-neutral-100);
@@ -79,7 +75,6 @@
     --form-field-background-default: var(--colors-neutral-800);
     --form-field-background-lighter: var(--colors-neutral-900);
     --form-field-background-darker: var(--colors-neutral-700);
-    --form-field-background-pressed: var(--colors-neutral-700);
     --form-field-border-default: var(--colors-neutral-500);
     --form-field-border-hovered: var(--colors-neutral-300);
     --form-field-border-pressed: var(--colors-neutral-100);
@@ -87,24 +82,14 @@
     --form-field-border-success: var(--border-success-light);
     --form-field-border-warning: var(--border-warning-light);
     --form-field-border-info: var(--border-info-light);
-    --form-option-background-hover: var(--colors-neutral-700);
-    --form-option-background-pressed: var(--colors-neutral-600);
 
     // ─── Autocomplete ───
     --autocomplete-highlight: var(--colors-primary-alpha-50);
-    --autocomplete-active: var(--colors-neutral-700);
 
     // ─── Datepicker ───
     --form-datecell-background-default: var(--colors-primary-600);
     --form-datecell-background-hovered: var(--colors-primary-700);
-    --form-datecell-background-pressed: var(--colors-primary-900);
-    --form-datecell-background-focused: var(--colors-primary-600);
     --form-datecell-today-background-default: var(--alpha-black-10);
-    --form-datecell-today-background-hovered: var(--colors-neutral-700);
-    --form-datecell-today-background-pressed: var(--colors-neutral-600);
-    --form-datecell-today-background-focused: var(--alpha-white-0);
-    --form-datecell-background-disabled: var(--colors-neutral-800);
-    --form-datecell-background-600: var(--colors-primary-600);
     --form-datecell-background-300: var(--colors-primary-300);
     --form-datecell-background-200: var(--colors-primary-400);
     --form-datecell-background-100: var(--colors-primary-300);
@@ -149,14 +134,12 @@
 
     // ─── Tables ───
     --table-cell-border: var(--colors-neutral-700);
-    --table-cell-border-inverse: var(--colors-base-white);
     --table-text-head: var(--colors-neutral-300);
     --table-background-hover-selected: var(--colors-primary-alpha-40);
     --table-background-row-selected: var(--colors-primary-alpha-20);
     --table-background-header: var(--colors-neutral-900);
     --table-background-cell: var(--background-default);
     --table-background-row: var(--background-stripe);
-    --table-background-disabled: var(--colors-neutral-700);
 
     // ─── Avatar ───
     --avatar-background: var(--colors-neutral-700);
@@ -168,7 +151,6 @@
     --button-background-neutral-hovered: var(--colors-neutral-600);
     --button-background-neutral-pressed: var(--colors-neutral-500);
     --button-background-neutral-selected: var(--colors-neutral-600);
-    --button-background-neutral-focused: var(--colors-neutral-700);
     --button-background-black-hovered: var(--colors-neutral-900);
 
     // ─── Stepper ───
@@ -182,5 +164,4 @@
     --stepper-text-primary: var(--text-default);
     --stepper-line-current: var(--colors-neutral-600);
     --stepper-line-upcomming: var(--colors-neutral-600);
-    --stepper-line-upcomming-hovered: var(--colors-neutral-600);
 }
