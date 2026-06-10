@@ -418,8 +418,8 @@
         }
 
         // Filter-aware: skip [data-filtered] items so a URL-active filter at
-        // page open doesn't paint a full-items nav now, then trim to display:none
-        // via the half's post-reveal refresh-replay → CLS. Filter is registered
+        // page open doesn't paint a full-items nav now, then trim it to
+        // display:none post-paint → CLS. Filter is registered
         // before Pagination in nds-loader.js so applyUrlParams() has already
         // stamped data-filtered by the time we get here; on plain pages this
         // filter is a no-op (no items carry the attribute).
@@ -458,9 +458,9 @@
     }
 
     // Rebuild an auto-pagination nav for the given --per-page, preserving the
-    // current page. Caller (the shell's initial paint in setupAutoContainer, or
-    // the half's resize callback + refresh entry) is responsible for wiring
-    // click handlers afterwards — wireAutoClicks lives in the half.
+    // current page. Callers (setupAutoContainer's initial paint, _wireAutoNav's
+    // resize callback) are responsible for wiring click handlers afterwards via
+    // wireAutoClicks; refreshAutoPagination rebuilds independently.
     function updateAutoPagination(paginationNav, items, perPage) {
         const totalPages = Math.ceil(items.length / perPage);
 

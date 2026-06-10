@@ -309,8 +309,7 @@
             // on URL-inactive items, and Pagination's filter-aware setupAutoContainer
             // reads visible-only items for its initial paint — so a URL-active
             // filter at page open paints the correct (often smaller, often empty)
-            // nav once, instead of painting full and then trimming via the lazy
-            // half's queued refresh-replay → CLS.
+            // nav once, instead of painting full and then trimming post-paint → CLS.
             // Gate on [data-filter-target] (not .nds-filter): a filter is defined
             // by its target link, so it must init even when there's no .nds-filter
             // dropdown (e.g. a search-only filter).
@@ -326,9 +325,9 @@
             // data-paged-initialized, so no CLS. Registered AFTER Filter so a
             // URL-active filter has stamped data-filtered before this paint —
             // setupAutoContainer's filter-aware item read then paints visible-only.
-            // Filter's refresh call during its init is trapped + queued; the half's
-            // post-reveal replay rebuilds with the same visible-only set, so the
-            // mutation is idempotent (no visible CLS).
+            // Filter's refresh call during its init lands before this nav's setup
+            // and is skipped (refreshAutoPagination's pre-init guard) —
+            // setupAutoContainer paints the same visible-only set itself.
             name: 'Pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
@@ -423,7 +422,7 @@
         : (cb) => { _yieldQueue.push(cb); _yieldChannel.port2.postMessage(null); };
 
     // rIC fallback for older Safari (<18). Deadline counts down a real 5ms
-    // slot so drainIdle yields like native rIC instead of running every
+    // slot so drainList yields like native rIC instead of running every
     // idle component in one macrotask. Fidelity gap: unlike native rIC this
     // fires ~immediately (setTimeout 1ms), NOT at true idle — so on those
     // engines deferred components init right after the critical pass, competing with
@@ -689,7 +688,7 @@
     const rootEl = document.documentElement;
     const attrAutoInit = rootEl?.getAttribute('data-nds-auto-init');
     const attrDisableAll = rootEl?.getAttribute('data-nds-disable-all');
-    const GLOBAL = (typeof window !== 'undefined' && window.NDSInitConfig) ? window.NDSInitConfig : {};
+    const GLOBAL = window.NDSInitConfig || {};
 
     const CONFIG = {
         // Per-batch budget: critical components init in a tight loop until this
