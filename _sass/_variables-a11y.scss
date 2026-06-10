@@ -124,6 +124,12 @@ $a11y-filters: (
     --button-background-primary-hovered: var(--_hc-fg);
     --button-background-primary-pressed: var(--_hc-fg);
     --button-label-primary-default:      var(--_hc-fg);
+
+    // Date-picker selected/endpoint fill + today ring follow the mono treatment;
+    // the range bar drops its brand hue to a neutral wash (grouping info kept).
+    --form-datecell-background-default: var(--_hc-fg);
+    --form-datecell-background-hovered: var(--_hc-fg);
+    --form-datecell-background-range: var(--alpha-black-10);
 }
 
 // Dark HC: invert bg/fg, shift the link ladder.
@@ -134,6 +140,7 @@ $a11y-filters: (
     --_hc-link-hovered: var(--colors-primary-200);
     --_hc-link-pressed: var(--colors-primary-100);
     --_hc-link-visited: var(--colors-secondary-300);
+    --form-datecell-background-range: var(--alpha-white-10);
 }
 
 // Topbar carries a brand-tinted background; the token swap above
@@ -213,6 +220,13 @@ $a11y-filters: (
 // regardless of theme.
 :root[data-a11y~="high-contrast"] .nds-accessibility-panel .nds-grid > .nds-btn[data-state~="selected"] {
     --btn-color: var(--_hc-bg);
+}
+
+// Date-picker selected/endpoint cells: same re-pair as the panel tile above —
+// their fill flips to --_hc-fg (white in dark HC) while the label reads
+// --text-oncolor-primary (white), so dark HC needs the label on --_hc-bg.
+:root[data-a11y~="high-contrast"][data-theme~="dark"] .nds-date-cell:is([data-state~="selected"], [data-state~="range-start"], [data-state~="range-end"]) {
+    --text-oncolor-primary: var(--_hc-bg);
 }
 
 // Content sections — the coloured variants (.nds-primary / .nds-green /
