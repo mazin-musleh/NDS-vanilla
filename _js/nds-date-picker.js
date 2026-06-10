@@ -1543,6 +1543,12 @@
             dayLabel.textContent = this.getDisplayDayNumber(date);
             btn.appendChild(dayLabel);
 
+            // Grid child is a slot wrapper: it paints the contiguous range
+            // bar (slots tile with no column gap), the button keeps the circle.
+            var slot = document.createElement('div');
+            slot.className = 'nds-date-slot';
+            slot.appendChild(btn);
+
             // Add appropriate classes
             if (type === 'other-month') {
                 NDS.State.add(btn, 'other-month');
@@ -1563,7 +1569,7 @@
                 self.selectDate(date);
             });
 
-            this.elements.datesContainer.appendChild(btn);
+            this.elements.datesContainer.appendChild(slot);
         },
 
         // Apply selection states to date cell
@@ -1632,6 +1638,16 @@
             }
             if (isRangeEnd && this.state.rangeStart) {
                 NDS.State.add(btn, 'has-range-start');
+            }
+
+            // Mirror the bar tokens onto the slot wrapper (it owns the range bar).
+            var slot = btn.parentElement;
+            if (slot && slot.classList.contains('nds-date-slot')) {
+                if (isRangeStart) NDS.State.add(slot, 'range-start');
+                if (isRangeEnd) NDS.State.add(slot, 'range-end');
+                if (isInRange) NDS.State.add(slot, 'in-range');
+                if (isRangeStart && this.state.rangeEnd) NDS.State.add(slot, 'has-range-end');
+                if (isRangeEnd && this.state.rangeStart) NDS.State.add(slot, 'has-range-start');
             }
         },
 

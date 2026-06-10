@@ -99,12 +99,12 @@
     --chip-text-oncolor-disabled: var(--colors-alpha-white-40);
 
     // ── date-picker ──
-    --form-datecell-background-default: var(--colors-primary-600);
+    --form-datecell-background-default: var(--colors-primary-600); // selected / endpoint fill + today ring
     --form-datecell-background-hovered: var(--colors-primary-700);
-    --form-datecell-today-background-default: var(--alpha-white-0);
-    --form-datecell-background-300: var(--colors-primary-300);
-    --form-datecell-background-200: var(--colors-primary-200);
-    --form-datecell-background-100: var(--colors-primary-100);
+    --form-datecell-background-range: var(--colors-primary-100); // range bar (slot)
+    --form-datecell-background-in-range: var(--alpha-white-0); // day circle inside a range, resting
+    --form-datecell-background-in-range-hovered: var(--colors-primary-200);
+    --form-datecell-background-in-range-pressed: var(--colors-primary-300);
 
     // ── featured-icons ──
     --featuredicons-icon-oncolor: var(--colors-base-white);
