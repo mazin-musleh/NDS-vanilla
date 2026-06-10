@@ -47,7 +47,15 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 3. **Color tokens**: `--colors-*` — only referenced indirectly through component tokens
 
 **NEVER** use hex colors or `--colors-*` tokens directly in components.
-**New component tokens** → add to `_variables.scss`, include all states: default, hovered, pressed, selected, focused, disabled. Add on-color variants for dark backgrounds.
+**New component tokens** → add to `_sass/tokens/_components.scss` (dark overrides in `tokens/_components-dark.scss`), with the states the component actually implements. Spell the oncolor axis `oncolor` (not `on-color`).
+
+**Routing a component token's VALUE — go by meaning:**
+1. A semantic token with matching **meaning** AND correct both-mode behavior exists → alias it (dark/HC/re-tints come free).
+2. Value must flip in dark but no semantic meaning-match → palette-direct + own dark re-bind; promote the mapping to semantic once ≥2 components share it.
+3. Mode-invariant by design → palette-direct with no dark line (comment it if non-obvious).
+- **Never route through a value-coincidence** (e.g. a border token feeding a background) — same hex today ≠ same meaning tomorrow.
+- **Route families as a unit (states AND variants)** — if only some rungs have a semantic twin, keep the whole family palette-direct. E.g. `--button-background-primary-default` ↔ `--background-primary` (hovered/pressed/selected have no twins) or `--tag-background-{error,info}` ↔ `--background-{error,info}` (success/warning deliberately sit at 700). Splitting a family couples its members to different override surfaces and can invert the ladder under a semantic re-tint.
+- Smell test: a dark re-bind that merely replicates an existing semantic token's flip = the token is on the wrong path; re-route and delete the re-bind.
 
 ## Section & Grid
 

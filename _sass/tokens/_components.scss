@@ -58,10 +58,10 @@
     --button-status-warning-bg: var(--background-warning-light);
     --button-status-warning-text: var(--text-warning);
     --button-border-danger: var(--colors-red-200); // destructive outline — separate from error status (no dark brightening)
-    --button-border-error: var(--colors-red-200);
-    --button-border-success: var(--colors-green-200);
-    --button-border-warning: var(--colors-yellow-200);
-    --button-border-info: var(--colors-blue-200);
+    --button-border-error: var(--border-error-light);
+    --button-border-success: var(--border-success-light);
+    --button-border-warning: var(--border-warning-light);
+    --button-border-info: var(--border-info-light);
 
     // ── card ──
     --card-radius: var(--spacing-4);
@@ -75,17 +75,17 @@
     --checkbox-neutral-pressed: var(--controls-neutral-pressed);
 
     // ── chips ──
-    --chip-background-neutral-default: var(--colors-neutral-100);
+    --chip-background-neutral-default: var(--background-neutral-light);
     --chip-background-neutral-hovered: var(--colors-neutral-200);
     --chip-background-neutral-pressed: var(--colors-neutral-300);
     --chip-background-neutral-selected: var(--colors-neutral-700);
-    --chip-background-neutral-focused: var(--colors-neutral-100);
+    --chip-background-neutral-focused: var(--background-neutral-light);
     --chip-background-oncolor-default: var(--colors-base-white);
-    --chip-background-oncolor-hovered: var(--colors-alpha-white-80);
-    --chip-background-oncolor-pressed: var(--colors-alpha-white-60);
-    --chip-background-oncolor-selected: var(--colors-alpha-white-70);
+    --chip-background-oncolor-hovered: var(--alpha-white-80);
+    --chip-background-oncolor-pressed: var(--alpha-white-60);
+    --chip-background-oncolor-selected: var(--alpha-white-70);
     --chip-background-oncolor-focused: var(--colors-base-white);
-    --chip-background-oncolor-disabled: var(--colors-alpha-white-20);
+    --chip-background-oncolor-disabled: var(--alpha-white-20);
     --chip-background-primary-default: var(--colors-primary-100);
     --chip-background-primary-hovered: var(--colors-primary-200);
     --chip-background-primary-pressed: var(--colors-primary-400);
@@ -97,7 +97,7 @@
     --chip-text-primary-pressed: var(--colors-primary-900);
     --chip-text-oncolor-default: var(--colors-base-white);
     --chip-text-disabled: var(--colors-neutral-400);
-    --chip-text-oncolor-disabled: var(--colors-alpha-white-40);
+    --chip-text-oncolor-disabled: var(--alpha-white-40);
 
     // ── date-picker ──
     --form-datecell-background-default: var(--colors-primary-600); // selected / endpoint fill + today ring
@@ -109,20 +109,20 @@
 
     // ── featured-icons ──
     --featuredicons-icon-oncolor: var(--colors-base-white);
-    --featuredicons-icon-success: var(--colors-green-700);
+    --featuredicons-icon-success: var(--icon-success);
     --featuredicons-icon-default: var(--colors-base-black);
-    --featuredicons-icon-error: var(--colors-red-700);
+    --featuredicons-icon-error: var(--icon-error);
     --featuredicons-background-error-light: var(--background-error-light);
     --featuredicons-background-info-light: var(--background-info-light);
     --featuredicons-background-warning-light: var(--background-warning-light);
     --featuredicons-background-success-light: var(--background-success-light);
-    --featuredicons-background-brand-light: var(--colors-primary-50);
+    --featuredicons-background-brand-light: var(--background-brand-light);
     --featuredicons-background-default-light: var(--colors-neutral-50);
-    --featuredicons-background-neutral-light: var(--colors-neutral-100);
+    --featuredicons-background-neutral-light: var(--background-neutral-light);
     --featuredicons-icon-primary: var(--colors-primary-600);
     --featuredicons-icon-neutral: var(--colors-neutral-700);
-    --featuredicons-icon-info: var(--colors-blue-700);
-    --featuredicons-icon-warning: var(--colors-yellow-700);
+    --featuredicons-icon-info: var(--icon-info);
+    --featuredicons-icon-warning: var(--icon-warning);
 
     // ── form-controls ──
     --control-disabled: var(--colors-neutral-400);
@@ -147,10 +147,10 @@
     --form-field-border-info: var(--border-info);
 
     // ── link ──
-    --link-primary: var(--colors-primary-600);
+    --link-primary: var(--text-primary);
     --link-primary-hovered: var(--colors-primary-400);
     --link-primary-pressed: var(--colors-primary-300);
-    --link-primary-focused: var(--colors-primary-600);
+    --link-primary-focused: var(--text-primary);
     --link-primary-visited: var(--colors-primary-800);
     --link-neutral: var(--colors-neutral-700);
     --link-neutral-hovered: var(--colors-neutral-500);
@@ -158,10 +158,10 @@
     --link-neutral-focused: var(--colors-neutral-700);
     --link-neutral-visited: var(--colors-neutral-600);
     --link-oncolor: var(--colors-base-white);
-    --link-oncolor-hovered: var(--colors-alpha-white-80);
-    --link-oncolor-pressed: var(--colors-alpha-white-60);
+    --link-oncolor-hovered: var(--alpha-white-80);
+    --link-oncolor-pressed: var(--alpha-white-60);
     --link-oncolor-focused: var(--colors-base-white);
-    --link-oncolor-visited: var(--colors-alpha-white-90);
+    --link-oncolor-visited: var(--alpha-white-90);
 
     // ── radio ──
     --radio-primary-checked: var(--controls-primary-checked);
@@ -190,7 +190,7 @@
     --stepper-button-current-hovered: var(--colors-primary-700);
     --stepper-button-upcoming: var(--colors-neutral-300);
     --stepper-button-upcoming-hovered: var(--colors-neutral-400);
-    --stepper-button-background: var(--colors-base-white);
+    --stepper-button-background: var(--background-default);
     --stepper-text-primary: var(--text-display);
     --stepper-text-secondary: var(--text-primary-paragraph);
     --stepper-text-tertiary: var(--text-secondary-paragraph);
@@ -225,8 +225,8 @@
     --table-text-body: var(--text-default);
     --table-background-hover-selected: var(--colors-primary-100);
     --table-background-header: var(--colors-neutral-100);
-    --table-background-row: var(--colors-neutral-50);
-    --table-background-cell: var(--colors-base-white);
+    --table-background-row: var(--background-stripe);
+    --table-background-cell: var(--background-default);
     --table-background-row-selected: var(--colors-primary-50);
 
     // ── tabs ──
@@ -237,7 +237,7 @@
     // ── tag ──
     --tag-background-neutral: var(--colors-neutral-600);
     --tag-background-neutral-light: var(--colors-neutral-50);
-    --tag-background-oncolor: var(--colors-alpha-white-20);
+    --tag-background-oncolor: var(--alpha-white-20);
     --tag-text-neutral: var(--colors-neutral-800);
     --tag-text-success: var(--colors-green-800);
     --tag-text-info: var(--colors-blue-800);
@@ -258,16 +258,16 @@
     --tag-background-error-light: var(--background-error-light);
     --tag-border-neutral: var(--colors-neutral-600);
     --tag-border-neutral-light: var(--colors-neutral-200); // DGA uses neutral-50, too light
-    --tag-border-oncolor: var(--colors-alpha-white-60);
+    --tag-border-oncolor: var(--alpha-white-60);
     --tag-border-success: var(--colors-green-700);
-    --tag-border-success-light: var(--colors-green-200);
+    --tag-border-success-light: var(--border-success-light);
     --tag-border-info: var(--colors-blue-700);
-    --tag-border-info-light: var(--colors-blue-200);
+    --tag-border-info-light: var(--border-info-light);
     --tag-border-warning: var(--colors-yellow-700);
-    --tag-border-warning-light: var(--colors-yellow-200);
+    --tag-border-warning-light: var(--border-warning-light);
     --tag-border-error: var(--colors-red-700);
-    --tag-border-error-light: var(--colors-red-200);
-    --tag-dot: var(--colors-alpha-white-60);
+    --tag-border-error-light: var(--border-error-light);
+    --tag-dot: var(--alpha-white-60);
 
     // ── tooltip ──
     --tooltip-padding: var(--spacing-2);
