@@ -878,182 +878,128 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Tier 5: Max-Width Breakout</h2>
-            <p class="nds-section-description">Content lives outside the wrapper and uses .nds-max-width to break out of the content padding into the full available width. Wrapper holds head + action only.</p>
+            <p class="nds-section-description">Content lives outside the wrapper and uses .nds-max-width to break out of the content padding into the full available width. Wrapper holds head + action only. This demo is live on the page itself — the swiper below escapes the content max-width to the viewport gutter edge (a nested demo card can't show this: the breakout resolves against its container, not the page).</p>
         </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-
-                        <div class="demo-action">
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Variant</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-neutral", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Neutral</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-swiper,.nds-swiper-navigation .nds-btn,.nds-section-action .nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Primary</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                            <span class="nds-label">Brand</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-ghost", ".nds-content-section.nds-demo-section", "sectionColor"]'>
-                                            <span class="nds-label">Ghost</span>
-                                        </button>
-                                    </div>
-                                </div>
+        <div class="nds-section-action">
+            <a href="#" class="nds-btn nds-primary">
+                <span class="nds-label">View All</span>
+            </a>
+        </div>
+    </div>
+    <div class="nds-section-body nds-max-width">
+        <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
+            <div class="nds-swiper-wrapper">
+                {% for service in site.data.content.services limit:6 %}
+                <div class="nds-swiper-slide">
+                    <div class="nds-card nds-stroke">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-xl">
+                                    {{ service.icon }}
+                                </span>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", ".nds-content-section.nds-demo-section", "sectionLayout"]'>
-                                <span class="nds-label">Center</span>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title nds-truncate">{{ service.title }}</span>
+                                <span class="nds-card-description nds-truncate">{{ service.description }}</span>
+                            </div>
+                            <div class="nds-card-actions">
+                                <a href="#" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
+                                    <span class="nds-label">Details</span>
+                                </a>
+                                <a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
+                                    <span class="nds-label">Get Started</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="nds-swiper-navigation" hidden>
+                <div class="nds-swiper-buttons">
+                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"></button>
+                    <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"></button>
+                </div>
+                <div class="nds-swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    <div class="nds-section-body">
+        <div class="nds-showcase">
+            <div class="nds-demo-card">
+                <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier5" id="tab-tier5">
+                                <span class="nds-tab-label">HTML</span>
                             </button>
-                        </div>
+                        </nav>
                     </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <section class="nds-content-section nds-demo-section">
-                                <div class="nds-section-wrapper">
-                                    <div class="nds-section-head">
-                                        <h2 class="nds-section-title">Related Services</h2>
-                                        <p class="nds-section-description">Explore other government digital services that may be relevant to you.</p>
-                                    </div>
-                                    <div class="nds-section-action">
-                                        <a href="#" class="nds-btn nds-primary">
-                                            <span class="nds-label">View All</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="nds-section-body nds-max-width">
-                                    <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
-                                        <div class="nds-swiper-wrapper">
-                                            {% for service in site.data.content.services limit:6 %}
-                                            <div class="nds-swiper-slide">
-                                                <div class="nds-card nds-stroke">
-                                                    <div class="nds-card-header">
-                                                        <div class="nds-card-featured-icon">
-                                                            <span class="nds-featured-icon nds-circle nds-xl">
-                                                                {{ service.icon }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="nds-card-content">
-                                                        <div class="nds-card-text">
-                                                            <span class="nds-card-title nds-truncate">{{ service.title }}</span>
-                                                            <span class="nds-card-description nds-truncate">{{ service.description }}</span>
-                                                        </div>
-                                                        <div class="nds-card-actions">
-                                                            <a href="#" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
-                                                                <span class="nds-label">Details</span>
-                                                            </a>
-                                                            <a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
-                                                                <span class="nds-label">Get Started</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="nds-swiper-navigation" hidden>
-                                            <div class="nds-swiper-buttons">
-                                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"></button>
-                                                <button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"></button>
-                                            </div>
-                                            <div class="nds-swiper-pagination"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                    <div class="nds-tabs nds-code nds-divided">
-                        <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier5" id="tab-tier5">
-                                    <span class="nds-tab-label">HTML</span>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tier5" aria-labelledby="tab-tier5">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
                                 </button>
-                            </nav>
-                        </div>
-                        <div class="nds-tab-content">
-                            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tier5" aria-labelledby="tab-tier5">
-                                <div class="nds-code-action">
-                                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                        <i class="nds-icon nds-hgi-copy-01"></i>
-                                    </button>
-                                </div>
-                                <div class="nds-expandable-content">
-                                <code class="lang-html code">
-&lt;section class="nds-content-section nds-demo-section"&gt;
-    &lt;div class="nds-section-wrapper"&gt;
-        &lt;div class="nds-section-head"&gt;
-            &lt;h2 class="nds-section-title"&gt;Related Services&lt;/h2&gt;
-            &lt;p class="nds-section-description"&gt;Explore other government digital services that may be relevant to you.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class="nds-section-action"&gt;
-            &lt;a href="#" class="nds-btn nds-primary"&gt;
-                &lt;span class="nds-label"&gt;View All&lt;/span&gt;
-            &lt;/a&gt;
-        &lt;/div&gt;
+                            </div>
+                            <div class="nds-expandable-content">
+                            <code class="lang-html code">
+&lt;section class="nds-content-section"&gt;
+&lt;div class="nds-section-wrapper"&gt;
+    &lt;div class="nds-section-head"&gt;
+        &lt;h2 class="nds-section-title"&gt;Related Services&lt;/h2&gt;
+        &lt;p class="nds-section-description"&gt;Explore other government digital services that may be relevant to you.&lt;/p&gt;
     &lt;/div&gt;
-    &lt;div class="nds-section-body nds-max-width"&gt;
-        &lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
-            &lt;div class="nds-swiper-wrapper"&gt;
-                &lt;div class="nds-swiper-slide"&gt;
-                    &lt;div class="nds-card nds-stroke"&gt;
-                        &lt;div class="nds-card-header"&gt;
-                            &lt;div class="nds-card-featured-icon"&gt;
-                                &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-user-id-verification"&gt;&lt;/i&gt;
-                                &lt;/span&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                        &lt;div class="nds-card-content"&gt;
-                            &lt;div class="nds-card-text"&gt;
-                                &lt;span class="nds-card-title nds-truncate"&gt;Identity Verification&lt;/span&gt;
-                                &lt;span class="nds-card-description nds-truncate"&gt;Verify your national identity and obtain digital certificates.&lt;/span&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                        &lt;div class="nds-card-actions"&gt;
-                            &lt;a href="#" class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Details&lt;/span&gt;&lt;/a&gt;
-                            &lt;a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon"&gt;&lt;span class="nds-label"&gt;Get Started&lt;/span&gt;&lt;/a&gt;
+    &lt;div class="nds-section-action"&gt;
+        &lt;a href="#" class="nds-btn nds-primary"&gt;
+            &lt;span class="nds-label"&gt;View All&lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="nds-section-body nds-max-width"&gt;
+    &lt;div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40"&gt;
+        &lt;div class="nds-swiper-wrapper"&gt;
+            &lt;div class="nds-swiper-slide"&gt;
+                &lt;div class="nds-card nds-stroke"&gt;
+                    &lt;div class="nds-card-header"&gt;
+                        &lt;div class="nds-card-featured-icon"&gt;
+                            &lt;span class="nds-featured-icon nds-circle nds-xl"&gt;
+                                &lt;i class="hgi hgi-stroke hgi-user-id-verification"&gt;&lt;/i&gt;
+                            &lt;/span&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;
+                    &lt;div class="nds-card-content"&gt;
+                        &lt;div class="nds-card-text"&gt;
+                            &lt;span class="nds-card-title nds-truncate"&gt;Identity Verification&lt;/span&gt;
+                            &lt;span class="nds-card-description nds-truncate"&gt;Verify your national identity and obtain digital certificates.&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="nds-card-actions"&gt;
+                        &lt;a href="#" class="nds-btn nds-secondary-outline nds-lg"&gt;&lt;span class="nds-label"&gt;Details&lt;/span&gt;&lt;/a&gt;
+                        &lt;a href="#" class="nds-btn nds-primary nds-lg nds-trail-icon"&gt;&lt;span class="nds-label"&gt;Get Started&lt;/span&gt;&lt;/a&gt;
+                    &lt;/div&gt;
                 &lt;/div&gt;
-                &lt;!-- more slides... --&gt;
             &lt;/div&gt;
-            &lt;div class="nds-swiper-navigation" hidden&gt;
-                &lt;div class="nds-swiper-buttons"&gt;
-                    &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
-                    &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
-                &lt;/div&gt;
-                &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
+            &lt;!-- more slides... --&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-swiper-navigation" hidden&gt;
+            &lt;div class="nds-swiper-buttons"&gt;
+                &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-prev" type="button" aria-label="Previous slide"&gt;&lt;/button&gt;
+                &lt;button class="nds-btn nds-primary nds-icon-only nds-circle nds-md nds-next" type="button" aria-label="Next slide"&gt;&lt;/button&gt;
             &lt;/div&gt;
+            &lt;div class="nds-swiper-pagination"&gt;&lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
+&lt;/div&gt;
 &lt;/section&gt;
 </code>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    </div>
+                </div>
                 </div>
             </div>
         </div>
