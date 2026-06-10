@@ -313,12 +313,12 @@ $breakpoints-range: (
   &::before {
     content: '';
     position: absolute !important;
-    height: $size;
     border-radius: var(--radius-full);
     display: block;
     /* transition: height var(--nds-transition); */
 
     @if $position =='b' {
+      height: $size;
       bottom: 0;
       inset-inline: 0;
       margin-inline: calc((var(--_btn-size) - 8px) / 4);

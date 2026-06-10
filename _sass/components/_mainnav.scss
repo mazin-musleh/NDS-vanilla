@@ -186,12 +186,6 @@
         }
     }
 
-    /* Accessible focus styles */
-    .nds-nav-link:focus-visible {
-        outline: 2px solid var(--colors-base-black);
-        outline-offset: 2px;
-    }
-
     /* Scrollbar Hiding - scoped to scrollable nav */
     .nds-nav-primary {
         scrollbar-width: none;
@@ -264,11 +258,11 @@
                 padding-top: var(--spacing-2xl);
                 padding-bottom: var(--spacing-2xl);
                 width: 100%;
-
-                .nds-search-box {
-                    max-width: 800px;
-                }
             }
+        }
+
+        .nds-search-box {
+            max-width: 800px;
         }
 
         &.nds-fit {
@@ -348,7 +342,7 @@
             &.nds-multi-column-list {
                 display: block;
                 column-count: 3;
-                column-gap: 2rem;
+                column-gap: var(--spacing-4xl);
                 list-style: none;
 
                 * {
@@ -408,10 +402,6 @@ body:not(.nds-minimal) .nds-main-nav {
         }
     }
 
-    .nds-mainNav-toggler {
-        display: none;
-    }
-
     .nds-collapse {
         display: flex;
         width: 100%;
@@ -448,7 +438,6 @@ body:not(.nds-minimal) .nds-main-nav {
         overflow-x: auto;
         touch-action: pan-x;
         -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
 
         >* {
             flex-shrink: 0;
@@ -456,40 +445,39 @@ body:not(.nds-minimal) .nds-main-nav {
         }
     }
 
-    /* Show More Button Styles - using sibling selector */
-    .nds-collapse-content {
-        .nds-nav-primary[data-state~="has-more"] {
-            ~.nds-show-more {
-                transform: translateX(0);
+    /* Show More Button Styles - using sibling selector. The ~ combinator
+       already pins same-parent (.nds-collapse-content), so the wrapper level
+       is structurally redundant in the selector. */
+    .nds-nav-primary[data-state~="has-more"] {
+        ~.nds-show-more {
+            transform: translateX(0);
 
-                i {
-                    transform: rotate(90deg);
-                    transition: transform 0.1s ease;
-                }
+            i {
+                transform: rotate(90deg);
+                transition: transform 0.1s ease;
+            }
+        }
+
+        // At end: icon rotation
+        &[data-state~="at-end"] {
+            ~.nds-show-more i {
+                transform: rotate(270deg);
+            }
+        }
+
+        @include ltr {
+            ~.nds-show-more i {
+                transform: rotate(270deg);
             }
 
-            // At end: icon rotation
-            &[data-state~="at-end"] {
-                ~.nds-show-more i {
-                    transform: rotate(270deg);
-                }
-            }
-
-            @include ltr {
-                ~.nds-show-more i {
-                    transform: rotate(270deg);
-                }
-
-                &[data-state~="at-end"]~.nds-show-more i {
-                    transform: rotate(90deg);
-                }
+            &[data-state~="at-end"]~.nds-show-more i {
+                transform: rotate(90deg);
             }
         }
     }
 
     /* Dropdown Menu for Desktop/Tablet */
-    .nds-dropdown-menu,
-    .nds-nav-minimal .nds-dropdown-menu {
+    .nds-dropdown-menu {
         position: fixed;
         inset-inline: 0;
     }
@@ -692,10 +680,10 @@ body.nds-minimal .nds-main-nav {
                 max-height: unset;
                 overflow: unset !important;
                 padding-inline: 0;
+            }
 
-                .nds-dropdown-item {
-                    width: 100%;
-                }
+            .nds-dropdown-item {
+                width: 100%;
             }
         }
 
@@ -714,26 +702,24 @@ body.nds-minimal .nds-main-nav {
     }
 
     /* Show More Button */
-    .nds-collapse-content {
-        .nds-nav-primary[data-state~="has-more"] {
-            margin-bottom: calc(var(--nds-minimal-nav-item-height));
+    .nds-nav-primary[data-state~="has-more"] {
+        margin-bottom: var(--nds-minimal-nav-item-height);
 
-            ~.nds-show-more {
-                opacity: 1;
-                visibility: visible;
+        ~.nds-show-more {
+            opacity: 1;
+            visibility: visible;
 
-                /* Above nav items */
+            /* Above nav items */
 
-                i {
-                    transition: transform 0.1s ease;
-                }
+            i {
+                transition: transform 0.1s ease;
             }
+        }
 
-            // At end: icon rotation
-            &[data-state~="at-end"] {
-                ~.nds-show-more i {
-                    transform: rotate(180deg);
-                }
+        // At end: icon rotation
+        &[data-state~="at-end"] {
+            ~.nds-show-more i {
+                transform: rotate(180deg);
             }
         }
     }
