@@ -423,7 +423,7 @@
     --icon-color: var(--icon-warning);
 
     &.nds-color {
-      --card-bg: var(--background-warning-50);
+      --card-bg: var(--background-warning-light);
       --card-bg-hover: var(--colors-yellow-100);
       --icon-bg-color: var(--alpha-warning-10);
     }
@@ -447,7 +447,7 @@
     --icon-color: var(--icon-error);
 
     &.nds-color {
-      --card-bg: var(--background-error-50);
+      --card-bg: var(--background-error-light);
       --card-bg-hover: var(--colors-red-100);
       --icon-bg-color: var(--alpha-error-10);
     }
@@ -471,7 +471,7 @@
     --icon-color: var(--icon-info);
 
     &.nds-color {
-      --card-bg: var(--background-info-50);
+      --card-bg: var(--background-info-light);
       --card-bg-hover: var(--colors-blue-100);
       --icon-bg-color: var(--alpha-info-10);
     }
@@ -495,7 +495,7 @@
     --icon-color: var(--icon-success);
 
     &.nds-color {
-      --card-bg: var(--background-success-50);
+      --card-bg: var(--background-success-light);
       --card-bg-hover: var(--colors-green-100);
       --icon-bg-color: var(--alpha-success-10);
     }

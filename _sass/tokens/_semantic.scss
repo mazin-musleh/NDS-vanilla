@@ -69,7 +69,6 @@
     --background-mark: var(--colors-primary-100);
     --background-white: var(--colors-base-white);
     --background-black: var(--colors-base-black);
-    --background-notification-white: var(--colors-base-white);
     --img-overlay-color: var(--colors-primary-950); // hero/card image overlay — DGA green (mode-invariant); runtime brands switch to neutral (see themes/_register.scss)
 
     // ── Background — brand & neutral scales ──
@@ -99,19 +98,15 @@
     // ── Background — status ──
     --background-success: var(--colors-green-600);
     --background-success-light: var(--colors-green-50);
-    --background-success-50: var(--colors-green-50);
     --background-success-25: var(--colors-green-25);
     --background-info: var(--colors-blue-600);
     --background-info-light: var(--colors-blue-50);
-    --background-info-50: var(--colors-blue-50);
     --background-info-25: var(--colors-blue-25);
     --background-warning: var(--colors-yellow-600);
     --background-warning-light: var(--colors-yellow-50);
-    --background-warning-50: var(--colors-yellow-50);
     --background-warning-25: var(--colors-yellow-25);
     --background-error: var(--colors-red-600);
     --background-error-light: var(--colors-red-50);
-    --background-error-50: var(--colors-red-50);
     --background-error-25: var(--colors-red-25);
 
     // ── Background — disabled ──
@@ -125,6 +120,9 @@
     --text-primary-paragraph: var(--colors-neutral-700);
     --text-secondary-paragraph: var(--colors-neutral-500);
     --text-brand: var(--colors-primary-800);
+    // NOTE: --text-{primary,secondary,tertiary} are BRAND-colored text (green/gold/
+    // lavender) — for text hierarchy use --text-default / --text-display /
+    // --text-{primary,secondary}-paragraph instead.
     --text-primary: var(--colors-primary-600);
     --text-secondary: var(--colors-secondary-600);
     --text-tertiary: var(--colors-tertiary-500);
@@ -140,7 +138,6 @@
     --text-error: var(--colors-red-700);
     --text-default-disabled: var(--colors-neutral-400);
     --text-default-oncolor-disabled: var(--alpha-white-40);
-    --text-white: var(--colors-base-white);
     --text-black: var(--colors-base-black);
 
     // ── Border ──
@@ -172,7 +169,6 @@
     --divider-color: var(--alpha-black-10);
 
     // ── Focus ──
-    --border-focus: var(--colors-base-black);
     --focus-outline: var(--colors-base-black);
     --focus-inner: var(--colors-base-white);
 
