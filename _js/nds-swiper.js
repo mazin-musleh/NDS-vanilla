@@ -91,6 +91,8 @@
             this.isHero = container.classList.contains('nds-hero');
             this._cachedGap = null;
             this.currentIndex = 0;
+            // [hidden] snapshot — destroy() restores the as-served nav state.
+            this._navHadHidden = !!(this.navigation && this.navigation.hasAttribute('hidden'));
 
             if (!this.wrapper || this.slides.length === 0) {
                 console.warn('NDS Swiper: No wrapper or slides found');
@@ -149,10 +151,6 @@
                 s.querySelector('img[data-src], img[data-srcset]')
             );
             if (lazySlides.length) this.setupLazyLoading(lazySlides);
-            // setupContentObserver only catches scrollWidth shifts from late-loading
-            // content; for static-content swipers (no lazy images) it's pure noise.
-            // Hero updatePeekStyles is a no-op anyway, so hero never needs it.
-            if (!this.isHero && lazySlides.length) this.setupContentObserver();
             // setupVisibilityObserver only does meaningful work for heroes that have
             // [hidden] slides to reveal on visibility (the WebKit RTL fix). Non-hero
             // peek/state was set synchronously above — no late update needed.
@@ -169,32 +167,6 @@
             this.updatePeekStyles();
 
             this.container.setAttribute('data-nds-swiper-initialized', 'true');
-
-            if (this.navigation && this.slides.length > this.slidesPerView) {
-                this.navigation.removeAttribute('hidden');
-            }
-        }
-
-        setupContentObserver() {
-            // Establish the baseline on the first observer callback rather than
-            // synchronously here — a scrollWidth read during init forces layout
-            // after the CSS-variable writes earlier in the chain.
-            let lastScrollWidth = -1;
-
-            const checkScrollWidth = NDS.debounce(() => {
-                const currentScrollWidth = this.wrapper.scrollWidth;
-                if (lastScrollWidth === -1) {
-                    lastScrollWidth = currentScrollWidth;
-                    return;
-                }
-                if (currentScrollWidth !== lastScrollWidth) {
-                    lastScrollWidth = currentScrollWidth;
-                    this.updatePeekStyles();
-                }
-            }, 100);
-
-            const off = NDS.onElementResize(this.wrapper, checkScrollWidth);
-            setTimeout(off, 500);
         }
 
         setupVisibilityObserver() {
@@ -239,6 +211,12 @@
             }
 
             const pageCount = Math.ceil(this.slides.length / this.slidesPerView);
+
+            // Nav visibility rides the served [hidden] FOUC guard, re-decided on
+            // every breakpoint pass. Inline display can't do this job — the
+            // universal [hidden]{display:none!important} rule outranks it, which
+            // left the nav stuck hidden when init landed on a one-page breakpoint.
+            if (this.navigation) this.navigation.toggleAttribute('hidden', pageCount <= 1);
 
             // Peek width = raw --peek + one gap; the addition is done in CSS
             // (calc on [data-swiper-peek]) so init never reads getComputedStyle.
@@ -406,7 +384,6 @@
             const display = hidden ? 'none' : '';
             this.pagination.style.display = display;
             this.pagination.innerHTML = '';
-            if (this.navigation) this.navigation.style.display = display;
             if (this.prevBtn) this.prevBtn.style.display = display;
             if (this.nextBtn) this.nextBtn.style.display = display;
             this.wrapper.style.overflow = hidden ? 'unset' : '';
@@ -604,13 +581,13 @@
             this.container.removeAttribute('data-nds-swiper-initialized');
             this.container.removeAttribute('tabindex');
 
-            // Reverse the inline state init/setupPagination wrote, so destroy() restores
+            // Reverse the state init/setupPagination wrote, so destroy() restores
             // the pre-init DOM for consumers that tear down without re-creating.
             this.container.removeAttribute('data-swiper-peek');
             ['--total', '--slides', '--peek', '--gap'].forEach(p => this.container.style.removeProperty(p));
             if (this.wrapper) this.wrapper.style.removeProperty('overflow');
             if (this.pagination) { this.pagination.style.removeProperty('display'); this.pagination.innerHTML = ''; }
-            if (this.navigation) this.navigation.style.removeProperty('display');
+            if (this.navigation) this.navigation.toggleAttribute('hidden', this._navHadHidden);
             if (this.prevBtn) this.prevBtn.style.removeProperty('display');
             if (this.nextBtn) this.nextBtn.style.removeProperty('display');
 
