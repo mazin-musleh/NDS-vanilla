@@ -26,6 +26,23 @@
     --background-brand-light: var(--alpha-primary-10);
     --background-overlay: var(--alpha-black-70);
 
+    // ─── Status Tinted Surfaces ───
+    // light/50/25 all collapse to the same alpha-10 overlay in dark mode (the
+    // shared pattern alert/cards/tag/button-status/featured-icons all used to
+    // re-state per-component). Solid --background-{status} stays bright.
+    --background-success-light: var(--alpha-success-10);
+    --background-info-light:    var(--alpha-info-10);
+    --background-warning-light: var(--alpha-warning-10);
+    --background-error-light:   var(--alpha-error-10);
+    --background-success-50: var(--alpha-success-10);
+    --background-info-50:    var(--alpha-info-10);
+    --background-warning-50: var(--alpha-warning-10);
+    --background-error-50:   var(--alpha-error-10);
+    --background-success-25: var(--alpha-success-10);
+    --background-info-25:    var(--alpha-info-10);
+    --background-warning-25: var(--alpha-warning-10);
+    --background-error-25:   var(--alpha-error-10);
+
     // ─── Default Text ───
     --text-default: var(--colors-neutral-200);
     --text-display: var(--colors-neutral-100);

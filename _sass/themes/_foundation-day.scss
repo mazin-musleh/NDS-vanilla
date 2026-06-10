@@ -167,7 +167,6 @@
 :root {
   @include oklch.brand-alpha-static('primary', #5B423B);
   @include oklch.neutral-ramp-static(#5B423B, 0.5); // warm grays (replaces DGA's cool slate)
-  --background-brand-strong: var(--colors-primary-900);
 }
 
 // ── Event-specific CSS (beyond tokens) ──

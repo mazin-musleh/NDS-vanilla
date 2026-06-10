@@ -92,6 +92,9 @@ direction: ltr
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="neutral">
                                             <span class="nds-label">Neutral</span>
                                         </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="green">
+                                            <span class="nds-label">Green</span>
+                                        </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="yellow">
                                             <span class="nds-label">Yellow</span>
                                         </button>
@@ -297,6 +300,9 @@ direction: ltr
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="neutral">
                                             <span class="nds-label">Neutral</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="green">
+                                            <span class="nds-label">Green</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-card-color="yellow">
                                             <span class="nds-label">Yellow</span>

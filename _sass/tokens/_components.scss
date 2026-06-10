@@ -154,10 +154,10 @@
     --featuredicons-icon-success: var(--colors-green-700);
     --featuredicons-icon-default: var(--colors-base-black);
     --featuredicons-icon-error: var(--colors-red-700);
-    --featuredicons-background-error-light: var(--colors-red-50);
-    --featuredicons-background-info-light: var(--colors-blue-50);
-    --featuredicons-background-warning-light: var(--colors-yellow-50);
-    --featuredicons-background-success-light: var(--colors-green-50);
+    --featuredicons-background-error-light: var(--background-error-50);
+    --featuredicons-background-info-light: var(--background-info-50);
+    --featuredicons-background-warning-light: var(--background-warning-50);
+    --featuredicons-background-success-light: var(--background-success-50);
     --featuredicons-background-brand-light: var(--colors-primary-50);
     --featuredicons-background-default-light: var(--colors-neutral-50);
     --featuredicons-background-neutral-light: var(--colors-neutral-100);
@@ -386,13 +386,13 @@
     --tag-icon-warning: var(--colors-yellow-800);
     --tag-icon-error: var(--colors-red-800);
     --tag-background-success: var(--colors-green-700);
-    --tag-background-success-light: var(--colors-green-50);
+    --tag-background-success-light: var(--background-success-50);
     --tag-background-info: var(--colors-blue-600);
-    --tag-background-info-light: var(--colors-blue-50);
+    --tag-background-info-light: var(--background-info-50);
     --tag-background-warning: var(--colors-yellow-700);
-    --tag-background-warning-light: var(--colors-yellow-50);
+    --tag-background-warning-light: var(--background-warning-50);
     --tag-background-error: var(--colors-red-600);
-    --tag-background-error-light: var(--colors-red-50);
+    --tag-background-error-light: var(--background-error-50);
     --tag-border-neutral: var(--colors-neutral-600);
     --tag-border-neutral-light: var(--colors-neutral-200); // DGA uses neutral-50, too light
     --tag-border-on-color: var(--colors-alpha-white-60);

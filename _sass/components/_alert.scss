@@ -158,40 +158,24 @@
       --card-bg: var(--background-success-25);
       --card-border: var(--border-success-light);
       --card-title: var(--text-success);
-      @include dark {
-        --card-bg: var(--alpha-success-10);
-        --card-border: var(--border-success-light);
-      }
     }
 
     &:is(.nds-blue, [data-status="info"]) {
       --card-bg: var(--background-info-25);
       --card-border: var(--border-info-light);
       --card-title: var(--text-info);
-      @include dark {
-        --card-bg: var(--alpha-info-10);
-        --card-border: var(--border-info-light);
-      }
     }
 
     &:is(.nds-yellow, [data-status="warning"]) {
       --card-bg: var(--background-warning-25);
       --card-border: var(--border-warning-light);
       --card-title: var(--text-warning);
-      @include dark {
-        --card-bg: var(--alpha-warning-10);
-        --card-border: var(--border-warning-light);
-      }
     }
 
     &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
       --card-bg: var(--background-error-25);
       --card-border: var(--border-error-light);
       --card-title: var(--text-error);
-      @include dark {
-        --card-bg: var(--alpha-error-10);
-        --card-border: var(--border-error-light);
-      }
     }
 
     &:is(.nds-neutral, [data-status="neutral"]) {
@@ -252,28 +236,28 @@
       --card-bg: var(--background-success-25);
       --card-title: var(--text-success);
       --_inline-desc: var(--text-success);
-      @include dark { --alert-icon-bg: var(--background-success); --card-bg: var(--alpha-success-10); }
+      @include dark { --alert-icon-bg: var(--background-success); }
     }
     &:is(.nds-blue, [data-status="info"]) {
       --alert-icon-bg: var(--background-info);
       --card-bg: var(--background-info-25);
       --card-title: var(--text-info);
       --_inline-desc: var(--text-info);
-      @include dark { --alert-icon-bg: var(--background-info); --card-bg: var(--alpha-info-10); }
+      @include dark { --alert-icon-bg: var(--background-info); }
     }
     &:is(.nds-yellow, [data-status="warning"]) {
       --alert-icon-bg: var(--background-warning);
       --card-bg: var(--background-warning-25);
       --card-title: var(--text-warning);
       --_inline-desc: var(--text-warning);
-      @include dark { --alert-icon-bg: var(--background-warning); --card-bg: var(--alpha-warning-10); }
+      @include dark { --alert-icon-bg: var(--background-warning); }
     }
     &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
       --alert-icon-bg: var(--background-error);
       --card-bg: var(--background-error-25);
       --card-title: var(--text-error);
       --_inline-desc: var(--text-error);
-      @include dark { --alert-icon-bg: var(--background-error); --card-bg: var(--alpha-error-10); }
+      @include dark { --alert-icon-bg: var(--background-error); }
     }
     &:is(.nds-neutral, [data-status="neutral"]) {
       --alert-icon-bg: var(--icon-neutral);

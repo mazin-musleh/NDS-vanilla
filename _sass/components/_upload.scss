@@ -33,11 +33,6 @@
             &[data-state~="drag-over"] {
                 border-color: var(--border-success) !important;
                 background-color: var(--background-success-25);
-
-                @include dark {
-                    background-color: var(--alpha-success-10);
-                }
-
                 color: var(--text-success);
 
                 .nds-upload-icon {
