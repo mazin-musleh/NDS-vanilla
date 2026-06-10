@@ -413,28 +413,23 @@
                 var hasCheckboxes = group.querySelector('input[type="checkbox"]');
                 var hasRadios = group.querySelector('input[type="radio"]');
 
+                var result = null;
+                var anchor = null;
                 if (group.classList.contains('nds-otp-group')) {
-                    var result = Validator.validateOtpGroup(group, { showMessage: options.showMessages });
-                    if (!result.valid) {
-                        acc.invalidFields.push(group);
-                        var otpFirst = group.querySelector('.nds-otp-container input');
-                        acc.errors.push({ field: group, input: otpFirst, message: result.message });
-                        if (!acc.firstInvalidInput) acc.firstInvalidInput = otpFirst;
-                    }
+                    result = Validator.validateOtpGroup(group, { showMessage: options.showMessages });
+                    if (!result.valid) anchor = group.querySelector('.nds-otp-container input');
                 } else if (hasCheckboxes) {
-                    var result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
-                    if (!result.valid) {
-                        acc.invalidFields.push(group);
-                        acc.errors.push({ field: group, input: hasCheckboxes, message: result.message });
-                        if (!acc.firstInvalidInput) acc.firstInvalidInput = hasCheckboxes;
-                    }
+                    result = Validator.validateCheckboxGroup(group, { showMessage: options.showMessages });
+                    anchor = hasCheckboxes;
                 } else if (hasRadios) {
-                    var result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
-                    if (!result.valid) {
-                        acc.invalidFields.push(group);
-                        acc.errors.push({ field: group, input: hasRadios, message: result.message });
-                        if (!acc.firstInvalidInput) acc.firstInvalidInput = hasRadios;
-                    }
+                    result = Validator.validateRadioGroup(group, { showMessage: options.showMessages });
+                    anchor = hasRadios;
+                }
+
+                if (result && !result.valid) {
+                    acc.invalidFields.push(group);
+                    acc.errors.push({ field: group, input: anchor, message: result.message });
+                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
                 }
             });
         },
@@ -761,11 +756,8 @@
         // Two-way initial sync + specialized control dispatch.
         _syncInitialState: function(input, formControl, formContainer) {
             // Initialize state - two-way sync
-            // Container → input: propagate data-required and pre-existing data-state
+            // Container → input: propagate pre-existing data-state
             if (formContainer) {
-                if (formContainer.hasAttribute('data-required') && input.type !== 'radio') {
-                    input.required = true;
-                }
                 NDS.State.apply(formContainer, 'disabled', 'readonly');
             }
             // Input → container: sync current input state to data-state
@@ -781,35 +773,28 @@
         },
 
         initSelectDropdown: function(selectElement, formControl) {
-            var isOpen = false;
             var formContainer = formControl.closest('.nds-form-container') || formControl;
 
-            function updateOpenState() {
-                isOpen ? NDS.State.add(formContainer, 'open') : NDS.State.remove(formContainer, 'open');
-            }
-
             selectElement.addEventListener('mousedown', function() {
-                isOpen = !isOpen;
-                updateOpenState();
+                NDS.State.has(formContainer, 'open')
+                    ? NDS.State.remove(formContainer, 'open')
+                    : NDS.State.add(formContainer, 'open');
             });
 
             selectElement.addEventListener('keydown', function(e) {
                 var openKeys = ['ArrowDown', 'ArrowUp', 'Enter', ' '];
                 var closeKeys = ['Escape', 'Tab'];
 
-                if (openKeys.includes(e.key) && !isOpen) {
-                    isOpen = true;
-                    updateOpenState();
+                if (openKeys.includes(e.key) && !NDS.State.has(formContainer, 'open')) {
+                    NDS.State.add(formContainer, 'open');
                 } else if (closeKeys.includes(e.key)) {
-                    isOpen = false;
-                    updateOpenState();
+                    NDS.State.remove(formContainer, 'open');
                 }
             });
 
             ['blur', 'change'].forEach(function(event) {
                 selectElement.addEventListener(event, function() {
-                    isOpen = false;
-                    updateOpenState();
+                    NDS.State.remove(formContainer, 'open');
                 });
             });
         },
