@@ -352,7 +352,12 @@
 
             // offsetLeft difference from first slide — static DOM property,
             // unaffected by scroll animation, accounts for wrapper padding.
-            const offset = Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
+            // Last page: end-align instead — the start-aligned offset overshoots
+            // max-scroll by the peek reserve (no next page left to peek), and
+            // mandatory snap re-pulls the row short, clipping the last slide.
+            const offset = clampedIndex >= this.maxIndex
+                ? this.wrapper.scrollWidth - this.wrapper.clientWidth
+                : Math.abs(targetSlide.offsetLeft - this.slides[0].offsetLeft);
 
             this.wrapper.scrollTo({
                 left: NDS.isRTL ? -offset : offset,
