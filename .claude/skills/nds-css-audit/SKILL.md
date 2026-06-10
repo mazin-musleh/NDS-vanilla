@@ -466,6 +466,8 @@ These feed the Phase 4 report's "Gaps observed" section AND Phase 6 EVOLVE — w
 
 Severity (HIGH / MEDIUM / LOW) drives display order within each section; byte-delta drives display order across SEL/DEAD/DUPE.
 
+**Annotation-exemption convention (every rule).** Each rule defines a `// <RULE> <reason>` exemption comment (named in its row); a site annotated with a real, specific reason is skipped by detection — vague reasons don't qualify. This is what powers the accept-and-annotate close-out above, and Phase 6 surfaces applied annotations as regression-guard candidates. The deep-read agent brief must restate this convention — the agent doesn't read this file.
+
 ---
 
 ## Phase 4: REPORT

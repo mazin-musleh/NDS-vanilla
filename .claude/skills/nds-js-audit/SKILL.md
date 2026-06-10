@@ -192,6 +192,13 @@ The detection rules live in sibling files, one per rule group. Read the file(s) 
 
 Severity (HIGH / MEDIUM / LOW) drives the order fixes are applied in Phase 5: HIGH (correctness and performance) first, then MEDIUM, then LOW.
 
+### Shared rule conventions (apply to EVERY catalog rule)
+
+- **Annotation exemption (global).** A match is NOT a finding when an inline comment within 3 lines above it names the SPECIFIC reason the pattern is intentional — the constraint or principle it answers to and, where the rule asks, the trusted source or re-activation path. Vague gestures (`// safe`, `// defensive`, `// needed`, `// just in case`) never qualify; the bar is a rationale a future reader can verify. Rule rows state only what THEIR comment must name (e.g. JSS-01: the value's source and why it's safe) and reference this convention as "annotation exemption (global)". Deleting such a comment re-arms the rule it exempts (JSA-19 protects them for exactly this reason).
+- **Gap discipline (global).** When a match is plausible but the recommended fix doesn't clearly apply in context — or a deep-read rule can't concretely prove its bar (JSA-14's three invariants, JSA-19's would-a-competent-reader-miss-this test) — record a Gap/SKIP observation, not a finding. Precision over recall: the catalog sharpens by recording uncertainty, not by padding reports.
+
+Agent briefs (Phase 3 / Phase 6) must paste both conventions verbatim — subagents don't read this file.
+
 **JSA `Type:` field.** Every JSA finding carries `Type: actionable` (concrete change, bounded risk — has a `Fix:` line) or `Type: tradeoff` (deliberate design choice no mechanical fix resolves). `fix all` / `fix JSA` apply actionable findings only; tradeoffs are acknowledged, never auto-fixed. A tradeoff with a real high-leverage lever is marked `Type: tradeoff → recommend solving` with `Proposed solution:` + `Benefit vs cost:` lines. Full framing in `RULES-JSA.md`.
 
 **Mode coverage.** Greppable rules run in both full-tree and single-file modes; deep-read rules run in single-file only (full-tree skips them with the Phase 4 banner). The authoritative which-runs-where lists are in Phase 1 (“Cross-tree rules in single-file mode” for JSD-05/JSD-15, “JSA deep-read rules in full-tree mode” for JSA); each `RULES-*.md` row also carries its own `Mode` where it matters.
@@ -204,7 +211,7 @@ Severity (HIGH / MEDIUM / LOW) drives the order fixes are applied in Phase 5: HI
 
 **Brief template** (self-contained — the agent has no audit context):
 1. **Target** — the resolved `_js/nds-<file>.js` path. "Read it top-to-bottom before judging; pattern-matching without the full read misses context."
-2. **Rules to apply** — paste the in-scope subset of the deep-read scope above, each with its one-line detection signature and fix (copy from the Phase 3 catalog rows). Include the JSA-14 three-invariant bar and the "record a Gap, not a finding, when in doubt" discipline verbatim.
+2. **Rules to apply** — paste the in-scope subset of the deep-read scope above, each with its one-line detection signature and fix (copy from the Phase 3 catalog rows). Include the Shared rule conventions (annotation exemption + gap discipline) and the JSA-14 three-invariant bar verbatim.
 3. **Reference anchors** — the Phase 2 good-pattern exemplars (`_js/nds-scroll-more.js`, `_js/nds-drawer.js`, `_js/nds-loader.js:415-423`, `_js/nds-autocomplete.js:290-312`) so fixes cite a real pattern.
 4. **Output contract** — return ONLY a findings table: `| Sev | Rule | Location (file:line) | Finding → one-line fix | Type (JSA: actionable/tradeoff) |`, plus a short "Gaps observed" list for shapes no rule covers. No prose, no fabricated findings; two-to-five JSA observations is typical, ten+ signals padding.
 
