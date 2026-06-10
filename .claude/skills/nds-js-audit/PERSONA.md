@@ -2,36 +2,22 @@
 
 The project's chosen conventions for `_js/nds-*.js` component files, documented as concrete canonical forms backed by principle reasoning. Consulted by `nds-js-audit` so JSD-15 ("cross-file pattern consistency") works in single-file mode and so the audit measures code against deliberate choices instead of against the loudest accidental majority.
 
-**Scope:** the 50 component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-showcase.js` (demo-page wiring).
+**Scope:** the component files under `_js/nds-*.js`. Excludes `nds-core.js` (publishes the shared utility surface, different conventions), `nds-loader.js` (orchestration shape), `nds-showcase.js` (demo-page wiring).
 
 ---
 
 ## How this document is structured
 
-Each entry has eight fields, each doing one job. They split into two tracks — **rules** (slow-changing judgments) and **bookkeeping** (facts the audit refreshes for free on every full-tree run):
-
-*Rules — change only through the Phase 7 evolve quality bar:*
+Each entry has four fields, each doing one job:
 
 - **Canonical** — the concrete form the audit checks against. A literal string, attribute name, method name, or shape. Greppable.
-- **Why this canonical (principle)** — the reasoning. Defends the choice against future revert attempts; not load-bearing for the audit itself.
-- **Why not the alternatives** — rejected forms with their cost. Documents what was considered and ruled out, so a future contributor can argue from data rather than revert from inattention.
-- **Carve-outs (NOT divergence)** — concept-different cases that share surface vocabulary but follow a different principle. The audit must NOT flag these. Cite file:line when possible.
+- **Why (and rejected alternatives)** — the principle defending the choice, plus the rejected forms with their cost, so a future contributor can argue from data rather than revert from inattention. Not load-bearing for the audit itself.
+- **Carve-outs (NOT divergence)** — concept-different cases that share surface vocabulary but follow a different principle. The audit must NOT flag these. Cite a symbol (file + identifier) when possible.
 - **Audit behavior** — the literal check `nds-js-audit` performs. A yes/no test, not a judgment call.
 
-*Bookkeeping — Phase 7 reconciles silently from the full-tree scan; no quality bar, because these are measured facts, not judgments:*
+If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, which auto-applies a revision only when the divergent file's cited reasoning clears the evolve quality bar and records it in the `## Catalog evolved` block. Raw adoption counts or "the corpus changed" never trigger a revision — those are migration targets; the canonical is the deliberate choice, and the corpus catches up. Citation hygiene (expiring a resolved motivating finding, healing a drifted symbol-anchored citation) needs no quality bar — it is reported under `Bookkeeping reconciled` so the change is never silent.
 
-- **Maturity** — where the entry sits on the confidence ladder (see below). The audit promotes/demotes it from run evidence. This is what makes the persona *mature* rather than just *current*: a new convention enters weak and earns its authority over runs.
-- **Current adoption** — measured conformance + the date it was tallied. Informational dashboard / refactor-progress signal. Never the source of the canonical; the canonical is the canonical even when adoption is 30%.
-- **Last reconciled** — the date the bookkeeping fields (Maturity, adoption, citations, motivating-finding status) were last refreshed against the corpus. A stamp older than the newest commit is a visible "stale" flag, not a guess.
-
-**Maturity ladder** (Phase 7 moves entries between rungs from run evidence — never the source of the canonical):
-
-- `proposed` — one motivating site; the canonical is asserted but unproven across the corpus.
-- `established` — ≥2 conforming sites and adoption has been measured at least once.
-- `enforced` — full (or full-minus-documented-carve-out) adoption; carve-outs cited and stable.
-- `settled` — 100% adoption with zero divergence for ≥3 consecutive full-tree runs. The audit may **skip re-checking** a settled entry every run (spend attention on unsettled conventions); a single later divergence demotes it back to `enforced`.
-
-If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, which auto-applies a revision only when the divergent file's cited reasoning clears the evolve quality bar and records it in the `## Catalog evolved` block. Bookkeeping refreshes (adoption re-tally, maturity promotion, citation healing, expiring a resolved motivating finding) need no bar — they are reported in the `## Catalog evolved` block under a `Bookkeeping reconciled` heading so the change is still never silent.
+*(The former maturity ladder and per-entry adoption tallies were removed 2026-06-10: the corpus had converged — every entry sat at full adoption — and the `settled` rung depended on a saved-report trail the skill never recommends creating. Divergence detection, not counting, is what the persona is for; the CSS audit retired its MATURITY.md ledger for the same reason. Do not re-add a counting ledger.)*
 
 ---
 
@@ -50,32 +36,18 @@ this.abortController = new AbortController();
 this.abortController.abort();
 ```
 
-**Why this canonical (principle)**
+**Why (and rejected alternatives)**
 
-Clarity beats brevity for fields read during teardown work and code review. A reader scanning a class to answer "where does teardown happen?" must spot the controller without parsing abbreviations. The 12 characters saved by an abbreviation are paid back at every read by every reader who has to learn the instance-local vocabulary.
-
-**Why not the alternatives**
-
-- `this._ac` / `this._ctrl` / `this.ac` — vocabulary tax. The leading underscore additionally misclassifies the field: `_xxx` signals "implementation detail, don't read from outside the class," but the controller's identity documents lifecycle, not implementation. Lifecycle naming should be searchable, not hidden.
-- `this.controller` — ambiguous when a component has more than one controller (fetch, render, animation). The field name should answer "what kind of controller?" without context.
+Clarity beats brevity for fields read during teardown work and code review: a reader scanning a class for "where does teardown happen?" must spot the controller without parsing abbreviations, and the characters an abbreviation saves are paid back at every read. Rejected: `this._ac` / `this._ctrl` / `this.ac` — vocabulary tax, and the leading underscore misclassifies a lifecycle field as an implementation detail (lifecycle naming should be searchable, not hidden); `this.controller` — ambiguous when a component has more than one controller (fetch, render, animation).
 
 **Carve-outs (NOT divergence)**
 
-- **Secondary controllers** that scope a sub-concern, named for what they scope:
-  - `this.fetchAbortController` ([_js/nds-filter.js:347](_js/nds-filter.js#L347)) — scopes in-flight fetch aborts, paired with the primary `this.abortController` at L100.
-  - `this.renderAbortController` ([_js/nds-chart.js:392](_js/nds-chart.js#L392)) — scopes one render cycle, paired with the primary at L122.
-  - `this.instanceAbortController` ([_js/nds-ipv.js:44](_js/nds-ipv.js#L44)) — secondary to instance teardown.
-- **Per-element AbortControllers stored on the element** (`el._ndsFilterAC = new AbortController()` at [_js/nds-filter.js:1334](_js/nds-filter.js#L1334)) are scoped to the element's lifetime, not the instance's. Structurally different shape; the leading underscore IS correct here because the property is on a foreign element.
+- **Secondary controllers** that scope a sub-concern, named for what they scope: `this.fetchAbortController` (`_js/nds-filter.js`, paired with the primary `this.abortController`), `this.renderAbortController` (`_js/nds-chart.js`, scopes one render cycle), `this.instanceAbortController` (`_js/nds-ipv.js`).
+- **Per-element AbortControllers stored on the element** (`el._ndsFilterAC` in `_js/nds-filter.js`) are scoped to the element's lifetime, not the instance's. Structurally different shape; the leading underscore IS correct here because the property is on a foreign element.
 
 **Audit behavior**
 
 Flag any `this.<name> = new AbortController()` where `<name>` matches one of: ≤4 characters, OR begins with `_` followed by ≤3 lowercase letters (`_ac`, `_ctrl`, `_fp`), OR equals `controller`. Secondary controllers with domain-named full words (any name containing `AbortController` as a suffix) pass.
-
-**Maturity:** `enforced` — full adoption, carve-outs (secondary + per-element controllers) cited and stable.
-
-**Current adoption:** 12/12 component files using a primary controller use `this.abortController`. Tallied 2026-06-04.
-
-**Last reconciled:** 2026-06-04 (adoption re-tallied, filter citations healed L98→L100 / L324→L347).
 
 ---
 
@@ -93,30 +65,18 @@ destroy() {
 }
 ```
 
-**Why this canonical (principle)**
+**Why (and rejected alternatives)**
 
-`destroy()` matches the JS-component ecosystem (Web Components' `disconnectedCallback` pairs with explicit `destroy()` patterns; Vue, React class lifecycle; Backbone) so consumers writing `instance.destroy()` never have to ask "is it destroy, teardown, cleanup, or dispose?" Project-local vocabulary on lifecycle methods produces friction for every consumer.
-
-**Why not the alternatives**
-
-- `cleanup()` — too generic; reads as "tidy up after some action" rather than "instance lifetime is over." Conflicts with the legitimate per-cycle internal use (see carve-out below).
-- `teardown()` — test-framework-flavored (Mocha, JUnit). Reads as "this is a test fixture" not "this is a UI component."
-- `dispose()` — C#/IDisposable-flavored. Unusual in JS-component ecosystems; forces consumers to learn a foreign vocabulary that has no upside.
+`destroy()` matches the JS-component ecosystem (Web Components pairings, Vue/React class lifecycles, Backbone), so consumers writing `instance.destroy()` never have to ask "is it destroy, teardown, cleanup, or dispose?" — project-local lifecycle vocabulary is friction for every consumer. Rejected: `cleanup()` — too generic, reads as per-action tidy-up and collides with the legitimate per-cycle use (carve-out below); `teardown()` — test-framework-flavored; `dispose()` — C#/IDisposable-flavored, foreign vocabulary with no upside.
 
 **Carve-outs (NOT divergence)**
 
-- **Two-phase lifecycle** where `cleanup()` releases per-open-cycle handlers and `destroy()` releases instance-lifetime handlers + invokes `cleanup()` first. Exemplar: [_js/nds-date-picker.js](_js/nds-date-picker.js) (declarations at L638, L1999). The principle: per-cycle release uses `cleanup()`; instance release uses `destroy()`. They coexist.
-- **Locally-scoped `function cleanup()` declarations** inside transitionend handlers ([_js/nds-accessibility.js:916](_js/nds-accessibility.js#L916), [_js/nds-drawer.js:143](_js/nds-drawer.js#L143), [_js/nds-dropmenu.js:627](_js/nds-dropmenu.js#L627), [_js/nds-sidemenu.js:159](_js/nds-sidemenu.js#L159)) are closure utilities, not public teardown methods. They share the word but not the meaning.
+- **Two-phase lifecycle** where `cleanup()` releases per-open-cycle handlers and `destroy()` releases instance-lifetime handlers + invokes `cleanup()` first. Exemplar: `_js/nds-date-picker.js`. The principle: per-cycle release uses `cleanup()`; instance release uses `destroy()`. They coexist.
+- **Locally-scoped `function cleanup()` declarations** inside transitionend handlers (`_js/nds-accessibility.js`, `_js/nds-drawer.js`, `_js/nds-dropmenu.js`, `_js/nds-sidemenu.js`) are closure utilities, not public teardown methods. They share the word but not the meaning.
 
 **Audit behavior**
 
 Flag any component that exposes `teardown()` or `dispose()` as the public instance-lifetime teardown, OR exposes only `cleanup()` without the two-phase shape detectable in the file (i.e., no separate `destroy()` declared AND no separate-subset teardown structure where `cleanup()` removes some handlers and other code removes the rest). Files exposing both `cleanup()` and `destroy()` for the documented two-phase shape are NOT flagged.
-
-**Maturity:** `enforced` — no known divergence; two-phase carve-out (date-picker) cited and stable.
-
-**Current adoption:** 22 component files expose `destroy()` as the public instance-lifetime teardown (tables.js declares two, for its two controllers); date-picker adds the two-phase `cleanup()`+`destroy()` carve-out. Zero `teardown()` / `dispose()` divergence across the tree. Tallied 2026-06-04.
-
-**Last reconciled:** 2026-06-04 (full-tree re-tally; zero divergence — `destroy()` is universal).
 
 ---
 
@@ -132,7 +92,7 @@ The verb pair encodes the concept, not the DOM mutation. Two components making a
 
 **Discriminator** (mechanically checkable): file invokes `NDS.trapFocus` OR `NDS.Backdrop.show`.
 
-**Examples:** [_js/nds-modal.js:26-69](_js/nds-modal.js#L26), [_js/nds-ipv.js:313-336](_js/nds-ipv.js#L313), [_js/nds-dropmenu.js:519-583](_js/nds-dropmenu.js#L519), [_js/nds-tooltip.js:168-202](_js/nds-tooltip.js#L168), [_js/nds-autocomplete.js:402-412](_js/nds-autocomplete.js#L402), [_js/nds-accessibility.js:862-896](_js/nds-accessibility.js#L862).
+**Examples:** `_js/nds-modal.js`, `_js/nds-ipv.js`, `_js/nds-dropmenu.js`, `_js/nds-tooltip.js`, `_js/nds-autocomplete.js`, `_js/nds-accessibility.js`.
 
 #### 3.2 Per-section toggleable → `show()` / `hide()`
 
@@ -142,7 +102,7 @@ The verb pair encodes the concept, not the DOM mutation. Two components making a
 
 **Discriminator:** multi-instance simultaneous visibility AND file does NOT invoke `NDS.trapFocus` / `NDS.Backdrop.show`.
 
-**Examples:** [_js/nds-accordion.js:144-180](_js/nds-accordion.js#L144), [_js/nds-drawer.js:126-147](_js/nds-drawer.js#L126) (`showSubmenu` / `hideSubmenu`).
+**Examples:** `_js/nds-accordion.js`, `_js/nds-drawer.js` (`showSubmenu` / `hideSubmenu`).
 
 #### 3.3 Transient self-dismissing surfaces → `create({...})` + `dismiss(target)`
 
@@ -152,7 +112,7 @@ The verb pair encodes the concept, not the DOM mutation. Two components making a
 
 **Discriminator:** module exposes `NDS.<Name>.create({...})` AND `NDS.<Name>.dismiss(target)` (or `dismissAll(scope)`) AND the created surface has a finite lifetime independent of the API caller.
 
-**Examples:** [_js/nds-alert.js:254](_js/nds-alert.js#L254), [_js/nds-feedback.js:144](_js/nds-feedback.js#L144).
+**Examples:** `_js/nds-alert.js`, `_js/nds-feedback.js`.
 
 #### 3.4 Binary toggle with symmetric setup → `toggle()` only
 
@@ -162,16 +122,11 @@ The verb pair encodes the concept, not the DOM mutation. Two components making a
 
 **Discriminator:** component exposes `toggle()` AND does NOT expose distinct `open()` / `close()` / `show()` / `hide()` for the same state axis.
 
-**Examples:** [_js/nds-theme.js:40](_js/nds-theme.js#L40), [_js/nds-expandable.js:96](_js/nds-expandable.js#L96), [_js/nds-mainnav.js:702](_js/nds-mainnav.js#L702) (`toggleDropdown`).
+**Examples:** `_js/nds-theme.js`, `_js/nds-expandable.js`, `_js/nds-mainnav.js` (`toggleDropdown`).
 
-**Why this canonical (principle, whole entry)**
+**Why (and rejected alternatives — whole entry)**
 
-The pair reads as the concept reads. `open` evokes a doorway; `show` evokes revealing what was hidden; `dismiss` evokes a temporary visitor leaving; `toggle` evokes a binary flip. Forcing one pair onto all concepts loses information at the call site — a reader seeing `widget.show()` shouldn't have to know component context to figure out whether a modal is opening, a toast is being created, or a section is revealing.
-
-**Why not the alternatives**
-
-- **One universal pair across all concepts** — destroys concept information at the call site. Vocabulary specificity is information; uniformity-for-its-own-sake erases it.
-- **Pair invented per file** — defeats the persona's purpose. A new contributor would have to learn N vocabularies for N components.
+The pair reads as the concept reads. `open` evokes a doorway; `show` evokes revealing what was hidden; `dismiss` evokes a temporary visitor leaving; `toggle` evokes a binary flip. Forcing one pair onto all concepts loses information at the call site — a reader seeing `widget.show()` shouldn't have to know component context to figure out whether a modal is opening, a toast is being created, or a section is revealing. Rejected: one universal pair across all concepts — destroys concept information at the call site (vocabulary specificity is information; uniformity-for-its-own-sake erases it); pair invented per file — defeats the persona's purpose, a new contributor would have to learn N vocabularies for N components.
 
 **Carve-outs (NOT divergence)**
 
@@ -183,18 +138,6 @@ For each component file:
 1. Apply the discriminators (`NDS.trapFocus` / `NDS.Backdrop.show` invocation → 3.1; multi-instance no-backdrop → 3.2; factory-create with finite lifetime → 3.3; `toggle()`-only → 3.4).
 2. Check the file's exposed lifecycle pair against the bucket's canonical.
 3. If the file's concept is ambiguous (multiple discriminators match, or none match), record it as an open question in the report rather than flagging a finding — ambiguity does not clear the evolve bar, so nothing auto-changes.
-
-**Maturity:** `enforced` — all four buckets fully adopted at last tally; discriminators stable.
-
-**Current adoption:**
-- 3.1 (modal-like): 6/6 use `open()` / `close()`
-- 3.2 (per-section): 2/2 use `show()` / `hide()`
-- 3.3 (transient): 2/2 use `create({...})` + `dismiss(target)`
-- 3.4 (toggle-only): 3/3 use `toggle()` only
-
-Tallied 2026-05-28 (corpus has since grown — adoption pending next full-tree re-tally).
-
-**Last reconciled:** 2026-05-28 (pre-corpus-growth; counts not yet refreshed against current tree).
 
 ---
 
@@ -209,30 +152,18 @@ console.warn('NDS Filter: target container not found');
 console.error('NDS Modal: requires NDSBackdrop API. Please include nds-backdrop.js first.');
 ```
 
-**Why this canonical (principle)**
+**Why (and rejected alternatives)**
 
-Component-emitted diagnostics carry the component's identity at the start of the message so a developer can grep `NDS Filter` and find every diagnostic the filter component produced. The PascalCase form matches the JS-side namespace identity (`NDS.Filter`, `NDS.Modal`) rather than the CSS-class form. The colon-space separator breaks the prefix from the message at a visually scannable point.
-
-**Why not the alternatives**
-
-- No prefix — un-greppable; loses identity in a noisy console. A diagnostic from an unidentified source is barely better than no diagnostic.
-- `[NDS.Filter]` bracket form — correct for API-namespace internals (core's `[NDS.i18n]`, loader's `[NDS:init]`) where the source IS a sub-API. Wrong shape for component messages because it implies sub-API identity that components don't have.
-- Lowercase `nds-filter:` — matches the CSS class form but not the JS namespace identity. JS-side diagnostics should match JS-side identity.
+Component-emitted diagnostics carry the component's identity at the start of the message so a developer can grep `NDS Filter` and find every diagnostic the filter component produced. The PascalCase form matches the JS-side namespace identity (`NDS.Filter`, `NDS.Modal`) rather than the CSS-class form, and the colon-space separator breaks prefix from message at a scannable point. Rejected: no prefix — un-greppable, loses identity in a noisy console; `[NDS.Filter]` bracket form — correct for API-namespace internals (core's `[NDS.i18n]`, loader's `[NDS:init]`) but implies sub-API identity components don't have; lowercase `nds-filter:` — matches the CSS class form, not the JS namespace identity.
 
 **Carve-outs (NOT divergence)**
 
 - `_js/nds-core.js` and `_js/nds-loader.js` use the bracket form `[NDS.<api>]` / `[NDS]` / `[NDS:init]` because they're API namespaces and orchestration, not components. Out of scope of this entry.
-- **Programmatic-API-namespace modules** whose public surface is invoked as `NDS.<Name>.<method>(...)` (a sub-API, not a DOM-attached per-element component instance) may use the bracket form `[NDS.<Name>]` — same shape as core's `[NDS.i18n]`. The diagnostics read as sub-API output, so the bracket form matches the module's actual identity. Cite: [_js/nds-export.js:141,326,380,422](_js/nds-export.js#L141) — `NDS.Export` (`export`/`csv`/`xls`/`pdf`/`collect`) is a stateless library/API namespace, not a per-element component, so it emits `[NDS.Export] …` like core's `[NDS.i18n] …`. (This carve-out tends to coincide with JSD-07's "declarative-delegation library" exemption — a module that is an API namespace there is usually one here too.)
+- **Programmatic-API-namespace modules** whose public surface is invoked as `NDS.<Name>.<method>(...)` (a sub-API, not a DOM-attached per-element component instance) may use the bracket form `[NDS.<Name>]` — same shape as core's `[NDS.i18n]`. Cite: `_js/nds-export.js` — `NDS.Export` (`export`/`csv`/`xls`/`pdf`/`collect`) is a stateless library/API namespace, so it emits `[NDS.Export] …`. (This carve-out tends to coincide with JSD-07's "declarative-delegation library" exemption — a module that is an API namespace there is usually one here too.)
 
 **Audit behavior**
 
 Flag any component-file `console.warn(...)` or `console.error(...)` whose first string argument does not match `/^NDS [A-Z][A-Za-z]*: /`. Files using the bracket form for component output (e.g. `'[NDS Filter] ...'`) are flagged for migration. **Exception:** a module that is a programmatic-API namespace (public surface invoked as `NDS.<Name>.<method>(...)`, not a per-element DOM component — confirm via the carve-out) may use the bracket form `[NDS.<Name>]` and is NOT flagged.
-
-**Maturity:** `enforced` — zero component-level divergence post commit `1a194e4`; API-namespace bracket carve-out (export) verified.
-
-**Current adoption:** 17 component files emit the `NDS <Name>:` form across ~33 warn/error statements (autocomplete, breadcrumb, accordion, date-picker, dropmenu, expandable, feedback, filter, ipv, modal, multiselect, sideinfo, user-feedback, tooltip, swiper, tabs, tables); export uses the `[NDS.Export]` bracket carve-out. Zero component-level divergence. Tallied 2026-06-04.
-
-**Last reconciled:** 2026-06-04 (full-tree count refresh; export bracket-form carve-out re-verified; zero divergence).
 
 ---
 
@@ -268,20 +199,14 @@ function init() {
 }
 ```
 
-**Why this canonical (principle, whole entry)**
+**Why (and rejected alternatives — whole entry)**
 
-A factory creates per-element instances; the guard must distinguish "this specific element is initialized" from "any element of this type was once initialized," so the marker belongs on the element. A singleton has no per-element target to mark; pinning a `data-nds-<name>-initialized` attribute to `document.body` would pollute a shared attribute namespace and force every singleton to coordinate names that don't need to coexist in the DOM. The guard's location should match the guard's scope.
-
-**Why not the alternatives**
-
-- Factory using a closure flag — can't distinguish per-element initialization state. Re-init scans become impossible.
-- Singleton using a DOM attribute on `document.body` — namespace pollution; coordination cost between unrelated singletons.
-- `window.nds<Name>Initialized` global flag — leaks state into the window namespace where it can be tampered with or accidentally collided. Acceptable only when the guard is genuinely cross-module (a tree-wide observer multiple components depend on existing exactly once).
+A factory creates per-element instances; the guard must distinguish "this specific element is initialized" from "any element of this type was once initialized," so the marker belongs on the element. A singleton has no per-element target to mark; pinning an attribute to `document.body` would pollute a shared namespace and force unrelated singletons to coordinate names. The guard's location should match the guard's scope. Rejected: factory using a closure flag — can't distinguish per-element state, re-init scans become impossible; singleton using a `document.body` attribute — namespace pollution; `window.nds<Name>Initialized` global flag — leaks state into the window namespace; acceptable only when the guard is genuinely cross-module (carve-out below).
 
 **Carve-outs (NOT divergence)**
 
-- **Window-scope flags for tree-wide observers.** [_js/nds-tables.js:414](_js/nds-tables.js#L414) (`window.ndsTableClassObserverInitialized`) and [_js/nds-tables.js:427](_js/nds-tables.js#L427) (`window.ndsTabChangeHandlerInitialized`) coordinate two cross-module observers (responsive-table class mutations, tab-change events). The window flag is the right shape for that specific concern because there's no per-element target AND the guard needs to coordinate with sibling modules. Not divergence.
-- **JS-property per-element guards on document-sweeping controllers.** A factory-style controller that sweeps the whole document (rather than a registered per-instance selector) MAY mark each visited element with a JS property (`el._ndsXxxInitialized`) instead of the canonical `data-nds-<name>-initialized` attribute. The property IS on the element (satisfying 5.1's principle that per-element state lives on the element) and distinguishes per-element init; it just isn't CSS-selectable, so re-sweeps visit every element and check the flag inline rather than filtering via `:not([data-…-initialized])`. Accepted for whole-document controllers where a selector-filtered rescan isn't used. Exemplar: [_js/nds-forms.js](_js/nds-forms.js) marks inputs/forms/switches with `_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized` etc. Not divergence. (A *registered* factory with a per-instance selector should still prefer the attribute form so the loader's rescan can selector-filter.)
+- **Window-scope flags for tree-wide observers.** `_js/nds-tables.js` (`window.ndsTableClassObserverInitialized` ~L394, `window.ndsTabChangeHandlerInitialized` ~L407) coordinates two cross-module observers (responsive-table class mutations, tab-change events). The window flag is the right shape for that specific concern because there's no per-element target AND the guard needs to coordinate with sibling modules. Not divergence.
+- **JS-property per-element guards on document-sweeping controllers.** A factory-style controller that sweeps the whole document (rather than a registered per-instance selector) MAY mark each visited element with a JS property (`el._ndsXxxInitialized`) instead of the canonical attribute. The property IS on the element (satisfying 5.1's principle) and distinguishes per-element init; it just isn't CSS-selectable, so re-sweeps check the flag inline rather than filtering via `:not([data-…-initialized])`. Exemplar: `_js/nds-forms.js` (`_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized` markers). Not divergence. (A *registered* factory with a per-instance selector should still prefer the attribute form so the loader's rescan can selector-filter.)
 
 **Audit behavior**
 
@@ -289,14 +214,8 @@ A factory creates per-element instances; the guard must distinguish "this specif
 2. Factory using `_initDone` or `window.<flag>` → flag.
 3. Singleton using `data-nds-<name>-initialized` → flag.
 4. Window-global flag requires an inline comment within 3 lines naming the cross-module observer concern; otherwise flag.
-5. Singleton using a module-scope closure flag NOT named `_initDone` (e.g. `_installed`, `_wired`, `_ready`) → flag as a name divergence. The shape is correct; only the name diverges. Resolve per file: migrate to `_initDone`, or open a Phase 7 revision to admit the name. Resolved (was the motivating finding): `_js/nds-voice-input.js` previously used `var _installed`; migrated to `var _initDone` (L290). No known divergence remains.
-6. Factory whose per-element guard IS a DOM attribute but does NOT match `data-nds-<name>-initialized` (e.g. missing the `nds-` namespace infix, like `data-swiper-initialized`) → flag as a name divergence. The shape is correct (marker lives on the element); only the name diverges. Resolve per file: migrate to `data-nds-<name>-initialized`, or open a Phase 7 revision to admit the name. Does NOT apply to the JS-property carve-out (`el._ndsXxxInitialized` on whole-document controllers, per carve-out above). Resolved (was the motivating finding): `_js/nds-swiper.js` previously used `data-swiper-initialized`; migrated to `data-nds-swiper-initialized` (L131,164,574,619). No known divergence remains.
-
-**Maturity:** `enforced` — both motivating divergences (voice-input, swiper) migrated this reconciliation; no known divergence remains. Promotes toward `settled` once a full-tree run confirms zero divergence.
-
-**Current adoption:** classification pass complete (2026-06-04). 11 singleton / document-sweeping modules use the `_initDone` closure flag (accessibility, cityWeather, cooldown-button, customselect, digitalStamp, empty, mainnav, modal, otp, theme, voice-input); cooldown-button + otp are delegated document-sweepers that pair `_initDone` with per-element JS-property markers (carve-out 5.2). ~20 factory components use the `data-nds-<name>-initialized` attribute form (autocomplete, accordion, breadcrumb, drawer, dropmenu, expandable, filter, ipv, multiselect, pagination, sideinfo, sort, stepper, swiper, tabs, tables, toc, tooltip, upload, user-feedback). Zero divergence — voice-input (`_installed`→`_initDone`) and swiper (`data-swiper-initialized`→`data-nds-swiper-initialized`) migrations confirmed.
-
-**Last reconciled:** 2026-06-04 (full-tree classification pass complete; zero divergence).
+5. Singleton using a module-scope closure flag NOT named `_initDone` (e.g. `_installed`, `_wired`, `_ready`) → flag as a name divergence; migrate to `_initDone` or open a Phase 7 revision. Resolved (was the motivating finding): `_js/nds-voice-input.js` migrated `var _installed` → `var _initDone`.
+6. Factory whose per-element guard IS a DOM attribute but does NOT match `data-nds-<name>-initialized` (e.g. missing the `nds-` infix, like `data-swiper-initialized`) → flag as a name divergence; migrate or open a Phase 7 revision. Does NOT apply to the JS-property carve-out above. Resolved (was the motivating finding): `_js/nds-swiper.js` migrated `data-swiper-initialized` → `data-nds-swiper-initialized`.
 
 ---
 
@@ -318,49 +237,32 @@ el.addEventListener('keydown', handler, { signal });
 
 Either form is acceptable; the choice between them is local readability.
 
-**Why this canonical (principle)**
+**Why (and rejected alternatives)**
 
-Listener teardown should be atomic by default. One `.abort()` releases every listener attached with the same signal — no per-listener bookkeeping, no enumeration loop, no chance of typo-induced silent leaks. The cost of per-handler storage (`this.handlers.<key> = fn`) is fragility: a missed key during teardown looks identical to working code at write time and only fails as a production leak. The JSD-09 rule exists specifically because per-handler shapes routinely drift between bind site and teardown site.
-
-**Why not the alternatives**
-
-- `this.handlers.<key> = fn; el.addEventListener('click', this.handlers.<key>)` then `destroy()` enumerates handlers — requires every key to round-trip exactly. Typos produce silent leaks.
-- Raw paired `addEventListener` / `removeEventListener` — requires the same function reference at both sites. Easy to drift when handlers are re-bound or recreated.
+Listener teardown should be atomic by default: one `.abort()` releases every listener attached with the same signal — no per-listener bookkeeping, no enumeration loop, no typo-induced silent leaks. Rejected: `this.handlers.<key> = fn` + teardown enumeration — every key must round-trip exactly; a missed key looks identical to working code at write time and only fails as a production leak (JSD-09 exists because these shapes routinely drift); raw paired `addEventListener` / `removeEventListener` — requires the same function reference at both sites, easy to drift when handlers are re-bound.
 
 **Carve-outs (NOT divergence)**
 
-- **Two-phase lifecycle with subset cleanup.** When a component genuinely needs to release a strict subset of listeners (per-open-cycle handlers) while keeping others alive (instance-lifetime handlers), AbortController is structurally wrong — `.abort()` releases everything. Per-handler storage is correct because partial release is the requirement. Exemplar: [_js/nds-date-picker.js](_js/nds-date-picker.js) (handler stores around `bindNavigationEvents` / `bindActionButtons`, partial removal in `cleanup()` at L638, full removal in `destroy()` at L1999).
+- **Two-phase lifecycle with subset cleanup.** When a component genuinely needs to release a strict subset of listeners (per-open-cycle handlers) while keeping others alive, AbortController is structurally wrong — `.abort()` releases everything. Per-handler storage is correct because partial release is the requirement. Exemplar: `_js/nds-date-picker.js` (handler stores around `bindNavigationEvents` / `bindActionButtons`; partial removal in `cleanup()`, full removal in `destroy()`).
 - **Per-element AbortControllers stored on the element** (`el._ndsFilterAC`) scope a different lifetime (the element's, not the instance's). Out of scope.
 
 **Audit behavior**
 
 Flag any `this.handlers.<key> = fn` pattern in a file where the component does NOT have a detectable two-phase lifecycle (i.e., does NOT have a `cleanup()` method removing a subset of `this.handlers.<key>` keys, paired with a `destroy()` removing the rest). Files with the documented two-phase shape pass.
 
-**Maturity:** `enforced` — `{ signal }` shape dominant; sole exception (date-picker two-phase) cited and principled.
-
-**Current adoption:** every file attaching listeners through an AbortController uses the `{ signal }` shape (~24 instance / per-element / module controllers); date-picker alone uses `this.handlers.<key>`, under the documented two-phase rationale. Zero un-rationalized divergence. Tallied 2026-06-04.
-
-**Last reconciled:** 2026-06-04 (full-tree re-tally; date-picker is the sole documented exception).
-
 ---
 
-### 7. No split components (removed 2026-06-04)
+### 7. No split components (prohibition; mechanism removed 2026-06-04)
 
 **Canonical**
 
-NDS does not use per-component eager-shell + lazy-behavior splits. The mechanism — `nds-X__delegated.js` halves grafted onto an eager shell via `_installBehavior` + `_deferBehavior` trap stubs + `NDS.loadSplit`, with build asserts `assert_splits_valid!` / `assert_trap_coverage!` / `assert_split_headers!` and a `window.__NDS_SPLIT` manifest — was built for Filter/Mainnav/Stepper/Pagination and removed: it saved ~3 KB gz off main (which the reveal isn't byte-bound on) for a pre-attach promise-vs-sync gap plus ~330 lines of mechanism + governance. A `critical` component with init-unnecessary behavior keeps that behavior in main and runs it on interaction (cold-init: cheap registration at init, no forced layout), per `CLAUDE.md` → "JS Bundles & Shrinking the Critical Bundle".
+NDS does not use per-component eager-shell + lazy-behavior splits. Full rationale and the chosen alternatives (cold-init in main; wholesale de-criticalization for delegate-safe components) live in `CLAUDE.md` → "JS Bundles & Shrinking the Critical Bundle" and SKILL.md Phase 2 → "Split components were removed".
 
 **Discriminator** (mechanically checkable): any `_js/nds-X__delegated.js` file, or any reference to `_installBehavior`, `_deferBehavior`, `NDS.loadSplit`, `window.__NDS_SPLIT`, or a `// SPLIT COMPONENT` banner.
 
 **Audit behavior**
 
-Flag any discriminator match as a regression — the split pattern is deliberately retired; reintroducing it contradicts CLAUDE.md. Route the fix to cold-init-in-main, or to wholesale de-criticalization if the component is delegate-safe. Wholesale de-criticalization (drop `critical: true` + move the whole file to the delegated `@bundles` list, Accordion-style) is NOT a split and remains valid.
-
-**Maturity:** `enforced` — prohibition; zero discriminator matches in the tree. Promotes to `settled` after 3 consecutive full-tree runs confirm zero reintroduction.
-
-**Current adoption:** 0 splits — Filter, Mainnav, Stepper, Pagination all merged back to main (2026-06-04). Verified zero `_installBehavior` / `loadSplit` / `__NDS_SPLIT` / `*__delegated.js` matches.
-
-**Last reconciled:** 2026-06-04 (discriminator scan confirmed clean).
+Flag any discriminator match as a regression — the split pattern is deliberately retired; reintroducing it contradicts CLAUDE.md. Route the fix to cold-init-in-main, or to wholesale de-criticalization if the component is delegate-safe (drop `critical: true` + move the whole file to the delegated `@bundles` list, Accordion-style — that is NOT a split and remains valid).
 
 ---
 
@@ -368,13 +270,11 @@ Flag any discriminator match as a regression — the split pattern is deliberate
 
 When `nds-js-audit` runs:
 
-- **Single-file `dry`:** reads PERSONA.md and runs JSD-15 against the canonicals via each entry's "Audit behavior" check (no skip banner). A `settled` entry may be skipped to save attention; all others are checked. A finding looks like: *"L227 uses `this._ac` against entry 1's canonical `this.abortController`. Migrate, or revise the canonical (Phase 7)."*
-- **Full-tree `dry`:** same checks across every file, plus the per-entry "current adoption" as a refactor-progress signal. The full-tree classification pass IS the adoption tally — Phase 7 writes the fresh count, maturity rung, and "Last reconciled" date back into each entry as bookkeeping (free, because the scan already computed it). Adoption drift toward divergence can additionally surface as a Phase 7 persona-drift refinement.
-- **Phase 7 EVOLVE — two tracks:**
-  - *Rules* (canonical / carve-out / new entry): persona drift is the third refinement source (alongside "Gaps observed" and "Dead-rule candidates"), surfaced when (a) the corpus has diverged from a canonical and a migration is now a meaningful refactor, OR (b) new evidence suggests revising the canonical itself. Gated by the evolve quality bar.
-  - *Bookkeeping* (adoption count, maturity rung, "Last reconciled" date, expiring a resolved motivating finding, healing a drifted file:line citation): refreshed from the full-tree scan with no quality bar — these are measured facts, not judgments.
+- **Single-file `dry`:** reads PERSONA.md and runs JSD-15 against the canonicals via each entry's "Audit behavior" check (no skip banner). A finding looks like: *"L227 uses `this._ac` against entry 1's canonical `this.abortController`. Migrate, or revise the canonical (Phase 7)."*
+- **Full-tree `dry`:** same checks across every file. Corpus-wide divergence can additionally surface as a Phase 7 persona-drift refinement.
+- **Phase 7 EVOLVE:** persona drift is the third refinement source (alongside "Gaps observed" and "Dead-rule candidates"), surfaced when (a) the corpus has diverged from a canonical and a migration is now a meaningful refactor, OR (b) new evidence suggests revising the canonical itself. Gated by the evolve quality bar. Citation hygiene (expiring resolved motivating findings, healing drifted citations by their symbol) is applied without a bar and reported under `Bookkeeping reconciled`.
 
-Persona edits are never silent. Rule edits: Phase 7 auto-applies a canonical revision **only** when the divergent file's cited reasoning clears the evolve quality bar. Bookkeeping edits: applied whenever the scan shows the recorded facts are stale. Both are recorded in the report's `## Catalog evolved` block (bookkeeping under a `Bookkeeping reconciled` sub-heading). The user reverts via git if they disagree.
+Persona edits are never silent — every edit lands in the report's `## Catalog evolved` block. The user reverts via git if they disagree.
 
 ---
 
@@ -383,8 +283,7 @@ Persona edits are never silent. Rule edits: Phase 7 auto-applies a canonical rev
 - **Audit flags a divergent file.** Either the file is wrong → a fix batch migrates it (canonical unchanged), or the canonical is wrong/incomplete → Phase 7 auto-revises it when the file's cited reasoning clears the bar (otherwise the file is the migration target).
 - **Audit surfaces an unanticipated concept.** Phase 7 adds a new entry or a carve-out, with motivating findings cited.
 - **User makes a deliberate decision** (e.g. "switch entry 3.2 to `expand()`/`collapse()`"). The edit lands directly per instruction.
-- **A tree-wide refactor lands.** Canonical unchanged — it was already the target. But the bookkeeping moves: the next full-tree run re-tallies "Current adoption", may promote the entry's maturity (e.g. `enforced` → `settled` once divergence stays at zero for 3 runs), and updates "Last reconciled".
-- **A motivating finding's file gets migrated.** The rule stays; Phase 7 expires the stale "Motivating finding:" pointer (rewrites it to "Resolved (was the motivating finding): …") on the next run that observes zero divergence. Precedent: voice-input `_installed`→`_initDone` and swiper `data-swiper-initialized`→`data-nds-swiper-initialized`, both expired 2026-06-04.
-- **A cited file:line drifts.** Phase 7 heals it by the symbol, not the line: citations are symbol-anchored (the greppable identifier/token is authoritative, the line number a decaying hint). Symbol moved → rewrite the line hint; symbol gone → flag the citation expired rather than silently trusting it. New citations must name a symbol, never a bare line.
+- **A motivating finding's file gets migrated.** The rule stays; Phase 7 expires the stale "Motivating finding:" pointer (rewrites it to "Resolved (was the motivating finding): …") on the next run that observes zero divergence. Precedent: voice-input `_installed`→`_initDone` and swiper `data-swiper-initialized`→`data-nds-swiper-initialized`.
+- **A cited symbol drifts.** Phase 7 heals it by the symbol, not the line: citations are symbol-anchored (the greppable identifier/token is authoritative, the line number a decaying hint). Symbol moved → rewrite the line hint; symbol gone → flag the citation expired rather than silently trusting it. New citations must name a symbol, never a bare line.
 
-**What never triggers a canonical revision:** raw adoption counts ("11 new files used `_ac`") or "the corpus changed" — those are migration targets and bookkeeping, not canonical revisions. The canonical is the deliberate choice; the corpus catches up. The saved audit-report trail in `.claude/audit-reports/` is the history.
+**What never triggers a canonical revision:** raw adoption counts ("11 new files used `_ac`") or "the corpus changed" — those are migration targets, not canonical revisions. The canonical is the deliberate choice; the corpus catches up.

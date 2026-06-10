@@ -329,7 +329,7 @@ Other options:
 1. `fix all` — apply every catalog finding marked `Type: actionable` (for JSA findings) plus every JSP/JSD/JSS finding in the report. Excludes JSD-05 promotion candidates (those go through `promote <api-name>` with per-candidate approval) and every JSA finding marked `Type: tradeoff` (those are acknowledged, not auto-fixed) — tradeoffs are skipped regardless of severity.
 2. `promote <api-name>` — apply one JSD-05 promotion: edit `_js/nds-core.js` to add the proposed helper, migrate every call site listed in the report, and follow the file-by-file rhythm (rebundle + agent review + pause between files). Only offered when the report has "Promotion candidates (JSD-05)" entries.
 3. `apply solution` — apply the `Proposed solution:` from a `tradeoff → recommend solving` finding inline (or `save the plan` if it's a larger refactor saved under `~/.claude/plans/`). Only offered when the report has a `tradeoff → recommend solving` finding.
-4. `save` — **optional.** Persist this report to `.claude/audit-reports/` for cross-run comparison (the "Diff vs. Run (N−1)" trail) and the cross-session maturity-streak signal the persona ladder reads. Not needed to apply fixes or to evolve within this session — see "Saving the report" below.
+4. `save` — **optional.** Persist this report to `.claude/audit-reports/` for cross-run comparison (the "Diff vs. Run (N−1)" trail). Not needed to apply fixes or to evolve within this session — see "Saving the report" below.
 5. `skip` — end the audit here; nothing is written, nothing is changed.
 
 (Catalog/persona evolution is no longer a numbered choice — Phase 7 auto-applies any concrete Gap / Dead-rule / Persona-drift refinement at run end and appends a `## Catalog evolved` block to the report. The user reverts via git if they disagree.)
@@ -347,7 +347,7 @@ Follow **Numbered-reply discipline** (see Response style): every available prima
 
 ### Computing the Recommended action
 
-**`save` is never the recommendation.** It is optional and exists for cross-run comparison and the cross-session maturity-streak signal — not for the work this run enables. Recommend the substantive next step the findings call for; when there is none, recommend `skip` and mention `save` only as the optional way to keep a comparison anchor. Walk top-to-bottom and stop at the first match:
+**`save` is never the recommendation.** It is optional and exists for cross-run comparison — not for the work this run enables. Recommend the substantive next step the findings call for; when there is none, recommend `skip` and mention `save` only as the optional way to keep a comparison anchor. Walk top-to-bottom and stop at the first match:
 
 | Run state | Recommended | One-line reason template |
 |---|---|---|
@@ -368,7 +368,7 @@ Never frame `save` as something the user *should* do — it is the user's call, 
 
 ### Saving the report (optional, user-approved)
 
-**What save is for.** A saved report is a comparison artifact, not a requirement. Its two payoffs are both *across* runs: the "Diff vs. Run (N−1)" section that makes multi-run refinement legible, and the cross-session maturity-streak signal the persona ladder reads (`enforced → settled` after 3 consecutive zero-divergence full-tree runs). Within a single session, neither applying fixes nor Phase 7 evolve depends on a saved file — same-session evolve aggregates the in-conversation reports directly. So never push `save`; offer it, and let the user decide whether the comparison trail is worth keeping.
+**What save is for.** A saved report is a comparison artifact, not a requirement. Its payoff is *across* runs: the "Diff vs. Run (N−1)" section that makes multi-run refinement legible. Within a single session, neither applying fixes nor Phase 7 evolve depends on a saved file — same-session evolve aggregates the in-conversation reports directly. So never push `save`; offer it, and let the user decide whether the comparison trail is worth keeping.
 
 When the user replies `save` — alone, or combined with another action like `fix HIGH then save` — write the current report verbatim to `.claude/audit-reports/` under one of these patterns:
 
@@ -607,18 +607,18 @@ Open items — reply with a number:
 
 ## Phase 7: EVOLVE (autonomous, runs at run end)
 
-**Runs automatically — no approval prompt.** At the end of any run that surfaced concrete "Gaps observed", "Dead-rule candidates", or "Persona drift" entries — OR any full-tree run, which always reconciles persona bookkeeping — turn them into edits to this `SKILL.md` and/or `PERSONA.md`, apply them, and append a `## Catalog evolved` diff block to the report. The user reverts via git if they disagree (the diff block makes that one command). Self-evolution is not a pause point (see Auto-drive).
+**Runs automatically — no approval prompt.** At the end of any run that surfaced concrete "Gaps observed", "Dead-rule candidates", or "Persona drift" entries — OR any full-tree run, which always reconciles persona citation hygiene — turn them into edits to this `SKILL.md` and/or `PERSONA.md`, apply them, and append a `## Catalog evolved` diff block to the report. The user reverts via git if they disagree (the diff block makes that one command). Self-evolution is not a pause point (see Auto-drive).
 
 **Two kinds of edit — different gates.** Keep them separate; blurring them is the failure mode (a persona that rewrites its *opinions* every run becomes noise):
 - **Rule edits** (canonical revision, carve-out, new entry; new/narrowed/deleted catalog rule) — judgments. Gated by the quality bars below.
-- **Bookkeeping edits** (adoption re-tally, maturity promotion/demotion, "Last reconciled" date, expiring a resolved motivating finding, healing a drifted file:line citation) — measured facts from the scan the run already performed. **No quality bar** — apply whenever the recorded fact is stale. Reported under a `Bookkeeping reconciled` sub-heading so the change is never silent.
+- **Bookkeeping edits** (expiring a resolved motivating finding, healing a drifted symbol-anchored citation) — measured facts from the scan the run already performed. **No quality bar** — apply whenever the recorded fact is stale. Reported under a `Bookkeeping reconciled` sub-heading so the change is never silent.
 
 **Three rule sources, two target files:**
 - **Gaps observed** → SKILL.md (new catalog rule, or extension of an existing rule).
 - **Dead-rule candidates** → SKILL.md (narrow / delete an existing catalog rule).
 - **Persona drift** → PERSONA.md (revise a canonical, add a carve-out, add a new entry). Surfaced when a JSD-15 finding's outcome is "revise the canonical" rather than "migrate the file."
 
-**Bookkeeping source (full-tree runs only):** the full-tree JSD-15 classification pass IS the corpus tally. Whatever it computes — per-entry conformance count, zero-divergence status, file:line positions of cited examples — gets written back to the matching PERSONA.md entry's bookkeeping fields. See "Bookkeeping reconciliation" below for the exact rules.
+**Bookkeeping source:** the JSD-15 pass itself — whatever it observes about cited examples (resolved motivating findings, moved or vanished symbols) feeds the citation-hygiene edits below.
 
 **Quality bars (the safety floor that replaces the old approval gate — apply only edits that clear them):**
 - **ADD rule** — requires a motivating finding with ≥2 sites or meaningful body overlap. A one-off shape stays a Gap observation, not a new rule.
@@ -678,16 +678,13 @@ For each applied edit, modify the appropriate file under `.claude/skills/nds-js-
 - **SEVERITY CHANGE**: update the Severity column only in the group file; do not touch detection or fix text.
 
 **Persona rule edits → PERSONA.md (gated by the quality bars):**
-- **REVISE CANONICAL**: edit the entry's "Canonical" field; update "Why this canonical" if the revised choice has a different principle defense; update "Why not the alternatives" if the rejected forms changed; touch "Audit behavior" to match the new canonical. Leave the bookkeeping fields (Maturity / Current adoption / Last reconciled) to the bookkeeping pass — but a canonical revision resets the entry's Maturity to `proposed` (the new canonical is unproven across the corpus) and the next full-tree run re-earns its rung.
+- **REVISE CANONICAL**: edit the entry's "Canonical" field; update "Why (and rejected alternatives)" if the principle defense or rejected forms changed; touch "Audit behavior" to match the new canonical.
 - **ADD CARVE-OUT**: append to the entry's "Carve-outs" list with the file:line citation that motivated it.
-- **NEW ENTRY**: append a new entry to PERSONA.md using the eight-field shape (Canonical, Why this canonical, Why not the alternatives, Carve-outs, Audit behavior, **Maturity**, Current adoption, Last reconciled). Seed Maturity at `proposed` (or `established` if the new entry already cites ≥2 conforming sites). Renumber subsequent entries if added mid-document.
+- **NEW ENTRY**: append a new entry to PERSONA.md using the four-field shape (Canonical, Why (and rejected alternatives), Carve-outs, Audit behavior), citing ≥1 motivating site by symbol. Renumber subsequent entries if added mid-document.
 
-**Persona bookkeeping edits → PERSONA.md (no quality bar — see "Bookkeeping reconciliation"):**
-- **RE-TALLY ADOPTION**: overwrite "Current adoption" with the count the full-tree scan produced and stamp it with today's date.
-- **MATURITY**: promote/demote per the ladder rules in "Bookkeeping reconciliation".
-- **EXPIRE RESOLVED FINDING**: when an entry's check finds zero divergent sites but the entry still carries a `Motivating finding: file:line`, rewrite that pointer to `Resolved (was the motivating finding): … migrated to <canonical>`.
+**Persona bookkeeping edits → PERSONA.md (no quality bar — citation hygiene only):**
+- **EXPIRE RESOLVED FINDING**: when an entry's check finds zero divergent sites but the entry still carries a `Motivating finding:` pointer, rewrite it to `Resolved (was the motivating finding): … migrated to <canonical>`.
 - **HEAL CITATION**: citations are **symbol-anchored** — the greppable identifier/token (function, field, attribute, comment text) is the authoritative anchor; the line number is a decaying hint. Grep the symbol: still present → rewrite the line hint; gone → the citation is expired (mark it `(citation expired <date> — <symbol> refactored away)` or resolve the motivating example), never trust the bare line.
-- **STAMP**: set "Last reconciled" to today's date on every entry the full-tree scan covered.
 
 After applying, append the diff to the report as the `## Catalog evolved` block (covering both files when both were touched):
 
@@ -701,31 +698,21 @@ After applying, append the diff to the report as the `## Catalog evolved` block 
 - No deletions this round
 
 ### Bookkeeping reconciled (no quality bar — measured facts)
-- PERSONA.md entry 1: adoption 13/13 → 12/12, stamped 2026-06-04
-- PERSONA.md entry 5: expired resolved findings (voice-input _installed→_initDone, swiper data-swiper-initialized→data-nds-swiper-initialized); maturity stays `enforced`
-- PERSONA.md entry 7: maturity enforced → settled (3rd consecutive zero-divergence run)
-- PERSONA.md entry 1: healed citation L324 → L347 (fetchAbortController moved)
-- "Last reconciled" stamped 2026-06-04 on all entries the full-tree scan covered
+- PERSONA.md entry 5: expired resolved findings (voice-input _installed→_initDone, swiper data-swiper-initialized→data-nds-swiper-initialized)
+- PERSONA.md entry 1: healed citation (`fetchAbortController` moved; line hint updated)
+- RULES-JSP.md JSP-02: healed exemplar citation (`NDS.onOutsideScroll` moved; line hint updated)
 
 Revert with `git checkout -- .claude/skills/nds-js-audit/` if you disagree. The next audit run uses the updated rules and canonicals.
 ```
 
-### Bookkeeping reconciliation (full-tree runs)
+### Citation hygiene (full-tree runs)
 
-The full-tree JSD-15 pass classifies every in-scope file against every persona entry's "Audit behavior" check — that classification IS the tally. After it completes, refresh each entry's bookkeeping fields from it. No quality bar: these are facts, not judgments. Record every change under the `Bookkeeping reconciled` sub-heading.
+The full-tree JSD-15 pass observes every entry's cited examples as a byproduct of its checks. Two no-bar edits follow; record both under the `Bookkeeping reconciled` sub-heading:
 
-- **Adoption.** Write `conforming / total` for the entry's concept and stamp today's date. `total` is the count of files the entry's discriminator selected (e.g. files with a primary AbortController, for entry 1), not all 50.
-- **Maturity ladder** — move the entry's rung from this run's evidence:
-  - `proposed` → `established` once ≥2 conforming sites exist and adoption is measured.
-  - `established` → `enforced` once adoption is full (or full-minus-documented-carve-out) and carve-outs are cited.
-  - `enforced` → `settled` once **3 consecutive full-tree runs** show 100% adoption with zero divergence. Track the streak via the saved audit-report trail in `.claude/audit-reports/` (count consecutive prior full-tree runs whose report recorded zero divergence for this entry); if the trail is unavailable, hold at `enforced`.
-  - Any rung → demote one step the moment a divergence appears (a `settled`/`enforced` entry with a fresh divergent file drops to `enforced`/`established`). A canonical revision resets to `proposed`.
-  - A `settled` entry MAY be skipped in the per-run JSD-15 check to save attention — but full-tree runs still spot-scan it cheaply (the discriminator grep) to catch a reintroduced divergence and demote.
-- **Expire resolved motivating findings.** If an entry's check returns zero divergent sites yet the entry still names a `Motivating finding: file:line`, rewrite that line to `Resolved (was the motivating finding): <file> migrated <old> → <canonical>`. The rule check itself is never removed — only the stale pointer.
+- **Expire resolved motivating findings.** If an entry's (or a catalog rule's) check returns zero divergent sites yet it still names a live `Motivating finding:`, rewrite that pointer to `Resolved (was the motivating finding): <file> migrated <old> → <canonical>`. The check itself is never removed — only the stale pointer.
 - **Heal citations.** Citations are symbol-anchored: grep the cited symbol/token, not the line. Symbol moved → rewrite the line hint. Symbol gone → mark the citation expired (`(citation expired <date> — <symbol> not found)`) rather than silently trusting it; an expired citation in a carve-out is a candidate Gap for the next run.
-- **Stamp.** Set "Last reconciled" to today's date on every entry the scan covered. An entry whose stamp predates the newest commit is the visible signal that it is overdue — never hide staleness by stamping an entry the run did not actually re-scan.
 
-Single-file runs do NOT reconcile bookkeeping (they see one file, not the corpus) — they may still produce rule edits (a JSD-15 finding on that file) and may expire a resolved finding *only* when that one file is the sole site the motivating finding named.
+Single-file runs see one file, not the corpus — they may still produce rule edits (a JSD-15 finding on that file) and may expire a resolved finding *only* when that one file is the sole site the motivating finding named.
 
 ### Guardrails
 
@@ -733,7 +720,7 @@ Single-file runs do NOT reconcile bookkeeping (they see one file, not the corpus
 - Apply only edits that clear the quality bars above; everything else stays a recorded Gap/Dead-rule candidate for a future run to confirm. The bars — not a user prompt — are the gate. Every applied edit MUST appear in the `## Catalog evolved` block, so the change is never silent.
 - Phase 7 edits SKILL.md, the `RULES-*.md` group files, and PERSONA.md only. Phase 5 handles source-code fixes; Phase 7 handles the rule catalog (in the `RULES-*.md` files, plus the mode banners in SKILL.md) and the persona. Never edit other files during Phase 7.
 - If a proposed evolution would conflict with the conventions in `CLAUDE.md` (e.g., "weaken JSP-01 to allow raw window resize listeners"), do NOT apply it — record it on the `Rejected (conflicts with CLAUDE.md)` line of the `## Catalog evolved` block with the reason. `CLAUDE.md` is upstream of this skill.
-- Preserve each file's structure: SKILL.md keeps frontmatter, mindset, phases, report format, non-goals, and the Rule-catalog pointer + mode banners; each `RULES-{group}.md` keeps its group's rule table + framing; PERSONA.md keeps the eight-field per-entry shape (the five rule fields + Maturity + Current adoption + Last reconciled). Don't invent new top-level sections during an evolution.
+- Preserve each file's structure: SKILL.md keeps frontmatter, mindset, phases, report format, non-goals, and the Rule-catalog pointer + mode banners; each `RULES-{group}.md` keeps its group's rule table + framing; PERSONA.md keeps the four-field per-entry shape (Canonical, Why (and rejected alternatives), Carve-outs, Audit behavior). Don't invent new top-level sections during an evolution.
 - Persona-drift proposals MUST include the divergent file's reasoning (cited inline) so the user can argue the canonical change from data, not from authorial preference. A proposal that says only "the corpus moved" is rejected — corpus movement is a migration target, not a canonical revision.
 
 ---
