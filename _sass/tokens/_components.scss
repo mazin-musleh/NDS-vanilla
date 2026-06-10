@@ -64,7 +64,7 @@
     --button-border-info: var(--border-info-light);
 
     // ── card ──
-    --card-radius: var(--spacing-4);
+    --card-radius: var(--radius-lg);
 
     // ── checkbox ──
     --checkbox-primary-checked: var(--controls-primary-checked);
@@ -128,7 +128,7 @@
     --control-disabled: var(--colors-neutral-400);
 
     // ── forms ──
-    --form-textarea-padding: var(--spacing-0);
+    --form-textarea-padding: var(--spacing-none);
     --form-field-text-label: var(--text-default);
     --form-field-text-placeholder: var(--text-secondary-paragraph);
     --form-field-text-hovered: var(--text-default);
@@ -182,8 +182,8 @@
     --rating-star-hovered-brand: var(--colors-primary-500);
 
     // ── stepper ──
-    --progressindicator-progress-indicator-gap: var(--spacing-2);
-    --progressindicator-progress-text-content-side-padding: var(--spacing-4);
+    --progressindicator-progress-indicator-gap: var(--spacing-md);
+    --progressindicator-progress-text-content-side-padding: var(--spacing-xl);
     --stepper-button-completed: var(--colors-primary-600);
     --stepper-button-completed-hovered: var(--colors-primary-700);
     --stepper-button-current: var(--colors-primary-600);
@@ -218,8 +218,8 @@
     --switch-neutral-pressed: var(--controls-neutral-pressed);
 
     // ── table ──
-    --table-cell-v-padding: var(--spacing-2);
-    --table-cell-h-padding: var(--spacing-4);
+    --table-cell-v-padding: var(--spacing-md);
+    --table-cell-h-padding: var(--spacing-xl);
     --table-cell-border: var(--colors-neutral-300);
     --table-text-head: var(--colors-neutral-700);
     --table-text-body: var(--text-default);
@@ -230,9 +230,9 @@
     --table-background-row-selected: var(--colors-primary-50);
 
     // ── tabs ──
-    --tab-button-gap: var(--spacing-1);
-    --tab-horizontal-tab-md-button-v-padding: var(--spacing-3);
-    --tab-horizontal-tab-md-button-h-padding: var(--spacing-4);
+    --tab-button-gap: var(--spacing-xs);
+    --tab-horizontal-tab-md-button-v-padding: var(--spacing-lg);
+    --tab-horizontal-tab-md-button-h-padding: var(--spacing-xl);
 
     // ── tag ──
     --tag-background-neutral: var(--colors-neutral-600);
@@ -270,8 +270,8 @@
     --tag-dot: var(--alpha-white-60);
 
     // ── tooltip ──
-    --tooltip-padding: var(--spacing-2);
-    --tooltip-gap: var(--spacing-2);
+    --tooltip-padding: var(--spacing-md);
+    --tooltip-gap: var(--spacing-md);
     --tooltip-background-default: var(--colors-base-white);
     --tooltip-text-heading-default: var(--text-display);
     --tooltip-text-paragraph-default: var(--text-primary-paragraph);

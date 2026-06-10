@@ -10,12 +10,12 @@
 
 // Spacing map - numeric NDS tokens only
 $spacers: (
-  0: var(--spacing-0),
-  1: var(--spacing-1),
-  2: var(--spacing-2),
-  3: var(--spacing-3),
-  4: var(--spacing-4),
-  5: var(--spacing-5)
+  0: var(--spacing-none),
+  1: var(--spacing-xs),
+  2: var(--spacing-md),
+  3: var(--spacing-lg),
+  4: var(--spacing-xl),
+  5: var(--spacing-2xl)
 );
 
 // Use only numeric spacers

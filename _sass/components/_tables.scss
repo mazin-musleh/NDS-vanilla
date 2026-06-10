@@ -164,7 +164,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--spacing-1);
+        gap: var(--spacing-xs);
     }
 
     .nds-col-actions {
@@ -197,7 +197,7 @@
     }
 
     caption {
-        padding: var(--spacing-4);
+        padding: var(--spacing-xl);
         font-weight: var(--font-weight-semibold);
         text-align: start;
         background-color: var(--table-background-header);
@@ -208,7 +208,7 @@
 
     .table-actions {
         display: flex;
-        gap: var(--spacing-1);
+        gap: var(--spacing-xs);
         align-items: center;
 
         .nds-btn {

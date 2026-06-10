@@ -232,6 +232,6 @@ html[dir="rtl"] {
 // into the critical bundle, loaded on every page). The switcher script in
 // theming.md toggles data-brand on <html>.
 // ══════════════════════════════════════════════════════════════════════════
-.theming-switch { display:flex; gap:.5rem; flex-wrap:wrap; margin-block-end:var(--spacing-4); }
+.theming-switch { display:flex; gap:.5rem; flex-wrap:wrap; margin-block-end:var(--spacing-xl); }
 .theming-switch [aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--colors-primary-600); }
 
