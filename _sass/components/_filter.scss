@@ -43,7 +43,6 @@
     min-width: 0;
     align-items: center;
     flex: 1 1 100%;
-    min-width: 0;
 
     >.nds-label {
         font-size: var(--typo-text-clamp-lg-FS);
@@ -62,11 +61,6 @@
     &[data-state~="submitting"] {
         opacity: 0.7;
         pointer-events: none;
-        cursor: wait;
-
-        .nds-btn {
-            pointer-events: none;
-        }
     }
 
     // Success state
@@ -89,5 +83,4 @@
 // Hidden inputs container lives inside the submission form; always invisible
 .nds-filter-hidden-inputs {
     display: none !important;
-    visibility: hidden !important;
 }
