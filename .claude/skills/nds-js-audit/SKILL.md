@@ -152,7 +152,7 @@ Source files are the single source of truth. Read them fully, not by skimming.
 
 - **The rule catalog for THIS run's scope** — the detection rules live in per-group sibling files (Phase 3 → "Rule catalog"). Read the one(s) matching the run's rule-group filter: `RULES-JSP.md` (`performance`), `RULES-JSD.md` (`dry`), `RULES-JSS.md` (`security`), `RULES-JSA.md` (`architecture`). A run with no rule-group filter reads all four. JSD-15's canonicals are in `PERSONA.md` (read it whenever JSD applies). Read only what the scope needs — loading the unused groups is the token waste the rule-group filter exists to avoid.
 - **`_js/nds-core.js`** — the full shared-utility surface. Re-read every run so the rule catalog reflects the current `NDS.*` API (names, arities, return values). Rules JSP-01 through JSP-08, JSD-01 through JSD-04, and JSS fixes that cite helpers (e.g., `NDS.escapeHtml` if/when promoted) all reference specific functions here; if core gains a utility, the skill's recommendation should route to it instead of flagging the pattern as unresolved.
-- **At least one JS good-pattern exemplar** — `_js/nds-scroll-more.js` for RAF-throttled scroll + pooled ResizeObserver, `_js/nds-drawer.js` for NDS.State destructuring + reads-before-writes, `_js/nds-modal.js` for NDS.State and backdrop API usage. Recommendations cite these with `file:line` so the user can copy a working pattern rather than invent one. JSA rules reuse the same exemplar set (plus `_js/nds-autocomplete.js:290-312` for size-capped fetch + abort, and `_js/nds-loader.js:272-281` for `MessageChannel`-based microtask yielding).
+- **At least one JS good-pattern exemplar** — `_js/nds-scroll-more.js` for RAF-throttled scroll + pooled ResizeObserver, `_js/nds-drawer.js` for NDS.State destructuring + reads-before-writes, `_js/nds-modal.js` for NDS.State and backdrop API usage. Recommendations cite these with `file:line` so the user can copy a working pattern rather than invent one. JSA rules reuse the same exemplar set (plus `_js/nds-autocomplete.js:290-312` for size-capped fetch + abort, and `_js/nds-loader.js:415-423` for `MessageChannel`-based microtask yielding).
 
 ### MUST read every target file
 
@@ -205,7 +205,7 @@ Severity (HIGH / MEDIUM / LOW) drives the order fixes are applied in Phase 5: HI
 **Brief template** (self-contained — the agent has no audit context):
 1. **Target** — the resolved `_js/nds-<file>.js` path. "Read it top-to-bottom before judging; pattern-matching without the full read misses context."
 2. **Rules to apply** — paste the in-scope subset of the deep-read scope above, each with its one-line detection signature and fix (copy from the Phase 3 catalog rows). Include the JSA-14 three-invariant bar and the "record a Gap, not a finding, when in doubt" discipline verbatim.
-3. **Reference anchors** — the Phase 2 good-pattern exemplars (`_js/nds-scroll-more.js`, `_js/nds-drawer.js`, `_js/nds-loader.js:272-281`, `_js/nds-autocomplete.js:290-312`) so fixes cite a real pattern.
+3. **Reference anchors** — the Phase 2 good-pattern exemplars (`_js/nds-scroll-more.js`, `_js/nds-drawer.js`, `_js/nds-loader.js:415-423`, `_js/nds-autocomplete.js:290-312`) so fixes cite a real pattern.
 4. **Output contract** — return ONLY a findings table: `| Sev | Rule | Location (file:line) | Finding → one-line fix | Type (JSA: actionable/tradeoff) |`, plus a short "Gaps observed" list for shapes no rule covers. No prose, no fabricated findings; two-to-five JSA observations is typical, ten+ signals padding.
 
 **Merge.** Fold the agent's findings into the Phase 4 report, deduped against the inline pass (inline keeps greppable hits; the agent owns the deep-read rows). Tag agent-sourced rows so the merge is auditable (a trailing `(deep-read agent)` marker on the location cell). Apply the same Type/tradeoff and Gap-vs-finding discipline as the inline pass. If the agent returns nothing, say so — a clean deep-read pass is a real result.
@@ -277,7 +277,7 @@ Use this structure verbatim:
 - L120 [JSA-09] `requestIdleCallback` polyfill runs idle work as a near-immediate macrotask on Safari <18
   Type: tradeoff
   Why it matters: Idle-tier components don't actually defer on older Safari; they run via `setTimeout(1)` with a fake 50ms deadline.
-  Proposed solution: replace the `setTimeout(1)` fallback with a `MessageChannel`-based idle shim that estimates a real deadline (pattern at `_js/nds-loader.js:272-281`).
+  Proposed solution: replace the `setTimeout(1)` fallback with a `MessageChannel`-based idle shim that estimates a real deadline (pattern at `_js/nds-loader.js:415-423`).
   Benefit vs cost: [INP + maintainability] LOW benefit — Safari 18 (Sept 2024) ships native rIC, so this only touches shrinking older-Safari traffic, vs [maintainability] the shim adds maintenance surface. Cost > benefit → stay put.
   Rationale for accepting: older-Safari degradation is the documented constraint; the polyfill degrades quietly there.
 
