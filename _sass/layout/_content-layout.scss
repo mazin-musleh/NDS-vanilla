@@ -45,7 +45,6 @@ main {
     &.nds-middle {
         --layout-min-height: 100dvh;
         align-items: center;
-        justify-content: center;
 
         &.nds-content-wrapper {
             padding: var(--nds-viewport-padding);
@@ -64,6 +63,8 @@ main {
         padding: 0;
         height: 100%;
 
+        // keep: defaults are already 0, but modes are combinable (standard-page.md)
+        // and cardView sets these knobs — the reset defends toEdge+cardView combos.
         &:is(.nds-wSideMenu, .nds-wSideInfo) .nds-main-content {
             --main-padding-block: 0;
             --main-padding-inline: 0;
@@ -97,6 +98,7 @@ main {
         }
 
         >aside {
+            // keep: !important — sidemenu's own display rules outrank this hide.
             display: none !important;
         }
     }
@@ -130,6 +132,7 @@ main {
                 padding-inline: var(--nds-viewport-padding);
 
                 @include tablet(max) {
+                    // keep: !important — section-layout has margin-inline:auto writers.
                     margin-inline: var(--nds-viewport-padding) !important;
                     max-width: calc(100% - var(--nds-viewport-padding) * 2);
                 }
@@ -152,7 +155,6 @@ main {
             @include tablet(max) {
                 --_wrapper-padding: 0;
 
-                :has(>.nds-section-body>.nds-card),
                 .nds-section-body:has(>.nds-card) {
                     padding-inline: var(--nds-viewport-padding);
                 }
@@ -166,7 +168,7 @@ main {
 
     /* ── Side menu layout ── */
 
-    &:is(.nds-wSideMenu) {
+    &.nds-wSideMenu {
         .nds-content-section {
             @include desktop(min) {
                 --section-shadow: var(--shadow-md);
@@ -185,7 +187,7 @@ main {
     }
 
     @include desktop(min) {
-        &:is(.nds-wSideMenu):not(.nds-toEdge) {
+        &.nds-wSideMenu:not(.nds-toEdge) {
             margin-inline: auto;
             padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
         }
@@ -203,7 +205,7 @@ main {
         @include _section-striping;
     }
 
-    &:not(.nds-cardView):is(.nds-wSideMenu) .nds-main-content {
+    &.nds-wSideMenu:not(.nds-cardView) .nds-main-content {
         @include tablet(max) {
             @include _section-striping;
         }
@@ -212,6 +214,7 @@ main {
     /* ── Mobile ── */
 
     @include mobile {
+        // keep: !important — must beat cardView's higher-specificity knob write.
         --layout-gap: 0 !important;
     }
 }
