@@ -89,8 +89,8 @@
     .nds-calendar-weekdays {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
-        margin-bottom: 8px;
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-md);
         .nds-weekday {
             text-align: center;
             font-size: var(--typo-text-md-FS);
@@ -106,7 +106,7 @@
     .nds-calendar-dates {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
+        gap: var(--spacing-xs);
         justify-items: center;
         overflow: hidden;
         .nds-date-cell {

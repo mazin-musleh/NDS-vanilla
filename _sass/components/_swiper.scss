@@ -92,8 +92,8 @@
         padding-inline-end: 2px;
     }
     .nds-swiper:not(.nds-hero) &:has(.nds-card.nds-shadow) {
-        padding-inline: 4px;
-        padding-block: 4px 8px;
+        padding-inline: var(--spacing-xs);
+        padding-block: var(--spacing-xs) var(--spacing-md);
     }
 
     > .nds-card {

@@ -416,11 +416,11 @@
     --card-border: var(--border-warning-light);
     --card-border-hover: var(--colors-yellow-600);
     --card-border-active: var(--colors-yellow-300);
-    --card-title: var(--colors-yellow-700);
-    --card-subtitle: var(--colors-yellow-700);
-    --card-number: var(--colors-yellow-700);
+    --card-title: var(--text-warning);
+    --card-subtitle: var(--text-warning);
+    --card-number: var(--text-warning);
     --icon-bg-color: var(--featuredicons-background-warning-light);
-    --icon-color: var(--colors-yellow-700);
+    --icon-color: var(--icon-warning);
 
     &.nds-color {
       --card-bg: var(--background-warning-50);
@@ -429,11 +429,6 @@
     }
 
     @include dark {
-      --card-title: var(--colors-yellow-400);
-      --card-subtitle: var(--colors-yellow-400);
-      --card-number: var(--colors-yellow-400);
-      --icon-color: var(--colors-yellow-400);
-
       &.nds-color {
         --card-bg-hover: var(--alpha-warning-20);
         --card-border: var(--colors-yellow-700);
@@ -445,11 +440,11 @@
     --card-border: var(--border-error-light);
     --card-border-hover: var(--colors-red-600);
     --card-border-active: var(--colors-red-300);
-    --card-title: var(--colors-red-700);
-    --card-subtitle: var(--colors-red-700);
-    --card-number: var(--colors-red-700);
+    --card-title: var(--text-error);
+    --card-subtitle: var(--text-error);
+    --card-number: var(--text-error);
     --icon-bg-color: var(--featuredicons-background-error-light);
-    --icon-color: var(--colors-red-700);
+    --icon-color: var(--icon-error);
 
     &.nds-color {
       --card-bg: var(--background-error-50);
@@ -458,11 +453,6 @@
     }
 
     @include dark {
-      --card-title: var(--colors-red-400);
-      --card-subtitle: var(--colors-red-400);
-      --card-number: var(--colors-red-400);
-      --icon-color: var(--colors-red-400);
-
       &.nds-color {
         --card-bg-hover: var(--alpha-error-20);
         --card-border: var(--colors-red-700);
@@ -474,11 +464,11 @@
     --card-border: var(--border-info-light);
     --card-border-hover: var(--colors-blue-600);
     --card-border-active: var(--colors-blue-300);
-    --card-title: var(--colors-blue-700);
-    --card-subtitle: var(--colors-blue-700);
-    --card-number: var(--colors-blue-700);
+    --card-title: var(--text-info);
+    --card-subtitle: var(--text-info);
+    --card-number: var(--text-info);
     --icon-bg-color: var(--featuredicons-background-info-light);
-    --icon-color: var(--colors-blue-700);
+    --icon-color: var(--icon-info);
 
     &.nds-color {
       --card-bg: var(--background-info-50);
@@ -487,11 +477,6 @@
     }
 
     @include dark {
-      --card-title: var(--colors-blue-400);
-      --card-subtitle: var(--colors-blue-400);
-      --card-number: var(--colors-blue-400);
-      --icon-color: var(--colors-blue-400);
-
       &.nds-color {
         --card-bg-hover: var(--alpha-info-20);
         --card-border: var(--colors-blue-700);
@@ -503,11 +488,11 @@
     --card-border: var(--border-success-light);
     --card-border-hover: var(--colors-green-600);
     --card-border-active: var(--colors-green-300);
-    --card-title: var(--colors-green-700);
-    --card-subtitle: var(--colors-green-700);
-    --card-number: var(--colors-green-700);
+    --card-title: var(--text-success);
+    --card-subtitle: var(--text-success);
+    --card-number: var(--text-success);
     --icon-bg-color: var(--featuredicons-background-success-light);
-    --icon-color: var(--colors-green-700);
+    --icon-color: var(--icon-success);
 
     &.nds-color {
       --card-bg: var(--background-success-50);
@@ -516,11 +501,6 @@
     }
 
     @include dark {
-      --card-title: var(--colors-green-400);
-      --card-subtitle: var(--colors-green-400);
-      --card-number: var(--colors-green-400);
-      --icon-color: var(--colors-green-400);
-
       &.nds-color {
         --card-bg-hover: var(--alpha-success-20);
         --card-border: var(--colors-green-700);

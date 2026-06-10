@@ -21,17 +21,17 @@
 
     &.nds-lg {
         --accordion-header-height: 56px;
-        --accordion-header-padding: 16px;
+        --accordion-header-padding: var(--accordion-lg-header-padding);
     }
 
     &.nds-md {
         --accordion-header-height: 48px;
-        --accordion-header-padding: 12px;
+        --accordion-header-padding: var(--accordion-md-header-padding);
     }
 
     &.nds-sm {
         --accordion-header-height: 40px;
-        --accordion-header-padding: 8px;
+        --accordion-header-padding: var(--accordion-sm-header-padding);
     }
 
 

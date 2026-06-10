@@ -122,8 +122,8 @@
 
   .nds-alert-close {
     position: absolute;
-    inset-block-start: 8px;
-    inset-inline-end: 8px;
+    inset-block-start: var(--spacing-md);
+    inset-inline-end: var(--spacing-md);
     @include mobile{
       inset-block-start: calc(8px + 8px);
     }

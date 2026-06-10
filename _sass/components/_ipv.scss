@@ -16,8 +16,8 @@
     content: "";
     position: absolute;
     z-index: 999;
-    inset-block-end: 8px;
-    inset-inline-end: 8px;
+    inset-block-end: var(--spacing-md);
+    inset-inline-end: var(--spacing-md);
     width: 32px;
     height: 32px;
     background-color: rgba(0, 0, 0, 0.3);
@@ -27,7 +27,7 @@
     background-repeat: no-repeat;
     color: rgb(255, 255, 255);
     pointer-events: none;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
   }
 
 }
@@ -107,8 +107,8 @@
 
 .nds-ipv-popup-controls {
   position: absolute;
-  inset-block-start: 20px;
-  inset-inline-end: 20px;
+  inset-block-start: var(--spacing-2xl);
+  inset-inline-end: var(--spacing-2xl);
   display: flex;
   gap: var(--spacing-sm);
   z-index: 1001;
@@ -128,7 +128,7 @@
   transform: translateY(-50%);
   display: flex;
   justify-content: space-between;
-  padding-inline: 20px;
+  padding-inline: var(--spacing-2xl);
   z-index: 1001;
   pointer-events: none;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -182,7 +182,7 @@
 
 .nds-ipv-zoom-info {
   position: absolute;
-  inset-block-end: 20px;
+  inset-block-end: var(--spacing-2xl);
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.7);
@@ -200,7 +200,7 @@
 
 .nds-ipv-image-counter {
   position: absolute;
-  inset-block-start: 20px;
+  inset-block-start: var(--spacing-2xl);
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.7);
@@ -233,8 +233,8 @@
 
 .nds-ipv-instructions {
   position: absolute;
-  inset-block-start: 20px;
-  inset-inline-start: 20px;
+  inset-block-start: var(--spacing-2xl);
+  inset-inline-start: var(--spacing-2xl);
   background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: var(--spacing-md);

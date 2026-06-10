@@ -84,7 +84,7 @@
     img {
       width: calc(var(--btn-height));
       height: calc(var(--btn-height));
-      padding: 4px;
+      padding: var(--spacing-xs);
     }
   }
 }
