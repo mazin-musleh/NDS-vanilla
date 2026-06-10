@@ -229,7 +229,7 @@ $a11y-filters: (
 }
 
 // Content sections — the coloured variants (.nds-primary / .nds-green /
-// .nds-neutral / .nds-brand / .nds-gradient-green) and any author-set
+// .nds-neutral / .nds-brand / .nds-gradient-primary) and any author-set
 // --section-bg collapse to the mono palette. !important on --section-bg
 // beats the (non-important) variant tokens and inline style overrides;
 // the gradient variant also needs its `background` shorthand cleared so
@@ -241,7 +241,7 @@ $a11y-filters: (
     --section-description-color:  var(--_hc-fg);
     --section-text-color:        var(--_hc-fg);
 }
-:root[data-a11y~="high-contrast"] .nds-content-section.nds-gradient-green {
+:root[data-a11y~="high-contrast"] .nds-content-section:is(.nds-gradient-primary, .nds-gradient-green) {
     background: var(--_hc-bg);
 }
 

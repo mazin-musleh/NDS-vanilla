@@ -87,8 +87,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -185,8 +185,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -291,8 +291,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -407,8 +407,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -533,8 +533,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -667,8 +667,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -779,8 +779,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -905,8 +905,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-swiper-navigation ,.nds-swiper-navigation .nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -1092,8 +1092,8 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                             <span class="nds-label">Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='[["nds-gradient-green", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
-                                            <span class="nds-label">Gradient Green</span>
+                                            data-toggler='[["nds-gradient-primary", ".nds-content-section.nds-demo-section", "sectionColor"], ["nds-oncolor", ".nds-btn", "sectionColor", "add"]]'>
+                                            <span class="nds-label">Gradient Primary</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-brand", ".nds-content-section.nds-demo-section", "sectionColor"]'>
@@ -1257,7 +1257,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <li>Do not nest <code class="nds-inline-code lang-html">nds-content-section</code> inside another <code class="nds-inline-code lang-html">nds-content-section</code>. Use a <a class="nds-color" href="{{ 'layout/block' | relative_url }}">block</a> to subdivide content within a section</li>
                     <li>Choose <strong>float action</strong> when the action is secondary and the title area has room. Choose <strong>standard action</strong> when the action buttons are prominent and should have their own row on mobile</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-nowrap</code> to the action container only when the action is compact (a single small button) and should stay inline at all breakpoints</li>
-                    <li>Use color themes sparingly. Reserve <code class="nds-inline-code lang-html">nds-primary</code> and <code class="nds-inline-code lang-html">nds-gradient-green</code> for hero-level emphasis, and <code class="nds-inline-code lang-html">nds-brand</code> or <code class="nds-inline-code lang-html">nds-ghost</code> for subtle visual separation between adjacent sections</li>
+                    <li>Use color themes sparingly. Reserve <code class="nds-inline-code lang-html">nds-primary</code> and <code class="nds-inline-code lang-html">nds-gradient-primary</code> for hero-level emphasis, and <code class="nds-inline-code lang-html">nds-brand</code> or <code class="nds-inline-code lang-html">nds-ghost</code> for subtle visual separation between adjacent sections</li>
                 </ul>
             </div>
 
@@ -1270,7 +1270,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                         <tr><td><code class="nds-inline-code lang-html">nds-horizontal</code></td><td>Switches the wrapper to a two-column grid on desktop (head start, content end)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Dark green background with on-color text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-green</code></td><td>Dark green background with on-color text (alias for nds-primary)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-gradient-green</code></td><td>Diagonal gradient background, direction-aware (flips for RTL/LTR)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-gradient-primary</code></td><td>Diagonal gradient background (deprecated alias: <code class="nds-inline-code lang-html">nds-gradient-green</code>), direction-aware (flips for RTL/LTR)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Dark neutral background with on-color text</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-brand</code></td><td>Light brand background with inset shadow, adapts for dark mode</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Removes all background, border, and shadow (transparent section)</td></tr>
