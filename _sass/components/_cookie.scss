@@ -10,7 +10,7 @@
     --card-width: 100%;
     --card-padding: var(--spacing-3xl);
     --card-gap: var(--spacing-lg);
-    --card-radius: var(--components-card-radius) var(--components-card-radius) 0 0;
+    --card-radius: var(--card-radius) var(--card-radius) 0 0;
 
     position: fixed;
     bottom: 0;
@@ -25,7 +25,7 @@
 
     &.nds-compact {
         @include tablet('min') {
-            --card-radius: var(--components-card-radius);
+            --card-radius: var(--card-radius);
             --card-width: calc(100% - var(--spacing-4xl));
             --card-width-max: 480px;
             margin-inline: auto;

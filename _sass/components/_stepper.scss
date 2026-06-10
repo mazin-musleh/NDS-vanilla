@@ -99,7 +99,7 @@
     }
 
     &[data-state~="upcoming"] .nds-stepper-base::after {
-        background-color: var(--stepper-line-upcomming);
+        background-color: var(--stepper-line-upcoming);
     }
 }
 
@@ -286,12 +286,12 @@
 // Upcoming State
 .nds-stepper-step[data-state~="upcoming"] {
     .nds-stepper-circle {
-        border-color: var(--stepper-button-upcomming);
-        color: var(--stepper-button-upcomming);
+        border-color: var(--stepper-button-upcoming);
+        color: var(--stepper-button-upcoming);
 
         &:hover {
-            border-color: var(--stepper-button-upcomming-hovered);
-            color: var(--stepper-button-upcomming-hovered);
+            border-color: var(--stepper-button-upcoming-hovered);
+            color: var(--stepper-button-upcoming-hovered);
         }
     }
 
@@ -348,10 +348,10 @@
     }
 
     .nds-stepper-step[data-state~="upcoming"] .nds-stepper-circle {
-        border: 2px solid var(--stepper-button-upcomming);
+        border: 2px solid var(--stepper-button-upcoming);
 
         &:hover {
-            border-color: var(--stepper-button-upcomming-hovered);
+            border-color: var(--stepper-button-upcoming-hovered);
         }
 
         &::before,

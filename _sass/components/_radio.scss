@@ -59,7 +59,7 @@
     // ==============================================
 
     &:checked::after {
-        --radio-tile-bg:     var(--controls-primary-checked);
+        --radio-tile-bg:     var(--radio-primary-checked);
         --radio-tile-border: var(--radio-tile-bg);
 
         border: 3px solid var(--background-default);

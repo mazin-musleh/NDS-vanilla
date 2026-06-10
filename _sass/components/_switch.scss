@@ -179,7 +179,7 @@
 
     // Checked
     .nds-switch-input:checked + .nds-switch-track {
-        --switch-track-bg:     var(--controls-primary-checked);
+        --switch-track-bg:     var(--switch-primary-checked);
         --switch-track-border: var(--switch-track-bg);
         --switch-thumb-bg:     var(--colors-base-white);
 

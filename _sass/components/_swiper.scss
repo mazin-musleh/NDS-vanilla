@@ -143,12 +143,12 @@
 
 .nds-bullet {
 
-    // Defaults come from the --bullet-background-* component tokens (theme- +
-    // on-color-aware); the public --bullet-* slots below let consumers override.
-    // Public override slots: --bullet-default, --bullet-default-hover,
-    //                        --bullet-active, --bullet-active-hover, --bullet-border.
-    --_bullet-bg: var(--bullet-default, var(--bullet-background-default));
-    --_bullet-bcolor: var(--bullet-border, transparent);
+    // Defaults come from the --swiper-bullet-background-* component tokens (theme- +
+    // oncolor-aware); the public --swiper-bullet-* slots below let consumers override.
+    // Public override slots: --swiper-bullet-default, --swiper-bullet-default-hovered,
+    //                        --swiper-bullet-active, --swiper-bullet-active-hovered, --swiper-bullet-border.
+    --_bullet-bg: var(--swiper-bullet-default, var(--swiper-bullet-background-default));
+    --_bullet-bcolor: var(--swiper-bullet-border, transparent);
     --_bullet-size: 16px;
 
     width: var(--_bullet-size);
@@ -162,15 +162,15 @@
     touch-action: manipulation;
 
     &:hover {
-        --_bullet-bg: var(--bullet-default-hover, var(--bullet-background-hover));
+        --_bullet-bg: var(--swiper-bullet-default-hovered, var(--swiper-bullet-background-hovered));
     }
 
     &[data-status="active"] {
-        --_bullet-bg: var(--bullet-active, var(--bullet-background-active));
+        --_bullet-bg: var(--swiper-bullet-active, var(--swiper-bullet-background-active));
         --_bullet-bcolor: var(--_bullet-bg);
 
         &:hover {
-            --_bullet-bg: var(--bullet-active-hover, var(--bullet-background-active-hover));
+            --_bullet-bg: var(--swiper-bullet-active-hovered, var(--swiper-bullet-background-active-hovered));
         }
     }
 }
@@ -217,10 +217,10 @@
     }
 
     .nds-bullet {
-        --bullet-default: var(--bullet-background-default-oncolor);
-        --bullet-default-hover: var(--bullet-background-hover-oncolor);
-        --bullet-active: var(--bullet-background-active-oncolor);
-        --bullet-active-hover: var(--bullet-background-active-hover-oncolor);
+        --swiper-bullet-default: var(--swiper-bullet-background-default-oncolor);
+        --swiper-bullet-default-hovered: var(--swiper-bullet-background-hovered-oncolor);
+        --swiper-bullet-active: var(--swiper-bullet-background-active-oncolor);
+        --swiper-bullet-active-hovered: var(--swiper-bullet-background-active-hovered-oncolor);
     }
 }
 

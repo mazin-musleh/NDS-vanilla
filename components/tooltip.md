@@ -405,10 +405,10 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-padding</code></td><td><code class="nds-inline-code lang-html">var(--spacing-2)</code></td><td>Inner padding around the balloon content.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-2)</code></td><td>Gap between the icon chip and the body, and between title and message.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-arrow-size</code></td><td><code class="nds-inline-code lang-html">10px</code></td><td>Side length of the rotated arrow square.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-background-light</code></td><td><code class="nds-inline-code lang-html">var(--colors-base-white)</code></td><td>Balloon surface color in light theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-background-dark</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-800)</code></td><td>Balloon surface color in dark theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-heading-light</code></td><td><code class="nds-inline-code lang-html">var(--text-display)</code></td><td>Title color in light theme.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-paragraph-light</code></td><td><code class="nds-inline-code lang-html">var(--text-primary-paragraph)</code></td><td>Message body color in light theme.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-background-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-base-white)</code></td><td>Balloon surface color in light theme.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-background-inverse</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-800)</code></td><td>Balloon surface color in dark theme.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-heading-default</code></td><td><code class="nds-inline-code lang-html">var(--text-display)</code></td><td>Title color in light theme.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-paragraph-default</code></td><td><code class="nds-inline-code lang-html">var(--text-primary-paragraph)</code></td><td>Message body color in light theme.</td></tr>
                     </tbody>
                 </table>
             </div>

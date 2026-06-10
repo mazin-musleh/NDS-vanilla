@@ -108,7 +108,7 @@
 
     &[data-state~="selected"] {
       --chip-bg: var(--chip-background-primary-selected);
-      --chip-text: var(--chip-text-oncolor-primary);
+      --chip-text: var(--chip-text-oncolor-default);
     }
 
     &:is(:focus-visible, [data-state~="focused"]) {
@@ -117,28 +117,28 @@
     }
 
     &.nds-oncolor {
-      --chip-bg: var(--chip-background-on-color-default);
+      --chip-bg: var(--chip-background-oncolor-default);
       --chip-text: var(--colors-base-black);
 
       &:is(:hover, [data-state~="hover"]) {
-        --chip-bg: var(--chip-background-on-color-hovered);
+        --chip-bg: var(--chip-background-oncolor-hovered);
       }
 
       &:is(:active, .pressed, [data-state~="pressed"]) {
-        --chip-bg: var(--chip-background-on-color-pressed);
+        --chip-bg: var(--chip-background-oncolor-pressed);
       }
 
       &[data-state~="selected"] {
-        --chip-bg: var(--chip-background-on-color-selected);
+        --chip-bg: var(--chip-background-oncolor-selected);
       }
 
       &:is(:focus-visible, [data-state~="focused"]) {
-        --chip-bg: var(--chip-background-on-color-focused);
+        --chip-bg: var(--chip-background-oncolor-focused);
         @include btn-focus-oncolor;
       }
 
       &:is(:disabled, [data-state~="disabled"]) {
-        background-color: var(--chip-background-on-color-disabled);
+        background-color: var(--chip-background-oncolor-disabled);
         color: var(--chip-text-oncolor-disabled);
       }
     }
@@ -166,28 +166,28 @@
     }
 
     &.nds-oncolor {
-      --chip-bg: var(--chip-background-on-color-default);
+      --chip-bg: var(--chip-background-oncolor-default);
       --chip-text: var(--colors-base-black);
 
       &:is(:hover, [data-state~="hover"]) {
-        --chip-bg: var(--chip-background-on-color-hovered);
+        --chip-bg: var(--chip-background-oncolor-hovered);
       }
 
       &:is(:active, .pressed, [data-state~="pressed"]) {
-        --chip-bg: var(--chip-background-on-color-pressed);
+        --chip-bg: var(--chip-background-oncolor-pressed);
       }
 
       &[data-state~="selected"] {
-        --chip-bg: var(--chip-background-on-color-selected);
+        --chip-bg: var(--chip-background-oncolor-selected);
       }
 
       &:is(:focus-visible, [data-state~="focused"]) {
-        --chip-bg: var(--chip-background-on-color-focused);
+        --chip-bg: var(--chip-background-oncolor-focused);
         @include btn-focus-oncolor;
       }
 
       &:is(:disabled, [data-state~="disabled"]) {
-        background-color: var(--chip-background-on-color-disabled);
+        background-color: var(--chip-background-oncolor-disabled);
         color: var(--chip-text-oncolor-disabled);
       }
     }

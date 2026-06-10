@@ -152,14 +152,14 @@
   }
 
   &.nds-oncolor {
-    --tag-bg: var(--tag-background-on-color);
+    --tag-bg: var(--tag-background-oncolor);
     --tag-text: var(--text-oncolor-primary);
     --tag-border: transparent;
     --tag-icon: var(--text-oncolor-primary);
 
     &.nds-outline {
       --tag-bg: transparent;
-      --tag-border: var(--tag-border-on-color);
+      --tag-border: var(--tag-border-oncolor);
       --tag-text: var(--text-oncolor-primary);
     }
   }

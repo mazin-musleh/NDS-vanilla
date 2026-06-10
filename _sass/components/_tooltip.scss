@@ -69,9 +69,9 @@
 // an ancestor selector.
 
 .nds-tooltip-balloon {
-  --_tooltip-bg: var(--tooltip-background-light);
-  --_tooltip-title: var(--tooltip-text-heading-light);
-  --_tooltip-body: var(--tooltip-text-paragraph-light);
+  --_tooltip-bg: var(--tooltip-background-default);
+  --_tooltip-title: var(--tooltip-text-heading-default);
+  --_tooltip-body: var(--tooltip-text-paragraph-default);
   --_tooltip-padding: var(--tooltip-padding);
   --_tooltip-gap: var(--tooltip-gap);
   --_tooltip-arrow-size: var(--tooltip-arrow-size, 10px);
@@ -80,9 +80,9 @@
 
   // Auto-swap to inverse tokens when the page is in dark theme.
   @include dark {
-    --_tooltip-bg: var(--tooltip-background-dark);
-    --_tooltip-title: var(--tooltip-text-heading-dark);
-    --_tooltip-body: var(--tooltip-text-paragraph-dark);
+    --_tooltip-bg: var(--tooltip-background-inverse);
+    --_tooltip-title: var(--tooltip-text-heading-inverse);
+    --_tooltip-body: var(--tooltip-text-paragraph-inverse);
   }
 
   // Balloon is marked `hidden` in source; the attribute controls visibility.

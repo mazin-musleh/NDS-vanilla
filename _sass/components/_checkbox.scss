@@ -67,7 +67,7 @@
 
     &:is(:checked, :indeterminate) {
         &::before {
-            --checkbox-tile-bg:     var(--controls-primary-checked);
+            --checkbox-tile-bg:     var(--checkbox-primary-checked);
             --checkbox-tile-border: var(--checkbox-tile-bg);
         }
         &::after {
@@ -140,7 +140,7 @@
     }
 
     &:is(:checked, :indeterminate)::after {
-        --checkbox-glyph-bg: var(--controls-primary-checked);
+        --checkbox-glyph-bg: var(--checkbox-primary-checked);
     }
 
     &.nds-neutral:is(:checked, :indeterminate)::after {

@@ -251,7 +251,7 @@
     --btn-bg-hover: var(--button-background-oncolor-hovered);
     --btn-bg-active: var(--button-background-oncolor-pressed);
     --btn-bg-selected: var(--button-background-oncolor-selected);
-    --btn-bg-disabled: var(--button-background-disabled-on-color);
+    --btn-bg-disabled: var(--button-background-disabled-oncolor);
     --btn-color-disabled: var(--text-default-oncolor-disabled);
     --btn-color: var(--background-black);
     --btn-loading-color: var(--background-black);
@@ -263,7 +263,7 @@
 
   &:is(.nds-primary, .nds-neutral) {
     @include dark {
-      --btn-bg-disabled: var(--button-background-disabled-on-color);
+      --btn-bg-disabled: var(--button-background-disabled-oncolor);
     }
   }
 
@@ -280,8 +280,8 @@
         --btn-bg-hover: var(--button-background-transparent-hovered);
         --btn-bg-active: var(--button-background-transparent-pressed);
         --btn-bg-selected: var(--button-background-transparent-selected);
-        --btn-bg-disabled: var(--button-background-disabled-on-color);
-        --btn-indicator-active: var(--button-background-disabled-on-color);
+        --btn-bg-disabled: var(--button-background-disabled-oncolor);
+        --btn-indicator-active: var(--button-background-disabled-oncolor);
         --btn-color: var(--text-oncolor-primary);
         --btn-loading-color: var(--text-oncolor-primary);
         --btn-loading-track: var(--alpha-white-20);
@@ -319,16 +319,16 @@
         --btn-bg-active: transparent;
         --btn-bg-selected: transparent;
         --btn-color: var(--text-oncolor-primary);
-        --btn-color-hover: var(--button-label-transparent-hovered-on-color);
+        --btn-color-hover: var(--button-label-transparent-hovered-oncolor);
         --btn-loading-color: var(--text-oncolor-primary);
         --btn-loading-track: var(--alpha-white-20);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
-          color: var(--button-label-transparent-pressed-on-color);
+          color: var(--button-label-transparent-pressed-oncolor);
         }
 
         &:is(:active, [data-state~="pressed"]) {
-          color: var(--button-label-transparent-pressed-on-color);
+          color: var(--button-label-transparent-pressed-oncolor);
         }
       }
     }

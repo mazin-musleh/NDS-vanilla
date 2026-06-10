@@ -172,7 +172,7 @@ $a11y-filters: (
     --btn-bg-hover:       var(--button-background-oncolor-hovered);
     --btn-bg-active:      var(--button-background-oncolor-pressed);
     --btn-bg-selected:    var(--button-background-oncolor-selected);
-    --btn-bg-disabled:    var(--button-background-disabled-on-color);
+    --btn-bg-disabled:    var(--button-background-disabled-oncolor);
     --btn-color-disabled: var(--text-default-oncolor-disabled);
     --btn-color:          var(--background-black);
     --btn-loading-color:  var(--background-black);
@@ -190,9 +190,9 @@ $a11y-filters: (
 // --colors-* fallbacks, so the token swap doesn't reach them. Inactive →
 // hollow (--_hc-bg fill, --_hc-fg ring); active → solid --_hc-fg.
 :root[data-a11y~="high-contrast"] .nds-bullet {
-    --bullet-default:  var(--_hc-bg);
-    --bullet-active:   var(--_hc-fg);
-    --bullet-border:   var(--_hc-fg);
+    --swiper-bullet-default:  var(--_hc-bg);
+    --swiper-bullet-active:   var(--_hc-fg);
+    --swiper-bullet-border:   var(--_hc-fg);
 }
 
 // Avatars: inset --_hc-fg ring. outline (not box-shadow) so it paints

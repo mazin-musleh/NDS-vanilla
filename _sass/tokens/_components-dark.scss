@@ -95,10 +95,10 @@
     // so the neutral (inactive) states need explicit dark grays here; hover = +1
     // lighter to stand out on dark. Active = brand primary at a lighter dark step
     // (primary-500, ~status-green-600 lightness so it pops); hover = +1 darker.
-    --bullet-background-default: var(--colors-neutral-700);
-    --bullet-background-hover: var(--colors-neutral-600);
-    --bullet-background-active: var(--colors-primary-500);
-    --bullet-background-active-hover: var(--colors-primary-600);
+    --swiper-bullet-background-default: var(--colors-neutral-700);
+    --swiper-bullet-background-hovered: var(--colors-neutral-600);
+    --swiper-bullet-background-active: var(--colors-primary-500);
+    --swiper-bullet-background-active-hovered: var(--colors-primary-600);
 
     // ─── Checkbox (darker for white checkmark contrast) ───
     --checkbox-primary-hovered: var(--colors-primary-700);
@@ -155,10 +155,10 @@
     --stepper-button-completed-hovered: var(--colors-primary-600);
     --stepper-button-current: var(--colors-primary-500);
     --stepper-button-current-hovered: var(--colors-primary-600);
-    --stepper-button-upcomming: var(--colors-neutral-600);
-    --stepper-button-upcomming-hovered: var(--colors-neutral-600);
+    --stepper-button-upcoming: var(--colors-neutral-600);
+    --stepper-button-upcoming-hovered: var(--colors-neutral-600);
     --stepper-button-background: var(--background-default);
     --stepper-text-primary: var(--text-default);
     --stepper-line-current: var(--colors-neutral-600);
-    --stepper-line-upcomming: var(--colors-neutral-600);
+    --stepper-line-upcoming: var(--colors-neutral-600);
 }
