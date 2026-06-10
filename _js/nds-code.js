@@ -33,20 +33,16 @@
             codeElement.dataset.originalContent = codeElement.innerHTML;
         }
 
-        // 1. Get original text content
         const originalText = getOriginalText(codeElement);
 
-        // 2. Apply syntax highlighting
         const lang = detectLanguage(codeElement);
         if (lang) {
             applySyntaxHighlighting(codeElement, lang, originalText);
         }
 
-        // 3. Add line numbers
         addLineNumbers(codeElement);
 
-        // 4. Set display mode
-        codeElement.style.display = 'flex';
+        // CSS reveals the block via code[data-processed="true"] (base is display:none)
         codeElement.dataset.processed = 'true';
     }
 
@@ -63,12 +59,10 @@
     }
 
     function reprocessCodeElement(codeElement) {
-        // Reset to original content
         if (codeElement.dataset.originalContent) {
             codeElement.innerHTML = codeElement.dataset.originalContent;
         }
 
-        // Clear processed flag
         codeElement.dataset.processed = 'false';
         codeElement.dataset.lineNumbers = 'false';
         codeElement.classList.remove('line-numbers');
@@ -219,27 +213,30 @@
         }
     }
 
-    // HTML Syntax Highlighting
+    // HTML Syntax Highlighting — jumps between tags via indexOf and escapes
+    // whole text runs (escaping is character-local, so one run-escape equals
+    // the concatenation of per-character escapes at a fraction of the DOM cost).
     function highlightHTML(text) {
         let result = '';
         let i = 0;
 
         while (i < text.length) {
-            // Find HTML tags
-            if (text[i] === '<') {
-                const tagEnd = text.indexOf('>', i);
-                if (tagEnd !== -1) {
-                    const tag = text.substring(i, tagEnd + 1);
-                    result += highlightHTMLTag(tag);
-                    i = tagEnd + 1;
-                } else {
-                    result += NDS.escapeHtml(text[i]);
-                    i++;
-                }
-            } else {
-                result += NDS.escapeHtml(text[i]);
-                i++;
+            const open = text.indexOf('<', i);
+            if (open === -1) {
+                result += NDS.escapeHtml(text.slice(i));
+                break;
             }
+            if (open > i) {
+                result += NDS.escapeHtml(text.slice(i, open));
+            }
+            const tagEnd = text.indexOf('>', open);
+            if (tagEnd === -1) {
+                // Unterminated tag — the rest is plain text
+                result += NDS.escapeHtml(text.slice(open));
+                break;
+            }
+            result += highlightHTMLTag(text.substring(open, tagEnd + 1));
+            i = tagEnd + 1;
         }
 
         return result;
@@ -365,6 +362,16 @@
     }
 
     // JavaScript Syntax Highlighting
+    // Precompiled per-category alternations — one pass per category instead of
+    // a fresh RegExp + full-text pass per word, per block. The trailing \b
+    // forces whole-token matches, so alternative order is irrelevant (`in`
+    // can't half-match `instanceof`).
+    const JS_WORD_CATEGORIES = [
+        ['keyword', /\b(const|let|var|function|if|else|for|while|return|break|continue|switch|case|default|try|catch|finally|throw|class|extends|import|export|await|async|new|typeof|instanceof|in|of|delete|void|this|super)\b/g],
+        ['literal', /\b(true|false|null|undefined|NaN|Infinity)\b/g],
+        ['builtin', /\b(console|window|document|Array|Object|String|Number|Boolean|Math|JSON|Date|Promise|Set|Map)\b/g]
+    ];
+
     function highlightJavaScript(text) {
         const tokens = [];
         let highlighted = text;
@@ -382,38 +389,20 @@
         highlighted = highlighted.replace(/(['"])((?:\\.|(?!\1)[^\\])*?)\1/g, function(m) { return tokenize(m, 'string'); });
         highlighted = highlighted.replace(/\b(\d+\.?\d*([eE][+-]?\d+)?)\b/g, function(m) { return tokenize(m, 'number'); });
 
-        // Keywords
-        const keywords = ['const', 'let', 'var', 'function', 'if', 'else', 'for', 'while', 'return',
-                         'break', 'continue', 'switch', 'case', 'default', 'try', 'catch', 'finally',
-                         'throw', 'class', 'extends', 'import', 'export', 'await', 'async', 'new',
-                         'typeof', 'instanceof', 'in', 'of', 'delete', 'void', 'this', 'super'];
-        keywords.forEach(function(kw) {
-            const regex = new RegExp('\\b(' + kw + ')\\b', 'g');
-            highlighted = highlighted.replace(regex, function(m) { return tokenize(m, 'keyword'); });
-        });
-
-        // Literals
-        const literals = ['true', 'false', 'null', 'undefined', 'NaN', 'Infinity'];
-        literals.forEach(function(lit) {
-            const regex = new RegExp('\\b(' + lit + ')\\b', 'g');
-            highlighted = highlighted.replace(regex, function(m) { return tokenize(m, 'literal'); });
-        });
-
-        // Built-ins
-        const builtins = ['console', 'window', 'document', 'Array', 'Object', 'String', 'Number',
-                         'Boolean', 'Math', 'JSON', 'Date', 'Promise', 'Set', 'Map'];
-        builtins.forEach(function(bi) {
-            const regex = new RegExp('\\b(' + bi + ')\\b', 'g');
-            highlighted = highlighted.replace(regex, function(m) { return tokenize(m, 'builtin'); });
+        // Word categories — keywords, literals, built-ins
+        JS_WORD_CATEGORIES.forEach(function(cat) {
+            highlighted = highlighted.replace(cat[1], function(m) { return tokenize(m, cat[0]); });
         });
 
         // Escape remaining text
         highlighted = NDS.escapeHtml(highlighted);
 
-        // Replace tokens
+        // Replace tokens. Function replacement — a literal $& / $' in the
+        // escaped code would otherwise be interpreted as a replacement pattern
+        // and splice match text into the output.
         tokens.forEach(function(token) {
             const wrapped = '<span class="syntax-' + token.type + '">' + token.content + '</span>';
-            highlighted = highlighted.replace(token.placeholder, wrapped);
+            highlighted = highlighted.replace(token.placeholder, function() { return wrapped; });
         });
 
         return highlighted;

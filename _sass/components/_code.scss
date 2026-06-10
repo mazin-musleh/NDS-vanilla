@@ -72,10 +72,16 @@
     background: transparent;
     border: none;
 
+    // Revealed by NDS.Code once processed (JS stamps data-processed="true");
+    // unprocessed markup stays hidden so raw text never flashes.
+    &[data-processed='true'] {
+      display: flex;
+    }
+
     &.line-numbers {
       counter-reset: line;
-      display: flex !important;
-      flex-direction: column !important;
+      display: flex;
+      flex-direction: column;
       padding-inline-end: var(--spacing-2xl);
 
       .code-line {

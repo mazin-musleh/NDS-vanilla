@@ -190,6 +190,9 @@
             init: () => NDS.Numbers?.init?.(),
         },
         {
+            // Critical: base CSS hides block code (display:none) until init's
+            // highlight + line-number rebuild stamps data-processed — deferral
+            // would reveal empty boxes that expand post-reveal (CLS on docs pages).
             // Targets the three NDS code hooks (block, tabs-wrapped block, inline).
             // Avoids bare `code` so detection doesn't sweep every <code> on docs pages.
             name: 'Code',
