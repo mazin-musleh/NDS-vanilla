@@ -196,15 +196,26 @@
         @include skeleton-bar;
     }
 
+    // Button icons (leading icon and chevron) skeleton too — mask:none so
+    // masked icons paint their whole box as a block (a masked gradient
+    // would reveal the icon's shape); font glyphs die via the transparent
+    // color from skeleton-fill.
     .nds-accordion-btn :is(.nds-icon, i) {
-        visibility: hidden;
+        animation: processing 1.5s ease-in-out infinite;
+        mask: none;
+        border-radius: var(--nds-skeleton-radius);
+        @include skeleton-fill;
     }
 
-    // Open items: one bar block over the body; children hide so tag/button
+    // Open items: one bar block over the body, inset to its padding (the
+    // content-box keyword sets origin+clip in one declaration, so the
+    // shorthand can't reset the clip); children hide so tag/button
     // backgrounds don't paint through.
     .nds-accordion-body {
         animation: processing 1.5s ease-in-out infinite;
-        @include skeleton-bar;
+        background: var(--nds-skeleton-fill) content-box;
+        border-radius: var(--nds-skeleton-radius);
+        color: transparent !important;
 
         >* {
             visibility: hidden;
