@@ -253,21 +253,40 @@
 // ==============================================
 // TABLE LOADING STATE
 // ==============================================
+// Processing skeleton — both loading entry points (filter's
+// tbody.nds-loading, consumer's data-state on the table) render cells as
+// gradient bars; cell children hide so only the bar paints (hidden boxes
+// keep their size, so column sizing and lockTableColumns are unaffected).
+// Spinner + dim are suppressed in _loading.scss. The same look serves the
+// pre-init hold: not-yet-initialized filter/paged table bodies show
+// shimmer rows (crit exempts tbody from its visibility hold and collapses
+// rows past the first page). Pulses via the shared `processing`
+// keyframes; the a11y reduce-motion kill leaves the bars static.
+.nds-table[data-state~="loading"] tbody tr td,
+:is(tbody.nds-loading,
+    tbody[data-filter-items]:not([data-nds-filter-initialized]),
+    tbody.nds-paged-content:not([data-paged-initialized])) tr td {
+    position: relative;
+    background-color: var(--table-background-row);
+    color: transparent !important;
 
-.nds-table[data-state~="loading"] {
-    tbody tr td {
-        background-color: var(--table-background-row);
-        color: var(--text-default-disabled);
-        animation: tableLoading 1.5s ease-in-out infinite alternate;
+    // The bar is a real box so border-radius rounds it — a background layer
+    // can't be rounded, and masking the cell would clip the row background
+    // and borders too. Explicit height (md line-height) centered, inset to
+    // the cell's horizontal padding.
+    &::before {
+        content: "";
+        position: absolute;
+        inset-inline: var(--table-cell-h-padding);
+        top: 50%;
+        translate: 0 -50%;
+        height: var(--typo-text-md-LH, 24px);
+        background: var(--nds-skeleton-fill);
+        border-radius: var(--nds-skeleton-radius);
+        animation: processing 1.5s ease-in-out infinite;
     }
-}
 
-@keyframes tableLoading {
-    0% {
-        opacity: 0.5;
-    }
-
-    100% {
-        opacity: 1;
+    >* {
+        visibility: hidden;
     }
 }

@@ -466,6 +466,29 @@ $breakpoints-range: (
 }
 
 // ==============================================
+// SKELETON MIXINS
+// ==============================================
+
+// Paint any surface (text bar, image, icon) with the static skeleton
+// gradient. color:transparent hides the real glyphs the gradient covers;
+// harmless on image surfaces. Tokens live in components/_loading.scss.
+@mixin skeleton-fill {
+  background: var(--nds-skeleton-fill);
+  color: transparent !important;
+}
+
+// Paint a text element as a skeleton bar — fill + radius, descendants'
+// text hidden too.
+@mixin skeleton-bar {
+  @include skeleton-fill;
+  border-radius: var(--nds-skeleton-radius);
+
+  >* {
+    color: transparent;
+  }
+}
+
+// ==============================================
 // SHARED PLACEHOLDERS
 // ==============================================
 

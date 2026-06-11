@@ -355,3 +355,17 @@ section>.nds-max-width {
   align-self: center;
   height: var(--btn-size) !important;
 }
+// ==============================================
+// PROCESSING SKELETON
+// ==============================================
+// A loading tab strip (or tabs root) renders its tab buttons as bars —
+// spinner + dim suppressed in _loading.scss.
+:is(.nds-tabs, .nds-tab-list).nds-loading .nds-tab {
+    border-color: transparent;
+    animation: processing 1.5s ease-in-out infinite;
+    @include skeleton-bar;
+
+    >* {
+        visibility: hidden;
+    }
+}

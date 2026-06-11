@@ -174,3 +174,35 @@
         }
     }
 }
+// ==============================================
+// PROCESSING SKELETON
+// ==============================================
+// While a filter pass runs on the accordion (e.g. faq-template targets it
+// with data-filter-items=".nds-accordion-item"), items render as bars
+// instead of the spinner + dim (suppression in _loading.scss). The same
+// look serves the pre-init hold: a not-yet-initialized filter target shows
+// shimmer (crit exempts accordions from its visibility hold and shapes the
+// item count; bar text is transparent so URL-filtered loads can't flash).
+:is(.nds-accordion.nds-loading,
+    .nds-accordion[data-filter-items]:not([data-nds-filter-initialized])) .nds-accordion-item {
+
+    .nds-accordion-title {
+        animation: processing 1.5s ease-in-out infinite;
+        @include skeleton-bar;
+    }
+
+    .nds-accordion-btn :is(.nds-icon, i) {
+        visibility: hidden;
+    }
+
+    // Open items: one bar block over the body; children hide so tag/button
+    // backgrounds don't paint through.
+    .nds-accordion-body {
+        animation: processing 1.5s ease-in-out infinite;
+        @include skeleton-bar;
+
+        >* {
+            visibility: hidden;
+        }
+    }
+}

@@ -148,12 +148,22 @@ html {
    release via their stamped ancestor): on URL-filtered loads init swaps it
    [hidden] for the applied-chips row, so painting it pre-init would flash
    the wrong row. */
-:where([data-filter-items]:not([data-nds-filter-initialized]),
+:where([data-filter-items]:not([data-nds-filter-initialized]):not(.nds-accordion):not(.nds-grid):not(tbody),
     .nds-auto-fill[data-filter-target]:not([data-nds-filter-initialized]),
     [data-filter-target]:not([data-nds-filter-initialized]) .nds-auto-fill,
-    .nds-paged-content:not([data-paged-initialized])) {
+    .nds-paged-content:not([data-paged-initialized]):not(.nds-grid):not(tbody)) {
     visibility: hidden;
 }
+
+/* Held accordions, card grids and table bodies are exempt from the
+   visibility hold above: they paint their skeleton placeholders instead
+   (main — _accordion.scss / _cards.scss / _tables.scss, the same rules as
+   the .nds-loading processing state), so pre-init shows shimmer rather
+   than a blank region. The reveal already waits for main CSS, so the
+   skeleton rules are guaranteed present. Bar text is transparent and
+   content is hidden (boxes keep their size, so table column sizing and
+   lockTableColumns are unaffected) — URL-filtered loads still can't flash
+   unfiltered content. */
 
 /* ── Auto-paginated content ──
    Pagination is delegated — it inits after the reveal, so this can't key
@@ -181,6 +191,21 @@ html {
 }
 
 .nds-paged-content:not([data-paged-initialized]) tr.nds-page-item:nth-child(n + 7) {
+    visibility: collapse;
+}
+
+/* Filter-target accordions (e.g. faq-template), plain (non-paged) filter
+   grids and filter-only table bodies aren't paged-content, so without
+   this their pre-init skeleton would render the FULL item list. Shape
+   them to the same first-page count; the filter's init stamp releases it.
+   Table rows collapse (not display:none) so they keep feeding column
+   sizing, same as the paged rule above. */
+.nds-accordion[data-filter-items]:not([data-nds-filter-initialized]) .nds-accordion-item:nth-child(n + 7),
+.nds-grid[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-content)>*:nth-child(n + 7) {
+    display: none;
+}
+
+tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-content) tr:nth-child(n + 7) {
     visibility: collapse;
 }
 

@@ -590,3 +590,57 @@
     opacity: 0.5;
   }
 }
+// ==============================================
+// PROCESSING SKELETON
+// ==============================================
+// While a filter/pagination pass runs, the loading container renders its
+// cards as skeleton placeholders instead of the spinner + dim (suppression
+// in _loading.scss). The card chrome (bg, border, padding) stays; content
+// slots become gradient bars/fills. Bars pulse via the shared `processing`
+// keyframes; the a11y reduce-motion kill leaves them static.
+// The same look serves the pre-init hold: not-yet-initialized filter grids
+// and paged content show shimmer cards (crit exempts card grids from its
+// visibility hold and shapes the item count; text is transparent and
+// content hidden, so URL-filtered loads can't flash).
+:is(:is(.nds-grid, .nds-paged-content).nds-loading,
+    .nds-grid[data-filter-items]:not([data-nds-filter-initialized]),
+    .nds-paged-content:not([data-paged-initialized])) .nds-card {
+
+  :is(.nds-card-title, .nds-card-subtitle, .nds-card-description,
+    .nds-card-number, .nds-card-rating-text) {
+    animation: processing 1.5s ease-in-out infinite;
+    @include skeleton-bar;
+  }
+
+  .nds-card-image:not(.nds-avatar) {
+    aspect-ratio: var(--img-ratio, 2/1);
+    border-radius: var(--radius-md, 8px);
+    overflow: hidden;
+    animation: processing 1.5s ease-in-out infinite;
+    @include skeleton-fill;
+
+    img {
+      visibility: hidden;
+    }
+  }
+
+  :is(.nds-tag, .nds-chip, .nds-btn) {
+    border-color: transparent;
+    border-radius: var(--nds-skeleton-radius);
+    animation: processing 1.5s ease-in-out infinite;
+    @include skeleton-fill;
+
+    >* {
+      visibility: hidden;
+    }
+  }
+
+  :is(.nds-featured-icon, .nds-avatar) {
+    animation: processing 1.5s ease-in-out infinite;
+    @include skeleton-fill;
+
+    :is(i, .nds-icon, img) {
+      visibility: hidden;
+    }
+  }
+}

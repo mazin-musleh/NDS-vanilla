@@ -10,6 +10,43 @@
 @use '../mixins' as *;
 
 // ==============================================
+// SKELETON TOKENS
+// ==============================================
+// Consumed by @mixin skeleton-fill / skeleton-bar (_mixins.scss) for the
+// processing-state placeholders in cards/tables. Stops are
+// neutral-200/300/400 at 20% alpha (dark: 600/500/400). The gradient runs
+// with reading direction — RTL default, LTR flips to 270deg (gradients
+// aren't direction-aware).
+:root {
+  --nds-skeleton-fill: linear-gradient(90deg,
+      rgba(229, 231, 235, 0.2) 0%,
+      rgba(210, 214, 219, 0.2) 50%,
+      rgba(157, 164, 174, 0.2) 100%);
+  --nds-skeleton-radius: var(--radius-sm, 4px);
+}
+
+:root[dir="ltr"] {
+  --nds-skeleton-fill: linear-gradient(270deg,
+      rgba(229, 231, 235, 0.2) 0%,
+      rgba(210, 214, 219, 0.2) 50%,
+      rgba(157, 164, 174, 0.2) 100%);
+}
+
+:root[data-theme~="dark"] {
+  --nds-skeleton-fill: linear-gradient(90deg,
+      rgba(77, 87, 97, 0.2) 0%,
+      rgba(108, 114, 126, 0.2) 50%,
+      rgba(157, 164, 174, 0.2) 100%);
+}
+
+:root[dir="ltr"][data-theme~="dark"] {
+  --nds-skeleton-fill: linear-gradient(270deg,
+      rgba(77, 87, 97, 0.2) 0%,
+      rgba(108, 114, 126, 0.2) 50%,
+      rgba(157, 164, 174, 0.2) 100%);
+}
+
+// ==============================================
 // NDS LOADING COMPONENT
 // ==============================================
 
@@ -118,4 +155,23 @@
     --_loading-track: var(--loading-track, var(--alpha-white-20));
   }
 
+}
+
+// ==============================================
+// SKELETON PROCESSING STATE
+// ==============================================
+// Card grids, paged content, table bodies, accordions and tab strips
+// render the processing state as skeleton placeholders on their items
+// (rules in _cards.scss / _tables.scss / _accordion.scss / _tabs.scss) —
+// the skeleton IS the feedback, so the spinner and the child dim are
+// suppressed. pointer-events: none stays from the base rule; every other
+// .nds-loading consumer keeps the spinner.
+:is(.nds-grid, .nds-paged-content, tbody, .nds-table, .nds-accordion, .nds-tabs, .nds-tab-list):is(.nds-loading, [data-state="loading"]) {
+  &::after {
+    content: none;
+  }
+
+  &:not(.nds-btn)>* {
+    opacity: 1;
+  }
 }
