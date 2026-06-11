@@ -110,17 +110,33 @@ html {
 
     /* ── Swiper ──
        Hero swiper + wrapper get their flex skeleton so the slide image fills
-       the hero box. All swipers collapse to their first slide until JS marks
-       data-nds-swiper-initialized — prevents pre-init flex layout from widening
-       the document. */
+       the hero box. A hero swiper collapses to its first slide (full-bleed)
+       until JS marks data-nds-swiper-initialized. */
     :where(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
         display: flex;
         height: 100%;
         width: 100%;
     }
 
-    .nds-swiper:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
+    .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
         display: none;
+    }
+
+    /* Non-hero (card) swipers instead show a clipped row of card-width
+       slides pre-init: the slide width must be pinned because main's
+       flex-basis formula collapses to 100% while JS hasn't written
+       --slides — one card stretched across the track. The cards inside
+       shimmer via their default skeleton; overflow stays clipped so the
+       row can't widen the document. Released by the swiper's own stamp. */
+    .nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized]) {
+        overflow: hidden;
+
+        .nds-swiper-slide {
+            // Mirrors the card's own max-width chain (cards size as 100% OF
+            // the slide, so they can't size it — circular): consumer card
+            // width knobs propagate to the pre-init slide automatically.
+            flex: 0 0 min(100%, var(--card-width-max, var(--card-width, 360px)));
+        }
     }
 
     :where(.nds-link, a):not(.nds-card):where(.nds-icon, .nds-external)::after {

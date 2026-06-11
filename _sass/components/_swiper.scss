@@ -259,3 +259,18 @@
         order: 1;
     }
 }
+
+// ==============================================
+// PRE-INIT SKELETON
+// ==============================================
+// Nav reservation: .nds-swiper-navigation ships [hidden] until init
+// un-hides it for multi-page swipers, and its bullets are JS-built —
+// without this the row pops in below the track when init lands after
+// the reveal. A placeholder pseudo stands in for it (the [hidden]
+// display:none !important stays authoritative); the init stamp releases
+// it, so single-page swipers shed the reservation then (bounded, rare).
+// Hero swipers are excluded — their nav overlays the slides.
+.nds-swiper:not(.nds-hero):not([data-nds-swiper-initialized])::after {
+    content: "";
+    min-height: var(--btn-size, 40px);
+}
