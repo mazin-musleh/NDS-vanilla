@@ -101,13 +101,17 @@
             critical: true,
         },
         {
-            // Critical: the skeleton collapses multi-slide swipers to slide 1
-            // until init writes --slides; deferral would re-expand the track
-            // post-reveal (CLS). Hero swipers are above-the-fold LCP.
+            // Delegated: pre-init paint is CSS-owned, keyed on the swiper's
+            // OWN stamp (crit: hero collapses to slide 1; non-hero pins a
+            // clipped card-width slide row; _swiper.scss reserves the
+            // [hidden] nav row) — so init landing after the reveal releases
+            // into reserved space, no track re-expansion. Hero LCP is the
+            // slide-1 image, painted from markup regardless of JS. The
+            // foundation-day slide injector handles the init race in both
+            // directions (reinit only after the stamp).
             name: 'Swiper',
             selector: '.nds-swiper',
             init: () => NDS.Swiper?.init?.(),
-            critical: true,
         },
         {
             name: 'Upload',
