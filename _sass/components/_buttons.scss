@@ -55,6 +55,7 @@
     background-color: var(--_btn-bg-disabled);
     color: var(--_btn-color-disabled);
     border-color: var(--_btn-border-disabled);
+    // DEAD-06 defensive: project-wide disabled-affordance pattern paired with pointer-events:none (see _chips, _pagination, _switch); keeps the cursor signal for a11y tooling and authoring docs.
     cursor: not-allowed;
     pointer-events: none;
   }
@@ -80,7 +81,7 @@
   }
 
   &[data-status="error"] {
-    --btn-bg-hover: var(--button-status-error-bg) ;
+    --btn-bg-hover: var(--button-status-error-bg) !important;
     --btn-bg: var(--button-status-error-bg) !important;
     --btn-color: var(--button-status-error-text) !important;
     --btn-color-hover: var(--button-status-error-text) !important;
@@ -116,6 +117,7 @@
   }
 
   // Status border paints only on the outline variant; --_status-border is set per status above.
+  // PERF-04 complexity-required: variant grid (outline × 4 statuses × :not(:active) guard); restructuring (Solution A) grows the bundle for a sub-ms match-cost win.
   &.nds-secondary-outline:is([data-status="success"], [data-status="error"], [data-status="info"], [data-status="warning"]):not(:active) {
     --btn-border: var(--_status-border) !important;
     --btn-border-hover: var(--_status-border) !important;
@@ -293,12 +295,12 @@
         --btn-bg-active: var(--button-background-transparent-pressed);
         --btn-bg-selected: var(--button-background-transparent-selected);
         --btn-bg-disabled: var(--button-background-transparent-default);
-        --btn-color: var(--colors-base-white);
+        --btn-color: var(--text-oncolor-primary);
         --btn-border: var(--border-white-40);
         --btn-border-hover: var(--border-white-40);
         --btn-border-active: var(--border-white-40);
         --btn-border-selected: var(--border-white-40);
-        --btn-loading-color: var(--colors-base-white);
+        --btn-loading-color: var(--text-oncolor-primary);
         --btn-loading-track: var(--alpha-white-20);
       }
 
@@ -324,7 +326,7 @@
         --btn-loading-track: var(--alpha-white-20);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
-          color: var(--button-label-transparent-pressed-oncolor);
+          color: var(--button-label-transparent-selected-oncolor);
         }
 
         &:is(:active, [data-state~="pressed"]) {
@@ -410,7 +412,7 @@
   @at-root {
     .nds-btn.nds-oncolor.nds-destructive,
     :where(:root[data-theme~="dark"]) .nds-btn.nds-destructive {
-      --btn-loading-color: var(--colors-base-white);
+      --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
 
       &.nds-primary {
