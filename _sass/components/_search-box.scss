@@ -1,13 +1,14 @@
 /**
  * NDS Search Box
- * In critical CSS — above-the-fold nav chrome, kept here to avoid CLS.
+ * Mainnav search panel — lives inside the Search dropmenu, hidden until opened,
+ * so it plays no part in the critical first paint.
  */
 
 @use '../mixins' as *;
 
 .nds-search-box {
     display: flex;
-    gap: var(--spacing-2xl) !important;
+    gap: var(--spacing-2xl) !important; // outweighs .nds-form-container's gap (composed on the same <form>)
     margin: 0 auto;
     justify-content: center;
     align-items: flex-start;
@@ -15,7 +16,7 @@
     width: 100%;
 
     @include mobile {
-        gap: var(--spacing-xl);
+        gap: var(--spacing-xl) !important; // must match the base's !important or it never wins
 
         .nds-main-nav & {
             padding-inline: var(--spacing-xl);
@@ -35,15 +36,7 @@
             gap: var(--spacing-md);
 
             :is(.nds-search-btn, .nds-filter-btn) > .nds-label {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                padding: 0;
-                margin: -1px;
-                overflow: hidden;
-                clip: rect(0, 0, 0, 0);
-                white-space: nowrap;
-                border: 0;
+                @include label-hidden;
             }
         }
     }
@@ -55,8 +48,7 @@
         flex-wrap: wrap;
 
         >.nds-label {
-            font-size: var(--typo-text-clamp-lg-FS);
-            font-weight: var(--font-weight-medium);
+            // FS/LH/weight come from _filter.scss's .nds-auto-fill > .nds-label base; only the color diverges
             color: var(--text-default);
         }
     }
