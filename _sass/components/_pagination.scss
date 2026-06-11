@@ -11,12 +11,32 @@
 
 .nds-pagination {
   --_pagination-margin-top: var(--pagination-margin-top, var(--spacing-2xl));
+  --_pagination-reserve: 40px; // one button row; size variants override below
   width: 100%;
   margin-top: var(--_pagination-margin-top);
 
   &:not(:has(>.nds-pagination-list)) {
     display: none;
   }
+
+  // Built-in skeleton: pagination is delegated, so its list lands after the
+  // reveal — a data-driven nav ([data-total-pages]) reserves its one-row
+  // height until its init stamp, so the insertion doesn't shift content
+  // below. Init owns the outcome: it generates the list (any total-pages
+  // > 0), and a nav init leaves empty falls back to the empty-collapse
+  // above. The auto-mode sibling rule below covers [data-auto-pagination].
+  &[data-total-pages]:not([data-nds-pagination-initialized]) {
+    display: block;
+    min-height: var(--_pagination-reserve);
+  }
+}
+
+// Auto-mode reservation: until pagination stamps data-paged-initialized on
+// the content, its adjacent nav holds its row height (and collapses after the
+// stamp if init left it empty — the single-page case).
+.nds-paged-content:not([data-paged-initialized])+.nds-pagination {
+  display: block;
+  min-height: var(--_pagination-reserve);
 }
 
 .nds-pagination-list {
@@ -132,13 +152,21 @@
 // PAGINATION SIZES
 // ==============================================
 
-.nds-pagination.nds-md .nds-btn {
-  --btn-size: 32px;
+.nds-pagination.nds-md {
+  --_pagination-reserve: 32px;
+
+  .nds-btn {
+    --btn-size: 32px;
+  }
 }
 
-.nds-pagination.nds-sm .nds-btn {
-  --btn-size: 24px;
-  --btn-FS: var(--typo-text-sm-FS);
+.nds-pagination.nds-sm {
+  --_pagination-reserve: 24px;
+
+  .nds-btn {
+    --btn-size: 24px;
+    --btn-FS: var(--typo-text-sm-FS);
+  }
 }
 
 

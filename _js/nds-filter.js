@@ -2179,7 +2179,11 @@
             // shares the representative element + targetId; destroying it must not
             // clobber the registered instance's backref, init attribute, or map entry.
             if (this.filterContainer.ndsFilter === this) {
+                // _targetRoots covers every stamped surface (incl. the
+                // representative); the target container is stamped separately.
+                this._targetRoots?.forEach(r => r.removeAttribute('data-nds-filter-initialized'));
                 this.filterContainer.removeAttribute('data-nds-filter-initialized');
+                this.targetContainer?.removeAttribute('data-nds-filter-initialized');
                 delete this.filterContainer.ndsFilter;
             }
             if (this.targetId && _instancesByTarget.get(this.targetId) === this) {
@@ -2204,7 +2208,15 @@
     function createInstance(representative, surfaces) {
         const instance = new NDSFilter(representative, surfaces);
         representative.ndsFilter = instance;
-        representative.setAttribute('data-nds-filter-initialized', 'true');
+        // Stamp every linked surface + the target container: the constructor's
+        // init has applied URL params by now, so this releases the crit holds
+        // (items region, auto-fill row) — including holds keyed on ancestor
+        // surfaces (the search-box wrapper, a form-mode <form>), which would
+        // otherwise pin a nested auto-fill hidden forever. The data-nds-loaded
+        // pattern, per element; the representative's stamp doubles as the
+        // public init marker.
+        (surfaces || [representative]).forEach(s => s.setAttribute('data-nds-filter-initialized', 'true'));
+        instance.targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
         if (instance.targetId) {
             _instancesByTarget.set(instance.targetId, instance);
         }

@@ -305,36 +305,36 @@
             init: () => NDS.Autocomplete?.init?.(),
         },
         {
-            // Critical: init is cheap now (scoped surface lookups + deferred option
-            // builds) and filtering controls visible content, so wiring it before
-            // first paint keeps URL-active filters and interactions ready.
-            // Registered BEFORE Pagination: applyUrlParams() stamps data-filtered
-            // on URL-inactive items, and Pagination's filter-aware setupAutoContainer
-            // reads visible-only items for its initial paint — so a URL-active
-            // filter at page open paints the correct (often smaller, often empty)
-            // nav once, instead of painting full and then trimming post-paint → CLS.
+            // Delegated: crit CSS holds each filter target container
+            // ([data-filter-items]) hidden until init stamps
+            // data-nds-filter-initialized on it — the data-nds-loaded pattern,
+            // per container — so a URL-active filter (?name=value) never
+            // flashes the unfiltered list: the stamp lands after
+            // applyUrlParams() has settled the filtered state. Registered
+            // BEFORE Pagination — drainList inits in registry order, so
+            // applyUrlParams() stamps data-filtered before Pagination's
+            // filter-aware item read, same invariant as the old critical pass.
             // Gate on [data-filter-target] (not .nds-filter): a filter is defined
             // by its target link, so it must init even when there's no .nds-filter
             // dropdown (e.g. a search-only filter).
             name: 'Filter',
             selector: '[data-filter-target]',
             init: () => NDS.Filter?.init?.(),
-            critical: true,
         },
         {
-            // Critical: init now reads --per-page inline-first (no forced recalc)
-            // and generates the collapsed list directly, so it no longer needs a
-            // settled idle layout; the skeleton CSS still reserves the slot until
-            // data-paged-initialized, so no CLS. Registered AFTER Filter so a
-            // URL-active filter has stamped data-filtered before this paint —
-            // setupAutoContainer's filter-aware item read then paints visible-only.
-            // Filter's refresh call during its init lands before this nav's setup
-            // and is skipped (refreshAutoPagination's pre-init guard) —
-            // setupAutoContainer paints the same visible-only set itself.
+            // Delegated: pre-init paint is covered by CSS — the
+            // data-paged-initialized skeleton (crit) hides items past the
+            // default page size and collapses table rows, and _pagination.scss
+            // reserves the empty nav's row height — so init landing after the
+            // reveal inserts the list without shifting content. Bounded known
+            // shifts: --per-page ≠ 6 boundary mismatch; manual >5-page lists
+            // collapse to the ellipsis post-reveal. Registered AFTER Filter so
+            // a URL-active filter has stamped data-filtered before this paint;
+            // Filter's refresh call during its init lands before this nav's
+            // setup and is skipped (refreshAutoPagination's pre-init guard).
             name: 'Pagination',
             selector: '.nds-pagination',
             init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
-            critical: true,
         },
         {
             name: 'Ipv',
@@ -590,8 +590,7 @@
             if (criticalIndex < criticalComponents.length) {
                 yieldToBrowser(initCriticalBatch);
             } else {
-                // Checklist complete — card-revealing components (swiper,
-                // pagination) are up. Stamp the body so critical-CSS skeletons
+                // Checklist complete — stamp the root so critical-CSS skeletons
                 // hand off to the real, now-styled components: this is the reveal.
                 document.documentElement.setAttribute('data-nds-loaded', '');
 
