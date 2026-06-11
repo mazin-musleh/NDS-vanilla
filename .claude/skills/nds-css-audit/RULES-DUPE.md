@@ -12,7 +12,7 @@ Duplicate-rule catalog for `nds-css-audit`. Read during Phase 2/3 of a `DUPE` ru
 
 #### Deleted rules & declined patterns (lessons — do not re-introduce)
 
-Preserved decisions, not active rules — once considered (or briefly shipped) and deliberately rejected. The audit must NOT re-propose them. (This is the durable home for these lessons; they used to live in the removed `MATURITY.md` bookkeeping file.)
+Preserved decisions, not active rules — once considered (or briefly shipped) and deliberately rejected. The audit must NOT re-propose them. This section is the durable home for these lessons.
 
 - **DUPE-04 (DELETED) — isomorphic variant-grid duplication.** Briefly added to flag variant blocks that share property *keys* but differ in *values* (e.g. a color-variant grid in `_cards.scss`), then deleted the same cycle after honest accounting: source bytes GREW, Brotli shrank the compiled "savings" to ~50–100B, the dark-mode duplication didn't collapse, and the rewrite broke the variant-grid idiom and added a debugging tax — a net loss. The lesson is encoded in the SKILL.md "chasing bytes blindly" guardrail. **Do not re-introduce a rule that flags same-keys / different-values variant grids.**
 - **Declined — structural variant-grid duplication has no compiled-byte payoff.** When N variant blocks share property keys but each value genuinely differs per variant, no merge saves compiled bytes (the values must differ). Note it as a documented gap if asked, but it is NOT a finding.

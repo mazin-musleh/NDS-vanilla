@@ -15,9 +15,9 @@ Each entry has four fields, each doing one job:
 - **Carve-outs (NOT divergence)** — concept-different cases that share surface vocabulary but follow a different principle. The audit must NOT flag these. Cite a symbol (file + identifier) when possible.
 - **Audit behavior** — the literal check `nds-js-audit` performs. A yes/no test, not a judgment call.
 
-If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, which auto-applies a revision only when the divergent file's cited reasoning clears the evolve quality bar and records it in the `## Catalog evolved` block. Raw adoption counts or "the corpus changed" never trigger a revision — those are migration targets; the canonical is the deliberate choice, and the corpus catches up. Citation hygiene (expiring a resolved motivating finding, healing a drifted symbol-anchored citation) needs no quality bar — it is reported under `Bookkeeping reconciled` so the change is never silent.
+If the canonical and the corpus disagree, the audit flags the divergent files as migration targets. The canonical changes only through Phase 7 EVOLVE, which surfaces a revision candidate when the divergent file's cited reasoning clears the evolve quality bar — applied only on the user's explicit `evolve` go and recorded in the `## Catalog evolved (applied)` block. Raw adoption counts or "the corpus changed" never trigger a revision — those are migration targets; the canonical is the deliberate choice, and the corpus catches up. Citation hygiene (expiring a resolved motivating finding, healing a drifted symbol-anchored citation) needs no quality bar — it is reported under `Bookkeeping reconciled` so the change is never silent, and it too lands only on the explicit `evolve` go (concurrent audit sessions share this file).
 
-*(The former maturity ladder and per-entry adoption tallies were removed 2026-06-10: the corpus had converged — every entry sat at full adoption — and the `settled` rung depended on a saved-report trail the skill never recommends creating. Divergence detection, not counting, is what the persona is for; the CSS audit retired its MATURITY.md ledger for the same reason. Do not re-add a counting ledger.)*
+*(No maturity ladder, no adoption tallies, no counting ledger — divergence detection, not counting, is what the persona is for. Do not add one: cross-run counting depends on a saved-report trail the skill never recommends creating.)*
 
 ---
 
@@ -252,29 +252,15 @@ Flag any `this.handlers.<key> = fn` pattern in a file where the component does N
 
 ---
 
-### 7. No split components (prohibition; mechanism removed 2026-06-04)
-
-**Canonical**
-
-NDS does not use per-component eager-shell + lazy-behavior splits. Full rationale and the chosen alternatives (cold-init in main; wholesale de-criticalization for delegate-safe components) live in `CLAUDE.md` → "JS Bundles & Shrinking the Critical Bundle" and SKILL.md Phase 2 → "Split components were removed".
-
-**Discriminator** (mechanically checkable): any `_js/nds-X__delegated.js` file, or any reference to `_installBehavior`, `_deferBehavior`, `NDS.loadSplit`, `window.__NDS_SPLIT`, or a `// SPLIT COMPONENT` banner.
-
-**Audit behavior**
-
-Flag any discriminator match as a regression — the split pattern is deliberately retired; reintroducing it contradicts CLAUDE.md. Route the fix to cold-init-in-main, or to wholesale de-criticalization if the component is delegate-safe (drop `critical: true` + move the whole file to the delegated `@bundles` list, Accordion-style — that is NOT a split and remains valid).
-
----
-
 ## Audit integration
 
 When `nds-js-audit` runs:
 
 - **Single-file `dry`:** reads PERSONA.md and runs JSD-15 against the canonicals via each entry's "Audit behavior" check (no skip banner). A finding looks like: *"L227 uses `this._ac` against entry 1's canonical `this.abortController`. Migrate, or revise the canonical (Phase 7)."*
 - **Full-tree `dry`:** same checks across every file. Corpus-wide divergence can additionally surface as a Phase 7 persona-drift refinement.
-- **Phase 7 EVOLVE:** persona drift is the third refinement source (alongside "Gaps observed" and "Dead-rule candidates"), surfaced when (a) the corpus has diverged from a canonical and a migration is now a meaningful refactor, OR (b) new evidence suggests revising the canonical itself. Gated by the evolve quality bar. Citation hygiene (expiring resolved motivating findings, healing drifted citations by their symbol) is applied without a bar and reported under `Bookkeeping reconciled`.
+- **Phase 7 EVOLVE:** persona drift is the third refinement source (alongside "Gaps observed" and "Dead-rule candidates"), surfaced when (a) the corpus has diverged from a canonical and a migration is now a meaningful refactor, OR (b) new evidence suggests revising the canonical itself. Gated by the evolve quality bar. Citation hygiene (expiring resolved motivating findings, healing drifted citations by their symbol) becomes a candidate without a bar and is reported under `Bookkeeping reconciled`.
 
-Persona edits are never silent — every edit lands in the report's `## Catalog evolved` block. The user reverts via git if they disagree.
+Persona edits are never silent and never unprompted — every candidate lands in the report's `## Catalog evolved — candidates` block, and this file is edited only on the user's explicit `evolve` go.
 
 ---
 

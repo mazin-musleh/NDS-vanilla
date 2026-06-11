@@ -10,9 +10,9 @@ Apply this skill to: `$ARGUMENTS`
 
 This skill audits NDS SCSS source — files in `_sass/` — for measurable improvements to the compiled CSS: smaller output bytes, cheaper selectors, more consistent token usage. It reports findings with proposed rewrites inline; it does NOT apply fixes automatically. Companion to `nds-js-audit` (which audits JavaScript) and `nds-doc` (which audits doc pages).
 
-> **Scope this skill narrowly.** Full-tree runs read every file under `_sass/components/` and re-parse the token table from the token-source files (Phase 2 list). Single-file runs are cheaper (~10–20k tokens) and are the default fit.
-> - `/nds-css-audit _sass/components/_<name>.scss [rule-group]` — single-file audit. Omit the rule-group to run all five groups. ~10–20k tokens. Best fit before merging a new or refactored component.
-> - `/nds-css-audit full-tree <rule-group>` — cross-file rules only. ~30–50k tokens. Best fit for cross-file consistency sweeps (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05, TOK-06).
+> **Scope this skill narrowly.** Full-tree runs read every file under `_sass/components/` and re-parse the token table from the token-source files (Phase 2 list). Single-file runs are several times cheaper and are the default fit.
+> - `/nds-css-audit _sass/components/_<name>.scss [rule-group]` — single-file audit. Omit the rule-group to run all five groups. The cheap mode; best fit before merging a new or refactored component.
+> - `/nds-css-audit full-tree <rule-group>` — cross-file rules only. Costs several single-file passes. Best fit for cross-file consistency sweeps (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05, TOK-06).
 
 ---
 
@@ -183,7 +183,7 @@ Source files are the single source of truth. Read fully, not by skimming.
 
 - **The rule catalog for THIS run's scope** — `RULES-SEL.md` (`SEL`), `RULES-DEAD.md` (`DEAD`), `RULES-DUPE.md` (`DUPE`), `RULES-PERF.md` (`PERF`), `RULES-TOK.md` (`TOK`). A run with no rule-group filter reads all five. Read only what the scope needs.
 - **No maturity ledger to read.** A rule's lifecycle — its motivating example, and whether that example was resolved into a regression guard — lives inline in its `RULES-*.md` row, already read as part of the rule catalog above. There is no separate maturity file and no cross-run trail the audit depends on. (A prior saved report in `.claude/audit-reports/` is read ONLY when the user asks for a `Diff vs. Run (N−1)` — an optional comparison export, never an input to detection or EVOLVE.)
-- **The token-source files** — the canonical token table, re-tiered 2026-06 into `_sass/tokens/` (the old `_variables.scss` monolith is now a thin barrel that only `@use`s the component tier; `_variables-dga.scss` is gone): `_sass/tokens/_primitives.scss` (spacing/width/radius scales), `_sass/tokens/_semantic.scss` (background/text/border/icon/controls/shadow), `_sass/tokens/_components.scss` (`--{component}-*` tier), `_sass/themes/_dga.scss` (the `--colors-*` palette — vendored DGA mirror, DO NOT MODIFY), and `_sass/_variables-critical.scss` (critical-path foundation tokens). **DEAD-05** and the **TOK rules** all reference them; this list is the canonical one (RULES-TOK.md restates it with per-file detail). The mode variants (`_variables-dark.scss`, `_sass/tokens/_components-dark.scss`, `_variables-a11y.scss`) are mode overrides, NOT token sources — they re-bind existing tokens for a different mode. Do not read them as token definitions; consult them only when checking DEAD-05 carve-outs (mode-conditional token availability) and TOK-02 dead-token analysis (mode-override binding counts as a use).
+- **The token-source files** — the canonical token table lives in `_sass/tokens/` (`_variables.scss` is a thin barrel that only `@use`s the component tier; there is no `_variables-dga.scss`): `_sass/tokens/_primitives.scss` (spacing/width/radius scales), `_sass/tokens/_semantic.scss` (background/text/border/icon/controls/shadow), `_sass/tokens/_components.scss` (`--{component}-*` tier), `_sass/themes/_dga.scss` (the `--colors-*` palette — vendored DGA mirror, DO NOT MODIFY), and `_sass/_variables-critical.scss` (critical-path foundation tokens). **DEAD-05** and the **TOK rules** all reference them; this list is the canonical one (RULES-TOK.md restates it with per-file detail). The mode variants (`_variables-dark.scss`, `_sass/tokens/_components-dark.scss`, `_variables-a11y.scss`) are mode overrides, NOT token sources — they re-bind existing tokens for a different mode. Do not read them as token definitions; consult them only when checking DEAD-05 carve-outs (mode-conditional token availability) and TOK-02 dead-token analysis (mode-override binding counts as a use).
 
   **Pre-parse the token map** (symmetric to the mixin map in `_mixins.scss` below). Build ONE keyed structure capturing, per token: (a) its resolved concrete value (chasing `var()` aliases down to a literal), (b) which mode-override files re-bind it, (c) whether it's *unconditionally* defined (top-level `:root`, not under `@media` / `@supports` / a mode selector). TOK-01 (value→token lookup), TOK-02 (dead-token), TOK-03 (alias graph), and DEAD-05 (unconditionally-defined check) then READ this one map instead of each re-parsing the source files — their per-rule detection steps consume it rather than re-deriving it. The list above is exemplars for orientation; the map is rebuilt from the current token files each run.
 - **`_sass/_mixins.scss`** — every mixin in the project. **Required for every run** because mixin resolution affects what every rule detects.
@@ -303,7 +303,7 @@ The expanded view is what every rule's detection operates on. The source view is
 **Brief template** (self-contained — the agent has no audit context):
 1. **Target** — the resolved `_sass/components/_<name>.scss` path. "Read it top-to-bottom before judging; `&`-chain resolution and nested rules mean line-local matching mis-attributes findings."
 2. **Inputs** — the Phase 2 mixin map and the token map built from the token-source files (Phase 2 list), so byte-deltas and `@extend`/`@include` decisions resolve correctly.
-3. **Rules to apply** — the in-scope subset of the deep-read scope above, each with its detection signature + rewrite shape (copy from the relevant `RULES-*.md` rows). Include the "record a GAP, not a finding, when in doubt" discipline.
+3. **Rules to apply** — name the in-scope rule IDs from the deep-read scope above and direct the agent to **Read the relevant `RULES-*.md` file(s) itself** (`.claude/skills/nds-css-audit/RULES-DUPE.md` / `RULES-PERF.md`, as scoped), applying ONLY the named IDs. Do NOT paste the rows into the brief — pasting re-emits multi-KB rows as expensive output and loses carve-out fidelity if compressed; the file is the full-fidelity source. Paste verbatim ONLY the "record a GAP, not a finding, when in doubt" discipline and the annotation-exemption convention — those live in this file, which the agent does not read.
 4. **Output contract** — return ONLY a findings table (`file:line`, rule ID, ≤120-char snippet, proposed rewrite, byte-delta estimate) plus a short "Gaps observed" list. No prose; two-to-five findings is typical, ten+ signals padding.
 
 **Merge.** Fold the agent's findings into the Phase 4 report, deduped against the inline pass (inline keeps the greppable single-rule hits; the agent owns the whole-file / cross-component rows). Tag agent-sourced rows with a trailing `(deep-read agent)` marker on the location cell so the merge is auditable. If the agent returns nothing, say so — a clean deep-read pass is a real result.
@@ -562,110 +562,14 @@ Run each group's Phase 3 analysis against the one file, then emit ONE Phase 4 re
 
 ---
 
-## Phase 5: APPLY (on user request only)
+## Phase 5: APPLY (on user request only — read APPLY.md first)
 
-When the user replies with a number from the Next Step block or types `apply <rule-id>` / `apply <file>:<line>`:
-
-1. Re-read the target file (it may have changed since Phase 3).
-2. Locate the finding by file:line.
-3. Confirm the snippet still matches; if not, report drift and stop.
-4. Apply the rewrite with the `Edit` tool — never bulk `Write`.
-5. After each applied edit, report back: `Applied [<rule-id>] at <file>:<line>. Saved ~<N>B (estimated).`
-6. If the user replied with `1` (apply top N), proceed file-by-file through the list, reporting after each. Stop on the first edit that fails or where the snippet drifted.
-
-**Never auto-apply.** Always wait for an explicit number or `apply` command.
-
-### Verification after fixes (REQUIRED when Phase 5 applies edits)
-
-Whenever Phase 5 actually applies one or more edits, the post-batch output MUST close with a **Verification** footer telling the user what to check to confirm no regressions. The footer has three tiers — the audit emits all three when it applies edits:
-
-**Tier 1 — Mandatory checks (do these every time):**
-
-The flow BRANCHES on whether the Jekyll dev server is already running. Detect first:
-
-```bash
-# Detection (port 4002 is the project default per CLAUDE.md):
-curl -sI http://localhost:4002 >/dev/null 2>&1 && echo "serve-active" || echo "serve-not-running"
-```
-
-**A. Build succeeds.**
-
-- **If serve-active**: the watcher is already compiling. Don't spawn a second build. Just stash → wait → unstash → wait, and check that the watcher didn't error. Sass errors surface as a build-failure message in the `jekyll serve` terminal AND `_site/assets/css/nds-main.min.css` will retain its prior contents (the watcher won't overwrite with a broken build). If the file's mtime doesn't advance within ~3s after a file change, treat as a build failure: revert the last applied edit, ask the user to read the serve terminal for the Sass error, and stop the batch.
-- **If serve-not-running**: explicit build via `bundle exec jekyll build`. Exit code 0 = no Sass syntax errors. If the build fails:
-  - The audit reverts the last applied edit, reports the Sass error verbatim, and stops the batch.
-  - The user fixes the error or asks the audit to retry; do NOT chain further edits onto a failing file.
-
-**B. Compiled bytes match the estimate.**
-
-- **If serve-active — leverage the running watcher** (fast, ~5–10s end-to-end; no race with `rm -rf _site`):
-  ```bash
-  # Fixes are currently applied (Phase 5 just edited the source files).
-  AFTER=$(wc -c < _site/assets/css/nds-main.min.css)             # record AFTER
-  git stash push -m "css-audit-byte-verify-temp" <fix-files>      # revert fixes; watcher rebuilds
-  sleep 3                                                          # wait for watcher rebuild
-  BEFORE=$(wc -c < _site/assets/css/nds-main.min.css)            # record BEFORE
-  git stash pop                                                    # restore fixes; watcher rebuilds again
-  sleep 3
-  echo "Actual delta: $((BEFORE - AFTER)) B (estimate was <N> B)"
-  ```
-  If `BEFORE - AFTER` doesn't budge within 3s of either stash, the watcher may have errored — read the serve terminal for the Sass message.
-
-- **If serve-not-running — explicit clean rebuild** (slow, ~60–120s end-to-end; no concurrency risk):
-  ```bash
-  # Fixes are currently applied.
-  AFTER=$(wc -c < _site/assets/css/nds-main.min.css)              # record AFTER if previous build still cached
-  git stash push -m "css-audit-byte-verify-temp" <fix-files>       # revert fixes
-  rm -rf _site                                                      # defensive: force clean rebuild
-  bundle exec jekyll build                                          # rebuild from reverted source
-  BEFORE=$(wc -c < _site/assets/css/nds-main.min.css)             # record BEFORE
-  git stash pop                                                     # restore fixes
-  rm -rf _site && bundle exec jekyll build                          # rebuild again
-  AFTER=$(wc -c < _site/assets/css/nds-main.min.css)              # confirm AFTER
-  echo "Actual delta: $((BEFORE - AFTER)) B (estimate was <N> B)"
-  ```
-
-Delta should match the report's "Compiled CSS bytes saved (est)" within ~15%. If actual delta is >30% off the estimate, the byte-delta framework is mis-calibrated for one or more of the applied rules — flag this in a GAP observation and don't apply further batches until investigated.
-
-**On stash-pop safety in both flows:** if the audit gets interrupted between `git stash push` and `git stash pop`, the user's fixes are recoverable via `git stash list` → `git stash pop stash@{<index named "css-audit-byte-verify-temp">}`. Always include the `-m` tag so the entry is identifiable.
-
-**C. Dead-token consumer re-check (TOK-02 deletions only).**
-
-When the batch applied a TOK-02 dead-token deletion, the skill auto-runs a consumer re-grep as a mandatory gate. This is a deterministic, read-only `Grep` — NOT a live browser drive — so auto-running it is consistent with the static-gate contract (it's the static analog of the JS audit's automatic post-fix review gate). For each deleted token, `Grep` `var\(--<name>` across `_sass/` (Tier 2 + Tier 3), `_includes/`, `_layouts/`, `assets/css/`, the mode-override files (`_variables-dark.scss`, `tokens/_components-dark.scss`, `_variables-a11y.scss`), AND the token NAME as a string across `_js/` (JS `getPropertyValue` readers) — the same consumer set the Phase 3 cross-component scan uses before recommending (the file can drift between recommend and apply). If ANY consumer surfaces: `Edit` the token back, report the surviving consumer `file:line`, and STOP the batch — the same revert-and-stop shape as a Tier 1-A build failure.
-
-**D. Automatic cascade-flip review (cascade-sensitive batches).**
-
-When the applied batch contains a cascade-sensitive rule — SEL-01 / SEL-03, DUPE-01 / DUPE-02 / DUPE-03, or PERF-03 / PERF-04 (the rules whose Tier 2 row already says "verify the cascade winner") — AUTO-run ONE read-only review agent (`Agent` tool, `general-purpose` subagent) after the Tier 1 build/byte gate and before emitting the Tier 2 spot-checks. This is the CSS analog of the JS audit's mandatory post-fix static review: it is auto-run, NOT gated behind a reply (the live visual / `verify in browser` drive in Tier 3 stays the user's offered choice; static analysis is the cheap automatic gate). Brief: the edited selectors with their pre/post resolved-`&`-chains plus the three-file token table; ask only "does any merged, dropped, or extracted selector now win or lose against a specificity-equivalent rule sitting between the merged blocks, or change cascade order?" — the failure the static byte-estimator can't see (the Methodology section's "cascade conflicts whose specificity comes from compile-time expansion" case). Output = a ranked list of cascade-flip SUSPECTS that PRIORITIZES which Tier 2 visual spot-checks below actually matter; it does NOT replace the visual checklist and NEVER drives a browser. If it flags a suspect flip, surface it at the top of the footer; do not silently pass. Skip the agent for a single `apply <rule-id>` of a non-cascade rule (e.g. a lone DEAD-05 fallback removal) — same skip-when-low-risk discipline as the Phase 3 deep-read agent.
-
-**Tier 2 — Per-finding spot-checks (one line per applied finding):**
-
-For every edit the batch applied, the verification footer includes a one-line "Verification:" note telling the user what to check. The line is rule-specific:
-
-| Applied rule | Verification line the footer emits |
-|---|---|
-| SEL-01 / SEL-02 | Open the component demo page; trigger every state pseudo-class merged into the `:is()` / `:not()` list (hover, focus, etc.) — appearance must be identical. |
-| SEL-03 | Specificity dropped from `1,1,0` to `0,1,0`. Grep `.nds-<class>` across the codebase; confirm no other rule was relying on the type-qualified form to win the cascade. **Cross-component check**: list every file that references the class; visual-check each one's affected page after the rebuild. |
-| DEAD-01 / DEAD-02 / DEAD-03 / DEAD-05 | Compiled output unchanged at the affected selector. Open the component demo; appearance must be identical. (DEAD-03 trio: also test parent-cascade — render the component inside a wrapper that sets the same `--var` to confirm the cycle-detection fallback still fires.) |
-| DEAD-04 | Test in BOTH directions. Toggle `<html dir="ltr">` and `<html dir="rtl">` (or apply / remove the `.ltr` class) — appearance must be correct in each. |
-| DUPE-01 / DUPE-03 (in-file merge) | Open the component demo page. The merged rule must come at a position where its cascade outcome matches the unmerged source — if the bodies were identical, this is automatic; if any specificity-equivalent rule sits between them, the merge may have changed the winner. Visual diff vs the previous build. |
-| DUPE-02 (cross-file `@extend %placeholder`) | Run a grep for `%<placeholder-name>` across all files that previously held the duplicated body; every call site must `@extend %<name>`. Open one demo page per affected component. |
-| PERF-04 (variant-grid restructure) | Full component QA. Open every variant the component supports (e.g., all color × style × dark-mode combinations for cards). Each variant must render identically. If the fix annotated rather than restructured: no visual check needed — confirm the `// PERF-04 complexity-required:` comment landed and reads correctly. |
-| TOK-01 / TOK-03 / TOK-06 (token swap / added alias) | Confirm the token's compiled value matches the literal it replaced. Inspect the element in DevTools — the resolved property value must be byte-identical to the pre-swap value. |
-| TOK-02 (dead-token deletion) | Covered automatically by **Tier 1-C** (the consumer re-grep + auto-revert runs as a mandatory gate). This row is the manual fallback when the dev server / `Grep` is unavailable: re-run `grep var\(--<name>` across `_sass/`, `_includes/`, `_layouts/`, `assets/css/`, the mode-override files (`_variables-dark.scss` etc.), and the token name across `_js/`; if any hit appears, restore the token. A token re-bound only in a mode-override file is itself now dead — remove those bindings in the same batch. |
-| Any rule with Cross-component reach > 0 (per the Phase 3 cross-component scan) | Each consumer file named in the finding's "Cross-component reach:" line must be visually spot-checked on its demo page after the rebuild. If the finding affects a base component (`_buttons.scss`, `_icons.scss`, `_typography.scss`, foundation files), the spot-check covers the top 3 dependent components by usage frequency, not just the audited file. |
-
-**Tier 3 — Optional ground-truth checks (recommended when estimated savings >100B compiled, or when applying ≥5 findings in one batch):**
-
-- **Computed-style + visual diff (`verify in browser` — user-elected).** Reply `verify in browser` and the skill drives `puppeteer-core` (env block + `executablePath` fallback + reuse of the running `:4002` server per the sibling skill's `../nds-js-audit/PUPPETEER.md` — cross-reference that boilerplate, don't duplicate it) to `goto` the affected component demo and, against the git-stashed source (BEFORE) vs the applied fix (AFTER): (1) snapshot `getComputedStyle` for a representative element per affected selector and diff the resolved-style maps, reporting any property whose computed value changed; (2) `page.screenshot` each affected variant (per-variant clips for PERF-04 / multi-variant findings, sourced from the Tier 2 spot-check row) and report a pixel-changed/unchanged verdict per variant. The per-selector element targets come from each finding's affected-selector list (there is no per-rule scenario table as in the JS skill). Reuse the Tier 1 stash → build → unstash mechanic (SCSS has no per-fix rebundle; the Jekyll watcher recompiles). This stays **offered, never auto-run** — a computed-style/screenshot drive is the live equivalent of the JS skill's browser drive (match verification to risk); Tier 1 `wc -c` byte-delta remains the automatic gate. Treat the screenshot verdict as a FLAG for human review, not a hard gate — demo-page anti-aliasing / hinting noise makes pixel-diff softer than a DOM assertion. When `verify in browser` isn't elected (or the dev server / Chrome is unavailable), fall back to the manual version: DevTools → Computed pane snapshot before/after, and a manual screenshot pixel-diff.
-- **Compiled CSS diff.** `diff` the `.min.css` before and after. Inspect the affected rules manually to confirm only the intended bytes changed.
-
-The footer is emitted ONLY when Phase 5 actually applied edits. Dry-run reports (Phase 4 alone, no apply commands) do not emit it — there's nothing to verify yet.
-
-The Phase 4 Next Step block should mention this so the user knows what comes after: "Applying any number above will produce a Verification footer at the end of the batch with build, byte-delta, and per-finding spot-checks."
+Only entered when the user replies with a Next Step number or an `apply <rule-id>` / `apply <file>:<line>` filter. **Before applying anything, read `APPLY.md` (sibling file) and follow it** — it owns the apply loop (re-read target, snippet-drift check, `Edit`-only changes) and the REQUIRED post-batch Verification footer: the serve-active vs explicit-build branch, byte-delta ground-truth, the TOK-02 consumer re-grep gate, the automatic cascade-flip review agent, per-finding spot-check lines, and the optional user-elected `verify in browser` tier. Never auto-apply — the explicit reply is the gate.
 
 ---
 ## Phase 6: EVOLVE (session-scoped — surface candidates at run end)
 
-After Phase 4 REPORT (and Phase 5 APPLY, if it ran), Phase 6 reconciles the catalog against THIS run's findings, gaps, and SKIPs and **surfaces** what it learns in the report. It is **session-scoped** — it reads no persisted ledger and writes nothing to the repo. (This matches the JS audit's *rule-refinement* track, which is likewise same-session — see "What replaced the committed ledger" below for where CSS deliberately goes leaner than JS.)
+After Phase 4 REPORT (and Phase 5 APPLY, if it ran), Phase 6 reconciles the catalog against THIS run's findings, gaps, and SKIPs and **surfaces** what it learns in the report. It is **session-scoped** — it reads no persisted ledger and writes nothing to the repo. (This matches the JS audit's *rule-refinement* track, which is likewise same-session — see "Where lifecycle state lives" below for where CSS deliberately goes leaner than JS.)
 
 **Where rule lifecycle lives.** A rule's lifecycle is an **inline annotation in its `RULES-*.md` row**, not a computed cross-run ladder:
 - A rule with a live motivating example is proven and active.
@@ -674,7 +578,7 @@ After Phase 4 REPORT (and Phase 5 APPLY, if it ran), Phase 6 reconciles the cata
 
 That inline, committed annotation is the durable lifecycle signal — no separate maturity file, no trail to read.
 
-**Two kinds of output, different gates** (mirrors the rule-judgment half of the JS audit's Phase 7 split — JS additionally has an auto-applied persona-bookkeeping track that the CSS skill, with no ledger, does not):
+**Two kinds of output, different gates** (mirrors the JS audit's Phase 7, likewise suggest-only — concurrent audit sessions share the skill files, so neither skill writes them mid-run; JS additionally surfaces persona-bookkeeping candidates, which the CSS skill, with no persona file, does not):
 - **Observations** (what this run saw — gaps, SKIPs, a resolved motivating example): reported only. Nothing written to the repo.
 - **Catalog change** (judgments — add / delete / narrow a rule, or annotate a resolved example): NEVER auto-applied. Surfaced as candidates in the report's `## Catalog evolved` section; the user makes the edit to `RULES-*.md` / `SKILL.md`.
 
@@ -690,13 +594,17 @@ From THIS run's gap and SKIP logs (Phase 3), surface — never auto-apply:
 
 Append a `## Catalog evolved` section to the report when any candidate exists — each line names the candidate + the action the user takes (e.g. "Add DEAD-06 per the draft above" / "Annotate DEAD-03 row: motivating example resolved → regression guard"). The candidates are SUGGESTIONS — Phase 6 never auto-edits the catalog. Omit the section when there are none.
 
-### What replaced the committed ledger
+### Where lifecycle state lives
 
-The old `MATURITY.md` — a committed file Phase 6 rewrote every run — was removed: it churned git history on pure bookkeeping and taxed every run's read. Its content moved to where each part belongs, by durability:
-- **Lessons & lifecycle** (the deleted DUPE-04 anti-pattern, declined variant-grid patterns, a rule's resolved-→-regression-guard state) → inline in the committed `RULES-*.md` — durable judgments belong in the rule catalog.
-- **Volatile cross-run bookkeeping** (match counts, a 4-rung maturity ladder, per-run reconciliation log) → dropped. It depended on a saved-report trail the skill discourages creating (`save` is never recommended), so it was mostly dormant. (The JS audit's rule refinement is likewise same-session; its `PERSONA.md` maturity ladder + adoption tallies were retired 2026-06-10 for the same reason — both skills now keep only committed, judgment-level state plus citation hygiene.) Saved reports remain a **purely optional export** (a `Diff vs. Run (N−1)` for users who choose to save), never a mechanism input to CSS detection or EVOLVE.
+The catalog's only cross-session memory is the committed `RULES-*.md` itself — rules, carve-outs, regression-guard annotations, and each group's "Deleted rules & declined patterns" lessons. Durable judgments live there, inline. Volatile cross-run bookkeeping (match counts, maturity ladders, reconciliation logs) is deliberately NOT kept — anything worth keeping is promoted to a committed rule row instead; do not introduce a committed bookkeeping ledger or any file Phase 6 rewrites per run. Saved reports remain a **purely optional export** (a `Diff vs. Run (N−1)` for users who choose to save), never a mechanism input to detection or EVOLVE.
 
-The catalog's cross-session memory is the committed `RULES-*.md` itself — its rules, carve-outs, regression-guard annotations, and lesson sections. That's durable and shared across machines without any churning file.
+### Writing guardrails (for the edits the user applies)
+
+Candidates are drafted — and, once the user applies them, written — under the same hygiene rules the JS audit's `EVOLVE.md` uses:
+
+- **Present-tense, no backstory.** New rules, carve-outs, and lessons read as current rules — no dates, no "was/previously/removed on", no narration of what the catalog used to say. A deleted rule gets at most one line in its group's "Deleted rules & declined patterns" section stating the anti-pattern and why it loses; git history holds the rest.
+- **Carve-outs retire.** A carve-out whose anchoring symbol is gone from the corpus (citation-drift check above) → surface a carve-out DELETION candidate, not merely an expired-citation note.
+- **Condense before appending.** A candidate that would push a rule row past ~25 source lines or add a fourth carve-out → surface a CONDENSE candidate for that row alongside it, rather than appending another exception to an already-encyclopedic row.
 
 ---
 

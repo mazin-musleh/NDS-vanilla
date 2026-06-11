@@ -1038,7 +1038,7 @@
         // sub-pixel deliveries). CSS flex sizing owns primary's width budget;
         // this handler only triggers downstream JS work (mode-flip check,
         // toggler visibility, overflow recheck) via scheduleUpdate.
-        // Pre-JSA-18 this also observed DOM.nav (for updateNavMaxWidth's
+        // Pre-JSA-15 this also observed DOM.nav (for updateNavMaxWidth's
         // navW input). With that gone, NDS.onResize fully covers window-level
         // size changes — observing just primary is enough.
         const navResizeHandler = (entry) => {

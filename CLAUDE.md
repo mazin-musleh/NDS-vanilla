@@ -73,7 +73,7 @@ All page content is built from sections. Read `layout/section.md` before creatin
 
 1. Create `_sass/components/_[name].scss` (with `@use '../mixins' as *;`)
 2. Add `@use 'components/[name]';` to `assets/css/nds-main.min.scss`
-3. Add JS in `_js/nds-[name].js` if needed, then run `ruby _plugins/js_processor.rb`
+3. Add JS in `_js/nds-[name].js` if needed — follow the canonicals in `.claude/skills/nds-js-audit/PERSONA.md` (controller naming, `destroy()` teardown, lifecycle pair by concept, console prefix, init sentinel, `{ signal }` listeners) — then run `ruby _plugins/js_processor.rb`
 4. Test the component in `playground.md` until behavior is correct
 
 **Phase 2: Document & register** — only after Phase 1 verifies behavior.
