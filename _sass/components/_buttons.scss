@@ -33,7 +33,7 @@
   // BUTTON STATES
   // ==============================================
 
-  &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
+  &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"], [data-state~="loading"]) {
     background-color: var(--_btn-bg-selected);
     border-color: var(--_btn-border-selected);
   }

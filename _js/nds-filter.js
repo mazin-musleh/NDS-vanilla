@@ -549,21 +549,7 @@
             if (searchParam) {
                 const sanitized = this.sanitizeInput(searchParam);
                 this.criteria.search = sanitized.trim().toLowerCase();
-
-                if (this.searchInputs.direct) {
-                    this.searchInputs.direct.input.value = sanitized;
-                    if (this.searchInputs.direct.clearBtn) {
-                        this.searchInputs.direct.clearBtn.hidden = false;
-                    }
-                }
-
-                if (this.searchInputs.dropmenu) {
-                    this.searchInputs.dropmenu.input.value = sanitized;
-                    if (this.searchInputs.dropmenu.clearBtn) {
-                        this.searchInputs.dropmenu.clearBtn.hidden = false;
-                    }
-                }
-
+                this._mirrorSearchInputs(sanitized);
                 hasParams = true;
             }
 
@@ -643,17 +629,14 @@
                 managedKeys.add(key);
             }
 
-            // Clear only managed params
             for (const key of managedKeys) {
                 params.delete(key);
             }
 
-            // Add search param
             if (this.criteria.search) {
                 params.set(searchParamName, this.criteria.search);
             }
 
-            // Add dynamic filter params
             for (const [filterName, values] of Object.entries(this.criteria.filters)) {
                 if (values.length > 0) {
                     params.set(filterName, values.join(','));
@@ -1009,13 +992,19 @@
             // (e.g. <span data-filter> markers on cards).
             const filterElements = this.queryAll('[data-filter]');
             const params = new URLSearchParams(window.location.search);
+            const deferringMenus = this._classifyDeferringMenus(filterElements, params);
+            filterElements.forEach(element => this._dispatchFilterElement(element, params, deferringMenus));
+            this._autoDetectDirectSearch();
+            this._wireDeferredFilterDropmenus();
+        }
 
-            // Dropmenus that will defer an auto-populated filter (hidden + not
-            // URL-active). Their first open already pays a prepare/delay pass, so a
-            // static-values filter in the same menu can defer its DOM build onto that
-            // same hook for free. A static filter in a menu that wouldn't otherwise
-            // defer stays eager — deferring it would add a needless first-open delay
-            // for no real init saving (static builds skip the collectFilterValues scan).
+        // Dropmenus that will defer an auto-populated filter (hidden + not
+        // URL-active). Their first open already pays a prepare/delay pass, so a
+        // static-values filter in the same menu can defer its DOM build onto that
+        // same hook for free. A static filter in a menu that wouldn't otherwise
+        // defer stays eager — deferring it would add a needless first-open delay
+        // for no real init saving (static builds skip the collectFilterValues scan).
+        _classifyDeferringMenus(filterElements, params) {
             const deferringMenus = new Set();
             filterElements.forEach(element => {
                 const type = element.getAttribute('data-filter-type');
@@ -1024,91 +1013,97 @@
                 const menu = element.closest('.nds-dropmenu-menu');
                 if (menu && !params.has(name)) deferringMenus.add(menu);
             });
+            return deferringMenus;
+        }
 
-            filterElements.forEach(element => {
-                const filterName = element.getAttribute('data-filter');
-                const filterType = element.getAttribute('data-filter-type');
+        _dispatchFilterElement(element, params, deferringMenus) {
+            const filterName = element.getAttribute('data-filter');
+            const filterType = element.getAttribute('data-filter-type');
 
-                if (filterName === 'search') {
-                    this.setupSearchFilter(element);
-                } else if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
-                    // Check for explicit values via data-filter-values (array or object)
-                    const staticValues = element.getAttribute('data-filter-values');
-                    let values = null;
-                    if (staticValues) {
-                        const raw = JSON.parse(staticValues);
-                        if (Array.isArray(raw)) {
-                            values = raw;
-                        } else {
-                            // Object form: keys = values, values = labels
-                            values = Object.keys(raw);
-                            this.filterLabels[filterName] = raw;
-                        }
-                    }
-
-                    // Hidden at rest (inside a dropmenu) and not URL-active: defer the
-                    // option build to first engagement. Auto-populated filters defer the
-                    // collectFilterValues scan; static-values filters defer the DOM build
-                    // but only when their menu already defers an auto filter (see
-                    // deferringMenus above). The parsed `values` ride along so the prepare
-                    // hook builds without re-reading the attribute. URL-active filters fall
-                    // through to the eager build so applyUrlParams can check inputs on load.
-                    const menu = element.closest('.nds-dropmenu-menu');
-                    const canDefer = !!menu && !params.has(filterName)
-                        && (!values || deferringMenus.has(menu));
-                    if (canDefer) {
-                        this._deferredFilters.push({ element, filterName, filterType, values });
+            if (filterName === 'search') {
+                this.setupSearchFilter(element);
+                return;
+            }
+            if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
+                // Check for explicit values via data-filter-values (array or object)
+                const staticValues = element.getAttribute('data-filter-values');
+                let values = null;
+                if (staticValues) {
+                    const raw = JSON.parse(staticValues);
+                    if (Array.isArray(raw)) {
+                        values = raw;
                     } else {
-                        this.setupDynamicFilter(element, filterName, filterType, values);
+                        // Object form: keys = values, values = labels
+                        values = Object.keys(raw);
+                        this.filterLabels[filterName] = raw;
                     }
+                }
+
+                // Hidden at rest (inside a dropmenu) and not URL-active: defer the
+                // option build to first engagement. Auto-populated filters defer the
+                // collectFilterValues scan; static-values filters defer the DOM build
+                // but only when their menu already defers an auto filter (see
+                // _classifyDeferringMenus above). The parsed `values` ride along so
+                // the prepare hook builds without re-reading the attribute. URL-active
+                // filters fall through to the eager build so applyUrlParams can check
+                // inputs on load.
+                const menu = element.closest('.nds-dropmenu-menu');
+                const canDefer = !!menu && !params.has(filterName)
+                    && (!values || deferringMenus.has(menu));
+                if (canDefer) {
+                    this._deferredFilters.push({ element, filterName, filterType, values });
                 } else {
-                    this.setupManualFilter(element, filterName);
+                    this.setupDynamicFilter(element, filterName, filterType, values);
                 }
+                return;
+            }
+            this.setupManualFilter(element, filterName);
+        }
+
+        // Auto-detect direct search input (anywhere linked to this filter).
+        // Merges what was previously two branches (inside filter, then external search-box).
+        _autoDetectDirectSearch() {
+            if (this.searchInputs.direct) return;
+            const candidates = this.queryAll('input.nds-search-input, input[name="search"], input[type="search"]');
+
+            for (const input of candidates) {
+                if (input.hasAttribute('data-filter-ignore') || input.closest('[data-filter-ignore]')) continue;
+                if (input.closest('.nds-dropmenu-menu')) continue;
+
+                const wrapper = input.closest('.nds-form-control') || input.parentElement;
+                const clearBtn = wrapper?.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
+
+                this.searchInputs.direct = {
+                    input: input,
+                    clearBtn: clearBtn,
+                    element: wrapper || input
+                };
+
+                this.setupDirectSearch(input, clearBtn);
+                return;
+            }
+        }
+
+        // Build deferred auto-populated filters via the dropmenu's delayed-open
+        // mode: mark the dropmenu data-delay="500" so the user's first open
+        // shows a loading state and waits before opening, and build the options
+        // on the nds:dropmenu:prepare hook it fires just before opening. The menu
+        // therefore opens already populated and correctly measured — the build
+        // never races the open animation, and the dropmenu clears data-delay
+        // after the first open so later opens are immediate. Released via the
+        // shared abort signal in destroy().
+        _wireDeferredFilterDropmenus() {
+            if (!this._deferredFilters.length) return;
+            const { signal } = this.abortController;
+            const dropmenus = new Set();
+            this._deferredFilters.forEach(({ element }) => {
+                const dm = element.closest('.nds-dropmenu');
+                if (dm) dropmenus.add(dm);
             });
-
-            // Auto-detect direct search input (anywhere linked to this filter).
-            // Merges what was previously two branches (inside filter, then external search-box).
-            if (!this.searchInputs.direct) {
-                const candidates = this.queryAll('input.nds-search-input, input[name="search"], input[type="search"]');
-
-                for (const input of candidates) {
-                    if (input.hasAttribute('data-filter-ignore') || input.closest('[data-filter-ignore]')) continue;
-                    if (input.closest('.nds-dropmenu-menu')) continue;
-
-                    const wrapper = input.closest('.nds-form-control') || input.parentElement;
-                    const clearBtn = wrapper?.querySelector('.nds-clear, [aria-label*="مسح"], [aria-label*="clear"]');
-
-                    this.searchInputs.direct = {
-                        input: input,
-                        clearBtn: clearBtn,
-                        element: wrapper || input
-                    };
-
-                    this.setupDirectSearch(input, clearBtn);
-                    break;
-                }
-            }
-
-            // Build deferred auto-populated filters via the dropmenu's delayed-open
-            // mode: mark the dropmenu data-delay="500" so the user's first open
-            // shows a loading state and waits before opening, and build the options
-            // on the nds:dropmenu:prepare hook it fires just before opening. The menu
-            // therefore opens already populated and correctly measured — the build
-            // never races the open animation, and the dropmenu clears data-delay
-            // after the first open so later opens are immediate. Released via the
-            // shared abort signal in destroy().
-            if (this._deferredFilters.length) {
-                const { signal } = this.abortController;
-                const dropmenus = new Set();
-                this._deferredFilters.forEach(({ element }) => {
-                    const dm = element.closest('.nds-dropmenu');
-                    if (dm) dropmenus.add(dm);
-                });
-                dropmenus.forEach(dm => {
-                    dm.setAttribute('data-delay', '500');
-                    dm.addEventListener('nds:dropmenu:prepare', () => this.buildDeferredFilters(), { signal });
-                });
-            }
+            dropmenus.forEach(dm => {
+                dm.setAttribute('data-delay', '500');
+                dm.addEventListener('nds:dropmenu:prepare', () => this.buildDeferredFilters(), { signal });
+            });
         }
 
         // Build options for filters whose option build was deferred at init (see
