@@ -262,7 +262,11 @@
 // shimmer rows (crit exempts tbody from its visibility hold and collapses
 // rows past the first page). Pulses via the shared `processing`
 // keyframes; the a11y reduce-motion kill leaves the bars static.
-.nds-table[data-state~="loading"] tbody tr td,
+// Skeleton is also the DEFAULT pre-init state: any table bars its cells
+// until its init stamp lands. The filter/paged tbody arms stay — those
+// must hold until their own stamps land, even after table init.
+.nds-table:is([data-state~="loading"], .nds-loading) tbody tr td,
+.nds-table:not([data-nds-responsive-initialized]) tbody tr td,
 :is(tbody.nds-loading,
     tbody[data-filter-items]:not([data-nds-filter-initialized]),
     tbody.nds-paged-content:not([data-paged-initialized])) tr td {

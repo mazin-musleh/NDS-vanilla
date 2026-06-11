@@ -255,6 +255,27 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
     visibility: hidden;
 }
 
+/* ── Critical-component safeguard ──
+   Main-bundle (critical) components whose init writes first-paint state
+   and which have no skeleton of their own yet. Normally inert: the
+   critical pass stamps data-nds-loaded before main CSS applies, so these
+   never paint held. They bite only when main JS lags behind main CSS —
+   then each region holds (space-preserving) instead of flashing
+   un-inited state, while skeleton-equipped components shimmer. Stamp
+   scoping is CORRECT here (visibility holds released by init-done) —
+   unlike layout reservations, which must outlive the stamp. */
+html:not([data-nds-loaded]) :where(.nds-form-control,
+    .nds-stepper,
+    .nds-sidemenu,
+    .nds-sideinfo,
+    .nds-drawer,
+    .nds-toc,
+    .nds-breadcrumb-nav,
+    .nds-multiselect,
+    .nds-empty) {
+    visibility: hidden;
+}
+
 /* ── Icon gate ──
    nds-icons.min.css is preloaded as a deferred <link> after main CSS
    (head.html, fetchpriority="low"); until it lands the --nds-icon-* tokens

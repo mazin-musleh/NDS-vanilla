@@ -183,7 +183,12 @@
 // look serves the pre-init hold: a not-yet-initialized filter target shows
 // shimmer (crit exempts accordions from its visibility hold and shapes the
 // item count; bar text is transparent so URL-filtered loads can't flash).
-:is(.nds-accordion.nds-loading,
+// Skeleton is also the DEFAULT pre-init state: any accordion shows bars
+// until its own init stamp lands. The filter arm stays separate — a
+// filter-target accordion must keep its bars until the filter has applied
+// URL params, even after accordion init.
+:is(.nds-accordion:is(.nds-loading, [data-state='loading']),
+    .nds-accordion:not([data-nds-accordion-initialized]),
     .nds-accordion[data-filter-items]:not([data-nds-filter-initialized])) .nds-accordion-item {
 
     .nds-accordion-title {

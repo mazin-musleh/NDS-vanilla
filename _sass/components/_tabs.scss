@@ -358,10 +358,37 @@ section>.nds-max-width {
 // ==============================================
 // PROCESSING SKELETON
 // ==============================================
-// A loading tab strip (or tabs root) renders its tab buttons as bars —
-// spinner + dim suppressed in _loading.scss.
-:is(.nds-tabs, .nds-tab-list).nds-loading .nds-tab {
-    border-color: transparent;
+// A loading tab strip (or tabs root) bars only each tab's label
+// (text-sized, like the table cell bars) — the button chrome stays,
+// icons and the active indicator hide. Spinner + dim suppressed in
+// _loading.scss.
+// Skeleton is also the DEFAULT pre-init state: any tabs root bars its
+// labels until its init stamp lands.
+:is(:is(.nds-tabs, .nds-tab-list):is(.nds-loading, [data-state='loading']),
+    .nds-tabs:not([data-nds-tabs-initialized])) .nds-tab {
+
+    .nds-label {
+        animation: processing 1.5s ease-in-out infinite;
+        @include skeleton-bar;
+    }
+
+    :is(.nds-icon, i) {
+        visibility: hidden;
+    }
+
+    &::before {
+        background-color: transparent;
+    }
+}
+
+// Panel content (loading on the tabs ROOT only — a loading .nds-tab-list
+// strip doesn't contain the panels): each direct child of the visible
+// panel becomes a bar; nested content hides so colored backgrounds don't
+// paint through. Components with their own skeleton (accordion, grids,
+// tables, nested tabs) are excluded — mark them loading for their richer
+// per-item placeholder.
+:is(.nds-tabs:is(.nds-loading, [data-state='loading']),
+    .nds-tabs:not([data-nds-tabs-initialized])) .nds-tab-panel>*:not(.nds-accordion, .nds-grid, .nds-paged-content, .nds-table, .nds-tabs) {
     animation: processing 1.5s ease-in-out infinite;
     @include skeleton-bar;
 

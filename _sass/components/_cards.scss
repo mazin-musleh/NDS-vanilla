@@ -602,9 +602,16 @@
 // and paged content show shimmer cards (crit exempts card grids from its
 // visibility hold and shapes the item count; text is transparent and
 // content hidden, so URL-filtered loads can't flash).
+// Also applies to a directly-marked card (.nds-loading / data-state on
+// the card root) — the "normal" single-component loading pattern — and,
+// since cards have no JS init sentinel, to every card before the page
+// stamp (html:not([data-nds-loaded])): the no-JS-component default for
+// the visible pre-stamp window (regions revealed at main-CSS load).
 :is(:is(.nds-grid, .nds-paged-content).nds-loading,
     .nds-grid[data-filter-items]:not([data-nds-filter-initialized]),
-    .nds-paged-content:not([data-paged-initialized])) .nds-card {
+    .nds-paged-content:not([data-paged-initialized])) .nds-card,
+.nds-card:is(.nds-loading, [data-state='loading']),
+html:not([data-nds-loaded]) .nds-card {
 
   :is(.nds-card-title, .nds-card-subtitle, .nds-card-description,
     .nds-card-number, .nds-card-rating-text) {

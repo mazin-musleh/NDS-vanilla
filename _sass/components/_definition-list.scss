@@ -225,3 +225,25 @@
 // ==============================================
 // RESPONSIVE BEHAVIOR
 // ==============================================
+
+// ==============================================
+// PROCESSING SKELETON
+// ==============================================
+// A loading definition list bars its terms and descriptions (fit-content
+// width, per the legacy skeleton) — icons hide; spinner + dim suppressed
+// in _loading.scss. No JS owns this component, so its pre-init default
+// keys on the page stamp (html:not([data-nds-loaded])) — the
+// no-JS-component pattern, covering regions visible before the reveal.
+:is(.nds-definition-list:is(.nds-loading, [data-state='loading']),
+    html:not([data-nds-loaded]) .nds-definition-list) {
+
+    :is(dt, .nds-item-title, dd, .nds-item-desc) {
+        width: fit-content;
+        animation: processing 1.5s ease-in-out infinite;
+        @include skeleton-bar;
+    }
+
+    :is(.nds-icon, i) {
+        visibility: hidden;
+    }
+}

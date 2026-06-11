@@ -102,15 +102,14 @@
 // Import utilities
 @use 'utilities';
 
-// Reveal gate set by _includes/critical-inline.html. Scoped to
-// html[data-nds-loaded] so content waits not just for main CSS to load
-// but also for JS init to complete — pairs with the html:not([data-nds-loaded])
-// skeleton scope in nds.critical.min.scss.
+// Reveal gate — data-nds-loaded is stamped by _js/nds-loader.js after the
+// critical init pass. Scoped to html[data-nds-loaded] so this chrome waits
+// not just for main CSS to load but also for JS init to complete — pairs
+// with the hide gate in nds.critical.min.scss.
 
 html[data-nds-loaded] :where(
     .nds-topbar > *,
     .nds-main-nav > *,
-    .nds-content-layout,
     .nds-user-feedback-section,
     .nds-accessibility-toggle,
     .nds-hero-section .nds-breadcrumb-nav
@@ -120,8 +119,10 @@ html[data-nds-loaded] :where(
 
 // Revealed at main-load (no JS-init dependency). Hero section-action's
 // buttons just need .nds-btn styling from main; footer is static markup
-// that needs nothing beyond CSS. Painting either is safe the moment main
-// parses.
-:where(.nds-hero-section .nds-section-action, .nds-footer){
+// that needs nothing beyond CSS. TEST: .nds-content-layout reveals here
+// too — component default skeletons (bars until each init stamp) carry
+// the not-ready signaling, so the page body no longer waits for the JS
+// critical pass.
+:where(.nds-hero-section .nds-section-action, .nds-footer, .nds-content-layout){
     visibility: visible;
 }
