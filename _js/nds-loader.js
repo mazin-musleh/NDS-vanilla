@@ -88,17 +88,16 @@
             init: () => NDS.Accordion?.init?.(),
         },
         {
-            // Critical: init() does first-paint data-state stamping — radial CSS
-            // hides any step without [data-state~="current"] via display:none, so
-            // a stepper shipping no JS would paint EMPTY. Stamping must hit the
-            // reveal pass to avoid the empty/flash. init() also constructs the
-            // per-instance NDSStepper objects + wires the delegated
-            // [data-stepper-control] click listener; both are cold (DOM writes
-            // only, no forced layout), so they add no init cost.
+            // Delegated: pre-init paint is CSS-owned, keyed on the stepper's
+            // OWN stamp (_stepper.scss skeleton: title/description bars +
+            // circle fills; radial force-shows its first step, which would
+            // otherwise paint EMPTY without JS data-state stamping). Init
+            // landing after the reveal swaps placeholders for the stamped
+            // states in place. Showcase's setFallback/getFallback calls are
+            // interaction-time — the delegated bundle is long loaded by then.
             name: 'Stepper',
             selector: '.nds-stepper',
             init: () => NDS.Stepper?.init?.(),
-            critical: true,
         },
         {
             // Delegated: pre-init paint is CSS-owned, keyed on the swiper's

@@ -371,8 +371,13 @@
 // VERTICAL STEPPER LAYOUT MODIFIER
 // ==============================================
 
-// Enhanced vertical stepper with vertical connecting lines
-.nds-stepper.nds-vertical {
+// Enhanced vertical stepper with vertical connecting lines.
+// The variant lives in a mixin so the SAME rules serve both owners of the
+// canonical class: JS post-init (it resolves nds-{variant}-{bp} overrides
+// into the canonical class), and CSS pre-init (breakpoint-gated selectors
+// below apply the real variant, so the skeleton phase needs no mirrored
+// styles — the bars/fills ride the true layout).
+@mixin stepper-variant-vertical {
     flex-direction: column;
     --stepper-gap: calc(var(--stepper-size)*1.5);
 
@@ -411,6 +416,11 @@
     }
 }
 
+// Post-init the canonical class is authoritative (JS resolved it).
+.nds-stepper[data-nds-stepper-initialized].nds-vertical {
+    @include stepper-variant-vertical;
+}
+
 // Reverse vertical stepper (bottom-to-top progress)
 .nds-stepper.nds-vertical.nds-reverse {
     flex-direction: column-reverse;
@@ -439,7 +449,8 @@
 // RADIAL STEPPER LAYOUT MODIFIER
 // ==============================================
 
-.nds-stepper.nds-radial {
+// Mixin for the same reason as the vertical variant above.
+@mixin stepper-variant-radial {
     --stepper-size: 64px;
     --progress-size: var(--stepper-size);
     --stepper-gap: calc(var(--progress-size)/8);
@@ -524,6 +535,51 @@
 
         position: relative;
         flex-shrink: 0;
+    }
+}
+
+// Post-init the canonical class is authoritative (JS resolved it).
+.nds-stepper[data-nds-stepper-initialized].nds-radial {
+    @include stepper-variant-radial;
+}
+
+// ==============================================
+// PRE-INIT RESPONSIVE VARIANT RESOLUTION
+// ==============================================
+// Before init, CSS resolves the variant exactly like the JS will: the
+// authored canonical class holds unless a same-breakpoint override
+// (closed vocabulary: nds-{horizontal|vertical|radial}-{sm|md|lg})
+// redirects it. The REAL variant mixins are applied — no mirrored
+// skeleton styles, so the placeholder bars ride the true layout and
+// nothing can drift. Horizontal needs no mixin: it's the default that
+// shows when neither block applies.
+@include mobile {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-sm):not(.nds-radial-sm), .nds-vertical-sm) {
+        @include stepper-variant-vertical;
+    }
+
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-sm):not(.nds-vertical-sm), .nds-radial-sm) {
+        @include stepper-variant-radial;
+    }
+}
+
+@include tablet {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-md):not(.nds-radial-md), .nds-vertical-md) {
+        @include stepper-variant-vertical;
+    }
+
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-md):not(.nds-vertical-md), .nds-radial-md) {
+        @include stepper-variant-radial;
+    }
+}
+
+@include desktop(min) {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-lg):not(.nds-radial-lg), .nds-vertical-lg) {
+        @include stepper-variant-vertical;
+    }
+
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-lg):not(.nds-vertical-lg), .nds-radial-lg) {
+        @include stepper-variant-radial;
     }
 }
 
@@ -646,3 +702,79 @@
         .nds-stepper-next { color: var(--text-oncolor-tertiary); }
     }
 }
+
+// ==============================================
+// PRE-INIT SKELETON
+// ==============================================
+// Stepper's data-state stamping is JS-owned (init derives current/completed/
+// upcoming and stamps every step), so until the init stamp lands the steps
+// render as placeholders: title/description/look-ahead bars, circles as
+// fills (their own 50% radius kept — no glyph/counter paints through the
+// transparent color). Radial would otherwise paint EMPTY (it hides any
+// step without data-state~="current") — its first step is forced visible
+// as the placeholder row. Released by data-nds-stepper-initialized.
+// The same look serves the explicit loading state (.nds-loading /
+// data-state="loading" on the root — spinner + dim suppressed in
+// _loading.scss).
+:is(.nds-stepper:not([data-nds-stepper-initialized]),
+    .nds-stepper:is(.nds-loading, [data-state='loading'])) {
+
+    .nds-stepper-step :is(.nds-stepper-title, .nds-stepper-description, .nds-stepper-next) {
+        width: fit-content;
+        animation: processing 1.5s ease-in-out infinite;
+        @include skeleton-bar;
+    }
+
+    // Explicit !important throughout the circle: the per-state rules
+    // (current/completed/upcoming) nest deeper and would paint through —
+    // including the completed checkmark, a background-painted mask on
+    // ::before that transparent text color can't touch.
+    .nds-stepper-circle {
+        animation: processing 1.5s ease-in-out infinite;
+        border: 0 !important;
+        background: var(--nds-skeleton-fill) !important;
+        color: transparent !important;
+
+        &::before,
+        &::after {
+            background-color: transparent !important;
+            color: transparent !important;
+        }
+
+        :is(.nds-icon, i) {
+            visibility: hidden;
+        }
+    }
+
+    // Connector lines go neutral too — their state colors otherwise read
+    // as real progress during the skeleton.
+    .nds-stepper-step .nds-stepper-base::after {
+        animation: processing 1.5s ease-in-out infinite;
+        background: var(--nds-skeleton-fill) !important;
+    }
+
+    // Radial ring: one skeleton disc over the whole progress circle — its
+    // text ships empty and its arc math reads JS-written vars, so masking
+    // the circle beats faking its parts.
+    &.nds-radial .nds-progress-circle {
+        animation: processing 1.5s ease-in-out infinite;
+        border-radius: 50%;
+        background: var(--nds-skeleton-fill) !important;
+
+        >* {
+            visibility: hidden;
+        }
+    }
+}
+
+// Pre-init only (NOT the loading state — post-init radial already shows
+// its current step; forcing the first would show two). :first-child can't
+// work — .nds-progress-circle precedes the steps in the shared DOM — so
+// "first step" = a step with no step before it. !important: the
+// breakpoint-gated radial resolution arm carries higher specificity (its
+// :is() selector) and re-hides non-current steps pre-init — it would
+// out-rank this otherwise. Inert post-init via :not([init]).
+.nds-stepper.nds-radial:not([data-nds-stepper-initialized]) .nds-stepper-step:not(.nds-stepper-step ~ .nds-stepper-step) {
+    display: flex !important;
+}
+
