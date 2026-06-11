@@ -93,7 +93,7 @@
 
             if (!element) return false;
 
-            var container = this._findContainer(element);
+            var container = element.closest('.nds-form-container, .nds-form-group, .nds-feedback');
             if (!container) return false;
 
             // Handle standalone feedback
@@ -111,7 +111,6 @@
             }
 
             if (status) {
-                // Set status on container
                 NDS.Status.set(container, status);
                 if (message) {
                     container.setAttribute('data-message', message);
@@ -166,22 +165,18 @@
             if (!element) return false;
 
             if (element.classList.contains('nds-feedback')) {
-                // For standalone feedback, just remove data attributes
                 NDS.Status.clear(element);
                 return true;
             }
 
-            var container = this._findContainer(element);
+            var container = element.closest('.nds-form-container, .nds-form-group, .nds-feedback');
             if (!container) return false;
 
-            // Remove status attributes
             NDS.Status.clear(container);
             container.removeAttribute('data-message');
 
-            // Dismiss all feedback in container using NDSFeedback API
             NDS.Feedback.dismissAll(container);
 
-            // Clear accessibility
             var input = container.querySelector('input, textarea, select');
             if (input) {
                 input.removeAttribute('aria-invalid');
@@ -198,7 +193,7 @@
         get: function(element) {
             if (!element) return { status: '', message: '', isValid: true };
 
-            var container = this._findContainer(element);
+            var container = element.closest('.nds-form-container, .nds-form-group, .nds-feedback');
             if (!container) return { status: '', message: '', isValid: true };
             var status = NDS.Status.get(container);
             return {
@@ -206,13 +201,6 @@
                 message: container.getAttribute('data-message') || '',
                 isValid: status !== 'error'
             };
-        },
-
-        _findContainer: function(element) {
-            var selectors = '.nds-form-container, .nds-form-group, .nds-feedback';
-            return (element.matches && element.matches(selectors))
-                ? element
-                : element.closest(selectors);
         }
     };
 
@@ -505,7 +493,6 @@
             // Skip per-input validation for groups — validated at group level
             if (formContainer && formContainer.closest('.nds-form-group')) return;
 
-            // Validate
             var isInvalid = input.validity && !input.validity.valid;
 
             // Clear custom validation when HTML5 validation passes
@@ -755,7 +742,6 @@
 
         // Two-way initial sync + specialized control dispatch.
         _syncInitialState: function(input, formControl, formContainer) {
-            // Initialize state - two-way sync
             // Container → input: propagate pre-existing data-state
             if (formContainer) {
                 NDS.State.apply(formContainer, 'disabled', 'readonly');
