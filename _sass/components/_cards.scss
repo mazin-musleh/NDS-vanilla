@@ -380,9 +380,10 @@
 // ==============================================
 
 // PERF-04 variant-grid: deliberate 4-axis composition (base × oncolor-guard × variant-color × variant-style); restructuring to Solution A would add ~12 class definitions to the bundle for a sub-ms per-match improvement. Tradeoff resolves toward keeping bytes off the wire.
+// --card-border and --card-title are scoped to &.nds-color so status alone never tints chrome;
+// alerts and cards both inherit this gate (no .nds-alert exclusion needed).
 .nds-card:not(.nds-oncolor, [disabled]) {
   &:is(.nds-neutral, [data-status="neutral"]) {
-    --card-border: var(--border-neutral-secondary);
     --card-border-hover: var(--colors-neutral-500);
     --card-border-active: var(--colors-neutral-300);
     --card-title: var(--colors-neutral-800);
@@ -394,11 +395,11 @@
     &.nds-color {
       --card-bg: var(--colors-neutral-50);
       --card-bg-hover: var(--colors-neutral-100);
+      --card-border: var(--border-neutral-secondary);
       --icon-bg-color: var(--featuredicons-background-neutral-light);
     }
 
     @include dark {
-      --card-border: var(--border-neutral-light);
       --card-title: var(--colors-neutral-200);
       --card-subtitle: var(--colors-neutral-400);
       --card-number: var(--colors-neutral-400);
@@ -413,7 +414,6 @@
   }
 
   &:is(.nds-yellow, [data-status="warning"]) {
-    --card-border: var(--border-warning-light);
     --card-border-hover: var(--colors-yellow-600);
     --card-border-active: var(--colors-yellow-300);
     --card-title: var(--text-warning);
@@ -425,6 +425,7 @@
     &.nds-color {
       --card-bg: var(--background-warning-light);
       --card-bg-hover: var(--colors-yellow-100);
+      --card-border: var(--border-warning-light);
       --icon-bg-color: var(--alpha-warning-10);
     }
 
@@ -437,7 +438,6 @@
   }
 
   &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
-    --card-border: var(--border-error-light);
     --card-border-hover: var(--colors-red-600);
     --card-border-active: var(--colors-red-300);
     --card-title: var(--text-error);
@@ -449,6 +449,7 @@
     &.nds-color {
       --card-bg: var(--background-error-light);
       --card-bg-hover: var(--colors-red-100);
+      --card-border: var(--border-error-light);
       --icon-bg-color: var(--alpha-error-10);
     }
 
@@ -461,7 +462,6 @@
   }
 
   &:is(.nds-blue, [data-status="info"]) {
-    --card-border: var(--border-info-light);
     --card-border-hover: var(--colors-blue-600);
     --card-border-active: var(--colors-blue-300);
     --card-title: var(--text-info);
@@ -473,6 +473,7 @@
     &.nds-color {
       --card-bg: var(--background-info-light);
       --card-bg-hover: var(--colors-blue-100);
+      --card-border: var(--border-info-light);
       --icon-bg-color: var(--alpha-info-10);
     }
 
@@ -485,7 +486,6 @@
   }
 
   &:is(.nds-green, [data-status="success"]) {
-    --card-border: var(--border-success-light);
     --card-border-hover: var(--colors-green-600);
     --card-border-active: var(--colors-green-300);
     --card-title: var(--text-success);
@@ -497,6 +497,7 @@
     &.nds-color {
       --card-bg: var(--background-success-light);
       --card-bg-hover: var(--colors-green-100);
+      --card-border: var(--border-success-light);
       --icon-bg-color: var(--alpha-success-10);
     }
 
