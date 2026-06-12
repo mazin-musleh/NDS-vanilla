@@ -30,13 +30,12 @@
 // Seed sets — single source of truth for the predefined themes. primary required;
 // the rest optional (secondary/tertiary auto-derive from primary by hue rotation).
 // 'weights': the per-theme font-weight scale (regular medium semibold bold). The
-// runtime brand fonts read lighter than IBM Plex at the same nominal weight, so
-// each shifts down one step from the DGA defaults (400 500 600 700). Tajawal's
-// faces cluster (Regular 300-400, Medium 500-600, Bold 700) so its semibold/bold
-// requests still resolve to a real face — no synthesis. Cairo / Readex Pro are
-// variable fonts; the shift renders true intermediate weights.
+// runtime brand fonts read lighter than IBM Plex at the same nominal weight, so they
+// shift down one step from the DGA defaults (400 500 600 700) — Cairo / Readex Pro are
+// variable fonts, so the shift renders true intermediate weights. Crimson carries no
+// brand font (inherits IBM Plex), so it omits 'weights' too and keeps the DGA scale.
 $themes: (
-  'crimson':   ('primary': #be123c, 'secondary': #d97706, 'tertiary': #0ea5e9, 'tint': 0.2, 'font': "'Tajawal', sans-serif",     'weights': (300 400 500 600)),
+  'crimson':   ('primary': #be123c, 'secondary': #d97706, 'tertiary': #0ea5e9, 'tint': 0.2),
   'corporate': ('primary': #4338ca, 'secondary': #0d9488, 'tertiary': #8b5cf6, 'tint': 1.5, 'font': "'Cairo', sans-serif",       'weights': (300 400 500 600)),
   'sunset':    ('primary': #b45309, 'secondary': #db2777, 'tertiary': #f59e0b, 'tint': 0.2, 'font': "'Readex Pro', sans-serif",  'weights': (300 400 500 600)),
 );

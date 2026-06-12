@@ -12,18 +12,13 @@ $arabic-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, 
 
 $latin-range: U+0000, U+000D, U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
 
-// Tajawal's latin subset differs from IBM Plex's (Google subset it differently), so
-// it gets its own range — matches the served woff2 exactly (no tofu, no missed glyphs).
-// Tajawal's arabic subset IS identical to $arabic-range, so that one is shared.
-$tajawal-latin-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+// Cairo + Readex Pro share a latin subset that differs from IBM Plex's (Google subsets
+// them differently), so it gets its own range — matches the served woff2 exactly (no
+// tofu, no missed glyphs). Their arabic subset IS identical to $arabic-range, so shared.
+$brand-latin-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 
-// Tajawal renders a touch smaller than IBM Plex Sans Arabic at the same font-size,
-// so a theme switch visibly shrinks the type. size-adjust scales its glyphs up to
-// match without touching any font-size/line-height token. Tune to taste.
-$tajawal-size-adjust: 110%;
-
-// Cairo's metrics differ from IBM Plex too; default 100% (no change) — bump if a
-// Cairo theme reads off-size, same knob as Tajawal above.
+// Cairo's metrics differ from IBM Plex; default 100% (no change) — bump if a Cairo theme
+// reads off-size.
 $cairo-size-adjust: 108%;
 
 // Readex Pro is UI-tuned and sits close to IBM Plex; default 100% — tune if needed.
@@ -142,73 +137,11 @@ $readex-size-adjust: 100%;
     url(../fonts/SaudiWeb-Bold.woff2) format('woff2');
 }
 
-/* Tajawal — default typeface for the runtime brands (self-hosted, OFL). Declared in
-   crit but FETCHED LAZILY: the woff2 only downloads when a [data-brand] sets
-   --nds-font-family to Tajawal and text uses it, so DGA pages never request it.
-   Tajawal has no 600, so the Medium face covers 500–600 (mirrors the IBM Plex range
-   pattern; no synthetic weight). Crimson's --font-weight-semibold resolves to 500
-   (themes/_register.scss shifts the scale one step lighter than DGA) and lands on
-   this same Medium face by design — runtime themes intentionally read lighter. */
-@font-face {
-  font-family: 'Tajawal';
-  size-adjust: $tajawal-size-adjust;
-  font-weight: 300 400;
-  font-display: swap;
-  src: local('Tajawal'), local('Tajawal Regular'),
-    url(../fonts/Tajawal-Regular.woff2) format('woff2');
-  unicode-range: $arabic-range;
-}
-@font-face {
-  font-family: 'Tajawal';
-  size-adjust: $tajawal-size-adjust;
-  font-weight: 300 400;
-  font-display: swap;
-  src: local('Tajawal'), local('Tajawal Regular'),
-    url(../fonts/Tajawal-Regular-Latin.woff2) format('woff2');
-  unicode-range: $tajawal-latin-range;
-}
-@font-face {
-  font-family: 'Tajawal';
-  size-adjust: $tajawal-size-adjust;
-  font-weight: 500 600;
-  font-display: swap;
-  src: local('Tajawal Medium'),
-    url(../fonts/Tajawal-Medium.woff2) format('woff2');
-  unicode-range: $arabic-range;
-}
-@font-face {
-  font-family: 'Tajawal';
-  size-adjust: $tajawal-size-adjust;
-  font-weight: 500 600;
-  font-display: swap;
-  src: local('Tajawal Medium'),
-    url(../fonts/Tajawal-Medium-Latin.woff2) format('woff2');
-  unicode-range: $tajawal-latin-range;
-}
-@font-face {
-  font-family: 'Tajawal';
-  size-adjust: $tajawal-size-adjust;
-  font-weight: 700;
-  font-display: swap;
-  src: local('Tajawal Bold'),
-    url(../fonts/Tajawal-Bold.woff2) format('woff2');
-  unicode-range: $arabic-range;
-}
-@font-face {
-  font-family: 'Tajawal';
-  size-adjust: $tajawal-size-adjust;
-  font-weight: 700;
-  font-display: swap;
-  src: local('Tajawal Bold'),
-    url(../fonts/Tajawal-Bold-Latin.woff2) format('woff2');
-  unicode-range: $tajawal-latin-range;
-}
-
-/* Cairo — runtime brand typeface (dual-script: Arabic + Latin/English). Self-hosted
-   like Tajawal and FETCHED LAZILY — only requested when a theme sets --nds-font-brand
-   to Cairo, so DGA pages never download it. Variable woff2: one file per subset covers
-   the whole 200–1000 weight axis. Its arabic + latin subsets are byte-identical Google
-   ranges to $arabic-range / $tajawal-latin-range above, so both are reused. */
+/* Cairo — runtime brand typeface (dual-script: Arabic + Latin/English). Self-hosted and
+   FETCHED LAZILY — only requested when a theme sets --nds-font-brand to Cairo, so DGA
+   pages never download it. Variable woff2: one file per subset covers the whole 200–1000
+   weight axis. Its arabic + latin subsets are byte-identical Google ranges to
+   $arabic-range / $brand-latin-range above, so both are reused. */
 @font-face {
   font-family: 'Cairo';
   size-adjust: $cairo-size-adjust;
@@ -225,13 +158,13 @@ $readex-size-adjust: 100%;
   font-display: swap;
   src: local('Cairo'),
     url(../fonts/Cairo-Latin.woff2) format('woff2');
-  unicode-range: $tajawal-latin-range;
+  unicode-range: $brand-latin-range;
 }
 
 /* Readex Pro — runtime brand typeface (dual-script: Arabic + Latin/English), UI-tuned
    and metrically close to IBM Plex. Self-hosted + FETCHED LAZILY like Cairo. Variable
    woff2: one file per subset covers the weight axis. Arabic + latin subsets are
-   byte-identical Google ranges to $arabic-range / $tajawal-latin-range, so both reused. */
+   byte-identical Google ranges to $arabic-range / $brand-latin-range, so both reused. */
 @font-face {
   font-family: 'Readex Pro';
   size-adjust: $readex-size-adjust;
@@ -248,5 +181,5 @@ $readex-size-adjust: 100%;
   font-display: swap;
   src: local('Readex Pro'),
     url(../fonts/ReadexPro-Latin.woff2) format('woff2');
-  unicode-range: $tajawal-latin-range;
+  unicode-range: $brand-latin-range;
 }

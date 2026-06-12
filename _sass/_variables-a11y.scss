@@ -282,8 +282,8 @@ $a11y-filters: (
 // ----------------------------------------------
 :root[data-a11y~="dyslexia"] {
     // Dyslexia faces lead (OpenDyslexic Latin + Maqroo Arabic); the active brand's own
-    // typeface — var(--nds-font-brand): Tajawal on a brand, IBM Plex on DGA — is the
-    // regular fallback, so the stack follows the brand.
+    // typeface — var(--nds-font-brand): Cairo / Readex Pro on a brand, IBM Plex on DGA —
+    // is the regular fallback, so the stack follows the brand.
     --nds-font-family: "OpenDyslexic", "Lexend", "Atkinson Hyperlegible", "Verdana",
                        "Maqroo", var(--nds-font-brand), system-ui, sans-serif;
 }
