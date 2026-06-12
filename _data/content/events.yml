@@ -1,0 +1,11 @@
+# Event theme packs — seasonal/occasion skins applied with a single drop-in.
+# Rendered as cards on events/index.html. Each event also ships a switcher entry
+# in _data/themes.yml and a self-contained folder under assets/events/<event>/.
+- title: "Foundation Day"
+  description: "Re-skin the whole site for Saudi Founding Day with one script tag: the heritage brown palette and a configurable bilingual hero slide, in both light and dark mode."
+  icon: '<i class="hgi hgi-stroke hgi-flag-02"></i>'
+  thumbnail: "/assets/events/foundation_day/Hero_thumb.webp"
+  theme: "foundation-day"   # matches the _data/themes.yml value; drives the live Preview button
+  category: "Theme"
+  tags: ["CSS", "JS"]
+  url: "/events/foundation-day.html"

@@ -61,6 +61,13 @@
       url: "/examples/console-demo"
       href: "/examples/console-demo.html"
 
+- label: "Events"
+  has_sub: true
+  children:
+    - label: "Foundation Day"
+      url: "/events/foundation-day"
+      href: "/events/foundation-day.html"
+
 
 - label: "Components"
   has_sub: true

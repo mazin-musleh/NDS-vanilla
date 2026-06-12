@@ -1,7 +1,14 @@
 <script>
-    // Pre-paint FOUC guard: stamp saved data-theme before first paint (NDS.Theme.init handles the rest).
+    // Pre-paint FOUC guard: stamp saved data-theme before first paint (NDS.Theme.init
+    // handles the rest). Union-merged with any markup-authored/pack-stamped tokens so
+    // a returning visitor's stored value never clobbers them.
     (function() {
         var v = localStorage.getItem('nds-theme');
-        if (v) document.documentElement.setAttribute('data-theme', v);
+        if (v) {
+            var d = document.documentElement;
+            var t = ((d.getAttribute('data-theme') || '') + ' ' + v).split(/\s+/)
+                .filter(function (x, i, a) { return x && a.indexOf(x) === i; });
+            d.setAttribute('data-theme', t.join(' '));
+        }
     })();
 </script>

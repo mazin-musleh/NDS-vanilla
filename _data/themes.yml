@@ -20,6 +20,9 @@
       stylesheet: true
       # Self-contained event folder (paths relative to assets/). Omit css/js to use the
       # default assets/css|js/nds-theme-<value>.min.{css,js}.
+      # `js` is the EVENT PACK: a downstream site applies the whole theme by dropping
+      # this one script tag (it injects its own css, token, and hero slide); here the
+      # switcher loads the same file on demand. See events/foundation-day.md.
       css: events/foundation_day/nds-theme-foundation-day.min.css
       js: events/foundation_day/nds-theme-foundation-day.min.js
 

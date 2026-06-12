@@ -9,6 +9,8 @@ columns:
         url: "/templates/"
       - label: "Examples"
         url: "/examples/"
+      - label: "Events"
+        url: "/events/"
       - label: "DGA"
         url: "https://dga.gov.sa/"
         class: "nds-external"

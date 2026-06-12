@@ -132,9 +132,14 @@
         const l = document.getElementById(LINK_ID);
         if (l) l.remove();
     }
-    // Load a stylesheet theme's optional behaviour script once. It registers
-    // inject/teardown on window.__NDS_THEME_HOOKS[value] and self-injects when
-    // window.__NDS_THEME_ACTIVE matches (the first-activation race-guard).
+    // Load a stylesheet theme's optional behaviour script once. The script is a
+    // self-contained event PACK: it registers inject/teardown on
+    // window.__NDS_THEME_HOOKS[value], where inject owns link + marker token + slide
+    // and teardown removes all three (idempotent — our ensureStylesheet/setThemeToken
+    // calls overlap them harmlessly, and stay required for CSS-only themes with no js).
+    // On load it self-activates when window.__NDS_THEME_ACTIVE matches (first-
+    // activation race-guard) OR is undefined (standalone one-tag use on a page this
+    // switcher never orchestrated — downstream sites drop the single script tag).
     function ensureThemeJS(value, src) {
         if (!src) return;
         const id = 'nds-theme-js-' + value;
@@ -155,7 +160,11 @@
         if (active == null) active = curTokens().filter(t => themeNames().indexOf(t) !== -1)[0] || '';
         const els = document.querySelectorAll(SWITCH_SEL);
         for (let i = 0; i < els.length; i++) {
-            els[i].setAttribute('aria-current', (els[i].getAttribute('data-theme-value') || '') === active ? 'true' : 'false');
+            const on = (els[i].getAttribute('data-theme-value') || '') === active;
+            els[i].setAttribute('aria-current', on ? 'true' : 'false');
+            // A switcher item rendered as a switch (not a button) reflects on/off state.
+            const cb = els[i].querySelector('.nds-switch-input');
+            if (cb) cb.checked = on;
         }
     }
 
@@ -180,7 +189,7 @@
 
             if (css) {
                 clearInline(); savePalette(null);
-                setThemeToken(value);                       // marker token (records the active sheet)
+                setThemeToken(value);                       // marker token (records + persists the active sheet; the pack's addToken no-ops after this)
                 window.__NDS_THEME_ACTIVE = value;
                 ensureStylesheet(css);
                 ensureThemeJS(value, el.getAttribute('data-theme-js'));
@@ -245,9 +254,17 @@
     function wireSwitcher() {
         if (_switcherWired) return;
         _switcherWired = true;
+        // A switcher item is usually a button (click); it can also be a switch — then
+        // the input's 'change' drives it, so skip the click to avoid a double-toggle.
         document.addEventListener('click', (e) => {
             const el = e.target.closest(SWITCH_SEL);
-            if (el) applySelection(el);
+            if (!el || el.querySelector('.nds-switch-input')) return;
+            applySelection(el);
+        });
+        document.addEventListener('change', (e) => {
+            if (!e.target.matches('.nds-switch-input')) return;
+            const el = e.target.closest(SWITCH_SEL);
+            if (el) applySelection(el);   // applySelection toggles on the item's current state
         });
     }
 
