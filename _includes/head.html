@@ -35,11 +35,20 @@
     {%- endif %}
     <!-- Main CSS - Deferred loading for below-the-fold content -->
     <link rel="preload" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
-        onload="this.onload=null;this.rel='stylesheet';window.loadDeferredAssets?loadDeferredAssets():window.__ndsDeferredPending=true">
+        onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds-main.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
+    <!-- UI icons sheet — deferred preload; onload stamps data-nds-icons-loaded (flips the icon opacity gate). -->
+    <link rel="preload" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
+        onload="this.onload=null;this.rel='stylesheet';document.documentElement.setAttribute('data-nds-icons-loaded','')">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds-icons.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    </noscript>
     {%- if site.use_hgi_font or page.use_hgi_font %}
+    <!-- HGI icon font sheet — deferred preload; readiness handled by nds-fontLoading.js. -->
+    <link rel="preload" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
+        onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/hgi-rounded-stroke-min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
