@@ -12,3 +12,21 @@
         }
     })();
 </script>
+<script>
+    // Loads icons + HGI after main CSS — keeps them out of the LCP window.
+    function loadDeferredAssets() {
+        var icons = document.createElement('link');
+        icons.rel = 'stylesheet';
+        icons.href = '{{ "assets/css/nds-icons.min.css" | relative_url }}?ver={{ site.asset_ver }}';
+        icons.onload = function () { document.documentElement.setAttribute('data-nds-icons-loaded', ''); };
+        document.head.appendChild(icons);
+        {%- if site.use_hgi_font or page.use_hgi_font %}
+        var hgi = document.createElement('link');
+        hgi.rel = 'stylesheet';
+        hgi.href = '{{ "assets/css/hgi-rounded-stroke-min.css" | relative_url }}?ver={{ site.asset_ver }}';
+        document.head.appendChild(hgi);
+        {%- endif %}
+    }
+    // Cached main.css can fire onload before this script parses — flush the pending flag.
+    if (window.__ndsDeferredPending) loadDeferredAssets();
+</script>
