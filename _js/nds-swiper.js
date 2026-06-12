@@ -55,6 +55,9 @@
     // slidesPerView only changes when the viewport crosses one of
     // NDS.breakpoints.{tablet,desktop} — MediaQueryList `change` fires only on
     // those transitions, skipping the resize bus's every-tick fan-out entirely.
+    // Separate set from _activeSwipers: single-slide swipers skip keyboard/nav
+    // setup but still need --slides re-derived on breakpoint crossings.
+    const _resizeSwipers = new Set();
     const _mqDesktop = window.matchMedia(NDS.breakpoints.desktop);
     const _mqTablet = window.matchMedia(NDS.breakpoints.tablet);
     let _resizeAttached = false;
@@ -62,7 +65,7 @@
     function ensureSharedResize() {
         if (_resizeAttached) return;
         _resizeAttached = true;
-        const trigger = () => _activeSwipers.forEach(inst => inst._handleResize());
+        const trigger = () => _resizeSwipers.forEach(inst => inst._handleResize());
         _mqDesktop.addEventListener('change', trigger);
         _mqTablet.addEventListener('change', trigger);
     }
@@ -135,8 +138,12 @@
             this.updateSlidesPerView();
 
             // Single-slide swipers can never navigate; bail before nav/observer/keyboard
-            // setup. updateSlidesPerView already ran so --slides/--peek are correct.
+            // setup. They still join the shared breakpoint subscription — --slides
+            // must keep tracking slides-max/mid/min or the lone card holds its
+            // init-time width across resizes.
             if (this.slides.length === 1) {
+                _resizeSwipers.add(this);
+                ensureSharedResize();
                 this.container.setAttribute('data-nds-swiper-initialized', 'true');
                 return;
             }
@@ -245,7 +252,8 @@
 
         setupResize() {
             // Breakpoint-driven slidesPerView: shared via ensureSharedResize; instance
-            // is invoked through _activeSwipers membership (added by setupKeyboard).
+            // is invoked through _resizeSwipers membership.
+            _resizeSwipers.add(this);
             ensureSharedResize();
 
             // Pixel-geometry caches (_measuredStep, _cachedGap) go stale on ANY size
@@ -592,6 +600,7 @@
             if (this.nextBtn) this.nextBtn.style.removeProperty('display');
 
             _activeSwipers.delete(this);
+            _resizeSwipers.delete(this);
             if (this._offResize) { this._offResize(); this._offResize = null; }
             if (this._offVisibility) { this._offVisibility(); this._offVisibility = null; }
             if (this._offLazyLoad) { this._offLazyLoad.forEach(off => off()); this._offLazyLoad = null; }
