@@ -8,9 +8,9 @@ exclude_showcase: true
 # Bundle sizes shown in the Architecture section (gzipped KB). Update when bundles change:
 #   gzip -c assets/js/nds-main.min.js | wc -c   (and delegated/extras, _site/.../nds.critical.min.css)
 bundle_sizes:
-  critical_css: 6   # nds.critical.min.css
-  core_js: 51       # nds-main.min.js (loads on every page)
-  total_js: 91      # main + delegated + extras (full library, demand-loaded)
+  critical_css: 10  # nds.critical.min.css
+  core_js: 35       # nds-main.min.js (loads on every page)
+  total_js: 92      # main + delegated + extras (full library, demand-loaded)
 ---
 
 <!-- Implementation Solution -->
@@ -165,7 +165,7 @@ bundle_sizes:
                             <div class="nds-card-header">
                                 {% if ev.thumbnail %}
                                 <div class="nds-card-image">
-                                    <img src="{{ ev.thumbnail | relative_url }}" alt="{{ ev.title }} theme preview" loading="lazy">
+                                    <img src="{{ ev.thumbnail | relative_url }}" width="400" height="200" alt="{{ ev.title }} theme preview" loading="lazy">
                                 </div>
                                 {% else %}
                                 <div class="nds-card-featured-icon">
