@@ -79,3 +79,13 @@
     color: var(--_section-description-color);
 }
 
+
+/* ── Off-screen sections: skip rendering until scrolled near ── */
+
+.nds-content-section {
+    // Halves the reveal-time layout task (measured 2026-06-12); unsupported
+    // browsers ignore both and render upfront. intrinsic-size keeps the
+    // scrollbar stable pre-render (auto = real size remembered after).
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+}
