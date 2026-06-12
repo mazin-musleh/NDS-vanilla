@@ -28,7 +28,7 @@ html {
     /* Nav/topbar height reservations (migrated from the removed inline
        crit — prevents CLS before main lands). */
     :where(.nds-topbar) { height: 40px; }
-    :where(.nds-main-nav) { height: var(--nds-nav-height, 72px); }
+    :where(.nds-main-nav) { height: var(--nds-nav-height); }
 
     :where(main) {
         overflow-x: clip;
@@ -45,7 +45,7 @@ html {
 
         @include desktop(min) {
             &:where(.nds-wSideMenu) {
-                grid-template-columns: var(--nds-sidemenu-width, 260px) 1fr;
+                grid-template-columns: var(--nds-sidemenu-width) 1fr;
             }
         }
     }
@@ -239,34 +239,26 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
    hero-zone components paint from crit, so their placeholder look must
    too. Stops are neutral-200/300/400 at 20% alpha (dark: 600/500/400);
    the gradient runs with reading direction — RTL default, LTR 270deg
-   (gradients aren't direction-aware). */
+   (gradients aren't direction-aware). Angle and stops are separate
+   tokens so the dir × theme axes compose instead of needing a block
+   per combination. */
 :root {
-    --nds-skeleton-fill: linear-gradient(90deg,
-            rgba(229, 231, 235, 0.2) 0%,
-            rgba(210, 214, 219, 0.2) 50%,
-            rgba(157, 164, 174, 0.2) 100%);
-    --nds-skeleton-radius: var(--radius-sm, 4px);
+    --nds-skeleton-angle: 90deg;
+    --nds-skeleton-stops: rgba(229, 231, 235, 0.2) 0%,
+        rgba(210, 214, 219, 0.2) 50%,
+        rgba(157, 164, 174, 0.2) 100%;
+    --nds-skeleton-fill: linear-gradient(var(--nds-skeleton-angle), var(--nds-skeleton-stops));
+    --nds-skeleton-radius: var(--radius-sm);
 }
 
-:root[dir="ltr"] {
-    --nds-skeleton-fill: linear-gradient(270deg,
-            rgba(229, 231, 235, 0.2) 0%,
-            rgba(210, 214, 219, 0.2) 50%,
-            rgba(157, 164, 174, 0.2) 100%);
+:root:is([dir="ltr"], .ltr) {
+    --nds-skeleton-angle: 270deg;
 }
 
 :root[data-theme~="dark"] {
-    --nds-skeleton-fill: linear-gradient(90deg,
-            rgba(77, 87, 97, 0.2) 0%,
-            rgba(108, 114, 126, 0.2) 50%,
-            rgba(157, 164, 174, 0.2) 100%);
-}
-
-:root[dir="ltr"][data-theme~="dark"] {
-    --nds-skeleton-fill: linear-gradient(270deg,
-            rgba(77, 87, 97, 0.2) 0%,
-            rgba(108, 114, 126, 0.2) 50%,
-            rgba(157, 164, 174, 0.2) 100%);
+    --nds-skeleton-stops: rgba(77, 87, 97, 0.2) 0%,
+        rgba(108, 114, 126, 0.2) 50%,
+        rgba(157, 164, 174, 0.2) 100%;
 }
 
 /* ── Breadcrumb pre-collapse shape ──

@@ -97,6 +97,19 @@
   }
 }
 
+/* Skeleton pulse is decorative (the bar itself is the feedback) — hold it
+   static under OS reduced motion. The a11y panel's reduce-motion toggle has
+   its own root-scoped kill (_variables-a11y.scss). */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes processing {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
 @keyframes processing-spin {
   0% {
     transform: rotate(0deg);

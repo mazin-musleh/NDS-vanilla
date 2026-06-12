@@ -36,6 +36,7 @@
     content: "";
     display: inline-block;
     width: 24px;
+    min-width: 24px;
     height: 1em;
     background: var(--icon-separator);
     mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
@@ -48,11 +49,6 @@
         transform: scaleX(-1);
     }
 }
-
-.nds-breadcrumb li:not(:last-child)::after {
-    min-width: 24px;
-}
-
 
 /* ========================================
    BREADCRUMB DROPDOWN (FOR COLLAPSED BREADCRUMBS)

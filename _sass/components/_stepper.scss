@@ -554,31 +554,31 @@
 // nothing can drift. Horizontal needs no mixin: it's the default that
 // shows when neither block applies.
 @include mobile {
-    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-sm):not(.nds-radial-sm), .nds-vertical-sm) {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-sm, .nds-radial-sm), .nds-vertical-sm) {
         @include stepper-variant-vertical;
     }
 
-    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-sm):not(.nds-vertical-sm), .nds-radial-sm) {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-sm, .nds-vertical-sm), .nds-radial-sm) {
         @include stepper-variant-radial;
     }
 }
 
 @include tablet {
-    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-md):not(.nds-radial-md), .nds-vertical-md) {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-md, .nds-radial-md), .nds-vertical-md) {
         @include stepper-variant-vertical;
     }
 
-    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-md):not(.nds-vertical-md), .nds-radial-md) {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-md, .nds-vertical-md), .nds-radial-md) {
         @include stepper-variant-radial;
     }
 }
 
 @include desktop(min) {
-    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-lg):not(.nds-radial-lg), .nds-vertical-lg) {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-vertical:not(.nds-horizontal-lg, .nds-radial-lg), .nds-vertical-lg) {
         @include stepper-variant-vertical;
     }
 
-    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-lg):not(.nds-vertical-lg), .nds-radial-lg) {
+    .nds-stepper:not([data-nds-stepper-initialized]):is(.nds-radial:not(.nds-horizontal-lg, .nds-vertical-lg), .nds-radial-lg) {
         @include stepper-variant-radial;
     }
 }

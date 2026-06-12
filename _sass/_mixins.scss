@@ -471,7 +471,7 @@ $breakpoints-range: (
 
 // Paint any surface (text bar, image, icon) with the static skeleton
 // gradient. color:transparent hides the real glyphs the gradient covers;
-// harmless on image surfaces. Tokens live in components/_loading.scss.
+// harmless on image surfaces. Tokens live in _skeleton.scss (crit).
 @mixin skeleton-fill {
   background: var(--nds-skeleton-fill);
   color: transparent !important;

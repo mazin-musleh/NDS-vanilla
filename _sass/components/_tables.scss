@@ -284,7 +284,7 @@
         inset-inline: var(--table-cell-h-padding);
         top: 50%;
         translate: 0 -50%;
-        height: var(--typo-text-md-LH, 24px);
+        height: var(--typo-text-md-LH);
         background: var(--nds-skeleton-fill);
         border-radius: var(--nds-skeleton-radius);
         animation: processing 1.5s ease-in-out infinite;
