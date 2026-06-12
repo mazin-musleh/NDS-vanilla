@@ -102,7 +102,7 @@ actions_nav:
   - label: "Ahmed"
     icon: "nds-icon-avatar"
     avatar: true
-    img_icon: "assets/img/avatar3.png"
+    img_icon: "assets/img/avatar3.webp"
     custom_class: "nds-login nds-icon-only nds-auth"
     button_style: "nds-nav-link nds-btn nds-subtle nds-lg nds-indicator"
 
