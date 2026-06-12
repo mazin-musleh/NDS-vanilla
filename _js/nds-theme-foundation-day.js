@@ -20,7 +20,7 @@
 // (all optional; bare filenames resolve against this script's own folder):
 //   data-title-ar / data-title-en
 //   data-description-ar / data-description-en
-//   data-image            hero photo ('' = brown bg + heroContentBg block)
+//   data-image            hero photo ('' = brown bg + Banner.webp block)
 //   data-cta-url          https or path-relative only ('' = no CTA)
 //   data-cta-label-ar / data-cta-label-en
 //   data-cta-icon         ('' = omit)

@@ -58,7 +58,7 @@
 
 .nds-swiper-slide.nds-foundingDay .nds-block {
   background-color: #271C19;
-  background-image: url(heroContentBg.svg);
+  background-image: url(Banner.webp);
   background-position: bottom center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -102,8 +102,11 @@
 
 }
 
-.nds-footer {
-  background: url(footer-backeground.svg), #231F20;
+// :root prefix bumps to 0,3,0 — beats _footer.scss's .nds-footer:is(.nds-green,.nds-brand) (0,2,0)
+// which resets background-image to none via the background shorthand
+:root .nds-footer:is(.nds-green, .nds-brand) {
+  background-color: #231F20;
+  background-image: url(footer-backeground.svg);
   background-repeat: no-repeat;
   background-position: bottom left;
   background-size: auto;
