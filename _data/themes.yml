@@ -26,6 +26,12 @@
       css: events/foundation_day/nds-theme-foundation-day.min.css
       js: events/foundation_day/nds-theme-foundation-day.min.js
 
+    - value: hajj
+      label: Hajj
+      stylesheet: true
+      css: events/Hajj/nds-theme-hajj.min.css
+      js: events/Hajj/nds-theme-hajj.min.js
+
 - label: Demo
   list:
     - value: crimson

@@ -41,6 +41,7 @@ class JSProcessor
     # brand's behaviour script ships in its self-contained event folder.
     @output_overrides = {
       'nds-theme-foundation-day.js' => 'assets/events/foundation_day',
+      'nds-theme-hajj.js' => 'assets/events/Hajj',
     }
     @bundles = {
       # Critical bundle — loaded via <script defer>. Carries core, the loader,

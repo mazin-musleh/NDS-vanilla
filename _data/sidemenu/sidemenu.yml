@@ -67,6 +67,9 @@
     - label: "Foundation Day"
       url: "/events/foundation-day"
       href: "/events/foundation-day.html"
+    - label: "Hajj"
+      url: "/events/hajj"
+      href: "/events/hajj.html"
 
 
 - label: "Components"

@@ -9,3 +9,11 @@
   category: "Theme"
   tags: ["CSS", "JS"]
   url: "/events/foundation-day.html"
+- title: "Hajj"
+  description: "Re-skin the whole site for the Hajj season with one script tag: a Saudi-font hero, a direction-aware backdrop, and seasonal section accents, in both light and dark mode."
+  icon: '<i class="hgi hgi-stroke hgi-kaaba-01"></i>'
+  thumbnail: "/assets/events/Hajj/hajj_thumb.webp"
+  theme: "hajj"   # matches the _data/themes.yml value; drives the live Preview button
+  category: "Theme"
+  tags: ["CSS", "JS"]
+  url: "/events/hajj.html"

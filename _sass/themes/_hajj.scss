@@ -1,0 +1,110 @@
+@use '../mixins' as *;
+@use 'oklch-template' as oklch;
+
+// ════════════════════════════════════════════════════════════════════════════
+// HAJJ — event skin (Hayyakom welcome). Only the hero slide, its Saudi-font
+// title, the Hayyakom logo, the direction-aware hero background, and the section
+// decorations are themed.
+//
+// Activate site-wide via `brand: hajj` (loads nds-theme-hajj.min.css render-
+// blocking, before first paint), or on demand via the theme switcher / the
+// one-tag event pack (nds-theme-hajj.js). Source for the build entry:
+// assets/events/Hajj/nds-theme-hajj.min.scss.
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── Brand palette — gold-brown primary (#946124). Derives the full primary ramp
+//    from the single seed on DGA's lightness curve, the brand-tint alphas, and a
+//    neutral-gray ramp (0 tint = true gray); all flow into dark automatically.
+//    Remove this block to fall back to the DGA palette. ──
+:root {
+  @include oklch.brand-ramp-static('primary', #946124);
+  @include oklch.brand-alpha-static('primary', #946124);
+  @include oklch.neutral-ramp-static(#946124, 0);   // 0 = true gray (no warmth)
+  --background-brand-light:  var(--colors-primary-25);
+  --img-overlay-color:       var(--colors-neutral-950);
+}
+
+// ── Hero slide — a normal-section layout (centred column, start-aligned) with
+//    a Saudi-font title, a top-start Hayyakom logo, and a direction-aware
+//    background (RTL photo by default, LTR variant under html[dir="ltr"]). The
+//    section's own .nds-section-body already start-aligns and vertically centres
+//    its column, so the logo lands at the top start with no extra layout. ──
+.nds-swiper-slide.nds-hajj {
+  background-color: #302d2a;                 // matches the photo so no light flash before it loads
+  background-image: url(darkhero.webp);      // RTL (default)
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  @include ltr {
+    background-image: url(darkhero_ltr.webp);
+  }
+}
+
+.nds-hajj-logo {
+  display: block;
+  height: auto;
+  width: clamp(64px, 9vw, 120px);
+  margin-block-end: var(--spacing-2xl);
+}
+
+.nds-swiper-slide.nds-hajj .nds-section-title {
+  font-family: 'Saudi', sans-serif;
+}
+
+// ── Section decorations (DGA-coloured) — a bottom separator on every content
+//    section and a services graphic on even sections. SVGs resolve against this
+//    stylesheet's folder (assets/events/Hajj/). ──
+.nds-content-layout:not(.nds-wSideMenu, .nds-cardView) .nds-main-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand):nth-of-type(even) {
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+
+    background: url(services-section.svg);
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: contain;
+    background-color: var(--background-stripe);   // DGA: neutral-50 (light) / neutral-850 (dark)
+  }
+
+  &::after {
+    content: unset;
+  }
+}
+
+.nds-content-section {
+  position: relative;
+}
+
+.nds-content-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+
+  background: url("separator-1.svg") no-repeat center bottom;
+  background-size: contain;
+
+  pointer-events: none;
+
+  @include dark {
+    filter: contrast(0.1);
+  }
+}
+
+.nds-content-section.nds-brand::after {
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+}
+
+@media (max-width: 960px) {
+  .nds-content-section::after {
+    background-size: auto;
+  }
+}
