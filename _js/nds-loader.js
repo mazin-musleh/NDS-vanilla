@@ -272,14 +272,15 @@
             init: () => NDS.Expandable?.init?.(),
         },
         {
-            // Critical: server renders all crumbs; init() collapses 6+ into an
-            // ellipsis dropdown via replaceChildren (horizontal restructure, no layout
-            // reads). Deferral paints the full breadcrumb, then collapses it
-            // post-reveal = horizontal CLS. Skeleton reserves only row height.
+            // Delegated: pre-init paint is CSS-owned, keyed on the breadcrumb's
+            // OWN stamp — crit shapes 6+ trails to the post-collapse geometry
+            // (first + 40px ellipsis stand-in + last two), main bars the labels,
+            // so init landing after the reveal swaps in place (verified box-
+            // identical). The ellipsis dropdown uses Dropmenu from main —
+            // present long before this drains.
             name: 'Breadcrumb',
             selector: '.nds-breadcrumb-nav',
             init: () => NDS.Breadcrumb?.init?.(),
-            critical: true,
         },
         {
             name: 'Dropmenu',

@@ -9,42 +9,9 @@
 
 @use '../mixins' as *;
 
-// ==============================================
-// SKELETON TOKENS
-// ==============================================
-// Consumed by @mixin skeleton-fill / skeleton-bar (_mixins.scss) for the
-// processing-state placeholders in cards/tables. Stops are
-// neutral-200/300/400 at 20% alpha (dark: 600/500/400). The gradient runs
-// with reading direction — RTL default, LTR flips to 270deg (gradients
-// aren't direction-aware).
-:root {
-  --nds-skeleton-fill: linear-gradient(90deg,
-      rgba(229, 231, 235, 0.2) 0%,
-      rgba(210, 214, 219, 0.2) 50%,
-      rgba(157, 164, 174, 0.2) 100%);
-  --nds-skeleton-radius: var(--radius-sm, 4px);
-}
-
-:root[dir="ltr"] {
-  --nds-skeleton-fill: linear-gradient(270deg,
-      rgba(229, 231, 235, 0.2) 0%,
-      rgba(210, 214, 219, 0.2) 50%,
-      rgba(157, 164, 174, 0.2) 100%);
-}
-
-:root[data-theme~="dark"] {
-  --nds-skeleton-fill: linear-gradient(90deg,
-      rgba(77, 87, 97, 0.2) 0%,
-      rgba(108, 114, 126, 0.2) 50%,
-      rgba(157, 164, 174, 0.2) 100%);
-}
-
-:root[dir="ltr"][data-theme~="dark"] {
-  --nds-skeleton-fill: linear-gradient(270deg,
-      rgba(77, 87, 97, 0.2) 0%,
-      rgba(108, 114, 126, 0.2) 50%,
-      rgba(157, 164, 174, 0.2) 100%);
-}
+// Skeleton tokens (--nds-skeleton-fill / -radius) live in CRIT
+// (_sass/_skeleton.scss): hero-zone components are visible from crit
+// paint, so their placeholder look can't wait for main.
 
 // ==============================================
 // NDS LOADING COMPONENT

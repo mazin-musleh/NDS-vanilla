@@ -97,7 +97,15 @@ html {
 
     /* ── Breadcrumb ──
        Reserve flex row + crumb-separator slot so the breadcrumb-nav's
-       height and inline width are stable before main CSS lands. */
+       height and inline width are stable before main CSS lands. The nav
+       reserves the collapsed row's 40px (ellipsis-button height) so the
+       label-bar skeleton → real-row swap can't shift vertically. */
+    :where(.nds-breadcrumb-nav) {
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+    }
+
     :where(.nds-breadcrumb) {
         display: flex;
 
@@ -225,6 +233,77 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
     visibility: collapse;
 }
 
+/* ── Skeleton tokens ──
+   Consumed by @mixin skeleton-fill / skeleton-bar (_mixins.scss) and by
+   the placeholder rules in component CSS. Crit-resident (not main):
+   hero-zone components paint from crit, so their placeholder look must
+   too. Stops are neutral-200/300/400 at 20% alpha (dark: 600/500/400);
+   the gradient runs with reading direction — RTL default, LTR 270deg
+   (gradients aren't direction-aware). */
+:root {
+    --nds-skeleton-fill: linear-gradient(90deg,
+            rgba(229, 231, 235, 0.2) 0%,
+            rgba(210, 214, 219, 0.2) 50%,
+            rgba(157, 164, 174, 0.2) 100%);
+    --nds-skeleton-radius: var(--radius-sm, 4px);
+}
+
+:root[dir="ltr"] {
+    --nds-skeleton-fill: linear-gradient(270deg,
+            rgba(229, 231, 235, 0.2) 0%,
+            rgba(210, 214, 219, 0.2) 50%,
+            rgba(157, 164, 174, 0.2) 100%);
+}
+
+:root[data-theme~="dark"] {
+    --nds-skeleton-fill: linear-gradient(90deg,
+            rgba(77, 87, 97, 0.2) 0%,
+            rgba(108, 114, 126, 0.2) 50%,
+            rgba(157, 164, 174, 0.2) 100%);
+}
+
+:root[dir="ltr"][data-theme~="dark"] {
+    --nds-skeleton-fill: linear-gradient(270deg,
+            rgba(77, 87, 97, 0.2) 0%,
+            rgba(108, 114, 126, 0.2) 50%,
+            rgba(157, 164, 174, 0.2) 100%);
+}
+
+/* ── Breadcrumb pre-collapse shape ──
+   JS collapses 6+ crumb trails to first + ellipsis button + last two
+   (threshold 5, _js/nds-breadcrumb.js). Shape the trail from first paint
+   — deep paths otherwise wrap to two lines and snap to one at init
+   (vertical CLS; hero breadcrumbs are visible from crit). Items 3..n-2
+   hide; item 2 keeps its normal label bar and becomes the 40px ellipsis
+   button at init (bounded width change, no wrap). Released by the
+   breadcrumb's own init stamp. */
+.nds-breadcrumb-nav:not([data-nds-breadcrumb-initialized]) li:first-child:nth-last-child(n + 6)~li:nth-child(n + 3):nth-last-child(n + 3) {
+    display: none;
+}
+
+/* Item 2's label bar clips to the ellipsis button's width so the swap is
+   width-stable (it becomes the 40px .nds-breadcrumb-ellipsis at init).
+   inline-flex so the width applies to the inline link; nowrap so a long
+   label can't wrap into a tall multi-line bar inside the clipped box. */
+.nds-breadcrumb-nav:not([data-nds-breadcrumb-initialized]) li:first-child:nth-last-child(n + 6)+li:not(.nds-breadcrumb-ellipsis)> :is(a, span) {
+    width: var(--btn-size, 40px);
+    white-space: nowrap;
+    overflow: clip;
+    display: inline-flex;
+}
+
+/* Breadcrumb labels bar from first paint — hero breadcrumbs are crit-
+   visible, so the bar look lives here; main adds only the pulse (and the
+   post-init .nds-loading form). Static until main's animation lands.
+   The current-page crumb is bare text in its li (hero-sub.html), so the
+   li itself is barred for that one. */
+.nds-breadcrumb-nav:not([data-nds-breadcrumb-initialized]) :is(li> :is(a, span), li[aria-current="page"]) {
+    background: var(--nds-skeleton-fill);
+    border-radius: var(--nds-skeleton-radius);
+    color: transparent !important;
+}
+
+
 /* ── Wrapper padding ──
    Every section (hero, content, content-wrapper) gets the same horizontal
    viewport gutter — clamps to the outer viewport-padding, with a max-width
@@ -285,7 +364,6 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
     .nds-sideinfo,
     .nds-drawer,
     .nds-toc,
-    .nds-breadcrumb-nav,
     .nds-multiselect,
     .nds-empty) {
     visibility: hidden;

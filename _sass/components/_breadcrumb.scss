@@ -49,8 +49,7 @@
     }
 }
 
-.nds-breadcrumb li::after {
-    content: '';
+.nds-breadcrumb li:not(:last-child)::after {
     min-width: 24px;
 }
 
@@ -68,4 +67,22 @@
   .nds-dropmenu-item {
     min-height: 40px;
   }
+}
+
+/* ========================================
+   PROCESSING SKELETON
+   ======================================== */
+
+/* Crumb labels bar until init (or while explicitly loading); the crit
+   shape rules already collapse 6+ trails to the post-init geometry and
+   own the bar look (hero breadcrumbs are crit-visible) — main
+   contributes the pulse and the post-init loading form. Released by
+   data-nds-breadcrumb-initialized. */
+:is(.nds-breadcrumb-nav:not([data-nds-breadcrumb-initialized]),
+    .nds-breadcrumb-nav:is(.nds-loading, [data-state='loading'])) {
+
+    :is(.nds-breadcrumb>li> :is(a, span), .nds-breadcrumb>li[aria-current="page"]) {
+        animation: processing 1.5s ease-in-out infinite;
+        @include skeleton-bar;
+    }
 }
