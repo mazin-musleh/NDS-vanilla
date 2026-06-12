@@ -171,8 +171,10 @@ sidemenu_mode: false
     if (!allTabBtn) return;
 
     if (appliedContainer && tabListContainer) {
+        const otherTabs = Array.from(tabListContainer.querySelectorAll('.nds-tab')).filter(t => t !== allTabBtn);
         const syncTabList = () => {
-            tabListContainer.hidden = !appliedContainer.hasAttribute('hidden');
+            const filtering = !appliedContainer.hasAttribute('hidden');
+            otherTabs.forEach(t => { t.disabled = filtering; });
         };
         syncTabList();
         new MutationObserver(syncTabList).observe(appliedContainer, { attributes: true, attributeFilter: ['hidden'] });
