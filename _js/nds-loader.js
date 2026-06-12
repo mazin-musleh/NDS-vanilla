@@ -13,7 +13,9 @@
     // All components live under the NDS.* namespace (e.g. NDS.Modal, NDS.Accordion)
     // Form sub-systems are grouped: NDS.Forms, NDS.Upload, NDS.OTP
     // Core utilities: NDS.Theme, NDS.debounce, NDS.onDOMAdd, etc.
-    // Only exception: window.NDSInitConfig (pre-boot config, set before bundle loads)
+    // Pre-boot window globals (set before this bundle loads, so they live on
+    // window, not NDS): window.NDSInitConfig (init config), window.NDSAssetBase
+    // (asset-dir override), window.__NDS_BUNDLES (build-generated bundle manifest).
     const COMPONENTS = [
         {
             name: 'Mainnav',
@@ -531,6 +533,12 @@
     // bundle arrives. A method invoked while stubbed returns a Promise (resolves
     // after load) — fine for fire-and-forget calls. If the bundle is missing the
     // call no-ops with a warning (the __ndsStub guard stops it recursing).
+    // LIMIT: the stub bridges fire-and-forget METHOD CALLS only — a synchronous
+    // read (a property value, or a boolean-returning call used in a condition
+    // like `if (NDS.X.isActive())`) gets the always-truthy stub function/Promise
+    // during the pre-bundle gap and silently takes the wrong branch. A component
+    // whose API is read synchronously by main-bundle code (e.g. mainnav reads
+    // NDS.Backdrop.isActive()) must therefore stay in main, not be delegated.
     for (const ns in nsToBundle) {
         if (NDS[ns]) continue;
         const bundle = nsToBundle[ns];
