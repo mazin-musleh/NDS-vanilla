@@ -457,6 +457,15 @@
 
     // ── API ─────────────────────────────────────────────────────────
     window.__ndsPerf = {
+        // Structured snapshot for tooling (the /nds-perf harness scrapes this).
+        data: function () {
+            var avg = fpsH.length ? Math.round(fpsH.reduce(function (a, b) { return a + b; }, 0) / fpsH.length) : null;
+            return {
+                cls: clsTotal, janks: janks, dom: pageNodes(),
+                fpsAvg: avg, fpsMin: minFps === Infinity ? null : minFps,
+                lines: logLines.slice()
+            };
+        },
         summary: function () {
             var avg = fpsH.length ? Math.round(fpsH.reduce(function (a, b) { return a + b; }, 0) / fpsH.length) : 'N/A';
             log('═══ SUMMARY ═══', 'i');
