@@ -27,7 +27,7 @@
   gap: var(--spacing-xs);
   border: none;
   border-radius: var(--radius-sm);
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-family: var(--nds-font-family);
   font-weight: var(--font-weight-medium);
   text-align: center;
   white-space: nowrap;
@@ -108,12 +108,12 @@
 
     &[data-state~="selected"] {
       --chip-bg: var(--chip-background-primary-selected);
-      --chip-text: var(--chip-text-oncolor-default);
+      --chip-text: var(--chip-text-primary-selected);
     }
 
     &:is(:focus-visible, [data-state~="focused"]) {
       --chip-bg: var(--chip-background-primary-focused);
-      --chip-text: var(--chip-text-primary-default);
+      --chip-text: var(--chip-text-primary-focused);
     }
 
     &.nds-oncolor {

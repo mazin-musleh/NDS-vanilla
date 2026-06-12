@@ -54,7 +54,9 @@
     --chip-text-neutral-default: var(--colors-base-white);
     --chip-text-neutral-selected: var(--colors-base-black);
     --chip-text-primary-default: var(--colors-primary-200);
+    --chip-text-primary-hovered: var(--colors-primary-200);
     --chip-text-primary-pressed: var(--colors-primary-100);
+    --chip-text-primary-focused: var(--colors-primary-200);
 
     // ─── Forms ───
     --form-field-background-default: var(--colors-neutral-800);
@@ -98,7 +100,6 @@
     --radio-neutral-checked: var(--colors-neutral-400);
     --radio-neutral-hovered: var(--colors-neutral-300);
     --radio-neutral-pressed: var(--colors-neutral-300);
-    --controls-switch-track-background: var(--colors-neutral-950);
 
     --control-disabled: var(--alpha-white-30);
 

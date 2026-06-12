@@ -21,7 +21,7 @@
   border-radius: 50%; // Circle by default
   background-color: var(--avatar-background);
   color: var(--avatar-color);
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-family: var(--nds-font-family);
   font-weight: var(--font-weight-medium);
   flex-shrink: 0;
   user-select: none;

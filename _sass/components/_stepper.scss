@@ -18,7 +18,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     gap: var(--stepper-gap);
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-family: var(--nds-font-family);
     width: 100%;
     align-items: flex-start;
     counter-reset: step-counter;

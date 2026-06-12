@@ -47,6 +47,7 @@
     --button-background-transparent-pressed: var(--alpha-white-40);
     --button-background-transparent-selected: var(--alpha-white-30);
     --button-background-disabled-oncolor: var(--alpha-white-20);
+    --button-label-transparent-default-oncolor: var(--text-oncolor-primary);
     --button-label-transparent-hovered-oncolor: var(--colors-primary-400);
     --button-label-transparent-pressed-oncolor: var(--colors-primary-300);
     --button-label-transparent-selected-oncolor: var(--colors-primary-400); // mirrors danger-primary precedent (selected = hovered); confirm with design
@@ -93,7 +94,10 @@
     --chip-text-neutral-default: var(--colors-base-black);
     --chip-text-neutral-selected: var(--colors-base-white);
     --chip-text-primary-default: var(--colors-primary-800);
+    --chip-text-primary-hovered: var(--colors-primary-800);
     --chip-text-primary-pressed: var(--colors-primary-900);
+    --chip-text-primary-selected: var(--colors-base-white);
+    --chip-text-primary-focused: var(--colors-primary-800);
     --chip-text-oncolor-default: var(--colors-base-white);
     --chip-text-disabled: var(--colors-neutral-400);
     --chip-text-oncolor-disabled: var(--alpha-white-40);
@@ -172,7 +176,7 @@
 
     // ── rating ──
     --rating-star-normal-default: var(--colors-neutral-300);
-    --rating-star-selected-default: var(--background-secondary);
+    --rating-star-selected-default: var(--colors-secondary-600);
     --rating-star-pressed-default: var(--colors-secondary-700);
     --rating-star-hovered-default: var(--colors-secondary-500);
     --rating-star-normal-brand: var(--colors-neutral-300);

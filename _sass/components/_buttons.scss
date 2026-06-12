@@ -310,7 +310,7 @@
         --btn-bg-active: var(--button-background-transparent-pressed);
         --btn-bg-selected: var(--button-background-transparent-selected);
         --btn-bg-disabled: transparent;
-        --btn-color: var(--text-oncolor-primary);
+        --btn-color: var(--button-label-transparent-default-oncolor);
         --btn-loading-color: var(--text-oncolor-primary);
         --btn-loading-track: var(--alpha-white-20);
       }
@@ -320,7 +320,7 @@
         --btn-bg-hover: transparent;
         --btn-bg-active: transparent;
         --btn-bg-selected: transparent;
-        --btn-color: var(--text-oncolor-primary);
+        --btn-color: var(--button-label-transparent-default-oncolor);
         --btn-color-hover: var(--button-label-transparent-hovered-oncolor);
         --btn-loading-color: var(--text-oncolor-primary);
         --btn-loading-track: var(--alpha-white-20);
