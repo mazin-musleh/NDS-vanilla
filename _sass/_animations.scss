@@ -6,9 +6,11 @@
    LOADING SPIN ANIMATION
    ======================================== */
 
+// Rotation only — positioning stays on the element (translate property),
+// so in-flow spinners (e.g. icon-slot buttons) don't inherit a centering shift
 @keyframes nds-spin {
   to {
-    transform: translate(-50%, -50%) rotate(360deg);
+    rotate: 360deg;
   }
 }
 

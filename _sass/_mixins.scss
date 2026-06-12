@@ -260,10 +260,6 @@ $breakpoints-range: (
   align-items: center;
   gap: var(--_btn-gap);
 
-  &[hidden] {
-    display: none;
-  }
-
   border: 1px solid transparent;
   border-radius: var(--_btn-radius);
   white-space: nowrap;

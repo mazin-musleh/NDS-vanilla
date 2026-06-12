@@ -415,14 +415,6 @@
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--alpha-white-20);
 
-      &.nds-primary {
-        --btn-bg: var(--button-background-danger-primary-default);
-        --btn-bg-hover: var(--button-background-danger-primary-hovered);
-        --btn-bg-active: var(--button-background-danger-primary-pressed);
-        --btn-bg-selected: var(--button-background-danger-primary-selected);
-        --btn-color: var(--text-oncolor-primary);
-      }
-
       &.nds-secondary {
         --btn-bg: var(--button-background-danger-secondary-default);
         --btn-bg-hover: var(--button-background-danger-secondary-hovered);
@@ -515,14 +507,14 @@
     width: var(--btn-size);
     padding: 0;
 
-    &::after {
+    &:not(.nds-loading,[data-state~="loading"])::after {
       content: "";
       display: inline-block;
       width: var(--_btn-icon-size);
       height: var(--_btn-icon-size);
       background: currentColor;
       mask: var(--nds-icon-more-horizontal) center / contain no-repeat;
-      opacity: var(--nds-icons-opacity, 1);
+      opacity: var(--nds-icons-opacity);
     }
   }
 
@@ -539,7 +531,7 @@
       height: var(--_btn-icon-size);
       background: currentColor;
       mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
-      opacity: var(--nds-icons-opacity, 1);
+      opacity: var(--nds-icons-opacity);
       rotate: -90deg;
       transition: transform 0.1s ease;
     }
@@ -580,10 +572,6 @@
     transform: rotate(180deg);
   }
 
-  &.nds-down::after {
-    transform: rotate(0deg);
-  }
-
   // ==============================================
   // LAYOUT MODIFIERS
   // ==============================================
@@ -606,7 +594,7 @@
     }
   }
 
-  &:is(.nds-icon-only) .nds-label {
+  &.nds-icon-only .nds-label {
     @include label-hidden;
   }
 
@@ -630,10 +618,6 @@
 
       &.nds-md {
         padding: 0 var(--spacing-md);
-      }
-
-      &.nds-lg {
-        padding: 0 var(--spacing-lg);
       }
     }
     
@@ -660,6 +644,22 @@
     --loading-color: var(--_btn-loading-color);
     --loading-track: var(--_btn-loading-track);
     color: transparent !important;
+  }
+
+  // Icon-pseudo buttons: the icon ::after is an in-flow flex child that
+  // contributes to button width. While loading it becomes the absolute
+  // centered spinner, so a hidden in-flow ::before reserves the icon's
+  // box and the button keeps its width.
+  &:is(.nds-ellipsis, .nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down):is(.nds-loading, [data-state~="loading"])::before {
+    content: "";
+    width: var(--_btn-icon-size);
+    height: var(--_btn-icon-size);
+    visibility: hidden;
+  }
+
+  &.nds-menu-btn:is(.nds-loading, [data-state~="loading"])::before {
+    width: calc(var(--_btn-icon-size) - 4px);
+    height: calc(var(--_btn-icon-size) - 4px);
   }
 
   // ==============================================
@@ -776,13 +776,11 @@
     }
 
     &:first-child {
-      --btn-radius: 0;
       border-start-start-radius: var(--btn-group-radius);
       border-end-start-radius: var(--btn-group-radius);
     }
 
     &:last-child {
-      --btn-radius: 0;
       border-start-end-radius: var(--btn-group-radius);
       border-end-end-radius: var(--btn-group-radius);
     }
