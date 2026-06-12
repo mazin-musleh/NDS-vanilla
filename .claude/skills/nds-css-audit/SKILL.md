@@ -408,6 +408,8 @@ Group findings in the report by **profile band** (pure wins → tradeoffs → ne
 
 The audit doesn't run the compiler — it estimates compiled bytes from source by applying these rules. Round to the nearest 10B. Total at the end of the report.
 
+**Count compiled emissions, not source occurrences.** Sass re-prints the full parent chain for every nested rule, so an edit to a parent selector (an added `:is()` arm, a collapsed `:not()` chain, a widened selector list) lands once per compiled child block — nested children, mixin-emitted blocks, and per-breakpoint arms included. Multiply the per-occurrence delta by that emission count before reporting: a +30B `:is()` arm on a parent with 7 nested rules costs ~+210B compiled, and a −6B `:not()` collapse on a parent that wraps a large variant mixin saves −6B × every rule the mixin emits. Estimates that count source lines instead of emissions miss by 3-7× in either direction.
+
 **For each finding, compute compiled-byte savings as follows:**
 
 - **SEL-01** (`:is()` merge of adjacent state pseudo-classes) — the *raw* delta is `(resolved chain + body) × (N−1) − :is() overhead`, but report the **gzip-discounted wire** figure: the duplicated body and repeated chain are already back-referenced by gzip, so the wire saving is a small fraction of the raw number (≈ the removed back-reference overhead). Lead the finding with the structural win — one fewer compiled rule — not the byte figure. (See the RULES-SEL.md gzip preamble.)
