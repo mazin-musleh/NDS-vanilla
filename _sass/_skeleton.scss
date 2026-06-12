@@ -362,8 +362,8 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
 }
 
 /* ── Icon gate ──
-   nds-icons.min.css is preloaded as a deferred <link> after main CSS
-   (head.html, fetchpriority="low"); until it lands the --nds-icon-* tokens
+   nds-icons.min.css is injected by loadDeferredAssets() (head-inline-scripts.html)
+   off the main-CSS onload; until it lands the --nds-icon-* tokens
    are undefined, so any masked pseudo paints as a solid currentColor block.
    Every masked-icon pseudo writes `opacity: var(--nds-icons-opacity, 1)`
    next to its `mask:` line; this var ships 0 by default and flips to 1
@@ -372,6 +372,13 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
    the mask. */
 :root { --nds-icons-opacity: 0; }
 html[data-nds-icons-loaded] { --nds-icons-opacity: 1; }
+
+/* ── HGI font gate ──
+   Content icons (<i class="hgi hgi-stroke hgi-NAME">) render CJK fallback
+   glyphs until the icon font (same deferred path) lands; hidden until
+   nds-fontLoading.js confirms the face and stamps it loaded. */
+i.hgi-stroke { opacity: 0; }
+html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
 
 /* ── Reveal at crit-load ──
    Hero body + wrapper (containing title / description / breadcrumb)
