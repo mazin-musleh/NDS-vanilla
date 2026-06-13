@@ -10,7 +10,7 @@ exclude_showcase: true
 bundle_sizes:
   critical_css: 10  # nds.critical.min.css
   core_js: 35       # nds-main.min.js (loads on every page)
-  total_js: 92      # main + delegated + extras (full library, demand-loaded)
+  total_js: 93      # main + delegated + extras (full library, demand-loaded)
 ---
 
 <!-- Implementation Solution -->
@@ -157,7 +157,7 @@ bundle_sizes:
             <p class="nds-section-description">Seasonal theme packs for national occasions. Each one re-skins the whole site from a single drop-in tag, and removing it restores the default when the event ends.</p>
         </div>
         <div class="nds-section-body  nds-max-width">
-            <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="40">
+            <div class="nds-swiper" slides-max="3" slides-mid="2" slides-min="1" peek="20">
                 <div class="nds-swiper-wrapper">
                     {% for ev in site.data.content.events %}
                     <div class="nds-swiper-slide">
@@ -330,6 +330,73 @@ bundle_sizes:
             <p class="nds-section-description">Built with a performance-first and compatibility approach.</p>
         </div>
         <div class="nds-section-body">
+            <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;">
+                <div class="nds-card nds-shadow nds-statistic">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="100">0</span>
+                            <p class="nds-card-description">Performance</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-card nds-shadow nds-statistic">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-access"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="100">0</span>
+                            <p class="nds-card-description">Accessibility</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-card nds-shadow nds-statistic">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-checkmark-badge-01"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="100">0</span>
+                            <p class="nds-card-description">Best Practices</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-card nds-shadow nds-statistic">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon nds-circle nds-xl">
+                                <i class="hgi hgi-stroke hgi-seo"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-number nds-counter-value nds-number-format" data-target="100">0</span>
+                            <p class="nds-card-description">SEO</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-block-start: 24px;">
+                <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/484v9dkc5q?form_factor=mobile" target="_blank" rel="noopener" class="nds-color">View the PageSpeed Insights report</a>
+            </p>
+        </div>
+        <div class="nds-section-body">
             <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--typo-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -358,6 +425,13 @@ bundle_sizes:
                         <span class="nds-label">3-Tier Design Tokens</span>
                     </span>
                     <p class="nds-item-desc">Color tokens, semantic tokens, and component tokens, all defined as CSS custom properties. Each component exposes public properties for customization while keeping internal styles private, no overrides needed.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-paint-board"></i>
+                        <span class="nds-label">Theming & Dark Mode</span>
+                    </span>
+                    <p class="nds-item-desc">Light and dark mode out of the box, plus full re-branding: generate an entire palette from a single OKLCH seed color, pick a predefined theme, or drop in a stylesheet theme. All driven from one HTML attribute, with no rebuild.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
