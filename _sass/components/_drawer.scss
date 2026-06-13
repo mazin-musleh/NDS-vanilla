@@ -96,9 +96,9 @@
         }
 
         &:is(:hover,[data-state~="active"]) .nds-featured-icon {
-            --icon-bg-color: var(--featuredicons-background-default-light);
-            --icon-color: var(--featuredicons-icon-neutral);
-            --dark-bg-color: var(--featuredicons-icon-default);
+            --featuredicon-bg: var(--featuredicons-background-default-light);
+            --featuredicon-color: var(--featuredicons-icon-neutral);
+            --featuredicon-dark-bg: var(--featuredicons-icon-default);
         }
     }
 }

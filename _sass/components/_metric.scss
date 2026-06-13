@@ -106,9 +106,9 @@
   &[data-status="positive"] {
     --metric-trend-color: var(--text-success);
     --metric-chart-color: var(--border-success);
-    --icon-bg-color: var(--featuredicons-background-success-light);
-    --icon-color: var(--featuredicons-icon-success);
-    --dark-bg-color: var(--background-success);
+    --featuredicon-bg: var(--featuredicons-background-success-light);
+    --featuredicon-color: var(--featuredicons-icon-success);
+    --featuredicon-dark-bg: var(--background-success);
 
     .nds-card-metric-trend.nds-arrow > i.nds-icon::before {
       transform: rotate(90deg);
@@ -118,9 +118,9 @@
   &[data-status="negative"] {
     --metric-trend-color: var(--text-error);
     --metric-chart-color: var(--border-error);
-    --icon-bg-color: var(--featuredicons-background-error-light);
-    --icon-color: var(--featuredicons-icon-error);
-    --dark-bg-color: var(--background-error);
+    --featuredicon-bg: var(--featuredicons-background-error-light);
+    --featuredicon-color: var(--featuredicons-icon-error);
+    --featuredicon-dark-bg: var(--background-error);
 
     .nds-card-metric-trend.nds-arrow > i.nds-icon::before {
       transform: rotate(-90deg);

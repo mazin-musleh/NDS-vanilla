@@ -41,10 +41,10 @@
   --_card-title: var(--card-title, var(--text-display));
   --_card-subtitle: var(--card-subtitle, var(--text-primary));
   --_card-number: var(--card-number, var(--text-brand));
-  --_card-icon: var(--icon-color, var(--featuredicons-icon-primary));
-  --_card-icon-bg: var(--icon-bg-color, var(--featuredicons-background-brand-light));
-  --icon-color: var(--_card-icon);
-  --icon-bg-color: var(--_card-icon-bg);
+  --_card-icon: var(--featuredicon-color, var(--featuredicons-icon-primary));
+  --_card-icon-bg: var(--featuredicon-bg, var(--featuredicons-background-brand-light));
+  --featuredicon-color: var(--_card-icon);
+  --featuredicon-bg: var(--_card-icon-bg);
   --avatar-color: var(--_card-icon);
   --_card-rating: var(--card-rating, var(--text-secondary-paragraph));
   --_card-width: var(--card-width, 100%);
@@ -382,6 +382,9 @@
 // PERF-04 variant-grid: deliberate 4-axis composition (base × oncolor-guard × variant-color × variant-style); restructuring to Solution A would add ~12 class definitions to the bundle for a sub-ms per-match improvement. Tradeoff resolves toward keeping bytes off the wire.
 // --card-border and --card-title are scoped to &.nds-color so status alone never tints chrome;
 // alerts and cards both inherit this gate (no .nds-alert exclusion needed).
+// The featured-icon fill/glyph colors come from the featured-icon core, whose
+// status cascade keys on these same aliases — so only card-specific deltas live
+// here: neutral's softer --featuredicon-color, the .nds-color alpha tints, oncolor/disabled.
 .nds-card:not(.nds-oncolor, [disabled]) {
   &:is(.nds-neutral, [data-status="neutral"]) {
     --card-border-hover: var(--colors-neutral-500);
@@ -389,21 +392,20 @@
     --card-title: var(--colors-neutral-800);
     --card-subtitle: var(--colors-neutral-600);
     --card-number: var(--colors-neutral-600);
-    --icon-bg-color: var(--featuredicons-background-default-light);
-    --icon-color: var(--colors-neutral-600);
+    --featuredicon-color: var(--colors-neutral-600); // softer than the core's neutral-700
 
     &.nds-color {
       --card-bg: var(--colors-neutral-50);
       --card-bg-hover: var(--colors-neutral-100);
       --card-border: var(--border-neutral-secondary);
-      --icon-bg-color: var(--featuredicons-background-neutral-light);
+      --featuredicon-bg: var(--featuredicons-background-neutral-light);
     }
 
     @include dark {
       --card-title: var(--colors-neutral-200);
       --card-subtitle: var(--colors-neutral-400);
       --card-number: var(--colors-neutral-400);
-      --icon-color: var(--colors-neutral-400);
+      --featuredicon-color: var(--colors-neutral-400);
 
       &.nds-color {
         --card-bg: var(--alpha-white-10);
@@ -419,14 +421,12 @@
     --card-title: var(--text-warning);
     --card-subtitle: var(--text-warning);
     --card-number: var(--text-warning);
-    --icon-bg-color: var(--featuredicons-background-warning-light);
-    --icon-color: var(--icon-warning);
 
     &.nds-color {
       --card-bg: var(--background-warning-light);
       --card-bg-hover: var(--colors-yellow-100);
       --card-border: var(--border-warning-light);
-      --icon-bg-color: var(--alpha-warning-10);
+      --featuredicon-bg: var(--alpha-warning-10);
     }
 
     @include dark {
@@ -443,14 +443,12 @@
     --card-title: var(--text-error);
     --card-subtitle: var(--text-error);
     --card-number: var(--text-error);
-    --icon-bg-color: var(--featuredicons-background-error-light);
-    --icon-color: var(--icon-error);
 
     &.nds-color {
       --card-bg: var(--background-error-light);
       --card-bg-hover: var(--colors-red-100);
       --card-border: var(--border-error-light);
-      --icon-bg-color: var(--alpha-error-10);
+      --featuredicon-bg: var(--alpha-error-10);
     }
 
     @include dark {
@@ -467,14 +465,12 @@
     --card-title: var(--text-info);
     --card-subtitle: var(--text-info);
     --card-number: var(--text-info);
-    --icon-bg-color: var(--featuredicons-background-info-light);
-    --icon-color: var(--icon-info);
 
     &.nds-color {
       --card-bg: var(--background-info-light);
       --card-bg-hover: var(--colors-blue-100);
       --card-border: var(--border-info-light);
-      --icon-bg-color: var(--alpha-info-10);
+      --featuredicon-bg: var(--alpha-info-10);
     }
 
     @include dark {
@@ -491,14 +487,12 @@
     --card-title: var(--text-success);
     --card-subtitle: var(--text-success);
     --card-number: var(--text-success);
-    --icon-bg-color: var(--featuredicons-background-success-light);
-    --icon-color: var(--icon-success);
 
     &.nds-color {
       --card-bg: var(--background-success-light);
       --card-bg-hover: var(--colors-green-100);
       --card-border: var(--border-success-light);
-      --icon-bg-color: var(--alpha-success-10);
+      --featuredicon-bg: var(--alpha-success-10);
     }
 
     @include dark {
@@ -524,8 +518,8 @@
   --card-title: var(--text-oncolor-primary);
   --card-subtitle: var(--text-oncolor-secondary);
   --card-number: var(--text-oncolor-primary);
-  --icon-bg-color: var(--alpha-white-10);
-  --icon-color: var(--featuredicons-icon-oncolor);
+  --featuredicon-bg: var(--alpha-white-10);
+  --featuredicon-color: var(--featuredicons-icon-oncolor);
   --card-rating: var(--alpha-white-80);
 }
 
@@ -581,8 +575,8 @@
   --_card-border: var(--border-disabled);
   --_card-icon: var(--icon-default-400);
   --_card-icon-bg: var(--background-inverse-disabled);
-  --icon-color: var(--icon-default-400);
-  --icon-bg-color: var(--background-inverse-disabled);
+  --featuredicon-color: var(--icon-default-400);
+  --featuredicon-bg: var(--background-inverse-disabled);
   --_card-rating: var(--text-default-disabled);
   box-shadow: none;
   pointer-events: none;

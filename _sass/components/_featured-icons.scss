@@ -11,24 +11,34 @@
 // ==============================================
 
 .nds-featured-icon {
-  // Custom properties with fallbacks for parent override
-  --featuredicons-bg-color: var(--icon-bg-color, var(--featuredicons-background-brand-light));
-  --featuredicons-icon-color: var(--icon-color, var(--featuredicons-icon-primary));
-  --featuredicons-dark-bg-color: var(--dark-bg-color, var(--background-success));
+  // PUBLIC knobs (--featuredicon-*) resolve to PRIVATE (--_featuredicon-*) with
+  // the component defaults here, so any consumer can override a single aspect.
+  // Hosts that color a nested featured icon (cards, drawer, metric) and the
+  // status cascade below set the same --featuredicon-* knobs:
+  //   --featuredicon-size      container diameter (size classes set it)
+  //   --featuredicon-bg        background fill
+  //   --featuredicon-color     glyph color
+  //   --featuredicon-dark-bg   .nds-dark fill
+  //   --featuredicon-radius    corner rounding (.nds-circle forces 50%)
+  --_featuredicon-size: var(--featuredicon-size, 40px);
+  --_featuredicon-bg: var(--featuredicon-bg, var(--featuredicons-background-brand-light));
+  --_featuredicon-color: var(--featuredicon-color, var(--featuredicons-icon-primary));
+  --_featuredicon-dark-bg: var(--featuredicon-dark-bg, var(--background-success));
+  --_featuredicon-radius: var(--featuredicon-radius, calc((var(--_featuredicon-size) / 4) - 2px));
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: calc((var(--nds-icon-size) / 4) - 2px);
+  border-radius: var(--_featuredicon-radius);
   position: relative;
-  width: var(--nds-icon-size);
-  height: var(--nds-icon-size);
-  font-size: calc(var(--nds-icon-size) / 2)!important;
-  padding: calc(var(--nds-icon-size) / 4);
-  line-height: calc(var(--nds-icon-size) / 2)!important;
+  width: var(--_featuredicon-size);
+  height: var(--_featuredicon-size);
+  font-size: calc(var(--_featuredicon-size) / 2)!important;
+  padding: calc(var(--_featuredicon-size) / 4);
+  line-height: calc(var(--_featuredicon-size) / 2)!important;
   border: unset;
-  background-color: var(--featuredicons-bg-color);
-  color: var(--featuredicons-icon-color);
+  background-color: var(--_featuredicon-bg);
+  color: var(--_featuredicon-color);
   overflow: hidden;
 
 
@@ -38,25 +48,25 @@
 
   &.nds-md,
   & {
-    --nds-icon-size: 40px;
+    --featuredicon-size: 40px;
   }
 
   &.nds-sm {
-    --nds-icon-size: 32px;
+    --featuredicon-size: 32px;
   }
 
   &.nds-lg {
-    --nds-icon-size: 48px;
+    --featuredicon-size: 48px;
 
   }
 
   &.nds-xl {
-    --nds-icon-size: 56px;
+    --featuredicon-size: 56px;
   }
 
   // Brand is the default (no attribute needed). All other status color
   // variants are handled by the global `[data-status="..."]` rules below,
-  // which cascade through `--icon-bg-color` / `--icon-color` — whether
+  // which cascade through `--featuredicon-bg` / `--featuredicon-color` — whether
   // the status is on the featured icon itself or on any ancestor.
 
   // ==============================================
@@ -73,7 +83,7 @@
   }
 
   &.nds-dark {
-    background-color: var(--featuredicons-dark-bg-color);
+    background-color: var(--_featuredicon-dark-bg);
     border: 2px solid transparent;
 
     :is(.nds-icon, i) {
@@ -81,51 +91,54 @@
     }
 
     @include dark {
-      --dark-bg-color: var(--colors-primary-700);
-      &[data-status="success"] { --dark-bg-color: var(--colors-green-700); }
-      &[data-status="info"] { --dark-bg-color: var(--colors-blue-700); }
-      &[data-status="warning"] { --dark-bg-color: var(--colors-yellow-700); }
-      &[data-status="error"] { --dark-bg-color: var(--colors-red-700); }
-      &[data-status="neutral"] { --dark-bg-color: var(--colors-neutral-900); }
+      --featuredicon-dark-bg: var(--colors-primary-700);
+      &[data-status="success"] { --featuredicon-dark-bg: var(--colors-green-700); }
+      &[data-status="info"] { --featuredicon-dark-bg: var(--colors-blue-700); }
+      &[data-status="warning"] { --featuredicon-dark-bg: var(--colors-yellow-700); }
+      &[data-status="error"] { --featuredicon-dark-bg: var(--colors-red-700); }
+      &[data-status="neutral"] { --featuredicon-dark-bg: var(--colors-neutral-900); }
     }
   }
 }
 
 // ==============================================
-// INHERITED STATUS
-// Any ancestor with [data-status] cascades matching tokens to featured
-// icons nested inside. The icon's own [data-status] wins via higher
-// specificity in the direct rules above.
-// --icon-bg-color / --icon-color are only consumed by .nds-featured-icon
-// (and forwarded through cards), so this is safe to apply broadly.
+// INHERITED STATUS — single owner of status → icon color
+// Keyed on BOTH the color-class aliases (.nds-green etc.) and [data-status],
+// so the mapping cascades to a featured icon whether the status sits on the
+// icon itself or on any ancestor (a card, drawer item, …). The icon's own
+// status wins via higher specificity in the direct rules above.
+// --featuredicon-bg / --featuredicon-color are only consumed by .nds-featured-icon (and
+// forwarded through cards), so applying them on these aliases is safe; hosts
+// that need a different value (cards' softer neutral, .nds-color tints,
+// disabled/oncolor) override at higher specificity. Selectors stay (0,1,0).
 // ==============================================
 
-[data-status="success"] {
-  --icon-bg-color: var(--featuredicons-background-success-light);
-  --icon-color: var(--featuredicons-icon-success);
-  --dark-bg-color: var(--background-success);
+:is(.nds-green, [data-status="success"]) {
+  --featuredicon-bg: var(--featuredicons-background-success-light);
+  --featuredicon-color: var(--featuredicons-icon-success);
+  --featuredicon-dark-bg: var(--background-success);
 }
 
-[data-status="info"] {
-  --icon-bg-color: var(--featuredicons-background-info-light);
-  --icon-color: var(--featuredicons-icon-info);
-  --dark-bg-color: var(--background-info);
+:is(.nds-blue, [data-status="info"]) {
+  --featuredicon-bg: var(--featuredicons-background-info-light);
+  --featuredicon-color: var(--featuredicons-icon-info);
+  --featuredicon-dark-bg: var(--background-info);
 }
 
-[data-status="warning"] {
-  --icon-bg-color: var(--featuredicons-background-warning-light);
-  --icon-color: var(--featuredicons-icon-warning);
-  --dark-bg-color: var(--background-warning);
+:is(.nds-yellow, [data-status="warning"]) {
+  --featuredicon-bg: var(--featuredicons-background-warning-light);
+  --featuredicon-color: var(--featuredicons-icon-warning);
+  --featuredicon-dark-bg: var(--background-warning);
 }
 
-:is([data-status="error"], [data-status="critical"]) {
-  --icon-bg-color: var(--featuredicons-background-error-light);
-  --icon-color: var(--featuredicons-icon-error);
-  --dark-bg-color: var(--background-error);
+:is(.nds-red, [data-status="error"], [data-status="critical"]) {
+  --featuredicon-bg: var(--featuredicons-background-error-light);
+  --featuredicon-color: var(--featuredicons-icon-error);
+  --featuredicon-dark-bg: var(--background-error);
 }
 
-[data-status="neutral"] {
-  --icon-bg-color: var(--featuredicons-background-default-light);
-  --icon-color: var(--featuredicons-icon-neutral);
-  --dark-bg-color: var(--background-neutral-400);
+:is(.nds-neutral, [data-status="neutral"]) {
+  --featuredicon-bg: var(--featuredicons-background-default-light);
+  --featuredicon-color: var(--featuredicons-icon-neutral);
+  --featuredicon-dark-bg: var(--background-neutral-400);
 }

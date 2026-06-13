@@ -158,7 +158,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-resize-01"></i>
                         <span class="nds-label">Four Sizes</span>
                     </span>
-                    <p class="nds-item-desc">From 32px to 56px. Icon and padding scale proportionally through the <code class="nds-inline-code lang-html">--nds-icon-size</code> property.</p>
+                    <p class="nds-item-desc">From 32px to 56px. Icon and padding scale proportionally through the <code class="nds-inline-code lang-html">--featuredicon-size</code> property.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -172,7 +172,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-paint-board"></i>
                         <span class="nds-label">Custom Color Override</span>
                     </span>
-                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--icon-bg-color</code> and <code class="nds-inline-code lang-html">--icon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants.</p>
+                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">--featuredicon-bg</code> and <code class="nds-inline-code lang-html">--featuredicon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants.</p>
                 </div>
             </div>
         </div>
@@ -198,7 +198,7 @@ direction: ltr
                     <li>Use <code class="nds-inline-code lang-html">nds-sm</code> in dense layouts like table rows or sidebar items. Use <code class="nds-inline-code lang-html">nds-lg</code> or <code class="nds-inline-code lang-html">nds-xl</code> for hero sections and landing page features</li>
                     <li>Use <code class="nds-inline-code lang-html">nds-circle</code> when the icon sits next to rounded elements like avatars. Use the default rounded square for card headers and list items</li>
                     <li>Use <code class="nds-inline-code lang-html">nds-dark</code> when the icon needs to stand out on light backgrounds with stronger visual weight. Use <code class="nds-inline-code lang-html">nds-outline</code> for a lighter, secondary treatment</li>
-                    <li>Override <code class="nds-inline-code lang-html">--icon-bg-color</code> and <code class="nds-inline-code lang-html">--icon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants</li>
+                    <li>Override <code class="nds-inline-code lang-html">--featuredicon-bg</code> and <code class="nds-inline-code lang-html">--featuredicon-color</code> directly on the element without a variant class to create custom color pairings beyond the built-in variants</li>
                 </ul>
             </div>
 
@@ -285,6 +285,7 @@ direction: ltr
 
             <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <p>Each knob can be set on the element itself or on any ancestor — the status cascade and host components (cards, drawer, metric) set these to color a nested featured icon.</p>
                 <table class="nds-table nds-responsive">
                     <thead>
                         <tr>
@@ -294,16 +295,24 @@ direction: ltr
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">--icon-bg-color</code></td>
-                            <td>Override the background color. Set on the element or a parent to create custom color pairings.</td>
+                            <td><code class="nds-inline-code lang-html">--featuredicon-bg</code></td>
+                            <td>Background fill color. Set without a variant to create custom color pairings.</td>
                         </tr>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">--icon-color</code></td>
-                            <td>Override the icon color. Pair with <code class="nds-inline-code lang-html">--icon-bg-color</code> for full control.</td>
+                            <td><code class="nds-inline-code lang-html">--featuredicon-color</code></td>
+                            <td>Icon glyph color. Pair with <code class="nds-inline-code lang-html">--featuredicon-bg</code> for full control.</td>
                         </tr>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">--nds-icon-size</code></td>
-                            <td>Override the container size in pixels. Icon and padding scale proportionally.</td>
+                            <td><code class="nds-inline-code lang-html">--featuredicon-size</code></td>
+                            <td>Container diameter. Icon, padding, and radius scale proportionally. The size classes (<code class="nds-inline-code lang-html">nds-sm</code>–<code class="nds-inline-code lang-html">nds-xl</code>) set it.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--featuredicon-radius</code></td>
+                            <td>Corner rounding. Defaults to a proportional rounded square; <code class="nds-inline-code lang-html">nds-circle</code> forces a full circle.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--featuredicon-dark-bg</code></td>
+                            <td>Fill color for the <code class="nds-inline-code lang-html">nds-dark</code> variant.</td>
                         </tr>
                     </tbody>
                 </table>
