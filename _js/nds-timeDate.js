@@ -2,13 +2,21 @@
 (() => {
     'use strict';
 
-    // Helper to get Saudi Arabia date (GMT+3) — embedded into every cache
-    // key below so a tab that crosses midnight automatically reads the
-    // new day's entry instead of stale data.
+    // Intl.DateTimeFormat construction does the expensive ICU locale init;
+    // format()/formatToParts() on an existing instance is cheap. Memoize one
+    // formatter per (locale, options) so repeated renders never rebuild it.
+    const _fmtCache = new Map();
+    function dtf(locale, opts) {
+        const key = locale + '|' + JSON.stringify(opts);
+        let f = _fmtCache.get(key);
+        if (!f) _fmtCache.set(key, f = new Intl.DateTimeFormat(locale, opts));
+        return f;
+    }
+
+    // Saudi Arabia (Riyadh, GMT+3) date as YYYY-MM-DD — embedded into the cache
+    // key below so a tab that crosses midnight reads the new day's entry.
     function getSaudiDate() {
-        return new Date().toLocaleDateString('en-CA', {
-            timeZone: 'Asia/Riyadh'
-        });
+        return dtf('en-CA', { timeZone: 'Asia/Riyadh' }).format(new Date());
     }
 
     // Cached payloads live in localStorage, which any same-origin script can
@@ -27,77 +35,31 @@
         parent.appendChild(span);
     }
 
-    // Hijri date with efficient dual-language caching
+    // Hijri date via Intl's Umm al-Qura calendar — the official Saudi calendar,
+    // computed locally (no network). Stays async to preserve the Promise
+    // contract consumers rely on (date-picker calls .then on it). Latin digits
+    // (nu-latn) match the topbar clock and the previous output. Formatters are
+    // memoized by dtf(), so repeat calls don't rebuild the (costly) ICU data.
     async function getHijriDate(isArabic, returnStructured = false) {
-        const today = getSaudiDate();
-        const arabicKey = `hijri_ar_${today}`;
-        const englishKey = `hijri_en_${today}`;
-        const dataKey = `hijri_data_${today}`;
+        const date = new Date();
 
-        // Check if we already have all three cached. Keys embed today, so
-        // day-boundary invalidation is handled by the cache-miss path.
-        const arabicCached = NDS.cache.get(arabicKey);
-        const englishCached = NDS.cache.get(englishKey);
-        const dataCached = NDS.cache.get(dataKey);
-
-        //console.log('Cache check:', { arabicCached: !!arabicCached, englishCached: !!englishCached, dataCached: !!dataCached });
-
-        if (arabicCached && englishCached && dataCached) {
-           /*  console.log('All cached - arabicCached:', arabicCached);
-            console.log('All cached - englishCached:', englishCached);
-            console.log('All cached - dataCached:', dataCached); */
-            return returnStructured ? dataCached : (isArabic ? arabicCached : englishCached);
+        if (returnStructured) {
+            // numeric parts via a latin-digit locale so parseInt is safe
+            const parts = dtf('en-US-u-ca-islamic-umalqura', {
+                day: 'numeric', month: 'numeric', year: 'numeric'
+            }).formatToParts(date);
+            const num = type => parseInt(parts.find(p => p.type === type).value, 10);
+            return { day: num('day'), month: num('month'), year: num('year') };
         }
 
-        try {
-            const now = new Date();
-            const dateStr = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`;
-            
-            const response = await fetch(
-                `https://api.aladhan.com/v1/gToH/${dateStr}`,
-                { signal: AbortSignal.timeout(5000) }
-            );
-
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-
-            if (data.code === 200) {
-                const hijri = data.data.hijri;
-                
-                // Create both language versions from single API response
-                const arabicDate = `${hijri.day} ${hijri.month.ar} ${hijri.year} هـ`;
-                const englishDate = `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
-                
-                // Create structured data
-                const hijriData = {
-                    day: parseInt(hijri.day),
-                    month: parseInt(hijri.month.number),
-                    year: parseInt(hijri.year)
-                };
-                
-                // Cache all three for 24 hours
-                NDS.cache.set(arabicKey, arabicDate, 24 * 60);
-                NDS.cache.set(englishKey, englishDate, 24 * 60);
-                NDS.cache.set(dataKey, hijriData, 24 * 60);
-                
-                return returnStructured ? hijriData : (isArabic ? arabicDate : englishDate);
-            }
-            throw new Error('Invalid API response');
-        } catch (error) {
-            // Fallback to browser calculation
-            const date = new Date();
-            if (isArabic) {
-                const hijri = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', {
-                    day: 'numeric', month: 'long', year: 'numeric'
-                }).format(date);
-                return hijri.includes('هـ') ? hijri : `${hijri} هـ`;
-            } else {
-                const hijri = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
-                    day: 'numeric', month: 'long', year: 'numeric'
-                }).format(date);
-                return hijri.includes('AH') ? hijri : `${hijri} AH`;
-            }
-        }
+        const locale = isArabic
+            ? 'ar-SA-u-ca-islamic-umalqura-nu-latn'
+            : 'en-US-u-ca-islamic-umalqura';
+        const formatted = dtf(locale, {
+            day: 'numeric', month: 'long', year: 'numeric'
+        }).format(date);
+        const suffix = isArabic ? 'هـ' : 'AH';
+        return formatted.includes(suffix) ? formatted : `${formatted} ${suffix}`;
     }
 
     // Date function with caching
@@ -126,7 +88,7 @@
         } else {
             // Gregorian date
             const locale = isArabic ? 'ar-SA' : 'en-US';
-            content = new Intl.DateTimeFormat(locale, {
+            content = dtf(locale, {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             }).format(new Date());
         }
@@ -209,11 +171,10 @@
 
         if (dateEl && !_dateInitDone) {
             _dateInitDone = true;
-            // Defer the initial fetch to an idle slot — on cache miss
-            // updateDate hits api.aladhan.com, and we don't want that
-            // racing critical resources during post-DCL hydration. The
-            // 24h interval and lang-change handler still run inline so
-            // they respond promptly when triggered.
+            // Defer the initial render to an idle slot so the Intl/ICU work
+            // (formatter construction) doesn't compete with critical resources
+            // during post-DCL hydration. The 24h interval and lang-change
+            // handler still run inline so they respond promptly when triggered.
             NDS.onIdle(updateDate);
             setInterval(updateDate, 24 * 60 * 60 * 1000);
             NDS.onAttrChange('html', ['lang'], updateDate);
