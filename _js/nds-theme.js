@@ -168,24 +168,6 @@
         }
     }
 
-    // A "theme applied" toast on every switcher change (any theme, or Default when
-    // toggled off). NDS.Alert is delegated; by interaction time its loader stub (or
-    // the loaded bundle) bridges this fire-and-forget call. Fired off the reveal so
-    // the fixed-position toast isn't captured by the View-Transition snapshot.
-    function switchToast(el, value, off) {
-        if (!(window.NDS && NDS.Alert)) return;
-        const ar = (root.lang || '').slice(0, 2) === 'ar';
-        const labelEl = el.querySelector('.nds-label');
-        const name = (off || !value)
-            ? (ar ? 'الافتراضي' : 'Default')
-            : ((labelEl ? labelEl.textContent : el.textContent) || '').trim();
-        setTimeout(() => NDS.Alert.create({
-            display: 'toast', position: 'top', variant: 'info',
-            title: name, description: ar ? 'تم تطبيق السمة' : 'Theme applied',
-            duration: 4000,
-        }), 0);
-    }
-
     let _sheet = '';   // active stylesheet theme value ('' otherwise)
     // Apply a clicked switcher item — inside the shared reveal so a theme change ripples
     // from the clicked item, exactly like the dark toggle. (Predefined/custom recolour
@@ -231,7 +213,6 @@
                 setThemeToken('');                          // DGA
             }
             syncSwitcher(value);
-            switchToast(el, value, off);
         }, el);
     }
 
