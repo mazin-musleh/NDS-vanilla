@@ -50,7 +50,8 @@ direction: ltr
   &lt;div class="nds-topbar-info"&gt;
     &lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri"&gt;&lt;/span&gt;
     &lt;span id="nds-realTimeClock" class="nds-text-icon"&gt;&lt;/span&gt;
-    &lt;span id="nds-cityName" class="nds-text-icon"&gt;&lt;/span&gt;
+    &lt;span id="nds-cityName" class="nds-text-icon"
+        data-city="الرياض" data-city-en="Riyadh"&gt;&lt;/span&gt;
     &lt;span id="nds-weatherInfo" class="nds-text-icon"
         data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
     &lt;button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode"&gt;
@@ -106,8 +107,9 @@ direction: ltr
 &lt;!-- Real-time clock (updates every second) --&gt;
 &lt;span id="nds-realTimeClock" class="nds-text-icon"&gt;&lt;/span&gt;
 
-&lt;!-- City &amp; Weather (both required, coordinates on weatherInfo) --&gt;
-&lt;span id="nds-cityName" class="nds-text-icon"&gt;&lt;/span&gt;
+&lt;!-- City &amp; Weather (both required; city via data-city, coordinates on weatherInfo) --&gt;
+&lt;span id="nds-cityName" class="nds-text-icon"
+    data-city="الرياض" data-city-en="Riyadh"&gt;&lt;/span&gt;
 &lt;span id="nds-weatherInfo" class="nds-text-icon"
     data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
                                     </code>
@@ -136,7 +138,7 @@ direction: ltr
                         <tr>
                             <td><code class="nds-inline-code lang-html">#nds-cityName</code> + <code class="nds-inline-code lang-html">#nds-weatherInfo</code></td>
                             <td><code class="nds-inline-code lang-js">NDS.CityWeather</code></td>
-                            <td>Displays the city name and current weather side by side. City is reverse-geocoded via the Nominatim API (30-day cache), weather is fetched from Open-Meteo (15-minute cache). Set <code class="nds-inline-code lang-html">data-latitude</code> and <code class="nds-inline-code lang-html">data-longitude</code> on <code class="nds-inline-code lang-html">#nds-weatherInfo</code> to configure the location (defaults to Riyadh). Both elements must be present: they share coordinates and initialize together as a single widget.</td>
+                            <td>Displays the city name and current weather side by side. Set the city directly with <code class="nds-inline-code lang-html">data-city</code> (and <code class="nds-inline-code lang-html">data-city-en</code> for the English variant) on <code class="nds-inline-code lang-html">#nds-cityName</code> — recommended, as it avoids a third-party call. Without it, the city is reverse-geocoded via the Nominatim API (30-day cache) as a fallback. Weather is fetched from Open-Meteo (15-minute cache); set <code class="nds-inline-code lang-html">data-latitude</code> and <code class="nds-inline-code lang-html">data-longitude</code> on <code class="nds-inline-code lang-html">#nds-weatherInfo</code> to configure the location (defaults to Riyadh). Both elements must be present: they initialize together as a single widget.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -273,7 +275,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-pin-location-01"></i>
                         <span class="nds-label">City &amp; Weather Widgets</span>
                     </span>
-                    <p class="nds-item-desc">Reverse-geocoded city name pairs with live weather readings from Open-Meteo. Coordinates are configurable per page via data attributes.</p>
+                    <p class="nds-item-desc">An author-set city name (<code class="nds-inline-code lang-html">data-city</code>) pairs with live weather readings from Open-Meteo, or falls back to a Nominatim reverse-geocode. City and coordinates are configurable per page via data attributes.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -303,6 +305,7 @@ direction: ltr
                     <li>Pair the clock with the date when the service is time-sensitive (appointments, deadlines, submissions). Pair the date with city/weather on portals where users need general awareness (citizen services, public dashboards).</li>
                     <li>Set <code class="nds-inline-code lang-html">data-calendar="hijri"</code> on the date widget for Arabic audiences and Saudi government properties. Leave it at the default for English-only international-facing services.</li>
                     <li>Always set explicit <code class="nds-inline-code lang-html">data-latitude</code> and <code class="nds-inline-code lang-html">data-longitude</code> on the weather widget. Do not rely on the Riyadh default for services that target a specific city or region.</li>
+                    <li>Set <code class="nds-inline-code lang-html">data-city</code> (and <code class="nds-inline-code lang-html">data-city-en</code>) on <code class="nds-inline-code lang-html">#nds-cityName</code> so the city renders without a third-party geocode. The Nominatim fallback is rate-limited and not intended for per-visitor traffic at scale.</li>
                     <li>Do not remove the theme toggle. Dark mode is part of the NDS accessibility baseline.</li>
                     <li>Do not add custom buttons to the top bar. Utility actions belong in the navigation bar's secondary actions area, which persists across all breakpoints.</li>
                     <li>Keep the <code class="nds-inline-code lang-html">nds-digitalStamp-lg-text</code> verification copy short. Long text truncates on tablet before switching to the <code class="nds-inline-code lang-html">nds-digitalStamp-sm-text</code> fallback.</li>
@@ -329,7 +332,8 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-theme-toggle</code></td><td>top bar button</td><td>Registers the element as a dark/light mode toggle</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-calendar</code></td><td><code class="nds-inline-code lang-html">#nds-date</code></td><td>Set to <code class="nds-inline-code lang-html">hijri</code> or <code class="nds-inline-code lang-html">gregorian</code>. Defaults to Hijri for Arabic pages.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-latitude</code> / <code class="nds-inline-code lang-html">data-longitude</code></td><td><code class="nds-inline-code lang-html">#nds-weatherInfo</code></td><td>GPS coordinates for weather and city lookup. Defaults to Riyadh (24.7136, 46.6753).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-latitude</code> / <code class="nds-inline-code lang-html">data-longitude</code></td><td><code class="nds-inline-code lang-html">#nds-weatherInfo</code></td><td>GPS coordinates for the weather lookup. Defaults to Riyadh (24.7136, 46.6753).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-city</code> / <code class="nds-inline-code lang-html">data-city-en</code></td><td><code class="nds-inline-code lang-html">#nds-cityName</code></td><td>City name shown in the widget (<code class="nds-inline-code lang-html">data-city-en</code> is the English variant). Recommended — when set, the city renders directly with no network call; otherwise it falls back to a Nominatim reverse-geocode of the coordinates.</td></tr>
                     </tbody>
                 </table>
             </div>

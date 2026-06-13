@@ -125,9 +125,26 @@
         const weatherEl = document.getElementById('nds-weatherInfo');
         if (!cityEl || !weatherEl) return;
 
+        const isArabic = NDS.isArabic;
+
+        // Author-supplied city short-circuits the reverse-geocode: the coords
+        // are already author-set, so the city is known — and OSM Nominatim's
+        // usage policy forbids the per-visitor volume a topbar widget across
+        // many sites generates (bulk use is IP-blocked). `data-city-en` gives
+        // the English variant; `data-city` covers both when it's absent. Only
+        // falls through to the geocode when no city is authored — backward
+        // compatible with existing markup.
+        const authored = isArabic
+            ? cityEl.dataset.city
+            : (cityEl.dataset.cityEn || cityEl.dataset.city);
+        if (authored) {
+            renderCity(cityEl, authored);
+            cityEl.style.display = '';
+            return;
+        }
+
         const lat = +(weatherEl.dataset.latitude || 24.7136);
         const lng = +(weatherEl.dataset.longitude || 46.6753);
-        const isArabic = NDS.isArabic;
         const lang = isArabic ? 'ar' : 'en';
         // v2 key: cache shape changed from HTML string to plain city name.
         const cacheKey = `city_v2_${lat}_${lng}_${lang}`;
