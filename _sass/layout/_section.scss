@@ -83,11 +83,16 @@
 /* ── Off-screen sections: skip rendering until scrolled near ── */
 
 .nds-content-section {
-    // Halves the reveal-time layout task (measured 2026-06-12); unsupported
-    // browsers ignore both and render upfront. intrinsic-size keeps the
-    // scrollbar stable pre-render (auto = real size remembered after).
+    // Skips off-screen sections — halves the reveal-time layout task (measured
+    // 2026-06-12); unsupported browsers render upfront. Estimate only the BLOCK
+    // axis: a single contain-intrinsic-size value also estimates the INLINE
+    // axis, and a fixed width clips content on viewports narrower than it
+    // (mobile). Width stays container-derived. 680px ≈ the measured median
+    // section height across doc pages (mobile + desktop), so reserved space
+    // matches real height — shrinks scroll-to/CLS error before `auto` remembers
+    // the true size after first paint.
     content-visibility: auto;
-    contain-intrinsic-size: auto 600px;
+    contain-intrinsic-block-size: auto 680px;
 }
 
 // The near-fold band (first two content sections) renders at real height, so
@@ -98,4 +103,12 @@
 // (nds-core.js) lifts containment on the rest as they near the viewport.
 :is(.nds-content-section:first-of-type, .nds-content-section:first-of-type + .nds-content-section) {
     content-visibility: visible;
+}
+
+// Print: never skip. Some engines omit content-visibility:auto content from the
+// printout (only the on-screen sections paint), so reveal every section on paper.
+@media print {
+    .nds-content-section {
+        content-visibility: visible;
+    }
 }
