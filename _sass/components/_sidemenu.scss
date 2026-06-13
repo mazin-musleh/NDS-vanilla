@@ -201,9 +201,9 @@
             --btn-bg-selected: var(--button-background-neutral-selected);
             --btn-indicator-size: 3px;
             --btn-height: var(--_toggle-height);
-            max-width: var(--nds-content-MaxWidth, 1280px);
+            max-width: var(--nds-content-MaxWidth);
             margin: 0 auto;
-            padding: 0 var(--nds-viewport-padding, 32px);
+            padding: 0 var(--nds-viewport-padding);
             border-radius: 0;
             position: relative;
             top: unset;

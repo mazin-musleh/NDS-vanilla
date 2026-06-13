@@ -223,6 +223,8 @@
     .nds-alert-description {
       font-size: var(--typo-text-clamp-md-FS);
       line-height: var(--typo-text-clamp-md-LH);
+      display: inline;
+      white-space: normal;
     }
 
     .nds-alert-description {
@@ -240,12 +242,6 @@
     .nds-alert-text {
       display: block;
       white-space: nowrap;
-    }
-
-    .nds-alert-title,
-    .nds-alert-description {
-      display: inline;
-      white-space: normal;
     }
 
     .nds-alert-title {
@@ -291,7 +287,7 @@
 .nds-alert-placeholder {
   position: fixed;
   z-index: 9999;
-  inset-inline-end: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-MaxWidth, 1280px)) / 2));
+  inset-inline-end: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-MaxWidth)) / 2));
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xl);

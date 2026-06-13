@@ -149,7 +149,7 @@ body.nds-page-bg {
     display: block;
     margin-top: calc((24px + var(--spacing-md)) * -1);
     width: 100%;
-    max-width: var(--nds-content-MaxWidth, 1280px);
+    max-width: var(--nds-content-MaxWidth);
     margin-inline: auto;
-    padding: 0 var(--nds-viewport-padding, 32px);
+    padding: 0 var(--nds-viewport-padding);
 }
