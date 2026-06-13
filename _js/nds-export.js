@@ -36,6 +36,15 @@
         return !!(cb && cb.checked);
     }
 
+    // A row filtered OUT by NDS.Filter carries data-filtered (hidden via the
+    // critical-layer rule [data-filtered]{display:none!important}). This is a
+    // distinct signal from pagination's off-page [hidden] flag: pagination-hidden
+    // rows must still export (every page), but filter-hidden rows must NOT —
+    // export respects the active filter rather than dumping the full data set.
+    function isRowFiltered(row) {
+        return row.hasAttribute('data-filtered');
+    }
+
     // ── adapters ────────────────────────────────────────────────────────
 
     const tableAdapter = {
@@ -60,9 +69,10 @@
             // Paginated tables hide off-page rows via .nds-page-item + [hidden].
             // Export must see every page, so reach for the source list and ignore the hidden flag.
             const paged = tbody.closest('.nds-paged-content');
-            const rows = paged
+            const rows = (paged
                 ? Array.from(source.querySelectorAll('tbody tr.nds-page-item'))
-                : Array.from(tbody.children).filter(el => el.tagName === 'TR');
+                : Array.from(tbody.children).filter(el => el.tagName === 'TR'))
+                .filter(row => !isRowFiltered(row));
             if (scope === 'selected') return rows.filter(isRowSelected);
             return rows;
         },
@@ -85,16 +95,18 @@
         anySelected(source) {
             const tbody = source.querySelector('tbody');
             if (!tbody) return false;
-            return Array.from(tbody.children).some(tr => tr.tagName === 'TR' && isRowSelected(tr));
+            return Array.from(tbody.children).some(tr =>
+                tr.tagName === 'TR' && !isRowFiltered(tr) && isRowSelected(tr));
         }
     };
 
     const genericAdapter = {
         getRows(source, scope) {
             const sel = source.dataset.exportRows;
-            const rows = sel
+            const rows = (sel
                 ? NDS.queryAll(source, sel)
-                : Array.from(source.children);
+                : Array.from(source.children))
+                .filter(row => !isRowFiltered(row));
             if (scope === 'selected') return rows.filter(isRowSelected);
             return rows;
         },
@@ -130,7 +142,7 @@
         anySelected(source) {
             const sel = source.dataset.exportRows;
             const rows = sel ? NDS.queryAll(source, sel) : Array.from(source.children);
-            return rows.some(isRowSelected);
+            return rows.some(row => !isRowFiltered(row) && isRowSelected(row));
         }
     };
 
