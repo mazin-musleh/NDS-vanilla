@@ -393,7 +393,7 @@ bundle_sizes:
                 </div>
             </div>
             <p style="text-align: center; margin-block-start: 24px;">
-                <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/484v9dkc5q?form_factor=mobile" target="_blank" rel="noopener" class="nds-color">View the PageSpeed Insights report</a>
+                <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/0x6coenrvy?form_factor=mobile" target="_blank" rel="noopener" class="nds-color">View the PageSpeed Insights report</a>
             </p>
         </div>
         <div class="nds-section-body">
@@ -439,6 +439,13 @@ bundle_sizes:
                         <span class="nds-label">~{{ page.bundle_sizes.critical_css }} KB Critical CSS (gzipped)</span>
                     </span>
                     <p class="nds-item-desc">Critical styles load immediately for instant render. The rest is deferred and loads asynchronously without blocking the page. Styles are split between critical and non-critical at the build level.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
+                        <span class="nds-label">5-Stage Reveal</span>
+                    </span>
+                    <p class="nds-item-desc">First paint is layered across five render-safe stages — inline critical skeleton → critical stylesheet → main stylesheet → main JavaScript → icons & font. Each stage paints correctly or holds hidden, never a flash of unstyled content, and icons load last to stay clear of the LCP window.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
