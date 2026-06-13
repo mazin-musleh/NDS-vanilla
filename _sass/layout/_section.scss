@@ -89,3 +89,13 @@
     content-visibility: auto;
     contain-intrinsic-size: auto 600px;
 }
+
+// The near-fold band (first two content sections) renders at real height, so
+// the contain-intrinsic-size estimate — necessarily wrong for sections of
+// differing content — can't surface as a layout shift in the viewport when the
+// page reveals (measured: home CLS 0.018 -> 0). They render on-screen anyway,
+// so the off-screen skip (sections 3+) is untouched; NDS.sectionContainment
+// (nds-core.js) lifts containment on the rest as they near the viewport.
+:is(.nds-content-section:first-of-type, .nds-content-section:first-of-type + .nds-content-section) {
+    content-visibility: visible;
+}
