@@ -1,0 +1,148 @@
+/* ========================================
+   FOLD  ·  above-the-fold structural skeleton
+   Single source for the pre-init layout reservations + visibility gates.
+   Compiled TWO ways from this one file:
+     • critical file  — @use 'fold'                 ($inline: false, default)
+     • inline <style>  — @use 'fold' with ($inline:true)  (scssify, in
+                          _includes/critical-inline.html)
+   Shared rules emit bare var() for crit (tokens are resolved there) and a
+   literal fallback for the inline (it paints before the token layer loads).
+   The inline-only block (bootstraps + chrome box bgs + hero box stand-in +
+   the hero-body hide) emits only when $inline — crit owns those via the real
+   components, and reveals the hero body instead of hiding it.
+   UNCONDITIONAL by design: the data-nds-loaded stamp can land before main
+   CSS, so these reservations must outlive it. :where()-wrapped at zero
+   specificity — main always overrides after.
+   ======================================== */
+@use './mixins' as *;
+
+// true only for the inline <style> compile.
+$inline: false !default;
+
+// var() with a literal fallback for the inline; bare var() for crit.
+@function v($token, $fallback) {
+    @return if($inline, var(#{$token}, $fallback), var(#{$token}));
+}
+
+html {
+    /* Page canvas — same token the body paints (reset.scss). */
+    background-color: v('--background-body', #f9fafb);
+
+    /* Nav/topbar height reservations — prevent CLS before main lands. */
+    :where(.nds-topbar) { height: 40px; }
+    :where(.nds-main-nav) { height: v('--nds-nav-height', 72px); }
+
+    :where(main) { overflow-x: clip; }
+
+    /* Mirrors layout/_content-layout.scss base — grid track + min-height so
+       the page reserves its viewport block before main CSS lands. */
+    :where(.nds-content-layout) {
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 400px;
+        width: 100%;
+
+        @include desktop(min) {
+            &:where(.nds-wSideMenu) {
+                grid-template-columns: v('--nds-sidemenu-width', 260px) 1fr;
+            }
+        }
+    }
+
+    /* Reserve the hero CTA row height (buttons held hidden by the gate until
+       main's .nds-btn styling lands, then snap to --btn-size). */
+    :where(.nds-hero-section .nds-section-action) {
+        min-height: 40px;
+    }
+
+    /* Hero swiper + wrapper flex skeleton; collapse to the first slide until
+       JS marks data-nds-swiper-initialized. */
+    :where(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
+        display: none;
+    }
+}
+
+/* ── Hide gate ──
+   THE page gate: everything listed stays hidden until main CSS's
+   html[data-nds-loaded] reveal rule (nds-main.min.scss) matches. The inline
+   additionally hides the hero body/wrapper/breadcrumb (see $inline block),
+   which the critical file reveals (_skeleton.scss) instead. */
+:where(.nds-topbar > *,
+    .nds-main-nav > *,
+    .nds-hero-section .nds-section-action,
+    .nds-content-layout,
+    .nds-user-feedback-section,
+    .nds-accessibility-toggle,
+    .nds-footer) {
+    visibility: hidden;
+}
+
+/* ── Critical-component safeguard ──
+   Main-bundle components whose init writes first-paint state and have no
+   skeleton of their own. Normally inert (the critical pass stamps
+   data-nds-loaded before main CSS applies); they bite only when main JS
+   lags main CSS — then each region holds instead of flashing un-inited. */
+html:not([data-nds-loaded]) :where(.nds-form-control,
+    .nds-sidemenu,
+    .nds-sideinfo,
+    .nds-drawer,
+    .nds-toc,
+    .nds-multiselect,
+    .nds-empty) {
+    visibility: hidden;
+}
+
+/* ── Icon gate ──
+   Masked-icon pseudos write opacity:var(--nds-icons-opacity); ships 0 until
+   nds-icons.min.css (deferred) onload stamps html[data-nds-icons-loaded]. */
+:root { --nds-icons-opacity: 0; }
+html[data-nds-icons-loaded] { --nds-icons-opacity: 1; }
+
+/* ── HGI font gate ──
+   Content icons render fallback glyphs until the icon font lands; hidden
+   until nds-fontLoading.js stamps the face loaded. */
+i.hgi-stroke { opacity: 0; }
+html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
+
+@if $inline {
+    /* ════ Inline-only (no critical-file counterpart) ════
+       Pre-crit bootstraps + the chrome/hero FCP skeleton. In the critical
+       file these come from reset.scss + the real topbar/nav/hero components;
+       here they paint first byte, then lose to those rules by specificity. */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
+
+    /* Dark page canvas (crit resolves --background-body in dark via the token). */
+    html[data-theme~=dark] { background-color: var(--background-body, #111927); }
+
+    /* Chrome box bgs — the colored FCP skeleton for topbar + nav. */
+    :where(.nds-topbar) { background-color: var(--background-topbar, #f3f4f6); }
+    :where(.nds-main-nav) { background-color: var(--background-nav, #fff); }
+    html[data-theme~=dark] :where(.nds-topbar) { background-color: var(--background-topbar, #111927); }
+    html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #1f2a37); }
+
+    /* Hero box stand-in (the real hero component owns these in crit). */
+    :where(.nds-hero-section) { position: relative; height: 550px; max-height: 550px; }
+    :where(.nds-hero-section.nds-sub) { height: auto; min-height: 220px; }
+    :where(.nds-hero-image-wrapper)::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(9, 42, 30, var(--overlay, .7));
+        pointer-events: none;
+    }
+
+    /* Hero body/wrapper/breadcrumb stay hidden until crit lands and styles
+       them — the critical file's reveal (_skeleton.scss) un-hides them. */
+    :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav, .nds-section-action)) {
+        visibility: hidden;
+    }
+}

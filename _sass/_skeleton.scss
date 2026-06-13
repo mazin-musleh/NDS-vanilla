@@ -13,56 +13,20 @@
    ======================================== */
 @use './mixins' as *;
 
+/* The fold's structural reservations emit first (body bg, topbar/nav height,
+   main overflow, content-layout, hero CTA row, swiper, hide gate, critical-
+   component safeguard, icon/HGI gates) — the block the inline hand-mirrors.
+   Everything below is crit-only: paint + skeleton-bar + delegated-hold rules
+   the inline never carries, plus the hero-body reveal that counters the
+   inline's extended hide gate. */
+@use 'fold';
+
 html {
-    /* Page canvas — same token the body paints (reset.scss), so overscroll
-       regions stay theme-correct in both modes with no stamp involvement. */
-    background-color: var(--background-body);
-
-    /* Mirror rules below are :where()-wrapped: they only need to win against
-       nothing (pre-main, no competing rules exist), and at zero specificity
-       main CSS always overrides them after — divergence can't become a
-       permanent skeleton override. Self-releasing rules (swiper slide hide,
-       paged/filter holds) stay at full strength: they must beat main until
-       their own stamp lands. */
-
-    /* Nav/topbar height reservations (migrated from the removed inline
-       crit — prevents CLS before main lands). */
-    :where(.nds-topbar) { height: 40px; }
-    :where(.nds-main-nav) { height: var(--nds-nav-height); }
-
-    :where(main) {
-        overflow-x: clip;
-    }
-
-    /* ── Content Layout ──
-       Mirrors layout/_content-layout.scss base — grid track + min-height
-       so the page reserves its viewport block before main CSS lands. */
-    :where(.nds-content-layout) {
-        display: grid;
-        grid-template-columns: 1fr;
-        min-height: 400px;
-        width: 100%;
-
-        @include desktop(min) {
-            &:where(.nds-wSideMenu) {
-                grid-template-columns: var(--nds-sidemenu-width) 1fr;
-            }
-        }
-    }
-
     /* ── Hero ──
        Full-bleed hero text paints white over the image; sub variants
        pick up their own theme tokens once main lands. */
     :where(.nds-hero-section:not(.nds-sub)) :where(.nds-section-title, .nds-section-description) {
         color: var(--text-oncolor-primary);
-    }
-
-    /* Reserve the CTA row height. The action buttons are held visibility:hidden
-       until main lands (see hide gate), then snap to the 40px --btn-size; without
-       this the centered hero body shifts when they appear. min-height (not height)
-       so wrapped CTAs on narrow viewports aren't clipped. */
-    :where(.nds-hero-section .nds-section-action) {
-        min-height: 40px;
     }
 
     /* ── Brand (nav logo + name) ──
@@ -116,21 +80,9 @@ html {
         }
     }
 
-    /* ── Swiper ──
-       Hero swiper + wrapper get their flex skeleton so the slide image fills
-       the hero box. A hero swiper collapses to its first slide (full-bleed)
-       until JS marks data-nds-swiper-initialized. */
-    :where(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
-        display: flex;
-        height: 100%;
-        width: 100%;
-    }
-
-    .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
-        display: none;
-    }
-
-    /* Non-hero (card) swipers instead show a clipped row of card-width
+    /* ── Swiper (non-hero) ──
+       The hero swiper's flex skeleton + first-slide collapse live in fold.
+       Non-hero (card) swipers instead show a clipped row of card-width
        slides pre-init: the slide width must be pinned because main's
        flex-basis formula collapses to 100% while JS hasn't written
        --slides — one card stretched across the track. The cards inside
@@ -325,60 +277,9 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
     z-index: 1;
 }
 
-/* ── Hide gate ──
-   THE page gate: everything listed stays hidden until main CSS's
-   html[data-nds-loaded] reveal rule (nds-main.min.scss) matches — i.e.
-   main has applied AND the loader's critical pass has stamped. Hero
-   section-action sits here (not in the crit reveal below) because its
-   CTA buttons need main's .nds-btn styling — revealing pre-main would
-   flash unstyled buttons. */
-:where(.nds-topbar > *,
-    .nds-main-nav > *,
-    .nds-hero-section .nds-section-action,
-    .nds-content-layout,
-    .nds-user-feedback-section,
-    .nds-accessibility-toggle,
-    .nds-footer) {
-    visibility: hidden;
-}
-
-/* ── Critical-component safeguard ──
-   Main-bundle (critical) components whose init writes first-paint state
-   and which have no skeleton of their own yet. Normally inert: the
-   critical pass stamps data-nds-loaded before main CSS applies, so these
-   never paint held. They bite only when main JS lags behind main CSS —
-   then each region holds (space-preserving) instead of flashing
-   un-inited state, while skeleton-equipped components shimmer. Stamp
-   scoping is CORRECT here (visibility holds released by init-done) —
-   unlike layout reservations, which must outlive the stamp. */
-html:not([data-nds-loaded]) :where(.nds-form-control,
-    .nds-sidemenu,
-    .nds-sideinfo,
-    .nds-drawer,
-    .nds-toc,
-    .nds-multiselect,
-    .nds-empty) {
-    visibility: hidden;
-}
-
-/* ── Icon gate ──
-   nds-icons.min.css is injected by loadDeferredAssets() (head-inline-scripts.html)
-   off the main-CSS onload; until it lands the --nds-icon-* tokens
-   are undefined, so any masked pseudo paints as a solid currentColor block.
-   Every masked-icon pseudo writes `opacity: var(--nds-icons-opacity, 1)`
-   next to its `mask:` line; this var ships 0 by default and flips to 1
-   when the icons-sheet onload stamps html[data-nds-icons-loaded]. New
-   components stay future-proof — just include the opacity line alongside
-   the mask. */
-:root { --nds-icons-opacity: 0; }
-html[data-nds-icons-loaded] { --nds-icons-opacity: 1; }
-
-/* ── HGI font gate ──
-   Content icons (<i class="hgi hgi-stroke hgi-NAME">) render CJK fallback
-   glyphs until the icon font (same deferred path) lands; hidden until
-   nds-fontLoading.js confirms the face and stamps it loaded. */
-i.hgi-stroke { opacity: 0; }
-html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
+/* Hide gate, critical-component safeguard, and icon/HGI gates live in fold
+   (@use'd at the top — the inline mirrors them). The reveal below is crit-
+   only: it counters the inline's hero-body hide once the critical file lands. */
 
 /* ── Reveal at crit-load ──
    Hero body + wrapper (containing title / description / breadcrumb)
