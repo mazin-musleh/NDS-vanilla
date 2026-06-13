@@ -6,7 +6,7 @@
  * - Uses existing .nds-card component structure
  * - Featured icons from nds-featured-icon
  * - Close button (optional)
- * - Color variants: success, info, warning, error, neutral
+ * - Color variants: success, info, warning, error, critical, neutral
  * - Inline layout
  */
 
@@ -17,9 +17,8 @@
 // ==============================================
 
 .nds-alert.nds-card {
-  // Alert-only internal tokens (not in card)
+  // Alert-only internal token (not in card)
   --_alert-stripe: var(--alert-stripe, var(--border-neutral-primary));
-  --_alert-icon-bg: var(--alert-icon-bg, var(--background-neutral-light));
 
   // Extend card component styles
   display: flex;
@@ -69,7 +68,9 @@
     --nds-icon-size: 20px;
     width: calc(var(--nds-icon-size)*2);
     height: calc(var(--nds-icon-size)*2);
-    background-color: var(--_alert-icon-bg);
+    // Light status tint behind the outline icon (set per status by the global
+    // block at EOF); --alert-icon-bg is the public override knob.
+    background-color: var(--alert-icon-bg, var(--background-neutral-light));
   }
 
   // ==============================================
@@ -129,19 +130,21 @@
     }
   }
 
-  // Solid backdrop + alpha tint overlay to prevent overlap bleed-through
+  // Both .nds-color and .nds-inline are always colored via the alpha tint
+  // overlay below; .nds-color adds a solid backdrop so stacked alerts don't
+  // bleed through each other.
   &.nds-color {
     background-color: var(--background-default);
+  }
 
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background-color: var(--_card-bg);
-      pointer-events: none;
-      z-index: -1;
-    }
+  &:is(.nds-color, .nds-inline)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--_card-bg);
+    pointer-events: none;
+    z-index: -1;
   }
 
   // ==============================================
@@ -199,48 +202,22 @@
       opacity: 1;
     }
 
-    // Smaller icon (no 2x multiplier)
+    // Smaller icon (no 2x multiplier). The solid feedback disc is the badge, so
+    // no tinted circle behind it.
     .nds-feedback-icon {
       width: var(--nds-icon-size);
       height: var(--nds-icon-size);
+      background-color: transparent;
     }
 
-    // Always colored (no nds-color class needed)
-    background-color: var(--background-default);
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background-color: var(--_card-bg);
-      pointer-events: none;
-      z-index: -1;
-    }
+    // Inline-only delta: colored description. (The tint overlay ::before is
+    // shared with .nds-color above.)
+    // Card tokens (--card-bg/-title) inherit from the alert-level status block above.
+    &:is(.nds-green, [data-status="success"])                         { --_inline-desc: var(--text-success); }
+    &:is(.nds-blue,  [data-status="info"])                            { --_inline-desc: var(--text-info); }
+    &:is(.nds-yellow,[data-status="warning"])                         { --_inline-desc: var(--text-warning); }
+    &:is(.nds-red,   [data-status="error"], [data-status="critical"]) { --_inline-desc: var(--text-error); }
 
-    // Inline-only deltas: solid icon bg + colored description.
-    // Card tokens (--card-bg/-title) inherit from alert-level status block above.
-    &:is(.nds-green, [data-status="success"]) {
-      --alert-icon-bg: var(--background-success);
-      --_inline-desc: var(--text-success);
-    }
-    &:is(.nds-blue, [data-status="info"]) {
-      --alert-icon-bg: var(--background-info);
-      --_inline-desc: var(--text-info);
-    }
-    &:is(.nds-yellow, [data-status="warning"]) {
-      --alert-icon-bg: var(--background-warning);
-      --_inline-desc: var(--text-warning);
-    }
-    &:is(.nds-red, [data-status="error"], [data-status="critical"]) {
-      --alert-icon-bg: var(--background-error);
-      --_inline-desc: var(--text-error);
-    }
-    &:is(.nds-neutral, [data-status="neutral"]) {
-      --alert-icon-bg: var(--icon-neutral);
-    }
-
-    // Critical uses warning triangle icon
-    &[data-status="critical"] .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-alert-circle); }
 
     .nds-alert-title,
     .nds-alert-description {
@@ -297,34 +274,15 @@
 // INHERITED STATUS — alert-private tokens cascade from any ancestor
 // with [data-status]. Mirrors the featured-icon / feedback-icon
 // pattern. --alert-stripe / --alert-icon-bg are only consumed by
-// .nds-alert, so setting them broadly is safe. The .nds-color and
-// .nds-inline variants inside .nds-alert override these where needed.
+// .nds-alert, so setting them broadly is safe. The .nds-color /
+// .nds-inline variants override where needed.
 // ==============================================
 
-:is(.nds-green, [data-status="success"]) {
-  --alert-stripe: var(--background-success);
-  --alert-icon-bg: var(--featuredicons-background-success-light);
-}
-
-:is(.nds-blue, [data-status="info"]) {
-  --alert-stripe: var(--background-info);
-  --alert-icon-bg: var(--featuredicons-background-info-light);
-}
-
-:is(.nds-yellow, [data-status="warning"]) {
-  --alert-stripe: var(--background-warning);
-  --alert-icon-bg: var(--featuredicons-background-warning-light);
-}
-
-:is(.nds-red, [data-status="error"], [data-status="critical"]) {
-  --alert-stripe: var(--background-error);
-  --alert-icon-bg: var(--featuredicons-background-error-light);
-}
-
-:is(.nds-neutral, [data-status="neutral"]) {
-  --alert-stripe: var(--border-neutral-light);
-  --alert-icon-bg: var(--featuredicons-background-neutral-light);
-}
+:is(.nds-green, [data-status="success"])                         { --alert-stripe: var(--background-success);   --alert-icon-bg: var(--featuredicons-background-success-light); }
+:is(.nds-blue,  [data-status="info"])                            { --alert-stripe: var(--background-info);      --alert-icon-bg: var(--featuredicons-background-info-light); }
+:is(.nds-yellow,[data-status="warning"])                         { --alert-stripe: var(--background-warning);   --alert-icon-bg: var(--featuredicons-background-warning-light); }
+:is(.nds-red,   [data-status="error"], [data-status="critical"]) { --alert-stripe: var(--background-error);     --alert-icon-bg: var(--featuredicons-background-error-light); }
+:is(.nds-neutral,[data-status="neutral"])                        { --alert-stripe: var(--border-neutral-light); --alert-icon-bg: var(--featuredicons-background-neutral-light); }
 
 // ==============================================
 // TOAST PLACEHOLDER CONTAINERS

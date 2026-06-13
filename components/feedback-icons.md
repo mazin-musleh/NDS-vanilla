@@ -43,6 +43,10 @@ direction: ltr
                                             <span class="nds-label">Error</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=critical", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                            <span class="nds-label">Critical</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=neutral", ".nds-feedback", "feedbackStatus", "attr"]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
@@ -165,6 +169,10 @@ direction: ltr
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
                                             data-toggler='["data-status=error", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
                                             <span class="nds-label">Error</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=critical", ".nds-feedback", "feedbackMsgStatus", "attr"]'>
+                                            <span class="nds-label">Critical</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=success", ".nds-feedback", "feedbackMsgStatus", "attr"]'>

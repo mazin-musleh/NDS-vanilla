@@ -127,6 +127,16 @@
     --featuredicons-icon-info: var(--icon-info);
     --featuredicons-icon-warning: var(--icon-warning);
 
+    // ── feedback ──
+    // Solid badge disc fill — frozen at the light status color so the white
+    // symbol reads on it in both themes. NOT dark-rebound (unlike --icon-*,
+    // which lighten to -400 for on-page contrast).
+    --feedback-icon-fill-success: var(--colors-green-700);
+    --feedback-icon-fill-error: var(--colors-red-700);
+    --feedback-icon-fill-warning: var(--colors-yellow-700);
+    --feedback-icon-fill-info: var(--colors-blue-700);
+    --feedback-icon-fill-neutral: var(--colors-neutral-700);
+
     // ── form-controls ──
     --control-disabled: var(--colors-neutral-400);
 

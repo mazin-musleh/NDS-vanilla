@@ -44,6 +44,10 @@ direction: ltr
                                             <span class="nds-label">Error</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=critical", ".nds-alert", "alertVariant", "attr"]'>
+                                            <span class="nds-label">Critical</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=neutral", ".nds-alert", "alertVariant", "attr"]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>

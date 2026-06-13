@@ -1,7 +1,7 @@
 /**
  * NDS Feedback Component - SCSS Version
  * Standalone feedback messages with status-based styling
- * Uses data-status attribute for error, success, warning, info states
+ * Uses data-status: error, success, warning, info, critical, neutral, help
  */
 
 @use '../mixins' as *;
@@ -29,10 +29,11 @@
     // descendant, so it must not be set on the ancestor `[data-status]`)
     // ==============================================
 
-    &[data-status="error"],   [data-status="error"] &   { color: var(--text-error); }
-    &[data-status="success"], [data-status="success"] & { color: var(--text-success); }
-    &[data-status="warning"], [data-status="warning"] & { color: var(--text-warning); }
-    &[data-status="info"],    [data-status="info"] &    { color: var(--text-info); }
+    &[data-status="error"],   [data-status="error"] &    { color: var(--text-error); }
+    &[data-status="critical"],[data-status="critical"] & { color: var(--text-error); }
+    &[data-status="success"], [data-status="success"] &  { color: var(--text-success); }
+    &[data-status="warning"], [data-status="warning"] &  { color: var(--text-warning); }
+    &[data-status="info"],    [data-status="info"] &     { color: var(--text-info); }
 
     // Neutral/help dark-mode tweaks depend on .nds-outline modifier, so
     // they stay scoped inside .nds-feedback rather than on the generic
@@ -72,52 +73,72 @@
 }
 
 // ==============================================
-// INHERITED STATUS — feedback-icon tokens cascade from any ancestor
-// with [data-status]. Mirrors the featured-icon pattern.
-// --feedback-* tokens are only consumed by .nds-feedback-icon (verified),
-// so setting them broadly is safe. The nested `.nds-feedback-icon
-// .nds-icon` rule scopes the `--nds-icon` shape swap to feedback chips
-// only (`--nds-icon` is universal and would bleed if set bare).
+// STATUS TOKENS — each [data-status] sets only what differs from the neutral
+// default; the .nds-feedback-icon consumers below supply the disc glyph, the
+// white symbol paint, the fallback "i" symbol, and the neutral disc fill.
+// --feedback-* tokens cascade from any ancestor with [data-status] and are
+// consumed only by .nds-feedback-icon, so setting them bare here is safe.
+//
+//   --feedback-color        outline glyph color (re-tints in dark)
+//   --feedback-ring         ring-accent halo color
+//   --feedback-icon-color   solid disc fill — frozen light color (see tokens)
+//   --feedback-icon-stroke  outline glyph (.nds-outline)
+//   --feedback-icon-symbol  white symbol painted on the solid disc
 // ==============================================
 
 [data-status="error"] {
-    --feedback-bg: var(--background-error);
     --feedback-color: var(--icon-error);
     --feedback-ring: var(--icon-error-ring);
+    --feedback-icon-color: var(--feedback-icon-fill-error);
+    --feedback-icon-stroke: var(--nds-icon-cancel-circle);
+    --feedback-icon-symbol: var(--nds-icon-solid-cancel);
+}
 
-    .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-cancel-circle); }
+// Critical (severe error, used by alert) — error color + the alert "!" symbol.
+[data-status="critical"] {
+    --feedback-color: var(--icon-error);
+    --feedback-ring: var(--icon-error-ring);
+    --feedback-icon-color: var(--feedback-icon-fill-error);
+    --feedback-icon-stroke: var(--nds-icon-alert-circle);
+    --feedback-icon-symbol: var(--nds-icon-solid-alert);
 }
 
 [data-status="success"] {
-    --feedback-bg: var(--background-success);
     --feedback-color: var(--icon-success);
     --feedback-ring: var(--icon-success-ring);
-
-    .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-checkmark-circle-02); }
+    --feedback-icon-color: var(--feedback-icon-fill-success);
+    --feedback-icon-stroke: var(--nds-icon-checkmark-circle-02);
+    --feedback-icon-symbol: var(--nds-icon-solid-checkmark);
 }
 
 [data-status="warning"] {
-    --feedback-bg: var(--background-warning);
     --feedback-color: var(--icon-warning);
     --feedback-ring: var(--icon-warning-ring);
-
-    .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-alert-circle); }
+    --feedback-icon-color: var(--feedback-icon-fill-warning);
+    --feedback-icon-stroke: var(--nds-icon-alert-circle);
+    --feedback-icon-symbol: var(--nds-icon-solid-alert);
 }
 
 [data-status="info"] {
-    --feedback-bg: var(--background-info);
+    // Outline stroke defaults to information-circle; the "i" symbol must be
+    // explicit (the symbol-less ::after default is inert).
     --feedback-color: var(--icon-info);
     --feedback-ring: var(--icon-info-ring);
+    --feedback-icon-color: var(--feedback-icon-fill-info);
+    --feedback-icon-symbol: var(--nds-icon-solid-info);
 }
 
+// Neutral + help share the gray status color and the "i" symbol; help swaps in
+// its own "?" below. Dark tweaks live in .nds-feedback.
 :is([data-status="neutral"], [data-status="help"]) {
-    --feedback-bg: var(--icon-neutral);
     --feedback-color: var(--icon-neutral);
     --feedback-ring: var(--icon-neutral-ring);
+    --feedback-icon-symbol: var(--nds-icon-solid-info);
 }
 
 [data-status="help"] {
-    .nds-feedback-icon .nds-icon { --nds-icon: var(--nds-icon-help-circle); }
+    --feedback-icon-stroke: var(--nds-icon-help-circle);
+    --feedback-icon-symbol: var(--nds-icon-solid-help);
 }
 
 // ==============================================
@@ -125,13 +146,28 @@
 // ==============================================
 
 .nds-feedback-icon {
+    // PUBLIC knobs (--feedback-*) resolve to PRIVATE (--_feedback-*) with the
+    // component defaults here, so any consumer can override a single knob:
+    //   --feedback-size          chip diameter
+    //   --feedback-color         outline glyph color (re-tints in dark)
+    //   --feedback-ring          ring-accent halo color
+    //   --feedback-icon-color    solid disc fill (frozen status color)
+    //   --feedback-icon-disc     ::before disc shape
+    //   --feedback-icon-stroke   outline glyph shape
+    //   --feedback-icon-symbol   ::after symbol shape (inert when unset)
+    //   --feedback-symbol-color  ::after symbol paint (white by default)
+    //   --feedback-ring-inset    inset bridging the disc↔ring gap
     --_feedback-size: var(--feedback-size, 24px);
-    --_feedback-bg: var(--feedback-bg, var(--icon-neutral));
     --_feedback-color: var(--feedback-color, var(--icon-neutral));
     --_feedback-ring: var(--feedback-ring, var(--icon-neutral-ring));
+    --_feedback-ring-inset: var(--feedback-ring-inset, calc(var(--_feedback-size) * 0.06));
+    --_feedback-icon-color: var(--feedback-icon-color, var(--feedback-icon-fill-neutral));
+    --_feedback-icon-disc: var(--feedback-icon-disc, var(--nds-icon-solid-disc));
+    --_feedback-icon-stroke: var(--feedback-icon-stroke, var(--nds-icon-information-circle));
+    --_feedback-icon-symbol: var(--feedback-icon-symbol, linear-gradient(#0000 0 0));
+    --_feedback-symbol-color: var(--feedback-symbol-color, var(--icon-oncolor));
 
     @include dark {
-        --_feedback-bg: var(--feedback-bg, var(--icon-neutral));
         --_feedback-ring: var(--feedback-ring, var(--colors-neutral-900));
     }
 
@@ -147,7 +183,6 @@
     line-height: var(--_feedback-size);
     padding: 0;
     border: unset;
-    background-color: var(--_feedback-bg);
     color: var(--_feedback-color);
 
     & i {
@@ -156,37 +191,59 @@
     }
 
     // ==============================================
-    // ICON STYLE VARIANTS — solid by default, .nds-outline opt-in
+    // ICON LAYERS — solid status disc by default, .nds-outline opt-in.
+    // ::before is the disc/glyph, ::after the symbol over it. An unset status
+    // falls through to the neutral default: gray disc + white "i".
     // ==============================================
 
-    // Solid (default): icon paints white over the colored chip background.
-    // Clip the SVG's outer circle stroke so only the inner glyph shows —
-    // the feedback chip already provides the circular background.
+    // Solid (default): disc glyph filled in the frozen status color.
     & > i {
-        color: var(--colors-base-white);
-        clip-path: inset(25.5%);
+        color: var(--_feedback-icon-color);
     }
 
-    // Outline opt-in: transparent chip, full glyph (including its own ring)
-    // painted in the status color. Supported on the chip itself OR on a
-    // `.nds-feedback.nds-outline` ancestor.
+    // ::before shape — the solid disc; .nds-outline swaps it for the stroke glyph.
+    .nds-icon {
+        --nds-icon: var(--_feedback-icon-disc);
+    }
+
+    // ::after symbol — painted white over the disc so it never inverts in dark
+    // mode. Inert unless a status sets --feedback-icon-symbol: the private's
+    // default is a fully-transparent mask (NOT `none`, which would unmask the
+    // whole box and paint a solid square — e.g. on alert's `critical`, an outline
+    // chip with no symbol). Shared by alert/tooltip/progress, so it must stay
+    // inert for any chip that doesn't opt in with a symbol.
+    & > i::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--_feedback-symbol-color);
+        mask: var(--_feedback-icon-symbol) center / contain no-repeat;
+        opacity: var(--nds-icons-opacity, 1);
+    }
+
+    // Outline opt-in: transparent chip, stroke glyph painted in the status
+    // color; the symbol layer matches it (a white symbol would vanish with no
+    // disc behind it). On the chip itself OR a `.nds-feedback.nds-outline` ancestor.
     &:is(.nds-outline, .nds-feedback.nds-outline > *) {
-        background-color: transparent;
+        --feedback-symbol-color: var(--_feedback-color);   // symbol matches the stroke glyph
+        --feedback-ring-inset: 0;                          // empty interior — no gap to bridge
 
         > i {
             color: var(--_feedback-color);
-            clip-path: none;
+        }
+
+        .nds-icon {
+            --nds-icon: var(--_feedback-icon-stroke);
         }
     }
 
     // Ring accent — on the chip itself OR on a `.nds-feedback.nds-ring` ancestor.
+    // The same-color inset bridges the disc glyph's ~5% transparent margin (it
+    // renders inset within the chip box) so the halo meets the disc edge with no
+    // gap. Zeroed for outline (--feedback-ring-inset), whose interior is empty.
     &:is(.nds-ring, .nds-feedback.nds-ring > *) {
-        box-shadow: 0 0 0 4px var(--_feedback-ring);
-    }
-
-    // Default icon (information-circle) — status-specific shapes are
-    // set in the [data-status="..."] blocks above.
-    .nds-icon {
-        --nds-icon: var(--nds-icon-information-circle);
+        box-shadow:
+            0 0 0 4px var(--_feedback-ring),
+            inset 0 0 0 var(--_feedback-ring-inset) var(--_feedback-ring);
     }
 }
