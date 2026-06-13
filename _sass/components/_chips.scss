@@ -118,7 +118,7 @@
 
     &.nds-oncolor {
       --chip-bg: var(--chip-background-oncolor-default);
-      --chip-text: var(--colors-base-black);
+      --chip-text: var(--chip-text-oncolor-default);
 
       &:is(:hover, [data-state~="hover"]) {
         --chip-bg: var(--chip-background-oncolor-hovered);
@@ -167,7 +167,7 @@
 
     &.nds-oncolor {
       --chip-bg: var(--chip-background-oncolor-default);
-      --chip-text: var(--colors-base-black);
+      --chip-text: var(--chip-text-oncolor-default);
 
       &:is(:hover, [data-state~="hover"]) {
         --chip-bg: var(--chip-background-oncolor-hovered);

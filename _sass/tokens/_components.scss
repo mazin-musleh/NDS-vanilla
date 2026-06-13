@@ -94,11 +94,10 @@
     --chip-text-neutral-default: var(--colors-base-black);
     --chip-text-neutral-selected: var(--colors-base-white);
     --chip-text-primary-default: var(--colors-primary-800);
-    --chip-text-primary-hovered: var(--colors-primary-800);
     --chip-text-primary-pressed: var(--colors-primary-900);
     --chip-text-primary-selected: var(--colors-base-white);
     --chip-text-primary-focused: var(--colors-primary-800);
-    --chip-text-oncolor-default: var(--colors-base-white);
+    --chip-text-oncolor-default: var(--colors-base-black);
     --chip-text-disabled: var(--colors-neutral-400);
     --chip-text-oncolor-disabled: var(--alpha-white-40);
 
