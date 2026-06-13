@@ -42,7 +42,8 @@
 
         addLineNumbers(codeElement);
 
-        // CSS reveals the block via code[data-processed="true"] (base is display:none)
+        // Idempotency guard (init re-runs / reprocess). The block paints from
+        // server markup now — CSS no longer gates display on this stamp.
         codeElement.dataset.processed = 'true';
     }
 

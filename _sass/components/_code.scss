@@ -61,7 +61,13 @@
     font-weight: var(--font-weight-semibold);
     direction: ltr;
     text-align: left;
-    display: none;
+    // Paints from server markup at its real height — the escaped content
+    // renders as readable (unhighlighted) code text, and the page-level hide
+    // gate (.nds-content-layout, _skeleton.scss) already covers FOUC until the
+    // reveal. NDS.Code (critical) then highlights + numbers in place, which is
+    // height-neutral (line count preserved), so there's no reveal-time shift —
+    // no display:none -> full expansion to land post-reveal in skipped sections.
+    display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     white-space: pre;
@@ -71,12 +77,6 @@
     padding: var(--spacing-xl) 0;
     background: transparent;
     border: none;
-
-    // Revealed by NDS.Code once processed (JS stamps data-processed="true");
-    // unprocessed markup stays hidden so raw text never flashes.
-    &[data-processed='true'] {
-      display: flex;
-    }
 
     &.line-numbers {
       counter-reset: line;
