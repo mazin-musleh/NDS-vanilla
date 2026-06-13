@@ -130,10 +130,58 @@ class BaseurlCleaner
       "#{$1}#{prefix}"
     end
 
-    # 4. Replace CSS url() paths: url(/assets/...), url('/assets/...'), url("/assets/...")
+    # 4. Inline custom-property url() — e.g. <body style="--bg-img: url('/assets/img/x.webp')">.
+    #    A url() inside a CSS custom property is resolved by the stylesheet that
+    #    CONSUMES it (assets/css/nds-main.min.css), not by the HTML page that
+    #    declares it — so the page-relative depth prefix is wrong here. The
+    #    consuming stylesheet always lives at assets/css/, so any asset under
+    #    assets/ is reachable as ../<rest> from there, INDEPENDENT of the page's
+    #    own depth. Rewrite the whole baseurl+assets/ segment to a single ../.
+    #    Runs before rule 5 so the page-relative rule never sees these.
+    content.gsub!(%r{(--[\w-]+\s*:\s*url\(\s*['"]?)#{Regexp.escape(@baseurl)}/assets/}) do
+      replacements += 1
+      "#{$1}../"
+    end
+
+    # 5. Replace remaining CSS url() paths (inline <style> blocks, direct inline
+    #    backgrounds): url(/assets/...), url('/assets/...'), url("/assets/...").
+    #    These resolve relative to the document, so the page-relative prefix is correct.
     content.gsub!(%r{(url\(\s*['"]?)#{Regexp.escape(@baseurl)}/(?!/)}) do
       replacements += 1
       "#{$1}#{prefix}"
+    end
+
+    # 6. Pretty-URL folder links -> explicit index.html for file:// browsing.
+    #    Jekyll builds each page to <folder>/index.html. On a server "components"
+    #    or "components/" serves that index; file:// only opens the directory.
+    #    Breadcrumbs emit the slash-less form (href="../components"), the nav the
+    #    trailing-slash form (href="../components/") — an extension-less internal
+    #    link can't be told from a real file by pattern alone, so resolve it
+    #    against THIS file's location and append index.html only when it actually
+    #    points at a directory that has one. Skips absolute/site-root links,
+    #    protocol URLs (the ':' exclusion), anchors/queries, and files (extension).
+    file_dir = File.dirname(file_path)
+    content.gsub!(%r{(href\s*=\s*["'])([^"'#?:]+)(["'])}) do
+      pre, href, post = $1, $2, $3
+      if href.start_with?('/') || File.extname(href) != ''
+        "#{pre}#{href}#{post}"
+      else
+        bare = href.chomp('/')
+        target = File.expand_path(bare, file_dir)
+        if File.directory?(target) && File.exist?(File.join(target, 'index.html'))
+          # Pretty-URL page: <folder>/index.html
+          replacements += 1
+          "#{pre}#{bare}/index.html#{post}"
+        elsif File.exist?(target + '.html')
+          # Flat-file page linked folder-style (e.g. console-demo.html linked as
+          # console-demo/) — point at the real file so file:// resolves it.
+          replacements += 1
+          "#{pre}#{bare}.html#{post}"
+        else
+          # No such target in the build (e.g. an unbuilt /ar/ subtree) — leave it.
+          "#{pre}#{href}#{post}"
+        end
+      end
     end
 
     if content != original_content
