@@ -30,6 +30,11 @@
     background: transparent;
     color: inherit;
     cursor: help;
+
+    // 20px trigger icon (the markup's .nds-sm would otherwise be 16px).
+    .nds-feedback-icon {
+      --feedback-size: 20px;
+    }
   }
 
   // Text-trigger mode — applies when the tooltip trigger has no icon.
@@ -48,14 +53,14 @@
     vertical-align: unset;
   }
 
-  // Idle help-trigger chip — neutral gray so the trigger reads as "there's
-  // a tooltip here" rather than as an active status chip. Scoped by the
-  // icon's own feedback wrapper (or any ancestor inside the trigger) having
-  // `data-status="help"`, so the tooltip's outer data-status stays free
-  // to signal something else. Skipped when the chip uses `.nds-outline`
-  // (transparent bg) and when open (status-driven color kicks in).
+  // Idle help-trigger — a lighter neutral disc so it reads as "there's a
+  // tooltip here" rather than an active status chip (open → the default
+  // darker neutral). Set via the disc-fill knob (--feedback-icon-color) so
+  // it tints the one solid disc instead of adding a second circle behind it.
+  // Scoped by the icon's own feedback wrapper having `data-status="help"`,
+  // leaving the tooltip's outer data-status free; skipped for `.nds-outline`.
   &:not([data-state~="open"]) &-trigger [data-status="help"] .nds-feedback-icon:not(:is(.nds-outline, .nds-feedback.nds-outline > *)) {
-    background-color: var(--icon-default-500);
+    --feedback-icon-color: var(--icon-default-500);
   }
 
 }
@@ -156,6 +161,11 @@
   // ============================================================
   // 4. CONTENT — body / title / message live inside the balloon
   // ============================================================
+
+  // 20px leading icon chip (the markup's .nds-sm would otherwise be 16px).
+  .nds-feedback-icon {
+    --feedback-size: 20px;
+  }
 
   .nds-tooltip-body {
     display: block;
