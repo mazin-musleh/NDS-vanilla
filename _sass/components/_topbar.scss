@@ -14,10 +14,6 @@
     align-items: center;
     /* Fallback for older browsers */
 
-    >* {
-        visibility: visible;
-    }
-
     .nds-btn {
         align-self: center;
         --btn-size: 32px;
