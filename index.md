@@ -165,7 +165,7 @@ bundle_sizes:
                             <div class="nds-card-header">
                                 {% if ev.thumbnail %}
                                 <div class="nds-card-image">
-                                    <img src="{{ ev.thumbnail | relative_url }}" width="400" height="200" alt="{{ ev.title }} theme preview" loading="lazy">
+                                    <img data-src="{{ ev.thumbnail | relative_url }}" width="400" height="200" alt="{{ ev.title }} theme preview" decoding="async">
                                 </div>
                                 {% else %}
                                 <div class="nds-card-featured-icon">
