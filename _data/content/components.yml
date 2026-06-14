@@ -464,12 +464,19 @@
   tags: ["JS", "CSS"]
   url: "/ui-shell/topbar.html"
 
-- title: "Main Navigation"
-  description: "Primary site navigation with mega menu and mobile drawer"
+- title: "Header"
+  description: "Top bar and primary navigation shell with mega menus and mobile drawer"
   icon: '<i class="hgi hgi-stroke hgi-navigation-01"></i>'
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
-  url: "/ui-shell/header.html#navBar"
+  url: "/ui-shell/header.html"
+
+- title: "Document Head"
+  description: "Critical CSS, deferred bundles, and the inline gate every page loads in its head"
+  icon: '<i class="hgi hgi-stroke hgi-html-5"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS"]
+  url: "/ui-shell/head.html"
 
 - title: "Hero"
   description: "Full-width page banners with slider and call-to-action"
