@@ -102,10 +102,17 @@
 // Import utilities
 @use 'utilities';
 
-// Reveal gate — data-nds-loaded is stamped by _js/nds-loader.js after the
-// critical init pass. Scoped to html[data-nds-loaded] so this chrome waits
-// not just for main CSS to load but also for JS init to complete — pairs
-// with the hide gate in nds.critical.min.scss.
+// Reveal gate. Requires BOTH conditions, because nothing in the reveal set may
+// paint before crit:
+//   • html[data-nds-loaded] — JS init done (stamped by _js/nds-loader.js after
+//     the critical pass), so the nav doesn't paint pre-collapse then rebuild.
+//   • --nds-crit-reveal — crit is present. data-nds-loaded can stamp while crit
+//     is still in flight (or has failed), so without this the chrome would
+//     reveal un-styled and shift when crit lands. The var falls back to
+//     `hidden` until the crit file (_skeleton.scss) sets it.
+// Pairs with the hide gate in nds.critical.min.scss. (The hero swiper is NOT
+// here — it must hide as soon as main paints it without crit, which can be
+// before data-nds-loaded; it rides the main-load gate below instead.)
 
 html[data-nds-loaded] :where(
     .nds-topbar > *,
@@ -114,7 +121,7 @@ html[data-nds-loaded] :where(
     .nds-accessibility-toggle,
     .nds-hero-section .nds-breadcrumb-nav
 ) {
-    visibility: visible;
+    visibility: var(--nds-crit-reveal, hidden);
 }
 
 // Revealed at main-load (no JS-init dependency). Hero section-action's
@@ -127,6 +134,11 @@ html[data-nds-loaded] :where(
 // so it can't beat the inline hide gate when main wins the download race
 // before crit — the var falls back to `hidden` until crit lands, otherwise
 // these regions would flash without crit's wrapper gutter + content grid.
-:where(.nds-hero-section .nds-section-action, .nds-footer, .nds-content-layout){
+// The hero swiper joins here (not the JS-gated block above): its slide-1 image
+// paints from markup before main (LCP), but the moment main styles it without
+// crit's sizing tokens the slides mis-size — so at main-load it hides until
+// crit, independent of data-nds-loaded. Closes the main-before-crit gap where a
+// pre-data-nds-loaded swiper would otherwise paint un-styled.
+:where(.nds-hero-section .nds-section-action, .nds-footer, .nds-content-layout, .nds-swiper.nds-hero){
     visibility: var(--nds-crit-reveal, hidden);
 }

@@ -57,6 +57,11 @@ html {
     .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
         display: none;
     }
+    /* This only collapses the track to slide 1 for the inline-paint phase. The
+       crit-missing case — main styling the swiper without crit's sizing tokens —
+       is held by the main-load reveal in nds-main.min.scss, which hides the whole
+       hero swiper via visibility:var(--nds-crit-reveal). So no per-slide guard is
+       needed here, and it covers the gap before data-nds-loaded too. */
 }
 
 /* ── Hide gate ──

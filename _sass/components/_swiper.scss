@@ -274,3 +274,12 @@
     content: "";
     min-height: var(--btn-size, 40px);
 }
+
+// Nav reveal gate. The bullet row is JS-built and ships [hidden] until init
+// re-decides it by page count, so reveal only once the swiper is initialized
+// AND crit is present — no point painting an empty/un-styled row before either.
+// visibility (not display) keeps the ::after-reserved height, so the swap is
+// CLS-free; --nds-crit-reveal (crit-only) flips it visible with crit.
+.nds-swiper[data-nds-swiper-initialized] .nds-swiper-navigation:not([hidden]) {
+    visibility: var(--nds-crit-reveal, hidden);
+}
