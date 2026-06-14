@@ -123,6 +123,10 @@ html[data-nds-loaded] :where(
 // too — component default skeletons (bars until each init stamp) carry
 // the not-ready signaling, so the page body no longer waits for the JS
 // critical pass.
+// Gated through --nds-crit-reveal (set only by the crit file, _skeleton.scss)
+// so it can't beat the inline hide gate when main wins the download race
+// before crit — the var falls back to `hidden` until crit lands, otherwise
+// these regions would flash without crit's wrapper gutter + content grid.
 :where(.nds-hero-section .nds-section-action, .nds-footer, .nds-content-layout){
-    visibility: visible;
+    visibility: var(--nds-crit-reveal, hidden);
 }

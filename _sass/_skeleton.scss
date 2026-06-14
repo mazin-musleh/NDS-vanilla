@@ -16,14 +16,16 @@
    ======================================== */
 @use './mixins' as *;
 
-/* The fold's structural reservations emit first (body bg, topbar/nav height,
-   hero first-slide collapse, hide gate, icon/HGI initial gates) — the block
-   the inline hand-mirrors. Everything below is crit-only: content-layout
-   grid, hero CTA + swiper flex skeletons, critical-component safeguard,
-   paint + skeleton-bar + delegated-hold rules the inline never carries,
-   plus the hero-body reveal that counters the inline's extended hide gate.
-   Icon + HGI gate reveals live with their own stylesheets (_sass/_icons.scss
-   and _sass/_hgiRoundedStroke.scss). */
+/* This crit file = fold + the crit-only skeleton below. fold's reservations
+   emit first (body bg, topbar/nav height, hero first-slide collapse, hide
+   gate, icon/HGI initial gates) — the same block the inline <style> is
+   GENERATED from (critical-inline.html scssifies fold with $inline:true), so
+   the render-blocking crit gate and the inline gate are one source and never
+   drift. Everything below is crit-only: content-layout grid, hero CTA + swiper
+   flex skeletons, critical-component safeguard, paint + skeleton-bar +
+   delegated-hold rules the inline never carries, plus the hero-body reveal
+   that counters the inline's extended hide gate. Icon + HGI gate reveals live
+   with their own stylesheets (_sass/_icons.scss, _sass/_hgiRoundedStroke.scss). */
 @use 'fold';
 
 html {
@@ -359,3 +361,13 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
 :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper), .nds-main-nav .nds-brand) {
     visibility: visible;
 }
+
+/* ── Crit-ready signal ──
+   main's content-layout / footer / section-action reveal reads this token
+   (`visibility: var(--nds-crit-reveal, hidden)`) so it can't beat the inline
+   hide gate before crit lands. Under async critical_inline both sheets load
+   non-blocking, so main can win the download race; until this crit-only token
+   flips the reveal to visible those regions stay hidden — otherwise they'd
+   paint without crit's wrapper gutter + content-layout grid, then shift when
+   crit arrives. Resolves to visible the moment crit is present (this file). */
+:root { --nds-crit-reveal: visible; }

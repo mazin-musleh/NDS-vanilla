@@ -1,16 +1,26 @@
 /* ========================================
    FOLD  ·  above-the-fold FCP gates + chrome reservations
-   Single source for the minimum that must paint before crit lands:
-   page canvas, topbar/nav heights, hero swiper first-slide collapse,
-   page-level hide gate, pre-init main overflow guard, and icon/HGI gate
-   initials (their reveals live with the respective sheets). Heavier
-   structural skeleton (content-layout grid, hero CTA/swiper flex,
-   critical-component safeguard) lives in _skeleton.scss — crit-only, no
-   inline weight.
-   Compiled TWO ways from this one file:
-     • critical file  — @use 'fold'                 ($inline: false, default)
-     • inline <style>  — @use 'fold' with ($inline:true)  (scssify, in
-                          _includes/critical-inline.html)
+   The minimum that must paint before crit lands: page canvas, topbar/nav
+   heights, hero swiper first-slide collapse, page-level hide gate, pre-init
+   main overflow guard, and icon/HGI gate initials (their reveals live with
+   the respective sheets). Heavier structural skeleton (content-layout grid,
+   hero CTA/swiper flex, critical-component safeguard) lives in _skeleton.scss
+   — crit-only, no inline weight.
+
+   ── One source, two compiles — in sync by construction ──
+   This file is the single source for the gate, compiled two ways:
+     • critical file  — _skeleton.scss `@use 'fold'`  ($inline:false) → ships
+                        inside nds.critical.min.css (the render-blocking <link>).
+     • inline <style> — `@use 'fold' with ($inline:true)` (scssify, in
+                        _includes/critical-inline.html).
+   The gate therefore ALWAYS lives in the critical file. The inline copy is an
+   optional accelerator (critical_inline: true) mirroring it at byte 0 for a
+   non-blocking first paint; with critical_inline: false there is no inline and
+   the render-blocking crit <link> carries the identical gate — nothing lost.
+   And because the inline is GENERATED from this file (never hand-written), it
+   can't drift from the crit gate when fold changes: edit here, rebuild, both
+   stay identical.
+
    Shared rules emit bare var() for crit (tokens are resolved there) and a
    literal fallback for the inline (it paints before the token layer loads).
    The inline-only block (bootstraps + chrome box bgs + hero box stand-in +
@@ -50,10 +60,13 @@ html {
 }
 
 /* ── Hide gate ──
-   THE page gate: everything listed stays hidden until main CSS's
-   html[data-nds-loaded] reveal rule (nds-main.min.scss) matches. The inline
-   additionally hides the hero body/wrapper/breadcrumb (see $inline block),
-   which the critical file reveals (_skeleton.scss) instead. */
+   THE page gate: everything listed stays hidden until its matching reveal in
+   nds-main.min.scss lands — most chrome at html[data-nds-loaded] (after the
+   JS critical pass); .nds-content-layout / .nds-footer / hero .nds-section-action
+   reveal at main-CSS-load, gated through --nds-crit-reveal so they can't
+   un-hide before crit (the crit-vs-main load race). The inline additionally
+   hides the hero body/wrapper/breadcrumb (see $inline block) — the critical
+   file reveals the hero body/wrapper instead, main reveals the breadcrumb. */
 :where(.nds-topbar > *,
     .nds-main-nav > *,
     .nds-hero-section .nds-section-action,
