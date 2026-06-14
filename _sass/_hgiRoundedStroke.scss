@@ -3,6 +3,11 @@
   font-display: swap;
   src: url("../fonts/hgi-stroke-rounded.woff2") format("woff2");
 }
+/* HGI font gate reveal — paired with the initial 0 in _fold.scss.
+   nds-fontLoading.js stamps data-nds-fonts-loaded~="hgi-stroke-rounded"
+   on <html> once the face loads. */
+html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
+
 .hgi-stroke {
   font-family: "hgi-stroke-rounded" !important;
   font-style: normal;

@@ -3,22 +3,27 @@
    Pre-init layout reservations — mirror final-state layout for
    components that ship without [hidden] so the parent visibility
    gate (.nds-content-layout etc.) hides paint while layout settles.
-   UNCONDITIONAL by design: the data-nds-loaded stamp can land before
-   main CSS applies (the reveal itself is keyed on main's rule), so
-   reservations must outlive the stamp — keying them on
+   Default discipline: reservations are UNCONDITIONAL — the data-nds-loaded
+   stamp can land before main CSS applies (the reveal itself is keyed on
+   main's rule), so reservations must outlive the stamp. Keying them on
    :not([data-nds-loaded]) stripped the topbar/nav heights in that gap
    and caused CLS. Because every rule mirrors final-state layout, main
    CSS overrides or agrees by cascade; rules that must release
    individually key on their component's own init stamp.
+   Exceptions (rules that deliberately release at data-nds-loaded, because
+   main CSS / main JS then owns the property):
+     • the critical-component safeguard (html:not([data-nds-loaded]) :where(...)).
    ======================================== */
 @use './mixins' as *;
 
 /* The fold's structural reservations emit first (body bg, topbar/nav height,
-   main overflow, content-layout, hero CTA row, swiper, hide gate, critical-
-   component safeguard, icon/HGI gates) — the block the inline hand-mirrors.
-   Everything below is crit-only: paint + skeleton-bar + delegated-hold rules
-   the inline never carries, plus the hero-body reveal that counters the
-   inline's extended hide gate. */
+   hero first-slide collapse, hide gate, icon/HGI initial gates) — the block
+   the inline hand-mirrors. Everything below is crit-only: content-layout
+   grid, hero CTA + swiper flex skeletons, critical-component safeguard,
+   paint + skeleton-bar + delegated-hold rules the inline never carries,
+   plus the hero-body reveal that counters the inline's extended hide gate.
+   Icon + HGI gate reveals live with their own stylesheets (nds-icons.min.scss
+   and _hgiRoundedStroke.scss). */
 @use 'fold';
 
 html {
@@ -80,8 +85,38 @@ html {
         }
     }
 
+    /* Mirrors layout/_content-layout.scss base — grid track + min-height so
+       the page reserves its viewport block before main CSS lands. */
+    :where(.nds-content-layout) {
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: 400px;
+        width: 100%;
+
+        @include desktop(min) {
+            &:where(.nds-wSideMenu) {
+                grid-template-columns: var(--nds-sidemenu-width) 1fr;
+            }
+        }
+    }
+
+    /* Reserve the hero CTA row height (buttons held hidden by the gate until
+       main's .nds-btn styling lands, then snap to --btn-size). */
+    :where(.nds-hero-section .nds-section-action) {
+        min-height: 40px;
+    }
+
+    /* Hero swiper + wrapper flex skeleton; collapse to the first slide until
+       JS marks data-nds-swiper-initialized. */
+    :where(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
     /* ── Swiper (non-hero) ──
-       The hero swiper's flex skeleton + first-slide collapse live in fold.
+       The hero swiper's flex skeleton lives above; its first-slide collapse
+       lives in fold.
        Non-hero (card) swipers instead show a clipped row of card-width
        slides pre-init: the slide width must be pinned because main's
        flex-basis formula collapses to 100% while JS hasn't written
@@ -109,6 +144,27 @@ html {
         margin-inline-start: var(--spacing-xs);
     }
 }
+
+/* ── Critical-component safeguard ──
+   Main-bundle components whose init writes first-paint state and have no
+   skeleton of their own. Normally inert (the critical pass stamps
+   data-nds-loaded before main CSS applies); they bite only when main JS
+   lags main CSS — then each region holds instead of flashing un-inited. */
+html:not([data-nds-loaded]) :where(.nds-form-control,
+    .nds-sidemenu > *,
+    .nds-sideinfo,
+    .nds-drawer,
+    .nds-toc,
+    .nds-multiselect,
+    .nds-empty) {
+    visibility: hidden;
+}
+
+/* Icon gate (initial 0) lives in fold; the reveal (data-nds-icons-loaded → 1)
+   lives in assets/css/nds-icons.min.scss so it lands with that sheet.
+   HGI font gate (initial 0) lives in fold; the reveal
+   (data-nds-fonts-loaded~="hgi-stroke-rounded" → 1) lives in
+   _sass/_hgiRoundedStroke.scss. */
 
 /* ── Filterable / paged content hold ──
    Filter + pagination are delegated — they init after the reveal, so their
@@ -252,7 +308,10 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
    Every section (hero, content, content-wrapper) gets the same horizontal
    viewport gutter — clamps to the outer viewport-padding, with a max-width
    stop. .nds-full-width children break out to the full viewport;
-   .nds-max-width children pull back to the gutter edge. */
+   .nds-max-width children pull back to the gutter edge.
+   :is() (not :where()) — keeps class-level specificity (0,1,0) so the
+   .nds-full-width / .nds-max-width descendants inherit (0,2,0), matching
+   the specificity main-CSS rules expect when adjusting these knobs. */
 :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) {
     --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
     width: 100%;
@@ -277,9 +336,12 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
     z-index: 1;
 }
 
-/* Hide gate, critical-component safeguard, and icon/HGI gates live in fold
-   (@use'd at the top — the inline mirrors them). The reveal below is crit-
-   only: it counters the inline's hero-body hide once the critical file lands. */
+/* The hide gate lives in fold (@use'd at the top — the inline mirrors it);
+   the critical-component safeguard is crit-only (above). Icon + HGI gate
+   initials live in fold; their reveals live with their own stylesheets
+   (assets/css/nds-icons.min.scss, _sass/_hgiRoundedStroke.scss).
+   The reveal below is crit-only: it counters the inline's hero-body hide
+   once the critical file lands. */
 
 /* ── Reveal at crit-load ──
    Hero body + wrapper (containing title / description / breadcrumb)

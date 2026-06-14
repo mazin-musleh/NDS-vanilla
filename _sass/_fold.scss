@@ -1,6 +1,12 @@
 /* ========================================
-   FOLD  ·  above-the-fold structural skeleton
-   Single source for the pre-init layout reservations + visibility gates.
+   FOLD  ·  above-the-fold FCP gates + chrome reservations
+   Single source for the minimum that must paint before crit lands:
+   page canvas, topbar/nav heights, hero swiper first-slide collapse,
+   page-level hide gate, pre-init main overflow guard, and icon/HGI gate
+   initials (their reveals live with the respective sheets). Heavier
+   structural skeleton (content-layout grid, hero CTA/swiper flex,
+   critical-component safeguard) lives in _skeleton.scss — crit-only, no
+   inline weight.
    Compiled TWO ways from this one file:
      • critical file  — @use 'fold'                 ($inline: false, default)
      • inline <style>  — @use 'fold' with ($inline:true)  (scssify, in
@@ -10,9 +16,12 @@
    The inline-only block (bootstraps + chrome box bgs + hero box stand-in +
    the hero-body hide) emits only when $inline — crit owns those via the real
    components, and reveals the hero body instead of hiding it.
-   UNCONDITIONAL by design: the data-nds-loaded stamp can land before main
-   CSS, so these reservations must outlive it. :where()-wrapped at zero
-   specificity — main always overrides after.
+   Default discipline: reservations are UNCONDITIONAL — the data-nds-loaded
+   stamp can land before main CSS, so they must outlive it. :where()-wrapped
+   at zero specificity — main always overrides after.
+   Exceptions (rules that deliberately release at data-nds-loaded, because
+   main CSS then owns the property):
+     • the main overflow guard (html:not([data-nds-loaded]) main).
    ======================================== */
 @use './mixins' as *;
 
@@ -32,37 +41,9 @@ html {
     :where(.nds-topbar) { height: 40px; }
     :where(.nds-main-nav) { height: v('--nds-nav-height', 72px); }
 
-    :where(main) { overflow-x: clip; }
-
-    /* Mirrors layout/_content-layout.scss base — grid track + min-height so
-       the page reserves its viewport block before main CSS lands. */
-    :where(.nds-content-layout) {
-        display: grid;
-        grid-template-columns: 1fr;
-        min-height: 400px;
-        width: 100%;
-
-        @include desktop(min) {
-            &:where(.nds-wSideMenu) {
-                grid-template-columns: v('--nds-sidemenu-width', 260px) 1fr;
-            }
-        }
-    }
-
-    /* Reserve the hero CTA row height (buttons held hidden by the gate until
-       main's .nds-btn styling lands, then snap to --btn-size). */
-    :where(.nds-hero-section .nds-section-action) {
-        min-height: 40px;
-    }
-
-    /* Hero swiper + wrapper flex skeleton; collapse to the first slide until
-       JS marks data-nds-swiper-initialized. */
-    :where(.nds-swiper.nds-hero, .nds-swiper-wrapper) {
-        display: flex;
-        height: 100%;
-        width: 100%;
-    }
-
+    /* Deliberately NOT :where()-wrapped — must beat any main-CSS .nds-swiper-slide
+       rule and outlive data-nds-loaded, releasing only when JS stamps
+       data-nds-swiper-initialized on the hero. */
     .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
         display: none;
     }
@@ -83,32 +64,24 @@ html {
     visibility: hidden;
 }
 
-/* ── Critical-component safeguard ──
-   Main-bundle components whose init writes first-paint state and have no
-   skeleton of their own. Normally inert (the critical pass stamps
-   data-nds-loaded before main CSS applies); they bite only when main JS
-   lags main CSS — then each region holds instead of flashing un-inited. */
-html:not([data-nds-loaded]) :where(.nds-form-control,
-    .nds-sidemenu,
-    .nds-sideinfo,
-    .nds-drawer,
-    .nds-toc,
-    .nds-multiselect,
-    .nds-empty) {
-    visibility: hidden;
-}
+/* ── Pre-init main overflow guard ──
+   Clip horizontal overflow on <main> until main CSS lands, so any unstyled
+   skeleton row (non-hero swiper, pagination skeleton, etc.) can't widen
+   the document during the gap. Released by data-nds-loaded — once main CSS
+   applies, components own their own overflow. */
+html:not([data-nds-loaded]) main { overflow-x: clip; }
 
-/* ── Icon gate ──
-   Masked-icon pseudos write opacity:var(--nds-icons-opacity); ships 0 until
-   nds-icons.min.css (deferred) onload stamps html[data-nds-icons-loaded]. */
+/* ── Icon gate (initial) ──
+   Masked-icon pseudos write opacity:var(--nds-icons-opacity); ships 0 here.
+   The reveal (data-nds-icons-loaded → 1) lives in assets/css/nds-icons.min.scss,
+   so it lands with that sheet (deferred onload stamps the attribute). */
 :root { --nds-icons-opacity: 0; }
-html[data-nds-icons-loaded] { --nds-icons-opacity: 1; }
 
-/* ── HGI font gate ──
+/* ── HGI font gate (initial) ──
    Content icons render fallback glyphs until the icon font lands; hidden
-   until nds-fontLoading.js stamps the face loaded. */
+   here. The reveal (data-nds-fonts-loaded~="hgi-stroke-rounded" → 1) lives
+   in _sass/_hgiRoundedStroke.scss, alongside the @font-face. */
 i.hgi-stroke { opacity: 0; }
-html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
 
 @if $inline {
     /* ════ Inline-only (no critical-file counterpart) ════
@@ -130,13 +103,13 @@ html[data-nds-fonts-loaded~="hgi-stroke-rounded"] i.hgi-stroke { opacity: 1; }
     html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #1f2a37); }
 
     /* Hero box stand-in (the real hero component owns these in crit). */
-    :where(.nds-hero-section) { position: relative; height: 550px; max-height: 550px; }
+    :where(.nds-hero-section) { position: relative; height: 550px; }
     :where(.nds-hero-section.nds-sub) { height: auto; min-height: 220px; }
     :where(.nds-hero-image-wrapper)::before {
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(9, 42, 30, var(--overlay, .7));
+        background: color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, .7) * 100%), transparent);
         pointer-events: none;
     }
 

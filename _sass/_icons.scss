@@ -4,6 +4,11 @@
 
 @use 'mixins' as *;
 
+// Icon gate reveal — paired with the initial 0 in _fold.scss.
+// onload of nds-icons.min.css stamps data-nds-icons-loaded on <html>,
+// flipping the opacity var so masked-icon pseudos paint.
+html[data-nds-icons-loaded] { --nds-icons-opacity: 1; }
+
 :root {
   --nds-icon-accessibility: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M17.9932 5.9375C18.5376 5.60345 19.2683 5.77851 19.5948 6.35156C19.9214 6.90876 19.7502 7.65675 19.1905 7.99121C18.0181 8.70733 16.6206 9.22425 15.1016 9.50781V14.79L16.6261 21.0166C16.7813 21.6533 16.4081 22.3056 15.7706 22.4648C15.6801 22.4957 15.5896 22.4961 15.4991 22.4961C14.9733 22.4928 14.5106 22.1286 14.3712 21.5898L13.0333 16.1279H11.7423L10.4044 21.5898C10.2487 22.2265 9.61133 22.624 8.98933 22.4648C8.36743 22.3056 7.97864 21.6533 8.13386 21.0166L9.65828 14.79V9.51172C8.13983 9.23136 6.73715 8.71695 5.56551 7.99121C5.02143 7.65674 4.8347 6.92465 5.16121 6.35156C5.48783 5.77835 6.20383 5.60312 6.76375 5.9375C8.25683 6.86091 10.2473 7.35449 12.378 7.35449C14.5088 7.35449 16.5157 6.84509 17.9932 5.9375ZM15.5059 22.4971H15.4903C15.4931 22.4971 15.4963 22.4961 15.4991 22.4961C15.5014 22.4961 15.5037 22.4971 15.5059 22.4971ZM12.3936 1C13.6821 1.00002 14.7266 2.0696 14.7266 3.38867C14.7265 4.70762 13.682 5.77635 12.3936 5.77637C11.1052 5.77637 10.0608 4.70763 10.0606 3.38867C10.0606 2.06959 11.1052 1 12.3936 1Z' fill='currentColor'/%3E%3C/svg%3E");
   --nds-icon-alert-circle: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='10' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Cpath d='M12 8V12' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Cpath d='M12.125 15.75H12M12.25 15.75C12.25 15.8881 12.1381 16 12 16C11.8619 16 11.75 15.8881 11.75 15.75C11.75 15.6119 11.8619 15.5 12 15.5C12.1381 15.5 12.25 15.6119 12.25 15.75Z' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E");
