@@ -224,11 +224,20 @@
         while (i < text.length) {
             const open = text.indexOf('<', i);
             if (open === -1) {
-                result += NDS.escapeHtml(text.slice(i));
+                result += highlightHtmlText(text.slice(i));
                 break;
             }
             if (open > i) {
-                result += NDS.escapeHtml(text.slice(i, open));
+                result += highlightHtmlText(text.slice(i, open));
+            }
+            // HTML comment — consume through `-->` (may itself contain `>`) and
+            // color it gray via syntax-comment, like the JS/CSS highlighters.
+            if (text.startsWith('<!--', open)) {
+                const close = text.indexOf('-->', open + 4);
+                const end = close === -1 ? text.length : close + 3;
+                result += '<span class="syntax-comment">' + NDS.escapeHtml(text.slice(open, end)) + '</span>';
+                i = end;
+                continue;
             }
             const tagEnd = text.indexOf('>', open);
             if (tagEnd === -1) {
@@ -241,6 +250,23 @@
         }
 
         return result;
+    }
+
+    // Text between tags — escape it, but color any `/* ... */` block comment
+    // gray (e.g. placeholder comments inside <script>/<style> in an HTML block).
+    function highlightHtmlText(run) {
+        let out = '';
+        let i = 0;
+        while (i < run.length) {
+            const start = run.indexOf('/*', i);
+            if (start === -1) { out += NDS.escapeHtml(run.slice(i)); break; }
+            if (start > i) out += NDS.escapeHtml(run.slice(i, start));
+            const end = run.indexOf('*/', start + 2);
+            const stop = end === -1 ? run.length : end + 2;
+            out += '<span class="syntax-comment">' + NDS.escapeHtml(run.slice(start, stop)) + '</span>';
+            i = stop;
+        }
+        return out;
     }
 
     function highlightHTMLTag(tag) {
