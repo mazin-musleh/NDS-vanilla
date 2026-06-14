@@ -113,7 +113,7 @@ header
         &lt;span class="nds-brand-slogan"&gt;Slogan text&lt;/span&gt;
       &lt;/span&gt;
     &lt;/a&gt;
-    &lt;ul class="nds-nav-minimal"&gt;
+    &lt;ul class="nds-nav-minimal" hidden&gt;
       &lt;li class="nds-mainNav-toggler nds-nav-item"&gt;
         &lt;button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="ndsNavCollapse"&gt;
           &lt;i class="nds-icon nds-hgi-menu-01" aria-hidden="true"&gt;&lt;/i&gt;
@@ -395,7 +395,7 @@ header
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
+                        <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
                         <span class="nds-label">Responsive Collapse</span>
                     </span>
                     <p class="nds-item-desc">Switches from a horizontal nav bar to a hamburger menu at a configurable breakpoint, with animated expand and collapse transitions.</p>
@@ -531,7 +531,7 @@ header
 
             <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The header initializes automatically when <code class="nds-inline-code lang-html">.nds-main-nav</code> exists on the page. It is priority 1 in the loader (first to initialize). Toggle functions are exposed globally on <code class="nds-inline-code lang-js">window</code> for use in HTML <code class="nds-inline-code lang-html">onclick</code> attributes.</p>
+                <p>The header initializes automatically when <code class="nds-inline-code lang-html">.nds-main-nav</code> exists on the page, and wires its own click handling through event delegation: the hamburger toggle and dropdown triggers respond without any inline <code class="nds-inline-code lang-html">onclick</code> attributes. The toggle functions below are exposed on the <code class="nds-inline-code lang-js">NDS.Mainnav</code> namespace for driving the nav from external scripts.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
