@@ -22,8 +22,8 @@
    grid, hero CTA + swiper flex skeletons, critical-component safeguard,
    paint + skeleton-bar + delegated-hold rules the inline never carries,
    plus the hero-body reveal that counters the inline's extended hide gate.
-   Icon + HGI gate reveals live with their own stylesheets (nds-icons.min.scss
-   and _hgiRoundedStroke.scss). */
+   Icon + HGI gate reveals live with their own stylesheets (_sass/_icons.scss
+   and _sass/_hgiRoundedStroke.scss). */
 @use 'fold';
 
 html {
@@ -161,7 +161,7 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
 }
 
 /* Icon gate (initial 0) lives in fold; the reveal (data-nds-icons-loaded → 1)
-   lives in assets/css/nds-icons.min.scss so it lands with that sheet.
+   lives in _sass/_icons.scss so it lands with the nds-icons sheet.
    HGI font gate (initial 0) lives in fold; the reveal
    (data-nds-fonts-loaded~="hgi-stroke-rounded" → 1) lives in
    _sass/_hgiRoundedStroke.scss. */
@@ -271,12 +271,15 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
 
 /* ── Breadcrumb pre-collapse shape ──
    JS collapses 6+ crumb trails to first + ellipsis button + last two
-   (threshold 5, _js/nds-breadcrumb.js). Shape the trail from first paint
-   — deep paths otherwise wrap to two lines and snap to one at init
-   (vertical CLS; hero breadcrumbs are visible from crit). Items 3..n-2
-   hide; item 2 keeps its normal label bar and becomes the 40px ellipsis
-   button at init (bounded width change, no wrap). Released by the
-   breadcrumb's own init stamp. */
+   (threshold 5, _js/nds-breadcrumb.js). Shape the trail so the delegated
+   init swaps in box-identically — deep paths otherwise wrap to two lines
+   and snap to one at init (vertical CLS). Shown from the page reveal
+   (data-nds-loaded) until the breadcrumb's own init stamp: under
+   critical_inline the page gate holds the breadcrumb hidden until that
+   reveal (so this never shows at first paint); under render-blocking crit
+   it shows from first paint. Items 3..n-2 hide; item 2 keeps its normal
+   label bar and becomes the 40px ellipsis button at init (bounded width
+   change, no wrap). Released by the breadcrumb's own init stamp. */
 .nds-breadcrumb-nav:not([data-nds-breadcrumb-initialized]) li:first-child:nth-last-child(n + 6)~li:nth-child(n + 3):nth-last-child(n + 3) {
     display: none;
 }
@@ -292,11 +295,11 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
     display: inline-flex;
 }
 
-/* Breadcrumb labels bar from first paint — hero breadcrumbs are crit-
-   visible, so the bar look lives here; main adds only the pulse (and the
-   post-init .nds-loading form). Static until main's animation lands.
-   The current-page crumb is bare text in its li (hero-sub.html), so the
-   li itself is barred for that one. */
+/* Breadcrumb label bars live in crit (not main) so they're present the
+   moment the breadcrumb reveals (see the pre-collapse note above for when
+   that is); main adds only the pulse (and the post-init .nds-loading form).
+   Static until main's animation lands. The current-page crumb is bare text
+   in its li (hero-sub.html), so the li itself is barred for that one. */
 .nds-breadcrumb-nav:not([data-nds-breadcrumb-initialized]) :is(li> :is(a, span), li[aria-current="page"]) {
     background: var(--nds-skeleton-fill);
     border-radius: var(--nds-skeleton-radius);
@@ -339,7 +342,7 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
 /* The hide gate lives in fold (@use'd at the top — the inline mirrors it);
    the critical-component safeguard is crit-only (above). Icon + HGI gate
    initials live in fold; their reveals live with their own stylesheets
-   (assets/css/nds-icons.min.scss, _sass/_hgiRoundedStroke.scss).
+   (_sass/_icons.scss, _sass/_hgiRoundedStroke.scss).
    The reveal below is crit-only: it counters the inline's hero-body hide
    once the critical file lands. */
 

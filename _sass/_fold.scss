@@ -73,8 +73,8 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
 
 /* ── Icon gate (initial) ──
    Masked-icon pseudos write opacity:var(--nds-icons-opacity); ships 0 here.
-   The reveal (data-nds-icons-loaded → 1) lives in assets/css/nds-icons.min.scss,
-   so it lands with that sheet (deferred onload stamps the attribute). */
+   The reveal (data-nds-icons-loaded → 1) lives in _sass/_icons.scss, landing
+   with the nds-icons sheet (deferred onload stamps the attribute). */
 :root { --nds-icons-opacity: 0; }
 
 /* ── HGI font gate (initial) ──
@@ -113,9 +113,11 @@ i.hgi-stroke { opacity: 0; }
         pointer-events: none;
     }
 
-    /* Hero body/wrapper/breadcrumb stay hidden until crit lands and styles
-       them — the critical file's reveal (_skeleton.scss) un-hides them. */
-    :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav, .nds-section-action)) {
+    /* Hero body + wrapper stay hidden until the critical file's reveal
+       (_skeleton.scss) un-hides them; the breadcrumb stays hidden until main's
+       data-nds-loaded reveal (it inits delegated, after that reveal). The
+       section-action is already held by the shared page gate above. */
+    :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) {
         visibility: hidden;
     }
 }
