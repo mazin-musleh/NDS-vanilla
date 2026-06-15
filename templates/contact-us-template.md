@@ -258,7 +258,8 @@ sidemenu_mode: false
                     </div>
 
                     <!-- Upload files (compact browse mode) -->
-                    <div class="nds-form-container nds-file-upload">
+                    <div class="nds-form-container nds-file-upload"
+                        data-max-file-size="2097152" data-allowed-types="jpg,jpeg,png,pdf">
                         <div class="nds-form-header">
                             <label for="contact-upload">
                                 <span class="nds-label">Upload files</span>
@@ -266,10 +267,9 @@ sidemenu_mode: false
                             </label>
                         </div>
                         <div class="nds-form-control">
-                            <input type="file" id="contact-upload" name="attachments" multiple
-                                accept=".jpg,.jpeg,.png,.pdf" class="nds-file-input">
+                            <input type="file" id="contact-upload" name="attachments" multiple class="nds-file-input">
                             <div class="nds-form-action">
-                                <button type="button" class="nds-btn nds-secondary-outline nds-md nds-browse-btn">
+                                <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
                                     <i class="hgi hgi-stroke hgi-folder-01"></i>
                                     <span class="nds-label">Browse Files</span>
                                 </button>
@@ -489,6 +489,19 @@ sidemenu_mode: false
                     });
                 }
                 form.reset();
+            });
+        }
+
+        // No upload step on this form — mark each validated selection complete
+        // so the attached file shows the success state.
+        var upload = document.querySelector('.nds-file-upload');
+        if (upload) {
+            upload.addEventListener('nds:upload:selected', function (e) {
+                var api = window.NDS && NDS.Upload && NDS.Upload.getInstance(upload);
+                if (!api) return;
+                (e.detail.fileData || []).forEach(function (f) {
+                    api.setFileStatus(f.id, 'complete');
+                });
             });
         }
     });

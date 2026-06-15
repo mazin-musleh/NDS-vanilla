@@ -2,7 +2,7 @@
 layout: page
 title: File Upload
 hero_title: File Upload - National Design System
-hero_description: Drag-and-drop file upload with built-in validation, progress tracking, and a full JavaScript API for custom upload workflows
+hero_description: A file uploader with drag-and-drop or compact browse modes that validates and lists selected files, then sends them to your server or with a form submit
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
@@ -269,7 +269,7 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i>
+                        <i class="hgi hgi-stroke hgi-refresh"></i>
                         <span class="nds-label">Upload Lifecycle</span>
                     </span>
                     <p class="nds-item-desc">Five status stages (ready, uploading, processing, complete, error) with progress tracking, retry for failures, and abort for in-progress uploads.</p>
@@ -283,7 +283,7 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
+                        <i class="hgi hgi-stroke hgi-translation"></i>
                         <span class="nds-label">Bilingual Messages</span>
                     </span>
                     <p class="nds-item-desc">Error and validation messages display in Arabic or English based on the page language setting.</p>
@@ -295,6 +295,63 @@ direction: ltr
                     </span>
                     <p class="nds-item-desc">Nine custom events cover the full upload lifecycle, letting you hook into file selection, progress updates, success, and error handling.</p>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sending Files -->
+<section id="uploadSending" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Sending Files to Your Server</h2>
+            <p class="nds-section-description">The component owns the file picker, validation, and the on-screen list; your code decides where the files go. Two patterns cover almost every case, chosen by file size and whether you want per-file progress.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block">
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr><th>Pattern</th><th>How it works</th><th>Best for</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Bundle on submit</strong></td><td>No <code class="nds-inline-code lang-html">data-upload-url</code>. Files stay in the component until you read them on submit and POST them with the rest of the form to a single endpoint.</td><td>Forms and small attachments, atomic submit, simplest backend</td></tr>
+                        <tr><td><strong>Upload as you go</strong></td><td>Set <code class="nds-inline-code lang-html">data-upload-url</code> with <code class="nds-inline-code lang-html">data-auto-upload="true"</code> (or a manual button calling <code class="nds-inline-code lang-js">startUpload()</code>). Each file uploads on its own with a progress ring, then a success check or a retry. The submit then references the uploaded files.</td><td>Large files and media, when you want per-file progress and retry</td></tr>
+                    </tbody>
+                </table>
+                <div class="nds-code nds-expandable">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <div class="nds-expandable-content">
+                        <code class="lang-javascript line-numbers">
+// ── Pattern 1: Bundle on submit (no data-upload-url) ──
+// Send the files WITH the form fields, in a single request.
+form.addEventListener('nds:formValid', (e) =&gt; {
+    e.preventDefault();                            // you are sending it yourself
+    const api  = NDS.Upload.getInstance('.nds-file-upload');
+    const data = new FormData(form);               // your text fields
+    api.getAllFiles().forEach(f =&gt; data.append('attachments[]', f.file));
+    fetch(form.action, { method: 'POST', body: data });
+});
+
+// ── Pattern 2: Upload as you go (set data-upload-url) ──
+// Auto-upload each file the moment it is picked:
+//   &lt;div class="nds-file-upload" data-upload-url="/api/files" data-auto-upload="true"&gt;...&lt;/div&gt;
+// Or trigger from your own button instead of data-auto-upload:
+uploadButton.addEventListener('click', () =&gt; {
+    NDS.Upload.getInstance('.nds-file-upload').startUpload();
+});
+</code>
+                    </div>
+                </div>
+                <p>Three things to know with either pattern:</p>
+                <ul>
+                    <li>Files never ride a native form submit. The component clears the native <code class="nds-inline-code lang-html">&lt;input&gt;</code> after selection, so always send them with <code class="nds-inline-code lang-js">getAllFiles()</code> or <code class="nds-inline-code lang-html">data-upload-url</code>.</li>
+                    <li><code class="nds-inline-code lang-html">data-upload-url</code> receives <strong>one file per request</strong>, not all of them at once, so the endpoint should accept a single <code class="nds-inline-code lang-js">file</code> field per POST.</li>
+                    <li>The input's <code class="nds-inline-code lang-html">accept</code> attribute only hints the OS picker and is advisory. Just set <code class="nds-inline-code lang-html">data-allowed-types</code> (which actually enforces extensions) and the component fills <code class="nds-inline-code lang-html">accept</code> from it automatically, so you never hand-write the picker filter or risk it drifting from what is enforced.</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -320,6 +377,8 @@ direction: ltr
                     <li>Do not use this component for large file transfers (500MB+) that need chunked upload or resumable protocols. Build a custom solution with the events API as a starting point</li>
                     <li>Server-side validation must duplicate all client-side checks. Client validation improves UX but cannot be trusted for security</li>
                     <li>Combine <code class="nds-inline-code lang-html">data-allowed-types</code> (extension) with <code class="nds-inline-code lang-html">data-allowed-mime-types</code> for defense in depth: extensions can be spoofed, MIME types add a second check</li>
+                    <li>Add <code class="nds-inline-code lang-html">aria-live="polite"</code> to the <code class="nds-inline-code lang-html">.nds-file-list</code> so newly added rows and per-file validation errors are announced to screen-reader users.</li>
+                    <li>The hidden <code class="nds-inline-code lang-html">.nds-file-item-template</code> is optional: when omitted, the component renders rows from its built-in markup. Supply your own template only to customize the per-file row.</li>
                 </ul>
             </div>
 
@@ -344,6 +403,7 @@ direction: ltr
 
             <div class="nds-block">
                 <h3 class="nds-block-title">Events</h3>
+                <p>Every <code class="nds-inline-code lang-js">fileData</code> payload is the consistent shape <code class="nds-inline-code lang-js">{ file, id, status, progress, error }</code>. For <code class="nds-inline-code lang-js">selected</code> it is an array of these, and for <code class="nds-inline-code lang-js">validationError</code> each <code class="nds-inline-code lang-js">errors[]</code> entry carries one as its <code class="nds-inline-code lang-js">fileData</code>.</p>
                 <table class="nds-table nds-responsive">
                     <thead>
                         <tr><th>Event</th><th>Detail</th></tr>
@@ -376,9 +436,19 @@ direction: ltr
 // ── Static methods ──────────────────────────────────
 NDS.Upload.init();                             // Initialize all .nds-file-upload on page
 NDS.Upload.reinit();                           // Re-scan DOM after dynamic changes
-NDS.Upload.create(element);                    // Manually create instance on element
+NDS.Upload.create(element, options);           // Create instance; returns it (or the existing one), null if it can't init
 NDS.Upload.getInstance('.nds-file-upload');     // Get instance by selector or element
 NDS.Upload.whenReady('.nds-file-upload', fn);  // Call fn(instance) when ready
+
+// ── Configure in JS (options override the data-* attributes) ──
+NDS.Upload.create('.nds-file-upload', {
+    uploadUrl: '/api/upload',
+    autoUpload: true,
+    maxFileSize: 2 * 1024 * 1024,               // bytes
+    maxFiles: 3,
+    allowedTypes: ['jpg', 'png', 'pdf'],        // or the 'jpg,png,pdf' string
+    allowedMimeTypes: ['image/*', 'application/pdf']
+});
 
 // ── File management ─────────────────────────────────
 const upload = NDS.Upload.getInstance('.nds-file-upload');
@@ -386,7 +456,8 @@ const upload = NDS.Upload.getInstance('.nds-file-upload');
 const fileId = upload.addFile(file, {   // Add file to queue
     status: 'ready',                    // 'ready' | 'uploading' | 'processing' | 'complete' | 'error'
     progress: 0,                        // 0-100
-    error: null                         // Error message string
+    error: null,                        // Error message string
+    validate: false                     // true → run size/type/MIME checks (sets 'error' on failure)
 });                                     // Returns fileId or null if max files reached
 
 upload.removeFile(fileId);              // Remove file, abort if uploading

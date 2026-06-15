@@ -49,16 +49,54 @@
         return (NDS.isArabic ? MESSAGES.ar : MESSAGES.en)[key];
     }
 
+    function warn(message) {
+        console.warn('NDS Upload: ' + message);
+    }
+
+    function resolve(container) {
+        return typeof container === 'string' ? document.querySelector(container) : container;
+    }
+
+    // Canonical file-item markup (mirrors components/upload.md). Cloned when a
+    // consumer omits the hidden .nds-file-item-template, so a bare
+    // .nds-file-upload still renders file rows. A supplied template still wins.
+    const DEFAULT_FILE_ITEM_HTML =
+        '<div class="nds-file-item">' +
+            '<span class="nds-feedback">' +
+                '<span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>' +
+            '</span>' +
+            '<div class="nds-progress-circle" style="--progress-size: 24px; --progress-value: 0;">' +
+                '<svg width="24" height="24" viewBox="0 0 24 24">' +
+                    '<circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="3" />' +
+                    '<circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="3" ' +
+                        'stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />' +
+                '</svg>' +
+                '<div class="nds-progress-info">' +
+                    '<span class="nds-progress-percentage"><span class="nds-progress-number"></span></span>' +
+                '</div>' +
+            '</div>' +
+            '<div class="nds-file-info">' +
+                '<div class="nds-file-name nds-truncate"></div>' +
+                '<div class="nds-file-error"><span class="nds-error-message"></span></div>' +
+            '</div>' +
+            '<div class="nds-file-actions">' +
+                '<button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file" aria-label="Remove file">' +
+                    '<i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>' +
+                '</button>' +
+            '</div>' +
+        '</div>';
+
     // ==============================================
     // CLASS: NDSUpload
     // ==============================================
 
     class NDSUpload {
-        constructor(container) {
+        constructor(container, options = {}) {
             if (!container || container.hasAttribute('data-nds-upload-initialized')) return;
             if (container.closest('code, .code-example')) return;
 
             this.container = container;
+            this._options = this._normalizeOptions(options);
             this._files = [];
             this._dragListenersActive = false;
 
@@ -71,9 +109,11 @@
 
             if (!this._fileInput || !this._dropZone || !this._fileList) return;
 
-            // Sync accept attribute from config
+            // data-allowed-types is the source of truth for the picker filter:
+            // mirror it onto the input's accept so authors never hand-write it
+            // (and it can't drift from what's actually enforced).
             const { allowedTypes } = this._readConfig();
-            if (allowedTypes && !this._fileInput.hasAttribute('accept')) {
+            if (allowedTypes) {
                 this._fileInput.setAttribute('accept', allowedTypes.map(t => '.' + t).join(','));
             }
 
@@ -100,6 +140,7 @@
             // Mark initialized and store instance
             container.setAttribute('data-nds-upload-initialized', '');
             container.ndsUpload = this;
+            this._initialized = true;
 
             // Dispatch ready event
             this._dispatchEvent('nds:upload:ready', { instance: this });
@@ -111,7 +152,7 @@
 
         _readConfig() {
             const ds = this.container.dataset;
-            return {
+            const fromAttrs = {
                 uploadUrl: ds.uploadUrl || null,
                 autoUpload: ds.autoUpload === 'true',
                 maxFileSize: parseInt(ds.maxFileSize) || 10 * 1024 * 1024,
@@ -119,6 +160,26 @@
                 allowedMimeTypes: ds.allowedMimeTypes ? ds.allowedMimeTypes.split(',').map(t => t.trim().toLowerCase()) : null,
                 maxFiles: parseInt(ds.maxFiles) || Infinity
             };
+            // JS options (passed to NDS.Upload.create / the constructor) override the
+            // declarative data-* attributes; _options only holds keys the caller set.
+            return { ...fromAttrs, ...this._options };
+        }
+
+        // Normalize a JS options object into the _readConfig shape, keeping only the
+        // keys the caller actually provided so they override attrs rather than blank
+        // them. allowedTypes / allowedMimeTypes accept an array or a comma string.
+        _normalizeOptions(options) {
+            if (!options || typeof options !== 'object') return {};
+            const list = (v) => (Array.isArray(v) ? v : String(v).split(','))
+                .map(t => t.trim().toLowerCase()).filter(Boolean);
+            const out = {};
+            if (options.uploadUrl != null) out.uploadUrl = options.uploadUrl;
+            if (options.autoUpload != null) out.autoUpload = options.autoUpload === true || options.autoUpload === 'true';
+            if (options.maxFileSize != null) out.maxFileSize = parseInt(options.maxFileSize, 10);
+            if (options.maxFiles != null) out.maxFiles = options.maxFiles === Infinity ? Infinity : parseInt(options.maxFiles, 10);
+            if (options.allowedTypes != null) out.allowedTypes = list(options.allowedTypes);
+            if (options.allowedMimeTypes != null) out.allowedMimeTypes = list(options.allowedMimeTypes);
+            return out;
         }
 
         getConfig() {
@@ -140,13 +201,16 @@
                 return null;
             }
 
+            // Opt-in: run the same size/type/MIME checks dragged/selected files get.
+            const errors = options.validate ? this._validateFile(file, config) : [];
+
             const isSingle = NDS.State.has(this.container, 'single');
             const fileData = {
                 file: file,
                 id: NDS.uniqueId('file-'),
-                status: options.status || 'ready',
+                status: errors.length ? 'error' : (options.status || 'ready'),
                 progress: options.progress || 0,
-                error: options.error || null,
+                error: errors.length ? errors.join(', ') : (options.error || null),
                 _xhr: null
             };
 
@@ -176,7 +240,7 @@
             if (el) el.remove();
 
             this._dispatchEvent('nds:upload:removed', {
-                fileData: { file: fileData.file, id: fileData.id, status: fileData.status },
+                fileData: this._toPublic(fileData),
                 fileId: fileId
             });
 
@@ -422,7 +486,7 @@
                 this._dispatchEvent('nds:upload:selected', {
                     files: validFiles.map(f => f.file),
                     allFiles: this._files.map(f => f.file),
-                    fileData: validFiles.map(f => ({ file: f.file, id: f.id, status: f.status }))
+                    fileData: validFiles.map(f => this._toPublic(f))
                 });
 
                 if (config.autoUpload && config.uploadUrl) {
@@ -431,7 +495,13 @@
             }
 
             if (validationErrors.length > 0) {
-                this._dispatchEvent('nds:upload:validationError', { errors: validationErrors });
+                this._dispatchEvent('nds:upload:validationError', {
+                    errors: validationErrors.map(e => ({
+                        file: e.file,
+                        errors: e.errors,
+                        fileData: this._toPublic(e.fileData)
+                    }))
+                });
             }
         }
 
@@ -440,6 +510,15 @@
             const index = this._files.findIndex(f => f.id === fileData.id);
             if (index === -1) return;
 
+            if (!config.uploadUrl) {
+                // Warn once per instance so a startUpload() over many files doesn't spam.
+                if (!this._warnedNoUrl) {
+                    warn('no upload URL configured (set data-upload-url or the uploadUrl option) — cannot upload');
+                    this._warnedNoUrl = true;
+                }
+                return;
+            }
+
             const formData = new FormData();
             formData.append('file', fileData.file, sanitizeFileName(fileData.file.name));
 
@@ -447,7 +526,7 @@
 
             // Dispatch beforeUpload (cancelable, exposes xhr for custom headers)
             const allowed = this._dispatchEvent('nds:upload:beforeUpload', {
-                fileData: { file: fileData.file, id: fileData.id },
+                fileData: this._toPublic(fileData),
                 formData: formData,
                 xhr: xhr
             }, true);
@@ -468,7 +547,7 @@
                     if (fileItem) this._setProgress(fileItem, progress);
 
                     this._dispatchEvent('nds:upload:progress', {
-                        fileData: { file: fileData.file, id: fileData.id },
+                        fileData: this._toPublic(fileData),
                         progress: progress
                     });
                 }
@@ -480,14 +559,14 @@
                     fileData.status = 'complete';
                     fileData.response = xhr.response;
                     this._dispatchEvent('nds:upload:success', {
-                        fileData: { file: fileData.file, id: fileData.id },
+                        fileData: this._toPublic(fileData),
                         response: xhr.response
                     });
                 } else {
                     fileData.status = 'error';
                     fileData.error = xhr.statusText;
                     this._dispatchEvent('nds:upload:error', {
-                        fileData: { file: fileData.file, id: fileData.id },
+                        fileData: this._toPublic(fileData),
                         error: xhr.statusText,
                         status: xhr.status
                     });
@@ -500,7 +579,7 @@
                 fileData.status = 'error';
                 fileData.error = msg('networkError');
                 this._dispatchEvent('nds:upload:error', {
-                    fileData: { file: fileData.file, id: fileData.id },
+                    fileData: this._toPublic(fileData),
                     error: msg('networkError')
                 });
                 this._updateFileItem(fileData.id);
@@ -522,11 +601,25 @@
             });
         }
 
-        _createFileItem(fileData, index) {
+        // Returns the .nds-file-item node to clone for a row. A consumer-supplied
+        // .nds-file-item-template wins; otherwise the built-in canonical markup is
+        // parsed once (cached per instance) so a bare .nds-file-upload still renders.
+        _getFileItemSource() {
             const template = this.container.querySelector('.nds-file-item-template');
-            if (!template) return document.createElement('div');
+            if (template) return template.querySelector('.nds-file-item');
 
-            const fileItem = template.querySelector('.nds-file-item').cloneNode(true);
+            if (!this._fallbackTemplate) {
+                this._fallbackTemplate = document.createElement('template');
+                this._fallbackTemplate.innerHTML = DEFAULT_FILE_ITEM_HTML;
+            }
+            return this._fallbackTemplate.content.querySelector('.nds-file-item');
+        }
+
+        _createFileItem(fileData, index) {
+            const source = this._getFileItemSource();
+            if (!source) return document.createElement('div');
+
+            const fileItem = source.cloneNode(true);
             fileItem.dataset.index = index;
             fileItem.dataset.fileId = fileData.id;
 
@@ -744,19 +837,20 @@
     NDS.Upload = {
         init: initializeUploads,
         reinit: initializeUploads,
-        create: (container) => {
-            if (typeof container === 'string') container = document.querySelector(container);
-            if (!container) return null;
-            return new NDSUpload(container);
+        create: (container, options) => {
+            container = resolve(container);
+            if (!container) { warn('create: container not found'); return null; }
+            if (container.ndsUpload) return container.ndsUpload;  // already built → return it
+            const instance = new NDSUpload(container, options);
+            return instance._initialized ? instance : null;       // null if the constructor bailed
         },
 
         getInstance: (container) => {
-            if (typeof container === 'string') container = document.querySelector(container);
-            return container?.ndsUpload || null;
+            return resolve(container)?.ndsUpload || null;
         },
 
         whenReady: (container, callback) => {
-            if (typeof container === 'string') container = document.querySelector(container);
+            container = resolve(container);
             if (!container) return;
 
             if (container.ndsUpload) {
