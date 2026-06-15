@@ -195,11 +195,12 @@
             init: () => NDS.Numbers?.init?.(),
         },
         {
-            // Critical: base CSS hides block code (display:none) until init's
-            // highlight + line-number rebuild stamps data-processed — deferral
-            // would reveal empty boxes that expand post-reveal (CLS on docs pages).
-            // Targets the three NDS code hooks (block, tabs-wrapped block, inline).
-            // Avoids bare `code` so detection doesn't sweep every <code> on docs pages.
+            // Critical: code paints from server markup at its real height (the page
+            // hide-gate covers FOUC); init then highlights + numbers in place, which
+            // is height-neutral, so it must settle before the reveal to avoid a
+            // visible plain->highlighted shift. Targets the three NDS code hooks
+            // (block, tabs-wrapped block, inline); avoids bare `code` so detection
+            // doesn't sweep every <code> on docs pages.
             name: 'Code',
             selector: '.code-example, .nds-code, code.nds-inline-code',
             init: () => NDS.Code?.init?.(),

@@ -136,8 +136,16 @@
         }
 
         const codeWrap = button.closest('.nds-code');
-        const codeBlock = codeWrap && codeWrap.querySelector('code');
-        if (codeBlock) return codeBlock.textContent;
+        if (codeWrap) {
+            // Tabbed code blocks hold one <code> per panel. Copy the button's own
+            // panel, else the active (visible) panel, else the block's only code —
+            // never blindly the first panel.
+            const ownPanel = button.closest('.nds-tab-panel');
+            const codeBlock = (ownPanel && ownPanel.querySelector('code'))
+                || codeWrap.querySelector('.nds-tab-panel:not([hidden]) code')
+                || codeWrap.querySelector('code');
+            if (codeBlock) return codeBlock.textContent;
+        }
 
         return '';
     }

@@ -1,9 +1,21 @@
 /**
  * National Design System - Code Processing JavaScript
- * Simplified code display with syntax highlighting and line numbers
+ * Syntax highlighting + line numbers for documentation code blocks.
  *
- * Purpose: Show code content as-is with line numbers and syntax coloring
- * Supports: HTML, JavaScript, CSS
+ * Pipeline (one pass, one innerHTML write per block):
+ *   source text -> lex(lang) -> Token[] -> split into lines -> render
+ *
+ * A Token is { type, value }: `type` is a syntax class suffix ('tag', 'attr',
+ * 'value', 'comment', 'property', 'selector', 'keyword', 'string', 'template',
+ * 'number', 'literal', 'builtin') or null for plain text. `value` is the RAW
+ * (un-escaped) substring — escaping happens exactly once, at render. Working in
+ * tokens (not HTML strings) lets line-numbering split at token boundaries, so a
+ * span can never straddle a line, and lets the HTML lexer splice CSS/JS tokens
+ * for embedded <style>/<script> bodies.
+ *
+ * Languages: HTML, CSS, JavaScript (+ CSS/JS embedded inside an HTML block).
+ * Language is taken from a `lang-*`/`language-*` class when present; otherwise
+ * it is sniffed from the content.
  */
 
 (function() {
@@ -14,36 +26,36 @@
     // ==============================================
 
     function initializeCodeProcessing() {
-        const codeElements = document.querySelectorAll('.code-example code, .nds-code code');
-        codeElements.forEach(function(codeElement) {
-            processCodeElement(codeElement);
-        });
-
-        const inlineCodeElements = document.querySelectorAll('code.nds-inline-code');
-        inlineCodeElements.forEach(function(codeElement) {
-            processInlineCodeElement(codeElement);
-        });
+        document.querySelectorAll('.code-example code, .nds-code code').forEach(processCodeElement);
+        document.querySelectorAll('code.nds-inline-code').forEach(processInlineCodeElement);
     }
 
     function processCodeElement(codeElement) {
         if (codeElement.dataset.processed === 'true') return;
 
-        // Store original content for later restoration
+        // Keep the server markup so reprocess (e.g. a theme switch) can restart.
         if (!codeElement.dataset.originalContent) {
             codeElement.dataset.originalContent = codeElement.innerHTML;
         }
 
-        const originalText = getOriginalText(codeElement);
+        const source = getSourceText(codeElement);
+        const lang = detectLanguage(codeElement, source);
+        const tokens = lexByLanguage(lang, source);
+        const lines = splitTokensIntoLines(tokens);
 
-        const lang = detectLanguage(codeElement);
-        if (lang) {
-            applySyntaxHighlighting(codeElement, lang, originalText);
+        if (lines.length === 0) {
+            codeElement.dataset.processed = 'true';
+            return;
         }
 
-        addLineNumbers(codeElement);
+        let html = '';
+        for (let i = 0; i < lines.length; i++) {
+            html += '<span class="code-line">' + renderTokens(lines[i]) + '</span>\n';
+        }
+        codeElement.innerHTML = html.trim();
 
-        // Idempotency guard (init re-runs / reprocess). The block paints from
-        // server markup now — CSS no longer gates display on this stamp.
+        // line-numbers gutter only for multi-line blocks (CSS counter reads the class).
+        if (lines.length > 1) codeElement.classList.add('line-numbers');
         codeElement.dataset.processed = 'true';
     }
 
@@ -51,461 +63,424 @@
         if (codeElement.dataset.processed === 'true') return;
 
         const text = codeElement.textContent;
-        const lang = detectLanguage(codeElement) || 'html';
-
-        // Inline code gets a single syntax class based on language
+        // Inline code is a single token — trust an explicit class, default to html.
+        const lang = languageFromClass(codeElement.className) || 'html';
         const syntaxClass = lang === 'javascript' ? 'syntax-keyword' : 'syntax-attr';
         codeElement.innerHTML = '<span class="' + syntaxClass + '">' + NDS.escapeHtml(text) + '</span>';
         codeElement.dataset.processed = 'true';
     }
 
     function reprocessCodeElement(codeElement) {
-        if (codeElement.dataset.originalContent) {
+        if (codeElement.dataset.originalContent != null) {
             codeElement.innerHTML = codeElement.dataset.originalContent;
         }
-
         codeElement.dataset.processed = 'false';
-        codeElement.dataset.lineNumbers = 'false';
         codeElement.classList.remove('line-numbers');
-
-        // Reprocess
         processCodeElement(codeElement);
     }
 
     // ==============================================
-    // TEXT EXTRACTION
+    // SOURCE EXTRACTION
     // ==============================================
 
-    function getOriginalText(codeElement) {
-        const htmlContent = codeElement.innerHTML;
-        const textContent = codeElement.textContent;
-
-        // If content has HTML entities, decode for display
-        if (htmlContent.includes('&lt;')) {
-            return decodeEntities(textContent);
-        }
-
-        // Check if this is a lang-html code block with raw HTML that needs to be shown as text
-        const isHtmlLang = detectLanguage(codeElement) === 'html';
-
-        // If it's HTML language code with raw tags, format it properly
-        if (isHtmlLang && htmlContent.includes('<')) {
-            return formatHtmlContent(htmlContent);
-        }
-
-        // Plain text - return as-is
-        return textContent;
-    }
-
-    function formatHtmlContent(html) {
-        // Parse HTML and format with proper indentation
-        const temp = document.createElement('div');
-        temp.innerHTML = html.trim();
-
-        let result = '';
-        let depth = 0;
-
-        function formatNode(node) {
-            const indent = '    '.repeat(depth);
-
-            for (let child of node.childNodes) {
-                if (child.nodeType === Node.TEXT_NODE) {
-                    const text = child.textContent.trim();
-                    if (text) {
-                        result += indent + text + '\n';
-                    }
-                } else if (child.nodeType === Node.ELEMENT_NODE) {
-                    const tag = child.tagName.toLowerCase();
-                    const hasChildren = child.children.length > 0;
-                    const hasText = !hasChildren && child.textContent.trim();
-
-                    // Build opening tag
-                    let openTag = '<' + tag;
-                    for (let attr of child.attributes) {
-                        if (attr.value === '' || attr.value === attr.name) {
-                            openTag += ' ' + attr.name;
-                        } else {
-                            openTag += ' ' + attr.name + '="' + attr.value + '"';
-                        }
-                    }
-
-                    // Check if it's a void element
-                    const voidElements = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img',
-                                         'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
-                    const isVoid = voidElements.includes(tag);
-
-                    if (isVoid) {
-                        // Void element - no closing tag
-                        openTag += '>';
-                        result += indent + openTag + '\n';
-                    } else if (hasText) {
-                        // Element with only text content - inline
-                        openTag += '>';
-                        result += indent + openTag + child.textContent.trim() + '</' + tag + '>\n';
-                    } else if (hasChildren) {
-                        // Element with children - block format
-                        openTag += '>';
-                        result += indent + openTag + '\n';
-                        depth++;
-                        formatNode(child);
-                        depth--;
-                        result += indent + '</' + tag + '>\n';
-                    } else {
-                        // Empty element
-                        openTag += '>';
-                        result += indent + openTag + '</' + tag + '>\n';
-                    }
-                }
-            }
-        }
-
-        formatNode(temp);
-        return result.trim();
-    }
-
-    function decodeEntities(str) {
-        return str.replace(/&lt;/g, '<')
-                  .replace(/&gt;/g, '>')
-                  .replace(/&quot;/g, '"')
-                  .replace(/&#x27;/g, "'")
-                  .replace(/&amp;/g, '&');
+    // The authored corpus is entity-escaped (`&lt;…&gt;`), so textContent already
+    // holds the decoded source with the author's indentation — no reparse needed.
+    // Strip one leading newline (the <code> tag sits on its own line).
+    function getSourceText(codeElement) {
+        const text = codeElement.textContent;
+        return text.charCodeAt(0) === 10 ? text.slice(1) : text;
     }
 
     // ==============================================
     // LANGUAGE DETECTION
     // ==============================================
 
-    function detectLanguage(codeElement) {
-        const className = codeElement.className;
-
-        if (className.includes('lang-html') || className.includes('language-html')) {
-            return 'html';
-        }
-        if (className.includes('lang-css') || className.includes('language-css')) {
-            return 'css';
-        }
-        if (className.includes('lang-javascript') || className.includes('language-javascript') ||
-            className.includes('lang-js') || className.includes('language-js')) {
-            return 'javascript';
-        }
-
+    function languageFromClass(className) {
+        if (/\blang(?:uage)?-html\b/.test(className)) return 'html';
+        if (/\blang(?:uage)?-css\b/.test(className)) return 'css';
+        if (/\blang(?:uage)?-(?:javascript|js)\b/.test(className)) return 'javascript';
         return null;
     }
 
-    // ==============================================
-    // SYNTAX HIGHLIGHTING
-    // ==============================================
-
-    function applySyntaxHighlighting(codeElement, lang, text) {
-        let highlighted = '';
-
-        if (lang === 'html') {
-            highlighted = highlightHTML(text);
-        } else if (lang === 'css') {
-            highlighted = highlightCSS(text);
-        } else if (lang === 'javascript') {
-            highlighted = highlightJavaScript(text);
-        }
-
-        if (highlighted) {
-            codeElement.innerHTML = highlighted;
-        } else {
-            codeElement.textContent = text;
-        }
+    // Class wins (explicit override, back-compat); otherwise sniff the content so
+    // a block can omit the class entirely.
+    function detectLanguage(codeElement, source) {
+        const byClass = languageFromClass(codeElement.className);
+        if (byClass) return byClass;
+        const text = source != null ? source : codeElement.textContent;
+        return sniffLanguage(text);
     }
 
-    // HTML Syntax Highlighting — jumps between tags via indexOf and escapes
-    // whole text runs (escaping is character-local, so one run-escape equals
-    // the concatenation of per-character escapes at a fraction of the DOM cost).
-    function highlightHTML(text) {
-        let result = '';
+    function sniffLanguage(source) {
+        const s = source.trim();
+        if (s === '' || s[0] === '<') return 'html';
+        // JS first — an object/array literal would otherwise read as a CSS block.
+        if (/\b(?:function|const|let|var|import|export)\b|=>|console\.|document\.|window\./.test(s)) {
+            return 'javascript';
+        }
+        // CSS — a `selector { … : … }` rule or a bare `prop: value;` declaration.
+        if (/[.#:\[\]\w-]+\s*\{[\s\S]*:/.test(s) || /^[\w-]+\s*:\s*[^;{}]+;/.test(s)) return 'css';
+        return 'html';
+    }
+
+    function lexByLanguage(lang, source) {
+        if (lang === 'html') return lexHtml(source);
+        if (lang === 'css') return lexCss(source);
+        if (lang === 'javascript') return lexJs(source);
+        return [{ type: null, value: source }];
+    }
+
+    // ==============================================
+    // RENDER + LINE SPLITTING (shared by all languages)
+    // ==============================================
+
+    function renderTokens(tokens) {
+        let html = '';
+        for (let i = 0; i < tokens.length; i++) {
+            const t = tokens[i];
+            const esc = NDS.escapeHtml(t.value);
+            html += t.type ? '<span class="syntax-' + t.type + '">' + esc + '</span>' : esc;
+        }
+        return html;
+    }
+
+    // Split a flat token stream into per-line token arrays. Any token that spans a
+    // newline is broken at the '\n', so a syntax span never crosses a line — this
+    // is what removes the old "value can't span a newline" lexer constraint.
+    function splitTokensIntoLines(tokens) {
+        const lines = [[]];
+        for (let i = 0; i < tokens.length; i++) {
+            const t = tokens[i];
+            if (t.value.indexOf('\n') === -1) {
+                if (t.value !== '') lines[lines.length - 1].push(t);
+                continue;
+            }
+            const parts = t.value.split('\n');
+            for (let p = 0; p < parts.length; p++) {
+                if (p > 0) lines.push([]);
+                if (parts[p] !== '') lines[lines.length - 1].push({ type: t.type, value: parts[p] });
+            }
+        }
+        // Drop trailing blank lines (indentation before the closing </code>).
+        while (lines.length > 0 && lineIsBlank(lines[lines.length - 1])) lines.pop();
+        return lines;
+    }
+
+    function lineIsBlank(lineTokens) {
+        for (let i = 0; i < lineTokens.length; i++) {
+            if (lineTokens[i].value.trim() !== '') return false;
+        }
+        return true;
+    }
+
+    // ==============================================
+    // HTML LEXER (delegates <style>/<script> bodies to CSS/JS)
+    // ==============================================
+
+    // Tags whose body is a foreign language. Lower-cased tag name -> sub-lexer key.
+    const EMBEDDED_LANG = { style: 'css', script: 'javascript' };
+
+    function lexHtml(source) {
+        const tokens = [];
+        const len = source.length;
         let i = 0;
 
-        while (i < text.length) {
-            const open = text.indexOf('<', i);
+        while (i < len) {
+            const open = source.indexOf('<', i);
             if (open === -1) {
-                result += highlightHtmlText(text.slice(i));
+                tokens.push({ type: null, value: source.slice(i) });
                 break;
             }
-            if (open > i) {
-                result += highlightHtmlText(text.slice(i, open));
-            }
-            // HTML comment — consume through `-->` (may itself contain `>`) and
-            // color it gray via syntax-comment, like the JS/CSS highlighters.
-            if (text.startsWith('<!--', open)) {
-                const close = text.indexOf('-->', open + 4);
-                const end = close === -1 ? text.length : close + 3;
-                result += '<span class="syntax-comment">' + NDS.escapeHtml(text.slice(open, end)) + '</span>';
+            if (open > i) tokens.push({ type: null, value: source.slice(i, open) });
+
+            // HTML comment — consume through `-->` (which may itself contain `>`).
+            if (source.startsWith('<!--', open)) {
+                const close = source.indexOf('-->', open + 4);
+                const end = close === -1 ? len : close + 3;
+                tokens.push({ type: 'comment', value: source.slice(open, end) });
                 i = end;
                 continue;
             }
-            const tagEnd = text.indexOf('>', open);
+
+            const tagEnd = source.indexOf('>', open);
             if (tagEnd === -1) {
-                // Unterminated tag — the rest is plain text
-                result += NDS.escapeHtml(text.slice(open));
+                tokens.push({ type: null, value: source.slice(open) });
                 break;
             }
-            result += highlightHTMLTag(text.substring(open, tagEnd + 1));
+            const tagText = source.slice(open, tagEnd + 1);
+            lexHtmlTag(tagText, tokens);
             i = tagEnd + 1;
+
+            // <style>/<script>: splice the body's CSS/JS tokens, then let the loop
+            // pick up the closing tag as an ordinary tag on its next pass.
+            const name = /^<([a-zA-Z][a-zA-Z0-9-]*)/.exec(tagText);
+            const sub = name && EMBEDDED_LANG[name[1].toLowerCase()];
+            if (sub && tagText.charAt(tagText.length - 2) !== '/') {
+                const rel = source.slice(i).search(new RegExp('</' + name[1] + '\\s*>', 'i'));
+                const bodyEnd = rel === -1 ? len : i + rel;
+                const body = source.slice(i, bodyEnd);
+                if (body) {
+                    const subTokens = sub === 'css' ? lexCss(body) : lexJs(body);
+                    for (let k = 0; k < subTokens.length; k++) tokens.push(subTokens[k]);
+                }
+                i = bodyEnd;
+            }
         }
 
-        return result;
+        return tokens;
     }
 
-    // Text between tags — escape it, but color any `/* ... */` block comment
-    // gray (e.g. placeholder comments inside <script>/<style> in an HTML block).
-    function highlightHtmlText(run) {
-        let out = '';
-        let i = 0;
-        while (i < run.length) {
-            const start = run.indexOf('/*', i);
-            if (start === -1) { out += NDS.escapeHtml(run.slice(i)); break; }
-            if (start > i) out += NDS.escapeHtml(run.slice(i, start));
-            const end = run.indexOf('*/', start + 2);
-            const stop = end === -1 ? run.length : end + 2;
-            out += '<span class="syntax-comment">' + NDS.escapeHtml(run.slice(start, stop)) + '</span>';
-            i = stop;
+    // Lex a single `<…>` tag into tokens: the `<`/`</`/`>` punctuation stays plain,
+    // the tag name is `tag`, attribute names are `attr`, quoted values are `value`.
+    function lexHtmlTag(tag, tokens) {
+        const close = tag.charAt(1) === '/';
+        const prefixEnd = close ? 2 : 1;
+        tokens.push({ type: null, value: tag.slice(0, prefixEnd) });
+
+        let i = prefixEnd;
+        const name = /^[a-zA-Z][a-zA-Z0-9-]*/.exec(tag.slice(i));
+        if (name) {
+            tokens.push({ type: 'tag', value: name[0] });
+            i += name[0].length;
         }
-        return out;
-    }
 
-    function highlightHTMLTag(tag) {
-        let result = '';
-        let i = 0;
-        let inQuotes = false;
-        let quoteChar = '';
         let buffer = '';
+        const flush = function() {
+            if (buffer) { tokens.push({ type: null, value: buffer }); buffer = ''; }
+        };
 
         while (i < tag.length) {
-            const char = tag[i];
+            const ch = tag.charAt(i);
 
-            // Handle quotes (attribute values)
-            if (!inQuotes && (char === '"' || char === "'")) {
-                if (buffer) {
-                    result += processHTMLToken(buffer);
-                    buffer = '';
-                }
-                inQuotes = true;
-                quoteChar = char;
-                buffer = char;
-            } else if (inQuotes && char === quoteChar) {
-                buffer += char;
-                result += '<span class="syntax-value">' + NDS.escapeHtml(buffer) + '</span>';
-                buffer = '';
-                inQuotes = false;
-                quoteChar = '';
-            } else if (inQuotes) {
-                buffer += char;
-            } else {
-                buffer += char;
+            // Quoted attribute value.
+            if (ch === '"' || ch === "'") {
+                flush();
+                const q = tag.indexOf(ch, i + 1);
+                const end = q === -1 ? tag.length : q + 1;
+                tokens.push({ type: 'value', value: tag.slice(i, end) });
+                i = end;
+                continue;
             }
 
+            // Attribute name: a word that follows whitespace and is bounded by
+            // `=`, whitespace, `/`, `>` or end (covers both valued and boolean attrs).
+            // `i` is always past the tag name here, so the prev char always exists.
+            if (/[a-zA-Z]/.test(ch) && /\s/.test(tag.charAt(i - 1))) {
+                const attr = /^[a-zA-Z][a-zA-Z0-9-]*/.exec(tag.slice(i));
+                if (attr) {
+                    const after = tag.charAt(i + attr[0].length);
+                    if (after === '' || after === '=' || /[\s/>]/.test(after)) {
+                        flush();
+                        tokens.push({ type: 'attr', value: attr[0] });
+                        i += attr[0].length;
+                        continue;
+                    }
+                }
+            }
+
+            buffer += ch;
             i++;
         }
-
-        if (buffer) {
-            result += processHTMLToken(buffer);
-        }
-
-        return result;
+        flush();
     }
 
-    function processHTMLToken(token) {
-        let result = NDS.escapeHtml(token);
+    // ==============================================
+    // CSS LEXER (state machine — selector <-> declaration context)
+    // ==============================================
+    //
+    // Walking contexts (not lines) highlights single-line rules
+    // (`a { color: red; }`) and multi-line rules identically, and keeps `#hex`
+    // inside the value context so it can't be misread as an `#id` selector.
 
-        // Tag name (opening or closing)
-        const tagMatch = token.match(/^<\/?([a-zA-Z][a-zA-Z0-9-]*)/);
-        if (tagMatch) {
-            return result.replace(tagMatch[1], '<span class="syntax-tag">' + tagMatch[1] + '</span>');
-        }
+    // At-rules whose `{ }` body holds nested rules, not declarations.
+    const CSS_GROUP_AT_RULE = /^@(?:media|supports|container|layer|scope|document)\b/i;
 
-        // Attribute names: with value (attr=) and boolean (attr followed by space, &gt; or end)
-        result = result.replace(/(?<=\s)([a-zA-Z][a-zA-Z0-9-]*)(?==|\s|&gt;|&amp;|$)/g, '<span class="syntax-attr">$1</span>');
-        return result;
-    }
-
-    // CSS Syntax Highlighting — line-aware. A global-regex pass mis-colors hex
-    // values (`#fbf9f8` matches the `#id` selector pattern → selector colour) while
-    // a digit-led hex (`#231f20`) falls through to the value colour, and it paints
-    // pseudo-class selectors (`:root`) as values. It also lets a value span cross a
-    // newline, which splitHtmlByLines then breaks into a blank line. Walking
-    // line-by-line keeps selector / property / value colours consistent and every
-    // span inside its own line.
-    function highlightCSS(text) {
-        const lines = text.split('\n');
-        const out = [];
-        let inComment = false;
-        for (let i = 0; i < lines.length; i++) {
-            const res = highlightCSSLine(lines[i], inComment);
-            out.push(res.html);
-            inComment = res.open;
-        }
-        return out.join('\n');
-    }
-
-    function cssEsc(s) { return NDS.escapeHtml(s); }
-    function cssSpan(type, s) { return '<span class="syntax-' + type + '">' + NDS.escapeHtml(s) + '</span>'; }
-
-    // Highlight one CSS line. `open` in = inside an unclosed `/* */` from a previous
-    // line; returns whether the comment is still open after this line.
-    function highlightCSSLine(line, open) {
-        // Continuation / start of a block comment
-        if (open) {
-            const end = line.indexOf('*/');
-            if (end === -1) return { html: cssSpan('comment', line), open: true };
-            const after = highlightCSSLine(line.slice(end + 2), false);
-            return { html: cssSpan('comment', line.slice(0, end + 2)) + after.html, open: after.open };
-        }
-        const start = line.indexOf('/*');
-        if (start !== -1) {
-            const before = highlightCSSLine(line.slice(0, start), false);
-            const end = line.indexOf('*/', start + 2);
-            if (end === -1) return { html: before.html + cssSpan('comment', line.slice(start)), open: true };
-            const after = highlightCSSLine(line.slice(end + 2), false);
-            return { html: before.html + cssSpan('comment', line.slice(start, end + 2)) + after.html, open: after.open };
-        }
-
-        // Declaration `prop: value;` — only when the line carries no block braces
-        if (line.indexOf('{') === -1 && line.indexOf('}') === -1) {
-            const decl = line.match(/^(\s*)([\w-]+)(\s*:\s*)(.*?)(;?\s*)$/);
-            if (decl) {
-                return {
-                    html: cssEsc(decl[1]) + cssSpan('property', decl[2]) + cssEsc(decl[3])
-                        + cssSpan('value', decl[4]) + cssEsc(decl[5]),
-                    open: false
-                };
-            }
-        }
-
-        // Selector line — everything before the `{` is the selector
-        const brace = line.indexOf('{');
-        if (brace !== -1) {
-            const sel = line.slice(0, brace).match(/^(.*?)(\s*)$/);
-            return { html: cssSpan('selector', sel[1]) + cssEsc(sel[2]) + cssEsc(line.slice(brace)), open: false };
-        }
-
-        // `}`, blank, or anything else — plain
-        return { html: cssEsc(line), open: false };
-    }
-
-    // JavaScript Syntax Highlighting
-    // Precompiled per-category alternations — one pass per category instead of
-    // a fresh RegExp + full-text pass per word, per block. The trailing \b
-    // forces whole-token matches, so alternative order is irrelevant (`in`
-    // can't half-match `instanceof`).
-    const JS_WORD_CATEGORIES = [
-        ['keyword', /\b(const|let|var|function|if|else|for|while|return|break|continue|switch|case|default|try|catch|finally|throw|class|extends|import|export|await|async|new|typeof|instanceof|in|of|delete|void|this|super)\b/g],
-        ['literal', /\b(true|false|null|undefined|NaN|Infinity)\b/g],
-        ['builtin', /\b(console|window|document|Array|Object|String|Number|Boolean|Math|JSON|Date|Promise|Set|Map)\b/g]
-    ];
-
-    function highlightJavaScript(text) {
+    function lexCss(source) {
         const tokens = [];
-        let highlighted = text;
+        const n = source.length;
+        let i = 0;
+        // Block kinds we're nested in: 'decl' = declaration block, 'rules' = a
+        // group at-rule body. Top level (empty stack) holds rules.
+        const blockStack = [];
 
-        function tokenize(match, type) {
-            const placeholder = '__TOKEN_' + tokens.length + '__';
-            tokens.push({ placeholder: placeholder, content: NDS.escapeHtml(match), type: type });
-            return placeholder;
-        }
+        while (i < n) {
+            const ch = source.charAt(i);
 
-        // Tokenize in priority order
-        highlighted = highlighted.replace(/(\/\/.*$)/gm, function(m) { return tokenize(m, 'comment'); });
-        highlighted = highlighted.replace(/(\/\*[\s\S]*?\*\/)/g, function(m) { return tokenize(m, 'comment'); });
-        highlighted = highlighted.replace(/(`[^`]*`)/g, function(m) { return tokenize(m, 'template'); });
-        highlighted = highlighted.replace(/(['"])((?:\\.|(?!\1)[^\\])*?)\1/g, function(m) { return tokenize(m, 'string'); });
-        highlighted = highlighted.replace(/\b(\d+\.?\d*([eE][+-]?\d+)?)\b/g, function(m) { return tokenize(m, 'number'); });
+            // Comment anywhere (may span lines; split-into-lines breaks it safely).
+            if (ch === '/' && source.charAt(i + 1) === '*') {
+                const end = source.indexOf('*/', i + 2);
+                const stop = end === -1 ? n : end + 2;
+                tokens.push({ type: 'comment', value: source.slice(i, stop) });
+                i = stop;
+                continue;
+            }
 
-        // Word categories — keywords, literals, built-ins
-        JS_WORD_CATEGORIES.forEach(function(cat) {
-            highlighted = highlighted.replace(cat[1], function(m) { return tokenize(m, cat[0]); });
-        });
+            // Close the current block.
+            if (ch === '}') {
+                tokens.push({ type: null, value: '}' });
+                blockStack.pop();
+                i++;
+                continue;
+            }
 
-        // Escape remaining text
-        highlighted = NDS.escapeHtml(highlighted);
-
-        // Replace tokens. Function replacement — a literal $& / $' in the
-        // escaped code would otherwise be interpreted as a replacement pattern
-        // and splice match text into the output.
-        tokens.forEach(function(token) {
-            const wrapped = '<span class="syntax-' + token.type + '">' + token.content + '</span>';
-            highlighted = highlighted.replace(token.placeholder, function() { return wrapped; });
-        });
-
-        return highlighted;
-    }
-
-    // ==============================================
-    // LINE NUMBERS
-    // ==============================================
-
-    function addLineNumbers(codeElement) {
-        if (codeElement.dataset.lineNumbers === 'true') return;
-
-        let htmlContent = codeElement.innerHTML;
-        let textContent = codeElement.textContent;
-
-        // Strip leading newline (from <code> tag on its own line)
-        if (htmlContent.startsWith('\n')) {
-            htmlContent = htmlContent.substring(1);
-        }
-        if (textContent.startsWith('\n')) {
-            textContent = textContent.substring(1);
-        }
-
-        const lines = textContent.split('\n');
-
-        // Remove trailing empty line
-        if (lines.length > 0 && lines[lines.length - 1].trim() === '') {
-            lines.pop();
-        }
-
-        if (lines.length === 0) return;
-
-        const hasMultipleLines = lines.length > 1;
-
-        // Split HTML by lines
-        const htmlLines = splitHtmlByLines(htmlContent, lines.length);
-
-        // Wrap each line
-        let numberedContent = '';
-        htmlLines.forEach(function(lineHtml, index) {
-            numberedContent += '<span class="code-line" data-line="' + (index + 1) + '">' +
-                             lineHtml + '</span>\n';
-        });
-
-        codeElement.innerHTML = numberedContent.trim();
-
-        // Add line-numbers class only for multi-line code
-        if (hasMultipleLines) {
-            codeElement.classList.add('line-numbers');
-        }
-
-        codeElement.dataset.lineNumbers = 'true';
-    }
-
-    function splitHtmlByLines(html, lineCount) {
-        const lines = [];
-        let remaining = html;
-
-        for (let i = 0; i < lineCount; i++) {
-            if (i === lineCount - 1) {
-                // Last line gets all remaining content
-                lines.push(remaining);
-            } else {
-                // Find first newline
-                const newlineIndex = remaining.indexOf('\n');
-                if (newlineIndex !== -1) {
-                    lines.push(remaining.substring(0, newlineIndex));
-                    remaining = remaining.substring(newlineIndex + 1);
+            if (blockStack[blockStack.length - 1] === 'decl') {
+                const j = scanCss(source, i, ':;{}');
+                const d = source.charAt(j);
+                if (d === ':') {
+                    emitCssRun(tokens, source, i, j, 'property');
+                    tokens.push({ type: null, value: ':' });
+                    const k = scanCss(source, j + 1, ';}'); // value up to ';' or block end
+                    emitCssRun(tokens, source, j + 1, k, 'value');
+                    i = k;
+                    if (source.charAt(i) === ';') { tokens.push({ type: null, value: ';' }); i++; }
+                } else if (d === '{') {
+                    // Nested rule (CSS nesting) — the run before '{' is its selector.
+                    emitCssRun(tokens, source, i, j, 'selector');
+                    tokens.push({ type: null, value: '{' });
+                    blockStack.push(CSS_GROUP_AT_RULE.test(source.slice(i, j).trim()) ? 'rules' : 'decl');
+                    i = j + 1;
                 } else {
-                    lines.push(remaining);
-                    remaining = '';
+                    // ';' (stray), '}' (handled next loop), comment-open, or end.
+                    emitCssRun(tokens, source, i, j, null);
+                    i = j;
+                    if (source.charAt(i) === ';') { tokens.push({ type: null, value: ';' }); i++; }
                 }
+                continue;
+            }
+
+            // Rule context: selector / at-rule prelude up to '{' or statement ';'.
+            const j = scanCss(source, i, '{};');
+            const delim = source.charAt(j);
+            emitCssRun(tokens, source, i, j, delim === '' ? null : 'selector');
+            if (delim === '{') {
+                tokens.push({ type: null, value: '{' });
+                blockStack.push(CSS_GROUP_AT_RULE.test(source.slice(i, j).trim()) ? 'rules' : 'decl');
+                i = j + 1;
+            } else if (delim === ';') {
+                tokens.push({ type: null, value: ';' }); // at-rule statement (@import, @charset, …)
+                i = j + 1;
+            } else {
+                i = j; // comment-open or end of source
             }
         }
 
-        return lines;
+        return tokens;
+    }
+
+    // Index of the next char in `stops`, the next comment-open, or end of source.
+    function scanCss(source, from, stops) {
+        const n = source.length;
+        let j = from;
+        while (j < n) {
+            const c = source.charAt(j);
+            if (stops.indexOf(c) !== -1 || (c === '/' && source.charAt(j + 1) === '*')) break;
+            j++;
+        }
+        return j;
+    }
+
+    // Emit source[from,to) as `type`, keeping surrounding whitespace as plain
+    // tokens so colored spans hug their text (and newlines stay in plain runs).
+    // A `selector` run is sub-tokenized for readability (classes vs attributes vs
+    // pseudo-classes get distinct colors); at-rule preludes (`@…`) are left whole.
+    function emitCssRun(tokens, source, from, to, type) {
+        let a = from, b = to;
+        while (a < b && isWhitespace(source.charAt(a))) a++;
+        while (b > a && isWhitespace(source.charAt(b - 1))) b--;
+        if (a > from) tokens.push({ type: null, value: source.slice(from, a) });
+        if (b > a) {
+            const text = source.slice(a, b);
+            if (type === 'selector' && text.charAt(0) !== '@') {
+                pushSelectorTokens(tokens, text);
+            } else {
+                tokens.push({ type: type, value: text });
+            }
+        }
+        if (to > b) tokens.push({ type: null, value: source.slice(b, to) });
+    }
+
+    // Split a selector into readable sub-tokens: attribute selectors -> 'attr',
+    // pseudo-class/element -> 'keyword', class/id/tag names -> 'selector',
+    // combinators/commas/parens/`*` -> plain. Values round-trip to the input.
+    function pushSelectorTokens(tokens, text) {
+        const n = text.length;
+        let i = 0;
+        while (i < n) {
+            const ch = text.charAt(i);
+            if (ch === '[') {                                   // attribute selector
+                const close = text.indexOf(']', i + 1);
+                const end = close === -1 ? n : close + 1;
+                tokens.push({ type: 'attr', value: text.slice(i, end) });
+                i = end;
+            } else if (ch === ':') {                            // pseudo-class / element
+                let j = i + 1;
+                if (text.charAt(j) === ':') j++;
+                const m = /^[a-zA-Z-]+/.exec(text.slice(j));
+                const end = m ? j + m[0].length : j;
+                tokens.push({ type: 'keyword', value: text.slice(i, end) });
+                i = end;
+            } else if (ch === '.' || ch === '#') {              // class / id
+                const m = /^[\w-]+/.exec(text.slice(i + 1));
+                const end = m ? i + 1 + m[0].length : i + 1;
+                tokens.push({ type: 'selector', value: text.slice(i, end) });
+                i = end;
+            } else if (/[a-zA-Z]/.test(ch)) {                   // tag / element name
+                const m = /^[\w-]+/.exec(text.slice(i));
+                tokens.push({ type: 'selector', value: m[0] });
+                i += m[0].length;
+            } else {                                            // combinators, commas, *, ( ), whitespace
+                let j = i + 1;
+                while (j < n && '[:.#'.indexOf(text.charAt(j)) === -1 && !/[a-zA-Z]/.test(text.charAt(j))) j++;
+                tokens.push({ type: null, value: text.slice(i, j) });
+                i = j;
+            }
+        }
+    }
+
+    function isWhitespace(c) {
+        return c === ' ' || c === '\t' || c === '\n' || c === '\r' || c === '\f';
+    }
+
+    // ==============================================
+    // JAVASCRIPT LEXER
+    // ==============================================
+
+    // One master regex, scanned left to right. Alternatives are ordered by
+    // priority (a keyword inside a string is swallowed by the string branch since
+    // exec jumps past the whole match). Gaps between matches are plain text.
+    const JS_TOKEN_RE = new RegExp(
+        '(\\/\\/[^\\n]*)' +                                       // 1 line comment
+        '|(\\/\\*[\\s\\S]*?\\*\\/)' +                             // 2 block comment
+        '|(`[^`]*`)' +                                            // 3 template literal
+        '|("(?:\\\\.|[^"\\\\])*"|\'(?:\\\\.|[^\'\\\\])*\')' +     // 4 string
+        '|(\\b\\d+\\.?\\d*(?:[eE][+-]?\\d+)?\\b)' +               // 5 number
+        // (?<!\.) so a member property named like a word token (`.catch`,
+        // `.finally`, `x.Promise`) stays plain instead of coloring as the token.
+        '|(?<!\\.)\\b(const|let|var|function|if|else|for|while|return|break|continue|switch|case|default|try|catch|finally|throw|class|extends|import|export|await|async|new|typeof|instanceof|in|of|delete|void|this|super)\\b' + // 6 keyword
+        '|(?<!\\.)\\b(true|false|null|undefined|NaN|Infinity)\\b' + // 7 literal
+        '|(?<!\\.)\\b(console|window|document|Array|Object|String|Number|Boolean|Math|JSON|Date|Promise|Set|Map)\\b', // 8 builtin
+        'g'
+    );
+
+    const JS_GROUP_TYPE = [null, 'comment', 'comment', 'template', 'string', 'number', 'keyword', 'literal', 'builtin'];
+
+    function lexJs(source) {
+        const tokens = [];
+        let last = 0;
+        let m;
+        JS_TOKEN_RE.lastIndex = 0;
+        while ((m = JS_TOKEN_RE.exec(source)) !== null) {
+            if (m.index > last) tokens.push({ type: null, value: source.slice(last, m.index) });
+            let type = null;
+            for (let g = 1; g < JS_GROUP_TYPE.length; g++) {
+                if (m[g] !== undefined) { type = JS_GROUP_TYPE[g]; break; }
+            }
+            tokens.push({ type: type, value: m[0] });
+            last = JS_TOKEN_RE.lastIndex;
+            if (m.index === JS_TOKEN_RE.lastIndex) JS_TOKEN_RE.lastIndex++; // zero-length guard
+        }
+        if (last < source.length) tokens.push({ type: null, value: source.slice(last) });
+        return tokens;
     }
 
     // ==============================================
@@ -516,8 +491,7 @@
         NDS.Code = {
             init: initializeCodeProcessing,
             reprocessCodeElement: reprocessCodeElement,
-            detectLanguage: detectLanguage,
-            decodeEntities: decodeEntities
+            detectLanguage: detectLanguage
         };
     }
 
