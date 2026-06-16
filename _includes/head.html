@@ -89,6 +89,10 @@
     <!-- Debug: enable the loader's per-component init logging + timing (pre-eval). -->
     <script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
     {%- endif %}
+    {%- comment -%} BreadcrumbList JSON-LD — sub-hero layouts only (page/post/console) {%- endcomment -%}
+    {%- if page.layout == 'page' or page.layout == 'post' or page.layout == 'console' -%}
+    {%- include breadcrumb-jsonld.html -%}
+    {%- endif -%}
     <!-- Theme/brand stamp (FOUC guard) — placed last so resource preloads kick off first. -->
     {%- include head-inline-scripts.html -%}
     {%- include google-analytics.html -%}
