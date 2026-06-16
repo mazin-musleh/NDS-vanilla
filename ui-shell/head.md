@@ -119,6 +119,7 @@ if (window.__ndsDeferredPending) loadDeferredAssets();
                         <div class="nds-expandable-content">
                             <code class="lang-css code">
 html { background-color: var(--background-body, #f9fafb); }
+html :where(header) { display: contents; }
 html :where(.nds-topbar) { height: 40px; }
 html :where(.nds-main-nav) { height: var(--nds-nav-height, 72px); }
 html .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) { display: none; }

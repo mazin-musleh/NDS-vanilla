@@ -47,6 +47,7 @@ html {
     /* Page canvas — same token the body paints (reset.scss). */
     background-color: v('--background-body', #f9fafb);
 
+    :where(header) {display: contents;}
     /* Nav/topbar height reservations — prevent CLS before main lands. */
     :where(.nds-topbar) { height: 40px; }
     :where(.nds-main-nav) { height: v('--nds-nav-height', 72px); }
@@ -113,7 +114,7 @@ i.hgi-stroke { opacity: 0; }
 
     /* Dark page canvas (crit resolves --background-body in dark via the token). */
     html[data-theme~=dark] { background-color: var(--background-body, #111927); }
-
+    
     /* Chrome box bgs — the colored FCP skeleton for topbar + nav. */
     :where(.nds-topbar) { background-color: var(--background-topbar, #f3f4f6); }
     :where(.nds-main-nav) { background-color: var(--background-nav, #fff); }
