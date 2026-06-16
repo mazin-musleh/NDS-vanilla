@@ -80,35 +80,20 @@
 }
 
 
-/* ── Off-screen sections: skip rendering until scrolled near ── */
+/* ── Off-screen sections: skip rendering until the reveal stamp ── */
 
-.nds-content-section {
-    // Skips off-screen sections — halves the reveal-time layout task (measured
-    // 2026-06-12); unsupported browsers render upfront. Estimate only the BLOCK
-    // axis: a single contain-intrinsic-size value also estimates the INLINE
-    // axis, and a fixed width clips content on viewports narrower than it
-    // (mobile). Width stays container-derived. 680px ≈ the measured median
-    // section height across doc pages (mobile + desktop), so reserved space
-    // matches real height — shrinks scroll-to/CLS error before `auto` remembers
-    // the true size after first paint.
+// content-visibility skips off-screen sections during the reveal-time Layout
+// task and the init's forced-layout reads, then drops at data-nds-loaded — so
+// popups never meet cv's containment clip (no observer needed) and the scroll
+// restore reads real heights. The loader stamps data-nds-loaded only once main
+// CSS has applied (nds-loader.js), and the reveal rule is in main too, so cv is
+// guaranteed present for the reveal layout and drops just after — no dependency
+// on the main-vs-JS load race. 680px ≈ the measured median section height; the
+// near-fold band stays real-height so the reveal can't shift (CLS 0).
+html:not([data-nds-loaded]) .nds-content-section {
     content-visibility: auto;
     contain-intrinsic-block-size: auto 680px;
 }
-
-// The near-fold band (first two content sections) renders at real height, so
-// the contain-intrinsic-size estimate — necessarily wrong for sections of
-// differing content — can't surface as a layout shift in the viewport when the
-// page reveals (measured: home CLS 0.018 -> 0). They render on-screen anyway,
-// so the off-screen skip (sections 3+) is untouched; NDS.sectionContainment
-// (nds-core.js) lifts containment on the rest as they near the viewport.
-:is(.nds-content-section:first-of-type, .nds-content-section:first-of-type + .nds-content-section) {
+html:not([data-nds-loaded]) :is(.nds-content-section:first-of-type, .nds-content-section:first-of-type + .nds-content-section) {
     content-visibility: visible;
-}
-
-// Print: never skip. Some engines omit content-visibility:auto content from the
-// printout (only the on-screen sections paint), so reveal every section on paper.
-@media print {
-    .nds-content-section {
-        content-visibility: visible;
-    }
 }

@@ -3,13 +3,10 @@
    Pre-init layout reservations — mirror final-state layout for
    components that ship without [hidden] so the parent visibility
    gate (.nds-content-layout etc.) hides paint while layout settles.
-   Default discipline: reservations are UNCONDITIONAL — the data-nds-loaded
-   stamp can land before main CSS applies (the reveal itself is keyed on
-   main's rule), so reservations must outlive the stamp. Keying them on
-   :not([data-nds-loaded]) stripped the topbar/nav heights in that gap
-   and caused CLS. Because every rule mirrors final-state layout, main
-   CSS overrides or agrees by cascade; rules that must release
-   individually key on their component's own init stamp.
+   Default discipline: reservations are UNCONDITIONAL (not gated on
+   data-nds-loaded) — they paint from the first byte, and because every rule
+   mirrors final-state layout, main CSS overrides or agrees by cascade. Rules
+   that must release individually key on their component's own init stamp.
    Exceptions (rules that deliberately release at data-nds-loaded, because
    main CSS / main JS then owns the property):
      • the critical-component safeguard (html:not([data-nds-loaded]) :where(...)).
@@ -149,9 +146,9 @@ html {
 
 /* ── Critical-component safeguard ──
    Main-bundle components whose init writes first-paint state and have no
-   skeleton of their own. Normally inert (the critical pass stamps
-   data-nds-loaded before main CSS applies); they bite only when main JS
-   lags main CSS — then each region holds instead of flashing un-inited. */
+   skeleton of their own. Held hidden until data-nds-loaded — which the loader
+   stamps only after main CSS has applied AND the critical pass has run — so
+   each region first paints styled and inited, never flashing un-inited. */
 html:not([data-nds-loaded]) :where(.nds-form-control,
     .nds-sidemenu > *,
     .nds-sideinfo,

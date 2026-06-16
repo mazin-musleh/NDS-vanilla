@@ -26,9 +26,9 @@
    The inline-only block (bootstraps + chrome box bgs + hero box stand-in +
    the hero-body hide) emits only when $inline — crit owns those via the real
    components, and reveals the hero body instead of hiding it.
-   Default discipline: reservations are UNCONDITIONAL — the data-nds-loaded
-   stamp can land before main CSS, so they must outlive it. :where()-wrapped
-   at zero specificity — main always overrides after.
+   Default discipline: reservations are UNCONDITIONAL (not gated on
+   data-nds-loaded) — they paint from the first byte and main CSS overrides
+   them by cascade. :where()-wrapped at zero specificity — main always wins.
    Exceptions (rules that deliberately release at data-nds-loaded, because
    main CSS then owns the property):
      • the main overflow guard (html:not([data-nds-loaded]) main).

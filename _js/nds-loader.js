@@ -588,6 +588,29 @@
             }
         };
 
+        // Stamp data-nds-loaded — the reveal — only once main CSS has applied.
+        // The reveal rules are main-gated, so nothing paints before then; pinning
+        // the stamp to main keeps data-nds-loaded honest ("styled + inited"), and
+        // lets _section.scss gate off-screen content-visibility on
+        // :not([data-nds-loaded]) (cv covers the reveal layout, drops at the
+        // stamp) and the scroll restore key off the same signal — no extra flag.
+        // main.css is the deferred <link>; .sheet is set once applied, else wait
+        // for its load. window.load is the backstop so the reveal can't hang.
+        function stampWhenStyled() {
+            const root = document.documentElement;
+            const stamp = () => root.setAttribute('data-nds-loaded', '');
+            const main = document.querySelector('link[href*="nds-main.min.css"]');
+            // Already applied? `.sheet` is set once the CSSOM attaches; `rel` flips to
+            // 'stylesheet' the instant the <link>'s onload swap runs. Check both — a
+            // load event that already fired before this listener attaches must not
+            // strand the reveal on the window.load backstop (which waits on every
+            // subresource: images, fonts, iframes).
+            if (!main || main.sheet || main.rel === 'stylesheet') { stamp(); return; }
+            main.addEventListener('load', stamp, { once: true });
+            main.addEventListener('error', stamp, { once: true });
+            window.addEventListener('load', stamp, { once: true });
+        }
+
         // Critical pass (the reveal checklist): time-sliced. Small inits share a
         // task; a heavy init lands alone. Yields when the per-batch budget is
         // exceeded.
@@ -603,12 +626,9 @@
             if (criticalIndex < criticalComponents.length) {
                 yieldToBrowser(initCriticalBatch);
             } else {
-                // Checklist complete — stamp the root so critical-CSS skeletons
-                // hand off to the real, now-styled components: this is the reveal.
-                document.documentElement.setAttribute('data-nds-loaded', '');
-
-                // Deferred components whose code is already in main drain in idle
-                // slots immediately — never gated on an injected-bundle fetch.
+                // Checklist complete. Deferred components whose code is already in
+                // main drain in idle slots immediately — never gated on an
+                // injected-bundle fetch (or on the reveal stamp below).
                 if (deferredComponents.length) drainList(deferredComponents, logAllDone);
                 else logAllDone();
 
@@ -620,6 +640,10 @@
                     const group = injectedGroups[name];
                     loadBundle(name).then(() => drainList(group));
                 }
+
+                // Hand the critical-CSS skeletons off to the now-styled
+                // components — but only once main CSS has actually applied.
+                stampWhenStyled();
             }
         }
 

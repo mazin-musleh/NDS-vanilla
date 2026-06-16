@@ -1138,55 +1138,37 @@
         return { update };
     })();
 
-    // ── Section Containment (content-visibility) ─────────────────────
-    // `.nds-content-section` ships `content-visibility: auto` so off-screen
-    // sections are skipped at first paint (halves the reveal layout task).
-    // The catch: that containment is ALSO a stacking context + overflow clip
-    // while the section is on-screen, which traps any popup overflowing the
-    // section — a dropmenu renders behind, and clipped by, the next sibling
-    // section. The skip is only wanted off-screen, so drop the containment on
-    // sections near the viewport and let it return once they're well away
-    // again. `contain-intrinsic-size: auto` remembers the rendered height, so
-    // re-containing is CLS-free.
-    // Usage: NDS.sectionContainment.refresh()  — re-observe after sections are
-    //        added/removed (mirrors gridLastRow.update()).
-    NDS.sectionContainment = (() => {
-        const SEL = '.nds-content-section';
-        // One viewport of lead time each side: a section un-contains before it
-        // can be scrolled to (and interacted with), re-contains only when well
-        // off-screen.
-        const ROOT_MARGIN = '100% 0px';
-        let unsubs = [];
-
-        function refresh() {
-            if (!NDS.onIntersect) return;
-            for (let i = 0; i < unsubs.length; i++) unsubs[i]();
-            unsubs = [];
-            const sections = document.querySelectorAll(SEL);
-            for (let i = 0; i < sections.length; i++) {
-                const section = sections[i];
-                // `visible` drops the containment; `''` restores the
-                // stylesheet's `content-visibility: auto`. The observer's
-                // initial delivery un-contains whatever is on-screen at load.
-                unsubs.push(NDS.onIntersect(section, (entry) => {
-                    section.style.contentVisibility = entry.isIntersecting ? 'visible' : '';
-                }, { rootMargin: ROOT_MARGIN }));
+    // ── Scroll restoration ─────────────────────────────────────────────
+    // Deferred main CSS means the page isn't at its final height when the browser
+    // would natively restore a reload's scroll — it lands at the top. data-nds-
+    // loaded is stamped only once main CSS has applied (nds-loader.js) and drops
+    // the off-screen-section content-visibility (_section.scss), so by then every
+    // section is laid out at its real height — restore there and scrollTo is
+    // exact. Reload / back-forward only; a fresh load or #fragment is left to the
+    // browser. (whole-page load = fallback.)
+    if ('scrollRestoration' in history) {
+        const root = document.documentElement;
+        const KEY = 'nds-scroll:' + location.pathname;
+        history.scrollRestoration = 'manual';
+        window.addEventListener('pagehide', () => {
+            try { sessionStorage.setItem(KEY, window.scrollY); } catch {}
+        });
+        const navType = (performance.getEntriesByType('navigation')[0] || {}).type;
+        if ((navType === 'reload' || navType === 'back_forward') && !location.hash) {
+            let y = 0;
+            try { y = parseInt(sessionStorage.getItem(KEY), 10) || 0; } catch {}
+            if (y) {
+                let done = false;
+                const restore = () => { if (done) return; done = true; window.scrollTo(0, y); };
+                if (root.hasAttribute('data-nds-loaded')) restore();
+                else {
+                    const mo = new MutationObserver(() => {
+                        if (root.hasAttribute('data-nds-loaded')) { mo.disconnect(); restore(); }
+                    });
+                    mo.observe(root, { attributes: true, attributeFilter: ['data-nds-loaded'] });
+                }
+                window.addEventListener('load', restore);                   // fallback
             }
         }
-
-        // observe() forces no layout (unlike gridLastRow's offsetTop scan), so
-        // register as soon as the DOM is parsed rather than waiting for idle —
-        // the sooner visible sections un-contain, the sooner their popups are
-        // safe. The un-contain itself fires on the observer's async delivery,
-        // after the reveal. Core ships in a <script defer> bundle, so the DOM
-        // is parsed by eval time; the readyState guard covers any non-deferred
-        // load too.
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', refresh, { once: true });
-        } else {
-            refresh();
-        }
-
-        return { refresh };
-    })();
+    }
 })();
