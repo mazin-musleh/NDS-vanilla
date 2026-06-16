@@ -1,0 +1,34 @@
+---
+permalink: /llms.txt
+# No layout — this front matter makes Jekyll process the Liquid below (same trick as
+# sitemap.xml). Generated from page front matter (title + hero_description), grouped by
+# section, so it never drifts from the docs. Opt a page out with `llms: false`.
+# Gated to production like _includes/google-analytics.html — GitHub Pages sets JEKYLL_ENV=production; local `jekyll serve` emits an empty file (no localhost URLs).
+---
+{%- if jekyll.environment == "production" -%}
+# {{ site.title }}
+
+> {{ site.description }}
+
+RTL (Arabic) by default with LTR support; zero runtime dependencies. Each page below documents one component, layout, utility, or pattern — open a page for its canonical, copy-ready HTML (in the `lang-html` code block) alongside live demos. Do not infer markup; use the documented structure.
+
+- [Home]({{ "/" | absolute_url }})
+- [Full sitemap]({{ "/sitemap.xml" | absolute_url }})
+- [JavaScript source (_js/)]({{ site.repository_url }}/tree/main/_js)
+- [SCSS source (_sass/)]({{ site.repository_url }}/tree/main/_sass)
+{%- assign keys = "components,layout,utilities,ui-shell,examples,templates" | split: "," -%}
+{%- assign names = "Components,Layout,Utilities,UI Shell,Examples,Templates" | split: "," -%}
+{%- for i in (0..5) -%}
+{%- assign prefix = keys[i] | prepend: "/" | append: "/" -%}
+{%- assign pages = site.html_pages | where_exp: "p", "p.url contains prefix" | where_exp: "p", "p.sitemap != false" | where_exp: "p", "p.llms != false" | sort: "title" -%}
+{%- if pages.size > 0 %}
+
+## {{ names[i] }}
+{% for p in pages -%}
+{%- if p.url == prefix -%}{%- continue -%}{%- endif -%}
+{%- assign desc = p.hero_description | default: p.description | strip_newlines -%}
+- [{{ p.title }}]({{ p.url | absolute_url }}){% if desc != "" %}: {{ desc }}{% endif %}
+{% endfor -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endif -%}

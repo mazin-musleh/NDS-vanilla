@@ -1,7 +1,9 @@
 ---
 permalink: /sitemap.xml
 # No layout — Jekyll still processes the Liquid below because of this front matter.
+# Gated to production like _includes/google-analytics.html — local `jekyll serve` emits an empty file (no localhost URLs).
 ---
+{%- if jekyll.environment == "production" -%}
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- assign pages = site.html_pages | where_exp: "p", "p.sitemap != false" -%}
@@ -23,3 +25,4 @@ permalink: /sitemap.xml
   </url>
 {%- endfor %}
 </urlset>
+{%- endif -%}

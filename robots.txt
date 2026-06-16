@@ -1,7 +1,10 @@
 ---
 permalink: /robots.txt
+# Gated to production like _includes/google-analytics.html — local `jekyll serve` emits an empty file (no localhost URLs).
 ---
+{%- if jekyll.environment == "production" -%}
 User-agent: *
 Allow: /
 
 Sitemap: {{ "/sitemap.xml" | absolute_url }}
+{%- endif -%}
