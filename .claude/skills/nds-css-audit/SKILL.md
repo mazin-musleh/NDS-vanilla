@@ -209,7 +209,7 @@ Source files are the single source of truth. Read fully, not by skimming.
 
   Declaration-emitting mixins:
   - `@include btn-base` / `btn-focus` / `btn-focus-oncolor` / `btn-indicator` / `btn-indicator-styles` — button system primitives
-  - `@include progress-circle-base` / `progress-circle-text` / `progress-circle-progress` — progress component primitives
+  - `@include progress-circle-base` / `progress-circle-text` — progress component primitives
   - `@include reset-section-style` — clears section background/shadow/border
   - `@include autofill-reset` — autofill state-resetting with `!important` overrides
 

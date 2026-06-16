@@ -438,18 +438,6 @@ $breakpoints-range: (
   }
 }
 
-@mixin progress-circle-progress($percent: 0) {
-  $circumference: 62.83; // 2πr where r=10
-  $clamped-percent: min($percent, 100);
-  $offset: calc(#{$circumference} - (#{$circumference} * #{$clamped-percent} / 100));
-
-  svg circle.nds-progress-track {
-    stroke-dasharray: #{$circumference}px !important;
-    stroke-dashoffset: calc(#{$offset} * 1px);
-    transition: stroke-dashoffset 0.3s ease !important;
-  }
-}
-
 // ==============================================
 // SECTION MIXINS
 // ==============================================
