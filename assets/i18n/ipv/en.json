@@ -1,0 +1,17 @@
+{
+    "viewerLabel":        "Image viewer",
+    "zoomIn":             "Zoom in",
+    "zoomOut":            "Zoom out",
+    "resetZoom":          "Reset zoom",
+    "toggleUI":           "Toggle controls",
+    "close":              "Close",
+    "prevImage":          "Previous image",
+    "nextImage":          "Next image",
+    "instructionsTitle":  "Controls:",
+    "instructionsScroll": "• Scroll to zoom",
+    "instructionsDrag":   "• Drag to pan",
+    "instructionsReset":  "• Double-click to reset",
+    "instructionsNav":    "• Arrow keys to navigate",
+    "instructionsToggle": "• H key to toggle UI",
+    "instructionsClose":  "• ESC to close"
+}

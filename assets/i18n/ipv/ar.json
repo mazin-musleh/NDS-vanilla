@@ -1,0 +1,17 @@
+{
+    "viewerLabel":        "عارض الصور",
+    "zoomIn":             "تكبير",
+    "zoomOut":            "تصغير",
+    "resetZoom":          "إعادة ضبط التكبير",
+    "toggleUI":           "إظهار/إخفاء الأدوات",
+    "close":              "إغلاق",
+    "prevImage":          "الصورة السابقة",
+    "nextImage":          "الصورة التالية",
+    "instructionsTitle":  "أزرار التحكم:",
+    "instructionsScroll": "• مرر للتكبير",
+    "instructionsDrag":   "• اسحب للتحريك",
+    "instructionsReset":  "• النقر المزدوج لإعادة الضبط",
+    "instructionsNav":    "• أسهم لوحة المفاتيح للتنقل",
+    "instructionsToggle": "• المفتاح H لإظهار/إخفاء الأدوات",
+    "instructionsClose":  "• ESC للإغلاق"
+}
