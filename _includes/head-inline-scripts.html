@@ -1,7 +1,5 @@
 <script>
-    // Pre-paint FOUC guard: stamp saved data-theme before first paint (NDS.Theme.init
-    // handles the rest). Union-merged with any markup-authored/pack-stamped tokens so
-    // a returning visitor's stored value never clobbers them.
+    // Pre-paint FOUC guard: stamp saved data-theme before first paint, union-merged with markup/pack tokens so a stored value never clobbers them.
     (function() {
         var v = localStorage.getItem('nds-theme');
         if (v) {
