@@ -2,6 +2,8 @@
  * NDS Progress Component
  * Reads data-value, data-max, data-num from .nds-progress-circle and .nds-progress-bar
  * Sets CSS custom properties and populates text for percentage & "out of" displays
+ * Initial value is applied as the indicator scrolls into view (NDS.onIntersect)
+ * so the fill animates where it's seen; reduced motion applies it immediately
  * Observes attribute changes via NDS.onAttrChange for live updates
  *
  * Data attributes (priority over inline style):
@@ -54,8 +56,26 @@
     let _offAttrChange;
 
     function init() {
+        const reduced = typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const canObserve = typeof IntersectionObserver !== 'undefined';
+
         document.querySelectorAll(SEL).forEach(el => {
-            if (el.dataset.value != null || el.dataset.num != null) syncFromData(el);
+            if (el.dataset.value == null && el.dataset.num == null) return;
+            if (el.closest('code, .code-example')) return;
+
+            // Reduced motion (or no observer support): show the value at once.
+            if (reduced || !canObserve) { syncFromData(el); return; }
+
+            // Otherwise leave it empty and let the fill sweep when the indicator
+            // scrolls into view — setting the value triggers the CSS transition.
+            if (el._ndsProgressOff) el._ndsProgressOff();
+            el._ndsProgressOff = NDS.onIntersect(el, entry => {
+                if (!entry.isIntersecting) return;
+                el._ndsProgressOff();
+                delete el._ndsProgressOff;
+                syncFromData(el);
+            }, { threshold: 0.5 });
         });
 
         if (_offAttrChange) _offAttrChange();
