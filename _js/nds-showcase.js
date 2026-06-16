@@ -26,8 +26,15 @@
 (function() {
     'use strict';
 
-    // Alert demo content — single source of truth
-    const ALERT_TITLES = {};
+    // Singleton lifecycle: init once (guard against double-boot), tear down via
+    // one AbortController for signal-based listeners plus _offHandles for non-signal
+    // core subscriptions (NDS.onAttrChange).
+    let _initDone = false;
+    let _abortController = null;
+    let _offHandles = [];
+
+    // Alert demo content — single source of truth. Non-inline alerts use the
+    // capitalized variant name as the title; only inline alerts have prefixes.
     const INLINE_TITLES = { critical: 'Important:', success: 'Success:', info: 'Information:', warning: 'Warning:', neutral: 'Notification:' };
     const ALERT_MESSAGES = {
         success: 'Operation completed successfully!',
@@ -51,59 +58,101 @@
         neutral: 'General note for reference'
     };
 
-    // Main initialization function
-    function initializeShowcase() {
-        storeOriginalCodeContent();
-        initializeDemoToggleButtons();
-        initializeFakeFileUpload();
-        initializeAutocompleteDemoData();
-        initializeDemoActionButtons();
-        initializeCardModeToggles();
-        initializeCardStateToggles();
-        initializeCardHeaderToggles();
-        initializeCardColorToggles();
-        initializeCardLayoutToggles();
-        initializeCardContentToggles();
-        initializeStepperResponsiveSimplify();
-        initializeStepperFallbackMenu();
-        initializeFormFixToggles();
-        initializeFormFixDropmenu();
-        initializeFormFixIcon();
-        initializeRatingDisableToggle();
-        initializeQuoteToggles();
+    // Dispatch registry for the single delegated click listener. Each entry is an
+    // independent matcher resolved via e.target.closest — there is NO early break,
+    // so an element matching two entries triggers both, exactly replicating the
+    // separate per-concern listeners this consolidates. (Function declarations are
+    // hoisted, so the handlers referenced here are defined further down.)
+    var CLICK_HANDLERS = [
+        { match: '.demo-toggle-btn',         handle: handleToggleClick },
+        { match: '.demo-action-btn',         handle: demoActionDispatch, preventDefault: true },
+        { match: '[data-card-mode]',         handle: cardModeToggle },
+        { match: '[data-card-state]',        handle: cardStateToggle },
+        { match: '[data-card-header]',       handle: cardHeaderToggle },
+        { match: '[data-card-color]',        handle: cardColorToggle },
+        { match: '[data-card-layout]',       handle: cardLayoutToggle },
+        { match: '[data-card-toggle]',       handle: cardContentToggle },
+        { match: '[data-stepper-fallback]',  handle: stepperFallbackToggle },
+        { match: '[data-form-fix]',          handle: formFixToggle },
+        { match: '[data-form-fix-icon]',     handle: formFixIconToggle },
+        { match: '[data-form-fix-dropmenu]', handle: formFixDropmenuToggle },
+        { match: '[data-rating-disable]',    handle: ratingDisableToggle },
+        { match: '[data-quote-bg]',          handle: quoteBgToggle },
+        { match: '[data-quote-toggle]',      handle: quoteToggle },
+        { match: '.demo-counter-restart',    handle: counterRestart }
+    ];
+
+    function onDocumentClick(e) {
+        for (var i = 0; i < CLICK_HANDLERS.length; i++) {
+            var entry = CLICK_HANDLERS[i];
+            var el = e.target.closest(entry.match);
+            if (!el) continue;
+            if (entry.preventDefault) e.preventDefault();
+            entry.handle(el, e);
+        }
     }
 
-    // CRITICAL: Expose global API immediately (called by unified init system)
+    // Main initialization function — idempotent (singleton, _initDone guard so a
+    // double-boot can't bind the listener twice).
+    function initializeShowcase() {
+        if (_initDone) return;
+        _initDone = true;
+        _abortController = new AbortController();
+        const signal = _abortController.signal;
+
+        // Demo-card first-paint defaults (oncolor auto-click + option visibility).
+        // Run BEFORE the click listener is attached so the synthetic firstBgButton
+        // click stays a pre-listener no-op, exactly as before consolidation.
+        initDemoCardDefaults();
+
+        // One delegated click listener for every demo control (replaces ~15
+        // per-button / per-concern listeners). Dispatch via CLICK_HANDLERS.
+        document.addEventListener('click', onDocumentClick, { signal });
+
+        // Custom upload event, page-gated fetch shim, and the pooled stepper observer.
+        initializeFakeFileUpload(signal);
+        initializeAutocompleteDemoData();
+        initializeStepperResponsiveSimplify();
+    }
+
+    // Tear down every listener/subscription this module owns.
+    function destroy() {
+        if (_abortController) _abortController.abort();
+        _abortController = null;
+        _offHandles.forEach(off => off());
+        _offHandles = [];
+        _initDone = false;
+    }
+
+    // Expose the global API at module-eval; the self-boot at file end calls init().
     if (typeof window !== 'undefined') {
         NDS.Showcase = {
-            initializeDemoToggleButtons: initializeDemoToggleButtons,
+            initializeDemoToggleButtons: initDemoCardDefaults,
             updateButtonsForBackground: updateButtonsForBackground,
             startUploadSimulation: startUploadSimulation,
             populateDemoFiles: populateDemoFiles,
             reapplyActiveTogglers: reapplyActiveTogglers,
-            init: initializeShowcase
+            init: initializeShowcase,
+            destroy: destroy
         };
     }
 
-    // Note: Initialization now handled by nds-loader.js unified system
-
-    // Store original code content in hidden copies before highlighting is applied
-    function storeOriginalCodeContent() {
-        document.querySelectorAll('.code-example code').forEach(codeElement => {
-            // Create a hidden copy to store original content
-            const hiddenCopy = document.createElement('div');
-            hiddenCopy.style.display = 'none';
-            hiddenCopy.className = 'original-code-content';
-            hiddenCopy.textContent = codeElement.textContent;
-            
-            // Insert hidden copy right after the code element
-            codeElement.parentNode.insertBefore(hiddenCopy, codeElement.nextSibling);
-        });
-    }
-
-    // Get the hidden copy for a code element
+    // Get the hidden copy for a code element, creating it on first request. The
+    // snapshot is the pristine authored source — every mutator calls this getter
+    // before it mutates, so the first call (always a user interaction, post-init)
+    // captures before any change. Lazy, so untouched demos allocate nothing.
+    // textContent yields the raw source pre- or post-highlight alike: nds-code
+    // keeps textContent === source (the corpus is entity-escaped).
     function getHiddenCodeCopy(codeElement) {
-        return codeElement.parentNode.querySelector('.original-code-content');
+        var copy = codeElement.parentNode.querySelector('.original-code-content');
+        if (!copy) {
+            copy = document.createElement('div');
+            copy.style.display = 'none';
+            copy.className = 'original-code-content';
+            copy.textContent = codeElement.textContent;
+            codeElement.parentNode.insertBefore(copy, codeElement.nextSibling);
+        }
+        return copy;
     }
 
     // Update the hidden copy and apply to visible code element
@@ -144,9 +193,9 @@
     }
 
 
-    // Demo toggle button functionality
-    function initializeDemoToggleButtons() {
-        // Initialize cards with default backgrounds based on data attributes
+    // Demo-card first-paint defaults (the click handling itself is delegated via
+    // CLICK_HANDLERS). Initializes oncolor cards and pairs option visibility.
+    function initDemoCardDefaults() {
         document.querySelectorAll('.nds-demo-card').forEach(card => {
             const demoContainer = card.querySelector('.demo-container');
             const hasOncolorButtons = demoContainer && demoContainer.querySelector('.nds-oncolor');
@@ -162,14 +211,6 @@
             // Pair options with layout state on first paint so variant-specific
             // toggles start out hidden/shown correctly.
             updateDemoOptionVisibility(card);
-        });
-
-        // Event delegation for all demo toggle buttons
-        document.addEventListener('click', function(e) {
-            const toggleBtn = e.target.closest('.demo-toggle-btn');
-            if (toggleBtn) {
-                handleToggleClick(toggleBtn);
-            }
         });
     }
 
@@ -275,8 +316,19 @@
         }
     }
 
-    // Parse data-toggler JSON into normalized togglePairs array, or null if invalid
+    // Parse data-toggler JSON into normalized togglePairs array, or null if invalid.
+    // data-toggler is a static markup contract (never rewritten at runtime), so the
+    // result is cached per button element — a WeakMap needs no teardown and never
+    // goes stale. The mutual-exclusion loop re-parses every sibling on each click.
+    var _togglerCache = new WeakMap();
     function parseTogglerData(button) {
+        if (_togglerCache.has(button)) return _togglerCache.get(button);
+        var result = parseTogglerRaw(button);
+        _togglerCache.set(button, result);
+        return result;
+    }
+
+    function parseTogglerRaw(button) {
         var togglerData = button.getAttribute('data-toggler');
         if (!togglerData) return null;
 
@@ -338,24 +390,11 @@
         } else if (targetSelector === '.code-example') {
             targets.push(...demoCard.querySelectorAll('.code-example'));
         } else {
+            // A class token in a CSS selector (`.foo`) matches exactly elements
+            // whose classList contains that token, so querySelectorAll covers the
+            // single-class, compound, descendant, attribute and tag cases alike.
             for (var i = 0; i < searchContainers.length; i++) {
-                var container = searchContainers[i];
-                if (targetSelector.includes(' ') || targetSelector.includes('[') || targetSelector.includes(':')) {
-                    targets.push(...container.querySelectorAll(targetSelector));
-                } else if (targetSelector.startsWith('.')) {
-                    if (targetSelector.includes('.') && targetSelector.lastIndexOf('.') > 0) {
-                        targets.push(...container.querySelectorAll(targetSelector));
-                    } else {
-                        var className = targetSelector.substring(1);
-                        var allElements = container.querySelectorAll('*');
-                        var exactMatches = Array.from(allElements).filter(function(el) {
-                            return el.classList.contains(className) && Array.from(el.classList).includes(className);
-                        });
-                        targets.push(...exactMatches);
-                    }
-                } else {
-                    targets.push(...container.querySelectorAll(targetSelector));
-                }
+                targets.push(...searchContainers[i].querySelectorAll(targetSelector));
             }
         }
 
@@ -537,8 +576,6 @@
 
                         if (deselectionTargetElements.length) {
                             deselectionTargetElements.forEach(targetElement => {
-                                const otherButtonType = otherTypes[0];
-
                                 if (deselectionOperationType === 'attr') {
                                     handleAttributeToggling(targetElement, classNamesOrAttrs, demoCard);
                                 } else if (deselectionOperationType === 'data-state') {
@@ -566,14 +603,6 @@
                                             }
                                         }
                                     });
-
-                                    if (otherButtonType === 'VerticalTabs' && classArray.includes('oneRowContent')) {
-                                        setTimeout(() => {
-                                            if (window.initializeRowScroll) {
-                                                window.initializeRowScroll(true);
-                                            }
-                                        }, 100);
-                                    }
 
                                     updateCodeExampleForClasses(demoCard, targetElement, classArray);
                                 }
@@ -667,15 +696,6 @@
                             targetElement.classList.toggle(className);
                         }
                     });
-                    
-                    // Special handling for VerticalTabs: trigger scroll logic after any oneRowContent change
-                    if (type === 'VerticalTabs' && classArray.includes('oneRowContent')) {
-                        setTimeout(() => {
-                            if (window.initializeRowScroll) {
-                                window.initializeRowScroll(true); // Force update for already initialized elements
-                            }
-                        }, 100);
-                    }
 
                     // Special handling for nds-color class on alerts: update JS code example
                     if (classArray.includes('nds-color') && targetElement.classList.contains('nds-alert')) {
@@ -728,21 +748,18 @@
             updateChartCodeFromToggles(demoCard);
         }
 
-        // Clean up and re-scan grid last-row borders after any toggle change
-        // When switching layouts (especially from grid view), manually remove nds-last-row first
-        if (NDS.gridLastRow) {
-            // Remove nds-last-row from all items in divided lists before rescanning
-            togglePairs.forEach(([classNames, targetSelector, type]) => {
-                if (type === 'dlLayout' || classNames.includes('nds-grid')) {
-                    const targets = demoCard.querySelectorAll(targetSelector);
-                    targets.forEach(target => {
-                        const items = target.querySelectorAll('.nds-definition-item');
-                        items.forEach(item => item.classList.remove('nds-last-row'));
-                    });
-                }
-            });
-            NDS.gridLastRow.update(demoCard);
-        }
+        // Clean up and re-scan grid last-row borders after any toggle change.
+        // Remove nds-last-row from divided lists before rescanning (esp. from grid view).
+        togglePairs.forEach(([classNames, targetSelector, type]) => {
+            if (type === 'dlLayout' || classNames.includes('nds-grid')) {
+                const targets = demoCard.querySelectorAll(targetSelector);
+                targets.forEach(target => {
+                    const items = target.querySelectorAll('.nds-definition-item');
+                    items.forEach(item => item.classList.remove('nds-last-row'));
+                });
+            }
+        });
+        NDS.gridLastRow.update(demoCard);
 
         // Rebuild code from live DOM for demo cards that opt in via data-code-rebuild
         if (demoCard.hasAttribute('data-code-rebuild')) {
@@ -795,80 +812,65 @@
         const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
         const alertEl = demoCard.querySelector('.nds-alert');
         const isInline = alertEl && alertEl.classList.contains('nds-inline');
-        const titles = isInline ? INLINE_TITLES : ALERT_TITLES;
-        const title = titles[variant] || capitalizedVariant;
+        const titles = isInline ? INLINE_TITLES : null;
+        const title = (titles && titles[variant]) || capitalizedVariant;
 
         // Update JS code example
-        const jsCodeElement = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
-        if (jsCodeElement) {
-            const hiddenCopy = getHiddenCodeCopy(jsCodeElement);
-            if (hiddenCopy) {
-                let updatedCode = hiddenCopy.textContent;
-
-                // Update variant
-                updatedCode = updatedCode.replace(/variant:\s*['"][^'"]+['"]/, `variant: '${variant}'`);
-                // Update title
-                updatedCode = updatedCode.replace(/title:\s*['"][^'"]+['"]/, `title: '${title}'`);
-                // Update description
-                if (messages[variant]) {
-                    updatedCode = updatedCode.replace(/description:\s*['"][^'"]+['"]/, `description: '${messages[variant]}'`);
-                }
-                // Update color and shadow
-                updatedCode = updatedCode.replace(/color:\s*(true|false)/, `color: ${hasColor}`);
-                updatedCode = updatedCode.replace(/shadow:\s*(true|false)/, `shadow: ${hasShadow}`);
-                // Update position (toast only)
-                if (isToast) {
-                    updatedCode = updatedCode.replace(/position:\s*['"][^'"]+['"]/, `position: '${position}'`);
-                }
-
-                updateCodeFromHiddenCopy(jsCodeElement, updatedCode);
+        withCodeExample(demoCard, '.lang-javascript, .code-example code[class*="javascript"]', function(code) {
+            // Update variant
+            code = code.replace(/variant:\s*['"][^'"]+['"]/, `variant: '${variant}'`);
+            // Update title
+            code = code.replace(/title:\s*['"][^'"]+['"]/, `title: '${title}'`);
+            // Update description
+            if (messages[variant]) {
+                code = code.replace(/description:\s*['"][^'"]+['"]/, `description: '${messages[variant]}'`);
             }
-        }
+            // Update color and shadow
+            code = code.replace(/color:\s*(true|false)/, `color: ${hasColor}`);
+            code = code.replace(/shadow:\s*(true|false)/, `shadow: ${hasShadow}`);
+            // Update position (toast only)
+            if (isToast) {
+                code = code.replace(/position:\s*['"][^'"]+['"]/, `position: '${position}'`);
+            }
+            return code;
+        });
 
         // Update HTML code example
-        const htmlCodeElement = demoCard.querySelector('.code-example code.lang-html, .code-example code[class*="html"]');
-        if (htmlCodeElement) {
-            const hiddenCopy = getHiddenCodeCopy(htmlCodeElement);
-            if (hiddenCopy) {
-                let updatedCode = hiddenCopy.textContent;
+        withCodeExample(demoCard, '.lang-html, .code-example code[class*="html"]', function(code) {
+            // Update data-status
+            code = code.replace(/data-status="[^"]*"/, `data-status="${variant}"`);
 
-                // Update data-status
-                updatedCode = updatedCode.replace(/data-status="[^"]*"/, `data-status="${variant}"`);
+            // Update title
+            code = code.replace(/(<span class="nds-alert-title">)[^<]+(<\/span>)/, `$1${title}$2`);
 
-                // Update title
-                updatedCode = updatedCode.replace(/(<span class="nds-alert-title">)[^<]+(<\/span>)/, `$1${title}$2`);
-
-                // Update description
-                if (messages[variant]) {
-                    updatedCode = updatedCode.replace(/(<p class="nds-alert-description">)[^<]+(<\/p>)/, `$1${messages[variant]}$2`);
-                }
-
-                // Toggle nds-color class
-                if (hasColor && !updatedCode.includes('nds-color')) {
-                    updatedCode = updatedCode.replace(/class="nds-alert nds-card/, 'class="nds-alert nds-card nds-color');
-                } else if (!hasColor) {
-                    updatedCode = updatedCode.replace(/ nds-color/, '');
-                }
-
-                // Toggle nds-shadow class
-                if (hasShadow && !updatedCode.includes('nds-shadow')) {
-                    updatedCode = updatedCode.replace(/class="nds-alert nds-card/, 'class="nds-alert nds-card nds-shadow');
-                } else if (!hasShadow) {
-                    updatedCode = updatedCode.replace(/ nds-shadow/, '');
-                }
-
-                // Toast-specific updates
-                if (isToast) {
-                    // Update data-position
-                    updatedCode = updatedCode.replace(/data-position="[^"]*"/, `data-position="${position}"`);
-                }
-
-                updateCodeFromHiddenCopy(htmlCodeElement, updatedCode);
+            // Update description
+            if (messages[variant]) {
+                code = code.replace(/(<p class="nds-alert-description">)[^<]+(<\/p>)/, `$1${messages[variant]}$2`);
             }
-        }
-    }
 
-    // Update feedback code examples directly from toggle button states
+            // Toggle nds-color class
+            if (hasColor && !code.includes('nds-color')) {
+                code = code.replace(/class="nds-alert nds-card/, 'class="nds-alert nds-card nds-color');
+            } else if (!hasColor) {
+                code = code.replace(/ nds-color/, '');
+            }
+
+            // Toggle nds-shadow class
+            if (hasShadow && !code.includes('nds-shadow')) {
+                code = code.replace(/class="nds-alert nds-card/, 'class="nds-alert nds-card nds-shadow');
+            } else if (!hasShadow) {
+                code = code.replace(/ nds-shadow/, '');
+            }
+
+            // Toast-specific updates
+            if (isToast) {
+                // Update data-position
+                code = code.replace(/data-position="[^"]*"/, `data-position="${position}"`);
+            }
+
+            return code;
+        });
+    }
 
     // Apply/remove inline styles from data-toggle-style on toggler buttons
     // Format: data-toggle-style=".selector { --prop:val; width:fit-content }"
@@ -964,7 +966,7 @@
 
             // Special handling for data-status variant changes
             if (attrName === 'data-status' && targetElement.classList.contains('nds-alert')) {
-                const currentStatus = targetElement.getAttribute('data-status');
+                const currentStatus = NDS.Status.get(targetElement);
                 if (currentStatus) {
                     updateAlertVariantContent(targetElement, currentStatus, demoCard);
                 }
@@ -972,7 +974,7 @@
 
             // Update feedback message text when status changes
             if (attrName === 'data-status' && targetElement.classList.contains('nds-feedback')) {
-                const currentStatus = targetElement.getAttribute('data-status');
+                const currentStatus = NDS.Status.get(targetElement);
                 if (currentStatus) {
                     const msgEl = targetElement.querySelector('.nds-feedback-message');
                     if (msgEl && FEEDBACK_MESSAGES[currentStatus]) {
@@ -1076,7 +1078,7 @@
         var baseClass = Array.from(changedElement.classList)[0];
         if (!baseClass) return;
         var escaped = baseClass.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
-        var liveState = changedElement.getAttribute('data-state');
+        var liveState = NDS.State.get(changedElement);
 
         withCodeExample(demoCard, '', function(code) {
             var tagRegex = new RegExp('(<[^>]*class="(?:[^"]*\\s)?' + escaped + '(?:\\s[^"]*|)"[^>]*?)(/?>)', 'g');
@@ -1112,7 +1114,7 @@
         if (!feedbackEl) return;
 
         // Read current state from the live element
-        const status = feedbackEl.getAttribute('data-status') || 'info';
+        const status = NDS.Status.get(feedbackEl) || 'info';
 
         let size = 'sm';
         if (feedbackEl.classList.contains('nds-lg')) size = 'lg';
@@ -1127,58 +1129,47 @@
         const message = hasMessage ? (FEEDBACK_MESSAGES[status] || msgEl.textContent) : null;
 
         // Update JS code example
-        const jsCode = demoCard.querySelector('.code-example code.lang-javascript, .code-example code[class*="javascript"]');
-        if (jsCode) {
-            const hiddenCopy = getHiddenCodeCopy(jsCode);
-            if (hiddenCopy) {
-                let updated = hiddenCopy.textContent;
-                updated = updated.replace(/status:\s*['"][^'"]+['"]/, `status: '${status}'`);
-                updated = updated.replace(/size:\s*['"][^'"]+['"]/, `size: '${size}'`);
-                if (hasMessage && message) {
-                    updated = updated.replace(/message:\s*['"][^'"]+['"]/, `message: '${message}'`);
-                }
-                // Update style — handle both existing style line and missing style line
-                if (updated.match(/style:\s*['"][^'"]*['"]/)) {
-                    updated = updated.replace(/style:\s*['"][^'"]*['"]/, `style: '${style}'`);
-                }
-                updateCodeFromHiddenCopy(jsCode, updated);
+        withCodeExample(demoCard, '.lang-javascript, .code-example code[class*="javascript"]', function(code) {
+            code = code.replace(/status:\s*['"][^'"]+['"]/, `status: '${status}'`);
+            code = code.replace(/size:\s*['"][^'"]+['"]/, `size: '${size}'`);
+            if (hasMessage && message) {
+                code = code.replace(/message:\s*['"][^'"]+['"]/, `message: '${message}'`);
             }
-        }
+            // Update style — handle both existing style line and missing style line
+            if (code.match(/style:\s*['"][^'"]*['"]/)) {
+                code = code.replace(/style:\s*['"][^'"]*['"]/, `style: '${style}'`);
+            }
+            return code;
+        });
 
         // Update HTML code example
-        const htmlCode = demoCard.querySelector('.code-example code.lang-html, .code-example code[class*="html"]');
-        if (htmlCode) {
-            const hiddenCopy = getHiddenCodeCopy(htmlCode);
-            if (hiddenCopy) {
-                let updated = hiddenCopy.textContent;
+        withCodeExample(demoCard, '.lang-html, .code-example code[class*="html"]', function(code) {
+            // Update data-status
+            code = code.replace(/data-status="[^"]*"/, `data-status="${status}"`);
 
-                // Update data-status
-                updated = updated.replace(/data-status="[^"]*"/, `data-status="${status}"`);
-
-                // Update message text
-                if (hasMessage && message) {
-                    updated = updated.replace(/(nds-feedback-message">)[^<]+(<)/, `$1${message}$2`);
-                }
-
-                // Update classes on .nds-feedback element
-                updated = updated.replace(
-                    /(<span class="nds-feedback)([^"]*)"/,
-                    function(match, prefix, currentClasses) {
-                        let classes = currentClasses
-                            .replace(/\s*nds-ring/g, '')
-                            .replace(/\s*nds-outline/g, '')
-                            .replace(/\s*nds-sm/g, '')
-                            .replace(/\s*nds-md/g, '')
-                            .replace(/\s*nds-lg/g, '');
-                        if (style) classes += ' nds-' + style;
-                        classes += ' nds-' + size;
-                        return prefix + classes + '"';
-                    }
-                );
-
-                updateCodeFromHiddenCopy(htmlCode, updated);
+            // Update message text
+            if (hasMessage && message) {
+                code = code.replace(/(nds-feedback-message">)[^<]+(<)/, `$1${message}$2`);
             }
-        }
+
+            // Update classes on .nds-feedback element
+            code = code.replace(
+                /(<span class="nds-feedback)([^"]*)"/,
+                function(match, prefix, currentClasses) {
+                    let classes = currentClasses
+                        .replace(/\s*nds-ring/g, '')
+                        .replace(/\s*nds-outline/g, '')
+                        .replace(/\s*nds-sm/g, '')
+                        .replace(/\s*nds-md/g, '')
+                        .replace(/\s*nds-lg/g, '');
+                    if (style) classes += ' nds-' + style;
+                    classes += ' nds-' + size;
+                    return prefix + classes + '"';
+                }
+            );
+
+            return code;
+        });
     }
 
     // Update alert content and code examples when variant changes
@@ -1189,8 +1180,8 @@
         const isToast = alertElement.classList.contains('nds-toast');
         const isInline = alertElement.classList.contains('nds-inline');
         const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
-        const titles = isInline ? INLINE_TITLES : ALERT_TITLES;
-        const title = titles[variant] || capitalizedVariant;
+        const titles = isInline ? INLINE_TITLES : null;
+        const title = (titles && titles[variant]) || capitalizedVariant;
 
         // Update title text
         const titleElement = alertElement.querySelector('.nds-alert-title');
@@ -1310,7 +1301,7 @@
 
     // Handle content toggling (append/prepend) for target element
     function handleContentToggling(targetElement, contentHTML, operationType) {
-        // Parse the HTML content
+        // XSS-safe: contentHTML is page-authored data-toggler markup (static), not user input.
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = contentHTML;
         const contentToToggle = tempDiv.firstElementChild || tempDiv.firstChild;
@@ -1468,7 +1459,7 @@
         const firstClass = Array.from(targetElement.classList)[0];
         if (!firstClass) return;
         
-        // Parse the content to add/remove
+        // XSS-safe: contentHTML is page-authored data-toggler markup (static), not user input.
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = contentHTML;
         const contentToToggle = tempDiv.firstElementChild || tempDiv.firstChild;
@@ -1542,13 +1533,12 @@
     }
 
     // Fake file upload for demonstration purposes
-    function initializeFakeFileUpload() {
+    function initializeFakeFileUpload(signal) {
         // Set up fake upload URLs for demo containers
         document.querySelectorAll('.nds-file-upload').forEach(container => {
             if (!container.dataset.uploadUrl) {
                 container.dataset.uploadUrl = '/demo/upload';
                 container.dataset.autoUpload = 'true';
-            } else {
             }
         });
 
@@ -1556,7 +1546,7 @@
         document.addEventListener('nds:upload:beforeUpload', function(e) {
             e.preventDefault();
             startUploadSimulation(e.target.closest('.nds-file-upload'), e.detail.fileData);
-        });
+        }, { signal });
     }
 
     // Simple upload simulation using UI API
@@ -1667,222 +1657,202 @@
     }
 
     // Card mode dropmenu — mutually exclusive card modes (default, expandable, selectable)
-    function initializeCardModeToggles() {
-        document.querySelectorAll('[data-card-mode]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function cardModeToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const mode = this.dataset.cardMode;
-                const card = demoCard.querySelector('.demo-container .nds-card');
+        const mode = btn.dataset.cardMode;
+        let card = demoCard.querySelector('.demo-container .nds-card');
+        if (!card) return;
+
+        selectDropmenuItem(btn, '[data-card-mode]');
+
+        // Reset all mode sections
+        card.querySelector('.nds-card-checkbox')?.setAttribute('hidden', '');
+        card.querySelector('.nds-card-actions')?.setAttribute('hidden', '');
+        // Clean expandable state
+        if (card.ndsExpandable) {
+            card.ndsExpandable.destroy();
+            delete card.ndsExpandable;
+        }
+        card.classList.remove('nds-expandable');
+        NDS.State.remove(card, 'expandable', 'expanded');
+        card.removeAttribute('data-nds-expandable-initialized');
+        const cardContent = card.querySelector('.nds-card-content');
+        if (cardContent) cardContent.classList.remove('nds-expandable-content');
+
+        // Ensure header visibility matches state
+        const headerMode = NDS.querySelector(demoCard, '[data-card-header][data-state~="selected"]')?.dataset.cardHeader || 'icon';
+        const cardHeader = card.querySelector('.nds-card-header');
+        if (headerMode === 'none' && mode !== 'selectable') {
+            cardHeader?.setAttribute('hidden', '');
+        } else {
+            cardHeader?.removeAttribute('hidden');
+        }
+
+        // Swap description for expandable mode
+        const desc = card.querySelector('.nds-card-description');
+        if (desc) {
+            if (!desc.dataset.shortDesc) desc.dataset.shortDesc = desc.textContent;
+            desc.textContent = mode === 'expandable'
+                ? 'This card demonstrates the flexible structure of the NDS card component. It supports featured icons, images, tags, ratings, action buttons, and selection checkboxes. Toggle the options above to preview different configurations. The expandable mode collapses long content behind a show-more button, keeping layouts compact while preserving access to the full content when needed.'
+                : desc.dataset.shortDesc;
+        }
+
+        // Apply mode
+        if (mode === 'selectable') {
+            card.querySelector('.nds-card-checkbox')?.removeAttribute('hidden');
+        } else if (mode === 'actions') {
+            card.querySelector('.nds-card-actions')?.removeAttribute('hidden');
+        } else if (mode === 'expandable') {
+            // Reset state to default if interactive/disabled
+            if (card.tagName === 'BUTTON') {
+                const defaultStateBtn = NDS.querySelector(demoCard, '[data-card-state="default"]');
+                if (defaultStateBtn) defaultStateBtn.click();
+                card = demoCard.querySelector('.demo-container .nds-card');
                 if (!card) return;
+            }
 
-                selectDropmenuItem(this, '[data-card-mode]');
+            // Remove truncate if active (conflicts with expandable)
+            card.querySelectorAll('.nds-truncate').forEach(el => el.classList.remove('nds-truncate'));
+            const truncateBtn = NDS.querySelector(demoCard, '[data-toggler*="cardTruncate"]');
+            if (truncateBtn) NDS.State.remove(truncateBtn, 'selected');
 
-                // Reset all mode sections
-                card.querySelector('.nds-card-checkbox')?.setAttribute('hidden', '');
-                card.querySelector('.nds-card-actions')?.setAttribute('hidden', '');
-                // Clean expandable state
-                if (card.ndsExpandable) {
-                    card.ndsExpandable.destroy();
-                    delete card.ndsExpandable;
-                }
-                card.classList.remove('nds-expandable');
-                NDS.State.remove(card, 'expandable', 'expanded');
-                card.removeAttribute('data-nds-expandable-initialized');
-                const cardContent = card.querySelector('.nds-card-content');
-                if (cardContent) cardContent.classList.remove('nds-expandable-content');
+            card.classList.add('nds-expandable');
+            NDS.State.add(card, 'expandable');
+            if (cardContent) {
+                cardContent.classList.add('nds-expandable-content');
+                cardContent.style.setProperty('--max-height', '200px');
+            }
+        }
 
-                // Ensure header visibility matches state
-                const headerMode = NDS.querySelector(demoCard, '[data-card-header][data-state~="selected"]')?.dataset.cardHeader || 'icon';
-                const cardHeader = card.querySelector('.nds-card-header');
-                if (headerMode === 'none' && mode !== 'selectable') {
-                    cardHeader?.setAttribute('hidden', '');
-                } else {
-                    cardHeader?.removeAttribute('hidden');
-                }
-
-                // Swap description for expandable mode
-                const desc = card.querySelector('.nds-card-description');
-                if (desc) {
-                    if (!desc.dataset.shortDesc) desc.dataset.shortDesc = desc.textContent;
-                    desc.textContent = mode === 'expandable'
-                        ? 'This card demonstrates the flexible structure of the NDS card component. It supports featured icons, images, tags, ratings, action buttons, and selection checkboxes. Toggle the options above to preview different configurations. The expandable mode collapses long content behind a show-more button, keeping layouts compact while preserving access to the full content when needed.'
-                        : desc.dataset.shortDesc;
-                }
-
-                // Apply mode
-                if (mode === 'selectable') {
-                    card.querySelector('.nds-card-checkbox')?.removeAttribute('hidden');
-                } else if (mode === 'actions') {
-                    card.querySelector('.nds-card-actions')?.removeAttribute('hidden');
-                } else if (mode === 'expandable') {
-                    // Reset state to default if interactive/disabled
-                    if (card.tagName === 'BUTTON') {
-                        const defaultStateBtn = NDS.querySelector(demoCard, '[data-card-state="default"]');
-                        if (defaultStateBtn) defaultStateBtn.click();
-                        card = demoCard.querySelector('.demo-container .nds-card');
-                        if (!card) return;
-                    }
-
-                    // Remove truncate if active (conflicts with expandable)
-                    card.querySelectorAll('.nds-truncate').forEach(el => el.classList.remove('nds-truncate'));
-                    const truncateBtn = NDS.querySelector(demoCard, '[data-toggler*="cardTruncate"]');
-                    if (truncateBtn) NDS.State.remove(truncateBtn, 'selected');
-
-                    card.classList.add('nds-expandable');
-                    NDS.State.add(card, 'expandable');
-                    if (cardContent) {
-                        cardContent.classList.add('nds-expandable-content');
-                        cardContent.style.setProperty('--max-height', '200px');
-                    }
-                }
-
-                NDS.Expandable.reinit();
-                rebuildCardCode(demoCard);
-            });
-        });
+        NDS.Expandable.reinit();
+        rebuildCardCode(demoCard);
     }
 
     // Card state dropmenu — default/interactive/disabled/interactive-disabled
-    function initializeCardStateToggles() {
-        document.querySelectorAll('[data-card-state]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function cardStateToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const state = this.dataset.cardState;
-                selectDropmenuItem(this, '[data-card-state]');
+        const state = btn.dataset.cardState;
+        selectDropmenuItem(btn, '[data-card-state]');
 
-                let card = demoCard.querySelector('.demo-container .nds-card');
-                if (!card) return;
+        let card = demoCard.querySelector('.demo-container .nds-card');
+        if (!card) return;
 
-                // Reset mode to default if expandable is active
-                if (state !== 'default' && NDS.State.has(card, 'expandable')) {
-                    const defaultModeBtn = NDS.querySelector(demoCard, '[data-card-mode="default"]');
-                    if (defaultModeBtn) defaultModeBtn.click();
-                    card = demoCard.querySelector('.demo-container .nds-card');
-                    if (!card) return;
-                }
+        // Reset mode to default if expandable is active
+        if (state !== 'default' && NDS.State.has(card, 'expandable')) {
+            const defaultModeBtn = NDS.querySelector(demoCard, '[data-card-mode="default"]');
+            if (defaultModeBtn) defaultModeBtn.click();
+            card = demoCard.querySelector('.demo-container .nds-card');
+            if (!card) return;
+        }
 
-                const needsButton = state !== 'default';
-                const isButton = card.tagName === 'BUTTON';
+        const needsButton = state !== 'default';
+        const isButton = card.tagName === 'BUTTON';
 
-                // Swap element if needed
-                if (needsButton && !isButton) {
-                    const newEl = document.createElement('button');
-                    for (const attr of card.attributes) newEl.setAttribute(attr.name, attr.value);
-                    newEl.innerHTML = card.innerHTML;
-                    card.parentNode.replaceChild(newEl, card);
-                    card = newEl;
-                } else if (!needsButton && isButton) {
-                    const newEl = document.createElement('div');
-                    for (const attr of card.attributes) newEl.setAttribute(attr.name, attr.value);
-                    newEl.innerHTML = card.innerHTML;
-                    card.parentNode.replaceChild(newEl, card);
-                    card = newEl;
-                }
+        // Swap element if needed
+        if (needsButton && !isButton) {
+            const newEl = document.createElement('button');
+            for (const attr of card.attributes) newEl.setAttribute(attr.name, attr.value);
+            newEl.innerHTML = card.innerHTML;
+            card.parentNode.replaceChild(newEl, card);
+            card = newEl;
+        } else if (!needsButton && isButton) {
+            const newEl = document.createElement('div');
+            for (const attr of card.attributes) newEl.setAttribute(attr.name, attr.value);
+            newEl.innerHTML = card.innerHTML;
+            card.parentNode.replaceChild(newEl, card);
+            card = newEl;
+        }
 
-                // Toggle disabled
-                if (state === 'disabled') {
-                    card.setAttribute('disabled', '');
-                    // Disable form controls via data-state (forms.js two-way binding)
-                    card.querySelectorAll('.nds-form-container').forEach(el => {
-                        NDS.State.add(el, 'disabled');
-                    });
-                    card.querySelectorAll('input, button, a').forEach(el => el.setAttribute('disabled', ''));
-                } else {
-                    card.removeAttribute('disabled');
-                    card.querySelectorAll('.nds-form-container').forEach(el => {
-                        NDS.State.remove(el, 'disabled');
-                    });
-                    card.querySelectorAll('input, button, a').forEach(el => el.removeAttribute('disabled'));
-                }
-
-                rebuildCardCode(demoCard);
+        // Toggle disabled
+        if (state === 'disabled') {
+            card.setAttribute('disabled', '');
+            // Disable form controls via data-state (forms.js two-way binding)
+            card.querySelectorAll('.nds-form-container').forEach(el => {
+                NDS.State.add(el, 'disabled');
             });
-        });
+            card.querySelectorAll('input, button, a').forEach(el => el.setAttribute('disabled', ''));
+        } else {
+            card.removeAttribute('disabled');
+            card.querySelectorAll('.nds-form-container').forEach(el => {
+                NDS.State.remove(el, 'disabled');
+            });
+            card.querySelectorAll('input, button, a').forEach(el => el.removeAttribute('disabled'));
+        }
+
+        rebuildCardCode(demoCard);
     }
 
     // Card header dropmenu — icon/image/none
-    function initializeCardHeaderToggles() {
-        document.querySelectorAll('[data-card-header]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function cardHeaderToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const headerType = this.dataset.cardHeader;
-                selectDropmenuItem(this, '[data-card-header]');
+        const headerType = btn.dataset.cardHeader;
+        selectDropmenuItem(btn, '[data-card-header]');
 
-                // Hide both, then show selected
-                const iconSection = demoCard.querySelector('.demo-container .nds-card-featured-icon');
-                const imageSection = demoCard.querySelector('.demo-container .nds-card-image:not(.nds-avatar)');
-                const avatarSection = demoCard.querySelector('.demo-container .nds-avatar');
-                const cardHeader = demoCard.querySelector('.demo-container .nds-card-header');
-                if (iconSection) iconSection.setAttribute('hidden', '');
-                if (imageSection) imageSection.setAttribute('hidden', '');
-                if (avatarSection) avatarSection.setAttribute('hidden', '');
+        // Hide both, then show selected
+        const iconSection = demoCard.querySelector('.demo-container .nds-card-featured-icon');
+        const imageSection = demoCard.querySelector('.demo-container .nds-card-image:not(.nds-avatar)');
+        const avatarSection = demoCard.querySelector('.demo-container .nds-avatar');
+        const cardHeader = demoCard.querySelector('.demo-container .nds-card-header');
+        if (iconSection) iconSection.setAttribute('hidden', '');
+        if (imageSection) imageSection.setAttribute('hidden', '');
+        if (avatarSection) avatarSection.setAttribute('hidden', '');
 
-                const checkboxVisible = demoCard.querySelector('.demo-container .nds-card-checkbox:not([hidden])');
-                if (headerType === 'none' && !checkboxVisible) {
-                    if (cardHeader) cardHeader.setAttribute('hidden', '');
-                } else {
-                    if (cardHeader) cardHeader.removeAttribute('hidden');
-                    if (headerType === 'icon' && iconSection) iconSection.removeAttribute('hidden');
-                    if (headerType === 'avatar' && avatarSection) avatarSection.removeAttribute('hidden');
-                    if (headerType === 'image' && imageSection) imageSection.removeAttribute('hidden');
-                }
+        const checkboxVisible = demoCard.querySelector('.demo-container .nds-card-checkbox:not([hidden])');
+        if (headerType === 'none' && !checkboxVisible) {
+            if (cardHeader) cardHeader.setAttribute('hidden', '');
+        } else {
+            if (cardHeader) cardHeader.removeAttribute('hidden');
+            if (headerType === 'icon' && iconSection) iconSection.removeAttribute('hidden');
+            if (headerType === 'avatar' && avatarSection) avatarSection.removeAttribute('hidden');
+            if (headerType === 'image' && imageSection) imageSection.removeAttribute('hidden');
+        }
 
-                rebuildCardCode(demoCard);
-            });
-        });
+        rebuildCardCode(demoCard);
     }
 
     // Card color dropmenu — mutually exclusive color variants
     var CARD_COLOR_CLASSES = ['nds-neutral', 'nds-green', 'nds-yellow', 'nds-red', 'nds-blue', 'nds-oncolor'];
-    function initializeCardColorToggles() {
-        document.querySelectorAll('[data-card-color]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function cardColorToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const color = this.dataset.cardColor;
-                selectDropmenuItem(this, '[data-card-color]');
+        const color = btn.dataset.cardColor;
+        selectDropmenuItem(btn, '[data-card-color]');
 
-                const container = demoCard.querySelector('.demo-container');
-                const cards = demoCard.querySelectorAll('.demo-container .nds-card');
-                cards.forEach(card => {
-                    card.classList.remove(...CARD_COLOR_CLASSES);
-                    if (color !== 'none') card.classList.add('nds-' + color);
-                });
-
-                // Toggle dark background for oncolor variant
-                if (container) container.classList.toggle('dark-bg', color === 'oncolor');
-
-                rebuildCardCode(demoCard);
-            });
+        const container = demoCard.querySelector('.demo-container');
+        const cards = demoCard.querySelectorAll('.demo-container .nds-card');
+        cards.forEach(card => {
+            card.classList.remove(...CARD_COLOR_CLASSES);
+            if (color !== 'none') card.classList.add('nds-' + color);
         });
+
+        // Toggle dark background for oncolor variant
+        if (container) container.classList.toggle('dark-bg', color === 'oncolor');
+
+        rebuildCardCode(demoCard);
     }
 
-    function initializeCardLayoutToggles() {
-        document.querySelectorAll('[data-card-layout]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function cardLayoutToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const layout = this.dataset.cardLayout;
-                selectDropmenuItem(this, '[data-card-layout]');
+        const layout = btn.dataset.cardLayout;
+        selectDropmenuItem(btn, '[data-card-layout]');
 
-                const card = demoCard.querySelector('.demo-container .nds-card');
-                if (!card) return;
+        const card = demoCard.querySelector('.demo-container .nds-card');
+        if (!card) return;
 
-                card.classList.remove('nds-rowView', 'nds-center');
-                if (layout === 'rowView') card.classList.add('nds-rowView');
-                else if (layout === 'center') card.classList.add('nds-center');
+        card.classList.remove('nds-rowView', 'nds-center');
+        if (layout === 'rowView') card.classList.add('nds-rowView');
+        else if (layout === 'center') card.classList.add('nds-center');
 
-                rebuildCardCode(demoCard);
-            });
-        });
+        rebuildCardCode(demoCard);
     }
 
     // Stepper Fallback dropmenu: picks the always-on variant that acts as the
@@ -1891,26 +1861,22 @@
     // Routes through the public NDS.Stepper.setFallback(id, variant) rather than
     // reaching into the instance, so the authored fallback, the always-on class,
     // and apply()'s live toggle stay coherent.
-    function initializeStepperFallbackMenu() {
-        document.addEventListener('click', function (e) {
-            const btn = e.target.closest('[data-stepper-fallback]');
-            if (!btn) return;
-            const variant = btn.dataset.stepperFallback;
-            if (!variant) return;
+    function stepperFallbackToggle(btn) {
+        const variant = btn.dataset.stepperFallback;
+        if (!variant) return;
 
-            const targetId = btn.dataset.stepperTarget;
-            const stepper = targetId && document.getElementById(targetId);
-            if (!stepper) return;
+        const targetId = btn.dataset.stepperTarget;
+        const stepper = targetId && document.getElementById(targetId);
+        if (!stepper) return;
 
-            selectDropmenuItem(btn, '[data-stepper-fallback]');
-            NDS.Stepper.setFallback(targetId, variant);
+        selectDropmenuItem(btn, '[data-stepper-fallback]');
+        NDS.Stepper.setFallback(targetId, variant);
 
-            // Pass the real always-on variant classes so the code-tab update
-            // checks each and strips those no longer on the element. Horizontal
-            // has no class (it's the default), so it's intentionally absent.
-            const demoCard = NDS.closest(btn, '.nds-demo-card');
-            if (demoCard) updateCodeExampleForClasses(demoCard, stepper, ['nds-vertical', 'nds-radial']);
-        });
+        // Pass the real always-on variant classes so the code-tab update
+        // checks each and strips those no longer on the element. Horizontal
+        // has no class (it's the default), so it's intentionally absent.
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (demoCard) updateCodeExampleForClasses(demoCard, stepper, ['nds-vertical', 'nds-radial']);
     }
 
     // Stepper responsive auto-simplify: minimizes the authored class count
@@ -1926,182 +1892,173 @@
     //   F=vertical   needs 2 BP classes + 1 fallback = 3
     //   F=radial     needs 1 BP class  + 1 fallback = 2  ← picked
     //   Result: nds-stepper nds-radial nds-vertical-lg
-    function initializeStepperResponsiveSimplify() {
-        const VARIANTS = ['horizontal', 'vertical', 'radial'];
-        const BPS = ['sm', 'md', 'lg'];
-        const BP_RE = /^nds-(?:horizontal|vertical|radial)-(?:sm|md|lg)$/;
+    const STEPPER_VARIANTS = ['horizontal', 'vertical', 'radial'];
+    const STEPPER_BPS = ['sm', 'md', 'lg'];
+    const STEPPER_BP_RE = /^nds-(?:horizontal|vertical|radial)-(?:sm|md|lg)$/;
 
-        document.querySelectorAll('[data-stepper-auto-simplify]').forEach(stepper => {
-            const currentFallback = () => NDS.Stepper.getFallback(stepper.id) || 'horizontal';
+    function stepperEffectiveAt(stepper, bp, fallback) {
+        for (const v of STEPPER_VARIANTS) {
+            if (stepper.classList.contains(`nds-${v}-${bp}`)) return v;
+        }
+        return fallback;
+    }
 
-            const effectiveAt = (bp, fallback) => {
-                for (const v of VARIANTS) {
-                    if (stepper.classList.contains(`nds-${v}-${bp}`)) return v;
-                }
-                return fallback;
-            };
+    // Class count needed to express the given effective map with `fb` as the
+    // always-on fallback. BPs matching fb need no class; others need
+    // nds-{variant}-{bp}. Fallback adds 1 class unless it's horizontal (the
+    // default — no class).
+    function stepperCountFor(fb, effective) {
+        return effective.filter(e => e !== fb).length + (fb !== 'horizontal' ? 1 : 0);
+    }
 
-            // Class count needed to express the given effective map with
-            // `fb` as the always-on fallback. BPs matching fb need no class;
-            // others need nds-{variant}-{bp}. Fallback adds 1 class unless
-            // it's horizontal (the default — no class).
-            const countFor = (fb, effective) =>
-                effective.filter(e => e !== fb).length + (fb !== 'horizontal' ? 1 : 0);
-
-            const simplify = (newFb, effective) => {
-                // Strip every BP class, then set the new fallback (which
-                // updates the always-on variant class + instance state and
-                // re-applies the responsive layout). Finally, re-add BP
-                // overrides only where effective differs from the new fallback.
-                for (const bp of BPS) {
-                    for (const v of VARIANTS) stepper.classList.remove(`nds-${v}-${bp}`);
-                }
-                NDS.Stepper.setFallback(stepper.id, newFb);
-                effective.forEach((e, i) => {
-                    if (e !== newFb) stepper.classList.add(`nds-${e}-${BPS[i]}`);
-                });
-
-                const demoCard = NDS.closest(stepper, '.nds-demo-card');
-                if (!demoCard) return;
-
-                // Sync Fallback dropmenu to the new fallback.
-                const fbTarget = NDS.querySelector(demoCard, `[data-stepper-fallback="${newFb}"]`);
-                if (fbTarget) selectDropmenuItem(fbTarget, '[data-stepper-fallback]');
-
-                // Sync each BP dropmenu to the correct option — Fallback when
-                // the BP inherits, the matching variant when it overrides.
-                BPS.forEach((bp, i) => {
-                    const groupName = 'stepperLayout' + bp[0].toUpperCase() + bp.slice(1);
-                    const groupItems = NDS.queryAll(demoCard, `.demo-toggle-btn[data-toggler*="${groupName}"]`);
-                    if (!groupItems.length) return;
-
-                    const expectedClass = effective[i] === newFb ? '' : `nds-${effective[i]}-${bp}`;
-                    const target = groupItems.find(b => {
-                        const m = (b.getAttribute('data-toggler') || '').match(/^\[\s*"([^"]*)"/);
-                        return m && m[1] === expectedClass;
-                    });
-                    if (target) {
-                        groupItems.forEach(b => NDS.State.remove(b, 'selected'));
-                        selectDropmenuItem(target, '.nds-dropmenu-item');
-                    }
-                });
-
-                // Mirror into the code tab. Pass every variant + BP class so
-                // stale ones are stripped; nds-horizontal excluded (horizontal
-                // has no always-on class).
-                const touched = [
-                    'nds-vertical', 'nds-radial',
-                    ...VARIANTS.flatMap(v => BPS.map(bp => `nds-${v}-${bp}`))
-                ];
-                updateCodeExampleForClasses(demoCard, stepper, touched);
-            };
-
-            const detect = () => {
-                const currentFb = currentFallback();
-                const effective = BPS.map(bp => effectiveAt(bp, currentFb));
-
-                const authoredBpCount = [...stepper.classList].filter(c => BP_RE.test(c)).length;
-                const currentTotal = authoredBpCount + (currentFb !== 'horizontal' ? 1 : 0);
-
-                let bestFb = currentFb;
-                let bestTotal = currentTotal;
-                for (const candidate of VARIANTS) {
-                    const total = countFor(candidate, effective);
-                    if (total < bestTotal) {
-                        bestTotal = total;
-                        bestFb = candidate;
-                    }
-                }
-
-                if (bestTotal >= currentTotal) return;
-                simplify(bestFb, effective);
-            };
-
-            new MutationObserver(detect).observe(stepper, {
-                attributes: true,
-                attributeFilter: ['class']
-            });
-            detect();
+    function stepperSimplify(stepper, newFb, effective) {
+        // Strip every BP class, then set the new fallback (which updates the
+        // always-on variant class + instance state and re-applies the responsive
+        // layout). Finally, re-add BP overrides only where effective differs from
+        // the new fallback.
+        for (const bp of STEPPER_BPS) {
+            for (const v of STEPPER_VARIANTS) stepper.classList.remove(`nds-${v}-${bp}`);
+        }
+        NDS.Stepper.setFallback(stepper.id, newFb);
+        effective.forEach((e, i) => {
+            if (e !== newFb) stepper.classList.add(`nds-${e}-${STEPPER_BPS[i]}`);
         });
+
+        const demoCard = NDS.closest(stepper, '.nds-demo-card');
+        if (!demoCard) return;
+
+        // Sync Fallback dropmenu to the new fallback.
+        const fbTarget = NDS.querySelector(demoCard, `[data-stepper-fallback="${newFb}"]`);
+        if (fbTarget) selectDropmenuItem(fbTarget, '[data-stepper-fallback]');
+
+        // Sync each BP dropmenu to the correct option — Fallback when the BP
+        // inherits, the matching variant when it overrides.
+        STEPPER_BPS.forEach((bp, i) => {
+            const groupName = 'stepperLayout' + bp[0].toUpperCase() + bp.slice(1);
+            const groupItems = NDS.queryAll(demoCard, `.demo-toggle-btn[data-toggler*="${groupName}"]`);
+            if (!groupItems.length) return;
+
+            const expectedClass = effective[i] === newFb ? '' : `nds-${effective[i]}-${bp}`;
+            const target = groupItems.find(b => {
+                const m = (b.getAttribute('data-toggler') || '').match(/^\[\s*"([^"]*)"/);
+                return m && m[1] === expectedClass;
+            });
+            if (target) {
+                groupItems.forEach(b => NDS.State.remove(b, 'selected'));
+                selectDropmenuItem(target, '.nds-dropmenu-item');
+            }
+        });
+
+        // Mirror into the code tab. Pass every variant + BP class so stale ones
+        // are stripped; nds-horizontal excluded (horizontal has no always-on class).
+        const touched = [
+            'nds-vertical', 'nds-radial',
+            ...STEPPER_VARIANTS.flatMap(v => STEPPER_BPS.map(bp => `nds-${v}-${bp}`))
+        ];
+        updateCodeExampleForClasses(demoCard, stepper, touched);
+    }
+
+    // Re-runs on every class mutation via the shared NDS.onAttrChange observer.
+    // stepperSimplify writes class, which re-delivers here — the "already optimal"
+    // guard (bestTotal >= currentTotal) makes that re-entry a no-op fixed point.
+    function stepperDetect(stepper) {
+        const currentFb = NDS.Stepper.getFallback(stepper.id) || 'horizontal';
+        const effective = STEPPER_BPS.map(bp => stepperEffectiveAt(stepper, bp, currentFb));
+
+        const authoredBpCount = [...stepper.classList].filter(c => STEPPER_BP_RE.test(c)).length;
+        const currentTotal = authoredBpCount + (currentFb !== 'horizontal' ? 1 : 0);
+
+        let bestFb = currentFb;
+        let bestTotal = currentTotal;
+        for (const candidate of STEPPER_VARIANTS) {
+            const total = stepperCountFor(candidate, effective);
+            if (total < bestTotal) {
+                bestTotal = total;
+                bestFb = candidate;
+            }
+        }
+
+        if (bestTotal >= currentTotal) return;
+        stepperSimplify(stepper, bestFb, effective);
+    }
+
+    function initializeStepperResponsiveSimplify() {
+        if (!document.querySelector('[data-stepper-auto-simplify]')) return;
+        _offHandles.push(
+            NDS.onAttrChange('[data-stepper-auto-simplify]', ['class'], els => els.forEach(stepperDetect))
+        );
+        document.querySelectorAll('[data-stepper-auto-simplify]').forEach(stepperDetect);
     }
 
     // Card content toggle — show/hide optional card sections and rebuild code
-    function initializeCardContentToggles() {
-        document.querySelectorAll('[data-card-toggle]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function cardContentToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const section = this.dataset.cardToggle;
-                const selectorMap = {
-                    tags: '.nds-card-tags',
-                    rating: '.nds-card-rating'
-                };
-                const selector = selectorMap[section];
-                if (!selector) return;
-                const target = demoCard.querySelector(`.demo-container ${selector}`);
-                if (!target) return;
+        const section = btn.dataset.cardToggle;
+        const selectorMap = {
+            tags: '.nds-card-tags',
+            rating: '.nds-card-rating'
+        };
+        const selector = selectorMap[section];
+        if (!selector) return;
+        const target = demoCard.querySelector(`.demo-container ${selector}`);
+        if (!target) return;
 
-                // Toggle hidden + button selected state
-                var isHidden = target.hasAttribute('hidden');
-                target.toggleAttribute('hidden', !isHidden);
-                if (isHidden) NDS.State.add(this, 'selected');
-                else NDS.State.remove(this, 'selected');
+        // Toggle hidden + button selected state
+        var isHidden = target.hasAttribute('hidden');
+        target.toggleAttribute('hidden', !isHidden);
+        if (isHidden) NDS.State.add(btn, 'selected');
+        else NDS.State.remove(btn, 'selected');
 
-                // Rebuild code from visible demo HTML
-                rebuildCardCode(demoCard);
-            });
-        });
+        // Rebuild code from visible demo HTML
+        rebuildCardCode(demoCard);
     }
 
 
     // Form fix visibility — show/hide prefix/suffix
-    function initializeFormFixToggles() {
-        document.querySelectorAll('[data-form-fix]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function formFixToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const mode = this.dataset.formFix;
-                const formControl = demoCard.querySelector('.demo-container .nds-form-control');
-                if (!formControl) return;
+        const mode = btn.dataset.formFix;
+        const formControl = demoCard.querySelector('.demo-container .nds-form-control');
+        if (!formControl) return;
 
-                selectDropmenuItem(this, '[data-form-fix]');
+        selectDropmenuItem(btn, '[data-form-fix]');
 
-                // Store original content on first use
-                if (!formControl.dataset.originalFixHtml) {
-                    formControl.dataset.originalFixHtml = formControl.innerHTML;
-                }
+        // Store original content on first use
+        if (!formControl.dataset.originalFixHtml) {
+            formControl.dataset.originalFixHtml = formControl.innerHTML;
+        }
 
-                // Restore original first
-                var input = formControl.querySelector('input, textarea, select');
-                var inputValue = input ? input.value : '';
-                formControl.innerHTML = formControl.dataset.originalFixHtml;
-                input = formControl.querySelector('input, textarea, select');
-                if (input) input.value = inputValue;
+        // Restore original first
+        var input = formControl.querySelector('input, textarea, select');
+        var inputValue = input ? input.value : '';
+        formControl.innerHTML = formControl.dataset.originalFixHtml;
+        input = formControl.querySelector('input, textarea, select');
+        if (input) input.value = inputValue;
 
-                // Remove based on mode
-                if (mode === 'suffix' || mode === 'prefix') {
-                    var removeSelector = mode === 'suffix' ? '.nds-prefix' : '.nds-suffix';
-                    var toRemove = formControl.querySelector(removeSelector);
-                    if (toRemove) toRemove.remove();
-                }
+        // Remove based on mode
+        if (mode === 'suffix' || mode === 'prefix') {
+            var removeSelector = mode === 'suffix' ? '.nds-prefix' : '.nds-suffix';
+            var toRemove = formControl.querySelector(removeSelector);
+            if (toRemove) toRemove.remove();
+        }
 
-                // Re-apply active data-toggler operations first (fixStyle, fixSize, state, etc.)
-                reapplyActiveTogglers(demoCard);
+        // Re-apply active data-toggler operations first (fixStyle, fixSize, state, etc.)
+        reapplyActiveTogglers(demoCard);
 
-                // Re-apply icon/dropmenu after state so new elements inherit disabled/readonly
-                if (NDS.querySelector(demoCard, '[data-form-fix-icon][data-state~="selected"]')) {
-                    applyFormFixIcon(formControl, true);
-                }
-                if (NDS.querySelector(demoCard, '[data-form-fix-dropmenu][data-state~="selected"]')) {
-                    applyFormFixDropmenu(formControl, true);
-                }
+        // Re-apply icon/dropmenu after state so new elements inherit disabled/readonly
+        if (NDS.querySelector(demoCard, '[data-form-fix-icon][data-state~="selected"]')) {
+            applyFormFixIcon(formControl, true);
+        }
+        if (NDS.querySelector(demoCard, '[data-form-fix-dropmenu][data-state~="selected"]')) {
+            applyFormFixDropmenu(formControl, true);
+        }
 
-                // Update code example after all toggles reapplied
-                rebuildDemoCode(demoCard);
-            });
-        });
+        // Update code example after all toggles reapplied
+        rebuildDemoCode(demoCard);
     }
 
     // Apply or remove icon from prefix/suffix buttons
@@ -2124,22 +2081,18 @@
     }
 
     // Form fix icon toggle — add/remove icon to prefix/suffix
-    function initializeFormFixIcon() {
-        document.querySelectorAll('[data-form-fix-icon]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function formFixIconToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const isActive = !NDS.State.has(this, 'selected');
-                if (isActive) NDS.State.add(this, 'selected');
-                else NDS.State.remove(this, 'selected');
-                const formControl = demoCard.querySelector('.demo-container .nds-form-control');
-                if (!formControl) return;
+        const isActive = !NDS.State.has(btn, 'selected');
+        if (isActive) NDS.State.add(btn, 'selected');
+        else NDS.State.remove(btn, 'selected');
+        const formControl = demoCard.querySelector('.demo-container .nds-form-control');
+        if (!formControl) return;
 
-                applyFormFixIcon(formControl, isActive);
-                rebuildDemoCode(demoCard);
-            });
-        });
+        applyFormFixIcon(formControl, isActive);
+        rebuildDemoCode(demoCard);
     }
 
     // Apply or remove dropmenu from prefix/suffix containers
@@ -2188,7 +2141,8 @@
                     }
                 }
 
-                if (window.NDS && NDS.Dropmenu) NDS.Dropmenu.init(fix);
+                // Soft dependency — demo skips the dropmenu enhancement if NDS.Dropmenu isn't bundled.
+                if (NDS.Dropmenu) NDS.Dropmenu.init(fix);
             } else {
                 // Remove dropmenu from container
                 fix.classList.remove('nds-dropmenu');
@@ -2216,41 +2170,33 @@
     }
 
     // Form fix dropmenu toggle — convert prefix/suffix to dropmenu triggers
-    function initializeFormFixDropmenu() {
-        document.querySelectorAll('[data-form-fix-dropmenu]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    function formFixDropmenuToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const isActive = !NDS.State.has(this, 'selected');
-                if (isActive) NDS.State.add(this, 'selected');
-                else NDS.State.remove(this, 'selected');
-                const formControl = demoCard.querySelector('.demo-container .nds-form-control');
-                if (!formControl) return;
+        const isActive = !NDS.State.has(btn, 'selected');
+        if (isActive) NDS.State.add(btn, 'selected');
+        else NDS.State.remove(btn, 'selected');
+        const formControl = demoCard.querySelector('.demo-container .nds-form-control');
+        if (!formControl) return;
 
-                applyFormFixDropmenu(formControl, isActive);
+        applyFormFixDropmenu(formControl, isActive);
 
-                // Rebuild code example from live demo
-                rebuildDemoCode(demoCard);
-            });
-        });
+        // Rebuild code example from live demo
+        rebuildDemoCode(demoCard);
     }
 
     // Rating disable toggle — toggle disabled state via rating API
-    function initializeRatingDisableToggle() {
-        document.querySelectorAll('[data-rating-disable]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
-                const rating = demoCard.querySelector('.nds-rating');
-                if (!rating || !rating.ndsRating) return;
-                const disabled = !rating.ndsRating.isDisabled();
-                rating.ndsRating.setDisabled(disabled);
-                if (disabled) NDS.State.add(this, 'selected');
-                else NDS.State.remove(this, 'selected');
-                rebuildDemoCode(demoCard);
-            });
-        });
+    function ratingDisableToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
+        const rating = demoCard.querySelector('.nds-rating');
+        if (!rating || !rating.ndsRating) return;
+        const disabled = !rating.ndsRating.isDisabled();
+        rating.ndsRating.setDisabled(disabled);
+        if (disabled) NDS.State.add(btn, 'selected');
+        else NDS.State.remove(btn, 'selected');
+        rebuildDemoCode(demoCard);
     }
 
     // Generic: rebuild code example from the live demo DOM.
@@ -2266,8 +2212,9 @@
         var rootEl = demoContainer.querySelector('.state-demo > *') || demoContainer.querySelector(':scope > *');
         if (!rootEl) return;
 
-        // Get clean IDs from the original static code
-        var hiddenCopy = codeElement.parentNode.querySelector('.original-code-content');
+        // Get clean IDs from the original static code (lazily snapshotted before
+        // any mutation — the code tab isn't touched until a code-update runs).
+        var hiddenCopy = getHiddenCodeCopy(codeElement);
         var idMap = {};
         if (hiddenCopy) {
             var origIds = hiddenCopy.textContent.match(/id="([^"]+)"/g);
@@ -2326,8 +2273,7 @@
 
         // outerHTML serializes empty attributes as attr="", strip for clean output
         var result = formatHtml(clone.outerHTML.replace(/([\w-])=""/g, '$1'));
-        var hiddenCopy = getHiddenCodeCopy(codeElement);
-        if (hiddenCopy) hiddenCopy.textContent = result;
+        hiddenCopy.textContent = result;
         // Write as TEXT, not innerHTML — see updateCodeFromHiddenCopy.
         codeElement.textContent = result;
         delete codeElement.dataset.originalContent;
@@ -2389,47 +2335,43 @@
         updateCodeFromHiddenCopy(codeEl, html);
     }
 
-    function initializeQuoteToggles() {
-        document.querySelectorAll('[data-quote-bg]').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    // Quote background dropmenu — solid/transparent
+    function quoteBgToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const quote = demoCard.querySelector('.demo-container .nds-quote');
-                if (!quote) return;
+        const quote = demoCard.querySelector('.demo-container .nds-quote');
+        if (!quote) return;
 
-                selectDropmenuItem(this, '[data-quote-bg]');
-                quote.classList.toggle('nds-transparent', this.dataset.quoteBg === 'transparent');
-                rebuildQuoteCode(demoCard);
-            });
-        });
+        selectDropmenuItem(btn, '[data-quote-bg]');
+        quote.classList.toggle('nds-transparent', btn.dataset.quoteBg === 'transparent');
+        rebuildQuoteCode(demoCard);
+    }
 
-        document.querySelectorAll('[data-quote-toggle]').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const demoCard = NDS.closest(this, '.nds-demo-card');
-                if (!demoCard) return;
+    // Quote content toggle — show/hide title/avatar/author
+    function quoteToggle(btn) {
+        const demoCard = NDS.closest(btn, '.nds-demo-card');
+        if (!demoCard) return;
 
-                const quote = demoCard.querySelector('.demo-container .nds-quote');
-                if (!quote) return;
+        const quote = demoCard.querySelector('.demo-container .nds-quote');
+        if (!quote) return;
 
-                const target = this.dataset.quoteToggle;
-                let el;
-                if (target === 'title')  el = quote.querySelector('.nds-quote-title');
-                if (target === 'avatar') el = quote.querySelector('.nds-quote-author .nds-avatar');
-                if (target === 'author') el = quote.querySelector('.nds-quote-author');
-                if (!el) return;
+        const target = btn.dataset.quoteToggle;
+        let el;
+        if (target === 'title')  el = quote.querySelector('.nds-quote-title');
+        if (target === 'avatar') el = quote.querySelector('.nds-quote-author .nds-avatar');
+        if (target === 'author') el = quote.querySelector('.nds-quote-author');
+        if (!el) return;
 
-                if (el.hasAttribute('hidden')) {
-                    el.removeAttribute('hidden');
-                    NDS.State.add(this, 'selected');
-                } else {
-                    el.setAttribute('hidden', '');
-                    NDS.State.remove(this, 'selected');
-                }
+        if (el.hasAttribute('hidden')) {
+            el.removeAttribute('hidden');
+            NDS.State.add(btn, 'selected');
+        } else {
+            el.setAttribute('hidden', '');
+            NDS.State.remove(btn, 'selected');
+        }
 
-                rebuildQuoteCode(demoCard);
-            });
-        });
+        rebuildQuoteCode(demoCard);
     }
 
     // Format raw HTML string with consistent indentation
@@ -2453,41 +2395,25 @@
         return formatted.trim();
     }
 
-    // Demo action buttons functionality
-    function initializeDemoActionButtons() {
-
-        // Event delegation for demo action buttons
-        document.addEventListener('click', function(e) {
-            const actionBtn = e.target.closest('.demo-action-btn');
-            if (actionBtn) {
-                e.preventDefault();
-                const action = actionBtn.getAttribute('data-action');
-
-                if (action === 'populate-demo-files') {
-                    populateDemoFiles(actionBtn);
-                }
-                else if (action === 'reset-progress-duration') {
-                    resetProgressDuration(actionBtn);
-                }
-                else if (action === 'random-progress-value') {
-                    randomProgressValue(actionBtn);
-                }
-                else if (action === 'toast-show') {
-                    createAlertFromDemo(actionBtn, true);
-                }
-                else if (action === 'alert-create') {
-                    createAlertFromDemo(actionBtn, false);
-                }
-                else if (action === 'cookie-show') {
-                    showCookiePopupFromDemo(actionBtn);
-                }
-            }
-        });
+    // Demo action buttons — dispatch by data-action (preventDefault handled by the
+    // delegated click registry via the entry's preventDefault flag).
+    var DEMO_ACTIONS = {
+        'populate-demo-files': btn => populateDemoFiles(btn),
+        'reset-progress-duration': btn => resetProgressDuration(btn),
+        'random-progress-value': btn => randomProgressValue(btn),
+        'toast-show': btn => createAlertFromDemo(btn, true),
+        'alert-create': btn => createAlertFromDemo(btn, false),
+        'cookie-show': btn => showCookiePopupFromDemo(btn)
+    };
+    function demoActionDispatch(actionBtn) {
+        var handler = DEMO_ACTIONS[actionBtn.getAttribute('data-action')];
+        if (handler) handler(actionBtn);
     }
 
     // Show the site-wide cookie popup, honoring the demo card's layout toggle
     function showCookiePopupFromDemo(button) {
-        if (!window.NDS || !window.NDS.Cookies || typeof window.NDS.Cookies.show !== 'function') return;
+        // Soft dependency — demo no-ops if NDS.Cookies isn't bundled.
+        if (!NDS.Cookies || typeof NDS.Cookies.show !== 'function') return;
 
         const demoCard = NDS.closest(button, '.nds-demo-card');
         const popup = document.getElementById('ndsCookiesPopup');
@@ -2495,7 +2421,7 @@
             const centerToggle = NDS.querySelector(demoCard, '[data-toggler*="cookieLayout"][data-state~="selected"]');
             popup.classList.toggle('nds-compact', !!centerToggle);
         }
-        window.NDS.Cookies.show();
+        NDS.Cookies.show();
     }
 
     // Reset progress duration animation
@@ -2558,10 +2484,11 @@
 
         const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;
 
+        // Soft dependency — demo skips alert/toast creation if NDS.Alert isn't bundled.
         if (NDS.Alert) {
             const options = {
                 variant: variant,
-                title: ALERT_TITLES[variant] || variant.charAt(0).toUpperCase() + variant.slice(1),
+                title: variant.charAt(0).toUpperCase() + variant.slice(1),
                 description: messages[variant],
                 color: hasColor
             };
@@ -2696,10 +2623,7 @@
     }
 
     // ── Counter restart button ───────────────────────────────────────
-    document.addEventListener('click', function(e) {
-        const btn = e.target.closest('.demo-counter-restart');
-        if (!btn) return;
-
+    function counterRestart(btn) {
         const card = NDS.closest(btn, '.nds-demo-card');
         if (!card) return;
 
@@ -2721,8 +2645,9 @@
             else el.textContent = '0';
         });
 
-        if (window.NDS && NDS.Numbers) NDS.Numbers.reinit();
-    });
+        // Soft dependency — demo skips counter re-init if NDS.Numbers isn't bundled.
+        if (NDS.Numbers) NDS.Numbers.reinit();
+    }
 
     // Self-boot: showcase ships as its own defer bundle, so it initializes itself
     // rather than relying on the main loader — whose init is decoupled from
