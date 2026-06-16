@@ -35,31 +35,38 @@
         parent.appendChild(span);
     }
 
-    // Hijri date via Intl's Umm al-Qura calendar — the official Saudi calendar,
-    // computed locally (no network). Stays async to preserve the Promise
-    // contract consumers rely on (date-picker calls .then on it). Latin digits
-    // (nu-latn) match the topbar clock and the previous output. Formatters are
-    // memoized by dtf(), so repeat calls don't rebuild the (costly) ICU data.
+    // Hijri month names (same spellings as the date picker). We map month
+    // number → name ourselves instead of asking Intl for month:'long' because
+    // Android's bundled ICU computes the correct Umm al-Qura *numeric* fields
+    // but renders the en-US islamic month/era SYMBOLS from the Gregorian set
+    // (month 1 → "January", era → "BC"). The numeric parts below are
+    // calendar-correct on every platform.
+    const HIJRI_MONTHS = {
+        en: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
+        ar: ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة']
+    };
+
+    // Numeric Hijri Y/M/D via Intl's Umm al-Qura calendar (latin digits so
+    // parseInt is safe). The formatter is memoized by dtf(), so repeat calls
+    // don't rebuild the costly ICU data.
+    function getHijriParts(date) {
+        const parts = dtf('en-US-u-ca-islamic-umalqura', {
+            day: 'numeric', month: 'numeric', year: 'numeric'
+        }).formatToParts(date);
+        const num = type => parseInt(parts.find(p => p.type === type).value, 10);
+        return { day: num('day'), month: num('month'), year: num('year') };
+    }
+
+    // Stays async to preserve the Promise contract consumers rely on
+    // (date-picker calls .then on it).
     async function getHijriDate(isArabic, returnStructured = false) {
-        const date = new Date();
+        const parts = getHijriParts(new Date());
+        if (returnStructured) return parts;
 
-        if (returnStructured) {
-            // numeric parts via a latin-digit locale so parseInt is safe
-            const parts = dtf('en-US-u-ca-islamic-umalqura', {
-                day: 'numeric', month: 'numeric', year: 'numeric'
-            }).formatToParts(date);
-            const num = type => parseInt(parts.find(p => p.type === type).value, 10);
-            return { day: num('day'), month: num('month'), year: num('year') };
-        }
-
-        const locale = isArabic
-            ? 'ar-SA-u-ca-islamic-umalqura-nu-latn'
-            : 'en-US-u-ca-islamic-umalqura';
-        const formatted = dtf(locale, {
-            day: 'numeric', month: 'long', year: 'numeric'
-        }).format(date);
-        const suffix = isArabic ? 'هـ' : 'AH';
-        return formatted.includes(suffix) ? formatted : `${formatted} ${suffix}`;
+        const monthName = (isArabic ? HIJRI_MONTHS.ar : HIJRI_MONTHS.en)[parts.month - 1];
+        return isArabic
+            ? `${parts.day} ${monthName} ${parts.year} هـ`
+            : `${monthName} ${parts.day}, ${parts.year} AH`;
     }
 
     // Date function with caching
