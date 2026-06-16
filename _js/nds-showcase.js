@@ -114,11 +114,14 @@
         // Update the hidden copy
         hiddenCopy.textContent = updatedContent;
 
-        // Update original content for reprocessing
-        codeElement.dataset.originalContent = updatedContent;
-        codeElement.innerHTML = updatedContent;
+        // nds-code reads the source from textContent, so the raw markup must be
+        // written as TEXT — innerHTML would parse the tags into real DOM and the
+        // highlighter's textContent read would then strip them. Clear the stale
+        // snapshot so reprocess re-captures the fresh (escaped) content.
+        codeElement.textContent = updatedContent;
+        delete codeElement.dataset.originalContent;
 
-        // Reprocess using new simplified API
+        // Reprocess using the nds-code API (re-highlights from textContent)
         NDS.Code.reprocessCodeElement(codeElement);
     }
 
@@ -2325,8 +2328,9 @@
         var result = formatHtml(clone.outerHTML.replace(/([\w-])=""/g, '$1'));
         var hiddenCopy = getHiddenCodeCopy(codeElement);
         if (hiddenCopy) hiddenCopy.textContent = result;
-        codeElement.dataset.originalContent = result;
-        codeElement.innerHTML = result;
+        // Write as TEXT, not innerHTML — see updateCodeFromHiddenCopy.
+        codeElement.textContent = result;
+        delete codeElement.dataset.originalContent;
         NDS.Code.reprocessCodeElement(codeElement);
     }
 
