@@ -42,7 +42,7 @@ Clarity beats brevity for fields read during teardown work and code review: a re
 
 **Carve-outs (NOT divergence)**
 
-- **Secondary controllers** that scope a sub-concern, named for what they scope: `this.fetchAbortController` (`_js/nds-filter.js`, paired with the primary `this.abortController`), `this.renderAbortController` (`_js/nds-chart.js`, scopes one render cycle), `this.instanceAbortController` (`_js/nds-ipv.js`).
+- **Secondary controllers** that scope a sub-concern, named for what they scope: `this.fetchAbortController` (`_js/nds-filter.js`, paired with the primary `this.abortController`), `this.renderAbortController` (`_js/nds-chart.js`, scopes one render cycle).
 - **Per-element AbortControllers stored on the element** (`el._ndsFilterAC` in `_js/nds-filter.js`) are scoped to the element's lifetime, not the instance's. Structurally different shape; the leading underscore IS correct here because the property is on a foreign element.
 
 **Audit behavior**
