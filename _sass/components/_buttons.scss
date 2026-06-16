@@ -685,7 +685,7 @@
     // Progress circle SVG
     svg circle.nds-progress-track {
       // Static progress value (default)
-      stroke-dashoffset: calc(var(--progress-circumference, 62.83) - (var(--progress-circumference, 62.83) * min(var(--progress-value, 0), 100) / 100));
+      stroke-dashoffset: calc((var(--progress-circumference, 62.83) - (var(--progress-circumference, 62.83) * min(var(--progress-value, 0), 100) / 100)) * 1px);
       transition: stroke-dashoffset 0.3s ease;
     }
   }
@@ -797,7 +797,7 @@
 
 @keyframes button-progress-countdown {
   from {
-    stroke-dashoffset: 62.83;
+    stroke-dashoffset: 62.83px;
   }
 
   to {

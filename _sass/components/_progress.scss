@@ -27,8 +27,8 @@
 
   // Dynamic progress using CSS custom property
   svg circle.nds-progress-track {
-    stroke-dasharray: var(--_progress-circumference) !important;
-    stroke-dashoffset: calc(var(--_progress-circumference) - (var(--_progress-circumference) * min(var(--_progress-value), 100) / 100));
+    stroke-dasharray: calc(var(--_progress-circumference) * 1px) !important;
+    stroke-dashoffset: calc((var(--_progress-circumference) - (var(--_progress-circumference) * min(var(--_progress-value), 100) / 100)) * 1px);
     transition: stroke-dashoffset 0.3s ease !important;
   }
 

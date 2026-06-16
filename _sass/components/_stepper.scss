@@ -516,8 +516,8 @@
 
         // Progress based on steps
         svg circle.nds-progress-track {
-            stroke-dasharray: 62.83 !important;
-            stroke-dashoffset: calc(62.83 - (62.83 * var(--current-step) / var(--total-steps)));
+            stroke-dasharray: 62.83px !important;
+            stroke-dashoffset: calc((62.83 - (62.83 * var(--current-step) / var(--total-steps))) * 1px);
             transition: stroke-dashoffset 0.3s ease !important;
         }
 

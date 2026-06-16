@@ -444,8 +444,8 @@ $breakpoints-range: (
   $offset: calc(#{$circumference} - (#{$circumference} * #{$clamped-percent} / 100));
 
   svg circle.nds-progress-track {
-    stroke-dasharray: $circumference !important;
-    stroke-dashoffset: $offset;
+    stroke-dasharray: #{$circumference}px !important;
+    stroke-dashoffset: calc(#{$offset} * 1px);
     transition: stroke-dashoffset 0.3s ease !important;
   }
 }
