@@ -10,6 +10,8 @@
   category: "UI"
   tags: ["JS", "CSS", "Add-on"]
   url: "/components/accessibility.html"
+  js: _js/nds-accessibility.js
+  scss: _sass/components/_accessibility.scss
 
 - title: "Accordion"
   description: "Expandable content panels with nested group support"
@@ -17,6 +19,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/accordion.html"
+  js: _js/nds-accordion.js
+  scss: _sass/components/_accordion.scss
 
 - title: "Alert"
   description: "Contextual messages for status, warnings, and notifications"
@@ -24,6 +28,8 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/alert.html"
+  js: _js/nds-alert.js
+  scss: _sass/components/_alert.scss
 
 - title: "Avatar"
   description: "Profile images, initials, and group stacks"
@@ -31,6 +37,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/avatar.html"
+  scss: _sass/components/_avatar.scss
 
 - title: "Breadcrumb"
   description: "Hierarchical path showing the current page location"
@@ -38,6 +45,8 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/breadcrumb.html"
+  js: _js/nds-breadcrumb.js
+  scss: _sass/components/_breadcrumb.scss
 
 - title: "Buttons"
   description: "Interactive actions with multiple variants, sizes, and states"
@@ -45,6 +54,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/button.html"
+  scss: _sass/components/_buttons.scss
 
 - title: "Cards"
   description: "Versatile content containers for articles, profiles, and actions"
@@ -52,6 +62,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/cards.html"
+  scss: _sass/components/_cards.scss
 
 - title: "Chips"
   description: "Compact labels for tags, filters, and selections"
@@ -59,6 +70,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/chips.html"
+  scss: _sass/components/_chips.scss
 
 - title: "Code"
   description: "Formatted code blocks with syntax highlighting and copy"
@@ -66,6 +78,8 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/code.html"
+  js: _js/nds-code.js
+  scss: _sass/components/_code.scss
 
 - title: "Cooldown Button"
   description: "Click-disabled countdown button for resend, retry, and rate-limited actions"
@@ -73,6 +87,8 @@
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/cooldown-button.html"
+  js: _js/nds-cooldown-button.js
+  scss: _sass/components/_cooldown-button.scss
 
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
@@ -80,6 +96,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/definition-list.html"
+  scss: _sass/components/_definition-list.scss
 
 - title: "Drawer"
   description: "Collapsible navigation lists with accordion groups"
@@ -87,6 +104,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/drawer.html"
+  js: _js/nds-drawer.js
+  scss: _sass/components/_drawer.scss
 
 - title: "Dropmenu"
   description: "Toggle-activated overlay for actions and navigation"
@@ -94,6 +113,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/dropmenu.html"
+  js: _js/nds-dropmenu.js
+  scss: _sass/components/_dropmenu.scss
 
 - title: "Empty"
   description: "Parent-adaptive placeholder for containers with no content"
@@ -101,6 +122,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/empty.html"
+  js: _js/nds-empty.js
+  scss: _sass/components/_empty.scss
 
 - title: "Featured Icons"
   description: "Decorative icon containers with shape and color options"
@@ -108,6 +131,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/featured-icons.html"
+  scss: _sass/components/_featured-icons.scss
 
 - title: "Feedback Icons"
   description: "Semantic status icons for success, error, and info"
@@ -115,6 +139,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/feedback-icons.html"
+  scss: _sass/components/_feedback-icons.scss
 
 - title: "Image Popup Viewer"
   description: "Fullscreen image preview with zoom and navigation"
@@ -122,6 +147,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/ipv.html"
+  js: _js/nds-ipv.js
+  scss: _sass/components/_ipv.scss
 
 - title: "Link"
   description: "Inline navigation with color variants and automatic external-link detection"
@@ -129,6 +156,8 @@
   category: "UI"
   tags: ["CSS", "JS"]
   url: "/components/link.html"
+  js: _js/nds-link.js
+  scss: _sass/components/_link.scss
 
 - title: "Loading"
   description: "Spinners and skeleton placeholders for loading states"
@@ -136,6 +165,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/loading.html"
+  scss: _sass/components/_loading.scss
 
 - title: "Metric"
   description: "Dashboard tile pairing a key statistic with an inline sparkline"
@@ -143,6 +173,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/metric.html"
+  scss: _sass/components/_metric.scss
 
 - title: "Modal"
   description: "Focused dialog overlays for confirmations and forms"
@@ -150,6 +181,8 @@
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/modal.html"
+  js: _js/nds-modal.js
+  scss: _sass/components/_modal.scss
 
 - title: "Pagination"
   description: "Page-by-page navigation for large data sets"
@@ -157,6 +190,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/pagination.html"
+  js: _js/nds-pagination.js
+  scss: _sass/components/_pagination.scss
 
 - title: "Persona"
   description: "Identity block with avatar, name, role, and optional action row"
@@ -164,6 +199,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/persona.html"
+  scss: _sass/components/_persona.scss
 
 - title: "Progress"
   description: "Visual indicators for task completion and loading"
@@ -171,6 +207,8 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/progress.html"
+  js: _js/nds-progress.js
+  scss: _sass/components/_progress.scss
 
 - title: "Quote"
   description: "Semantic quotation block with optional title and author attribution"
@@ -178,6 +216,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/quote.html"
+  scss: _sass/components/_quote.scss
 
 - title: "Rating"
   description: "Star-based display and input for user ratings"
@@ -185,6 +224,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/rating.html"
+  js: _js/nds-rating.js
+  scss: _sass/components/_rating.scss
 
 - title: "Scroll More"
   description: "Overflow wrapper with edge mask-fade and sticky show-more button"
@@ -192,6 +233,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/scroll-more.html"
+  js: _js/nds-scroll-more.js
+  scss: _sass/components/_scroll-more.scss
 
 - title: "Stepper"
   description: "Sequential step indicators for multi-stage workflows"
@@ -199,6 +242,8 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/stepper.html"
+  js: _js/nds-stepper.js
+  scss: _sass/components/_stepper.scss
 
 - title: "Swiper"
   description: "Touch-enabled carousel for images and content slides"
@@ -206,6 +251,8 @@
   category: "UI"
   tags: ["JS", "CSS"]
   url: "/components/swiper.html"
+  js: _js/nds-swiper.js
+  scss: _sass/components/_swiper.scss
 
 - title: "Tabs"
   description: "Switchable content panels with horizontal tab navigation"
@@ -213,6 +260,8 @@
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/tabs.html"
+  js: _js/nds-tabs.js
+  scss: _sass/components/_tabs.scss
 
 - title: "Tags"
   description: "Small labels for categorization and metadata"
@@ -220,6 +269,7 @@
   category: "UI"
   tags: ["CSS"]
   url: "/components/tags.html"
+  scss: _sass/components/_tags.scss
 
 - title: "Themes"
   description: "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet theme"
@@ -234,6 +284,8 @@
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/toc.html"
+  js: _js/nds-toc.js
+  scss: _sass/components/_toc.scss
 
 - title: "Tooltip"
   description: "Click-activated balloon for contextual help next to a term or field"
@@ -241,6 +293,8 @@
   category: "UI"
   tags: ["JS", "CSS", "API"]
   url: "/components/tooltip.html"
+  js: _js/nds-tooltip.js
+  scss: _sass/components/_tooltip.scss
 
 # Form Components
 - title: "Text Inputs"
@@ -249,6 +303,8 @@
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/forms.html"
+  js: _js/nds-forms.js
+  scss: _sass/components/_forms.scss
 
 - title: "Selects"
   description: "Native dropdown menus for choosing from a list"
@@ -256,6 +312,8 @@
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/forms.html"
+  js: _js/nds-forms.js
+  scss: _sass/components/_forms.scss
 
 - title: "Textareas"
   description: "Resizable multi-line text fields"
@@ -263,6 +321,8 @@
   category: "Forms"
   tags: ["CSS"]
   url: "/components/forms.html#textareaInput"
+  js: _js/nds-forms.js
+  scss: _sass/components/_forms.scss
 
 - title: "Number Input"
   description: "Numeric field with increment and decrement controls, min/max, and step"
@@ -270,6 +330,8 @@
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/forms.html#numberInput"
+  js: _js/nds-forms.js
+  scss: _sass/components/_forms.scss
 
 - title: "Checkbox"
   description: "Multi-select toggles for options and preferences"
@@ -277,6 +339,7 @@
   category: "Forms"
   tags: ["CSS"]
   url: "/components/checkbox.html"
+  scss: _sass/components/_checkbox.scss
 
 - title: "Radio"
   description: "Single-choice selection within a group"
@@ -284,6 +347,7 @@
   category: "Forms"
   tags: ["CSS"]
   url: "/components/radio.html"
+  scss: _sass/components/_radio.scss
 
 - title: "Switch"
   description: "Binary on/off toggles for settings and preferences"
@@ -291,6 +355,7 @@
   category: "Forms"
   tags: ["CSS"]
   url: "/components/switch.html"
+  scss: _sass/components/_switch.scss
 
 - title: "OTP Input"
   description: "Segmented one-time password fields with auto-advance"
@@ -298,6 +363,8 @@
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/otp.html"
+  js: _js/nds-otp.js
+  scss: _sass/components/_otp.scss
 
 - title: "File Upload"
   description: "Drag-and-drop file input with preview and validation"
@@ -305,6 +372,8 @@
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/upload.html"
+  js: _js/nds-upload.js
+  scss: _sass/components/_upload.scss
 
 - title: "Autocomplete"
   description: "Type-ahead search with filtered suggestions"
@@ -312,6 +381,8 @@
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/autocomplete.html"
+  js: _js/nds-autocomplete.js
+  scss: _sass/components/_autocomplete.scss
 
 - title: "Multiselect"
   description: "Multi-option select with grouped checkboxes, draft/apply commit, and removable chips"
@@ -319,6 +390,8 @@
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/multiselect.html"
+  js: _js/nds-multiselect.js
+  scss: _sass/components/_multiselect.scss
 
 - title: "User Feedback"
   description: "Satisfaction surveys and inline rating forms"
@@ -326,6 +399,8 @@
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/user-feedback.html"
+  js: _js/nds-user-feedback.js
+  scss: _sass/components/_user-feedback.scss
 
 # Data Components
 - title: "Filter"
@@ -334,6 +409,8 @@
   category: "Data"
   tags: ["JS", "CSS", "API"]
   url: "/components/filter.html"
+  js: _js/nds-filter.js
+  scss: _sass/components/_filter.scss
 
 - title: "Tables"
   description: "Data grids with sorting, pagination, and expandable rows"
@@ -341,6 +418,8 @@
   category: "Data"
   tags: ["JS", "CSS"]
   url: "/components/tables.html"
+  js: _js/nds-tables.js
+  scss: _sass/components/_tables.scss
 
 - title: "Sort"
   description: "DOM-reorder engine for lists, grids, and tables with type auto-detect and URL sync"
@@ -348,6 +427,7 @@
   category: "Data"
   tags: ["JS", "API"]
   url: "/components/sort.html"
+  js: _js/nds-sort.js
 
 - title: "Chart"
   description: "Lightweight SVG charts: bar, line, pie, and donut"
@@ -355,6 +435,8 @@
   category: "Data"
   tags: ["JS", "CSS"]
   url: "/components/chart.html"
+  js: _js/nds-chart.js
+  scss: _sass/components/_chart.scss
 
 - title: "Export"
   description: "Declarative CSV, Excel, and PDF downloads from any table, card list, or marked-up container"
@@ -362,6 +444,8 @@
   category: "Data"
   tags: ["JS", "CSS"]
   url: "/components/export.html"
+  js: _js/nds-export.js
+  scss: _sass/components/_export.scss
 
 # Layout Components
 - title: "Section"
@@ -370,6 +454,7 @@
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/section.html"
+  scss: _sass/layout/_section.scss
 
 - title: "Grid"
   description: "Responsive column system with flexible breakpoints"
@@ -377,6 +462,7 @@
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/grid.html"
+  scss: _sass/_grid.scss
 
 - title: "Block"
   description: "Titled content grouping primitive for sub-sections inside a section body"
@@ -384,6 +470,7 @@
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/block.html"
+  scss: _sass/layout/_block.scss
 
 # Utilities
 - title: "Copy"
@@ -392,6 +479,8 @@
   category: "Utilities"
   tags: ["JS", "CSS"]
   url: "/utilities/copy.html"
+  js: _js/nds-copy.js
+  scss: _sass/components/_copy.scss
 
 - title: "Truncate Text"
   description: "Line-clamped overflow with expand/collapse toggle"
@@ -434,6 +523,7 @@
   category: "Utilities"
   tags: ["JS"]
   url: "/utilities/numbers.html"
+  js: _js/nds-numbers.js
 
 - title: "Counter Animation"
   description: "Scroll-triggered animated counters that count up to a target value"
@@ -441,6 +531,7 @@
   category: "Utilities"
   tags: ["JS"]
   url: "/utilities/numbers.html#counterAnimation"
+  js: _js/nds-numbers.js
 
 - title: "Currency"
   description: "SAR and international currency symbols appended automatically via data attribute"
@@ -448,6 +539,7 @@
   category: "Utilities"
   tags: ["CSS"]
   url: "/utilities/numbers.html#currencyFormat"
+  js: _js/nds-numbers.js
 
 - title: "Share"
   description: "Social share dropmenu for X, LinkedIn, WhatsApp, and copy link"
@@ -455,6 +547,8 @@
   category: "Utilities"
   tags: ["JS", "CSS"]
   url: "/utilities/share.html"
+  js: _js/nds-share.js
+  scss: _sass/components/_share.scss
 
 # UI Shell
 - title: "Top Bar"
@@ -463,6 +557,7 @@
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/topbar.html"
+  scss: _sass/components/_topbar.scss
 
 - title: "Header"
   description: "Top bar and primary navigation shell with mega menus and mobile drawer"
@@ -484,6 +579,7 @@
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/hero.html"
+  scss: _sass/components/_hero.scss
 
 - title: "DGA Digital Stamp"
   description: "Government authority verification panel"
@@ -491,6 +587,8 @@
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/topbar.html#dgaDigitalStamp"
+  js: _js/nds-digitalStamp.js
+  scss: _sass/components/_DGAdigitalStamp.scss
 
 - title: "Side Menu"
   description: "Collapsible nested sidebar navigation"
@@ -498,6 +596,8 @@
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/sidemenu.html"
+  js: _js/nds-sidemenu.js
+  scss: _sass/components/_sidemenu.scss
 
 - title: "Side Info"
   description: "Companion column for service details, progress, and in-page navigation"
@@ -505,6 +605,8 @@
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/sideinfo.html"
+  js: _js/nds-sideinfo.js
+  scss: _sass/components/_sideinfo.scss
 
 - title: "Footer"
   description: "Multi-column footer with light and green variants"
@@ -512,6 +614,7 @@
   category: "UI Shell"
   tags: ["CSS"]
   url: "/ui-shell/footer.html"
+  scss: _sass/components/_footer.scss
 
 # Plugins
 - title: "Date Picker"
@@ -520,6 +623,8 @@
   category: "Plugins"
   tags: ["JS", "CSS", "API"]
   url: "/components/date-picker.html"
+  js: _js/nds-date-picker.js
+  scss: _sass/components/_date-picker.scss
 
 - title: "Voice Input"
   description: "Voice-to-text button that dictates into a text field, with Arabic/English auto-detection"
@@ -527,6 +632,7 @@
   category: "Plugins"
   tags: ["JS", "API"]
   url: "/components/voice-input.html"
+  js: _js/nds-voice-input.js
 
 - title: "Weather Widget"
   description: "Live weather display from GPS coordinates"
@@ -534,6 +640,8 @@
   category: "Plugins"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/topbar.html#topbarWidgets"
+  js: _js/nds-cityWeather.js
+  scss: _sass/components/_topbar.scss
 
 - title: "Clock"
   description: "Real-time clock with Hijri/Gregorian date"
@@ -541,6 +649,8 @@
   category: "Plugins"
   tags: ["JS", "API"]
   url: "/ui-shell/topbar.html#topbarWidgets"
+  js: _js/nds-timeDate.js
+  scss: _sass/components/_topbar.scss
 
 - title: "Cookie Consent"
   description: "Privacy-compliant cookie management banner"
@@ -548,4 +658,6 @@
   category: "Plugins"
   tags: ["JS", "CSS"]
   url: "/components/cookies.html"
+  js: _js/nds-cookies.js
+  scss: _sass/components/_cookie.scss
 

@@ -1,34 +1,61 @@
 ---
 permalink: /llms.txt
 # No layout — this front matter makes Jekyll process the Liquid below (same trick as
-# sitemap.xml). Generated from page front matter (title + hero_description), grouped by
-# section, so it never drifts from the docs. Opt a page out with `llms: false`.
-# Gated to production like _includes/google-analytics.html — GitHub Pages sets JEKYLL_ENV=production; local `jekyll serve` emits an empty file (no localhost URLs).
+# sitemap.xml). Generated from _data/content/*.yml (the same catalog the homepage renders),
+# grouped by category with tech tags, so it never drifts from the docs.
+# Gated to production like _includes/google-analytics.html — GitHub Pages sets
+# JEKYLL_ENV=production; local `jekyll serve` emits an empty file (no localhost URLs).
 ---
 {%- if jekyll.environment == "production" -%}
 # {{ site.title }}
 
 > {{ site.description }}
 
-RTL (Arabic) by default with LTR support; zero runtime dependencies. Each page below documents one component, layout, utility, or pattern — open a page for its canonical, copy-ready HTML (in the `lang-html` code block) alongside live demos. Do not infer markup; use the documented structure.
+A framework-free build of the design language the Saudi [Digital Government Authority (DGA)](https://dga.gov.sa/) uses to unify government websites and services. It covers every UI component, a layout system, page templates, and full documentation — RTL (Arabic) first, with LTR (English) support.
 
-- [Home]({{ "/" | absolute_url }})
-- [Full sitemap]({{ "/sitemap.xml" | absolute_url }})
+Important notes:
+
+- **Plain HTML/CSS/JS, zero runtime dependencies.** Works with any stack — or none — and is *not* tied to React, Vue, Svelte, or any framework. A smart loader detects the components present on each page and initializes only those.
+- **Markup is a contract.** Every component page below ships canonical, copy-ready HTML in a `lang-html` code block alongside live demos. Copy that markup verbatim — class names, element nesting, `data-*` attributes, and ARIA roles all matter. Do not infer or invent structure.
+- **RTL is the default.** Styles use CSS logical properties, so direction flips from a single `dir`/`lang` attribute — there is no separate RTL stylesheet.
+- **Composition.** Pages are built from sections and a responsive grid (see *Layout*). The *Document head* (under *UI shell*) lists the stylesheets and scripts every page must load.
+- **Theming.** Styling uses a 3-tier design-token system (color → semantic → component) as CSS custom properties. Light/dark mode and full re-branding work from a single `data-theme` attribute — OKLCH-seed palettes, predefined themes, or stylesheet themes — with no rebuild.
+- **Not government-only.** NDS is a general-purpose design system — any website can adopt it by re-theming to its own brand (generate a palette from a `data-theme` seed or override the 3-tier tokens) and swapping the logos. The *default* identity (tokens, colors, logos, and the DGA digital-stamp) is reserved for Saudi Arabia government entities, so non-government use must replace those before deploying — see the [README disclaimer]({{ site.repository_url }}#disclaimer).
+- **Tech tags** after each component show what it needs: `CSS` (style only), `JS` (requires the bundled script), `API`/`Data` (consumes data or a remote endpoint), `Add-on` (optional bundle).
+{%- assign cats = "UI,Forms,Data,Plugins,Layout,UI Shell,Utilities" | split: "," -%}
+{%- assign labels = "UI components,Form components,Data components,Plugin components,Layout,UI shell,Utilities" | split: "," -%}
+{%- assign rawbase = site.repository_url | replace: "github.com", "raw.githubusercontent.com" | append: "/refs/heads/main" -%}
+{%- for ci in (0..6) -%}
+{%- assign cat = cats[ci] -%}
+{%- assign items = site.data.content.components | where: "category", cat | sort: "title" -%}
+{%- if items.size > 0 %}
+
+## {{ labels[ci] }}
+{%- for c in items %}
+- [{{ c.title }}]({{ c.url | absolute_url }}){% if c.description and c.description != "" %}: {{ c.description }}{% endif %}{% if c.tags and c.tags.size > 0 %} ({{ c.tags | join: ", " }}){% endif %}{% if c.js or c.scss %} — source:{% if c.js %} [JS]({{ rawbase }}/{{ c.js }}){% endif %}{% if c.js and c.scss %} ·{% endif %}{% if c.scss %} [SCSS]({{ rawbase }}/{{ c.scss }}){% endif %}{% endif %}
+{%- endfor %}
+{%- endif -%}
+{%- endfor %}
+
+## Page templates
+
+DGA-compliant full-page templates — copy, populate with your content, and publish.
+{%- for t in site.data.content.templates %}
+- [{{ t.title }}]({{ t.url | absolute_url }}){% if t.description and t.description != "" %}: {{ t.description }}{% endif %}
+{%- endfor %}
+
+## Examples
+
+Composed pages showing NDS components working together in real government-service contexts.
+{%- for e in site.data.content.examples %}
+- [{{ e.title }}]({{ e.url | absolute_url }}){% if e.description and e.description != "" %}: {{ e.description }}{% endif %}
+{%- endfor %}
+
+## Optional
+
+- [Live site & full documentation]({{ "/" | absolute_url }})
+- [Source repository]({{ site.repository_url }})
 - [JavaScript source (_js/)]({{ site.repository_url }}/tree/main/_js)
 - [SCSS source (_sass/)]({{ site.repository_url }}/tree/main/_sass)
-{%- assign keys = "components,layout,utilities,ui-shell,examples,templates" | split: "," -%}
-{%- assign names = "Components,Layout,Utilities,UI Shell,Examples,Templates" | split: "," -%}
-{%- for i in (0..5) -%}
-{%- assign prefix = keys[i] | prepend: "/" | append: "/" -%}
-{%- assign pages = site.html_pages | where_exp: "p", "p.url contains prefix" | where_exp: "p", "p.sitemap != false" | where_exp: "p", "p.llms != false" | sort: "title" -%}
-{%- if pages.size > 0 %}
-
-## {{ names[i] }}
-{% for p in pages -%}
-{%- if p.url == prefix -%}{%- continue -%}{%- endif -%}
-{%- assign desc = p.hero_description | default: p.description | strip_newlines -%}
-- [{{ p.title }}]({{ p.url | absolute_url }}){% if desc != "" %}: {{ desc }}{% endif %}
-{% endfor -%}
-{%- endif -%}
-{%- endfor -%}
+- [Full sitemap]({{ "/sitemap.xml" | absolute_url }})
 {%- endif -%}
