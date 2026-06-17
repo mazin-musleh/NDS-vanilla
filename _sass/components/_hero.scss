@@ -71,7 +71,7 @@
         --hero-height: fit-content;
         background-color: var(--background-sub-hero);
         min-height: 220px;
-        box-shadow: var(--shadow-inset, inset 0 -2px 4px rgba(0, 0, 0, 0.05)) !important;
+        box-shadow: var(--shadow-inset) !important;
         border-radius: 0 !important;
         display: flex;
         flex-direction: column;
