@@ -165,7 +165,7 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 | `$2` | Rule group | Mode |
 |---|---|---|
 | `SEL` | Selector compaction (3 rules) | single-file only |
-| `DEAD` | Dead declarations (6 rules) | single-file only |
+| `DEAD` | Dead declarations (7 rules — DEAD-07 browser-confirmed) | single-file only |
 | `DUPE` | Duplicate rule bodies (3 rules — DUPE-02 full-tree) | single-file + DUPE-02 full-tree |
 | `PERF` | Selector performance/complexity (4 rules) | single-file only |
 | `TOK` | Token consistency (7 rules — TOK-01/02/04/05/06 full-tree, +TOK-07 dangling refs single-file+full-tree) | single-file + TOK-01/02/04/05/06 full-tree |
@@ -367,6 +367,7 @@ For each finding, the report MUST emit both lines:
 | **SEL-03** (drop tag qualifier) | **wire ~tag-length once** (repeats gzip-back-referenced) | perf ↑ — lower specificity + one less segment per compound. |
 | **DEAD-01 / -02 / -03 / -05** | size ↓ | perf ↑ — one less declaration the cascade evaluates. |
 | **DEAD-04** (empty LTR wrapper) | size ↓ (large) | perf ↑ — one less compiled rule for the matcher. |
+| **DEAD-07** (effective-redundancy, browser-confirmed) | size ↓ (small) | neutral — one less declaration; finding status requires a computed-style diff to confirm. |
 | **DUPE-01 / -03** (selector-list merge) | size ↓ | neutral — selector lists are evaluated efficiently. |
 | **DUPE-02** (`@extend %placeholder`) | size ↓ | neutral (selector-list growth). |
 | **DUPE-02** (`@include mixin`) | ±0 | ±0 — source-organization only. |
@@ -461,7 +462,7 @@ These feed the Phase 4 report's "Gaps observed" section AND Phase 6 EVOLVE — w
 | Group | File | Covers | Rules |
 |---|---|---|---|
 | SEL | `RULES-SEL.md` | Selector compaction — `:is()` grouping, `:not()` lists, over-qualified type selectors | 3 |
-| DEAD | `RULES-DEAD.md` | Dead declarations — shorthand/longhand override, duplicate keys, `@include ltr` re-statements, redundant `var()` token fallbacks, inert companion declarations | 6 |
+| DEAD | `RULES-DEAD.md` | Dead declarations — shorthand/longhand override, duplicate keys, `@include ltr` re-statements, redundant `var()` token fallbacks, inert companion declarations, effectively-redundant cascade/default duplicates (browser-confirmed) | 7 |
 | DUPE | `RULES-DUPE.md` | Duplicate rule bodies — in-file merge, cross-file mixin candidates, in-file selector splits | 3 |
 | PERF | `RULES-PERF.md` | Selector cost/complexity — unanchored `*`/`[attr]`, ID selectors, deep chains | 4 |
 | TOK | `RULES-TOK.md` | Token consistency — hardcoded values, dead tokens, hierarchy direction, state symmetry, cross-file duplicate keys / upstream-hex, cross-sibling indirection symmetry, dangling token references | 7 |
@@ -615,7 +616,7 @@ Candidates are drafted — and, once the user applies them, written — under th
 
 The audit does NOT check, and the report should mention this so the user knows what to NOT expect:
 
-- **Specificity conflicts** — needs cascade modeling
+- **Specificity conflicts** — full cascade-winner modeling is out of scope; DEAD-07 covers only the narrow browser-confirmed *effective-redundancy* subset (a declaration whose removal leaves computed styles unchanged), not specificity-winner resolution
 - **Color contrast (WCAG)** — needs resolved color values + rendering
 - **Unused selectors** — needs HTML corpus scan
 - **Token discipline (form-violation)** — raw hex colors, raw `--colors-*` references in components, `nds-` prefix, missing `@use 'mixins' as *;`. Already enforced in this codebase per `CLAUDE.md`; the audit doesn't re-check what CLAUDE.md already governs. NOTE: token *consistency* (hardcoded values where a token exists, dead tokens, hierarchy direction, asymmetric state coverage) IS audited via TOK-01/-02/-03/-04. Discipline ≠ consistency.
