@@ -267,9 +267,6 @@
         - label: "Footer"
           url: "/ui-shell/footer"
           href: "/ui-shell/footer.html"
-        - label: "Cookie Consent"
-          url: "/components/cookies"
-          href: "/components/cookies.html"
     - label: "Layout"
       is_group: true
       children:
@@ -285,6 +282,9 @@
     - label: "Utilities"
       is_group: true
       children:
+        - label: "Cookies"
+          url: "/components/cookies"
+          href: "/components/cookies.html"
         - label: "Copy"
           url: "/utilities/copy"
           href: "/utilities/copy.html"

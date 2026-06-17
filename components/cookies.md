@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Cookie Consent
-hero_title: Cookie Consent - National Design System
+title: Cookies
+hero_title: Cookies - National Design System
 hero_description: A privacy-compliant consent banner, built on the Cards component, that captures the user's cookie preferences, gates analytics and marketing cookies on decline, and can be re-opened from any trigger for ongoing settings control.
 breadcrumb: [["Components", "/components"]]
 lang: en
@@ -122,6 +122,58 @@ direction: ltr
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Google Analytics Setup -->
+<section id="cookiesAnalytics" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Google Analytics Setup</h2>
+            <p class="nds-section-description">The banner manages consent signals, but you bring your own gtag.js. Default Consent Mode to denied so nothing tracks before the user decides; the banner switches it to granted on Accept and disables it on Reject.</p>
+        </div>
+        <div class="nds-section-body">
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Wire up gtag with consent denied by default</h3>
+                <p>NDS does not load Google Analytics for you, and it sends no consent signal until a choice is stored. Set Consent Mode to <code class="nds-inline-code lang-js">denied</code> before gtag.js loads, then register your property ID so the banner can disable it on reject. Place this in the document <code class="nds-inline-code lang-html">&lt;head&gt;</code>, before the NDS scripts.</p>
+                <div class="nds-code">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <code class="lang-html code">
+&lt;!-- In &lt;head&gt;, before the NDS scripts and before gtag.js --&gt;
+&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+
+  // Deny analytics + ads by default, so nothing tracks until the user accepts.
+  gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied' });
+
+  // Tell NDS which tracking id(s) to disable on "Reject Non-Essential".
+  window.GA_TRACKING_ID = 'G-XXXXXXXXXX'; // a string, or an array of ids
+
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+&lt;/script&gt;
+&lt;script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"&gt;&lt;/script&gt;
+                    </code>
+                </div>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">What the banner does after</h3>
+                <ul>
+                    <li><strong>On Accept</strong>: emits <code class="nds-inline-code lang-js">gtag('consent', 'update', ...)</code> with <code class="nds-inline-code lang-js">analytics_storage</code> and <code class="nds-inline-code lang-js">ad_storage</code> granted.</li>
+                    <li><strong>On Reject Non-Essential</strong>: sets <code class="nds-inline-code lang-js">window['ga-disable-&lt;id&gt;']</code> for every registered ID, clears the <code class="nds-inline-code lang-js">_ga</code>, <code class="nds-inline-code lang-js">_gid</code>, <code class="nds-inline-code lang-js">_gat</code>, <code class="nds-inline-code lang-js">_fbp</code>, and <code class="nds-inline-code lang-js">_fbc</code> cookies, and emits the same update with values denied.</li>
+                    <li><strong>On the next visit</strong>: the saved choice is re-applied on load, so a returning user is not re-prompted and analytics resumes only if they accepted.</li>
+                    <li><strong>Before any choice</strong>: the banner sends no signal, so your <code class="nds-inline-code lang-js">denied</code> default stays in force. That default is what keeps the first page view from tracking.</li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </section>

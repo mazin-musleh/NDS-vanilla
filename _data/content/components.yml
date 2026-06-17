@@ -489,6 +489,15 @@
   scss: _sass/layout/_block.scss
 
 # Utilities
+- title: "Cookies"
+  description: "Privacy-compliant cookie management banner"
+  icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
+  category: "Utilities"
+  tags: ["JS", "CSS"]
+  url: "/components/cookies.html"
+  js: _js/nds-cookies.js
+  scss: _sass/components/_cookie.scss
+
 - title: "Copy"
   description: "One-click clipboard copy with checkmark feedback and screen reader announcement"
   icon: '<i class="hgi hgi-stroke hgi-copy-01"></i>'
@@ -649,15 +658,6 @@
   tags: ["CSS"]
   url: "/ui-shell/footer.html"
   scss: _sass/components/_footer.scss
-
-- title: "Cookie Consent"
-  description: "Privacy-compliant cookie management banner"
-  icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
-  category: "UI Shell"
-  tags: ["JS", "CSS"]
-  url: "/components/cookies.html"
-  js: _js/nds-cookies.js
-  scss: _sass/components/_cookie.scss
 
 # Add-ons
 - title: "Accessibility"
