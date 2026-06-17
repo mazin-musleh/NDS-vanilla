@@ -8,10 +8,6 @@
     'use strict';
 
     // ==============================================
-    // UTILITIES
-    // ==============================================
-
-    // ==============================================
     // MAIN CLASS
     // ==============================================
 
@@ -20,6 +16,7 @@
             this.sideInfo = element;
             this.sideInfoParent = element.parentElement;
             this.sectionHead = document.querySelector('.nds-hero-section');
+            this.abortController = new AbortController();
             // Remember whether the author opted into sticky so we can re-apply
             // it after a viewport/content change makes it fit again.
             this.wantsSticky = element.classList.contains('nds-sticky');
@@ -77,18 +74,11 @@
                 return;
             }
 
-            // Desktop calculations (>=960px)
-            // Recapture parent position to ensure accuracy on resize
+            // Desktop calc (>=960px): recapture parent position fresh each resize for accuracy.
             const parentRect = this.sideInfoParent.getBoundingClientRect();
             const parentTop = parentRect.top;
-
-            // Get section head position
             const sectionHeadRect = this.sectionHead.getBoundingClientRect();
-
-            // Calculate offset using current parent position
             const offsetY = sectionHeadRect.top - parentTop;
-
-            // Set CSS variable with the offset
             this.sideInfo.style.setProperty('--nds-sideinfo-top', `${offsetY}px`);
         }
 
@@ -118,7 +108,10 @@
         // One-shot recomputes after font swap and image load finish,
         // covering CLS sources that don't change the hero's own box size.
         setupLateRecompute() {
+            // Skip a late font-swap / load recompute after destroy() aborts — it would re-stamp cleared state.
+            const { signal } = this.abortController;
             const recompute = () => {
+                if (signal.aborted) return;
                 this.updatePosition();
                 this.updateStickyState();
             };
@@ -126,7 +119,7 @@
                 document.fonts.ready.then(recompute);
             }
             if (document.readyState !== 'complete') {
-                window.addEventListener('load', recompute, { once: true });
+                window.addEventListener('load', recompute, { once: true, signal });
             }
         }
 
@@ -135,6 +128,7 @@
         // ==============================================
 
         destroy() {
+            this.abortController.abort();
             this.sideInfo.removeAttribute('data-nds-sideinfo-initialized');
             this.sideInfo.style.removeProperty('--nds-sideinfo-top');
             if (this.wantsSticky) this.sideInfo.classList.add('nds-sticky');
