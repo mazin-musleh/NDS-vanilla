@@ -24,8 +24,8 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-2xl);">
                             <button type="button" class="nds-btn nds-primary nds-cooldown"
-                                data-cooldown="30"
-                                data-cooldown-loading="3"
+                                data-cooldown="15"
+                                data-cooldown-loading="1"
                                 data-cooldown-label="Resend in {s}s"
                                 data-resend-label="Resend"
                                 data-sent-title="Verification code sent"
@@ -54,8 +54,8 @@ direction: ltr
                                     </div>
                                     <code class="lang-html code">
 &lt;button type="button" class="nds-btn nds-primary nds-cooldown"
-        data-cooldown="30"
-        data-cooldown-loading="3"
+        data-cooldown="15"
+        data-cooldown-loading="1"
         data-cooldown-label="Resend in {s}s"
         data-resend-label="Resend"
         data-sent-title="Verification code sent"
