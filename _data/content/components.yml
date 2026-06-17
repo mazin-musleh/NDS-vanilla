@@ -3,16 +3,22 @@
 # Tags (status): Experimental, New, Beta, Deprecated
 # Tags (kind):   Add-on (optional bundle, gated by a site.* flag)
 
-# UI Components
-- title: "Accessibility"
-  description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
-  icon: '<i class="hgi hgi-stroke hgi-accessibility"></i>'
-  category: "UI"
-  tags: ["JS", "CSS", "Add-on"]
-  url: "/components/accessibility.html"
-  js: _js/nds-accessibility.js
-  scss: _sass/components/_accessibility.scss
+# Foundations
+- title: "Themes"
+  description: "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet theme"
+  icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
+  category: "Foundations"
+  tags: ["CSS", "JS"]
+  url: "/components/themes.html"
 
+- title: "Tokens"
+  description: "The three-tier CSS custom property system: primitive, semantic, and component tokens to reference and override"
+  icon: '<i class="hgi hgi-stroke hgi-cube"></i>'
+  category: "Foundations"
+  tags: ["CSS"]
+  url: "/components/tokens.html"
+
+# UI Components
 - title: "Accordion"
   description: "Expandable content panels with nested group support"
   icon: '<i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>'
@@ -167,14 +173,6 @@
   url: "/components/loading.html"
   scss: _sass/components/_loading.scss
 
-- title: "Metric"
-  description: "Dashboard tile pairing a key statistic with an inline sparkline"
-  icon: '<i class="hgi hgi-stroke hgi-chart-line-data-01"></i>'
-  category: "UI"
-  tags: ["CSS"]
-  url: "/components/metric.html"
-  scss: _sass/components/_metric.scss
-
 - title: "Modal"
   description: "Focused dialog overlays for confirmations and forms"
   icon: '<i class="hgi hgi-stroke hgi-browser"></i>'
@@ -270,13 +268,6 @@
   tags: ["CSS"]
   url: "/components/tags.html"
   scss: _sass/components/_tags.scss
-
-- title: "Themes"
-  description: "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet theme"
-  icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
-  category: "UI"
-  tags: ["CSS", "JS"]
-  url: "/components/themes.html"
 
 - title: "TOC"
   description: "Auto-populated in-page table of contents with active-section tracking"
@@ -402,7 +393,32 @@
   js: _js/nds-user-feedback.js
   scss: _sass/components/_user-feedback.scss
 
+- title: "Date Picker"
+  description: "Hijri/Gregorian calendar with dual date conversion"
+  icon: '<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/date-picker.html"
+  js: _js/nds-date-picker.js
+  scss: _sass/components/_date-picker.scss
+
+- title: "Voice Input"
+  description: "Voice-to-text button that dictates into a text field, with Arabic/English auto-detection"
+  icon: '<i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>'
+  category: "Forms"
+  tags: ["JS", "API"]
+  url: "/components/voice-input.html"
+  js: _js/nds-voice-input.js
+
 # Data Components
+- title: "Metric"
+  description: "Dashboard tile pairing a key statistic with an inline sparkline"
+  icon: '<i class="hgi hgi-stroke hgi-chart-line-data-01"></i>'
+  category: "Data"
+  tags: ["CSS"]
+  url: "/components/metric.html"
+  scss: _sass/components/_metric.scss
+
 - title: "Filter"
   description: "Applied filters with search, URL sync, and remote data"
   icon: '<i class="hgi hgi-stroke hgi-filter"></i>'
@@ -559,6 +575,24 @@
   url: "/ui-shell/topbar.html"
   scss: _sass/components/_topbar.scss
 
+- title: "Weather Widget"
+  description: "Live weather display from GPS coordinates"
+  icon: '<i class="nds-icon nds-hgi-sun-cloud-01" aria-hidden="true"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS", "API"]
+  url: "/ui-shell/topbar.html#topbarWidgets"
+  js: _js/nds-cityWeather.js
+  scss: _sass/components/_topbar.scss
+
+- title: "Clock"
+  description: "Real-time clock with Hijri/Gregorian date"
+  icon: '<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>'
+  category: "UI Shell"
+  tags: ["JS", "API"]
+  url: "/ui-shell/topbar.html#topbarWidgets"
+  js: _js/nds-timeDate.js
+  scss: _sass/components/_topbar.scss
+
 - title: "Header"
   description: "Top bar and primary navigation shell with mega menus and mobile drawer"
   icon: '<i class="hgi hgi-stroke hgi-navigation-01"></i>'
@@ -616,48 +650,22 @@
   url: "/ui-shell/footer.html"
   scss: _sass/components/_footer.scss
 
-# Plugins
-- title: "Date Picker"
-  description: "Hijri/Gregorian calendar with dual date conversion"
-  icon: '<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>'
-  category: "Plugins"
-  tags: ["JS", "CSS", "API"]
-  url: "/components/date-picker.html"
-  js: _js/nds-date-picker.js
-  scss: _sass/components/_date-picker.scss
-
-- title: "Voice Input"
-  description: "Voice-to-text button that dictates into a text field, with Arabic/English auto-detection"
-  icon: '<i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>'
-  category: "Plugins"
-  tags: ["JS", "API"]
-  url: "/components/voice-input.html"
-  js: _js/nds-voice-input.js
-
-- title: "Weather Widget"
-  description: "Live weather display from GPS coordinates"
-  icon: '<i class="nds-icon nds-hgi-sun-cloud-01" aria-hidden="true"></i>'
-  category: "Plugins"
-  tags: ["JS", "CSS", "API"]
-  url: "/ui-shell/topbar.html#topbarWidgets"
-  js: _js/nds-cityWeather.js
-  scss: _sass/components/_topbar.scss
-
-- title: "Clock"
-  description: "Real-time clock with Hijri/Gregorian date"
-  icon: '<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>'
-  category: "Plugins"
-  tags: ["JS", "API"]
-  url: "/ui-shell/topbar.html#topbarWidgets"
-  js: _js/nds-timeDate.js
-  scss: _sass/components/_topbar.scss
-
 - title: "Cookie Consent"
   description: "Privacy-compliant cookie management banner"
   icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
-  category: "Plugins"
+  category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/components/cookies.html"
   js: _js/nds-cookies.js
   scss: _sass/components/_cookie.scss
+
+# Add-ons
+- title: "Accessibility"
+  description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
+  icon: '<i class="hgi hgi-stroke hgi-accessibility"></i>'
+  category: "Add-ons"
+  tags: ["JS", "CSS", "Add-on"]
+  url: "/components/accessibility.html"
+  js: _js/nds-accessibility.js
+  scss: _sass/components/_accessibility.scss
 

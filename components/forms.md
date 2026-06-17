@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Forms
-hero_title: Forms - National Design System
+title: Text Fields
+hero_title: Text Fields - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
 breadcrumb: [["Components", "/components"]]
 lang: en
