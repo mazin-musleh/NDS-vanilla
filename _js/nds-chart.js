@@ -785,9 +785,10 @@
             // Layer 4: Crosshair line + plot-area overlay (snaps to nearest x-index on hover)
             if (enableCrosshair && catCount > 0) {
                 // touch-action on SVG <rect> is unreliable in mobile browsers — they walk
-                // up to the SVG element to decide gesture ownership. Setting it here
-                // stops Chrome/Safari from firing pointercancel after a few moves.
-                svg.style.touchAction = 'none';
+                // up to the SVG element to decide gesture ownership, so set it here too.
+                // pan-y reserves only horizontal drags for the crosshair and lets vertical
+                // swipes scroll the page (a bare 'none' trapped page scroll on mobile).
+                svg.style.touchAction = 'pan-y';
 
                 const colors = computed.map(c => c.color);
                 const crosshair = svgEl('line', {
@@ -806,7 +807,7 @@
                 });
                 svg.appendChild(overlay);
 
-                let lastIdx = -1;
+                let lastIdx = -1, tapStartIdx = -1;
                 const signal = this.renderAbortController.signal;
 
                 // Touch tooltips pin to the top of the chart and follow the crosshair X
@@ -816,7 +817,6 @@
                     if (!this._tooltip) return;
                     const rect = this.el.getBoundingClientRect();
                     const tw = this._tooltip.offsetWidth;
-                    const th = this._tooltip.offsetHeight;
                     if (e.pointerType && e.pointerType !== 'mouse') {
                         const gap = 8;
                         const svgRect = svg.getBoundingClientRect();
@@ -840,19 +840,8 @@
                     this._hideTooltip();
                 };
 
-                // Pointer Events unify mouse + touch + pen. setPointerCapture keeps
-                // events flowing when a finger drags outside the overlay bounds —
-                // preventDefault stops the browser from claiming the gesture as scroll.
-                overlay.addEventListener('pointerdown', (e) => {
-                    if (e.pointerType !== 'mouse') {
-                        e.preventDefault();
-                        if (overlay.setPointerCapture) {
-                            try { overlay.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
-                        }
-                    }
-                }, { signal });
-
-                overlay.addEventListener('pointermove', (e) => {
+                // Snap the crosshair to the nearest x-index under the pointer.
+                const update = (e) => {
                     const rect = svg.getBoundingClientRect();
                     if (!rect.width) return;
                     const mouseSvgX = ((e.clientX - rect.left) / rect.width) * L.w;
@@ -901,16 +890,39 @@
                     } else {
                         positionTip(e, xPositions[lastIdx]);
                     }
+                };
+
+                // Pointer Events unify mouse + touch + pen. setPointerCapture keeps
+                // events flowing when a finger drags outside the overlay bounds —
+                // preventDefault suppresses text-selection/callout during a horizontal
+                // scrub (scroll ownership is decided by touch-action: pan-y, not here).
+                overlay.addEventListener('pointerdown', (e) => {
+                    if (e.pointerType !== 'mouse') {
+                        e.preventDefault();
+                        tapStartIdx = lastIdx; // remember the pin (if any) before this touch, for toggle-on-tap
+                        if (overlay.setPointerCapture) {
+                            try { overlay.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
+                        }
+                    }
+                    update(e); // show on a press/click even without an x move
                 }, { signal });
 
+                overlay.addEventListener('pointermove', update, { signal });
+
                 // pointerleave fires on actual boundary crossing even when captured,
-                // so dismiss it only for mouse — touch dismissal goes through pointerup/cancel.
+                // so dismiss it only for mouse — touch is tap-to-pin (below).
                 overlay.addEventListener('pointerleave', (e) => {
                     if (e.pointerType === 'mouse') dismiss();
                 }, { signal });
+
+                // Tap-to-pin (touch): a tap pins the crosshair and it persists — including
+                // through taps outside the chart. Tapping the already-pinned point clears it
+                // (lastIdx unchanged from the pre-touch pin); tapping/scrubbing to a different
+                // point moves the pin. pointercancel clears it when a vertical scroll claims
+                // the gesture. Mouse is unaffected (hover-to-show / leave-to-hide).
                 overlay.addEventListener('pointercancel', dismiss, { signal });
                 overlay.addEventListener('pointerup', (e) => {
-                    if (e.pointerType !== 'mouse') dismiss();
+                    if (e.pointerType !== 'mouse' && lastIdx === tapStartIdx) dismiss();
                 }, { signal });
             }
 
@@ -1004,7 +1016,7 @@
         if (_dirObserverReady) return;
         _dirObserverReady = true;
         NDS.onAttrChange('html', ['dir', 'lang'], () => {
-            document.querySelectorAll('.nds-chart[data-nds-init]').forEach(el => {
+            document.querySelectorAll('.nds-chart[data-nds-chart-initialized]').forEach(el => {
                 if (el.ndsChart) el.ndsChart.render();
             });
         });
@@ -1012,7 +1024,7 @@
 
     function initCharts() {
         setupDirObserver();
-        document.querySelectorAll('.nds-chart:not([data-nds-init])').forEach(el => {
+        document.querySelectorAll('.nds-chart:not([data-nds-chart-initialized])').forEach(el => {
             if (el.ndsChart) return;
             const d = el.dataset;
             const config = tryParse(d.chartConfig) || {};
@@ -1022,7 +1034,7 @@
 
             if (config.type || config.series) {
                 el.ndsChart = new NDSChartInstance(el, config);
-                el.setAttribute('data-nds-init', '');
+                el.setAttribute('data-nds-chart-initialized', '');
             }
         });
     }
@@ -1033,7 +1045,7 @@
         setupDirObserver();
         if (el.ndsChart) el.ndsChart.destroy();
         el.ndsChart = new NDSChartInstance(el, opts);
-        el.setAttribute('data-nds-init', '');
+        el.setAttribute('data-nds-chart-initialized', '');
         return el.ndsChart;
     }
 

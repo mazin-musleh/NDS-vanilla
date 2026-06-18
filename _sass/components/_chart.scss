@@ -217,10 +217,10 @@
 
 .nds-chart-overlay {
     cursor: crosshair;
-    // Take full ownership of touch gestures inside the plot area so the browser
-    // does not cancel pointer events the moment the finger drifts vertically.
-    // Page scroll still works above/below the chart.
-    touch-action: none;
+    // Reserve only horizontal drags for the crosshair scrub; let the browser keep
+    // vertical pans as page scroll so a finger landing on the chart can still scroll
+    // (esp. on mobile). pan-x widget precedent: mainnav.
+    touch-action: pan-y;
 }
 
 .nds-chart-tip-marker {
