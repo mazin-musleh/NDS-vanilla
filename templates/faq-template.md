@@ -2,7 +2,7 @@
 exclude_showcase: true
 layout: page
 title: FAQ Template
-hero_style: "nds-flat"
+hero_style: ""
 hero_title: FAQs
 hero_description: Find answers to common questions about our products, services, and policies.
 breadcrumb:
