@@ -179,6 +179,7 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
    release via their stamped ancestor): on URL-filtered loads init swaps it
    [hidden] for the applied-chips row, so painting it pre-init would flash
    the wrong row. */
+// PERF-02 intentional-global: filter stamps data-filter-items / data-filter-target on heterogeneous containers — no class anchor exists.
 :where([data-filter-items]:not([data-nds-filter-initialized]):not(.nds-accordion):not(.nds-grid):not(tbody),
     .nds-auto-fill[data-filter-target]:not([data-nds-filter-initialized]),
     [data-filter-target]:not([data-nds-filter-initialized]) .nds-auto-fill,
@@ -367,4 +368,5 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
    flips the reveal to visible those regions stay hidden — otherwise they'd
    paint without crit's wrapper gutter + content-layout grid, then shift when
    crit arrives. Resolves to visible the moment crit is present (this file). */
+// DUPE-03 split: crit-reveal signal sits last, beside the reveal it backs — kept separate from the skeleton-token :root.
 :root { --nds-crit-reveal: visible; }
