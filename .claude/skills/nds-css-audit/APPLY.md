@@ -19,7 +19,9 @@ When the user replies with a number from the Next Step block or types `apply <ru
 
 ### Verification after fixes (REQUIRED when Phase 5 applies edits)
 
-Whenever Phase 5 actually applies one or more edits, the post-batch output MUST close with a **Verification** footer telling the user what to check to confirm no regressions. The footer has three tiers — the audit emits all three when it applies edits:
+Whenever Phase 5 actually applies one or more edits, the post-batch output MUST close with a **Verification** footer telling the user what to check to confirm no regressions. The footer has three tiers — the audit emits all three when it applies edits that change compiled output.
+
+**Annotation-only fast path (check FIRST).** If EVERY edit in the batch only adds or edits a `// <RULE> <reason>` exemption comment and touches no selector or declaration, the compiled `.min.css` is byte-identical and selector-identical BY CONSTRUCTION — Sass strips `//` comments before emit. SKIP Tier 1-B (byte-delta), Tier 1-D (cascade agent), and the Tier 2 visual spot-checks. Verify statically: confirm the comment landed at the intended source line, and — only if a current `_site` build already exists — optionally `Grep` that the comment text is absent from `_site/assets/css/nds.critical.min.css` / `nds-main.min.css` (never trigger a rebuild to create one). Tier 1-A (build still succeeds) and Tier 1-C (TOK-02 consumer re-grep, if a token was touched) still apply. Emit one line: `Verification: annotation-only — compiled output byte-identical by construction (comment absent from .min.css).` If any edit also changes a selector/declaration, this fast path does NOT apply — run the full flow below:
 
 **Tier 1 — Mandatory checks (do these every time):**
 
@@ -32,7 +34,7 @@ curl -sI http://localhost:4002 >/dev/null 2>&1 && echo "serve-active" || echo "s
 
 **A. Build succeeds.**
 
-- **If serve-active**: the watcher is already compiling. Don't spawn a second build. Just stash → wait → unstash → wait, and check that the watcher didn't error. Sass errors surface as a build-failure message in the `jekyll serve` terminal AND `_site/assets/css/nds-main.min.css` will retain its prior contents (the watcher won't overwrite with a broken build). If the file's mtime doesn't advance within ~3s after a file change, treat as a build failure: revert the last applied edit, ask the user to read the serve terminal for the Sass error, and stop the batch.
+- **If serve-active**: the watcher is already compiling. Don't spawn a second build. Just stash → wait → unstash → wait, and check that the watcher didn't error. Sass errors surface as a build-failure message in the `jekyll serve` terminal AND `_site/assets/css/nds-main.min.css` will retain its prior contents (the watcher won't overwrite with a broken build). If the file's mtime doesn't advance before the poll cap below (~18s), treat as a build failure: revert the last applied edit, ask the user to read the serve terminal for the Sass error, and stop the batch.
 - **If serve-not-running**: explicit build via `bundle exec jekyll build`. Exit code 0 = no Sass syntax errors. If the build fails:
   - The audit reverts the last applied edit, reports the Sass error verbatim, and stops the batch.
   - The user fixes the error or asks the audit to retry; do NOT chain further edits onto a failing file.
@@ -43,14 +45,16 @@ curl -sI http://localhost:4002 >/dev/null 2>&1 && echo "serve-active" || echo "s
   ```bash
   # Fixes are currently applied (Phase 5 just edited the source files).
   AFTER=$(wc -c < _site/assets/css/nds-main.min.css)             # record AFTER
+  T0=$(stat -c %Y _site/assets/css/nds-main.min.css)             # baseline mtime BEFORE stash
   git stash push -m "css-audit-byte-verify-temp" <fix-files>      # revert fixes; watcher rebuilds
-  sleep 3                                                          # wait for watcher rebuild
+  n=0; until [ "$(stat -c %Y _site/assets/css/nds-main.min.css)" -gt "$T0" ] || [ $n -ge 60 ]; do n=$((n+1)); sleep 0.3; done  # poll until watcher rewrites (cap ~18s = build failure)
   BEFORE=$(wc -c < _site/assets/css/nds-main.min.css)            # record BEFORE
+  T1=$(stat -c %Y _site/assets/css/nds-main.min.css)             # baseline mtime BEFORE pop
   git stash pop                                                    # restore fixes; watcher rebuilds again
-  sleep 3
+  n=0; until [ "$(stat -c %Y _site/assets/css/nds-main.min.css)" -gt "$T1" ] || [ $n -ge 60 ]; do n=$((n+1)); sleep 0.3; done
   echo "Actual delta: $((BEFORE - AFTER)) B (estimate was <N> B)"
   ```
-  If `BEFORE - AFTER` doesn't budge within 3s of either stash, the watcher may have errored — read the serve terminal for the Sass message.
+  If the compiled-file mtime doesn't advance past its baseline before the poll cap (or `BEFORE - AFTER` stays 0 on a non-comment edit), the watcher may have errored — read the serve terminal for the Sass message.
 
 - **If serve-not-running — explicit clean rebuild** (slow, ~60–120s end-to-end; no concurrency risk):
   ```bash
@@ -66,7 +70,7 @@ curl -sI http://localhost:4002 >/dev/null 2>&1 && echo "serve-active" || echo "s
   echo "Actual delta: $((BEFORE - AFTER)) B (estimate was <N> B)"
   ```
 
-Delta should match the report's "Compiled CSS bytes saved (est)" within ~15%. If actual delta is >30% off the estimate, the byte-delta framework is mis-calibrated for one or more of the applied rules — flag this in a GAP observation and don't apply further batches until investigated.
+Delta should match the report header's "Size: −N B compiled" field within ~15%. If actual delta is >30% off the estimate, the byte-delta framework is mis-calibrated for one or more of the applied rules — flag this in a GAP observation and don't apply further batches until investigated.
 
 **On stash-pop safety in both flows:** if the audit gets interrupted between `git stash push` and `git stash pop`, the user's fixes are recoverable via `git stash list` → `git stash pop stash@{<index named "css-audit-byte-verify-temp">}`. Always include the `-m` tag so the entry is identifiable.
 
@@ -76,7 +80,7 @@ When the batch applied a TOK-02 dead-token deletion, the skill auto-runs a consu
 
 **D. Automatic cascade-flip review (cascade-sensitive batches).**
 
-When the applied batch contains a cascade-sensitive rule — SEL-01 / SEL-03, DUPE-01 / DUPE-02 / DUPE-03, or PERF-03 / PERF-04 (the rules whose Tier 2 row already says "verify the cascade winner") — AUTO-run ONE read-only review agent (`Agent` tool, `general-purpose` subagent) after the Tier 1 build/byte gate and before emitting the Tier 2 spot-checks. This is the CSS analog of the JS audit's mandatory post-fix static review: it is auto-run, NOT gated behind a reply (the live visual / `verify in browser` drive in Tier 3 stays the user's offered choice; static analysis is the cheap automatic gate). Brief: the edited selectors with their pre/post resolved-`&`-chains plus the three-file token table; ask only "does any merged, dropped, or extracted selector now win or lose against a specificity-equivalent rule sitting between the merged blocks, or change cascade order?" — the failure the static byte-estimator can't see (the Methodology section's "cascade conflicts whose specificity comes from compile-time expansion" case). Output = a ranked list of cascade-flip SUSPECTS that PRIORITIZES which Tier 2 visual spot-checks below actually matter; it does NOT replace the visual checklist and NEVER drives a browser. If it flags a suspect flip, surface it at the top of the footer; do not silently pass. Skip the agent for a single `apply <rule-id>` of a non-cascade rule (e.g. a lone DEAD-05 fallback removal) — same skip-when-low-risk discipline as the Phase 3 deep-read agent.
+When the applied batch APPLIED A SELECTOR CHANGE for a cascade-sensitive rule — a merge / drop / extract / restructure under SEL-01 / SEL-03, DUPE-01 / DUPE-02 / DUPE-03, or PERF-03 / PERF-04 (the rules whose Tier 2 row already says "verify the cascade winner") — AUTO-run ONE read-only review agent. An accept-and-annotate (comment-only) apply of one of these rules changes NO selector and is byte- and cascade-identical by construction, so it does NOT trigger the agent; in a mixed batch, the agent runs iff at least one applied edit actually altered a selector, and reviews only the altered selectors (`Agent` tool, `general-purpose` subagent) after the Tier 1 build/byte gate and before emitting the Tier 2 spot-checks. This is the CSS analog of the JS audit's mandatory post-fix static review: it is auto-run, NOT gated behind a reply (the live visual / `verify in browser` drive in Tier 3 stays the user's offered choice; static analysis is the cheap automatic gate). Brief: the edited selectors with their pre/post resolved-`&`-chains plus the three-file token table; ask only "does any merged, dropped, or extracted selector now win or lose against a specificity-equivalent rule sitting between the merged blocks, or change cascade order?" — the failure the static byte-estimator can't see (the Methodology section's "cascade conflicts whose specificity comes from compile-time expansion" case). Output = a ranked list of cascade-flip SUSPECTS that PRIORITIZES which Tier 2 visual spot-checks below actually matter; it does NOT replace the visual checklist and NEVER drives a browser. If it flags a suspect flip, surface it at the top of the footer; do not silently pass. Skip the agent when no applied edit changed a selector — a single `apply <rule-id>` of a non-cascade rule (e.g. a lone DEAD-05 fallback removal), OR an accept-and-annotate apply of any rule (comment-only, see the annotation-only fast path above). Same skip-when-low-risk discipline as the Phase 3 deep-read agent; this keeps Tier 1-D consistent with the Tier 2 PERF-04 row, which already says an annotated (vs restructured) fix needs no visual check.
 
 **Tier 2 — Per-finding spot-checks (one line per applied finding):**
 
@@ -85,7 +89,7 @@ For every edit the batch applied, the verification footer includes a one-line "V
 | Applied rule | Verification line the footer emits |
 |---|---|
 | SEL-01 / SEL-02 | Open the component demo page; trigger every state pseudo-class merged into the `:is()` / `:not()` list (hover, focus, etc.) — appearance must be identical. |
-| SEL-03 | Specificity dropped from `1,1,0` to `0,1,0`. Grep `.nds-<class>` across the codebase; confirm no other rule was relying on the type-qualified form to win the cascade. **Cross-component check**: list every file that references the class; visual-check each one's affected page after the rebuild. |
+| SEL-03 | Specificity dropped from `0,1,1` to `0,1,0`. Grep `.nds-<class>` across the codebase; confirm no other rule was relying on the type-qualified form to win the cascade. **Cross-component check**: list every file that references the class; visual-check each one's affected page after the rebuild. |
 | DEAD-01 / DEAD-02 / DEAD-03 / DEAD-05 | Compiled output unchanged at the affected selector. Open the component demo; appearance must be identical. (DEAD-03 trio: also test parent-cascade — render the component inside a wrapper that sets the same `--var` to confirm the cycle-detection fallback still fires.) |
 | DEAD-04 | Test in BOTH directions. Toggle `<html dir="ltr">` and `<html dir="rtl">` (or apply / remove the `.ltr` class) — appearance must be correct in each. |
 | DUPE-01 / DUPE-03 (in-file merge) | Open the component demo page. The merged rule must come at a position where its cascade outcome matches the unmerged source — if the bodies were identical, this is automatic; if any specificity-equivalent rule sits between them, the merge may have changed the winner. Visual diff vs the previous build. |

@@ -55,7 +55,7 @@ The rule catalog is a living document — Phase 3 tracks gaps and SKIPs during t
 
 Reports are scannable, not prose.
 
-- **Recommendation-first.** Open the report with ONE line: `<N HIGH / N MED / N LOW or "Clean">  →  Compiled CSS bytes saved (est): <N>  →  Recommended: <action>`. Never bury the recommendation.
+- **Recommendation-first.** Open the report with ONE line (the canonical header — identical at the Phase 3 "Header line" and Phase 4 item 1): `<N HIGH / N MED / N LOW or "Clean">  →  Size: −N B compiled (W wins, T tradeoffs DE-RECOMMENDED, G growers)  |  Perf: N wins, N tradeoffs, N neutral  →  Cross-component reach: N  →  Recommended: <action>`. Never bury the recommendation.
 - **Findings sorted by impact, not taxonomy.** Top section: SEL/DEAD/DUPE findings ordered by byte-delta (largest first). Middle section: PERF findings by severity. Bottom section: TOK findings.
 - **Per-finding block format.** `### {file}` then `- L{n} [{rule}] {one-line description}` with indented `Snippet:` / `Rewrite:` / `Saves: ~{N}B` lines. Tables only for the per-group summary at the top.
 - **One-line disclosures.** `Skipped: DUPE-02, TOK-01/02/04/05/06 (full-tree only, single-file mode).` No banner blocks.
@@ -113,7 +113,7 @@ Accept `0` or `exit` as "end here, nothing runs".
 | **filename** (e.g. `_sass/components/_buttons.scss`, `_buttons.scss`, `buttons`) | One file: the resolved target | A rule-group filter (`SEL` / `DEAD` / `DUPE` / `PERF` / `TOK`), or `all`. **When omitted, default to `all`** — single-file `all` is cheap. Full-tree-only rules (DUPE-02, TOK-01, TOK-02, TOK-04, TOK-05, TOK-06) are skipped with a one-line banner. |
 | `full-tree` | All `_sass/components/*.scss` (plus `_variables*.scss` and `_mixins.scss` for reference) | Must be paired with a rule-group filter that contains cross-file rules — only `DUPE` and `TOK`. Other groups rejected in full-tree mode. |
 
-**File resolution.** When `$1` doesn't match `full-tree`, treat as a filename and try in order: (1) literal `$1` if it includes a path separator and exists; (2) `_sass/components/$1` if it ends in `.scss`; (3) `_sass/components/_$1.scss` if it starts with `_`; (4) `_sass/components/_$1.scss` for the bare name. Stop at the first match. If none exist, reply: *"Couldn't resolve `<filename>`. Tried: `_sass/components/_<X>.scss`. Pass the filename as it appears in `_sass/components/`."* — and if the target ends in `.js` or names a component that exists only under `_js/`, add: *"For JS behavior, use `/nds-js-audit nds-<name>.js` — this skill audits SCSS only."* Then stop.
+**File resolution.** When `$1` doesn't match `full-tree`, treat as a filename and try in order: (1) literal `$1` if it includes a path separator and exists; (2) `_sass/components/$1` if it ends in `.scss`; (3) `_sass/components/_$1.scss` if it starts with `_`; (4) `_sass/components/_$1.scss` for the bare name. Stop at the first match. If none exist, branch by tier before the generic miss-message: **(a)** if the bare `<X>` matches a **Tier-2** file at `_sass/_<X>.scss` (the Tier-2 list below), reply: *"`<X>` isn't a component, but `_sass/_<X>.scss` is a Tier-2 foundation file, excluded from bare-name scope by design (prevents accidental Tier-2 audits). To audit it directly (reduced catalog — see the Tier-2 advisory), pass the explicit path: `/nds-css-audit _sass/_<X>.scss`."* and stop. **(b)** if `<X>` matches a **Tier-1** file at `_sass/_<X>.scss` (e.g. `showcase`, `hgiRoundedStroke`), give the Tier-1 hard-exclusion reply (above) instead. **(c)** otherwise reply: *"Couldn't resolve `<filename>`. Tried: `_sass/components/_<X>.scss`. Pass the filename as it appears in `_sass/components/`."* — and if the target ends in `.js` or names a component that exists only under `_js/`, add: *"For JS behavior, use `/nds-js-audit nds-<name>.js` — this skill audits SCSS only."* Then stop.
 
 **File-tier scoping (THREE tiers):**
 
@@ -190,7 +190,7 @@ Source files are the single source of truth. Read fully, not by skimming.
 
   Pre-parse the file and build a **mixin map** keyed by mixin name. For each mixin, capture:
   - **Emitted selectors** — does the mixin wrap its `@content` in a selector (like `@mixin ltr { :is(html[dir="ltr"], .ltr) #{&} { @content; } }`), or does it just emit declarations into the calling rule's body? Selector-wrapping mixins (`ltr`, `dark`, `mobile`, `tablet`, `desktop`, `large-desktop`, `reduced-motion`, `high-contrast`, `print-media`) change the compiled selector chain.
-  - **Emitted declarations** — the property/value pairs the mixin emits into the calling rule. For declaration-emitting mixins (`btn-base`, `btn-focus`, `btn-indicator`, `btn-indicator-styles`, `progress-circle-base/text/progress`, `reset-section-style`, `autofill-reset`, `label-hidden`), capture the full declaration set.
+  - **Emitted declarations** — the property/value pairs the mixin emits into the calling rule. For declaration-emitting mixins (`btn-base`, `btn-focus`, `btn-indicator`, `btn-indicator-styles`, `progress-circle-base/text`, `reset-section-style`, `autofill-reset`, `label-hidden`), capture the full declaration set.
 
   Why this matters across rules:
   - **DEAD-02 / DEAD-03**: a literal `color: red` AND an `@include btn-base` that emits `color: var(--btn-color)` in the same rule body are a property duplicate. The audit must resolve the mixin to detect it.
@@ -225,8 +225,8 @@ Read each target file top-to-bottom before running the catalog. Nested rules and
 
 - **SEL-01** (`:is()` state-merge): `_buttons.scss:42` — `&:is(:hover, [data-state~="hover"])` groups a pseudo-class with its JS-stamped `data-state` twin in one block.
 - **SEL-02** (collapsed `:not()` list, done right): `_buttons.scss:19` — `&:not(button, a)` already in the single-`:not()` comma-list form SEL-02 targets; cite it as the resolved-state reference.
-- **DUPE-01 / DUPE-02** (`@extend %placeholder` byte win): `%select-caret-after` at `_sass/_mixins.scss:476`, consumed via `@extend` at `_forms.scss:368` and `_date-picker.scss:28` — the placeholder form that dedupes compiled output (the `@include` form would not).
-- **DEAD-04** (`@include ltr` for transforms only): `_buttons.scss:560` and `:571` — direction-asymmetric transforms logical properties can't express, NOT a re-statement of an RTL default.
+- **DUPE-01 / DUPE-02** (`@extend %placeholder` byte win): `%select-caret-after` at `_sass/_mixins.scss:483`, consumed via `@extend` at `_forms.scss:368` and `_date-picker.scss:28` — the placeholder form that dedupes compiled output (the `@include` form would not).
+- **DEAD-04** (`@include ltr` for transforms only): the two `@include ltr { transform: rotate() }` blocks in the chevron-direction modifiers — `_buttons.scss:554` and `:565` — direction-asymmetric transforms logical properties can't express, NOT a re-statement of an RTL default.
 - **TOK-03** (component-level token consumption): button state blocks consume `--button-*` component tokens rather than reaching for semantic tokens directly.
 
 ---
@@ -257,7 +257,7 @@ This table is illustrative, not exhaustive. The audit discovers relationships at
 
 For each candidate finding, before recommending:
 
-1. **If the finding affects a token** (TOK-02 dead-token deletion, TOK-03 swap, DEAD-05 fallback removal, or any rule that proposes a token change): grep `var(--<name>` across **all `_sass/**/*.scss` (Tier 2 AND Tier 3 — foundation files consume tokens too)**, plus `_includes/`, `_layouts/`, and `assets/css/*.scss`, **AND grep the token NAME as a string across `_js/`** — components read tokens via `getComputedStyle(...).getPropertyValue('--name')`, which a CSS-only grep misses (the TOK-02 `--nds-minimal-nav-bp` lesson). Skip Tier 1 files (`_hgiRoundedStroke.scss`, `_showcase.scss`, the DGA mirror, `*.min.*`) — Tier 1 doesn't get to vote. List every consumer in the finding's "Cross-component reach:" line. If reach > 0, the cost axis goes to MEDIUM/HIGH and the Verification footer adds a check-every-consumer step.
+1. **If the finding affects a token** (TOK-02 dead-token deletion, TOK-03 swap, DEAD-05 fallback removal, or any rule that proposes a token change): grep the name-terminated `var(--<name>[),[:space:]]` (the token name must end at `)`, `,`, or whitespace — a longer-named sibling like `--tag-background-error-light` does NOT satisfy a shorter token's test) across **all `_sass/**/*.scss` (Tier 2 AND Tier 3 — foundation files consume tokens too)**, plus `_includes/`, `_layouts/`, and `assets/css/*.scss`, **AND grep the token NAME as a string across `_js/`** — components read tokens via `getComputedStyle(...).getPropertyValue('--name')`, which a CSS-only grep misses (the TOK-02 `--nds-minimal-nav-bp` lesson). Skip Tier 1 files (`_hgiRoundedStroke.scss`, `_showcase.scss`, the DGA mirror, `*.min.*`) — Tier 1 doesn't get to vote. List every consumer in the finding's "Cross-component reach:" line. If reach > 0, the cost axis goes to MEDIUM/HIGH and the Verification footer adds a check-every-consumer step.
 2. **If the finding affects a mixin** (DUPE-02 extraction, DEAD-04 wrapper, any rule that proposes adding or modifying a mixin in `_mixins.scss`): grep `@include <name>` across all `_sass/**/*.scss` (Tier 2 + Tier 3). The fix may require updating every call site.
 3. **If the finding affects a class name** (SEL-03 dropping a tag qualifier, PERF-03 ID→class conversion, any selector restructuring): grep `\.<class-name>` across Tier 2 + Tier 3 SCSS AND across `_includes/` and `_layouts/` for HTML usage. If the class is consumed by other components, the cascade change may surface there.
 4. **If the audited file is a base component** (`_buttons.scss`, `_icons.scss`, `_typography.scss`, or any file in the "consumed by many" cluster): elevate every finding's cross-component cost by one tier. Verification spot-checks must cover the top dependent components, not just the audited one.
@@ -302,7 +302,7 @@ The expanded view is what every rule's detection operates on. The source view is
 
 **Brief template** (self-contained — the agent has no audit context):
 1. **Target** — the resolved `_sass/components/_<name>.scss` path. "Read it top-to-bottom before judging; `&`-chain resolution and nested rules mean line-local matching mis-attributes findings."
-2. **Inputs** — the Phase 2 mixin map and the token map built from the token-source files (Phase 2 list), so byte-deltas and `@extend`/`@include` decisions resolve correctly.
+2. **Inputs** — the Phase 2 mixin map and the token map built from the token-source files (Phase 2 list), so byte-deltas and `@extend`/`@include` decisions resolve correctly. **If the target is a Tier-2 file, also paste its file-specific carve-outs from the Phase-1 Tier-2 table PLUS the standing constraint that foundation/critical CSS (`_skeleton.scss` / `_fold.scss` / `_base.scss`) is deliberately tuned — instruct the agent NOT to flag by-design patterns and NEVER to propose restructuring that changes critical-path block size (those are already-rejected design).**
 3. **Rules to apply** — name the in-scope rule IDs from the deep-read scope above and direct the agent to **Read the relevant `RULES-*.md` file(s) itself** (`.claude/skills/nds-css-audit/RULES-DUPE.md` / `RULES-PERF.md`, as scoped), applying ONLY the named IDs. Do NOT paste the rows into the brief — pasting re-emits multi-KB rows as expensive output and loses carve-out fidelity if compressed; the file is the full-fidelity source. Paste verbatim ONLY the "record a GAP, not a finding, when in doubt" discipline and the annotation-exemption convention — those live in this file, which the agent does not read.
 4. **Output contract** — return ONLY a findings table (`file:line`, rule ID, ≤120-char snippet, proposed rewrite, byte-delta estimate) plus a short "Gaps observed" list. No prose; two-to-five findings is typical, ten+ signals padding.
 
@@ -329,6 +329,8 @@ For every finding, compute:
 - **Source growth**: does the SCSS source file grow even if the compiled output shrinks?
 - **Regression risk**: how many visual states / variants / media queries does the affected code path touch?
 - **Cross-component reach**: does the fix touch surface that OTHER component files consume — shared tokens in `_variables*.scss`, shared mixins in `_mixins.scss`, shared classes used inside other components (e.g., `.nds-icon` inside `.nds-card`/`.nds-alert`), or compositional patterns (cards extending alert patterns, drawer ↔ sidemenu)? Local-to-file fixes are LOW cost on this axis; fixes that ripple to ≥1 other component are MEDIUM; fixes on base components consumed by many (`_buttons.scss`, `_icons.scss`, `_mixins.scss`, `_variables.scss`) are HIGH.
+
+**Cost-band fallback** (for a finding that matches no rule-family in the "Recommendation logic" list below): Cost = the MAX of the cross-component-reach band (above — the only quantified cost axis) and a +1 band bump if the rewrite adds an indirection hop (debuggability), breaks a named idiom (variant grid / BEM / state class), or changes cascade order/specificity. For a finding that DOES match a listed family, that step's band stands — this fallback is only for novel shapes.
 
 **Net recommendation decision matrix:**
 
@@ -362,9 +364,7 @@ For each finding, the report MUST emit both lines:
 
 | Rule | Size impact | Perf impact |
 |---|---|---|
-| **SEL-01** (`:is()` merge) | raw ↓ but **wire ≈** (duplicated body gzip-back-referenced) | perf ↑ — one fewer compiled rule to parse/match. **Primary win is structural, not bytes.** |
-| **SEL-02** (`:not()` list) | **wire ~0** (`:not(` recurs → gzip-discounted) | perf ↑ — one `:not()` to evaluate, not a chain. |
-| **SEL-03** (drop tag qualifier) | **wire ~tag-length once** (repeats gzip-back-referenced) | perf ↑ — lower specificity + one less segment per compound. |
+| **SEL-01 / -02 / -03** | profile authoritative in each rule's fix-column footer in `RULES-SEL.md` (gzip preamble + per-row "Wire bytes (gzip-discounted)") — all gzip-neutral on wire | perf ↑ — structural / match-cost / specificity wins, not byte wins |
 | **DEAD-01 / -02 / -03 / -05** | size ↓ | perf ↑ — one less declaration the cascade evaluates. |
 | **DEAD-04** (empty LTR wrapper) | size ↓ (large) | perf ↑ — one less compiled rule for the matcher. |
 | **DEAD-07** (effective-redundancy, browser-confirmed) | size ↓ (small) | neutral — one less declaration; finding status requires a computed-style diff to confirm. |
@@ -374,9 +374,7 @@ For each finding, the report MUST emit both lines:
 | **PERF-01** (anchor universal `*`) | size ↑ slightly (anchor class added) | perf ↑↑ — universal-match cost eliminated. **Classic tradeoff.** |
 | **PERF-02** (anchor attribute) | size ↑ slightly | perf ↑ — attribute search bounded by class. |
 | **PERF-03** (ID → class) | ±0 | perf ↑ — lower specificity, easier overrides. |
-| **PERF-04 Solution A** (collapse axis into single class) | size ↑ — N new class definitions added | perf ↑ — compound count drops by 1+. **Classic tradeoff.** |
-| **PERF-04 Solution B** (flatten nesting) | ±0 (same compiled selectors) | perf ↑ — descendant-chain depth drops; specificity often lowers too. |
-| **PERF-04 accept and annotate** | ±0 | ±0 — comment only. |
+| **PERF-04** (Solution A / B / accept-and-annotate) | profile authoritative in the PERF-04 fix-column "Size impact:/Perf impact:" blocks in `RULES-PERF.md` — Sol-A size ↑ (DE-RECOMMENDED), Sol-B ±0, annotate ±0 | Sol-A/B perf ↑ (compound/depth drop), annotate ±0 |
 | **TOK-01** (literal → token) | size ↑ — `var(--name)` is wider than typical literals (`var(--spacing-md)` ~ 18B vs `16px` ~ 4B) | ±0 — runtime lookup is cheap. **Hidden size tradeoff** — design-system consistency win, output-bytes loss. |
 | **TOK-02** (delete dead token) | size ↓ | ±0. |
 | **TOK-03** (more-specific token) | size variable (token names differ) | ±0. |
@@ -398,7 +396,7 @@ For each finding, the report MUST emit both lines:
 **Header line** leads with size, mentions perf as secondary:
 
 ```
-N HIGH / N MED / N LOW  →  Size: −N B compiled (W wins, T tradeoffs DE-RECOMMENDED, G growers)  |  Perf: N wins, N tradeoffs, N neutral  →  Cross-component reach: N  →  Recommended: <action>
+<N HIGH / N MED / N LOW or "Clean">  →  Size: −N B compiled (W wins, T tradeoffs DE-RECOMMENDED, G growers)  |  Perf: N wins, N tradeoffs, N neutral  →  Cross-component reach: N  →  Recommended: <action>
 ```
 
 Group findings in the report by **profile band** (pure wins → tradeoffs → neutral) rather than by rule group alone. Within each band, sort by impact magnitude on the band's leading axis.
@@ -479,7 +477,7 @@ One scannable report. Sections in this order:
 
 **(Tier-2 advisory, if applicable.)** When the audited file is a Tier-2 foundation file, the one-line reduced-catalog advisory (Phase 1) prints here, ABOVE the header — so the reader sees the coverage caveat before the "Clean"/findings verdict.
 
-1. **Header**: `<N HIGH / N MED / N LOW or "Clean">  →  Compiled CSS bytes saved (est): <N>  →  Recommended: <action>`
+1. **Header**: emits the Phase 3 "Header line" verbatim — `<N HIGH / N MED / N LOW or "Clean">  →  Size: −N B compiled (W wins, T tradeoffs DE-RECOMMENDED, G growers)  |  Perf: N wins, N tradeoffs, N neutral  →  Cross-component reach: N  →  Recommended: <action>`
 2. **Per-group summary table** — one row per group: count of findings + total bytes saved (for SEL/DEAD/DUPE) or qualitative note (for PERF/TOK). Skip if all groups are clean.
 3. **Output-size findings (SEL + DEAD + DUPE)** — sorted by byte-delta descending. Per-finding block:
    ```
