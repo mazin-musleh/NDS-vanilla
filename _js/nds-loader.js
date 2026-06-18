@@ -518,6 +518,9 @@
             s.onload = resolve;
             s.onerror = () => {
                 console.warn(`[NDS] bundle '${name}' failed to load (${url})`);
+                // Remove the failed <script> + drop the cache so a later loadBundle()/lazy-stub call can retry a transient failure (else the present-script guard above short-circuits re-injection on the lingering failed element).
+                s.remove();
+                delete _bundlePromises[name];
                 resolve();
             };
             document.head.appendChild(s);
