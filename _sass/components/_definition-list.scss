@@ -56,10 +56,16 @@
         padding-bottom: var(--_dl-gap);
         border-bottom: 1px solid var(--divider-color);
 
-        &:last-child,
-        &.nds-last-row {
+        // Cards own their border + padding; don't strip them on the last row.
+        &:not(.nds-card):last-child,
+        &:not(.nds-card).nds-last-row {
             border-bottom: none;
             padding-bottom: 0;
+        }
+
+        // Non-stroke cards (shadow/plain) shouldn't pick up the divider border.
+        &.nds-card:not(.nds-stroke) {
+            border-bottom: none;
         }
     }
 }

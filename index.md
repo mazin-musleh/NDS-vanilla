@@ -29,7 +29,8 @@ bundle_sizes:
                 components. This project provides the same design system in plain HTML, CSS, and JavaScript, and
                 includes all components, a layout system, page templates, documentation, and a complete development
                 environment. No framework is required.</p>
-            <div class="nds-alert nds-card nds-inline nds-block" data-status="neutral" role="alert">
+            <div class="nds-alert nds-card nds-inline nds-block" data-status="neutral" role="alert"
+                style="margin-top: var(--spacing-5xl);">
                 <span class="nds-feedback nds-alert-icon">
                     <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
@@ -41,6 +42,74 @@ bundle_sizes:
                         <p class="nds-alert-description">This is an independent community implementation, not affiliated
                             with, endorsed by, or maintained by the Digital Government Authority (DGA) or the Government
                             of Saudi Arabia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Who is this for? -->
+<section id="audience" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Who It's For</h2>
+            <p class="nds-section-description">Built for the people delivering, customizing, and learning
+                government-grade web development.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-definition-list nds-divided nds-grid"
+                style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--typo-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
+                <div class="nds-definition-item nds-card nds-shadow">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-building-06"></i>
+                        <span class="nds-label">Government teams &amp; agencies</span>
+                    </span>
+                    <p class="nds-item-desc">Government teams and the agencies delivering for them, building
+                        DGA-compliant digital services on whatever stack they already use.</p>
+                </div>
+                <div class="nds-definition-item nds-card nds-shadow">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-briefcase-01"></i>
+                        <span class="nds-label">Freelancers</span>
+                    </span>
+                    <p class="nds-item-desc">Freelancers shipping client sites quickly with a polished component library
+                        and page templates out of the box.</p>
+                </div>
+                <div class="nds-definition-item nds-card nds-shadow">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-mortarboard-02"></i>
+                        <span class="nds-label">Students &amp; fresh graduates</span>
+                    </span>
+                    <p class="nds-item-desc">Students and fresh graduates learning core HTML, CSS, and vanilla JavaScript
+                        from a readable, production-grade codebase.</p>
+                </div>
+                <div class="nds-definition-item nds-card nds-shadow">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-teaching"></i>
+                        <span class="nds-label">Teachers &amp; trainers</span>
+                    </span>
+                    <p class="nds-item-desc">Teachers and trainers using real components, page templates, and patterns as
+                        study cases for web-development courses, bootcamps, or workshops.</p>
+                </div>
+            </div>
+            <div class="nds-alert nds-card nds-inline nds-block" data-status="warning" role="alert"
+                style="margin-top: var(--spacing-5xl);">
+                <span class="nds-feedback nds-alert-icon">
+                    <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                    </span>
+                </span>
+                <div class="nds-alert-content">
+                    <div class="nds-alert-text">
+                        <span class="nds-alert-title">Important</span>
+                        <p class="nds-alert-description">The default visual identity (design tokens, colors, logos, and
+                            the digital-stamp component) is exclusive to Saudi Arabia government entities. Any
+                            non-government use must replace these with the adopting organization's own identity before
+                            deploying.</p>
+                    </div>
+                    <div class="nds-alert-actions">
+                        <a href="{{ '/components/themes.html' | relative_url }}" class="nds-link">Theming guide</a>
                     </div>
                 </div>
             </div>
@@ -555,8 +624,8 @@ bundle_sizes:
 <section id="opensource" class="nds-content-section nds-brand">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Open Source</h2>
-            <p class="nds-section-description">MIT licensed. Full source code included.</p>
+            <h2 class="nds-section-title">Get Started</h2>
+            <p class="nds-section-description">MIT licensed and open to contributions.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-grid" style="--max-col:3;--mid-col:1;--min-col:1;">
@@ -571,8 +640,7 @@ bundle_sizes:
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Download</span>
-                            <p class="nds-card-description">Compiled HTML, CSS, and JavaScript ready to use. Source
-                                files included as reference.</p>
+                            <p class="nds-card-description">Compiled HTML, CSS, and JavaScript ready to use.</p>
                         </div>
                         <div class="nds-card-actions">
                             <a href="https://github.com/mazin-musleh/NDS-vanilla/releases/latest" target="_blank"
@@ -592,13 +660,13 @@ bundle_sizes:
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-title">Fork</span>
+                            <span class="nds-card-title">Fork or Clone</span>
                             <p class="nds-card-description">Full source code with build system, templates, and tooling.
                             </p>
                         </div>
                         <div class="nds-card-actions">
                             <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" rel="noopener"
-                                class="nds-btn nds-primary nds-external">
+                                class="nds-btn nds-secondary nds-external">
                                 <span class="nds-label">View Repository</span>
                             </a>
                         </div>
@@ -620,7 +688,7 @@ bundle_sizes:
                         </div>
                         <div class="nds-card-actions">
                             <a href="https://github.com/mazin-musleh/NDS-vanilla/issues" target="_blank" rel="noopener"
-                                class="nds-btn nds-primary nds-external">
+                                class="nds-btn nds-secondary nds-external">
                                 <span class="nds-label">Open Issues</span>
                             </a>
                         </div>

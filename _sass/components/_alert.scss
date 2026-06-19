@@ -117,6 +117,16 @@
     margin-top: var(--spacing-sm);
   }
 
+  // Neutralize links inside alerts; the content-section rule otherwise promotes a bare .nds-link to primary.
+  .nds-link {
+    --link-color: var(--link-neutral);
+    --link-hover: var(--link-neutral-hovered);
+    --link-pressed: var(--link-neutral-pressed);
+    --link-focused: var(--link-neutral-focused);
+    --link-visited: var(--link-neutral-visited);
+    text-decoration: none;
+  }
+
   // ==============================================
   // ALERT CLOSE BUTTON
   // ==============================================
