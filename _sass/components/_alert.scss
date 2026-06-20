@@ -118,7 +118,9 @@
   }
 
   // Neutralize links inside alerts; the content-section rule otherwise promotes a bare .nds-link to primary.
-  .nds-link {
+  a {
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
     --link-color: var(--link-neutral);
     --link-hover: var(--link-neutral-hovered);
     --link-pressed: var(--link-neutral-pressed);
