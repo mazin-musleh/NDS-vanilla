@@ -8,6 +8,24 @@ lang: en
 direction: ltr
 ---
 
+<!-- Choosing a mode -->
+<section id="paginationModes" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Choosing a mode</h2>
+            <p class="nds-section-description">Pagination is one nav with three ways to drive it. Pick by who owns the content.</p>
+        </div>
+        <div class="nds-section-body">
+            <ul>
+                <li><strong>Auto</strong> — all items are already in the DOM and NDS slices them into pages. Wrap them in <code class="nds-inline-code lang-html">nds-paged-content</code>, mark each with <code class="nds-inline-code lang-html">nds-page-item</code>, and point the nav at the wrapper with <code class="nds-inline-code lang-html">data-auto-pagination="id"</code> (see Paginated Grid / Table below).</li>
+                <li><strong>Manual / server</strong> — each page is a separate URL or request. Use a plain <code class="nds-inline-code lang-html">nds-pagination</code> nav with no content classes; for AJAX, listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> and load the page yourself (see Standard Pagination below).</li>
+                <li><strong>Data-driven</strong> — you know the page count but want NDS to build the controls. Set <code class="nds-inline-code lang-html">data-total-pages="N"</code> on an empty nav (see Data-Driven Pagination below).</li>
+            </ul>
+            <p class="nds-section-description"><code class="nds-inline-code lang-html">nds-paged-content</code> and <code class="nds-inline-code lang-html">nds-page-item</code> belong to <strong>auto</strong> only — manual and data-driven navs never use them.</p>
+        </div>
+    </div>
+</section>
+
 <!-- Standard Pagination -->
 <section id="paginationStandard" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -444,7 +462,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Paginated Grid</h2>
-            <p class="nds-section-description">Automatically split grid items across pages by marking children with <code class="nds-inline-code lang-html">nds-page-item</code> and placing a <code class="nds-inline-code lang-html">data-auto-pagination</code> nav after the container</p>
+            <p class="nds-section-description">Automatically split grid items across pages by marking children with <code class="nds-inline-code lang-html">nds-page-item</code> and adding a <code class="nds-inline-code lang-html">data-auto-pagination="id"</code> nav that targets the container by id</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -481,7 +499,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-paged-content nds-grid"
+                            <div id="pagination_grid_demo" class="nds-paged-content nds-grid"
                                 style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;">
                                 <div class="nds-page-item nds-card nds-stroke">Card 1</div>
                                 <div class="nds-page-item nds-card nds-stroke">Card 2</div>
@@ -504,7 +522,7 @@ direction: ltr
                                 <div class="nds-page-item nds-card nds-stroke">Card 19</div>
                                 <div class="nds-page-item nds-card nds-stroke">Card 20</div>
                             </div>
-                            <nav class="nds-pagination" data-auto-pagination aria-label="Pagination"></nav>
+                            <nav class="nds-pagination" data-auto-pagination="pagination_grid_demo" aria-label="Pagination"></nav>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -527,7 +545,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div class="nds-paged-content nds-grid"
+&lt;div id="pagination_grid_demo" class="nds-paged-content nds-grid"
     style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;"&gt;
     &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 1&lt;/div&gt;
     &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 2&lt;/div&gt;
@@ -550,7 +568,7 @@ direction: ltr
     &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 19&lt;/div&gt;
     &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 20&lt;/div&gt;
 &lt;/div&gt;
-&lt;nav class="nds-pagination" data-auto-pagination aria-label="Pagination"&gt;&lt;/nav&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="pagination_grid_demo" aria-label="Pagination"&gt;&lt;/nav&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -605,7 +623,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-paged-content" style="--per-page: 5;">
+                            <div id="pagination_table_demo" class="nds-paged-content" style="--per-page: 5;">
                                 <table class="nds-table nds-sortable">
                                     <thead>
                                         <tr>
@@ -650,7 +668,7 @@ direction: ltr
                                     </tbody>
                                 </table>
                             </div>
-                            <nav class="nds-pagination" data-auto-pagination></nav>
+                            <nav class="nds-pagination" data-auto-pagination="pagination_table_demo"></nav>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -673,7 +691,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div class="nds-paged-content" style="--per-page: 5;"&gt;
+&lt;div id="pagination_table_demo" class="nds-paged-content" style="--per-page: 5;"&gt;
     &lt;table class="nds-table"&gt;
         &lt;thead&gt;
             &lt;tr&gt;
@@ -793,7 +811,7 @@ direction: ltr
         &lt;/tbody&gt;
     &lt;/table&gt;
 &lt;/div&gt;
-&lt;nav class="nds-pagination" data-auto-pagination&gt;&lt;/nav&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="pagination_table_demo"&gt;&lt;/nav&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -833,7 +851,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Content Pagination</span>
                     </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-auto-pagination</code> to any <code class="nds-inline-code lang-html">nds-pagination</code> after a <code class="nds-inline-code lang-html">nds-paged-content</code> container and the pagination controls, page visibility, and scroll behavior are handled automatically.</p>
+                    <p class="nds-item-desc">Point a <code class="nds-inline-code lang-html">nds-pagination</code> nav at a <code class="nds-inline-code lang-html">nds-paged-content</code> container with <code class="nds-inline-code lang-html">data-auto-pagination="id"</code> and the pagination controls, page visibility, and scroll behavior are handled automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -879,6 +897,12 @@ direction: ltr
                     <li>Set <code class="nds-inline-code lang-html">--per-page</code> to match your grid column count so each page fills the layout. Update it in media queries for responsive grids</li>
                     <li>For tables, wrap the table in <code class="nds-inline-code lang-html">nds-paged-content</code> and add <code class="nds-inline-code lang-html">nds-page-item</code> on each <code class="nds-inline-code lang-html">&lt;tr&gt;</code> in <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>. The table wrapper is added automatically</li>
                     <li>Both <code class="nds-inline-code lang-html">&lt;button&gt;</code> and <code class="nds-inline-code lang-html">&lt;a&gt;</code> elements work inside pagination items. Use buttons for client-side navigation, anchors for distinct URLs</li>
+                    <li>Bind a nav to its content by id — <code class="nds-inline-code lang-html">data-auto-pagination="gridId"</code> matching the wrapper's <code class="nds-inline-code lang-html">id</code> (the same convention as filter's <code class="nds-inline-code lang-html">data-filter-target</code>). Omit the value to bind the immediately-preceding wrapper instead</li>
+                    <li>Keep <code class="nds-inline-code lang-html">nds-page-item</code> (your <strong>content</strong> items) distinct from <code class="nds-inline-code lang-html">nds-pagination-item</code> (the nav's <code class="nds-inline-code lang-html">&lt;li&gt;</code> controls) — similar names, opposite roles</li>
+                    <li>For server or AJAX pagination, listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> (its <code class="nds-inline-code lang-js">detail.page</code> is the resolved page), load that page, then call <code class="nds-inline-code lang-js">NDS.Pagination.setPage()</code> to sync the nav — NDS owns the nav UI, you own the data</li>
+                    <li>When a filter's AJAX mode swaps in new content, that content isn't auto-initialized — re-init pagination on it (e.g. in the <code class="nds-inline-code lang-js">nds:filterFormComplete</code> handler), or have the server return it already paginated</li>
+                    <li>Don't paginate a continuously growing feed. Use <a class="nds-color" href="{{ 'components/scroll-more' | relative_url }}">Scroll More</a> for load-on-scroll content where the total count isn't fixed</li>
+                    <li>Don't use pagination for a linear, must-finish-in-order flow like a form wizard. Reach for <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> instead</li>
                 </ul>
             </div>
 
@@ -911,7 +935,17 @@ direction: ltr
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-page-item</code></td>
                             <td>Content children</td>
-                            <td>Marks individual items (cards, rows, list items) as pageable content</td>
+                            <td>Marks individual <strong>content</strong> items (cards, rows, list items) to be paginated. Not to be confused with <code class="nds-inline-code lang-html">nds-pagination-item</code> below</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-pagination-list</code></td>
+                            <td>Nav</td>
+                            <td>The <code class="nds-inline-code lang-html">&lt;ul&gt;</code> inside <code class="nds-inline-code lang-html">.nds-pagination</code> that holds the page controls</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-pagination-item</code></td>
+                            <td>Nav children</td>
+                            <td>An <code class="nds-inline-code lang-html">&lt;li&gt;</code> control in the nav (a page number or prev/next) — the <strong>navigation</strong> counterpart to <code class="nds-inline-code lang-html">nds-page-item</code></td>
                         </tr>
                     </tbody>
                 </table>
@@ -928,8 +962,8 @@ direction: ltr
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">data-auto-pagination</code></td>
-                            <td>Add to <code class="nds-inline-code lang-html">nds-pagination</code> to enable content-based auto-pagination from the preceding <code class="nds-inline-code lang-html">nds-paged-content</code> container</td>
+                            <td><code class="nds-inline-code lang-html">data-auto-pagination="id"</code></td>
+                            <td>Add to <code class="nds-inline-code lang-html">nds-pagination</code> to auto-paginate the <code class="nds-inline-code lang-html">nds-paged-content</code> container with that id. The value is optional — omit it to bind the immediately-preceding container instead</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-total-pages="N"</code></td>
@@ -964,6 +998,11 @@ direction: ltr
                             <td><code class="nds-inline-code lang-html">5</code></td>
                             <td>Items per page in auto-pagination. Set on the <code class="nds-inline-code lang-html">nds-paged-content</code> container</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--pagination-scroll-offset</code></td>
+                            <td><code class="nds-inline-code lang-html">120</code></td>
+                            <td>Gap in px between the sticky nav and the content top when a page change scrolls it into view. Set on the <code class="nds-inline-code lang-html">nds-pagination</code> nav</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -992,6 +1031,12 @@ NDS.Pagination.setPage(containerElement, 3);
 
 // Refresh after filtering (recalculates pages from visible items)
 NDS.Pagination.refresh(contentContainer);
+
+// Listen for page changes (auto + manual). NDS owns the nav UI; you own the data.
+document.addEventListener('nds:pagination:change', (e) => {
+  const { page, previousPage, totalPages, pagination } = e.detail; // pagination = the nav element
+  // fetch/render page `page` from your backend (server / AJAX pagination)
+});
 </code>
                     </div>
                 </div>

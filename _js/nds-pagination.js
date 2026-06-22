@@ -254,6 +254,15 @@
 
                 // Initialize button states after pagination is ready
                 initializePaginationStates(container);
+
+                // Universal reveal: a non-auto pagination releases its paged-content's
+                // skeleton hold at init. Auto navs are skipped here — setupAutoContainer
+                // stamps after it collapses, so pre-collapse content stays held.
+                if (container.classList.contains('nds-pagination') &&
+                    !container.hasAttribute('data-auto-pagination')) {
+                    const content = contentForNav(container);
+                    if (content) content.setAttribute('data-paged-initialized', '');
+                }
             }
         });
     }
@@ -397,6 +406,43 @@
         for (let i = 0; i < headers.length; i++) headers[i].style.width = widths[i] + 'px';
     }
 
+    // Resolve a data-auto-pagination ref to its element. Canonical form is a bare
+    // id (matches filter's data-filter-target); a #id or any selector also works.
+    function resolveContentRef(ref) {
+        const byId = document.getElementById(ref.replace(/^#/, ''));
+        if (byId) return byId;
+        try { return document.querySelector(ref); } catch (e) { return null; }
+    }
+
+    // The .nds-paged-content a nav controls. Explicit binding wins:
+    // data-auto-pagination="gridId" (the content's id). With no value, falls back
+    // to the legacy adjacency contract — the nav's immediately-preceding sibling.
+    function contentForNav(paginationNav) {
+        const ref = paginationNav.getAttribute('data-auto-pagination');
+        if (ref) {
+            const el = resolveContentRef(ref);
+            if (el && el.classList.contains('nds-paged-content')) return el;
+            console.warn(`[NDS Pagination] data-auto-pagination="${ref}" matched no .nds-paged-content element.`, paginationNav);
+            return null;
+        }
+        const sibling = paginationNav.previousElementSibling;
+        return sibling && sibling.classList.contains('nds-paged-content') ? sibling : null;
+    }
+
+    // The auto nav controlling a given .nds-paged-content. Explicit binding wins:
+    // a nav whose ref resolves to this element (only when it has an id). Else the
+    // legacy adjacency lookup — the first auto nav under the shared parent.
+    function navForContent(contentContainer) {
+        if (contentContainer.id) {
+            const navs = document.querySelectorAll('.nds-pagination[data-auto-pagination]');
+            for (const nav of navs) {
+                const ref = nav.getAttribute('data-auto-pagination');
+                if (ref && resolveContentRef(ref) === contentContainer) return nav;
+            }
+        }
+        return contentContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]') || null;
+    }
+
     // Auto-Pagination Generator for content-based pagination
     function initializeAutoPagination() {
         document.querySelectorAll('.nds-pagination[data-auto-pagination]').forEach(setupAutoContainer);
@@ -412,8 +458,8 @@
             return;
         }
 
-        const contentContainer = paginationNav.previousElementSibling;
-        if (!contentContainer || !contentContainer.classList.contains('nds-paged-content')) {
+        const contentContainer = contentForNav(paginationNav);
+        if (!contentContainer) {
             return;
         }
 
@@ -595,10 +641,8 @@
         const paginationNav = pagination.closest('.nds-pagination');
         if (!paginationNav) return;
 
-        const contentContainer = paginationNav.previousElementSibling;
-        const targetElement = (contentContainer && contentContainer.classList.contains('nds-paged-content'))
-            ? contentContainer
-            : paginationNav;
+        const contentContainer = contentForNav(paginationNav);
+        const targetElement = contentContainer || paginationNav;
 
         const nav = document.querySelector('.nds-main-nav');
         const navHeight = nav ? nav.offsetHeight : 72;
@@ -615,7 +659,22 @@
         });
     }
 
+    // Dispatch nds:pagination:change after a user-initiated page change. detail
+    // mirrors the sibling :change family (filter/sort/stepper/tab): new value +
+    // previous + total + the component element. Fired on the .nds-pagination nav,
+    // bubbling. setPage() (programmatic) stays silent to avoid feedback loops.
+    function _dispatchPageChange(pagination, page, previousPage, totalPages) {
+        const nav = pagination.closest('.nds-pagination') || pagination;
+        nav.dispatchEvent(new CustomEvent('nds:pagination:change', {
+            detail: { page, previousPage, totalPages, pagination: nav },
+            bubbles: true
+        }));
+    }
+
     function goToPage(pagination, items, pageNumber, perPage, totalPages) {
+        const prevActive = pagination.querySelector('[aria-current="page"]');
+        const previousPage = prevActive ? pageNumberOf(prevActive) : null;
+
         // Set active page with aria-current
         setActivePage(pagination, pageNumber);
 
@@ -627,6 +686,8 @@
 
         // Scroll to top of content
         scrollToContent(pagination);
+
+        _dispatchPageChange(pagination, pageNumber, previousPage, totalPages);
     }
 
     // Per-nav click handler for an auto-pagination's <ul>. getItems() returns
@@ -726,7 +787,7 @@
         if (!contentContainer) return;
 
         // Find the pagination nav associated with this content container
-        const paginationNav = contentContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]');
+        const paginationNav = navForContent(contentContainer);
         if (!paginationNav) return;
 
         // Skip refreshes that land BEFORE this nav's first-paint setup. At page
@@ -781,10 +842,13 @@
     // bounds from the portal-aware page set, scroll if needed. Both branches of
     // the document click handler land here once they've resolved a target page.
     function _applyManualPageChange(pagination, targetPageNum, allPageElements) {
+        const prevActive = allPageElements.find(el => el.ariaCurrent === 'page');
+        const previousPage = prevActive ? pageNumberOf(prevActive) : null;
         setActivePage(pagination, targetPageNum);
         const pageNumbers = allPageElements.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
         updatePrevNextStates(pagination, targetPageNum, Math.min(...pageNumbers), Math.max(...pageNumbers));
         scrollToContent(pagination);
+        _dispatchPageChange(pagination, targetPageNum, previousPage, Math.max(...pageNumbers));
     }
 
     // Global click handler for manual pagination (not auto-pagination). Wired

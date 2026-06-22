@@ -269,7 +269,7 @@ hideFeedback: true
                     <span class="nds-label">PDF</span>
                 </button>
             </div>
-            <div class="nds-paged-content">
+            <div id="console_transactions_content" class="nds-paged-content">
                 <table id="consoleTransactions" class="nds-table nds-compact nds-sortable" data-export-name="transactions">
                     <thead>
                         <tr>
@@ -408,7 +408,7 @@ hideFeedback: true
                     </tbody>
                 </table>
             </div>
-            <nav class="nds-pagination" data-auto-pagination aria-label="Table pagination"></nav>
+            <nav class="nds-pagination" data-auto-pagination="console_transactions_content" aria-label="Table pagination"></nav>
         </div>
     </div>
 </section>
@@ -479,7 +479,7 @@ hideFeedback: true
             </div>
         </div>
         <div class="nds-section-body">
-            <div class="nds-paged-content nds-cq" style="--per-page:6;">
+            <div id="team_directory_content" class="nds-paged-content nds-cq" style="--per-page:6;">
                 <div class="nds-grid" id="teamDirectoryGrid" data-filter-items=".nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
                     {% for user in site.data.content.users %}
                     <div class="nds-card nds-stroke nds-rowView nds-page-item">
@@ -528,7 +528,7 @@ hideFeedback: true
                     {% endfor %}
                 </div>
             </div>
-            <nav class="nds-pagination" data-auto-pagination aria-label="Team directory pagination"></nav>
+            <nav class="nds-pagination" data-auto-pagination="team_directory_content" aria-label="Team directory pagination"></nav>
         </div>
     </div>
 </section>

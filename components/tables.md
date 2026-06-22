@@ -1253,7 +1253,7 @@ direction: ltr
                             <span class="nds-label">Applied Filters:</span>
                             <div class="nds-chips"></div>
                         </div>
-                        <div class="nds-paged-content" style="--per-page: 5;">
+                        <div id="tables_pagination_demo" class="nds-paged-content" style="--per-page: 5;">
                             <table class="nds-table nds-compact nds-sortable">
                                 <thead>
                                     <tr>
@@ -1302,7 +1302,7 @@ direction: ltr
                                 </tbody>
                             </table>
                         </div>
-                        <nav class="nds-pagination" data-auto-pagination aria-label="Table pagination"></nav>
+                        <nav class="nds-pagination" data-auto-pagination="tables_pagination_demo" aria-label="Table pagination"></nav>
                     </div>
                 </div>
                 <div class="demo-code">
@@ -1367,7 +1367,7 @@ direction: ltr
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="nds-paged-content" style="--per-page: 5;"&gt;
+&lt;div id="tables_pagination_demo" class="nds-paged-content" style="--per-page: 5;"&gt;
   &lt;table class="nds-table nds-compact nds-sortable"&gt;
     &lt;thead&gt;
       &lt;tr&gt;
@@ -1432,8 +1432,8 @@ direction: ltr
     &lt;/tbody&gt;
   &lt;/table&gt;
 &lt;/div&gt;
-&lt;!-- Auto-pagination nav placed right after the content wrapper --&gt;
-&lt;nav class="nds-pagination" data-auto-pagination aria-label="Table pagination"&gt;&lt;/nav&gt;
+&lt;!-- Auto-pagination nav bound to the content wrapper by id --&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="tables_pagination_demo" aria-label="Table pagination"&gt;&lt;/nav&gt;
                                 </code>
                             </div>
                         </div>
@@ -1669,7 +1669,7 @@ const xlsHtml   = NDS.Export.toXLSHtml(data, { dir: 'rtl' });</code></pre>
                         <tr><td><code class="nds-inline-code lang-html">data-state="sorted-desc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark the initial sort column as descending</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="selected"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;tr&gt;</code> to visually highlight a selected row. JS toggles this automatically when checkboxes change</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;table&gt;</code> to show the loading shimmer animation</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-auto-pagination</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;nav class="nds-pagination"&gt;</code> to enable auto-pagination for the preceding <code class="nds-inline-code lang-html">nds-paged-content</code> wrapper</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-auto-pagination="id"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;nav class="nds-pagination"&gt;</code> to auto-paginate the <code class="nds-inline-code lang-html">nds-paged-content</code> wrapper with that id (omit the value to bind the preceding wrapper)</td></tr>
                     </tbody>
                 </table>
             </div>
