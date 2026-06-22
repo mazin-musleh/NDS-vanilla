@@ -1,8 +1,11 @@
 /**
  * NDS Pagination Component
  *
- * Critical (rides nds-main.min.js, critical:true so the loader fires init()
- * during the reveal-gating pass). First-paint work:
+ * Delegated (ships in nds-delegated.min.js, loader-INJECTED after the reveal —
+ * NOT critical:true). Pre-init paint is owned by the data-paged-initialized
+ * crit-CSS skeleton, which hides items past the default page size (and collapses
+ * table rows) until init stamps data-paged-initialized — so init landing
+ * post-reveal inserts the list without shifting content. The state init sets:
  *   - HTML builders + the manual-collapse path (NDSPagination +
  *     collapsePagination + createDropdown): 5+ pages collapse to
  *     [Prev] 1 2 3 [ellipsis] N [Next] so author-written full lists never
@@ -53,6 +56,13 @@
     // text, fall back to the element's own text (prev/next, bare anchors).
     function pageNumberOf(el) {
         return parseInt(el.querySelector('.nds-label')?.textContent || el.textContent);
+    }
+
+    // Min/max page numbers across a set of page elements (portal-aware sets
+    // included). Returns { min: Infinity, max: -Infinity } when none are numeric.
+    function pageBounds(els) {
+        const nums = els.map(pageNumberOf).filter(n => !isNaN(n));
+        return { min: Math.min(...nums), max: Math.max(...nums) };
     }
 
     class NDSPagination {
@@ -289,48 +299,47 @@
         return [...inList, ...getPaginationDropmenuItems(pagination)];
     }
 
-    // Shared function to set active page and aria-current
+    // Shared function to set active page and aria-current. One portal-aware pass
+    // over every clickable: clears stale active state ONLY where it exists (at
+    // most the old active page + its ellipsis trigger — the hundreds of inactive
+    // dropmenu items on a large auto-pagination pay no write) and, in the same
+    // visit, captures the page element matching the target. Replaces the prior
+    // clear-all + find-all double scan, each O(total pages) per page change.
     function setActivePage(pagination, pageNumber) {
         const dropmenuItems = getPaginationDropmenuItems(pagination);
+        const clickables = pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-trigger');
 
-        // Remove active from all items (including dropdown items and ellipsis trigger)
-        const inListClickables = pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-trigger');
-        [...inListClickables, ...dropmenuItems].forEach(el => {
-            NDS.State.clear(el);
-            NDS.aria.current(el, null);
+        let target = null;
+        [...clickables, ...dropmenuItems].forEach(el => {
+            if (el.ariaCurrent === 'page' || NDS.State.has(el, 'active')) {
+                NDS.State.clear(el);
+                NDS.aria.current(el, null);
+            }
+            // First page element (never a trigger) whose number matches.
+            if (target === null && !el.classList.contains('nds-dropmenu-trigger') &&
+                pageNumberOf(el) === pageNumber) {
+                target = el;
+            }
         });
 
-        // Reset all ellipsis triggers (icon is CSS ::after, just clear page number)
+        // Reset all ellipsis trigger labels (icon is CSS ::after, just clear the
+        // page number). Bounded — one label per ellipsis.
         pagination.querySelectorAll('.nds-ellipsis .nds-label').forEach(label => {
             label.textContent = '';
         });
 
-        // Find and activate the target page element
-        let activeInDropdown = false;
-        let ellipsisTrigger = null;
+        if (!target) return;
 
-        const inListPages = pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a');
-        [...inListPages, ...dropmenuItems].forEach(element => {
-            const elementPageNumber = pageNumberOf(element);
-            if (elementPageNumber === pageNumber) {
-                NDS.State.set(element, 'active');
-                NDS.aria.current(element, 'page');
-
-                // Check if this element is inside a dropdown
-                if (element.classList.contains('nds-dropmenu-item')) {
-                    activeInDropdown = true;
-                    const dropdown = NDS.Dropmenu.from(element);
-                    ellipsisTrigger = dropdown?.querySelector('.nds-dropmenu-trigger');
-                }
-            }
-        });
-
-        // Add active to ellipsis button and show active page number if active page is inside dropdown
-        if (activeInDropdown && ellipsisTrigger) {
-            NDS.State.set(ellipsisTrigger, 'active');
-            const ellipsisLabel = ellipsisTrigger.querySelector('.nds-label');
-            if (ellipsisLabel) {
-                ellipsisLabel.textContent = pageNumber;
+        // Activate the target; if it lives in the dropdown, also light the
+        // ellipsis trigger and show the active page number on it.
+        NDS.State.set(target, 'active');
+        NDS.aria.current(target, 'page');
+        if (target.classList.contains('nds-dropmenu-item')) {
+            const ellipsisTrigger = NDS.Dropmenu.from(target)?.querySelector('.nds-dropmenu-trigger');
+            if (ellipsisTrigger) {
+                NDS.State.set(ellipsisTrigger, 'active');
+                const ellipsisLabel = ellipsisTrigger.querySelector('.nds-label');
+                if (ellipsisLabel) ellipsisLabel.textContent = pageNumber;
             }
         }
     }
@@ -365,11 +374,8 @@
         const allPageElements = getAllPageElements(pagination);
         if (allPageElements.length === 0) return;
 
-        const pageNumbers = allPageElements.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
-        if (pageNumbers.length === 0) return;
-
-        const minPage = Math.min(...pageNumbers);
-        const maxPage = Math.max(...pageNumbers);
+        const { min: minPage, max: maxPage } = pageBounds(allPageElements);
+        if (!Number.isFinite(minPage)) return;
 
         // Find the active page (portal-aware)
         const activePage = allPageElements.find(el => el.ariaCurrent === 'page');
@@ -422,7 +428,7 @@
         if (ref) {
             const el = resolveContentRef(ref);
             if (el && el.classList.contains('nds-paged-content')) return el;
-            console.warn(`[NDS Pagination] data-auto-pagination="${ref}" matched no .nds-paged-content element.`, paginationNav);
+            console.warn(`NDS Pagination: data-auto-pagination="${ref}" matched no .nds-paged-content element.`, paginationNav);
             return null;
         }
         const sibling = paginationNav.previousElementSibling;
@@ -845,10 +851,10 @@
         const prevActive = allPageElements.find(el => el.ariaCurrent === 'page');
         const previousPage = prevActive ? pageNumberOf(prevActive) : null;
         setActivePage(pagination, targetPageNum);
-        const pageNumbers = allPageElements.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
-        updatePrevNextStates(pagination, targetPageNum, Math.min(...pageNumbers), Math.max(...pageNumbers));
+        const { min, max } = pageBounds(allPageElements);
+        updatePrevNextStates(pagination, targetPageNum, min, max);
         scrollToContent(pagination);
-        _dispatchPageChange(pagination, targetPageNum, previousPage, Math.max(...pageNumbers));
+        _dispatchPageChange(pagination, targetPageNum, previousPage, max);
     }
 
     // Global click handler for manual pagination (not auto-pagination). Wired
@@ -906,16 +912,16 @@
     // Expose global API for unified init system
     NDS.Pagination = {
         init: () => { _wireManualClicks(); initializePagination(); },
+        reinit: () => { _wireManualClicks(); initializePagination(); initializeAutoPagination(); },
         initAuto: initializeAutoPagination,
         create: (container) => new NDSPagination(container),
         refresh: (container) => refreshAutoPagination(container),
         setPage: function(container, pageNumber) {
             const pagination = container.querySelector('.nds-pagination-list') || container;
-            const allPages = getAllPageElements(pagination);
-            const pageNumbers = allPages.map(el => pageNumberOf(el)).filter(n => !isNaN(n));
-            if (pageNumbers.length === 0) return;
+            const { min, max } = pageBounds(getAllPageElements(pagination));
+            if (!Number.isFinite(min)) return;
             setActivePage(pagination, pageNumber);
-            updatePrevNextStates(pagination, pageNumber, Math.min(...pageNumbers), Math.max(...pageNumbers));
+            updatePrevNextStates(pagination, pageNumber, min, max);
         },
     };
 
