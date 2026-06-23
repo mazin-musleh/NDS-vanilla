@@ -1,0 +1,28 @@
+{%- comment -%} Canonical + Open Graph + Twitter Card meta. Title/description/image computed once and reused. Per-page overrides: og_image, og_type, noindex. {%- endcomment -%}
+{%- assign seo_title = page.title | default: site.title -%}
+{%- comment -%} Per-page description from the curated catalog (matched by url across the content index data files) so doc pages get unique copy without per-file front matter. {%- endcomment -%}
+{%- assign _catalog = site.data.content.components | concat: site.data.content.examples | concat: site.data.content.templates -%}
+{%- assign _entry = _catalog | where: 'url', page.url | first -%}
+{%- assign seo_desc = page.description | default: _entry.description | default: page.hero_description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 200 -%}
+{%- assign seo_image = page.og_image | default: site.og_image | default: site.hero_image | absolute_url -%}
+<meta name="description" content="{{ seo_desc | escape }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+{%- if page.noindex %}
+<meta name="robots" content="noindex, follow">
+{%- endif %}
+<meta property="og:type" content="{{ page.og_type | default: 'website' }}">
+<meta property="og:site_name" content="{{ site.title | escape }}">
+<meta property="og:title" content="{{ seo_title | escape }}">
+<meta property="og:description" content="{{ seo_desc | escape }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:locale" content="{% if page.lang == 'ar' %}ar_SA{% else %}en_US{% endif %}">
+<meta property="og:image" content="{{ seo_image }}">
+{%- unless page.og_image %}
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+{%- endunless %}
+<meta property="og:image:alt" content="{{ seo_title | escape }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title | escape }}">
+<meta name="twitter:description" content="{{ seo_desc | escape }}">
+<meta name="twitter:image" content="{{ seo_image }}">

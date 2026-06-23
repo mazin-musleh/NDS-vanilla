@@ -1,0 +1,26 @@
+{%- comment -%} Site-wide WebSite + Organization JSON-LD (entity context for search engines). Emitted on every page; shared @id dedupes the graph. {%- endcomment -%}
+{%- assign home_url = '/' | absolute_url -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ home_url | append: '#organization' | jsonify }},
+      "name": {{ site.title | jsonify }},
+      "url": {{ home_url | jsonify }},
+      "logo": {{ site.brandLogo | absolute_url | jsonify }},
+      "sameAs": [{{ site.repository_url | jsonify }}, {{ site.author_profile | jsonify }}]
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ home_url | append: '#website' | jsonify }},
+      "url": {{ home_url | jsonify }},
+      "name": {{ site.title | jsonify }},
+      "description": {{ site.description | strip_html | jsonify }},
+      "inLanguage": {{ page.lang | default: site.lang | default: 'en' | jsonify }},
+      "publisher": { "@id": {{ home_url | append: '#organization' | jsonify }} }
+    }
+  ]
+}
+</script>

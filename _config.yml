@@ -58,6 +58,9 @@ hero_image: assets/img/riyadhcenter_ai.webp
 hero_image_small: assets/img/riyadhcenter3s.webp
 hero_image_sub:
 hero_image_pos: 50% 80%
+
+# Social share card (Open Graph / Twitter), 1200x627. Per-page override: `og_image` in front matter.
+og_image: assets/img/nds-cover.webp
 hero_title: National Design System
 hero_description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
 
