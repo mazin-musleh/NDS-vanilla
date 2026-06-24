@@ -428,6 +428,49 @@ direction: ltr
         <div class="nds-section-body">
 
             <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Applies to</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Large size: 56px header height, <code class="nds-inline-code lang-html">--spacing-xl</code> padding (default)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Medium size: 48px header height, <code class="nds-inline-code lang-html">--spacing-lg</code> padding</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Small size: 40px header height, <code class="nds-inline-code lang-html">--spacing-md</code> padding</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-card</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Card container view: collapses outer border and uses card gap. Combine with <code class="nds-inline-code lang-html">nds-stroke</code> and <code class="nds-inline-code lang-html">nds-shadow</code> for the full card look</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-stroke</code></td><td><code class="nds-inline-code lang-html">.nds-accordion.nds-card</code></td><td>Adds an outer border to the card container</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-shadow</code></td><td><code class="nds-inline-code lang-html">.nds-accordion.nds-card</code></td><td>Adds elevation shadow to the card container</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Applies to</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="always-open"</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Allows multiple panels to be open at the same time. Without it, opening one panel closes the others</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="open"</code></td><td><code class="nds-inline-code lang-html">.nds-accordion-btn</code> and <code class="nds-inline-code lang-html">.nds-accordion-collapse</code></td><td>Server-rendered initial open state. Set on both the button and its collapse panel to expand a panel before JS initializes, preventing a 0fr animation on load</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-nds-accordion-initialized</code></td><td><code class="nds-inline-code lang-html">.nds-accordion</code></td><td>Stamped by JS after initialization. Enables collapse transitions and removes the skeleton loading state. Do not set this manually</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--accordion-header-height</code></td><td><code class="nds-inline-code lang-html">56px</code></td><td>Height of each accordion button. Overridden per size class (<code class="nds-inline-code lang-html">nds-lg/md/sm</code>). Set inline on <code class="nds-inline-code lang-html">.nds-accordion</code> to customize a single instance</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--accordion-header-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Inline padding of the accordion button. Overridden per size class. Set inline on <code class="nds-inline-code lang-html">.nds-accordion</code> to customize a single instance</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Loading and Skeleton State</h3>
+                <p>The accordion shows a shimmer skeleton on its items in three situations: before JS initializes (<code class="nds-inline-code lang-html">:not([data-nds-accordion-initialized])</code>), when explicitly set to loading (<code class="nds-inline-code lang-html">nds-loading</code> class or <code class="nds-inline-code lang-html">data-state="loading"</code>), and when it is a filter target waiting for the filter to apply URL params (<code class="nds-inline-code lang-html">data-filter-items</code> without <code class="nds-inline-code lang-html">data-nds-filter-initialized</code>). Titles, leading icons, and open body content all animate as skeleton bars. Collapse transitions are suppressed until the init stamp lands so the initial open state paints without a 0fr transition.</p>
+            </div>
+
+            <div class="nds-block">
                 <h3 class="nds-block-title">When to Use</h3>
                 <ul>
                     <li>Use accordions to progressively disclose content. Show headings first, let users expand what they need</li>

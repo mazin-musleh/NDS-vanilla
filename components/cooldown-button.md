@@ -164,7 +164,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-notification-square"></i>
                         <span class="nds-label">Built-in Success Toast</span>
                     </span>
-                    <p class="nds-item-desc">Fires a success toast at the bottom of the viewport when the cooldown begins if <code class="nds-inline-code lang-html">data-sent-title</code> or <code class="nds-inline-code lang-html">data-sent-message</code> is set.</p>
+                    <p class="nds-item-desc">Fires a success toast at the top of the viewport when the cooldown begins if <code class="nds-inline-code lang-html">data-sent-title</code> or <code class="nds-inline-code lang-html">data-sent-message</code> is set.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -219,7 +219,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-cooldown-label</code></td><td>Countdown text template. <code class="nds-inline-code lang-html">{s}</code> is replaced by the seconds remaining. Default <code class="nds-inline-code lang-html">{s}</code> (number only)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-resend-label</code></td><td>Label to restore after the first completed cycle. Omit to keep the initial label across cycles. A mid-loading <code class="nds-inline-code lang-js">reset()</code> always restores the initial label</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-sent-title</code></td><td>Title of the success toast fired when the cooldown begins. Either this or <code class="nds-inline-code lang-html">data-sent-message</code> must be present for a toast to appear</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-sent-message</code></td><td>Description of the success toast fired when the cooldown begins. Toast uses variant <code class="nds-inline-code lang-html">success</code>, position <code class="nds-inline-code lang-html">bottom</code>, duration <code class="nds-inline-code lang-html">4000ms</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-sent-message</code></td><td>Description of the success toast fired when the cooldown begins. Toast uses variant <code class="nds-inline-code lang-html">success</code>, position <code class="nds-inline-code lang-html">top</code>, duration <code class="nds-inline-code lang-html">4000ms</code></td></tr>
                     </tbody>
                 </table>
             </div>

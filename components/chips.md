@@ -131,6 +131,69 @@ direction: ltr
     </div>
 </section>
 
+<!-- Icon Chip -->
+<section id="chipIcons" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">With Icons</h2>
+            <p class="nds-section-description">Leading and trailing icons are positioned with <code class="nds-inline-code lang-html">nds-lead-icon</code> or <code class="nds-inline-code lang-html">nds-trail-icon</code> on the chip</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-chip nds-primary nds-rounded nds-lead-icon">
+                                <i class="hgi hgi-stroke hgi-add-01"></i>
+                                <span class="nds-label">Lead Icon</span>
+                            </button>
+                            <button class="nds-chip nds-neutral nds-rounded nds-trail-icon">
+                                <span class="nds-label">Trail Icon</span>
+                                <i class="hgi hgi-stroke hgi-add-01"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-chip-icons-1" id="tab-chip-icons-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chip-icons-1"
+                                    aria-labelledby="tab-chip-icons-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;!-- Leading icon --&gt;
+&lt;button class="nds-chip nds-primary nds-rounded nds-lead-icon"&gt;
+  &lt;i class="hgi hgi-stroke hgi-add-01"&gt;&lt;/i&gt;
+  &lt;span class="nds-label"&gt;Lead Icon&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Trailing icon --&gt;
+&lt;button class="nds-chip nds-neutral nds-rounded nds-trail-icon"&gt;
+  &lt;span class="nds-label"&gt;Trail Icon&lt;/span&gt;
+  &lt;i class="hgi hgi-stroke hgi-add-01"&gt;&lt;/i&gt;
+&lt;/button&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Chip Group -->
 <section id="chipGroup" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -259,7 +322,7 @@ direction: ltr
         <div class="nds-section-body">
 
             <div class="nds-block">
-                <h3 class="nds-block-title">When to Use</h3>
+                <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use chips for interactive selections like filters, categories, and multi-select options</li>
                     <li>Use <strong>primary</strong> for emphasis and <strong>neutral</strong> for standard options. Selected state is handled by the selected class</li>
@@ -267,6 +330,41 @@ direction: ltr
                     <li>Group related chips together for filter bars, category selectors, and multi-select inputs</li>
                     <li>Add leading icons when the chip represents a category with a recognizable symbol</li>
                 </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <p><code class="nds-inline-code lang-html">nds-green</code> is an alias for <code class="nds-inline-code lang-html">nds-primary</code>, and <code class="nds-inline-code lang-html">nds-gray</code> is an alias for <code class="nds-inline-code lang-html">nds-neutral</code>.</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Primary (green) color variant</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-green</code></td><td>Alias for <code class="nds-inline-code lang-html">nds-primary</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Neutral (gray) color variant</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-gray</code></td><td>Alias for <code class="nds-inline-code lang-html">nds-neutral</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-rounded</code></td><td>Fully rounded pill shape (border-radius: 999px)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>On-color variant for use on dark or brand-colored backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Small size, 20px height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size, 24px height (default)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Large size, 32px height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lead-icon</code></td><td>Apply to the chip when the first child is an icon; adds inline spacing after the icon</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-trail-icon</code></td><td>Apply to the chip when the last child is an icon; adds inline spacing before the icon</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--chip-bg</code></td><td><code class="nds-inline-code lang-html">--chip-background-neutral-default</code></td><td>Background color of the chip</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--chip-text</code></td><td><code class="nds-inline-code lang-html">--chip-text-neutral-default</code></td><td>Text color of the chip</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--chip-icon</code></td><td>Inherits <code class="nds-inline-code lang-html">--chip-text</code></td><td>Icon color inside the chip</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--chip-size</code></td><td><code class="nds-inline-code lang-html">24px</code></td><td>Height of the chip (overridden by size modifiers)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--truncate</code></td><td><code class="nds-inline-code lang-html">1</code></td><td>Number of lines before label text truncates with ellipsis</td></tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>

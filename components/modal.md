@@ -164,14 +164,14 @@ direction: ltr
         &lt;/span&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-card-actions"&gt;
-    &lt;button class="nds-btn nds-primary nds-lg" data-modal-close&gt;
-      &lt;span class="nds-label"&gt;Confirm&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-btn nds-secondary-outline nds-lg" data-modal-close&gt;
-      &lt;span class="nds-label"&gt;Cancel&lt;/span&gt;
-    &lt;/button&gt;
+    &lt;div class="nds-card-actions"&gt;
+      &lt;button class="nds-btn nds-primary nds-lg" data-modal-close&gt;
+        &lt;span class="nds-label"&gt;Confirm&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-secondary-outline nds-lg" data-modal-close&gt;
+        &lt;span class="nds-label"&gt;Cancel&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>

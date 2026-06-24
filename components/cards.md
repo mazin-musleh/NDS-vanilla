@@ -151,6 +151,10 @@ direction: ltr
                                 <span class="nds-label">Rating</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-card", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -182,6 +186,7 @@ direction: ltr
                                 <div class="nds-card-content">
                                     <div class="nds-card-text">
                                         <span class="nds-card-title">Card Title</span>
+                                        <span class="nds-card-subtitle">Card Subtitle</span>
                                         <p class="nds-card-description">Short description of this card content goes here for demonstration.</p>
                                     </div>
                                     <div class="nds-card-meta">
@@ -248,6 +253,7 @@ direction: ltr
     &lt;div class="nds-card-content"&gt;
         &lt;div class="nds-card-text"&gt;
             &lt;span class="nds-card-title"&gt;Card Title&lt;/span&gt;
+            &lt;span class="nds-card-subtitle"&gt;Card Subtitle&lt;/span&gt;
             &lt;p class="nds-card-description"&gt;Short description of this card content goes here for demonstration.&lt;/p&gt;
         &lt;/div&gt;
         &lt;div class="nds-card-meta"&gt;
@@ -330,6 +336,10 @@ direction: ltr
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
                                 <span class="nds-label">Shadow</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-card", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
@@ -420,6 +430,10 @@ direction: ltr
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-shadow", ".nds-card", "cardShadow"]'>
                                 <span class="nds-label">Shadow</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-card", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
@@ -695,8 +709,21 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-user</code></td><td>Compact user-card preset with a 224px default width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-full-width</code> / <code class="nds-inline-code lang-html">nds-full</code></td><td>Removes the max-width cap so the card fills its container</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Adapts text, borders, and icon tints for dark or photographic surfaces</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code>, <code class="nds-inline-code lang-html">nds-yellow</code>, <code class="nds-inline-code lang-html">nds-red</code>, <code class="nds-inline-code lang-html">nds-blue</code></td><td>Color variants that retint title, border-hover, and icon. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a matching tinted fill</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code>, <code class="nds-inline-code lang-html">nds-yellow</code>, <code class="nds-inline-code lang-html">nds-red</code>, <code class="nds-inline-code lang-html">nds-blue</code>, <code class="nds-inline-code lang-html">nds-green</code></td><td>Color variants that retint title, border-hover, and icon. Combine with <code class="nds-inline-code lang-html">nds-color</code> for a matching tinted fill</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-card-actions nds-end</code></td><td>Right-aligns the actions row within the card</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-card-status</code></td><td>Absolute-positioned status badge slot pinned to the top-start corner of the card; place a tag or badge inside</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-disabled</code> / <code class="nds-inline-code lang-html">[disabled]</code></td><td>Mutes colors, dims sub-content, and removes pointer interactions</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>Color variant on the card root without a class. Values: <code class="nds-inline-code lang-html">neutral</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">critical</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">success</code>. Equivalent to the corresponding color class modifier</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on the card root, or on a parent <code class="nds-inline-code lang-html">.nds-grid</code> or <code class="nds-inline-code lang-html">.nds-paged-content</code>, to render skeleton shimmer placeholders on all child cards. Equivalent to adding <code class="nds-inline-code lang-html">nds-loading</code> as a class</td></tr>
                     </tbody>
                 </table>
             </div>

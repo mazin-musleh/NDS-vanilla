@@ -660,6 +660,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     </span>
                     <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">sort.apply(key, dir)</code>, <code class="nds-inline-code lang-js">sort.reset()</code>, <code class="nds-inline-code lang-js">sort.getState()</code>, and <code class="nds-inline-code lang-js">sort.destroy()</code> on the instance returned from <code class="nds-inline-code lang-js">create()</code>. Subscribe to <code class="nds-inline-code lang-js">nds:sort:change</code> on the root for every reorder.</p>
                 </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-menu-square"></i>
+                        <span class="nds-label">Dropmenu Trigger Icon Sync</span>
+                    </span>
+                    <p class="nds-item-desc">When sort triggers live inside a <code class="nds-inline-code lang-html">.nds-dropmenu</code>, the closed trigger button icon automatically updates to mirror the active sort item's icon after each selection. Icon classes are copied verbatim, so any icon set works without additional configuration.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -686,6 +693,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <li>Use <code class="nds-inline-code lang-js">initialState</code> when the server renders pre-sorted markup. NDS.Sort will honour it without reordering, so aria attributes match the DOM immediately.</li>
                     <li>Hook consumer-specific side effects (pagination refresh, CSS state flags, analytics) through <code class="nds-inline-code lang-js">onChange</code>. Avoid listening to <code class="nds-inline-code lang-js">nds:sort:change</code> for side effects on the same component: <code class="nds-inline-code lang-js">onChange</code> fires synchronously before the event and keeps logic co-located with the <code class="nds-inline-code lang-js">create()</code> call.</li>
                     <li>Call <code class="nds-inline-code lang-js">sort.destroy()</code> in single-page app teardown. The AbortController drops every click and keydown listener in one step.</li>
+                    <li>Note the <strong>active state stamp</strong> difference by <code class="nds-inline-code lang-js">a11y</code> mode: <code class="nds-inline-code lang-js">'pressed'</code> sets <code class="nds-inline-code lang-html">data-state="selected"</code> on the active trigger; <code class="nds-inline-code lang-js">'sort'</code> sets <code class="nds-inline-code lang-html">data-state="active"</code>. CSS rules that key off these stamps must use the correct value for the mode in use.</li>
                 </ul>
             </div>
 

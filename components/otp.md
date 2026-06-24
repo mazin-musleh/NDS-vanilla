@@ -533,6 +533,17 @@ document.getElementById('clear-btn').addEventListener('click', function() {
                 </ul>
             </div>
             <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Applied to</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-otp-group</code></td><td>Small size: 32px cells, medium font</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-otp-group</code></td><td>Large size: 48px cells, XL font</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
@@ -562,6 +573,14 @@ group.addEventListener('nds:otpComplete', function(e) {
 group.addEventListener('nds:otpChange', function(e) {
   console.log('Value:', e.detail.value, 'Filled:', e.detail.filled);
 });
+
+// Listen for clear (fired by NDS.OTP.clear())
+group.addEventListener('nds:otpClear', function(e) {
+  console.log('Cleared, value:', e.detail.value);
+});
+
+// Re-initialize after injecting OTP markup dynamically
+NDS.OTP.init();
 
 // Validate OTP group manually
 var result = NDS.Forms.validateOtpGroup(group);

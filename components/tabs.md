@@ -21,6 +21,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-tabs", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-vertical", ".nds-tabs", "tabLayout"]'>
                                 <span class="nds-label">Vertical</span>
                             </button>
@@ -423,6 +427,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-tabs", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-vertical", ".nds-tabs", "tabLayout"]'>
                                 <span class="nds-label">Vertical</span>
                             </button>
@@ -710,6 +718,32 @@ direction: ltr
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-card nds-stroke nds-shadow</code></td>
                             <td>Wraps the tab group in a card container with border and shadow</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">nds-loading</code></td>
+                            <td>Activates the processing skeleton: tab label bars animate and panel children hide. On <code class="nds-inline-code lang-html">.nds-tabs</code> or <code class="nds-inline-code lang-html">.nds-tab-list</code>. Equivalent to <code class="nds-inline-code lang-html">data-state="loading"</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-state="loading"</code></td>
+                            <td>Set on <code class="nds-inline-code lang-html">.nds-tabs</code> or <code class="nds-inline-code lang-html">.nds-tab-list</code> to activate the processing skeleton. Tab label bars animate and panel children hide until the attribute is removed. Equivalent to adding the <code class="nds-inline-code lang-html">nds-loading</code> class</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-nds-tabs-initialized</code></td>
+                            <td>Stamped on <code class="nds-inline-code lang-html">.nds-tabs</code> by JS after initialization. The pre-init skeleton (automatic label bars) is active on any <code class="nds-inline-code lang-html">.nds-tabs</code> that lacks this attribute, so the strip is never visually bare before JS runs</td>
                         </tr>
                     </tbody>
                 </table>

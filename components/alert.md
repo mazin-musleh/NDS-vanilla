@@ -678,6 +678,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--alert-stripe</code></td><td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td><td>Color of the side stripe indicator</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--alert-icon-bg</code></td><td><code class="nds-inline-code lang-html">--background-neutral-light</code></td><td>Background color of the feedback icon circle</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-duration</code></td><td><code class="nds-inline-code lang-html">4000ms</code></td><td>Duration of the countdown animation on the toast close button. Set inline on <code class="nds-inline-code lang-html">.nds-alert-close</code> by the JS API when <code class="nds-inline-code lang-js">duration</code> is provided</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -546,6 +546,13 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-filter"></i>
+                        <span class="nds-label">Filter Aware</span>
+                    </span>
+                    <p class="nds-item-desc">Rows hidden by <code class="nds-inline-code lang-html">NDS.Filter</code> (<code class="nds-inline-code lang-html">data-filtered</code> attribute) are excluded from the export. This is distinct from pagination-hidden rows, which are always included. Export reflects the active filter without any extra wiring.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Declarative & Programmatic</span>
                     </span>
@@ -577,6 +584,7 @@ direction: ltr
                     <li>For tables that use a header column for the visible label and a separate value (sortable status enums, currency cells), do not rely on <code class="nds-inline-code lang-html">data-sort-value</code> for the export. Sort and export are decoupled by design.</li>
                     <li>Don't pre-format numbers inside cells if you want spreadsheet math. Use <code class="nds-inline-code lang-html">data-export-value</code> with the raw number so the export becomes summable.</li>
                     <li>For pure source-of-truth control over the file, the programmatic API (<code class="nds-inline-code lang-js">NDS.Export.collect</code> + <code class="nds-inline-code lang-js">NDS.Export.toCSV</code>) lets a custom script transform or filter the data before download.</li>
+                    <li>CSV and Excel downloads announce the row count to screen readers automatically: <code class="nds-inline-code lang-js">NDS.announce('Exported N rows')</code> fires after the file is triggered. No extra markup is needed, but avoid suppressing the live region if you customize the download flow.</li>
                 </ul>
             </div>
 

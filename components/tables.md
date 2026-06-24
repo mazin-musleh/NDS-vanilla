@@ -1668,7 +1668,9 @@ const xlsHtml   = NDS.Export.toXLSHtml(data, { dir: 'rtl' });</code></pre>
                         <tr><td><code class="nds-inline-code lang-html">data-state="sorted-asc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark the initial sort column as ascending</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="sorted-desc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark the initial sort column as descending</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="selected"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;tr&gt;</code> to visually highlight a selected row. JS toggles this automatically when checkboxes change</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;table&gt;</code> to show the loading shimmer animation</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;table&gt;</code> to show the loading shimmer animation across all cells</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-sort-value</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;td&gt;</code> to supply an alternate value used for sorting only, when the displayed text would sort incorrectly (e.g. "Free" in a numeric column, a localized date in a text column). The cell still renders its normal content; only the sort order is affected. Not read by Export: use <code class="nds-inline-code lang-html">data-export-value</code> for that.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code> (class on <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>)</td><td>Alternate loading trigger: add the <code class="nds-inline-code lang-html">nds-loading</code> class directly to <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> to shimmer only the body rows while keeping the header visible. Used internally by the Filter and Pagination components during data refresh.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-auto-pagination="id"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;nav class="nds-pagination"&gt;</code> to auto-paginate the <code class="nds-inline-code lang-html">nds-paged-content</code> wrapper with that id (omit the value to bind the preceding wrapper)</td></tr>
                     </tbody>
                 </table>
@@ -1703,6 +1705,11 @@ const xlsHtml   = NDS.Export.toXLSHtml(data, { dir: 'rtl' });</code></pre>
 NDS.Tables.init();             // Initialize all tables on the page
 NDS.Tables.reinit();           // Re-initialize after dynamic content changes
 NDS.Tables.recheckWidths();    // Recheck responsive wrappers (e.g. after resize)
+
+// ── Utility ──────────────────────────────────────────
+// Read the sort-safe text of a cell (prefers direct text nodes so
+// nested sort buttons, icons, and badges don't pollute the value)
+NDS.Tables.getCellText(tdElement);  // Returns string
 
 // ── Manual creation ──────────────────────────────────
 // Create a sortable/selectable controller for a specific table

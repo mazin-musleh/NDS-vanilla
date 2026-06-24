@@ -101,6 +101,41 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Empty Ordered List</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <ol class="nds-empty" style="min-height: 280px; border: 1px dashed var(--divider-color); border-radius: var(--radius-md); margin: 0; padding: 0;"></ol>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-empty-list-2" id="tab-empty-list-2">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-empty-list-2"
+                                    aria-labelledby="tab-empty-list-2">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;ol class="nds-empty"&gt;&lt;/ol&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -111,7 +146,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">In Tables</h2>
-            <p class="nds-section-description">Place <code class="nds-inline-code lang-html">nds-empty</code> on the <code class="nds-inline-code lang-html">&lt;table&gt;</code> itself. The placeholder row spans every column using <code class="nds-inline-code lang-html">colspan</code> derived from the header, and a <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> is created automatically when one is missing.</p>
+            <p class="nds-section-description">Place <code class="nds-inline-code lang-html">nds-empty</code> on the <code class="nds-inline-code lang-html">&lt;table&gt;</code> itself or directly on a <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>. The placeholder row spans every column using <code class="nds-inline-code lang-html">colspan</code> derived from the header, and a <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> is created automatically when one is missing.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -159,6 +194,59 @@ direction: ltr
       &lt;th&gt;Updated&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
+&lt;/table&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Empty tbody</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <table class="nds-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="nds-empty"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-empty-table-2" id="tab-empty-table-2">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-empty-table-2"
+                                    aria-labelledby="tab-empty-table-2">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;table class="nds-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Status&lt;/th&gt;
+      &lt;th&gt;Updated&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class="nds-empty"&gt;&lt;/tbody&gt;
 &lt;/table&gt;
                                     </code>
                                 </div>
@@ -369,6 +457,13 @@ li.remove();</code>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-image-01"></i>
+                        <span class="nds-label">Custom Icon Override</span>
+                    </span>
+                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-empty-icon</code> on the container to replace the default glyph. The value is written as the full class string on the placeholder's <code class="nds-inline-code lang-html">&lt;i&gt;</code>. Updates live when the attribute changes.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
@@ -445,7 +540,7 @@ NDS.Empty.refresh(table);
 
 // ── Localization ─────────────────────────────────────
 // Default message language is picked from &lt;html lang="..."&gt;
-// via NDS.isArabic. To override for a single instance, set
+// via NDS.langKey. To override for a single instance, set
 // data-empty-message on the element itself.
 //
 //   &lt;div class="nds-empty" data-empty-message="No items yet"&gt;&lt;/div&gt;

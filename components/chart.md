@@ -793,6 +793,10 @@ NDS.Chart.create('#my-chart', {
                             <td>Auto-initialize all <code class="nds-inline-code lang-html">.nds-chart</code> elements with data attributes</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-js">NDS.Chart.reinit()</code></td>
+                            <td>Alias for <code class="nds-inline-code lang-js">init()</code>: pick up any newly added <code class="nds-inline-code lang-html">.nds-chart</code> elements</td>
+                        </tr>
+                        <tr>
                             <td><code class="nds-inline-code lang-js">chart.update(opts)</code></td>
                             <td>Update chart with new options (merges with existing) and re-render</td>
                         </tr>
@@ -959,7 +963,7 @@ NDS.Chart.create('#my-chart', {
                         <tr>
                             <td><code class="nds-inline-code lang-js">line.width</code></td>
                             <td>number</td>
-                            <td>2</td>
+                            <td>3</td>
                             <td>Line stroke width</td>
                         </tr>
                         <tr>

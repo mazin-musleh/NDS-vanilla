@@ -1754,6 +1754,14 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     </tbody>
                 </table>
 
+                <h4>Auto-Fill Container</h4>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class / Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">.nds-auto-fill</code></td><td>Place on any element linked via <code class="nds-inline-code lang-html">data-filter-target</code>. The filter detects it by class and automatically hides it when any filters are applied, then shows it again when all filters are cleared. Use it for promotional or instructional content that should only appear before the user has filtered.</td></tr>
+                    </tbody>
+                </table>
+
                 <h4>Search Box (AJAX mode)</h4>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
@@ -1771,6 +1779,17 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--dropmenu-min-width</code></td><td>250px</td><td>Minimum width of the filter dropmenu</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>State and Status (form submission mode)</h4>
+                <p>In form mode, the filter sets these attributes on the <code class="nds-inline-code lang-html">.nds-filter</code> anchor element via <code class="nds-inline-code lang-js">NDS.State</code> and <code class="nds-inline-code lang-js">NDS.Status</code>. These drive the built-in SCSS rules below.</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Selector</th><th>Effect</th><th>When set</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-state~="submitting"]</code></td><td><code class="nds-inline-code">opacity: 0.7; pointer-events: none</code></td><td>Set on the anchor when a standard or AJAX form submission is in flight. Cleared when the response arrives.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-status="success"]</code></td><td>Search inputs get <code class="nds-inline-code">border-color: var(--border-success)</code></td><td>Set on successful AJAX response. Auto-cleared after 3 seconds.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-status="error"]</code></td><td>Search inputs get <code class="nds-inline-code">border-color: var(--border-error)</code></td><td>Set on AJAX request failure. Auto-cleared after 5 seconds.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1853,6 +1872,17 @@ filterEl.addEventListener('nds:filter:reset', (e) =&gt; {
 // nds:filter:clear - Dropmenu clear button clicked
 filterEl.addEventListener('nds:filter:clear', (e) =&gt; {
     const { filter } = e.detail;
+});
+
+// ── Form submission events (standard + AJAX mode) ───
+// nds:formInvalid - Standard form submission failed validation
+filterEl.addEventListener('nds:formInvalid', (e) =&gt; {
+    const { invalidFields, errors } = e.detail;
+});
+
+// nds:formValid - Standard form passed validation, navigation will proceed
+filterEl.addEventListener('nds:formValid', (e) =&gt; {
+    // e.detail is {}
 });
 
 // ── AJAX mode events ────────────────────────────────

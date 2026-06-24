@@ -136,7 +136,7 @@ direction: ltr
             <i class="hgi hgi-stroke hgi-keyboard"></i>
             <span class="nds-label">Keyboard Navigation</span>
           </span>
-          <p class="nds-item-desc">Arrow keys navigate results, Enter selects the active item, Escape closes the dropdown. The active item scrolls into view automatically.</p>
+          <p class="nds-item-desc">Arrow keys navigate results, Enter selects the active item, Escape closes the dropdown, Tab closes without selecting, Home jumps to the first item, End jumps to the last item. The active item scrolls into view automatically.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
@@ -158,6 +158,13 @@ direction: ltr
             <span class="nds-label">Form Integration</span>
           </span>
           <p class="nds-item-desc">Selected values sync to the input. Clear button resets the selection. Works with the forms validation and status API.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-search-list-01"></i>
+            <span class="nds-label">Search Box Auto-submit</span>
+          </span>
+          <p class="nds-item-desc">When the container also has class <code class="nds-inline-code lang-html">nds-search-box</code>, selecting a result automatically clicks the nearest <code class="nds-inline-code lang-html">.nds-search-btn</code> to submit the search without extra interaction.</p>
         </div>
       </div>
     </div>
@@ -196,16 +203,21 @@ direction: ltr
 // For dynamic content:
 NDS.Autocomplete.reinit();
 
-// Create an instance programmatically
-var instance = NDS.Autocomplete.create(containerElement);
+// Create an instance programmatically (options are optional)
+var instance = NDS.Autocomplete.create(containerElement, {
+  // Override client-side filtering (used in both fetch modes)
+  filter: function(items, query) { return items.filter(/* … */); },
+  // Override per-row label rendering; developer owns escaping
+  renderItem: function(item, query) { return '&lt;strong&gt;' + item.Title + '&lt;/strong&gt;'; }
+});
 
 // Destroy an instance
 instance.destroy();
 
 // Listen for selection
 container.addEventListener('nds:autocomplete:select', function(e) {
-  console.log('Selected:', e.detail.item);
-  console.log('Value:', e.detail.value);
+  console.log('Selected item object:', e.detail.item);
+  console.log('Display text:', e.detail.text);
 });
 
 // Listen for results fetched
@@ -230,11 +242,12 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
           <li><code class="nds-inline-code lang-html">data-min-chars</code>: minimum characters before fetching starts (default: 3)</li>
           <li><code class="nds-inline-code lang-html">data-query-param</code>: query string parameter name sent to the API (default: "q")</li>
           <li><code class="nds-inline-code lang-html">data-results-path</code>: dot notation path to the results array in the response (e.g. "response.items"). Without it, the component auto-detects flat arrays or objects with <code class="nds-inline-code lang-js">results</code> or <code class="nds-inline-code lang-js">data</code> keys</li>
+          <li><code class="nds-inline-code lang-html">data-fetch</code>: fetch mode, either <code class="nds-inline-code lang-js">"each"</code> (default) or <code class="nds-inline-code lang-js">"once"</code>. With <code class="nds-inline-code lang-js">"each"</code> the API is called on every keystroke and the server filters results. With <code class="nds-inline-code lang-js">"once"</code> the full list is fetched once on first input, cached, and filtered client-side on each keystroke. Use <code class="nds-inline-code lang-js">"once"</code> for small static datasets such as countries, currencies, or departments.</li>
         </ul>
       </div>
       <div class="nds-block">
         <h3 class="nds-block-title">API Response Format</h3>
-        <p>The component sends a GET request with the query as a URL parameter (e.g. <code class="nds-inline-code lang-html">/api/services?q=term</code>). The API handles filtering and returns JSON in one of these formats:</p>
+        <p>With the default <code class="nds-inline-code lang-js">data-fetch="each"</code> mode, the component sends a GET request per keystroke (e.g. <code class="nds-inline-code lang-html">/api/services?q=term</code>) and the server handles filtering. With <code class="nds-inline-code lang-js">data-fetch="once"</code>, the full URL is fetched once with no query parameter and filtering is done client-side. Both modes expect JSON in one of these formats:</p>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">
                 <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -258,7 +271,7 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
 { "response": { "items": [{ "Title": "Item one" }], "total": 42 } }
 
 // The component renders up to 20 results
-// Filtering is done server-side, not in the browser
+// Filtering: server-side with data-fetch="each" (default), client-side with data-fetch="once"
                 </code>
               </div>
         </div>

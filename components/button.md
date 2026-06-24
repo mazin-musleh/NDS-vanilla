@@ -539,6 +539,77 @@ direction: ltr
     </div>
 </section>
 
+<!-- Directional Buttons -->
+<section id="btnDirectional" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Directional Buttons</h2>
+            <p class="nds-section-description">Pseudo-element icon buttons for navigation: next, previous, up, down, and ellipsis</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-secondary-outline nds-next"><span class="nds-label">Next</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-prev"><span class="nds-label">Prev</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-up"><span class="nds-label">Up</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-down"><span class="nds-label">Down</span></button>
+                            <button class="nds-btn nds-secondary-outline nds-ellipsis nds-icon-only" aria-label="More"></button>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-btn-directional-1" id="tab-btn-directional-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-directional-1"
+                                    aria-labelledby="tab-btn-directional-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;!-- Next: arrow points forward (RTL-aware) --&gt;
+&lt;button class="nds-btn nds-secondary-outline nds-next"&gt;
+  &lt;span class="nds-label"&gt;Next&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Prev: arrow points backward (RTL-aware), icon placed after label --&gt;
+&lt;button class="nds-btn nds-secondary-outline nds-prev"&gt;
+  &lt;span class="nds-label"&gt;Prev&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Up --&gt;
+&lt;button class="nds-btn nds-secondary-outline nds-up"&gt;
+  &lt;span class="nds-label"&gt;Up&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Down --&gt;
+&lt;button class="nds-btn nds-secondary-outline nds-down"&gt;
+  &lt;span class="nds-label"&gt;Down&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Ellipsis (icon-only, no label needed) --&gt;
+&lt;button class="nds-btn nds-secondary-outline nds-ellipsis nds-icon-only" aria-label="More"&gt;&lt;/button&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Button Group -->
 <section id="btnGroup" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -1100,6 +1171,101 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
     </div>
 </section>
 
+<!-- Cooldown Button -->
+<section id="btnCooldown" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Cooldown Button</h2>
+            <p class="nds-section-description">Click triggers a loading phase then a live countdown before the button is re-enabled</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <button class="nds-btn nds-subtle nds-cooldown"
+                                data-cooldown="10"
+                                data-cooldown-loading="2"
+                                data-cooldown-label="Resend in {s}s"
+                                data-resend-label="Resend code"
+                                data-sent-title="Code sent"
+                                data-sent-message="Check your inbox for the verification code.">
+                                <i class="hgi hgi-stroke hgi-mail-send-01" aria-hidden="true"></i>
+                                <span class="nds-label">Send code</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-btn-cooldown-1" id="tab-btn-cooldown-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-btn-cooldown-js" id="tab-btn-cooldown-js">
+                                        <span class="nds-tab-label">JavaScript</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-cooldown-1"
+                                    aria-labelledby="tab-btn-cooldown-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;button class="nds-btn nds-subtle nds-cooldown"
+        data-cooldown="10"
+        data-cooldown-loading="2"
+        data-cooldown-label="Resend in {s}s"
+        data-resend-label="Resend code"
+        data-sent-title="Code sent"
+        data-sent-message="Check your inbox for the verification code."&gt;
+  &lt;i class="hgi hgi-stroke hgi-mail-send-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;span class="nds-label"&gt;Send code&lt;/span&gt;
+&lt;/button&gt;
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-btn-cooldown-js"
+                                    aria-labelledby="tab-btn-cooldown-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">
+// Trigger programmatically
+const btn = document.querySelector('.nds-cooldown');
+NDS.CooldownButton.start(btn);
+
+// Reset mid-countdown (restores label, re-enables button)
+NDS.CooldownButton.reset(btn);
+
+// Listen for lifecycle events
+btn.addEventListener('nds:cooldown:triggered', () =&gt; {
+    console.log('Cooldown started');
+});
+btn.addEventListener('nds:cooldown:tick', (e) =&gt; {
+    console.log('Remaining:', e.detail.remaining);
+});
+btn.addEventListener('nds:cooldown:end', () =&gt; {
+    console.log('Button restored');
+});
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="btnFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -1174,7 +1340,101 @@ btn.addEventListener('click', () =&gt; copyAction(btn));
                     <li>Use <strong>on-color</strong> variants when placing buttons on colored or dark backgrounds</li>
                     <li>Use <strong>icon-only</strong> for toolbar actions where space is limited. Always include aria-label</li>
                     <li>Use <strong>loading</strong> state after a click to indicate processing. Disable the button to prevent double submissions</li>
+                    <li>Use <strong>cooldown</strong> for rate-limited actions like resend OTP, where the button must be locked for a set period after each click</li>
                 </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-primary</code></td><td>Primary variant, green background</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td>Neutral variant, dark background</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-secondary</code></td><td>Secondary solid variant, light gray background</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-secondary-outline</code></td><td>Secondary outlined variant, transparent background with border</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-subtle</code></td><td>No background until hover</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-transparent</code></td><td>No background at any state; text color shifts on hover</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-transparent nds-color</code></td><td>Transparent variant where default text uses the primary brand color and reverts to default on hover</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-destructive</code></td><td>Red-tone modifier, combine with any variant</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>Light-on-dark modifier for colored/dark backgrounds</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>40px height (default, no class required)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>32px height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>24px height</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-icon-only</code></td><td>Hides label text (screen-reader accessible via clip)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-label-only</code></td><td>Hides icon elements</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lead-icon</code></td><td>Forces icon before label (row direction)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-trail-icon</code></td><td>Forces icon after label (row-reverse)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-full</code></td><td>Full-width, centered label</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-circle</code></td><td>999px border-radius for circular icon buttons</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-indicator</code></td><td>Adds a bottom-edge active indicator bar</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-menu-btn</code></td><td>Dropdown trigger with rotating chevron indicator</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-next</code></td><td>Directional button, arrow points forward (RTL-aware)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-prev</code></td><td>Directional button, arrow points backward with reversed flex order (RTL-aware)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-up</code></td><td>Directional button, arrow points up</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-down</code></td><td>Directional button, arrow points down</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-ellipsis</code></td><td>Fixed-width icon-only button with a horizontal more icon</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-progress</code></td><td>Shows the <code class="nds-inline-code lang-html">.nds-progress-circle</code> overlay</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-progress-static</code></td><td>Disables the countdown animation; progress driven by <code class="nds-inline-code lang-html">--progress-value</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-cooldown</code></td><td>Marks the button for cooldown behavior. Requires <code class="nds-inline-code lang-html">data-cooldown</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td><code class="nds-inline-code lang-html">.nds-btn</code></td><td>Simulates interaction states: <code class="nds-inline-code lang-html">default</code>, <code class="nds-inline-code lang-html">hover</code>, <code class="nds-inline-code lang-html">pressed</code>, <code class="nds-inline-code lang-html">selected</code>, <code class="nds-inline-code lang-html">focused</code>, <code class="nds-inline-code lang-html">loading</code>, <code class="nds-inline-code lang-html">cooldown</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td><code class="nds-inline-code lang-html">.nds-btn</code></td><td>Applies a contextual color and swaps the icon. Values: <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">warning</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-cooldown</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Cooldown duration in seconds (required). Read once at wire time and frozen.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-cooldown-loading</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Seconds to hold the loading state before the countdown begins (default: 0)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-cooldown-label</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Label template during countdown. Use <code class="nds-inline-code lang-html">{s}</code> for remaining seconds (default: <code class="nds-inline-code lang-html">{s}</code>)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-resend-label</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Label to restore after the first completed cycle (e.g., initial "Send" becomes "Resend"). Omit to keep the original label.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-sent-title</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Optional toast title shown when the cooldown begins (requires NDS.Alert to be loaded)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-sent-message</code></td><td><code class="nds-inline-code lang-html">.nds-cooldown</code></td><td>Optional toast description shown when the cooldown begins (requires NDS.Alert to be loaded)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--btn-size</code></td><td><code class="nds-inline-code lang-html">40px</code></td><td>Controls button height and the square dimension for icon-only buttons. Set by size modifier classes.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--btn-group-radius</code></td><td><code class="nds-inline-code lang-html">var(--radius-md)</code></td><td>Border-radius applied to the <code class="nds-inline-code lang-html">.nds-btn-group</code> ends. Automatically reduces to <code class="nds-inline-code lang-html">--radius-sm</code> when the group contains <code class="nds-inline-code lang-html">nds-md</code> or <code class="nds-inline-code lang-html">nds-sm</code> buttons.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-duration</code></td><td><code class="nds-inline-code lang-html">4000ms</code></td><td>Duration of the animated progress countdown. Set inline on the button: <code class="nds-inline-code lang-html">style="--progress-duration: 4000ms;"</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-value</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Static progress percentage (0-100) for <code class="nds-inline-code lang-html">nds-progress-static</code> buttons. Set inline: <code class="nds-inline-code lang-html">style="--progress-value: 25;"</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-circumference</code></td><td><code class="nds-inline-code lang-html">62.83</code></td><td>SVG circle circumference in px. Matches the <code class="nds-inline-code lang-html">stroke-dasharray</code> value on the SVG circle. Override only if the SVG radius is changed.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">JavaScript API: NDS.CooldownButton</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Method</th><th>Parameters</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-js">NDS.CooldownButton.start(btn)</code></td><td><code class="nds-inline-code lang-js">btn: HTMLElement</code></td><td>Programmatically triggers the cooldown cycle on the given button. No-op if the button is already in a cycle or has no <code class="nds-inline-code lang-html">data-cooldown</code> attribute.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">NDS.CooldownButton.reset(btn)</code></td><td><code class="nds-inline-code lang-js">btn: HTMLElement</code></td><td>Cancels an active cooldown or loading phase and restores the button immediately. Fires <code class="nds-inline-code lang-js">nds:cooldown:end</code>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Custom Events</h3>
+                <p>All events bubble and are dispatched on the <code class="nds-inline-code lang-html">.nds-cooldown</code> button element.</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Event</th><th>Detail</th><th>When fired</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:loading</code></td><td></td><td>The loading phase begins (only when <code class="nds-inline-code lang-html">data-cooldown-loading</code> is greater than 0)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:triggered</code></td><td></td><td>The loading phase ends and the countdown starts. Fire toast notifications here for custom variants.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:tick</code></td><td><code class="nds-inline-code lang-js">{ remaining: number }</code></td><td>Fires every second during the countdown. <code class="nds-inline-code lang-js">detail.remaining</code> is the seconds left.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">nds:cooldown:end</code></td><td></td><td>The cooldown finished naturally or <code class="nds-inline-code lang-js">reset()</code> was called. The button is restored and re-enabled.</td></tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>

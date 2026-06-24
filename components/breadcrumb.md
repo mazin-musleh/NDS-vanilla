@@ -21,6 +21,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -87,6 +91,10 @@ direction: ltr
                     <div class="demo-header">
                         <div class="demo-action">
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -150,6 +158,10 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
@@ -216,6 +228,10 @@ direction: ltr
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-breadcrumb-nav", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
@@ -341,6 +357,28 @@ direction: ltr
                     <li>Write the full hierarchy in HTML. The JS handles collapsing automatically for deep structures</li>
                     <li>Skip breadcrumbs on the homepage and single-level landing pages</li>
                 </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td><code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code></td><td>Shows the skeleton pulse animation while breadcrumb content is loading. Alias for <code class="nds-inline-code lang-html">data-state="loading"</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-breadcrumb-ellipsis</code></td><td><code class="nds-inline-code lang-html">&lt;li&gt;</code></td><td>Applied by JS to the generated collapse container holding the dropmenu for hidden items</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-nds-breadcrumb-initialized</code></td><td><code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code></td><td>Stamped by JS after init. Releases the pre-init skeleton. Prevents double-initialization on <code class="nds-inline-code lang-js">reinit()</code> calls</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td><code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code></td><td>Triggers the skeleton pulse animation. Equivalent to adding <code class="nds-inline-code lang-html">nds-loading</code></td></tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="nds-block">

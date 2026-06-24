@@ -827,7 +827,7 @@ direction: ltr
                     <li>Do not use swiper for content that should be visible all at once. Use <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">Grid</a> for static card layouts or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> for switchable content panels</li>
                     <li>Do not place interactive form controls inside slides. Keep slide content to display elements: text, images, cards, and links</li>
                     <li>Add <code class="nds-inline-code lang-html">peek="40"</code> when the slide count exceeds the visible slots, giving users a visual cue that more content is available</li>
-                    <li>Set <code class="nds-inline-code lang-html">hidden</code> on the <code class="nds-inline-code lang-html">nds-swiper</code> element for multi-slide swipers to prevent a flash of unstyled content before JS initializes</li>
+                    <li>Always include <code class="nds-inline-code lang-html">hidden</code> on <code class="nds-inline-code lang-html">.nds-swiper-navigation</code>: the navigation row ships hidden and JS reveals it only when there are multiple pages. The swiper container itself does not use <code class="nds-inline-code lang-html">hidden</code>; a CSS <code class="nds-inline-code lang-html">::after</code> placeholder on <code class="nds-inline-code lang-html">.nds-swiper:not([data-nds-swiper-initialized])</code> reserves the navigation row height before init</li>
                     <li>Keep slide heights consistent within a swiper. Mix uneven heights and the tallest slide will define the row height for all others</li>
                     <li>Always include <code class="nds-inline-code lang-html">aria-label</code> on navigation buttons with clear directional text like "Previous slide" and "Next slide"</li>
                     <li>For <strong>full-width section breakouts</strong>, place the swiper inside a <code class="nds-inline-code lang-html">nds-section-body nds-max-width</code> container so it can span beyond the content padding</li>
@@ -858,7 +858,9 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">slides-mid="2"</code></td><td>Slides visible at medium breakpoint (600px to 959px). Default: 1</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">slides-min="1"</code></td><td>Slides visible at small breakpoint (viewport < 600px). Default: 1</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">peek="40"</code></td><td>Pixels of adjacent slides to reveal. Only applies when there are multiple pages. Default: 0</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Prevents flash of unstyled content. The swiper removes it after initialization</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Place on <code class="nds-inline-code lang-html">.nds-swiper-navigation</code> (not the container). JS re-decides visibility on every breakpoint change: removes <code class="nds-inline-code lang-html">hidden</code> when there are multiple pages, restores it when there is only one</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-nds-swiper-initialized</code></td><td>Set by JS after init completes (<code class="nds-inline-code lang-html">true</code>). Used as a CSS hook (the pre-init <code class="nds-inline-code lang-html">::after</code> height reservation is scoped to <code class="nds-inline-code lang-html">:not([data-nds-swiper-initialized])</code>) and as a guard to skip already-initialized swipers during <code class="nds-inline-code lang-js">NDS.Swiper.init()</code>. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-swiper-peek</code></td><td>Toggled on <code class="nds-inline-code lang-html">.nds-swiper</code> by JS when peek is active (peek &gt; 0 and multiple pages exist). Activates the CSS <code class="nds-inline-code lang-html">calc(var(--peek) + var(--swiper-gap))</code> peek-width formula in <code class="nds-inline-code lang-html">_swiper.scss</code>. Removed by <code class="nds-inline-code lang-js">destroy()</code></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -870,6 +872,7 @@ direction: ltr
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between slides</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--padding</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Inline padding applied to the scroll wrapper. Inside <code class="nds-inline-code lang-html">.nds-max-width</code> the default shifts to <code class="nds-inline-code lang-html">var(--nds-viewport-padding)</code> so the swiper can bleed to the viewport edge while its content stays aligned</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-default</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-200)</code></td><td>Inactive pagination bullet color (light theme); shifts to neutral-700 in dark mode and to translucent white on hero/on-color backgrounds</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-default-hovered</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-300)</code></td><td>Inactive bullet hover color (one step from default: neutral-300 light, neutral-600 dark)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--swiper-bullet-active</code></td><td><code class="nds-inline-code lang-html">var(--colors-primary-600)</code></td><td>Active pagination bullet color (light theme); shifts to green-600 in dark mode and to base white on hero/on-color backgrounds</td></tr>
@@ -916,6 +919,7 @@ const instance = NDS.Swiper.create(el); // Create and initialize a new instance
 
 // ── Re-initialize all swipers ──
 NDS.Swiper.init();       // Finds and initializes all uninitialized .nds-swiper elements
+NDS.Swiper.reinit();     // Alias for init(), same function, provided for lifecycle symmetry
                         </code>
                     </div>
                 </div>

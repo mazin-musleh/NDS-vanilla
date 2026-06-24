@@ -102,6 +102,10 @@ direction: ltr
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-definition-list", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -237,6 +241,10 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-definition-list", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
@@ -394,6 +402,118 @@ direction: ltr
     </div>
 </section>
 
+<!-- Item Action -->
+<section id="definitionListItemAction" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Item Action</h2>
+            <p class="nds-section-description">Wrap a description and its trailing action buttons in <code class="nds-inline-code lang-html">.nds-item-action</code> to place them in a flex row. Any number of buttons share a single gap and stay aligned with the value.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <dl class="nds-definition-list nds-divided">
+                                <div class="nds-definition-item">
+                                    <dt>
+                                        <i class="hgi hgi-stroke hgi-link-01"></i>
+                                        <span class="nds-label">Profile URL</span>
+                                    </dt>
+                                    <dd>
+                                        <div class="nds-item-action">
+                                            <span>https://example.gov.sa/profile</span>
+                                            <button class="nds-btn nds-subtle nds-sm" aria-label="Copy URL">
+                                                <i class="hgi hgi-stroke hgi-copy-01"></i>
+                                            </button>
+                                            <button class="nds-btn nds-subtle nds-sm" aria-label="Share URL">
+                                                <i class="hgi hgi-stroke hgi-share-01"></i>
+                                            </button>
+                                        </div>
+                                    </dd>
+                                </div>
+                                <div class="nds-definition-item">
+                                    <dt>
+                                        <i class="hgi hgi-stroke hgi-edit-01"></i>
+                                        <span class="nds-label">Email</span>
+                                    </dt>
+                                    <dd>
+                                        <div class="nds-item-action">
+                                            <span>user@example.gov.sa</span>
+                                            <button class="nds-btn nds-subtle nds-sm" aria-label="Edit email">
+                                                <i class="hgi hgi-stroke hgi-edit-01"></i>
+                                            </button>
+                                        </div>
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-definition-list-action-1" id="tab-definition-list-action-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                    id="panel-definition-list-action-1" aria-labelledby="tab-definition-list-action-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
+&lt;dl class="nds-definition-list nds-divided"&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;dt&gt;
+      &lt;i class="hgi hgi-stroke hgi-link-01"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Profile URL&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd&gt;
+      &lt;div class="nds-item-action"&gt;
+        &lt;span&gt;https://example.gov.sa/profile&lt;/span&gt;
+        &lt;button class="nds-btn nds-subtle nds-sm" aria-label="Copy URL"&gt;
+          &lt;i class="hgi hgi-stroke hgi-copy-01"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+        &lt;button class="nds-btn nds-subtle nds-sm" aria-label="Share URL"&gt;
+          &lt;i class="hgi hgi-stroke hgi-share-01"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-definition-item"&gt;
+    &lt;dt&gt;
+      &lt;i class="hgi hgi-stroke hgi-edit-01"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Email&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd&gt;
+      &lt;div class="nds-item-action"&gt;
+        &lt;span&gt;user@example.gov.sa&lt;/span&gt;
+        &lt;button class="nds-btn nds-subtle nds-sm" aria-label="Edit email"&gt;
+          &lt;i class="hgi hgi-stroke hgi-edit-01"&gt;&lt;/i&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/dd&gt;
+  &lt;/div&gt;
+&lt;/dl&gt;
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Usage Guidelines -->
 <section id="definitionListGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -429,10 +549,13 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-tableView-sm</code></td><td>Table view on mobile only (max-width: 600px), stacked on larger screens</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tableView-md</code></td><td>Table view from tablet and up (min-width: 601px), stacked on mobile</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tableView-lg</code></td><td>Table view from desktop and up (min-width: 961px), stacked below</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>Each item places dt and dd on a single wrappable row. Looser than table view — no shared columns across items</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td>Each item places dt and dd on a single wrappable row. Looser than table view: no shared columns across items</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-divided</code></td><td>Adds border separators between items. Adapts styling for table view and stacked layouts</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size: 16px icon, medium title font, medium row gap</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Small size: 14px icon, small title font, small row gap</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size: 18px icon (floored, no visual change from lg), medium title font, medium row gap</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Small size: 18px icon (floored, no visual change from lg/md), small title font, small row gap</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-last-row</code></td><td>On a <code class="nds-inline-code lang-html">.nds-definition-item</code>, strips the bottom border in divided layout when the item is not the last child (for example when a wrapping <code class="nds-inline-code lang-html">.nds-card</code> breaks CSS <code class="nds-inline-code lang-html">:last-child</code>)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td>On <code class="nds-inline-code lang-html">.nds-definition-list</code>: animates skeleton bars over terms and descriptions, hides icons. Equivalent to <code class="nds-inline-code lang-html">data-state="loading"</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-item-action</code></td><td>On a wrapper inside <code class="nds-inline-code lang-html">.nds-definition-item</code>: flex row that places a description value alongside one or more trailing action buttons (copy, edit, share) with a shared gap</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -442,10 +565,10 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-icon-size</code></td><td>18px (lg) / 16px (md) / 14px (sm)</td><td>Width and height of title icons. Floored at 18px — icons never render smaller, even when this value or a size modifier requests less</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-icon-size</code></td><td>20px (lg) / 18px (md) / 18px (sm)</td><td>Width and height of title icons. Floored at 18px; icons never render smaller, even when this value or a size modifier requests less</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--dl-icon-gap</code></td><td>half of icon size</td><td>Gap between the icon and label text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-title-FS</code></td><td>--typo-text-clamp-lg-FS (lg) / -md-FS (md) / -sm-FS (sm)</td><td>Font size of term/title text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--dl-desc-FS</code></td><td>--dl-title-FS</td><td>Font size of description/value text. Defaults to match the title so both sides of each row scale together</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-title-FS</code></td><td>--typo-text-lg-FS (lg) / --typo-text-clamp-md-FS (md) / --typo-text-clamp-sm-FS (sm)</td><td>Font size of term/title text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--dl-desc-FS</code></td><td>--typo-text-md-FS (lg) / --typo-text-md-FS inherited (md) / --typo-text-sm-FS (sm)</td><td>Font size of description/value text. The large and medium sizes default to <code class="nds-inline-code lang-html">--typo-text-md-FS</code>; small explicitly sets <code class="nds-inline-code lang-html">--typo-text-sm-FS</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--row-gap</code></td><td>--spacing-lg</td><td>Vertical spacing between items</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--col-gap</code></td><td>--spacing-xl (table view) / --spacing-sm (row view)</td><td>Horizontal spacing between dt and dd in table view and row view</td></tr>
                     </tbody>

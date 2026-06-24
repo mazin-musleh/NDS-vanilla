@@ -50,6 +50,10 @@ direction: ltr
                                 <span class="nds-label">Brand</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -145,6 +149,10 @@ direction: ltr
                                 <span class="nds-label">Brand</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>
@@ -216,6 +224,10 @@ direction: ltr
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-brand", ".nds-rating", "ratingDropmenuStyle"]'>
                                 <span class="nds-label">Brand</span>
+                            </button>
+                            <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-rating", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
                             </button>
                             <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
@@ -454,6 +466,26 @@ direction: ltr
                             <td><code class="nds-inline-code lang-html">data-rating="3.5"</code></td>
                             <td>Set on <code class="nds-inline-code lang-html">.nds-rating</code> to define the initial score. Accepts whole numbers and decimals (0 to 5).</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-state="interactive"</code></td>
+                            <td>Stamped by JS on <code class="nds-inline-code lang-html">.nds-rating</code> when star children are <code class="nds-inline-code lang-html">&lt;button&gt;</code> elements and the component is not disabled. Enables hover preview, click selection, and keyboard navigation styles.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-state="disabled"</code></td>
+                            <td>Stamped by JS on <code class="nds-inline-code lang-html">.nds-rating</code> when <code class="nds-inline-code lang-js">setDisabled(true)</code> is called. Suppresses hover and click handling; remove via <code class="nds-inline-code lang-js">setDisabled(false)</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-state="preview"</code></td>
+                            <td>Stamped by JS on <code class="nds-inline-code lang-html">.nds-rating-star</code> during hover to show the candidate rating in the star color. Removed on mouse leave or after a value is committed.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-state="selected"</code></td>
+                            <td>Stamped by JS on <code class="nds-inline-code lang-html">.nds-rating-star</code> for every star at or below the committed rating value. Renders the star in the selected (filled) color.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-state="half"</code></td>
+                            <td>Stamped by JS on <code class="nds-inline-code lang-html">.nds-rating-star</code> for the star that renders as a half-filled star (decimal part 0.3 or greater).</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -492,7 +524,7 @@ direction: ltr
                         <tr>
                             <td><code class="nds-inline-code lang-html">--star-hovered</code></td>
                             <td>--rating-star-hovered-default</td>
-                            <td>Color applied on hover (brand variant only)</td>
+                            <td>Color applied on hover in interactive mode. The brand variant overrides this to its own palette value.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -539,6 +571,7 @@ document.addEventListener('ratingChange', (e) =&gt; {
 // ── Namespace methods (NDS.Rating) ──────────────────
 NDS.Rating.init();                     // Initialize all .nds-rating elements on the page
 NDS.Rating.reinit();                   // Re-initialize (same as init)
+NDS.Rating.create(element);            // Initialize a single element and return its instance
 NDS.Rating.enableRating(element);      // Initialize and enable a specific rating element
 </code>
                     </div>

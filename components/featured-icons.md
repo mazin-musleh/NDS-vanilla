@@ -231,7 +231,11 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-status="error"</code></td>
-                            <td>Red for errors and critical issues.</td>
+                            <td>Red for errors and validation failures.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-status="critical"</code></td>
+                            <td>Red, same cascade as error. Use for system-level critical alerts and outages.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-status="neutral"</code></td>

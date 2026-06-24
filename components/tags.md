@@ -71,8 +71,16 @@ direction: ltr
                                 </div>
                             </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-inverted", ".nds-tag", "tagStyle"]'>
+                                <span class="nds-label">Inverted</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-outline", ".nds-tag", "tagStyle"]'>
                                 <span class="nds-label">Outline</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-ghost", ".nds-tag", "tagStyle"]'>
+                                <span class="nds-label">Ghost</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-rounded", ".nds-tag", "tagShape"]'>
@@ -451,6 +459,64 @@ direction: ltr
     </div>
 </section>
 
+<!-- Tag Group -->
+<section id="tagGroup" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Tag Group</h2>
+            <p class="nds-section-description">Wrap multiple tags in .nds-tags for automatic flex-wrap layout with consistent gap</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-tags">
+                                <span class="nds-tag nds-gray"><span class="nds-label">Design</span></span>
+                                <span class="nds-tag nds-blue"><span class="nds-label">Development</span></span>
+                                <span class="nds-tag nds-green"><span class="nds-label">Approved</span></span>
+                                <span class="nds-tag nds-yellow"><span class="nds-label">In Review</span></span>
+                                <span class="nds-tag nds-red"><span class="nds-label">Blocked</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-tags-group-1" id="tab-tags-group-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tags-group-1"
+                                    aria-labelledby="tab-tags-group-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;div class="nds-tags"&gt;
+  &lt;span class="nds-tag nds-gray"&gt;&lt;span class="nds-label"&gt;Design&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="nds-tag nds-blue"&gt;&lt;span class="nds-label"&gt;Development&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="nds-tag nds-green"&gt;&lt;span class="nds-label"&gt;Approved&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="nds-tag nds-yellow"&gt;&lt;span class="nds-label"&gt;In Review&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="nds-tag nds-red"&gt;&lt;span class="nds-label"&gt;Blocked&lt;/span&gt;&lt;/span&gt;
+&lt;/div&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="tagFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -471,7 +537,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-text-wrap"></i>
                         <span class="nds-label">Auto-truncation</span>
                     </span>
-                    <p class="nds-item-desc">Labels truncate to a single line with ellipsis, configurable via --truncate.</p>
+                    <p class="nds-item-desc">Labels are forced to a single line via <code class="nds-inline-code lang-html">white-space: nowrap</code>. The tag itself uses <code class="nds-inline-code lang-html">min-width: fit-content</code> so it grows to fit its content.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -507,6 +573,38 @@ direction: ltr
                     <li>Use status tags when the state needs a visual indicator beyond just color (the dot reinforces meaning for colorblind users)</li>
                     <li>Choose color by meaning: <strong>neutral</strong> for general labels, <strong>success/error/warning/info</strong> for semantic status</li>
                 </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th><th>Combinable with</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-inverted</code></td><td>Solid filled background using the full-strength color token. Requires a color class or <code class="nds-inline-code lang-html">data-status</code></td><td>Color class, <code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-outline</code></td><td>Transparent background with full-strength border. Requires a color class or <code class="nds-inline-code lang-html">data-status</code></td><td>Color class, <code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code>, <code class="nds-inline-code lang-html">nds-oncolor</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-ghost</code></td><td>Transparent background and border with neutral text. Usable without a color class or status</td><td>Color class, <code class="nds-inline-code lang-html">data-status</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-rounded</code></td><td>Pill shape via <code class="nds-inline-code lang-html">border-radius: 999px</code></td><td>All variants</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-icon-only</code></td><td>Square aspect ratio, hides the label, sized to tag height</td><td>All variants</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-oncolor</code></td><td>White-on-color styling for use on colored or dark backgrounds</td><td><code class="nds-inline-code lang-html">nds-outline</code>, <code class="nds-inline-code lang-html">nds-rounded</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-bg</code></td><td><code class="nds-inline-code lang-html">--tag-background-neutral-light</code></td><td>Tag background color</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-text</code></td><td><code class="nds-inline-code lang-html">--tag-text-neutral</code></td><td>Label text color</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-border</code></td><td><code class="nds-inline-code lang-html">--tag-border-neutral-light</code></td><td>Border color</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-icon</code></td><td><code class="nds-inline-code lang-html">--tag-icon-neutral</code></td><td>Icon and status dot color</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-height</code></td><td><code class="nds-inline-code lang-html">32px</code></td><td>Tag height (also drives icon-only width via aspect-ratio)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-fs</code></td><td><code class="nds-inline-code lang-html">--typo-text-md-FS</code></td><td>Font size</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-padding-inline</code></td><td><code class="nds-inline-code lang-html">--spacing-xl</code></td><td>Horizontal padding</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tag-dot-size</code></td><td><code class="nds-inline-code lang-html">10px</code></td><td>Diameter of the status dot indicator</td></tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>

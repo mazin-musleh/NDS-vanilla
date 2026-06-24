@@ -465,6 +465,13 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-scroll"></i>
+                        <span class="nds-label">Scroll-triggered Fill</span>
+                    </span>
+                    <p class="nds-item-desc">The fill sweeps in as each indicator enters the viewport (0.5 threshold via <code class="nds-inline-code lang-js">NDS.onIntersect</code>), so the animation plays where it is seen. Under <code class="nds-inline-code lang-html">prefers-reduced-motion</code>, the value is applied immediately at load.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
@@ -507,9 +514,8 @@ direction: ltr
                         <tr><th>Class</th><th>Applies to</th><th>Description</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-xs</code></td><td>Circle</td><td>24px, hides percentage symbol and label text</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Circle / Bar</td><td>Circle: 40px, hides label text. Bar: 4px track height, hides inline percentage</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Circle / Bar</td><td>Circle: 64px (default). Bar: 8px track height (default)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Bar only</td><td>4px track height, hides inline percentage</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Circle / Bar</td><td>Circle: 80px. Bar: 8px track height (default)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Circle / Bar</td><td>Circle: 120px. Bar: 16px track height with percentage inside the fill</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-xl</code></td><td>Circle</td><td>160px large display</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-2xl</code></td><td>Circle</td><td>200px hero display</td></tr>
@@ -542,10 +548,13 @@ direction: ltr
                     </thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--progress-value</code></td><td>0</td><td>Current progress (0 to 100). Values above 100 are clamped. Update via JS to animate the fill</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-size</code></td><td>64px</td><td>Circle diameter. Overridden by size classes (nds-xs through nds-xl)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-size</code></td><td>64px</td><td>Circle diameter. Overridden by size classes (nds-md through nds-2xl)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--progress-color</code></td><td>var(--background-primary)</td><td>Fill and stroke color for both circle and bar</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--progress-track-color</code></td><td>var(--colors-neutral-100)</td><td>Background track color for the circle</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-track-color</code></td><td>var(--alpha-white-10) in dark mode</td><td>Circle track color in dark mode only. Light mode track is not a knob; the bar track is also hardcoded</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--progress-height</code></td><td>8px</td><td>Bar track height. Overridden by size classes</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-circumference</code></td><td>62.83</td><td>SVG circle circumference (2&pi;r, r=10). Override when using a non-standard SVG radius</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-num</code></td><td>n/a</td><td>Set by JS in out-of mode from <code class="nds-inline-code lang-html">data-num</code>. Not intended for direct use</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--progress-max</code></td><td>n/a</td><td>Set by JS in out-of mode from <code class="nds-inline-code lang-html">data-max</code>. Not intended for direct use</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -2068,10 +2068,13 @@ NDS.Forms.clearStatus(container);</code>
       <div class="nds-block">
         <h3 class="nds-block-title">Modifier Classes</h3>
         <table class="nds-table nds-responsive">
-          <thead><tr><th>Class</th><th>Description</th></tr></thead>
+          <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
           <tbody>
-            <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size with reduced height (32px) and smaller font</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">nds-phone</code></td><td>Set on a tel input that sits next to a country-code prefix slot. On every keystroke, strips non-digit characters and any leading zero so the value submitted is the local number ready to concatenate with the prefix. Length is still controlled by the input's <code class="nds-inline-code lang-html">maxlength</code>.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Medium size with reduced height (32px) and smaller font</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-lighter</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the lighter surface token. Removes the input border so the fill alone defines the field boundary. Not applied to file upload containers.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-darker</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the darker surface token. Same border behavior as <code class="nds-inline-code lang-html">nds-lighter</code>. Not applied to file upload containers.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">nds-form-group</code></td><td>Lays out checkbox, radio, or switch group items in a horizontal wrapping row instead of the default vertical column.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-phone</code></td><td><code class="nds-inline-code lang-html">nds-input</code> (tel)</td><td>Set on a tel input that sits next to a country-code prefix slot. On every keystroke, strips non-digit characters and any leading zero so the value submitted is the local number ready to concatenate with the prefix. Length is still controlled by the input's <code class="nds-inline-code lang-html">maxlength</code>.</td></tr>
           </tbody>
         </table>
       </div>
@@ -2090,6 +2093,9 @@ NDS.Forms.clearStatus(container);</code>
             <tr><td><code class="nds-inline-code lang-html">data-select-value</code></td><td>Set on a select-mode dropmenu to pre-select the item whose <code class="nds-inline-code lang-html">data-value</code> matches. Takes precedence over any pre-rendered <code class="nds-inline-code lang-html">data-state="selected"</code> item.</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-required</code> (on dropmenu)</td><td>Set on a select-mode dropmenu to add <code class="nds-inline-code lang-html">required</code> to the hidden input, so native form submission blocks when nothing is picked.</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-trigger-label</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu-item</code> to override the trigger label text when that item is chosen. Useful when the dropdown row is descriptive (<em>Saudi Arabia (+966)</em>) but the trigger slot needs something compact (<em>+966</em>).</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-min-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid unless at least this many checkboxes are checked. Also adds the required asterisk to the group label.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-max-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid when more than this many checkboxes are checked. Defaults to the total checkbox count when absent.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-ajax</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form</code>. When present, the form's submit event is intercepted and <code class="nds-inline-code lang-html">preventDefault()</code> is called after validation passes, allowing you to handle submission via fetch or XHR without a page reload.</td></tr>
           </tbody>
         </table>
       </div>
@@ -2101,6 +2107,7 @@ NDS.Forms.clearStatus(container);</code>
             <tr><td><code class="nds-inline-code lang-html">--form-width</code></td><td>100%</td><td>Controls the width of the form container</td></tr>
             <tr><td><code class="nds-inline-code lang-html">--input-size</code></td><td>40px</td><td>Height of the input field (32px for <code class="nds-inline-code lang-html">nds-md</code>)</td></tr>
             <tr><td><code class="nds-inline-code lang-html">--input-radius</code></td><td>var(--radius-sm)</td><td>Border radius of the input field</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td>16px</td><td>Size (width and height) of the checkbox and radio control element. Size modifier classes set it to 20px (<code class="nds-inline-code lang-html">nds-md</code>) or 24px (<code class="nds-inline-code lang-html">nds-lg</code>). Set directly to use a custom size.</td></tr>
           </tbody>
         </table>
       </div>
@@ -2142,6 +2149,16 @@ NDS.Forms.clearStatus(el);
 NDS.Forms.getStatus(el);
 // Returns: { status: 'error', message: '...', isValid: false }
 
+// ── Field Sync ──────────────────────────────────────
+// Re-sync a form-control's chrome after programmatic value/checked changes.
+// Call this (or dispatch input/change) when setting a field's value from JS;
+// raw assignment alone no longer notifies the field.
+NDS.Forms.syncState(inputElement);
+
+// Set or clear a checkbox's indeterminate state.
+// Stamps data-state="indeterminate" on the container and fires nds:indeterminateChange.
+NDS.Forms.setIndeterminate(checkboxElement, true);
+
 // ── State Management ────────────────────────────────
 // Set disabled or required state programmatically
 NDS.Forms.setState(el, 'disabled', true);
@@ -2180,6 +2197,16 @@ form.addEventListener('nds:formInvalid', function(e) {
 // Select dropdown change event on .nds-form-control
 formControl.addEventListener('selectChange', function(e) {
     // e.detail: { value: 'option1', text: 'Option 1' }
+});
+
+// Switch toggle event on .nds-switch-element
+switchElement.addEventListener('switchChange', function(e) {
+    // e.detail: { checked: true|false, value: '...', input: switchInputElement }
+});
+
+// Checkbox indeterminate state change on the checkbox element
+checkbox.addEventListener('nds:indeterminateChange', function(e) {
+    // e.detail: { indeterminate: true|false }
 });
 
 // ── Dropmenu select-mode (prefix/suffix pickers) ────

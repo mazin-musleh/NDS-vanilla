@@ -366,6 +366,47 @@ direction: ltr
         </ul>
       </div>
       <div class="nds-block">
+        <h3 class="nds-block-title">Modifier Classes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Small size: 36x18px track, 12px thumb</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Large size: 56x28px track, 20px thumb</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td><code class="nds-inline-code lang-html">.nds-switch</code></td><td>Uses neutral color palette for the checked state instead of primary</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">.nds-switch-group</code></td><td>Lays out switches in a horizontal row instead of the default column</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nds-block">
+        <h3 class="nds-block-title">Data Attributes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Disables the individual switch: sets not-allowed cursor and mutes track and thumb colors. Synced automatically from the input's <code class="nds-inline-code lang-html">disabled</code> attribute by the forms system</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-switch-group</code></td><td>Disables all switches in the group at once via CSS opacity and pointer-events</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nds-block">
+        <h3 class="nds-block-title">CSS Custom Properties</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td><code class="nds-inline-code lang-html">20px</code></td><td>Controls the label line-height and ripple baseline; set via size modifier classes</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-width</code></td><td><code class="nds-inline-code lang-html">48px</code></td><td>Width of the switch track</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-height</code></td><td><code class="nds-inline-code lang-html">24px</code></td><td>Height of the switch track</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-size</code></td><td><code class="nds-inline-code lang-html">16px</code></td><td>Diameter of the thumb circle</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-offset</code></td><td><code class="nds-inline-code lang-html">4px</code></td><td>Distance from the track edge to the thumb in unchecked and checked states</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-track-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Track background color; overridden by checked state and disabled state</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-track-border</code></td><td><code class="nds-inline-code lang-html">--switch-neutral-default</code></td><td>Track border color; overridden by checked state and disabled state</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-bg</code></td><td><code class="nds-inline-code lang-html">--switch-neutral-default</code></td><td>Thumb background color; overridden by checked state and disabled state</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nds-block">
         <h3 class="nds-block-title">JavaScript API</h3>
         <div class="nds-code nds-expandable">
               <div class="nds-code-action">

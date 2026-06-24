@@ -396,8 +396,8 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-status="positive"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-card</code>. Applies the success palette to the chart line, the trend text, and the header featured icon.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-status="negative"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-card</code>. Applies the error palette to the same three elements.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-status="positive"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-card</code>. Applies the success palette to the chart line, the trend text, and the header featured icon. When <code class="nds-inline-code lang-html">.nds-arrow</code> is present on the trend, also rotates the arrow icon 90deg (pointing up).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-status="negative"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-card</code>. Applies the error palette to the same three elements. When <code class="nds-inline-code lang-html">.nds-arrow</code> is present on the trend, also rotates the arrow icon -90deg (pointing down).</td></tr>
                     </tbody>
                 </table>
             </div>

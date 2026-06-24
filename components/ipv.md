@@ -79,6 +79,10 @@ direction: ltr
                                         aria-controls="panel-ipv-gallery-1" id="tab-ipv-gallery-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-ipv-gallery-js" id="tab-ipv-gallery-js">
+                                        <span class="nds-tab-label">JS API</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -130,6 +134,27 @@ direction: ltr
 &lt;/div&gt;
                                         </code>
                                     </div>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-ipv-gallery-js"
+                                    aria-labelledby="tab-ipv-gallery-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">// Auto-initializes on page load; call again after dynamic thumbnail injection
+NDS.Ipv.init();
+
+// Re-scan for new thumbnails added at runtime
+NDS.Ipv.reinit();
+
+// Initialize and get the viewer instance
+var viewer = NDS.Ipv.create();
+
+// Open programmatically, close, and tear down
+viewer.open(document.querySelector('.nds-ipv-thumbnail'));
+viewer.close();
+viewer.destroy();</code>
                                 </div>
                             </div>
                         </div>
@@ -273,7 +298,7 @@ direction: ltr
             </div>
             <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Ipv</strong> API controls initialization and programmatic access. The viewer auto-initializes on page load. For dynamically added thumbnails, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code> to re-scan the page.</p>
+                <p>The <strong>NDS.Ipv</strong> API controls initialization and programmatic access. The viewer auto-initializes on page load. For dynamically added thumbnails, call <code class="nds-inline-code lang-js">NDS.Ipv.init()</code> or <code class="nds-inline-code lang-js">NDS.Ipv.reinit()</code> to re-scan the page.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -285,6 +310,9 @@ direction: ltr
 // ── Initialization ──────────────────────────────────
 // All thumbnails auto-initialize on page load
 NDS.Ipv.init();
+
+// Re-initialize after dynamically adding thumbnails
+NDS.Ipv.reinit();
 
 // Create and get the viewer instance
 var viewer = NDS.Ipv.create();
@@ -308,6 +336,9 @@ viewer.resetTransform();
 
 // Toggle UI controls visibility (distraction-free mode)
 viewer.toggleUI();
+
+// Tear down all listeners, resize observer, and focus trap
+viewer.destroy();
 
 // ── Keyboard Shortcuts ──────────────────────────────
 // Tab          Move focus to a thumbnail, then Enter or Space opens it

@@ -104,7 +104,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Any button with <code class="nds-inline-code lang-html">nds-voice-input</code> inside an NDS form container is wired automatically when the form module loads. No extra JS required.</p>
+                    <p class="nds-item-desc">Any button with <code class="nds-inline-code lang-html">nds-voice-input</code> is wired automatically when the <code class="nds-inline-code lang-js">NDS.VoiceInput</code> module loads: it installs a single document-level click handler, so buttons present now or added later all work with no per-button setup. No extra JS required.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -160,7 +160,7 @@ direction: ltr
                     <li>Use voice input on search fields and long free-text inputs where typing is burdensome. Short, constrained fields like phone numbers, postcodes, or PIN codes are not good candidates.</li>
                     <li>Use <a class="nds-color" href="{{ 'components/forms' | relative_url }}">the search input variant</a> (<code class="nds-inline-code lang-html">nds-search-input</code>) for search fields. It includes the microphone button slot alongside the clear button by design.</li>
                     <li>Do not add voice input to password fields, OTP fields, or other security-sensitive inputs where dictation could expose credentials to bystanders or screen-recording software.</li>
-                    <li>Do not add voice input to <code class="nds-inline-code lang-html">&lt;select&gt;</code>, <code class="nds-inline-code lang-html">&lt;textarea&gt;</code>, or read-only inputs. The plugin targets the primary text input inside the form control and relies on setting <code class="nds-inline-code lang-html">.value</code> directly.</li>
+                    <li>Do not add voice input to <code class="nds-inline-code lang-html">&lt;select&gt;</code> or read-only inputs. The plugin targets the primary text <code class="nds-inline-code lang-html">input</code> or <code class="nds-inline-code lang-html">textarea</code> inside the form control and sets <code class="nds-inline-code lang-html">.value</code> directly.</li>
                     <li>Always provide a visible microphone icon in the button so users can identify it without reading the <code class="nds-inline-code lang-html">aria-label</code>. Use the <code class="nds-inline-code lang-html">nds-hgi-mic-01</code> UI icon for consistency with the rest of NDS.</li>
                     <li>On browsers without the Web Speech API the button is left in place: a click shows a localized "not supported" message in the field and the input keeps working as a normal text field. To omit the button entirely on those browsers, gate it with <code class="nds-inline-code lang-js">NDS.VoiceInput.isSupported()</code>.</li>
                     <li>The plugin requires microphone permission from the browser. Pair it with a visible permission explanation or tooltip when the feature is prominent in a service flow, so users understand why they are being prompted.</li>
@@ -181,6 +181,19 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">network</code></td><td>Network error</td><td>خطأ في الشبكة</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">aborted</code></td><td>Voice input cancelled</td><td>تم إلغاء إدخال الصوت</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">language-not-supported</code></td><td>Language not supported</td><td>اللغة غير مدعومة</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">timeout</code></td><td>Voice input timed out</td><td>انتهت مهلة إدخال الصوت</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">unsupported</code></td><td>Voice input is not supported in this browser</td><td>إدخال الصوت غير مدعوم في هذا المتصفح</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Listening State</h3>
+                <p>When recording starts, the module adds <code class="nds-inline-code lang-html">listening</code> to the <code class="nds-inline-code lang-html">data-state</code> of the enclosing <code class="nds-inline-code lang-html">nds-form-container</code>. The CSS uses that token to animate the microphone icon with a colour-cycling pulse, giving a visible recording indicator.</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Selector</th><th>Effect</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">[data-state~="listening"]</code> on <code class="nds-inline-code lang-html">.nds-form-container</code></td><td>Applied by JS when the mic opens; removed when the mic closes. Triggers the colour-cycle animation on the <code class="nds-inline-code lang-html">.nds-voice-input &gt; i</code> icon.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -193,6 +206,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-voice-target="field-id"</code></td><td>Set on the button to point it at a specific input by <code class="nds-inline-code lang-html">id</code> or <code class="nds-inline-code lang-html">name</code>. Lets the button sit anywhere on the page, not just inside the form control.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-target="field-id"</code></td><td>The shared NDS targeting convention, accepted as a fallback when <code class="nds-inline-code lang-html">data-voice-target</code> is absent.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-name="field-name"</code></td><td>Last-resort lookup on the input itself: if neither <code class="nds-inline-code lang-html">id</code> nor <code class="nds-inline-code lang-html">name</code> match the target value, the module queries for an element with a matching <code class="nds-inline-code lang-html">data-name</code> attribute.</td></tr>
                     </tbody>
                 </table>
             </div>

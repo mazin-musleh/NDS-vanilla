@@ -370,8 +370,8 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Role</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tooltip</code></td><td>Inline root wrapping the trigger and the balloon. JS toggles <code class="nds-inline-code lang-html">data-state="open"</code> on this element while the balloon is visible.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tooltip-trigger</code></td><td>The clickable element. A <code class="nds-inline-code lang-html">&lt;button&gt;</code> wrapping an <code class="nds-inline-code lang-html">.nds-feedback-icon</code> chip is the canonical pattern.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tooltip</code></td><td>Inline root wrapping the trigger and the balloon. JS toggles <code class="nds-inline-code lang-html">data-state="open"</code> on this element while the balloon is visible. In text-trigger mode (no <code class="nds-inline-code lang-html">.nds-icon</code> descendant inside the trigger), the root itself receives <code class="nds-inline-code lang-html">cursor:help</code> and a dotted underline so the annotated term is visually marked.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tooltip-trigger</code></td><td>The clickable element. A <code class="nds-inline-code lang-html">&lt;button&gt;</code> wrapping an <code class="nds-inline-code lang-html">.nds-feedback-icon</code> chip is the canonical pattern. Omit this element when the root's own text content is the trigger (declarative text-trigger mode, as in the "National ID" example).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-balloon</code></td><td>The floating panel. Marked <code class="nds-inline-code lang-html">hidden</code> by default; JS toggles the attribute on open.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-body</code></td><td>Text container inside the balloon. Sits beside the optional leading icon chip.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-title</code></td><td>Optional bold heading placed at the top of the body stack.</td></tr>
@@ -392,6 +392,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Managed by JS on <code class="nds-inline-code lang-html">.nds-tooltip</code>. Set to <code class="nds-inline-code lang-html">open</code> while the balloon is visible; absent when closed. Used internally for CSS styling hooks (e.g. the idle-trigger neutral background).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-tooltip-balloon</code> in source so the balloon starts closed. JS flips the attribute on open and close.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">aria-label</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-tooltip-trigger</code> to describe the tooltip purpose for screen readers (e.g. <code class="nds-inline-code lang-html">"What is this?"</code>).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-position-vertical</code></td><td>Stamped by JS on both <code class="nds-inline-code lang-html">.nds-tooltip</code> and <code class="nds-inline-code lang-html">.nds-tooltip-balloon</code> when the balloon flips above the trigger due to insufficient space below. Value: <code class="nds-inline-code lang-html">top</code>. Drives the CSS arrow-flip rule. Read-only; do not set manually.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -409,13 +410,15 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-background-inverse</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-800)</code></td><td>Balloon surface color in dark theme.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-text-heading-default</code></td><td><code class="nds-inline-code lang-html">var(--text-display)</code></td><td>Title color in light theme.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--tooltip-text-paragraph-default</code></td><td><code class="nds-inline-code lang-html">var(--text-primary-paragraph)</code></td><td>Message body color in light theme.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-heading-inverse</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-50)</code></td><td>Title color in dark theme.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--tooltip-text-paragraph-inverse</code></td><td><code class="nds-inline-code lang-html">var(--colors-neutral-100)</code></td><td>Message body color in dark theme.</td></tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Tooltip</strong> namespace exposes initialization and factory methods. Every initialized tooltip also attaches an instance to its root element at <code class="nds-inline-code lang-js">el.ndsTooltip</code>, with <code class="nds-inline-code lang-js">open()</code> and <code class="nds-inline-code lang-js">close()</code> methods. Tooltips dispatch <code class="nds-inline-code lang-js">nds:tooltip:opened</code> and <code class="nds-inline-code lang-js">nds:tooltip:closed</code> events that bubble to the document.</p>
+                <p>The <strong>NDS.Tooltip</strong> namespace exposes initialization and factory methods. Every initialized tooltip also attaches an instance to its root element at <code class="nds-inline-code lang-js">el.ndsTooltip</code>, with <code class="nds-inline-code lang-js">open()</code>, <code class="nds-inline-code lang-js">close()</code>, and <code class="nds-inline-code lang-js">destroy()</code> methods. Tooltips dispatch <code class="nds-inline-code lang-js">nds:tooltip:opened</code> and <code class="nds-inline-code lang-js">nds:tooltip:closed</code> events that bubble to the document.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
@@ -441,6 +444,9 @@ const tooltip = NDS.Tooltip.create(el);
 // Every initialized root has `ndsTooltip` attached.
 el.ndsTooltip.open();
 el.ndsTooltip.close();
+// Closes if open, detaches all listeners, and removes
+// the init sentinel so the element can be re-initialized.
+el.ndsTooltip.destroy();
 
 // ── Listen for open/close events ─────────────────────
 // Events bubble, so you can delegate from a parent.

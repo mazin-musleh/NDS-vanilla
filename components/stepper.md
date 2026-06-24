@@ -181,6 +181,10 @@ direction: ltr
                                         aria-controls="panel-stepper-layouts-1" id="tab-stepper-layouts-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-stepper-layouts-js" id="tab-stepper-layouts-js">
+                                        <span class="nds-tab-label">JS API</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -254,6 +258,22 @@ direction: ltr
 &lt;/div&gt;
                                         </code>
                                     </div>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel"
+                                    id="panel-stepper-layouts-js" aria-labelledby="tab-stepper-layouts-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">// Inject a stepper dynamically and initialize it
+const el = document.getElementById('demo-stepper-layouts');
+const stepper = NDS.Stepper.create(el);
+
+// Navigate programmatically
+NDS.Stepper.next('demo-stepper-layouts');
+NDS.Stepper.previous('demo-stepper-layouts');
+NDS.Stepper.goTo('demo-stepper-layouts', 3);</code>
                                 </div>
                             </div>
                         </div>
@@ -496,6 +516,10 @@ direction: ltr
                                         aria-controls="panel-stepper-responsive-1" id="tab-stepper-responsive-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-stepper-responsive-js" id="tab-stepper-responsive-js">
+                                        <span class="nds-tab-label">JS API</span>
+                                    </button>
                                 </nav>
                             </div>
                             <div class="nds-tab-content">
@@ -571,6 +595,26 @@ direction: ltr
 &lt;/div&gt;
                                         </code>
                                     </div>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel"
+                                    id="panel-stepper-responsive-js" aria-labelledby="tab-stepper-responsive-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">// Inject a stepper dynamically and initialize it
+const el = document.getElementById('demo-stepper-responsive');
+const stepper = NDS.Stepper.create(el);
+
+// Read or change the fallback layout variant at runtime
+const fallback = NDS.Stepper.getFallback('demo-stepper-responsive'); // 'horizontal'
+NDS.Stepper.setFallback('demo-stepper-responsive', 'vertical');
+
+// Navigate programmatically
+NDS.Stepper.next('demo-stepper-responsive');
+NDS.Stepper.previous('demo-stepper-responsive');
+NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
                                 </div>
                             </div>
                         </div>
@@ -698,6 +742,8 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">nds-horizontal-sm</code> / <code class="nds-inline-code lang-html">-md</code> / <code class="nds-inline-code lang-html">-lg</code></td><td>Container</td><td>Forces horizontal layout on mobile / tablet / desktop respectively. Combine with other breakpoint-scoped variants to compose a responsive layout</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-vertical-sm</code> / <code class="nds-inline-code lang-html">-md</code> / <code class="nds-inline-code lang-html">-lg</code></td><td>Container</td><td>Forces vertical layout on mobile / tablet / desktop respectively</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-radial-sm</code> / <code class="nds-inline-code lang-html">-md</code> / <code class="nds-inline-code lang-html">-lg</code></td><td>Container</td><td>Forces radial layout on mobile / tablet / desktop respectively. Example: <code class="nds-inline-code lang-html">nds-radial-sm nds-vertical-lg</code> = radial on mobile, horizontal on tablet, vertical on desktop</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-loading</code></td><td>Container</td><td>Renders all steps as animated skeleton placeholders. Use while step data is being loaded. Equivalent to setting <code class="nds-inline-code lang-html">data-state="loading"</code> on the root</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-stepper-action</code></td><td><code class="nds-inline-code lang-html">.nds-stepper-content</code></td><td>Flex row container for action buttons (<code class="nds-inline-code lang-html">.nds-btn</code> children) placed inside a step's content area. Each button stretches to fill equal width</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -718,6 +764,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-state="completed"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-stepper-step</code>. Marks the step as completed with a checkmark icon. Managed automatically by JS.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-stepper-step</code>. Marks the step as the active step. Managed automatically by JS.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="upcoming"</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-stepper-step</code>. Marks the step as a future step with muted styling. Managed automatically by JS.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on the <code class="nds-inline-code lang-html">.nds-stepper</code> container. Renders all steps as animated skeleton placeholders. Equivalent to adding <code class="nds-inline-code lang-html">nds-loading</code>.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -731,6 +778,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-size</code></td><td>32px</td><td>Circle diameter for linear steppers. Overridden by size classes</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-gap</code></td><td>token-based</td><td>Spacing between steps. Adjusts automatically with size classes</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td>var(--spacing-xl)</td><td>Vertical gap between the step's text block and any <code class="nds-inline-code lang-html">.nds-stepper-action</code> buttons. Set on the <code class="nds-inline-code lang-html">.nds-stepper</code> container</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--progress-size</code></td><td>var(--stepper-size)</td><td>Circle diameter for radial steppers. Inherits from <code class="nds-inline-code lang-html">--stepper-size</code>, which radial size classes override</td></tr>
                     </tbody>
                 </table>
@@ -776,6 +824,17 @@ document.addEventListener('nds:stepper:change', (e) =&gt; {
 const el = document.getElementById('my-stepper');
 el.dataset.current = '2';  // Moves to step 2
 el.dataset.total = '5';    // Updates total steps
+
+// ── Create a stepper instance dynamically ───────────
+// Stamps responsive layout + data-state + progress on the element,
+// then registers it so get(id) / control(id, …) work.
+const stepper = NDS.Stepper.create(el);
+
+// ── Fallback layout variant ──────────────────────────
+// The fallback is the authored variant used when no breakpoint-scoped
+// class (nds-{variant}-{sm|md|lg}) matches the current viewport.
+NDS.Stepper.getFallback('my-stepper');              // Returns 'horizontal' | 'vertical' | 'radial'
+NDS.Stepper.setFallback('my-stepper', 'vertical'); // Change at runtime
 
 // ── Re-initialize after dynamic HTML ────────────────
 NDS.Stepper.init();

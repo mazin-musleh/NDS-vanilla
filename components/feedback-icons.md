@@ -50,6 +50,10 @@ direction: ltr
                                             data-toggler='["data-status=neutral", ".nds-feedback", "feedbackStatus", "attr"]'>
                                             <span class="nds-label">Neutral</span>
                                         </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=help", ".nds-feedback", "feedbackStatus", "attr"]'>
+                                            <span class="nds-label">Help</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -395,7 +399,7 @@ direction: ltr
                     <tbody>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-status</code></td>
-                            <td>Set on the <code class="nds-inline-code lang-html">.nds-feedback</code> element or any parent. Values: <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">neutral</code>. Sets color and auto-selects the icon.</td>
+                            <td>Set on the <code class="nds-inline-code lang-html">.nds-feedback</code> element or any parent. Values: <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">neutral</code>, <code class="nds-inline-code lang-html">help</code>, <code class="nds-inline-code lang-html">critical</code>. Sets color and auto-selects the icon.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-permanent</code></td>
@@ -429,8 +433,8 @@ direction: ltr
                         <tr>
                             <td><code class="nds-inline-code lang-js">status</code></td>
                             <td>string</td>
-                            <td><code class="nds-inline-code lang-js">'info'</code></td>
-                            <td><code class="nds-inline-code lang-js">'error'</code>, <code class="nds-inline-code lang-js">'success'</code>, <code class="nds-inline-code lang-js">'warning'</code>, <code class="nds-inline-code lang-js">'info'</code>, <code class="nds-inline-code lang-js">'neutral'</code></td>
+                            <td><code class="nds-inline-code lang-js">'neutral'</code></td>
+                            <td><code class="nds-inline-code lang-js">'error'</code>, <code class="nds-inline-code lang-js">'success'</code>, <code class="nds-inline-code lang-js">'warning'</code>, <code class="nds-inline-code lang-js">'info'</code>, <code class="nds-inline-code lang-js">'neutral'</code>, <code class="nds-inline-code lang-js">'help'</code>, <code class="nds-inline-code lang-js">'critical'</code></td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-js">target</code></td>
@@ -521,6 +525,93 @@ direction: ltr
                     </tbody>
                 </table>
 
+                <h4 style="margin-top: var(--spacing-2xl); margin-bottom: var(--spacing-md); font-weight: var(--font-weight-semibold);">Custom Events</h4>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Target</th>
+                            <th>Detail</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">nds:feedbackCreate</code></td>
+                            <td><code class="nds-inline-code lang-js">document</code></td>
+                            <td><code class="nds-inline-code lang-js">{ feedback, options }</code></td>
+                            <td>Fired after a feedback element is created and inserted. <code class="nds-inline-code lang-js">feedback</code> is the new element; <code class="nds-inline-code lang-js">options</code> is the original options object.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-js">nds:feedbackDismiss</code></td>
+                            <td><code class="nds-inline-code lang-js">document</code></td>
+                            <td><code class="nds-inline-code lang-js">{ feedback }</code></td>
+                            <td>Fired before a feedback element is removed from the DOM. <code class="nds-inline-code lang-js">feedback</code> is the element being dismissed.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <p>Set on <code class="nds-inline-code lang-html">.nds-feedback-icon</code> or any ancestor to override individual rendering knobs.</p>
+                <table class="nds-table nds-responsive">
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-size</code></td>
+                            <td><code class="nds-inline-code lang-html">24px</code></td>
+                            <td>Diameter of the icon chip.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-color</code></td>
+                            <td><code class="nds-inline-code lang-html">--icon-neutral</code></td>
+                            <td>Outline glyph color (re-tints in dark mode).</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-ring</code></td>
+                            <td><code class="nds-inline-code lang-html">--icon-neutral-ring</code></td>
+                            <td>Color of the ring-accent halo when <code class="nds-inline-code lang-html">nds-ring</code> is applied.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-ring-inset</code></td>
+                            <td><code class="nds-inline-code lang-html">~6% of size</code></td>
+                            <td>Inset bridging the gap between the disc glyph edge and the ring halo. Automatically zeroed for outline style.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-icon-color</code></td>
+                            <td><code class="nds-inline-code lang-html">--feedback-icon-fill-neutral</code></td>
+                            <td>Solid disc fill color (frozen status color, not re-tinted in dark).</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-icon-disc</code></td>
+                            <td><code class="nds-inline-code lang-html">--nds-icon-solid-disc</code></td>
+                            <td>Mask shape used for the solid disc layer.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-icon-stroke</code></td>
+                            <td><code class="nds-inline-code lang-html">--nds-icon-information-circle</code></td>
+                            <td>Outline glyph shape shown when <code class="nds-inline-code lang-html">nds-outline</code> is applied.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-icon-symbol</code></td>
+                            <td>transparent</td>
+                            <td>Mask shape for the symbol painted over the solid disc. Inert until a status sets it.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--feedback-symbol-color</code></td>
+                            <td><code class="nds-inline-code lang-html">--icon-oncolor</code></td>
+                            <td>Fill color of the symbol layer (white by default so it shows over the colored disc).</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>

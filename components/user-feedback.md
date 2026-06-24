@@ -320,6 +320,16 @@ hideFeedback: true
                             <td>Tells the JS which follow-up branch to reveal. Must be exactly <code class="nds-inline-code lang-html">Yes</code> or <code class="nds-inline-code lang-html">No</code> (capitalized).</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-html">data-state="details|status"</code></td>
+                            <td><code class="nds-inline-code lang-html">.nds-user-feedback</code> (JS-stamped)</td>
+                            <td>Set at runtime by the component. <code class="nds-inline-code lang-html">details</code> shows the follow-up form and hides the statistic; <code class="nds-inline-code lang-html">status</code> shows the confirmation message and hides the question and answer buttons. Absent in the initial question state.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-answer="yes|no"</code></td>
+                            <td><code class="nds-inline-code lang-html">.nds-user-feedback</code> (JS-stamped)</td>
+                            <td>Set at runtime on the root element (lowercase) when the user selects an answer. Controls which follow-up branch is visible: <code class="nds-inline-code lang-html">yes</code> shows <code class="nds-inline-code lang-html">.nds-why-yes</code>, <code class="nds-inline-code lang-html">no</code> shows <code class="nds-inline-code lang-html">.nds-why-no</code>. Removed on reset.</td>
+                        </tr>
+                        <tr>
                             <td><code class="nds-inline-code lang-html">data-required</code></td>
                             <td><code class="nds-inline-code lang-html">fieldset</code></td>
                             <td>Marks a checkbox or radio group as required. At least one option must be selected before submission proceeds.</td>

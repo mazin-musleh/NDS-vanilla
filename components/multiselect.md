@@ -340,6 +340,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-multiselect-action</code></td><td>Set on footer buttons. Values: <code class="nds-inline-code lang-html">apply</code> commits the draft and fires <code class="nds-inline-code lang-js">nds:multiselect:change</code>; <code class="nds-inline-code lang-html">reset</code> clears the draft without touching the applied set</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-label</code></td><td>Set on each checkbox input. Overrides the visible label text when rendering chips, useful when the visible label contains extra markup or context</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-no-auto-close</code></td><td>Set on the checkbox fieldset and the Reset button so the dropmenu stays open while the user toggles options or clears the draft</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state~="filled"</code></td><td>Stamped on <code class="nds-inline-code lang-html">.nds-multiselect</code> by JS when at least one value is applied. Hides the placeholder via CSS. Removed when all values are cleared</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -358,6 +359,11 @@ direction: ltr
 // ── Initialize (auto-runs on load) ─────────────────────
 // Call again after injecting multiselect HTML dynamically.
 NDS.Multiselect.init();
+
+// ── Re-initialize (alias of init) ─────────────────────
+// Picks up any .nds-multiselect elements added to the DOM
+// since the last init pass. Skips already-initialized roots.
+NDS.Multiselect.reinit();
 
 // ── Create an instance manually ────────────────────────
 // Returns the NDSMultiselect instance. Useful for markup

@@ -248,7 +248,7 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--quote-border</code></td>
-                            <td><code class="nds-inline-code lang-html">--border-default</code></td>
+                            <td><code class="nds-inline-code lang-html">--border-neutral-primary</code></td>
                             <td>Border color around the card.</td>
                         </tr>
                         <tr>

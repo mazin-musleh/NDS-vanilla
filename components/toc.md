@@ -333,6 +333,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-toc-source</code></td><td>CSS selector for the container whose headings should populate the list. Omit for manual markup.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-toc-levels</code></td><td>Comma-separated heading tags to include (default: <code class="nds-inline-code lang-html">h2,h3,h4</code>). Use <code class="nds-inline-code lang-html">h2</code> for a flat TOC or <code class="nds-inline-code lang-html">h2,h3,h4,h5</code> for deeper docs.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-nds-toc-initialized</code></td><td>Stamped <code class="nds-inline-code lang-html">true</code> by <code class="nds-inline-code lang-js">init()</code> after a TOC instance is created. Checked by <code class="nds-inline-code lang-js">reinit()</code> to prevent double-initialization. Removed by <code class="nds-inline-code lang-js">destroy()</code>.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -343,6 +344,18 @@ direction: ltr
                     <thead><tr><th>Class</th><th>Applied to</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-lined</code></td><td><code class="nds-inline-code lang-html">.nds-drawer</code></td><td>Required. Renders the vertical rail beside sub-lists. <code class="nds-inline-code lang-html">.nds-toc</code> sets <code class="nds-inline-code lang-css">--drawer-lined-block: 0px</code> internally so the rail extends flush to the block edges of each nested list.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--drawer-lined-block</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Block-axis inset of the lined rail on the drawer. Set to <code class="nds-inline-code lang-html">0px</code> by <code class="nds-inline-code lang-html">.nds-toc</code> so the rail extends flush to the top and bottom of each nested list.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--drawer-lined-width</code></td><td><code class="nds-inline-code lang-html">2px</code></td><td>Thickness of the lined rail. Set to <code class="nds-inline-code lang-html">2px</code> by <code class="nds-inline-code lang-html">.nds-toc</code> for a slimmer rail than the drawer default.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--drawer-indicator-width</code></td><td><code class="nds-inline-code lang-html">3px</code></td><td>Width of the active-item side indicator. Set to <code class="nds-inline-code lang-html">3px</code> on <code class="nds-inline-code lang-html">.nds-toc .nds-drawer</code> for a bolder highlight than the base drawer default.</td></tr>
                     </tbody>
                 </table>
             </div>

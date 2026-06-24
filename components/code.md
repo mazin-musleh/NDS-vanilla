@@ -555,12 +555,63 @@ NDS.Alert.create({
     </div>
 </section>
 
+<!-- Inline Code -->
+<section id="inlineCode" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Inline Code</h2>
+            <p class="nds-section-description">Use <code class="nds-inline-code lang-html">nds-inline-code</code> on a <code class="nds-inline-code lang-html">&lt;code&gt;</code> element for short inline code references with syntax coloring</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-label">Inline Code</div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo" style="padding: var(--spacing-lg);">
+                        <p>Call <code class="nds-inline-code lang-html">NDS.Code.init</code> after inserting dynamic code blocks, or use the class <code class="nds-inline-code lang-html">nds-inline-code</code> directly on any <code class="nds-inline-code lang-html">&lt;code&gt;</code> element.</p>
+                    </div>
+                </div>
+                <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-code-inline-1" id="tab-code-inline-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example" role="tabpanel" id="panel-code-inline-1"
+                            aria-labelledby="tab-code-inline-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <code class="lang-html code">
+&lt;p&gt;Call &lt;code class="nds-inline-code lang-html"&gt;NDS.Code.init&lt;/code&gt; after inserting dynamic code blocks, or use the class &lt;code class="nds-inline-code lang-html"&gt;nds-inline-code&lt;/code&gt; directly on any &lt;code class="nds-inline-code lang-html"&gt;&amp;lt;code&amp;gt;&lt;/code&gt; element.&lt;/p&gt;
+                            </code>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Language Classes -->
 <section id="languageClasses" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Language Classes</h2>
-            <p class="nds-section-description">Supported language identifiers for the code element</p>
+            <p class="nds-section-description">Supported language identifiers for the code element. When no class is present, the lexer sniffs the language from the content automatically.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -581,17 +632,17 @@ NDS.Alert.create({
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>lang-html</td>
+                                    <td><code class="nds-inline-code lang-html">lang-html</code></td>
                                     <td>HTML / XML</td>
                                     <td>Markup and template examples</td>
                                 </tr>
                                 <tr>
-                                    <td>lang-css</td>
+                                    <td><code class="nds-inline-code lang-html">lang-css</code></td>
                                     <td>CSS / SCSS</td>
                                     <td>Stylesheet examples</td>
                                 </tr>
                                 <tr>
-                                    <td>lang-javascript</td>
+                                    <td><code class="nds-inline-code lang-html">lang-javascript</code> or <code class="nds-inline-code lang-html">lang-js</code></td>
                                     <td>JavaScript</td>
                                     <td>Script and API examples</td>
                                 </tr>
@@ -606,117 +657,125 @@ NDS.Alert.create({
     </div>
 </section>
 
+<!-- Built-in Features -->
+<section id="codeFeatures" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Built-in Features</h2>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-source-code"></i>
+                        <span class="nds-label">Syntax Highlighting</span>
+                    </span>
+                    <p class="nds-item-desc">HTML, CSS, and JavaScript are highlighted automatically. Embedded <code class="nds-inline-code lang-html">&lt;style&gt;</code> and <code class="nds-inline-code lang-html">&lt;script&gt;</code> bodies inside HTML blocks are highlighted in their respective languages.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
+                        <span class="nds-label">Line Numbers</span>
+                    </span>
+                    <p class="nds-item-desc">A CSS counter gutter is added automatically when a block has more than one line. Opt in manually by adding <code class="nds-inline-code lang-html">line-numbers</code> to the <code class="nds-inline-code lang-html">&lt;code&gt;</code> element.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-copy-01"></i>
+                        <span class="nds-label">Copy Button</span>
+                    </span>
+                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-copy</code> to any button inside <code class="nds-inline-code lang-html">.nds-code-action</code> to copy the block's source text. The button shows a brief "Copied" state on success.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-tag-01"></i>
+                        <span class="nds-label">Language Auto-detection</span>
+                    </span>
+                    <p class="nds-item-desc">When no <code class="nds-inline-code lang-html">lang-*</code> class is set, the lexer sniffs the language from the content: leading <code class="nds-inline-code lang-html">&lt;</code> implies HTML, JS keywords imply JavaScript, selector or declaration patterns imply CSS.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-code"></i>
+                        <span class="nds-label">Inline Code</span>
+                    </span>
+                    <p class="nds-item-desc">Apply <code class="nds-inline-code lang-html">nds-inline-code</code> to a <code class="nds-inline-code lang-html">&lt;code&gt;</code> element for short inline references with <code class="nds-inline-code lang-html">nowrap</code> and syntax coloring.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-colors"></i>
+                        <span class="nds-label">Themeable Tokens</span>
+                    </span>
+                    <p class="nds-item-desc">Nine <code class="nds-inline-code lang-html">--syntax-*</code> custom properties let you override every syntax color category at the page or component level.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Usage Guidelines -->
-<section id="codeGuidelines" class="nds-content-section nds-demo-section">
+<section id="codeUsageGuidelines" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-body">
-                <div class="nds-block">
-                    <h3 class="nds-block-title">Structure</h3>
-                    <ul>
-                        <li>All code blocks must be wrapped in .nds-code.nds-expandable</li>
-                        <li>Use .nds-code-action for the copy button container</li>
-                        <li>Wrap the code element inside div.nds-expandable-content</li>
-                        <li>Add language class to the code element (lang-html, lang-css, lang-javascript)</li>
-                    </ul>
-                </div>
 
-                <div class="nds-block">
-                    <h3 class="nds-block-title">Direct vs Tabbed</h3>
-                    <ul>
-                        <li>Direct: .nds-code.nds-expandable > .nds-expandable-content > code</li>
-                        <li>Tabbed: .nds-tabs.nds-code.nds-divided > .nds-tab-panel > code</li>
-                        <li>Add hidden attribute when tabbed code is inside demo cards</li>
-                        <li>Tabbed variant inherits tab component behavior</li>
-                    </ul>
-                </div>
+            <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-processed</code></td><td><code class="nds-inline-code lang-html">code</code></td><td>Set to <code class="nds-inline-code lang-html">true</code> by JS after highlighting. Guards against double-processing. Set to <code class="nds-inline-code lang-html">false</code> by <code class="nds-inline-code lang-js">reprocessCodeElement</code> before re-highlighting.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-original-content</code></td><td><code class="nds-inline-code lang-html">code</code></td><td>Stores the pre-highlight innerHTML so <code class="nds-inline-code lang-js">reprocessCodeElement</code> can restore and re-highlight (for example, after a theme switch).</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-                <div class="nds-block">
-                    <h3 class="nds-block-title">Features</h3>
-                    <ul>
-                        <li>Add line-numbers class for numbered lines</li>
-                        <li>.nds-expandable enables auto show/hide for long code</li>
-                        <li>Copy button auto-copies content and shows "Copied" feedback</li>
-                        <li>Code is always rendered LTR regardless of page direction</li>
-                    </ul>
-                </div>
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <p>These properties apply to both <code class="nds-inline-code lang-html">.nds-code</code> and <code class="nds-inline-code lang-html">.nds-inline-code</code>. Set them on a parent element or <code class="nds-inline-code lang-html">:root</code> to re-theme all code on the page.</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Highlights</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-red</code></td><td><code class="nds-inline-code lang-html">--colors-red-600</code></td><td>Tags and CSS selectors</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-orange</code></td><td><code class="nds-inline-code lang-html">--colors-yellow-600</code></td><td>Attribute names and numbers</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-green</code></td><td><code class="nds-inline-code lang-html">--colors-green-600</code></td><td>Attribute values and strings</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-blue</code></td><td><code class="nds-inline-code lang-html">--colors-blue-600</code></td><td>CSS properties, JS functions and methods</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-purple</code></td><td><code class="nds-inline-code lang-html">--colors-tertiary-500</code></td><td>Keywords and regex</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-cyan</code></td><td><code class="nds-inline-code lang-html">--colors-blue-500</code></td><td>Literals and operators</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-yellow</code></td><td><code class="nds-inline-code lang-html">--colors-yellow-600</code></td><td>Built-in globals and class names</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-gray</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-500</code></td><td>Comments</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-gray-dark</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-600</code></td><td>Parameters</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-                <div class="nds-block">
-                    <h3 class="nds-block-title">Best Practices</h3>
-                    <ul>
-                        <li>Keep code examples concise and focused</li>
-                        <li>Use expandable for code longer than ~15 lines</li>
-                        <li>Match tab labels to the actual language shown</li>
-                        <li>Ensure all panel IDs and tab IDs are unique per page</li>
-                    </ul>
-                </div>
-        </div>
-    </div>
-</section>
+            <div class="nds-block">
+                <h3 class="nds-block-title">JavaScript API</h3>
+                <p>The <strong>NDS.Code</strong> API is called automatically on page load. Call <strong>NDS.Code.init()</strong> after inserting code blocks dynamically.</p>
+                <div class="nds-code nds-expandable">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <div class="nds-expandable-content">
+                        <code class="lang-javascript line-numbers">
+// ── Initialize all code blocks on the page ───────────
+// Processes .code-example code, .nds-code code, and code.nds-inline-code
+NDS.Code.init();
 
-<!-- CSS Implementation -->
-<section id="codeCSS" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">CSS Implementation</h2>
-            <p class="nds-section-description">Core styles for the code block component</p>
-        </div>
-        <div class="nds-section-body">
+// ── Re-highlight a single element ────────────────────
+// Restores original content from data-original-content then re-highlights.
+// Use after a theme switch or dynamic content change.
+NDS.Code.reprocessCodeElement(codeEl);
 
-            <div class="nds-code nds-expandable">
-                <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                        <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                </div>
-                <div class="nds-expandable-content">
-                    <code class="lang-css line-numbers">
-.nds-code {
-    margin: var(--spacing-xl);
-    border: 1px solid var(--border-neutral-secondary);
-    border-radius: var(--radius-md);
-    padding: 0;
-    position: relative;
-    overflow: clip;
-}
-
-.nds-code .nds-code-action {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: var(--alpha-white-70);
-    z-index: 2;
-}
-
-.nds-code code {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-    font-size: var(--typo-text-sm-FS);
-    line-height: var(--typo-text-sm-LH);
-    font-weight: var(--font-weight-semibold);
-    direction: ltr;
-    text-align: left;
-    white-space: pre;
-    padding: var(--spacing-xl) 0;
-}
-
-/* Line numbers variant */
-.nds-code code.line-numbers {
-    counter-reset: line;
-    display: flex;
-    flex-direction: column;
-}
-
-.nds-code code.line-numbers .code-line::before {
-    counter-increment: line;
-    content: counter(line);
-    width: 3em;
-    margin-right: 1rem;
-    color: var(--colors-neutral-500);
-    font-size: var(--typo-text-xs-FS);
-}
-                </code>
+// ── Detect the language of a block ───────────────────
+// Returns 'html', 'css', or 'javascript'.
+// Reads the lang-* / language-* class first; falls back to content sniffing.
+const lang = NDS.Code.detectLanguage(codeEl, sourceText);
+                        </code>
+                    </div>
                 </div>
             </div>
 

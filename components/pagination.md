@@ -1020,6 +1020,9 @@ direction: ltr
 // Initialize all pagination on the page
 NDS.Pagination.init();
 
+// Re-initialize all pagination (manual + auto): call after dynamic content insertion
+NDS.Pagination.reinit();
+
 // Initialize auto-pagination (data-auto-pagination + nds-paged-content)
 NDS.Pagination.initAuto();
 

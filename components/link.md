@@ -167,7 +167,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;!-- JS detects the external hostname and adds nds-external + target="_blank". Cross-domain links also get rel="noopener noreferrer". Subdomain links are trusted and skip rel. --&gt;
+&lt;!-- JS compares a.hostname against location.hostname (exact match). Any different hostname, including subdomains, gets nds-external + target="_blank" + rel="noopener noreferrer". --&gt;
 &lt;p&gt;Consult the &lt;a href="https://www.data.gov.sa/" class="nds-link"&gt;Saudi Open Data portal&lt;/a&gt; for published datasets.&lt;/p&gt;
 &lt;p&gt;Review the &lt;a href="https://www.itu.int/en/Pages/default.aspx" class="nds-link nds-primary"&gt;ITU accessibility guidelines&lt;/a&gt; before publishing your service.&lt;/p&gt;
                                     </code>
@@ -295,7 +295,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-security-check"></i>
                         <span class="nds-label">Safe Navigation</span>
                     </span>
-                    <p class="nds-item-desc">External links open in a new tab automatically. Cross-domain links also receive <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>. Subdomain links are treated as trusted and skip the rel attribute.</p>
+                    <p class="nds-item-desc">External links open in a new tab automatically and receive <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>. The check compares <code class="nds-inline-code lang-html">a.hostname</code> against <code class="nds-inline-code lang-html">location.hostname</code> exactly, so subdomains are treated as external and also receive the rel attribute.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -337,6 +337,7 @@ direction: ltr
                     <li>External links (different domain) are detected and marked automatically. You do not need to add <code class="nds-inline-code lang-html">target="_blank"</code> or <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code> manually for cross-domain URLs</li>
                     <li>Use <code class="nds-inline-code lang-html">data-no-external</code> on a link or a wrapper element when you want to suppress the external icon and new-tab behavior, such as for trusted partner sites or embedded widgets from a known domain</li>
                     <li>Icon-only buttons (<code class="nds-inline-code lang-html">nds-btn nds-icon-only</code>) that happen to be links are automatically excluded from external treatment since they have no visible label to accompany the external icon</li>
+                    <li>Links whose only child elements are <code class="nds-inline-code lang-html">&lt;i&gt;</code> or <code class="nds-inline-code lang-html">&lt;img&gt;</code> (no text content) are also skipped by the auto-tagger. To force the external badge on such a link, add <code class="nds-inline-code lang-html">nds-external</code> manually</li>
                 </ul>
             </div>
 
@@ -371,6 +372,7 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--link-decoration</code></td><td><code class="nds-inline-code lang-html">none</code></td><td>Controls <code class="nds-inline-code lang-html">text-decoration</code>. Set to <code class="nds-inline-code lang-html">underline</code> to force underline regardless of state. Automatically set to <code class="nds-inline-code lang-html">underline</code> on hover, active, and when <code class="nds-inline-code lang-html">nds-underline</code> is present</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--link-color</code></td><td><code class="nds-inline-code lang-html">--link-neutral</code></td><td>Text color in the default state. Set on the element or an ancestor to override the variant</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--link-hover</code></td><td><code class="nds-inline-code lang-html">--link-neutral-hovered</code></td><td>Text color on hover</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--link-pressed</code></td><td><code class="nds-inline-code lang-html">--link-neutral-pressed</code></td><td>Text color on active press</td></tr>

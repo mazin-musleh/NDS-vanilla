@@ -102,16 +102,16 @@ direction: ltr
       &lt;span&gt;|&lt;/span&gt;
       &lt;a href="/privacy-policy" id="ndsCookiesPrivacyLink"&gt;Privacy Policy&lt;/a&gt;
     &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div class="nds-card-actions"&gt;
-    &lt;button class="nds-btn nds-primary nds-full" id="ndsCookiesAcceptBtn"
-      data-accept-title="Accepted" data-accept-message="Cookies have been accepted"&gt;
-      &lt;span class="nds-label"&gt;Accept&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn"
-      data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected"&gt;
-      &lt;span class="nds-label"&gt;Reject Non-Essential&lt;/span&gt;
-    &lt;/button&gt;
+    &lt;div class="nds-card-actions"&gt;
+      &lt;button class="nds-btn nds-primary nds-full" id="ndsCookiesAcceptBtn"
+        data-accept-title="Accepted" data-accept-message="Cookies have been accepted"&gt;
+        &lt;span class="nds-label"&gt;Accept&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button class="nds-btn nds-secondary nds-full" id="ndsCookiesDeclineBtn"
+        data-decline-title="Non-essential rejected" data-decline-message="Non-essential cookies rejected"&gt;
+        &lt;span class="nds-label"&gt;Reject Non-Essential&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                         </code>
@@ -191,7 +191,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Opens two seconds after first load when no consent is stored. Re-visits skip the banner until you clear the saved preference.</p>
+                    <p class="nds-item-desc">Opens six seconds after first load when no consent is stored. Re-visits skip the banner until you clear the saved preference.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -228,6 +228,13 @@ direction: ltr
                     </span>
                     <p class="nds-item-desc">Call NDS.Cookies.show() from any trigger (footer link, settings button) to re-open the banner after a decision has been made.</p>
                 </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-motion-01"></i>
+                        <span class="nds-label">Reduced Motion</span>
+                    </span>
+                    <p class="nds-item-desc">The slideUp entrance animation is suppressed automatically when the user has enabled the prefers-reduced-motion system setting.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -244,7 +251,7 @@ direction: ltr
             <div class="nds-block">
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
-                    <li>Let the component auto-open on the first visit. A 2000 ms delay keeps the banner from fighting with first-paint content, and the saved consent means return visitors never see it again unnecessarily</li>
+                    <li>Let the component auto-open on the first visit. A 6000 ms delay keeps the banner from fighting with first-paint content, and the saved consent means return visitors never see it again unnecessarily</li>
                     <li>Add a persistent "Cookie Settings" link in the footer that calls <code class="nds-inline-code lang-js">NDS.Cookies.show()</code>. Consent is a reversible decision, and users expect to find the control later without digging</li>
                     <li>Choose <code class="nds-inline-code lang-html">nds-compact</code> for desktop-first products where the bottom banner would cover a fixed footer, chatbot, or data table. The compact card sits above content as a floating dialog rather than a bar</li>
                     <li>Keep the body text to one or two sentences. Lead with the "why", then link to the Terms and Privacy pages for the full policy. Users skim, not read, consent banners</li>

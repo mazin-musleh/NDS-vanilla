@@ -435,12 +435,44 @@ var result = NDS.Forms.validateCheckboxGroup(group);
 // Validate without showing feedback
 NDS.Forms.validateCheckboxGroup(group, { showMessage: false });
 
+// Attach change-listener validation to a group (called automatically at init)
+NDS.Forms.initCheckboxGroupValidation(group);
+
 // Clear validation status
 NDS.Forms.clearStatus(group);
                 </code>
               </div>
         </div>
       </div>
+      <div class="nds-block">
+        <h3 class="nds-block-title">Data Attributes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="indeterminate"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code></td><td>Stamped by <code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code> when the checkbox is indeterminate; removed when cleared</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code>, <code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Propagates disabled styling to all child inputs</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="readonly"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code></td><td>Renders the checkbox tile as read-only: border only, no fill</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code>, <code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Marks a single checkbox or group as required on form submit</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-min-checked</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Minimum number of checkboxes that must be selected</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-max-checked</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Maximum number of checkboxes that may be selected</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Overrides the default validation error message shown below the group</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nds-block">
+        <h3 class="nds-block-title">CSS Custom Properties</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">--checkbox-tile-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Fill color of the checkbox tile. Override inline to tint a single checkbox</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--checkbox-tile-border</code></td><td><code class="nds-inline-code lang-html">--controls-border</code></td><td>Box-shadow ring color around the tile</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--checkbox-glyph-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Color of the checkmark or dash glyph painted inside the tile</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td><code class="nds-inline-code lang-html">16px</code></td><td>Size of the checkbox control. Set by size modifiers: <code class="nds-inline-code lang-html">nds-md</code> = 20px, <code class="nds-inline-code lang-html">nds-lg</code> = 24px. Override inline for a custom size</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="nds-block">
         <h3 class="nds-block-title">Validation Attributes</h3>
         <ul>

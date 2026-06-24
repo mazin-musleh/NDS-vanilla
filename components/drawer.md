@@ -1204,8 +1204,8 @@ direction: ltr
                             <td>Adds a vertical side rail (<code class="nds-inline-code lang-css">::before</code> pseudo-element) alongside every sub-list. Opt-in — add to <code class="nds-inline-code lang-html">.nds-drawer</code>. Used by the site sidemenu and TOC. Rail width and block-axis inset are controlled by <code class="nds-inline-code lang-html">--drawer-lined-width</code> and <code class="nds-inline-code lang-html">--drawer-lined-block</code>.</td>
                         </tr>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">nds-drawer-group</code></td>
-                            <td>Applied to a <code class="nds-inline-code lang-html">li</code> inside a sub-<code class="nds-inline-code lang-html">ul</code> to create a 3-level collapsible group. The group renders as a bold header button that expands a nested sub-list. Restores <code class="nds-inline-code lang-html">display: flex</code> and full text color that the muted sub-list styles normally suppress.</td>
+                            <td>element: <code class="nds-inline-code lang-html">li &gt; ul &gt; li</code></td>
+                            <td>No class needed. A <code class="nds-inline-code lang-html">li</code> directly inside a sub-<code class="nds-inline-code lang-html">ul</code> is automatically treated as a 3-level group header: the element selector restores <code class="nds-inline-code lang-html">display: flex</code>, full text color, and applies semibold weight to its direct button. Nest another <code class="nds-inline-code lang-html">ul</code> inside to create the collapsible sub-list.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-divided</code> on <code class="nds-inline-code lang-html">ul</code></td>
@@ -1259,8 +1259,8 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--drawer-indent</code></td>
-                            <td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td>
-                            <td>Submenu indentation. Increases with <code class="nds-inline-code lang-html">nds-sm</code> and <code class="nds-inline-code lang-html">nds-lg</code>.</td>
+                            <td><code class="nds-inline-code lang-html">calc(var(--spacing-xl))</code></td>
+                            <td>Submenu indentation, derived from the button's inline padding. Overridden to <code class="nds-inline-code lang-html">--spacing-lg</code> by <code class="nds-inline-code lang-html">nds-sm</code> and <code class="nds-inline-code lang-html">--spacing-2xl</code> by <code class="nds-inline-code lang-html">nds-lg</code>.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--drawer-divider</code></td>
@@ -1314,7 +1314,7 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--drawer-lined-width</code></td>
-                            <td><code class="nds-inline-code lang-html">2px</code></td>
+                            <td><code class="nds-inline-code lang-html">1px</code></td>
                             <td>Width of the vertical side rail rendered by <code class="nds-inline-code lang-html">nds-lined</code>.</td>
                         </tr>
                         <tr>

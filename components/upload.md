@@ -212,7 +212,7 @@ direction: ltr
       &lt;/div&gt;
 
       &lt;div class="nds-file-actions"&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file" aria-label="Remove file"&gt;
+        &lt;button type="button" class="nds-btn nds-subtle nds-md nds-icon-only nds-remove-file" aria-label="Remove file"&gt;
           &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/button&gt;
       &lt;/div&gt;
@@ -415,7 +415,7 @@ uploadButton.addEventListener('click', () =&gt; {
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:beforeUpload</code> (cancelable)</td><td><code class="nds-inline-code lang-js">{ fileData, formData, xhr }</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:progress</code></td><td><code class="nds-inline-code lang-js">{ fileData, progress }</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:success</code></td><td><code class="nds-inline-code lang-js">{ fileData, response }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:error</code></td><td><code class="nds-inline-code lang-js">{ fileData, error, status }</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">nds:upload:error</code></td><td><code class="nds-inline-code lang-js">{ fileData, error, status? }</code>: <code class="nds-inline-code lang-js">status</code> (HTTP status code) is present for HTTP errors only; network-level errors omit it</td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:removed</code></td><td><code class="nds-inline-code lang-js">{ fileData, fileId }</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:maxFilesReached</code></td><td><code class="nds-inline-code lang-js">{ maxFiles, currentCount }</code></td></tr>
                     </tbody>

@@ -183,6 +183,88 @@ direction: ltr
   </div>
 </section>
 
+<!-- Readonly State -->
+<section id="radioReadonly" class="nds-content-section nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Readonly State</h2>
+      <p class="nds-section-description">Freezes the border color without disabling interaction or graying the tile fill</p>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-showcase">
+        <div class="nds-demo-card">
+          <div class="demo-container">
+            <div class="state-demo">
+              <form class="nds-form nds-grid" style="--max-col:1" onsubmit="return false">
+                <fieldset class="nds-form-group nds-radio-group">
+                  <legend class="nds-label">Preferred contact</legend>
+                  <div class="nds-form-container nds-radio-container" data-state="readonly">
+                    <div class="nds-form-header">
+                      <label for="demo-readonly-radio1">
+                        <span class="nds-label">Email</span>
+                        <span class="nds-info">Receive updates by email</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input type="radio" id="demo-readonly-radio1" name="contact-readonly" value="email" class="nds-radio" checked>
+                    </div>
+                  </div>
+                  <div class="nds-form-container nds-radio-container" data-state="readonly">
+                    <div class="nds-form-header">
+                      <label for="demo-readonly-radio2">
+                        <span class="nds-label">SMS</span>
+                        <span class="nds-info">Receive updates by text message</span>
+                      </label>
+                    </div>
+                    <div class="nds-form-control">
+                      <input type="radio" id="demo-readonly-radio2" name="contact-readonly" value="sms" class="nds-radio">
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          <div class="demo-code">
+          <div class="nds-tabs nds-code nds-divided">
+            <div class="nds-tab-list-container nds-scroll-more">
+              <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  aria-controls="panel-radio-readonly-1" id="tab-radio-readonly-1">
+                  <span class="nds-tab-label">HTML</span>
+                </button>
+              </nav>
+            </div>
+            <div class="nds-tab-content">
+              <div class="nds-tab-panel code-example" role="tabpanel" id="panel-radio-readonly-1"
+                aria-labelledby="tab-radio-readonly-1">
+                <div class="nds-code-action">
+                  <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                    <i class="nds-icon nds-hgi-copy-01"></i>
+                  </button>
+                </div>
+                <code class="lang-html code">
+&lt;div class="nds-form-container nds-radio-container" data-state="readonly"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="radio-readonly1"&gt;
+      &lt;span class="nds-label"&gt;Email&lt;/span&gt;
+      &lt;span class="nds-info"&gt;Receive updates by email&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;input type="radio" id="radio-readonly1" name="contact" value="email" class="nds-radio" checked&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+                </code>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="radioFeatures" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
@@ -267,9 +349,55 @@ NDS.Forms.setStatus({ element: group, status: 'error', message: 'Please select a
 
 // Clear validation status
 NDS.Forms.clearStatus(group);
+
+// Re-sync chrome after a programmatic .checked assignment
+// (updates sibling radio containers and the clear button; no event re-dispatch)
+var radio = document.querySelector('#radio1');
+radio.checked = true;
+NDS.Forms.syncState(radio);
                 </code>
               </div>
         </div>
+      </div>
+      <div class="nds-block">
+        <h3 class="nds-block-title">Modifier Classes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Class</th><th>Target</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td><code class="nds-inline-code lang-html">.nds-radio</code></td><td>Neutral color variant for the checked tile fill</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">.nds-radio-container</code></td><td>Medium size: increases tile and gap proportionally, widens gap ring to 4 px</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-radio-container</code></td><td>Large size: further increases tile and gap proportionally, widens gap ring to 5 px</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">.nds-radio-group</code></td><td>Arranges radio options horizontally in a row instead of the default column</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nds-block">
+        <h3 class="nds-block-title">Data Attributes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Attribute</th><th>Target</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td><code class="nds-inline-code lang-html">.nds-radio-group</code></td><td>Marks the group as required; a selection is enforced on form submit</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td><code class="nds-inline-code lang-html">.nds-radio-group</code></td><td>Overrides the default validation error message shown when no option is selected</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-radio-group</code></td><td>Disables all radio inputs in the group via the forms state hook</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="readonly"</code></td><td><code class="nds-inline-code lang-html">.nds-radio-container</code></td><td>Freezes the tile border to the disabled color while leaving the input interactive</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nds-block">
+        <h3 class="nds-block-title">CSS Custom Properties</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">--radio-tile-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Background fill of the radio tile (unchecked state)</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--radio-tile-border</code></td><td><code class="nds-inline-code lang-html">--controls-border</code></td><td>Outline ring color of the tile (unchecked state)</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--radio-primary-checked</code></td><td><code class="nds-inline-code lang-html">--controls-primary-checked</code></td><td>Tile fill color when the primary radio is checked</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--radio-primary-hovered</code></td><td><code class="nds-inline-code lang-html">--controls-primary-hovered</code></td><td>Tile fill color on hover of a checked primary radio</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--radio-primary-pressed</code></td><td><code class="nds-inline-code lang-html">--controls-primary-pressed</code></td><td>Tile fill color on press of a checked primary radio</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--radio-neutral-checked</code></td><td><code class="nds-inline-code lang-html">--controls-neutral-checked</code></td><td>Tile fill color when the neutral radio is checked</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--radio-neutral-hovered</code></td><td><code class="nds-inline-code lang-html">--controls-neutral-hovered</code></td><td>Tile fill color on hover of a checked neutral radio</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--radio-neutral-pressed</code></td><td><code class="nds-inline-code lang-html">--controls-neutral-pressed</code></td><td>Tile fill color on press of a checked neutral radio</td></tr>
+          </tbody>
+        </table>
       </div>
       <div class="nds-block">
         <h3 class="nds-block-title">Validation Attributes</h3>

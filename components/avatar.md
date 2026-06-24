@@ -720,14 +720,42 @@ direction: ltr
         <div class="nds-section-body">
 
             <div class="nds-block">
-                <h3 class="nds-block-title">When to Use</h3>
+                <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use initials when no profile image is available. Two letters from the user's name</li>
                     <li>Use icon avatars for anonymous or system-level users where no identity is needed</li>
-                    <li>Use image avatars when a real photo is available. Always include alt text</li>
+                    <li>Use image avatars when a real photo is available. Always include <code class="nds-inline-code lang-html">alt</code> text describing the person</li>
                     <li>Use groups to show participants, collaborators, or team members in a compact space</li>
                     <li>Choose the size based on context: XS/SM for inline mentions, MD/LG for cards, XL+ for profile headers</li>
+                    <li>For icon-only avatars used as buttons or links, add <code class="nds-inline-code lang-html">aria-label</code> to describe the action or person (for example, <code class="nds-inline-code lang-html">aria-label="Open user menu"</code>)</li>
+                    <li>For image avatars, write <code class="nds-inline-code lang-html">alt</code> text that names the person or conveys context. Use an empty <code class="nds-inline-code lang-html">alt=""</code> only when the avatar is purely decorative and the name appears nearby in text</li>
                 </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-square</code></td><td><code class="nds-inline-code lang-html">.nds-avatar</code></td><td>Applies a small border-radius for a rounded-square shape instead of a circle</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-image-border</code></td><td><code class="nds-inline-code lang-html">.nds-avatar</code></td><td>Adds a subtle inset outline on image avatars to separate the photo from the background</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-stacked</code></td><td><code class="nds-inline-code lang-html">.nds-avatar-group</code></td><td>Overlaps avatars so each one shifts behind the previous, creating a compact layered group</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--avatar-size</code></td><td><code class="nds-inline-code lang-html">40px</code></td><td>Width and height of the avatar. Overridden by each size modifier class</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--avatar-gap</code></td><td><code class="nds-inline-code lang-html">6px</code></td><td>Spacing between avatars inside <code class="nds-inline-code lang-html">.nds-avatar-group</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--avatar-background</code></td><td><code class="nds-inline-code lang-html">--background-neutral-100</code></td><td>Fill color of initials and icon avatars</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--avatar-color</code></td><td><code class="nds-inline-code lang-html">--icon-default</code></td><td>Foreground color for initials text and icons</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--avatar-border</code></td><td><code class="nds-inline-code lang-html">--border-white</code></td><td>Border color applied to 3XL avatars and 3XL group members</td></tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>
