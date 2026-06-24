@@ -119,6 +119,8 @@ Unfiltered four-group runs in **full-tree `js` mode** are not supported — swee
 
 **If `$2` is missing:** single-file mode defaults to `all` and runs immediately (single-file `all` is cheap — don't prompt for a group). Full-tree `js` mode has no default — show the Phase 1 menu and wait. `all` is valid in single-file mode only; in full-tree `js` it's rejected (see the full-tree note above).
 
+**Ponytail overlay.** The ponytail lens (Phase 3) runs on top of whichever groups run — it is not itself a selectable group. Pass a `no-pony` token (e.g. `/nds-js-audit nds-modal.js all no-pony`, or alongside a single group) to suppress it for a pure catalog run.
+
 **Single-file `all` — consolidated report.** Run each group's Phase 3 analysis against the one file, then emit ONE Phase 4 report (not four): a `## Per-group results` table (one row per group: clean / N findings), findings merged and grouped by severity exactly as the normal report does (rule IDs disambiguate the group), and every applicable single-file banner shown once (the JSD-05 single-file skip banner for the dry portion; no JSA deep-read banner since single-file runs them all). Compute the Recommended action over the merged finding set using the same Phase 4 table. Phase 5 fixes and Phase 7 evolve work identically on the merged set. This is the same shape as running the four groups back-to-back, collapsed into a single pass and a single report.
 
 ### Cross-tree rules in single-file mode
@@ -152,6 +154,7 @@ Source files are the single source of truth. Read them fully, not by skimming.
 ### MUST read every run
 
 - **The rule catalog for THIS run's scope** — the detection rules live in per-group sibling files (Phase 3 → "Rule catalog"). Read the one(s) matching the run's rule-group filter: `RULES-JSP.md` (`performance`), `RULES-JSD.md` (`dry`), `RULES-JSS.md` (`security`), `RULES-JSA.md` (`architecture`). A run with no rule-group filter reads all four. JSD-15's canonicals are in `PERSONA.md` (read it whenever JSD applies). Read only what the scope needs — loading the unused groups is the token waste the rule-group filter exists to avoid.
+- **`PONYTAIL.md`** — the ponytail over-engineering overlay (Phase 3). Read it on every analyze pass UNLESS the run carries a `no-pony` token. It runs after the catalog, within this run's scope, and carries its own carve-outs (reuses the PERSONA.md + deliberate-architecture guardrails).
 - **`_js/nds-core.js`** — the full shared-utility surface. Re-read every run so the rule catalog reflects the current `NDS.*` API (names, arities, return values). Rules JSP-01 through JSP-08, JSD-01 through JSD-04, and JSS fixes that cite helpers (e.g., `NDS.escapeHtml` if/when promoted) all reference specific functions here; if core gains a utility, the skill's recommendation should route to it instead of flagging the pattern as unresolved.
 - **At least one JS good-pattern exemplar** — `_js/nds-scroll-more.js` for RAF-throttled scroll + pooled ResizeObserver, `_js/nds-drawer.js` for NDS.State destructuring (`const { add: addState, … } = NDS.State`, ~L77), `_js/nds-modal.js` for NDS.State and backdrop API usage. Recommendations cite these with `file:line` so the user can copy a working pattern rather than invent one. JSA rules reuse the same exemplar set (plus `_js/nds-autocomplete.js:290-312` for size-capped fetch + abort, and `_js/nds-loader.js` `yieldToBrowser` (~L423-431) for `MessageChannel`-based microtask yielding).
 
@@ -168,6 +171,10 @@ NDS uses no per-component eager-shell + lazy-behavior splits — the chosen patt
 ## Phase 3: ANALYZE
 
 Run the rule catalog (the per-group `RULES-*.md` file(s) read in Phase 2) file-by-file. Each match is recorded as: file, line, rule ID, offending snippet (≤120 characters), suggested fix pointing to the exact `NDS.*` call. Dedupe findings whose line ranges overlap so the same handler is not triple-flagged.
+
+### Ponytail overlay (final lens — every run unless `no-pony`)
+
+After the catalog pass completes, apply `PONYTAIL.md` (read in Phase 2) **within this run's resolved scope** — it asks "should this exist at all?", which the perf/DRY/security/architecture rules never ask head-on. Two steps, per that file: (1) **re-tag** each finding already produced with `delete/stdlib/native/yagni/shrink` (a label on the existing row — no new finding, no double-report); (2) **gap-hunt** the small net-new `PONY-STD/-NAT/-YAG/-DEL` set the catalog doesn't cover, scoped to this run (single-file → the target + repo cross-ref for readers; full-tree → the greppable shapes). Honor `PONYTAIL.md`'s carve-outs verbatim — never flag the 3-bundle architecture, pooled core helpers, lifecycle canon, deliberate fidelity shims, the markup contract, or marginal changes to `forms`/`core`/`loader`. **Before any `delete`/`PONY-DEL`/zero-reader `PONY-YAG`, grep the whole repo (incl. `nds-showcase.js` and the component's `.md`) for readers** — the `getFallback` lesson. The single-file deep-read agent runs this lens too: paste `PONYTAIL.md`'s carve-outs into its brief and tag returned rows `PONY-*` + `(deep-read agent)`. PONY findings fold into the Phase 4 report under their severity; print one `Ponytail: <N> cuts (…)` / `Ponytail: none` line below the Summary block. Phase 5 FIX, auto-advance, and Phase 7 EVOLVE treat them like any rule.
 
 ### Track observations for Phase 7
 

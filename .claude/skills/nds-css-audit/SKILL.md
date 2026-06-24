@@ -173,6 +173,8 @@ When Tier 2 IS explicitly named, the audit applies **file-specific carve-outs** 
 
 **If `$2` is missing:** single-file mode defaults to `all`. Full-tree mode has no default — show the Phase 1 menu and wait.
 
+**Ponytail overlay.** The ponytail lens (Phase 3) runs on top of whichever groups run — it is not itself a selectable group and needs no full-tree pairing. Pass a `no-pony` token (e.g. `/nds-css-audit _buttons.scss all no-pony`, or alongside a single group) to suppress it for a pure catalog run.
+
 **Full-tree restriction.** Only DUPE-02 (cross-file duplicate rule bodies), TOK-01 (cross-file hardcoded-value duplication), TOK-02 (dead component tokens), TOK-04 (asymmetric state coverage), TOK-05 (cross-file duplicate keys / upstream-value duplication), and TOK-06 (cross-sibling indirection-token asymmetry) work cross-file. If the user passes `full-tree SEL` / `full-tree DEAD` / `full-tree PERF`, reject: *"`SEL`/`DEAD`/`PERF` rules are per-file — full-tree mode applies only to `DUPE` and `TOK`. Run single-file (`/nds-css-audit _sass/components/_<name>.scss <group>`) instead."*
 
 ## Phase 2: READ
@@ -182,6 +184,7 @@ Source files are the single source of truth. Read fully, not by skimming.
 ### MUST read every run
 
 - **The rule catalog for THIS run's scope** — `RULES-SEL.md` (`SEL`), `RULES-DEAD.md` (`DEAD`), `RULES-DUPE.md` (`DUPE`), `RULES-PERF.md` (`PERF`), `RULES-TOK.md` (`TOK`). A run with no rule-group filter reads all five. Read only what the scope needs.
+- **`PONYTAIL.md`** — the ponytail over-engineering overlay (Phase 3). Read it on every analyze pass UNLESS the run carries a `no-pony` token. It runs after the catalog, within this run's scope, and carries its own carve-outs.
 - **No maturity ledger to read.** A rule's lifecycle — its motivating example, and whether that example was resolved into a regression guard — lives inline in its `RULES-*.md` row, already read as part of the rule catalog above. There is no separate maturity file and no cross-run trail the audit depends on. (A prior saved report in `.claude/audit-reports/` is read ONLY when the user asks for a `Diff vs. Run (N−1)` — an optional comparison export, never an input to detection or EVOLVE.)
 - **The token-source files** — the canonical token table lives in `_sass/tokens/` (`_variables.scss` is a thin barrel that only `@use`s the component tier; there is no `_variables-dga.scss`): `_sass/tokens/_primitives.scss` (spacing/width/radius scales), `_sass/tokens/_semantic.scss` (background/text/border/icon/controls/shadow), `_sass/tokens/_components.scss` (`--{component}-*` tier), `_sass/themes/_dga.scss` (the `--colors-*` palette — vendored DGA mirror, DO NOT MODIFY), and `_sass/_variables-critical.scss` (critical-path foundation tokens). **DEAD-05** and the **TOK rules** all reference them; this list is the canonical one (RULES-TOK.md restates it with per-file detail). The mode variants (`_variables-dark.scss`, `_sass/tokens/_components-dark.scss`, `_variables-a11y.scss`) are mode overrides, NOT token sources — they re-bind existing tokens for a different mode. Do not read them as token definitions; consult them only when checking DEAD-05 carve-outs (mode-conditional token availability) and TOK-02 dead-token analysis (mode-override binding counts as a use).
 
@@ -234,6 +237,10 @@ Read each target file top-to-bottom before running the catalog. Nested rules and
 ## Phase 3: ANALYZE
 
 Run the rule catalog (the per-group `RULES-*.md` file(s) read in Phase 2) file-by-file. Each match is recorded as: file, line, rule ID, offending snippet (≤120 characters), proposed rewrite, byte-delta estimate (SEL/DEAD/DUPE) or qualitative impact note (PERF/TOK). Dedupe overlapping findings so the same block isn't double-flagged.
+
+### Ponytail overlay (final lens — every run unless `no-pony`)
+
+After the catalog pass completes, apply `PONYTAIL.md` (read in Phase 2) **within this run's resolved scope** — it asks "should this exist at all?", which the byte/selector/token rules never ask. Two steps, per that file: (1) **re-tag** each finding already produced with `delete/shrink/yagni/native` (a label on the existing row — no new finding, no double-report); (2) **gap-hunt** the small net-new `PONY-NAT/-YAG/-DEL` set the catalog doesn't cover, scoped to this run (single-file → the target file + repo cross-ref for "is it used"; full-tree → the cross-file shapes). Honor `PONYTAIL.md`'s carve-outs verbatim — never flag the deliberately-tuned critical CSS, token tiers, public mixin/utility surface, or rejected-before patterns. The single-file deep-read agent runs this lens too: paste `PONYTAIL.md`'s carve-outs into its brief and tag returned rows `PONY-*` + `(deep-read agent)`. PONY findings fold into the Phase 4 report under their severity; print one `Ponytail: <N> cuts (…)` / `Ponytail: none` line below the canonical header. Phase 5 APPLY, accept-and-annotate, and Phase 6 EVOLVE treat them like any rule.
 
 ### Component relationships (preprocessing step)
 
