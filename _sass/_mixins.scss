@@ -10,28 +10,6 @@
 // BREAKPOINTS
 // ==============================================
 
-// Grid breakpoints (viewport-based)
-$grid-breakpoints: (
-  md: 600px,
-  lg: 960px,
-  xl: 1280px
-);
-
-// Viewport breakpoints — all (includes sm as alias for base)
-$breakpoints-all: (
-  sm: '(min-width: 0px)',
-  md: '(min-width: 600px)',
-  lg: '(min-width: 960px)',
-  xl: '(min-width: 1280px)'
-);
-
-// Viewport breakpoints — responsive only (excludes sm to avoid redundant classes)
-$breakpoints-responsive: (
-  md: '(min-width: 600px)',
-  lg: '(min-width: 960px)',
-  xl: '(min-width: 1280px)'
-);
-
 // Viewport breakpoints — range-based (exclusive ranges for alignment utilities)
 $breakpoints-range: (
   sm: '(max-width: 599px)',
@@ -85,26 +63,6 @@ $breakpoints-range: (
 
   @else {
     @media (min-width: 961px) and (max-width: 1280px) {
-      @content;
-    }
-  }
-}
-
-@mixin large-desktop($break: null) {
-  @if $break =='min' {
-    @media (min-width: 1344px) {
-      @content;
-    }
-  }
-
-  @else if $break =='max' {
-    @media (max-width: 1920px) {
-      @content;
-    }
-  }
-
-  @else {
-    @media (min-width: 1344px) {
       @content;
     }
   }
@@ -329,28 +287,6 @@ $breakpoints-range: (
       margin-block: calc((var(--_btn-size) - 8px) / 4);
       margin-inline: unset;
     }
-  }
-}
-
-@mixin btn-indicator-styles($hover-color: var(--background-neutral-400), $pressed-color: var(--background-neutral-800), $selected-color: var(--background-neutral-800), $position : 'b') {
-  @include btn-indicator($position);
-
-  &:is(:hover, [data-state~="hover"])::before {
-    background-color: $hover-color;
-  }
-
-  &:is(:focus-visible,
-    [aria-selected="true"],
-    [data-state~="open"],
-    [data-state~="selected"],
-    [data-state~="active"],
-    [data-state~="focused"])::before,
-  [data-state~="open"]>&::before {
-    background-color: $selected-color;
-  }
-
-  &:active>&::before {
-    background-color: $pressed-color;
   }
 }
 
