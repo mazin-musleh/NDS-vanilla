@@ -81,4 +81,17 @@
         animation: processing 1.5s ease-in-out infinite;
         @include skeleton-bar;
     }
+
+    /* Collapsed ellipsis while loading: bar the trigger at label height (24px, not the 40px button) so the row stays text-height and the stretched last crumb matches the other bars / crit clipped slot. Drops the dots. */
+    .nds-breadcrumb-ellipsis .nds-ellipsis {
+        min-height: 0;
+        height: 24px;
+        background: var(--nds-skeleton-fill);
+        border-radius: var(--nds-skeleton-radius);
+        animation: processing 1.5s ease-in-out infinite;
+
+        &::after {
+            content: none;
+        }
+    }
 }

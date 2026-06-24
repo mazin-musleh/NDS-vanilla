@@ -645,4 +645,15 @@ html:not([data-nds-loaded]) .nds-card {
       visibility: hidden;
     }
   }
+
+  // Rating renders as one bar (stars hidden, fit-content) like the other slots.
+  .nds-rating {
+    border-radius: var(--nds-skeleton-radius);
+    animation: processing 1.5s ease-in-out infinite;
+    @include skeleton-fill;
+
+    .nds-rating-star {
+      visibility: hidden;
+    }
+  }
 }
