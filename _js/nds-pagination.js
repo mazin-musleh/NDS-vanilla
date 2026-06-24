@@ -220,10 +220,6 @@
 
             return li;
         }
-
-        static create(element) {
-            return new NDSPagination(element);
-        }
     }
 
     // Initialization function (called by nds-loader.js)
