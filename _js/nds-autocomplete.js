@@ -62,11 +62,6 @@
             //                      per keystroke. Use for small static datasets
             //                      (countries, currencies, departments, etc.)
             this.fetchMode = containerElement.getAttribute('data-fetch') || 'each';
-            // Fields used for client-side substring matching in fetch="once".
-            // Defaults to nameField. Set to a comma-separated list to match
-            // across multiple fields — e.g. data-search-fields="Name,NameAr"
-            // lets the user find a city by typing either language while the
-            // dropdown still displays nameField.
 
             // State
             this.cache = null;

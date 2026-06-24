@@ -51,18 +51,6 @@
     });
 
     // ==============================================
-    // CONSTANTS
-    // ==============================================
-    var StatusTypes = {
-        DEFAULT: '',
-        ERROR: 'error',
-        SUCCESS: 'success',
-        WARNING: 'warning',
-        INFO: 'info'
-    };
-
-
-    // ==============================================
     // UTILITY FUNCTIONS
     // ==============================================
     var Utils = {
@@ -1201,7 +1189,6 @@
         initializeContainer: initializeContainer,
 
         // Status Management API
-        StatusTypes: StatusTypes,
         setStatus: StatusManager.set.bind(StatusManager),
         clearStatus: StatusManager.clear.bind(StatusManager),
         getStatus: StatusManager.get.bind(StatusManager),

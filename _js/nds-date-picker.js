@@ -1482,7 +1482,7 @@
 
             // Fill remaining cells to 42
             var usedCells = calendarData.startOffset + calendarData.daysInMonth;
-            var nextMonth = isHijri ? calendarData.month + 1 : calendarData.month + 1;
+            var nextMonth = calendarData.month + 1;
             var nextYear = calendarData.year;
             if (isHijri && nextMonth > 12) { nextMonth = 1; nextYear++; }
 

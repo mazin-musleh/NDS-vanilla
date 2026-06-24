@@ -136,7 +136,6 @@
     let maskTopEl = null;
     let maskBottomEl = null;
     let maskControlsEl = null;
-    let maskLastY = null;
     let resetTimer = null;          // armed by first reset click
     let resetDoneTimer = null;      // post-reset visible-flash
     let resetCountdownTimer = null; // mid-arming SR announcement
@@ -349,7 +348,6 @@
             if (typeof currentY !== 'number' || currentY < 0 || currentY > window.innerHeight) {
                 currentY = window.innerHeight / 2;
             }
-            maskLastY = currentY;
 
             const headerOffset = parseFloat(getComputedStyle(root).getPropertyValue('--nds-nav-height')) || 72;
             const toolbarGap = parseFloat(getComputedStyle(root).getPropertyValue('--spacing-md')) || 8;
@@ -380,8 +378,6 @@
                 maskControlsEl.style.transform = fitsBelow
                     ? `translate3d(-50%, ${bandBottom}px, 0)`
                     : `translate3d(-50%, calc(${bandTop - 2 * toolbarGap}px - 100%), 0)`;
-
-                maskLastY = currentY;
             };
 
             const moveTo = (y) => { currentY = y; render(); };
@@ -490,7 +486,6 @@
         } else if (!active && maskAbortController) {
             maskAbortController.abort();
             maskAbortController = null;
-            maskLastY = null;
             if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
             if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
             if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
@@ -941,7 +936,6 @@
         if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
         if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
         if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
-        maskLastY = null;
         navEl = topbarEl = null;
     }
 

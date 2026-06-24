@@ -113,30 +113,9 @@
 
         /** Get all focusable elements in the menu in DOM order */
         getFocusableElements() {
-            const focusable = [];
-
-            const walk = (el) => {
-                if (el.nodeType !== 1) return;
-
-                const tag = el.tagName;
-                const isInput = (tag === 'INPUT' || tag === 'TEXTAREA')
-                    && el.type !== 'hidden' && !el.disabled;
-                const isItem = (tag === 'BUTTON' || tag === 'A')
-                    && el.classList.contains('nds-dropmenu-item') && !el.disabled;
-
-                // Scope is already the menu subtree (walk starts at this.menu.children
-                // and only recurses downward), so any input or dropmenu-item we reach
-                // is by definition inside the menu. No external-boundary check needed.
-                if (isInput || isItem) {
-                    focusable.push(el);
-                    if (isItem) return; // Don't traverse children of items
-                }
-
-                Array.from(el.children).forEach(walk);
-            };
-
-            Array.from(this.menu.children).forEach(walk);
-            return focusable;
+            return Array.from(this.menu.querySelectorAll(
+                'input:not([type="hidden"]):not(:disabled), textarea:not(:disabled), :is(a, button).nds-dropmenu-item:not(:disabled)'
+            ));
         }
 
         /**
