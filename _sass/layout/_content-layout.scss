@@ -6,6 +6,7 @@ main {
     flex: 1;
     display: grid;
     align-content: start;
+    grid-template-rows: 1fr;
 }
 
 .nds-content-layout {
@@ -31,7 +32,7 @@ main {
     .nds-main-content {
         display: flex;
         flex-wrap: wrap;
-        align-content: stretch;
+        align-content: flex-end;
         position: relative;
         padding-block: var(--_main-padding-block);
         padding-inline: var(--_main-padding-inline);
