@@ -19,13 +19,19 @@
  *     prev/next disabled states are correct on first frame.
  *
  * Interaction (wired at init, runs on click/resize — no forced layout at init):
- *   - The global delegated click handler for manual pagination navigation
- *     (prev/next, direct page, portaled dropmenu items)
- *   - Per-nav click handler for auto-pagination (wireAutoClicks)
+ *   - Per-nav click handler for manual pagination (_wireManualNavClicks),
+ *     scoped via paginationNav._ndsClickAC; DOM removal GCs it automatically.
+ *   - Per-nav click handler for auto-pagination (wireAutoClicks).
  *   - goToPage / scrollToContent (sticky-nav-aware smooth scroll)
  *   - refreshAutoPagination (filter-driven; the NDS.Pagination.refresh entry)
  *   - The per-container --per-page ResizeObserver + the .nds-paged-content
  *     onDOMRemove cleanup
+ *
+ * Lifecycle:
+ *   - Shared NDS.onDOMRemove('.nds-pagination') sweep aborts the click AC
+ *     and releases _offResize for navs torn down without an explicit destroy.
+ *   - NDS.Pagination.destroy(nav) — explicit teardown for SPA consumers
+ *     (aborts the click AC, releases _offResize, clears the init stamps).
  *
  * Display pattern: [Prev] 1 2 3 ... [Last] [Next]
  * - Always shows first 3 pages and last page
@@ -38,7 +44,7 @@
     'use strict';
 
     let _autoCleanupReady = false;
-    let _manualWired = false;
+    let _navCleanupReady = false;
 
     // Read --per-page for a paged-content container. Prefers the inline style —
     // the common case is a consumer setting style="--per-page:N", and an inline
@@ -222,8 +228,50 @@
         }
     }
 
+    // Release everything pagination attached to a nav: the click AbortController
+    // (manual), the content-side resize observer whose closure references this
+    // nav (auto), the instance backref, and the init stamps. Idempotent — re-
+    // invoked on the same nav no-ops once the stash is gone. Item visibility
+    // (`item.hidden`) is left untouched: a teardown of the UI shouldn't decide
+    // what to render in its absence.
+    function _destroyPaginationNav(nav) {
+        if (!nav) return;
+
+        if (nav._ndsClickAC) {
+            nav._ndsClickAC.abort();
+            delete nav._ndsClickAC;
+        }
+
+        // Auto path: the .nds-paged-content removal sweep also releases this,
+        // but destroy() may run while the content is still in the DOM (consumer
+        // tearing down a region without removing it). Releasing here avoids a
+        // resize callback firing into a torn-down nav.
+        const content = contentForNav(nav);
+        if (content && content._offResize) {
+            content._offResize();
+            delete content._offResize;
+        }
+
+        delete nav.ndsPagination;
+        nav.removeAttribute('data-nds-pagination-initialized');
+        nav.removeAttribute('data-nds-auto-pagination-initialized');
+    }
+
+    // Shared DOM-removal sweep: any pagination nav leaving the document gets
+    // _destroyPaginationNav. Belt-and-suspenders for the implicit GC path —
+    // catches navs torn down without an explicit destroy() call. Wired once
+    // per page; idempotent.
+    function _wireNavCleanup() {
+        if (_navCleanupReady) return;
+        _navCleanupReady = true;
+        NDS.onDOMRemove('.nds-pagination', removed => {
+            removed.forEach(_destroyPaginationNav);
+        });
+    }
+
     // Initialization function (called by nds-loader.js)
     function initializePagination() {
+        _wireNavCleanup();
         const paginationContainers = document.querySelectorAll('.nds-pagination, .nds-pagination-list');
 
         paginationContainers.forEach(container => {
@@ -260,6 +308,15 @@
 
                 // Initialize button states after pagination is ready
                 initializePaginationStates(container);
+
+                // Wire the per-nav click handler. Auto-paginations are wired
+                // separately by _wireAutoNav (with a live items getter) and skip
+                // this path. Listener is scoped to the nav — DOM removal GCs it
+                // automatically; the AbortController stash on the element is the
+                // explicit handle a future destroy() can abort.
+                if (!container.hasAttribute('data-auto-pagination')) {
+                    _wireManualNavClicks(container);
+                }
 
                 // Universal reveal: a non-auto pagination releases its paged-content's
                 // skeleton hold at init. Auto navs are skipped here — setupAutoContainer
@@ -853,22 +910,22 @@
         _dispatchPageChange(pagination, targetPageNum, previousPage, max);
     }
 
-    // Global click handler for manual pagination (not auto-pagination). Wired
-    // once, at init. Module-lifetime — pagination has no teardown, so a plain
-    // listener (no AbortController) is correct here.
-    function _wireManualClicks() {
-        if (_manualWired) return;
-        _manualWired = true;
-        document.addEventListener('click', (e) => {
-            // Early-exit for clicks outside any pagination. Portaled dropmenu
-            // re-dispatch (nds-dropmenu fires a synthetic click on the wrapper,
-            // which sits inside .nds-pagination-list and carries
-            // `e.ndsDropmenuItem`) still satisfies this gate, so portaled items
-            // aren't filtered out. The captured `pagination` is reused below as
-            // the resolved container — closest() from any descendant resolves to
-            // the same ancestor (paginations don't nest), so no second walk.
-            const pagination = e.target.closest?.('.nds-pagination-list');
-            if (!pagination) return;
+    // Per-nav click handler for manual pagination. Scoped to the nav element,
+    // so DOM removal releases the listener automatically — the AbortController
+    // stash on the element is the explicit handle a future destroy() can abort.
+    // Idempotent: a re-wire on an already-wired nav no-ops, so init()/create()
+    // are safe to repeat. Auto-paginations are wired separately by _wireAutoNav
+    // and skip this path.
+    function _wireManualNavClicks(paginationNav) {
+        if (paginationNav._ndsClickAC) return;
+        const ac = new AbortController();
+        paginationNav._ndsClickAC = ac;
+        paginationNav.addEventListener('click', (e) => {
+            // The list inside the nav, or the nav itself when used as a standalone
+            // .nds-pagination-list. Reused below for getAllPageElements + the
+            // apply step (which call setActivePage / updatePrevNextStates against
+            // the list element).
+            const pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
 
             const portaledItem = e.ndsDropmenuItem || null;
             const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a');
@@ -879,9 +936,10 @@
             const clickedElement = pageElement || dropdownItem;
             if (!clickedElement && !prevElement && !nextElement) return;
 
-            // Skip if this is an auto-pagination (handled by its own listener).
-            const paginationNav = pagination.closest('.nds-pagination');
-            if (paginationNav?.hasAttribute('data-nds-auto-pagination-initialized')) return;
+            // Defensive: if auto-pagination wiring landed on this nav after init
+            // (a `data-auto-pagination` resolved late), let its own handler
+            // own the click.
+            if (paginationNav.hasAttribute('data-nds-auto-pagination-initialized')) return;
 
             // Resolve target page once; portal-aware element set serves both
             // bounds-finding (prev/next) and the post-change prev/next reconcile.
@@ -902,16 +960,25 @@
             const clickedPageNum = pageNumberOf(clickedElement);
             if (isNaN(clickedPageNum)) return;
             _applyManualPageChange(pagination, clickedPageNum, allPageElements);
-        });
+        }, { signal: ac.signal });
     }
 
     // Expose global API for unified init system
     NDS.Pagination = {
-        init: () => { _wireManualClicks(); initializePagination(); },
-        reinit: () => { _wireManualClicks(); initializePagination(); initializeAutoPagination(); },
+        init: initializePagination,
+        reinit: () => { initializePagination(); initializeAutoPagination(); },
         initAuto: initializeAutoPagination,
-        create: (container) => new NDSPagination(container),
+        create: (container) => {
+            const inst = new NDSPagination(container);
+            // Match initializePagination: wire the per-nav click handler for
+            // manual navs; auto-paginations are wired by _wireAutoNav.
+            if (!container.hasAttribute('data-auto-pagination')) {
+                _wireManualNavClicks(container);
+            }
+            return inst;
+        },
         refresh: (container) => refreshAutoPagination(container),
+        destroy: (container) => _destroyPaginationNav(container),
         setPage: function(container, pageNumber) {
             const pagination = container.querySelector('.nds-pagination-list') || container;
             const { min, max } = pageBounds(getAllPageElements(pagination));
