@@ -10,7 +10,6 @@
     'use strict';
     if (!window.NDS) window.NDS = {};
 
-    var TAG = 'NDS Slider:';
     var SENTINEL = 'data-nds-slider-initialized';
 
     function pct(input) {
@@ -22,14 +21,19 @@
         return ((parseFloat(input.value) - min) / (max - min)) * 100;
     }
 
-    // Write the raw input value to an output, then let the Numbers utility own
-    // formatting if the output opted in via .nds-number-format. That class also
-    // paints the [data-currency]::after icon, so the symbol stays put across
-    // updates. Slider knows nothing about thousand-separators or locales.
+    // Soft dependency — Slider skips locale/currency formatting when NDS.Numbers
+    // (a deferred, optional sibling) isn't bundled; the output keeps the raw value.
+    function formatOutput(el) {
+        if (NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(el);
+    }
+
+    // Re-format on every update: NDS.Numbers also paints the [data-currency]::after
+    // icon, so the symbol stays put across drags. Slider itself knows nothing about
+    // thousand-separators or locales; .nds-number-format on the output opts in.
     function writeValue(output, raw) {
         if (!output) return;
         output.textContent = raw;
-        if (window.NDS && NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(output);
+        formatOutput(output);
     }
 
     // Reserve output width for the widest value the input can produce so the
@@ -48,7 +52,7 @@
         clone.textContent = widestRaw;
         clone.style.cssText = 'position:absolute;visibility:hidden;width:auto;min-width:0;pointer-events:none;';
         output.parentNode.appendChild(clone);
-        if (window.NDS && NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(clone);
+        formatOutput(clone);
         var w = clone.getBoundingClientRect().width;
         output.parentNode.removeChild(clone);
         if (w > 0) output.style.width = w + 'px';
@@ -104,8 +108,12 @@
     function initOne(container) {
         if (container.getAttribute(SENTINEL) === 'true') return;
         container.setAttribute(SENTINEL, 'true');
-        reserveAll(container);
         paint(container);
+        // Cold-init: keep the forced width measurement off the synchronous init
+        // path. The pooled observer fires an initial callback (reserve width then)
+        // and re-fires on font-load/resize, so the reserved width self-heals.
+        if (container._sliderOffResize) container._sliderOffResize();
+        if (NDS.onElementResize) container._sliderOffResize = NDS.onElementResize(container, function () { reserveAll(container); });
     }
 
     var bound = false;
@@ -124,9 +132,8 @@
         init: function () {
             bindOnce();
             document.querySelectorAll('.nds-slider-container').forEach(initOne);
-            if (NDS.onDOMAdd) NDS.onDOMAdd('.nds-slider-container', initOne);
-            // eslint-disable-next-line no-console
-            console.log(TAG, 'initialized');
+            // onDOMAdd hands the callback a nodes array, not one element.
+            NDS.onDOMAdd('.nds-slider-container', function (nodes) { nodes.forEach(initOne); });
         },
         reinit: function (el) {
             var list = el ? [el] : document.querySelectorAll('.nds-slider-container');
@@ -137,8 +144,11 @@
         },
         destroy: function (el) {
             var list = el ? [el] : document.querySelectorAll('[' + SENTINEL + ']');
-            list.forEach(function (c) { c.removeAttribute(SENTINEL); });
-            // ponytail: delegated listener stays bound for the page lifetime —
+            list.forEach(function (c) {
+                c.removeAttribute(SENTINEL);
+                if (c._sliderOffResize) { c._sliderOffResize(); delete c._sliderOffResize; }
+            });
+            // ponytail: delegated input listener stays bound for the page lifetime —
             // reinit re-uses it. Upgrade to AbortController if a future variant
             // needs per-instance teardown (e.g. native vertical orientation).
         },
