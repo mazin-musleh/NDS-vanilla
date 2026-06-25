@@ -1,8 +1,8 @@
 /**
  * NDS Slider
  * Single or dual <input type="range"> with gradient fill + live value output.
- * Native input owns drag/keyboard/touch/SR — JS only paints the CSS var
- * (--slider-fill for single, --slider-fill-start/end for range) and clamps
+ * Native input owns drag/keyboard/touch/SR — JS only paints the track fill
+ * (--slider-fill-end for single, --slider-fill-start/end for range) and clamps
  * the two sibling inputs in range mode so they never invert.
  */
 
@@ -36,10 +36,10 @@
         formatOutput(output);
     }
 
-    // Reserve output width for the widest value the input can produce so the
-    // flex row doesn't shift as the user drags — if width grew with text, the
-    // bar's flex:1 slot would shrink and the thumb-edge fill calc would drift.
-    // Measure off-DOM via cloneNode, formatted the same way the live output is.
+    // Reserve the output's width for the widest value the input can produce so
+    // the inline (beside-bar) layout doesn't jitter as the value changes — the
+    // bar's flex slot stays put. Measure off-DOM via a formatted clone (catches
+    // currency / thousand-separator width). Harmless under .nds-stacked.
     function reserveWidth(input, output) {
         if (!input || !output) return;
         var maxN = parseFloat(input.max);
@@ -58,10 +58,13 @@
         if (w > 0) output.style.width = w + 'px';
     }
 
-    function paintSingle(input) {
-        input.style.setProperty('--slider-fill', pct(input) + '%');
-        var control = input.closest('.nds-form-control');
-        writeValue(control && control.querySelector('.nds-slider-value'), input.value);
+    function paintSingle(container) {
+        var input = container.querySelector('.nds-slider');
+        var track = container.querySelector('.nds-slider-track');
+        if (!input || !track) return;
+        // Single fills 0→value: set only the end stop; start defaults to 0%.
+        track.style.setProperty('--slider-fill-end', pct(input) + '%');
+        writeValue(container.querySelector('.nds-slider-value'), input.value);
     }
 
     function paintRange(container) {
@@ -89,8 +92,7 @@
         if (container.classList.contains('nds-slider-range')) {
             paintRange(container);
         } else {
-            var input = container.querySelector('.nds-slider');
-            if (input) paintSingle(input);
+            paintSingle(container);
         }
     }
 
@@ -99,9 +101,17 @@
             reserveWidth(container.querySelector('.nds-slider-min'), container.querySelector('.nds-slider-value-min'));
             reserveWidth(container.querySelector('.nds-slider-max'), container.querySelector('.nds-slider-value-max'));
         } else {
-            var input = container.querySelector('.nds-slider');
-            var out = container.querySelector('.nds-slider-value');
-            reserveWidth(input, out);
+            reserveWidth(container.querySelector('.nds-slider'), container.querySelector('.nds-slider-value'));
+        }
+    }
+
+    // Reserve the widest-value width in inline mode (keeps the bar from jittering),
+    // or clear it under .nds-stacked (full-width bar — no reservation needed).
+    function applyReservation(container) {
+        if (container.classList.contains('nds-stacked')) {
+            container.querySelectorAll('.nds-slider-value').forEach(function (o) { o.style.width = ''; });
+        } else {
+            reserveAll(container);
         }
     }
 
@@ -109,11 +119,11 @@
         if (container.getAttribute(SENTINEL) === 'true') return;
         container.setAttribute(SENTINEL, 'true');
         paint(container);
-        // Cold-init: keep the forced width measurement off the synchronous init
-        // path. The pooled observer fires an initial callback (reserve width then)
-        // and re-fires on font-load/resize, so the reserved width self-heals.
+        // Cold-init: the pooled observer's initial callback applies the reservation
+        // off the sync path and re-runs it on font-load / resize. .nds-stacked
+        // toggles are handled by the onAttrChange watcher in bindOnce.
         if (container._sliderOffResize) container._sliderOffResize();
-        if (NDS.onElementResize) container._sliderOffResize = NDS.onElementResize(container, function () { reserveAll(container); });
+        if (NDS.onElementResize) container._sliderOffResize = NDS.onElementResize(container, function () { applyReservation(container); });
     }
 
     var bound = false;
@@ -126,6 +136,10 @@
             var c = t.closest('.nds-slider-container');
             if (c) paint(c);
         });
+        // Toggling .nds-stacked (a class change) neither re-runs init nor fires a
+        // resize — re-apply the reservation when a container's class changes.
+        // onAttrChange hands the callback a nodes array.
+        if (NDS.onAttrChange) NDS.onAttrChange('.nds-slider-container', ['class'], function (els) { els.forEach(applyReservation); });
     }
 
     NDS.Slider = {

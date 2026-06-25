@@ -58,13 +58,38 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["disabled=true", "#slider-default-1", "sliderDisabled", "attr"]'>
-                                <span class="nds-label">Disabled</span>
-                            </button>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="nds-label">State</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-form-container", "sliderState"]'>
+                                            <span class="nds-label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-required", ".nds-form-container", "sliderState", "attr"]'>
+                                            <span class="nds-label">Required</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["disabled", ".nds-form-container", "sliderState", "data-state"]'>
+                                            <span class="nds-label">Disabled</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["readonly", ".nds-form-container", "sliderState", "data-state"]'>
+                                            <span class="nds-label">Readonly</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-loading=true", ".nds-slider-container", "sliderLoading", "attr"]'>
                                 <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-stacked", ".nds-slider-container", "sliderStacked"]'>
+                                <span class="nds-label">Stacked</span>
                             </button>
                         </div>
                     </div>
@@ -78,8 +103,18 @@ direction: ltr
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
-                                    <input type="range" id="slider-default-1" class="nds-slider" min="0" max="100" value="50">
+                                    <div class="nds-slider-track">
+                                        <input type="range" id="slider-default-1" class="nds-slider" min="0" max="100" value="50">
+                                    </div>
                                     <output for="slider-default-1" class="nds-slider-value">50</output>
+                                </div>
+                                <div class="nds-form-footer" data-feedback-target>
+                                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="nds-feedback-message">Changes apply instantly</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -111,8 +146,18 @@ direction: ltr
     &lt;/label&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-control"&gt;
-    &lt;input type="range" id="slider-default-1" class="nds-slider" min="0" max="100" value="50"&gt;
+    &lt;div class="nds-slider-track"&gt;
+      &lt;input type="range" id="slider-default-1" class="nds-slider" min="0" max="100" value="50"&gt;
+    &lt;/div&gt;
     &lt;output for="slider-default-1" class="nds-slider-value"&gt;50&lt;/output&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target&gt;
+    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
+      &lt;span class="nds-feedback-icon"&gt;
+        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+      &lt;span class="nds-feedback-message"&gt;Changes apply instantly&lt;/span&gt;
+    &lt;/span&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
@@ -155,9 +200,38 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="nds-label">State</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-form-container", "rangeState"]'>
+                                            <span class="nds-label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-required", ".nds-form-container", "rangeState", "attr"]'>
+                                            <span class="nds-label">Required</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["disabled", ".nds-form-container", "rangeState", "data-state"]'>
+                                            <span class="nds-label">Disabled</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["readonly", ".nds-form-container", "rangeState", "data-state"]'>
+                                            <span class="nds-label">Readonly</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-loading=true", ".nds-slider-container", "rangeLoading", "attr"]'>
                                 <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-stacked", ".nds-slider-container", "rangeStacked"]'>
+                                <span class="nds-label">Stacked</span>
                             </button>
                         </div>
                     </div>
@@ -166,17 +240,25 @@ direction: ltr
                             <div class="nds-slider-container nds-form-container nds-slider-range">
                                 <div class="nds-form-header">
                                     <label>
-                                        <span class="nds-label">Price range</span>
+                                        <span class="nds-label">Age range</span>
                                         <span class="nds-info">Tab to either thumb and adjust independently</span>
                                     </label>
                                 </div>
                                 <div class="nds-form-control">
-                                    <output class="nds-slider-value nds-slider-value-min">20</output>
+                                    <output class="nds-slider-value nds-slider-value-min">25</output>
                                     <div class="nds-slider-track">
-                                        <input type="range" class="nds-slider nds-slider-min" min="0" max="100" value="20" aria-label="Minimum">
-                                        <input type="range" class="nds-slider nds-slider-max" min="0" max="100" value="70" aria-label="Maximum">
+                                        <input type="range" class="nds-slider nds-slider-min" min="18" max="80" value="25" aria-label="Minimum age">
+                                        <input type="range" class="nds-slider nds-slider-max" min="18" max="80" value="55" aria-label="Maximum age">
                                     </div>
-                                    <output class="nds-slider-value nds-slider-value-max">70</output>
+                                    <output class="nds-slider-value nds-slider-value-max">55</output>
+                                </div>
+                                <div class="nds-form-footer" data-feedback-target>
+                                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="nds-feedback-message">Whole years only</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -203,17 +285,25 @@ direction: ltr
 &lt;div class="nds-slider-container nds-form-container nds-slider-range"&gt;
   &lt;div class="nds-form-header"&gt;
     &lt;label&gt;
-      &lt;span class="nds-label"&gt;Price range&lt;/span&gt;
+      &lt;span class="nds-label"&gt;Age range&lt;/span&gt;
       &lt;span class="nds-info"&gt;Tab to either thumb and adjust independently&lt;/span&gt;
     &lt;/label&gt;
   &lt;/div&gt;
   &lt;div class="nds-form-control"&gt;
-    &lt;output class="nds-slider-value nds-slider-value-min"&gt;20&lt;/output&gt;
+    &lt;output class="nds-slider-value nds-slider-value-min"&gt;25&lt;/output&gt;
     &lt;div class="nds-slider-track"&gt;
-      &lt;input type="range" class="nds-slider nds-slider-min" min="0" max="100" value="20" aria-label="Minimum"&gt;
-      &lt;input type="range" class="nds-slider nds-slider-max" min="0" max="100" value="70" aria-label="Maximum"&gt;
+      &lt;input type="range" class="nds-slider nds-slider-min" min="18" max="80" value="25" aria-label="Minimum age"&gt;
+      &lt;input type="range" class="nds-slider nds-slider-max" min="18" max="80" value="55" aria-label="Maximum age"&gt;
     &lt;/div&gt;
-    &lt;output class="nds-slider-value nds-slider-value-max"&gt;70&lt;/output&gt;
+    &lt;output class="nds-slider-value nds-slider-value-max"&gt;55&lt;/output&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target&gt;
+    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
+      &lt;span class="nds-feedback-icon"&gt;
+        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+      &lt;span class="nds-feedback-message"&gt;Whole years only&lt;/span&gt;
+    &lt;/span&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
@@ -256,15 +346,44 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="nds-label">State</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-form-container", "priceState"]'>
+                                            <span class="nds-label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-required", ".nds-form-container", "priceState", "attr"]'>
+                                            <span class="nds-label">Required</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["disabled", ".nds-form-container", "priceState", "data-state"]'>
+                                            <span class="nds-label">Disabled</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["readonly", ".nds-form-container", "priceState", "data-state"]'>
+                                            <span class="nds-label">Readonly</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["data-loading=true", ".nds-slider-container", "priceLoading", "attr"]'>
                                 <span class="nds-label">Loading</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["nds-stacked", ".nds-slider-container", "priceStacked"]'>
+                                <span class="nds-label">Stacked</span>
                             </button>
                         </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-slider-container nds-form-container nds-slider-range" id="price-range-1">
+                            <div class="nds-slider-container nds-form-container nds-slider-range nds-stacked" id="price-range-1">
                                 <div class="nds-form-header">
                                     <label>
                                         <span class="nds-label">Budget</span>
@@ -278,6 +397,14 @@ direction: ltr
                                         <input type="range" class="nds-slider nds-slider-max" min="0" max="100000" step="500" value="65000" aria-label="Maximum price">
                                     </div>
                                     <output class="nds-slider-value nds-slider-value-max nds-number-format" data-currency="SAR">65000</output>
+                                </div>
+                                <div class="nds-form-footer" data-feedback-target>
+                                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                                        <span class="nds-feedback-icon">
+                                            <i class="nds-icon" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="nds-feedback-message">Prices include VAT</span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -301,7 +428,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;div class="nds-slider-container nds-form-container nds-slider-range" id="price-range-1"&gt;
+&lt;div class="nds-slider-container nds-form-container nds-slider-range nds-stacked" id="price-range-1"&gt;
   &lt;div class="nds-form-header"&gt;
     &lt;label&gt;
       &lt;span class="nds-label"&gt;Budget&lt;/span&gt;
@@ -315,6 +442,14 @@ direction: ltr
       &lt;input type="range" class="nds-slider nds-slider-max" min="0" max="100000" step="500" value="65000" aria-label="Maximum price"&gt;
     &lt;/div&gt;
     &lt;output class="nds-slider-value nds-slider-value-max nds-number-format" data-currency="SAR"&gt;65000&lt;/output&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target&gt;
+    &lt;span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent&gt;
+      &lt;span class="nds-feedback-icon"&gt;
+        &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/span&gt;
+      &lt;span class="nds-feedback-message"&gt;Prices include VAT&lt;/span&gt;
+    &lt;/span&gt;
   &lt;/div&gt;
 &lt;/div&gt;
                                     </code>
@@ -413,6 +548,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td>Medium size on <code class="nds-inline-code lang-html">.nds-slider-container</code>: 16 px thumb and 8 px bar. Default is 12 px thumb and 4 px bar</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-slider-range</code></td><td>Switches the container from single to dual-thumb mode. Requires the range markup with <code class="nds-inline-code lang-html">.nds-slider-track</code>, two inputs (<code class="nds-inline-code lang-html">.nds-slider-min</code>, <code class="nds-inline-code lang-html">.nds-slider-max</code>), and two value outputs</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-stacked</code></td><td>Moves the value output(s) to a row above the bar so the bar spans the full width. Use for wide or formatted values (currency, large numbers) where the default beside-the-bar layout would crush the bar on narrow screens/containers</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -437,8 +573,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--slider-track-fill</code></td><td><code class="nds-inline-code lang-html">--background-primary</code></td><td>Color of the filled portion of the track</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--slider-thumb-bg</code></td><td><code class="nds-inline-code lang-html">--background-primary</code></td><td>Background color of the thumb at rest</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--slider-thumb-bg-hovered</code></td><td><code class="nds-inline-code lang-html">--controls-primary-hovered</code></td><td>Background color of the thumb on hover and focus</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--slider-fill</code></td><td><code class="nds-inline-code lang-html">0%</code></td><td>Single-mode fill percentage. Written by the component on every input event; consumers should not set this directly</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--slider-fill-start</code>, <code class="nds-inline-code lang-html">--slider-fill-end</code></td><td><code class="nds-inline-code lang-html">0%</code>, <code class="nds-inline-code lang-html">100%</code></td><td>Range-mode bar endpoints. Written by the component on every input event</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--slider-fill-start</code>, <code class="nds-inline-code lang-html">--slider-fill-end</code></td><td><code class="nds-inline-code lang-html">0%</code>, <code class="nds-inline-code lang-html">100%</code></td><td>Track bar fill endpoints, set on <code class="nds-inline-code lang-html">.nds-slider-track</code> by the component on every input event. Single mode sets only <code class="nds-inline-code lang-html">--slider-fill-end</code> (start stays 0%); range sets both. Consumers should not set these directly</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -270,7 +270,7 @@
             // natively; the fill repaints on the first `input` after the delegated
             // bundle lands.
             name: 'Slider',
-            selector: '.nds-slider-container',
+            selector: '.nds-slider',
             init: () => NDS.Slider?.init?.(),
         },
         {

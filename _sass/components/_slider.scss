@@ -1,6 +1,8 @@
 /**
  * NDS Slider Component
  * Single or dual-thumb range input. Built on native <input type="range">.
+ * One rendering model: a .nds-slider-track paints the fill bar (::before) and
+ * the transparent input(s) overlay it — single = one thumb, range = two.
  */
 
 @use '../mixins' as *;
@@ -10,27 +12,14 @@
 // and neither treats the other as forgivable inside :is(). Mixins do the
 // sharing instead.
 
-@mixin _track {
-    height: var(--_bar-size);
-    border-radius: var(--radius-full);
-    background-color: var(--slider-track-bg);
-    // Solid fill strip painted over the bg. Width = calc that ends at the
-    // thumb CENTER for the current value (native thumbs clamp inward by
-    // thumb-radius), so no gap at value=0 and no overrun at value=max.
-    // Anchor flips via --_anchor (right RTL default, left LTR).
-    background-image: linear-gradient(var(--slider-track-fill), var(--slider-track-fill));
-    background-repeat: no-repeat;
-    background-position: var(--_anchor, right) center;
-    background-size: calc(var(--_thumb-size) / 2 + (100% - var(--_thumb-size)) * (var(--slider-fill, 0%) / 100%)) 100%;
-}
-
 @mixin _thumb {
     appearance: none;
+    box-sizing: border-box;   // keep the border inside --_thumb-size (footprint + fill alignment unchanged)
     width: var(--_thumb-size);
     height: var(--_thumb-size);
     border-radius: var(--radius-full);
     background: var(--slider-thumb-bg);
-    border: 0;
+    border: 2px solid var(--slider-thumb-border);
     cursor: grab;
     margin-top: calc((var(--_bar-size) - var(--_thumb-size)) / 2);
     transition: transform 0.1s ease, background-color 0.1s ease;
@@ -43,7 +32,7 @@
 .nds-slider-container {
     --_thumb-size: 12px;
     --_bar-size: 4px;
-    @include ltr { --_anchor: left; --_dir: 90deg; }
+    @include ltr { --_dir: 90deg; }
     &.nds-md { --_thumb-size: 16px; --_bar-size: 8px; }
 
     // Form-field focus underline + 40px row height don't fit a slider. Other
@@ -60,34 +49,82 @@
         &::before { content: none; }
     }
 
-    // Width is reserved by JS at init time (measured against the max-formatted
-    // value) and stamped as inline `width`. flex-shrink:0 stops the flex row
-    // from squeezing that reservation as the user drags — if it could shrink,
-    // the bar's flex:1 slot would grow/contract and the thumb-edge fill calc
-    // would drift. min-width is the pre-init fallback before JS lands.
+    // Beside the bar by default; flex-shrink:0 + a JS-reserved width (reserveWidth)
+    // keep the bar from jittering as the value changes. min-width is the pre-init
+    // fallback before JS measures the widest value.
     .nds-slider-value {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;   // inline: trailing value (single, range max) hugs the bar's track-side edge
         flex-shrink: 0;
         min-width: 3ch;
         color: var(--text-primary-paragraph);
         font-variant-numeric: tabular-nums;
-        text-align: end;
+    }
+    .nds-slider-value-min { justify-content: flex-end; }
+    
+    // .nds-number-format is row-reverse in LTR (currency symbol before the number),
+    // which inverts justify-content — flip the hug for currency outputs to match.
+    // RTL keeps normal row, so the base justify is already correct there.
+    @include ltr {
+        .nds-slider-value.nds-number-format { justify-content: flex-end; }
+        .nds-slider-value-min.nds-number-format { justify-content: flex-start; }
     }
 }
 
 // ==============================================
-// SINGLE-MODE INPUT — track + thumb
+// TRACK — shared gradient bar; the input(s) overlay it
 // ==============================================
 
-.nds-slider {
+.nds-slider-track {
+    position: relative;
     flex: 1;
     min-width: 0;
     height: var(--_thumb-size);
+
+    // Bar inset by half a thumb on each side so the gradient's 0↔100% map to the
+    // thumb-CENTER travel range. Single fills 0→value (start defaults to 0%);
+    // range fills start→end. Direction flips via --_dir (270deg = "to left" RTL
+    // default; LTR sets 90deg = "to right").
+    &::before {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        top: 50%;
+        height: var(--_bar-size);
+        transform: translateY(-50%);
+        border-radius: var(--radius-full);
+        background: linear-gradient(var(--_dir, 270deg),
+            var(--slider-track-bg)   0 var(--slider-fill-start, 0%),
+            var(--slider-track-fill) var(--slider-fill-start, 0%) var(--slider-fill-end, 100%),
+            var(--slider-track-bg)   var(--slider-fill-end, 100%) 100%);
+    }
+}
+
+// ==============================================
+// INPUT — transparent overlay; only the thumb shows + takes pointer events
+// ==============================================
+
+.nds-slider {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     appearance: none;
     background: transparent;
     cursor: pointer;
     margin: 0;
     padding: 0;
     border: 0;
+
+    // Native tracks are transparent — the bar lives on .nds-slider-track::before.
+    // Keep them at bar height so the thumb's margin-top centers on the bar.
+    &::-webkit-slider-runnable-track { background: transparent; height: var(--_bar-size); }
+    &::-moz-range-track              { background: transparent; height: var(--_bar-size); }
+
+    // Thumb is the only visible part; z-index lifts it above the ::before bar.
+    &::-webkit-slider-thumb { @include _thumb; position: relative; z-index: 1; }
+    &::-moz-range-thumb     { @include _thumb; position: relative; z-index: 1; }
 
     // Suppress the default ring on the input box; show focus on the thumb
     // pseudo instead. Same outline + inset-shadow pattern as @mixin btn-focus,
@@ -114,11 +151,6 @@
         }
     }
 
-    &::-webkit-slider-runnable-track { @include _track; }
-    &::-moz-range-track              { @include _track; }
-    &::-webkit-slider-thumb { @include _thumb; }
-    &::-moz-range-thumb     { @include _thumb; }
-
     &:is(:hover, :focus-visible) {
         &::-webkit-slider-thumb { background: var(--slider-thumb-bg-hovered); }
         &::-moz-range-thumb     { background: var(--slider-thumb-bg-hovered); }
@@ -128,73 +160,74 @@
         &::-moz-range-thumb     { cursor: grabbing; transform: scale(1.15); }
     }
     &:disabled {
-        opacity: 0.5;
         cursor: not-allowed;
         &::-webkit-slider-thumb { cursor: not-allowed; }
         &::-moz-range-thumb     { cursor: not-allowed; }
     }
 }
 
+// Forms disabled state (container data-state — the shared forms-system disable):
+// the bar/value use their own color tokens, so _forms.scss's color dim doesn't
+// reach them. Dim the track + value — NOT the input: a full-opacity thumb stays
+// distinct from the dimmed bar instead of blending into it.
+.nds-slider-container[data-state~="disabled"] {
+    .nds-slider-track,
+    .nds-slider-value { opacity: 0.5; }
+}
+
 // ==============================================
-// RANGE MODE — two stacked inputs share one visual bar
+// RANGE — a second thumb stacks on the shared bar
 // ==============================================
+// Two inputs overlap, so their full bodies can't both receive pointer events
+// (only the topmost would). Disable the bodies and re-enable just the thumbs so
+// each thumb stays independently draggable.
 
-.nds-slider-range {
-    .nds-slider-track {
-        position: relative;
-        flex: 1;
-        min-width: 0;
-        height: var(--_thumb-size);
+.nds-slider-range .nds-slider {
+    pointer-events: none;
+    &::-webkit-slider-thumb { pointer-events: auto; }
+    &::-moz-range-thumb     { pointer-events: auto; }
+}
 
-        // Bar inset by half a thumb on each side so the gradient's 0↔100% map
-        // to the thumb-CENTER travel range. Direction flips via --_dir
-        // (270deg = "to left" RTL default; LTR sets 90deg = "to right").
-        &::before {
-            content: '';
-            position: absolute;
-            inset-inline: calc(var(--_thumb-size) / 2);
-            top: 50%;
-            height: var(--_bar-size);
-            transform: translateY(-50%);
-            border-radius: var(--radius-full);
-            background: linear-gradient(var(--_dir, 270deg),
-                var(--slider-track-bg)   0 var(--slider-fill-start, 0%),
-                var(--slider-track-fill) var(--slider-fill-start, 0%) var(--slider-fill-end, 100%),
-                var(--slider-track-bg)   var(--slider-fill-end, 100%) 100%);
-        }
-    }
-
-    .nds-slider {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        background: transparent;
-        &::-webkit-slider-runnable-track { background: transparent; }
-        &::-moz-range-track              { background: transparent; }
-        &::-webkit-slider-thumb { pointer-events: auto; position: relative; z-index: 1; }
-        &::-moz-range-thumb     { pointer-events: auto; position: relative; z-index: 1; }
-    }
+// ==============================================
+// STACKED — opt-in: value(s) move ABOVE a full-width bar
+// ==============================================
+// Beside-the-bar (default) crushes the bar when values are wide (currency, large
+// numbers) on narrow screens/containers. .nds-stacked moves the value(s) to a
+// row above so the bar spans the full width. Value justify FLIPS vs inline:
+// values align to the bar's OUTER start/end edges, not the inner track edge.
+.nds-slider-container.nds-stacked {
+    .nds-form-control { flex-wrap: wrap; row-gap: var(--spacing-xs); }
+    .nds-slider-track { order: 1; flex-basis: 100%; }   // own full-width line, below the values
+    .nds-slider-value { justify-content: flex-end; }       // trailing → bar's end edge
+    .nds-slider-value-min { justify-content: flex-start; } // leading  → bar's start edge
+    // Trailing value (single, range max) to the bar's end; min stays at the start.
+    .nds-slider-value-max,
+    &:not(.nds-slider-range) .nds-slider-value { margin-inline-start: auto; }
 }
 
 // ==============================================
 // SKELETON — pre-init OR explicit [data-loading]
 // ==============================================
-// Pre-init: native input paints the THUMB at the right position from `value=`,
-// but --slider-fill is unset, so the bar shows no fill until JS lands — visible
-// mismatch. Paint the whole track as a skeleton + hide the thumb until the
-// init sentinel is stamped. Consumers can also flip on a `data-loading` flag
-// during async value updates (e.g. fetching min/max bounds).
+// Pre-init the ::before bar can't show the right fill yet (--slider-fill-end is
+// unset → defaults full) while the native thumb already sits at value=. Render
+// the track as a skeleton block sized to match the value skeletons (stretch to
+// the row) and hide the thumb until the init sentinel is stamped. Consumers can
+// also flip a `data-loading` flag during async value updates (e.g. fetching bounds).
 .nds-slider-container:is(:not([data-nds-slider-initialized]), [data-loading]) {
     .nds-slider {
         pointer-events: none;
-        &::-webkit-slider-runnable-track { background: var(--nds-skeleton-fill); }
-        &::-moz-range-track              { background: var(--nds-skeleton-fill); }
-        &::-webkit-slider-thumb          { opacity: 0; }
-        &::-moz-range-thumb              { opacity: 0; }
+        &::-webkit-slider-thumb { opacity: 0; }
+        &::-moz-range-thumb     { opacity: 0; }
     }
-    .nds-slider-track::before { background: var(--nds-skeleton-fill); }
-    .nds-slider-value         { @include skeleton-fill; border-radius: var(--radius-sm); }
+    // Skeleton bar sized to the value-skeleton height (one line of text-md) so the
+    // bar + outputs line up. Set the height explicitly rather than stretch: stacked
+    // puts the bar alone on its own line, with no sibling to stretch against.
+    .nds-slider-track {
+        height: auto;
+        min-height: var(--typo-text-md-LH);
+        background: var(--nds-skeleton-fill);
+        border-radius: var(--nds-skeleton-radius);
+        &::before { display: none; }
+    }
+    .nds-slider-value { @include skeleton-fill; border-radius: var(--radius-sm); }
 }
-

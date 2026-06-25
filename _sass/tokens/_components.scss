@@ -198,6 +198,7 @@
     --slider-track-fill: var(--background-primary);
     --slider-thumb-bg: var(--background-primary);
     --slider-thumb-bg-hovered: var(--controls-primary-hovered);
+    --slider-thumb-border: var(--alpha-black-10);          // thumb ring — 10% black overlay: brand-agnostic, so it never clashes under rebrand (Figma's --border-success is a fixed status color that wouldn't follow the brand). Mode-invariant.
 
     // ── stepper ──
     --progressindicator-progress-indicator-gap: var(--spacing-md);
