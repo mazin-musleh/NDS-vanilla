@@ -264,6 +264,16 @@
             init: () => NDS.Rating?.init?.(),
         },
         {
+            // Deferred: native <input type="range"> is interactive and a11y-correct
+            // with no JS — init only paints the gradient fill (CSS var) and updates
+            // the value <output>. Clicks/drags in the pre-bundle gap update value
+            // natively; the fill repaints on the first `input` after the delegated
+            // bundle lands.
+            name: 'Slider',
+            selector: '.nds-slider-container',
+            init: () => NDS.Slider?.init?.(),
+        },
+        {
             // Deferred: the collapsed clamp is pure CSS (_utilities.scss base
             // max-height/overflow, server-rendered + in main), so the box paints
             // correctly with no JS. init() is registration-only; the height read +

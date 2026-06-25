@@ -193,6 +193,12 @@
     --rating-star-pressed-brand: var(--colors-primary-700);
     --rating-star-hovered-brand: var(--colors-primary-500);
 
+    // ── slider ──
+    --slider-track-bg: var(--colors-neutral-100);          // ponytail: palette-direct, no semantic twin for neutral-100
+    --slider-track-fill: var(--background-primary);
+    --slider-thumb-bg: var(--background-primary);
+    --slider-thumb-bg-hovered: var(--controls-primary-hovered);
+
     // ── stepper ──
     --progressindicator-progress-indicator-gap: var(--spacing-md);
     --progressindicator-progress-text-content-side-padding: var(--spacing-xl);

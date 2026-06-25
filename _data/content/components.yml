@@ -348,6 +348,15 @@
   url: "/components/switch.html"
   scss: _sass/components/_switch.scss
 
+- title: "Slider"
+  description: "Numeric range input with single-thumb and dual-thumb modes for picking a value or a min–max span"
+  icon: '<i class="hgi hgi-stroke hgi-arrow-left-right"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/slider.html"
+  js: _js/nds-slider.js
+  scss: _sass/components/_slider.scss
+
 - title: "OTP Input"
   description: "Segmented one-time password fields with auto-advance"
   icon: '<i class="hgi hgi-stroke hgi-key-01"></i>'

@@ -579,13 +579,20 @@ fieldset {
             min-height: unset;
             width: fit-content;
             height: fit-content;
-            padding: 0;
-            border: 0;
-            box-shadow: unset;
-            background-color: unset !important;
             position: relative;
         }
     }
+}
+
+// Strip the form-field box chrome on controls whose visual isn't a field box
+// (selection controls + slider). The control wrapper is just a layout slot.
+// !important on bg/shadow beats the focus/active state rules above (which
+// re-stamp both at higher specificity via [data-state~=…]).
+:is(.nds-check-container, .nds-radio-container, .nds-switch-container, .nds-slider-container).nds-form-container .nds-form-control {
+    padding: 0;
+    border: 0;
+    box-shadow: unset !important;
+    background-color: unset !important;
 }
 
 // Shared ripple (checkbox + radio)

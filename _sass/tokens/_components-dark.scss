@@ -90,6 +90,9 @@
     --checkbox-primary-hovered: var(--colors-primary-700);
     --checkbox-primary-pressed: var(--colors-primary-800);
 
+    // ─── Slider (neutral track flips to a 10% white wash; fill stays primary) ───
+    --slider-track-bg: var(--alpha-white-10);
+
     // ─── Switch (darker for white thumb contrast) ───
     --switch-primary-hovered: var(--colors-primary-700);
     --switch-primary-pressed: var(--colors-primary-800);

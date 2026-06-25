@@ -2,33 +2,38 @@
 (() => {
     'use strict';
 
+    // Format the number text inside a single .nds-number-format element.
+    // Idempotent (commas are stripped before parsing), so callers like the
+    // Slider can call this after every value write without double-formatting.
+    function format(el) {
+        if (!el || el.closest('code, .code-example')) return;
+        // Find the text node containing the number (preserves child elements like icons)
+        const textNodes = [];
+        for (const node of el.childNodes) {
+            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                textNodes.push(node);
+            }
+        }
+
+        const targetNode = textNodes.find(n => /\d/.test(n.textContent));
+        if (!targetNode) return;
+
+        const text = targetNode.textContent.trim();
+        const match = text.match(/^([^\d]*)([-+]?\d[\d,]*\.?\d*)(.*)$/);
+        if (match) {
+            const prefix = match[1] || '';
+            const numStr = match[2].replace(/,/g, '');
+            const suffix = match[3] || '';
+            const num = parseFloat(numStr);
+
+            if (!isNaN(num)) {
+                targetNode.textContent = `${prefix}${num.toLocaleString()}${suffix}`;
+            }
+        }
+    }
+
     function formatNumbers() {
-        document.querySelectorAll('.nds-number-format').forEach(el => {
-            if (el.closest('code, .code-example')) return;
-            // Find the text node containing the number (preserves child elements like icons)
-            const textNodes = [];
-            for (const node of el.childNodes) {
-                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-                    textNodes.push(node);
-                }
-            }
-
-            const targetNode = textNodes.find(n => /\d/.test(n.textContent));
-            if (!targetNode) return;
-
-            const text = targetNode.textContent.trim();
-            const match = text.match(/^([^\d]*)([-+]?\d[\d,]*\.?\d*)(.*)$/);
-            if (match) {
-                const prefix = match[1] || '';
-                const numStr = match[2].replace(/,/g, '');
-                const suffix = match[3] || '';
-                const num = parseFloat(numStr);
-
-                if (!isNaN(num)) {
-                    targetNode.textContent = `${prefix}${num.toLocaleString()}${suffix}`;
-                }
-            }
-        });
+        document.querySelectorAll('.nds-number-format').forEach(format);
     }
 
     function setupCounterAnimations() {
@@ -194,6 +199,7 @@
     // CRITICAL: Expose global API immediately (called by unified init system)
     if (typeof window !== 'undefined') {
         NDS.Numbers = {
+            format,
             formatNumbers,
             setupCounterAnimations,
             init() {
