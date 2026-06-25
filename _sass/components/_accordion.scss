@@ -178,7 +178,7 @@
 // PROCESSING SKELETON
 // ==============================================
 // While a filter pass runs on the accordion (e.g. faq-template targets it
-// with data-filter-items=".nds-accordion-item"), items render as bars
+// with data-filter-items="nds-accordion-item"), items render as bars
 // instead of the spinner + dim (suppression in _loading.scss). The same
 // look serves the pre-init hold: a not-yet-initialized filter target shows
 // shimmer (crit exempts accordions from its visibility hold and shapes the

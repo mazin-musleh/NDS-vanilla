@@ -480,7 +480,7 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div id="team_directory_content" class="nds-paged-content nds-cq" style="--per-page:6;">
-                <div class="nds-grid" id="teamDirectoryGrid" data-filter-items=".nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
+                <div class="nds-grid" id="teamDirectoryGrid" data-filter-items="nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
                     {% for user in site.data.content.users %}
                     <div class="nds-card nds-stroke nds-rowView nds-page-item">
                         <div class="nds-card-header">

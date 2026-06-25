@@ -74,7 +74,7 @@ direction: ltr
                                     <div class="nds-chips"></div>
                                 </div>
                             </div>
-                            <div id="basicFilterCards" class="nds-grid" data-filter-items=".nds-card"
+                            <div id="basicFilterCards" class="nds-grid" data-filter-items="nds-card"
                                 style="--max-col: 3; --mid-col: 2; --min-col: 1;">
                                 {% for user in site.data.content.users %}
                                 <div class="nds-card nds-stroke">
@@ -173,7 +173,7 @@ direction: ltr
 &lt;/div&gt;
 
 &lt;!-- Filterable Cards --&gt;
-&lt;div id="basicFilterCards" class="nds-grid" data-filter-items=".nds-card"
+&lt;div id="basicFilterCards" class="nds-grid" data-filter-items="nds-card"
   style="--max-col: 3; --mid-col: 2; --min-col: 1;"&gt;
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
@@ -251,7 +251,7 @@ direction: ltr
                                 <span class="nds-label">Applied Filters:</span>
                                 <div class="nds-chips"></div>
                             </div>
-                            <div id="checkboxCards" class="nds-grid" data-filter-items=".nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+                            <div id="checkboxCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
@@ -347,7 +347,7 @@ direction: ltr
   &lt;div class="nds-chips"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="checkboxCards" class="nds-grid" data-filter-items=".nds-card"
+&lt;div id="checkboxCards" class="nds-grid" data-filter-items="nds-card"
   style="--max-col: 2; --mid-col: 2; --min-col: 1;"&gt;
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
@@ -444,7 +444,7 @@ direction: ltr
                                 <span class="nds-label">Applied Filters:</span>
                                 <div class="nds-chips"></div>
                             </div>
-                            <div id="radioCards" class="nds-grid" data-filter-items=".nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+                            <div id="radioCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
@@ -539,7 +539,7 @@ direction: ltr
   &lt;div class="nds-chips"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="radioCards" class="nds-grid" data-filter-items=".nds-card"
+&lt;div id="radioCards" class="nds-grid" data-filter-items="nds-card"
   style="--max-col: 2; --mid-col: 2; --min-col: 1;"&gt;
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
@@ -636,7 +636,7 @@ direction: ltr
                                 <span class="nds-label">Applied Filters:</span>
                                 <div class="nds-chips"></div>
                             </div>
-                            <div id="switchCards" class="nds-grid" data-filter-items=".nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+                            <div id="switchCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
@@ -743,7 +743,7 @@ direction: ltr
   &lt;div class="nds-chips"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="switchCards" class="nds-grid" data-filter-items=".nds-card"
+&lt;div id="switchCards" class="nds-grid" data-filter-items="nds-card"
   style="--max-col: 2; --mid-col: 2; --min-col: 1;"&gt;
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
@@ -859,7 +859,7 @@ direction: ltr
                                 <span class="nds-label">Applied Filters:</span>
                                 <div class="nds-chips"></div>
                             </div>
-                            <div id="staticCards" class="nds-grid" data-filter-items=".nds-card" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+                            <div id="staticCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
@@ -973,7 +973,7 @@ direction: ltr
 &lt;/div&gt;
 
 &lt;!-- Cards use data-filter-value to match machine keys --&gt;
-&lt;div id="staticCards" class="nds-grid" data-filter-items=".nds-card"&gt;
+&lt;div id="staticCards" class="nds-grid" data-filter-items="nds-card"&gt;
   &lt;div class="nds-card nds-stroke"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-tags"&gt;
@@ -1423,7 +1423,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                                     </div>
                                 </div>
                             </div>
-                            <div id="sortDemoList" class="nds-grid" data-filter-items=".nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
+                            <div id="sortDemoList" class="nds-grid" data-filter-items="nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
                                 <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
                                     <div class="nds-card-content">
                                         <span class="nds-card-title">Zakat Payment</span>
@@ -1514,7 +1514,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="sortDemoList" class="nds-grid" data-filter-items=".nds-card"&gt;
+&lt;div id="sortDemoList" class="nds-grid" data-filter-items="nds-card"&gt;
   &lt;div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;span class="nds-card-title"&gt;Zakat Payment&lt;/span&gt;
@@ -1706,7 +1706,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-items</code></td><td>Set on the target container (the element referenced by <code class="nds-inline-code lang-html">data-filter-target</code>) to specify a custom CSS selector for filterable items. Default: <code class="nds-inline-code lang-html">.nds-card</code>. Example: <code class="nds-inline-code lang-html">data-filter-items=".search-result"</code> to filter non-card elements like list items or table rows. Setting it (even to the default <code class="nds-inline-code lang-html">.nds-card</code>) also opts the container into the critical-CSS hold: the container stays hidden until the filter initializes and has applied any URL filter params — so a URL-filtered page never flashes the unfiltered list.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-items</code></td><td>Set on the target container (the element referenced by <code class="nds-inline-code lang-html">data-filter-target</code>) to specify which descendants are filterable. Canonical form is a bare class name, e.g. <code class="nds-inline-code lang-html">data-filter-items="search-result"</code>; a tag name (<code class="nds-inline-code lang-html">tr</code>) or any CSS selector (<code class="nds-inline-code lang-html">.nds-card</code>, <code class="nds-inline-code lang-html">[data-row]</code>) also works. Default: <code class="nds-inline-code lang-html">.nds-card</code>. Setting the attribute (even with the default value) also opts the container into the critical-CSS hold: the container stays hidden until the filter initializes and has applied any URL filter params — so a URL-filtered page never flashes the unfiltered list.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-total-count</code></td><td>Set on the target container by server-side rendering or inside a <code class="nds-inline-code lang-js">nds:filterFormComplete</code> handler to provide a server-authoritative result count. When present, overrides the DOM-enumerated count written to <code class="nds-inline-code lang-html">[data-filter-count]</code> slots.</td></tr>
                     </tbody>
                 </table>

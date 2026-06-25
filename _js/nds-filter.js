@@ -129,7 +129,13 @@
         }
 
         getItemSelector() {
-            return this.targetContainer?.getAttribute('data-filter-items') || '.nds-card';
+            const ref = this.targetContainer?.getAttribute('data-filter-items');
+            if (!ref) return '.nds-card';
+            // Canonical form is a bare class (matches data-filter-target / data-auto-pagination
+            // style). Selectors with punctuation pass through unchanged for back-compat; bare
+            // tokens resolve as a class first, then fall back to a tag selector (e.g. "tr").
+            if (/[.#\[:\s>+~,*=]/.test(ref)) return ref;
+            return this.targetContainer.querySelector(`.${ref}`) ? `.${ref}` : ref;
         }
 
         getFilterValue(el) {

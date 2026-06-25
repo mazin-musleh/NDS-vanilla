@@ -93,7 +93,7 @@ sidemenu_mode: false
                 <div class="nds-tab-content">
 
                     <div class="nds-tab-panel" role="tabpanel" id="panel-faq-all" aria-labelledby="tab-faq-all" tabindex="0" style="padding:0;">
-                        <div class="nds-accordion nds-lg" id="faq-all-items" data-filter-items=".nds-accordion-item">
+                        <div class="nds-accordion nds-lg" id="faq-all-items" data-filter-items="nds-accordion-item">
                             {% for item in faqs %}
                             {% assign hid = "faq-all-h-" | append: item.id %}
                             {% assign cid = "faq-all-c-" | append: item.id %}
