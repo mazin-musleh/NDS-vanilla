@@ -121,6 +121,17 @@ $all-spacers: $spacers;
   &[data-currency="TRY"]::after {
     content: "₺";
   }
+  // Generic text unit (e.g. "km", "yr", "%", "★") rendered as a suffix — the
+  // non-currency counterpart of data-currency, so any numeric facet formats
+  // consistently. CSS-driven (::after) so it survives JS text rewrites (Slider).
+  &[data-unit]::after {
+    content: attr(data-unit);
+  }
+  // A currency icon reads BEFORE the number (row-reverse); a plain unit reads
+  // AFTER it, so cancel the LTR reverse when only a unit is present.
+  &[data-unit]:not([data-currency]) {
+    @include ltr { flex-direction: row; }
+  }
   // Zero-price display: render the label as-is (e.g. "Free") and suppress
   // the currency icon. Pairs with data-currency for consistent typography.
   &[data-free]::after {
