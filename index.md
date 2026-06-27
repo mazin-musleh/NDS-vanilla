@@ -328,21 +328,25 @@ bundle_sizes:
             <p class="nds-section-description">Each with markup, styling, and JavaScript behavior. All built from
                 scratch.</p>
         </div>
-        <div class="nds-form-container nds-search-box" data-filter-target="components_list">
-            <div class="nds-search-content">
-                <div class="nds-form-control">
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <input id="componentSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
-                        placeholder="Search components...">
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i
-                                class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+        <div class="nds-section-body">
+            <div class="nds-filter-bar">
+                <div class="nds-form-container nds-search-box" data-filter-target="components_list">
+                    <div class="nds-search-content">
+                        <div class="nds-form-control">
+                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                            <input id="componentSearch" type="text" class="nds-search-input" name="search" autocomplete="off"
+                                placeholder="Search components...">
+                            <div class="nds-form-action">
+                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i
+                                        class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <button class="nds-btn nds-primary nds-search-btn" type="button">
+                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                            <span class="nds-label">Search</span>
+                        </button>
                     </div>
                 </div>
-                <button class="nds-btn nds-primary nds-search-btn" type="button">
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <span class="nds-label">Search</span>
-                </button>
                 <div class="nds-dropmenu nds-filter" data-filter-target="components_list">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                         <i class="hgi hgi-stroke hgi-filter"></i>
@@ -371,13 +375,11 @@ bundle_sizes:
                         </div>
                     </div>
                 </div>
+                <div class="nds-filter-applied" data-filter-target="components_list" hidden>
+                    <span class="nds-label">Applied Filters:</span>
+                    <div class="nds-chips"></div>
+                </div>
             </div>
-            <div class="nds-filter-applied" data-filter-target="components_list" hidden>
-                <span class="nds-label">Applied Filters:</span>
-                <div class="nds-chips"></div>
-            </div>
-        </div>
-        <div class="nds-section-body">
             <div id="components_list" class="nds-paged-content nds-grid"
                 style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 

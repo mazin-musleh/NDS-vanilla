@@ -20,25 +20,30 @@ sidemenu_mode: false
         <div class="nds-section-head">
             <h2 class="nds-section-title">Browse questions</h2>
         </div>
-        <div class="nds-form-container nds-search-box" data-filter-target="faq-all-items">
-            <div class="nds-search-content">
-                <div class="nds-form-control">
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <input id="faqSearch" type="text" class="nds-search-input" name="q" autocomplete="off"
-                        placeholder="Search">
-                    <div class="nds-form-action">
-                        <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear">
-                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" class="nds-btn nds-subtle nds-voice-input" aria-label="Voice input">
-                            <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
+
+        <div class="nds-section-body">
+            <div class="nds-filter-bar">
+                <div class="nds-form-container nds-search-box" data-filter-target="faq-all-items">
+                    <div class="nds-search-content">
+                        <div class="nds-form-control">
+                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                            <input id="faqSearch" type="text" class="nds-search-input" name="q" autocomplete="off"
+                                placeholder="Search">
+                            <div class="nds-form-action">
+                                <button type="button" class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear">
+                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="nds-btn nds-subtle nds-voice-input" aria-label="Voice input">
+                                    <i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="nds-btn nds-primary nds-search-btn">
+                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                            <span class="nds-label">Search</span>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="nds-btn nds-primary nds-search-btn">
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <span class="nds-label">Search</span>
-                </button>
                 <div class="nds-dropmenu nds-filter" data-filter-target="faq-all-items">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
                         <i class="hgi hgi-stroke hgi-filter"></i>
@@ -64,14 +69,11 @@ sidemenu_mode: false
                         </div>
                     </div>
                 </div>
+                <div class="nds-filter-applied" data-filter-target="faq-all-items" hidden>
+                    <span class="nds-label">Applied Filters:</span>
+                    <div class="nds-chips"></div>
+                </div>
             </div>
-            <div class="nds-filter-applied" data-filter-target="faq-all-items" hidden>
-                <span class="nds-label">Applied Filters:</span>
-                <div class="nds-chips"></div>
-            </div>
-        </div>
-
-        <div class="nds-section-body">
             <div class="nds-tabs nds-divided" id="faq-tabs">
                 <div class="nds-tab-list-container nds-scroll-more">
                     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="FAQ categories">

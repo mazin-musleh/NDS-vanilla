@@ -202,25 +202,29 @@ hideFeedback: true
             <h2 class="nds-section-title">Recent Transactions</h2>
             <p class="nds-section-description">Latest financial records across all government service categories.</p>
         </div>
-        <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
-            <div class="nds-search-content">
-                <div class="nds-form-control">
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <input type="text" class="nds-search-input" placeholder="Search transactions...">
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+        <div class="nds-section-body">
+            <div class="nds-filter-bar">
+                <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
+                    <div class="nds-search-content">
+                        <div class="nds-form-control">
+                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                            <input type="text" class="nds-search-input" placeholder="Search transactions...">
+                            <div class="nds-form-action">
+                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <button class="nds-btn nds-primary nds-search-btn" type="button">
+                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                            <span class="nds-label">Search</span>
+                        </button>
                     </div>
                 </div>
-                <button class="nds-btn nds-primary nds-search-btn" type="button">
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <span class="nds-label">Search</span>
-                </button>
-                <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody" data-portal>
+                <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                         <i class="hgi hgi-stroke hgi-filter"></i>
                         <span class="nds-label">Filter</span>
                     </button>
-                    <div class="nds-dropmenu-menu" hidden>
+                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                         <div class="nds-dropmenu-scroll">
                             <div data-filter="category" data-filter-type="checkbox"
                                 data-filter-legend="Category"
@@ -231,6 +235,12 @@ hideFeedback: true
                                 data-filter-legend="Status"
                                 data-filter-values='{"completed":"Completed","pending":"Pending","failed":"Failed"}'
                                 data-no-auto-close>
+                            </div>
+                            <hr class="nds-divider">
+                            <div data-filter="amount" data-filter-type="slider"
+                                data-filter-legend="Amount"
+                                data-filter-min="0" data-filter-max="45000" data-filter-step="500"
+                                data-filter-currency="SAR" data-no-auto-close>
                             </div>
                         </div>
                         <div class="nds-dropmenu-footer">
@@ -248,13 +258,11 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
+                <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
+                    <span class="nds-label">Applied Filters:</span>
+                    <div class="nds-chips"></div>
+                </div>
             </div>
-            <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
-                <span class="nds-label">Applied Filters:</span>
-                <div class="nds-chips"></div>
-            </div>
-        </div>
-        <div class="nds-section-body">
             <div class="nds-export nds-btn-group">
                 <button type="button" class="nds-btn nds-secondary-outline nds-md"
                         data-export="csv" data-export-target="#consoleTransactions">
@@ -354,9 +362,9 @@ hideFeedback: true
                             </td>
                             <td data-sort-value="{{ txn.amount }}">
                                 {% if txn.amount == 0 %}
-                                <span class="nds-number-format" data-currency="{{ txn.currency }}" data-free>Free</span>
+                                <span class="nds-number-format" data-currency="{{ txn.currency }}" data-free data-filter="amount" data-filter-value="0">Free</span>
                                 {% else %}
-                                <span class="nds-number-format" data-currency="{{ txn.currency }}">{{ txn.amount }}</span>
+                                <span class="nds-number-format" data-currency="{{ txn.currency }}" data-filter="amount" data-filter-value="{{ txn.amount }}">{{ txn.amount }}</span>
                                 {% endif %}
                             </td>
                             <td>{{ txn.date }}</td>
@@ -426,19 +434,23 @@ hideFeedback: true
             <h2 class="nds-section-title">Team Directory</h2>
             <p class="nds-section-description">Active team members across all departments.</p>
         </div>
-        <div class="nds-form-container nds-search-box" data-filter-target="teamDirectoryGrid">
-            <div class="nds-search-content">
-                <div class="nds-form-control">
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <input type="text" class="nds-search-input" placeholder="Search team members...">
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+        <div class="nds-section-body">
+            <div class="nds-filter-bar">
+                <div class="nds-form-container nds-search-box" data-filter-target="teamDirectoryGrid">
+                    <div class="nds-search-content">
+                        <div class="nds-form-control">
+                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                            <input type="text" class="nds-search-input" placeholder="Search team members...">
+                            <div class="nds-form-action">
+                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <button class="nds-btn nds-primary nds-search-btn" type="button">
+                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                            <span class="nds-label">Search</span>
+                        </button>
                     </div>
                 </div>
-                <button class="nds-btn nds-primary nds-search-btn" type="button">
-                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <span class="nds-label">Search</span>
-                </button>
                 <div class="nds-dropmenu nds-filter" data-filter-target="teamDirectoryGrid">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                         <i class="hgi hgi-stroke hgi-filter"></i>
@@ -472,13 +484,11 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
+                <div class="nds-filter-applied" data-filter-target="teamDirectoryGrid" hidden>
+                    <span class="nds-label">Applied Filters:</span>
+                    <div class="nds-chips"></div>
+                </div>
             </div>
-            <div class="nds-filter-applied" data-filter-target="teamDirectoryGrid" hidden>
-                <span class="nds-label">Applied Filters:</span>
-                <div class="nds-chips"></div>
-            </div>
-        </div>
-        <div class="nds-section-body">
             <div id="team_directory_content" class="nds-paged-content nds-cq" style="--per-page:6;">
                 <div class="nds-grid" id="teamDirectoryGrid" data-filter-items="nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
                     {% for user in site.data.content.users %}
