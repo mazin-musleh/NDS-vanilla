@@ -795,6 +795,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The <strong>NDS.Sort</strong> API exposes a factory plus pure helpers. Consumers of Filter and Tables rarely need to call it directly: the widget wires itself on page load. Call <strong>NDS.Sort.create()</strong> only for custom widgets.</p>
+                <p><strong>NDS.Sort</strong> ships in the delegated bundle, which the loader injects after first paint. On a page that already uses Filter, Tables, or any other delegated component, it is loaded for you. For a standalone widget on a page with no other delegated component, await <code class="nds-inline-code lang-js">NDS.loadBundle('delegated')</code> before calling <code class="nds-inline-code lang-js">create()</code> so it returns the instance synchronously. An early call through the lazy loader stub returns a Promise instead.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">

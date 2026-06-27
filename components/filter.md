@@ -23,8 +23,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar" data-filter-target="basicFilterCards">
-                                <div class="nds-form-container nds-search-box">
+                            <div class="nds-filter-bar">
+                                <div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards">
                                     <div class="nds-search-content">
                                         <div class="nds-form-control">
                                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
@@ -39,7 +39,7 @@ direction: ltr
                                         </button>
                                     </div>
                                 </div>
-                                <div class="nds-dropmenu nds-filter">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards">
                                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
                                         <span class="nds-label">Filter</span>
@@ -70,7 +70,7 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-filter-applied" hidden>
+                                <div class="nds-filter-applied" data-filter-target="basicFilterCards" hidden>
                                     <span class="nds-label">Applied Filters:</span>
                                     <div class="nds-chips"></div>
                                 </div>
@@ -117,10 +117,10 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;!-- One flex bar above the grid; a single data-filter-target wires it all --&gt;
-&lt;div class="nds-filter-bar" data-filter-target="basicFilterCards"&gt;
+&lt;!-- One flex bar above the grid; each surface is wired by its own data-filter-target --&gt;
+&lt;div class="nds-filter-bar"&gt;
   &lt;!-- Search box (field + button) --&gt;
-  &lt;div class="nds-form-container nds-search-box"&gt;
+  &lt;div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards"&gt;
     &lt;div class="nds-search-content"&gt;
       &lt;div class="nds-form-control"&gt;
         &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
@@ -139,7 +139,7 @@ direction: ltr
   &lt;/div&gt;
 
   &lt;!-- Filter: sibling of the search box, not nested inside it --&gt;
-  &lt;div class="nds-dropmenu nds-filter"&gt;
+  &lt;div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
       &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
@@ -174,7 +174,7 @@ direction: ltr
     &lt;/div&gt;
   &lt;/div&gt;
 
-  &lt;div class="nds-filter-applied" hidden&gt;
+  &lt;div class="nds-filter-applied" data-filter-target="basicFilterCards" hidden&gt;
     &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
     &lt;div class="nds-chips"&gt;&lt;/div&gt;
   &lt;/div&gt;
@@ -958,8 +958,8 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar" data-filter-target="barFilterCards">
-                                <div class="nds-form-container nds-search-box">
+                            <div class="nds-filter-bar">
+                                <div class="nds-form-container nds-search-box" data-filter-target="barFilterCards">
                                     <div class="nds-search-content">
                                         <div class="nds-form-control">
                                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
@@ -974,7 +974,7 @@ direction: ltr
                                         </button>
                                     </div>
                                 </div>
-                                <div class="nds-dropmenu nds-filter">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards">
                                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
                                         <span class="nds-label">Filter</span>
@@ -996,11 +996,11 @@ direction: ltr
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-filter-applied" hidden>
+                                <div class="nds-filter-applied" data-filter-target="barFilterCards" hidden>
                                     <span class="nds-label">Applied Filters:</span>
                                     <div class="nds-chips"></div>
                                 </div>
-                                <div class="nds-auto-fill" data-target="barSearchInput" data-autofill-apply>
+                                <div class="nds-auto-fill" data-target="barSearchInput" data-filter-target="barFilterCards" data-autofill-apply>
                                     <span class="nds-label">Suggestions:</span>
                                     <div class="nds-chips">
                                         <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Furniture</span></button>
@@ -1042,10 +1042,10 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;!-- One flex bar above the grid; a single data-filter-target wires it all --&gt;
-&lt;div class="nds-filter-bar" data-filter-target="barFilterCards"&gt;
+&lt;!-- One flex bar above the grid; each surface is wired by its own data-filter-target --&gt;
+&lt;div class="nds-filter-bar"&gt;
   &lt;!-- Search box (field + button) --&gt;
-  &lt;div class="nds-form-container nds-search-box"&gt;
+  &lt;div class="nds-form-container nds-search-box" data-filter-target="barFilterCards"&gt;
     &lt;div class="nds-search-content"&gt;
       &lt;div class="nds-form-control"&gt;
         &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
@@ -1065,7 +1065,7 @@ direction: ltr
   &lt;/div&gt;
 
   &lt;!-- Filter: category checkbox + price slider --&gt;
-  &lt;div class="nds-dropmenu nds-filter"&gt;
+  &lt;div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
       &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
@@ -1093,13 +1093,13 @@ direction: ltr
   &lt;/div&gt;
 
   &lt;!-- Applied-filter chips (filled by JS) --&gt;
-  &lt;div class="nds-filter-applied" hidden&gt;
+  &lt;div class="nds-filter-applied" data-filter-target="barFilterCards" hidden&gt;
     &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
     &lt;div class="nds-chips"&gt;&lt;/div&gt;
   &lt;/div&gt;
 
   &lt;!-- Auto-fill suggestions; data-autofill-apply runs the search on click --&gt;
-  &lt;div class="nds-auto-fill" data-target="barSearchInput" data-autofill-apply&gt;
+  &lt;div class="nds-auto-fill" data-target="barSearchInput" data-filter-target="barFilterCards" data-autofill-apply&gt;
     &lt;span class="nds-label"&gt;Suggestions:&lt;/span&gt;
     &lt;div class="nds-chips"&gt;
       &lt;button type="button" class="nds-chip nds-neutral nds-rounded nds-item"&gt;
