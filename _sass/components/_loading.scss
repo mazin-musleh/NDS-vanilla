@@ -18,7 +18,7 @@
 // ==============================================
 
 .nds-loading,
-[data-state="loading"] {
+[data-state~="loading"] {
   // Private tokens — resolve public overrides with semantic fallbacks
   --_loading-size: var(--loading-size, 32px);
   --_loading-border: var(--loading-border, 3px);
