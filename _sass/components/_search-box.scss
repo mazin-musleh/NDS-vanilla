@@ -40,16 +40,4 @@
             }
         }
     }
-
-    .nds-auto-fill {
-        flex-direction: row;
-        flex: 1 1 100%;
-        align-items: center;
-        flex-wrap: wrap;
-
-        >.nds-label {
-            // FS/LH/weight come from _filter.scss's .nds-auto-fill > .nds-label base; only the color diverges
-            color: var(--text-default);
-        }
-    }
 }

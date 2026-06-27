@@ -1053,6 +1053,10 @@
         var targetId = container.getAttribute('data-target');
         if (!targetId) return;
 
+        // Opt-in: data-autofill-apply makes a chip click also submit the search
+        // (simulates Enter on the target) instead of only filling the field.
+        var applyOnFill = container.hasAttribute('data-autofill-apply');
+
         container.querySelectorAll('.nds-item').forEach(function(item) {
             if (item._autoFillHandler) {
                 item.removeEventListener('click', item._autoFillHandler);
@@ -1076,6 +1080,10 @@
                     var formControl = targetInput.closest('.nds-form-control');
                     if (formControl) {
                         FieldSync.update(targetInput, formControl);
+                    }
+
+                    if (applyOnFill) {
+                        targetInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
                     }
                 }
             };

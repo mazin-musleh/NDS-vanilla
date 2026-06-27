@@ -1,86 +1,94 @@
 /**
  * NDS Filter Component - SCSS
- * Filtration system styles for filtering card items
+ * The filter anchor + submission states, the applied-chips / auto-fill rows, the
+ * result-count line, and the standard .nds-filter-bar controls layout.
  */
 
 @use '../mixins' as *;
 
 // ==============================================
-// FILTER CONTAINER IN DROPMENU
+// FILTER ANCHOR (.nds-filter)
 // ==============================================
-
-.nds-auto-fill {
-    display: flex;
-    gap: var(--spacing-md);
-    flex-direction: column;
-
-    >.nds-label {
-        font-size: var(--typo-text-clamp-lg-FS);
-        line-height: var(--typo-text-clamp-lg-LH);
-        color: var(--text-primary);
-        font-weight: var(--font-weight-medium);
-    }
-}
 
 .nds-filter {
     --dropmenu-min-width: 250px;
-}
 
-// Result-count line (e.g. "0 Result(s) found") — pairs with [data-filter-count]
-.nds-results-count {
-    color: var(--text-secondary-paragraph);
-}
-
-
-// ==============================================
-// APPLIED FILTERS (standalone)
-// ==============================================
-
-.nds-filter-applied {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
-    min-width: 0;
-    align-items: center;
-    flex: 1 1 100%;
-
-    >.nds-label {
-        font-size: var(--typo-text-clamp-lg-FS);
-        font-weight: var(--font-weight-medium);
-    }
-}
-
-// ==============================================
-// FORM SUBMISSION MODE
-// States are set on .nds-filter (the anchor) by nds-filter.js during submission
-// ==============================================
-
-.nds-filter {
-
-    // Submitting state
+    // Submission states — set on the anchor by nds-filter.js while a form
+    // submits; the success/error rings land on whichever search input exists.
     &[data-state~="submitting"] {
         opacity: 0.7;
         pointer-events: none;
     }
-
-    // Success state
-    &[data-status="success"] {
-
-        :is(.nds-search-input, .nds-form-control input) {
-            border-color: var(--border-success);
-        }
+    &[data-status="success"] :is(.nds-search-input, .nds-form-control input) {
+        border-color: var(--border-success);
     }
-
-    // Error state
-    &[data-status="error"] {
-
-        :is(.nds-search-input, .nds-form-control input) {
-            border-color: var(--border-error);
-        }
+    &[data-status="error"] :is(.nds-search-input, .nds-form-control input) {
+        border-color: var(--border-error);
     }
 }
 
-// Hidden inputs container lives inside the submission form; always invisible
+// Hidden inputs container lives inside the submission form; always invisible.
 .nds-filter-hidden-inputs {
     display: none !important;
+}
+
+// ==============================================
+// LABELED-CHIPS ROWS — applied filters + auto-fill suggestions
+// ==============================================
+// Same structure: a .nds-label + .nds-chips group laid out as one wrapping row
+// that spans its line. Label colour comes from .nds-label (varies by context).
+
+:is(.nds-auto-fill, .nds-filter-applied) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-md);
+    min-width: 0;
+    flex: 1 1 100%;
+
+    > .nds-label {
+        font-size: var(--typo-text-clamp-lg-FS);
+        line-height: var(--typo-text-clamp-lg-LH);
+        font-weight: var(--font-weight-medium);
+    }
+}
+
+// Result-count line (e.g. "0 Result(s) found"); pairs with [data-filter-count].
+.nds-results-count {
+    color: var(--text-secondary-paragraph);
+}
+
+// ==============================================
+// FILTER BAR — standard controls layout above the items grid
+// ==============================================
+// One flex container holding every filter surface (search, filter, sort, applied
+// chips, auto-fill) wired by a single data-filter-target on the bar itself, so the
+// controls live next to the content instead of in the section head. The grid +
+// pagination stay independent siblings below it.
+
+.nds-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-xl) var(--spacing-lg);   // row gap (controls ↔ status row) / column gap
+    margin-block-end: var(--spacing-4xl);
+    width: 100%;
+    // The standard .nds-search-box (its inner .nds-search-content holds the field +
+    // button row and the responsive label-hide). As a bar item it just grows to fill
+    // the row instead of being the centered, full-width panel it is by default.
+    > .nds-search-box {
+        flex: 1 1 240px;
+        min-width: 0;
+        width: auto;
+        margin: 0;
+    }
+
+    // Applied chips + auto-fill take their own full-width row beneath the controls
+    // via the shared rule's flex: 1 1 100% (the JS swaps which one shows).
+
+    @include mobile {
+        gap: var(--spacing-xl) var(--spacing-md);   // keep the xl row gap; tighter column gap
+        // Collapse control labels to icons to save width on small screens.
+        /* :is(.nds-search-btn, .nds-filter-btn) > .nds-label { @include label-hidden; } */
+    }
 }

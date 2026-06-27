@@ -23,61 +23,62 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards">
-                                <div class="nds-search-content">
-                                    <div class="nds-form-control">
-                                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                        <input type="text" class="nds-search-input" placeholder="Search cards...">
-                                        <div class="nds-form-action">
-                                            <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
-                                        </div>
-                                    </div>
-                                    <button class="nds-btn nds-primary nds-search-btn" type="button">
-                                        <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                        <span class="nds-label">Search</span>
-                                    </button>
-                                    <div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards">
-                                        <button
-                                            class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                            <i class="hgi hgi-stroke hgi-filter"></i>
-                                            <span class="nds-label">Filter</span>
-                                        </button>
-                                        <div class="nds-dropmenu-menu" hidden>
-                                            <div class="nds-dropmenu-scroll">
-                                                <div data-filter="department"
-                                                    data-filter-type="checkbox" data-filter-legend="Department"
-                                                    data-no-auto-close>
-                                                </div>
-                                                <hr class="nds-divider">
-                                                <div data-filter="role"
-                                                    data-filter-type="radio" data-filter-legend="Role" data-no-auto-close>
-                                                </div>
+                            <div class="nds-filter-bar" data-filter-target="basicFilterCards">
+                                <div class="nds-form-container nds-search-box">
+                                    <div class="nds-search-content">
+                                        <div class="nds-form-control">
+                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                            <input type="text" class="nds-search-input" placeholder="Search cards...">
+                                            <div class="nds-form-action">
+                                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
                                             </div>
-                                            <div class="nds-dropmenu-footer">
-                                                <hr class="nds-divider">
-                                                <div class="nds-dropmenu-action nds-grid">
-                                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                                        data-filter-action="clear" data-no-auto-close>
-                                                        <span class="nds-label">Reset</span>
-                                                    </button>
-                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                                        data-filter-action="apply">
-                                                        <span class="nds-label">Filter</span>
-                                                    </button>
-                                                </div>
+                                        </div>
+                                        <button class="nds-btn nds-primary nds-search-btn" type="button">
+                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                            <span class="nds-label">Search</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu nds-filter">
+                                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                        <i class="hgi hgi-stroke hgi-filter"></i>
+                                        <span class="nds-label">Filter</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <div data-filter="department"
+                                                data-filter-type="checkbox" data-filter-legend="Department"
+                                                data-no-auto-close>
+                                            </div>
+                                            <hr class="nds-divider">
+                                            <div data-filter="role"
+                                                data-filter-type="radio" data-filter-legend="Role" data-no-auto-close>
+                                            </div>
+                                        </div>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider">
+                                            <div class="nds-dropmenu-action nds-grid">
+                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                    data-filter-action="clear" data-no-auto-close>
+                                                    <span class="nds-label">Reset</span>
+                                                </button>
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                    data-filter-action="apply">
+                                                    <span class="nds-label">Filter</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="nds-filter-applied" data-filter-target="basicFilterCards" hidden>
+                                <div class="nds-filter-applied" hidden>
                                     <span class="nds-label">Applied Filters:</span>
                                     <div class="nds-chips"></div>
                                 </div>
                             </div>
-                            <div id="basicFilterCards" class="nds-grid" data-filter-items="nds-card"
-                                style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+                            <div id="basicFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
+                                style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
                                 {% for user in site.data.content.users %}
-                                <div class="nds-card nds-stroke">
+                                <div class="nds-card nds-stroke nds-page-item">
                                     <div class="nds-card-content">
                                         <div class="nds-card-text">
                                             <span class="nds-card-title">{{ user.name }}</span>
@@ -93,6 +94,7 @@ direction: ltr
                                 </div>
                                 {% endfor %}
                             </div>
+                            <nav class="nds-pagination" data-auto-pagination="basicFilterCards" aria-label="Pagination"></nav>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -115,67 +117,73 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;!-- Search Box with Filter (all linked by data-filter-target) --&gt;
-&lt;div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards"&gt;
-  &lt;div class="nds-search-content"&gt;
-    &lt;div class="nds-form-control"&gt;
-      &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;input type="text" class="nds-search-input" placeholder="Search cards..."&gt;
-      &lt;div class="nds-form-action"&gt;
-        &lt;button class="nds-btn nds-subtle nds-clear" hidden&gt;
-          &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;button class="nds-btn nds-primary nds-search-btn" type="button"&gt;
-      &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Search&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards"&gt;
-      &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
-        &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-        &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;div class="nds-dropmenu-menu" hidden&gt;
-        &lt;div class="nds-dropmenu-scroll"&gt;
-          &lt;div data-filter="department"
-            data-filter-type="checkbox"
-            data-filter-legend="Department"
-            data-no-auto-close&gt;
-          &lt;/div&gt;
-          &lt;hr class="nds-divider"&gt;
-          &lt;div data-filter="role"
-            data-filter-type="radio"
-            data-filter-legend="Role"
-            data-no-auto-close&gt;
-          &lt;/div&gt;
+&lt;!-- One flex bar above the grid; a single data-filter-target wires it all --&gt;
+&lt;div class="nds-filter-bar" data-filter-target="basicFilterCards"&gt;
+  &lt;!-- Search box (field + button) --&gt;
+  &lt;div class="nds-form-container nds-search-box"&gt;
+    &lt;div class="nds-search-content"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;input type="text" class="nds-search-input" placeholder="Search cards..."&gt;
+        &lt;div class="nds-form-action"&gt;
+          &lt;button class="nds-btn nds-subtle nds-clear" hidden&gt;
+            &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+          &lt;/button&gt;
         &lt;/div&gt;
-        &lt;div class="nds-dropmenu-footer"&gt;
-          &lt;hr class="nds-divider"&gt;
-          &lt;div class="nds-dropmenu-action nds-grid"&gt;
-            &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-              data-filter-action="clear" data-no-auto-close&gt;
-              &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
-            &lt;/button&gt;
-            &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-              data-filter-action="apply"&gt;
-              &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
-            &lt;/button&gt;
-          &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button class="nds-btn nds-primary nds-search-btn" type="button"&gt;
+        &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Search&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Filter: sibling of the search box, not nested inside it --&gt;
+  &lt;div class="nds-dropmenu nds-filter"&gt;
+    &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
+      &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
+      &lt;div class="nds-dropmenu-scroll"&gt;
+        &lt;div data-filter="department"
+          data-filter-type="checkbox"
+          data-filter-legend="Department"
+          data-no-auto-close&gt;
+        &lt;/div&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;div data-filter="role"
+          data-filter-type="radio"
+          data-filter-legend="Role"
+          data-no-auto-close&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-dropmenu-footer"&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+          &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+            data-filter-action="clear" data-no-auto-close&gt;
+            &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+            data-filter-action="apply"&gt;
+            &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+          &lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-filter-applied" data-filter-target="basicFilterCards" hidden&gt;
+
+  &lt;div class="nds-filter-applied" hidden&gt;
     &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
     &lt;div class="nds-chips"&gt;&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- Filterable Cards --&gt;
-&lt;div id="basicFilterCards" class="nds-grid" data-filter-items="nds-card"
-  style="--max-col: 3; --mid-col: 2; --min-col: 1;"&gt;
-  &lt;div class="nds-card nds-stroke"&gt;
+&lt;div id="basicFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
+  style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;"&gt;
+  &lt;div class="nds-card nds-stroke nds-page-item"&gt;
     &lt;div class="nds-card-content"&gt;
       &lt;div class="nds-card-text"&gt;
         &lt;span class="nds-card-title"&gt;User Name&lt;/span&gt;
@@ -192,6 +200,7 @@ direction: ltr
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="basicFilterCards" aria-label="Pagination"&gt;&lt;/nav&gt;
                                     </code>
                                     </div>
                                 </div>
@@ -209,7 +218,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Auto-Generated Filter Types</h2>
-            <p class="nds-section-description">Three filter input types that auto-generate from card content: checkbox (multi-select, OR logic), radio (single-select), and switch (toggle, OR logic)</p>
+            <p class="nds-section-description">Four auto-generated filter input types: checkbox (multi-select, OR logic), radio (single-select), switch (toggle, OR logic), and slider (numeric range). The first three build their options from card content; the slider reads its bounds from <code class="nds-inline-code lang-html">data-filter-min</code>/<code class="nds-inline-code lang-html">data-filter-max</code>.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -220,6 +229,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
+                            <div class="nds-filter-bar">
                             <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -250,6 +260,7 @@ direction: ltr
                             <div class="nds-filter-applied" data-filter-target="checkboxCards" hidden>
                                 <span class="nds-label">Applied Filters:</span>
                                 <div class="nds-chips"></div>
+                            </div>
                             </div>
                             <div id="checkboxCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
                                 <div class="nds-card nds-stroke">
@@ -311,6 +322,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
+&lt;div class="nds-filter-bar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -345,6 +357,7 @@ direction: ltr
 &lt;div class="nds-filter-applied" data-filter-target="checkboxCards" hidden&gt;
   &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
   &lt;div class="nds-chips"&gt;&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div id="checkboxCards" class="nds-grid" data-filter-items="nds-card"
@@ -413,6 +426,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
+                            <div class="nds-filter-bar">
                             <div class="nds-dropmenu nds-filter" data-filter-target="radioCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -443,6 +457,7 @@ direction: ltr
                             <div class="nds-filter-applied" data-filter-target="radioCards" hidden>
                                 <span class="nds-label">Applied Filters:</span>
                                 <div class="nds-chips"></div>
+                            </div>
                             </div>
                             <div id="radioCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
                                 <div class="nds-card nds-stroke">
@@ -504,6 +519,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
+&lt;div class="nds-filter-bar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="radioCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -537,6 +553,7 @@ direction: ltr
 &lt;div class="nds-filter-applied" data-filter-target="radioCards" hidden&gt;
   &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
   &lt;div class="nds-chips"&gt;&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div id="radioCards" class="nds-grid" data-filter-items="nds-card"
@@ -605,6 +622,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
+                            <div class="nds-filter-bar">
                             <div class="nds-dropmenu nds-filter" data-filter-target="switchCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -635,6 +653,7 @@ direction: ltr
                             <div class="nds-filter-applied" data-filter-target="switchCards" hidden>
                                 <span class="nds-label">Applied Filters:</span>
                                 <div class="nds-chips"></div>
+                            </div>
                             </div>
                             <div id="switchCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
                                 <div class="nds-card nds-stroke">
@@ -708,6 +727,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
+&lt;div class="nds-filter-bar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="switchCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -741,6 +761,7 @@ direction: ltr
 &lt;div class="nds-filter-applied" data-filter-target="switchCards" hidden&gt;
   &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
   &lt;div class="nds-chips"&gt;&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div id="switchCards" class="nds-grid" data-filter-items="nds-card"
@@ -807,6 +828,311 @@ direction: ltr
                         </div>
                     </div>
                 </div>
+
+                <!-- Slider -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Slider Filter (Range)</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-filter-bar">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="sliderCards">
+                                    <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
+                                        <i class="hgi hgi-stroke hgi-filter"></i>
+                                        <span class="nds-label">Filter</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
+                                                data-filter-min="0" data-filter-max="5000" data-filter-step="100"
+                                                data-filter-currency="SAR" data-no-auto-close></div>
+                                        </div>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider">
+                                            <div class="nds-dropmenu-action nds-grid">
+                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close><span class="nds-label">Reset</span></button>
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply"><span class="nds-label">Apply</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-filter-applied" data-filter-target="sliderCards" hidden>
+                                    <span class="nds-label">Applied Filters:</span>
+                                    <div class="nds-chips"></div>
+                                </div>
+                            </div>
+                            <div id="sliderCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+                                <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Hub</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="250">250</span></span></div></div></div>
+                                <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Office Chair</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="900">900</span></span></div></div></div>
+                                <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Monitor</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="1800">1800</span></span></div></div></div>
+                                <div class="nds-card nds-stroke"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Laptop</span></div><div class="nds-card-tags"><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="3500">3500</span></span></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-filter-slider-1" id="tab-filter-slider-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-slider-1" aria-labelledby="tab-filter-slider-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                    <code class="lang-html code">
+&lt;div class="nds-filter-bar"&gt;
+  &lt;!-- Slider: numeric range. Both min+max = dual range; max alone = "up to" --&gt;
+  &lt;div class="nds-dropmenu nds-filter" data-filter-target="sliderCards"&gt;
+    &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
+      &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="nds-dropmenu-menu" style="min-width: 300px;" hidden&gt;
+      &lt;div class="nds-dropmenu-scroll"&gt;
+        &lt;div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
+          data-filter-min="0" data-filter-max="5000" data-filter-step="100"
+          data-filter-currency="SAR" data-no-auto-close&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-dropmenu-footer"&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+          &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+            data-filter-action="clear" data-no-auto-close&gt;&lt;span class="nds-label"&gt;Reset&lt;/span&gt;&lt;/button&gt;
+          &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+            data-filter-action="apply"&gt;&lt;span class="nds-label"&gt;Apply&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-filter-applied" data-filter-target="sliderCards" hidden&gt;
+    &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
+    &lt;div class="nds-chips"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Each card carries a numeric data-filter-value --&gt;
+&lt;div id="sliderCards" class="nds-grid" data-filter-items="nds-card"&gt;
+  &lt;div class="nds-card nds-stroke"&gt;
+    &lt;div class="nds-card-content"&gt;
+      &lt;div class="nds-card-text"&gt;&lt;span class="nds-card-title"&gt;Wireless Hub&lt;/span&gt;&lt;/div&gt;
+      &lt;div class="nds-card-tags"&gt;
+        &lt;span class="nds-tag nds-blue nds-sm"&gt;&lt;span class="nds-label nds-number-format" data-currency="SAR"
+          data-filter="price" data-filter-value="250"&gt;250&lt;/span&gt;&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- ...more cards... --&gt;
+&lt;/div&gt;
+                                    </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Bar (standard layout) -->
+<section id="filterBar" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Filter Bar (Standard Layout)</h2>
+            <p class="nds-section-description">The standard arrangement: one <code class="nds-inline-code lang-html">.nds-filter-bar</code> flex container directly above the grid, holding the search box, Filter, applied-filter chips, and auto-fill suggestions, all wired by a single <code class="nds-inline-code lang-html">data-filter-target</code> on the bar. The Filter here pairs a category checkbox group with a <a class="nds-color" href="{{ 'components/slider' | relative_url }}">price slider</a> (<code class="nds-inline-code lang-html">data-filter-type="slider"</code>). Sort controls can live in the bar too: see the <a class="nds-color" href="{{ 'components/sort' | relative_url }}">Sort</a> page. Grid and pagination stay independent siblings below.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Search + Filter + Slider</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-filter-bar" data-filter-target="barFilterCards">
+                                <div class="nds-form-container nds-search-box">
+                                    <div class="nds-search-content">
+                                        <div class="nds-form-control">
+                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                            <input id="barSearchInput" type="text" class="nds-search-input" name="search" placeholder="Search products...">
+                                            <div class="nds-form-action">
+                                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                        <button class="nds-btn nds-primary nds-search-btn" type="button">
+                                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                            <span class="nds-label">Search</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="nds-dropmenu nds-filter">
+                                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                        <i class="hgi hgi-stroke hgi-filter"></i>
+                                        <span class="nds-label">Filter</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <div data-filter="category" data-filter-type="checkbox" data-filter-legend="Category" data-no-auto-close></div>
+                                            <hr class="nds-divider">
+                                            <div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
+                                                data-filter-min="0" data-filter-max="5000" data-filter-step="100"
+                                                data-filter-currency="SAR" data-no-auto-close></div>
+                                        </div>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider">
+                                            <div class="nds-dropmenu-action nds-grid">
+                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close><span class="nds-label">Reset</span></button>
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply"><span class="nds-label">Apply</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-filter-applied" hidden>
+                                    <span class="nds-label">Applied Filters:</span>
+                                    <div class="nds-chips"></div>
+                                </div>
+                                <div class="nds-auto-fill" data-target="barSearchInput" data-autofill-apply>
+                                    <span class="nds-label">Suggestions:</span>
+                                    <div class="nds-chips">
+                                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Furniture</span></button>
+                                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Accessories</span></button>
+                                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item"><i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i><span class="nds-label">Computers</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="barFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card" style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
+                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="USB-C Hub" data-sort-price="250"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">USB-C Hub</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="250">250</span></span></div></div></div>
+                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Wireless Mouse" data-sort-price="120"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Mouse</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="120">120</span></span></div></div></div>
+                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Wireless Keyboard" data-sort-price="480"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Wireless Keyboard</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="480">480</span></span></div></div></div>
+                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="27-inch Monitor" data-sort-price="950"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">27&quot; Monitor</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Displays</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="950">950</span></span></div></div></div>
+                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Ergonomic Chair" data-sort-price="1500"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Ergonomic Chair</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Furniture</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="1500">1500</span></span></div></div></div>
+                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Standing Desk" data-sort-price="2800"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Standing Desk</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Furniture</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="2800">2800</span></span></div></div></div>
+                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Laptop Pro" data-sort-price="4200"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Laptop Pro</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Computers</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="4200">4200</span></span></div></div></div>
+                                <div class="nds-card nds-stroke nds-page-item" data-sort-name="Noise-Cancel Headphones" data-sort-price="600"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Headphones</span></div><div class="nds-card-tags"><span class="nds-tag nds-green nds-sm"><span class="nds-label" data-filter="category">Accessories</span></span><span class="nds-tag nds-blue nds-sm"><span class="nds-label nds-number-format" data-currency="SAR" data-filter="price" data-filter-value="600">600</span></span></div></div></div>
+                            </div>
+                            <nav class="nds-pagination" data-auto-pagination="barFilterCards" aria-label="Pagination"></nav>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-filter-bar-1" id="tab-filter-bar-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-bar-1"
+                                    aria-labelledby="tab-filter-bar-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                    <code class="lang-html code">
+&lt;!-- One flex bar above the grid; a single data-filter-target wires it all --&gt;
+&lt;div class="nds-filter-bar" data-filter-target="barFilterCards"&gt;
+  &lt;!-- Search box (field + button) --&gt;
+  &lt;div class="nds-form-container nds-search-box"&gt;
+    &lt;div class="nds-search-content"&gt;
+      &lt;div class="nds-form-control"&gt;
+        &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;input id="barSearchInput" type="text" class="nds-search-input"
+          name="search" placeholder="Search products..."&gt;
+        &lt;div class="nds-form-action"&gt;
+          &lt;button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"&gt;
+            &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button class="nds-btn nds-primary nds-search-btn" type="button"&gt;
+        &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Search&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Filter: category checkbox + price slider --&gt;
+  &lt;div class="nds-dropmenu nds-filter"&gt;
+    &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
+      &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="nds-dropmenu-menu" style="min-width: 300px;" hidden&gt;
+      &lt;div class="nds-dropmenu-scroll"&gt;
+        &lt;div data-filter="category" data-filter-type="checkbox"
+          data-filter-legend="Category" data-no-auto-close&gt;&lt;/div&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;!-- Slider filter: data-filter-max alone = single "up to"; both bounds = dual range --&gt;
+        &lt;div data-filter="price" data-filter-type="slider" data-filter-legend="Price"
+          data-filter-min="0" data-filter-max="5000" data-filter-step="100"
+          data-filter-currency="SAR" data-no-auto-close&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-dropmenu-footer"&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+          &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+            data-filter-action="clear" data-no-auto-close&gt;&lt;span class="nds-label"&gt;Reset&lt;/span&gt;&lt;/button&gt;
+          &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+            data-filter-action="apply"&gt;&lt;span class="nds-label"&gt;Apply&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Applied-filter chips (filled by JS) --&gt;
+  &lt;div class="nds-filter-applied" hidden&gt;
+    &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
+    &lt;div class="nds-chips"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Auto-fill suggestions; data-autofill-apply runs the search on click --&gt;
+  &lt;div class="nds-auto-fill" data-target="barSearchInput" data-autofill-apply&gt;
+    &lt;span class="nds-label"&gt;Suggestions:&lt;/span&gt;
+    &lt;div class="nds-chips"&gt;
+      &lt;button type="button" class="nds-chip nds-neutral nds-rounded nds-item"&gt;
+        &lt;i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"&gt;&lt;/i&gt;&lt;span class="nds-label"&gt;Furniture&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;!-- ...more suggestion chips... --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Items: each card carries a numeric data-filter-value + data-sort-* --&gt;
+&lt;div id="barFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
+  style="--per-page: 6;"&gt;
+  &lt;div class="nds-card nds-stroke nds-page-item" data-sort-name="USB-C Hub" data-sort-price="250"&gt;
+    &lt;div class="nds-card-content"&gt;
+      &lt;div class="nds-card-text"&gt;&lt;span class="nds-card-title"&gt;USB-C Hub&lt;/span&gt;&lt;/div&gt;
+      &lt;div class="nds-card-tags"&gt;
+        &lt;span class="nds-tag nds-green nds-sm"&gt;&lt;span class="nds-label" data-filter="category"&gt;Accessories&lt;/span&gt;&lt;/span&gt;
+        &lt;span class="nds-tag nds-blue nds-sm"&gt;&lt;span class="nds-label nds-number-format" data-currency="SAR"
+          data-filter="price" data-filter-value="250"&gt;250&lt;/span&gt;&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- ...more cards... --&gt;
+&lt;/div&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="barFilterCards" aria-label="Pagination"&gt;&lt;/nav&gt;
+                                    </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -827,6 +1153,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
+                            <div class="nds-filter-bar">
                             <div class="nds-dropmenu nds-filter" data-filter-target="staticCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -858,6 +1185,7 @@ direction: ltr
                             <div class="nds-filter-applied" data-filter-target="staticCards" hidden>
                                 <span class="nds-label">Applied Filters:</span>
                                 <div class="nds-chips"></div>
+                            </div>
                             </div>
                             <div id="staticCards" class="nds-grid" data-filter-items="nds-card" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
                                 <div class="nds-card nds-stroke">
@@ -937,6 +1265,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
+&lt;div class="nds-filter-bar"&gt;
 &lt;!-- Object form: keys = machine values, values = display labels --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="staticCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -970,6 +1299,7 @@ direction: ltr
 &lt;div class="nds-filter-applied" data-filter-target="staticCards" hidden&gt;
   &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
   &lt;div class="nds-chips"&gt;&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- Cards use data-filter-value to match machine keys --&gt;
@@ -1376,196 +1706,6 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
     </div>
 </section>
 
-<!-- Sort -->
-<section id="sortInFilter" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Sort</h2>
-            <p class="nds-section-description">Drop sort buttons anywhere inside the filter (typically a dropmenu). Each button carries <code class="nds-inline-code lang-html">data-sort="{key}"</code> and <code class="nds-inline-code lang-html">data-sort-dir="asc|desc"</code>; items expose the sortable value via <code class="nds-inline-code lang-html">data-sort-{key}</code>. An empty <code class="nds-inline-code lang-html">data-sort</code> resets to the original DOM order.</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-label">Sort by Name or Price</div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-filter" data-filter-target="sortDemoList">
-                                <div class="nds-dropmenu">
-                                    <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button">
-                                        <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
-                                        <span class="nds-label">Sort</span>
-                                    </button>
-                                    <div class="nds-dropmenu-menu" hidden>
-                                        <div class="nds-dropmenu-scroll">
-                                            <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort>
-                                                <i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i>
-                                                <span class="nds-label">Most Relevant</span>
-                                            </button>
-                                            <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="name" data-sort-dir="asc">
-                                                <i class="nds-icon nds-hgi-sort-by-up-02" aria-hidden="true"></i>
-                                                <span class="nds-label">Name A–Z</span>
-                                            </button>
-                                            <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="name" data-sort-dir="desc">
-                                                <i class="nds-icon nds-hgi-sort-by-down-02" aria-hidden="true"></i>
-                                                <span class="nds-label">Name Z–A</span>
-                                            </button>
-                                            <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="price" data-sort-dir="asc">
-                                                <i class="nds-icon nds-hgi-sort-by-up-02" aria-hidden="true"></i>
-                                                <span class="nds-label">Price: low to high</span>
-                                            </button>
-                                            <button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="price" data-sort-dir="desc">
-                                                <i class="nds-icon nds-hgi-sort-by-down-02" aria-hidden="true"></i>
-                                                <span class="nds-label">Price: high to low</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="sortDemoList" class="nds-grid" data-filter-items="nds-card" style="--max-col:3;--mid-col:2;--min-col:1;">
-                                <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
-                                    <div class="nds-card-content">
-                                        <span class="nds-card-title">Zakat Payment</span>
-                                        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">75</span></p>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300">
-                                    <div class="nds-card-content">
-                                        <span class="nds-card-title">Passport Renewal</span>
-                                        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">300</span></p>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25">
-                                    <div class="nds-card-content">
-                                        <span class="nds-card-title">Birth Certificate</span>
-                                        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">25</span></p>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0">
-                                    <div class="nds-card-content">
-                                        <span class="nds-card-title">Identity Verification</span>
-                                        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR" data-free>Free</span></p>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150">
-                                    <div class="nds-card-content">
-                                        <span class="nds-card-title">Driver License</span>
-                                        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">150</span></p>
-                                    </div>
-                                </div>
-                                <div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200">
-                                    <div class="nds-card-content">
-                                        <span class="nds-card-title">Business Registration</span>
-                                        <p class="nds-card-description"><span class="nds-number-format" data-currency="SAR">1200</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-filter-sort-1" id="tab-filter-sort-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-sort-1" aria-labelledby="tab-filter-sort-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;div class="nds-filter" data-filter-target="sortDemoList"&gt;
-  &lt;div class="nds-dropmenu"&gt;
-    &lt;button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
-      &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Sort&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden&gt;
-      &lt;div class="nds-dropmenu-scroll"&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort&gt;
-          &lt;i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;span class="nds-label"&gt;Most Relevant&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="name" data-sort-dir="asc"&gt;
-          &lt;i class="nds-icon nds-hgi-sort-by-up-02" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;span class="nds-label"&gt;Name A&ndash;Z&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="name" data-sort-dir="desc"&gt;
-          &lt;i class="nds-icon nds-hgi-sort-by-down-02" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;span class="nds-label"&gt;Name Z&ndash;A&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="price" data-sort-dir="asc"&gt;
-          &lt;i class="nds-icon nds-hgi-sort-by-up-02" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;span class="nds-label"&gt;Price: low to high&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-sort="price" data-sort-dir="desc"&gt;
-          &lt;i class="nds-icon nds-hgi-sort-by-down-02" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;span class="nds-label"&gt;Price: high to low&lt;/span&gt;
-        &lt;/button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div id="sortDemoList" class="nds-grid" data-filter-items="nds-card"&gt;
-  &lt;div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75"&gt;
-    &lt;div class="nds-card-content"&gt;
-      &lt;span class="nds-card-title"&gt;Zakat Payment&lt;/span&gt;
-      &lt;p class="nds-card-description"&gt;&lt;span class="nds-number-format" data-currency="SAR"&gt;75&lt;/span&gt;&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;!-- ...more cards with data-sort-name and data-sort-price... --&gt;
-&lt;/div&gt;
-                                        </code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical"></i>
-                        <span class="nds-label">Type auto-detect</span>
-                    </span>
-                    <p class="nds-item-desc">Values are sampled at sort time. Pure numbers (including formatted strings like <code class="nds-inline-code lang-html">"9,375"</code>) sort numerically; dates in <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, <code class="nds-inline-code lang-html">YYYY-MM-DD</code>, and ISO 8601 sort chronologically; everything else uses <code class="nds-inline-code lang-js">localeCompare</code>.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-link-circle-02"></i>
-                        <span class="nds-label">URL sync</span>
-                    </span>
-                    <p class="nds-item-desc">Sort state persists as <code class="nds-inline-code lang-html">?sort=name&amp;dir=desc</code>. Reload the page or share the URL to restore the same order. Ascending is the default, so <code class="nds-inline-code lang-html">dir</code> is only written when descending.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-image-02"></i>
-                        <span class="nds-label">Trigger icon mirror</span>
-                    </span>
-                    <p class="nds-item-desc">The dropmenu trigger icon automatically mirrors the active sort button's icon. Swap icon sets (NDS inline, HGI font, custom) without any JS changes — the component copies the <code class="nds-inline-code lang-js">className</code> at runtime.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-globe-02"></i>
-                        <span class="nds-label">External triggers</span>
-                    </span>
-                    <p class="nds-item-desc">Sort buttons can live outside <code class="nds-inline-code lang-html">.nds-filter</code> — add <code class="nds-inline-code lang-html">data-filter-target="{id}"</code> on each trigger (or on their wrapper) to bind them to a filter whose target matches.</p>
-                </div>
-            </div>
-            <p>See the <a class="nds-color" href="{{ 'components/sort' | relative_url }}">Sort component page</a> for the underlying JavaScript API, including <code class="nds-inline-code lang-js">NDS.Sort</code>, the <code class="nds-inline-code lang-js">nds:sort:change</code> event, and the pure comparator helpers.</p>
-        </div>
-    </div>
-</section>
-
 <!-- Built-in Features -->
 <section id="filterFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -1587,6 +1727,13 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         <span class="nds-label">Auto-Generated Filters</span>
                     </span>
                     <p class="nds-item-desc">Builds checkbox, radio, or switch inputs automatically. Values come from card content, a JSON attribute (<code class="nds-inline-code lang-html">data-filter-values</code>), or the <code class="nds-inline-code lang-js">populateFilter()</code> API — no manual HTML required.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-equal-sign-circle"></i>
+                        <span class="nds-label">Slider Filtering</span>
+                    </span>
+                    <p class="nds-item-desc">Set <code class="nds-inline-code lang-html">data-filter-type="slider"</code> to inject a range (dual-thumb) or "up to" (single-thumb) slider that filters cards by a numeric <code class="nds-inline-code lang-html">data-filter-value</code>. The active selection shows as one removable chip and syncs to the URL.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1666,6 +1813,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     <li>Do not use Filter for navigation menus or hierarchical browsing. Use <a class="nds-color" href="{{ 'ui-shell/side-nav' | relative_url }}">Side Nav</a> or <a class="nds-color" href="{{ 'components/tabs' | relative_url }}">Tabs</a> instead</li>
                     <li>Do not use Filter for single-field search without filter controls. Use the search box from <a class="nds-color" href="{{ 'components/forms' | relative_url }}">Forms</a> directly</li>
                     <li>Choose <strong>checkbox</strong> for multi-select with OR logic, <strong>radio</strong> for mutually exclusive single-select, and <strong>switch</strong> for feature toggles where each option is independent</li>
+                    <li>Choose <strong>slider</strong> for a continuous numeric facet (price, distance, area): both bounds give a dual range, <code class="nds-inline-code lang-html">data-filter-max</code> alone gives an "up to" thumb. Give each card a numeric <code class="nds-inline-code lang-html">data-filter-value</code> on its <code class="nds-inline-code lang-html">data-filter</code> marker; the visible text can still read <code class="nds-inline-code lang-html">SAR 250</code> while the value stays a bare number</li>
                     <li>Combine a search box with filter controls for the best experience. Search narrows by text while filters narrow by category</li>
                     <li>Always include a Reset/Clear button inside the dropmenu footer so users can undo selections before applying</li>
                     <li>Add the <code class="nds-inline-code lang-html">.nds-filter-applied</code> container to show applied filter chips. This gives users visibility into active filters and a quick way to remove individual ones</li>
@@ -1725,7 +1873,11 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-filter="name"</code></td><td>Filter group name. On filter controls, groups inputs together. On item elements, marks filterable content. Can be placed on child elements inside items or on the item itself.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-type</code></td><td>Auto-generate inputs. Values: <code class="nds-inline-code lang-html">checkbox</code>, <code class="nds-inline-code lang-html">radio</code>, or <code class="nds-inline-code lang-html">switch</code>. Scans cards for values unless <code class="nds-inline-code lang-html">data-filter-values</code> is set. Radio groups auto-prepend an "All" option (selected by default) so the filter can be cleared.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-type</code></td><td>Auto-generate inputs. Values: <code class="nds-inline-code lang-html">checkbox</code>, <code class="nds-inline-code lang-html">radio</code>, <code class="nds-inline-code lang-html">switch</code>, or <code class="nds-inline-code lang-html">slider</code>. The first three scan cards for values unless <code class="nds-inline-code lang-html">data-filter-values</code> is set; radio groups auto-prepend an "All" option (selected by default) so the filter can be cleared. <code class="nds-inline-code lang-html">slider</code> injects a slider and matches each card's numeric <code class="nds-inline-code lang-html">data-filter-value</code>: both <code class="nds-inline-code lang-html">data-filter-min</code> + <code class="nds-inline-code lang-html">data-filter-max</code> give a dual-thumb range, <code class="nds-inline-code lang-html">data-filter-max</code> alone gives a single "up to" thumb.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-min</code>, <code class="nds-inline-code lang-html">data-filter-max</code></td><td>Slider only. The numeric bounds. Both present means a dual range; <code class="nds-inline-code lang-html">data-filter-max</code> alone (floor defaults to 0) means a single "up to" thumb. <code class="nds-inline-code lang-html">max</code> must be greater than <code class="nds-inline-code lang-html">min</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-step</code></td><td>Slider only. Snap increment for the thumb(s). Default: <code class="nds-inline-code lang-html">1</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-currency</code></td><td>Slider only. Currency code (e.g. <code class="nds-inline-code lang-html">SAR</code>) shown on the slider value outputs and the applied-filter chip via <a class="nds-color" href="{{ 'components/forms' | relative_url }}">number formatting</a>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-unit</code></td><td>Slider only. A text unit (e.g. <code class="nds-inline-code lang-html">km</code>, <code class="nds-inline-code lang-html">years</code>, <code class="nds-inline-code lang-html">%</code>) appended after the value on the outputs and chip; the non-currency counterpart of <code class="nds-inline-code lang-html">data-filter-currency</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-all-label</code></td><td>Override the auto-prepended "All" label on radio groups. Default: <code class="nds-inline-code lang-html">الكل</code> in Arabic, <code class="nds-inline-code lang-html">All</code> otherwise.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-no-all</code></td><td>Opt out of the auto-prepended "All" option on radio groups (boolean attribute).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-values</code></td><td>JSON object mapping machine values to display labels, e.g. <code class="nds-inline-code lang-html">'{"A":"Label A","B":"Label B"}'</code>. Keys become checkbox/radio values, values become visible text. Also accepts a JSON array (<code class="nds-inline-code lang-html">'["A","B"]'</code>) which uses raw values as labels. Skips card scanning. Static: not affected by <code class="nds-inline-code lang-js">refresh()</code>. Use <code class="nds-inline-code lang-js">populateFilter()</code> if values need to change at runtime. Requires <code class="nds-inline-code lang-html">data-filter-type</code>.</td></tr>

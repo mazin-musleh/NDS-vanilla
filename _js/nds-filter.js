@@ -567,8 +567,12 @@
                 if (key === searchParamName || key === 'sort' || key === 'dir') continue;
 
                 if (this.filterInputs[key]) {
-                    this._checkInputsForValues(this.filterInputs[key], value);
-                    this.updateFilterCriteria(key);
+                    if (this.filterInputs[key].type === 'range') {
+                        this._applyRangeFromUrl(key, value);
+                    } else {
+                        this._checkInputsForValues(this.filterInputs[key], value);
+                        this.updateFilterCriteria(key);
+                    }
                     hasParams = true;
                 }
             }
@@ -880,8 +884,19 @@
 
             // Add chips for all dynamic filters
             for (const [filterName, values] of Object.entries(this.criteria.filters)) {
+                const filterData = this.filterInputs[filterName];
+                // Range filters render one chip for the whole span; removing it
+                // restores the full bounds rather than unchecking an input.
+                if (filterData?.type === 'range') {
+                    if (values.length) {
+                        const chip = this.createFilterChip(filterName, values[0], () => {
+                            this.resetRangeFilter(filterName);
+                        }, this._buildRangeChipLabel(filterName, values[0]));
+                        chipsContainer.appendChild(chip);
+                    }
+                    continue;
+                }
                 values.forEach(value => {
-                    const filterData = this.filterInputs[filterName];
                     const displayLabel = filterData?.labels?.[value.toLowerCase()] || value;
                     const chip = this.createFilterChip(filterName, value, () => {
                         this.removeFilterValue(filterName, value);
@@ -945,7 +960,10 @@
 
             const label = document.createElement('span');
             label.className = 'nds-label';
-            label.textContent = displayLabel || value;
+            // displayLabel may be a DOM node (range chips render formatted
+            // nds-number-format price nodes) or a plain string.
+            if (displayLabel instanceof Node) label.appendChild(displayLabel);
+            else label.textContent = displayLabel || value;
 
             chip.appendChild(label);
             chip.appendChild(icon);
@@ -1014,7 +1032,7 @@
             const deferringMenus = new Set();
             filterElements.forEach(element => {
                 const type = element.getAttribute('data-filter-type');
-                if (!type || element.hasAttribute('data-filter-values')) return;
+                if (!type || type === 'slider' || element.hasAttribute('data-filter-values')) return;
                 const name = element.getAttribute('data-filter');
                 const menu = element.closest('.nds-dropmenu-menu');
                 if (menu && !params.has(name)) deferringMenus.add(menu);
@@ -1028,6 +1046,10 @@
 
             if (filterName === 'search') {
                 this.setupSearchFilter(element);
+                return;
+            }
+            if (filterType === 'slider') {
+                this.setupRangeFilter(element, filterName);
                 return;
             }
             if (filterType === 'checkbox' || filterType === 'radio' || filterType === 'switch') {
@@ -1405,6 +1427,253 @@
         }
 
         // ==============================================
+        // SLIDER FILTER (numeric range — data-filter-type="slider")
+        // ==============================================
+        // A slider (NDS.Slider) acting as a filter input. Mode is inferred from the
+        // bounds: data-filter-min + data-filter-max → dual range (two thumbs);
+        // data-filter-max alone → single "up to" (one thumb, floor 0). Each item
+        // carries its numeric value on a [data-filter="name" data-filter-value="N"]
+        // marker. Criteria holds one encoded "lo-hi" string (single pins lo to the
+        // floor) when narrower than full bounds (empty = inactive), so the existing
+        // count / chip / URL machinery treats it like a single-value filter.
+
+        setupRangeFilter(element, filterName) {
+            const root = this.generateRangeControl(element, filterName);
+            if (!root) return;
+
+            const container = root.querySelector('.nds-slider-container');
+            // Single ("up to") has one .nds-slider thumb; dual has .nds-slider-min/-max.
+            const single = !container.classList.contains('nds-slider-range');
+            const minInput = single ? null : container.querySelector('.nds-slider-min');
+            const maxInput = single ? container.querySelector('.nds-slider') : container.querySelector('.nds-slider-max');
+
+            if (!this.criteria.filters[filterName]) this.criteria.filters[filterName] = [];
+
+            this.filterInputs[filterName] = {
+                type: 'range',
+                single,
+                element: root,
+                controlContainer: container,
+                minInput,
+                maxInput,
+                min: parseFloat(maxInput.min),
+                max: parseFloat(maxInput.max),
+                currency: root.getAttribute('data-filter-currency') || '',
+                unit: root.getAttribute('data-filter-unit') || ''
+            };
+
+            // Per-element controller mirrors setupManualFilter so destroy()
+            // releases the thumb listener(s) atomically.
+            if (root._ndsFilterAC) root._ndsFilterAC.abort();
+            root._ndsFilterAC = new AbortController();
+            this._filterElementACs.add(root);
+
+            const onInput = () => {
+                this.updateRangeCriteria(filterName);
+                this.updateApplyButtonLabel();
+            };
+            if (minInput) minInput.addEventListener('input', onInput, { signal: root._ndsFilterAC.signal });
+            maxInput.addEventListener('input', onInput, { signal: root._ndsFilterAC.signal });
+
+            // Filter builds the slider, so it kicks off Slider for it (the loader
+            // only auto-inits Slider when a static .nds-slider exists at load).
+            // init() is idempotent. Cross-bundle safe via the loader's lazy stub:
+            // same bundle = synchronous paint; separate bundle = the stub auto-loads
+            // Slider and paints async. Fire-and-forget — never a sync read of NDS.Slider.
+            if (NDS.Slider && NDS.Slider.init) NDS.Slider.init();
+        }
+
+        // Replace the placeholder with a fieldset holding the canonical slider
+        // markup (see components/slider.md). Mode is inferred from the bounds:
+        // both data-filter-min + data-filter-max → dual range (two thumbs);
+        // data-filter-max alone → single "up to" (one thumb, floor 0).
+        generateRangeControl(placeholder, filterName) {
+            const hasMin = placeholder.hasAttribute('data-filter-min');
+            const hasMax = placeholder.hasAttribute('data-filter-max');
+            const min = hasMin ? parseFloat(placeholder.getAttribute('data-filter-min')) : 0;
+            const max = parseFloat(placeholder.getAttribute('data-filter-max'));
+            if (!hasMax || isNaN(min) || isNaN(max) || max <= min) {
+                console.warn(`NDS Filter: slider filter "${filterName}" needs data-filter-max (add data-filter-min for a dual range; max alone = single "up to").`);
+                return null;
+            }
+            const single = !hasMin;
+            const step = placeholder.getAttribute('data-filter-step') || '1';
+            const legendText = placeholder.getAttribute('data-filter-legend') || '';
+            const currency = placeholder.getAttribute('data-filter-currency') || '';
+            const unit = placeholder.getAttribute('data-filter-unit') || '';
+            const isInDropmenu = placeholder.closest('.nds-dropmenu-menu') !== null;
+
+            const fieldset = document.createElement('fieldset');
+            fieldset.className = 'nds-form-group nds-filter-range';
+            if (currency) fieldset.setAttribute('data-filter-currency', currency);
+            if (unit) fieldset.setAttribute('data-filter-unit', unit);
+            if (isInDropmenu) {
+                fieldset.classList.add('nds-dropmenu-group');
+                fieldset.setAttribute('data-no-auto-close', '');
+            }
+            if (legendText) {
+                const legend = document.createElement('legend');
+                legend.className = 'nds-label';
+                legend.textContent = legendText;
+                fieldset.appendChild(legend);
+            }
+
+            const container = document.createElement('div');
+            container.className = 'nds-slider-container nds-form-container nds-stacked' + (single ? '' : ' nds-slider-range');
+
+            const fmt = { currency, unit };
+            const control = document.createElement('div');
+            control.className = 'nds-form-control';
+            const track = document.createElement('div');
+            track.className = 'nds-slider-track';
+
+            if (single) {
+                // One thumb resting at max — the filter is off until dragged down.
+                track.appendChild(this._buildRangeInput(null, min, max, step, max, NDS.isArabic ? 'القيمة القصوى' : 'Maximum value'));
+                control.appendChild(track);
+                control.appendChild(this._buildRangeOutput(null, fmt, max));
+            } else {
+                control.appendChild(this._buildRangeOutput('min', fmt, min));
+                track.appendChild(this._buildRangeInput('min', min, max, step, min, NDS.isArabic ? 'الحد الأدنى' : 'Minimum'));
+                track.appendChild(this._buildRangeInput('max', min, max, step, max, NDS.isArabic ? 'الحد الأقصى' : 'Maximum'));
+                control.appendChild(track);
+                control.appendChild(this._buildRangeOutput('max', fmt, max));
+            }
+            container.appendChild(control);
+            fieldset.appendChild(container);
+
+            placeholder.replaceWith(fieldset);
+            return fieldset;
+        }
+
+        _buildRangeOutput(which, fmt, value) {
+            const out = document.createElement('output');
+            const formatted = fmt.currency || fmt.unit;
+            out.className = `nds-slider-value${which ? ' nds-slider-value-' + which : ''}${formatted ? ' nds-number-format' : ''}`;
+            if (fmt.currency) out.setAttribute('data-currency', fmt.currency);
+            if (fmt.unit) out.setAttribute('data-unit', fmt.unit);
+            out.textContent = String(value);
+            return out;
+        }
+
+        _buildRangeInput(which, min, max, step, value, ariaLabel) {
+            const input = document.createElement('input');
+            input.type = 'range';
+            input.className = which ? `nds-slider nds-slider-${which}` : 'nds-slider';
+            input.min = min;
+            input.max = max;
+            input.step = step;
+            input.value = value;
+            input.setAttribute('aria-label', ariaLabel);
+            return input;
+        }
+
+        // Read both thumbs into criteria. Empty (inactive) when the span covers the
+        // full bounds; otherwise one "lo-hi" encoded string.
+        updateRangeCriteria(filterName) {
+            const fd = this.filterInputs[filterName];
+            if (!fd || fd.type !== 'range') return;
+            let lo, hi;
+            if (fd.single) {
+                // "Up to": lo pinned to the floor, hi = the single thumb.
+                lo = fd.min;
+                hi = parseFloat(fd.maxInput.value);
+                if (isNaN(hi)) hi = fd.max;
+            } else {
+                lo = parseFloat(fd.minInput.value);
+                hi = parseFloat(fd.maxInput.value);
+                if (isNaN(lo)) lo = fd.min;
+                if (isNaN(hi)) hi = fd.max;
+                if (lo > hi) { const t = lo; lo = hi; hi = t; }
+            }
+            this.criteria.filters[filterName] = (lo <= fd.min && hi >= fd.max) ? [] : [lo + '-' + hi];
+        }
+
+        // Write both thumbs and repaint the slider fill. NDS.Slider is a soft
+        // dependency — when absent the values still land on the inputs and the
+        // slider paints from them on its own init.
+        _setRangeValues(filterName, lo, hi) {
+            const fd = this.filterInputs[filterName];
+            if (!fd || fd.type !== 'range') return;
+            if (fd.single) {
+                fd.maxInput.value = hi;          // single: only the cutoff thumb (lo is pinned)
+            } else {
+                fd.minInput.value = lo;
+                fd.maxInput.value = hi;
+            }
+            if (NDS.Slider && NDS.Slider.reinit) NDS.Slider.reinit(fd.controlContainer);
+            this.updateRangeCriteria(filterName);
+        }
+
+        _applyRangeFromUrl(filterName, raw) {
+            const fd = this.filterInputs[filterName];
+            if (!fd || fd.type !== 'range') return;
+            const parts = this.sanitizeFilterValue(raw).split('-');
+            let lo = parseFloat(parts[0]);
+            let hi = parseFloat(parts[1]);
+            if (isNaN(lo) || isNaN(hi)) return;
+            lo = Math.min(Math.max(lo, fd.min), fd.max);
+            hi = Math.min(Math.max(hi, fd.min), fd.max);
+            if (lo > hi) { const t = lo; lo = hi; hi = t; }
+            this._setRangeValues(filterName, lo, hi);
+        }
+
+        _itemMatchesRange(item, filterName, encoded) {
+            const dash = encoded.indexOf('-');
+            if (dash < 0) return true;
+            const lo = parseFloat(encoded.slice(0, dash));
+            const hi = parseFloat(encoded.slice(dash + 1));
+            const itemValues = item._ndsFilterValues?.[filterName];
+            if (!itemValues || !itemValues.length) return false;
+            const v = parseFloat(itemValues[0]);
+            if (isNaN(v)) return false;
+            return v >= lo && v <= hi;
+        }
+
+        // Build the chip label as nds-number-format nodes so a range chip renders
+        // exactly like the card tags / slider outputs — currency icon (CSS ::after
+        // on [data-currency]) + thousand separators (NDS.Numbers) — not a string.
+        _buildRangeChipLabel(filterName, encoded) {
+            const fd = this.filterInputs[filterName];
+            const dash = encoded.indexOf('-');
+            const frag = document.createDocumentFragment();
+            // Single ("up to") shows just the cutoff with a ≤ prefix; dual shows lo – hi.
+            if (fd && fd.single) {
+                const le = document.createElement('span');
+                le.textContent = '≤ ';
+                frag.appendChild(le);
+                frag.appendChild(this._buildRangeValueNode(encoded.slice(dash + 1), fd));
+                return frag;
+            }
+            frag.appendChild(this._buildRangeValueNode(encoded.slice(0, dash), fd));
+            const sep = document.createElement('span');
+            sep.textContent = ' – ';
+            frag.appendChild(sep);
+            frag.appendChild(this._buildRangeValueNode(encoded.slice(dash + 1), fd));
+            return frag;
+        }
+
+        _buildRangeValueNode(value, fd) {
+            const span = document.createElement('span');
+            span.className = 'nds-number-format';
+            if (fd && fd.currency) span.setAttribute('data-currency', fd.currency);
+            if (fd && fd.unit) span.setAttribute('data-unit', fd.unit);
+            span.textContent = value;
+            if (NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(span);
+            return span;
+        }
+
+        // Chip-remove / clear handler for a range filter: restore the full span.
+        resetRangeFilter(filterName) {
+            const fd = this.filterInputs[filterName];
+            if (!fd || fd.type !== 'range') return;
+            this._setRangeValues(filterName, fd.min, fd.max);
+            this.updateApplyButtonLabel();
+            if (this.isAjaxMode) this.submitForm();
+            else this.applyFilters();
+        }
+
+        // ==============================================
         // AUTO-GENERATION
         // ==============================================
 
@@ -1664,6 +1933,11 @@
             const filterData = this.filterInputs[filterName];
             if (!filterData) return;
 
+            if (filterData.type === 'range') {
+                this.updateRangeCriteria(filterName);
+                return;
+            }
+
             this.criteria.filters[filterName] = Array.from(filterData.inputs)
                 .filter(input => input.checked && input.value !== '')
                 .map(input => input.value);
@@ -1882,6 +2156,11 @@
         itemMatchesFilter(item, filterName, selectedValues) {
             if (selectedValues.length === 0) return true;
 
+            // Range: numeric in-bounds test against the item's cached value.
+            if (this.filterInputs[filterName]?.type === 'range') {
+                return this._itemMatchesRange(item, filterName, selectedValues[0]);
+            }
+
             const itemValues = item._ndsFilterValues?.[filterName];
             if (!itemValues || itemValues.length === 0) return false;
 
@@ -1928,6 +2207,11 @@
         // selection after clearing. Shared by clear() and clearDropmenuFilters().
         _resetFilterInputs() {
             for (const [filterName, filterData] of Object.entries(this.filterInputs)) {
+                if (filterData.type === 'range') {
+                    // Restore the full span (updateRangeCriteria clears the criteria).
+                    this._setRangeValues(filterName, filterData.min, filterData.max);
+                    continue;
+                }
                 filterData.inputs.forEach(input => {
                     input.checked = false;
                 });
