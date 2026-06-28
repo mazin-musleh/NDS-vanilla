@@ -81,12 +81,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-otp-4digit-1" id="tab-otp-4digit-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-4digit-1"
@@ -217,12 +219,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-otp-separator-1" id="tab-otp-separator-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-separator-1"
@@ -360,7 +364,7 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-otp-validate-1" id="tab-otp-validate-1">
                                         <span class="nds-tab-label">HTML</span>
@@ -370,6 +374,8 @@ direction: ltr
                                         <span class="nds-tab-label">JavaScript</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-otp-validate-1"

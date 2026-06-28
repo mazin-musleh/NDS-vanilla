@@ -38,12 +38,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-link-variants-1" id="tab-link-variants-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-variants-1"
@@ -94,12 +96,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-link-oncolor-1" id="tab-link-oncolor-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-oncolor-1"
@@ -151,12 +155,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-link-external-1" id="tab-link-external-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-external-1"
@@ -188,12 +194,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-link-icon-1" id="tab-link-icon-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-icon-1"
@@ -226,12 +234,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-link-optout-1" id="tab-link-optout-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-link-optout-1"

@@ -89,7 +89,7 @@ direction: ltr
         <div class="nds-section-body">
             <div class="nds-tabs nds-code nds-divided">
                 <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="{{ tier.label }} categories">
+                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="{{ tier.label }} categories">
                         {%- for cat in tier.categories %}
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
                             aria-controls="panel-tokens-{{ tier.id }}-{{ cat.id }}" id="tab-tokens-{{ tier.id }}-{{ cat.id }}">
@@ -97,6 +97,8 @@ direction: ltr
                         </button>
                         {%- endfor %}
                     </nav>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    </button>
                 </div>
                 <div class="nds-tab-content">
                     {%- for cat in tier.categories %}

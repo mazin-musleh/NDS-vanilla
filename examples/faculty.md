@@ -89,8 +89,7 @@ sidemenu_mode: top
                         <span class="nds-label">Contact</span>
                     </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more">
-                    <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="nds-tab-content">

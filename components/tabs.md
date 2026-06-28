@@ -287,8 +287,7 @@ direction: ltr
                 &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
             &lt;/button&gt;
         &lt;/nav&gt;
-        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"&gt;
-            &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"&gt;&lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/button&gt;
     &lt;/div&gt;
     &lt;div class="nds-tab-content"&gt;
@@ -554,8 +553,7 @@ direction: ltr
                 &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
             &lt;/button&gt;
         &lt;/nav&gt;
-        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"&gt;
-            &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"&gt;&lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/button&gt;
     &lt;/div&gt;
     &lt;div class="nds-tab-content"&gt;

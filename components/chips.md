@@ -101,12 +101,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chip-standard-1" id="tab-chip-standard-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chip-standard-1"
@@ -156,12 +158,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chip-icons-1" id="tab-chip-icons-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chip-icons-1"
@@ -234,12 +238,14 @@ direction: ltr
                     <div class="demo-code">
                         <div class="nds-tabs nds-code nds-divided">
                             <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
                                         aria-controls="panel-chip-group-1" id="tab-chip-group-1">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                 </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="nds-tab-content">
                                 <div class="nds-tab-panel code-example" role="tabpanel" id="panel-chip-group-1"

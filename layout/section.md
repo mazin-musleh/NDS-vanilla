@@ -121,11 +121,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier1" id="tab-tier1">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier1" aria-labelledby="tab-tier1">
@@ -223,11 +225,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier2" id="tab-tier2">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier2" aria-labelledby="tab-tier2">
@@ -334,11 +338,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier3" id="tab-tier3">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier3" aria-labelledby="tab-tier3">
@@ -459,11 +465,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-float" id="tab-float">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-float" aria-labelledby="tab-float">
@@ -585,11 +593,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-dual" id="tab-dual">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-dual" aria-labelledby="tab-dual">
@@ -706,11 +716,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-nowrap" id="tab-nowrap">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-nowrap" aria-labelledby="tab-nowrap">
@@ -827,11 +839,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier4" id="tab-tier4">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier4" aria-labelledby="tab-tier4">
@@ -932,11 +946,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                 <div class="demo-code">
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                             <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier5" id="tab-tier5">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        </button>
                     </div>
                     <div class="nds-tab-content">
                         <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tier5" aria-labelledby="tab-tier5">
@@ -1081,11 +1097,13 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <div class="demo-code">
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
-                            <nav class="nds-tab-list nds-scroll-more-content oneRowContent" role="tablist" aria-label="Tab navigation">
+                            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                 <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-tier6" id="tab-tier6">
                                     <span class="nds-tab-label">HTML</span>
                                 </button>
                             </nav>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="nds-tab-content">
                             <div class="nds-tab-panel code-example" role="tabpanel" id="panel-tier6" aria-labelledby="tab-tier6">
