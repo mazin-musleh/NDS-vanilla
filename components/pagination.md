@@ -185,7 +185,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Data-Driven Pagination</h2>
-            <p class="nds-section-description">Set a page count and optional active page on an empty nav element, and the component generates all controls automatically</p>
+            <p class="nds-section-description">Set a page count and optional active page on an empty nav element, and the component builds the numbered controls automatically. By default they are buttons you wire through the change event (SPA); add a <code class="nds-inline-code lang-html">data-page-url</code> template to render navigable links instead, for no-JS full-reload server pagination</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -263,7 +263,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic Ellipsis Collapse</h2>
-            <p class="nds-section-description">When page count exceeds five, middle pages collapse into a dropdown for compact navigation</p>
+            <p class="nds-section-description">When page count exceeds five, middle pages collapse into a dropdown for compact navigation. Write the full list of pages flat and the component folds them on its own, re-folding as pages are added or removed</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -854,7 +854,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-more-horizontal"></i>
                         <span class="nds-label">Ellipsis Collapse</span>
                     </span>
-                    <p class="nds-item-desc">Paginations with more than five pages automatically collapse middle pages into a dropdown menu, keeping the first three and last page visible.</p>
+                    <p class="nds-item-desc">Paginations with more than five pages collapse middle pages into a dropdown menu, keeping the first three and last page visible. The collapse is live: add or remove page buttons and the nav re-collapses or expands to match.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -865,10 +865,10 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
-                        <span class="nds-label">Filter-Aware Refresh</span>
+                        <i class="hgi hgi-stroke hgi-refresh"></i>
+                        <span class="nds-label">Live Content Updates</span>
                     </span>
-                    <p class="nds-item-desc">When used with filtered content, call <code class="nds-inline-code lang-js">NDS.Pagination.refresh()</code> to recalculate page counts and reset to page one with only visible items.</p>
+                    <p class="nds-item-desc">Add or remove <code class="nds-inline-code lang-html">nds-page-item</code> elements at runtime and the pages recalculate automatically, keeping the current page, at any nesting including table rows. Filtered content stays in sync with no manual call.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -902,15 +902,16 @@ direction: ltr
                 <ul>
                     <li>Use <strong>content pagination</strong> (<code class="nds-inline-code lang-html">data-auto-pagination</code>) for items already in the DOM: card grids, table rows, or list items</li>
                     <li>Use <strong>manual pagination</strong> when each page number links to a different URL or triggers a server-side request</li>
-                    <li>Use <strong>data-driven generation</strong> (<code class="nds-inline-code lang-html">data-total-pages</code>) when you know the page count but want the component to build the controls</li>
+                    <li>Use <strong>data-driven generation</strong> (<code class="nds-inline-code lang-html">data-total-pages</code>) when you know the page count but want the component to build the controls. Default controls are buttons you drive through <code class="nds-inline-code lang-js">nds:pagination:change</code> (SPA); add <code class="nds-inline-code lang-html">data-page-url="?page={page}"</code> to emit navigable links for no-JS full-reload server pagination. For a runtime count change, call <code class="nds-inline-code lang-js">NDS.Pagination.setTotalPages()</code></li>
                     <li>Do not paginate fewer than two pages. Auto-pagination hides controls automatically when all items fit</li>
                     <li>Set <code class="nds-inline-code lang-html">--per-page</code> to match your grid column count so each page fills the layout. Update it in media queries for responsive grids</li>
                     <li>For tables, wrap the table in <code class="nds-inline-code lang-html">nds-paged-content</code> and add <code class="nds-inline-code lang-html">nds-page-item</code> on each <code class="nds-inline-code lang-html">&lt;tr&gt;</code> in <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>. The table wrapper is added automatically</li>
                     <li>Both <code class="nds-inline-code lang-html">&lt;button&gt;</code> and <code class="nds-inline-code lang-html">&lt;a&gt;</code> elements work inside pagination items. Use buttons for client-side navigation, anchors for distinct URLs</li>
                     <li>Bind a nav to its content by id — <code class="nds-inline-code lang-html">data-auto-pagination="gridId"</code> matching the wrapper's <code class="nds-inline-code lang-html">id</code> (the same convention as filter's <code class="nds-inline-code lang-html">data-filter-target</code>). Omit the value to bind the immediately-preceding wrapper instead</li>
                     <li>Keep <code class="nds-inline-code lang-html">nds-page-item</code> (your <strong>content</strong> items) distinct from <code class="nds-inline-code lang-html">nds-pagination-item</code> (the nav's <code class="nds-inline-code lang-html">&lt;li&gt;</code> controls) — similar names, opposite roles</li>
-                    <li>For server or AJAX pagination, listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> (its <code class="nds-inline-code lang-js">detail.page</code> is the resolved page), load that page, then call <code class="nds-inline-code lang-js">NDS.Pagination.setPage()</code> to sync the nav — NDS owns the nav UI, you own the data</li>
-                    <li>When a filter's AJAX mode swaps in new content, that content isn't auto-initialized — re-init pagination on it (e.g. in the <code class="nds-inline-code lang-js">nds:filterFormComplete</code> handler), or have the server return it already paginated</li>
+                    <li>For server or AJAX pagination, listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> (its <code class="nds-inline-code lang-js">detail.page</code> is the resolved page), load that page, then call <code class="nds-inline-code lang-js">NDS.Pagination.setPage()</code> to highlight it. When a new query changes the total page count, call <code class="nds-inline-code lang-js">NDS.Pagination.setTotalPages()</code> to rebuild the controls (it keeps the current page; pass a page number to jump). NDS owns the nav UI, you own the data</li>
+                    <li>Attach your logic to the nav, not to individual page buttons: listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> or give each page a distinct <code class="nds-inline-code lang-html">&lt;a href&gt;</code>. Collapsing rebuilds the page buttons, so custom classes, <code class="nds-inline-code lang-html">data-*</code> attributes, <code class="nds-inline-code lang-html">href</code>, and inline <code class="nds-inline-code lang-html">onclick</code> survive, but a listener added with <code class="nds-inline-code lang-js">addEventListener</code> on a button does not</li>
+                    <li>For content pagination, adding or removing <code class="nds-inline-code lang-html">nds-page-item</code> elements re-paginates automatically and keeps the current page, no re-init needed, at any nesting (cards, list items, table rows). A wholesale content swap that injects a brand-new nav (e.g. a filter's AJAX HTML mode) still needs <code class="nds-inline-code lang-js">NDS.Pagination.reinit()</code>, or have the server return it already paginated</li>
                     <li>Don't paginate a continuously growing feed. Use <a class="nds-color" href="{{ 'components/scroll-more' | relative_url }}">Scroll More</a> for load-on-scroll content where the total count isn't fixed</li>
                     <li>Don't use pagination for a linear, must-finish-in-order flow like a form wizard. Reach for <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> instead</li>
                 </ul>
@@ -977,7 +978,11 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-total-pages="N"</code></td>
-                            <td>Set on an empty <code class="nds-inline-code lang-html">nds-pagination</code> to auto-generate N page buttons. Optionally add <code class="nds-inline-code lang-html">data-active-page="N"</code> to set the initial page (defaults to 1)</td>
+                            <td>Set on an empty <code class="nds-inline-code lang-html">nds-pagination</code> to auto-generate N page controls. Optionally add <code class="nds-inline-code lang-html">data-active-page="N"</code> for the initial active page (read once at init; defaults to 1). For a count that changes at runtime, call <code class="nds-inline-code lang-js">NDS.Pagination.setTotalPages()</code></td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-page-url="?page={page}"</code></td>
+                            <td>Pair with <code class="nds-inline-code lang-html">data-total-pages</code> to render the controls as navigable <code class="nds-inline-code lang-html">&lt;a href&gt;</code> links instead of buttons: <code class="nds-inline-code lang-html">{page}</code> is replaced with each page number. Use for no-JS, full-reload server pagination (the nav re-renders on each navigation). Without it the controls are buttons you wire through <code class="nds-inline-code lang-js">nds:pagination:change</code></td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-state="active"</code></td>
@@ -1030,7 +1035,7 @@ direction: ltr
 // Initialize all pagination on the page
 NDS.Pagination.init();
 
-// Re-initialize all pagination (manual + auto): call after dynamic content insertion
+// Re-initialize after injecting a whole new nav (manual + auto)
 NDS.Pagination.reinit();
 
 // Initialize auto-pagination (data-auto-pagination + nds-paged-content)
@@ -1042,8 +1047,19 @@ const instance = NDS.Pagination.create(element);
 // Navigate to a specific page
 NDS.Pagination.setPage(containerElement, 3);
 
-// Refresh after filtering (recalculates pages from visible items)
-NDS.Pagination.refresh(contentContainer);
+// Auto-pagination re-paginates on its own when nds-page-item elements are
+// added or removed (current page kept), no call needed. Use refresh() only to
+// force a recalculation, e.g. after filtering:
+NDS.Pagination.refresh(contentContainer);                     // reset to page 1
+NDS.Pagination.refresh(contentContainer, { keepPage: true }); // stay on current page
+
+// Manual / data-driven: when the server's total page count changes, rebuild the
+// nav controls. Keeps the current page by default; pass a page number to jump.
+NDS.Pagination.setTotalPages(navElement, 12);    // keep current page (clamped)
+NDS.Pagination.setTotalPages(navElement, 12, 1); // jump to page 1
+
+// Tear down a removed nav (SPA): releases listeners and clears init state
+NDS.Pagination.destroy(navElement);
 
 // Listen for page changes (auto + manual). NDS owns the nav UI; you own the data.
 document.addEventListener('nds:pagination:change', (e) => {

@@ -6,8 +6,8 @@
  * crit-CSS skeleton, which hides items past the default page size (and collapses
  * table rows) until init stamps data-paged-initialized — so init landing
  * post-reveal inserts the list without shifting content. The state init sets:
- *   - HTML builders + the manual-collapse path (NDSPagination +
- *     collapsePagination + createDropdown): 5+ pages collapse to
+ *   - HTML builders + the manual-collapse path (NDSPagination →
+ *     reconcileCollapse): 5+ pages collapse to
  *     [Prev] 1 2 3 [ellipsis] N [Next] so author-written full lists never
  *     paint then collapse (horizontal CLS).
  *   - Auto-pagination initial paint (setupAutoContainer → updateAutoPagination):
@@ -45,6 +45,8 @@
 
     let _autoCleanupReady = false;
     let _navCleanupReady = false;
+    let _autoRefreshWatchReady = false;
+    let _collapseWatchReady = false;
 
     // Read --per-page for a paged-content container. Prefers the inline style —
     // the common case is a consumer setting style="--per-page:N", and an inline
@@ -64,8 +66,8 @@
         return parseInt(el.querySelector('.nds-label')?.textContent || el.textContent);
     }
 
-    // Min/max page numbers across a set of page elements (portal-aware sets
-    // included). Returns { min: Infinity, max: -Infinity } when none are numeric.
+    // Min/max page numbers across a set of page elements. Returns
+    // { min: Infinity, max: -Infinity } when none are numeric.
     function pageBounds(els) {
         const nums = els.map(pageNumberOf).filter(n => !isNaN(n));
         return { min: Math.min(...nums), max: Math.max(...nums) };
@@ -76,7 +78,6 @@
             this.paginationNav = paginationNav;
             this.pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
             this.items = Array.from(this.pagination.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next)'));
-            this.threshold = 5; // Collapse if more than 5 page items
 
             if (this.items.length === 0) {
                 // Silently skip empty pagination (likely auto-pagination that will be populated)
@@ -87,145 +88,143 @@
         }
 
         init() {
-            if (this.items.length > this.threshold) {
-                this.collapsePagination();
-            }
+            // Initial collapse runs through the same re-runnable reconcile the
+            // dynamic watcher uses, so the markup-preserving collapse logic lives
+            // in exactly one place.
+            reconcileCollapse(this.paginationNav);
         }
+    }
 
-        collapsePagination() {
-            // Keep first 3 pages and last page visible
-            const prevBtn = this.pagination.querySelector('.nds-pagination-prev');
-            const nextBtn = this.pagination.querySelector('.nds-pagination-next');
-            const firstThreeItems = this.items.slice(0, 3);
-            const lastItem = this.items[this.items.length - 1];
-            const hiddenItems = this.items.slice(3, -1); // Middle pages (4 to second-to-last)
+    // ── Live ellipsis collapse (any manual mode) ─────────────────────────
+    // Attributes the builders own — everything else on an author page button is
+    // preserved verbatim through collapse. data-state stays NDS.State-managed
+    // (never a literal attribute); class/href/type/aria-current are emitted by
+    // the builder from dedicated model fields.
+    const _MANAGED_ATTRS = new Set(['class', 'href', 'type', 'aria-current', 'data-state']);
+    const _escAttr = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    const _attrStr = attrs => { let s = ''; for (const n in attrs) s += ` ${n}="${_escAttr(attrs[n])}"`; return s; };
 
-            // Create dropdown container using nds-dropmenu
-            const dropdownContainer = this.createDropdown(hiddenItems);
-
-            // Clear and rebuild pagination
-            this.pagination.innerHTML = '';
-
-            // Add prev button
-            if (prevBtn) this.pagination.appendChild(prevBtn);
-
-            // Add first 3 pages
-            firstThreeItems.forEach(item => {
-                this.pagination.appendChild(item);
+    // Capture the full ordered page-button set from a manual nav's list, whether
+    // it is currently flat or already collapsed (visible buttons + ellipsis
+    // dropdown items). Each entry is a faithful round-trip of the author's control
+    // — element type (button/anchor), href, label markup, class, and any extra
+    // attributes (data-*, title, custom aria) — so collapse preserves custom
+    // markup, not just the page number.
+    function _capturePageModel(list) {
+        const seen = new Set();
+        const model = [];
+        const push = el => {
+            const num = pageNumberOf(el);
+            if (isNaN(num) || seen.has(num)) return;
+            seen.add(num);
+            const attrs = {};
+            for (let i = 0; i < el.attributes.length; i++) {
+                const a = el.attributes[i];
+                if (!_MANAGED_ATTRS.has(a.name)) attrs[a.name] = a.value;
+            }
+            model.push({
+                num,
+                tag: el.tagName.toLowerCase() === 'a' ? 'a' : 'button',
+                href: el.getAttribute('href'),
+                // Class minus the positional dropdown marker — the ellipsis builder
+                // re-adds nds-dropmenu-item when this page collapses in.
+                className: (el.getAttribute('class') || '').split(/\s+/).filter(c => c && c !== 'nds-dropmenu-item').join(' '),
+                attrs,
+                labelHTML: el.innerHTML,
+                active: el.ariaCurrent === 'page' || NDS.State.has(el, 'active'),
             });
+        };
+        list.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis) a').forEach(push);
+        getPaginationDropmenuItems(list).forEach(push);
+        return model.sort((a, b) => a.num - b.num);
+    }
 
-            // Add dropdown
-            this.pagination.appendChild(dropdownContainer);
+    // Render one captured page control (button or anchor), preserving the author's
+    // class + pass-through attributes. dropdownItem=true re-adds the dropmenu marker.
+    function _control(e, activeNum, dropdownItem) {
+        const cls = dropdownItem ? `${e.className} nds-dropmenu-item` : e.className;
+        const cur = e.num === activeNum ? ' aria-current="page"' : '';
+        const extra = _attrStr(e.attrs);
+        return e.tag === 'a'
+            ? `<a class="${cls}"${e.href != null ? ` href="${_escAttr(e.href)}"` : ''}${cur}${extra}>${e.labelHTML}</a>`
+            : `<button type="button" class="${cls}"${cur}${extra}>${e.labelHTML}</button>`;
+    }
 
-            // Add last page
-            this.pagination.appendChild(lastItem);
+    // One page <li> from a model entry — preserves the author's control markup
+    // (class/attrs/href/label) the data-driven _pageLi builder doesn't carry.
+    function _pageLiM(e, activeNum) {
+        return `<li class="nds-pagination-item page_${e.num}">${_control(e, activeNum, false)}</li>`;
+    }
 
-            // Add next button
-            if (nextBtn) this.pagination.appendChild(nextBtn);
+    // Shared ellipsis <li> chrome — the dropmenu shell both ellipsis builders wrap
+    // around their own items (number-only _ellipsisLi, markup-preserving _ellipsisLiM).
+    // One definition so a dropmenu-markup change can't drift between the two.
+    function _ellipsisShell(itemsHTML) {
+        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="More pages"><span class="nds-label"></span></button><div class="nds-dropmenu-menu" aria-hidden="true"><div class="nds-dropmenu-scroll">${itemsHTML}</div></div></div></li>`;
+    }
 
-            // Initialize only the newly created dropdown menu (same as breadcrumbs)
-            const dropmenuElement = dropdownContainer.querySelector('.nds-dropmenu');
-            // Soft dependency — ellipsis stays as plain markup if NDS.Dropmenu isn't bundled.
-            if (dropmenuElement && NDS.Dropmenu) {
-                NDS.Dropmenu.create(dropmenuElement);
-            }
+    // Ellipsis <li> whose dropdown holds the collapsed range — entry-based twin
+    // of _ellipsisLi, carrying each hidden page's author markup.
+    function _ellipsisLiM(entries, activeNum) {
+        return _ellipsisShell(entries.map(e => _control(e, activeNum, true)).join(''));
+    }
 
-            // If active page is inside the dropdown, activate the ellipsis trigger.
-            // Two equally-acceptable signals: aria-current="page" (semantic) or
-            // data-state's 'active' token (state-vocab). Iterate once in DOM order
-            // and break on whichever matches first — preserves the union-selector
-            // semantics of the prior code without coupling to the State vocab via
-            // attribute selector.
-            let activeDropdownItem = null;
-            const dropdownItems = dropdownContainer.querySelectorAll('.nds-dropmenu-item');
-            for (let i = 0; i < dropdownItems.length; i++) {
-                const item = dropdownItems[i];
-                if (item.ariaCurrent === 'page' || NDS.State.has(item, 'active')) {
-                    activeDropdownItem = item;
-                    break;
-                }
-            }
-            if (activeDropdownItem) {
-                const trigger = dropdownContainer.querySelector('.nds-dropmenu-trigger');
-                if (trigger) {
-                    NDS.State.set(trigger, 'active');
-                    const triggerLabel = trigger.querySelector('.nds-label');
-                    const activeLabel = activeDropdownItem.querySelector('.nds-label');
-                    if (triggerLabel && activeLabel) {
-                        triggerLabel.textContent = activeLabel.textContent;
-                    }
-                }
-            }
-        }
+    // Collapse (or expand) a manual nav's page buttons to the canonical shape —
+    // flat at <=5, [1 2 3 … N] above. Idempotent: keyed on the page-number set,
+    // so re-running it on its own output is a no-op. That is what makes the live
+    // watcher loop-safe — collapsing only shuffles buttons between the visible
+    // row and the dropdown, leaving the number SET unchanged, so the signature
+    // matches and the re-triggered pass returns early (the rebuild it causes is
+    // the loop's terminating microtask, not a debounce). Only a real author
+    // add/remove changes the set and triggers exactly one rebuild.
+    function reconcileCollapse(nav) {
+        const list = nav.matches('.nds-pagination-list') ? nav : nav.querySelector('.nds-pagination-list');
+        if (!list) return;
+        const model = _capturePageModel(list);
+        if (!model.length) return;
 
-        createDropdown(hiddenItems) {
-            const li = document.createElement('li');
-            li.className = 'nds-pagination-item nds-pagination-ellipsis';
+        const sig = model.map(e => e.num).join(',');
+        if (nav._ndsCollapseSig === sig) return; // unchanged set (incl. our own collapse) → loop guard
+        nav._ndsCollapseSig = sig;
 
-            // Create nds-dropmenu structure. Default no-portal: the menu lives
-            // inside `.nds-pagination-ellipsis`, so the descendant SCSS selector
-            // applies naturally.
-            const dropmenu = document.createElement('div');
-            dropmenu.className = 'nds-dropmenu';
+        // <=5 and already flat → leave the author's exact markup untouched.
+        const isCollapsed = !!list.querySelector('.nds-pagination-ellipsis');
+        if (model.length <= 5 && !isCollapsed) return;
 
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger';
-            button.innerHTML = '<span class="nds-label"></span>';
-            NDS.aria.label(button, 'More pages');
+        const activeNum = (model.find(e => e.active) || {}).num;
+        const prevLi = list.querySelector('.nds-pagination-prev');
+        const nextLi = list.querySelector('.nds-pagination-next');
 
-            const menu = document.createElement('div');
-            menu.className = 'nds-dropmenu-menu';
-            NDS.aria.hidden(menu, true);
+        const pages = model.length > 5
+            ? _pageLiM(model[0], activeNum) + _pageLiM(model[1], activeNum) + _pageLiM(model[2], activeNum)
+              + _ellipsisLiM(model.slice(3, -1), activeNum) + _pageLiM(model[model.length - 1], activeNum)
+            : model.map(e => _pageLiM(e, activeNum)).join('');
 
-            const scroll = document.createElement('div');
-            scroll.className = 'nds-dropmenu-scroll';
-            menu.appendChild(scroll);
+        list.innerHTML = pages; // page area only…
+        if (prevLi) list.insertAdjacentElement('afterbegin', prevLi); // …prev/next are the author's, preserved
+        if (nextLi) list.insertAdjacentElement('beforeend', nextLi);
 
-            // Add hidden items to dropdown menu
-            hiddenItems.forEach(item => {
-                // Support both button and anchor elements
-                const element = item.querySelector('button, a');
-                if (element) {
-                    const isAnchor = element.tagName.toLowerCase() === 'a';
-                    const menuItem = document.createElement(isAnchor ? 'a' : 'button');
-                    menuItem.className = 'nds-btn nds-subtle nds-indicator nds-dropmenu-item';
-                    menuItem.innerHTML = element.innerHTML;
-                    NDS.aria.label(menuItem, element.ariaLabel || `Page ${element.textContent}`);
+        wireGeneratedPagination(nav, activeNum || model[0].num); // ellipsis dropmenu + active stamp
+        initializePaginationStates(nav);                          // prev/next disabled at the ends
+    }
 
-                    // Preserve active state and aria-current from original element
-                    if (NDS.State.has(element, 'active')) {
-                        NDS.State.set(menuItem, 'active');
-                    }
-                    if (element.hasAttribute('aria-current')) {
-                        NDS.aria.current(menuItem, element.ariaCurrent);
-                    }
-
-                    // Copy href for anchors
-                    if (isAnchor && element.hasAttribute('href')) {
-                        menuItem.setAttribute('href', element.getAttribute('href'));
-                    }
-
-                    // Preserve any onclick the source button carried; otherwise
-                    // navigation is handled by the document-level pagination
-                    // click handler (the dropmenu portals to <body>, so the
-                    // wrapper re-dispatches a synthetic click that carries the
-                    // item via `event.ndsDropmenuItem`).
-                    if (!isAnchor) {
-                        menuItem.type = 'button';
-                        if (element.onclick) menuItem.onclick = element.onclick;
-                    }
-
-                    scroll.appendChild(menuItem);
-                }
+    // Wire the live collapse watcher once per page. Re-collapses a manual nav
+    // when its page buttons change. Runs SYNCHRONOUSLY — onChildrenChange is a
+    // MutationObserver microtask, so a button added in a click handler collapses
+    // before the browser paints, and never flashes uncollapsed. Adds within one
+    // task (a loop or a fragment) already arrive as a single batch, so no debounce
+    // is needed to coalesce them; loop-safety is reconcileCollapse's signature
+    // guard. Auto navs manage their own collapse (updateAutoPagination) — skipped.
+    function _wireCollapseWatch() {
+        if (_collapseWatchReady) return;
+        _collapseWatchReady = true;
+        NDS.onChildrenChange('.nds-pagination-list', lists => {
+            lists.forEach(list => {
+                const nav = list.closest('.nds-pagination') || list;
+                if (nav.hasAttribute('data-auto-pagination')) return;
+                reconcileCollapse(nav);
             });
-
-            dropmenu.appendChild(button);
-            dropmenu.appendChild(menu);
-            li.appendChild(dropmenu);
-
-            return li;
-        }
+        });
     }
 
     // Release everything pagination attached to a nav: the click AbortController
@@ -296,8 +295,10 @@
                                          container.querySelector('.nds-pagination-list');
 
                 if (totalPages && totalPages > 0 && !hasPaginationList) {
-                    // Auto-generate pagination HTML
-                    const paginationHTML = generatePaginationHTML(totalPages, activePage);
+                    // Auto-generate pagination HTML. data-page-url (a "?page={page}"
+                    // template) makes the controls navigable links for no-JS,
+                    // server-reload pagination; without it they're buttons.
+                    const paginationHTML = generatePaginationHTML(totalPages, activePage, false, container.getAttribute('data-page-url'));
                     container.innerHTML = paginationHTML;
                     markActivePage(container, activePage);
                 }
@@ -316,6 +317,7 @@
                 // explicit handle a future destroy() can abort.
                 if (!container.hasAttribute('data-auto-pagination')) {
                     _wireManualNavClicks(container);
+                    _wireCollapseWatch(); // live ellipsis re-collapse on dynamic <li> changes
                 }
 
                 // Universal reveal: a non-auto pagination releases its paged-content's
@@ -330,20 +332,19 @@
         });
     }
 
-    // Collect dropmenu items associated with a pagination, including those
-    // in menus currently portaled to <body> (resolved via the wrapper's
-    // `_ownerMenu` backref through NDS.Dropmenu.menuOf).
+    // Collect the dropmenu items inside a pagination's ellipsis menus. The
+    // ellipsis dropmenu renders in place (it never opts into data-portal), so
+    // each menu is a direct descendant.
     function getPaginationDropmenuItems(pagination) {
         const items = [];
-        pagination.querySelectorAll('.nds-dropmenu').forEach(dm => {
-            const menu = NDS.Dropmenu.menuOf(dm) || dm.querySelector('.nds-dropmenu-menu');
-            if (menu) items.push(...menu.querySelectorAll('.nds-dropmenu-item'));
+        pagination.querySelectorAll('.nds-dropmenu-menu').forEach(menu => {
+            items.push(...menu.querySelectorAll('.nds-dropmenu-item'));
         });
         return items;
     }
 
-    // All clickable page elements (in-list buttons + dropmenu items),
-    // portal-aware. Excludes prev/next.
+    // All clickable page elements (in-list buttons + dropmenu items).
+    // Excludes prev/next.
     function getAllPageElements(pagination) {
         const inList = Array.from(pagination.querySelectorAll(
             '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, ' +
@@ -352,8 +353,8 @@
         return [...inList, ...getPaginationDropmenuItems(pagination)];
     }
 
-    // Shared function to set active page and aria-current. One portal-aware pass
-    // over every clickable: clears stale active state ONLY where it exists (at
+    // Shared function to set active page and aria-current. One pass over every
+    // clickable: clears stale active state ONLY where it exists (at
     // most the old active page + its ellipsis trigger — the hundreds of inactive
     // dropmenu items on a large auto-pagination pay no write) and, in the same
     // visit, captures the page element matching the target. Replaces the prior
@@ -388,7 +389,7 @@
         NDS.State.set(target, 'active');
         NDS.aria.current(target, 'page');
         if (target.classList.contains('nds-dropmenu-item')) {
-            const ellipsisTrigger = NDS.Dropmenu.from(target)?.querySelector('.nds-dropmenu-trigger');
+            const ellipsisTrigger = target.closest('.nds-dropmenu')?.querySelector('.nds-dropmenu-trigger');
             if (ellipsisTrigger) {
                 NDS.State.set(ellipsisTrigger, 'active');
                 const ellipsisLabel = ellipsisTrigger.querySelector('.nds-label');
@@ -423,14 +424,14 @@
     function initializePaginationStates(paginationNav) {
         const pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
 
-        // Get all page elements and numbers (portal-aware)
+        // Get all page elements and numbers
         const allPageElements = getAllPageElements(pagination);
         if (allPageElements.length === 0) return;
 
         const { min: minPage, max: maxPage } = pageBounds(allPageElements);
         if (!Number.isFinite(minPage)) return;
 
-        // Find the active page (portal-aware)
+        // Find the active page
         const activePage = allPageElements.find(el => el.ariaCurrent === 'page');
 
         // Get current page number (or default to first page if none active)
@@ -559,6 +560,10 @@
         if (items[0] && items[0].tagName === 'TR') requestAnimationFrame(paginate);
         else paginate();
 
+        // Re-paginate automatically when items are added/removed. Default for all
+        // auto-pagination; wired once per page, subsequent calls no-op.
+        _wireAutoRefreshWatch();
+
         paginationNav.setAttribute('data-nds-auto-pagination-initialized', 'true');
     }
 
@@ -602,41 +607,61 @@
     // inside NDS.State.set (markActivePage / activateGeneratedPage) so the State
     // vocab never leaks into a literal attribute. aria-current IS emitted; it's
     // semantic and valid pre-JS.
-    const _prevLi = (disabled) =>
-        `<li class="nds-pagination-item nds-pagination-prev"><button type="button" class="nds-btn nds-subtle" aria-label="Previous page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button></li>`;
-    const _nextLi = (disabled) =>
-        `<li class="nds-pagination-item nds-pagination-next"><button type="button" class="nds-btn nds-subtle" aria-label="Next page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button></li>`;
-    const _pageLi = (i, activePage) =>
-        `<li class="nds-pagination-item page_${i}"><button type="button" class="nds-btn nds-subtle nds-indicator"${i === activePage ? ' aria-current="page"' : ''} aria-label="Page ${i}"><span class="nds-label">${i}</span></button></li>`;
+    // url (when set) is a page→href function — the controls become navigable
+    // anchors for no-JS, server-reload pagination (data-page-url). A disabled
+    // prev/next anchor drops its href; CSS pointer-events handles the rest.
+    const _prevLi = (disabled, url, prevPage) => {
+        const inner = url
+            ? `<a class="nds-btn nds-subtle" aria-label="Previous page"${disabled ? ' aria-disabled="true"' : ` href="${url(prevPage)}"`}><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></a>`
+            : `<button type="button" class="nds-btn nds-subtle" aria-label="Previous page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>`;
+        return `<li class="nds-pagination-item nds-pagination-prev">${inner}</li>`;
+    };
+    const _nextLi = (disabled, url, nextPage) => {
+        const inner = url
+            ? `<a class="nds-btn nds-subtle" aria-label="Next page"${disabled ? ' aria-disabled="true"' : ` href="${url(nextPage)}"`}><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></a>`
+            : `<button type="button" class="nds-btn nds-subtle" aria-label="Next page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>`;
+        return `<li class="nds-pagination-item nds-pagination-next">${inner}</li>`;
+    };
+    const _pageLi = (i, activePage, url) => {
+        const cur = i === activePage ? ' aria-current="page"' : '';
+        const inner = url
+            ? `<a class="nds-btn nds-subtle nds-indicator" href="${url(i)}"${cur} aria-label="Page ${i}"><span class="nds-label">${i}</span></a>`
+            : `<button type="button" class="nds-btn nds-subtle nds-indicator"${cur} aria-label="Page ${i}"><span class="nds-label">${i}</span></button>`;
+        return `<li class="nds-pagination-item page_${i}">${inner}</li>`;
+    };
 
     // Ellipsis <li>: a dropmenu whose items are the collapsed page range
-    // [from, to]. Structure mirrors createDropdown() (the manual-collapse path)
+    // [from, to]. Structure mirrors _ellipsisLiM (the markup-preserving twin)
     // exactly, so NDS.Dropmenu.create and the click handler treat them the same.
-    function _ellipsisLi(from, to, activePage) {
+    function _ellipsisLi(from, to, activePage, url) {
         let items = '';
         for (let i = from; i <= to; i++) {
-            const ariaCurrent = i === activePage ? ' aria-current="page"' : '';
-            items += `<button type="button" class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" aria-label="Page ${i}"${ariaCurrent}><span class="nds-label">${i}</span></button>`;
+            const cur = i === activePage ? ' aria-current="page"' : '';
+            items += url
+                ? `<a class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" href="${url(i)}"${cur} aria-label="Page ${i}"><span class="nds-label">${i}</span></a>`
+                : `<button type="button" class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" aria-label="Page ${i}"${cur}><span class="nds-label">${i}</span></button>`;
         }
-        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="More pages"><span class="nds-label"></span></button><div class="nds-dropmenu-menu" aria-hidden="true"><div class="nds-dropmenu-scroll">${items}</div></div></div></li>`;
+        return _ellipsisShell(items);
     }
 
     // Build a pagination list. With collapse=true and >5 pages, emits the
     // collapsed shape directly — [Prev] 1 2 3 [ellipsis of 4..N-1] N [Next] — so
     // auto-pagination skips the build-all-then-collapse round-trip (no
-    // NDSPagination needed). The manual path passes collapse=false and keeps
-    // collapsePagination() for author-written markup.
-    function generatePaginationHTML(totalPages, activePage = 1, collapse = false) {
+    // NDSPagination needed). The manual path passes collapse=false and collapses
+    // via reconcileCollapse (which preserves author href/label markup). pageUrl
+    // (a "?page={page}" template) makes every control a navigable <a href>.
+    function generatePaginationHTML(totalPages, activePage = 1, collapse = false, pageUrl = null) {
         activePage = Math.max(1, Math.min(activePage, totalPages));
-        let html = '<ul class="nds-pagination-list">' + _prevLi(activePage === 1);
+        const url = pageUrl ? (p => _escAttr(pageUrl.replace('{page}', p))) : null;
+        let html = '<ul class="nds-pagination-list">' + _prevLi(activePage === 1, url, activePage - 1);
         if (collapse && totalPages > 5) {
-            html += _pageLi(1, activePage) + _pageLi(2, activePage) + _pageLi(3, activePage);
-            html += _ellipsisLi(4, totalPages - 1, activePage);
-            html += _pageLi(totalPages, activePage);
+            html += _pageLi(1, activePage, url) + _pageLi(2, activePage, url) + _pageLi(3, activePage, url);
+            html += _ellipsisLi(4, totalPages - 1, activePage, url);
+            html += _pageLi(totalPages, activePage, url);
         } else {
-            for (let i = 1; i <= totalPages; i++) html += _pageLi(i, activePage);
+            for (let i = 1; i <= totalPages; i++) html += _pageLi(i, activePage, url);
         }
-        html += _nextLi(activePage === totalPages) + '</ul>';
+        html += _nextLi(activePage === totalPages, url, activePage + 1) + '</ul>';
         return html;
     }
 
@@ -681,8 +706,7 @@
     }
 
     function getCurrentPage(pagination) {
-        // Portal-aware: searches both in-list items and dropmenu items
-        // (whether the menu is nested or currently portaled to <body>).
+        // Searches both in-list items and ellipsis dropmenu items.
         const active = getAllPageElements(pagination).find(el => el.ariaCurrent === 'page');
         if (active) {
             return pageNumberOf(active) || 1;
@@ -763,8 +787,7 @@
         if (newPagination._ndsAutoClickWired) return;
         newPagination._ndsAutoClickWired = true;
         newPagination.addEventListener('click', (e) => {
-            const pageElement = e.ndsDropmenuItem
-                || e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
+            const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
 
             if (pageElement) {
                 if (pageElement.tagName.toLowerCase() === 'a') e.preventDefault();
@@ -840,9 +863,12 @@
         }
     }
 
-    // Refresh auto-pagination for a specific content container (used by filters).
-    // Resets to page 1 over the visible (non-[data-filtered]) subset.
-    function refreshAutoPagination(contentContainer) {
+    // Refresh auto-pagination for a specific content container (used by filters
+    // and the auto-refresh watcher). Resets to page 1 over the
+    // visible (non-[data-filtered]) subset. With { keepPage: true } it stays on
+    // the current page instead (clamped to the new last page) — for add/remove,
+    // where snapping back to page 1 would lose the user's place.
+    function refreshAutoPagination(contentContainer, options = {}) {
         if (!contentContainer) return;
 
         // Find the pagination nav associated with this content container
@@ -865,6 +891,15 @@
         const perPage = contentContainer._ndsPerPage || readPerPage(contentContainer);
         const totalPages = Math.ceil(visibleItems.length / perPage);
 
+        // Resolve target page BEFORE the nav is rebuilt: keepPage reads the live
+        // active page off the current list and clamps it to the new range;
+        // otherwise reset to 1 (the filter default).
+        let targetPage = 1;
+        if (options.keepPage) {
+            const list = paginationNav.querySelector('.nds-pagination-list');
+            targetPage = list ? Math.min(getCurrentPage(list), Math.max(1, totalPages)) : 1;
+        }
+
         // If no pagination needed (0 or 1 page), hide pagination and show all visible items
         if (totalPages <= 1) {
             visibleItems.forEach(item => item.hidden = false);
@@ -877,13 +912,13 @@
         paginationNav.style.display = '';
 
         // Generate the collapsed list directly (no build-all-then-collapse)
-        paginationNav.innerHTML = generatePaginationHTML(totalPages, 1, true);
+        paginationNav.innerHTML = generatePaginationHTML(totalPages, targetPage, true);
 
-        // Show first page items
-        showPage(visibleItems, 1, perPage);
+        // Show the target page's items
+        showPage(visibleItems, targetPage, perPage);
 
         // Wire the ellipsis dropmenu + stamp active state
-        wireGeneratedPagination(paginationNav, 1);
+        wireGeneratedPagination(paginationNav, targetPage);
 
         // Wire clicks; re-filter the item set on each click in case the
         // filter changed since this nav was generated. totalPages is derived
@@ -897,8 +932,73 @@
         );
     }
 
+    // Auto-refresh: every auto-pagination re-paginates itself when .nds-page-item
+    // nodes are added/removed anywhere in its content — no NDS.Pagination.refresh()
+    // call needed, at ANY nesting (grid/list direct children, table rows under
+    // <tbody>, any wrapper). Wired once per page (on the first auto container's
+    // setup), riding the shared body MutationObserver via onDOMAdd/onDOMRemove —
+    // no new observer. Watches the items themselves, not a parent selector, so it
+    // is content-shape agnostic.
+    //
+    // Adds: the node is attached → route each to its .nds-paged-content via
+    // closest(), and hide off-page items NOW (this callback is a microtask → runs
+    // before paint) so fresh items don't flash during the debounce window.
+    // Removes: the node is detached (no closest()) → re-check every initialized
+    // auto nav; each recomputes from its own live items, and a removal adds nothing
+    // visible so no pre-paint pass is needed. Only the costly nav rebuild is debounced.
+    //
+    // No feedback loop: pagination's own writes are item.hidden (attribute) and nav
+    // innerHTML (.nds-pagination-item children, not .nds-page-item) — neither is a
+    // .nds-page-item add/remove.
+    function _wireAutoRefreshWatch() {
+        if (_autoRefreshWatchReady) return;
+        _autoRefreshWatchReady = true;
+
+        const pending = new Set();
+        const flush = NDS.debounce(() => {
+            pending.forEach(c => refreshAutoPagination(c, { keepPage: true }));
+            pending.clear();
+        }, 150);
+
+        NDS.onDOMAdd('.nds-page-item', added => {
+            // Dedupe to containers first — a bulk insert reports N added nodes, but
+            // the pre-paint visibility pass need only run once per container.
+            const containers = new Set();
+            added.forEach(item => { const c = item.closest('.nds-paged-content'); if (c) containers.add(c); });
+            let queued = false;
+            containers.forEach(content => {
+                const nav = navForContent(content);
+                if (!nav) return;
+                _applyCurrentPageVisibility(content, nav);
+                pending.add(content);
+                queued = true;
+            });
+            if (queued) flush();
+        });
+
+        NDS.onDOMRemove('.nds-page-item', () => {
+            const navs = document.querySelectorAll('.nds-pagination[data-nds-auto-pagination-initialized]');
+            let queued = false;
+            navs.forEach(nav => { const content = contentForNav(nav); if (content) { pending.add(content); queued = true; } });
+            if (queued) flush();
+        });
+    }
+
+    // Re-apply the current page's visibility over the live (non-filtered) item
+    // set without touching the nav controls — the cheap half of a refresh,
+    // safe to run synchronously per mutation. Clamps to the new last page.
+    function _applyCurrentPageVisibility(content, nav) {
+        const list = nav.querySelector('.nds-pagination-list');
+        if (!list) return;
+        const perPage = content._ndsPerPage || readPerPage(content);
+        const items = Array.from(content.querySelectorAll('.nds-page-item'))
+            .filter(it => !it.hasAttribute('data-filtered'));
+        const totalPages = Math.max(1, Math.ceil(items.length / perPage));
+        showPage(items, Math.min(getCurrentPage(list), totalPages), perPage);
+    }
+
     // Shared apply step for manual paginations: stamp active, refresh prev/next
-    // bounds from the portal-aware page set, scroll if needed. Both branches of
+    // bounds from the page set, scroll if needed. Both branches of
     // the document click handler land here once they've resolved a target page.
     function _applyManualPageChange(pagination, targetPageNum, allPageElements) {
         const prevActive = allPageElements.find(el => el.ariaCurrent === 'page');
@@ -927,9 +1027,8 @@
             // the list element).
             const pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
 
-            const portaledItem = e.ndsDropmenuItem || null;
             const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a');
-            const dropdownItem = portaledItem || e.target.closest('.nds-pagination-list .nds-dropmenu-item');
+            const dropdownItem = e.target.closest('.nds-pagination-list .nds-dropmenu-item');
             const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
             const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
 
@@ -941,7 +1040,7 @@
             // own the click.
             if (paginationNav.hasAttribute('data-nds-auto-pagination-initialized')) return;
 
-            // Resolve target page once; portal-aware element set serves both
+            // Resolve target page once; the element set serves both
             // bounds-finding (prev/next) and the post-change prev/next reconcile.
             const allPageElements = getAllPageElements(pagination);
 
@@ -951,7 +1050,7 @@
                 const currentPageNum = pageNumberOf(currentActive);
                 if (isNaN(currentPageNum)) return;
                 const targetPageNum = prevElement ? currentPageNum - 1 : currentPageNum + 1;
-                // Confirm the target exists (in-list or in the portaled dropdown).
+                // Confirm the target exists (in-list or in the dropdown).
                 if (!allPageElements.some(el => pageNumberOf(el) === targetPageNum)) return;
                 _applyManualPageChange(pagination, targetPageNum, allPageElements);
                 return;
@@ -961,6 +1060,36 @@
             if (isNaN(clickedPageNum)) return;
             _applyManualPageChange(pagination, clickedPageNum, allPageElements);
         }, { signal: ac.signal });
+    }
+
+    // Update a manual / data-driven nav's total page count and rebuild its
+    // controls. Manual content lives on the server, so its count can't be
+    // observed — the consumer calls this from the fetch handler when a new
+    // query changes the result size. activePage defaults to the current page
+    // clamped to the new range; pass it to jump (e.g. 1 on a fresh query).
+    // The nav-level click handler reads elements live, so it survives the
+    // innerHTML swap untouched (_wireManualNavClicks below is just a safety
+    // net for a nav that was never inited).
+    function setTotalPages(paginationNav, totalPages, activePage) {
+        if (!paginationNav) return;
+        if (paginationNav.hasAttribute('data-auto-pagination')) {
+            console.warn('NDS Pagination: setTotalPages is for manual / data-driven navs. For auto-pagination, add/remove .nds-page-item items (auto-refreshes) or call refresh().', paginationNav);
+            return;
+        }
+        totalPages = parseInt(totalPages);
+        if (!(totalPages > 0)) return;
+
+        const list = paginationNav.querySelector('.nds-pagination-list');
+        const current = list ? getCurrentPage(list) : 1;
+        const target = Math.min(Math.max(1, parseInt(activePage) || current), totalPages);
+
+        paginationNav.dataset.totalPages = totalPages; // keep the attribute truthful
+        paginationNav.innerHTML = generatePaginationHTML(totalPages, target, true, paginationNav.getAttribute('data-page-url'));
+        // Pre-stamp the collapse signature so the live watcher recognises this as
+        // its own output (pages 1..N) and skips a redundant rebuild.
+        paginationNav._ndsCollapseSig = Array.from({ length: totalPages }, (_, i) => i + 1).join(',');
+        wireGeneratedPagination(paginationNav, target); // ellipsis dropmenu + active stamp (prev/next come baked)
+        _wireManualNavClicks(paginationNav);
     }
 
     // Expose global API for unified init system
@@ -974,10 +1103,11 @@
             // manual navs; auto-paginations are wired by _wireAutoNav.
             if (!container.hasAttribute('data-auto-pagination')) {
                 _wireManualNavClicks(container);
+                _wireCollapseWatch();
             }
             return inst;
         },
-        refresh: (container) => refreshAutoPagination(container),
+        refresh: (container, options) => refreshAutoPagination(container, options),
         destroy: (container) => _destroyPaginationNav(container),
         setPage: function(container, pageNumber) {
             const pagination = container.querySelector('.nds-pagination-list') || container;
@@ -986,6 +1116,7 @@
             setActivePage(pagination, pageNumber);
             updatePrevNextStates(pagination, pageNumber, min, max);
         },
+        setTotalPages: (container, totalPages, activePage) => setTotalPages(container, totalPages, activePage),
     };
 
     // Note: Initialization now handled by nds-loader.js unified system
