@@ -276,8 +276,8 @@
     .nds-btn.nds-oncolor,
     :where(:root[data-theme~="dark"]) .nds-btn:not(.nds-primary, .nds-neutral) {
       --btn-color-disabled: var(--text-default-oncolor-disabled);
-      --btn-indicator-color: var(--alpha-white-40);
-      --btn-indicator-active: var(--alpha-white-60);
+      /*--btn-indicator-color: var(--background-neutral-400); same light mode color*/
+      --btn-indicator-active: var(--background-white);
       --btn-indicator-selected: var(--background-white);
 
       &.nds-secondary {
