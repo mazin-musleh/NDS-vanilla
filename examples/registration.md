@@ -16,7 +16,7 @@ breadcrumb: [["Examples", "/examples"]]
 {% assign site_title = page.siteTitle | default: site.title %}
 
 <!-- Step 1: Account Details -->
-<div class="nds-card nds-shadow nds-stroke" id="registration-step-1" style="--card-width: 400px;">
+<div class="nds-card nds-shadow nds-stroke" id="registration-step-1">
   <div class="nds-card-header">
     <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
       height="{{ brand_height }}" alt="{{ site_title }} Logo">
@@ -142,7 +142,7 @@ breadcrumb: [["Examples", "/examples"]]
 </div>
 
 <!-- Log in: alternate entry -->
-<div class="nds-card nds-shadow nds-stroke" id="registration-login" style="--card-width: 400px;" hidden>
+<div class="nds-card nds-shadow nds-stroke" id="registration-login" hidden>
   <div class="nds-card-header">
     <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
       height="{{ brand_height }}" alt="{{ site_title }} Logo">
@@ -213,7 +213,7 @@ breadcrumb: [["Examples", "/examples"]]
 </div>
 
 <!-- Forgot password -->
-<div class="nds-card nds-shadow nds-stroke" id="registration-forgot" style="--card-width: 400px;" hidden>
+<div class="nds-card nds-shadow nds-stroke" id="registration-forgot" hidden>
   <div class="nds-card-header">
     <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
       height="{{ brand_height }}" alt="{{ site_title }} Logo">
@@ -256,7 +256,7 @@ breadcrumb: [["Examples", "/examples"]]
 </div>
 
 <!-- Step 2: Verify Email -->
-<div class="nds-card nds-shadow nds-stroke" id="registration-step-2" style="--card-width: 400px;" hidden>
+<div class="nds-card nds-shadow nds-stroke" id="registration-step-2" hidden>
   <div class="nds-card-header">
     <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
       height="{{ brand_height }}" alt="{{ site_title }} Logo">
@@ -312,7 +312,7 @@ breadcrumb: [["Examples", "/examples"]]
 </div>
 
 <!-- Step 3: Success -->
-<div class="nds-card nds-shadow nds-stroke" id="registration-step-3" style="--card-width: 400px;" hidden>
+<div class="nds-card nds-shadow nds-stroke" id="registration-step-3" hidden>
   <div class="nds-card-header">
     <img class="nds-brand-logo nds-center" src="{{ brand_logo | relative_url }}" width="{{ brand_width }}"
       height="{{ brand_height }}" alt="{{ site_title }} Logo">
