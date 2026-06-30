@@ -451,7 +451,7 @@
     const JS_TOKEN_RE = new RegExp(
         '(\\/\\/[^\\n]*)' +                                       // 1 line comment
         '|(\\/\\*[\\s\\S]*?\\*\\/)' +                             // 2 block comment
-        '|(`[^`]*`)' +                                            // 3 template literal
+        '|(`(?:\\\\.|[^`\\\\])*`)' +                              // 3 template literal
         '|("(?:\\\\.|[^"\\\\])*"|\'(?:\\\\.|[^\'\\\\])*\')' +     // 4 string
         '|(\\b\\d+\\.?\\d*(?:[eE][+-]?\\d+)?\\b)' +               // 5 number
         // (?<!\.) so a member property named like a word token (`.catch`,

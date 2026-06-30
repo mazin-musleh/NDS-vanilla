@@ -72,8 +72,7 @@
         var maxInput = container.querySelector('.nds-slider-max');
         if (!minInput || !maxInput) return;
 
-        // Never let the two inputs invert. The currently-dragged thumb wins;
-        // the other snaps to its value.
+        // Never let the thumbs cross: clamp the dragged one to the other's value.
         if (parseFloat(minInput.value) > parseFloat(maxInput.value)) {
             if (document.activeElement === minInput) minInput.value = maxInput.value;
             else                                     maxInput.value = minInput.value;

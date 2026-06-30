@@ -1605,13 +1605,19 @@
             this.updateRangeCriteria(filterName);
         }
 
+        // Decode "lo-hi"; '-' is the delimiter, so each bound may carry its own
+        // leading '-' (negative ranges). null if not a numeric pair.
+        _parseEncodedRange(str) {
+            const m = /^(-?\d*\.?\d+)-(-?\d*\.?\d+)$/.exec(str || '');
+            return m ? [parseFloat(m[1]), parseFloat(m[2])] : null;
+        }
+
         _applyRangeFromUrl(filterName, raw) {
             const fd = this.filterInputs[filterName];
             if (!fd || fd.type !== 'range') return;
-            const parts = this.sanitizeFilterValue(raw).split('-');
-            let lo = parseFloat(parts[0]);
-            let hi = parseFloat(parts[1]);
-            if (isNaN(lo) || isNaN(hi)) return;
+            const pair = this._parseEncodedRange(this.sanitizeFilterValue(raw));
+            if (!pair) return;
+            let [lo, hi] = pair;
             lo = Math.min(Math.max(lo, fd.min), fd.max);
             hi = Math.min(Math.max(hi, fd.min), fd.max);
             if (lo > hi) { const t = lo; lo = hi; hi = t; }
@@ -1619,10 +1625,9 @@
         }
 
         _itemMatchesRange(item, filterName, encoded) {
-            const dash = encoded.indexOf('-');
-            if (dash < 0) return true;
-            const lo = parseFloat(encoded.slice(0, dash));
-            const hi = parseFloat(encoded.slice(dash + 1));
+            const pair = this._parseEncodedRange(encoded);
+            if (!pair) return true;
+            const [lo, hi] = pair;
             const itemValues = item._ndsFilterValues?.[filterName];
             if (!itemValues || !itemValues.length) return false;
             const v = parseFloat(itemValues[0]);
