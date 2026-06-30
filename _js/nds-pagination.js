@@ -54,6 +54,7 @@
     // to getComputedStyle, which forces a style recalc on the (laid-out) container.
     // Defaults to 5. The container itself isn't display:none pre-init — the
     // skeleton hides individual items past --per-page, so the read is not free.
+    // Synchronous at init by necessity — the page split must settle before data-paged-initialized reveals, or items flash all → paginated.
     function readPerPage(el) {
         const inline = el.style.getPropertyValue('--per-page');
         const v = parseInt(inline || getComputedStyle(el).getPropertyValue('--per-page'), 10);
@@ -357,8 +358,7 @@
     // clickable: clears stale active state ONLY where it exists (at
     // most the old active page + its ellipsis trigger — the hundreds of inactive
     // dropmenu items on a large auto-pagination pay no write) and, in the same
-    // visit, captures the page element matching the target. Replaces the prior
-    // clear-all + find-all double scan, each O(total pages) per page change.
+    // visit, captures the page element matching the target.
     function setActivePage(pagination, pageNumber) {
         const dropmenuItems = getPaginationDropmenuItems(pagination);
         const clickables = pagination.querySelectorAll('.nds-pagination-item button, .nds-pagination-item a, .nds-dropmenu-trigger');
@@ -696,6 +696,7 @@
         }
     }
 
+    // Write-only visibility (no layout read) — settles synchronously so the page swap never flashes all-items then hides.
     function showPage(items, pageNumber, perPage) {
         const start = (pageNumber - 1) * perPage;
         const end = start + perPage;
@@ -758,16 +759,9 @@
         const prevActive = pagination.querySelector('[aria-current="page"]');
         const previousPage = prevActive ? pageNumberOf(prevActive) : null;
 
-        // Set active page with aria-current
         setActivePage(pagination, pageNumber);
-
-        // Update prev/next button states
         updatePrevNextStates(pagination, pageNumber, 1, totalPages);
-
-        // Show page items
         showPage(items, pageNumber, perPage);
-
-        // Scroll to top of content
         scrollToContent(pagination);
 
         _dispatchPageChange(pagination, pageNumber, previousPage, totalPages);
@@ -1107,8 +1101,8 @@
             }
             return inst;
         },
-        refresh: (container, options) => refreshAutoPagination(container, options),
-        destroy: (container) => _destroyPaginationNav(container),
+        refresh: refreshAutoPagination,
+        destroy: _destroyPaginationNav,
         setPage: function(container, pageNumber) {
             const pagination = container.querySelector('.nds-pagination-list') || container;
             const { min, max } = pageBounds(getAllPageElements(pagination));
@@ -1116,7 +1110,7 @@
             setActivePage(pagination, pageNumber);
             updatePrevNextStates(pagination, pageNumber, min, max);
         },
-        setTotalPages: (container, totalPages, activePage) => setTotalPages(container, totalPages, activePage),
+        setTotalPages,
     };
 
     // Note: Initialization now handled by nds-loader.js unified system
