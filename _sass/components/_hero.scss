@@ -75,6 +75,7 @@
         border-radius: 0 !important;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         gap: var(--spacing-3xl);
 
         // Image layer — mask fades it to transparent so background-color shows through

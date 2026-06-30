@@ -32,7 +32,7 @@ main {
     .nds-main-content {
         display: flex;
         flex-wrap: wrap;
-        align-content: flex-end;
+        align-content: flex-start;
         position: relative;
         padding-block: var(--_main-padding-block);
         padding-inline: var(--_main-padding-inline);
