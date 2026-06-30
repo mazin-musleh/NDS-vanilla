@@ -120,11 +120,12 @@
     --text-display: var(--colors-neutral-800);
     --text-primary-paragraph: var(--colors-neutral-700);
     --text-secondary-paragraph: var(--colors-neutral-500);
-    --text-brand: var(--colors-primary-700);
+    --text-primary-strong: var(--colors-primary-700);
     // NOTE: --text-{primary,secondary,tertiary} are BRAND-colored text (green/gold/
     // lavender) — for text hierarchy use --text-default / --text-display /
     // --text-{primary,secondary}-paragraph instead.
     --text-primary: var(--colors-primary-600);
+    --text-brand: var(--text-primary);   // alias of --text-primary (auto-follows its dark value)
     --text-secondary: var(--colors-secondary-600);
     --text-tertiary: var(--colors-tertiary-500);
     --text-primary-light: var(--colors-primary-300);
@@ -207,8 +208,8 @@
     // ── Controls (checkbox / radio / switch shared surface) ──
     --controls-primary: var(--alpha-white-0);
     --controls-primary-checked: var(--colors-primary-600);
-    --controls-primary-hovered: var(--colors-primary-800);
-    --controls-primary-pressed: var(--colors-primary-800);
+    --controls-primary-hovered: var(--colors-primary-500);
+    --controls-primary-pressed: var(--colors-primary-700);
     --controls-primary-focused: var(--colors-primary-600);
     --controls-primary-readonly: var(--alpha-white-0);
     --controls-neutral-checked: var(--colors-neutral-950);
