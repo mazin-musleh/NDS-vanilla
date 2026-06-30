@@ -353,6 +353,11 @@
         .nds-btn.nds-minimal)>.nds-label {
         @include label-hidden;
     }
+
+    // Icon-only: drop the button padding.
+    :is(.nds-section-action.nds-minimal > .nds-btn, .nds-section-action.nds-minimal > .nds-dropmenu > .nds-btn) {
+        --btn-padding: 0;
+    }
 }
 
 /* ── 404 ── */

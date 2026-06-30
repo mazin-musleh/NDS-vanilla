@@ -508,7 +508,7 @@
 
   &.nds-ellipsis {
     width: var(--btn-size);
-    padding: 0;
+    --btn-padding: 0;
 
     &:not(.nds-loading,[data-state~="loading"])::after {
       content: "";
@@ -605,7 +605,7 @@
   &.nds-icon-only {
     justify-content: center;
     width: var(--btn-size);
-    padding: 0;
+    --btn-padding: 0;
 
     &.nds-menu-btn {
       width: fit-content;

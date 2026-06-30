@@ -198,7 +198,8 @@ $breakpoints-range: (
   --_btn-height-min: var(--btn-height-min, fit-content);
   --_btn-width: var(--btn-width, unset);
   --_btn-gap: var(--btn-gap, var(--spacing-xs));
-  --_btn-padding: var(--btn-padding, calc((var(--_btn-size) - 8px) / 2));
+  --_btn-padding-default: calc((var(--_btn-size) - 8px) / 2);
+  --_btn-padding: var(--btn-padding, var(--_btn-padding-default));
   --_btn-radius: var(--btn-radius, var(--radius-sm));
 
   // Outer * --user-font-scale wraps both the consumer-override path and
@@ -210,7 +211,8 @@ $breakpoints-range: (
   --_btn-LH: var(--btn-LH, calc(var(--_btn-FS) * 1.5));
   --_btn-icon-size: var(--btn-icon-size, calc(var(--_btn-size) / 2 + 4px));
 
-  --_btn-space: calc(var(--_btn-size) - var(--_btn-padding));
+  // default, not --_btn-padding — spinner inset must survive a --btn-padding:0 override
+  --_btn-space: calc(var(--_btn-size) - var(--_btn-padding-default));
   --loading-size: var(--_btn-space) !important;
   --loading-border: max(2px, calc(var(--_btn-space) / 10)) !important;
 
