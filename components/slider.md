@@ -8,27 +8,6 @@ lang: en
 direction: ltr
 ---
 
-<!-- Work in progress notice -->
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-body">
-            <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
-                <span class="nds-feedback nds-alert-icon">
-                    <span class="nds-feedback-icon">
-                        <i class="nds-icon" aria-hidden="true"></i>
-                    </span>
-                </span>
-                <div class="nds-alert-content">
-                    <div class="nds-alert-text">
-                        <span class="nds-alert-title">Work in progress</span>
-                        <p class="nds-alert-description">This component is still being refined and will be available in the next release.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Single Slider -->
 <section id="sliderDefault" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">

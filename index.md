@@ -65,15 +65,15 @@ bundle_sizes:
                         <i class="hgi hgi-stroke hgi-building-06"></i>
                         <span class="nds-label">Government teams &amp; agencies</span>
                     </span>
-                    <p class="nds-item-desc">Government teams and the agencies delivering for them, building
-                        DGA-compliant digital services on whatever stack they already use.</p>
+                    <p class="nds-item-desc">Delivering DGA-compliant digital services on whatever stack they
+                        already use.</p>
                 </div>
                 <div class="nds-definition-item nds-card nds-shadow">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-briefcase-01"></i>
                         <span class="nds-label">Freelancers</span>
                     </span>
-                    <p class="nds-item-desc">Freelancers shipping client sites quickly with a polished component library
+                    <p class="nds-item-desc">Shipping client sites quickly with a polished component library
                         and page templates out of the box.</p>
                 </div>
                 <div class="nds-definition-item nds-card nds-shadow">
@@ -81,7 +81,7 @@ bundle_sizes:
                         <i class="hgi hgi-stroke hgi-mortarboard-02"></i>
                         <span class="nds-label">Students &amp; fresh graduates</span>
                     </span>
-                    <p class="nds-item-desc">Students and fresh graduates learning core HTML, CSS, and vanilla JavaScript
+                    <p class="nds-item-desc">Learning core HTML, CSS, and vanilla JavaScript
                         from a readable, production-grade codebase.</p>
                 </div>
                 <div class="nds-definition-item nds-card nds-shadow">
@@ -89,7 +89,7 @@ bundle_sizes:
                         <i class="hgi hgi-stroke hgi-teaching"></i>
                         <span class="nds-label">Teachers &amp; trainers</span>
                     </span>
-                    <p class="nds-item-desc">Teachers and trainers using real components, page templates, and patterns as
+                    <p class="nds-item-desc">Using real components, page templates, and patterns as
                         study cases for web-development courses, bootcamps, or workshops.</p>
                 </div>
             </div>
