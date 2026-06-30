@@ -391,8 +391,8 @@ section>.nds-max-width {
 :is(.nds-tabs:is(.nds-loading, [data-state='loading']),
     .nds-tabs:not([data-nds-tabs-initialized])) .nds-tab-panel>*:not(.nds-accordion, .nds-grid, .nds-paged-content, .nds-table, .nds-tabs, .nds-code-action) {
     animation: processing 1.5s ease-in-out infinite;
+    --nds-skeleton-width: 100%;   // fill the panel (skeleton-fill defaults to fit-content)
     @include skeleton-bar;
-    width: 100%;
 
     >* {
         visibility: hidden;

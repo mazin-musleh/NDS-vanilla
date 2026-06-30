@@ -397,7 +397,7 @@ $breakpoints-range: (
 @mixin skeleton-fill {
   background: var(--nds-skeleton-fill);
   color: transparent !important;
-  width: fit-content;
+  width: var(--nds-skeleton-width, fit-content);
 }
 
 // Paint a text element as a skeleton bar — fill + radius, descendants'
