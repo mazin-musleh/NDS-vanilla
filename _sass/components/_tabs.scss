@@ -389,9 +389,10 @@ section>.nds-max-width {
 // tables, nested tabs) are excluded — mark them loading for their richer
 // per-item placeholder.
 :is(.nds-tabs:is(.nds-loading, [data-state='loading']),
-    .nds-tabs:not([data-nds-tabs-initialized])) .nds-tab-panel>*:not(.nds-accordion, .nds-grid, .nds-paged-content, .nds-table, .nds-tabs) {
+    .nds-tabs:not([data-nds-tabs-initialized])) .nds-tab-panel>*:not(.nds-accordion, .nds-grid, .nds-paged-content, .nds-table, .nds-tabs, .nds-code-action) {
     animation: processing 1.5s ease-in-out infinite;
     @include skeleton-bar;
+    width: 100%;
 
     >* {
         visibility: hidden;

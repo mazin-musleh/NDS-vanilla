@@ -119,14 +119,13 @@
 
   // Neutralize links inside alerts; the content-section rule otherwise promotes a bare .nds-link to primary.
   a {
-    font-size: var(--typo-text-sm-FS);
-    line-height: var(--typo-text-sm-LH);
+    font-size: var(--typo-text-md-FS);
+    line-height: var(--typo-text-md-LH);
     --link-color: var(--link-neutral);
     --link-hover: var(--link-neutral-hovered);
     --link-pressed: var(--link-neutral-pressed);
     --link-focused: var(--link-neutral-focused);
     --link-visited: var(--link-neutral-visited);
-    text-decoration: none;
   }
 
   // ==============================================
