@@ -6,6 +6,46 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-07-01
+
+### Added
+- Slider — new range input component: single value or dual-thumb min–max, full keyboard control (arrows, Home/End, Page Up/Down), proportional sizes, and a `.nds-stacked` layout. See the [Slider doc page](https://mazin-musleh.github.io/NDS-vanilla/components/slider.html).
+- Filter — slider/range filter type and a standard `nds-filter-bar` layout. See the [Filter doc page](https://mazin-musleh.github.io/NDS-vanilla/components/filter.html).
+- Pagination — `setTotalPages()`, a `page-change` event, id-based binding between a nav and its content via `data-*`, `data-page-url` page links, plus live collapse and auto-refresh when items are added or removed.
+- Numbers — `data-unit` on `nds-number-format` appends an arbitrary unit suffix.
+- Upload — `NDS.Upload.create(el, options)` for JS configuration (overrides the declarative `data-*`), a built-in fallback file-item template, and opt-in `addFile` validation. See the [Upload doc page](https://mazin-musleh.github.io/NDS-vanilla/components/upload.html).
+- IPV (ID/passport input) — input component with full keyboard accessibility and English/Arabic localization. See the [IPV doc page](https://mazin-musleh.github.io/NDS-vanilla/components/ipv.html).
+- Rating — loading skeleton state.
+- Progress — circular ring fills when scrolled into view.
+
+### Changed
+- Code — syntax highlighter rewritten as a token-stream lexer with embedded-language support and language auto-detection.
+- Filter — `data-filter-items` accepts a bare class name, not only a full selector.
+- Buttons — `--btn-gap` scales per size; icon-only and minimal-collapse buttons route padding through the `--btn-padding` token; the loading-spinner inset is decoupled from padding so a zero-padding button keeps a correctly sized spinner.
+- Upload — event payloads are now uniformly shaped `{file, id, status, progress, error}`.
+- Alert — links inside alerts render in the neutral link color instead of being promoted to the primary color.
+- Tokens — added `--text-primary-strong` (`primary-700`) for AA-contrast brand text on tinted surfaces; `--text-brand` is now an alias of `--text-primary` (`primary-600`).
+
+### Fixed
+- Filter — negative range bounds now decode from the URL and match items correctly.
+- Chart — touch page-scroll restored; tap pins the crosshair on line charts.
+- Loader — recovers from a transient first-load failure when fetching an injected bundle.
+- Date — Hijri dates are built from numeric parts, fixing component and separator ordering.
+- Mainnav — dropdown column sizes to its content (`fit-content`).
+- Buttons — the indicator on dark/oncolor buttons is brightened to white.
+- Progress — `stroke-dashoffset` / `stroke-dasharray` values are correctly unitized.
+- Breadcrumb — collapsed-ellipsis loading skeleton renders correctly.
+- Tabs — loading-state skeleton spans the full panel width and no longer covers code-block action buttons.
+- Featured icon — stays square (`aspect-ratio: 1`) instead of distorting in flex/grid containers.
+- Layout — hero stack is vertically centered; main content aligns to the start.
+- Layout — `.nds-content-layout` reliably fills the remaining height regardless of how many sections precede it.
+
+### Migrating from v1.1.0
+
+- Replace `nds-main.min.css` and `nds-main.min.js`, plus the loader-injected `nds-delegated.min.js` and `nds-extras.min.js` (the new Slider ships in `nds-delegated`).
+- Code-block tabs: if you copied the old tab markup, re-copy it from a doc page — the dead `oneRowContent` class is gone and an overflow `nds-show-more` button now follows the tab `<nav>`. Old markup keeps working; the update just restores the overflow control.
+- Upload — if your event handlers read a payload shape other than `{file, id, status, progress, error}`, update them. The declarative `data-*` API is unchanged.
+
 ## [1.1.0] - 2026-06-13
 
 ### Changed
