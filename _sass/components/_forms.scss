@@ -499,6 +499,12 @@ fieldset {
 // All three group classes also carry .nds-form-group in HTML.
 // ==============================================
 
+// plural = the form-level action row; singular .nds-form-action is the per-input slot
+.nds-form-actions {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
 .nds-form-group {
     display: flex;
     flex-direction: column;

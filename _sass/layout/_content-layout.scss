@@ -4,9 +4,8 @@
 
 main {
     flex: 1;
-    display: grid;
-    align-content: start;
-    grid-template-rows: 1fr;
+    display: flex;
+    flex-direction: column;
 }
 
 .nds-content-layout {
@@ -17,6 +16,7 @@ main {
     --_main-gap: var(--main-gap, 0);
 
     position: relative;
+    flex: 1; // fills the leftover space in main's column; siblings stay auto
     min-height: var(--_layout-min-height);
     display: grid;
     grid-template-columns: 1fr;
@@ -31,6 +31,7 @@ main {
 
     .nds-main-content {
         display: flex;
+        flex-direction: column;
         flex-wrap: wrap;
         align-content: flex-start;
         position: relative;
@@ -38,6 +39,10 @@ main {
         padding-inline: var(--_main-padding-inline);
         gap: var(--_main-gap);
         min-width: 0;
+
+        .nds-content-section {
+            flex: 1;
+        }
     }
 
     /* ── Middle (centered/hero) ── */
@@ -52,6 +57,7 @@ main {
 
         .nds-main-content {
             justify-content: center;
+            align-content: center;
         }
     }
 
@@ -218,4 +224,3 @@ main {
         --layout-gap: 0 !important;
     }
 }
-
