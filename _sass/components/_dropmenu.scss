@@ -13,6 +13,9 @@
 .nds-dropmenu {
   position: relative;
   display: inline-flex;
+  // Follow the parent's cross-axis when it stretches (e.g. column-flex
+  // action rows); no-op in inline / row contexts.
+  align-self: stretch;
 
   &-scroll {
     overflow: hidden;
