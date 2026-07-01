@@ -27,19 +27,18 @@
   user-select: none;
   width: var(--_avatar-size);
   height: var(--_avatar-size);
+  aspect-ratio: 1;
+  font-size: calc(var(--_avatar-size) / 3);
 
   // Image styling
   img {
     width: 100%;
-    max-width: 100%;
     height: auto !important;
     aspect-ratio: 1;
     object-fit: cover;
     display: block;
     border-radius: 50%;
   }
-
-
 
   // Optional image border variant
   &.nds-image-border img {
@@ -53,6 +52,8 @@
     align-items: center;
     justify-content: center;
     color: inherit;
+    width: calc(var(--_avatar-size) / 2);
+    height: calc(var(--_avatar-size) / 2);
   }
 
   // Initials styling
@@ -62,32 +63,17 @@
     justify-content: center;
     text-transform: uppercase;
   }
+
+  &.nds-btn img {
+    width: var(--btn-height);
+    height: var(--btn-height);
+    padding: var(--spacing-xs);
+  }
 }
 
 // ==============================================
 // AVATAR SIZES
 // ==============================================
-
-// Medium - 40px (default)
-.nds-avatar.nds-md,
-.nds-avatar {
-  width: var(--_avatar-size);
-  height: var(--_avatar-size);
-  font-size: calc(var(--_avatar-size) / 3);
-
-  i {
-    width: calc(var(--_avatar-size) / 2);
-    height: calc(var(--_avatar-size) / 2);
-  }
-
-  &.nds-btn {
-    img {
-      width: calc(var(--btn-height));
-      height: calc(var(--btn-height));
-      padding: var(--spacing-xs);
-    }
-  }
-}
 
 .nds-avatar.nds-xs {
   --avatar-size: 24px;
@@ -125,46 +111,34 @@
 .nds-avatar.nds-square,
 .nds-avatar.nds-square > img {
   border-radius: var(--radius-sm);
-
-  .nds-3xl &,
-  &.nds-3xl {
-    border-radius: var(--radius-md);
-  }
 }
 
+.nds-avatar.nds-square.nds-3xl,
+.nds-avatar.nds-square.nds-3xl > img {
+  border-radius: var(--radius-md);
+}
 
 // ==============================================
 // AVATAR GROUP
 // ==============================================
 
 .nds-avatar-group {
---_avatar-gap: var(--avatar-gap, 6px);
+  --_avatar-gap: var(--avatar-gap, 6px);
   display: flex;
   align-items: center;
-  gap: var(--_avatar-gap, 6px);
+  gap: var(--_avatar-gap);
 
   // Stacked variant - avatars overlap
   &.nds-stacked {
     --_stacked-gap: calc(var(--_avatar-gap) * 2);
     gap: 0;
-    padding-left: var(--_stacked-gap);
+    padding-inline-end: var(--_stacked-gap);
 
     .nds-avatar {
       --avatar-size: 40px;
-      margin-left: calc(var(--_stacked-gap) * -1);
-    }
-
-    @include ltr {
-      padding-left: unset;
-      padding-right: var(--_stacked-gap);
-
-      .nds-avatar {
-        margin-left: unset;
-        margin-right: calc(var(--_stacked-gap) * -1);
-      }
+      margin-inline-end: calc(var(--_stacked-gap) * -1);
     }
   }
-
 
   &.nds-xs {
     --avatar-gap: 2px;
@@ -222,5 +196,4 @@
       border: 4px solid var(--avatar-border);
     }
   }
-
 }
