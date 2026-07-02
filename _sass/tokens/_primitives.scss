@@ -1,87 +1,38 @@
 // ════════════════════════════════════════════════════════════════════════════
 // PRIMITIVES — dimension scales (no color)
-// Each scale = numeric rungs + its consumable size vocabulary (spacing-{n} →
-// spacing-{size}, radius-{n} → radius-{size}, width-{size}). Components consume
-// the SIZE names; numerics are ladder-internal. The full color palette lives in
-// themes/_dga.scss; semantic meanings in tokens/_semantic.scss.
+// Dimension scales, direct values on the size vocabulary (no numeric rungs).
+// The full color palette lives in themes/_dga.scss; semantic meanings in
+// tokens/_semantic.scss.
 // ════════════════════════════════════════════════════════════════════════════
 @use '../mixins' as *;
 
 :root {
-    --spacing-0: 0px;
-    --spacing-0-5: 2px;
-    --spacing-1: 4px;
-    --spacing-1-5: 6px;
-    --spacing-2: 8px;
-    --spacing-3: 12px;
-    --spacing-4: 16px;
-    --spacing-5: 20px;
-    --spacing-6: 24px;
-    --spacing-8: 32px;
-    --spacing-10: 40px;
-    --spacing-12: 48px;
-    --spacing-16: 64px;
-    --spacing-20: 80px;
-    --spacing-24: 96px;
-    --spacing-32: 128px;
-    --spacing-40: 160px;
-    --spacing-48: 192px;
-    --spacing-56: 224px;
-    --spacing-64: 256px;
-    --spacing-80: 320px;
-    --spacing-96: 384px;
-    --spacing-120: 480px;
-    --spacing-140: 560px;
-    --spacing-160: 640px;
-    --spacing-180: 720px;
-    --spacing-192: 768px;
-    --spacing-256: 1024px;
-    --spacing-320: 1280px;
-    --spacing-360: 1440px;
-    --spacing-400: 1600px;
-    --spacing-480: 1920px;
-    --spacing-none: var(--spacing-0);
-    --spacing-xxs: var(--spacing-0-5);
-    --spacing-xs: var(--spacing-1);
-    --spacing-sm: var(--spacing-1-5);
-    --spacing-md: var(--spacing-2);
-    --spacing-lg: var(--spacing-3);
-    --spacing-xl: var(--spacing-4);
-    --spacing-2xl: var(--spacing-5);
-    --spacing-3xl: var(--spacing-6);
-    --spacing-4xl: var(--spacing-8);
-    --spacing-5xl: var(--spacing-10);
-    --spacing-6xl: var(--spacing-12);
-    --spacing-7xl: var(--spacing-16);
-    --spacing-8xl: var(--spacing-20);
-    --spacing-9xl: var(--spacing-24);
-    --spacing-10xl: var(--spacing-32);
-    --spacing-11xl: var(--spacing-40);
-    --width-xxs: var(--spacing-80);
-    --width-xs: var(--spacing-96);
-    --width-sm: var(--spacing-120);
-    --width-md: var(--spacing-140);
-    --width-lg: var(--spacing-160);
-    --width-xl: var(--spacing-192);
-    --width-2xl: var(--spacing-256);
-    --width-3xl: var(--spacing-320);
-    --width-4xl: var(--spacing-360);
-    --width-5xl: var(--spacing-400);
-    --width-6xl: var(--spacing-480);
-    --radius-0: 0;
-    --radius-2: 2px;
-    --radius-4: 4px;
-    --radius-8: 8px;
-    --radius-16: 16px;
-    --radius-24: 24px;
-    --radius-9999: 9999px;
-    --radius-none: var(--radius-0);
-    --radius-xs: var(--radius-2);
-    --radius-sm: var(--radius-4);
-    --radius-md: var(--radius-8);
-    --radius-lg: var(--radius-16);
-    --radius-xl: var(--radius-24);
-    --radius-full: var(--radius-9999);
+    // Spacing — 4px grid. Comments = DGA Figma sheet numbers (spacing/{n}).
+    --spacing-none: 0px;   // 0
+    --spacing-xxs: 2px;    // 0.5
+    --spacing-xs: 4px;     // 1
+    --spacing-sm: 6px;     // 1.5
+    --spacing-md: 8px;     // 2
+    --spacing-lg: 12px;    // 3
+    --spacing-xl: 16px;    // 4
+    --spacing-2xl: 20px;   // 5
+    --spacing-3xl: 24px;   // 6
+    --spacing-4xl: 32px;   // 8
+    --spacing-5xl: 40px;   // 10
+    --spacing-6xl: 48px;   // 12
+    --spacing-7xl: 64px;   // 16
+    --spacing-8xl: 80px;   // 20
+    --spacing-9xl: 96px;   // 24
+    --spacing-10xl: 128px; // 32
+    --spacing-11xl: 160px; // 40
+
+    --radius-none: 0;
+    --radius-xs: 2px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
 
     // Global user font scale — set by the accessibility panel's Font
     // Sizing tile (font-step ladder) to reflect the user's chosen
