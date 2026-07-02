@@ -14,18 +14,20 @@
     --avatar-border: var(--colors-base-white);
 
     // ── button ──
-    --button-background-black-default: var(--colors-neutral-950);
-    --button-background-black-hovered: var(--colors-neutral-800);
-    --button-background-black-pressed: var(--colors-neutral-600);
-    --button-background-black-selected: var(--colors-neutral-700);
+    // DGA sheet name: button/background/black — renamed: class is .nds-neutral and the ladder is the neutral ramp
+    --button-background-neutral-default: var(--colors-neutral-950);
+    --button-background-neutral-hovered: var(--colors-neutral-800);
+    --button-background-neutral-pressed: var(--colors-neutral-600);
+    --button-background-neutral-selected: var(--colors-neutral-700);
     --button-background-primary-default: var(--colors-primary-600);
     --button-background-primary-hovered: var(--colors-primary-700);
     --button-background-primary-pressed: var(--colors-primary-900);
     --button-background-primary-selected: var(--colors-primary-800);
-    --button-background-neutral-default: var(--colors-neutral-100);
-    --button-background-neutral-hovered: var(--colors-neutral-100);
-    --button-background-neutral-pressed: var(--colors-neutral-200);
-    --button-background-neutral-selected: var(--colors-neutral-200);
+    // DGA sheet name: button/background/neutral — renamed to match its class .nds-secondary
+    --button-background-secondary-default: var(--colors-neutral-100);
+    --button-background-secondary-hovered: var(--colors-neutral-100);
+    --button-background-secondary-pressed: var(--colors-neutral-200);
+    --button-background-secondary-selected: var(--colors-neutral-200);
     --button-background-danger-primary-default: var(--colors-red-600);
     --button-background-danger-primary-hovered: var(--colors-red-700);
     --button-background-danger-primary-pressed: var(--colors-red-900);
@@ -303,8 +305,8 @@
 }
 
 // ── Inactive (deliberately-off) NDS-vs-DGA overrides, kept for reference ──
-// --button-background-neutral-hovered: var(--colors-neutral-200);
-// --button-background-neutral-focused: var(--colors-neutral-200);
+// --button-background-secondary-hovered: var(--colors-neutral-200);
+// --button-background-secondary-focused: var(--colors-neutral-200);
 // --controls-primary-pressed: var(--colors-primary-900);
 // --controls-neutral-pressed: var(--colors-neutral-700);
 // --controls-ripple-effect: var(--colors-neutral-100);

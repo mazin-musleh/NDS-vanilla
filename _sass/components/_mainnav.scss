@@ -620,8 +620,8 @@ body.nds-minimal .nds-main-nav {
             .nds-nav-link {
                 &.nds-menu-btn {
                     --btn-bg: var(--button-background-transparent-default);
-                    --btn-bg-hover: var(--button-background-neutral-default);
-                    --btn-bg-active: var(--button-background-neutral-pressed);
+                    --btn-bg-hover: var(--button-background-secondary-default);
+                    --btn-bg-active: var(--button-background-secondary-pressed);
                     --btn-bg-selected: var(--button-background-transparent-default);
 
                     &.nds-oncolor {

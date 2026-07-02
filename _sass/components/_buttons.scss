@@ -171,10 +171,10 @@
 
   /* Neutral Button (Dark Gray) */
   &.nds-neutral {
-    --btn-bg: var(--button-background-black-default);
-    --btn-bg-hover: var(--button-background-black-hovered);
-    --btn-bg-active: var(--button-background-black-pressed);
-    --btn-bg-selected: var(--button-background-black-selected);
+    --btn-bg: var(--button-background-neutral-default);
+    --btn-bg-hover: var(--button-background-neutral-hovered);
+    --btn-bg-active: var(--button-background-neutral-pressed);
+    --btn-bg-selected: var(--button-background-neutral-selected);
     --btn-color: var(--text-oncolor-primary);
     --btn-indicator-color: var(--button-indicator-primary);
     --btn-indicator-active: var(--button-indicator-primary);
@@ -185,19 +185,19 @@
 
   /* Secondary Solid Button (Light Gray) */
   &.nds-secondary {
-    --btn-bg: var(--button-background-neutral-default);
-    --btn-bg-hover: var(--button-background-neutral-hovered);
-    --btn-bg-active: var(--button-background-neutral-pressed);
-    --btn-bg-selected: var(--button-background-neutral-selected);
+    --btn-bg: var(--button-background-secondary-default);
+    --btn-bg-hover: var(--button-background-secondary-hovered);
+    --btn-bg-active: var(--button-background-secondary-pressed);
+    --btn-bg-selected: var(--button-background-secondary-selected);
     --btn-color: var(--text-default);
   }
 
   /* Secondary Outline Button */
   &.nds-secondary-outline {
     --btn-bg: var(--button-background-transparent-default);
-    --btn-bg-hover: var(--button-background-neutral-default);
-    --btn-bg-active: var(--button-background-neutral-pressed);
-    --btn-bg-selected: var(--button-background-neutral-selected);
+    --btn-bg-hover: var(--button-background-secondary-default);
+    --btn-bg-active: var(--button-background-secondary-pressed);
+    --btn-bg-selected: var(--button-background-secondary-selected);
     --btn-bg-disabled: var(--button-background-transparent-default);
     --btn-color: var(--text-default);
     --btn-border: var(--border-neutral-primary);
@@ -210,9 +210,9 @@
   /* Subtle Button */
   &.nds-subtle {
     --btn-bg: var(--button-background-transparent-default);
-    --btn-bg-hover: var(--button-background-neutral-default);
-    --btn-bg-active: var(--button-background-neutral-pressed);
-    --btn-bg-selected: var(--button-background-neutral-selected);
+    --btn-bg-hover: var(--button-background-secondary-default);
+    --btn-bg-active: var(--button-background-secondary-pressed);
+    --btn-bg-selected: var(--button-background-secondary-selected);
     --btn-bg-disabled: transparent;
     --btn-color: var(--text-default);
   }

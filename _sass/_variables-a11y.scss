@@ -155,10 +155,10 @@ $a11y-filters: (
 // the on-colour (light) variant in dark theme. Skips .nds-oncolor
 // primaries — they already carry the on-colour treatment (e.g. hero).
 :root[data-a11y~="high-contrast"] .nds-btn.nds-primary:not(.nds-oncolor) {
-    --btn-bg:                 var(--button-background-black-default);
-    --btn-bg-hover:           var(--button-background-black-hovered);
-    --btn-bg-active:          var(--button-background-black-pressed);
-    --btn-bg-selected:        var(--button-background-black-selected);
+    --btn-bg:                 var(--button-background-neutral-default);
+    --btn-bg-hover:           var(--button-background-neutral-hovered);
+    --btn-bg-active:          var(--button-background-neutral-pressed);
+    --btn-bg-selected:        var(--button-background-neutral-selected);
     --btn-color:              var(--text-oncolor-primary);
     --btn-indicator-color:    var(--button-indicator-primary);
     --btn-indicator-active:   var(--button-indicator-primary);
@@ -448,7 +448,7 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
         &:active,
         &[data-state~="dragging"] {
             cursor: grabbing;
-            background-color: var(--button-background-neutral-pressed);
+            background-color: var(--button-background-secondary-pressed);
         }
     }
 }
