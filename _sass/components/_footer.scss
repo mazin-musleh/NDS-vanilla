@@ -201,20 +201,6 @@
         color: var(--text-oncolor-primary);
         --divider-color: var(--colors-alpha-white-10);
 
-        .nds-btn.nds-subtle {
-            --btn-bg: transparent;
-            --btn-bg-hover: var(--button-background-transparent-hovered);
-            --btn-bg-active: var(--button-background-transparent-pressed);
-            --btn-bg-selected: var(--button-background-transparent-selected);
-            --btn-bg-disabled: transparent;
-            --btn-color: var(--text-oncolor-primary);
-            --btn-loading-color: var(--text-oncolor-primary);
-            --btn-loading-track: var(--colors-alpha-white-20);
-            --btn-indicator-color: var(--colors-alpha-white-40);
-            --btn-indicator-active: var(--colors-alpha-white-60);
-            --btn-indicator-selected: var(--text-oncolor-primary);
-        }
-
         .nds-btn.nds-secondary-outline {
             --btn-bg: var(--button-background-transparent-default);
             --btn-bg-hover: var(--button-background-transparent-hovered);
