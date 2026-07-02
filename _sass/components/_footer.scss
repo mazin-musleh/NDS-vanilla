@@ -221,12 +221,12 @@
             --btn-bg-active: var(--button-background-transparent-pressed);
             --btn-bg-selected: var(--button-background-transparent-selected);
             --btn-bg-disabled: var(--button-background-transparent-default);
-            --btn-color: var(--colors-base-white);
+            --btn-color: var(--text-oncolor-primary);
             --btn-border: var(--border-white-40);
             --btn-border-hover: var(--border-white-40);
             --btn-border-active: var(--border-white-40);
             --btn-border-selected: var(--border-white-40);
-            --btn-loading-color: var(--colors-base-white);
+            --btn-loading-color: var(--text-oncolor-primary);
             --btn-loading-track: var(--colors-alpha-white-20);
         }
 

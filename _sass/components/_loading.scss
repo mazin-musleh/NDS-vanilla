@@ -50,7 +50,7 @@
 
   // Dark theme — default to white spinner
   @include dark {
-    --_loading-color: var(--loading-color, var(--colors-base-white));
+    --_loading-color: var(--loading-color, var(--icon-oncolor));
     --_loading-track: var(--loading-track, var(--colors-alpha-white-20));
   }
 
@@ -111,14 +111,14 @@
     --_loading-track: var(--loading-track, var(--colors-alpha-black-10));
 
     @include dark {
-      --_loading-color: var(--loading-color, var(--colors-base-white));
+      --_loading-color: var(--loading-color, var(--icon-oncolor));
       --_loading-track: var(--loading-track, var(--colors-alpha-white-20));
     }
   }
 
   // On dark backgrounds (explicit override for forced-dark containers)
   &.nds-oncolor {
-    --_loading-color: var(--loading-color, var(--colors-base-white));
+    --_loading-color: var(--loading-color, var(--icon-oncolor));
     --_loading-track: var(--loading-track, var(--colors-alpha-white-20));
   }
 

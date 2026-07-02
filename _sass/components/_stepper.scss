@@ -241,7 +241,7 @@
     .nds-stepper-circle {
         border-color: var(--stepper-button-completed);
         background-color: var(--stepper-button-completed);
-        color: var(--colors-base-white);
+        color: var(--text-oncolor-primary);
 
         &:hover {
             border-color: var(--stepper-button-completed-hovered);
@@ -317,7 +317,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: var(--colors-base-white);
+            background-color: var(--background-surface-oncolor);
         }
     }
 
@@ -615,7 +615,7 @@
 
             .nds-stepper-circle {
                 border-color: var(--background-surface-oncolor);
-                color: var(--colors-base-white);
+                color: var(--text-oncolor-primary);
 
                 &:hover {
                     border-color: var(--colors-alpha-white-40);
@@ -643,7 +643,7 @@
                 // Default content override for completed state
                 &::before,
                 &[data-step-text]::before {
-                    color: var(--colors-base-white);
+                    color: var(--text-oncolor-primary);
                 }
 
                 &:before {
