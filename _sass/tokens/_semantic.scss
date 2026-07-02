@@ -151,23 +151,21 @@
     --icon-default-disabled: var(--colors-neutral-400);
     --icon-default-oncolor-disabled: var(--colors-alpha-white-40);
 
-    // ── Controls (checkbox / radio / switch shared surface) ──
-    --controls-primary: var(--colors-alpha-white-0);
+    // ── Controls (checkbox / radio / switch / slider shared surface) ──
+    // Shared defaults for the form-control cluster; the per-control dials
+    // (--checkbox-*/--radio-*/--switch-*) alias the checked-state fills so dark
+    // can retune each control separately (components-dark) — don't collapse them.
+    // TOK-04 partial-states: fill re-tints only on checked/hovered/pressed;
+    // focus = --focus-outline ring, readonly = --border-disabled swap.
     --controls-primary-checked: var(--colors-primary-600);
     --controls-primary-hovered: var(--colors-primary-500);
     --controls-primary-pressed: var(--colors-primary-700);
-    --controls-primary-focused: var(--colors-primary-600);
-    --controls-primary-readonly: var(--colors-alpha-white-0);
     --controls-neutral-checked: var(--colors-neutral-950);
     --controls-neutral-hovered: var(--colors-neutral-600);
     --controls-neutral-pressed: var(--colors-neutral-600);
-    --controls-neutral-focused: var(--colors-neutral-950);
-    --controls-pressed: var(--colors-neutral-300);
     --controls-ripple-effect: var(--colors-neutral-200);
     --controls-border: var(--colors-neutral-500);
     --controls-disabled: var(--colors-neutral-400);
-    --controls-icon-hovered: var(--icon-oncolor);
-    --controls-icon-pressed: var(--icon-oncolor);
     --controls-icon-disabled: var(--colors-base-white);
     --controls-text-error: var(--text-error);
 

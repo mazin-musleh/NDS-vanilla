@@ -72,14 +72,10 @@
 
     // ─── Controls (Checkbox, Radio, Switch) ───
     --controls-border: var(--colors-neutral-400);
-    --controls-pressed: var(--colors-neutral-600);
     --controls-ripple-effect: var(--colors-alpha-black-50);
     --controls-neutral-checked: var(--colors-neutral-600);
     --controls-neutral-hovered: var(--colors-neutral-400);
     --controls-neutral-pressed: var(--colors-neutral-400);
-    --controls-neutral-focused: var(--colors-neutral-600);
-    --controls-icon-hovered: var(--colors-primary-400);
-    --controls-icon-pressed: var(--colors-primary-400);
     --controls-icon-disabled: var(--colors-neutral-400);
     --controls-disabled: var(--colors-alpha-white-30);
     --controls-text-error: var(--colors-red-400);
