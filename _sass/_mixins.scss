@@ -188,9 +188,9 @@ $breakpoints-range: (
   --_btn-border-active: var(--btn-border-active, var(--_btn-border));
   --_btn-border-selected: var(--btn-border-selected, var(--_btn-border));
   --_btn-border-disabled: var(--btn-border-disabled, transparent);
-  --_btn-indicator-color: var(--btn-indicator-color, var(--colors-neutral-400));
-  --_btn-indicator-active: var(--btn-indicator-active, var(--colors-neutral-800));
-  --_btn-indicator-selected: var(--btn-indicator-selected, var(--colors-neutral-800));
+  --_btn-indicator-color: var(--btn-indicator-color, var(--button-indicator-default));
+  --_btn-indicator-active: var(--btn-indicator-active, var(--button-indicator-pressed));
+  --_btn-indicator-selected: var(--btn-indicator-selected, var(--button-indicator-selected));
   --_btn-loading-color: var(--btn-loading-color, var(--text-default));
   --_btn-loading-track: var(--btn-loading-track, var(--colors-alpha-black-10));
   --_btn-size: var(--btn-size, 40px);

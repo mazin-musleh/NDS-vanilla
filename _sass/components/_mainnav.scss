@@ -396,9 +396,9 @@ body:not(.nds-minimal) .nds-main-nav {
                 --btn-bg-active: var(--button-background-primary-pressed);
                 --btn-bg-selected: var(--button-background-primary-default);
                 --btn-color: var(--text-oncolor-primary);
-                --btn-indicator-color: var(--colors-primary-400);
-                --btn-indicator-active: var(--colors-primary-400);
-                --btn-indicator-selected: var(--colors-primary-400);
+                --btn-indicator-color: var(--button-indicator-primary);
+                --btn-indicator-active: var(--button-indicator-primary);
+                --btn-indicator-selected: var(--button-indicator-primary);
                 --btn-loading-color: var(--text-oncolor-primary);
                 --btn-loading-track: var(--colors-alpha-white-20);
             }

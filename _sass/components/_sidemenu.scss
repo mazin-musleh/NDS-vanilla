@@ -136,7 +136,7 @@
             transform: var(--_toggle-transform);
             transition: transform var(--nds-transition);
             --btn-indicator-size: 3px;
-            --btn-indicator-color: var(--colors-primary-400);
+            --btn-indicator-color: var(--button-indicator-primary);
             @include btn-indicator('v');
 
             &::before {

@@ -162,9 +162,9 @@
     --btn-bg-active: var(--button-background-primary-pressed);
     --btn-bg-selected: var(--button-background-primary-selected);
     --btn-color: var(--text-oncolor-primary);
-    --btn-indicator-color: var(--colors-primary-400);
-    --btn-indicator-active: var(--colors-primary-400);
-    --btn-indicator-selected: var(--colors-primary-400);
+    --btn-indicator-color: var(--button-indicator-primary);
+    --btn-indicator-active: var(--button-indicator-primary);
+    --btn-indicator-selected: var(--button-indicator-primary);
     --btn-loading-color: var(--text-oncolor-primary);
     --btn-loading-track: var(--colors-alpha-white-20);
   }
@@ -176,9 +176,9 @@
     --btn-bg-active: var(--button-background-black-pressed);
     --btn-bg-selected: var(--button-background-black-selected);
     --btn-color: var(--text-oncolor-primary);
-    --btn-indicator-color: var(--colors-primary-400);
-    --btn-indicator-active: var(--colors-primary-400);
-    --btn-indicator-selected: var(--colors-primary-400);
+    --btn-indicator-color: var(--button-indicator-primary);
+    --btn-indicator-active: var(--button-indicator-primary);
+    --btn-indicator-selected: var(--button-indicator-primary);
     --btn-loading-color: var(--text-oncolor-primary);
     --btn-loading-track: var(--colors-alpha-white-20);
   }
@@ -276,10 +276,6 @@
     .nds-btn.nds-oncolor,
     :where(:root[data-theme~="dark"]) .nds-btn:not(.nds-primary, .nds-neutral) {
       --btn-color-disabled: var(--text-default-oncolor-disabled);
-      /*--btn-indicator-color: var(--colors-neutral-400); same light mode color*/
-      --btn-indicator-active: var(--background-surface-oncolor);
-      --btn-indicator-selected: var(--background-surface-oncolor);
-
       &.nds-secondary {
         --btn-bg: var(--button-background-transparent-hovered);
         --btn-bg-hover: var(--button-background-transparent-hovered);
