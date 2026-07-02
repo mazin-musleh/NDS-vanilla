@@ -12,7 +12,7 @@
 
 .nds-stepper {
     --stepper-size: 32px;
-    --stepper-gap: var(--progressindicator-progress-indicator-gap);
+    --stepper-gap: var(--stepper-indicator-gap);
     --_content-gap: var(--gap, var(--spacing-xl));
     display: flex;
     flex-direction: row;
@@ -25,12 +25,12 @@
 
     &.nds-lg {
         --stepper-size: 40px;
-        --stepper-gap: calc(var(--progressindicator-progress-indicator-gap) * 1.2);
+        --stepper-gap: calc(var(--stepper-indicator-gap) * 1.2);
     }
 
     &.nds-xl {
         --stepper-size: 48px;
-        --stepper-gap: calc(var(--progressindicator-progress-indicator-gap) * 1.5);
+        --stepper-gap: calc(var(--stepper-indicator-gap) * 1.5);
     }
 
     // RTL support is default - LTR overrides when needed
@@ -79,7 +79,7 @@
 .nds-stepper-step {
     display: flex;
     flex-direction: column;
-    gap: var(--progressindicator-progress-text-content-side-padding);
+    gap: var(--stepper-text-padding);
     position: relative;
     counter-increment: step-counter;
 

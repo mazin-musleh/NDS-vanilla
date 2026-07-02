@@ -13,10 +13,10 @@
 .nds-rating {
   /* --- Rating custom properties --- */
   --_star-size: var(--star-size, 32px);
-  --_star-color: var(--star-color, var(--rating-star-normal-default));
-  --_star-selected: var(--star-selected, var(--rating-star-selected-default));
-  --_star-pressed: var(--star-pressed, var(--rating-star-pressed-default));
-  --_star-hovered: var(--star-hovered, var(--rating-star-hovered-default));
+  --_star-color: var(--star-color, var(--rating-star-default-default));
+  --_star-selected: var(--star-selected, var(--rating-star-default-selected));
+  --_star-pressed: var(--star-pressed, var(--rating-star-default-pressed));
+  --_star-hovered: var(--star-hovered, var(--rating-star-default-hovered));
 
   display: flex;
   align-items: flex-start;
@@ -110,10 +110,10 @@
 // ==============================================
 
 .nds-rating.nds-brand {
-  --star-color: var(--rating-star-normal-brand);
-  --star-selected: var(--rating-star-selected-brand);
-  --star-pressed: var(--rating-star-pressed-brand);
-  --star-hovered: var(--rating-star-hovered-brand);
+  --star-color: var(--rating-star-brand-default);
+  --star-selected: var(--rating-star-brand-selected);
+  --star-pressed: var(--rating-star-brand-pressed);
+  --star-hovered: var(--rating-star-brand-hovered);
 
 }
 

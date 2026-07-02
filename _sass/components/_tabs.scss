@@ -151,7 +151,7 @@
 
 .nds-tab {
   gap: var(--tab-button-gap);
-  padding: var(--tab-horizontal-tab-md-button-v-padding) var(--tab-horizontal-tab-md-button-h-padding);
+  padding: var(--tab-button-padding-block) var(--tab-button-padding-inline);
   color: var(--text-primary-paragraph);
   border: 0;
   white-space: nowrap;

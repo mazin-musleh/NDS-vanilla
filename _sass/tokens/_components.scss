@@ -95,6 +95,7 @@
     --chip-background-primary-pressed: var(--colors-primary-400);
     --chip-background-primary-selected: var(--colors-primary-600);
     --chip-background-primary-focused: var(--colors-primary-100);
+    // TOK-04 partial-states: chip hover shifts background only — text hover rungs removed by design
     --chip-text-neutral-default: var(--colors-base-black);
     --chip-text-neutral-selected: var(--colors-base-white);
     --chip-text-primary-default: var(--colors-primary-800);
@@ -106,6 +107,7 @@
     --chip-text-oncolor-disabled: var(--colors-alpha-white-40);
 
     // ── date-picker ──
+    // TOK-04 partial-states: selection fill has no pressed shade (click commits instantly); in-range carries the interactive rungs
     --form-datecell-background-default: var(--colors-primary-600); // selected / endpoint fill + today ring
     --form-datecell-background-hovered: var(--colors-primary-700);
     --form-datecell-background-range: var(--colors-primary-100); // range bar (slot)
@@ -139,9 +141,6 @@
     --feedback-icon-fill-warning: var(--colors-yellow-700);
     --feedback-icon-fill-info: var(--colors-blue-700);
     --feedback-icon-fill-neutral: var(--colors-neutral-700);
-
-    // ── form-controls ──
-    --control-disabled: var(--colors-neutral-400);
 
     // ── forms ──
     --form-textarea-padding: var(--spacing-none);
@@ -188,14 +187,14 @@
     --radio-neutral-pressed: var(--controls-neutral-pressed);
 
     // ── rating ──
-    --rating-star-normal-default: var(--colors-neutral-300);
-    --rating-star-selected-default: var(--colors-secondary-600);
-    --rating-star-pressed-default: var(--colors-secondary-700);
-    --rating-star-hovered-default: var(--colors-secondary-500);
-    --rating-star-normal-brand: var(--colors-neutral-300);
-    --rating-star-selected-brand: var(--colors-primary-600);
-    --rating-star-pressed-brand: var(--colors-primary-700);
-    --rating-star-hovered-brand: var(--colors-primary-500);
+    --rating-star-default-default: var(--colors-neutral-300);
+    --rating-star-default-selected: var(--colors-secondary-600);
+    --rating-star-default-pressed: var(--colors-secondary-700);
+    --rating-star-default-hovered: var(--colors-secondary-500);
+    --rating-star-brand-default: var(--colors-neutral-300);
+    --rating-star-brand-selected: var(--colors-primary-600);
+    --rating-star-brand-pressed: var(--colors-primary-700);
+    --rating-star-brand-hovered: var(--colors-primary-500);
 
     // ── slider ──
     --slider-track-bg: var(--colors-neutral-100);          // ponytail: palette-direct, no semantic twin for neutral-100
@@ -205,8 +204,8 @@
     --slider-thumb-border: var(--colors-alpha-black-10);          // thumb ring — 10% black overlay: brand-agnostic, so it never clashes under rebrand (Figma's --border-success is a fixed status color that wouldn't follow the brand). Mode-invariant.
 
     // ── stepper ──
-    --progressindicator-progress-indicator-gap: var(--spacing-md);
-    --progressindicator-progress-text-content-side-padding: var(--spacing-xl);
+    --stepper-indicator-gap: var(--spacing-md);
+    --stepper-text-padding: var(--spacing-xl);
     --stepper-button-completed: var(--colors-primary-600);
     --stepper-button-completed-hovered: var(--colors-primary-700);
     --stepper-button-current: var(--colors-primary-600);
@@ -241,8 +240,8 @@
     --switch-neutral-pressed: var(--controls-neutral-pressed);
 
     // ── table ──
-    --table-cell-v-padding: var(--spacing-md);
-    --table-cell-h-padding: var(--spacing-xl);
+    --table-cell-padding-block: var(--spacing-md);
+    --table-cell-padding-inline: var(--spacing-xl);
     --table-cell-border: var(--colors-neutral-300);
     --table-text-head: var(--colors-neutral-700);
     --table-text-body: var(--text-default);
@@ -254,8 +253,8 @@
 
     // ── tabs ──
     --tab-button-gap: var(--spacing-xs);
-    --tab-horizontal-tab-md-button-v-padding: var(--spacing-lg);
-    --tab-horizontal-tab-md-button-h-padding: var(--spacing-xl);
+    --tab-button-padding-block: var(--spacing-lg);
+    --tab-button-padding-inline: var(--spacing-xl);
 
     // ── tag ──
     --tag-background-neutral: var(--colors-neutral-600);

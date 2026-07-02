@@ -514,22 +514,22 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--star-color</code></td>
-                            <td>--rating-star-normal-default</td>
+                            <td>--rating-star-default-default</td>
                             <td>Color of unselected (empty) stars</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--star-selected</code></td>
-                            <td>--rating-star-selected-default</td>
+                            <td>--rating-star-default-selected</td>
                             <td>Color of filled stars</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--star-pressed</code></td>
-                            <td>--rating-star-pressed-default</td>
+                            <td>--rating-star-default-pressed</td>
                             <td>Color applied on active/press state</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--star-hovered</code></td>
-                            <td>--rating-star-hovered-default</td>
+                            <td>--rating-star-default-hovered</td>
                             <td>Color applied on hover in interactive mode. The brand variant overrides this to its own palette value.</td>
                         </tr>
                     </tbody>

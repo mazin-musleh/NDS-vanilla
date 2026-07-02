@@ -60,7 +60,7 @@
   // Scoped by the icon's own feedback wrapper having `data-status="help"`,
   // leaving the tooltip's outer data-status free; skipped for `.nds-outline`.
   &:not([data-state~="open"]) &-trigger [data-status="help"] .nds-feedback-icon:not(:is(.nds-outline, .nds-feedback.nds-outline > *)) {
-    --feedback-icon-color: var(--icon-default-500);
+    --feedback-icon-color: var(--colors-neutral-500);
   }
 
 }

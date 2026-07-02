@@ -125,11 +125,8 @@
 
     // ── Icon ──
     --icon-default: var(--colors-base-black);
-    --icon-default-500: var(--colors-neutral-500);
-    --icon-default-400: var(--colors-neutral-400);
     --icon-primary: var(--colors-primary-600);
     --icon-primary-light: var(--colors-primary-50);
-    --icon-primary-400: var(--colors-primary-400);
     --icon-neutral: var(--colors-neutral-700);
     --icon-neutral-light: var(--colors-neutral-50);
     --icon-secondary: var(--colors-secondary-600);
@@ -168,13 +165,12 @@
     --controls-pressed: var(--colors-neutral-300);
     --controls-ripple-effect: var(--colors-neutral-200);
     --controls-border: var(--colors-neutral-500);
+    --controls-disabled: var(--colors-neutral-400);
     --controls-icon-hovered: var(--icon-oncolor);
     --controls-icon-pressed: var(--icon-oncolor);
     --controls-icon-disabled: var(--colors-base-white);
     --controls-text-error: var(--text-error);
 
     // ── Layout / typography ──
-    --text-content-gap: var(--spacing-md);
-    --icon-text-gap: var(--spacing-md);
     --paragraph-max-width: 720px; // readable paragraph line-length
 }

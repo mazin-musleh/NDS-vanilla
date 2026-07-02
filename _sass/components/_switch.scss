@@ -63,13 +63,13 @@
     // DISABLED — forms.js syncs data-state on the container.
     &[data-state~="disabled"] {
         --switch-track-bg:     var(--background-default);
-        --switch-track-border: var(--control-disabled);
-        --switch-thumb-bg:     var(--control-disabled);
+        --switch-track-border: var(--controls-disabled);
+        --switch-thumb-bg:     var(--controls-disabled);
 
         .nds-switch-track { cursor: not-allowed; }
 
         .nds-switch-input:checked + .nds-switch-track {
-            --switch-track-bg:     var(--control-disabled);
+            --switch-track-bg:     var(--controls-disabled);
             --switch-track-border: var(--switch-track-bg);
             --switch-thumb-bg:     var(--controls-icon-disabled);
         }

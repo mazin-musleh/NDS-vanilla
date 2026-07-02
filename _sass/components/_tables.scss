@@ -91,7 +91,7 @@
         color: var(--table-text-head);
         font-weight: var(--font-weight-semibold);
         font-size: var(--typo-text-sm-FS);
-        padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+        padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
         border-left: 1px solid var(--table-cell-border);
         border-bottom: 1px solid var(--table-cell-border);
         text-align: start;
@@ -115,7 +115,7 @@
     // ── Data cells ──
 
     td {
-        padding: var(--table-cell-v-padding) var(--table-cell-h-padding);
+        padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
         vertical-align: middle;
         background-color: var(--table-background-cell);
         color: var(--table-text-body);
@@ -281,7 +281,7 @@
     &::before {
         content: "";
         position: absolute;
-        inset-inline: var(--table-cell-h-padding);
+        inset-inline: var(--table-cell-padding-inline);
         top: 50%;
         translate: 0 -50%;
         height: var(--typo-text-md-LH);

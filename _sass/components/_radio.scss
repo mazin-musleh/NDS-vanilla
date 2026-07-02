@@ -99,7 +99,7 @@
     }
 
     &:checked:disabled::after {
-        --radio-tile-bg:     var(--control-disabled);
+        --radio-tile-bg:     var(--controls-disabled);
         --radio-tile-border: var(--border-disabled);
     }
 }
