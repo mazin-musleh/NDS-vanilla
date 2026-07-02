@@ -14,7 +14,7 @@
             padding: var(--spacing-3xl);
             border: 2px dashed var(--border-neutral-primary) !important;
             border-radius: var(--radius-sm);
-            background-color: var(--background-neutral-100);
+            background-color: var(--background-surface-sunken);
 
             @include dark {
                 background-color: var(--background-default);
@@ -152,7 +152,7 @@
         padding: var(--spacing-md);
         border: 1px solid var(--border-neutral-primary);
         border-radius: var(--radius-sm);
-        background-color: var(--background-neutral-100);
+        background-color: var(--background-surface-sunken);
         gap: var(--spacing-md);
         min-height: 36px;
 

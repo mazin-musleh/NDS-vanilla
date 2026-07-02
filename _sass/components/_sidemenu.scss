@@ -136,17 +136,13 @@
             transform: var(--_toggle-transform);
             transition: transform var(--nds-transition);
             --btn-indicator-size: 3px;
+            --btn-indicator-color: var(--colors-primary-400);
             @include btn-indicator('v');
 
             &::before {
                 inset-inline-start: auto;
                 inset-inline-end: 0;
-                --btn-indicator-color: var(--background-primary-400);
-                background-color: var(--btn-indicator-color);
-            }
-
-            &:hover::before {
-                --btn-indicator-color: var(--background-primary-400);
+                background-color: var(--_btn-indicator-color);
             }
 
             &.nds-peek {
