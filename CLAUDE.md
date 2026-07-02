@@ -41,13 +41,27 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 
 ## Design Tokens (CRITICAL)
 
-**Token hierarchy** — always prefer higher levels:
-1. **Component tokens**: `--{component}-{property}-{variant}-{state}` (e.g. `--button-background-primary-default`)
-2. **Semantic tokens**: `--background-{variant}-{shade}`, `--border-{variant}-{state}`, `--text-{variant}-{state}`
-3. **Color tokens**: `--colors-*` — only referenced indirectly through component tokens
+**Four tiers** (+ knobs):
+1. **Palette** `--colors-*` (`themes/_dga.scss` — vendored, DO NOT MODIFY; runtime theme ramps): raw values, zero meaning.
+2. **Primitives** (`tokens/_primitives.scss`): dimension vocabulary — direct values on the size names (`--spacing-md`, `--radius-sm`, typo ladders). No numeric rungs.
+3. **Semantic** (`tokens/_semantic.scss`): ONE name per meaning, system-wide (e.g. `--background-overlay`, `--text-oncolor-primary`). Dark rebinds in `_variables-dark.scss`.
+4. **Component** (`tokens/_components.scss`, dark in `tokens/_components-dark.scss`): `--{component}-{property}-{variant}-{state}` — a per-component dial.
 
-**NEVER** use hex colors or `--colors-*` tokens directly in components.
-**New component tokens** → add to `_sass/tokens/_components.scss` (dark overrides in `tokens/_components-dark.scss`), with the states the component actually implements. Spell the oncolor axis `oncolor` (not `on-color`).
+**Knobs** (`--btn-size`, `--section-*`, `--hero-*`) are NOT tokens: per-instance styling the consumer sets on the element, undefined by default, resolved via the `--_x: var(--x, default)` private pattern. Tokens theme the system; knobs style one element.
+
+**Authoring test — when a component needs a value, stop at the first hit:**
+1. A semantic token with the same MEANING exists (and behaves right in dark) → consume it.
+2. The component needs its own dial — design retunes just this component, or the DGA sheet defines it → mint the component token (STRICT bar: dial-or-DGA-mandate only) and route its VALUE by meaning (below).
+3. No meaning match, no dial needed → palette-direct `--colors-*`, whole family as a unit. Raw hex: never.
+
+**Naming grammar:**
+- Semantic: `--{property}-{role}-{modifier}-{state}`; property ∈ `background/text/border/icon/shadow/focus/controls`; modifiers are words with ONE fixed meaning (`light` = tinted wash, `strong` = deep emphasis, `oncolor` = on colored fill — always spelled `oncolor`, never `on-color`, placed last before state).
+- States: `default/hovered/pressed/selected/focused/disabled` (token `pressed` feeds the `-active` knob — established precedent).
+- NO color names, NO shade numbers in semantic names; one name per meaning (no synonyms); no rename-only layers.
+- Element widths are meaning-named knobs/tokens (`--nds-sidemenu-width`), never scale rungs; breakpoints stay literals (CSS forbids `var()` in `@media`).
+- One-off alphas: `color-mix(in srgb, var(--token) N%, transparent)` at point of use — alpha ramp families never grow.
+
+**Family rules:** families ship complete or not at all — all four status hues, FS/LH pairs, the states the component implements. A member is justified by its family; a whole family with no consumers and no design mandate gets removed. Every public token appears in a doc reference table; token removals/renames land in the release Migration section.
 
 **Routing a component token's VALUE — go by meaning:**
 1. A semantic token with matching **meaning** AND correct both-mode behavior exists → alias it (dark/HC/re-tints come free).
