@@ -509,7 +509,7 @@
         align-self: flex-start;
 
         @include dark {
-            --progress-track-color: var(--alpha-white-10);
+            --progress-track-color: var(--colors-alpha-white-10);
         }
 
         @include progress-circle-base(var(--progress-size), -90deg);
@@ -588,24 +588,24 @@
 // ==============================================
 
 .nds-stepper.nds-oncolor {
-    .nds-stepper-title { color: var(--alpha-white-40); }
-    .nds-stepper-description { color: var(--alpha-white-30); }
-    .nds-stepper-next { color: var(--alpha-white-30); }
+    .nds-stepper-title { color: var(--colors-alpha-white-40); }
+    .nds-stepper-description { color: var(--colors-alpha-white-30); }
+    .nds-stepper-next { color: var(--colors-alpha-white-30); }
 
     .nds-stepper-step {
         .nds-stepper-base:after {
-            background-color: var(--alpha-white-30);
+            background-color: var(--colors-alpha-white-30);
         }
 
         .nds-stepper-circle {
-            border-color: var(--alpha-white-30);
-            background-color: var(--alpha-white-10);
-            color: var(--alpha-white-50);
+            border-color: var(--colors-alpha-white-30);
+            background-color: var(--colors-alpha-white-10);
+            color: var(--colors-alpha-white-50);
 
             &:hover {
-                border-color: var(--alpha-white-60);
-                background-color: var(--alpha-white-20);
-                color: var(--alpha-white-60);
+                border-color: var(--colors-alpha-white-60);
+                background-color: var(--colors-alpha-white-20);
+                color: var(--colors-alpha-white-60);
             }
         }
 
@@ -618,7 +618,7 @@
                 color: var(--colors-base-white);
 
                 &:hover {
-                    border-color: var(--alpha-white-40);
+                    border-color: var(--colors-alpha-white-40);
                 }
             }
         }
@@ -637,7 +637,7 @@
 
                 &:hover {
                     border-color: var(--background-surface-oncolor);
-                    background-color: var(--alpha-white-80);
+                    background-color: var(--colors-alpha-white-80);
                 }
 
                 // Default content override for completed state
@@ -655,11 +655,11 @@
 
     &.nds-dot {
         .nds-stepper-circle {
-            background-color: var(--alpha-white-10);
+            background-color: var(--colors-alpha-white-10);
 
             &::before,
             &[data-step-text]::before {
-                background-color: var(--alpha-white-30);
+                background-color: var(--colors-alpha-white-30);
             }
         }
 
@@ -683,13 +683,13 @@
 
         .nds-stepper-step[data-state~="upcoming"] .nds-stepper-circle {
             background-color: transparent;
-            border-color: var(--alpha-white-30);
+            border-color: var(--colors-alpha-white-30);
         }
     }
 
     &.nds-radial {
         .nds-progress-circle {
-            --progress-track-color: var(--alpha-white-30);
+            --progress-track-color: var(--colors-alpha-white-30);
             --progress-color: var(--background-surface-oncolor);
         }
 

@@ -445,7 +445,7 @@ footer.nds-footer.nds-content-wrapper
                         <tr>
                             <td><code class="nds-inline-code lang-html">--divider-color</code></td>
                             <td>Theme token</td>
-                            <td>Color of the heading underline and the legal-link separators. Inherits from the global divider token; the <code class="nds-inline-code lang-html">nds-brand</code> variant overrides it locally to <code class="nds-inline-code lang-html">--alpha-white-10</code>.</td>
+                            <td>Color of the heading underline and the legal-link separators. Inherits from the global divider token; the <code class="nds-inline-code lang-html">nds-brand</code> variant overrides it locally to <code class="nds-inline-code lang-html">--colors-alpha-white-10</code>.</td>
                         </tr>
                     </tbody>
                 </table>

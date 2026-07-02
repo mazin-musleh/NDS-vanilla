@@ -128,7 +128,7 @@ $a11y-filters: (
     // the range bar drops its brand hue to a neutral wash (grouping info kept).
     --form-datecell-background-default: var(--_hc-fg);
     --form-datecell-background-hovered: var(--_hc-fg);
-    --form-datecell-background-range: var(--alpha-black-10);
+    --form-datecell-background-range: var(--colors-alpha-black-10);
 }
 
 // Dark HC: invert bg/fg, shift the link ladder.
@@ -139,7 +139,7 @@ $a11y-filters: (
     --_hc-link-hovered: var(--colors-primary-200);
     --_hc-link-pressed: var(--colors-primary-100);
     --_hc-link-visited: var(--colors-secondary-300);
-    --form-datecell-background-range: var(--alpha-white-10);
+    --form-datecell-background-range: var(--colors-alpha-white-10);
 }
 
 // Topbar carries a brand-tinted background; the token swap above
@@ -164,7 +164,7 @@ $a11y-filters: (
     --btn-indicator-active:   var(--background-primary-400);
     --btn-indicator-selected: var(--background-primary-400);
     --btn-loading-color:      var(--text-oncolor-primary);
-    --btn-loading-track:      var(--alpha-white-20);
+    --btn-loading-track:      var(--colors-alpha-white-20);
 }
 :root[data-a11y~="high-contrast"][data-theme~="dark"] .nds-btn:is(.nds-primary,.nds-neutral):not(.nds-oncolor) {
     --btn-bg:             var(--button-background-oncolor-default);

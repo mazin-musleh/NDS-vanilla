@@ -432,7 +432,7 @@ direction: ltr
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--loading-color</code></td><td><code class="nds-inline-code lang-html">--background-primary</code> (white in dark)</td><td>Spinner arc color</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--loading-track</code></td><td><code class="nds-inline-code lang-html">--alpha-black-10</code> (alpha-white-20 in dark)</td><td>Spinner track (background ring) color</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--loading-track</code></td><td><code class="nds-inline-code lang-html">--colors-alpha-black-10</code> (colors-alpha-white-20 in dark)</td><td>Spinner track (background ring) color</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--loading-size</code></td><td><code class="nds-inline-code lang-html">32px</code></td><td>Diameter of the spinner</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--loading-border</code></td><td><code class="nds-inline-code lang-html">3px</code></td><td>Stroke width of the spinner ring</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--loading-opacity</code></td><td><code class="nds-inline-code lang-html">0.15</code></td><td>Opacity applied to child elements while loading</td></tr>

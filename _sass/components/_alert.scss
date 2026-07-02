@@ -186,7 +186,7 @@
     &:is(.nds-red,   [data-status="error"], [data-status="critical"]){ --card-title: var(--text-error); }
     &:is(.nds-neutral,[data-status="neutral"]) {
       --card-bg: var(--background-neutral-light);
-      @include dark { --card-bg: var(--alpha-white-10); }
+      @include dark { --card-bg: var(--colors-alpha-white-10); }
     }
   }
 

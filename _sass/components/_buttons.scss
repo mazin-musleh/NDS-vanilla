@@ -166,7 +166,7 @@
     --btn-indicator-active: var(--background-primary-400);
     --btn-indicator-selected: var(--background-primary-400);
     --btn-loading-color: var(--text-oncolor-primary);
-    --btn-loading-track: var(--alpha-white-20);
+    --btn-loading-track: var(--colors-alpha-white-20);
   }
 
   /* Neutral Button (Dark Gray) */
@@ -180,7 +180,7 @@
     --btn-indicator-active: var(--background-primary-400);
     --btn-indicator-selected: var(--background-primary-400);
     --btn-loading-color: var(--text-oncolor-primary);
-    --btn-loading-track: var(--alpha-white-20);
+    --btn-loading-track: var(--colors-alpha-white-20);
   }
 
   /* Secondary Solid Button (Light Gray) */
@@ -289,7 +289,7 @@
         --btn-indicator-active: var(--button-background-disabled-oncolor);
         --btn-color: var(--text-oncolor-primary);
         --btn-loading-color: var(--text-oncolor-primary);
-        --btn-loading-track: var(--alpha-white-20);
+        --btn-loading-track: var(--colors-alpha-white-20);
       }
 
       &.nds-secondary-outline {
@@ -304,7 +304,7 @@
         --btn-border-active: var(--border-white-40);
         --btn-border-selected: var(--border-white-40);
         --btn-loading-color: var(--text-oncolor-primary);
-        --btn-loading-track: var(--alpha-white-20);
+        --btn-loading-track: var(--colors-alpha-white-20);
       }
 
       &.nds-subtle {
@@ -315,7 +315,7 @@
         --btn-bg-disabled: transparent;
         --btn-color: var(--button-label-transparent-default-oncolor);
         --btn-loading-color: var(--text-oncolor-primary);
-        --btn-loading-track: var(--alpha-white-20);
+        --btn-loading-track: var(--colors-alpha-white-20);
       }
 
       &.nds-transparent {
@@ -326,7 +326,7 @@
         --btn-color: var(--button-label-transparent-default-oncolor);
         --btn-color-hover: var(--button-label-transparent-hovered-oncolor);
         --btn-loading-color: var(--text-oncolor-primary);
-        --btn-loading-track: var(--alpha-white-20);
+        --btn-loading-track: var(--colors-alpha-white-20);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
           color: var(--button-label-transparent-selected-oncolor);
@@ -351,7 +351,7 @@
       --btn-bg-selected: var(--button-background-danger-primary-selected);
       --btn-color: var(--text-oncolor-primary);
       --btn-loading-color: var(--text-oncolor-primary);
-      --btn-loading-track: var(--alpha-white-20);
+      --btn-loading-track: var(--colors-alpha-white-20);
     }
 
     &.nds-secondary {
@@ -416,7 +416,7 @@
     .nds-btn.nds-oncolor.nds-destructive,
     :where(:root[data-theme~="dark"]) .nds-btn.nds-destructive {
       --btn-loading-color: var(--text-oncolor-primary);
-      --btn-loading-track: var(--alpha-white-20);
+      --btn-loading-track: var(--colors-alpha-white-20);
 
       &.nds-secondary {
         --btn-bg: var(--button-background-danger-secondary-default);
@@ -663,7 +663,7 @@
     margin: auto;
     pointer-events: none;
     // Inherit button colors
-    --progress-track-color: var(--_btn-loading-track, var(--alpha-black-10));
+    --progress-track-color: var(--_btn-loading-track, var(--colors-alpha-black-10));
     --progress-color: var(--_btn-color);
     --progress-size: calc(var(--btn-size) - 8px);
 
@@ -691,7 +691,7 @@
 
   // On-color variant adjustments
   &.nds-oncolor .nds-progress-circle {
-    --progress-track-color: var(--alpha-white-20);
+    --progress-track-color: var(--colors-alpha-white-20);
     --progress-color: var(--text-oncolor-primary);
   }
 

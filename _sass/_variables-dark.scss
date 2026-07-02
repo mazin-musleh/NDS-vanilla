@@ -13,7 +13,7 @@
     --background-default: var(--colors-neutral-800);
     --background-body: var(--colors-neutral-900);
     --background-card: var(--background-default);
-    --background-card-hovered: var(--alpha-white-10);
+    --background-card-hovered: var(--colors-alpha-white-10);
     --background-nav: var(--background-default);
     --background-topbar: var(--colors-neutral-900);
     --background-footer: var(--colors-primary-alpha-30);
@@ -23,8 +23,8 @@
     // modes, so they need no dark special-case of their own. Brand-tracked (alpha
     // follows the active --colors-primary). Brands @use'd before this layer, so a
     // brand's light brand-light (primary-25) is overridden here for brand+dark.
-    --background-brand-light: var(--alpha-primary-10);
-    --background-overlay: var(--alpha-black-70);
+    --background-brand-light: var(--colors-primary-alpha-10);
+    --background-overlay: var(--colors-alpha-black-70);
 
     // ─── Status Tinted Surfaces ───
     // light/50/25 all collapse to the same alpha-10 overlay in dark mode (the
@@ -47,7 +47,7 @@
     --text-primary: var(--colors-primary-400);
 
     // ─── Divider ───
-    --divider-color: var(--alpha-white-10);
+    --divider-color: var(--colors-alpha-white-10);
 
     --text-primary-strong: var(--colors-primary-400);
 
@@ -73,7 +73,7 @@
     // ─── Controls (Checkbox, Radio, Switch) ───
     --controls-border: var(--colors-neutral-400);
     --controls-pressed: var(--colors-neutral-600);
-    --controls-ripple-effect: var(--alpha-black-50);
+    --controls-ripple-effect: var(--colors-alpha-black-50);
     --controls-neutral-checked: var(--colors-neutral-600);
     --controls-neutral-hovered: var(--colors-neutral-400);
     --controls-neutral-pressed: var(--colors-neutral-400);
@@ -84,7 +84,7 @@
     --controls-text-error: var(--colors-red-400);
 
     // ─── Neutral Background ───
-    --background-neutral-light: var(--alpha-white-10);
+    --background-neutral-light: var(--colors-alpha-white-10);
 
     // ─── Disabled ───
     --background-disabled: var(--colors-neutral-700);

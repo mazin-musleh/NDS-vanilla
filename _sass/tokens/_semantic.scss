@@ -5,31 +5,7 @@
 // ════════════════════════════════════════════════════════════════════════════
 
 :root {
-    // ── Alpha aliases ──
-    --alpha-white-0: var(--colors-alpha-white-0);
-    --alpha-white-10: var(--colors-alpha-white-10);
-    --alpha-white-20: var(--colors-alpha-white-20);
-    --alpha-white-30: var(--colors-alpha-white-30);
-    --alpha-white-40: var(--colors-alpha-white-40);
-    --alpha-white-50: var(--colors-alpha-white-50);
-    --alpha-white-60: var(--colors-alpha-white-60);
-    --alpha-white-70: var(--colors-alpha-white-70);
-    --alpha-white-80: var(--colors-alpha-white-80);
-    --alpha-white-90: var(--colors-alpha-white-90);
-    --alpha-white-100: var(--colors-alpha-white-100);
-    --alpha-black-0: var(--colors-alpha-black-0);
-    --alpha-black-10: var(--colors-alpha-black-10);
-    --alpha-black-20: var(--colors-alpha-black-20);
-    --alpha-black-30: var(--colors-alpha-black-30);
-    --alpha-black-40: var(--colors-alpha-black-40);
-    --alpha-black-50: var(--colors-alpha-black-50);
-    --alpha-black-60: var(--colors-alpha-black-60);
-    --alpha-black-70: var(--colors-alpha-black-70);
-    --alpha-black-80: var(--colors-alpha-black-80);
-    --alpha-black-90: var(--colors-alpha-black-90);
-    --alpha-black-100: var(--colors-alpha-black-100);
-    --alpha-primary-10: var(--colors-primary-alpha-10);
-    --alpha-primary-20: var(--colors-primary-alpha-20);
+    // ── Status alphas (DGA has no status alpha ramp; dark status surfaces read these) ──
     --alpha-warning-10: #dc680319;
     --alpha-warning-20: #dc680333;
     --alpha-error-10: #d92c2019;
@@ -132,19 +108,19 @@
     --text-secondary-light: var(--colors-secondary-300);
     --text-tertiary-light: var(--colors-tertiary-300);
     --text-oncolor-primary: var(--colors-base-white);
-    --text-oncolor-secondary: var(--alpha-white-80);
-    --text-oncolor-tertiary: var(--alpha-white-70);
+    --text-oncolor-secondary: var(--colors-alpha-white-80);
+    --text-oncolor-tertiary: var(--colors-alpha-white-70);
     --text-success: var(--colors-green-700);
     --text-info: var(--colors-blue-700);
     --text-warning: var(--colors-yellow-700);
     --text-error: var(--colors-red-700);
     --text-default-disabled: var(--colors-neutral-400);
-    --text-default-oncolor-disabled: var(--alpha-white-40);
+    --text-default-oncolor-disabled: var(--colors-alpha-white-40);
     --text-black: var(--colors-base-black);
 
     // ── Border ──
     --border-white: var(--colors-base-white);
-    --border-white-40: var(--alpha-white-40);
+    --border-white-40: var(--colors-alpha-white-40);
     --border-black: var(--colors-base-black);
     --border-primary: var(--colors-primary-600);
     --border-primary-light: var(--colors-primary-200);
@@ -157,7 +133,7 @@
     --border-neutral-tertiary: var(--colors-neutral-100);
     --border-background-white: var(--colors-neutral-100);
     --border-background-neutral: var(--colors-neutral-300);
-    --border-transparent-10: var(--alpha-white-10);
+    --border-transparent-10: var(--colors-alpha-white-10);
     --border-oncolor-transparent-30: var(--colors-alpha-white-30);
     --border-success: var(--colors-green-700);
     --border-success-light: var(--colors-green-200);
@@ -168,7 +144,7 @@
     --border-error: var(--colors-red-700);
     --border-error-light: var(--colors-red-200);
     --border-disabled: var(--colors-neutral-300); // DGA uses neutral-400, spec is #D2D6DB (neutral-300)
-    --divider-color: var(--alpha-black-10);
+    --divider-color: var(--colors-alpha-black-10);
 
     // ── Focus ──
     --focus-outline: var(--colors-base-black);
@@ -206,12 +182,12 @@
     --icon-default-oncolor-disabled: var(--colors-alpha-white-40);
 
     // ── Controls (checkbox / radio / switch shared surface) ──
-    --controls-primary: var(--alpha-white-0);
+    --controls-primary: var(--colors-alpha-white-0);
     --controls-primary-checked: var(--colors-primary-600);
     --controls-primary-hovered: var(--colors-primary-500);
     --controls-primary-pressed: var(--colors-primary-700);
     --controls-primary-focused: var(--colors-primary-600);
-    --controls-primary-readonly: var(--alpha-white-0);
+    --controls-primary-readonly: var(--colors-alpha-white-0);
     --controls-neutral-checked: var(--colors-neutral-950);
     --controls-neutral-hovered: var(--colors-neutral-600);
     --controls-neutral-pressed: var(--colors-neutral-600);

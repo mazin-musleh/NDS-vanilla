@@ -20,12 +20,12 @@
 
     // ─── Featured Icons ───
     --featuredicons-icon-default: var(--colors-neutral-100);
-    --featuredicons-background-default-light: var(--alpha-white-10);
+    --featuredicons-background-default-light: var(--colors-alpha-white-10);
     --featuredicons-icon-neutral: var(--colors-neutral-300);
     --featuredicons-icon-primary: var(--colors-primary-400);
 
     // ─── Tags ───
-    --tag-background-neutral-light: var(--alpha-white-10);
+    --tag-background-neutral-light: var(--colors-alpha-white-10);
     --tag-text-neutral: var(--colors-neutral-100);
     --tag-icon-neutral: var(--colors-neutral-300);
     --tag-border-neutral-light: var(--colors-neutral-400);
@@ -44,8 +44,8 @@
     --tag-border-error: var(--colors-red-400);
 
     // ─── Chips ───
-    --chip-background-neutral-hovered: var(--alpha-white-20);
-    --chip-background-neutral-pressed: var(--alpha-white-30);
+    --chip-background-neutral-hovered: var(--colors-alpha-white-20);
+    --chip-background-neutral-pressed: var(--colors-alpha-white-30);
     --chip-background-neutral-selected: var(--colors-neutral-300);
     --chip-background-primary-default: var(--colors-primary-alpha-10);
     --chip-background-primary-hovered: var(--colors-primary-alpha-20);
@@ -73,8 +73,8 @@
     --autocomplete-highlight: var(--colors-primary-alpha-50);
 
     // ─── Datepicker ───
-    --form-datecell-background-range: var(--alpha-primary-20);
-    --form-datecell-background-in-range: var(--alpha-black-10);
+    --form-datecell-background-range: var(--colors-primary-alpha-20);
+    --form-datecell-background-in-range: var(--colors-alpha-black-10);
     --form-datecell-background-in-range-hovered: var(--colors-primary-400);
 
     // Swiper bullet — dark theme. --background-neutral-* aren't remapped for dark,
@@ -91,7 +91,7 @@
     --checkbox-primary-pressed: var(--colors-primary-800);
 
     // ─── Slider (neutral track flips to a 10% white wash; fill stays primary, hover lightens) ───
-    --slider-track-bg: var(--alpha-white-10);
+    --slider-track-bg: var(--colors-alpha-white-10);
     --slider-thumb-bg-hovered: var(--colors-primary-400);   // dark: hover lightens to 400 (light mode darkens to 800) for contrast on a dark bg
 
     // ─── Switch (darker for white thumb contrast) ───
@@ -104,7 +104,7 @@
     --radio-neutral-hovered: var(--colors-neutral-300);
     --radio-neutral-pressed: var(--colors-neutral-300);
 
-    --control-disabled: var(--alpha-white-30);
+    --control-disabled: var(--colors-alpha-white-30);
 
     // ─── Button Status ───
     --button-status-success-text: var(--colors-green-400);

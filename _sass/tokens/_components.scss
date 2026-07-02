@@ -39,14 +39,14 @@
     --button-background-danger-secondary-pressed: var(--colors-red-200);
     --button-background-danger-secondary-selected: var(--colors-red-50);
     --button-background-oncolor-default: var(--colors-base-white);
-    --button-background-oncolor-hovered: var(--alpha-white-80);
-    --button-background-oncolor-pressed: var(--alpha-white-60);
-    --button-background-oncolor-selected: var(--alpha-white-70);
-    --button-background-transparent-default: var(--alpha-white-0);
-    --button-background-transparent-hovered: var(--alpha-white-20);
-    --button-background-transparent-pressed: var(--alpha-white-40);
-    --button-background-transparent-selected: var(--alpha-white-30);
-    --button-background-disabled-oncolor: var(--alpha-white-20);
+    --button-background-oncolor-hovered: var(--colors-alpha-white-80);
+    --button-background-oncolor-pressed: var(--colors-alpha-white-60);
+    --button-background-oncolor-selected: var(--colors-alpha-white-70);
+    --button-background-transparent-default: var(--colors-alpha-white-0);
+    --button-background-transparent-hovered: var(--colors-alpha-white-20);
+    --button-background-transparent-pressed: var(--colors-alpha-white-40);
+    --button-background-transparent-selected: var(--colors-alpha-white-30);
+    --button-background-disabled-oncolor: var(--colors-alpha-white-20);
     --button-label-transparent-default-oncolor: var(--text-oncolor-primary);
     --button-label-transparent-hovered-oncolor: var(--colors-primary-400);
     --button-label-transparent-pressed-oncolor: var(--colors-primary-300);
@@ -81,11 +81,11 @@
     --chip-background-neutral-selected: var(--colors-neutral-700);
     --chip-background-neutral-focused: var(--background-neutral-light);
     --chip-background-oncolor-default: var(--colors-base-white);
-    --chip-background-oncolor-hovered: var(--alpha-white-80);
-    --chip-background-oncolor-pressed: var(--alpha-white-60);
-    --chip-background-oncolor-selected: var(--alpha-white-70);
+    --chip-background-oncolor-hovered: var(--colors-alpha-white-80);
+    --chip-background-oncolor-pressed: var(--colors-alpha-white-60);
+    --chip-background-oncolor-selected: var(--colors-alpha-white-70);
     --chip-background-oncolor-focused: var(--colors-base-white);
-    --chip-background-oncolor-disabled: var(--alpha-white-20);
+    --chip-background-oncolor-disabled: var(--colors-alpha-white-20);
     --chip-background-primary-default: var(--colors-primary-100);
     --chip-background-primary-hovered: var(--colors-primary-200);
     --chip-background-primary-pressed: var(--colors-primary-400);
@@ -99,13 +99,13 @@
     --chip-text-primary-focused: var(--colors-primary-800);
     --chip-text-oncolor-default: var(--colors-base-black);
     --chip-text-disabled: var(--colors-neutral-400);
-    --chip-text-oncolor-disabled: var(--alpha-white-40);
+    --chip-text-oncolor-disabled: var(--colors-alpha-white-40);
 
     // ── date-picker ──
     --form-datecell-background-default: var(--colors-primary-600); // selected / endpoint fill + today ring
     --form-datecell-background-hovered: var(--colors-primary-700);
     --form-datecell-background-range: var(--colors-primary-100); // range bar (slot)
-    --form-datecell-background-in-range: var(--alpha-white-0); // day circle inside a range, resting
+    --form-datecell-background-in-range: var(--colors-alpha-white-0); // day circle inside a range, resting
     --form-datecell-background-in-range-hovered: var(--colors-primary-200);
     --form-datecell-background-in-range-pressed: var(--colors-primary-300);
 
@@ -170,10 +170,10 @@
     --link-neutral-focused: var(--colors-neutral-700);
     --link-neutral-visited: var(--colors-neutral-600);
     --link-oncolor: var(--colors-base-white);
-    --link-oncolor-hovered: var(--alpha-white-80);
-    --link-oncolor-pressed: var(--alpha-white-60);
+    --link-oncolor-hovered: var(--colors-alpha-white-80);
+    --link-oncolor-pressed: var(--colors-alpha-white-60);
     --link-oncolor-focused: var(--colors-base-white);
-    --link-oncolor-visited: var(--alpha-white-90);
+    --link-oncolor-visited: var(--colors-alpha-white-90);
 
     // ── radio ──
     --radio-primary-checked: var(--controls-primary-checked);
@@ -198,7 +198,7 @@
     --slider-track-fill: var(--background-primary);
     --slider-thumb-bg: var(--background-primary);
     --slider-thumb-bg-hovered: var(--controls-primary-hovered);
-    --slider-thumb-border: var(--alpha-black-10);          // thumb ring — 10% black overlay: brand-agnostic, so it never clashes under rebrand (Figma's --border-success is a fixed status color that wouldn't follow the brand). Mode-invariant.
+    --slider-thumb-border: var(--colors-alpha-black-10);          // thumb ring — 10% black overlay: brand-agnostic, so it never clashes under rebrand (Figma's --border-success is a fixed status color that wouldn't follow the brand). Mode-invariant.
 
     // ── stepper ──
     --progressindicator-progress-indicator-gap: var(--spacing-md);
@@ -222,10 +222,10 @@
     --swiper-bullet-background-hovered: var(--colors-neutral-300);
     --swiper-bullet-background-active: var(--colors-primary-600);
     --swiper-bullet-background-active-hovered: var(--colors-primary-700);
-    --swiper-bullet-background-default-oncolor: var(--alpha-white-60);
-    --swiper-bullet-background-hovered-oncolor: var(--alpha-white-80);
-    --swiper-bullet-background-active-oncolor: var(--alpha-white-100);
-    --swiper-bullet-background-active-hovered-oncolor: var(--alpha-white-80);
+    --swiper-bullet-background-default-oncolor: var(--colors-alpha-white-60);
+    --swiper-bullet-background-hovered-oncolor: var(--colors-alpha-white-80);
+    --swiper-bullet-background-active-oncolor: var(--colors-alpha-white-100);
+    --swiper-bullet-background-active-hovered-oncolor: var(--colors-alpha-white-80);
 
     // ── switch ──
     --switch-primary-checked: var(--controls-primary-checked);
@@ -256,7 +256,7 @@
     // ── tag ──
     --tag-background-neutral: var(--colors-neutral-600);
     --tag-background-neutral-light: var(--colors-neutral-50);
-    --tag-background-oncolor: var(--alpha-white-20);
+    --tag-background-oncolor: var(--colors-alpha-white-20);
     --tag-text-neutral: var(--colors-neutral-800);
     --tag-text-success: var(--colors-green-800);
     --tag-text-info: var(--colors-blue-800);
@@ -277,7 +277,7 @@
     --tag-background-error-light: var(--background-error-light);
     --tag-border-neutral: var(--colors-neutral-600);
     --tag-border-neutral-light: var(--colors-neutral-200); // DGA uses neutral-50, too light
-    --tag-border-oncolor: var(--alpha-white-60);
+    --tag-border-oncolor: var(--colors-alpha-white-60);
     --tag-border-success: var(--colors-green-700);
     --tag-border-success-light: var(--border-success-light);
     --tag-border-info: var(--colors-blue-700);
@@ -286,7 +286,7 @@
     --tag-border-warning-light: var(--border-warning-light);
     --tag-border-error: var(--colors-red-700);
     --tag-border-error-light: var(--border-error-light);
-    --tag-dot: var(--alpha-white-60);
+    --tag-dot: var(--colors-alpha-white-60);
 
     // ── tooltip ──
     --tooltip-padding: var(--spacing-md);

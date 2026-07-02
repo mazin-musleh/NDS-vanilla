@@ -102,7 +102,7 @@
     --card-title: var(--text-primary-strong);
 
     @include dark {
-      --card-bg-hover: var(--alpha-primary-20);
+      --card-bg-hover: var(--colors-primary-alpha-20);
       --card-title: var(--colors-primary-400);
     }
   }
@@ -408,8 +408,8 @@
       --featuredicon-color: var(--colors-neutral-400);
 
       &.nds-color {
-        --card-bg: var(--alpha-white-10);
-        --card-bg-hover: var(--alpha-white-20);
+        --card-bg: var(--colors-alpha-white-10);
+        --card-bg-hover: var(--colors-alpha-white-20);
         --card-border: var(--colors-neutral-500);
       }
     }
@@ -509,18 +509,18 @@
 // ==============================================
 
 .nds-card.nds-oncolor {
-  --card-bg: var(--alpha-white-10);
-  --card-bg-hover: var(--alpha-white-20);
-  --card-border: var(--alpha-white-20);
-  --card-border-hover: var(--alpha-white-40);
-  --card-border-active: var(--alpha-white-30);
+  --card-bg: var(--colors-alpha-white-10);
+  --card-bg-hover: var(--colors-alpha-white-20);
+  --card-border: var(--colors-alpha-white-20);
+  --card-border-hover: var(--colors-alpha-white-40);
+  --card-border-active: var(--colors-alpha-white-30);
   --card-text: var(--text-oncolor-primary);
   --card-title: var(--text-oncolor-primary);
   --card-subtitle: var(--text-oncolor-secondary);
   --card-number: var(--text-oncolor-primary);
-  --featuredicon-bg: var(--alpha-white-10);
+  --featuredicon-bg: var(--colors-alpha-white-10);
   --featuredicon-color: var(--featuredicons-icon-oncolor);
-  --card-rating: var(--alpha-white-80);
+  --card-rating: var(--colors-alpha-white-80);
 }
 
 

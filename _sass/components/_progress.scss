@@ -19,7 +19,7 @@
   @include progress-circle-text(var(--_progress-size));
 
   @include dark {
-    --_progress-track-color: var(--progress-track-color, var(--alpha-white-10));
+    --_progress-track-color: var(--progress-track-color, var(--colors-alpha-white-10));
   }
 
   // CSS counter for automatic number display (clamped to 100)
@@ -150,7 +150,7 @@
     overflow: hidden;
 
     @include dark {
-      background-color: var(--alpha-white-10);
+      background-color: var(--colors-alpha-white-10);
     }
   }
 

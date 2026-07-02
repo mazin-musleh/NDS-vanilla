@@ -23,7 +23,7 @@
   --_loading-size: var(--loading-size, 32px);
   --_loading-border: var(--loading-border, 3px);
   --_loading-color: var(--loading-color, var(--background-primary));
-  --_loading-track: var(--loading-track, var(--alpha-black-10));
+  --_loading-track: var(--loading-track, var(--colors-alpha-black-10));
   --_loading-opacity: var(--loading-opacity, 0.15);
   position: relative;
   pointer-events: none;
@@ -51,7 +51,7 @@
   // Dark theme — default to white spinner
   @include dark {
     --_loading-color: var(--loading-color, var(--colors-base-white));
-    --_loading-track: var(--loading-track, var(--alpha-white-20));
+    --_loading-track: var(--loading-track, var(--colors-alpha-white-20));
   }
 
   // ==============================================
@@ -108,18 +108,18 @@
   // Neutral (black spinner)
   &.nds-neutral {
     --_loading-color: var(--loading-color, var(--background-black));
-    --_loading-track: var(--loading-track, var(--alpha-black-10));
+    --_loading-track: var(--loading-track, var(--colors-alpha-black-10));
 
     @include dark {
       --_loading-color: var(--loading-color, var(--colors-base-white));
-      --_loading-track: var(--loading-track, var(--alpha-white-20));
+      --_loading-track: var(--loading-track, var(--colors-alpha-white-20));
     }
   }
 
   // On dark backgrounds (explicit override for forced-dark containers)
   &.nds-oncolor {
     --_loading-color: var(--loading-color, var(--colors-base-white));
-    --_loading-track: var(--loading-track, var(--alpha-white-20));
+    --_loading-track: var(--loading-track, var(--colors-alpha-white-20));
   }
 
 }

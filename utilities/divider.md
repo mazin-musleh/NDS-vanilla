@@ -467,7 +467,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--divider</code></td><td><code class="nds-inline-code lang-html">--spacing-xs</code></td><td>Block margin applied above and below the divider. Size modifiers override this value</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--divider-size</code></td><td><code class="nds-inline-code lang-html">2px</code></td><td>Thickness of the rule. Applies to the element border and the pseudo-element lines in the text variant</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--divider-color</code></td><td><code class="nds-inline-code lang-html">--alpha-black-10</code></td><td>Color of the rule. Swaps automatically to <code class="nds-inline-code lang-html">--alpha-white-10</code> in dark mode. Override per-instance to match surrounding surfaces</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--divider-color</code></td><td><code class="nds-inline-code lang-html">--colors-alpha-black-10</code></td><td>Color of the rule. Swaps automatically to <code class="nds-inline-code lang-html">--colors-alpha-white-10</code> in dark mode. Override per-instance to match surrounding surfaces</td></tr>
                     </tbody>
                 </table>
             </div>
