@@ -173,8 +173,8 @@ $a11y-filters: (
     --btn-bg-selected:    var(--button-background-oncolor-selected);
     --btn-bg-disabled:    var(--button-background-disabled-oncolor);
     --btn-color-disabled: var(--text-default-oncolor-disabled);
-    --btn-color:          var(--background-black);
-    --btn-loading-color:  var(--background-black);
+    --btn-color:          var(--colors-base-black);
+    --btn-loading-color:  var(--colors-base-black);
 }
 
 // Sub-hero only: --background-sub-hero is swapped to --_hc-bg above, so

@@ -107,7 +107,7 @@
 
   // Neutral (black spinner)
   &.nds-neutral {
-    --_loading-color: var(--loading-color, var(--background-black));
+    --_loading-color: var(--loading-color, var(--icon-default));
     --_loading-track: var(--loading-track, var(--colors-alpha-black-10));
 
     @include dark {

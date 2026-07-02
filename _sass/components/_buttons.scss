@@ -258,8 +258,8 @@
     --btn-bg-selected: var(--button-background-oncolor-selected);
     --btn-bg-disabled: var(--button-background-disabled-oncolor);
     --btn-color-disabled: var(--text-default-oncolor-disabled);
-    --btn-color: var(--background-black);
-    --btn-loading-color: var(--background-black);
+    --btn-color: var(--colors-base-black);
+    --btn-loading-color: var(--colors-base-black);
 
     &:is(.focus, :focus-visible) {
       @include btn-focus-oncolor;
@@ -277,8 +277,8 @@
     :where(:root[data-theme~="dark"]) .nds-btn:not(.nds-primary, .nds-neutral) {
       --btn-color-disabled: var(--text-default-oncolor-disabled);
       /*--btn-indicator-color: var(--colors-neutral-400); same light mode color*/
-      --btn-indicator-active: var(--background-white);
-      --btn-indicator-selected: var(--background-white);
+      --btn-indicator-active: var(--background-surface-oncolor);
+      --btn-indicator-selected: var(--background-surface-oncolor);
 
       &.nds-secondary {
         --btn-bg: var(--button-background-transparent-hovered);
@@ -299,10 +299,10 @@
         --btn-bg-selected: var(--button-background-transparent-selected);
         --btn-bg-disabled: var(--button-background-transparent-default);
         --btn-color: var(--text-oncolor-primary);
-        --btn-border: var(--border-white-40);
-        --btn-border-hover: var(--border-white-40);
-        --btn-border-active: var(--border-white-40);
-        --btn-border-selected: var(--border-white-40);
+        --btn-border: var(--border-oncolor);
+        --btn-border-hover: var(--border-oncolor);
+        --btn-border-active: var(--border-oncolor);
+        --btn-border-selected: var(--border-oncolor);
         --btn-loading-color: var(--text-oncolor-primary);
         --btn-loading-track: var(--colors-alpha-white-20);
       }

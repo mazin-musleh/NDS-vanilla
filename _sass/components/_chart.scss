@@ -35,11 +35,11 @@
     --_chart-tooltip-border: var(--chart-tooltip-border, var(--border-neutral-secondary));
     --_chart-pie-label-1: var(--chart-pie-label-1, var(--text-oncolor-primary));
     --_chart-pie-label-2: var(--chart-pie-label-2, var(--text-oncolor-primary));
-    --_chart-pie-label-3: var(--chart-pie-label-3, var(--text-black));
-    --_chart-pie-label-4: var(--chart-pie-label-4, var(--text-black));
+    --_chart-pie-label-3: var(--chart-pie-label-3, var(--colors-base-black));
+    --_chart-pie-label-4: var(--chart-pie-label-4, var(--colors-base-black));
     --_chart-pie-label-5: var(--chart-pie-label-5, var(--text-oncolor-primary));
     --_chart-pie-label-6: var(--chart-pie-label-6, var(--text-oncolor-primary));
-    --_chart-dot-fill: var(--chart-dot-fill, var(--background-white));
+    --_chart-dot-fill: var(--chart-dot-fill, var(--colors-base-white));
     position: relative;
     width: 100%;
     min-height: 200px;

@@ -222,10 +222,10 @@
             --btn-bg-selected: var(--button-background-transparent-selected);
             --btn-bg-disabled: var(--button-background-transparent-default);
             --btn-color: var(--text-oncolor-primary);
-            --btn-border: var(--border-white-40);
-            --btn-border-hover: var(--border-white-40);
-            --btn-border-active: var(--border-white-40);
-            --btn-border-selected: var(--border-white-40);
+            --btn-border: var(--border-oncolor);
+            --btn-border-hover: var(--border-oncolor);
+            --btn-border-active: var(--border-oncolor);
+            --btn-border-selected: var(--border-oncolor);
             --btn-loading-color: var(--text-oncolor-primary);
             --btn-loading-track: var(--colors-alpha-white-20);
         }

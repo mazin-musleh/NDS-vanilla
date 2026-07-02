@@ -761,7 +761,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--avatar-gap</code></td><td><code class="nds-inline-code lang-html">6px</code></td><td>Spacing between avatars inside <code class="nds-inline-code lang-html">.nds-avatar-group</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--avatar-background</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-100</code></td><td>Fill color of initials and icon avatars</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--avatar-color</code></td><td><code class="nds-inline-code lang-html">--icon-default</code></td><td>Foreground color for initials text and icons</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--avatar-border</code></td><td><code class="nds-inline-code lang-html">--border-white</code></td><td>Border color applied to 3XL avatars and 3XL group members</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--avatar-border</code></td><td><code class="nds-inline-code lang-html">--colors-base-white</code></td><td>Border color applied to 3XL avatars and 3XL group members</td></tr>
                     </tbody>
                 </table>
             </div>
