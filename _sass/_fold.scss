@@ -1,56 +1,28 @@
 /* ========================================
    FOLD  ·  above-the-fold FCP gates + chrome reservations
-   The minimum that must paint before crit lands: page canvas, topbar/nav
-   heights, hero swiper first-slide collapse, page-level hide gate, pre-init
-   main overflow guard, and icon/HGI gate initials (their reveals live with
-   the respective sheets). Heavier structural skeleton (content-layout grid,
-   hero CTA/swiper flex, critical-component safeguard) lives in _skeleton.scss
-   — crit-only, no inline weight.
+   Crit's gate partial (@use'd by _skeleton.scss into nds.critical.min.css):
+   the minimum that gates first paint — page canvas, topbar/nav height
+   reservations, hero swiper first-slide collapse, the page-level hide gate,
+   the pre-init main overflow guard, and the icon/HGI gate initials (their
+   reveals live with the respective sheets). Heavier structural skeleton
+   (content-layout grid, hero CTA/swiper flex, critical-component safeguard)
+   lives in _skeleton.scss.
 
-   ── One source, two compiles — in sync by construction ──
-   This file is the single source for the gate, compiled two ways:
-     • critical file  — _skeleton.scss `@use 'fold'`  ($inline:false) → ships
-                        inside nds.critical.min.css (the render-blocking <link>).
-     • inline <style> — `@use 'fold' with ($inline:true)` (scssify, in
-                        _includes/critical-inline.html).
-   The gate therefore ALWAYS lives in the critical file. The inline copy is an
-   optional accelerator (critical_inline: true) mirroring it at byte 0 for a
-   non-blocking first paint; with critical_inline: false there is no inline and
-   the render-blocking crit <link> carries the identical gate — nothing lost.
-   And because the inline is GENERATED from this file (never hand-written), it
-   can't drift from the crit gate when fold changes: edit here, rebuild, both
-   stay identical.
-
-   Shared rules emit bare var() for crit (tokens are resolved there) and a
-   literal fallback for the inline (it paints before the token layer loads).
-   The inline-only block (bootstraps + chrome box bgs + hero box stand-in +
-   the hero-body hide) emits only when $inline — crit owns those via the real
-   components, and reveals the hero body instead of hiding it.
-   Default discipline: reservations are UNCONDITIONAL (not gated on
-   data-nds-loaded) — they paint from the first byte and main CSS overrides
-   them by cascade. :where()-wrapped at zero specificity — main always wins.
-   Exceptions (rules that deliberately release at data-nds-loaded, because
-   main CSS then owns the property):
-     • the main overflow guard (html:not([data-nds-loaded]) main).
+   Reservations are UNCONDITIONAL (not gated on data-nds-loaded) — they paint
+   from the first byte and main CSS overrides them by cascade, :where()-wrapped
+   at zero specificity so main always wins. Exception: the main overflow guard
+   releases at data-nds-loaded, because main CSS then owns overflow.
    ======================================== */
 @use './mixins' as *;
 
-// true only for the inline <style> compile.
-$inline: false !default;
-
-// var() with a literal fallback for the inline; bare var() for crit.
-@function v($token, $fallback) {
-    @return if($inline, var(#{$token}, $fallback), var(#{$token}));
-}
-
 html {
     /* Page canvas — same token the body paints (reset.scss). */
-    background-color: v('--background-body', #f9fafb);
+    background-color: var(--background-body);
 
     :where(header) {display: contents;}
     /* Nav/topbar height reservations — prevent CLS before main lands. */
     :where(.nds-topbar) { height: 40px; }
-    :where(.nds-main-nav) { height: v('--nds-nav-height', 72px); }
+    :where(.nds-main-nav) { height: var(--nds-nav-height); }
 
     /* Deliberately NOT :where()-wrapped — must beat any main-CSS .nds-swiper-slide
        rule and outlive data-nds-loaded, releasing only when JS stamps
@@ -58,10 +30,10 @@ html {
     .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) {
         display: none;
     }
-    /* This only collapses the track to slide 1 for the inline-paint phase. The
-       crit-missing case — main styling the swiper without crit's sizing tokens —
-       is held by the main-load reveal in nds-main.min.scss, which hides the whole
-       hero swiper via visibility:var(--nds-crit-reveal). So no per-slide guard is
+    /* This only collapses the track to slide 1 for first paint. The crit-missing
+       case — main styling the swiper without crit's sizing tokens — is held by
+       the main-load reveal in nds-main.min.scss, which hides the whole hero
+       swiper via visibility:var(--nds-crit-reveal). So no per-slide guard is
        needed here, and it covers the gap before data-nds-loaded too. */
 }
 
@@ -70,9 +42,7 @@ html {
    nds-main.min.scss lands — most chrome at html[data-nds-loaded] (after the
    JS critical pass); .nds-content-layout / .nds-footer / hero .nds-section-action
    reveal at main-CSS-load, gated through --nds-crit-reveal so they can't
-   un-hide before crit (the crit-vs-main load race). The inline additionally
-   hides the hero body/wrapper/breadcrumb (see $inline block) — the critical
-   file reveals the hero body/wrapper instead, main reveals the breadcrumb. */
+   un-hide before crit (the crit-vs-main load race). */
 :where(.nds-topbar > *,
     .nds-main-nav > *,
     .nds-hero-section .nds-section-action,
@@ -101,42 +71,3 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
    here. The reveal (data-nds-fonts-loaded~="hgi-stroke-rounded" → 1) lives
    in _sass/_hgiRoundedStroke.scss, alongside the @font-face. */
 i.hgi-stroke { opacity: 0; }
-
-@if $inline {
-    /* ════ Inline-only (no critical-file counterpart) ════
-       Pre-crit bootstraps + the chrome/hero FCP skeleton. In the critical
-       file these come from reset.scss + the real topbar/nav/hero components;
-       here they paint first byte, then lose to those rules by specificity. */
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
-
-    /* Dark page canvas (crit resolves --background-body in dark via the token). */
-    html[data-theme~=dark] { background-color: var(--background-body, #111927); }
-    
-    /* Chrome box bgs — the colored FCP skeleton for topbar + nav. */
-    :where(.nds-topbar) { background-color: var(--background-topbar, #f3f4f6); }
-    :where(.nds-main-nav) { background-color: var(--background-nav, #fff); }
-    html[data-theme~=dark] :where(.nds-topbar) { background-color: var(--background-topbar, #111927); }
-    html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #1f2a37); }
-
-    /* Hero box stand-in (the real hero component owns these in crit). */
-    :where(.nds-hero-section) { position: relative; height: 550px; }
-    :where(.nds-hero-section.nds-sub) { height: auto; min-height: 220px; }
-    :where(.nds-hero-image-wrapper)::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, .7) * 100%), transparent);
-        pointer-events: none;
-    }
-
-    /* Hero body + wrapper stay hidden until the critical file's reveal
-       (_skeleton.scss) un-hides them; the breadcrumb stays hidden until main's
-       data-nds-loaded reveal (it inits delegated, after that reveal). The
-       section-action is already held by the shared page gate above. */
-    :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) {
-        visibility: hidden;
-    }
-}

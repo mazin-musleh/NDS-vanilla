@@ -13,16 +13,13 @@
    ======================================== */
 @use './mixins' as *;
 
-/* This crit file = fold + the crit-only skeleton below. fold's reservations
-   emit first (body bg, topbar/nav height, hero first-slide collapse, hide
-   gate, icon/HGI initial gates) — the same block the inline <style> is
-   GENERATED from (critical-inline.html scssifies fold with $inline:true), so
-   the render-blocking crit gate and the inline gate are one source and never
-   drift. Everything below is crit-only: content-layout grid, hero CTA + swiper
-   flex skeletons, critical-component safeguard, paint + skeleton-bar +
-   delegated-hold rules the inline never carries, plus the hero-body reveal
-   that counters the inline's extended hide gate. Icon + HGI gate reveals live
-   with their own stylesheets (_sass/_icons.scss, _sass/_hgiRoundedStroke.scss). */
+/* This crit file = fold (the gate partial) + the crit-only skeleton below.
+   fold's reservations emit first (body bg, topbar/nav height, hero first-slide
+   collapse, hide gate, icon/HGI initial gates); everything below is crit-only:
+   content-layout grid, hero CTA + swiper flex skeletons, critical-component
+   safeguard, paint + skeleton-bar + delegated-hold rules, plus the nav-brand
+   reveal. Icon + HGI gate reveals live with their own stylesheets
+   (_sass/_icons.scss, _sass/_hgiRoundedStroke.scss). */
 @use 'fold';
 
 html {
@@ -273,11 +270,9 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
    JS collapses 6+ crumb trails to first + ellipsis button + last two
    (threshold 5, _js/nds-breadcrumb.js). Shape the trail so the delegated
    init swaps in box-identically — deep paths otherwise wrap to two lines
-   and snap to one at init (vertical CLS). Shown from the page reveal
-   (data-nds-loaded) until the breadcrumb's own init stamp: under
-   critical_inline the page gate holds the breadcrumb hidden until that
-   reveal (so this never shows at first paint); under render-blocking crit
-   it shows from first paint. Items 3..n-2 hide; item 2 keeps its normal
+   and snap to one at init (vertical CLS). Shown from first paint (crit is
+   render-blocking) until the breadcrumb's own init stamp. Items 3..n-2 hide;
+   item 2 keeps its normal
    label bar and becomes the 40px ellipsis button at init (bounded width
    change, no wrap). Released by the breadcrumb's own init stamp. */
 .nds-breadcrumb-nav:not([data-nds-breadcrumb-initialized]) li:first-child:nth-last-child(n + 6)~li:nth-child(n + 3):nth-last-child(n + 3) {
@@ -339,34 +334,28 @@ tbody[data-filter-items]:not([data-nds-filter-initialized]):not(.nds-paged-conte
     z-index: 1;
 }
 
-/* The hide gate lives in fold (@use'd at the top — the inline mirrors it);
-   the critical-component safeguard is crit-only (above). Icon + HGI gate
-   initials live in fold; their reveals live with their own stylesheets
-   (_sass/_icons.scss, _sass/_hgiRoundedStroke.scss).
-   The reveal below is crit-only: it counters the inline's hero-body hide
-   once the critical file lands. */
+/* The hide gate lives in fold (@use'd at the top); the critical-component
+   safeguard is crit-only (above). Icon + HGI gate initials live in fold;
+   their reveals live with their own stylesheets (_sass/_icons.scss,
+   _sass/_hgiRoundedStroke.scss). */
 
-/* ── Reveal at crit-load ──
-   Hero body + wrapper (containing title / description / breadcrumb)
-   and the nav brand (logo + name) paint as soon as crit lands. The
-   hide gate above blanket-hides `.nds-main-nav > *`; the nav brand opts
-   back in here because it's typically the LCP element above the fold.
-   Scoped to the NAV brand — a bare .nds-brand would also match the
-   brand-variant footer (footer.html root carries the class) and reveal
-   it unstyled before main. Scoped to hero + nav brand — revealing
-   anything inside .nds-content-layout opens the slope where every
-   below-the-fold CLS demands its own skeleton. */
-:where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper), .nds-main-nav .nds-brand) {
+/* ── Nav brand reveal ──
+   The hide gate above blanket-hides `.nds-main-nav > *`; the nav brand (logo
+   + name) opts back in here because it's typically the LCP element above the
+   fold, so it paints the moment crit lands. Scoped to the NAV brand — a bare
+   .nds-brand would also match the brand-variant footer (footer.html root
+   carries the class) and reveal it unstyled before main. */
+:where(.nds-main-nav .nds-brand) {
     visibility: visible;
 }
 
 /* ── Crit-ready signal ──
    main's content-layout / footer / section-action reveal reads this token
-   (`visibility: var(--nds-crit-reveal, hidden)`) so it can't beat the inline
-   hide gate before crit lands. Under async critical_inline both sheets load
-   non-blocking, so main can win the download race; until this crit-only token
-   flips the reveal to visible those regions stay hidden — otherwise they'd
-   paint without crit's wrapper gutter + content-layout grid, then shift when
-   crit arrives. Resolves to visible the moment crit is present (this file). */
+   (`visibility: var(--nds-crit-reveal, hidden)`) so it can't beat the hide
+   gate before crit lands. main's CSS is async and could win the download race
+   over crit; until this crit-only token flips the reveal to visible those
+   regions stay hidden — otherwise they'd paint without crit's wrapper gutter +
+   content-layout grid, then shift when crit arrives. Resolves to visible the
+   moment crit is present (this file). */
 // DUPE-03 split: crit-reveal signal sits last, beside the reveal it backs — kept separate from the skeleton-token :root.
 :root { --nds-crit-reveal: visible; }

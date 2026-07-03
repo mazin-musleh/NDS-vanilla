@@ -100,7 +100,7 @@ i.nds-icon {
 
 // The icon glyph lives in ::before so sibling children (e.g. .nds-badge)
 // are not clipped by the mask. `opacity: var(--nds-icons-opacity, 1)` is the
-// icons-sheet load gate — see _skeleton.scss / critical-inline.html. Every
+// icons-sheet load gate — see _fold.scss / _skeleton.scss. Every
 // masked-pseudo rule in the codebase mirrors this convention.
 i.nds-icon::before {
   content: "";
