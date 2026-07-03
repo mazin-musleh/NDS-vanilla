@@ -36,7 +36,7 @@
 // (0,2,0) would be shadowed by main's component-dark tokens. The doubled :root bumps
 // specificity to 0,3,0 so it wins in both the global and runtime-switch load orders.
 :root:root[data-theme~="dark"] {
-  --featuredicons-background-brand-light: var(--colors-primary-alpha-20);
+  --featuredicons-background-primary-light: var(--colors-primary-alpha-20);
   --featuredicons-icon-primary: var(--colors-primary-300);
   --stepper-button-current: var(--colors-primary-400);
 }

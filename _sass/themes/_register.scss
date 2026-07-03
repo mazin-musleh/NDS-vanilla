@@ -63,7 +63,7 @@ $sel: ':root[data-palette]';
     @include oklch.brand-alpha('tertiary', '--brand-tertiary');
     @include oklch.neutral-ramp('--brand-primary');   // honours --neutral-tint
 
-    --background-brand-light:  var(--colors-primary-25);
+    --background-primary-light:  var(--background-primary-faint); // derived ramps run hot; collapse light to the faint step
     --img-overlay-color:       var(--colors-neutral-950);
   }
 }

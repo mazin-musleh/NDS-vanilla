@@ -21,7 +21,7 @@
   //   --featuredicon-dark-bg   .nds-dark fill
   //   --featuredicon-radius    corner rounding (.nds-circle forces 50%)
   --_featuredicon-size: var(--featuredicon-size, 40px);
-  --_featuredicon-bg: var(--featuredicon-bg, var(--featuredicons-background-brand-light));
+  --_featuredicon-bg: var(--featuredicon-bg, var(--featuredicons-background-primary-light));
   --_featuredicon-color: var(--featuredicon-color, var(--featuredicons-icon-primary));
   --_featuredicon-dark-bg: var(--featuredicon-dark-bg, var(--background-success));
   --_featuredicon-radius: var(--featuredicon-radius, calc((var(--_featuredicon-size) / 4) - 2px));

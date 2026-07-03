@@ -109,7 +109,7 @@
 .demo-container {
 
   &:is(.green-bg, .dark-bg) {
-    background-color: var(--background-brand-strong);
+    background-color: var(--background-primary-strong);
   }
 
   &.black-bg {
@@ -122,7 +122,7 @@
 }
 
 .oncolor-buttons .demo-container {
-  background-color: var(--background-brand-strong);
+  background-color: var(--background-primary-strong);
 }
 
 

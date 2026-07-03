@@ -29,14 +29,14 @@
     // .nds-green is the deprecated alias of .nds-primary — same brand surface.
     &:is(.nds-primary, .nds-green) {
         // re-tints under runtime themes (was pinned to status green-900)
-        --section-bg: var(--background-brand-strong);
+        --section-bg: var(--background-primary-strong);
     }
 
     // .nds-gradient-green is the deprecated alias of .nds-gradient-primary.
     &:is(.nds-gradient-primary, .nds-gradient-green) {
         --_gradient-angle: var(--gradient-angle, -45deg);
-        --section-bg: var(--background-brand-strong);
-        background: linear-gradient(var(--_gradient-angle), var(--background-brand-strong), var(--background-primary));
+        --section-bg: var(--background-primary-strong);
+        background: linear-gradient(var(--_gradient-angle), var(--background-primary-strong), var(--background-primary));
 
         @include ltr {
             --gradient-angle: 45deg;
@@ -49,9 +49,9 @@
 
     &.nds-brand {
         --section-shadow: var(--shadow-inset);
-        // --background-brand-light carries both modes (light: primary-25/50; dark:
+        // --background-primary-light carries both modes (light: primary-25/50; dark:
         // alpha-primary-10 — see _variables-dark.scss), so no dark special-case here.
-        --section-bg: var(--background-brand-light);
+        --section-bg: var(--background-primary-light);
         --section-title-color: var(--text-display);
         --section-subtitle-color: var(--text-default);
         --section-description-color: var(--text-default);

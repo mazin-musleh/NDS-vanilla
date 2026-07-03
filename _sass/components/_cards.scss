@@ -42,7 +42,7 @@
   --_card-subtitle: var(--card-subtitle, var(--text-primary));
   --_card-number: var(--card-number, var(--text-primary-strong));
   --_card-icon: var(--featuredicon-color, var(--featuredicons-icon-primary));
-  --_card-icon-bg: var(--featuredicon-bg, var(--featuredicons-background-brand-light));
+  --_card-icon-bg: var(--featuredicon-bg, var(--featuredicons-background-primary-light));
   --featuredicon-color: var(--_card-icon);
   --featuredicon-bg: var(--_card-icon-bg);
   --avatar-color: var(--_card-icon);
@@ -96,7 +96,7 @@
   // Color fill variant (tinted background) — default tracks brand primary.
   // Status modifiers (.nds-green/.nds-yellow/etc. or [data-status]) override below.
   &.nds-color {
-    --card-bg: var(--background-brand-light);
+    --card-bg: var(--background-primary-light);
     --card-bg-hover: var(--colors-primary-100);
     --card-border: var(--border-primary-light);
     --card-title: var(--text-primary-strong);

@@ -31,10 +31,10 @@
     --background-body: var(--colors-neutral-50);
     --background-nav: var(--colors-base-white);
     --background-topbar: var(--colors-neutral-100);
-    --background-footer: var(--background-brand-strong);
-    --background-hero: var(--background-brand-strong); // own knob; defaults to the shared deep brand surface
+    --background-footer: var(--background-primary-strong);
+    --background-hero: var(--background-primary-strong); // own knob; defaults to the shared deep brand surface
     --background-stripe: var(--colors-neutral-50);
-    --background-sub-hero: var(--background-brand-light);
+    --background-sub-hero: var(--background-primary-light);
     --background-menu: var(--colors-base-white);
     --background-card: var(--colors-base-white);
     --background-card-hovered: var(--colors-neutral-50);
@@ -46,8 +46,9 @@
     --img-overlay-color: var(--colors-primary-950); // hero/card image overlay — DGA green (mode-invariant); runtime brands switch to neutral (see themes/_register.scss)
 
     // ── Background — brand & neutral scales ──
-    --background-brand-light: var(--colors-primary-50);
-    --background-brand-strong: var(--colors-primary-900);
+    --background-primary-light: var(--colors-primary-50);
+    --background-primary-faint: var(--colors-primary-25);
+    --background-primary-strong: var(--colors-primary-900);
     --background-neutral-light: var(--colors-neutral-100);
     --background-primary: var(--colors-primary-600);
     --background-secondary: var(--colors-secondary-600);

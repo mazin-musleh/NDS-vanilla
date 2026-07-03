@@ -23,7 +23,8 @@
     // modes, so they need no dark special-case of their own. Brand-tracked (alpha
     // follows the active --colors-primary). Brands @use'd before this layer, so a
     // brand's light brand-light (primary-25) is overridden here for brand+dark.
-    --background-brand-light: var(--colors-primary-alpha-10);
+    --background-primary-light: var(--colors-primary-alpha-10);
+    --background-primary-faint: var(--colors-primary-alpha-10);
     --background-overlay: var(--colors-alpha-black-70);
 
     // ─── Status Tinted Surfaces ───

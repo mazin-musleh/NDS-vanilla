@@ -476,8 +476,8 @@ root.setAttribute('data-palette', '');
   --colors-neutral-950: #0c111b;
 
   /* Deep brand surfaces (hero / footer / image overlay) */
-  --background-brand-strong: var(--colors-primary-900);
-  --background-brand-light:  var(--colors-primary-50);
+  --background-primary-strong: var(--colors-primary-900);
+  --background-primary-light:  var(--colors-primary-50);
   --img-overlay-color:       var(--colors-neutral-950);
 }
 
@@ -632,8 +632,8 @@ root.setAttribute('data-palette', '');
                         <tr><td><code class="nds-inline-code lang-html">--font-weight-medium</code></td><td><code class="nds-inline-code lang-html">500</code></td><td>Medium weight for the theme font.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--font-weight-semibold</code></td><td><code class="nds-inline-code lang-html">600</code></td><td>Semibold weight for the theme font.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--font-weight-bold</code></td><td><code class="nds-inline-code lang-html">700</code></td><td>Bold weight for the theme font.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--background-brand-strong</code></td><td><code class="nds-inline-code lang-html">--colors-primary-900</code></td><td>Deep brand surface used by the hero and footer.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--background-brand-light</code></td><td><code class="nds-inline-code lang-html">--colors-primary-25</code></td><td>Light brand surface token set by the OKLCH ramp and also by full-override themes (such as Hajj). Used for subtle tinted backgrounds.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--background-primary-strong</code></td><td><code class="nds-inline-code lang-html">--colors-primary-900</code></td><td>Deep brand surface used by the hero and footer.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--background-primary-light</code></td><td><code class="nds-inline-code lang-html">--colors-primary-25</code></td><td>Light brand surface token set by the OKLCH ramp and also by full-override themes (such as Hajj). Used for subtle tinted backgrounds.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--img-overlay-color</code></td><td><code class="nds-inline-code lang-html">--colors-primary-950</code></td><td>Colour of the translucent overlay on hero images.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--colors-*</code></td><td>DGA palette</td><td>The full colour ramps (primary, secondary, tertiary, neutral, status). Override these directly in a stylesheet theme for exact values.</td></tr>
                     </tbody>

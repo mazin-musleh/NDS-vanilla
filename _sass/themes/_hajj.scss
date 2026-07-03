@@ -20,7 +20,7 @@
   @include oklch.brand-ramp-static('primary', #946124);
   @include oklch.brand-alpha-static('primary', #946124);
   @include oklch.neutral-ramp-static(#946124, 0);   // 0 = true gray (no warmth)
-  --background-brand-light:  var(--colors-primary-25);
+  --background-primary-light:  var(--background-primary-faint); // event themes collapse light to the faint step
   --img-overlay-color:       var(--colors-neutral-950);
 }
 
