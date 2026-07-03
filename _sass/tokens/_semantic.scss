@@ -5,15 +5,15 @@
 // ════════════════════════════════════════════════════════════════════════════
 
 :root {
-    // ── Status alphas (DGA has no status alpha ramp; dark status surfaces read these) ──
-    --alpha-warning-10: #dc680319;
-    --alpha-warning-20: #dc680333;
-    --alpha-error-10: #d92c2019;
-    --alpha-error-20: #d92c2033;
-    --alpha-info-10: #156fee19;
-    --alpha-info-20: #156fee33;
-    --alpha-success-10: #06945419;
-    --alpha-success-20: #06945433;
+    // ── Status alpha ramp — palette extension (DGA ships none; NDS-authored, so it lives here, not in the vendored mirror) ──
+    --colors-yellow-alpha-10: #dc680319;
+    --colors-yellow-alpha-20: #dc680333;
+    --colors-red-alpha-10: #d92c2019;
+    --colors-red-alpha-20: #d92c2033;
+    --colors-blue-alpha-10: #156fee19;
+    --colors-blue-alpha-20: #156fee33;
+    --colors-green-alpha-10: #06945419;
+    --colors-green-alpha-20: #06945433;
 
     // ── Shadows ──
     --shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
@@ -56,16 +56,16 @@
     // ── Background — status ──
     --background-success: var(--colors-green-600);
     --background-success-light: var(--colors-green-50);
-    --background-success-25: var(--colors-green-25);
+    --background-success-faint: var(--colors-green-25);
     --background-info: var(--colors-blue-600);
     --background-info-light: var(--colors-blue-50);
-    --background-info-25: var(--colors-blue-25);
+    --background-info-faint: var(--colors-blue-25);
     --background-warning: var(--colors-yellow-600);
     --background-warning-light: var(--colors-yellow-50);
-    --background-warning-25: var(--colors-yellow-25);
+    --background-warning-faint: var(--colors-yellow-25);
     --background-error: var(--colors-red-600);
     --background-error-light: var(--colors-red-50);
-    --background-error-25: var(--colors-red-25);
+    --background-error-faint: var(--colors-red-25);
 
     // ── Background — disabled ──
     --background-disabled: var(--colors-neutral-200);

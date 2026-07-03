@@ -356,7 +356,7 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
 :root[data-a11y~="highlight-titles"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
     outline: 2px solid var(--border-warning);
     outline-offset: 2px;
-    background-color: var(--background-warning-25);
+    background-color: var(--background-warning-faint);
     color: var(--text-warning) !important;
     padding-inline: var(--spacing-xs);
     border-radius: var(--radius-xs);
@@ -370,7 +370,7 @@ $step-scales: (1: 1.15, 2: 1.30, 3: 1.50);
     outline-color: var(--border-warning-light);
 }
 :root[data-a11y~="highlight-titles"][data-theme~="dark"] body[class] > :is(header, main, footer) :is(h1, h2, h3, h4, h5, h6) {
-    background-color: var(--alpha-warning-10);
+    background-color: var(--colors-yellow-alpha-10);
 }
 
 // ----------------------------------------------

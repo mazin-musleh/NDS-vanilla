@@ -12,7 +12,7 @@
   url: "/components/themes.html"
 
 - title: "Tokens"
-  description: "The three-tier CSS custom property system: primitive, semantic, and component tokens to reference and override"
+  description: "Every CSS custom property in the system: palette, primitive scales, semantic meanings, and component dials to reference and override"
   icon: '<i class="hgi hgi-stroke hgi-cube"></i>'
   category: "Foundations"
   tags: ["CSS"]

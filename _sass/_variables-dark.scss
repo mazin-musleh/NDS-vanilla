@@ -30,14 +30,14 @@
     // light/50/25 all collapse to the same alpha-10 overlay in dark mode (the
     // shared pattern alert/cards/tag/button-status/featured-icons all used to
     // re-state per-component). Solid --background-{status} stays bright.
-    --background-success-light: var(--alpha-success-10);
-    --background-info-light:    var(--alpha-info-10);
-    --background-warning-light: var(--alpha-warning-10);
-    --background-error-light:   var(--alpha-error-10);
-    --background-success-25: var(--alpha-success-10);
-    --background-info-25:    var(--alpha-info-10);
-    --background-warning-25: var(--alpha-warning-10);
-    --background-error-25:   var(--alpha-error-10);
+    --background-success-light: var(--colors-green-alpha-10);
+    --background-info-light:    var(--colors-blue-alpha-10);
+    --background-warning-light: var(--colors-yellow-alpha-10);
+    --background-error-light:   var(--colors-red-alpha-10);
+    --background-success-faint: var(--colors-green-alpha-10);
+    --background-info-faint:    var(--colors-blue-alpha-10);
+    --background-warning-faint: var(--colors-yellow-alpha-10);
+    --background-error-faint:   var(--colors-red-alpha-10);
 
     // ─── Default Text ───
     --text-default: var(--colors-neutral-200);

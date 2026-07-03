@@ -173,10 +173,10 @@
   }
 
   &:is(.nds-color, .nds-inline) {
-    &:is(.nds-green, [data-status="success"])                        { --card-bg: var(--background-success-25); }
-    &:is(.nds-blue,  [data-status="info"])                           { --card-bg: var(--background-info-25); }
-    &:is(.nds-yellow,[data-status="warning"])                        { --card-bg: var(--background-warning-25); }
-    &:is(.nds-red,   [data-status="error"], [data-status="critical"]){ --card-bg: var(--background-error-25); }
+    &:is(.nds-green, [data-status="success"])                        { --card-bg: var(--background-success-faint); }
+    &:is(.nds-blue,  [data-status="info"])                           { --card-bg: var(--background-info-faint); }
+    &:is(.nds-yellow,[data-status="warning"])                        { --card-bg: var(--background-warning-faint); }
+    &:is(.nds-red,   [data-status="error"], [data-status="critical"]){ --card-bg: var(--background-error-faint); }
   }
 
   &.nds-inline {

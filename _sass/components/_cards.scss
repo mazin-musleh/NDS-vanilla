@@ -426,12 +426,12 @@
       --card-bg: var(--background-warning-light);
       --card-bg-hover: var(--colors-yellow-100);
       --card-border: var(--border-warning-light);
-      --featuredicon-bg: var(--alpha-warning-10);
+      --featuredicon-bg: var(--colors-yellow-alpha-10);
     }
 
     @include dark {
       &.nds-color {
-        --card-bg-hover: var(--alpha-warning-20);
+        --card-bg-hover: var(--colors-yellow-alpha-20);
         --card-border: var(--colors-yellow-700);
       }
     }
@@ -448,12 +448,12 @@
       --card-bg: var(--background-error-light);
       --card-bg-hover: var(--colors-red-100);
       --card-border: var(--border-error-light);
-      --featuredicon-bg: var(--alpha-error-10);
+      --featuredicon-bg: var(--colors-red-alpha-10);
     }
 
     @include dark {
       &.nds-color {
-        --card-bg-hover: var(--alpha-error-20);
+        --card-bg-hover: var(--colors-red-alpha-20);
         --card-border: var(--colors-red-700);
       }
     }
@@ -470,12 +470,12 @@
       --card-bg: var(--background-info-light);
       --card-bg-hover: var(--colors-blue-100);
       --card-border: var(--border-info-light);
-      --featuredicon-bg: var(--alpha-info-10);
+      --featuredicon-bg: var(--colors-blue-alpha-10);
     }
 
     @include dark {
       &.nds-color {
-        --card-bg-hover: var(--alpha-info-20);
+        --card-bg-hover: var(--colors-blue-alpha-20);
         --card-border: var(--colors-blue-700);
       }
     }
@@ -492,12 +492,12 @@
       --card-bg: var(--background-success-light);
       --card-bg-hover: var(--colors-green-100);
       --card-border: var(--border-success-light);
-      --featuredicon-bg: var(--alpha-success-10);
+      --featuredicon-bg: var(--colors-green-alpha-10);
     }
 
     @include dark {
       &.nds-color {
-        --card-bg-hover: var(--alpha-success-20);
+        --card-bg-hover: var(--colors-green-alpha-20);
         --card-border: var(--colors-green-700);
       }
     }

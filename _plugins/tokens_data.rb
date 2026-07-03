@@ -26,7 +26,6 @@ module NDS
     # layout aliases before --text-/--icon-.
     PRIMITIVE_CATS = [
       ['spacing',     'Spacing',              ['--spacing-']],
-      ['sizing',      'Sizing',               ['--width-']],
       ['radius',      'Radius',               ['--radius-']],
       ['typography',  'Typography',           ['--typo-']],
       ['color-brand', 'Brand colors',         ['--colors-primary-', '--colors-secondary-', '--colors-tertiary-', '--colors-neutral-']],
@@ -34,19 +33,22 @@ module NDS
     ].freeze
 
     SEMANTIC_CATS = [
-      ['layout',     'Layout',         ['--paragraph-', '--text-content-gap', '--icon-text-gap']],
+      ['layout',     'Layout',         ['--paragraph-']],
       ['background', 'Background',      ['--background-']],
       ['text',       'Text',           ['--text-']],
       ['border',     'Border & focus', ['--border-', '--focus-', '--divider-']],
       ['icon',       'Icon',           ['--icon-']],
       ['controls',   'Controls',       ['--controls-']],
-      ['shadow',     'Shadow',         ['--shadow-']],
-      ['alpha',      'Alpha',          ['--alpha-']]
+      ['shadow',     'Shadow',         ['--shadow-']]
     ].freeze
 
     def generate(site)
+      # _semantic.scss is read here too: its NDS-authored --colors-* palette
+      # extensions (status alpha ramp) file under the palette tier; everything
+      # else in it misses these prefixes and is bucketed by SEMANTIC_CATS below.
       primitive = bucket_by_prefix(
-        read_decls(site, '_sass/tokens/_primitives.scss') + read_decls(site, '_sass/themes/_dga.scss'),
+        read_decls(site, '_sass/tokens/_primitives.scss') + read_decls(site, '_sass/themes/_dga.scss') +
+        read_decls(site, '_sass/tokens/_semantic.scss'),
         PRIMITIVE_CATS
       )
       semantic  = bucket_by_prefix(read_decls(site, '_sass/tokens/_semantic.scss'), SEMANTIC_CATS)
