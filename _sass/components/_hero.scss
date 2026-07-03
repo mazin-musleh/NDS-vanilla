@@ -45,13 +45,25 @@
 
     // ── Image & overlay ──
 
-    .nds-hero-image-wrapper::before {
-        --_overlay: var(--overlay, 0.20);
-        content: "";
+    .nds-hero-image-wrapper {
         position: absolute;
         inset: 0;
-        background: color-mix(in srgb, var(--img-overlay-color) calc(var(--_overlay) * 100%), transparent);
-        pointer-events: none;
+
+        &::before {
+            --_overlay: var(--overlay, 0.7);
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: color-mix(in srgb, var(--img-overlay-color) calc(var(--_overlay) * 100%), transparent);
+            pointer-events: none;
+        }
+    }
+
+    .nds-hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
 
     // ── Sub variant ──

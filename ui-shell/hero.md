@@ -681,7 +681,7 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--overlay</code></td>
-                            <td><code class="nds-inline-code lang-html">0.20</code></td>
+                            <td><code class="nds-inline-code lang-html">0.7</code></td>
                             <td>Opacity of the dark overlay on the main hero image wrapper. Set on <code class="nds-inline-code lang-html">.nds-hero-image-wrapper</code> via inline style. Range: 0 (transparent) to 1 (fully opaque).</td>
                         </tr>
                     </tbody>
