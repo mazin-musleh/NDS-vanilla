@@ -27,6 +27,8 @@
     const SEED_PROPS = {
         primary: '--brand-primary', secondary: '--brand-secondary',
         tertiary: '--brand-tertiary', tint: '--neutral-tint', font: '--nds-font-brand',
+        'weight-regular': '--font-weight-regular', 'weight-medium': '--font-weight-medium',
+        'weight-semibold': '--font-weight-semibold', 'weight-bold': '--font-weight-bold',
     };
 
     // ── data-theme token plumbing ───────────────────────────────────────────
