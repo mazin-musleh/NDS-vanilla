@@ -46,6 +46,7 @@
     transition: grid-template-rows var(--nds-transition);
     grid-template-rows: 0fr;
     overflow: clip;
+    z-index: 1000;
     &[data-state~="open"] {
         display: grid;
         grid-template-rows: 1fr;
