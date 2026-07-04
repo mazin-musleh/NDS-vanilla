@@ -116,7 +116,17 @@ if (window.__ndsDeferredPending) loadDeferredAssets();
                             <code class="lang-css code">
 /* Optional inline critical gate — paste into an inline &lt;style&gt; in &lt;head&gt;, */
 /* then load the critical CSS async (see the note under the tabs). */
+
+/* ── Colors — the FCP skeleton's fills; edit here to re-skin first paint. ── */
 html { background-color: var(--background-body, #f9fafb); }
+html[data-theme~=dark] { background-color: var(--background-body, #111927); }
+:where(.nds-topbar) { background-color: var(--background-topbar, #f3f4f6); }
+html[data-theme~=dark] :where(.nds-topbar) { background-color: var(--background-topbar, #111927); }
+:where(.nds-main-nav) { background-color: var(--background-nav, #fff); }
+html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #1f2a37); }
+:where(.nds-hero-image-wrapper)::before { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent); pointer-events: none; }
+
+/* ── Layout reservations + gates (structure) ── */
 html :where(header) { display: contents; }
 html :where(.nds-topbar) { height: 40px; }
 html :where(.nds-main-nav) { height: var(--nds-nav-height, 72px); }
@@ -127,16 +137,10 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
 i.hgi-stroke { opacity: 0; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
-html[data-theme~=dark] { background-color: var(--background-body, #111927); }
-:where(.nds-topbar) { background-color: var(--background-topbar, #f3f4f6); }
-:where(.nds-main-nav) { background-color: var(--background-nav, #fff); }
-html[data-theme~=dark] :where(.nds-topbar) { background-color: var(--background-topbar, #111927); }
-html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #1f2a37); }
 :where(.nds-hero-section) { position: relative; height: 550px; }
 :where(.nds-hero-section.nds-sub) { height: auto; min-height: 220px; }
 :where(.nds-hero-image-wrapper) { position: absolute; inset: 0; }
 :where(.nds-hero-image) { width: 100%; height: 100%; object-fit: cover; display: block; }
-:where(.nds-hero-image-wrapper)::before { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent); pointer-events: none; }
 :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) { visibility: hidden; }
                             </code>
                         </div>

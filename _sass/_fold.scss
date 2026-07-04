@@ -43,10 +43,20 @@ $inline: false !default;
     @return if($inline, var(#{$token}, $fallback), var(#{$token}));
 }
 
-html {
-    /* Page canvas — same token the body paints (reset.scss). */
-    background-color: v('--background-body', #f9fafb);
+// ── Pre-crit skeleton colors ──────────────────────────────────────────────
+// Literal fallbacks the inline gate paints before the token layer resolves
+// (crit paints the real tokens; these ship only in the $inline compile).
+// TUNE THE ABOVE-THE-FOLD SKELETON COLORS HERE — every rule below refers back.
+$c-body-light:   #f9fafb;   // page canvas
+$c-body-dark:    #111927;
+$c-topbar-light: #f3f4f6;
+$c-topbar-dark:  #111927;
+$c-nav-light:    #fff;
+$c-nav-dark:     #1f2a37;
+$c-hero-overlay: #092a1e;   // hero image tint
+// ──────────────────────────────────────────────────────────────────────────
 
+html {
     :where(header) {display: contents;}
     /* Nav/topbar height reservations — prevent CLS before main lands. */
     :where(.nds-topbar) { height: 40px; }
@@ -108,37 +118,37 @@ i.hgi-stroke { opacity: 0; }
        file these come from reset.scss + the real topbar/nav/hero components;
        here they paint first byte, then lose to those rules by specificity. */
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
-
-    /* Dark page canvas (crit resolves --background-body in dark via the token). */
-    html[data-theme~=dark] { background-color: var(--background-body, #111927); }
-    
-    /* Chrome box bgs — the colored FCP skeleton for topbar + nav. */
-    :where(.nds-topbar) { background-color: var(--background-topbar, #f3f4f6); }
-    :where(.nds-main-nav) { background-color: var(--background-nav, #fff); }
-    html[data-theme~=dark] :where(.nds-topbar) { background-color: var(--background-topbar, #111927); }
-    html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #1f2a37); }
-
-    /* Hero box stand-in (the real hero component owns these in crit). */
-    :where(.nds-hero-section) { position: relative; height: 550px; }
-    :where(.nds-hero-section.nds-sub) { height: auto; min-height: 220px; }
-    :where(.nds-hero-image-wrapper) { position: absolute; inset: 0; }
-    :where(.nds-hero-image) { width: 100%; height: 100%; object-fit: cover; display: block; }
+   /* ── Colors — INLINE-ONLY; the FCP skeleton's fills, grouped for editing (tune the $c-* palette above).
+   Crit paints these via reset.scss + the real topbar/nav/hero components, so they live here only —
+   the inline gate has neither and carries the literal fallbacks, painting before the token layer loads. ── */
+    html { background-color: var(--background-body, #{$c-body-light}); }
+    html[data-theme~=dark] { background-color: var(--background-body, #{$c-body-dark}); }
+    :where(.nds-topbar) { background-color: var(--background-topbar, #{$c-topbar-light}); }
+    html[data-theme~=dark] :where(.nds-topbar) { background-color: var(--background-topbar, #{$c-topbar-dark}); }
+    :where(.nds-main-nav) { background-color: var(--background-nav, #{$c-nav-light}); }
+    html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #{$c-nav-dark}); }
     :where(.nds-hero-image-wrapper)::before {
         content: "";
         position: absolute;
         inset: 0;
-        background: color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, .7) * 100%), transparent);
+        background: color-mix(in srgb, var(--img-overlay-color, #{$c-hero-overlay}) calc(var(--overlay, .7) * 100%), transparent);
         pointer-events: none;
     }
 
-    /* Hero body + wrapper stay hidden until the critical file's reveal
-       (_skeleton.scss) un-hides them; the breadcrumb stays hidden until main's
-       data-nds-loaded reveal (it inits delegated, after that reveal). The
-       section-action is already held by the shared page gate above. */
+    /* ── Bootstraps ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
+
+    /* ── Hero box stand-in (structure; the real hero component owns these in crit) ── */
+    :where(.nds-hero-section) { position: relative; height: 550px; }
+    :where(.nds-hero-section.nds-sub) { height: auto; min-height: 220px; }
+    :where(.nds-hero-image-wrapper) { position: absolute; inset: 0; }
+    :where(.nds-hero-image) { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── Hero body hide (the critical file's reveal in _skeleton.scss un-hides it;
+       the breadcrumb waits for main's data-nds-loaded reveal — inits delegated) ── */
     :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) {
         visibility: hidden;
     }
+
 }
