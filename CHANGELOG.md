@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-07-04
+
+### Added
+- Themes — font-weight seeds (`data-seed-weight-{regular,medium,semibold,bold}` / `--font-weight-*`) for inline custom themes whose brand font reads lighter or heavier than IBM Plex at the same nominal weight.
+- Tokens — `--button-indicator-*` family (one dial for the active-indicator trio, value-identical across light/dark/HC) and `--border-oncolor` (translucent border on colored fills).
+- Dropmenu — trigger stretches to fill a column-flex parent (e.g. a hero action wrap); inline/row contexts unchanged.
+
+### Changed
+- Tokens — design-token layer restructured to enforce the four-tier naming grammar: numeric scale rungs replaced by size names, the `--alpha-*` alias tier folded into palette alphas, color-named/shade-numbered semantic tokens renamed, and several component tokens renamed to the property grammar. Component output is unchanged.
+- Hero — structural styles (position, inset, sizing) moved from inline markup into blocking-crit CSS; markup now emits only per-instance knobs (`--overlay`, `object-position`). The `--overlay` default is unified to `0.7` in CSS (was `0.20` in CSS vs `0.7` in the template/data).
+- Icon — `--icon-primary` now brightens to `primary-400` in dark mode (previously frozen at `primary-600`); primary-colored icons route through it instead of `--text-primary`. A consumer overriding `--icon-primary` globally is now re-bound by NDS in dark theme.
+- Drawer — active/selected item label uses `--text-primary-strong` (`primary-700`) for AA contrast on the neutral-100 surface.
+- Forms — dark-mode input backgrounds on lighter/darker surfaces shift: `--form-field-background-lighter` → `neutral-700`, `--form-field-background-darker` → `neutral-900`.
+
+### Fixed
+- Featured icon — a default `.nds-featured-icon.nds-dark` (no status) filled green in light mode; it now fills the brand color.
+- Slider — focus outline and inner ring scale with thumb size instead of hardcoded widths, staying proportional when the thumb is resized.
+- Core — scroll restoration uses native `'auto'` (pre-paint restore), killing the reload top-flash; hash URLs and back-forward navigation restore correctly.
+- Feedback / Progress — a status-less `.nds-feedback` now renders neutral (info glyph + dark outline brightening) via `var()` defaults; removed a stale progress information-circle override that double-stamped the glyph.
+
+### Migrating from v1.2.0
+
+- Replace the built bundles (`nds-main.min.*` and the loader-injected `nds-delegated`/`nds-extras`, plus the `nds-accessibility`/`nds-showcase`/theme bundles).
+- Token overrides — only consumers who **override or reference NDS token custom properties** in their own CSS are affected; classes and component rendering are otherwise unchanged. See the [Token Migration Reference](TOKEN-MIGRATION.md) for the full old→new name map.
+- Hero — copied hero markup with inline structural styles still works but those styles are now redundant (CSS owns them); a slide that doesn't stamp `--overlay` now renders at `0.7` (was `0.20`) — stamp an explicit value to pin it.
+- Head — v1.2.0 pages shipped an inline critical-gate `<style>` + async-loaded critical `<link>` (preload/`onload` swap + `<noscript>`). A copied `<head>` still works, but the inline snapshot can drift from the 1.3.0 crit file; the canonical, drift-proof setup is a single render-blocking `<link rel="stylesheet" href="assets/css/nds.critical.min.css">` (first paint stays theme/dark-correct). Redundant but harmless if left.
+
 ## [1.2.0] - 2026-07-01
 
 ### Added
