@@ -1139,27 +1139,36 @@
     })();
 
     // ── Scroll restoration ─────────────────────────────────────────────
-    // Deferred main CSS means the page isn't at its final height when the browser
-    // would natively restore a reload's scroll — it lands at the top. data-nds-
-    // loaded is stamped only once main CSS has applied (nds-loader.js) and drops
-    // the off-screen-section content-visibility (_section.scss), so by then every
-    // section is laid out at its real height — restore there and scrollTo is
-    // exact. Reload / back-forward only; a fresh load or #fragment is left to the
-    // browser. (whole-page load = fallback.)
+    // Native restoration stays ON — the browser applies the offset BEFORE first
+    // paint, so a reload never flashes the top of the page (manual mode painted
+    // frame one at 0 and jumped at the stamp). 'auto' is set explicitly: the
+    // mode persists per history entry, so tabs stamped 'manual' by earlier
+    // builds must be unstuck. Native can still land short pre-stamp (cv holds
+    // off-screen sections at 680px estimates, capping reachable height on long
+    // pages), so at data-nds-loaded — cv dropped, heights real — re-pin to the
+    // exact saved offset. Reload: always (native target == ours). Back/forward:
+    // only rescue from 0 — native's per-entry offset beats our per-path save.
+    // pagehide saves the pending y until the re-pin has run, so re-reloading
+    // mid-load can't clobber the position with 0. (whole-page load = fallback.)
     if ('scrollRestoration' in history) {
         const root = document.documentElement;
         const KEY = 'nds-scroll:' + location.pathname;
-        history.scrollRestoration = 'manual';
+        history.scrollRestoration = 'auto';
+        let pending = 0;
         window.addEventListener('pagehide', () => {
-            try { sessionStorage.setItem(KEY, window.scrollY); } catch {}
+            try { sessionStorage.setItem(KEY, window.scrollY || pending); } catch {}
         });
         const navType = (performance.getEntriesByType('navigation')[0] || {}).type;
-        if ((navType === 'reload' || navType === 'back_forward') && !location.hash) {
+        if (navType === 'reload' || navType === 'back_forward') {
             let y = 0;
             try { y = parseInt(sessionStorage.getItem(KEY), 10) || 0; } catch {}
             if (y) {
-                let done = false;
-                const restore = () => { if (done) return; done = true; window.scrollTo(0, y); };
+                pending = y;
+                const restore = () => {
+                    if (!pending) return;
+                    pending = 0;
+                    if (navType === 'reload' || !window.scrollY) window.scrollTo(0, y);
+                };
                 if (root.hasAttribute('data-nds-loaded')) restore();
                 else {
                     const mo = new MutationObserver(() => {
