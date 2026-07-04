@@ -156,7 +156,7 @@
     // to replicate the whole :not/:is chain.
     &:where(:not(.nds-menu-btn, :active, .nds-oncolor)):where([data-state~="active"], [data-state~="selected"]) {
         :where(:root:not([data-theme~="dark"])) & {
-            --btn-color: var(--background-primary);
+            --btn-color: var(--text-primary-strong);
             --btn-indicator-color: var(--background-primary);
             --btn-indicator-selected: var(--background-primary);
         }

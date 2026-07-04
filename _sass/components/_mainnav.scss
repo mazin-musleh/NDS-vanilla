@@ -644,12 +644,6 @@ body.nds-minimal .nds-main-nav {
 
                 }
 
-                /*  &:not(.nds-menu-btn, :active, .nds-oncolor):is([data-state~="active"], [data-state~="selected"], [data-state~="current"]) {
-                    --btn-color: var(--background-primary);
-                    --btn-indicator-color: var(--background-primary);
-                    --btn-indicator-selected: var(--background-primary);
-                } */
-
             }
 
             &:not(.nds-show-more) {

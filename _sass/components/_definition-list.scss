@@ -176,7 +176,7 @@
     margin: 0;
 
     :is(.nds-icon, i) {
-        color: var(--text-primary);
+        color: var(--icon-primary);
         min-width: 18px;
         width: max(18px, var(--_dl-icon-size));
         height: max(18px, var(--_dl-icon-size));

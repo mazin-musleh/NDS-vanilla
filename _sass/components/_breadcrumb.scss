@@ -20,11 +20,7 @@
     display: flex;
     align-items: center;
     color: var(--text-secondary-paragraph);
-
-    /* Disabled-token color fails AA contrast for the current-page crumb */
-    /* &:last-child {
-        color: var(--text-default-disabled);
-    } */
+    // current-page crumb keeps this color; disabled-token color fails AA here
 }
 
 /* ========================================

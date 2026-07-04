@@ -23,7 +23,7 @@
   --_featuredicon-size: var(--featuredicon-size, 40px);
   --_featuredicon-bg: var(--featuredicon-bg, var(--featuredicons-background-primary-light));
   --_featuredicon-color: var(--featuredicon-color, var(--featuredicons-icon-primary));
-  --_featuredicon-dark-bg: var(--featuredicon-dark-bg, var(--background-success));
+  --_featuredicon-dark-bg: var(--featuredicon-dark-bg, var(--background-primary));
   --_featuredicon-radius: var(--featuredicon-radius, calc((var(--_featuredicon-size) / 4) - 2px));
 
   display: inline-flex;
