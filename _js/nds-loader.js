@@ -24,8 +24,8 @@
         },
         {
             // Deferred: the saved theme is stamped pre-paint by the inline FOUC
-            // script (head-inline-scripts.html) and the render-blocking critical CSS
-            // resolves the theme/dark tokens, so first paint is correct with no JS.
+            // script (head-inline-scripts.html) and critical-inline CSS paints the
+            // [data-theme="dark"] body/hero bg, so first paint is correct with no JS.
             // init() only syncs toggle-widget UI (icon/checkbox/aria) and wires the
             // toggle — no page-color repaint; theme application fires on interaction.
             name: 'Theme',

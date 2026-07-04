@@ -22,9 +22,17 @@
     {%- endif -%}
     {%- endif -%}
     {%- endif -%}
-    {%- comment -%} Critical CSS — render-blocking so first paint has the real tokens (theme + dark resolve before paint, no flash); small, high-priority, cacheable across pages. {%- endcomment -%}
+    {%- comment -%} Critical CSS. Default: render-blocking <link> (fastest LCP/FCP on slow networks, cacheable across pages). Opt in to the inline skeleton gate + async crit with `critical_inline: true` (site or page) — non-blocking first paint; the gate is auto-generated from _sass/_fold.scss so it can't drift from the crit file. {%- endcomment -%}
+    {%- if site.critical_inline or page.critical_inline -%}
+    {%- include critical-inline.html -%}
+    <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="high"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+    </noscript>
+    {%- else -%}
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-
+    {%- endif -%}
     {%- if site.brand %}
     <!-- Default stylesheet theme: render-blocking so it resolves before paint (no flash). Only stylesheet themes need their own file; seed themes ride the [data-palette] slot in critical. -->
     {%- assign _brands_flat = "" | split: "" -%}{%- for _g in site.data.themes -%}{%- assign _brands_flat = _brands_flat | concat: _g.list -%}{%- endfor -%}

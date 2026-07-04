@@ -25,6 +25,9 @@ direction: ltr
                         <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-setup-js" id="tab-setup-js">
                             <span class="nds-tab-label">JavaScript</span>
                         </button>
+                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-setup-gate" id="tab-setup-gate">
+                            <span class="nds-tab-label">Critical Gate</span>
+                        </button>
                     </nav>
                     <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                     </button>
@@ -44,25 +47,24 @@ direction: ltr
   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
   &lt;title&gt;Page Title&lt;/title&gt;
 
-  &lt;!-- Critical CSS — render-blocking so the real tokens resolve before first paint. --&gt;
-  &lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver=1.1.0"&gt;
+  &lt;!-- Critical CSS — render-blocking, so first paint has the real tokens (no flash). --&gt;
+  &lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver=1.3.0"&gt;
 
-  &lt;!-- Main CSS, deferred. Pulls in the icon sheets once it loads. --&gt;
-  &lt;link rel="preload" href="assets/css/nds-main.min.css?ver=1.1.0" as="style"
+  &lt;!-- Main CSS — deferred; loads the icon sheets once it applies. --&gt;
+  &lt;link rel="preload" href="assets/css/nds-main.min.css?ver=1.3.0" as="style"
         onload="this.onload=null;this.rel='stylesheet';window.loadDeferredAssets?loadDeferredAssets():window.__ndsDeferredPending=true"&gt;
-  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-main.min.css?ver=1.1.0"&gt;&lt;/noscript&gt;
-  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-icons.min.css?ver=1.1.0"&gt;&lt;/noscript&gt;
-  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/hgi-rounded-stroke-min.css?ver=1.1.0"&gt;&lt;/noscript&gt;
+  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-main.min.css?ver=1.3.0"&gt;&lt;/noscript&gt;
+  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-icons.min.css?ver=1.3.0"&gt;&lt;/noscript&gt;
+  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/hgi-rounded-stroke-min.css?ver=1.3.0"&gt;&lt;/noscript&gt;
 
   &lt;link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg"&gt;
 
-  &lt;!-- Inline scripts: see the JavaScript tab. --&gt;
-  &lt;script&gt;/* theme guard */&lt;/script&gt;
-  &lt;script&gt;/* loadDeferredAssets */&lt;/script&gt;
+  &lt;!-- Inline scripts — theme guard (no light-to-dark flip) + loadDeferredAssets. Copy from the JavaScript tab. --&gt;
+  &lt;script&gt;/* theme guard + loadDeferredAssets — see the JavaScript tab */&lt;/script&gt;
 &lt;/head&gt;
 
 &lt;!-- ...page content... then just before &lt;/body&gt;: --&gt;
-&lt;script defer src="assets/js/nds-main.min.js?ver=1.1.0"&gt;&lt;/script&gt;
+&lt;script defer src="assets/js/nds-main.min.js?ver=1.3.0"&gt;&lt;/script&gt;
                             </code>
                         </div>
                     </div>
@@ -90,13 +92,13 @@ direction: ltr
 function loadDeferredAssets() {
   var icons = document.createElement('link');
   icons.rel = 'stylesheet';
-  icons.href = 'assets/css/nds-icons.min.css?ver=1.1.0';
+  icons.href = 'assets/css/nds-icons.min.css?ver=1.3.0';
   icons.onload = function () { document.documentElement.setAttribute('data-nds-icons-loaded', ''); };
   document.head.appendChild(icons);
 
   var hgi = document.createElement('link');
   hgi.rel = 'stylesheet';
-  hgi.href = 'assets/css/hgi-rounded-stroke-min.css?ver=1.1.0';
+  hgi.href = 'assets/css/hgi-rounded-stroke-min.css?ver=1.3.0';
   document.head.appendChild(hgi);
 }
 if (window.__ndsDeferredPending) loadDeferredAssets();
@@ -104,9 +106,60 @@ if (window.__ndsDeferredPending) loadDeferredAssets();
                         </div>
                     </div>
 
+                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-gate" aria-labelledby="tab-setup-gate" hidden>
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
+                            <code class="lang-css code">
+/* Optional inline critical gate — paste into an inline &lt;style&gt; in &lt;head&gt;, */
+/* then load the critical CSS async (see the note under the tabs). */
+html { background-color: var(--background-body, #f9fafb); }
+html :where(header) { display: contents; }
+html :where(.nds-topbar) { height: 40px; }
+html :where(.nds-main-nav) { height: var(--nds-nav-height, 72px); }
+html .nds-swiper.nds-hero:not([data-nds-swiper-initialized]) .nds-swiper-slide:not(:first-child) { display: none; }
+:where(.nds-topbar &gt; *, .nds-main-nav &gt; *, .nds-hero-section .nds-section-action, .nds-content-layout, .nds-user-feedback-section, .nds-accessibility-toggle, .nds-footer) { visibility: hidden; }
+html:not([data-nds-loaded]) main { overflow-x: clip; }
+:root { --nds-icons-opacity: 0; }
+i.hgi-stroke { opacity: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
+html[data-theme~=dark] { background-color: var(--background-body, #111927); }
+:where(.nds-topbar) { background-color: var(--background-topbar, #f3f4f6); }
+:where(.nds-main-nav) { background-color: var(--background-nav, #fff); }
+html[data-theme~=dark] :where(.nds-topbar) { background-color: var(--background-topbar, #111927); }
+html[data-theme~=dark] :where(.nds-main-nav) { background-color: var(--background-nav, #1f2a37); }
+:where(.nds-hero-section) { position: relative; height: 550px; }
+:where(.nds-hero-section.nds-sub) { height: auto; min-height: 220px; }
+:where(.nds-hero-image-wrapper) { position: absolute; inset: 0; }
+:where(.nds-hero-image) { width: 100%; height: 100%; object-fit: cover; display: block; }
+:where(.nds-hero-image-wrapper)::before { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--img-overlay-color, #092a1e) calc(var(--overlay, 0.7) * 100%), transparent); pointer-events: none; }
+:where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) { visibility: hidden; }
+                            </code>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <p>The critical CSS loads render-blocking so first paint has the real tokens — theme and dark mode resolve before anything shows, so there's no flash. It's small and high-priority, and caches across pages. The main bundle then loads deferred and gates the page reveal until component styles are ready.</p>
+            <p>The HTML tab loads critical CSS <strong>render-blocking</strong> — the simplest setup, and first paint already carries the real tokens so there's no flash. <strong>The inline gate is optional.</strong> For a non-blocking first paint (better FCP on slow networks), drop the inline <code class="nds-inline-code lang-html">&lt;style&gt;</code> gate from the Critical Gate tab into <code class="nds-inline-code lang-html">&lt;head&gt;</code> and swap the render-blocking critical <code class="nds-inline-code lang-html">&lt;link&gt;</code> for the async version:</p>
+            <div class="nds-code nds-expandable">
+                <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                        <i class="nds-icon nds-hgi-copy-01"></i>
+                    </button>
+                </div>
+                <div class="nds-expandable-content">
+                    <code class="lang-html code">
+&lt;link rel="preload" href="assets/css/nds.critical.min.css?ver=1.3.0" as="style"
+      onload="this.onload=null;this.rel='stylesheet'"&gt;
+&lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver=1.3.0"&gt;&lt;/noscript&gt;
+                    </code>
+                </div>
+            </div>
+            <p>The gate hides above-the-fold chrome until styles land, so async loading never flashes.</p>
         </div>
     </div>
 </section>
@@ -122,7 +175,7 @@ if (window.__ndsDeferredPending) loadDeferredAssets();
             <table class="nds-table nds-responsive">
                 <thead><tr><th>File</th><th>Contents</th><th>Loading</th></tr></thead>
                 <tbody>
-                    <tr><td><code class="nds-inline-code lang-html">nds.critical.min.css</code></td><td>Tokens, reset, fonts, hero, fold gate</td><td>Render-blocking</td></tr>
+                    <tr><td><code class="nds-inline-code lang-html">nds.critical.min.css</code></td><td>Tokens, reset, fonts, hero, gate</td><td>Render-blocking (or async behind the gate)</td></tr>
                     <tr><td><code class="nds-inline-code lang-html">nds-main.min.css</code></td><td>All component and layout styles</td><td>Deferred; gates the page reveal</td></tr>
                     <tr><td><code class="nds-inline-code lang-html">nds-icons.min.css</code></td><td>UI icons (<code class="nds-inline-code lang-html">nds-icon</code>)</td><td>Loaded after main CSS</td></tr>
                     <tr><td><code class="nds-inline-code lang-html">hgi-rounded-stroke-min.css</code></td><td>Content icon font (<code class="nds-inline-code lang-html">hgi hgi-stroke</code>)</td><td>Loaded after main CSS</td></tr>
