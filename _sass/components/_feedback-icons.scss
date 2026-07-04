@@ -247,3 +247,17 @@
             inset 0 0 0 var(--_feedback-ring-inset) var(--_feedback-ring);
     }
 }
+
+// A status-less standalone feedback renders the neutral style. The shared
+// bare-icon defaults leave the symbol transparent (inert for icon-only chips
+// elsewhere) and skip neutral's dark outline-glyph brightening — restore both
+// here, scoped to .nds-feedback. These sit in the var() DEFAULT, so any real
+// status (own or inherited from a parent) sets the public token and wins,
+// leaving parent-status inheritance intact.
+.nds-feedback .nds-feedback-icon {
+    --_feedback-icon-symbol: var(--feedback-icon-symbol, var(--nds-icon-solid-info));
+
+    @include dark {
+        --_feedback-color: var(--feedback-color, var(--colors-neutral-300));
+    }
+}

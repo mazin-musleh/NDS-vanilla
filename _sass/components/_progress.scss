@@ -177,13 +177,10 @@
   }
 
   // ─── Feedback (uses .nds-feedback component) ───
-  // Always visible inside progress, defaults to info icon
+  // Always visible inside the bar; with no status it renders the feedback
+  // component's own neutral icon — no per-progress shape/color override.
   .nds-feedback {
     display: flex;
-  }
-
-  &:not([data-status]) .nds-feedback .nds-icon {
-    --nds-icon: var(--nds-icon-information-circle);
   }
 
   // ─── Size variants ───

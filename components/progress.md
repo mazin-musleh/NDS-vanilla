@@ -90,7 +90,7 @@ direction: ltr
                                         stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" />
                                 </svg>
                                 <div class="nds-progress-info">
-                                    <span class="nds-feedback nds-sm">
+                                    <span class="nds-feedback">
                                         <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                                     </span>
                                     <span class="nds-progress-percentage">
@@ -130,7 +130,7 @@ direction: ltr
       stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round" /&gt;
   &lt;/svg&gt;
   &lt;div class="nds-progress-info"&gt;
-    &lt;span class="nds-feedback nds-sm"&gt;
+    &lt;span class="nds-feedback"&gt;
       &lt;span class="nds-feedback-icon"&gt;&lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;&lt;/span&gt;
     &lt;/span&gt;
     &lt;span class="nds-progress-percentage"&gt;
