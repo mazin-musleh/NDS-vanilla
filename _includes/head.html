@@ -22,7 +22,7 @@
     {%- endif -%}
     {%- endif -%}
     {%- endif -%}
-    {%- comment -%} Critical CSS. Default: render-blocking <link> (fastest LCP/FCP on slow networks, cacheable across pages). Opt in to the inline skeleton gate + async crit with `critical_inline: true` (site or page) — non-blocking first paint; the gate is auto-generated from _sass/_fold.scss so it can't drift from the crit file. {%- endcomment -%}
+    {%- comment -%} Critical CSS. Default: render-blocking <link> (simplest head, cacheable across pages). `critical_inline: true` (site or page): inline skeleton gate + async crit — non-blocking first paint; the gate is auto-generated from _sass/_fold.scss so it can't drift from the crit file. `critical_inline: minimal`: one-line body hold + async crit — nothing paints until crit lands, then reveals fully styled (release ships in crit, _sass/_skeleton.scss). {%- endcomment -%}
     {%- if site.critical_inline or page.critical_inline -%}
     {%- include critical-inline.html -%}
     <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="high"
