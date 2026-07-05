@@ -39,7 +39,7 @@
   --_card-radius: var(--card-radius, var(--radius-lg));
   --_card-text: var(--card-text, var(--text-display));
   --_card-title: var(--card-title, var(--text-display));
-  --_card-subtitle: var(--card-subtitle, var(--text-primary));
+  --_card-subtitle: var(--card-subtitle, var(--text-primary-paragraph));
   --_card-number: var(--card-number, var(--text-primary-strong));
   --_card-icon: var(--featuredicon-color, var(--featuredicons-icon-primary));
   --_card-icon-bg: var(--featuredicon-bg, var(--featuredicons-background-primary-light));
@@ -74,6 +74,10 @@
 
     &:not(.nds-stroke) {
       border: 1px solid var(--border-neutral-tertiary);
+
+      &.nds-oncolor {
+        border-color: var(--colors-alpha-white-10);
+      }
     }
   }
 
@@ -103,7 +107,6 @@
 
     @include dark {
       --card-bg-hover: var(--colors-primary-alpha-20);
-      --card-title: var(--colors-primary-400);
     }
   }
 
@@ -390,7 +393,6 @@
     --card-border-hover: var(--colors-neutral-500);
     --card-border-active: var(--colors-neutral-300);
     --card-title: var(--colors-neutral-800);
-    --card-subtitle: var(--colors-neutral-600);
     --card-number: var(--colors-neutral-600);
     --featuredicon-color: var(--colors-neutral-600); // softer than the core's neutral-700
 
@@ -403,7 +405,6 @@
 
     @include dark {
       --card-title: var(--colors-neutral-200);
-      --card-subtitle: var(--colors-neutral-400);
       --card-number: var(--colors-neutral-400);
       --featuredicon-color: var(--colors-neutral-400);
 
@@ -419,7 +420,6 @@
     --card-border-hover: var(--colors-yellow-600);
     --card-border-active: var(--colors-yellow-300);
     --card-title: var(--text-warning);
-    --card-subtitle: var(--text-warning);
     --card-number: var(--text-warning);
 
     &.nds-color {
@@ -441,7 +441,6 @@
     --card-border-hover: var(--colors-red-600);
     --card-border-active: var(--colors-red-300);
     --card-title: var(--text-error);
-    --card-subtitle: var(--text-error);
     --card-number: var(--text-error);
 
     &.nds-color {
@@ -463,7 +462,6 @@
     --card-border-hover: var(--colors-blue-600);
     --card-border-active: var(--colors-blue-300);
     --card-title: var(--text-info);
-    --card-subtitle: var(--text-info);
     --card-number: var(--text-info);
 
     &.nds-color {
@@ -485,7 +483,6 @@
     --card-border-hover: var(--colors-green-600);
     --card-border-active: var(--colors-green-300);
     --card-title: var(--text-success);
-    --card-subtitle: var(--text-success);
     --card-number: var(--text-success);
 
     &.nds-color {
