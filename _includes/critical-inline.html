@@ -1,19 +1,7 @@
 {%- comment -%}
-  The inline crit gate, in the mode picked by `critical_inline` (page value wins):
-  • true    — full skeleton gate, AUTO-GENERATED from _sass/_fold.scss — do not
-              hand-edit (the $inline:true compile layers the pre-crit bootstraps +
-              literal token fallbacks on top of the shared fold block that also
-              feeds the critical file). Paints a real above-fold skeleton before
-              crit lands.
-  • minimal — one-line body hold: nothing paints until crit lands, then the page
-              reveals fully styled and themed (zero theme flash by construction).
-              Self-releasing via --nds-crit-reveal (crit defines it visible, see
-              _sass/_skeleton.scss) — same signal the swiper holds against; no
-              added crit rule.
+  AUTO-GENERATED from _sass/_fold.scss — do not hand-edit.
+  The $inline:true compile layers the pre-crit bootstraps + literal token
+  fallbacks on top of the shared fold block that also feeds the critical file
+  (_skeleton.scss @use 'fold'). Edit _sass/_fold.scss, then rebuild.
 {%- endcomment -%}
-{%- assign _gate = page.critical_inline | default: site.critical_inline -%}
-{%- if _gate == 'minimal' -%}
-<style>:where(body){visibility:var(--nds-crit-reveal,hidden);overflow-x:var(--nds-crit-reveal,hidden)}</style>
-{%- else -%}
 <style>{%- capture _fold_css -%}@use "fold" with ($inline: true);{%- endcapture -%}{{ _fold_css | scssify }}</style>
-{%- endif -%}

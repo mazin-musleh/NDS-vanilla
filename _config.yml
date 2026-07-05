@@ -26,14 +26,12 @@ brand_switcher: true
 accessibility: true
 
 # Critical-CSS load mode. Default (false): the critical file loads render-blocking
-# (<link rel="stylesheet">) — simplest head, cacheable across pages. `true`: inline
-# skeleton gate (auto-generated from _sass/_fold.scss, so it never drifts from the
-# crit file) + async crit — paints a real above-fold skeleton before crit lands.
-# `minimal`: one-line body hold + async crit — nothing paints until crit lands,
-# then the page reveals fully styled and themed (zero theme flash; release ships
-# in crit via _sass/_skeleton.scss). Page front matter can override per page with
-# `critical_inline: true|minimal`.
-critical_inline: minimal
+# (<link rel="stylesheet">) — fastest LCP/FCP on slow networks and cacheable across
+# pages. Set true to instead ship an inline skeleton gate (auto-generated from
+# _sass/_fold.scss, so it never drifts from the crit file) and load the crit file
+# async — non-blocking first paint, for consumers who prefer it. Page front matter
+# can opt a single page in with `critical_inline: true`.
+critical_inline: true
 
 # Default brand (re-branding). Empty = the built-in DGA default brand (no extra
 # request). Set to a name matching assets/css/nds-theme-<name>.min.css to load
