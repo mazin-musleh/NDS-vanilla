@@ -231,6 +231,22 @@ NDS.UserFeedback = (() => {
                 }
 
                 showStatus('success');
+
+                // Sticky-nav-aware scroll: mirrors nds-pagination scrollToContent —
+                // early-returns when the target is already below the sticky nav,
+                // so short forms don't jump on submit.
+                const target = feedbackComponent.closest('section') || feedbackComponent;
+                const nav = document.querySelector('.nds-main-nav');
+                const navHeight = nav ? nav.offsetHeight : 72;
+                const targetTop = target.getBoundingClientRect().top;
+                if (targetTop < navHeight) {
+                    const offsetVar = parseFloat(getComputedStyle(feedbackComponent).getPropertyValue('--userfeedback-scroll-offset'));
+                    const offset = Number.isFinite(offsetVar) ? offsetVar : 120;
+                    window.scrollTo({
+                        top: targetTop + window.pageYOffset - navHeight - offset,
+                        behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth'
+                    });
+                }
             }, { signal: _ufSignal });
         }
 
