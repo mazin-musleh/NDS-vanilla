@@ -93,6 +93,10 @@ direction: ltr
                                 <span class="nds-label">Dark</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-subtle", ".nds-featured-icon", "iconStyle"]'>
+                                <span class="nds-label">Subtle</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
                             </button>

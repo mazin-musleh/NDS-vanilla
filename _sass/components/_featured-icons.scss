@@ -83,6 +83,14 @@
     border: 2px solid currentColor;
   }
 
+  &.nds-subtle {
+    background-color: transparent;
+    padding: 0;
+    overflow: visible;
+    font-size: var(--_featuredicon-size) !important;
+    line-height: 1 !important;
+  }
+
   &.nds-dark {
     background-color: var(--_featuredicon-dark-bg);
     border: 2px solid transparent;
