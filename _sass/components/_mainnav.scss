@@ -43,9 +43,9 @@
     //   1. .nds-collapse .nds-dropdown — desktop dropdown
     //   2. .nds-collapse — mobile hamburger panel
     //   3. .nds-nav-minimal .nds-dropdown — minimal nav dropdown
-    &:not( :has(.nds-collapse .nds-dropdown[data-state~="open"]),
-        :has(.nds-collapse[data-state~="open"]),
-        :has(.nds-nav-minimal .nds-dropdown[data-state~="open"])) {
+    &:not(:has(.nds-collapse .nds-dropdown[data-state~="open"],
+        .nds-collapse[data-state~="open"],
+        .nds-nav-minimal .nds-dropdown[data-state~="open"])) {
         overflow-x: clip;
     }
 

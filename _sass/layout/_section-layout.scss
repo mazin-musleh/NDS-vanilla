@@ -380,7 +380,7 @@
 /* ── Horizontal layout ── */
 
 @include desktop(min) {
-    :is(.nds-content-section, .nds-hero-section).nds-horizontal>.nds-section-wrapper {
+    :is(.nds-hero-section, .nds-content-section).nds-horizontal>.nds-section-wrapper {
 
         &:not(.nds-grid) {
             display: grid;

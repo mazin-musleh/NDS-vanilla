@@ -2,24 +2,6 @@
 // NDS UTILITIES - Bootstrap 5 Inspired
 // ==============================================
 @use './mixins' as *;
-@use 'sass:map';
-
-// Generate spacing utilities using NDS spacing tokens
-// Pattern: {property}{sides?}-{breakpoint?}-{size}
-// Following Bootstrap 5 exact naming conventions
-
-// Spacing map - numeric NDS tokens only
-$spacers: (
-  0: var(--spacing-none),
-  1: var(--spacing-xs),
-  2: var(--spacing-md),
-  3: var(--spacing-lg),
-  4: var(--spacing-xl),
-  5: var(--spacing-2xl)
-);
-
-// Use only numeric spacers
-$all-spacers: $spacers;
 
 // ==============================================
 // NDS FLEX UTILITY
