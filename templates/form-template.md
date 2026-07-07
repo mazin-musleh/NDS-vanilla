@@ -96,8 +96,8 @@ sidemenu_mode: false
                                 <div class="nds-form-action">
                                     <button type="button" class="nds-btn nds-subtle nds-cooldown"
                                         id="ft-otp-resend"
-                                        data-cooldown="30"
-                                        data-cooldown-loading="3"
+                                        data-cooldown="5"
+                                        data-cooldown-loading="1.5"
                                         data-cooldown-label="Resend in {s}s"
                                         data-resend-label="Resend"
                                         data-sent-title="Verification code sent"
@@ -364,7 +364,7 @@ sidemenu_mode: false
             </form>
         </div>
 
-        <aside class="nds-sideinfo nds-sticky nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
+        <aside class="nds-sideinfo nds-sticky nds-sticky-md nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
             <!-- Vertical fallback (tablet + desktop) with a radial override on
                  mobile so the 4-step flow stays compact on small screens. -->
             <div class="nds-stepper nds-radial nds-vertical-lg"
@@ -438,6 +438,9 @@ sidemenu_mode: false
         const panels = document.querySelectorAll('[data-form-step]');
 
         const requiredNotice = document.querySelector('#formTemplate .nds-required-notice');
+        const mainContent = document.querySelector('#formTemplate .nds-info-content');
+        const mainNav = document.querySelector('.nds-main-nav');
+        const reducedMotionMQL = window.matchMedia('(prefers-reduced-motion: reduce)');
 
         function showPanel(step) {
             panels.forEach(p => {
@@ -445,22 +448,19 @@ sidemenu_mode: false
             });
             // The success panel has no required fields, so hide the notice there.
             if (requiredNotice) requiredNotice.hidden = step === 4;
-            // Same scroll-to-top semantics as nds-pagination.js: only scroll when
-            // the form top is hidden behind the sticky nav, and offset by nav height.
-            const main = document.querySelector('#formTemplate .nds-info-content');
-            if (main) {
-                const nav = document.querySelector('.nds-main-nav');
-                const navHeight = nav ? nav.offsetHeight : 72;
-                const targetTop = main.getBoundingClientRect().top;
+            // Same scroll-to-top semantics as nds-pagination.js: only scroll
+            // when the form top is hidden behind the sticky main nav.
+            if (mainContent) {
+                const navHeight = mainNav ? mainNav.offsetHeight : 72;
+                const targetTop = mainContent.getBoundingClientRect().top;
                 if (targetTop < navHeight) {
-                    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                     window.scrollTo({
                         top: targetTop + window.pageYOffset - navHeight - 16,
-                        behavior: reduced ? 'auto' : 'smooth'
+                        behavior: reducedMotionMQL.matches ? 'auto' : 'smooth'
                     });
                 }
             }
-            const panel = document.querySelector('#form-template [data-form-step]:not([hidden])');
+            const panel = document.querySelector('#formTemplate [data-form-step]:not([hidden])');
             if (panel) focusNext(panel);
         }
 

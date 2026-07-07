@@ -28,6 +28,7 @@
         top: var(--_sideinfo-sticky-top);
         height: fit-content;
         --card-width: 100%;
+        background-color: var(--background-menu);
 
         @include tablet(max) {
             top: unset;
@@ -41,6 +42,30 @@
                 position: static;
                 top: unset;
             }
+        }
+
+        // Opt-in below-desktop pinning: pair with .nds-sticky to keep the
+        // sideinfo sticky as a full-width strip below the main nav.
+        //   .nds-sticky-sm → pinned at mobile only (≤600)
+        //   .nds-sticky-md → pinned at tablet-max (≤960, includes mobile)
+        @mixin _sideinfo-pin {
+            position: sticky;
+            top: calc(var(--nds-nav-height));
+            padding-block: var(--spacing-xl);
+            padding-inline: var(--nds-viewport-padding);
+            margin-block-start: calc(var(--spacing-4xl) * -1);
+            width: 100vw !important;
+            margin-inline: calc(50% - 50vw);
+            box-shadow: var(--shadow-md);
+            z-index: 999;
+        }
+
+        &.nds-sticky.nds-sticky-sm {
+            @include mobile { @include _sideinfo-pin; }
+        }
+
+        &.nds-sticky.nds-sticky-md {
+            @include tablet(max) { @include _sideinfo-pin; }
         }
 
         &.nds-top {
