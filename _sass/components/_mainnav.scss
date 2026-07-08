@@ -76,6 +76,13 @@
             max-width: unset;
         }
 
+        // Flatten the brand logo to a white silhouette on the dark nav bg
+        // (opt-in via .nds-oncolor on the brand link). Above-the-fold crit +
+        // inline-gate mirror lives in _fold.scss so it paints inverted from byte 0.
+        :root[data-theme~="dark"] &.nds-oncolor :is(img, svg) {
+            filter: brightness(0) invert(1);
+        }
+
         .nds-brand-name {
             // No visibility here: it inherits from .nds-brand, which crit
             // reveals (_skeleton.scss). Setting visible would leak the name

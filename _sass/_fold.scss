@@ -75,6 +75,14 @@ html {
        needed here, and it covers the gap before data-nds-loaded too. */
 }
 
+/* Brand logo → white silhouette on the dark nav bg (opt-in via .nds-oncolor on
+   the brand link). Literal filter — no token, identical inline and crit — so the
+   dark logo paints inverted from byte 0 and never flashes. Steady state (light
+   default, non-crit) lives in _mainnav.scss. */
+html[data-theme~=dark] :where(.nds-main-nav .nds-brand.nds-oncolor :is(img, svg)) {
+    filter: brightness(0) invert(1);
+}
+
 /* ── Hide gate ──
    THE page gate: everything listed stays hidden until its matching reveal in
    nds-main.min.scss lands — most chrome at html[data-nds-loaded] (after the

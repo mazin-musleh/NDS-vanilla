@@ -11,7 +11,7 @@
         {%- assign brand_slogan_color = nav_data.brandSloganColor | default: site.brandSloganColor -%}
         {%- assign site_title = page.siteTitle | default: site.title -%}
 
-        <a href="{{ '/' | relative_url }}" class="nds-brand">
+        <a href="{{ '/' | relative_url }}" class="nds-brand nds-oncolor">
             {%- if brand_logo %}
             <img class="nds-brand-logo" src="{{ brand_logo | relative_url }}"
                 width="{{ brand_width }}" height="{{ brand_height }}" loading="lazy" alt="{{ site_title }} Logo">
