@@ -1856,6 +1856,18 @@
             return container;
         }
 
+        // Form mode: a filter's surfaces are linked by data-filter-target, not
+        // by nesting, so generated controls may live anywhere on the page.
+        // Associate them with the submission form via HTML's native `form`
+        // attribute so FormData/GET submissions include them (matching the
+        // Apply button's association in _bindApplyButton). No-op outside form
+        // mode or when the form has no id to reference.
+        _associateWithForm(input) {
+            if (this.isFormMode && this.submissionForm.id) {
+                input.setAttribute('form', this.submissionForm.id);
+            }
+        }
+
         // Build one .nds-form-container holding a single checkbox / radio /
         // switch input for `value`. `index` drives the id and "All"-option
         // detection; `ctx` carries the shared per-group settings.
@@ -1900,6 +1912,7 @@
                 input.name = `filter-${filterName}`;
                 input.value = value;
                 input.className = 'nds-switch-input';
+                this._associateWithForm(input);
 
                 const track = document.createElement('div');
                 track.className = 'nds-switch-track';
@@ -1919,6 +1932,7 @@
                 input.name = inputType === 'radio' ? groupName : `filter-${filterName}`;
                 input.value = value;
                 input.className = inputClass;
+                this._associateWithForm(input);
                 if (variant) {
                     input.classList.add(variant);
                 }
