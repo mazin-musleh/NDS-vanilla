@@ -16,7 +16,6 @@
     // Submission states — set on the anchor by nds-filter.js while a form
     // submits; the success/error rings land on whichever search input exists.
     &[data-state~="submitting"] {
-        opacity: 0.7;
         pointer-events: none;
     }
     &[data-status="success"] :is(.nds-search-input, .nds-form-control input) {

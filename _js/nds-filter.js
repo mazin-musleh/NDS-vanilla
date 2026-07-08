@@ -283,6 +283,7 @@
             }
 
             NDS.State.set(this.filterContainer, 'submitting');
+            this._showTriggerLoading();
 
             this.filterContainer.dispatchEvent(new CustomEvent('nds:formValid', {
                 detail: {}
@@ -315,6 +316,7 @@
             if (!this.filterContainer.dispatchEvent(ajaxEvent)) return;
 
             NDS.State.set(this.filterContainer, 'submitting');
+            this._showTriggerLoading();
             NDS.Status.clear(this.filterContainer);
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
 
@@ -460,6 +462,7 @@
 
             NDS.Status.set(this.filterContainer, 'success');
             NDS.State.clear(this.filterContainer);
+            if (this._triggerBtn) { NDS.State.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
 
             this.updateUrlParams();
             this.updateFilterButtonLabel();
@@ -492,6 +495,7 @@
 
             NDS.Status.set(this.filterContainer, 'error');
             NDS.State.clear(this.filterContainer);
+            if (this._triggerBtn) { NDS.State.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
 
             this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
                 detail: {
@@ -698,10 +702,12 @@
                 this._syncSearchFromDropmenu();
 
                 // In form mode, trigger submission programmatically so it works
-                // even if the button isn't natively form-associated.
+                // even if the button isn't natively form-associated. Spin the
+                // always-visible filter trigger, not this apply button — the
+                // dropmenu closes on apply and hides it.
                 if (this.isFormMode) {
                     e.preventDefault();
-                    this.submitForm();
+                    this.submitForm(this._resolveFilterBtn() || this.applyButton);
                     return;
                 }
 
@@ -804,14 +810,17 @@
             }
         }
 
-        updateFilterButtonLabel() {
-            // Cache the button ref on first call; this method fires on every
-            // filter change, so we avoid re-walking the DOM each time.
+        // The always-visible filter dropmenu trigger (.nds-filter-btn). Cached on
+        // first resolve — walked once, not on every filter change.
+        _resolveFilterBtn() {
             if (this.filterButtonEl === undefined) {
                 this.filterButtonEl = this.query('.nds-filter-btn, [data-filter-btn], .filter-btn');
             }
+            return this.filterButtonEl;
+        }
 
-            const filterBtn = this.filterButtonEl;
+        updateFilterButtonLabel() {
+            const filterBtn = this._resolveFilterBtn();
             if (!filterBtn) return;
 
             if (!this.filterButtonBaseLabel) {
@@ -1230,6 +1239,7 @@
             const searchBtn = searchContainer?.querySelector(
                 'button.nds-search-btn, button[type="submit"], button:has(.nds-hgi-search-01)'
             );
+            this.directSearchBtn = searchBtn || null;
 
             searchInput.addEventListener('input', () => {
                 if (clearBtn) {
@@ -1271,9 +1281,9 @@
                 this.updateApplyButtonLabel();
             }
 
-            // In form mode, submit the form directly
+            // In form mode, submit the form directly (spinner on the search button)
             if (this.isFormMode) {
-                this.submitForm();
+                this.submitForm(this.directSearchBtn);
                 return;
             }
 
@@ -1284,8 +1294,23 @@
         /**
          * Submit the form (only called from user actions, not programmatically)
          */
-        submitForm() {
+        // Spin the current trigger button, first clearing any other trigger that
+        // was left spinning by an overlapping submit — only one spins at a time.
+        // Clear-then-add are adjacent here so the current button always ends up
+        // stamped (never removed-without-re-add).
+        _showTriggerLoading() {
+            [this.filterButtonEl, this.directSearchBtn].forEach(btn => {
+                if (btn && btn !== this._triggerBtn) NDS.State.remove(btn, 'loading');
+            });
+            if (this._triggerBtn) NDS.State.add(this._triggerBtn, 'loading');
+        }
+
+        submitForm(triggerBtn) {
             if (!this.submissionForm) return;
+            // Track which button triggered this submit so its spinner shows at
+            // submit and clears via the AJAX lifecycle (native submits self-clear
+            // on navigation). null for programmatic submits with no button.
+            this._triggerBtn = triggerBtn || null;
 
             // Dismiss any feedback in filter container
             // Soft dependency — filter skips feedback dismissal if NDS.Feedback isn't bundled.
