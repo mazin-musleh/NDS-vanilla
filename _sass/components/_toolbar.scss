@@ -1,0 +1,119 @@
+/**
+ * NDS Toolbar Component
+ * Layout only — a controls row above any content region (table, list, grid).
+ * It owns no state and no behavior. Two clusters bracket it: .nds-bar-info
+ * leads, .nds-bar-actions trails, and the search / filter / sort surfaces sit
+ * between them.
+ *
+ * Every element inside a cluster is a self-contained widget that wires itself
+ * to its own component — the bar never mediates. .nds-bar-info takes whatever
+ * a page needs to report: a [data-filter-count] slot, a [data-filter-query]
+ * keyword, a record count, a selected-rows summary. .nds-bar-actions takes the
+ * controls: an export group, a column-visibility menu, bulk actions.
+ *
+ * A bar wraps its items by default. Wrap them in .nds-bar-row instead to pin an
+ * explicit line — a row lays out exactly like the bar, so clusters and search
+ * surfaces behave the same inside one. Stack rows for a multi-row bar.
+ *
+ * Filter, export and pagination all self-wire by target, so they'd work anywhere
+ * on the page — a consumer can hand-roll a bar with nds-grid/nds-flex. This is
+ * the canonical arrangement, not a requirement. The content + pagination stay
+ * independent siblings below the bar.
+ *
+ * .nds-filter-bar is transitional, not public API: it predates this component
+ * and still ships in consumer markup, so the rules carry it. Nothing in this
+ * repo uses it and it is undocumented. Drop it once consumers have migrated.
+ */
+
+@use '../mixins' as *;
+
+// Shared layout — a .nds-bar-row IS a bar, so it lays its children out the same
+// way. Stack rows to build a multi-row bar; each one takes a line of its own.
+:is(.nds-toolbar, .nds-filter-bar, .nds-bar-row) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-xl) var(--spacing-lg);   // row gap (wrapped items) / column gap
+
+    // The standard .nds-search-box (its inner .nds-search-content holds the field +
+    // button row and the responsive label-hide). As a bar item it just grows to fill
+    // the row instead of being the centered, full-width panel it is by default.
+    > .nds-search-box {
+        flex: 1 1 220px;
+        min-width: 0;
+        width: auto;
+        margin: 0;
+    }
+
+    // Applied chips + auto-fill claim their own line via their own flex: 1 1 100%
+    // in _filter.scss (the JS swaps which one shows) — an implicit .nds-bar-row.
+
+    @include mobile {
+        gap: var(--spacing-xl) var(--spacing-md);   // keep the xl row gap; tighter column gap
+        // Collapse control labels to icons to save width on small screens.
+        :is(.nds-search-btn, .nds-filter-btn) > .nds-label { @include label-hidden; }
+    }
+
+    // Clusters — widget slots that lay their children out as one bar item.
+    :is(.nds-bar-info, .nds-bar-actions) {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+    }
+
+    // Info keeps its natural leading spot; actions are pushed to the end edge
+    // of whichever bar or row holds them.
+    .nds-bar-actions {
+        margin-inline-start: auto;
+    }
+}
+
+// Bar-only — a row inherits the layout above but never the outer spacing.
+:is(.nds-toolbar, .nds-filter-bar) {
+    // Knob: the bar's block margins, "<start> <end>". A toolbar hugs its content
+    // and clears nothing above it; set --toolbar-margin-block on the bar (or an
+    // ancestor) to change either edge.
+    --_toolbar-margin-block: var(--toolbar-margin-block, 0 var(--spacing-xl));
+
+    margin-block: var(--_toolbar-margin-block);
+    width: 100%;
+}
+
+// A row spans the bar, so whatever follows it starts a new line.
+.nds-bar-row {
+    flex: 1 1 100%;
+    min-width: 0;
+}
+
+// ==============================================
+// EMPTY-SLOT COLLAPSE
+// ==============================================
+// Widgets ship `hidden` until their component has something to say (the
+// applied-filters row until a filter lands). Their wrappers don't, so a row
+// holding only hidden widgets is 0px tall yet still claims a flex line and the
+// bar's row-gap. These two rules let the structure stay canonical — the bar
+// absorbs the empty case instead of asking authors to un-nest the widget.
+//
+// :has() is the only native way to see through a wrapper to a hidden child; the
+// selectors name the bar's own classes plus [hidden], never a widget's, so the
+// toolbar stays uncoupled from filter/export/pagination.
+
+// A cluster of nothing but hidden widgets would still eat a column gap.
+:is(.nds-bar-info, .nds-bar-actions):not(:has(> :not([hidden]))) {
+    display: none;
+}
+
+// A row is empty when it holds no visible child of its own AND no cluster
+// holding a visible child. Then it takes no line at all.
+.nds-bar-row:not(:has(
+    > :not([hidden], .nds-bar-info, .nds-bar-actions),
+    > :is(.nds-bar-info, .nds-bar-actions) > :not([hidden])
+)) {
+    display: none;
+}
+
+// Transitional: preserves the legacy bar's wider bottom gap for markup that still
+// ships .nds-filter-bar. Stays top-level — nested it would read as a bar INSIDE a bar.
+.nds-filter-bar {
+    --toolbar-margin-block: 0 var(--spacing-4xl);
+}

@@ -329,7 +329,7 @@ bundle_sizes:
                 scratch.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-filter-bar">
+            <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box" data-filter-target="components_list">
                     <div class="nds-search-content">
                         <div class="nds-form-control">

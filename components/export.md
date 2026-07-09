@@ -23,19 +23,23 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="gap: 0;">
-                            <div class="nds-export nds-btn-group">
-                                <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                    data-export="csv" data-export-target="#exportOrdersTable">
-                                    <span class="nds-label">CSV</span>
-                                </button>
-                                <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                    data-export="xls" data-export-target="#exportOrdersTable">
-                                    <span class="nds-label">Excel</span>
-                                </button>
-                                <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                    data-export="pdf" data-export-target="#exportOrdersTable">
-                                    <span class="nds-label">PDF</span>
-                                </button>
+                            <div class="nds-toolbar">
+                                <div class="nds-bar-actions">
+                                    <div class="nds-export nds-btn-group">
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="csv" data-export-target="#exportOrdersTable">
+                                            <span class="nds-label">CSV</span>
+                                        </button>
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="xls" data-export-target="#exportOrdersTable">
+                                            <span class="nds-label">Excel</span>
+                                        </button>
+                                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                            data-export="pdf" data-export-target="#exportOrdersTable">
+                                            <span class="nds-label">PDF</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <table id="exportOrdersTable" class="nds-table nds-compact" data-export-name="orders">
                                     <thead>
@@ -132,19 +136,23 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div class="nds-export nds-btn-group"&gt;
-  &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
-          data-export="csv" data-export-target="#orders"&gt;
-    &lt;span class="nds-label"&gt;CSV&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
-          data-export="xls" data-export-target="#orders"&gt;
-    &lt;span class="nds-label"&gt;Excel&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
-          data-export="pdf" data-export-target="#orders"&gt;
-    &lt;span class="nds-label"&gt;PDF&lt;/span&gt;
-  &lt;/button&gt;
+&lt;div class="nds-toolbar"&gt;
+  &lt;div class="nds-bar-actions"&gt;
+    &lt;div class="nds-export nds-btn-group"&gt;
+      &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
+              data-export="csv" data-export-target="#orders"&gt;
+        &lt;span class="nds-label"&gt;CSV&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
+              data-export="xls" data-export-target="#orders"&gt;
+        &lt;span class="nds-label"&gt;Excel&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
+              data-export="pdf" data-export-target="#orders"&gt;
+        &lt;span class="nds-label"&gt;PDF&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
 &lt;/div&gt;
 &lt;table id="orders" class="nds-table nds-compact" data-export-name="orders"&gt;
   &lt;thead&gt;
@@ -242,19 +250,23 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo" style="gap: 0;">
                             <div id="exportCardsDemo">
-                                <div class="nds-export nds-btn-group">
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="csv" data-export-target="#exportCardsList">
-                                        <span class="nds-label">CSV</span>
-                                    </button>
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="xls" data-export-target="#exportCardsList">
-                                        <span class="nds-label">Excel</span>
-                                    </button>
-                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                        data-export="pdf" data-export-target="#exportCardsList">
-                                        <span class="nds-label">PDF</span>
-                                    </button>
+                                <div class="nds-toolbar">
+                                    <div class="nds-bar-actions">
+                                        <div class="nds-export nds-btn-group">
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                data-export="csv" data-export-target="#exportCardsList">
+                                                <span class="nds-label">CSV</span>
+                                            </button>
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                data-export="xls" data-export-target="#exportCardsList">
+                                                <span class="nds-label">Excel</span>
+                                            </button>
+                                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                                data-export="pdf" data-export-target="#exportCardsList">
+                                                <span class="nds-label">PDF</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="exportCardsList" class="nds-grid"
                                 style="--max-col:3;--mid-col:2;--min-col:1;"
@@ -373,19 +385,23 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;div id="servicesExport"&gt;
-  &lt;div class="nds-export nds-btn-group"&gt;
-    &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
-            data-export="csv" data-export-target="#services"&gt;
-      &lt;span class="nds-label"&gt;CSV&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
-            data-export="xls" data-export-target="#services"&gt;
-      &lt;span class="nds-label"&gt;Excel&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
-            data-export="pdf" data-export-target="#services"&gt;
-      &lt;span class="nds-label"&gt;PDF&lt;/span&gt;
-    &lt;/button&gt;
+  &lt;div class="nds-toolbar"&gt;
+    &lt;div class="nds-bar-actions"&gt;
+      &lt;div class="nds-export nds-btn-group"&gt;
+        &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
+                data-export="csv" data-export-target="#services"&gt;
+          &lt;span class="nds-label"&gt;CSV&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
+                data-export="xls" data-export-target="#services"&gt;
+          &lt;span class="nds-label"&gt;Excel&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
+                data-export="pdf" data-export-target="#services"&gt;
+          &lt;span class="nds-label"&gt;PDF&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
   &lt;div id="services" class="nds-grid"
        style="--max-col:3;--mid-col:2;--min-col:1;"

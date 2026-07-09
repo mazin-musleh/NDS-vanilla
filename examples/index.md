@@ -16,7 +16,7 @@ sidemenu_mode: false
             <p class="nds-section-description">{{ site.data.content.examples | size }} full-page demos showing how NDS components work together in real government service contexts.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-filter-bar">
+            <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box" data-filter-target="examples_list">
                     <div class="nds-search-content">
                         <div class="nds-form-control">

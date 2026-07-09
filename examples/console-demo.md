@@ -203,7 +203,7 @@ hideFeedback: true
             <p class="nds-section-description">Latest financial records across all government service categories.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-filter-bar">
+            <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
                     <div class="nds-search-content">
                         <div class="nds-form-control">
@@ -258,24 +258,26 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
+                <div class="nds-bar-actions">
+                    <div class="nds-export nds-btn-group">
+                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                data-export="csv" data-export-target="#consoleTransactions">
+                            <span class="nds-label">CSV</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                data-export="xls" data-export-target="#consoleTransactions">
+                            <span class="nds-label">Excel</span>
+                        </button>
+                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                data-export="pdf" data-export-target="#consoleTransactions">
+                            <span class="nds-label">PDF</span>
+                        </button>
+                    </div>
+                </div>
                 <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
                     <span class="nds-label">Applied Filters:</span>
                     <div class="nds-chips"></div>
                 </div>
-            </div>
-            <div class="nds-export nds-btn-group">
-                <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                        data-export="csv" data-export-target="#consoleTransactions">
-                    <span class="nds-label">CSV</span>
-                </button>
-                <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                        data-export="xls" data-export-target="#consoleTransactions">
-                    <span class="nds-label">Excel</span>
-                </button>
-                <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                        data-export="pdf" data-export-target="#consoleTransactions">
-                    <span class="nds-label">PDF</span>
-                </button>
             </div>
             <div id="console_transactions_content" class="nds-paged-content">
                 <table id="consoleTransactions" class="nds-table nds-compact nds-sortable" data-export-name="transactions">
@@ -435,7 +437,7 @@ hideFeedback: true
             <p class="nds-section-description">Active team members across all departments.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-filter-bar">
+            <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box" data-filter-target="teamDirectoryGrid">
                     <div class="nds-search-content">
                         <div class="nds-form-control">

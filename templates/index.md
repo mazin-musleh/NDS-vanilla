@@ -16,7 +16,7 @@ sidemenu_mode: false
             <p class="nds-section-description">{{ site.data.content.templates | size }} canonical layouts for the most common government service screens.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-filter-bar">
+            <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box" data-filter-target="templates_list">
                     <div class="nds-search-content">
                         <div class="nds-form-control">

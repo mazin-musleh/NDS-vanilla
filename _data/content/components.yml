@@ -278,6 +278,14 @@
   js: _js/nds-toc.js
   scss: _sass/components/_toc.scss
 
+- title: "Toolbar"
+  description: "Controls bar above a table, list, or grid: result counts and applied filters lead, export and actions trail"
+  icon: '<i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>'
+  category: "UI"
+  tags: ["CSS"]
+  url: "/components/toolbar.html"
+  scss: _sass/components/_toolbar.scss
+
 - title: "Tooltip"
   description: "Click-activated balloon for contextual help next to a term or field"
   icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'

@@ -23,7 +23,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar">
+                            <div class="nds-toolbar">
                                 <div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards">
                                     <div class="nds-search-content">
                                         <div class="nds-form-control">
@@ -120,7 +120,7 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
 &lt;!-- One flex bar above the grid; each surface is wired by its own data-filter-target --&gt;
-&lt;div class="nds-filter-bar"&gt;
+&lt;div class="nds-toolbar"&gt;
   &lt;!-- Search box (field + button) --&gt;
   &lt;div class="nds-form-container nds-search-box" data-filter-target="basicFilterCards"&gt;
     &lt;div class="nds-search-content"&gt;
@@ -231,7 +231,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar">
+                            <div class="nds-toolbar">
                             <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -326,7 +326,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-filter-bar"&gt;
+&lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -430,7 +430,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar">
+                            <div class="nds-toolbar">
                             <div class="nds-dropmenu nds-filter" data-filter-target="radioCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -525,7 +525,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-filter-bar"&gt;
+&lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="radioCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -628,7 +628,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar">
+                            <div class="nds-toolbar">
                             <div class="nds-dropmenu nds-filter" data-filter-target="switchCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -735,7 +735,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-filter-bar"&gt;
+&lt;div class="nds-toolbar"&gt;
 &lt;!-- Filter (merged with dropmenu) --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="switchCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -844,7 +844,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar">
+                            <div class="nds-toolbar">
                                 <div class="nds-dropmenu nds-filter" data-filter-target="sliderCards">
                                     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
@@ -898,7 +898,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-filter-bar"&gt;
+&lt;div class="nds-toolbar"&gt;
   &lt;!-- Slider: numeric range. Both min+max = dual range; max alone = "up to" --&gt;
   &lt;div class="nds-dropmenu nds-filter" data-filter-target="sliderCards"&gt;
     &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
@@ -958,7 +958,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Filter Bar (Standard Layout)</h2>
-            <p class="nds-section-description">The standard arrangement: one <code class="nds-inline-code lang-html">.nds-filter-bar</code> flex container directly above the grid, holding the search box, Filter, applied-filter chips, and auto-fill suggestions, all wired by a single <code class="nds-inline-code lang-html">data-filter-target</code> on the bar. The Filter here pairs a category checkbox group with a <a class="nds-color" href="{{ 'components/slider' | relative_url }}">price slider</a> (<code class="nds-inline-code lang-html">data-filter-type="slider"</code>). Sort controls can live in the bar too: see the <a class="nds-color" href="{{ 'components/sort' | relative_url }}">Sort</a> page. Grid and pagination stay independent siblings below.</p>
+            <p class="nds-section-description">The standard arrangement: a <a class="nds-color" href="{{ 'components/toolbar' | relative_url }}">Toolbar</a> directly above the grid, holding the search box, Filter, applied-filter chips, and auto-fill suggestions. Each surface carries its own <code class="nds-inline-code lang-html">data-filter-target</code>, so the bar itself stays pure layout. The Filter here pairs a category checkbox group with a <a class="nds-color" href="{{ 'components/slider' | relative_url }}">price slider</a> (<code class="nds-inline-code lang-html">data-filter-type="slider"</code>). Sort controls can live in the bar too: see the <a class="nds-color" href="{{ 'components/sort' | relative_url }}">Sort</a> page. Grid and pagination stay independent siblings below.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -968,7 +968,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar">
+                            <div class="nds-toolbar">
                                 <div class="nds-form-container nds-search-box" data-filter-target="barFilterCards">
                                     <div class="nds-search-content">
                                         <div class="nds-form-control">
@@ -1055,7 +1055,7 @@ direction: ltr
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
 &lt;!-- One flex bar above the grid; each surface is wired by its own data-filter-target --&gt;
-&lt;div class="nds-filter-bar"&gt;
+&lt;div class="nds-toolbar"&gt;
   &lt;!-- Search box (field + button) --&gt;
   &lt;div class="nds-form-container nds-search-box" data-filter-target="barFilterCards"&gt;
     &lt;div class="nds-search-content"&gt;
@@ -1165,7 +1165,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-filter-bar">
+                            <div class="nds-toolbar">
                             <div class="nds-dropmenu nds-filter" data-filter-target="staticCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
@@ -1279,7 +1279,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-filter-bar"&gt;
+&lt;div class="nds-toolbar"&gt;
 &lt;!-- Object form: keys = machine values, values = display labels --&gt;
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="staticCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;

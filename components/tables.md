@@ -597,19 +597,23 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo" style="gap: 0;">
-                        <div class="nds-export nds-btn-group">
-                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                data-export="csv" data-export-target="#selectionTable">
-                                <span class="nds-label">CSV</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                data-export="xls" data-export-target="#selectionTable">
-                                <span class="nds-label">Excel</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                data-export="pdf" data-export-target="#selectionTable">
-                                <span class="nds-label">PDF</span>
-                            </button>
+                        <div class="nds-toolbar">
+                            <div class="nds-bar-actions">
+                                <div class="nds-export nds-btn-group">
+                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                        data-export="csv" data-export-target="#selectionTable">
+                                        <span class="nds-label">CSV</span>
+                                    </button>
+                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                        data-export="xls" data-export-target="#selectionTable">
+                                        <span class="nds-label">Excel</span>
+                                    </button>
+                                    <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                        data-export="pdf" data-export-target="#selectionTable">
+                                        <span class="nds-label">PDF</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <table id="selectionTable" class="nds-table" data-export-name="selection">
                             <thead>

@@ -13,4 +13,7 @@
 .nds-export {
     margin-inline-start: auto;
     margin-block-end: var(--spacing-md);
+
+    // In a bar the cluster owns alignment and spacing.
+    .nds-bar-actions & { margin: 0; }
 }

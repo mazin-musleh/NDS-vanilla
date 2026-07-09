@@ -15,7 +15,7 @@ exclude_showcase: false
 <section id="servicesList" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-filter-bar">
+            <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box nds-demo-showcase" data-filter-target="services_list_content"
                     data-url="{{ '/assets/data/services-autocomplete.json' | relative_url }}" data-name="Title"
                     data-query-param="q">

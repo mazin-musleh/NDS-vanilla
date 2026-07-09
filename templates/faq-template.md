@@ -22,7 +22,7 @@ sidemenu_mode: false
         </div>
 
         <div class="nds-section-body">
-            <div class="nds-filter-bar">
+            <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box" data-filter-target="faq-all-items">
                     <div class="nds-search-content">
                         <div class="nds-form-control">
