@@ -21,7 +21,7 @@
     &:not([data-status]),
     &[data-status],
     [data-status] & {
-        display: flex;
+        display: inline-flex;
     }
 
     // ==============================================
