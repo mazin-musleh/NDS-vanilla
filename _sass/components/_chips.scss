@@ -219,4 +219,8 @@
   flex-wrap: wrap;
   gap: var(--spacing-md);
   align-items: center;
+
+  &.nds-center {
+    justify-content: center;
+  }
 }
