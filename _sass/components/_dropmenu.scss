@@ -17,6 +17,13 @@
   // action rows); no-op in inline / row contexts.
   align-self: stretch;
 
+  // Delayed first open (data-delay) parks the trigger in the loading state,
+  // which _loading.scss makes pointer-events:none. Keep it clickable so a
+  // second click can cancel the pending open instead of hitting a dead button.
+  .nds-dropmenu-trigger[data-state~="loading"] {
+    pointer-events: auto;
+  }
+
   &-scroll {
     overflow: hidden;
     overflow-y: auto;

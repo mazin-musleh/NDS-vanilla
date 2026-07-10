@@ -309,9 +309,11 @@
             // events from menu items don't bubble through .nds-dropmenu —
             // treat clicks inside the menu as inside.
             this.handleOutsideClick = (e) => {
-                if (this.isOpen
-                    && !this.dropmenu.contains(e.target)
-                    && !this.menu.contains(e.target)) this.close();
+                if (this.dropmenu.contains(e.target) || this.menu.contains(e.target)) return;
+                // Clicking away during a delayed first-open cancels it — otherwise
+                // the menu would still pop open once the timer fired.
+                if (this._cancelDelayedOpen()) return;
+                if (this.isOpen) this.close();
             };
             document.addEventListener('click', this.handleOutsideClick, true);
 
@@ -338,7 +340,12 @@
             // (for focus inside the portaled menu, which no longer bubbles
             // up to the dropmenu wrapper).
             const onEscape = (e) => {
-                if (e.key === 'Escape' && this.isOpen) {
+                if (e.key !== 'Escape') return;
+                if (this._cancelDelayedOpen()) {
+                    e.stopPropagation();
+                    return;
+                }
+                if (this.isOpen) {
                     e.stopPropagation();
                     this.close();
                     this.trigger.focus();
@@ -491,7 +498,23 @@
         // ==============================================
 
         toggle() {
+            // A second click during a delayed first-open aborts it rather than
+            // being swallowed by open()'s _delaying guard.
+            if (this._cancelDelayedOpen()) return;
             this.isOpen ? this.close() : this.open();
+        }
+
+        // Abort a delayed first-open that hasn't fired yet: the user asked for the
+        // menu, then changed their mind (clicked the trigger again, clicked away,
+        // pressed Escape). data-delay stays put, so the next open still defers and
+        // gives its consumer the nds:dropmenu:prepare hook. Returns true when a
+        // pending open was actually cancelled.
+        _cancelDelayedOpen() {
+            if (!this._delaying) return false;
+            clearTimeout(this._delayTimer);
+            this._delaying = false;
+            removeState(this.trigger, 'loading');
+            return true;
         }
 
 
@@ -537,6 +560,17 @@
 
             // Menu ships with [hidden] (intrinsic-state markup) — drop it
             // before measurement so applyPosition() reads real dimensions.
+            // Park it out of flow first: at its `left: auto` static position a
+            // menu wider than the space beside its trigger hangs past the
+            // document edge, growing scrollWidth for the one layout pass before
+            // applyPosition() runs. In RTL the browser then re-anchors the
+            // scroll origin, so every rect applyPosition() reads is offset by
+            // the overflow and the page keeps a phantom horizontal scrollbar.
+            // A position:fixed box contributes nothing to scrollable overflow.
+            // applyPosition() clears this before writing the absolute offsets.
+            this.menu.style.position = 'fixed';
+            this.menu.style.left = '0px';
+            this.menu.style.top = '0px';
             this.menu.removeAttribute('hidden');
 
             // Portal (opt-in). When `data-portal` is set, move the menu to
@@ -713,14 +747,22 @@
             this._flipUp = flipUp;
 
             if (this.shouldPortal) {
+                // The [data-portal] rule already makes the menu fixed; drop the
+                // inline park so the stylesheet governs.
+                this.menu.style.position = '';
                 NDS.placeFixed(this.menu, top, leftPx);
             } else {
                 // Absolute: anchor to offsetParent (the dropmenu wrapper via
                 // `position: relative`). Convert viewport coords by subtracting
-                // the parent's rect. Falls back to the dropmenu wrapper if
-                // offsetParent is null (e.g. menu temporarily display:none).
+                // the parent's rect. offsetParent is null while the menu is
+                // parked as fixed (see open()), so fall back to the wrapper —
+                // which is the real offsetParent once position is restored.
+                // Read the rect BEFORE unparking: the moment the menu goes back
+                // to `absolute` with no offsets it snaps to its static position
+                // and can overflow the document, which would skew this read.
                 const op = this.menu.offsetParent || this.dropmenu;
                 const opRect = op.getBoundingClientRect();
+                this.menu.style.position = '';
                 this.menu.style.top = (top - opRect.top) + 'px';
                 this.menu.style.left = (leftPx - opRect.left) + 'px';
             }
