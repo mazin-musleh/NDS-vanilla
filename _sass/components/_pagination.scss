@@ -169,6 +169,22 @@
   }
 }
 
+// A collapsed nav is [Prev] 1 2 3 … N [Next]: seven controls that need ~352px
+// at the default 40px size. The list is nowrap and its items can't shrink below
+// a button, so under ~352px of viewport it bleeds past the page gutters and the
+// document grows a horizontal scrollbar. Adopt the nds-md size there — 296px of
+// content fits the narrowest phones. Mainstream widths (375px and up) keep the
+// 40px touch target.
+@media (max-width: 360px) {
+  .nds-pagination {
+    --_pagination-reserve: 32px;
+
+    .nds-btn {
+      --btn-size: 32px;
+    }
+  }
+}
+
 
 // ==============================================
 // AUTO-PAGINATION CONTENT
