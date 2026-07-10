@@ -259,6 +259,19 @@ hideFeedback: true
                     </div>
                 </div>
                 <div class="nds-bar-actions">
+                    <div class="nds-dropmenu" data-columns-target="consoleTransactions">
+                        <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                            <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                            <span class="nds-label">Columns</span>
+                        </button>
+                        <div class="nds-dropmenu-menu" hidden>
+                            <div class="nds-dropmenu-scroll">
+                                <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+                                    <legend class="nds-label">Visible columns</legend>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
                     <div class="nds-export nds-btn-group">
                         <button type="button" class="nds-btn nds-secondary-outline nds-md"
                                 data-export="csv" data-export-target="#consoleTransactions">

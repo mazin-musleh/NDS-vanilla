@@ -390,6 +390,139 @@
         }
     }
 
+    // ── Column visibility ────────────────────────────────────────────
+    // A [data-columns-target] dropmenu whose [data-columns-list] fieldset is
+    // filled from the target table's <thead> on its first open — the same field
+    // structure filter and multiselect use. Unchecking a column sets [hidden]
+    // on its <th> and on the matching <td> of every row, and stamps
+    // data-export-skip on the <th> so CSV / Excel / PDF exports match what the
+    // user sees. Columns are addressed by cell index, so colspan/rowspan header
+    // cells aren't supported (the same assumption sort and export already make).
+
+    function resolveTable(ref) {
+        const byId = document.getElementById(ref.replace(/^#/, ''));
+        if (byId) return byId;
+        try { return document.querySelector(ref); } catch (e) { return null; }
+    }
+
+    function setColumnHidden(table, index, hidden) {
+        const th = table.querySelectorAll('thead th')[index];
+        if (!th) return;
+
+        th.toggleAttribute('hidden', hidden);
+
+        // Hiding a column skips it in exports. Only ever clear a data-export-skip
+        // we set ourselves — an authored one (an actions column, say) must survive
+        // a hide/show round trip.
+        if (hidden && !th.hasAttribute('data-export-skip')) {
+            th.setAttribute('data-export-skip', '');
+            th._ndsExportSkipOwned = true;
+        } else if (!hidden && th._ndsExportSkipOwned) {
+            th.removeAttribute('data-export-skip');
+            th._ndsExportSkipOwned = false;
+        }
+
+        table.querySelectorAll('tbody tr').forEach(tr => {
+            const cell = tr.children[index];
+            if (cell) cell.toggleAttribute('hidden', hidden);
+        });
+
+        table.dispatchEvent(new CustomEvent('nds:table:columns', {
+            detail: { table, index, hidden },
+            bubbles: true
+        }));
+    }
+
+    class NDSColumnToggle {
+        constructor(root) {
+            this.root = root;
+            this.table = resolveTable(root.getAttribute('data-columns-target') || '');
+            this.list = root.querySelector('[data-columns-list]');
+
+            if (!this.table || !this.list) {
+                console.warn('NDS Tables: column toggle needs a [data-columns-target] table and a [data-columns-list] host', root);
+                return;
+            }
+
+            this.abortController = new AbortController();
+            this.init();
+        }
+
+        init() {
+            const { signal } = this.abortController;
+
+            // An authored list wins — a server-rendered checklist paints before
+            // this bundle lands. The host's <legend> is always authored, so test
+            // for a generated row rather than for children.
+            if (!this.list.querySelector('.nds-form-container')) {
+                // Populate on first open, not at init: reading <thead> and building
+                // a row per column costs more than an unopened menu is worth. Same
+                // deferred-build hook nds-filter.js uses (_wireDeferredFilterDropmenus):
+                // data-delay shows a loading state on the trigger, emits
+                // nds:dropmenu:prepare so we build, then opens with the content already
+                // in place — never empty, never mis-measured. One-shot; later opens are
+                // immediate. Released by the same abort signal in destroy().
+                this.root.setAttribute('data-delay', '500');
+                this.root.addEventListener('nds:dropmenu:prepare', () => this.render(), { once: true, signal });
+            }
+
+            this.list.addEventListener('change', (e) => {
+                if (!e.target.matches('input[data-column-index]')) return;
+                setColumnHidden(this.table, Number(e.target.dataset.columnIndex), !e.target.checked);
+            }, { signal });
+        }
+
+        render() {
+            const frag = document.createDocumentFragment();
+            this.table.querySelectorAll('thead th').forEach((th, index) => {
+                // Locked columns and the row-selection column stay off the list.
+                if (th.hasAttribute('data-columns-lock')) return;
+                if (th.querySelector('input[type="checkbox"].nds-check')) return;
+                frag.appendChild(this.buildRow(th, index));
+            });
+            this.list.appendChild(frag);
+        }
+
+        // The .nds-check-container field nds-filter.js and nds-multiselect.js put
+        // in a dropmenu. No .nds-dropmenu-item class — that's what keeps the menu
+        // open while columns are toggled.
+        buildRow(th, index) {
+            const id = NDS.uniqueId('nds-col-');
+
+            const container = document.createElement('div');
+            container.className = 'nds-form-container nds-check-container';
+
+            const header = document.createElement('div');
+            header.className = 'nds-form-header';
+            const label = document.createElement('label');
+            label.setAttribute('for', id);
+            const labelText = document.createElement('span');
+            labelText.className = 'nds-label';
+            // Prefer the visible header text — data-export-label exists precisely
+            // because the exported name differs from the displayed one.
+            labelText.textContent = getCellText(th) || th.dataset.exportLabel || 'Column ' + (index + 1);
+            label.appendChild(labelText);
+            header.appendChild(label);
+
+            const control = document.createElement('div');
+            control.className = 'nds-form-control';
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.id = id;
+            input.className = 'nds-check';
+            input.dataset.columnIndex = index;
+            input.checked = !th.hasAttribute('hidden');
+            control.appendChild(input);
+
+            container.append(header, control);
+            return container;
+        }
+
+        destroy() {
+            this.abortController?.abort();
+        }
+    }
+
     // Global class-change observer so mask toggle reflects without a scroll event
     if (!window.ndsTableClassObserverInitialized) {
         window.ndsTableClassObserverInitialized = true;
@@ -459,6 +592,15 @@
                 table.setAttribute('data-nds-tables-initialized', 'true');
             }
         });
+
+        // Column-visibility menus live in a toolbar, not in the table
+        document.querySelectorAll('[data-columns-target]').forEach(root => {
+            if (root.closest('code, .code-example')) return;
+            if (root.hasAttribute('data-nds-columns-initialized')) return;
+
+            root.ndsColumnToggle = new NDSColumnToggle(root);
+            root.setAttribute('data-nds-columns-initialized', 'true');
+        });
     }
 
     // Re-initialize when new content is added
@@ -484,6 +626,8 @@
             recheckWidths: recheckAllWidths,
             create: (table) => new NDSTables(table),
             createResponsive: (table) => new NDSResponsiveTable(table),
+            createColumnToggle: (root) => new NDSColumnToggle(root),
+            setColumnHidden,
             getCellText
         };
     }

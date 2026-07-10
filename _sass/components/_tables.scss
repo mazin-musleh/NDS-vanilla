@@ -23,8 +23,10 @@
     display: block;
 
     .nds-table {
-        --_min-width: var(--min-width, 600px);
-        min-width: var(--_min-width);
+        // No default floor: a table can't lay out below its own min-content
+        // width, so the wrapper still scrolls when the columns demand it.
+        // --min-width sets an explicit floor when a wider table is wanted.
+        min-width: var(--min-width, auto);
         display: table;
     }
 }

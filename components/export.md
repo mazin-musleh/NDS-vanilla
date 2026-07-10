@@ -25,6 +25,19 @@ direction: ltr
                         <div class="state-demo" style="gap: 0;">
                             <div class="nds-toolbar">
                                 <div class="nds-bar-actions">
+                                    <div class="nds-dropmenu" data-columns-target="exportOrdersTable">
+                                        <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                            <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                                            <span class="nds-label">Columns</span>
+                                        </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+                                                    <legend class="nds-label">Visible columns</legend>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="nds-export nds-btn-group">
                                         <button type="button" class="nds-btn nds-secondary-outline nds-md"
                                             data-export="csv" data-export-target="#exportOrdersTable">
@@ -138,6 +151,20 @@ direction: ltr
                                         <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;div class="nds-bar-actions"&gt;
+    &lt;!-- Hiding a column stamps data-export-skip, so exports follow the view --&gt;
+    &lt;div class="nds-dropmenu" data-columns-target="orders"&gt;
+      &lt;button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
+        &lt;i class="hgi hgi-stroke hgi-view-off-slash"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Columns&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;div class="nds-dropmenu-menu" hidden&gt;
+        &lt;div class="nds-dropmenu-scroll"&gt;
+          &lt;fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close&gt;
+            &lt;legend class="nds-label"&gt;Visible columns&lt;/legend&gt;
+          &lt;/fieldset&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
     &lt;div class="nds-export nds-btn-group"&gt;
       &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
               data-export="csv" data-export-target="#orders"&gt;
@@ -598,6 +625,7 @@ direction: ltr
                     <li>Use the same component for non-table lists. Tag the container with <code class="nds-inline-code lang-html">data-export-rows="&lt;selector&gt;"</code> and each field inside a row with <code class="nds-inline-code lang-html">data-export-field="key"</code>. Cards and definition lists become exportable without a new component.</li>
                     <li>Place currency, units, and other column-wide qualifiers in the header label via <code class="nds-inline-code lang-html">data-export-label="Amount (SAR)"</code>, not in every cell. CSV and Excel can then do math on the column.</li>
                     <li>Add <code class="nds-inline-code lang-html">data-export-skip</code> on per-row action columns (Edit, Delete, View buttons) so they don't leak into the file. The auto-detected checkbox column is already skipped.</li>
+                    <li>Exports follow the visible table. A column hidden through the <a class="nds-color" href="{{ 'components/tables' | relative_url }}">Table</a> column menu stamps its own <code class="nds-inline-code lang-html">data-export-skip</code>, so it drops out of the file and returns when the column is shown again. An authored <code class="nds-inline-code lang-html">data-export-skip</code> always survives.</li>
                     <li>Set <code class="nds-inline-code lang-html">data-export-name</code> on the source for a meaningful filename. Output is <code class="nds-inline-code lang-html">{name}-YYYY-MM-DD.{ext}</code>.</li>
                     <li>If a cell shows a formatted value but the spreadsheet needs the raw one, set <code class="nds-inline-code lang-html">data-export-value</code> on the <code class="nds-inline-code lang-html">&lt;td&gt;</code>. The display stays the same, the export gets the raw number or ISO date.</li>
                     <li>Selection just works: drop the canonical <code class="nds-inline-code lang-html">nds-card-checkbox</code> or <code class="nds-inline-code lang-html">.nds-check</code> markup, and any checked row is exported automatically when <code class="nds-inline-code lang-js">scope</code> is <code class="nds-inline-code lang-js">'auto'</code>.</li>
