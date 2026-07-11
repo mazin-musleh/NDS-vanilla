@@ -1542,6 +1542,13 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                        <span class="nds-label">Column Visibility</span>
+                    </span>
+                    <p class="nds-item-desc">Point a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> at a table with <code class="nds-inline-code lang-html">data-columns-target</code> and it becomes a checklist of that table's columns, built from the <code class="nds-inline-code lang-html">&lt;thead&gt;</code> on first open. Hidden columns are skipped by exports, the trigger label gains a count, and the choice is remembered for tables that have an <code class="nds-inline-code lang-html">id</code>.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
                         <span class="nds-label">Scroll Awareness</span>
                     </span>
@@ -1604,6 +1611,7 @@ direction: ltr
                     <li>Enable sorting only on columns with meaningful sort order. Status columns with tags are poor candidates for sorting</li>
                     <li>Add <strong>row selection</strong> when the interface supports bulk operations (delete, export, assign). Pair the table with an action bar that appears when rows are selected</li>
                     <li>Apply <code class="nds-inline-code lang-html">nds-interactive</code> only when rows actually do something on click or hover (open a detail panel, link to a record, toggle selection). Leave it off for read-only data so the hover highlight does not suggest interactivity that is not there</li>
+                    <li>Offer a <strong>column-visibility menu</strong> on wide tables so users can trim a horizontally-scrolling table to the columns they care about. Lock the identifier column with <code class="nds-inline-code lang-html">data-columns-lock</code> so a row can never lose its label, and give the table an <code class="nds-inline-code lang-html">id</code> so the choice survives a reload</li>
                     <li>Set <code class="nds-inline-code lang-html">--max-width</code> when placing a table in a narrow container or side panel to trigger the responsive scroll wrapper early</li>
                     <li>Use <strong>pagination</strong> for datasets over 15-20 rows. Showing too many rows slows rendering and makes scanning harder</li>
                     <li>Keep header labels short and descriptive. Avoid abbreviations that require explanation</li>
@@ -1646,9 +1654,10 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-sort-value</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;td&gt;</code> to supply an alternate value used for sorting only, when the displayed text would sort incorrectly (e.g. "Free" in a numeric column, a localized date in a text column). The cell still renders its normal content; only the sort order is affected. Not read by Export: use <code class="nds-inline-code lang-html">data-export-value</code> for that.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-loading</code> (class on <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>)</td><td>Alternate loading trigger: add the <code class="nds-inline-code lang-html">nds-loading</code> class directly to <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> to shimmer only the body rows while keeping the header visible. Used internally by the Filter and Pagination components during data refresh.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-auto-pagination="id"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;nav class="nds-pagination"&gt;</code> to auto-paginate the <code class="nds-inline-code lang-html">nds-paged-content</code> wrapper with that id (omit the value to bind the preceding wrapper)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-columns-target="id"</code></td><td>Set on a <code class="nds-inline-code lang-html">nds-dropmenu</code> to turn it into a column-visibility menu for the table with that id</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-columns-target="id"</code></td><td>Set on a <code class="nds-inline-code lang-html">nds-dropmenu</code> to turn it into a column-visibility menu for the table with that id. The trigger's <code class="nds-inline-code lang-html">.nds-label</code> gains a <code class="nds-inline-code lang-html">(n)</code> count while columns are hidden</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-columns-list</code></td><td>Set on the <code class="nds-inline-code lang-html">&lt;fieldset&gt;</code> inside that menu. The checklist is generated into it from the table's <code class="nds-inline-code lang-html">&lt;thead&gt;</code>. Author your own rows to opt out of generation</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-columns-lock</code></td><td>Set on a <code class="nds-inline-code lang-html">&lt;th&gt;</code> to keep that column off the menu so it can never be hidden. The row-selection column is excluded automatically</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">id</code> (on <code class="nds-inline-code lang-html">&lt;table&gt;</code>)</td><td>A table with an id remembers its hidden columns across visits, stored under <code class="nds-inline-code lang-js">localStorage['nds-cols-{id}']</code>. The saved set is discarded if the table's column count changes, so a later deploy can add or drop a column without hiding the wrong one</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1705,6 +1714,10 @@ NDS.Tables.setColumnHidden(table, 3, false);  // show it again
 // Wire a [data-columns-target] menu manually (auto-wired on init)
 NDS.Tables.createColumnToggle(document.querySelector('[data-columns-target]'));
 
+// setColumnHidden does not persist — only the menu writes the saved set.
+// Clear a table's remembered columns:
+localStorage.removeItem('nds-cols-' + table.id);
+
 // ── Instance methods (sortable tables) ───────────────
 instance.getSortColumn();      // Returns current sort column index (-1 if none)
 instance.getSortDirection();   // Returns 'asc', 'desc', or null
@@ -1721,7 +1734,7 @@ table.addEventListener('nds:table:sort', (e) =&gt; {
     e.detail.columnIndex;  // Sorted column index
     e.detail.direction;    // 'asc', 'desc', or null (reset)
     e.detail.table;        // The &lt;table&gt; element
-    e.detail.button;       // The sort button clicked
+    e.detail.button;       // The active sort button (null on reset)
 });
 
 // Fires when row selection changes
@@ -1738,6 +1751,7 @@ table.addEventListener('nds:table:columns', (e) =&gt; {
     e.detail.index;            // Column index in &lt;thead&gt;
     e.detail.hidden;           // true when the column was hidden
     e.detail.table;            // The &lt;table&gt; element
+    e.detail.restored;         // true when replayed from storage at init, not chosen by the user
 });
 </code>
                     </div>

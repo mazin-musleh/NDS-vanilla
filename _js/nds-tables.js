@@ -20,14 +20,18 @@
         return textNode || cell.textContent.trim();
     }
 
+    // Sort keys are <th> cell indexes, never positions in the sort-button array:
+    // a checkbox or actions column has no button, so the two index spaces diverge.
+    const thIndex = (th) => Array.from(th.parentElement.children).indexOf(th);
+
     class NDSTables {
         constructor(tableElement) {
+            this.valid = false;
             this.table = tableElement;
             this.thead = tableElement.querySelector('thead');
             this.tbody = tableElement.querySelector('tbody');
             this.sortButtons = Array.from(tableElement.querySelectorAll('.nds-sort-btn'));
 
-            // Checkbox selection support
             this.selectAllCheckbox = this.thead?.querySelector('th input[type="checkbox"].nds-check');
             this.rowCheckboxes = Array.from(this.tbody?.querySelectorAll('td input[type="checkbox"].nds-check') || []);
 
@@ -36,10 +40,7 @@
                 return;
             }
 
-            // Check if this is a sortable table
             this.isSortable = this.sortButtons.length > 0;
-
-            // Check if this is a selectable table
             this.isSelectable = this.selectAllCheckbox && this.rowCheckboxes.length > 0;
 
             // AbortController for the change-listeners attached in
@@ -47,6 +48,7 @@
             // bookkeeping detaches cleanly when the table is torn down.
             this.abortController = new AbortController();
 
+            this.valid = true;
             this.init();
         }
 
@@ -67,17 +69,12 @@
         setupSort() {
             // Seed initial state from HTML if a <th> already carries sorted-asc / sorted-desc
             const sortedTh = this.thead.querySelector('[data-state~="sorted-asc"], [data-state~="sorted-desc"]');
-            let initialState = null;
-            if (sortedTh) {
-                const button = sortedTh.querySelector('.nds-sort-btn');
-                const colIdx = this.sortButtons.indexOf(button);
-                if (colIdx !== -1) {
-                    initialState = {
-                        key: colIdx,
-                        dir: NDS.State.has(sortedTh, 'sorted-asc') ? 'asc' : 'desc'
-                    };
+            const initialState = sortedTh?.querySelector('.nds-sort-btn')
+                ? {
+                    key: thIndex(sortedTh),
+                    dir: NDS.State.has(sortedTh, 'sorted-asc') ? 'asc' : 'desc'
                 }
-            }
+                : null;
 
             this.sort = NDS.Sort.create(this.table, {
                 items: () => Array.from(this.tbody.querySelectorAll('tr')),
@@ -93,43 +90,31 @@
                     const cell = row.children[colIdx];
                     if (!cell) return '';
                     const override = cell.getAttribute('data-sort-value');
-                    return override !== null ? override : this.getCellText(cell);
+                    return override !== null ? override : getCellText(cell);
                 },
-                keyFrom: (btn) => {
-                    const th = btn.closest('th');
-                    return Array.from(th.parentElement.children).indexOf(th);
-                },
+                keyFrom: (btn) => thIndex(btn.closest('th')),
                 initialState,
                 onChange: ({ key, dir }) => {
-                    // Clear sorted-asc/sorted-desc data-state from every column header
                     this.sortButtons.forEach(btn => {
-                        const th = btn.closest('th');
-                        NDS.State.remove(th, 'sorted-asc', 'sorted-desc');
+                        NDS.State.remove(btn.closest('th'), 'sorted-asc', 'sorted-desc');
                     });
 
-                    // Apply to the active header for CSS icon swap at _tables.scss
-                    if (key !== null && key !== undefined && dir) {
-                        const activeBtn = this.sortButtons.find(btn => {
-                            const th = btn.closest('th');
-                            return Array.from(th.parentElement.children).indexOf(th) === key;
-                        });
-                        if (activeBtn) {
-                            const th = activeBtn.closest('th');
-                            NDS.State.add(th, dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
-                        }
+                    const activeBtn = (key != null && dir)
+                        ? this.sortButtons.find(btn => thIndex(btn.closest('th')) === key)
+                        : null;
+
+                    // Mark the active header for the CSS icon swap in _tables.scss
+                    if (activeBtn) {
+                        NDS.State.add(activeBtn.closest('th'), dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
                     }
 
                     const pagedContent = this.tbody.closest('.nds-paged-content');
                     if (pagedContent) NDS.Pagination.refresh(pagedContent);
 
                     // Back-compat event — existing listeners expect columnIndex + direction
-                    this.dispatchSortEvent(key, dir);
+                    this.dispatchSortEvent(key, dir, activeBtn);
                 }
             });
-        }
-
-        getCellText(cell) {
-            return getCellText(cell);
         }
 
         setupEventListeners() {
@@ -154,13 +139,13 @@
             }
         }
 
-        dispatchSortEvent(columnIndex, direction) {
+        dispatchSortEvent(columnIndex, direction, button = null) {
             const event = new CustomEvent('nds:table:sort', {
                 detail: {
                     columnIndex: columnIndex,
                     direction: direction,
                     table: this.table,
-                    button: this.sortButtons[columnIndex]
+                    button
                 },
                 bubbles: true
             });
@@ -168,7 +153,6 @@
             this.table.dispatchEvent(event);
         }
 
-        // Selection methods
         handleSelectAll(checked) {
             this.rowCheckboxes.forEach(checkbox => {
                 checkbox.checked = checked;
@@ -198,27 +182,27 @@
             const checkedCount = this.rowCheckboxes.filter(cb => cb.checked).length;
             const totalCount = this.rowCheckboxes.length;
 
-
-            // Set checked state based on count
             this.selectAllCheckbox.checked = checkedCount === totalCount;
 
-            // Set indeterminate state via forms API
-            var isIndeterminate = checkedCount > 0 && checkedCount < totalCount;
+            const isIndeterminate = checkedCount > 0 && checkedCount < totalCount;
             NDS.Forms.setIndeterminate(this.selectAllCheckbox, isIndeterminate);
-
         }
 
         dispatchSelectionEvent() {
-            const selectedRows = this.rowCheckboxes
-                .map((checkbox, index) => ({ checkbox, row: this.tbody.querySelectorAll('tr')[index], index }))
+            // Resolve each row from its own checkbox. Sorting re-appends the <tr>
+            // nodes (nds-sort.js), so rowCheckboxes' construction-time order stops
+            // matching the live tbody order — indexing tbody rows by position
+            // reported the wrong rows after the first sort.
+            const selected = this.rowCheckboxes
+                .map((checkbox, index) => ({ checkbox, index }))
                 .filter(item => item.checkbox.checked);
 
             const event = new CustomEvent('nds:table:selection', {
                 detail: {
-                    selectedCount: selectedRows.length,
+                    selectedCount: selected.length,
                     totalCount: this.rowCheckboxes.length,
-                    selectedRows: selectedRows.map(item => item.row),
-                    selectedIndexes: selectedRows.map(item => item.index),
+                    selectedRows: selected.map(item => item.checkbox.closest('tr')),
+                    selectedIndexes: selected.map(item => item.index),
                     table: this.table
                 },
                 bubbles: true
@@ -244,17 +228,18 @@
         destroy() {
             this.sort?.destroy();
             this.abortController?.abort();
+            this.table.removeAttribute('data-nds-tables-initialized');
         }
     }
 
     // Responsive table handler (similar to expandable pattern)
     class NDSResponsiveTable {
         constructor(tableElement) {
-            // tableElement is the <table> element with nds-table and nds-responsive classes
             this.table = tableElement;
             this.wrapper = null;
             this.needsScroll = false;
             this.currentScrollState = null; // Track current state to avoid redundant DOM operations
+            this.abortController = new AbortController();
 
             this.init();
         }
@@ -265,24 +250,15 @@
         }
 
         setupWrapper() {
-            // Check if already wrapped
             if (this.table.parentElement.classList.contains('nds-table-wrapper')) {
                 this.wrapper = this.table.parentElement;
-                this.copyMaxWidthToWrapper();
             } else {
-                // Create wrapper
                 this.wrapper = document.createElement('div');
                 this.wrapper.className = 'nds-table-wrapper';
-
-                // Insert wrapper before table
                 this.table.parentElement.insertBefore(this.wrapper, this.table);
-
-                // Move table into wrapper
                 this.wrapper.appendChild(this.table);
-
-                // Copy max-width from table to wrapper
-                this.copyMaxWidthToWrapper();
             }
+            this.copyMaxWidthToWrapper();
         }
 
         copyMaxWidthToWrapper() {
@@ -329,7 +305,6 @@
                 if (scrollLeft >= maxScroll - 5) tokens.push('at-end');
             }
 
-            // Only update DOM if state changed
             const newState = tokens.join(' ');
             if (this.currentScrollState !== newState) {
                 NDS.State.set(this.wrapper, ...tokens);
@@ -338,8 +313,9 @@
         }
 
         setupEventListeners() {
-            // Scroll event listener with requestAnimationFrame throttling
-            this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => this.handleScroll()));
+            this.wrapper.addEventListener('scroll', NDS.rafThrottle(() => this.handleScroll()), {
+                signal: this.abortController.signal
+            });
 
             // The RO's first delivery runs the initial overflow check
             // immediately — it fires post-layout so the scrollWidth read is free.
@@ -365,14 +341,7 @@
                 if (entry.isIntersecting) onVisibleDebounced();
             }, { threshold: 0.1 });
 
-            // Tab change listener is now handled globally (see initializeTables function)
-        }
-
-        handleResize() {
-            if (!this._debouncedResize) {
-                this._debouncedResize = NDS.debounce(() => this.checkTableWidth(), 250);
-            }
-            this._debouncedResize();
+            // Tab-change rechecks are wired once at module scope, not per instance.
         }
 
         recheckWidth() {
@@ -380,13 +349,16 @@
         }
 
         destroy() {
+            this.abortController.abort();
+
             if (this._offResizeTable) { this._offResizeTable(); this._offResizeTable = null; }
             if (this._offResizeWrapper) { this._offResizeWrapper(); this._offResizeWrapper = null; }
-
             if (this._offIntersect) { this._offIntersect(); this._offIntersect = null; }
 
             NDS.State.clear(this.wrapper);
             this.currentScrollState = null;
+            this.needsScroll = false;
+            this.table.removeAttribute('data-nds-responsive-initialized');
         }
     }
 
@@ -405,7 +377,9 @@
         try { return document.querySelector(ref); } catch (e) { return null; }
     }
 
-    function setColumnHidden(table, index, hidden) {
+    // `restored` marks a hide replayed from storage at init rather than chosen by
+    // the user, so a consumer syncing the event to a server can ignore the replay.
+    function setColumnHidden(table, index, hidden, restored = false) {
         const th = table.querySelectorAll('thead th')[index];
         if (!th) return;
 
@@ -428,13 +402,39 @@
         });
 
         table.dispatchEvent(new CustomEvent('nds:table:columns', {
-            detail: { table, index, hidden },
+            detail: { table, index, hidden, restored },
             bubbles: true
         }));
     }
 
+    // The hidden set persists whenever the table has an id to key on — a UI
+    // preference, same tier as the theme, so localStorage rather than a
+    // consent-tier cookie. The saved value is "<columnCount>-<hiddenIndex>-…";
+    // the count is a fingerprint, so adding or dropping a column in a later
+    // deploy discards the stale set instead of hiding the wrong ones.
+    const columnsKey = (table) => 'nds-cols-' + table.id;
+
+    function saveHiddenColumns(table) {
+        const ths = [...table.querySelectorAll('thead th')];
+        const hidden = ths.flatMap((th, i) => th.hasAttribute('hidden') ? [i] : []);
+        try {
+            localStorage.setItem(columnsKey(table), [ths.length, ...hidden].join('-'));
+        } catch {}
+    }
+
+    function restoreHiddenColumns(table) {
+        let saved = null;
+        try { saved = localStorage.getItem(columnsKey(table)); } catch {}
+        if (!saved) return;
+
+        const [count, ...hidden] = saved.split('-').map(Number);
+        if (count !== table.querySelectorAll('thead th').length) return;
+        hidden.forEach(index => setColumnHidden(table, index, true, true));
+    }
+
     class NDSColumnToggle {
         constructor(root) {
+            this.valid = false;
             this.root = root;
             this.table = resolveTable(root.getAttribute('data-columns-target') || '');
             this.list = root.querySelector('[data-columns-list]');
@@ -444,8 +444,27 @@
                 return;
             }
 
+            this.valid = true;
+            this.persist = !!this.table.id;
+
             this.abortController = new AbortController();
+            // Before init(): render() runs on the menu's first open, so the
+            // checklist reads the restored [hidden] and paints the right boxes.
+            if (this.persist) restoreHiddenColumns(this.table);
+            this.updateTriggerLabel();
             this.init();
+        }
+
+        // Same affordance as the filter button: base label + (n) while columns
+        // are hidden, so a persisted hide is visible without opening the menu.
+        updateTriggerLabel() {
+            const labelEl = this.root.querySelector('.nds-dropmenu-trigger .nds-label');
+            if (!labelEl) return;
+
+            if (this.baseLabel == null) this.baseLabel = labelEl.textContent.trim();
+            const count = this.table.querySelectorAll('thead th[hidden]').length;
+
+            labelEl.textContent = count > 0 ? `${this.baseLabel} (${count})` : this.baseLabel;
         }
 
         init() {
@@ -469,6 +488,8 @@
             this.list.addEventListener('change', (e) => {
                 if (!e.target.matches('input[data-column-index]')) return;
                 setColumnHidden(this.table, Number(e.target.dataset.columnIndex), !e.target.checked);
+                this.updateTriggerLabel();
+                if (this.persist) saveHiddenColumns(this.table);
             }, { signal });
         }
 
@@ -520,6 +541,7 @@
 
         destroy() {
             this.abortController?.abort();
+            this.root.removeAttribute('data-nds-columns-initialized');
         }
     }
 
@@ -547,7 +569,6 @@
                 tables.forEach(table => {
                     const responsive = table.ndsTableResponsive;
                     if (responsive) {
-                        // Debounce the recheck
                         if (!responsive._debouncedTabChangeCheck) {
                             responsive._debouncedTabChangeCheck = NDS.debounce(
                                 () => responsive.checkTableWidth(),
@@ -562,34 +583,29 @@
     }
 
     // Auto-initialize tables on page load (sortable and/or selectable)
+    // The init sentinel is stamped only on a construction that succeeded — a table
+    // whose <tbody> arrives later must stay eligible for the next reinit().
     function initializeTables() {
-        // Find all NDS tables
-        const tables = document.querySelectorAll('.nds-table');
+        document.querySelectorAll('.nds-table').forEach(table => {
+            if (table.closest('code, .code-example')) return;
 
-        tables.forEach(table => {
-            // Skip elements inside code examples
-            if (table.closest('code, .code-example')) {
-                return;
-            }
-
-            // Initialize responsive wrapper for all tables
-            // If table has --max-width, it will use that value
-            // Otherwise, wrapper will use default max-width (100%)
-            // Set --min-width inline on the table to control scroll breakpoint
+            // Every table gets the responsive scroll wrapper. --max-width on the
+            // table (inline only) carries over to the wrapper; --min-width on the
+            // table controls the scroll breakpoint.
             if (!table.hasAttribute('data-nds-responsive-initialized')) {
-                const responsiveInstance = new NDSResponsiveTable(table);
-                table.ndsTableResponsive = responsiveInstance;
+                table.ndsTableResponsive = new NDSResponsiveTable(table);
                 table.setAttribute('data-nds-responsive-initialized', 'true');
             }
 
-            // Check if table has sort buttons or checkboxes
             const hasSortButtons = table.querySelector('.nds-sort-btn') !== null;
             const hasCheckboxes = table.querySelector('thead input[type="checkbox"].nds-check') !== null;
 
             if ((hasSortButtons || hasCheckboxes) && !table.hasAttribute('data-nds-tables-initialized')) {
-                const tablesInstance = new NDSTables(table);
-                table.ndsTableControls = tablesInstance;
-                table.setAttribute('data-nds-tables-initialized', 'true');
+                const instance = new NDSTables(table);
+                if (instance.valid) {
+                    table.ndsTableControls = instance;
+                    table.setAttribute('data-nds-tables-initialized', 'true');
+                }
             }
         });
 
@@ -598,72 +614,29 @@
             if (root.closest('code, .code-example')) return;
             if (root.hasAttribute('data-nds-columns-initialized')) return;
 
-            root.ndsColumnToggle = new NDSColumnToggle(root);
-            root.setAttribute('data-nds-columns-initialized', 'true');
-        });
-    }
-
-    // Re-initialize when new content is added
-    function reinitializeTables() {
-        initializeTables();
-    }
-
-    // Recheck width for all responsive tables
-    function recheckAllWidths() {
-        const responsiveTables = document.querySelectorAll('.nds-table[data-nds-responsive-initialized]');
-        responsiveTables.forEach(table => {
-            if (table.ndsTableResponsive && table.ndsTableResponsive.recheckWidth) {
-                table.ndsTableResponsive.recheckWidth();
+            const instance = new NDSColumnToggle(root);
+            if (instance.valid) {
+                root.ndsColumnToggle = instance;
+                root.setAttribute('data-nds-columns-initialized', 'true');
             }
         });
     }
 
-    // CRITICAL: Expose global API immediately (called by unified init system)
-    if (typeof window !== 'undefined') {
-        NDS.Tables = {
-            init: initializeTables,
-            reinit: reinitializeTables,
-            recheckWidths: recheckAllWidths,
-            create: (table) => new NDSTables(table),
-            createResponsive: (table) => new NDSResponsiveTable(table),
-            createColumnToggle: (root) => new NDSColumnToggle(root),
-            setColumnHidden,
-            getCellText
-        };
+    function recheckAllWidths() {
+        document.querySelectorAll('.nds-table[data-nds-responsive-initialized]').forEach(table => {
+            table.ndsTableResponsive?.recheckWidth();
+        });
     }
 
-    // Export for modules
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSTables;
-    }
-
-    // Note: Initialization now handled by nds-loader.js unified system
+    // Public API — the loader calls init(); see components/tables.md for the surface.
+    NDS.Tables = {
+        init: initializeTables,
+        reinit: initializeTables,
+        recheckWidths: recheckAllWidths,
+        create: (table) => new NDSTables(table),
+        createResponsive: (table) => new NDSResponsiveTable(table),
+        createColumnToggle: (root) => new NDSColumnToggle(root),
+        setColumnHidden,
+        getCellText
+    };
 })();
-
-/**
- * Usage Examples:
- *
- * // Auto-initialization (happens automatically)
- * // Just add the HTML structure with .nds-table.nds-sortable class
- *
- * // Manual initialization
- * const tableElement = document.querySelector('#myTable');
- * const tableInstance = NDSTables.create(tableElement);
- *
- * // Reset sorting
- * tableInstance.resetSort();
- *
- * // Get current state
- * const sortColumn = tableInstance.getSortColumn();
- * const sortDirection = tableInstance.getSortDirection();
- *
- * // Listen for sort changes
- * document.addEventListener('nds:table:sort', (e) => {
- *     console.log('Table sorted by column:', e.detail.columnIndex);
- *     console.log('Sort direction:', e.detail.direction);
- *     console.log('Table element:', e.detail.table);
- * });
- *
- * // Reinitialize after dynamic content changes
- * NDSTables.reinit();
- */
