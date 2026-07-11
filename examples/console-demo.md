@@ -204,92 +204,103 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">
-                <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
-                    <div class="nds-search-content">
-                        <div class="nds-form-control">
-                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <input type="text" class="nds-search-input" placeholder="Search transactions...">
-                            <div class="nds-form-action">
-                                <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
-                            </div>
-                        </div>
-                        <button class="nds-btn nds-primary nds-search-btn" type="button">
-                            <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <span class="nds-label">Search</span>
-                        </button>
+                <div class="nds-bar-row">
+                    <div class="nds-bar-info">
+                        <span class="nds-results-count" data-filter-target="transactionsTableBody"><span data-filter-count>0</span> transaction(s)</span>
                     </div>
-                </div>
-                <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody">
-                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                        <i class="hgi hgi-stroke hgi-filter"></i>
-                        <span class="nds-label">Filter</span>
-                    </button>
-                    <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
-                        <div class="nds-dropmenu-scroll">
-                            <div data-filter="category" data-filter-type="checkbox"
-                                data-filter-legend="Category"
-                                data-no-auto-close>
-                            </div>
-                            <hr class="nds-divider">
-                            <div data-filter="status" data-filter-type="radio"
-                                data-filter-legend="Status"
-                                data-filter-values='{"completed":"Completed","pending":"Pending","failed":"Failed"}'
-                                data-no-auto-close>
-                            </div>
-                            <hr class="nds-divider">
-                            <div data-filter="amount" data-filter-type="slider"
-                                data-filter-legend="Amount"
-                                data-filter-min="0" data-filter-max="45000" data-filter-step="500"
-                                data-filter-currency="SAR" data-no-auto-close>
+                    <div class="nds-bar-actions">
+                        <div class="nds-dropmenu" data-columns-target="consoleTransactions">
+                            <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                                <span class="nds-label">Columns</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-scroll">
+                                    <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
+                                        <legend class="nds-label">Visible columns</legend>
+                                    </fieldset>
+                                </div>
                             </div>
                         </div>
-                        <div class="nds-dropmenu-footer">
-                            <hr class="nds-divider">
-                            <div class="nds-dropmenu-action nds-grid">
-                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                    data-filter-action="clear" data-no-auto-close>
-                                    <span class="nds-label">Reset</span>
-                                </button>
-                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                    data-filter-action="apply">
-                                    <span class="nds-label">Filter</span>
-                                </button>
-                            </div>
+                        <div class="nds-export nds-btn-group">
+                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                    data-export="csv" data-export-target="#consoleTransactions">
+                                <span class="nds-label">CSV</span>
+                            </button>
+                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                    data-export="xls" data-export-target="#consoleTransactions">
+                                <span class="nds-label">Excel</span>
+                            </button>
+                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
+                                    data-export="pdf" data-export-target="#consoleTransactions">
+                                <span class="nds-label">PDF</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="nds-bar-actions">
-                    <div class="nds-dropmenu" data-columns-target="consoleTransactions">
-                        <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                            <i class="hgi hgi-stroke hgi-view-off-slash"></i>
-                            <span class="nds-label">Columns</span>
+                <div class="nds-bar-row">
+                    <div class="nds-form-container nds-search-box" data-filter-target="transactionsTableBody">
+                        <div class="nds-search-content">
+                            <div class="nds-form-control">
+                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                <input type="text" class="nds-search-input" placeholder="Search transactions...">
+                                <div class="nds-form-action">
+                                    <button class="nds-btn nds-subtle nds-clear" hidden aria-label="Clear search"><i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                            <button class="nds-btn nds-primary nds-search-btn" type="button">
+                                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                                <span class="nds-label">Search</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nds-dropmenu nds-filter" data-filter-target="transactionsTableBody">
+                        <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                            <i class="hgi hgi-stroke hgi-filter"></i>
+                            <span class="nds-label">Filter</span>
                         </button>
-                        <div class="nds-dropmenu-menu" hidden>
+                        <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                             <div class="nds-dropmenu-scroll">
-                                <fieldset class="nds-form-group nds-check-group nds-dropmenu-group" data-columns-list data-no-auto-close>
-                                    <legend class="nds-label">Visible columns</legend>
-                                </fieldset>
+                                <div data-filter="category" data-filter-type="checkbox"
+                                    data-filter-legend="Category"
+                                    data-no-auto-close>
+                                </div>
+                                <hr class="nds-divider">
+                                <div data-filter="status" data-filter-type="radio"
+                                    data-filter-legend="Status"
+                                    data-filter-values='{"completed":"Completed","pending":"Pending","failed":"Failed"}'
+                                    data-no-auto-close>
+                                </div>
+                                <hr class="nds-divider">
+                                <div data-filter="amount" data-filter-type="slider"
+                                    data-filter-legend="Amount"
+                                    data-filter-min="0" data-filter-max="45000" data-filter-step="500"
+                                    data-filter-currency="SAR" data-no-auto-close>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu-footer">
+                                <hr class="nds-divider">
+                                <div class="nds-dropmenu-action nds-grid">
+                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                        data-filter-action="clear" data-no-auto-close>
+                                        <span class="nds-label">Reset</span>
+                                    </button>
+                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                        data-filter-action="apply">
+                                        <span class="nds-label">Filter</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="nds-export nds-btn-group">
-                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                data-export="csv" data-export-target="#consoleTransactions">
-                            <span class="nds-label">CSV</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                data-export="xls" data-export-target="#consoleTransactions">
-                            <span class="nds-label">Excel</span>
-                        </button>
-                        <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                data-export="pdf" data-export-target="#consoleTransactions">
-                            <span class="nds-label">PDF</span>
-                        </button>
-                    </div>
                 </div>
-                <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
-                    <span class="nds-label">Applied Filters:</span>
-                    <div class="nds-chips"></div>
+                <div class="nds-bar-row">
+                    <div class="nds-bar-info">
+                        <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
+                            <span class="nds-label">Applied Filters:</span>
+                            <div class="nds-chips"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="console_transactions_content" class="nds-paged-content">
