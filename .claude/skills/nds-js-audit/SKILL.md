@@ -129,7 +129,7 @@ Single-file `dry` runs every JSD rule **except JSD-05** — JSD-05 compares help
 
 ### JSA deep-read rules in full-tree mode
 
-Full-tree `architecture` runs only the greppable JSA rules (JSA-01, -02, -04, -05, -06, -13); the deep-read rules (JSA-03, -07 through -12, -14, -15, -16) are skipped and the report shows the JSA deep-read banner (Phase 4). Single-file `architecture` runs every JSA rule — the per-file deep reads (complexity, in-file duplication, mixed-concern structure, INP cost, CSS-subsumption) are where deep-reads earn their keep, and the single-file budget allows them. Full-tree `architecture` also computes the **deep-read triage** (Phase 3) so the skipped coverage converts into ranked single-file targets instead of a bare disclaimer.
+Full-tree `architecture` runs only the greppable JSA rules (JSA-01, -02, -04, -05, -06, -13); the deep-read rules (JSA-03, -07 through -12, -14 through -17) are skipped and the report shows the JSA deep-read banner (Phase 4). Single-file `architecture` runs every JSA rule — the per-file deep reads (complexity, in-file duplication, mixed-concern structure, INP cost, CSS-subsumption) are where deep-reads earn their keep, and the single-file budget allows them. Full-tree `architecture` also computes the **deep-read triage** (Phase 3) so the skipped coverage converts into ranked single-file targets instead of a bare disclaimer.
 
 ### Excluded files
 
@@ -192,9 +192,9 @@ The detection rules live in sibling files, one per rule group. Read the file(s) 
 | Group | File | Covers | Rules |
 |---|---|---|---|
 | JSP | `RULES-JSP.md` | performance — listener/observer pooling, scroll/resize throttling, forced-layout-at-init | 11 |
-| JSD | `RULES-JSD.md` | DRY/KISS — cross-file dedup, core promotion (JSD-05), persona conformance (JSD-15 → `PERSONA.md`) | 16 |
+| JSD | `RULES-JSD.md` | DRY/KISS — cross-file dedup, core promotion (JSD-05), persona conformance (JSD-15 → `PERSONA.md`), init-sentinel ordering | 18 |
 | JSS | `RULES-JSS.md` | client-side security sinks — innerHTML XSS, eval, tabnabbing, postMessage origin, untrusted URLs | 6 |
-| JSA | `RULES-JSA.md` | architecture — unbounded caches, scheduling choice, complexity, in-file DRY, INP cost, CSS-subsumption, comment hygiene | 16 |
+| JSA | `RULES-JSA.md` | architecture — unbounded caches, scheduling choice, complexity, in-file DRY, INP cost, CSS-subsumption, comment hygiene, index-space correctness | 17 |
 
 Severity (HIGH / MEDIUM / LOW) drives the order fixes are applied in Phase 5: HIGH (correctness and performance) first, then MEDIUM, then LOW.
 
@@ -213,7 +213,7 @@ Agent briefs (Phase 3 / Phase 6) must paste both conventions verbatim — subage
 
 **Single-file mode only.** After the inline catalog pass completes, spawn ONE dedicated deep-read agent (`Agent` tool, `general-purpose` subagent) whose sole job is to re-read the target file end-to-end with fresh context and hunt the rules that reward undivided attention. This is what makes single-file the deepest mode — the inline pass owns the fast greppable rules, the agent owns the architectural deep reads. Full-tree mode does NOT spawn this agent: its budget is committed to breadth, and deep-read rules are banner-skipped there.
 
-**Deep-read scope for the agent:** JSA-03, JSA-07 through JSA-12, JSA-14, JSA-15, JSA-16; JSD-14 sub-shapes (a) deep nesting, (b) redundant guards, (d) dead code, (e) unused locals; JSD-16 (frozen disabled-flag dead code); and the context-dependent confirmations for JSS-01 (innerHTML XSS vector) and JSS-04 (postMessage origin allowlist). Restrict the agent to the rule group(s) in scope for this run — on a single-group run with no deep-read rules (e.g. `performance`), skip the agent entirely; on `architecture`, `dry`, `security`, or `all`, run the in-scope deep-read subset.
+**Deep-read scope for the agent:** JSA-03, JSA-07 through JSA-12, JSA-14 through JSA-17; JSD-14 sub-shapes (a) deep nesting, (b) redundant guards, (d) dead code, (e) unused locals; JSD-16 (frozen disabled-flag dead code); and the context-dependent confirmations for JSS-01 (innerHTML XSS vector) and JSS-04 (postMessage origin allowlist). Restrict the agent to the rule group(s) in scope for this run — on a single-group run with no deep-read rules (e.g. `performance`), skip the agent entirely; on `architecture`, `dry`, `security`, or `all`, run the in-scope deep-read subset.
 
 **Brief template** (self-contained — the agent has no audit context):
 1. **Target** — the resolved `_js/nds-<file>.js` path. "Read it top-to-bottom before judging; pattern-matching without the full read misses context."
@@ -264,7 +264,7 @@ Use this structure verbatim:
 
 > Skipped: JSD-16 frozen-flag dead code (full-tree mode — needs whole-file scope analysis) — run `/nds-js-audit nds-<file>.js dry` for a specific component.
 
-> Skipped: JSA deep-read rules JSA-03, -07–-12, -14–-16 (full-tree mode — per-file analysis exceeds the full-tree budget) — run `/nds-js-audit nds-<file>.js architecture` for a specific component.
+> Skipped: JSA deep-read rules JSA-03, -07–-12, -14–-17 (full-tree mode — per-file analysis exceeds the full-tree budget) — run `/nds-js-audit nds-<file>.js architecture` for a specific component.
 > Deep-read triage (full-tree `architecture` only): 1. `_js/nds-<a>.js` — {driving signals, e.g. "1.9k lines, 31 interaction listeners, ~120-line validateForm"}; 2. `_js/nds-<b>.js` — {…}; 3. `_js/nds-<c>.js` — {…}. Start with `/nds-js-audit nds-<a>.js architecture`.
 
 ## HIGH
