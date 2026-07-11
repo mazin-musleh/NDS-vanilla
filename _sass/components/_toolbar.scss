@@ -59,12 +59,14 @@
         display: flex;
         align-items: center;
         gap: var(--spacing-md);
+        flex-wrap: wrap;
     }
 
     // Info keeps its natural leading spot; actions are pushed to the end edge
     // of whichever bar or row holds them.
     .nds-bar-actions {
         margin-inline-start: auto;
+        justify-content: flex-end;
     }
 }
 
