@@ -371,7 +371,7 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                        <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
                         <span class="nds-label">Empty-Slot Collapse</span>
                     </span>
                     <p class="nds-item-desc">A row whose widgets are all hidden takes no space at all, so an applied-filters row leaves no gap above the content until a filter lands.</p>

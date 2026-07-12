@@ -560,6 +560,43 @@
         sort:     _aria('aria-sort',     false),
     };
 
+    // ── Count Badge ──────────────────────────────────────────────────
+    // Stamp a count on a button's icon as .nds-badge (styled in _buttons.scss).
+    // 0 / null removes it. No icon → no-op; the badge is positioned against the
+    // <i>, not the button.
+    // The badge text is unreadable to AT whenever the icon is aria-hidden (the
+    // convention for .nds-icon), and aria-hidden can't be undone on a descendant —
+    // so the count is mirrored into the button's accessible name instead. The base
+    // name is taken from the button's own visible label, captured once before any
+    // count lands, so no translated string is needed here: "Columns" → "Columns (2)".
+    // Usage: NDS.badge(filterBtn, 3);
+    NDS.badge = (btn, count) => {
+        const icon = btn && btn.querySelector('i, .nds-icon');
+        if (!icon) return;
+
+        let badge = icon.querySelector('.nds-badge');
+        if (count) {
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'nds-badge';
+                icon.appendChild(badge);
+            }
+            badge.textContent = count;
+        } else if (badge) {
+            badge.remove();
+        }
+
+        if (btn._ndsBadgeBase === undefined) {
+            const label = btn.querySelector('.nds-label');
+            // Icon-only buttons carry their name on aria-label — read it before we overwrite it.
+            btn._ndsBadgeBase = (label ? label.textContent : btn.getAttribute('aria-label') || '').trim();
+        }
+        // Keeps the visible label inside the accessible name (WCAG 2.5.3).
+        if (btn._ndsBadgeBase) {
+            btn.setAttribute('aria-label', count ? `${btn._ndsBadgeBase} (${count})` : btn._ndsBadgeBase);
+        }
+    };
+
     // ── HTML Escape ──────────────────────────────────────────────────
     // Escape a string for safe insertion into an HTML context (innerHTML, template literals).
     // Uses the browser's textContent serializer so every edge case the parser cares about

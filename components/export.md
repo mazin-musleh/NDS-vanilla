@@ -27,7 +27,7 @@ direction: ltr
                                 <div class="nds-bar-actions">
                                     <div class="nds-dropmenu" data-columns-target="exportOrdersTable">
                                         <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                                            <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                                            <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
                                             <span class="nds-label">Columns</span>
                                         </button>
                                         <div class="nds-dropmenu-menu" hidden>
@@ -154,7 +154,7 @@ direction: ltr
     &lt;!-- Hiding a column stamps data-export-skip, so exports follow the view --&gt;
     &lt;div class="nds-dropmenu" data-columns-target="orders"&gt;
       &lt;button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
-        &lt;i class="hgi hgi-stroke hgi-view-off-slash"&gt;&lt;/i&gt;
+        &lt;i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;span class="nds-label"&gt;Columns&lt;/span&gt;
       &lt;/button&gt;
       &lt;div class="nds-dropmenu-menu" hidden&gt;

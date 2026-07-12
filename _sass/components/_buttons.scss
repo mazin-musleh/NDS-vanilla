@@ -712,6 +712,11 @@
     position: relative;
   }
 
+  // Loading turns the icon into a spinner — the badge would sit on top of it.
+  &:is(.nds-loading, [data-state~="loading"]) .nds-badge {
+    display: none;
+  }
+
   .nds-badge {
     position: absolute;
     inset-block-start: -8px;

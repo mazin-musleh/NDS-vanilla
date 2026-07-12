@@ -601,7 +601,7 @@ direction: ltr
                             <div class="nds-bar-actions">
                                 <div class="nds-dropmenu" data-columns-target="selectionTable">
                                     <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                                        <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                                        <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
                                         <span class="nds-label">Columns</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
@@ -732,7 +732,7 @@ direction: ltr
     &lt;!-- Checklist is built from the table's own &lt;thead&gt; --&gt;
     &lt;div class="nds-dropmenu" data-columns-target="selectionTable"&gt;
       &lt;button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
-        &lt;i class="hgi hgi-stroke hgi-view-off-slash"&gt;&lt;/i&gt;
+        &lt;i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;span class="nds-label"&gt;Columns&lt;/span&gt;
       &lt;/button&gt;
       &lt;div class="nds-dropmenu-menu" hidden&gt;
@@ -1542,7 +1542,7 @@ direction: ltr
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                        <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
                         <span class="nds-label">Column Visibility</span>
                     </span>
                     <p class="nds-item-desc">Point a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> at a table with <code class="nds-inline-code lang-html">data-columns-target</code> and it becomes a checklist of that table's columns, built from the <code class="nds-inline-code lang-html">&lt;thead&gt;</code> on first open. Hidden columns are skipped by exports, the trigger label gains a count, and the choice is remembered for tables that have an <code class="nds-inline-code lang-html">id</code>.</p>
@@ -1654,7 +1654,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-sort-value</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;td&gt;</code> to supply an alternate value used for sorting only, when the displayed text would sort incorrectly (e.g. "Free" in a numeric column, a localized date in a text column). The cell still renders its normal content; only the sort order is affected. Not read by Export: use <code class="nds-inline-code lang-html">data-export-value</code> for that.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-loading</code> (class on <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>)</td><td>Alternate loading trigger: add the <code class="nds-inline-code lang-html">nds-loading</code> class directly to <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> to shimmer only the body rows while keeping the header visible. Used internally by the Filter and Pagination components during data refresh.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-auto-pagination="id"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;nav class="nds-pagination"&gt;</code> to auto-paginate the <code class="nds-inline-code lang-html">nds-paged-content</code> wrapper with that id (omit the value to bind the preceding wrapper)</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-columns-target="id"</code></td><td>Set on a <code class="nds-inline-code lang-html">nds-dropmenu</code> to turn it into a column-visibility menu for the table with that id. The trigger's <code class="nds-inline-code lang-html">.nds-label</code> gains a <code class="nds-inline-code lang-html">(n)</code> count while columns are hidden</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-columns-target="id"</code></td><td>Set on a <code class="nds-inline-code lang-html">nds-dropmenu</code> to turn it into a column-visibility menu for the table with that id. The trigger's icon gains a <code class="nds-inline-code lang-html">.nds-badge</code> counting the hidden columns, and a "Reset" button sits under the checklist while any column is hidden</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-columns-list</code></td><td>Set on the <code class="nds-inline-code lang-html">&lt;fieldset&gt;</code> inside that menu. The checklist is generated into it from the table's <code class="nds-inline-code lang-html">&lt;thead&gt;</code>. Author your own rows to opt out of generation</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-columns-lock</code></td><td>Set on a <code class="nds-inline-code lang-html">&lt;th&gt;</code> to keep that column off the menu so it can never be hidden. The row-selection column is excluded automatically</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">id</code> (on <code class="nds-inline-code lang-html">&lt;table&gt;</code>)</td><td>A table with an id remembers its hidden columns across visits, stored under <code class="nds-inline-code lang-js">localStorage['nds-cols-{id}']</code>. The saved set is discarded if the table's column count changes, so a later deploy can add or drop a column without hiding the wrong one</td></tr>

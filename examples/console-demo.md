@@ -211,7 +211,7 @@ hideFeedback: true
                     <div class="nds-bar-actions">
                         <div class="nds-dropmenu" data-columns-target="consoleTransactions">
                             <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                                <i class="hgi hgi-stroke hgi-view-off-slash"></i>
+                                <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
                                 <span class="nds-label">Columns</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>

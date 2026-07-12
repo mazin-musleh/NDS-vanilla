@@ -451,24 +451,67 @@
             // Before init(): render() runs on the menu's first open, so the
             // checklist reads the restored [hidden] and paints the right boxes.
             if (this.persist) restoreHiddenColumns(this.table);
-            this.updateTriggerLabel();
             this.init();
         }
 
-        // Same affordance as the filter button: base label + (n) while columns
-        // are hidden, so a persisted hide is visible without opening the menu.
-        updateTriggerLabel() {
-            const labelEl = this.root.querySelector('.nds-dropmenu-trigger .nds-label');
-            if (!labelEl) return;
-
-            if (this.baseLabel == null) this.baseLabel = labelEl.textContent.trim();
+        // Same affordance as the filter button: an icon badge counting the hidden
+        // columns, so a persisted hide is visible without opening the menu.
+        // The footer rides along — it only earns its space while something is hidden.
+        updateTriggerBadge() {
             const count = this.table.querySelectorAll('thead th[hidden]').length;
+            NDS.badge(this.root.querySelector('.nds-dropmenu-trigger'), count);
+            this.footer.hidden = !count;
+        }
 
-            labelEl.textContent = count > 0 ? `${this.baseLabel} (${count})` : this.baseLabel;
+        // The filter dropmenu's footer, built rather than authored: divider + action
+        // row outside .nds-dropmenu-scroll, so Reset stays pinned while a long column
+        // list scrolls. Sibling of the scroll box — never inside the checklist, so
+        // render()'s rows can't land under it.
+        buildFooter(signal) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'nds-btn nds-secondary nds-md nds-dropmenu-item';
+            btn.setAttribute('data-no-auto-close', '');
+            btn.addEventListener('click', () => this.showAllColumns(), { signal });
+
+            const label = document.createElement('span');
+            label.className = 'nds-label';
+            label.textContent = NDS.lang === 'ar' ? 'إعادة تعيين' : 'Reset';
+            btn.appendChild(label);
+
+            const action = document.createElement('div');
+            action.className = 'nds-dropmenu-action nds-grid';
+            action.appendChild(btn);
+
+            const divider = document.createElement('hr');
+            divider.className = 'nds-divider';
+
+            const footer = document.createElement('div');
+            footer.className = 'nds-dropmenu-footer';
+            footer.append(divider, action);
+
+            (this.list.closest('.nds-dropmenu-menu') || this.root).appendChild(footer);
+            return footer;
+        }
+
+        showAllColumns() {
+            this.table.querySelectorAll('thead th').forEach((th, index) => {
+                if (th.hasAttribute('hidden')) setColumnHidden(this.table, index, false);
+            });
+            // No-op before the checklist is built — render() reads [hidden] fresh.
+            this.list.querySelectorAll('input[data-column-index]').forEach(input => {
+                input.checked = true;
+            });
+
+            this.updateTriggerBadge();
+            if (this.persist) saveHiddenColumns(this.table);
         }
 
         init() {
             const { signal } = this.abortController;
+
+            this.footer = this.buildFooter(signal);
+            this.updateTriggerBadge();
 
             // An authored list wins — a server-rendered checklist paints before
             // this bundle lands. The host's <legend> is always authored, so test
@@ -488,7 +531,7 @@
             this.list.addEventListener('change', (e) => {
                 if (!e.target.matches('input[data-column-index]')) return;
                 setColumnHidden(this.table, Number(e.target.dataset.columnIndex), !e.target.checked);
-                this.updateTriggerLabel();
+                this.updateTriggerBadge();
                 if (this.persist) saveHiddenColumns(this.table);
             }, { signal });
         }

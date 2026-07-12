@@ -298,7 +298,7 @@
         handleAjaxSubmit() {
             // Update URL params and UI state
             this.updateUrlParams();
-            this.updateFilterButtonLabel();
+            this.updateFilterButtonBadge();
             this.updateAppliedChips();
 
             // Unified change event (fires in all modes)
@@ -465,7 +465,7 @@
             if (this._triggerBtn) { NDS.State.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
 
             this.updateUrlParams();
-            this.updateFilterButtonLabel();
+            this.updateFilterButtonBadge();
             this.updateAppliedChips();
 
             this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
@@ -605,7 +605,7 @@
         _settleAfterCriteriaChange() {
             this.updateApplyButtonLabel();
             if (this.isFormMode) {
-                this.updateFilterButtonLabel();
+                this.updateFilterButtonBadge();
                 this.updateAppliedChips();
             } else {
                 this.applyFilters();
@@ -819,23 +819,12 @@
             return this.filterButtonEl;
         }
 
-        updateFilterButtonLabel() {
+        updateFilterButtonBadge() {
             const filterBtn = this._resolveFilterBtn();
             if (!filterBtn) return;
 
-            if (!this.filterButtonBaseLabel) {
-                const labelEl = filterBtn.querySelector('.nds-label');
-                this.filterButtonBaseLabel = labelEl ? labelEl.textContent : '';
-            }
-
             const count = this.getAppliedFilterCount();
-            const labelEl = filterBtn.querySelector('.nds-label');
-
-            if (labelEl && this.filterButtonBaseLabel) {
-                labelEl.textContent = count > 0
-                    ? `${this.filterButtonBaseLabel} (${count})`
-                    : this.filterButtonBaseLabel;
-            }
+            NDS.badge(filterBtn, count);
 
             if (count > 0) {
                 NDS.State.set(filterBtn, 'has-filters');
@@ -2077,7 +2066,7 @@
             // Form submission only happens from explicit user actions via submitForm()
             if (this.isFormMode) {
                 this.updateUrlParams();
-                this.updateFilterButtonLabel();
+                this.updateFilterButtonBadge();
                 this.updateAppliedChips();
                 this.dispatchFilterEvent();
                 return;
@@ -2097,7 +2086,7 @@
                 this.dismissNoResultsAlert();
 
                 this.updateUrlParams();
-                this.updateFilterButtonLabel();
+                this.updateFilterButtonBadge();
                 this.updateAppliedChips();
                 this.updatePagination();
 
@@ -2127,7 +2116,7 @@
             this.updatePagination();
             this.updateNoResultsAlert(visibleCount);
             this.updateUrlParams();
-            this.updateFilterButtonLabel();
+            this.updateFilterButtonBadge();
             this.updateAppliedChips();
 
             this._clearLoadingDebounced();
@@ -2409,7 +2398,7 @@
 
             this.updateUrlParams();
             this.updatePagination();
-            this.updateFilterButtonLabel();
+            this.updateFilterButtonBadge();
             this.updateAppliedChips();
         }
 
