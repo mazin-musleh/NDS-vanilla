@@ -57,5 +57,34 @@
     color: var(--text-secondary-paragraph);
 }
 
+// Filter group opted into accordion (data-filter-accordion). Retune the
+// accordion header to match the standard dropmenu-group legend (text-xs
+// bold, --text-display) instead of the default text-md button style, and
+// shrink the click target via the header-height/padding knobs.
+.nds-dropmenu-scroll > .nds-accordion {
+    --accordion-header-height: auto;
+    --accordion-header-padding: var(--spacing-md);
+
+    .nds-accordion-item {
+        border-top: 0;
+    }
+
+    .nds-accordion-btn {
+        --btn-icon-size: 32px;
+        font-size: var(--typo-text-sm-FS);
+        line-height: var(--typo-text-sm-LH);
+        font-weight: var(--font-weight-bold);
+        color: var(--text-display);
+    }
+
+    // Applied-count tag on the header — knob-tuned so it matches the
+    // header's text-xs font instead of the tag default (text-md, 32px).
+    .nds-tag[data-filter-count-for] {
+        --tag-fs: var(--typo-text-xs-FS);
+        --tag-height: var(--typo-text-xs-LH);
+        padding: var(--spacing-sm);
+    }
+}
+
 // .nds-filter-bar — the controls row that hosts these surfaces — is a
 // .nds-toolbar alias; its layout lives in _toolbar.scss.

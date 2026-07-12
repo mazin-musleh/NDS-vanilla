@@ -21,6 +21,7 @@
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     display: block;
+    padding-inline-end: 1px;
 
     .nds-table {
         // No default floor: a table can't lay out below its own min-content

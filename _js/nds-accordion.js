@@ -286,7 +286,14 @@
                 return;
             }
             
-            if (!container.hasAttribute('data-nds-accordion-initialized')) {
+            // The init flag is stamped in a rAF (below) to preserve the CSS
+            // gate. If a caller runs reinit() synchronously between two
+            // wraps, an already-inited root looks un-stamped and would be
+            // double-constructed — a second click listener toggles the
+            // panel back closed on the first click. Guard on the instance
+            // property, which lands synchronously.
+            if (!container.hasAttribute('data-nds-accordion-initialized')
+                && !container.ndsAccordion) {
                 const accordionInstance = new NDSAccordion(container);
                 container.ndsAccordion = accordionInstance;
                 // Defer the marker by one rAF so the browser commits the

@@ -848,6 +848,7 @@
             // Refresh filter-count slots (query + count) regardless of whether
             // an applied-chips container exists on this page.
             this.updateFilterCount();
+            this._updateAccordionCounts();
 
             const appliedContainer = this.appliedContainer;
             if (!appliedContainer) return;
@@ -1774,6 +1775,11 @@
 
             const legendText = container.getAttribute('data-filter-legend') || '';
             const variant = container.getAttribute('data-filter-variant') || '';
+            // Per-group opt-in: turn this fieldset into a collapsible
+            // accordion item (legend → header button, fields → body). Reuse
+            // the closest .nds-accordion ancestor if the author grouped
+            // several under one; otherwise each group gets its own root.
+            const collapsible = container.hasAttribute('data-filter-accordion');
 
             // Radios cannot be deselected once chosen, so auto-prepend an "All"
             // option with value="" — updateFilterCriteria already excludes empty
@@ -1820,7 +1826,76 @@
                 fieldset.appendChild(this._buildFilterInput(value, index, ctx));
             });
 
+            if (collapsible) {
+                this._wrapAsAccordionItem(fieldset, legendText);
+            }
+
             return fieldset;
+        }
+
+        // Wrap a generated fieldset in nds-accordion-item markup (header
+        // button + collapse + content + body) and schedule one accordion
+        // init per root — coalesces the eager per-group loop into a single
+        // NDS.Accordion.create pass that sees every button at once. If the
+        // fieldset already sits inside a .nds-accordion (author grouping),
+        // reuse that root; otherwise synthesize a per-group root.
+        _wrapAsAccordionItem(fieldset, legendText) {
+            const legend = fieldset.querySelector(':scope > legend');
+            const title = legendText || (legend ? legend.textContent : '');
+            if (legend) legend.remove();
+            fieldset.classList.remove('nds-dropmenu-group');
+
+            const filterName = fieldset.getAttribute('data-filter') || '';
+            const id = `nds-filter-acc-${NDS.uniqueId()}`;
+            const item = document.createElement('div');
+            item.className = 'nds-accordion-item';
+            item.innerHTML =
+                `<h3 class="nds-accordion-header">` +
+                    `<button class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" type="button" ` +
+                        `aria-expanded="false" aria-controls="${id}" data-no-auto-close>` +
+                        `<span class="nds-accordion-title">${NDS.escapeHtml(title)}</span>` +
+                        `<span class="nds-tag nds-green nds-rounded" ` +
+                            `data-filter-count-for="${NDS.escapeHtml(filterName)}" hidden></span>` +
+                    `</button>` +
+                `</h3>` +
+                `<div class="nds-accordion-collapse" id="${id}">` +
+                    `<div class="nds-accordion-content">` +
+                        `<div class="nds-accordion-body"></div>` +
+                    `</div>` +
+                `</div>`;
+            const existingRoot = fieldset.parentNode.closest('.nds-accordion');
+            if (existingRoot) {
+                fieldset.parentNode.insertBefore(item, fieldset);
+            } else {
+                const root = document.createElement('div');
+                root.className = 'nds-accordion';
+                fieldset.parentNode.insertBefore(root, fieldset);
+                root.appendChild(item);
+            }
+            item.querySelector('.nds-accordion-body').appendChild(fieldset);
+
+            // Hand off to accordion.js's own initializer — it wires listeners,
+            // stamps data-nds-accordion-initialized (clears the skeleton), and
+            // sets .ndsAccordion on the container. Skips already-inited roots,
+            // so multiple groups triggering this is cheap.
+            NDS.Accordion?.reinit();
+        }
+
+        // Sync applied-count tags on filter-accordion headers with the current
+        // criteria. Hidden at 0, shows the number of selected values otherwise.
+        _updateAccordionCounts() {
+            const tags = this.filterContainer.querySelectorAll('[data-filter-count-for]');
+            tags.forEach(tag => {
+                const name = tag.getAttribute('data-filter-count-for');
+                const count = (this.criteria.filters[name] || []).length;
+                if (count > 0) {
+                    tag.textContent = count;
+                    tag.removeAttribute('hidden');
+                } else {
+                    tag.textContent = '';
+                    tag.setAttribute('hidden', '');
+                }
+            });
         }
 
         // Resolve the element that will hold the generated inputs. Three shapes:
