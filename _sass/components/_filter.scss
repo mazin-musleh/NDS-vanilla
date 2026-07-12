@@ -70,11 +70,15 @@
     }
 
     .nds-accordion-btn {
-        --btn-icon-size: 32px;
         font-size: var(--typo-text-sm-FS);
         line-height: var(--typo-text-sm-LH);
         font-weight: var(--font-weight-bold);
         color: var(--text-display);
+
+        // Pushes the count tag to the end edge, whatever the title's length.
+        .nds-accordion-title {
+            flex: 1;
+        }
     }
 
     // Applied-count tag on the header — knob-tuned so it matches the

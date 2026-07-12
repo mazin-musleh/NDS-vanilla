@@ -953,6 +953,200 @@ direction: ltr
     </div>
 </section>
 
+<!-- Collapsible Filter Groups -->
+<section id="filterAccordion" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Collapsible Filter Groups</h2>
+            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-filter-accordion</code> to a filter group and it renders as a collapsible <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> item instead of an always-open fieldset. Opt in per group: reach for it when a group has many options and would otherwise push the rest of the menu out of view. Groups without the attribute stay inline, so short groups keep their options visible at a glance.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Department Inline, Role and Status Collapsible</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-toolbar">
+                                <div class="nds-dropmenu nds-filter" data-filter-target="accordionFilterCards">
+                                    <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                        <i class="hgi hgi-stroke hgi-filter"></i>
+                                        <span class="nds-label">Filter</span>
+                                    </button>
+                                    <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-scroll">
+                                            <div data-filter="department"
+                                                data-filter-type="checkbox" data-filter-legend="Department"
+                                                data-no-auto-close>
+                                            </div>
+                                            <hr class="nds-divider">
+                                            <div data-filter="role"
+                                                data-filter-type="checkbox" data-filter-legend="Role"
+                                                data-filter-accordion
+                                                data-no-auto-close>
+                                            </div>
+                                            <hr class="nds-divider">
+                                            <div data-filter="status"
+                                                data-filter-type="radio" data-filter-legend="Status"
+                                                data-filter-accordion
+                                                data-no-auto-close>
+                                            </div>
+                                        </div>
+                                        <div class="nds-dropmenu-footer">
+                                            <hr class="nds-divider">
+                                            <div class="nds-dropmenu-action nds-grid">
+                                                <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                    data-filter-action="clear" data-no-auto-close>
+                                                    <span class="nds-label">Reset</span>
+                                                </button>
+                                                <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                    data-filter-action="apply">
+                                                    <span class="nds-label">Filter</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-filter-applied" data-filter-target="accordionFilterCards" hidden>
+                                    <span class="nds-label">Applied Filters:</span>
+                                    <div class="nds-chips"></div>
+                                </div>
+                            </div>
+                            <div id="accordionFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
+                                style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
+                                {% for user in site.data.content.users %}
+                                <div class="nds-card nds-stroke nds-page-item">
+                                    <div class="nds-card-content">
+                                        <div class="nds-card-text">
+                                            <span class="nds-card-title">{{ user.name }}</span>
+                                            <span class="nds-card-description">{{ user.role }}</span>
+                                        </div>
+                                        <div class="nds-card-tags">
+                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label"
+                                                    data-filter="department">{{ user.department }}</span></span>
+                                            <span class="nds-tag nds-green nds-sm"><span class="nds-label"
+                                                    data-filter="role">{{ user.role }}</span></span>
+                                            <span class="nds-tag nds-neutral nds-sm"><span class="nds-label"
+                                                    data-filter="status">{{ user.status }}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <nav class="nds-pagination" data-auto-pagination="accordionFilterCards" aria-label="Pagination"></nav>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-filter-accordion-1" id="tab-filter-accordion-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-filter-accordion-1"
+                                    aria-labelledby="tab-filter-accordion-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                    <code class="lang-html code">
+&lt;div class="nds-toolbar"&gt;
+  &lt;div class="nds-dropmenu nds-filter" data-filter-target="accordionFilterCards"&gt;
+    &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
+      &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
+      &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
+      &lt;div class="nds-dropmenu-scroll"&gt;
+        &lt;!-- Short group: stays inline --&gt;
+        &lt;div data-filter="department"
+          data-filter-type="checkbox"
+          data-filter-legend="Department"
+          data-no-auto-close&gt;
+        &lt;/div&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;!-- Long groups: collapsible, with a count tag on the header --&gt;
+        &lt;div data-filter="role"
+          data-filter-type="checkbox"
+          data-filter-legend="Role"
+          data-filter-accordion
+          data-no-auto-close&gt;
+        &lt;/div&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;div data-filter="status"
+          data-filter-type="radio"
+          data-filter-legend="Status"
+          data-filter-accordion
+          data-no-auto-close&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-dropmenu-footer"&gt;
+        &lt;hr class="nds-divider"&gt;
+        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+          &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+            data-filter-action="clear" data-no-auto-close&gt;
+            &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+            data-filter-action="apply"&gt;
+            &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="nds-filter-applied" data-filter-target="accordionFilterCards" hidden&gt;
+    &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
+    &lt;div class="nds-chips"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Filterable Cards --&gt;
+&lt;div id="accordionFilterCards" class="nds-paged-content nds-grid" data-filter-items="nds-card"
+  style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;"&gt;
+  &lt;div class="nds-card nds-stroke nds-page-item"&gt;
+    &lt;div class="nds-card-content"&gt;
+      &lt;div class="nds-card-text"&gt;
+        &lt;span class="nds-card-title"&gt;User Name&lt;/span&gt;
+        &lt;span class="nds-card-description"&gt;Role Title&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-card-tags"&gt;
+        &lt;span class="nds-tag nds-blue nds-sm"&gt;
+          &lt;span class="nds-label" data-filter="department"&gt;Engineering&lt;/span&gt;
+        &lt;/span&gt;
+        &lt;span class="nds-tag nds-green nds-sm"&gt;
+          &lt;span class="nds-label" data-filter="role"&gt;Developer&lt;/span&gt;
+        &lt;/span&gt;
+        &lt;span class="nds-tag nds-neutral nds-sm"&gt;
+          &lt;span class="nds-label" data-filter="status"&gt;active&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="accordionFilterCards" aria-label="Pagination"&gt;&lt;/nav&gt;
+                                    </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Filter Bar (standard layout) -->
 <section id="filterBar" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -1759,6 +1953,13 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
+                        <span class="nds-label">Collapsible Groups</span>
+                    </span>
+                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">data-filter-accordion</code> to a long filter group and it becomes a collapsible section, closed by default, with a tag on its header counting the values selected inside. Short groups stay inline.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-link-circle-02"></i>
                         <span class="nds-label">Shareable URL State</span>
                     </span>
@@ -1840,6 +2041,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                     <li>Always include a Reset/Clear button inside the dropmenu footer so users can undo selections before applying</li>
                     <li>Add the <code class="nds-inline-code lang-html">.nds-filter-applied</code> container to show applied filter chips. This gives users visibility into active filters and a quick way to remove individual ones</li>
                     <li>Keep filter group names short and descriptive. The <code class="nds-inline-code lang-html">data-filter-legend</code> value appears as the fieldset heading inside the dropmenu</li>
+                    <li>Add <code class="nds-inline-code lang-html">data-filter-accordion</code> to groups with many options so the menu opens on a short list of headers rather than a long scroll. Leave short groups (three or four options) inline: collapsing them hides choices behind a click for no gain</li>
                 </ul>
             </div>
 
@@ -1904,6 +2106,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         <tr><td><code class="nds-inline-code lang-html">data-filter-no-all</code></td><td>Opt out of the auto-prepended "All" option on radio groups (boolean attribute).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-values</code></td><td>JSON object mapping machine values to display labels, e.g. <code class="nds-inline-code lang-html">'{"A":"Label A","B":"Label B"}'</code>. Keys become checkbox/radio values, values become visible text. Also accepts a JSON array (<code class="nds-inline-code lang-html">'["A","B"]'</code>) which uses raw values as labels. Skips card scanning. Static: not affected by <code class="nds-inline-code lang-js">refresh()</code>. Use <code class="nds-inline-code lang-js">populateFilter()</code> if values need to change at runtime. Requires <code class="nds-inline-code lang-html">data-filter-type</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-legend</code></td><td>Fieldset legend text for auto-generated filter groups</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-accordion</code></td><td>Boolean attribute. Renders this group as a collapsible <a class="nds-color" href="{{ 'components/accordion' | relative_url }}">Accordion</a> item, closed by default, with the <code class="nds-inline-code lang-html">data-filter-legend</code> text as the header and a tag counting that group's selected values (hidden at zero). Opt in per group: groups without it stay inline. Wrap several opted-in groups in your own <code class="nds-inline-code lang-html">&lt;div class="nds-accordion"&gt;</code> to make them one accordion; otherwise each group becomes its own, so they open independently.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-variant</code></td><td>CSS class to add to auto-generated input elements (e.g. <code class="nds-inline-code lang-html">nds-primary</code>)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-value</code></td><td>Set on a <code class="nds-inline-code lang-html">[data-filter]</code> element to provide a machine-readable filter value separate from the visible text. The display label is derived from the element's text content automatically. Example: <code class="nds-inline-code lang-html">&lt;span data-filter="type" data-filter-value="Announcement"&gt;Translated Label&lt;/span&gt;</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-name</code></td><td>Custom display name used in applied filter chips instead of the raw value</td></tr>
