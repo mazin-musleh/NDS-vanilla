@@ -104,12 +104,6 @@
 .nds-pagination-item:is(.nds-pagination-prev, .nds-pagination-next) {
   .nds-btn {
     aspect-ratio: 1;
-
-    i {
-      @include ltr {
-        transform: scaleX(-1);
-      }
-    }
   }
 }
 

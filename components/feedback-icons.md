@@ -596,7 +596,7 @@ direction: ltr
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--feedback-icon-disc</code></td>
-                            <td><code class="nds-inline-code lang-html">--nds-icon-solid-disc</code></td>
+                            <td><code class="nds-inline-code lang-html">--nds-icon-disc</code></td>
                             <td>Mask shape used for the solid disc layer.</td>
                         </tr>
                         <tr>

@@ -31,7 +31,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#about-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open About us">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -52,7 +52,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#organizational-structure" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Organizational Structure">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#strategy-policies" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Strategy, Policies, and Regulations">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -94,7 +94,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#budget" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Budget and Expenditures">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#tenders" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Tenders and Procurements">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -136,7 +136,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#e-participation" class="nds-btn nds-secondary nds-icon-only" aria-label="Open E-Participation">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -157,7 +157,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#partners" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Our Partners / Partnerships">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -178,7 +178,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#sustainable-development" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Sustainable Development">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -199,7 +199,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#careers" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Careers">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -220,7 +220,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#news" class="nds-btn nds-secondary nds-icon-only" aria-label="Open News and Events">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -241,7 +241,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#contact-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Contact Us">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>

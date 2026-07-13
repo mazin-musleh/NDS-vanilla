@@ -32,7 +32,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#x-platform" class="nds-btn nds-secondary nds-icon-only" aria-label="Open X Platform">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#youtube" class="nds-btn nds-secondary nds-icon-only" aria-label="Open YouTube">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -74,7 +74,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#instagram" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Instagram">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -95,7 +95,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#linkedin" class="nds-btn nds-secondary nds-icon-only" aria-label="Open LinkedIn">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -116,7 +116,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#snapchat" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Snapchat">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -137,7 +137,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-actions nds-end">
                             <a href="#facebook" class="nds-btn nds-secondary nds-icon-only" aria-label="Open Facebook">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>

@@ -612,14 +612,14 @@
     // prev/next anchor drops its href; CSS pointer-events handles the rest.
     const _prevLi = (disabled, url, prevPage) => {
         const inner = url
-            ? `<a class="nds-btn nds-subtle" aria-label="Previous page"${disabled ? ' aria-disabled="true"' : ` href="${url(prevPage)}"`}><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></a>`
-            : `<button type="button" class="nds-btn nds-subtle" aria-label="Previous page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i></button>`;
+            ? `<a class="nds-btn nds-subtle" aria-label="Previous page"${disabled ? ' aria-disabled="true"' : ` href="${url(prevPage)}"`}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></a>`
+            : `<button type="button" class="nds-btn nds-subtle" aria-label="Previous page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i></button>`;
         return `<li class="nds-pagination-item nds-pagination-prev">${inner}</li>`;
     };
     const _nextLi = (disabled, url, nextPage) => {
         const inner = url
-            ? `<a class="nds-btn nds-subtle" aria-label="Next page"${disabled ? ' aria-disabled="true"' : ` href="${url(nextPage)}"`}><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></a>`
-            : `<button type="button" class="nds-btn nds-subtle" aria-label="Next page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i></button>`;
+            ? `<a class="nds-btn nds-subtle" aria-label="Next page"${disabled ? ' aria-disabled="true"' : ` href="${url(nextPage)}"`}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></a>`
+            : `<button type="button" class="nds-btn nds-subtle" aria-label="Next page"${disabled ? ' disabled' : ''}><i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i></button>`;
         return `<li class="nds-pagination-item nds-pagination-next">${inner}</li>`;
     };
     const _pageLi = (i, activePage, url) => {

@@ -499,10 +499,10 @@
 
                     <div class="nds-ipv-navigation-controls">
                         <button class="nds-ipv-control-btn nds-ipv-prev-btn" title="Previous Image" aria-label="Previous image" data-i18n-attr="aria-label:prevImage,title:prevImage">
-                            <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
+                            <i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i>
                         </button>
                         <button class="nds-ipv-control-btn nds-ipv-next-btn" title="Next Image" aria-label="Next image" data-i18n-attr="aria-label:nextImage,title:nextImage">
-                            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                            <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                         </button>
                     </div>
 

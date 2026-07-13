@@ -91,7 +91,7 @@
     --feedback-ring: var(--icon-error-ring);
     --feedback-icon-color: var(--feedback-icon-fill-error);
     --feedback-icon-stroke: var(--nds-icon-cancel-circle);
-    --feedback-icon-symbol: var(--nds-icon-solid-cancel);
+    --feedback-icon-symbol: var(--nds-icon-cancel);
 }
 
 // Critical (severe error, used by alert) — error color + the alert "!" symbol.
@@ -100,7 +100,7 @@
     --feedback-ring: var(--icon-error-ring);
     --feedback-icon-color: var(--feedback-icon-fill-error);
     --feedback-icon-stroke: var(--nds-icon-alert-circle);
-    --feedback-icon-symbol: var(--nds-icon-solid-alert);
+    --feedback-icon-symbol: var(--nds-icon-alert);
 }
 
 [data-status="success"] {
@@ -108,7 +108,7 @@
     --feedback-ring: var(--icon-success-ring);
     --feedback-icon-color: var(--feedback-icon-fill-success);
     --feedback-icon-stroke: var(--nds-icon-checkmark-circle-02);
-    --feedback-icon-symbol: var(--nds-icon-solid-checkmark);
+    --feedback-icon-symbol: var(--nds-icon-checkmark-solid);
 }
 
 [data-status="warning"] {
@@ -116,7 +116,7 @@
     --feedback-ring: var(--icon-warning-ring);
     --feedback-icon-color: var(--feedback-icon-fill-warning);
     --feedback-icon-stroke: var(--nds-icon-alert-circle);
-    --feedback-icon-symbol: var(--nds-icon-solid-alert);
+    --feedback-icon-symbol: var(--nds-icon-alert);
 }
 
 [data-status="info"] {
@@ -125,7 +125,7 @@
     --feedback-color: var(--icon-info);
     --feedback-ring: var(--icon-info-ring);
     --feedback-icon-color: var(--feedback-icon-fill-info);
-    --feedback-icon-symbol: var(--nds-icon-solid-info);
+    --feedback-icon-symbol: var(--nds-icon-info);
 }
 
 // Neutral + help share the gray status color and the "i" symbol; help swaps in
@@ -133,12 +133,12 @@
 :is([data-status="neutral"], [data-status="help"]) {
     --feedback-color: var(--icon-neutral);
     --feedback-ring: var(--icon-neutral-ring);
-    --feedback-icon-symbol: var(--nds-icon-solid-info);
+    --feedback-icon-symbol: var(--nds-icon-info);
 }
 
 [data-status="help"] {
     --feedback-icon-stroke: var(--nds-icon-help-circle);
-    --feedback-icon-symbol: var(--nds-icon-solid-help);
+    --feedback-icon-symbol: var(--nds-icon-help);
 }
 
 // ==============================================
@@ -162,7 +162,7 @@
     --_feedback-ring: var(--feedback-ring, var(--icon-neutral-ring));
     --_feedback-ring-inset: var(--feedback-ring-inset, calc(var(--_feedback-size) * 0.06));
     --_feedback-icon-color: var(--feedback-icon-color, var(--feedback-icon-fill-neutral));
-    --_feedback-icon-disc: var(--feedback-icon-disc, var(--nds-icon-solid-disc));
+    --_feedback-icon-disc: var(--feedback-icon-disc, var(--nds-icon-disc));
     --_feedback-icon-stroke: var(--feedback-icon-stroke, var(--nds-icon-information-circle));
     --_feedback-icon-symbol: var(--feedback-icon-symbol, linear-gradient(#0000 0 0));
     --_feedback-symbol-color: var(--feedback-symbol-color, var(--icon-oncolor));
@@ -255,7 +255,7 @@
 // status (own or inherited from a parent) sets the public token and wins,
 // leaving parent-status inheritance intact.
 .nds-feedback .nds-feedback-icon {
-    --_feedback-icon-symbol: var(--feedback-icon-symbol, var(--nds-icon-solid-info));
+    --_feedback-icon-symbol: var(--feedback-icon-symbol, var(--nds-icon-info));
 
     @include dark {
         --_feedback-color: var(--feedback-color, var(--colors-neutral-300));

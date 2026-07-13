@@ -152,13 +152,6 @@
   button {
     pointer-events: all;
   }
-
-  // Flip arrows for LTR
-  @include ltr {
-    i {
-      transform: scaleX(-1);
-    }
-  }
 }
 
 .nds-ipv-control-btn {

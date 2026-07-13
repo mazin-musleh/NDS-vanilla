@@ -48,7 +48,7 @@ sidemenu_mode: false
                         </dl>
                         <div class="nds-card-actions nds-end">
                             <a href="#contact-us" class="nds-btn nds-secondary nds-icon-only" aria-label="Open contact form">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ sidemenu_mode: false
                         </dl>
                         <div class="nds-card-actions nds-end">
                             <a href="#faqs" class="nds-btn nds-secondary nds-icon-only" aria-label="Browse frequently asked questions">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ sidemenu_mode: false
                         </dl>
                         <div class="nds-card-actions nds-end">
                             <a href="#live-chat" class="nds-btn nds-secondary nds-icon-only" aria-label="Start live chat">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ sidemenu_mode: false
                         </dl>
                         <div class="nds-card-actions nds-end">
                             <a href="tel:19996" class="nds-btn nds-secondary nds-icon-only" aria-label="Call support line">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -200,7 +200,7 @@ sidemenu_mode: false
                         </dl>
                         <div class="nds-card-actions nds-end">
                             <a href="#office-locations" class="nds-btn nds-secondary nds-icon-only" aria-label="Find a branch office">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>
@@ -238,7 +238,7 @@ sidemenu_mode: false
                         </dl>
                         <div class="nds-card-actions nds-end">
                             <a href="#report-issue" class="nds-btn nds-secondary nds-icon-only" aria-label="Report a service issue">
-                                <i class="nds-icon nds-hgi-arrow-left-02"></i>
+                                <i class="nds-icon nds-hgi-arrow-next-02"></i>
                             </a>
                         </div>
                     </div>

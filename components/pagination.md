@@ -72,7 +72,7 @@ direction: ltr
                                 <ul class="nds-pagination-list">
                                     <li class="nds-pagination-item nds-pagination-prev">
                                         <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page" disabled>
-                                            <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
+                                            <i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
@@ -102,7 +102,7 @@ direction: ltr
                                     </li>
                                     <li class="nds-pagination-item nds-pagination-next">
                                         <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page">
-                                            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                            <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                                         </button>
                                     </li>
                                 </ul>
@@ -134,7 +134,7 @@ direction: ltr
     &lt;ul class="nds-pagination-list"&gt;
         &lt;li class="nds-pagination-item nds-pagination-prev"&gt;
             &lt;button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page" disabled&gt;
-                &lt;i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"&gt;&lt;/i&gt;
             &lt;/button&gt;
         &lt;/li&gt;
         &lt;li class="nds-pagination-item"&gt;
@@ -164,7 +164,7 @@ direction: ltr
         &lt;/li&gt;
         &lt;li class="nds-pagination-item nds-pagination-next"&gt;
             &lt;button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page"&gt;
-                &lt;i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"&gt;&lt;/i&gt;
             &lt;/button&gt;
         &lt;/li&gt;
     &lt;/ul&gt;
@@ -303,7 +303,7 @@ direction: ltr
                                 <ul class="nds-pagination-list">
                                     <li class="nds-pagination-item nds-pagination-prev">
                                         <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page">
-                                            <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
+                                            <i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i>
                                         </button>
                                     </li>
                                     <li class="nds-pagination-item">
@@ -358,7 +358,7 @@ direction: ltr
                                     </li>
                                     <li class="nds-pagination-item nds-pagination-next">
                                         <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page">
-                                            <i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"></i>
+                                            <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                                         </button>
                                     </li>
                                 </ul>
@@ -391,7 +391,7 @@ direction: ltr
     &lt;ul class="nds-pagination-list"&gt;
         &lt;li class="nds-pagination-item nds-pagination-prev"&gt;
             &lt;button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Previous page"&gt;
-                &lt;i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"&gt;&lt;/i&gt;
             &lt;/button&gt;
         &lt;/li&gt;
         &lt;li class="nds-pagination-item"&gt;
@@ -446,7 +446,7 @@ direction: ltr
         &lt;/li&gt;
         &lt;li class="nds-pagination-item nds-pagination-next"&gt;
             &lt;button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Next page"&gt;
-                &lt;i class="nds-icon nds-hgi-arrow-left-01" aria-hidden="true"&gt;&lt;/i&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"&gt;&lt;/i&gt;
             &lt;/button&gt;
         &lt;/li&gt;
     &lt;/ul&gt;

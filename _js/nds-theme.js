@@ -95,7 +95,7 @@
             NDS.aria.pressed(el, isDark);
             const icon = el.querySelector('.nds-icon');
             if (icon) {
-                icon.classList.toggle('nds-hgi-sun-01', isDark);
+                icon.classList.toggle('nds-hgi-sun-03', isDark);
                 icon.classList.toggle('nds-hgi-moon-02', !isDark);
             }
         }

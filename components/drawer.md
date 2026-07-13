@@ -652,7 +652,7 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Services Portal</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                                                        <i class="nds-icon nds-hgi-arrow-next-01"></i>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -670,7 +670,7 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Careers</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                                                        <i class="nds-icon nds-hgi-arrow-next-01"></i>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -688,7 +688,7 @@ direction: ltr
                                                             <i class="hgi hgi-stroke hgi-link-02"></i>
                                                         </span>
                                                         <span class="nds-label nds-truncate">Media Center</span>
-                                                        <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+                                                        <i class="nds-icon nds-hgi-arrow-next-01"></i>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -790,7 +790,7 @@ direction: ltr
                 &lt;i class="hgi hgi-stroke hgi-link-02"&gt;&lt;/i&gt;
               &lt;/span&gt;
               &lt;span class="nds-label nds-truncate"&gt;Services Portal&lt;/span&gt;
-              &lt;i class="hgi hgi-stroke hgi-arrow-left-01"&gt;&lt;/i&gt;
+              &lt;i class="nds-icon nds-hgi-arrow-next-01"&gt;&lt;/i&gt;
             &lt;/a&gt;
           &lt;/li&gt;
           &lt;li&gt;
@@ -808,7 +808,7 @@ direction: ltr
                 &lt;i class="hgi hgi-stroke hgi-link-02"&gt;&lt;/i&gt;
               &lt;/span&gt;
               &lt;span class="nds-label nds-truncate"&gt;Careers&lt;/span&gt;
-              &lt;i class="hgi hgi-stroke hgi-arrow-left-01"&gt;&lt;/i&gt;
+              &lt;i class="nds-icon nds-hgi-arrow-next-01"&gt;&lt;/i&gt;
             &lt;/a&gt;
           &lt;/li&gt;
           &lt;li&gt;
@@ -826,7 +826,7 @@ direction: ltr
                 &lt;i class="hgi hgi-stroke hgi-link-02"&gt;&lt;/i&gt;
               &lt;/span&gt;
               &lt;span class="nds-label nds-truncate"&gt;Media Center&lt;/span&gt;
-              &lt;i class="hgi hgi-stroke hgi-arrow-left-01"&gt;&lt;/i&gt;
+              &lt;i class="nds-icon nds-hgi-arrow-next-01"&gt;&lt;/i&gt;
             &lt;/a&gt;
           &lt;/li&gt;
           &lt;li&gt;

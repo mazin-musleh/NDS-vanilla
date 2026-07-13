@@ -448,7 +448,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                                     <div class="nds-section-head">
                                         <div class="nds-section-action">
                                             <a href="#" class="nds-btn nds-primary" aria-label="View All">
-                                                <i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"></i>
+                                                <i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"></i>
                                                 <span class="nds-label">View All</span>
                                             </a>
                                         </div>
@@ -486,7 +486,7 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
         &lt;div class="nds-section-head"&gt;
             &lt;div class="nds-section-action"&gt;
                 &lt;a href="#" class="nds-btn nds-primary" aria-label="View All"&gt;
-                    &lt;i class="nds-icon nds-hgi-arrow-right-01" aria-hidden="true"&gt;&lt;/i&gt;
+                    &lt;i class="nds-icon nds-hgi-arrow-prev-01" aria-hidden="true"&gt;&lt;/i&gt;
                     &lt;span class="nds-label"&gt;View All&lt;/span&gt;
                 &lt;/a&gt;
             &lt;/div&gt;
