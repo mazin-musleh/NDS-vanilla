@@ -847,7 +847,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Center Aligned Table</h2>
-            <p class="nds-section-description">Center-align all cell content when the data benefits from symmetrical presentation</p>
+            <p class="nds-section-description">Center-align all cell content when the data benefits from symmetrical presentation. To align a single column instead, put <code class="nds-inline-code lang-html">data-align="center|start|end"</code> on its <code class="nds-inline-code lang-html">&lt;th&gt;</code>.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -963,6 +963,104 @@ direction: ltr
       &lt;td&gt;3,100,000 SAR&lt;/td&gt;
       &lt;td&gt;+18.8%&lt;/td&gt;
       &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;On Track&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-label">Per-Column Alignment</div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo">
+                        <table class="nds-table">
+                            <thead>
+                                <tr>
+                                    <th>Quarter</th>
+                                    <th data-align="end">Revenue</th>
+                                    <th data-align="center">Growth</th>
+                                    <th data-align="center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Q1 2024</td>
+                                    <td>2,450,000 SAR</td>
+                                    <td>+12%</td>
+                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Q2 2024</td>
+                                    <td>2,780,000 SAR</td>
+                                    <td>+13.5%</td>
+                                    <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">On Track</span></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Q3 2024</td>
+                                    <td>2,610,000 SAR</td>
+                                    <td>-6.1%</td>
+                                    <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">At Risk</span></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                aria-controls="panel-table-align-1" id="tab-table-align-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-align-1"
+                            aria-labelledby="tab-table-align-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <div class="nds-expandable-content">
+                                <code class="lang-html code">
+&lt;table class="nds-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Quarter&lt;/th&gt;
+      &lt;th data-align="end"&gt;Revenue&lt;/th&gt;
+      &lt;th data-align="center"&gt;Growth&lt;/th&gt;
+      &lt;th data-align="center"&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Q1 2024&lt;/td&gt;
+      &lt;td&gt;2,450,000 SAR&lt;/td&gt;
+      &lt;td&gt;+12%&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;On Track&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Q2 2024&lt;/td&gt;
+      &lt;td&gt;2,780,000 SAR&lt;/td&gt;
+      &lt;td&gt;+13.5%&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="success"&gt;&lt;span class="nds-label"&gt;On Track&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Q3 2024&lt;/td&gt;
+      &lt;td&gt;2,610,000 SAR&lt;/td&gt;
+      &lt;td&gt;-6.1%&lt;/td&gt;
+      &lt;td&gt;&lt;span class="nds-tag nds-sm" data-status="warning"&gt;&lt;span class="nds-label"&gt;At Risk&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1259,7 +1357,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Pagination</h2>
-            <p class="nds-section-description">Large datasets can be paginated using the <strong>data-auto-pagination</strong> attribute. Add <strong>nds-page-item</strong> class to each <code>&lt;tr&gt;</code> in <code>&lt;tbody&gt;</code> and set <strong>--per-page</strong> on the content wrapper.</p>
+            <p class="nds-section-description">Large datasets can be paginated using the <strong>data-auto-pagination</strong> attribute. Add <strong>nds-page-item</strong> class to each <code>&lt;tr&gt;</code>, then put <strong>nds-paged-content</strong> and <strong>--per-page</strong> on the <code>&lt;tbody&gt;</code> itself, so the rows show their skeleton until pagination initializes.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -1316,7 +1414,7 @@ direction: ltr
                             <span class="nds-label">Applied Filters:</span>
                             <div class="nds-chips"></div>
                         </div>
-                        <div id="tables_pagination_demo" class="nds-paged-content" style="--per-page: 5;">
+                        <div id="tables_pagination_demo">
                             <table class="nds-table nds-compact nds-sortable">
                                 <thead>
                                     <tr>
@@ -1347,7 +1445,7 @@ direction: ltr
                                         <th>Popularity</th>
                                     </tr>
                                 </thead>
-                                <tbody id="paginatedTableBody" data-filter-items="tr">
+                                <tbody id="paginatedTableBody" class="nds-paged-content" style="--per-page: 5;" data-filter-items="tr">
                                     {% for service in site.data.content.services %}
                                     <tr class="nds-page-item">
                                         <td>{{ forloop.index }}</td>
@@ -1365,7 +1463,7 @@ direction: ltr
                                 </tbody>
                             </table>
                         </div>
-                        <nav class="nds-pagination" data-auto-pagination="tables_pagination_demo" aria-label="Table pagination"></nav>
+                        <nav class="nds-pagination" data-auto-pagination="paginatedTableBody" aria-label="Table pagination"></nav>
                     </div>
                 </div>
                 <div class="demo-code">
@@ -1432,7 +1530,7 @@ direction: ltr
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id="tables_pagination_demo" class="nds-paged-content" style="--per-page: 5;"&gt;
+&lt;div id="tables_pagination_demo"&gt;
   &lt;table class="nds-table nds-compact nds-sortable"&gt;
     &lt;thead&gt;
       &lt;tr&gt;
@@ -1463,7 +1561,7 @@ direction: ltr
         &lt;th&gt;Popularity&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
-    &lt;tbody id="paginatedTableBody" data-filter-items="tr"&gt;
+    &lt;tbody id="paginatedTableBody" class="nds-paged-content" style="--per-page: 5;" data-filter-items="tr"&gt;
       &lt;tr class="nds-page-item"&gt;
         &lt;td&gt;1&lt;/td&gt;
         &lt;td&gt;Identity Verification&lt;/td&gt;
@@ -1498,7 +1596,7 @@ direction: ltr
   &lt;/table&gt;
 &lt;/div&gt;
 &lt;!-- Auto-pagination nav bound to the content wrapper by id --&gt;
-&lt;nav class="nds-pagination" data-auto-pagination="tables_pagination_demo" aria-label="Table pagination"&gt;&lt;/nav&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="paginatedTableBody" aria-label="Table pagination"&gt;&lt;/nav&gt;
                                 </code>
                             </div>
                         </div>
@@ -1651,6 +1749,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">data-state="sorted-desc"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;th&gt;</code> to mark the initial sort column as descending</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="selected"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;tr&gt;</code> to visually highlight a selected row. JS toggles this automatically when checkboxes change</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="loading"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;table&gt;</code> to show the loading shimmer animation across all cells</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-align="center|start|end"</code></td><td>Set on a <code class="nds-inline-code lang-html">&lt;th&gt;</code> to align that column: the header and every cell below it, including rows added later by sorting, filtering, or pagination</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-sort-value</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;td&gt;</code> to supply an alternate value used for sorting only, when the displayed text would sort incorrectly (e.g. "Free" in a numeric column, a localized date in a text column). The cell still renders its normal content; only the sort order is affected. Not read by Export: use <code class="nds-inline-code lang-html">data-export-value</code> for that.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-loading</code> (class on <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>)</td><td>Alternate loading trigger: add the <code class="nds-inline-code lang-html">nds-loading</code> class directly to <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> to shimmer only the body rows while keeping the header visible. Used internally by the Filter and Pagination components during data refresh.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-auto-pagination="id"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;nav class="nds-pagination"&gt;</code> to auto-paginate the <code class="nds-inline-code lang-html">nds-paged-content</code> wrapper with that id (omit the value to bind the preceding wrapper)</td></tr>

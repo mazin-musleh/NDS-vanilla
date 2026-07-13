@@ -228,7 +228,7 @@
         destroy() {
             this.sort?.destroy();
             this.abortController?.abort();
-            this.table.removeAttribute('data-nds-tables-initialized');
+            this.table.ndsTableControls = null;   // the table stays initialized; only its controls go
         }
     }
 
@@ -358,7 +358,8 @@
             NDS.State.clear(this.wrapper);
             this.currentScrollState = null;
             this.needsScroll = false;
-            this.table.removeAttribute('data-nds-responsive-initialized');
+            this.table.removeAttribute('data-nds-tables-initialized');
+            this.table.ndsTableResponsive = null;
         }
     }
 
@@ -591,7 +592,7 @@
     // Global class-change observer so mask toggle reflects without a scroll event
     if (!window.ndsTableClassObserverInitialized) {
         window.ndsTableClassObserverInitialized = true;
-        NDS.onAttrChange('.nds-table[data-nds-responsive-initialized]', ['class'], (hits) => {
+        NDS.onAttrChange('.nds-table[data-nds-tables-initialized]', ['class'], (hits) => {
             hits.forEach(table => {
                 const responsive = table.ndsTableResponsive;
                 if (!responsive) return;
@@ -608,7 +609,7 @@
             const activePanel = e.detail?.panel;
             if (activePanel) {
                 // Find all responsive tables inside the activated tab panel
-                const tables = activePanel.querySelectorAll('.nds-table[data-nds-responsive-initialized]');
+                const tables = activePanel.querySelectorAll('.nds-table[data-nds-tables-initialized]');
                 tables.forEach(table => {
                     const responsive = table.ndsTableResponsive;
                     if (responsive) {
@@ -625,6 +626,38 @@
         });
     }
 
+    // ── Column alignment (data-align on the <th>) ─────────────────────
+    // One generated rule per aligned column, not a class stamped on each cell:
+    // a selector also covers rows that arrive later from sort, filter or
+    // pagination, with nothing to re-run. The <th> is aligned by CSS (it paints
+    // before this runs); body cells sit under the pre-init skeleton until init,
+    // so the rule is in place before they are ever visible.
+    // Positional by nature: a colspan in the body shifts the column index.
+    const ALIGN = { center: 1, start: 1, end: 1 };
+    let alignSheet = null;
+    let alignSeq = 0;
+
+    function applyColumnAlign(table) {
+        const heads = table.querySelectorAll('thead th[data-align]');
+        if (!heads.length) return;
+
+        const rules = [];
+        const scope = 'a' + (++alignSeq);
+        heads.forEach(th => {
+            const align = th.getAttribute('data-align');
+            if (!ALIGN[align]) return;
+            rules.push(`[data-nds-align="${scope}"] tbody td:nth-child(${th.cellIndex + 1}){text-align:${align}}`);
+        });
+        if (!rules.length) return;
+
+        table.setAttribute('data-nds-align', scope);
+        if (!alignSheet) {
+            alignSheet = document.createElement('style');
+            document.head.appendChild(alignSheet);
+        }
+        alignSheet.textContent += rules.join('');
+    }
+
     // Auto-initialize tables on page load (sortable and/or selectable)
     // The init sentinel is stamped only on a construction that succeeded — a table
     // whose <tbody> arrives later must stay eligible for the next reinit().
@@ -632,23 +665,27 @@
         document.querySelectorAll('.nds-table').forEach(table => {
             if (table.closest('code, .code-example')) return;
 
+            // Guarded by the scope stamp: reinit() must not append the rules twice.
+            if (!table.hasAttribute('data-nds-align')) applyColumnAlign(table);
+
             // Every table gets the responsive scroll wrapper. --max-width on the
             // table (inline only) carries over to the wrapper; --min-width on the
-            // table controls the scroll breakpoint.
-            if (!table.hasAttribute('data-nds-responsive-initialized')) {
+            // table controls the scroll breakpoint. The stamp is the component's
+            // one init signal: the pre-init cell skeleton and the global handlers
+            // below key on it, so it lands for every table, sortable or not.
+            if (!table.ndsTableResponsive) {
                 table.ndsTableResponsive = new NDSResponsiveTable(table);
-                table.setAttribute('data-nds-responsive-initialized', 'true');
+                table.setAttribute('data-nds-tables-initialized', 'true');
             }
 
             const hasSortButtons = table.querySelector('.nds-sort-btn') !== null;
             const hasCheckboxes = table.querySelector('thead input[type="checkbox"].nds-check') !== null;
 
-            if ((hasSortButtons || hasCheckboxes) && !table.hasAttribute('data-nds-tables-initialized')) {
+            // Sorting / selection is opt-in by markup and guarded by the instance,
+            // so a table whose <tbody> arrives later stays eligible for reinit().
+            if ((hasSortButtons || hasCheckboxes) && !table.ndsTableControls) {
                 const instance = new NDSTables(table);
-                if (instance.valid) {
-                    table.ndsTableControls = instance;
-                    table.setAttribute('data-nds-tables-initialized', 'true');
-                }
+                if (instance.valid) table.ndsTableControls = instance;
             }
         });
 
@@ -666,7 +703,7 @@
     }
 
     function recheckAllWidths() {
-        document.querySelectorAll('.nds-table[data-nds-responsive-initialized]').forEach(table => {
+        document.querySelectorAll('.nds-table[data-nds-tables-initialized]').forEach(table => {
             table.ndsTableResponsive?.recheckWidth();
         });
     }

@@ -170,6 +170,27 @@
         gap: var(--spacing-xs);
     }
 
+    // Column alignment, declared once on the header: data-align="center|start|end".
+    // The header aligns here (it paints before JS); nds-tables.js emits the matching
+    // nth-child rule for the body cells, which sit under the skeleton until it runs.
+    th[data-align="center"] {
+        text-align: center;
+
+        .nds-col-header { justify-content: center; }
+    }
+
+    th[data-align="end"] {
+        text-align: end;
+
+        .nds-col-header { justify-content: flex-end; }
+    }
+
+    th[data-align="start"] {
+        text-align: start;
+
+        .nds-col-header { justify-content: flex-start; }
+    }
+
     .nds-col-actions {
         display: flex;
         align-items: center;
@@ -269,7 +290,7 @@
 // until its init stamp lands. The filter/paged tbody arms stay — those
 // must hold until their own stamps land, even after table init.
 .nds-table:is([data-state~="loading"], .nds-loading) tbody tr td,
-.nds-table:not([data-nds-responsive-initialized]) tbody tr td,
+.nds-table:not([data-nds-tables-initialized]) tbody tr td,
 :is(tbody.nds-loading,
     tbody[data-filter-items]:not([data-nds-filter-initialized]),
     tbody.nds-paged-content:not([data-paged-initialized])) tr td {

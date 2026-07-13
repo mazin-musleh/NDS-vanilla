@@ -631,7 +631,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div id="pagination_table_demo" class="nds-paged-content" style="--per-page: 5;">
+                            <div id="pagination_table_demo">
                                 <table class="nds-table nds-sortable">
                                     <thead>
                                         <tr>
@@ -663,7 +663,7 @@ direction: ltr
                                             <th>Most Used</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="pagination_table_body" class="nds-paged-content" style="--per-page: 5;">
                                         {% for service in site.data.content.services %}
                                         <tr class="nds-page-item">
                                             <td>{{ forloop.index }}</td>
@@ -676,7 +676,7 @@ direction: ltr
                                     </tbody>
                                 </table>
                             </div>
-                            <nav class="nds-pagination" data-auto-pagination="pagination_table_demo"></nav>
+                            <nav class="nds-pagination" data-auto-pagination="pagination_table_body"></nav>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -701,7 +701,7 @@ direction: ltr
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;div id="pagination_table_demo" class="nds-paged-content" style="--per-page: 5;"&gt;
+&lt;div id="pagination_table_demo"&gt;
     &lt;table class="nds-table"&gt;
         &lt;thead&gt;
             &lt;tr&gt;
@@ -712,7 +712,7 @@ direction: ltr
                 &lt;th&gt;Most Used&lt;/th&gt;
             &lt;/tr&gt;
         &lt;/thead&gt;
-        &lt;tbody&gt;
+        &lt;tbody id="pagination_table_body" class="nds-paged-content" style="--per-page: 5;"&gt;
             &lt;tr class="nds-page-item"&gt;
                 &lt;td&gt;1&lt;/td&gt;
                 &lt;td&gt;Identity Verification&lt;/td&gt;
@@ -821,7 +821,7 @@ direction: ltr
         &lt;/tbody&gt;
     &lt;/table&gt;
 &lt;/div&gt;
-&lt;nav class="nds-pagination" data-auto-pagination="pagination_table_demo"&gt;&lt;/nav&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="pagination_table_body"&gt;&lt;/nav&gt;
                                         </code>
                                     </div>
                                 </div>
@@ -905,7 +905,7 @@ direction: ltr
                     <li>Use <strong>data-driven generation</strong> (<code class="nds-inline-code lang-html">data-total-pages</code>) when you know the page count but want the component to build the controls. Default controls are buttons you drive through <code class="nds-inline-code lang-js">nds:pagination:change</code> (SPA); add <code class="nds-inline-code lang-html">data-page-url="?page={page}"</code> to emit navigable links for no-JS full-reload server pagination. For a runtime count change, call <code class="nds-inline-code lang-js">NDS.Pagination.setTotalPages()</code></li>
                     <li>Do not paginate fewer than two pages. Auto-pagination hides controls automatically when all items fit</li>
                     <li>Set <code class="nds-inline-code lang-html">--per-page</code> to match your grid column count so each page fills the layout. Update it in media queries for responsive grids</li>
-                    <li>For tables, wrap the table in <code class="nds-inline-code lang-html">nds-paged-content</code> and add <code class="nds-inline-code lang-html">nds-page-item</code> on each <code class="nds-inline-code lang-html">&lt;tr&gt;</code> in <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>. The table wrapper is added automatically</li>
+                    <li>For tables, put <code class="nds-inline-code lang-html">nds-paged-content</code> on the <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> itself and add <code class="nds-inline-code lang-html">nds-page-item</code> on each <code class="nds-inline-code lang-html">&lt;tr&gt;</code>. A wrapper around the table would be hidden until pagination initializes; the tbody shows its skeleton rows instead</li>
                     <li>Both <code class="nds-inline-code lang-html">&lt;button&gt;</code> and <code class="nds-inline-code lang-html">&lt;a&gt;</code> elements work inside pagination items. Use buttons for client-side navigation, anchors for distinct URLs</li>
                     <li>Bind a nav to its content by id — <code class="nds-inline-code lang-html">data-auto-pagination="gridId"</code> matching the wrapper's <code class="nds-inline-code lang-html">id</code> (the same convention as filter's <code class="nds-inline-code lang-html">data-filter-target</code>). Omit the value to bind the immediately-preceding wrapper instead</li>
                     <li>Keep <code class="nds-inline-code lang-html">nds-page-item</code> (your <strong>content</strong> items) distinct from <code class="nds-inline-code lang-html">nds-pagination-item</code> (the nav's <code class="nds-inline-code lang-html">&lt;li&gt;</code> controls) — similar names, opposite roles</li>
@@ -941,7 +941,7 @@ direction: ltr
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-paged-content</code></td>
                             <td>Content wrapper</td>
-                            <td>Marks a container whose <code class="nds-inline-code lang-html">nds-page-item</code> children should be paginated</td>
+                            <td>Marks a container whose <code class="nds-inline-code lang-html">nds-page-item</code> children should be paginated. On a table it goes on the <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>, not a wrapper</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-page-item</code></td>

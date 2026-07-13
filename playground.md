@@ -89,3 +89,86 @@ direction: rtl
         </div>
     </div>
 </section>
+
+<!-- ── data-align test: column alignment declared on the header ── -->
+<section class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Tables — data-align on the column header (prototype)</h2>
+            <p class="nds-section-description">Same console-demo table (sortable + paginated). <code>data-align="center|start|end"</code> on a <code>&lt;th&gt;</code> is turned into ONE <code>:nth-child()</code> rule per column, not a class stamped on each cell, so rows that appear later (sort, filter, pagination) are aligned by the selector. Amount, Status and Action are centered here.</p>
+        </div>
+        <div class="nds-section-body">
+            <div>
+                <table id="playgroundAlignTable" class="nds-table nds-compact nds-sortable">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="nds-col-header">
+                                    <span class="nds-label">Reference</span>
+                                    <div class="nds-col-actions">
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by reference"><i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="nds-col-header">
+                                    <span class="nds-label">Service</span>
+                                    <div class="nds-col-actions">
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by service"><i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th data-align="center">
+                                <div class="nds-col-header">
+                                    <span class="nds-label">Amount</span>
+                                    <div class="nds-col-actions">
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by amount"><i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th data-align="center">
+                                <div class="nds-col-header">
+                                    <span class="nds-label">Status</span>
+                                    <div class="nds-col-actions">
+                                        <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" aria-label="Sort by status"><i class="nds-icon nds-hgi-sorting-05" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th data-align="center">
+                                <div class="nds-col-header">
+                                    <span class="nds-label">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="playgroundAlignBody" class="nds-paged-content" style="--per-page:5;">
+                        {% for txn in site.data.content.transactions %}
+                        <tr class="nds-page-item">
+                            <td>{{ txn.id }}</td>
+                            <td>{{ txn.name }}</td>
+                            <td data-sort-value="{{ txn.amount }}">
+                                <span class="nds-number-format" data-currency="{{ txn.currency }}" data-value="{{ txn.amount }}">{{ txn.amount }}</span>
+                            </td>
+                            <td data-sort-value="{% if txn.status == 'completed' %}1{% elsif txn.status == 'pending' %}2{% else %}3{% endif %}">
+                                {% if txn.status == "completed" %}
+                                <span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Completed</span></span>
+                                {% elsif txn.status == "pending" %}
+                                <span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Pending</span></span>
+                                {% else %}
+                                <span class="nds-tag nds-sm" data-status="error"><span class="nds-label">Failed</span></span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="nds-btn nds-subtle nds-sm nds-icon-only" aria-label="Edit {{ txn.id }}">
+                                    <i class="hgi hgi-stroke hgi-edit-02"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <nav class="nds-pagination" data-auto-pagination="playgroundAlignBody" aria-label="Pagination"></nav>
+        </div>
+    </div>
+</section>

@@ -303,7 +303,7 @@ hideFeedback: true
                     </div>
                 </div>
             </div>
-            <div id="console_transactions_content" class="nds-paged-content">
+            <div id="console_transactions_content">
                 <table id="consoleTransactions" class="nds-table nds-compact nds-sortable" data-export-name="transactions">
                     <thead>
                         <tr>
@@ -369,7 +369,7 @@ hideFeedback: true
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="transactionsTableBody" data-filter-items="tr">
+                    <tbody id="transactionsTableBody" class="nds-paged-content" data-filter-items="tr">
                         {% for txn in site.data.content.transactions %}
                         <tr class="nds-page-item">
                             <td>
@@ -442,7 +442,7 @@ hideFeedback: true
                     </tbody>
                 </table>
             </div>
-            <nav class="nds-pagination" data-auto-pagination="console_transactions_content" aria-label="Table pagination"></nav>
+            <nav class="nds-pagination" data-auto-pagination="transactionsTableBody" aria-label="Table pagination"></nav>
         </div>
     </div>
 </section>
