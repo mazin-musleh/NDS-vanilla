@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+- Icons — documentation page covering both icon layers, a click-to-copy catalog of every inline UI icon, and the license terms. See `components/icons.md`.
+- Icons — logical arrows `nds-hgi-arrow-{next,prev}-{01,02}`: they follow reading direction, so one class means forward (or back) in both Arabic and English.
+- License — third-party notice for the bundled Hugeicons free set (MIT), previously shipped with no attribution.
+
+### Changed
+- Icons — the literal arrow classes (`nds-hgi-arrow-{left,right}-{01,02}` and the HGI font equivalents) no longer mirror on LTR pages. They now point where their name says, in both directions; direction-aware behavior moved to the new `next`/`prev` classes.
+- Icons — the filled status symbols are token-only (`--nds-icon-{alert,cancel,checkmark-solid,disc,help,info}`). Their `nds-hgi-solid-*` classes are removed: each is one layer of a mark the feedback icon composes over a disc, not a standalone icon.
+- Icons — the theme-toggle glyph is now `--nds-icon-paint-board`, exposed as `nds-hgi-paint-board`; the chrome alias `.nds-theme` is renamed `.nds-icon-theme`.
+- Icons — `nds-hgi-sun-01` removed; the dark-mode toggle uses `nds-hgi-sun-03`, the same sun the weather icons use.
+
+### Fixed
+- Icons — the theme-toggle glyph hardcoded its fill (`#161616`) instead of `currentColor`, so it ignored `color` and stayed near-black in dark mode.
+
+### Migration
+
+- Arrows — markup that used `nds-hgi-arrow-left-01` (or `-02`) as a **next/forward** affordance must switch to `nds-hgi-arrow-next-01`, and `arrow-right-*` used as **previous/back** to `nds-hgi-arrow-prev-*`. Left as-is, the arrow now points literally left or right and no longer mirrors in English. Arrows that always meant a literal direction need no change.
+- Status symbols — replace `nds-hgi-solid-{alert,cancel,checkmark,disc,help,info}` with the Feedback Icons component, which composes the symbol over its disc.
+- Theme icon — replace `.nds-theme` with `.nds-icon-theme`.
+
 ## [1.3.0] - 2026-07-04
 
 ### Added
