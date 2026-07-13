@@ -119,8 +119,14 @@
     // Readonly state — non-interactive across every form type. The label
     // toggles checkbox/radio/switch via `for=`, so killing pointer events on
     // the whole container is the only reliable way to prevent value changes.
+    // Action-slot buttons (copy, clear, reveal, etc.) are not value-changing,
+    // so restore their pointer events explicitly.
     &[data-state~="readonly"] {
         pointer-events: none;
+
+        .nds-form-action {
+            pointer-events: auto;
+        }
 
         .nds-form-control {
             border-color: var(--border-neutral-primary);
