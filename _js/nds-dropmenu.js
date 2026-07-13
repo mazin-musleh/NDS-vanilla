@@ -566,9 +566,14 @@
             // applyPosition() runs. In RTL the browser then re-anchors the
             // scroll origin, so every rect applyPosition() reads is offset by
             // the overflow and the page keeps a phantom horizontal scrollbar.
-            // A position:fixed box contributes nothing to scrollable overflow.
-            // applyPosition() clears this before writing the absolute offsets.
-            this.menu.style.position = 'fixed';
+            // Non-portal: park as absolute inside the wrapper so consumers
+            //   that set --dropmenu-min-width: 100% (autocomplete, select)
+            //   resolve % against the wrapper, not the viewport. Fixed-park
+            //   inflated min-width:100% to 100vw, which applyPosition then
+            //   locked into an inline width — the menu stayed viewport-wide
+            //   until the next resize re-measured it as absolute.
+            // Portal: menu goes to <body> and is fixed anyway; park stays fixed.
+            this.menu.style.position = this.shouldPortal ? 'fixed' : 'absolute';
             this.menu.style.left = '0px';
             this.menu.style.top = '0px';
             this.menu.removeAttribute('hidden');
