@@ -178,6 +178,24 @@
 // not). Same hook filter/date-picker use.
 .nds-select {
     --dropmenu-min-width: 100%;
+
+    // Move form-control's inline gutter onto the <select> itself.
+    // Chromium anchors OS-popup options to the select's padding-box left,
+    // so its options render inset by the same gap as the closed value
+    // (matching other design systems). Without this the popup rows sit
+    // flush against the form-control's inner edge.
+    >.nds-form-control:has(>select) {
+        padding-inline: 0;
+    }
+}
+
+// Custom-select option buttons carry .nds-btn, so the dropmenu's
+// .nds-dropmenu-item:not(.nds-btn) inline-padding rule skips them and
+// they render flush against the menu edge with centered text. Restore
+// left alignment + inline gutter to match native <option> behavior.
+.nds-select-option {
+    justify-content: flex-start;
+    padding-inline: var(--spacing-md);
 }
 
 :is(.nds-form-container, .nds-form-group) {
@@ -357,13 +375,20 @@ fieldset {
             outline: 0px;
             color: var(--form-field-text-focused);
             // Leave room for the wrapper's ::after caret so the selected
-            // value doesn't slide under it.
+            // value doesn't slide under it. Inline-start padding also
+            // indents the OS popup's options (Chromium anchors option
+            // rows to the select's padding-box left, so the closed value
+            // and the open dropdown line up with the form-control's own
+            // gutter).
+            padding-inline-start: var(--spacing-md);
             padding-inline-end: calc(var(--spacing-md) + 20px);
 
-            // The option popup is OS-rendered and ignores most CSS, but
-            // background/color on <option> are honoured in current
-            // Chromium/Firefox — pin them to form tokens so the menu
-            // doesn't flash white in dark mode.
+            // The option popup is OS-rendered and ignores most CSS.
+            // Chromium/Firefox honour background/color on <option> in
+            // dropdown mode — pin them so the menu doesn't flash white
+            // in dark mode. Padding/font/margin are silently dropped
+            // in dropdown mode; consumers who need styled option gutter
+            // should use the custom `.nds-select-input` variant instead.
             >option {
                 background-color: var(--form-field-background-default);
                 color: var(--form-field-text-focused);
