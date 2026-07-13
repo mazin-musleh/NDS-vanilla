@@ -198,36 +198,35 @@
     width: 100%;
     white-space: wrap;
     flex: 1;
+  }
+
+  .nds-card-title {
+    display: block;
+    font-size: var(--typo-text-lg-FS);
+    line-height: var(--typo-text-lg-LH);
+    font-weight: var(--font-weight-bold);
+    color: var(--_card-title);
+    margin: 0;
+    width: 100%;
+  }
+
+  .nds-card-subtitle {
+    font-size: var(--typo-text-md-FS);
+    line-height: var(--typo-text-md-LH);
+    font-weight: var(--font-weight-semibold);
+    color: var(--_card-subtitle);
+    margin: 0;
+    width: 100%;
+  }
 
 
-    .nds-card-title {
-      display: block;
-      font-size: var(--typo-text-lg-FS);
-      line-height: var(--typo-text-lg-LH);
-      font-weight: var(--font-weight-bold);
-      color: var(--_card-title);
-      margin: 0;
-      width: 100%;
-    }
-
-    .nds-card-subtitle {
-      font-size: var(--typo-text-md-FS);
-      line-height: var(--typo-text-md-LH);
-      font-weight: var(--font-weight-semibold);
-      color: var(--_card-subtitle);
-      margin: 0;
-      width: 100%;
-    }
-
-
-    .nds-card-description {
-      font-size: var(--typo-text-md-FS);
-      line-height: var(--typo-text-md-LH);
-      font-weight: var(--font-weight-regular);
-      color: var(--_card-text);
-      margin: 0;
-      width: 100%;
-    }
+  .nds-card-description {
+    font-size: var(--typo-text-md-FS);
+    line-height: var(--typo-text-md-LH);
+    font-weight: var(--font-weight-regular);
+    color: var(--_card-text);
+    margin: 0;
+    width: 100%;
   }
 
   // ==============================================
