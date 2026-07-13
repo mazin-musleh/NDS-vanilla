@@ -176,6 +176,40 @@
 
 
 // ==============================================
+// DOC PAGE ICON CATALOG GRID
+// ==============================================
+
+// components/icons.md — click-to-copy tiles, glyph above its class name.
+// .nds-btn is a fixed-height nowrap row, so stack it and let long names wrap.
+.nds-grid.nds-doc-icons {
+  --max-col: 4;
+  --min-col: 2;
+  --row-gap: var(--spacing-lg);
+  --col-gap: var(--spacing-lg);
+
+  .nds-btn {
+    --btn-height: auto;
+    --btn-gap: var(--spacing-md);
+    --btn-FS: var(--typo-text-xs-FS);
+    flex-direction: column;
+    white-space: normal;
+    padding-block: var(--spacing-2xl);
+    word-break: break-word;
+  }
+
+  // Beats .nds-copy .nds-label's nowrap: class names are long and must wrap in the tile.
+  .nds-label {
+    text-align: center;
+    white-space: normal;
+  }
+
+  .nds-icon {
+    font-size: 24px;
+  }
+}
+
+
+// ==============================================
 // RESPONSIVE DESIGN & ACCESSIBILITY
 // ==============================================
 

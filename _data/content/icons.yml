@@ -1,0 +1,106 @@
+# UI icons registered in _sass/_icons.scss, rendered as the catalog on components/icons.md.
+# Ordered by family, not alphabetically: the catalog reads better when related glyphs sit together.
+# scripts/add-icon.mjs appends a new icon to the end of its list, so move it into the right group.
+
+hgi:
+  # Arrows, literal
+  - nds-hgi-arrow-up-01
+  - nds-hgi-arrow-down-01
+  - nds-hgi-arrow-left-01
+  - nds-hgi-arrow-right-01
+  - nds-hgi-arrow-up-02
+  - nds-hgi-arrow-down-02
+  - nds-hgi-arrow-left-02
+  - nds-hgi-arrow-right-02
+  - nds-hgi-square-arrow-shrink-01
+  # Arrows, logical (follow reading direction)
+  - nds-hgi-arrow-next-01
+  - nds-hgi-arrow-prev-01
+  - nds-hgi-arrow-next-02
+  - nds-hgi-arrow-prev-02
+  # Navigation
+  - nds-hgi-menu-01
+  - nds-hgi-menu-02
+  - nds-hgi-more-horizontal
+  - nds-hgi-more-vertical
+  # Status
+  - nds-hgi-alert-circle
+  - nds-hgi-information-circle
+  - nds-hgi-help-circle
+  - nds-hgi-checkmark-circle-01
+  - nds-hgi-checkmark-circle-02
+  - nds-hgi-cancel-circle
+  - nds-hgi-notification-02
+  # Actions
+  - nds-hgi-search-01
+  - nds-hgi-plus-sign
+  - nds-hgi-cancel-01
+  - nds-hgi-copy-01
+  - nds-hgi-share-01
+  - nds-hgi-refresh
+  - nds-hgi-link-04
+  - nds-hgi-link-square-02
+  - nds-hgi-highlighter
+  - nds-hgi-door-01
+  # View
+  - nds-hgi-eye
+  - nds-hgi-view-off
+  - nds-hgi-view-off-slash
+  - nds-hgi-zoom-in-area
+  - nds-hgi-zoom-out-area
+  # Data
+  - nds-hgi-sorting-05
+  - nds-hgi-sort-by-up-02
+  - nds-hgi-sort-by-down-02
+  - nds-hgi-trade-up
+  - nds-hgi-trade-down
+  # Appearance
+  - nds-hgi-sun-03
+  - nds-hgi-moon-02
+  - nds-hgi-paint-board
+  - nds-hgi-translation
+  - nds-hgi-accessibility
+  # Weather
+  - nds-hgi-cloud
+  - nds-hgi-sun-cloud-01
+  - nds-hgi-moon-cloud
+  - nds-hgi-cloud-angled-rain
+  - nds-hgi-cloud-angled-rain-zap
+  - nds-hgi-cloud-snow
+  - nds-hgi-slow-winds
+  - nds-hgi-desert
+  # Social
+  - nds-hgi-facebook-02
+  - nds-hgi-new-twitter
+  - nds-hgi-linkedin-02
+  - nds-hgi-whatsapp
+  - nds-hgi-youtube
+  # Commerce and identity
+  - nds-hgi-cart
+  - nds-hgi-riyal-circular
+  - nds-hgi-award-05
+  - nds-hgi-identity-card
+  - nds-hgi-lock-password
+  - nds-hgi-square-lock-01
+  - nds-hgi-cookie
+  # Devices
+  - nds-hgi-smart-phone-01
+  - nds-hgi-mic-01
+  - nds-hgi-headphones
+  # Time and contact
+  - nds-hgi-calendar-03
+  - nds-hgi-clock-01
+  - nds-hgi-location-01
+  - nds-hgi-mail-01
+
+custom:
+  # Marks
+  - nds-icon-avatar
+  - nds-icon-checkmark
+  - nds-icon-dash
+  - nds-icon-quote
+  - nds-icon-riyal
+  # Store badges
+  - nds-icon-apple
+  - nds-icon-google-play
+  - nds-icon-huawei

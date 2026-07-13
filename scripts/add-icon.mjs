@@ -7,7 +7,8 @@
 //
 // Handles URL-encoding of the SVG for data URIs and inserts the token/alias
 // at the alphabetically correct position in its section. The SCSS file is
-// hand-editable — this script preserves existing structure.
+// hand-editable — this script preserves existing structure. The alias is also
+// mirrored into _data/content/icons.yml, the catalog components/icons.md lists.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,6 +17,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, '_sass', '_icons.scss');
+const DATA = path.join(ROOT, '_data', 'content', 'icons.yml');
 
 const args = process.argv.slice(2);
 const name = args[0];
@@ -142,4 +144,19 @@ if (aliasInsertAt === -1) {
 lines.splice(aliasInsertAt, 0, aliasLine);
 
 fs.writeFileSync(OUT, lines.join('\n'));
+
+// --- Mirror the alias into the catalog data file (components/icons.md) ---
+// Plain YAML, no Jekyll plugin: the doc page reads the list as shipped. The list
+// is grouped by family, so append and let a human file it under the right group.
+const yml = fs.readFileSync(DATA, 'utf8').split('\n');
+const listKey = customClass ? 'custom:' : 'hgi:';
+const entry = `  - ${aliasClass}`;
+if (!yml.includes(entry)) {
+  let end = yml.findIndex(l => l.trim() === listKey) + 1;
+  while (end < yml.length && yml[end].startsWith('  ')) end++;   // items + group comments
+  yml.splice(end, 0, entry);
+  fs.writeFileSync(DATA, yml.join('\n'));
+  console.log(`catalog: appended to ${listKey.slice(0, -1)} — move it into its family group`);
+}
+
 console.log(`added: ${name}`);

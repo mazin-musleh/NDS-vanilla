@@ -317,6 +317,8 @@ Do NOT document things the developer already gets from copying the code examples
 
 ### Content Rules
 
+- **Be brief.** Every sentence must earn its place. A section description is one or two sentences, a Built-in Features description is one line, a Best Practices bullet is one clause. Say the thing and stop: no restating the title, no explaining the same point twice in different words, no trailing "so that…" clause that repeats what the sentence already said. If a sentence can be cut without losing information the developer acts on, cut it.
+- **Write for the developer using the system, not for its maintainers.** No repo tooling (`scripts/*.mjs`, build steps, SCSS internals), no "how we register icons/tokens" mechanics. If the reader cannot act on it from their own project, it belongs in a skill or a source comment, not on a doc page.
 - **NEVER use em dashes** in any generated content. Use colons, commas, periods, or restructure instead.
 - **Use HTML entities inside code tabs**, not raw HTML. The `<code class="lang-html code">` body contains entity-encoded markup (`&lt;div&gt;`, `&lt;span class="..."&gt;`) so the browser renders it as literal text instead of parsing it. Live demo markup above (inside `.state-demo`) stays as raw HTML — only the code-tab copy is entity-encoded. When reviewing an existing page with raw HTML inside a code tab, convert every tag character: `<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;` (when not already part of an entity like `&lt;`).
 - Use `<code class="nds-inline-code lang-html">` for HTML references. Use `<code class="nds-inline-code lang-js">` for JS references. Do NOT use plain `<code>` or the `nds-code` wrapper for inline text.
@@ -363,6 +365,8 @@ Before finishing, validate your work against this checklist. Every item MUST pas
 - [ ] Best Practices has at least 7 bullets including "don't use" guidance and practical tips
 - [ ] Best Practices covers both when to use/not use AND how to use well
 - [ ] Alternative components mentioned in "don't use" bullets actually exist in NDS
+- [ ] Prose is brief: section descriptions are one or two sentences, feature descriptions one line, bullets one clause. No sentence restates the title or makes the same point twice
+- [ ] No repo tooling, build steps, or maintainer mechanics anywhere on the page
 
 ### Reference Tables
 - [ ] Modifier Classes table exists (if component has class-based variants/sizes/modes)

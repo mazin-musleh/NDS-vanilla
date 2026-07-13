@@ -18,6 +18,13 @@
   tags: ["CSS"]
   url: "/components/tokens.html"
 
+- title: "Icons"
+  description: "The HugeIcons Stroke Rounded font for content plus a curated inline SVG set for components and chrome, with sizing, color, and license guidance"
+  icon: '<i class="hgi hgi-stroke hgi-svg-01"></i>'
+  category: "Foundations"
+  tags: ["CSS"]
+  url: "/components/icons.html"
+
 # UI Components
 - title: "Accordion"
   description: "Expandable content panels with nested group support"

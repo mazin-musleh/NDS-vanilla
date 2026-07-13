@@ -84,6 +84,9 @@
         - label: "Tokens"
           url: "/components/tokens"
           href: "/components/tokens.html"
+        - label: "Icons"
+          url: "/components/icons"
+          href: "/components/icons.html"
     - label: "UI"
       is_group: true
       children:

@@ -1,13 +1,18 @@
-// List UI icons that aren't referenced anywhere in the codebase.
-// Searches for both `nds-hgi-NAME` (markup) and `--nds-icon-NAME` (token).
+// List UI icons that nothing in the codebase references.
+//
+//   node scripts/find-unused-icons.mjs
+//
+// Registered set: _data/content/icons.yml (kept in sync by add-icon.mjs).
+// An icon counts as used when its class (`nds-hgi-NAME` / `nds-icon-NAME`) or its
+// token (`--nds-icon-NAME`) appears anywhere outside the files that list every
+// icon by definition: the icon sheet, the catalog data, and the catalog page.
 
 import fs from 'node:fs';
 import { execSync } from 'node:child_process';
 
-const src = fs.readFileSync('scripts/generate-icons-scss.mjs', 'utf8');
-const arrMatch = src.match(/UI_ICONS\s*=\s*\[([\s\S]*?)\];/);
-if (!arrMatch) { console.error('cannot locate UI_ICONS'); process.exit(1); }
-const uiIcons = [...arrMatch[1].matchAll(/'([a-z0-9-]+)'/g)].map(m => m[1]);
+const yml = fs.readFileSync('_data/content/icons.yml', 'utf8');
+const classes = [...yml.matchAll(/^\s*-\s*(nds-[a-z0-9-]+)/gm)].map(m => m[1]);
+if (!classes.length) { console.error('no icons found in _data/content/icons.yml'); process.exit(1); }
 
 const SEARCH_OPTS = [
   '--include=*.html',
@@ -20,12 +25,13 @@ const SEARCH_OPTS = [
   '--exclude-dir=node_modules',
   '--exclude-dir=.git',
   '--exclude=_icons.scss',
-  '--exclude=generate-icons-scss.mjs',
-  '--exclude=find-unused-icons.mjs',
+  '--exclude=icons.yml',
+  '--exclude=icons.md',
 ];
 
-function used(name) {
-  for (const pat of [`nds-hgi-${name}`, `--nds-icon-${name}`]) {
+function used(cls) {
+  const name = cls.replace(/^nds-(hgi|icon)-/, '');
+  for (const pat of [cls, `--nds-icon-${name}`]) {
     try {
       execSync(`grep -rl ${SEARCH_OPTS.join(' ')} -- '${pat}' .`, { stdio: ['ignore', 'pipe', 'ignore'] });
       return true;
@@ -34,7 +40,7 @@ function used(name) {
   return false;
 }
 
-const unused = uiIcons.filter(n => !used(n));
-console.log(`UI icons total: ${uiIcons.length}`);
+const unused = classes.filter(c => !used(c));
+console.log(`UI icons registered: ${classes.length}`);
 console.log(`unused: ${unused.length}`);
 if (unused.length) console.log(unused.join('\n'));

@@ -10,6 +10,8 @@ Registers one `--nds-icon-{name}` token and one alias (`.nds-hgi-{name}` by defa
 
 The script handles URL-encoding of the data URI AND inserts the new token/alias at the alphabetically correct position in its section (`:root` tokens, HGI alias block, or custom alias block). The file is hand-editable.
 
+It also mirrors the alias into `_data/content/icons.yml`, the list the icon catalog on `components/icons.md` renders. A hand-edited `_icons.scss` must add its class there too, or the icon is missing from the catalog.
+
 **After running the script, double-check**: run `git diff _sass/_icons.scss` and confirm the new lines landed alphabetically within their section. If the script got confused (e.g. section markers were renamed), hand-move the inserted lines to the right spot.
 
 ## Naming convention for style/type variants
