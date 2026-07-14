@@ -323,6 +323,38 @@
             return this._finishGroupValidation(group, options, isValid, message, { selected: isSelected });
         },
 
+        // Multiselect: option checkboxes are the source of truth (no hidden
+        // carrier). Count checked ones and honour data-min-checked /
+        // data-max-checked on the wrapper, defaulting to min=1 when
+        // data-required is set (same shape as validateCheckboxGroup).
+        validateMultiselect: function(msElement, options) {
+            options = options || { showMessage: true };
+            var ms = msElement.closest('.nds-multiselect') || msElement;
+            var checkboxes = ms.querySelectorAll('.nds-dropmenu-menu input[type="checkbox"]');
+            var checkedCount = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).length;
+
+            var hasDataRequired = ms.hasAttribute('data-required') || ms.classList.contains('nds-required');
+            var defaultMin = hasDataRequired ? 1 : 0;
+            var minChecked = parseInt(ms.getAttribute('data-min-checked') || defaultMin, 10);
+            var maxChecked = parseInt(ms.getAttribute('data-max-checked') || checkboxes.length, 10);
+
+            var isValid = checkedCount >= minChecked && checkedCount <= maxChecked;
+            var message = '';
+            var isArabic = NDS.isArabic;
+            if (!isValid) {
+                if (checkedCount < minChecked) {
+                    message = isArabic
+                        ? 'يرجى اختيار ' + minChecked + ' خيارات على الأقل'
+                        : 'Please select at least ' + minChecked + ' option(s)';
+                } else {
+                    message = isArabic
+                        ? 'يرجى اختيار ' + maxChecked + ' خيارات كحد أقصى'
+                        : 'Please select no more than ' + maxChecked + ' option(s)';
+                }
+            }
+            return this._finishGroupValidation(ms, options, isValid, message, { checked: checkedCount, min: minChecked, max: maxChecked });
+        },
+
         validateOtpGroup: function(groupElement, options) {
             options = options || { showMessage: true };
 
@@ -405,6 +437,21 @@
                 if (result && !result.valid) {
                     acc.invalidFields.push(group);
                     acc.errors.push({ field: group, input: anchor, message: result.message });
+                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
+                }
+            });
+
+            // Multiselect wrappers: option checkboxes live inside a nested
+            // dropmenu, so they're not caught by the .nds-form-group loop above.
+            // Validate min/max/required at the wrapper level; anchor is the
+            // dropdown trigger (the user's focusable target).
+            form.querySelectorAll('.nds-multiselect[data-required], .nds-multiselect.nds-required, .nds-multiselect[data-min-checked], .nds-multiselect[data-max-checked]').forEach(function(ms) {
+                if (!isFieldVisible(ms, form)) return;
+                var result = Validator.validateMultiselect(ms, { showMessage: options.showMessages });
+                if (!result.valid) {
+                    var anchor = ms.querySelector('.nds-dropmenu-trigger');
+                    acc.invalidFields.push(ms);
+                    acc.errors.push({ field: ms, input: anchor, message: result.message });
                     if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
                 }
             });

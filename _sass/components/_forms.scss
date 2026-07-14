@@ -32,10 +32,14 @@
         }
     }
 
-    // Required field indicator (using data-required attribute or legacy class)
+    // Required field indicator (using data-required attribute or legacy class).
+    // Scoped to the container's OWN header/label — an unscoped
+    // `.nds-form-header .nds-label` descendant selector also matched every
+    // nested form-container's label (multiselect option checkboxes, grouped
+    // fields), so the asterisk bled onto inner labels.
     &:is([data-required], .nds-required) {
 
-        .nds-form-header .nds-label::before,
+        >.nds-form-header .nds-label::before,
         >.nds-label::before {
             content: "* ";
             color: var(--controls-text-error);

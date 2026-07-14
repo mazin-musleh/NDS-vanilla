@@ -17,20 +17,73 @@ direction: ltr
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
-                <div class="nds-demo-card">
+                <div class="nds-demo-card" data-code-rebuild>
                     <div class="demo-header">
                         <div class="demo-label">Multi-option select</div>
+                        <div class="demo-action">
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="nds-label">State</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-form-container.nds-multiselect", "msState"]'>
+                                            <span class="nds-label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-required", ".nds-form-container.nds-multiselect", "msState", "attr"]'>
+                                            <span class="nds-label">Required</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["disabled", ".nds-form-container.nds-multiselect", "msState", "data-state"]'>
+                                            <span class="nds-label">Disabled</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["readonly", ".nds-form-container.nds-multiselect", "msState", "data-state"]'>
+                                            <span class="nds-label">Readonly</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="nds-label">Status</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-form-container.nds-multiselect", "msStatus"]'>
+                                            <span class="nds-label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=error", ".nds-form-container.nds-multiselect", "msStatus", "attr"]'>
+                                            <span class="nds-label">Error</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=success", ".nds-form-container.nds-multiselect", "msStatus", "attr"]'>
+                                            <span class="nds-label">Success</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=warning", ".nds-form-container.nds-multiselect", "msStatus", "attr"]'>
+                                            <span class="nds-label">Warning</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=info", ".nds-form-container.nds-multiselect", "msStatus", "attr"]'>
+                                            <span class="nds-label">Info</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-form-container nds-multiselect" data-multiselect-name="interests">
+                            <div class="nds-form-container nds-multiselect" data-multiselect-name="interests" data-required>
                                 <div class="nds-form-header">
                                     <label><span class="nds-label">Interests</span></label>
                                 </div>
                                 <div class="nds-form-control">
-                                    <!-- Server-rendered restored selection: picked up on init -->
-                                    <input type="hidden" name="interests[]" value="ai">
-                                    <input type="hidden" name="interests[]" value="ux">
                                     <div class="nds-form-action nds-prefix nds-dropmenu" data-multiselect-dropmenu>
                                         <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger" type="button">
                                             <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
@@ -45,7 +98,7 @@ direction: ltr
                                                             <label for="ms-default-ai"><span class="nds-label">AI &amp; ML</span></label>
                                                         </div>
                                                         <div class="nds-form-control">
-                                                            <input type="checkbox" id="ms-default-ai" class="nds-check" value="ai" data-label="AI &amp; ML">
+                                                            <input type="checkbox" id="ms-default-ai" class="nds-check" name="interests[]" value="ai" data-label="AI &amp; ML" checked>
                                                         </div>
                                                     </div>
                                                     <div class="nds-form-container nds-check-container">
@@ -53,7 +106,7 @@ direction: ltr
                                                             <label for="ms-default-cloud"><span class="nds-label">Cloud</span></label>
                                                         </div>
                                                         <div class="nds-form-control">
-                                                            <input type="checkbox" id="ms-default-cloud" class="nds-check" value="cloud" data-label="Cloud">
+                                                            <input type="checkbox" id="ms-default-cloud" class="nds-check" name="interests[]" value="cloud" data-label="Cloud">
                                                         </div>
                                                     </div>
                                                     <div class="nds-form-container nds-check-container">
@@ -61,7 +114,7 @@ direction: ltr
                                                             <label for="ms-default-security"><span class="nds-label">Cybersecurity</span></label>
                                                         </div>
                                                         <div class="nds-form-control">
-                                                            <input type="checkbox" id="ms-default-security" class="nds-check" value="security" data-label="Cybersecurity">
+                                                            <input type="checkbox" id="ms-default-security" class="nds-check" name="interests[]" value="security" data-label="Cybersecurity">
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -73,7 +126,7 @@ direction: ltr
                                                             <label for="ms-default-ux"><span class="nds-label">UX Research</span></label>
                                                         </div>
                                                         <div class="nds-form-control">
-                                                            <input type="checkbox" id="ms-default-ux" class="nds-check" value="ux" data-label="UX Research">
+                                                            <input type="checkbox" id="ms-default-ux" class="nds-check" name="interests[]" value="ux" data-label="UX Research" checked>
                                                         </div>
                                                     </div>
                                                     <div class="nds-form-container nds-check-container">
@@ -81,7 +134,7 @@ direction: ltr
                                                             <label for="ms-default-brand"><span class="nds-label">Brand Identity</span></label>
                                                         </div>
                                                         <div class="nds-form-control">
-                                                            <input type="checkbox" id="ms-default-brand" class="nds-check" value="brand" data-label="Brand Identity">
+                                                            <input type="checkbox" id="ms-default-brand" class="nds-check" name="interests[]" value="brand" data-label="Brand Identity">
                                                         </div>
                                                     </div>
                                                     <div class="nds-form-container nds-check-container">
@@ -89,7 +142,7 @@ direction: ltr
                                                             <label for="ms-default-motion"><span class="nds-label">Motion</span></label>
                                                         </div>
                                                         <div class="nds-form-control">
-                                                            <input type="checkbox" id="ms-default-motion" class="nds-check" value="motion" data-label="Motion">
+                                                            <input type="checkbox" id="ms-default-motion" class="nds-check" name="interests[]" value="motion" data-label="Motion">
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -100,8 +153,8 @@ direction: ltr
                                                     <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-multiselect-action="reset" data-no-auto-close>
                                                         <span class="nds-label">Reset</span>
                                                     </button>
-                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-multiselect-action="apply">
-                                                        <span class="nds-label">Apply</span>
+                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button">
+                                                        <span class="nds-label">Close</span>
                                                     </button>
                                                 </div>
                                             </div>
