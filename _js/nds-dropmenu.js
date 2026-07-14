@@ -728,20 +728,40 @@
             let top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
             top = Math.max(topEdge, Math.min(top, p.viewportHeight - mr2.height - pad));
 
-            // Horizontal: anchor the menu on the click x (so wide triggers
-            // open near where the user clicked), falling back to trigger
-            // center for keyboard / programmatic opens. When the menu fits
+            // Horizontal: default anchors the menu on click x (so wide
+            // triggers open near where the user clicked), falling back to
+            // trigger center for keyboard / programmatic opens. Opt-in
+            // `data-anchor="start|end"` on the wrapper pins the menu's
+            // matching edge to the trigger's edge instead — RTL-aware via
+            // the trigger's computed direction (useful for multiselect
+            // where the menu should line up with the field's start edge,
+            // not float centered on a wide input). When the menu fits
             // inside the trigger (narrow menu, wide trigger), additionally
-            // clamp the menu inside the trigger's horizontal bounds so it
-            // never overshoots past the trigger edges. Then clamp to the
-            // viewport ("centered + shifted on clip", same pattern as the
-            // mainnav .nds-fit dropdown).
-            const anchorX = (this._lastClickX != null)
-                ? this._lastClickX
-                : p.triggerRect.left + p.triggerRect.width / 2;
-            let leftPx = anchorX - mr2.width / 2;
-            if (mr2.width <= p.triggerRect.width) {
-                leftPx = Math.max(p.triggerRect.left, Math.min(leftPx, p.triggerRect.right - mr2.width));
+            // clamp centered menus inside the trigger's horizontal bounds
+            // so they never overshoot past the trigger edges. Then clamp
+            // to the viewport.
+            const anchor = this.dropmenu.getAttribute('data-anchor');
+            let leftPx;
+            if (anchor === 'start' || anchor === 'end') {
+                // Try the requested edge first; if it would clip past the
+                // viewport, flip to the opposite edge (same idea as the
+                // vertical flipUp above). Keeps the menu edge-aligned to
+                // the trigger instead of sliding out of alignment on clip.
+                // The final viewport clamp below still catches trigger-at-
+                // edge cases where both sides don't fit.
+                const startAtLeft = (getComputedStyle(this.trigger).direction !== 'rtl') === (anchor === 'start');
+                const primary = startAtLeft ? p.triggerRect.left : p.triggerRect.right - mr2.width;
+                const flipped = startAtLeft ? p.triggerRect.right - mr2.width : p.triggerRect.left;
+                const primaryFits = primary >= pad && primary + mr2.width <= vw - pad;
+                leftPx = primaryFits ? primary : flipped;
+            } else {
+                const anchorX = (this._lastClickX != null)
+                    ? this._lastClickX
+                    : p.triggerRect.left + p.triggerRect.width / 2;
+                leftPx = anchorX - mr2.width / 2;
+                if (mr2.width <= p.triggerRect.width) {
+                    leftPx = Math.max(p.triggerRect.left, Math.min(leftPx, p.triggerRect.right - mr2.width));
+                }
             }
             leftPx = Math.max(pad, Math.min(leftPx, vw - mr2.width - pad));
 
@@ -786,7 +806,14 @@
             const top = this._flipUp
                 ? tRect.top - mRect.height - gap
                 : tRect.bottom + gap;
-            let left = tRect.left + (tRect.width - mRect.width) / 2;
+            const anchor = this.dropmenu.getAttribute('data-anchor');
+            let left;
+            if (anchor === 'start' || anchor === 'end') {
+                const startAtLeft = (getComputedStyle(this.trigger).direction !== 'rtl') === (anchor === 'start');
+                left = startAtLeft ? tRect.left : tRect.right - mRect.width;
+            } else {
+                left = tRect.left + (tRect.width - mRect.width) / 2;
+            }
             // Keep the horizontal viewport clamp — users can't scroll
             // sideways to recover off-screen content.
             const pad = 8;

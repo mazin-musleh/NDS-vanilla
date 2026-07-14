@@ -48,6 +48,12 @@
         }
 
         init() {
+            // Multiselect menus read as an extension of the field, so line them
+            // up with the field's start edge instead of the default centered
+            // anchor. Author can override with data-anchor="center|end".
+            if (!this.dropmenu.hasAttribute('data-anchor')) {
+                this.dropmenu.setAttribute('data-anchor', 'start');
+            }
             // Soft dependency — NDS.Dropmenu ships in the main bundle (present
             // during the critical pass), so this normally runs; the guard just keeps
             // the unbuilt-but-functional fallback if it's ever absent.
