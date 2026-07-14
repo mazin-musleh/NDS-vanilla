@@ -8,6 +8,27 @@ lang: en
 direction: ltr
 ---
 
+<!-- Availability notice -->
+<section class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-body">
+            <div class="nds-alert nds-card nds-inline" data-status="info" role="alert">
+                <span class="nds-feedback nds-alert-icon">
+                    <span class="nds-feedback-icon">
+                        <i class="nds-icon" aria-hidden="true"></i>
+                    </span>
+                </span>
+                <div class="nds-alert-content">
+                    <div class="nds-alert-text">
+                        <span class="nds-alert-title">Coming in the next release</span>
+                        <p class="nds-alert-description">This documentation is ahead of the latest published release: Tag Input is not yet part of the current published bundle and ships with the next release.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Tag Entry -->
 <section id="taginputDefault" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -102,7 +123,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Server-Rendered Restore</h2>
-            <p class="nds-section-description">Emit one hidden input per saved tag and the field renders their chips on load. The field name is adopted from the hidden inputs, so no wrapper attribute is needed.</p>
+            <p class="nds-section-description">Emit one hidden input per saved tag and the field renders their chips on load. The field name is adopted from the hidden inputs, so no wrapper attribute is needed. This demo also shows the neutral chip variant via <code class="nds-inline-code lang-html">data-chip-class</code>.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -112,7 +133,7 @@ direction: ltr
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-form-container nds-taginput">
+                            <div class="nds-form-container nds-taginput" data-chip-class="nds-neutral nds-sm">
                                 <div class="nds-form-header">
                                     <label for="taginput-restore-input"><span class="nds-label">Interests</span></label>
                                 </div>
@@ -146,7 +167,7 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;div class="nds-form-container nds-taginput"&gt;
+&lt;div class="nds-form-container nds-taginput" data-chip-class="nds-neutral nds-sm"&gt;
   &lt;div class="nds-form-header"&gt;
     &lt;label for="taginput-restore-input"&gt;&lt;span class="nds-label"&gt;Interests&lt;/span&gt;&lt;/label&gt;
   &lt;/div&gt;
@@ -509,7 +530,7 @@ direction: ltr
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-taginput-name</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code>. Names the hidden carriers, posted as <code class="nds-inline-code lang-html">name[]</code>. When omitted, the name is adopted from server-rendered hidden inputs; with neither, the selection does not post</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-max-tags</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code>. Caps the tag count; adds past the limit are rejected with footer feedback naming the limit</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-chip-class</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code>. Classes applied to generated chips. Defaults to <code class="nds-inline-code lang-html">nds-primary nds-sm</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-chip-class</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code>. Classes applied to generated chips: color variants <code class="nds-inline-code lang-html">nds-primary</code> / <code class="nds-inline-code lang-html">nds-neutral</code>, sizes <code class="nds-inline-code lang-html">nds-sm</code> / <code class="nds-inline-code lang-html">nds-md</code> / <code class="nds-inline-code lang-html">nds-lg</code>, plus <code class="nds-inline-code lang-html">nds-rounded</code>. Defaults to <code class="nds-inline-code lang-html">nds-primary nds-sm</code>. See <a class="nds-color" href="{{ 'components/chips' | relative_url }}">Chips</a></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-url</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code> to enable autocomplete assist (the input also needs <code class="nds-inline-code lang-html">autocomplete="on"</code>). Picked suggestions commit as tags. The fetch behavior is configured with <a class="nds-color" href="{{ 'components/autocomplete' | relative_url }}">Autocomplete</a>'s own attributes</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-strict</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-taginput</code> alongside <code class="nds-inline-code lang-html">data-url</code>. Typed text never commits: Enter and comma show "choose from the suggestions" feedback, and only picked suggestions become tags. The programmatic <code class="nds-inline-code lang-js">addTag()</code> API is not restricted</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-taginput-value</code></td><td>Stamped on each chip by JS with the tag's value. Use it to target specific chips from consumer code or end-to-end tests</td></tr>
