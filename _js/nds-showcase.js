@@ -2068,13 +2068,13 @@
             if (!childBtn) return;
 
             if (isActive) {
-                if (!childBtn.querySelector('i.hgi')) {
+                if (!childBtn.querySelector('i.nds-hgi-award-05')) {
                     var icon = document.createElement('i');
                     icon.className = 'nds-icon nds-hgi-award-05';
                     childBtn.insertBefore(icon, childBtn.firstChild);
                 }
             } else {
-                var existing = childBtn.querySelector('i.hgi');
+                var existing = childBtn.querySelector('i.nds-hgi-award-05');
                 if (existing) existing.remove();
             }
         });

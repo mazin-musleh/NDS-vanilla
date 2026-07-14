@@ -41,35 +41,6 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <div class="nds-dropmenu demo-toggle-menu">
-                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
-                                    <span class="nds-label">Status</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
-                                            data-toggler='["", ".nds-form-container.nds-taginput", "tagStatus"]'>
-                                            <span class="nds-label">Default</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=error", ".nds-form-container.nds-taginput", "tagStatus", "attr"]'>
-                                            <span class="nds-label">Error</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=success", ".nds-form-container.nds-taginput", "tagStatus", "attr"]'>
-                                            <span class="nds-label">Success</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=warning", ".nds-form-container.nds-taginput", "tagStatus", "attr"]'>
-                                            <span class="nds-label">Warning</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["data-status=info", ".nds-form-container.nds-taginput", "tagStatus", "attr"]'>
-                                            <span class="nds-label">Info</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="demo-container">
