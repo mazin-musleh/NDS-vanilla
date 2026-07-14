@@ -245,6 +245,8 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
           <li><code class="nds-inline-code lang-html">data-query-param</code>: query string parameter name sent to the API (default: "q")</li>
           <li><code class="nds-inline-code lang-html">data-results-path</code>: dot notation path to the results array in the response (e.g. "response.items"). Without it, the component auto-detects flat arrays or objects with <code class="nds-inline-code lang-js">results</code> or <code class="nds-inline-code lang-js">data</code> keys</li>
           <li><code class="nds-inline-code lang-html">data-fetch</code>: fetch mode, either <code class="nds-inline-code lang-js">"each"</code> (default) or <code class="nds-inline-code lang-js">"once"</code>. With <code class="nds-inline-code lang-js">"each"</code> the API is called on every keystroke and the server filters results. With <code class="nds-inline-code lang-js">"once"</code> the full list is fetched once on first input, cached, and filtered client-side on each keystroke. Use <code class="nds-inline-code lang-js">"once"</code> for small static datasets such as countries, currencies, or departments.</li>
+          <li><code class="nds-inline-code lang-html">data-empty-message</code>: custom text for the "no results" placeholder shown when a query matches nothing (default: localized "No results")</li>
+          <li><code class="nds-inline-code lang-html">data-empty-icon</code>: icon classes for the "no results" placeholder (default: <code class="nds-inline-code lang-html">nds-icon nds-hgi-search-01</code>)</li>
         </ul>
       </div>
       <div class="nds-block">

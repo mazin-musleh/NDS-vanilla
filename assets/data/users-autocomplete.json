@@ -1,0 +1,4 @@
+---
+---
+[{% for user in site.data.content.users %}{"Id": {{ forloop.index }}, "Name": "{{ user.name }}", "Role": "{{ user.role }}"}{% unless forloop.last %},
+{% endunless %}{% endfor %}]

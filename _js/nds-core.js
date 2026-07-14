@@ -597,6 +597,45 @@
         }
     };
 
+    // ── Chip Builder ─────────────────────────────────────────────────
+    // Removable .nds-chip button: label + cancel icon + click-to-remove.
+    // One canonical shape for every chips consumer (taginput, multiselect,
+    // filter applied-chips) so a11y details (aria-hidden icon, disabled
+    // stamping) can't drift per component.
+    //   label — string (rendered via textContent) or a Node (e.g. a
+    //           formatted nds-number-format price node)
+    //   opts.chipClass — variant classes appended after 'nds-chip'
+    //   opts.data      — { camelKey: value } map stamped onto dataset
+    //   opts.onRemove  — click handler; the click is preventDefault'ed
+    //   opts.disabled  — initial disabled state
+    // Usage: chipsEl.appendChild(NDS.buildChip('AI & ML', {
+    //            chipClass: 'nds-primary nds-sm',
+    //            data: { taginputValue: 'ai' },
+    //            onRemove: () => this.removeTag('ai'),
+    //        }));
+    NDS.buildChip = (label, opts = {}) => {
+        const chip = document.createElement('button');
+        chip.className = 'nds-chip' + (opts.chipClass ? ' ' + opts.chipClass : '');
+        chip.type = 'button';
+        if (opts.disabled) chip.disabled = true;
+        for (const k in (opts.data || {})) chip.dataset[k] = opts.data[k];
+
+        const text = document.createElement('span');
+        text.className = 'nds-label';
+        if (label instanceof Node) text.appendChild(label);
+        else text.textContent = label;
+
+        const icon = document.createElement('i');
+        icon.className = 'nds-icon nds-hgi-cancel-01';
+        NDS.aria.hidden(icon, true);
+
+        chip.append(text, icon);
+        if (opts.onRemove) {
+            chip.addEventListener('click', (e) => { e.preventDefault(); opts.onRemove(e); });
+        }
+        return chip;
+    };
+
     // ── HTML Escape ──────────────────────────────────────────────────
     // Escape a string for safe insertion into an HTML context (innerHTML, template literals).
     // Uses the browser's textContent serializer so every edge case the parser cares about

@@ -398,29 +398,17 @@
         }
 
         buildChip(value) {
-            const chip = document.createElement('button');
-            chip.className = 'nds-chip ' + this.chipClass;
-            chip.type = 'button';
-            chip.dataset.multiselectValue = value;
-            // Chips built while the field is disabled (init/reinit) — the
-            // State hook above only covers runtime toggles.
-            chip.disabled = NDS.State.has(this.root, 'disabled');
-
-            const icon = document.createElement('i');
-            icon.className = 'nds-icon nds-hgi-cancel-01';
-            NDS.aria.hidden(icon, true);
-
-            const label = document.createElement('span');
-            label.className = 'nds-label';
-            label.textContent = this.labelFor(value);
-
-            chip.append(label, icon);
-            chip.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                this.removeValue(value);
+            return NDS.buildChip(this.labelFor(value), {
+                chipClass: this.chipClass,
+                data: { multiselectValue: value },
+                // Chips built while the field is disabled (init/reinit) — the
+                // State hook above only covers runtime toggles.
+                disabled: NDS.State.has(this.root, 'disabled'),
+                onRemove: (e) => {
+                    e.stopPropagation();
+                    this.removeValue(value);
+                },
             });
-            return chip;
         }
 
         emitChange() {

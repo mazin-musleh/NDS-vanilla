@@ -400,13 +400,22 @@
   scss: _sass/components/_autocomplete.scss
 
 - title: "Multiselect"
-  description: "Multi-option select over a native checkbox group — removable chips, JSON-populated options, staged or instant commit"
+  description: "Multi-option select over a native checkbox group: removable chips, JSON-populated options, staged or instant commit"
   icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/multiselect.html"
   js: _js/nds-multiselect.js
   scss: _sass/components/_multiselect.scss
+
+- title: "Tag Input"
+  description: "Free-text tags committed as removable chips while typing, posted natively as an array"
+  icon: '<i class="hgi hgi-stroke hgi-tags"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/taginput.html"
+  js: _js/nds-taginput.js
+  scss: _sass/components/_taginput.scss
 
 - title: "User Feedback"
   description: "Satisfaction surveys and inline rating forms"

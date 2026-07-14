@@ -11,6 +11,11 @@
     // State helpers — delegated to NDS.State (nds-core.js)
     const { add: addState, remove: removeState } = NDS.State;
 
+    const STRINGS = {
+        en: { noResults: 'No results' },
+        ar: { noResults: 'لا توجد نتائج' }
+    };
+
     // ==============================================
     // DEBOUNCE
     // ==============================================
@@ -47,6 +52,11 @@
             if (!this.formControl || !this.input) return;
 
             this.clearBtn = this.formControl.querySelector('.nds-form-action .nds-clear');
+            // Dedicated inert fetch spinner — a hidden .nds-loading span in the
+            // action slot. Fields where a clear affordance makes no sense
+            // (taginput assist: chips own removal) ship this instead of the
+            // clear button; when absent, the clear button doubles as spinner.
+            this.spinnerEl = this.formControl.querySelector('.nds-form-action .nds-loading');
 
             // Config from container attributes
             this.url = containerElement.getAttribute('data-url');
@@ -101,9 +111,17 @@
             var menuId = 'nds-ac-' + (this.input.id || NDS.uniqueId());
             menu.id = menuId;
 
-            // Scrollable container for items
+            // Scrollable container for items — an .nds-empty container so a
+            // query matching nothing shows a "no results" placeholder instead
+            // of silently closing (a dead-field read in taginput strict mode).
+            // data-empty-message / data-empty-icon on the [data-url] container
+            // forward through, so consumers customize per field.
             var scroll = document.createElement('div');
-            scroll.className = 'nds-dropmenu-scroll';
+            scroll.className = 'nds-dropmenu-scroll nds-empty';
+            scroll.setAttribute('data-empty-message',
+                this.container.getAttribute('data-empty-message') || STRINGS[NDS.langKey].noResults);
+            scroll.setAttribute('data-empty-icon',
+                this.container.getAttribute('data-empty-icon') || 'nds-icon nds-hgi-search-01');
             menu.appendChild(scroll);
 
             this.formControl.appendChild(menu);
@@ -322,6 +340,7 @@
         // ==============================================
 
         setLoading(isLoading) {
+            if (this.spinnerEl) this.spinnerEl.toggleAttribute('hidden', !isLoading);
             if (!this.clearBtn) return;
 
             if (isLoading) {
@@ -343,7 +362,12 @@
             this.activeIndex = -1;
 
             if (!data || data.length === 0) {
-                this.close();
+                // Soft dependency — NDS.Empty ships in the main bundle; without
+                // it the menu closes silently as before.
+                if (!NDS.Empty) { this.close(); return; }
+                NDS.Empty.refresh(this.scroll);
+                NDS.announce(STRINGS[NDS.langKey].noResults);
+                this.open();
                 return;
             }
 

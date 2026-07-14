@@ -32,6 +32,23 @@
         border-radius: 2px;
     }
 
+    // "No results" — the scroll area is an .nds-empty container (placeholder
+    // auto-managed by NDS.Empty). Compact the placeholder's spacious default
+    // to menu-row scale.
+    .nds-autocomplete-menu .nds-empty-placeholder {
+        padding: var(--spacing-xl) var(--spacing-md);
+        gap: var(--spacing-sm);
+
+        > i {
+            font-size: var(--typo-text-xl-FS);
+        }
+
+        .nds-empty-message {
+            font-size: var(--typo-text-sm-FS);
+            line-height: var(--typo-text-sm-LH);
+        }
+    }
+
 }
 
 // ==============================================

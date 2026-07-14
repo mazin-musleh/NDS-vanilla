@@ -316,6 +316,17 @@
             critical: true,
         },
         {
+            // Critical twice over: restored chips are JS-built at init (CLS
+            // if deferred, like Multiselect), AND typing is the primary
+            // interaction — in a pre-bundle gap Enter native-submits the
+            // form (destructive, not a recoverable no-op; the OTP rule).
+            // Stays eager even if the chips ever become server-rendered.
+            name: 'TagInput',
+            selector: '.nds-taginput',
+            init: () => NDS.TagInput?.init?.(),
+            critical: true,
+        },
+        {
             // Deferred: results fetch on user typing — no first-paint visual.
             name: 'Autocomplete',
             selector: '.nds-form-container[data-url]',

@@ -1,0 +1,33 @@
+/**
+ * NDS TagInput Component
+ * Free-text tags typed into the field and committed as removable .nds-chip
+ * elements sharing the row with the input. Hidden inputs carry the values.
+ */
+
+@use '../mixins' as *;
+
+.nds-taginput {
+
+  // Chips are DIRECT flex items (no wrapper), so the input continues the
+  // flow right after the last chip on every row. input-size stays the
+  // height floor.
+  > .nds-form-control {
+    height: auto;
+    min-height: var(--_input-size);
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding-block: var(--spacing-md);
+    cursor: text;
+  }
+
+  // The text field floats after the last chip and takes the row's remaining
+  // space — override the base full-width/full-height input rules. It wraps
+  // to a fresh row only when less than its minimum is left.
+  > .nds-form-control > input:not([type="hidden"]) {
+    flex: 1 1 8rem;
+    width: auto;
+    min-width: 8rem;
+    height: auto;
+  }
+}

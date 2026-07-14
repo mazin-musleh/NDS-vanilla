@@ -947,32 +947,15 @@
             countSlot.textContent = visible;
         }
 
+        // displayLabel may be a DOM node (range chips render formatted
+        // nds-number-format price nodes) or a plain string — NDS.buildChip
+        // accepts both.
         createFilterChip(type, value, onRemove, displayLabel) {
-            const chip = document.createElement('button');
-            chip.className = `nds-chip ${this.chipClass || 'nds-primary nds-lg'}`;
-            chip.setAttribute('type', 'button');
-            chip.setAttribute('data-filter-type', type);
-            chip.setAttribute('data-filter-value', value);
-
-            const icon = document.createElement('i');
-            icon.className = 'nds-icon nds-hgi-cancel-01';
-
-            const label = document.createElement('span');
-            label.className = 'nds-label';
-            // displayLabel may be a DOM node (range chips render formatted
-            // nds-number-format price nodes) or a plain string.
-            if (displayLabel instanceof Node) label.appendChild(displayLabel);
-            else label.textContent = displayLabel || value;
-
-            chip.appendChild(label);
-            chip.appendChild(icon);
-
-            chip.addEventListener('click', (e) => {
-                e.preventDefault();
-                onRemove();
+            return NDS.buildChip(displayLabel || value, {
+                chipClass: this.chipClass || 'nds-primary nds-lg',
+                data: { filterType: type, filterValue: value },
+                onRemove,
             });
-
-            return chip;
         }
 
         removeSearchFilter() {

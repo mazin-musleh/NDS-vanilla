@@ -976,6 +976,10 @@
                 e.preventDefault();
 
                 inputElements.forEach(function(input) {
+                    // Hidden inputs are component-owned carriers (taginput
+                    // tags, restore seeds) — clear resets the visible field,
+                    // never the committed values.
+                    if (input.type === 'hidden') return;
                     if (input.type === 'checkbox' || input.type === 'radio') {
                         input.checked = false;
                     } else {
