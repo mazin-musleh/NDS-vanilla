@@ -57,8 +57,8 @@
         validateNumberRange: function(input) {
             var val = parseInt(input.value);
             if (input.value === '' || isNaN(val)) return null;
-            var min = input.hasAttribute('min') ? parseInt(input.min) : 0;
-            var max = input.hasAttribute('max') ? parseInt(input.max) : val;
+            var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
+            var max = input.hasAttribute('max') ? parseInt(input.max) : Infinity;
             if (val < min) return { clamped: min, message: Validator.getNumberRangeMessage('min', min) };
             if (val > max) return { clamped: max, message: Validator.getNumberRangeMessage('max', max) };
             return null;
@@ -866,8 +866,8 @@
                 if (!input || input.disabled || input.readOnly) return false;
 
                 var current = parseInt(input.value) || 0;
-                var min = input.hasAttribute('min') ? parseInt(input.min) : 0;
-                var max = input.hasAttribute('max') ? parseInt(input.max) : current;
+                var min = input.hasAttribute('min') ? parseInt(input.min) : -Infinity;
+                var max = input.hasAttribute('max') ? parseInt(input.max) : Infinity;
                 var step = (parseInt(input.step) || 1) * (multiplier || 1);
                 var next = btn.classList.contains('nds-number-increment') ? current + step : current - step;
 
