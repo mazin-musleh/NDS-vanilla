@@ -93,9 +93,11 @@ hgi:
   - nds-hgi-location-01
   - nds-hgi-mail-01
 
+
 custom:
   # Marks
   - nds-icon-avatar
+  - nds-icon-checkmark
   - nds-icon-dash
   - nds-icon-quote
   - nds-icon-riyal
