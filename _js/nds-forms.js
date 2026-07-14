@@ -272,36 +272,38 @@
             return Object.assign({ valid: isValid, message: message }, extra);
         },
 
-        validateCheckboxGroup: function(groupElement, options) {
-            options = options || { showMessage: true };
-
-            var group = groupElement.closest('.nds-form-group') || groupElement;
-            var checkboxes = group.querySelectorAll('input[type="checkbox"]');
+        // Shared checked-count rule for checkbox-backed groups: min defaults
+        // to 1 when the element is flagged required, max to the option count.
+        _validateCheckedCount: function(group, checkboxes, options) {
             var checkedCount = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).length;
 
-            // If data-required is set without data-min-checked, require at least 1
-            var hasDataRequired = group.hasAttribute('data-required');
-            var defaultMin = hasDataRequired ? 1 : 0;
-            var minChecked = parseInt(group.getAttribute('data-min-checked') || defaultMin, 10);
+            var hasRequired = group.hasAttribute('data-required') || group.classList.contains('nds-required');
+            var minChecked = parseInt(group.getAttribute('data-min-checked') || (hasRequired ? 1 : 0), 10);
             var maxChecked = parseInt(group.getAttribute('data-max-checked') || checkboxes.length, 10);
 
             var isValid = checkedCount >= minChecked && checkedCount <= maxChecked;
             var message = '';
-            var isArabic = NDS.isArabic;
-
             if (!isValid) {
-                if (checkedCount < minChecked) {
-                    message = isArabic
-                        ? 'يرجى اختيار ' + minChecked + ' خيارات على الأقل'
-                        : 'Please select at least ' + minChecked + ' option(s)';
+                var below = checkedCount < minChecked;
+                var n = below ? minChecked : maxChecked;
+                if (NDS.isArabic) {
+                    var noun = n === 1 ? 'خيار واحد' : n === 2 ? 'خيارين' : n + ' خيارات';
+                    message = 'يرجى اختيار ' + noun + (below ? ' على الأقل' : ' كحد أقصى');
                 } else {
-                    message = isArabic
-                        ? 'يرجى اختيار ' + maxChecked + ' خيارات كحد أقصى'
-                        : 'Please select no more than ' + maxChecked + ' option(s)';
+                    var word = n === 1 ? '1 option' : n + ' options';
+                    message = below
+                        ? 'Please select at least ' + word
+                        : 'Please select no more than ' + word;
                 }
             }
 
             return this._finishGroupValidation(group, options, isValid, message, { checked: checkedCount, min: minChecked, max: maxChecked });
+        },
+
+        validateCheckboxGroup: function(groupElement, options) {
+            options = options || { showMessage: true };
+            var group = groupElement.closest('.nds-form-group') || groupElement;
+            return this._validateCheckedCount(group, group.querySelectorAll('input[type="checkbox"]'), options);
         },
 
         validateRadioGroup: function(groupElement, options) {
@@ -324,35 +326,12 @@
         },
 
         // Multiselect: option checkboxes are the source of truth (no hidden
-        // carrier). Count checked ones and honour data-min-checked /
-        // data-max-checked on the wrapper, defaulting to min=1 when
-        // data-required is set (same shape as validateCheckboxGroup).
+        // carrier); scoped to the nested dropmenu so nothing else in the
+        // wrapper is counted.
         validateMultiselect: function(msElement, options) {
             options = options || { showMessage: true };
             var ms = msElement.closest('.nds-multiselect') || msElement;
-            var checkboxes = ms.querySelectorAll('.nds-dropmenu-menu input[type="checkbox"]');
-            var checkedCount = Array.from(checkboxes).filter(function(cb) { return cb.checked; }).length;
-
-            var hasDataRequired = ms.hasAttribute('data-required') || ms.classList.contains('nds-required');
-            var defaultMin = hasDataRequired ? 1 : 0;
-            var minChecked = parseInt(ms.getAttribute('data-min-checked') || defaultMin, 10);
-            var maxChecked = parseInt(ms.getAttribute('data-max-checked') || checkboxes.length, 10);
-
-            var isValid = checkedCount >= minChecked && checkedCount <= maxChecked;
-            var message = '';
-            var isArabic = NDS.isArabic;
-            if (!isValid) {
-                if (checkedCount < minChecked) {
-                    message = isArabic
-                        ? 'يرجى اختيار ' + minChecked + ' خيارات على الأقل'
-                        : 'Please select at least ' + minChecked + ' option(s)';
-                } else {
-                    message = isArabic
-                        ? 'يرجى اختيار ' + maxChecked + ' خيارات كحد أقصى'
-                        : 'Please select no more than ' + maxChecked + ' option(s)';
-                }
-            }
-            return this._finishGroupValidation(ms, options, isValid, message, { checked: checkedCount, min: minChecked, max: maxChecked });
+            return this._validateCheckedCount(ms, ms.querySelectorAll('.nds-dropmenu-menu input[type="checkbox"]'), options);
         },
 
         validateOtpGroup: function(groupElement, options) {
@@ -1042,6 +1021,20 @@
             Validator.validateRadioGroup.bind(Validator));
     }
 
+    // Multiselect re-validation listens to the component's commit event, not
+    // checkbox `change` — chip removal and reset uncheck programmatically
+    // without dispatching change, so per-input listeners would miss them.
+    function initMultiselectValidation(ms) {
+        if (!ms || ms._msValidationInitialized) return;
+        ms._msValidationInitialized = true;
+
+        ms.addEventListener('nds:multiselect:change', function() {
+            var opted = ms.hasAttribute('data-required') || ms.classList.contains('nds-required')
+                || ms.hasAttribute('data-min-checked') || ms.hasAttribute('data-max-checked');
+            if (opted && NDS.Status.get(ms) !== '') Validator.validateMultiselect(ms);
+        });
+    }
+
     // ==============================================
     // GROUP STATE MANAGEMENT
     // ==============================================
@@ -1190,6 +1183,8 @@
             if (group.querySelector('input[type="radio"]')) initRadioGroupValidation(group);
         });
 
+        container.querySelectorAll('.nds-multiselect').forEach(initMultiselectValidation);
+
         // Initialize forms
         var forms = container.classList && container.classList.contains('nds-form')
             ? [container]
@@ -1288,6 +1283,10 @@
         // Radio Group Validation
         validateRadioGroup: Validator.validateRadioGroup.bind(Validator),
         initRadioGroupValidation: initRadioGroupValidation,
+
+        // Multiselect Validation
+        validateMultiselect: Validator.validateMultiselect.bind(Validator),
+        initMultiselectValidation: initMultiselectValidation,
 
         // OTP Group Validation
         validateOtpGroup: Validator.validateOtpGroup.bind(Validator),

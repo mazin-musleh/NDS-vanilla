@@ -400,7 +400,7 @@
   scss: _sass/components/_autocomplete.scss
 
 - title: "Multiselect"
-  description: "Multi-option select with grouped checkboxes, draft/apply commit, and removable chips"
+  description: "Multi-option select over a native checkbox group — removable chips, JSON-populated options, staged or instant commit"
   icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
   category: "Forms"
   tags: ["JS", "CSS", "API"]

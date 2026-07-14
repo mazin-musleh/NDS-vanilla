@@ -90,6 +90,89 @@ direction: rtl
     </div>
 </section>
 
+<!-- ── Multiselect population test: options from JSON attrs / populate() ── -->
+<section class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Multiselect — populated options (prototype)</h2>
+            <p class="nds-section-description">Left: options built from <code>data-multiselect-options</code> (grouped JSON) + <code>data-multiselect-selected</code>, with an <strong>Apply button = staged commit</strong> (filter UX: toggles stage, Apply updates chips, closing without Apply discards) — inside a form with <code>data-min-checked="2"</code> / <code>data-max-checked="4"</code>, Submit validates the APPLIED set. Right: starts empty, <code>populate()</code> fills it at runtime (simulated fetch), no Apply button = instant commit.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-grid" style="--max-col:2; --min-col:1;">
+                <form class="nds-form" onsubmit="return false">
+                <div class="nds-form-container nds-multiselect" id="pgMsAttr"
+                    data-multiselect-name="pg-interests"
+                    data-multiselect-options='{"Technology":{"ai":"AI &amp; ML","cloud":"Cloud","security":"Cybersecurity"},"Design":{"ux":"UX Research","brand":"Brand Identity","motion":"Motion"}}'
+                    data-multiselect-selected='["ai","ux"]'
+                    data-min-checked="2" data-max-checked="4">
+                    <div class="nds-form-header">
+                        <label><span class="nds-label">Interests (from attribute)</span></label>
+                    </div>
+                    <div class="nds-form-control">
+                        <div class="nds-form-action nds-prefix nds-dropmenu" data-multiselect-dropmenu>
+                            <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger" type="button">
+                                <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
+                                <span class="nds-label">Select</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-footer">
+                                    <hr class="nds-divider">
+                                    <div class="nds-dropmenu-action nds-grid">
+                                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-multiselect-action="reset" data-no-auto-close>
+                                            <span class="nds-label">Reset</span>
+                                        </button>
+                                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-multiselect-action="apply">
+                                            <span class="nds-label">Apply</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nds-chips nds-multiselect-chips" data-multiselect-chips></div>
+                        <span class="nds-multiselect-placeholder">Select options&hellip;</span>
+                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
+                </div>
+                <button class="nds-btn nds-primary nds-sm" type="submit" style="align-self: start; margin-block-start: var(--spacing-md);">
+                    <span class="nds-label">Submit</span>
+                </button>
+                </form>
+                <div class="nds-form-container nds-multiselect" id="pgMsRuntime" data-multiselect-name="pg-cities">
+                    <div class="nds-form-header">
+                        <label><span class="nds-label">Cities (populate() at runtime)</span></label>
+                    </div>
+                    <div class="nds-form-control">
+                        <div class="nds-form-action nds-prefix nds-dropmenu" data-multiselect-dropmenu>
+                            <button class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger" type="button">
+                                <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
+                                <span class="nds-label">Select</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden></div>
+                        </div>
+                        <div class="nds-chips nds-multiselect-chips" data-multiselect-chips></div>
+                        <span class="nds-multiselect-placeholder">Load options first&hellip;</span>
+                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
+                </div>
+            </div>
+            <button class="nds-btn nds-secondary nds-sm" type="button" id="pgMsLoad" style="margin-block-start: var(--spacing-xl);">
+                <span class="nds-label">Load cities via populate()</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('pgMsLoad').addEventListener('click', function () {
+    var field = document.getElementById('pgMsRuntime');
+    if (!field || !field.ndsMultiselect) return;
+    field.ndsMultiselect.populate(
+        { riyadh: 'الرياض', jeddah: 'جدة', dammam: 'الدمام', abha: 'أبها' },
+        ['riyadh']
+    );
+});
+</script>
+
 <!-- ── data-align test: column alignment declared on the header ── -->
 <section class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">

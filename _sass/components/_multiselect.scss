@@ -1,8 +1,8 @@
 /**
  * NDS Multiselect Component
  * Multi-option select built on the prefix-dropmenu slot of .nds-form-control.
- * The dropmenu hosts grouped checkboxes + apply/reset; selected values mirror
- * back into the form-control as removable .nds-chip elements.
+ * The dropmenu hosts grouped checkboxes (the source of truth); checked values
+ * mirror into the form-control as removable .nds-chip elements.
  */
 
 @use '../mixins' as *;
@@ -15,13 +15,15 @@
   // Base .nds-form-control fixes height to --_input-size (40px). When chips
   // accumulate they need to wrap onto new rows, so we relax the height to
   // grow with content while keeping the input-size as a floor.
+  // Clicking anywhere on the field opens the menu (JS delegation), so the
+  // surface is a control, not a text input.
   > .nds-form-control {
     height: auto;
     min-height: var(--_input-size);
     flex-wrap: wrap;
     align-items: center;
     row-gap: var(--spacing-sm);
-    cursor: text;
+    cursor: pointer;
   }
 
   // ============================================================
@@ -49,10 +51,5 @@
 
   &[data-state~="filled"] .nds-multiselect-placeholder {
     display: none;
-  }
-
-  // Hidden inputs container: invisible, never affects layout.
-  &-values {
-    display: none !important;
   }
 }
