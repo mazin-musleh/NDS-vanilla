@@ -47,7 +47,7 @@
     window.NDS = window.NDS || {};
 
     const DEFAULT_FLASH_MS = 2000;
-    const CHECKMARK_CLASS = 'nds-icon-checkmark';
+    const CHECKMARK_CLASS = 'nds-hgi-checkmark-circle-01';
 
     async function writeText(text) {
         if (text == null || text === '') return false;
