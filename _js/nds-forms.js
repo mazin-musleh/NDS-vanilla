@@ -334,6 +334,20 @@
             return this._validateCheckedCount(ms, ms.querySelectorAll('.nds-dropmenu-menu input[type="checkbox"]'), options);
         },
 
+        // Taginput: hidden inputs are the carriers (one per committed tag).
+        // Typing field is empty at submit even when tags exist — can't feed
+        // checkValidity. Required = at least one tag; max is enforced at
+        // add-time by the widget, not re-checked here.
+        validateTaginput: function(tiElement, options) {
+            options = options || { showMessage: true };
+            var ti = tiElement.closest('.nds-taginput') || tiElement;
+            var hasRequired = ti.hasAttribute('data-required') || ti.classList.contains('nds-required');
+            var count = ti.querySelectorAll('.nds-form-control > input[type="hidden"]').length;
+            var isValid = !hasRequired || count > 0;
+            var message = isValid ? '' : (NDS.isArabic ? 'يرجى إضافة وسم واحد على الأقل' : 'Please add at least one tag');
+            return this._finishGroupValidation(ti, options, isValid, message, { count: count });
+        },
+
         validateOtpGroup: function(groupElement, options) {
             options = options || { showMessage: true };
 
@@ -362,6 +376,9 @@
                 // Skip containers validated at group level (OTP, radio, checkbox)
                 if (container.classList.contains('nds-otp-container')) return;
                 if (container.closest('.nds-form-group')) return;
+                // Composite wrappers own their own validators — taginput's
+                // typing field isn't the carrier, checkValidity would false-fail.
+                if (container.classList.contains('nds-taginput')) return;
 
                 var input = container.querySelector('input, textarea, select');
                 if (!input || input.disabled) return;
@@ -434,6 +451,20 @@
                     if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
                 }
             });
+
+            // Taginput wrappers: same pattern as multiselect — typing field
+            // isn't the carrier, so _validateContainers can't feed it via
+            // checkValidity. Anchor is the typing input (focusable).
+            form.querySelectorAll('.nds-taginput[data-required], .nds-taginput.nds-required').forEach(function(ti) {
+                if (!isFieldVisible(ti, form)) return;
+                var result = Validator.validateTaginput(ti, { showMessage: options.showMessages });
+                if (!result.valid) {
+                    var anchor = ti.querySelector('.nds-form-control > input:not([type="hidden"])');
+                    acc.invalidFields.push(ti);
+                    acc.errors.push({ field: ti, input: anchor, message: result.message });
+                    if (!acc.firstInvalidInput) acc.firstInvalidInput = anchor;
+                }
+            });
         },
 
         // Thin orchestrator over both validation passes (shared accumulator),
@@ -490,8 +521,10 @@
                 if (!input.classList.contains('nds-select-input')) {
                     input.readOnly ? NDS.State.add(formContainer, 'readonly') : NDS.State.remove(formContainer, 'readonly');
                 }
-                // Skip required propagation for radios/checkboxes — managed at group level
-                if (input.type !== 'radio' && input.type !== 'checkbox') {
+                // Skip required propagation for radios/checkboxes — managed at group level.
+                // Skip for taginput too: the wrapper's data-required is authoritative,
+                // the typing input's required attr isn't (and mustn't be — see initializeInput).
+                if (input.type !== 'radio' && input.type !== 'checkbox' && !formContainer.classList.contains('nds-taginput')) {
                     formContainer.toggleAttribute('data-required', input.required);
                 }
             }
@@ -740,10 +773,15 @@
             // Remember original type for password fields
             if (input.type === 'password') input.dataset.type = 'password';
 
-            // Auto-add required and aria-required if container has data-required attribute
+            // Auto-add required and aria-required if container has data-required attribute.
+            // Taginput's typing field isn't the carrier — never stamp `required` on it
+            // (would false-fail checkValidity even when tags exist); aria-required still
+            // announces requiredness on the interactive input.
             var formContainer = formControl.closest('.nds-form-container');
             if (formContainer && (formContainer.hasAttribute('data-required') || formContainer.classList.contains('nds-required'))) {
-                if (!input.hasAttribute('required')) input.setAttribute('required', '');
+                if (!formContainer.classList.contains('nds-taginput') && !input.hasAttribute('required')) {
+                    input.setAttribute('required', '');
+                }
                 input.setAttribute('aria-required', 'true');
             }
 
@@ -1291,6 +1329,9 @@
         // Multiselect Validation
         validateMultiselect: Validator.validateMultiselect.bind(Validator),
         initMultiselectValidation: initMultiselectValidation,
+
+        // Taginput Validation
+        validateTaginput: Validator.validateTaginput.bind(Validator),
 
         // OTP Group Validation
         validateOtpGroup: Validator.validateOtpGroup.bind(Validator),
