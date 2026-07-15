@@ -245,6 +245,10 @@
                     : 'Value must be no more than ' + input.max;
             } else if (validity.patternMismatch) {
                 return isArabic ? 'يرجى مطابقة التنسيق المطلوب' : 'Please match the requested format';
+            } else if (validity.customError) {
+                // setCustomValidity stamp — already localized by the stamping
+                // component (e.g. date-picker format/bounds).
+                return input.validationMessage;
             }
 
             return isArabic ? 'مدخل غير صحيح' : 'Invalid input';

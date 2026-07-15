@@ -6,7 +6,7 @@ hero_description: Interactive calendar component for selecting dates with suppor
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "15/07/2026 - 02:35 PM"
+last_edit: "15/07/2026 - 05:38 PM"
 lang: en
 direction: ltr
 ---
@@ -267,7 +267,7 @@ direction: ltr
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Date Bounds (Min / Max)</h2>
-      <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-min-date</code> and/or <code class="nds-inline-code lang-html">data-max-date</code> to the input — values parsed with the picker's own <code class="nds-inline-code lang-html">data-format</code>. Out-of-range day cells, month cells, and years render disabled; prev/next arrows and the Today button also disable at the boundary. Coexists with <code class="nds-inline-code lang-html">data-year-before</code> / <code class="nds-inline-code lang-html">data-year-after</code> — the tighter side wins.</p>
+      <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-min-date</code> and/or <code class="nds-inline-code lang-html">data-max-date</code> to the input — values parsed with the picker's own <code class="nds-inline-code lang-html">data-format</code>. Out-of-range day cells, month cells, and years render disabled; prev/next arrows and the Today button also disable at the boundary. Coexists with <code class="nds-inline-code lang-html">data-year-before</code> / <code class="nds-inline-code lang-html">data-year-after</code> — the tighter side wins. Hand-typed values are validated too: a badly formatted, out-of-range, or reversed-range value shows a localized field error on commit and blocks form submit through the standard forms validation (<code class="nds-inline-code">setCustomValidity</code>), so the bounds can't be bypassed by editing the input directly.</p>
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
@@ -496,11 +496,11 @@ direction: ltr
           <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
           <tbody>
             <tr><td><code class="nds-inline-code lang-html">data-year-before</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Number of years before today to include in the year dropdown. Default: <code class="nds-inline-code">5</code></td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-year-after</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Number of years after today to include in the year dropdown. Default: <code class="nds-inline-code">5</code>. Set to <code class="nds-inline-code">0</code> (or omit) to cap the year list at the current year, preventing future year selection</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-year-after</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Number of years after today to include in the year dropdown. Default: <code class="nds-inline-code">0</code> — omitted (or set to <code class="nds-inline-code">0</code>), the year list caps at the current year, preventing future year selection</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-lang</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Override the calendar language. Values: <code class="nds-inline-code">ar</code>, <code class="nds-inline-code">en</code>. Defaults to the <code class="nds-inline-code lang-html">&lt;html lang&gt;</code> attribute</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-format</code></td><td><code class="nds-inline-code lang-html">.nds-form-container.nds-date-picker</code></td><td>Custom date format. Tokens: <code class="nds-inline-code">YYYY</code>, <code class="nds-inline-code">YY</code>, <code class="nds-inline-code">MM</code>, <code class="nds-inline-code">M</code>, <code class="nds-inline-code">DD</code>, <code class="nds-inline-code">D</code>. Any other character passes through literally. Default: <code class="nds-inline-code">DD/MM/YYYY</code>. Applies to both Gregorian and Hijri; both endpoints of a range use the same format. Token presence also selects the picker UI — omit day tokens for a month picker (day defaults to <code class="nds-inline-code">1</code>), use only year tokens for a year picker (day+month default to <code class="nds-inline-code">1</code>)</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-min-date</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Earliest selectable date. Parsed with the picker's <code class="nds-inline-code lang-html">data-format</code>. Coexists with <code class="nds-inline-code lang-html">data-year-before</code> — the tighter side wins</td></tr>
-            <tr><td><code class="nds-inline-code lang-html">data-max-date</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Latest selectable date. Parsed with the picker's <code class="nds-inline-code lang-html">data-format</code>. Coexists with <code class="nds-inline-code lang-html">data-year-after</code> — the tighter side wins</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-min-date</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Earliest selectable date. Parsed with the picker's <code class="nds-inline-code lang-html">data-format</code>. Coexists with <code class="nds-inline-code lang-html">data-year-before</code> — the tighter side wins. Typed values before it fail form validation</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-max-date</code></td><td><code class="nds-inline-code lang-html">.nds-date-input</code></td><td>Latest selectable date. Parsed with the picker's <code class="nds-inline-code lang-html">data-format</code>. Coexists with <code class="nds-inline-code lang-html">data-year-after</code> — the tighter side wins. Typed values after it fail form validation</td></tr>
             <tr><td><code class="nds-inline-code lang-html">data-clearable</code></td><td><code class="nds-inline-code lang-html">.nds-form-container.nds-date-picker</code></td><td>Shows a Clear button in the footer that wipes the input value + state and closes the picker. Auto-enabled in range mode. Boolean (presence-only)</td></tr>
           </tbody>
         </table>

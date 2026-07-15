@@ -148,14 +148,16 @@
             &[data-state~="in-range"] {
                 background-color: var(--form-datecell-background-range);
             }
-            // Endpoints tint only the half facing the range interior.
-            &[data-state~="range-start"][data-state~="has-range-end"] {
+            // Endpoints tint only the half facing the range interior. A
+            // single-day range is both endpoints at once — no interior,
+            // no bar (the :not() excludes the double-endpoint slot).
+            &[data-state~="range-start"][data-state~="has-range-end"]:not([data-state~="range-end"]) {
                 background: linear-gradient(to right, var(--form-datecell-background-range) 50%, transparent 50%);
                 @include ltr {
                     background: linear-gradient(to right, transparent 50%, var(--form-datecell-background-range) 50%);
                 }
             }
-            &[data-state~="range-end"][data-state~="has-range-start"] {
+            &[data-state~="range-end"][data-state~="has-range-start"]:not([data-state~="range-start"]) {
                 background: linear-gradient(to right, transparent 50%, var(--form-datecell-background-range) 50%);
                 @include ltr {
                     background: linear-gradient(to right, var(--form-datecell-background-range) 50%, transparent 50%);

@@ -4,6 +4,9 @@ title: Text Fields
 hero_title: Text Fields - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
 breadcrumb: [["Components", "/components"]]
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "15/07/2026 - 05:45 PM"
 lang: en
 direction: ltr
 ---
@@ -2016,6 +2019,13 @@ NDS.Forms.clearStatus(container);</code>
             <span class="nds-label">Validation</span>
           </span>
           <p class="nds-item-desc">Uses HTML5 validity checks but replaces browser popups with styled inline feedback. Error messages auto-clear on blur or change once the field is corrected. Custom messages via <code class="nds-inline-code lang-html">data-error-message</code>.</p>
+        </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-puzzle"></i>
+            <span class="nds-label">Extending Validation</span>
+          </span>
+          <p class="nds-item-desc">Custom components hook into submit validation by stamping <code class="nds-inline-code lang-js">setCustomValidity('message')</code> on their input (empty string when valid) — <code class="nds-inline-code lang-js">validateForm</code> blocks the submit and shows the stamped message as-is, no forms changes needed.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
