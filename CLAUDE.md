@@ -102,6 +102,23 @@ All page content is built from sections. Read `layout/section.md` before creatin
    - `templates/` → `_data/content/templates.yml`
    Whenever you create a new doc page, check for a sibling YAML in `_data/content/` and add the entry there too.
 
+## Component Doc Front Matter
+
+Every component/utility/layout doc page in `components/`, `layout/`, `utilities/`, `ui-shell/` carries three tracking fields alongside the usual `layout/title/hero_*/breadcrumb/lang/direction`:
+
+```yaml
+since: "1.0.0"                                    # version the doc first shipped (never changes)
+updated: "1.4.0"                                  # version of the most recent refactor
+last_edit: "15/07/2026 - 02:35 PM"  # human timestamp of the most recent doc edit (GMT+3)
+```
+
+**When to update:**
+- `since` — set once at creation, never touched again.
+- `updated` — bump on any refactor that changes the component's public API, markup, JS behavior, or added/removed features. Value = current `version` in `_config.yml` (strip `-dev`).
+- `last_edit` — refresh on ANY doc edit (typo fix, new demo card, table row, wording tweak). Format: `DD/MM/YYYY - HH:MM AM/PM` in GMT+3 (Asia/Riyadh). The environment's `date` command is unreliable for this — ask the user for the current time if unsure, or use `date -u '+%d/%m/%Y'` for the date and manually add 3 hours to the UTC time.
+
+**Reference implementation:** `components/multiselect.md`, `components/date-picker.md`.
+
 ## JS Bundles & Shrinking the Critical Bundle
 
 **Three bundles, location owned by the build** (`@bundles` in `_plugins/js_processor.rb`): `nds-main.min.js` (a `<script defer>` — **gates the page reveal, keep lean**), `nds-delegated.min.js` + `nds-extras.min.js` (loader-INJECTED *after* the reveal, never gate it). The loader reads `window.__NDS_BUNDLES` (namespace→bundle, build-generated) — **never hardcode bundle membership in JS**. Run `ruby _plugins/js_processor.rb` after any `@bundles` or `_js/` change.
