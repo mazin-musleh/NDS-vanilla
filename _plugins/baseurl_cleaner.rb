@@ -1,8 +1,9 @@
 # Baseurl Cleaner for National Design System
 #
-# This script removes the baseurl prefix (/_site) from all generated files
-# in the _site/ directory. Useful when deploying to a root domain where
-# the baseurl path is not needed.
+# This script removes the site baseurl prefix (from _config.yml) from all
+# generated files in the _site/ directory, rewriting URLs to depth-relative
+# paths. Useful when deploying to a root domain or browsing via file://
+# where the baseurl path is not needed.
 #
 # USAGE:
 #   ruby _plugins/baseurl_cleaner.rb          # Process files once
@@ -27,6 +28,10 @@ require 'yaml'
 class BaseurlCleaner
   # File extensions to process
   FILE_EXTENSIONS = %w[.html].freeze
+
+  # <code> blocks are displayed doc samples — shield them so the URL rewrite
+  # rules (esp. the file-existence pretty-URL rule) can't mutate their text.
+  CODE_RE = /<code\b[^>]*>.*?<\/code>/mi
 
   def initialize(dry_run: false)
     @dry_run = dry_run
@@ -79,6 +84,13 @@ class BaseurlCleaner
 
   private
 
+  # Case-insensitive prefix strip: on Windows Dir.pwd keeps the cwd casing as
+  # typed while Dir.glob returns on-disk casing — a case-sensitive sub can miss,
+  # silently exploding the ../ depth for every page.
+  def relative_to_site(file_path)
+    file_path.sub(/\A#{Regexp.escape(@site_dir)}\/?/i, '')
+  end
+
   def process_directory(dir)
     Dir.glob(File.join(dir, '**', '*')).each do |file_path|
       next unless File.file?(file_path)
@@ -90,11 +102,13 @@ class BaseurlCleaner
 
   def process_file(file_path)
     @files_processed += 1
-    content = File.read(file_path, encoding: 'UTF-8')
+    content = File.binread(file_path)
+    code_blocks = []
+    content = content.gsub(CODE_RE) { |m| code_blocks << m; "___NDS_CODE_SHIELD_#{code_blocks.size - 1}___" }
     original_content = content.dup
 
     # Calculate directory depth relative to _site/
-    relative_path = file_path.sub(@site_dir + File::SEPARATOR, '').sub(@site_dir, '')
+    relative_path = relative_to_site(file_path)
     depth = File.dirname(relative_path).split(File::SEPARATOR).reject { |p| p == '.' }.length
     prefix = depth > 0 ? ('../' * depth) : ''
 
@@ -110,9 +124,9 @@ class BaseurlCleaner
     end
 
     # 2. Replace baseurl prefix with relative path based on depth
-    #    Matches: href, src, srcset, data-*, imagesrcset
+    #    Matches: href, src, srcset, action, data-*, imagesrcset
     #    Skips protocol URLs (http://, https://, //)
-    content.gsub!(%r{((?:href|src|srcset|data-[\w-]+|imagesrcset)\s*=\s*["'])#{Regexp.escape(@baseurl)}/(?!/)}) do
+    content.gsub!(%r{((?:href|src|srcset|action|data-[\w-]+|imagesrcset)\s*=\s*["'])#{Regexp.escape(@baseurl)}/(?!/)}) do
       replacements += 1
       "#{$1}#{prefix}"
     end
@@ -187,12 +201,13 @@ class BaseurlCleaner
     if content != original_content
       @files_modified += 1
       @total_replacements += replacements
-      relative_path = file_path.sub(@site_dir + File::SEPARATOR, '').sub(@site_dir, '')
+      relative_path = relative_to_site(file_path)
 
       puts "  ✓ #{relative_path} (#{replacements} replacements)"
 
       unless @dry_run
-        File.write(file_path, content, encoding: 'UTF-8')
+        restored = content.gsub(/___NDS_CODE_SHIELD_(\d+)___/) { code_blocks[$1.to_i] }
+        File.binwrite(file_path, restored)
       end
     end
   end

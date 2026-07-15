@@ -1,33 +1,27 @@
 # HTML Compressor for National Design System
 #
-# This script removes all blank lines from generated HTML files in _site/.
-# Preserves whitespace inside <script>, <style>, <pre>, and <textarea> blocks.
+# Reformats generated HTML files in _site/ with htmlbeautifier: consistent
+# indentation, jammed include-boundary tags split, blank lines removed.
+# <code> blocks are shielded (byte-preserved) — doc code samples are
+# whitespace-significant but not wrapped in <pre>, which htmlbeautifier
+# would otherwise flatten. <pre>/<textarea>/<script>/<style> are preserved
+# by htmlbeautifier itself.
 #
 # USAGE:
 #   ruby _plugins/html_compressor.rb          # Process files
 #   ruby _plugins/html_compressor.rb dry      # Dry run - show changes without modifying files
-#
-# WHAT IT DOES:
-#   1. Scans all .html files in _site/
-#   2. Strips trailing whitespace from each line
-#   3. Removes all blank lines (except inside script/style/pre/textarea)
-#
 
-require 'fileutils'
+require 'htmlbeautifier'
 
 class HtmlCompressor
   FILE_EXTENSIONS = %w[.html].freeze
-
-  # Protected blocks: preserve original formatting
-  PROTECTED_OPEN_RE = /<(script|style|pre|textarea|code)[\s>]/i
-  PROTECTED_CLOSE_RE = lambda { |tag| /<\/#{tag}>/i }
+  CODE_RE = /<code\b[^>]*>.*?<\/code>/mi
 
   def initialize(dry_run: false)
     @dry_run = dry_run
     @site_dir = File.join(Dir.pwd, '_site')
     @files_processed = 0
     @files_modified = 0
-    @lines_removed = 0
   end
 
   def run
@@ -39,7 +33,7 @@ class HtmlCompressor
     puts ""
     puts "  ╔══════════════════════════════════════════════════════╗"
     puts "  ║         NDS HTML Compressor                          ║"
-    puts "  ║         Removing blank lines from _site/".ljust(57) + "║"
+    puts "  ║         Formatting HTML in _site/".ljust(57) + "║"
     if @dry_run
       puts "  ║         DRY RUN - No files will be modified".ljust(57) + "║"
     end
@@ -52,7 +46,6 @@ class HtmlCompressor
     puts "  ── Summary ──────────────────────────────────────────"
     puts "  Files scanned:    #{@files_processed}"
     puts "  Files modified:   #{@files_modified}"
-    puts "  Lines removed:    #{@lines_removed}"
     if @dry_run
       puts "  Mode:             DRY RUN (no changes written)"
     end
@@ -72,58 +65,22 @@ class HtmlCompressor
 
   def process_file(file_path)
     @files_processed += 1
-    content = File.read(file_path, encoding: 'UTF-8')
-    original_line_count = content.lines.count
+    content = File.binread(file_path)
 
-    # Split into lines and process, preserving blank lines inside protected blocks
-    lines = content.lines
-    result = []
-    in_protected = false
-    protected_tag = nil
+    # Shield <code> elements so the beautifier can't touch their whitespace
+    blocks = []
+    shielded = content.gsub(CODE_RE) { |m| blocks << m; "___NDS_CODE_SHIELD_#{blocks.size - 1}___" }
+    cleaned = HtmlBeautifier.beautify(shielded, indent: '  ')
+                .gsub(/___NDS_CODE_SHIELD_(\d+)___/) { blocks[$1.to_i] } + "\n"
 
-    lines.each do |line|
-      stripped = line.rstrip
+    return if content == cleaned
 
-      if !in_protected
-        if stripped =~ PROTECTED_OPEN_RE
-          in_protected = true
-          protected_tag = $1.downcase
-          # Check if it also closes on the same line
-          if stripped =~ PROTECTED_CLOSE_RE.call(protected_tag)
-            in_protected = false
-            protected_tag = nil
-          end
-        end
-        # Skip blank lines outside protected blocks
-        next if stripped.empty?
-        result << stripped
-      else
-        # Inside protected block: keep everything (including blank lines)
-        result << line.chomp
-        if stripped =~ PROTECTED_CLOSE_RE.call(protected_tag)
-          in_protected = false
-          protected_tag = nil
-        end
-      end
-    end
+    @files_modified += 1
+    relative_path = file_path.sub(@site_dir + File::SEPARATOR, '').sub(@site_dir, '')
+    delta = cleaned.lines.count - content.lines.count
+    puts "  ✓ #{relative_path} (#{delta >= 0 ? '+' : ''}#{delta} lines)"
 
-    cleaned = result.join("\n")
-    cleaned.strip!
-    cleaned << "\n"
-
-    removed = original_line_count - cleaned.lines.count
-
-    if content != cleaned
-      @files_modified += 1
-      @lines_removed += [removed, 0].max
-      relative_path = file_path.sub(@site_dir + File::SEPARATOR, '').sub(@site_dir, '')
-
-      puts "  ✓ #{relative_path} (#{removed} lines removed)"
-
-      unless @dry_run
-        File.write(file_path, cleaned, encoding: 'UTF-8')
-      end
-    end
+    File.binwrite(file_path, cleaned) unless @dry_run
   end
 end
 

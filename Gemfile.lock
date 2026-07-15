@@ -21,6 +21,7 @@ GEM
     google-protobuf (4.31.1-x86_64-linux-gnu)
       bigdecimal
       rake (>= 13)
+    htmlbeautifier (1.4.3)
     http_parser.rb (0.8.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -87,6 +88,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  htmlbeautifier
   jekyll (~> 4.4.1)
   logger
   tzinfo-data

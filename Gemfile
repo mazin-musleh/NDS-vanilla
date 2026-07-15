@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gem "jekyll", "~> 4.4.1"
 gem "webrick"              # needed for `bundle exec jekyll serve` on Ruby 3+
 gem "logger"               # default gem removed in Ruby 3.5+
+gem "htmlbeautifier"       # post-build HTML formatter (_plugins/html_compressor.rb)
 
 # Jekyll plugins (optional: keep only what you use)
 group :jekyll_plugins do
