@@ -18,15 +18,7 @@
             {%- endif %}
             {%- if brand_name %}
             <span class="nds-brand-name" style="color: {{ brand_name_color }};">
-                <span class="nds-brand-title">
-                    {{- brand_name -}}
-                    {%- if site.version and site.latest_release %}
-                    <span class="nds-tag nds-ghost nds-xs nds-brand-version"
-                        {%- unless site.version == site.latest_release %} title="Documentation preview: ahead of v{{ site.latest_release }}"{% endunless %}>
-                        <span class="nds-label">v{{ site.version }}</span>
-                    </span>
-                    {%- endif %}
-                </span>
+                {{- brand_name -}}
                 {%- if brand_slogan %}
                 <span class="nds-brand-slogan" style="color: {{ brand_slogan_color }};">{{ brand_slogan }}</span>
                 {%- endif %}
@@ -94,7 +86,8 @@
                         {%- elsif item.icon -%}
                             <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
                         {%- endif -%}
-                        <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}">{{ item.label }}</span>
+                        <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}"
+                            {%- unless item.custom_class contains 'nds-CTA' %} data-hidden="mobile tablet sr"{%- endunless %}>{{ item.label }}</span>
                     {%- endcapture -%}
                     {%- assign action_class = item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' -%}
                     {%- if item.type == 'modal' -%}

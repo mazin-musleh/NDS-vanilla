@@ -7,7 +7,7 @@
 .nds-topbar {
     background-color: var(--background-topbar);
     height: 40px;
-    z-index: 1000;
+    z-index: 1001;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -23,6 +23,7 @@
         display: flex;
         gap: var(--spacing-xl);
         margin-inline-start: auto;
+        align-items: center;
     }
 
 
@@ -56,24 +57,9 @@
     background-color: var(--background-neutral-light);
 }
 
-/* Tablet: 960px and down */
-@include tablet(max) {
-    .nds-topbar {
-        .nds-topbar-info {
-
-            >:is(#nds-cityName, #nds-date) {
-                display: none;
-            }
-        }
-    }
-}
-
-/* Small Mobile Screens */
+/* Widget hiding: stamp data-hidden on any widget (band-exact utility, _utilities.scss) */
 @include mobile {
-    .nds-topbar .nds-topbar-info:not(.nds-digitalStamp-tab)> :not(.nds-theme-toggle-wrap):not(.nds-theme-switcher) {
-        display: none;
-    }
     .nds-topbar .nds-topbar-info {
-    gap: var(--spacing-sm);
-}
+        gap: var(--spacing-sm);
+    }
 }

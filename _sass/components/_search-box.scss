@@ -32,12 +32,10 @@
             flex: 1;
         }
 
+        // Search/filter labels collapse to icon-only on mobile via
+        // data-hidden="mobile sr" stamped in the markup (_utilities.scss).
         @include mobile {
             gap: var(--spacing-md);
-
-            :is(.nds-search-btn, .nds-filter-btn) > .nds-label {
-                @include label-hidden;
-            }
         }
     }
 }

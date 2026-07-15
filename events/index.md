@@ -29,14 +29,14 @@ sidemenu_mode: false
                         </div>
                         <button class="nds-btn nds-primary nds-search-btn" type="button">
                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                            <span class="nds-label">Search</span>
+                            <span class="nds-label" data-hidden="mobile sr">Search</span>
                         </button>
                     </div>
                 </div>
                 <div class="nds-dropmenu nds-filter" data-filter-target="events_list">
                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                         <i class="hgi hgi-stroke hgi-filter"></i>
-                        <span class="nds-label">Filter</span>
+                        <span class="nds-label" data-hidden="mobile sr">Filter</span>
                     </button>
                     <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                         <div class="nds-dropmenu-scroll">

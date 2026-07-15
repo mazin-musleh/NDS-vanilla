@@ -195,7 +195,7 @@ direction: ltr
                                         </div>
                                         <button class="nds-btn nds-primary nds-search-btn" type="button">
                                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <span class="nds-label">Search</span>
+                                            <span class="nds-label" data-hidden="mobile sr">Search</span>
                                         </button>
                                     </div>
                                 </div>
@@ -293,7 +293,7 @@ direction: ltr
         &lt;/div&gt;
         &lt;button class="nds-btn nds-primary nds-search-btn" type="button"&gt;
           &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;span class="nds-label"&gt;Search&lt;/span&gt;
+          &lt;span class="nds-label" data-hidden="mobile sr"&gt;Search&lt;/span&gt;
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;

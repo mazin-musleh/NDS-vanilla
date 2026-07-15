@@ -48,10 +48,10 @@
     // Applied chips + auto-fill claim their own line via their own flex: 1 1 100%
     // in _filter.scss (the JS swaps which one shows) — an implicit .nds-bar-row.
 
+    // Control labels collapse to icon-only on mobile via data-hidden="mobile sr"
+    // stamped in the markup (_utilities.scss).
     @include mobile {
         gap: var(--spacing-xl) var(--spacing-md);   // keep the xl row gap; tighter column gap
-        // Collapse control labels to icons to save width on small screens.
-        :is(.nds-search-btn, .nds-filter-btn) > .nds-label { @include label-hidden; }
     }
 
     // Clusters — widget slots that lay their children out as one bar item.

@@ -31,7 +31,7 @@ exclude_showcase: false
                 </div>
                 <button type="button" class="nds-btn nds-primary nds-search-btn">
                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                    <span class="nds-label">Search</span>
+                    <span class="nds-label" data-hidden="mobile sr">Search</span>
                 </button>
             </div>
         </div>
@@ -67,7 +67,7 @@ exclude_showcase: false
             <div class="nds-dropmenu nds-filter" data-filter-target="search_results_content">
                 <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger" type="button">
                     <i class="hgi hgi-stroke hgi-filter"></i>
-                    <span class="nds-label">Filter</span>
+                    <span class="nds-label" data-hidden="mobile sr">Filter</span>
                 </button>
                 <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                     <div class="nds-dropmenu-scroll">

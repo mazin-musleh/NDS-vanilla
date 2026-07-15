@@ -181,23 +181,24 @@
 // VISIBILITY UTILITIES
 // ==============================================
 
-/* Hidden utility - ensures elements with hidden attribute are properly hidden
- * Uses !important to override any display property (flex, grid, block, etc.)
- * Supports both hidden attribute and .hidden class for legacy compatibility
- */
-.hidden {
-  display: none;
+// Band-exact responsive hiding: data-hidden="mobile|tablet|desktop" hides an
+// element ONLY inside that range (mobile ≤600, tablet 601-960, desktop 961-1280).
+// Combine tokens to span ranges: data-hidden="mobile tablet" hides up to 960px.
+// Add the sr token to keep the element in the accessibility tree while hidden
+// (visually-hidden instead of display:none) — e.g. data-hidden="mobile sr" on a
+// button label that collapses to icon-only without losing its accessible name.
+// Deliberately unanchored — a global utility.
+@include mobile {
+  [data-hidden~="mobile"]:not([data-hidden~="sr"]) { display: none !important; }
+  [data-hidden~="mobile"][data-hidden~="sr"] { @include label-hidden; }
 }
-
-// Responsive visibility — pair with a tablet/mobile variant of the same
-// component to swap rendering across the desktop breakpoint (961px) without
-// JS. Both instances stay in the DOM, so progressive enhancement stays trivial.
-.nds-desktop-only {
-  @include tablet(max) { display: none !important; }
+@include tablet {
+  [data-hidden~="tablet"]:not([data-hidden~="sr"]) { display: none !important; }
+  [data-hidden~="tablet"][data-hidden~="sr"] { @include label-hidden; }
 }
-
-.nds-mobile-only {
-  @include desktop(min) { display: none !important; }
+@include desktop {
+  [data-hidden~="desktop"]:not([data-hidden~="sr"]) { display: none !important; }
+  [data-hidden~="desktop"][data-hidden~="sr"] { @include label-hidden; }
 }
 
 // Small red notice shown above a form ("*Required information" etc.).

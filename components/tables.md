@@ -1379,7 +1379,7 @@ direction: ltr
                         <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal>
                             <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                 <i class="hgi hgi-stroke hgi-filter"></i>
-                                <span class="nds-label">Filter</span>
+                                <span class="nds-label" data-hidden="mobile sr">Filter</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
                                 <div class="nds-dropmenu-scroll">
@@ -1493,7 +1493,7 @@ direction: ltr
   &lt;div class="nds-dropmenu"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-      &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+      &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
     &lt;div class="nds-dropmenu-menu" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
