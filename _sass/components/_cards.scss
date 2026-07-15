@@ -259,6 +259,35 @@
   }
 
   // ==============================================
+  // CARD PRICE SECTION
+  // ==============================================
+
+  // Price line built on the numbers utility. The wrapper's own type IS the
+  // muted suffix style, so bare text like "/ كجم" needs no class; the
+  // .nds-number-format child is the prominent amount (currency icon tracks
+  // the font via 1em); a <s> child is the crossed-out original (sale pricing).
+  .nds-card-price {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
+    color: var(--_card-text);
+
+    .nds-number-format:not(s) {
+      font-size: var(--typo-text-xl-FS);
+      line-height: var(--typo-text-xl-LH);
+      font-weight: var(--font-weight-bold);
+      color: var(--_card-title);
+    }
+
+    s {
+      font-size: var(--typo-text-md-FS);
+      line-height: var(--typo-text-md-LH);
+    }
+  }
+
+  // ==============================================
   // CARD CHECKBOX SECTION
   // ==============================================
 

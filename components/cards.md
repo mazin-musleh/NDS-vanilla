@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "03/07/2026 - 03:39 AM"
+last_edit: "16/07/2026 - 12:29 AM"
 ---
 
 <!-- Standard Card -->
@@ -418,6 +418,170 @@ last_edit: "03/07/2026 - 03:39 AM"
     </div>
 </section>
 
+<!-- Product Pricing -->
+<section id="cardPricing" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Product Pricing</h2>
+            <p class="nds-section-description">A clear price line for product and service cards, built on the <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> utility: a prominent amount with its currency icon, an optional crossed-out original for sale pricing, and a muted unit suffix as plain text</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Sale pricing with the original crossed out</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-card nds-stroke">
+                                <div class="nds-card-image">
+                                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=60" alt="Smart Watch" loading="lazy">
+                                </div>
+                                <div class="nds-card-content">
+                                    <div class="nds-card-text">
+                                        <span class="nds-card-title">Smart Watch</span>
+                                        <p class="nds-card-description">AMOLED display, water resistant to 50 meters.</p>
+                                    </div>
+                                    <div class="nds-card-price">
+                                        <span class="nds-number-format" data-currency="SAR">1299</span>
+                                        <s class="nds-number-format" data-currency="SAR">1599</s>
+                                    </div>
+                                </div>
+                                <div class="nds-card-actions">
+                                    <button class="nds-btn nds-primary nds-full" type="button">
+                                        <span class="nds-label">Add to Cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-card-price-1" id="tab-card-price-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-card-price-1"
+                                    aria-labelledby="tab-card-price-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;div class="nds-card nds-stroke"&gt;
+    &lt;div class="nds-card-image"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&amp;fit=crop&amp;w=800&amp;q=60" alt="Smart Watch" loading="lazy"&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card-content"&gt;
+        &lt;div class="nds-card-text"&gt;
+            &lt;span class="nds-card-title"&gt;Smart Watch&lt;/span&gt;
+            &lt;p class="nds-card-description"&gt;AMOLED display, water resistant to 50 meters.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-card-price"&gt;
+            &lt;span class="nds-number-format" data-currency="SAR"&gt;1299&lt;/span&gt;
+            &lt;s class="nds-number-format" data-currency="SAR"&gt;1599&lt;/s&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card-actions"&gt;
+        &lt;button class="nds-btn nds-primary nds-full" type="button"&gt;
+            &lt;span class="nds-label"&gt;Add to Cart&lt;/span&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Unit pricing with a plain-text suffix</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-card nds-stroke">
+                                <div class="nds-card-image">
+                                    <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=60" alt="Specialty Coffee" loading="lazy">
+                                </div>
+                                <div class="nds-card-content">
+                                    <div class="nds-card-text">
+                                        <span class="nds-card-title">Specialty Coffee</span>
+                                        <p class="nds-card-description">Medium-roast single-origin Arabica beans.</p>
+                                    </div>
+                                    <div class="nds-card-price">
+                                        <span class="nds-number-format" data-currency="SAR">89</span>
+                                        / kg
+                                    </div>
+                                </div>
+                                <div class="nds-card-actions">
+                                    <button class="nds-btn nds-primary nds-full" type="button">
+                                        <span class="nds-label">Add to Cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-card-price-2" id="tab-card-price-2">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-card-price-2"
+                                    aria-labelledby="tab-card-price-2">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;div class="nds-card nds-stroke"&gt;
+    &lt;div class="nds-card-image"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&amp;fit=crop&amp;w=800&amp;q=60" alt="Specialty Coffee" loading="lazy"&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card-content"&gt;
+        &lt;div class="nds-card-text"&gt;
+            &lt;span class="nds-card-title"&gt;Specialty Coffee&lt;/span&gt;
+            &lt;p class="nds-card-description"&gt;Medium-roast single-origin Arabica beans.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="nds-card-price"&gt;
+            &lt;span class="nds-number-format" data-currency="SAR"&gt;89&lt;/span&gt;
+            / kg
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-card-actions"&gt;
+        &lt;button class="nds-btn nds-primary nds-full" type="button"&gt;
+            &lt;span class="nds-label"&gt;Add to Cart&lt;/span&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Card Group -->
 <section id="cardGroup" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -624,7 +788,7 @@ last_edit: "03/07/2026 - 03:39 AM"
                         <i class="hgi hgi-stroke hgi-puzzle"></i>
                         <span class="nds-label">Composable Anatomy</span>
                     </span>
-                    <p class="nds-item-desc">Mix header, content, tags, rating, checkbox, status, and actions to build product, article, service, or user cards.</p>
+                    <p class="nds-item-desc">Mix header, content, tags, rating, price, checkbox, status, and actions to build product, article, service, or user cards.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -700,6 +864,7 @@ last_edit: "03/07/2026 - 03:39 AM"
                     <li>Don't use a card for a transient status message: use an <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> instead. Don't use a card to block the user for a decision: use a <a class="nds-color" href="{{ 'components/modal' | relative_url }}">Modal</a></li>
                     <li>Don't nest cards inside cards. If you need internal structure, use <code class="nds-inline-code lang-html">nds-card-meta</code>, <code class="nds-inline-code lang-html">nds-card-tags</code>, or a <a class="nds-color" href="{{ 'components/definition-list' | relative_url }}">definition list</a> inside the content area</li>
                     <li>Add a featured icon or avatar in the header for quick visual recognition. Size up (<code class="nds-inline-code lang-html">nds-lg</code>, <code class="nds-inline-code lang-html">nds-xl</code>) on statistic cards and grid contexts where the icon carries the meaning</li>
+                    <li>Show prices with <code class="nds-inline-code lang-html">nds-card-price</code>, not tags: the amount is an <a class="nds-color" href="{{ 'utilities/numbers' | relative_url }}">Numbers</a> span (<code class="nds-inline-code lang-html">data-currency</code> renders the riyal icon), a <code class="nds-inline-code lang-html">&lt;s&gt;</code> child is the crossed-out original, and a unit suffix like <code class="nds-inline-code lang-html">/ kg</code> is plain text</li>
                     <li>Keep card descriptions to one or two lines. For longer copy, add <code class="nds-inline-code lang-html">nds-truncate</code> on the title and description, or link out to a detail page from the actions area</li>
                 </ul>
             </div>
