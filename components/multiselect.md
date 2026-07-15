@@ -4,6 +4,9 @@ title: Multiselect
 hero_title: Multiselect - National Design System
 hero_description: A form field for picking multiple options from grouped lists, with selections shown as removable chips and submitted natively as a checkbox array.
 breadcrumb: [["Components", "/components"]]
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "15/07/2026 - 3:00 PM Saudi Arabia Time"
 lang: en
 direction: ltr
 ---
@@ -265,7 +268,7 @@ direction: ltr
 <section id="multiselectValidation" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Validation</h2>
+            <h2 class="nds-section-title">Validation {% include since.html v="1.4.0" %}</h2>
             <p class="nds-section-description">Min/max selection constraints set on the wrapper and enforced on submit — always against the applied set, never a staged draft. Once an error shows, it clears live as the selection changes.</p>
         </div>
         <div class="nds-section-body">

@@ -4,30 +4,10 @@ title: Tag Input
 hero_title: Tag Input - National Design System
 hero_description: A free-text field that turns typed values into removable chip tags, committing on Enter or comma and submitting natively as an array.
 breadcrumb: [["Components", "/components"]]
+since: "1.4.0"
 lang: en
 direction: ltr
 ---
-
-<!-- Availability notice -->
-<section class="nds-content-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-body">
-            <div class="nds-alert nds-card nds-inline" data-status="info" role="alert">
-                <span class="nds-feedback nds-alert-icon">
-                    <span class="nds-feedback-icon">
-                        <i class="nds-icon" aria-hidden="true"></i>
-                    </span>
-                </span>
-                <div class="nds-alert-content">
-                    <div class="nds-alert-text">
-                        <span class="nds-alert-title">Coming in the next release</span>
-                        <p class="nds-alert-description">This documentation is ahead of the latest published release: Tag Input is not yet part of the current published bundle and ships with the next release.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Tag Entry -->
 <section id="taginputDefault" class="nds-content-section nds-demo-section">

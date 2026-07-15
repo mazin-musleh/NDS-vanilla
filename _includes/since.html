@@ -1,0 +1,13 @@
+{%- comment -%}
+Feature-level version tag: {% include since.html v="1.4.0" %} next to a
+section title or table row marks the release that ships the feature. When v
+equals the in-development target ({site.version} minus -dev) it renders as
+"Next release" and flips to "v1.4.0+" automatically once the release lands
+(version == latest_release). Only a mid-cycle renumber needs a sweep.
+{%- endcomment -%}
+{%- assign _dev_target = site.version | remove: "-dev" -%}
+{%- if include.v == _dev_target and site.version != site.latest_release -%}
+<span class="nds-tag nds-blue nds-sm"><span class="nds-label">Next release</span></span>
+{%- else -%}
+<span class="nds-tag nds-gray nds-sm"><span class="nds-label">v{{ include.v }}+</span></span>
+{%- endif -%}

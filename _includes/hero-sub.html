@@ -132,7 +132,7 @@
             {%- if page.hero_brief %}
             <p class="nds-section-brief">{{ page.hero_brief }}</p>
             {%- endif %}
-            {%- if hero_tags %}
+            {%- if hero_tags or page.since %}
             <div class="nds-section-meta">
                 <div class="nds-section-tags">
                     {%- for tag in hero_tags %}
@@ -141,7 +141,29 @@
                         <span class="nds-label">{{ tag.label }}</span>
                     </span>
                     {%- endfor %}
+                    {%- comment %} Version tags — since/updated front matter hold release numbers.
+                        A number equal to the in-development target ({version} minus -dev) renders
+                        as "next release" and flips automatically when the release lands
+                        (version == latest_release). {%- endcomment %}
+                    {%- assign _dev_target = site.version | remove: "-dev" -%}
+                    {%- assign _in_dev = true -%}
+                    {%- if site.version == site.latest_release -%}{%- assign _in_dev = false -%}{%- endif %}
+                    {%- if page.since %}
+                    {%- if _in_dev and page.since == _dev_target %}
+                    <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Next release</span></span>
+                    {%- else %}
+                    <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Added in v{{ page.since }}</span></span>
+                    {%- endif %}
+                    {%- endif %}
+                    {%- if page.updated %}
+                    {%- if _in_dev and page.updated == _dev_target %}
+                    <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Updated in next release</span></span>
+                    {%- else %}
+                    <span class="nds-tag nds-green nds-sm"><span class="nds-label">Updated in v{{ page.updated }}</span></span>
+                    {%- endif %}
+                    {%- endif %}
                 </div>
+                {%- if hero_tags %}
                 <div class="nds-dropmenu">
                     <button class="nds-section-rating nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button">
                         <div class="nds-rating nds-xs " data-rating="4.5">
@@ -174,6 +196,7 @@
                         </div>
                     </div>
                 </div>
+                {%- endif %}
             </div>
             {%- endif %}
             <p class="nds-section-description">{{ page.hero_description | default: site.hero_description }}</p>

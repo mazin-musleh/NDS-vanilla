@@ -6,6 +6,19 @@
 
 @use '../mixins' as *;
 
+// Brand name row: the name text plus the version pill (vX.Y.Z, docs-preview
+// note in its title on development builds; rendered only when
+// site.latest_release is configured). The slogan stays on its own row below.
+.nds-brand-title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-md);
+
+    .nds-brand-version {
+        padding: 0;
+    }
+}
+
 /* ========================================
    BASE NAVIGATION STYLES
    ======================================== */
