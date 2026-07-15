@@ -55,7 +55,7 @@
 // ── Section decorations (DGA-coloured) — a bottom separator on every content
 //    section and a services graphic on even sections. SVGs resolve against this
 //    stylesheet's folder (assets/events/Hajj/). ──
-.nds-content-layout:not(.nds-wSideMenu, .nds-cardView) .nds-main-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand):nth-of-type(even) {
+.nds-content-layout:not(.nds-wSideMenu, .nds-cardView) .nds-main-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
   &::before {
     content: "";
     position: absolute;

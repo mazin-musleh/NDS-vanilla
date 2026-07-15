@@ -202,7 +202,14 @@ main {
     /* ── Section striping ── */
 
     @mixin _section-striping {
-        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand):nth-of-type(even) {
+        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
+            --section-bg: var(--background-stripe);
+        }
+
+        // The slim last-edit strip reads as part of the section above it, so it
+        // takes the INVERSE parity bg: its predecessor always has the other
+        // parity, so odd-strip + even-excluded = always matching the section above.
+        .nds-last-edit:nth-of-type(odd) {
             --section-bg: var(--background-stripe);
         }
     }
