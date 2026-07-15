@@ -1,0 +1,34 @@
+// ==============================================
+// NDS FLEX LAYOUT
+// ==============================================
+@use '../mixins' as *;
+
+.nds-flex {
+  display: flex;
+  justify-content: var(--justify, flex-start);
+  // Default `stretch` matches CSS default. Column layouts get full-width
+  // children (common for forms/lists); row layouts with same-height children
+  // (buttons, icons+text) look identical to `center`. Override with
+  // `--align: center` when a row mixes children of differing heights.
+  align-items: var(--align, stretch);
+  gap: var(--gap, var(--spacing-xl));
+}
+
+// Direction overrides — unscoped so components like .nds-card-actions
+// can flip direction with just .nds-row without wrapping in .nds-flex.
+.nds-row {
+  flex-direction: row !important;
+}
+
+.nds-col {
+  flex-direction: column !important;
+}
+
+// Wrap utilities
+.nds-wrap {
+  flex-wrap: wrap !important;
+}
+
+.nds-nowrap {
+  flex-wrap: nowrap !important;
+}

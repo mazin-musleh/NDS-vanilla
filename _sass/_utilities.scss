@@ -3,52 +3,9 @@
 // ==============================================
 @use './mixins' as *;
 
-// ==============================================
-// NDS FLEX UTILITY
-// ==============================================
-
-.nds-flex {
-  display: flex;
-  justify-content: var(--justify, flex-start);
-  align-items: var(--align, center);
-  gap: var(--gap, var(--spacing-xl));
-}
-
-// Direction overrides — unscoped so components like .nds-card-actions
-// can flip direction with just .nds-row without wrapping in .nds-flex.
-.nds-row {
-  flex-direction: row !important;
-}
-
-.nds-col {
-  flex-direction: column !important;
-}
-
-// Reverse directions
-.nds-row.nds-reverse {
-  flex-direction: row-reverse !important;
-}
-
-.nds-col.nds-reverse {
-  flex-direction: column-reverse !important;
-}
-
-// Wrap utilities
-.nds-wrap {
-  flex-wrap: wrap !important;
-}
-
-.nds-nowrap {
-  flex-wrap: nowrap !important;
-}
-
-// Container query opt-in — establishes an inline-size container so descendants
-// (e.g. .nds-grid) can respond to ancestor width. Apply only when needed:
-// `container-type: inline-size` also makes the element a containing block for
-// position:fixed descendants, which can trap modals/dropmenus/tooltips.
-.nds-cq {
-  container-type: inline-size;
-}
+// Flex layout utilities (.nds-flex, .nds-row/.nds-col, .nds-wrap) live at
+// _sass/layout/_flex.scss. Grid's container-query companion (.nds-cq) lives
+// at _sass/_grid.scss. Both imported directly by nds-main.min.scss.
 
 .nds-number-format {
   --_number-icon-size: var(--number-icon-size, 1em);

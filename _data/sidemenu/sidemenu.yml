@@ -291,6 +291,9 @@
         - label: "Block"
           url: "/layout/block"
           href: "/layout/block.html"
+        - label: "Flex"
+          url: "/layout/flex"
+          href: "/layout/flex.html"
     - label: "Utilities"
       is_group: true
       children:
@@ -306,9 +309,6 @@
         - label: "Expandable Content"
           url: "/utilities/expandable-content"
           href: "/utilities/expandable-content.html"
-        - label: "Flex"
-          url: "/utilities/flex"
-          href: "/utilities/flex.html"
         - label: "Numbers"
           url: "/utilities/numbers"
           href: "/utilities/numbers.html"

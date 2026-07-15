@@ -50,7 +50,7 @@ direction: ltr
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-flex" style="--justify: flex-start;">
+                        <div class="nds-flex" style="width: 100%; --justify: flex-start;">
                             <span class="nds-tag nds-sm"><span class="nds-label">First</span></span>
                             <span class="nds-tag nds-sm"><span class="nds-label">Second</span></span>
                             <span class="nds-tag nds-sm"><span class="nds-label">Third</span></span>
@@ -78,7 +78,7 @@ direction: ltr
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;div class="nds-flex" style="--justify: flex-start;"&gt;
+&lt;div class="nds-flex" style="--justify: flex-start; width: 100%;"&gt;
     &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;First&lt;/span&gt;&lt;/span&gt;
     &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Second&lt;/span&gt;&lt;/span&gt;
     &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Third&lt;/span&gt;&lt;/span&gt;
@@ -100,7 +100,7 @@ direction: ltr
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Direction Control</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-row</code> or <code class="nds-inline-code lang-html">nds-col</code> to flip the main axis. Combine with <code class="nds-inline-code lang-html">nds-reverse</code> to invert child order for layout or RTL action-flip patterns.</p>
+            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-row</code> or <code class="nds-inline-code lang-html">nds-col</code> to flip the main axis.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -125,10 +125,6 @@ direction: ltr
                                 </div>
                             </div>
                         </div>
-                        <button class="nds-btn nds-subtle demo-toggle-btn"
-                            data-toggler='["nds-reverse", ".nds-flex", "flexReverse"]'>
-                            <span class="nds-label">Reverse</span>
-                        </button>
                     </div>
                 </div>
                 <div class="demo-container">
@@ -299,7 +295,7 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
                         <span class="nds-label">Sensible Defaults</span>
                     </span>
-                    <p class="nds-item-desc">Items align to center cross-axis, start along the main axis, and separate by <code class="nds-inline-code lang-html">--spacing-xl</code> gap out of the box.</p>
+                    <p class="nds-item-desc">Items stretch across the cross-axis, start along the main axis, and separate by <code class="nds-inline-code lang-html">--spacing-xl</code> gap out of the box.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -314,13 +310,6 @@ direction: ltr
                         <span class="nds-label">Unscoped Direction</span>
                     </span>
                     <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-row</code> and <code class="nds-inline-code lang-html">nds-col</code> flip direction on any flex element, including components that declare their own <code class="nds-inline-code lang-html">display: flex</code> like card actions.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-arrow-reload-horizontal"></i>
-                        <span class="nds-label">Reverse Order</span>
-                    </span>
-                    <p class="nds-item-desc">Pair <code class="nds-inline-code lang-html">nds-reverse</code> with a direction class to flip visual child order, useful for RTL-specific action arrangements.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -352,7 +341,7 @@ direction: ltr
                     <li>For container-responsive stacking (items stack when the container gets narrow, not when the viewport changes), add <code class="nds-inline-code lang-html">nds-wrap</code> with a <code class="nds-inline-code lang-html">min-width</code> on children. More resilient than breakpoint-based direction swaps</li>
                     <li>Do not add <code class="nds-inline-code lang-html">nds-flex</code> to elements inside components that already ship their own flex logic (cards, forms, main navigation). The component handles alignment more precisely than a generic utility</li>
                     <li>Do not use <code class="nds-inline-code lang-html">nds-flex</code> for multi-breakpoint layout composition. If you need a row that becomes a column on mobile, use Grid with <code class="nds-inline-code lang-html">--max-col: 2; --min-col: 1;</code> instead. Flex direction swaps rarely come alone and usually trigger other responsive adjustments</li>
-                    <li>Keep the <code class="nds-inline-code lang-html">width: 100%</code> default in mind. When the flex container must only occupy its content's width, wrap it in an inline-level parent or override with inline <code class="nds-inline-code lang-html">width: auto</code></li>
+                    <li>The flex container is block-level by default (fills parent inline direction, respects parent padding). When it must shrink to its content's width, use inline <code class="nds-inline-code lang-html">width: fit-content</code> or switch to <code class="nds-inline-code lang-html">display: inline-flex</code></li>
                 </ul>
             </div>
 
@@ -361,10 +350,9 @@ direction: ltr
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-flex</code></td><td>Declares the element as a flex container with default gap, center cross-axis alignment, and start main-axis alignment</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-flex</code></td><td>Declares the element as a flex container with default gap, stretch cross-axis alignment, and start main-axis alignment</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-row</code></td><td>Sets <code class="nds-inline-code lang-html">flex-direction: row</code>. Unscoped: works with or without <code class="nds-inline-code lang-html">nds-flex</code> on the same element</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-col</code></td><td>Sets <code class="nds-inline-code lang-html">flex-direction: column</code>. Unscoped: works with or without <code class="nds-inline-code lang-html">nds-flex</code> on the same element</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-reverse</code></td><td>Combined with <code class="nds-inline-code lang-html">nds-row</code> or <code class="nds-inline-code lang-html">nds-col</code>, reverses visual child order (<code class="nds-inline-code lang-html">row-reverse</code> or <code class="nds-inline-code lang-html">column-reverse</code>)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>Enables <code class="nds-inline-code lang-html">flex-wrap: wrap</code> so children flow onto multiple lines when the container is too narrow</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-nowrap</code></td><td>Forces <code class="nds-inline-code lang-html">flex-wrap: nowrap</code> so children stay on one line, potentially overflowing</td></tr>
                     </tbody>

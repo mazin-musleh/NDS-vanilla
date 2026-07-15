@@ -521,6 +521,14 @@
   url: "/layout/block.html"
   scss: _sass/layout/_block.scss
 
+- title: "Flex"
+  description: "Quick alignment, direction, and wrapping with custom-property overrides"
+  icon: '<i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/flex.html"
+  scss: _sass/layout/_flex.scss
+
 # Utilities
 - title: "Cookies"
   description: "Privacy-compliant cookie management banner"
@@ -560,13 +568,6 @@
   category: "Utilities"
   tags: ["JS", "CSS"]
   url: "/utilities/expandable-content.html"
-
-- title: "Flex"
-  description: "Quick alignment, direction, and wrapping with custom-property overrides"
-  icon: '<i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>'
-  category: "Utilities"
-  tags: ["CSS"]
-  url: "/utilities/flex.html"
 
 - title: "Saudi Cities"
   description: "Bundled JSON dataset of 132 Saudi Arabian cities with bilingual names, drop-in for autocomplete and address flows"

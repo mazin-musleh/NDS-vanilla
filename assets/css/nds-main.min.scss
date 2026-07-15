@@ -27,6 +27,7 @@
 // because hero depends on it; block/content-layout/grid stay here.
 @use 'layout/block';
 @use 'layout/content-layout';
+@use 'layout/flex';
 @use 'grid';
 
 // Section styles - visual tokens, color variants, meta, actions, 404, sideInfo

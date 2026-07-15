@@ -66,3 +66,12 @@
     --justify: center;
   }
 }
+
+// Container-query opt-in — grid's companion. Add to any ancestor to make
+// nested grids respond to that ancestor's width via the @container rules
+// above. Opt-in (not on every section/block) because container-type also
+// makes the element a containing block for position:fixed descendants,
+// which can trap modals/dropmenus/tooltips.
+.nds-cq {
+  container-type: inline-size;
+}
