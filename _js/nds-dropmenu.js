@@ -680,7 +680,13 @@
         applyPosition() {
             const gap = 4, pad = 8;
 
-            const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
+            // Own scroll region only — a bare querySelector would grab a
+            // NESTED dropmenu's scroll (the date-picker calendar contains
+            // month/year sub-dropmenus) and clamp another instance's list.
+            let scroll = null;
+            for (const s of this.menu.querySelectorAll('.nds-dropmenu-scroll')) {
+                if (s.closest('.nds-dropmenu-menu') === this.menu) { scroll = s; break; }
+            }
             if (scroll) scroll.style.maxHeight = '';
 
             // Lock width in px before measurement. fit-content/max-content
@@ -702,8 +708,10 @@
             // p.spaceAbove because p.spaceAbove uses the unclamped p.topEdge
             // (which is 0 when no nav is present); we need the clamped value.
             const spaceAbove = p.triggerRect.top - gap - topEdge;
-            // Flip up when space below is tight AND above has more room.
-            const flipUp = spaceBelow < 400 && spaceAbove > spaceBelow;
+            // Flip up when the menu doesn't fit below AND above has more room
+            // (real measured height, not a fixed threshold — a fits-below menu
+            // must never flip, a taller-than-threshold one must not stay down).
+            const flipUp = spaceBelow < p.menuRect.height && spaceAbove > spaceBelow;
             const available = flipUp ? spaceAbove : spaceBelow;
 
             let clamped = false;
@@ -725,8 +733,13 @@
                 this.menu.removeAttribute('data-position-vertical');
             }
 
-            let top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
-            top = Math.max(topEdge, Math.min(top, p.viewportHeight - mr2.height - pad));
+            // Glued to the trigger edge, no vertical viewport clamp:
+            // scrollable menus were already shrunk to `available` (they fit),
+            // and a rigid menu (calendar) that fits neither side must overflow
+            // the viewport edge rather than slide over its own trigger — page
+            // scroll can reveal an off-edge menu, a covered input never
+            // recovers. Matches trackPosition(), which never clamped.
+            const top = flipUp ? p.triggerRect.top - mr2.height - gap : p.triggerRect.bottom + gap;
 
             // Horizontal: default anchors the menu on click x (so wide
             // triggers open near where the user clicked), falling back to
