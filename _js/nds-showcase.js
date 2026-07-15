@@ -671,6 +671,9 @@
                     } else {
                         handleStyleToggling(targetElement, classNamesOrAttrs);
                     }
+                    // Re-serialize the mutated style attribute into the code snippet
+                    // (mirrors what handleAttributeToggling/handleDataStateToggling do).
+                    updateCodeExampleForAttributes(demoCard, targetElement, ['style']);
                 } else if (operationType === 'chart') {
                     // Handle chart option toggling via NDSChart API
                     handleChartToggling(targetElement, button, isDeselecting);
