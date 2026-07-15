@@ -207,6 +207,7 @@ A factory creates per-element instances; the guard must distinguish "this specif
 
 - **Window-scope flags for tree-wide observers.** `_js/nds-tables.js` (`window.ndsTableClassObserverInitialized` ~L394, `window.ndsTabChangeHandlerInitialized` ~L407) coordinates two cross-module observers (responsive-table class mutations, tab-change events). The window flag is the right shape for that specific concern because there's no per-element target AND the guard needs to coordinate with sibling modules. Not divergence.
 - **JS-property per-element guards on document-sweeping controllers.** A factory-style controller that sweeps the whole document (rather than a registered per-instance selector) MAY mark each visited element with a JS property (`el._ndsXxxInitialized`) instead of the canonical attribute. The property IS on the element (satisfying 5.1's principle) and distinguishes per-element init; it just isn't CSS-selectable, so re-sweeps check the flag inline rather than filtering via `:not([data-…-initialized])`. Exemplar: `_js/nds-forms.js` (`_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized` markers). Not divergence. (A *registered* factory with a per-instance selector should still prefer the attribute form so the loader's rescan can selector-filter.)
+- **Instance-expando guards on registered factories.** A registered factory whose `create(el)` is idempotent through the instance back-ref itself MAY use that expando as the per-element guard instead of a parallel `data-nds-<name>-initialized` attribute — the instance IS the init state, and a second attribute channel written in lockstep could drift (the JSA-12 "single-reader state mirror" smell). The guard must be gated on successful construction (JSD-18). Tradeoff: loader rescans can't selector-filter; acceptable when instances-per-page stay few. Exemplar: `_js/nds-date-picker.js` (`createInstance` returns the existing instance when `dateInput._ndsDatePicker` is present). Not divergence.
 
 **Audit behavior**
 
@@ -243,7 +244,7 @@ Listener teardown should be atomic by default: one `.abort()` releases every lis
 
 **Carve-outs (NOT divergence)**
 
-- **Two-phase lifecycle with subset cleanup.** When a component genuinely needs to release a strict subset of listeners (per-open-cycle handlers) while keeping others alive, AbortController is structurally wrong — `.abort()` releases everything. Per-handler storage is correct because partial release is the requirement. Exemplar: `_js/nds-date-picker.js` (handler stores around `bindNavigationEvents` / `bindActionButtons`; partial removal in `cleanup()`, full removal in `destroy()`).
+- **Two-phase lifecycle with subset cleanup.** When a component genuinely needs to release a strict subset of listeners (per-open-cycle handlers) while keeping others alive, AbortController is structurally wrong — `.abort()` releases everything. Per-handler storage is correct because partial release is the requirement. Exemplar: `_js/nds-date-picker.js` (handler stores around `bindNavigationEvents` / `bindActionEvents`; partial removal in `cleanup()`, full removal in `destroy()`).
 - **Per-element AbortControllers stored on the element** (`el._ndsFilterAC`) scope a different lifetime (the element's, not the instance's). Out of scope.
 
 **Audit behavior**
