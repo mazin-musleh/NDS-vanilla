@@ -48,9 +48,14 @@
          * @param {string} options.id - Custom ID (optional)
          * @param {boolean} options.prepend - Prepend instead of append (default: false)
          * @param {Array} options.actions - Action buttons array (optional)
-         *        Each action: { label, variant, size, onClick, dismiss, href, target }
+         *        Each action: { label, variant, size, onClick, dismiss, href, target, copy, copyTarget }
+         *        copy: text to copy to the clipboard on click (uses NDS.Copy: checkmark
+         *        flash + aria-live announce come free)
+         *        copyTarget: CSS selector; copies that element's textContent instead
+         *        (ignored when copy is also set)
          * @param {string} options.display - 'default', 'inline', or 'toast' (default: 'default')
-         * @param {string} options.position - Toast position: 'top' or 'bottom' (default: 'top')
+         * @param {string} options.position - Toast position: '{top|bottom}' plus optional inline side
+         *        '-start'/'-end'/'-left'/'-right', e.g. 'top-start', 'bottom-left' (default: 'top' = inline-end)
          * @param {number} options.duration - Auto-dismiss duration in ms, 0 for no auto-dismiss (default: 0)
          * @returns {HTMLElement}
          */
@@ -144,10 +149,22 @@
                         el.appendChild(lbl);
                     }
                     el.className = classes;
+                    if (action.copy || action.copyTarget) {
+                        el.classList.add('nds-copy');
+                        if (action.copy) el.setAttribute('data-copy', action.copy);
+                        else el.setAttribute('data-copy-target', action.copyTarget);
+                        const ico = document.createElement('i');
+                        ico.className = 'nds-icon nds-hgi-copy-01';
+                        ico.setAttribute('aria-hidden', 'true');
+                        el.prepend(ico);
+                    }
                     el.setAttribute('data-action-index', index);
                     actionsWrap.appendChild(el);
                 });
                 alert.querySelector('.nds-alert-content').appendChild(actionsWrap);
+                // Late-created copy actions need the delegated .nds-copy binding even on
+                // pages that had no copy button at loader scan time (bind is idempotent)
+                if (actions.some(a => a.copy || a.copyTarget)) NDS.Copy?.init?.();
             }
 
             // Close button handler
@@ -161,9 +178,9 @@
             if (actions && actions.length > 0) {
                 actions.forEach((action, index) => {
                     const btn = alert.querySelector(`[data-action-index="${index}"]`);
-                    if (btn && action.onClick) {
+                    if (btn && (action.onClick || action.dismiss)) {
                         btn.addEventListener('click', () => {
-                            action.onClick(alert);
+                            if (action.onClick) action.onClick(alert);
                             // Auto dismiss if action.dismiss is true (default: false)
                             if (action.dismiss) {
                                 this.dismiss(alert);
@@ -179,20 +196,46 @@
                 const placeholder = this._getPlaceholder(position);
 
                 // Top: prepend (newest first), Bottom: append (newest last)
-                if (position === 'bottom') {
+                if (position.startsWith('bottom')) {
                     placeholder.appendChild(alert);
                 } else {
                     placeholder.prepend(alert);
                 }
 
                 // Add entrance animation
-                setTimeout(() => NDS.State.set(alert, 'toast-show'), 10);
+                NDS.afterPaint(() => NDS.State.add(alert, 'toast-show'));
 
-                // Auto-dismiss with duration
+                // Auto-dismiss with duration; hover pauses, click pins the pause
+                // (touch has no hover — tap keeps the toast until closed)
                 if (duration > 0) {
-                    setTimeout(() => {
-                        this.dismiss(alert);
-                    }, duration);
+                    let timer = null, remaining = duration, start = 0, pinned = false;
+                    const run = () => {
+                        start = Date.now();
+                        timer = setTimeout(() => this.dismiss(alert), remaining);
+                    };
+                    const pause = () => {
+                        if (!timer) return;
+                        clearTimeout(timer);
+                        timer = null;
+                        remaining -= Date.now() - start;
+                        NDS.State.add(alert, 'paused');
+                    };
+                    const resume = () => {
+                        if (pinned || timer) return;
+                        NDS.State.remove(alert, 'paused');
+                        run();
+                    };
+                    alert.addEventListener('mouseenter', pause);
+                    alert.addEventListener('focusin', pause);
+                    alert.addEventListener('click', () => {
+                        pinned = true;
+                        pause();
+                        // Countdown cancelled for good — dropping nds-progress hides the whole ring
+                        alert.querySelector('.nds-alert-close').classList.remove('nds-progress');
+                    });
+                    alert.addEventListener('mouseleave', resume);
+                    alert.addEventListener('focusout', resume);
+                    run();
                 }
             } else if (target) {
                 const targetEl = typeof target === 'string' ? document.querySelector(target) : target;
@@ -226,7 +269,7 @@
             }
 
             // Sync top offset to nav bottom
-            if (position === 'top' && !placeholder._scrollSync) {
+            if (position.startsWith('top') && !placeholder._scrollSync) {
                 const nav = document.querySelector('.nds-main-nav');
                 if (nav) {
                     const update = () => placeholder.style.setProperty('--_toast-top', nav.getBoundingClientRect().bottom + 'px');
@@ -281,7 +324,7 @@
         dismissAll(container) {
             const el = typeof container === 'string' ? document.querySelector(container) : container;
             if (el) {
-                el.querySelectorAll('.nds-alert').forEach(a => a.remove());
+                el.querySelectorAll('.nds-alert').forEach(a => this.dismiss(a));
             }
         },
 

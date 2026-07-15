@@ -799,7 +799,9 @@
         if (isToast) {
             const positionToggle = NDS.querySelector(demoCard, '[data-toggler*="toastPosition"][data-state~="selected"]');
             if (positionToggle) {
-                position = 'bottom';
+                try {
+                    position = JSON.parse(positionToggle.getAttribute('data-toggler'))[0].split('=')[1] || 'top';
+                } catch (e) {}
             }
         }
 
@@ -2482,7 +2484,11 @@
         let position = 'top';
         if (isToast) {
             const positionToggle = NDS.querySelector(demoCard, '[data-toggler*="toastPosition"][data-state~="selected"]');
-            if (positionToggle) position = 'bottom';
+            if (positionToggle) {
+                try {
+                    position = JSON.parse(positionToggle.getAttribute('data-toggler'))[0].split('=')[1] || 'top';
+                } catch (e) {}
+            }
         }
 
         const messages = isToast ? TOAST_MESSAGES : ALERT_MESSAGES;

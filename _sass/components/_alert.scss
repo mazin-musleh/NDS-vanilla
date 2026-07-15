@@ -298,25 +298,32 @@
 .nds-alert-placeholder {
   position: fixed;
   z-index: 9999;
-  inset-inline-end: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-MaxWidth)) / 2));
+  // Content-edge offset shared by every anchored side
+  --_toast-edge: max(var(--nds-viewport-padding), calc((100vw - var(--nds-content-MaxWidth)) / 2));
+  inset-inline-end: var(--_toast-edge);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xl);
   pointer-events: none;
   isolation: isolate;
 
-  @include mobile {
-    inset-inline: var(--nds-viewport-padding);
-  }
-
-  // Top position (default)
-  &[data-position="top"] {
+  // data-position = '{top|bottom}[-{start|end|left|right}]' — block edge by prefix
+  &[data-position^="top"] {
     inset-block-start: calc(var(--_toast-top, var(--nds-nav-height)) + var(--spacing-md));
   }
-
-  // Bottom position
-  &[data-position="bottom"] {
+  &[data-position^="bottom"] {
     inset-block-end: var(--nds-viewport-padding);
+  }
+
+  // Inline edge by suffix — bare top/bottom and '-end' keep the inline-end default above;
+  // left/right are deliberate physical anchors that ignore text direction
+  &[data-position$="-start"] { inset-inline: var(--_toast-edge) auto; }
+  &[data-position$="-left"]  { inset-inline-end: auto; left: var(--_toast-edge); }
+  &[data-position$="-right"] { inset-inline-end: auto; right: var(--_toast-edge); }
+
+  // Mobile spans the viewport whatever the inline anchor — after the variants so it wins the tie
+  @include mobile {
+    &[data-position] { inset-inline: var(--nds-viewport-padding); }
   }
 }
 
@@ -344,6 +351,12 @@
 
   &[data-state~="toast-hide"] {
     opacity: 0;
+  }
+
+  // JS stamps 'paused' on hover/focus/click — freeze the countdown ring in sync with the timer.
+  // .nds-alert-close keeps this above the button's `animation:` shorthand, which resets play-state.
+  &[data-state~="paused"] .nds-alert-close .nds-progress-track {
+    animation-play-state: paused;
   }
 
 }

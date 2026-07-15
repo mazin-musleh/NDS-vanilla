@@ -6,6 +6,9 @@ hero_description: Alert notifications for displaying important messages, warning
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "15/07/2026 - 09:43 PM"
 ---
 
 <!-- Variants -->
@@ -437,12 +440,236 @@ direction: ltr
     </div>
 </section>
 
+<!-- Copy Actions -->
+<section id="alertCopyActions" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Copy Actions</h2>
+            <p class="nds-section-description">Action buttons that place text on the clipboard with a checkmark flash: pass a literal string with <code class="nds-inline-code lang-js">copy</code>, or point <code class="nds-inline-code lang-js">copyTarget</code> at an element on the page. In a toast, clicking a copy action also keeps the toast open</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <!-- Simple value copy -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Copy a one-time code</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-alert nds-card" data-status="info" role="alert">
+                                <span class="nds-feedback nds-alert-icon nds-outline">
+                                    <span class="nds-feedback-icon">
+                                        <i class="nds-icon" aria-hidden="true"></i>
+                                    </span>
+                                </span>
+                                <div class="nds-alert-content">
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Verification code</span>
+                                        <p class="nds-alert-description">Your one-time code is 843291. It expires in 10 minutes.</p>
+                                    </div>
+                                    <div class="nds-alert-actions">
+                                        <button class="nds-btn nds-subtle nds-sm nds-copy" data-copy="843291">
+                                            <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
+                                            <span class="nds-label">Copy code</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
+                                    aria-label="Close alert">
+                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-alert-copy-1" id="tab-alert-copy-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-alert-copy-js" id="tab-alert-copy-js">
+                                        <span class="nds-tab-label">JS API</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copy-1"
+                                    aria-labelledby="tab-alert-copy-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;div class="nds-alert nds-card" data-status="info" role="alert"&gt;
+  &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
+    &lt;span class="nds-feedback-icon"&gt;
+      &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;div class="nds-alert-content"&gt;
+    &lt;div class="nds-alert-text"&gt;
+      &lt;span class="nds-alert-title"&gt;Verification code&lt;/span&gt;
+      &lt;p class="nds-alert-description"&gt;Your one-time code is 843291. It expires in 10 minutes.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-alert-actions"&gt;
+      &lt;button class="nds-btn nds-subtle nds-sm nds-copy" data-copy="843291"&gt;
+        &lt;i class="nds-icon nds-hgi-copy-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Copy code&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert"&gt;
+    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copy-js"
+                                    aria-labelledby="tab-alert-copy-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">NDS.Alert.create({
+    variant: 'info',
+    title: 'Verification code',
+    description: 'Your one-time code is 843291. It expires in 10 minutes.',
+    target: '#alert-container',
+    actions: [
+        { label: 'Copy code', copy: '843291' }
+    ]
+});</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Error log copy -->
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Copy an error log</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-alert nds-card" data-status="error" role="alert">
+                                <span class="nds-feedback nds-alert-icon nds-outline">
+                                    <span class="nds-feedback-icon">
+                                        <i class="nds-icon" aria-hidden="true"></i>
+                                    </span>
+                                </span>
+                                <div class="nds-alert-content">
+                                    <div class="nds-alert-text">
+                                        <span class="nds-alert-title">Request failed</span>
+                                        <p class="nds-alert-description">The request could not be completed. Share the error log with support.</p>
+                                    </div>
+                                    <div class="nds-alert-actions">
+                                        <button class="nds-btn nds-neutral nds-sm nds-copy" data-copy="TRACE-4821 TypeError: response is undefined
+  at save (app.js:42)
+  at async submit (form.js:17)">
+                                            <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
+                                            <span class="nds-label">Copy error log</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close"
+                                    aria-label="Close alert">
+                                    <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-alert-copylog-1" id="tab-alert-copylog-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                        aria-controls="panel-alert-copylog-js" id="tab-alert-copylog-js">
+                                        <span class="nds-tab-label">JS API</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copylog-1"
+                                    aria-labelledby="tab-alert-copylog-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;div class="nds-alert nds-card" data-status="error" role="alert"&gt;
+  &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
+    &lt;span class="nds-feedback-icon"&gt;
+      &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;div class="nds-alert-content"&gt;
+    &lt;div class="nds-alert-text"&gt;
+      &lt;span class="nds-alert-title"&gt;Request failed&lt;/span&gt;
+      &lt;p class="nds-alert-description"&gt;The request could not be completed. Share the error log with support.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-alert-actions"&gt;
+      &lt;button class="nds-btn nds-neutral nds-sm nds-copy" data-copy="TRACE-4821 TypeError: response is undefined
+  at save (app.js:42)
+  at async submit (form.js:17)"&gt;
+        &lt;i class="nds-icon nds-hgi-copy-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;span class="nds-label"&gt;Copy error log&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert"&gt;
+    &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-alert-copylog-js"
+                                    aria-labelledby="tab-alert-copylog-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript code">// In production, pass the real error you already hold:
+// quotes, commas, and newlines inside the string are all safe
+NDS.Alert.create({
+    variant: 'error',
+    title: 'Request failed',
+    description: 'The request could not be completed. Share the error log with support.',
+    target: '#alert-container',
+    actions: [
+        { label: 'Copy error log', variant: 'neutral', copy: err.stack }
+    ]
+});</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Toast Notification Demo -->
 <section id="toastDemo" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Toast Notifications</h2>
-            <p class="nds-section-description">Floating notifications that appear at the top or bottom of the viewport</p>
+            <p class="nds-section-description">Floating notifications anchored to any corner of the viewport. The auto-dismiss timer pauses while users hover or focus, and a click keeps the toast until closed</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -475,10 +702,47 @@ direction: ltr
                                     </div>
                                 </div>
                             </div>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
-                                <span class="nds-label">Bottom</span>
-                            </button>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="nds-label">Top</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["data-position=top", ".nds-alert", "toastPosition", "attr"]'>
+                                            <span class="nds-label">Top</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-position=top-start", ".nds-alert", "toastPosition", "attr"]'>
+                                            <span class="nds-label">Top start</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-position=top-left", ".nds-alert", "toastPosition", "attr"]'>
+                                            <span class="nds-label">Top left</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-position=top-right", ".nds-alert", "toastPosition", "attr"]'>
+                                            <span class="nds-label">Top right</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-position=bottom", ".nds-alert", "toastPosition", "attr"]'>
+                                            <span class="nds-label">Bottom</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-position=bottom-start", ".nds-alert", "toastPosition", "attr"]'>
+                                            <span class="nds-label">Bottom start</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-position=bottom-left", ".nds-alert", "toastPosition", "attr"]'>
+                                            <span class="nds-label">Bottom left</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-position=bottom-right", ".nds-alert", "toastPosition", "attr"]'>
+                                            <span class="nds-label">Bottom right</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-color", ".nds-alert", "toastColor"]'>
                                 <span class="nds-label">Color</span>
@@ -601,7 +865,21 @@ direction: ltr
                         <i class="hgi hgi-stroke hgi-notification-square"></i>
                         <span class="nds-label">Toast Notifications</span>
                     </span>
-                    <p class="nds-item-desc">Fixed positioning with auto-dismiss timer and progress indicator.</p>
+                    <p class="nds-item-desc">Floating notifications with an auto-dismiss timer and a countdown ring on the close button.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-pause"></i>
+                        <span class="nds-label">Pausable Auto-dismiss</span>
+                    </span>
+                    <p class="nds-item-desc">Toast timers pause on hover or keyboard focus and resume on leave. A click keeps the toast until closed.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-layout-01"></i>
+                        <span class="nds-label">Flexible Placement</span>
+                    </span>
+                    <p class="nds-item-desc">Toasts anchor to the top or bottom edge combined with start, end, left, or right, and logical sides follow text direction.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -648,9 +926,11 @@ direction: ltr
                     <li>Do not use toast notifications for critical errors or messages that require user action. Toasts can auto-dismiss before the user reads them</li>
                     <li>Prefer alerts over modals for non-blocking feedback. Alerts let users continue working without interruption</li>
                     <li>Add action buttons when the user needs to respond (retry, undo, update) rather than just acknowledge the message</li>
+                    <li>Add a <code class="nds-inline-code lang-js">copy</code> action for content users will paste elsewhere (verification codes, reference numbers, error details) instead of making them select text from the message</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-color</code> to reinforce severity in high-density layouts where the stripe alone may not stand out</li>
                     <li>Keep alert descriptions to one or two sentences. For longer content, link to a detail page with an action link</li>
-                    <li>Set a reasonable <code class="nds-inline-code lang-js">duration</code> for toast notifications (3000-5000 ms). Avoid durations under 2000 ms as users may not have time to read the message</li>
+                    <li>Set a reasonable <code class="nds-inline-code lang-js">duration</code> for toast notifications (3000-5000 ms). Avoid durations under 2000 ms as users may not have time to read the message. The timer pauses on hover and focus, so users who start reading are never cut off</li>
+                    <li>Prefer logical toast positions (<code class="nds-inline-code lang-js">start</code>, <code class="nds-inline-code lang-js">end</code>) so placement follows text direction in RTL and LTR. Reserve <code class="nds-inline-code lang-js">left</code> and <code class="nds-inline-code lang-js">right</code> for cases that must anchor to a physical screen edge</li>
                 </ul>
             </div>
 
@@ -673,8 +953,8 @@ direction: ltr
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-alert</code> to control the variant. Values: <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">critical</code>, <code class="nds-inline-code lang-html">neutral</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-position</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-alert-placeholder</code> to position toast containers. Values: <code class="nds-inline-code lang-html">top</code>, <code class="nds-inline-code lang-html">bottom</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-toast</code> to control visibility transitions. Values: <code class="nds-inline-code lang-html">toast-show</code>, <code class="nds-inline-code lang-html">toast-hide</code>. Managed automatically by the JS API</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-position</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-alert-placeholder</code> to position toast containers. Values: <code class="nds-inline-code lang-html">top</code> or <code class="nds-inline-code lang-html">bottom</code>, optionally suffixed with an inline side: <code class="nds-inline-code lang-html">-start</code>, <code class="nds-inline-code lang-html">-end</code>, <code class="nds-inline-code lang-html">-left</code>, <code class="nds-inline-code lang-html">-right</code> (e.g. <code class="nds-inline-code lang-html">top-start</code>, <code class="nds-inline-code lang-html">bottom-left</code>). Bare values anchor to the inline end</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-toast</code> to control visibility transitions. Values: <code class="nds-inline-code lang-html">toast-show</code>, <code class="nds-inline-code lang-html">toast-hide</code>, <code class="nds-inline-code lang-html">paused</code>. Managed automatically by the JS API</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -722,7 +1002,11 @@ const alert = NDS.Alert.create({
             onClick: (el) =&gt; {},  // Callback, receives the alert element
             dismiss: false,       // Auto-dismiss after click (default: false)
             href: '/url',         // Render as &lt;a&gt; link instead of &lt;button&gt; (optional)
-            target: '_blank'      // Link target attribute (optional, requires href)
+            target: '_blank',     // Link target attribute (optional, requires href)
+            copy: 'text',         // Copy this text on click: adds a copy icon,
+                                  // checkmark flash, and screen-reader announce
+            copyTarget: '#log'    // Or copy an element's textContent by CSS selector
+                                  // (ignored when copy is also set)
         }
     ]
 });
@@ -732,8 +1016,11 @@ NDS.Alert.create({
     variant: 'success',
     description: 'Changes saved!',
     display: 'toast',          // 'default' | 'inline' | 'toast'
-    position: 'top',          // 'top' | 'bottom' (default: 'top')
+    position: 'top',          // 'top' | 'bottom', plus optional inline side
+                              // '-start' | '-end' | '-left' | '-right'
+                              // e.g. 'top-start', 'bottom-left' (default: 'top' = inline end)
     duration: 4000,           // Auto-dismiss in ms, 0 = manual (default: 0)
+                              // Timer pauses on hover/focus; a click pins the toast until closed
     shadow: true
 });
 
