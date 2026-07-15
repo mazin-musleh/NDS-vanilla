@@ -138,18 +138,3 @@ body.nds-page-bg {
     text-align: start;
 }
 
-/* ========================================
-   LAST EDIT
-   ======================================== */
-
-.nds-last-edit {
-    font-size: var(--typo-text-clamp-md-FS);
-    text-align: end;
-    height: 24px;
-    display: block;
-    margin-top: calc((24px + var(--spacing-md)) * -1);
-    width: 100%;
-    max-width: var(--nds-content-MaxWidth);
-    margin-inline: auto;
-    padding: 0 var(--nds-viewport-padding);
-}

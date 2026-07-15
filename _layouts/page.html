@@ -8,6 +8,7 @@ layout: default
     {%- endif %}
     <div class="nds-main-content">
         {{ content }}
+        {%- include last-edit.html %}
     </div>
 </div>
 {%- if page.hideFeedback != true %}

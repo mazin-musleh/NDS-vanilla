@@ -1,0 +1,18 @@
+/**
+ * NDS Last Edit Component
+ * DGA last-modified line at the end of .nds-main-content, rendered by the
+ * page/post layouts when a page sets `last_edit` front matter. In-flow and
+ * content-column aligned, so it works with or without the user-feedback
+ * section below it.
+ */
+
+@use '../mixins' as *;
+
+.nds-last-edit {
+    // A minimal content-section: a slim padding band via the section system's
+    // own knob, in place of the default section padding.
+    --section-padding-block: var(--spacing-lg);
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
+    text-align: end;
+}
