@@ -18,12 +18,12 @@ sidemenu_mode: false
         <div class="nds-info-content">
             <p class="nds-required-notice"><span class="nds-label">*Required information</span></p>
 
-            <form id="form-template" class="nds-form" novalidate>
+            <form id="form-template" class="nds-form nds-flex nds-col" novalidate>
 
                 <!-- ============================================================
                      STEP 1 — Identity Verification
                      ============================================================ -->
-                <div class="nds-form" data-form-step="1">
+                <div class="nds-flex nds-col" data-form-step="1">
                     <div class="nds-grid nds-form-grid" style="--min-col: 1; --max-col: 2; --gap: var(--spacing-4xl);">
 
                         <div class="nds-form-container" data-required>
@@ -127,7 +127,7 @@ sidemenu_mode: false
                 <!-- ============================================================
                      STEP 2 — Personal Information
                      ============================================================ -->
-                <div class="nds-form" data-form-step="2" hidden>
+                <div class="nds-flex nds-col" data-form-step="2" hidden>
                     <div class="nds-grid nds-form-grid" style="--min-col: 1; --max-col: 2;">
 
                         <div class="nds-form-container" data-required>
@@ -270,7 +270,7 @@ sidemenu_mode: false
                 <!-- ============================================================
                      STEP 3 — Review & Submit
                      ============================================================ -->
-                <div class="nds-form" data-form-step="3" hidden>
+                <div class="nds-flex nds-col" data-form-step="3" hidden>
                     <h2 class="nds-section-title">Review your information</h2>
                     <p class="nds-section-description">Check the details below before submitting. Use Back to make corrections.</p>
 
@@ -327,7 +327,7 @@ sidemenu_mode: false
                 <!-- ============================================================
                      STEP 4 — Submitted (success)
                      ============================================================ -->
-                <div class="nds-form" data-form-step="4" hidden>
+                <div class="nds-flex nds-col" data-form-step="4" hidden>
                     <div class="nds-card nds-stroke nds-center" style="--card-width: 100%;">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">

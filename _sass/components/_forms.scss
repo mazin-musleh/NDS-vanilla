@@ -1,10 +1,8 @@
 @use '../mixins' as *;
 
-.nds-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xl);
-}
+// .nds-form is a validation hook only — no layout. Consumers pick their own
+// layout (.nds-flex.nds-col, .nds-grid, or whatever their surrounding structure
+// requires). See _js/nds-forms.js initForm() for the validation wiring.
 
 .nds-form-container {
     --_form-width: var(--form-width, 100%);
@@ -552,6 +550,7 @@ fieldset {
 .nds-form-actions {
     display: flex;
     gap: var(--spacing-lg);
+    margin-block-start: var(--actions-margin-top, var(--spacing-2xl));
 }
 
 .nds-form-group {

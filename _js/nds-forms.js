@@ -1096,6 +1096,10 @@
     // ==============================================
     function initForm(formElement) {
         var form = formElement.closest('.nds-form') || formElement;
+        // .nds-form is a validation hook, but consumers also use it as a
+        // layout-only marker on non-form elements (e.g. wizard step divs).
+        // Only real <form>s get novalidate + a submit listener.
+        if (form.tagName !== 'FORM') return;
         if (form._ndsFormInitialized) return;
         form._ndsFormInitialized = true;
         form.setAttribute('novalidate', '');
