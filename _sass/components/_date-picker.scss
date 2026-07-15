@@ -31,6 +31,33 @@
     &[data-state~="open"] .nds-form-control::after {
         transform: rotate(180deg);
     }
+
+    // Month/year mode (data-format has no D token) — the day grid is replaced
+    // with a month/year picker grid, and the header controls that overlap the
+    // grid semantics are hidden.
+    &:is([data-picker-mode="month"], [data-picker-mode="year"]) {
+        .nds-calendar-weekdays { display: none; }
+        .nds-calendar-dates {
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+            .nds-date-cell {
+                border-radius: var(--radius-md) !important;
+                aspect-ratio: 2 / 1;
+                min-height: unset;
+                width: 100%;
+            }
+        }
+    }
+    // Month grid: 3×4. Also hide the (now-redundant) month dropmenu.
+    &[data-picker-mode="month"] .nds-month-dropmenu {
+        display: none;
+    }
+    // Year grid: 4×3. The whole header is hidden — grid shows years directly
+    // (across the data-year-before / data-year-after range), no anchor needed.
+    &[data-picker-mode="year"] {
+        .nds-calendar-header { display: none; }
+        .nds-calendar-dates { grid-template-columns: repeat(4, 1fr); }
+    }
 }
 
 // ==============================================

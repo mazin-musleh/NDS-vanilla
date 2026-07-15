@@ -69,6 +69,78 @@
         en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     };
 
+    // Format token support for data-format="…". Tokens: YYYY, YY, MM, M, DD, D.
+    // Longer tokens listed first so the alternation prefers YYYY over YY (regex
+    // alternatives are tried in order at each position). Any character outside a
+    // token is passed through literally.
+    var DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
+    var FORMAT_TOKEN_REGEX = /(YYYY|YY|MM|M|DD|D)/g;
+
+    function applyDateFormat(format, values) {
+        // values = { year, month, day } — month is 1-indexed
+        return format.replace(FORMAT_TOKEN_REGEX, function (token) {
+            switch (token) {
+                case 'YYYY': return String(values.year);
+                case 'YY':   return String(values.year).slice(-2);
+                case 'MM':   return String(values.month).padStart(2, '0');
+                case 'M':    return String(values.month);
+                case 'DD':   return String(values.day).padStart(2, '0');
+                case 'D':    return String(values.day);
+            }
+        });
+    }
+
+    // Cache parse regexes per format string — cheap, rebuilt only per new format.
+    var _parseRegexCache = {};
+    function getParseConfig(format) {
+        if (_parseRegexCache[format]) return _parseRegexCache[format];
+        var groupOrder = [];
+        var escaped = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        var pattern = escaped.replace(FORMAT_TOKEN_REGEX, function (token) {
+            groupOrder.push(token);
+            switch (token) {
+                case 'YYYY': return '(\\d{4})';
+                case 'YY':   return '(\\d{2})';
+                case 'MM':   return '(\\d{2})';
+                case 'M':    return '(\\d{1,2})';
+                case 'DD':   return '(\\d{2})';
+                case 'D':    return '(\\d{1,2})';
+            }
+        });
+        var config = { regex: new RegExp('^' + pattern + '$'), order: groupOrder };
+        _parseRegexCache[format] = config;
+        return config;
+    }
+
+    function parseWithFormat(str, format) {
+        var config = getParseConfig(format);
+        var match = str.match(config.regex);
+        if (!match) return null;
+        var values = { day: null, month: null, year: null };
+        config.order.forEach(function (token, i) {
+            var val = parseInt(match[i + 1], 10);
+            if (token === 'YYYY') values.year = val;
+            else if (token === 'YY') values.year = 2000 + val; // ponytail: 20xx window; add data-year-window if 19xx/21xx dates need parsing
+            else if (token === 'MM' || token === 'M') values.month = val;
+            else if (token === 'DD' || token === 'D') values.day = val;
+        });
+        // Year is required (there is no sensible default); month/day default
+        // to 1 so month-only ('MM/YYYY') and year-only ('YYYY') formats parse.
+        if (values.year === null) return null;
+        if (values.month === null) values.month = 1;
+        if (values.day === null) values.day = 1;
+        return values;
+    }
+
+    // Detect picker UI mode from the format string. Token presence drives it:
+    // any D → day grid; only M+Y → month mode; only Y → year mode. Keeps the
+    // format the single source of truth (no separate data-mode attribute).
+    function detectFormatMode(format) {
+        if (/D/.test(format)) return 'day';
+        if (/M/.test(format)) return 'month';
+        return 'year';
+    }
+
     // Calendar System Configuration
     var CalendarConfig = {
         gregorian: {
@@ -78,24 +150,21 @@
                 en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
             },
             weekdayNames: WEEKDAY_NAMES,
-            formatDate: function (date) {
-                var day = String(date.getDate()).padStart(2, '0');
-                var month = String(date.getMonth() + 1).padStart(2, '0');
-                var year = date.getFullYear();
-                return day + '/' + month + '/' + year;
+            formatDate: function (date, format) {
+                return applyDateFormat(format || DEFAULT_DATE_FORMAT, {
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1,
+                    day: date.getDate()
+                });
             },
-            parseDate: function (dateString) {
-                var parts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-                if (!parts) return null;
+            parseDate: function (dateString, format) {
+                var vals = parseWithFormat(dateString, format || DEFAULT_DATE_FORMAT);
+                if (!vals) return null;
 
-                var day = parseInt(parts[1], 10);
-                var month = parseInt(parts[2], 10) - 1;
-                var year = parseInt(parts[3], 10);
-
-                var testDate = new Date(year, month, day);
-                if (testDate.getDate() === day &&
-                    testDate.getMonth() === month &&
-                    testDate.getFullYear() === year) {
+                var testDate = new Date(vals.year, vals.month - 1, vals.day);
+                if (testDate.getDate() === vals.day &&
+                    testDate.getMonth() === vals.month - 1 &&
+                    testDate.getFullYear() === vals.year) {
                     return testDate;
                 }
                 return null;
@@ -125,9 +194,9 @@
             },
             weekdayNames: WEEKDAY_NAMES,
 
-            formatDate: function (date) {
+            formatDate: function (date, format) {
                 var hijriDate;
-                
+
                 // Use attached Hijri data if available
                 if (date._hijriDay && date._hijriMonth && date._hijriYear) {
                     hijriDate = createHijriDate(date._hijriDay, date._hijriMonth, date._hijriYear);
@@ -135,11 +204,12 @@
                     // Convert Gregorian to Hijri
                     hijriDate = this.gregorianToHijri(date);
                 }
-                
-                var day = String(hijriDate.day).padStart(2, '0');
-                var month = String(hijriDate.month).padStart(2, '0');
-                var year = hijriDate.year;
-                return day + '/' + month + '/' + year;
+
+                return applyDateFormat(format || DEFAULT_DATE_FORMAT, {
+                    year: hijriDate.year,
+                    month: hijriDate.month,
+                    day: hijriDate.day
+                });
             },
 
             generateCalendarData: function (year, month) {
@@ -471,21 +541,17 @@
             },
 
             // Common operations - duplicated to avoid circular references
-            parseDate: function (dateString) {
-                var parts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-                if (!parts) return null;
-
-                var day = parseInt(parts[1], 10);
-                var month = parseInt(parts[2], 10);
-                var year = parseInt(parts[3], 10);
+            parseDate: function (dateString, format) {
+                var vals = parseWithFormat(dateString, format || DEFAULT_DATE_FORMAT);
+                if (!vals) return null;
 
                 // Pure conversion - no offset involved
-                var gregorianDate = this.hijriToGregorian(year, month, day);
-                
+                var gregorianDate = this.hijriToGregorian(vals.year, vals.month, vals.day);
+
                 // Attach original input as Hijri metadata
-                gregorianDate._hijriDay = day;
-                gregorianDate._hijriMonth = month;
-                gregorianDate._hijriYear = year;
+                gregorianDate._hijriDay = vals.day;
+                gregorianDate._hijriMonth = vals.month;
+                gregorianDate._hijriYear = vals.year;
 
                 return gregorianDate;
             },
@@ -495,8 +561,8 @@
     // UI Configuration
     var UIConfig = {
         buttonLabels: {
-            ar: { today: 'اليوم', clear: 'مسح', save: 'حفظ' },
-            en: { today: 'Today', clear: 'Clear', save: 'Save' }
+            ar: { today: 'اليوم', close: 'إغلاق', clear: 'مسح', save: 'حفظ' },
+            en: { today: 'Today', close: 'Close', clear: 'Clear', save: 'Save' }
         },
         selectors: {
             container: '.nds-form-container',
@@ -511,6 +577,7 @@
             prevBtn: '.prev-month',
             nextBtn: '.next-month',
             todayBtn: '.today-btn',
+            closeBtn: '.close-btn',
             clearBtn: '.clear-btn',
             saveBtn: '.save-btn',
             datesContainer: '.nds-calendar-dates'
@@ -672,10 +739,10 @@
                             '</div>' +
                         '</div>' +
                         '<div class="nds-calendar-month-switch">' +
-                            '<button class="nds-btn nds-subtle prev-month" type="button" aria-label="Previous month">' +
+                            '<button class="nds-btn nds-subtle nds-icon-only prev-month" type="button" aria-label="Previous month">' +
                                 '<i class="nds-icon nds-hgi-arrow-prev-02" aria-hidden="true"></i>' +
                             '</button>' +
-                            '<button class="nds-btn nds-subtle next-month" type="button" aria-label="Next month">' +
+                            '<button class="nds-btn nds-subtle nds-icon-only next-month" type="button" aria-label="Next month">' +
                                 '<i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>' +
                             '</button>' +
                         '</div>' +
@@ -690,10 +757,17 @@
                         '<button class="nds-btn nds-secondary-outline today-btn" type="button">' +
                             '<span class="nds-label">Today</span>' +
                         '</button>' +
-                    '</div>' +
-                    '<div class="nds-calendar-action-end">' +
+                        // Clear is opt-in via data-clearable on the container
+                        // (or automatic in range mode — typical use case).
+                        // Wiped in cacheElements when not enabled so the handler
+                        // simply skips it.
                         '<button class="nds-btn nds-subtle clear-btn" type="button">' +
                             '<span class="nds-label">Clear</span>' +
+                        '</button>' +
+                    '</div>' +
+                    '<div class="nds-calendar-action-end">' +
+                        '<button class="nds-btn nds-subtle close-btn" type="button">' +
+                            '<span class="nds-label">Close</span>' +
                         '</button>' +
                         '<button class="nds-btn nds-primary save-btn" type="button">' +
                             '<span class="nds-label">Save</span>' +
@@ -702,6 +776,16 @@
                 '</div>';
 
             dropdown.innerHTML = calendarHTML;
+
+            // Clear is opt-in — remove the button unless data-clearable or
+            // range mode. Removed here (not hidden via CSS) so the shared
+            // cache/handler paths simply see no element.
+            var container = this.elements.container;
+            var clearable = container.hasAttribute('data-clearable') || container.classList.contains('dateRange');
+            if (!clearable) {
+                var clearBtn = dropdown.querySelector('.clear-btn');
+                if (clearBtn) clearBtn.remove();
+            }
 
             // Insert dropdown after the input, inside the same parent (form-control)
             this.elements.input.insertAdjacentElement('afterend', dropdown);
@@ -748,7 +832,7 @@
                 prevBtn: UIConfig.selectors.prevBtn,
                 nextBtn: UIConfig.selectors.nextBtn,
                 todayBtn: UIConfig.selectors.todayBtn,
-                clearBtn: UIConfig.selectors.clearBtn,
+                closeBtn: UIConfig.selectors.closeBtn,
                 saveBtn: UIConfig.selectors.saveBtn
             };
 
@@ -772,31 +856,101 @@
                 }
             }
 
+            // Conditional element — .clear-btn is removed from the DOM by
+            // createDropdownDOM when the picker isn't clearable. Absence is
+            // expected, so cache silently (no warn).
+            var clearEl = container.querySelector(UIConfig.selectors.clearBtn);
+            if (clearEl) elements.clearBtn = clearEl;
+
             return elements;
         },
 
         // Initialize calendar state
         initializeState: function () {
+            var format = (this.elements.container && this.elements.container.getAttribute('data-format')) || DEFAULT_DATE_FORMAT;
+            var mode = detectFormatMode(format);
+            // Expose the mode as an attribute so CSS can gate the day grid /
+            // month controls without JS reaching into the dropdown.
+            if (this.elements.container) {
+                this.elements.container.setAttribute('data-picker-mode', mode);
+            }
+            var calendarType = this.detectCalendarType(format);
+
+            // Parse min/max date bounds (day-precision, in the picker's own
+            // format). Coexist with data-year-before/after — getYearRange
+            // takes the tighter of the two at year granularity.
+            var calendar = CalendarConfig[calendarType];
+            var minStr = this.elements.input.getAttribute('data-min-date');
+            var maxStr = this.elements.input.getAttribute('data-max-date');
+            var minDate = minStr ? calendar.parseDate(minStr, format) : null;
+            var maxDate = maxStr ? calendar.parseDate(maxStr, format) : null;
+
+            // Open at the nearest bound when today falls outside [min, max] —
+            // otherwise the initial month is entirely disabled.
+            var currentDate = getSaudiDateObject();
+            if (maxDate && currentDate > maxDate) currentDate = copyDateWithHijri(maxDate);
+            else if (minDate && currentDate < minDate) currentDate = copyDateWithHijri(minDate);
+
             return {
-                currentDate: getSaudiDateObject(),
+                currentDate: currentDate,
                 selectedDate: null,
                 rangeStart: null,
                 rangeEnd: null,
                 isInitialized: false,
-                calendarType: this.detectCalendarType()
+                format: format,
+                mode: mode,
+                calendarType: calendarType,
+                minDate: minDate,
+                maxDate: maxDate
             };
         },
 
-        detectCalendarType: function () {
+        // Day-precision membership test. Returns true when there is no bound.
+        isDateAllowed: function (date) {
+            if (this.state.minDate && date < this.state.minDate) return false;
+            if (this.state.maxDate && date > this.state.maxDate) return false;
+            return true;
+        },
+
+        // Month is offered in month-grid iff at least one of its days is
+        // within [min, max]. Cheap check via first and last of month.
+        isMonthAllowedForYear: function (year, monthIdx) {
+            if (!this.state.minDate && !this.state.maxDate) return true;
+            var isHijri = this.state.calendarType === 'hijri';
+            var first, last;
+            if (isHijri) {
+                var calendar = CalendarConfig.hijri;
+                first = calendar.hijriToGregorian(year, monthIdx, 1);
+                var daysInMonth = calendar.getDaysInHijriMonth(year, monthIdx);
+                last = calendar.hijriToGregorian(year, monthIdx, daysInMonth);
+            } else {
+                first = new Date(year, monthIdx, 1);
+                last = new Date(year, monthIdx + 1, 0);
+            }
+            if (this.state.maxDate && first > this.state.maxDate) return false;
+            if (this.state.minDate && last < this.state.minDate) return false;
+            return true;
+        },
+
+        // Snap a date to the nearest bound if it's outside [min, max]. Used
+        // by month/year commit paths where the picker synthesizes day=1 and
+        // could land before minDate (or after maxDate).
+        _clampToRange: function (date) {
+            if (this.state.minDate && date < this.state.minDate) return copyDateWithHijri(this.state.minDate);
+            if (this.state.maxDate && date > this.state.maxDate) return copyDateWithHijri(this.state.maxDate);
+            return date;
+        },
+
+        detectCalendarType: function (format) {
             // First check if there's an initial value to determine calendar type
             var inputValue = this.elements.input.value.trim();
             if (inputValue) {
-                var detectedType = this.detectCalendarTypeFromValue(inputValue);
+                var detectedType = this.detectCalendarTypeFromValue(inputValue, format);
                 if (detectedType) {
                     return detectedType;
                 }
             }
-            
+
             // Check hijri class dynamically each time
             if (this.elements.container && this.elements.container.classList.contains('nds-hijri')) {
                 return 'hijri';
@@ -804,44 +958,41 @@
             return 'gregorian';
         },
 
-        detectCalendarTypeFromValue: function (inputValue) {
+        detectCalendarTypeFromValue: function (inputValue, format) {
             // Handle range format
             if (inputValue.includes(' - ')) {
                 var rangeParts = inputValue.split(' - ');
                 if (rangeParts.length === 2) {
                     // Use the first date to determine calendar type
-                    return this.detectCalendarTypeFromSingleValue(rangeParts[0].trim());
+                    return this.detectCalendarTypeFromSingleValue(rangeParts[0].trim(), format);
                 }
             }
-            
+
             // Handle single date format
-            return this.detectCalendarTypeFromSingleValue(inputValue);
+            return this.detectCalendarTypeFromSingleValue(inputValue, format);
         },
 
-        detectCalendarTypeFromSingleValue: function (dateString) {
-            var parts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-            if (!parts) return null;
-
-            var month = parseInt(parts[2], 10);
-            var year = parseInt(parts[3], 10);
+        detectCalendarTypeFromSingleValue: function (dateString, format) {
+            var vals = parseWithFormat(dateString, format || DEFAULT_DATE_FORMAT);
+            if (!vals) return null;
 
             // Hijri year heuristics (approximate ranges)
-            if (year >= 1400 && year <= 1500) {
+            if (vals.year >= 1400 && vals.year <= 1500) {
                 // Likely Hijri (current era is around 1440s)
                 return 'hijri';
-            } else if (year >= 1900 && year <= 2100) {
+            } else if (vals.year >= 1900 && vals.year <= 2100) {
                 // Likely Gregorian
                 return 'gregorian';
             }
 
             // If year is ambiguous, check for impossible Gregorian dates
-            if (month > 12) {
+            if (vals.month > 12) {
                 // Invalid for both, but let's default to gregorian
                 return 'gregorian';
             }
 
             // Default assumption based on year range
-            return year > 1500 ? 'gregorian' : 'hijri';
+            return vals.year > 1500 ? 'gregorian' : 'hijri';
         },
 
         // Utility methods
@@ -1018,13 +1169,14 @@
             this.renderWeekdays();
             this.renderButtonLabels();
             this.renderCalendarDates();
+            this.updateNavArrows();
         },
 
         // Cleanup on close - Clear all cache
         cleanup: function () {
             // Remove event listeners for calendar-specific elements
-            var handlers = ['todayBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'gridKeydown'];
-            var elements = ['todayBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'datesContainer'];
+            var handlers = ['todayBtn', 'closeBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'gridKeydown'];
+            var elements = ['todayBtn', 'closeBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'datesContainer'];
 
             for (var i = 0; i < handlers.length; i++) {
                 if (this.handlers[handlers[i]] && this.elements[elements[i]]) {
@@ -1066,6 +1218,13 @@
 
         // Parse initial input value
         parseInitialValue: function () {
+            // Clear pending selection state first — if the user closed the
+            // picker without Save, this drops the un-committed pick so the
+            // reopen reflects the committed input value exactly.
+            this.state.selectedDate = null;
+            this.state.rangeStart = null;
+            this.state.rangeEnd = null;
+
             var inputValue = this.elements.input.value.trim();
             if (!inputValue) return;
 
@@ -1075,8 +1234,8 @@
             if (inputValue.includes(' - ')) {
                 var rangeParts = inputValue.split(' - ');
                 if (rangeParts.length === 2) {
-                    var startDate = calendar.parseDate(rangeParts[0].trim());
-                    var endDate = calendar.parseDate(rangeParts[1].trim());
+                    var startDate = calendar.parseDate(rangeParts[0].trim(), this.state.format);
+                    var endDate = calendar.parseDate(rangeParts[1].trim(), this.state.format);
 
                     if (startDate && endDate) {
                         this.state.currentDate = startDate;
@@ -1094,7 +1253,7 @@
             }
 
             // Handle single date format
-            var parsedDate = calendar.parseDate(inputValue);
+            var parsedDate = calendar.parseDate(inputValue, this.state.format);
             if (parsedDate) {
                 this.state.currentDate = parsedDate;
                 this.state.selectedDate = parsedDate;
@@ -1126,14 +1285,14 @@
 
             if (this.elements.prevBtn) {
                 this.handlers.prevBtn = function () {
-                    self.navigateMonth(-1);
+                    self.navigate(-1);
                 };
                 this.elements.prevBtn.addEventListener('click', this.handlers.prevBtn);
             }
 
             if (this.elements.nextBtn) {
                 this.handlers.nextBtn = function () {
-                    self.navigateMonth(1);
+                    self.navigate(1);
                 };
                 this.elements.nextBtn.addEventListener('click', this.handlers.nextBtn);
             }
@@ -1285,29 +1444,34 @@
 
         // Navigate month (unified for Gregorian and Hijri)
         navigateMonth: function (direction) {
+            var range = this.getYearRange();
             if (this.state.calendarType === 'hijri') {
                 var hijri = this.getCurrentHijriDate();
-                hijri.month += direction;
-                if (hijri.month < 1) { hijri.month = 12; hijri.year--; }
-                else if (hijri.month > 12) { hijri.month = 1; hijri.year++; }
+                var newMonth = hijri.month + direction;
+                var newYear = hijri.year;
+                if (newMonth < 1) { newMonth = 12; newYear--; }
+                else if (newMonth > 12) { newMonth = 1; newYear++; }
+                if (newYear < range.start || newYear > range.end) return;
 
                 var calendar = this.getCurrentCalendar();
-                var newDate = calendar.hijriToGregorian(hijri.year, hijri.month, 1);
+                var newDate = calendar.hijriToGregorian(newYear, newMonth, 1);
                 newDate._hijriDay = 1;
-                newDate._hijriMonth = hijri.month;
-                newDate._hijriYear = hijri.year;
+                newDate._hijriMonth = newMonth;
+                newDate._hijriYear = newYear;
                 this.state.currentDate = newDate;
             } else {
                 var month = this.state.currentDate.getMonth() + direction;
                 var year = this.state.currentDate.getFullYear();
                 if (month < 0) { month = 11; year--; }
                 else if (month > 11) { month = 0; year++; }
+                if (year < range.start || year > range.end) return;
                 this.state.currentDate.setFullYear(year);
                 this.state.currentDate.setMonth(month);
             }
 
             this.updateDropdowns();
             this.renderCalendarDates();
+            this.updateNavArrows();
         },
 
         getCurrentHijriDate: function () {
@@ -1361,7 +1525,21 @@
                 this.elements.todayBtn.addEventListener('click', this.handlers.todayBtn);
             }
 
+            if (this.elements.closeBtn) {
+                // Close = discard pending state and close the dropmenu. State
+                // resets on next open via parseInitialValue, so nothing to do
+                // here beyond closing — matches click-outside-to-cancel.
+                this.handlers.closeBtn = function () {
+                    if (self.dropmenuInstance && self.dropmenuInstance.isOpen) {
+                        self.dropmenuInstance.close();
+                    }
+                };
+                this.elements.closeBtn.addEventListener('click', this.handlers.closeBtn);
+            }
+
             if (this.elements.clearBtn) {
+                // Clear = wipe committed value + pending state, then close.
+                // Opt-in via data-clearable on the container (auto-on for range).
                 this.handlers.clearBtn = function () { self.clearSelection(); };
                 this.elements.clearBtn.addEventListener('click', this.handlers.clearBtn);
             }
@@ -1374,6 +1552,28 @@
 
         // Save and close calendar
         saveAndClose: function () {
+            // Month/year mode has no day cell to click — synthesize a selection
+            // from state.currentDate (the currently navigated month/year), with
+            // day forced to 1 (and month to 1 in year mode) so the stored value
+            // matches what parseWithFormat produces on the way back in.
+            if (this.state.mode !== 'day' && !this.isRangeMode() && !this.state.selectedDate) {
+                var date = copyDateWithHijri(this.state.currentDate);
+                if (this.state.calendarType === 'hijri') {
+                    if (this.state.mode === 'year') date._hijriMonth = 1;
+                    date._hijriDay = 1;
+                    var gEq = CalendarConfig.hijri.hijriToGregorian(
+                        date._hijriYear, date._hijriMonth, date._hijriDay
+                    );
+                    date.setTime(gEq.getTime());
+                } else {
+                    if (this.state.mode === 'year') date.setMonth(0);
+                    date.setDate(1);
+                }
+                this.state.selectedDate = date;
+            }
+            // Commit pending state to the input on every save (day / month /
+            // year / range) — selectDate + selectToday no longer auto-commit.
+            this.updateInput();
             if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
                 this.dropmenuInstance.close();
             }
@@ -1419,7 +1619,7 @@
 
         renderButtonLabels: function () {
             var labels = UIConfig.buttonLabels[this.getLanguage()];
-            var map = { todayBtn: labels.today, clearBtn: labels.clear, saveBtn: labels.save };
+            var map = { todayBtn: labels.today, closeBtn: labels.close, clearBtn: labels.clear, saveBtn: labels.save };
             for (var key in map) {
                 if (this.elements[key]) {
                     var el = this.elements[key].querySelector('.nds-label');
@@ -1433,6 +1633,10 @@
 
             this.elements.datesContainer.innerHTML = '';
 
+            // Month/year modes render a picker grid in place of day cells.
+            if (this.state.mode === 'month') return this.renderMonthGrid();
+            if (this.state.mode === 'year') return this.renderYearGrid();
+
             var calendar = this.getCurrentCalendar();
             var calendarData = calendar.generateCalendarData(
                 this.getCurrentYear(),
@@ -1440,6 +1644,183 @@
             );
 
             this.generateCalendarDates(calendarData);
+        },
+
+        // Month-mode body: 3×4 grid of months. Click sets state.selectedDate
+        // (day forced to 1) so the value survives close-without-save reset and
+        // Save commits it via the shared updateInput path.
+        renderMonthGrid: function () {
+            var self = this;
+            var isHijri = this.state.calendarType === 'hijri';
+            var monthNames = this.getMonthNames(this.getLanguage());
+            var currentMonth = this.getCurrentMonth();
+            var currentYear = this.getCurrentYear();
+
+            // Selected month = state.selectedDate's month IF its year matches
+            // the currently viewed year (grid is one year at a time).
+            var selectedMonth = -1;
+            if (this.state.selectedDate) {
+                var selYear = isHijri ? this.state.selectedDate._hijriYear : this.state.selectedDate.getFullYear();
+                if (selYear === currentYear) {
+                    selectedMonth = isHijri
+                        ? this.state.selectedDate._hijriMonth
+                        : this.state.selectedDate.getMonth();
+                }
+            }
+
+            monthNames.forEach(function (name, i) {
+                // Hijri months are 1-based; Gregorian months are 0-based.
+                var monthValue = isHijri ? i + 1 : i;
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'nds-btn nds-subtle nds-date-cell';
+                btn.setAttribute('data-value', monthValue);
+                btn.textContent = name;
+
+                if (monthValue === selectedMonth) {
+                    NDS.State.add(btn, 'selected');
+                } else if (monthValue === currentMonth && currentYear === new Date().getFullYear()) {
+                    NDS.State.add(btn, 'today');
+                }
+
+                if (!self.isMonthAllowedForYear(currentYear, monthValue)) {
+                    btn.disabled = true;
+                } else {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        self._selectUnit('month', monthValue);
+                    });
+                }
+
+                self.elements.datesContainer.appendChild(btn);
+            });
+        },
+
+        // Year-mode body: grid of years derived from the same data-year-before
+        // / data-year-after range the year dropmenu uses (single source of truth).
+        renderYearGrid: function () {
+            var self = this;
+            var isHijri = this.state.calendarType === 'hijri';
+            var range = this.getYearRange();
+            var startYear = range.start;
+            var endYear = range.end;
+            var currentYear = this.getCurrentYear();
+            var selectedYear = -1;
+            if (this.state.selectedDate) {
+                selectedYear = isHijri ? this.state.selectedDate._hijriYear : this.state.selectedDate.getFullYear();
+            }
+            var todaysYear = isHijri ? this.getTodaysHijriDate().year : new Date().getFullYear();
+
+            for (var year = startYear; year <= endYear; year++) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'nds-btn nds-subtle nds-date-cell';
+                btn.setAttribute('data-value', year);
+                btn.textContent = year;
+
+                if (year === selectedYear) {
+                    NDS.State.add(btn, 'selected');
+                } else if (year === todaysYear) {
+                    NDS.State.add(btn, 'today');
+                }
+
+                (function (y) {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        self._selectUnit('year', y);
+                    });
+                })(year);
+
+                self.elements.datesContainer.appendChild(btn);
+            }
+        },
+
+        // Shared month/year cell click: sets state.currentDate to the picked
+        // unit (with lower units forced to 1) and mirrors it into
+        // state.selectedDate so saveAndClose commits without synthesizing.
+        _selectUnit: function (unit, value) {
+            var isHijri = this.state.calendarType === 'hijri';
+            if (isHijri) {
+                var year = unit === 'year' ? value : this.getCurrentYear();
+                var month = unit === 'month' ? value : (unit === 'year' ? 1 : this.getCurrentMonth());
+                var d = CalendarConfig.hijri.hijriToGregorian(year, month, 1);
+                d._hijriDay = 1;
+                d._hijriMonth = month;
+                d._hijriYear = year;
+                this.state.currentDate = d;
+                this.state.selectedDate = copyDateWithHijri(d);
+            } else {
+                if (unit === 'year') {
+                    this.state.currentDate.setFullYear(value);
+                    this.state.currentDate.setMonth(0);
+                } else {
+                    this.state.currentDate.setMonth(value);
+                }
+                this.state.currentDate.setDate(1);
+                this.state.selectedDate = new Date(this.state.currentDate);
+            }
+            // Clamp when the synthesized day=1 falls outside [min, max] — the
+            // month/year cell was allowed (some day in it is in range), so
+            // snap the committed date to the nearest bound.
+            this.state.selectedDate = this._clampToRange(this.state.selectedDate);
+            this.updateDropdowns();
+            this.renderCalendarDates();
+        },
+
+        // Prev/next dispatch — day mode nudges month, month mode nudges year,
+        // year mode arrows are hidden by CSS so this branch is inert there.
+        navigate: function (direction) {
+            if (this.state.mode === 'month') return this.navigateYear(direction);
+            this.navigateMonth(direction);
+        },
+
+        navigateYear: function (direction) {
+            var range = this.getYearRange();
+            if (this.state.calendarType === 'hijri') {
+                var hijri = this.getCurrentHijriDate();
+                var newYear = hijri.year + direction;
+                if (newYear < range.start || newYear > range.end) return;
+                var calendar = this.getCurrentCalendar();
+                var newDate = calendar.hijriToGregorian(newYear, hijri.month, 1);
+                newDate._hijriDay = 1;
+                newDate._hijriMonth = hijri.month;
+                newDate._hijriYear = newYear;
+                this.state.currentDate = newDate;
+            } else {
+                var newYearG = this.state.currentDate.getFullYear() + direction;
+                if (newYearG < range.start || newYearG > range.end) return;
+                this.state.currentDate.setFullYear(newYearG);
+            }
+            this.updateDropdowns();
+            this.renderCalendarDates();
+            this.updateNavArrows();
+        },
+
+        // Disable prev/next when the next step would go outside the year range.
+        // Also disables Today when today itself falls outside [min, max]. Called
+        // after every navigation and at the end of render(); silent when arrows
+        // aren't present (year mode hides them).
+        updateNavArrows: function () {
+            if (this.elements.todayBtn) {
+                this.elements.todayBtn.disabled = !this.isDateAllowed(getSaudiDateObject());
+            }
+            if (!this.elements.prevBtn || !this.elements.nextBtn) return;
+            var range = this.getYearRange();
+            var currentYear = this.getCurrentYear();
+            var atStart, atEnd;
+            if (this.state.mode === 'month') {
+                atStart = currentYear <= range.start;
+                atEnd = currentYear >= range.end;
+            } else {
+                var isHijri = this.state.calendarType === 'hijri';
+                var currentMonth = this.getCurrentMonth();
+                var firstMonth = isHijri ? 1 : 0;
+                var lastMonth = isHijri ? 12 : 11;
+                atStart = currentYear <= range.start && currentMonth <= firstMonth;
+                atEnd = currentYear >= range.end && currentMonth >= lastMonth;
+            }
+            this.elements.prevBtn.disabled = atStart;
+            this.elements.nextBtn.disabled = atEnd;
         },
 
         // Calendar date generation (unified for Gregorian and Hijri)
@@ -1562,12 +1943,16 @@
             // Check selection states
             this.applySelectionStates(btn, date);
 
-            // Add click handler
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                self.selectDate(date);
-            });
+            // Out-of-range days paint disabled and skip the click handler entirely.
+            if (!this.isDateAllowed(date)) {
+                btn.disabled = true;
+            } else {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    self.selectDate(date);
+                });
+            }
 
             this.elements.datesContainer.appendChild(slot);
         },
@@ -1659,7 +2044,10 @@
                 this.state.selectedDate = copyDateWithHijri(date);
             }
 
-            this.updateInput();
+            // Selection only mutates state — Save commits to the input.
+            // Consumers listening for `change` on the input still get one event,
+            // fired from saveAndClose. Closing without Save discards the pending
+            // pick (parseInitialValue re-syncs state from input on next open).
             this.renderCalendarDates();
         },
 
@@ -1693,11 +2081,12 @@
 
             this.updateDropdowns();
             this.renderCalendarDates();
-            if (!this.isRangeMode()) {
-                this.updateInput();
-            }
+            // Today only mutates state; Save commits (matches selectDate).
         },
 
+        // Explicit erase — wipes the committed input value AND pending state,
+        // dispatches change, and closes the picker. Immediate (not deferred to
+        // Save) because the user's click IS the confirmation for erasing.
         clearSelection: function () {
             this.state.selectedDate = null;
             this.state.rangeStart = null;
@@ -1705,6 +2094,9 @@
             this.elements.input.value = '';
             this.elements.input.dispatchEvent(new Event('change', { bubbles: true }));
             this.renderCalendarDates();
+            if (this.dropmenuInstance && this.dropmenuInstance.isOpen) {
+                this.dropmenuInstance.close();
+            }
         },
 
         // Range selection logic
@@ -1731,14 +2123,14 @@
             var convertedValue = '';
 
             if (this.isRangeMode() && this.state.rangeStart) {
-                value = calendar.formatDate(this.state.rangeStart);
+                value = calendar.formatDate(this.state.rangeStart, this.state.format);
                 convertedValue = this.getConvertedDate(this.state.rangeStart);
                 if (this.state.rangeEnd) {
-                    value += ' - ' + calendar.formatDate(this.state.rangeEnd);
+                    value += ' - ' + calendar.formatDate(this.state.rangeEnd, this.state.format);
                     convertedValue += ' - ' + this.getConvertedDate(this.state.rangeEnd);
                 }
             } else if (this.state.selectedDate) {
-                value = calendar.formatDate(this.state.selectedDate);
+                value = calendar.formatDate(this.state.selectedDate, this.state.format);
                 convertedValue = this.getConvertedDate(this.state.selectedDate);
             }
 
@@ -1757,6 +2149,7 @@
         getConvertedDate: function (date) {
             if (!date) return '';
 
+            var format = this.state.format;
             if (this.state.calendarType === 'hijri') {
                 if (date._hijriDay && date._hijriMonth && date._hijriYear &&
                     window._accurateTodaysHijriDate && window._accurateTodaysGregorianDate) {
@@ -1764,13 +2157,13 @@
                         date._hijriYear, date._hijriMonth, date._hijriDay,
                         window._accurateTodaysHijriDate, window._accurateTodaysGregorianDate
                     );
-                    return CalendarConfig.gregorian.formatDate(accurateGregorian);
+                    return CalendarConfig.gregorian.formatDate(accurateGregorian, format);
                 }
-                return CalendarConfig.gregorian.formatDate(date);
+                return CalendarConfig.gregorian.formatDate(date, format);
             }
 
             // Gregorian → Hijri: formatDate handles conversion internally
-            return CalendarConfig.hijri.formatDate(date);
+            return CalendarConfig.hijri.formatDate(date, format);
         },
 
         // Utility methods
@@ -1791,6 +2184,9 @@
             var monthNames = calendar.monthNames[lang];
             var self = this;
 
+            var isHijri = self.state.calendarType === 'hijri';
+            var currentYear = self.getCurrentYear();
+
             monthNames.forEach(function (monthName, index) {
                 var btn = document.createElement('button');
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-month-option';
@@ -1803,7 +2199,7 @@
                 monthLabel.textContent = monthName;
                 btn.appendChild(monthLabel);
 
-                var isSelected = self.state.calendarType === 'hijri' ?
+                var isSelected = isHijri ?
                     (index + 1) === self.getCurrentMonth() : // For Hijri: compare (0-based index + 1) with 1-based month
                     index === self.getCurrentMonth();        // For Gregorian: compare 0-based with 0-based
 
@@ -1811,22 +2207,57 @@
                     NDS.State.add(btn, 'selected');
                 }
 
-                btn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    var monthValue = parseInt(this.dataset.value);
+                // Same allowed-day check the month grid uses — a month is only
+                // pickable if at least one of its days falls inside [min, max].
+                var monthCheckValue = isHijri ? index + 1 : index;
+                if (!self.isMonthAllowedForYear(currentYear, monthCheckValue)) {
+                    btn.disabled = true;
+                } else {
+                    btn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        var monthValue = parseInt(this.dataset.value);
 
-                    if (self.state.calendarType === 'hijri') {
-                        self.setHijriDatePart('month', monthValue + 1); // Convert 0-based dropdown index to 1-based Hijri month
-                    } else {
-                        self.state.currentDate.setMonth(monthValue);
-                    }
+                        if (isHijri) {
+                            self.setHijriDatePart('month', monthValue + 1); // Convert 0-based dropdown index to 1-based Hijri month
+                        } else {
+                            self.state.currentDate.setMonth(monthValue);
+                        }
 
-                    self.updateDropdowns();
-                    self.renderCalendarDates();
-                });
+                        self.updateDropdowns();
+                        self.renderCalendarDates();
+                    });
+                }
 
                 self.elements.monthDropdownMenu.appendChild(btn);
             });
+        },
+
+        // Shared year-range bounds — driven by input's data-year-before /
+        // data-year-after, relative to today's year. Used by the year dropmenu,
+        // the year-mode grid, and the prev/next navigation clamp. Coexists
+        // with data-min-date / data-max-date — the tighter side wins.
+        getYearRange: function () {
+            var yearRangeBefore = parseInt(this.elements.input.dataset.yearBefore) || 5;
+            var yearRangeAfter = parseInt(this.elements.input.dataset.yearAfter);
+            var useCurrentYearAsLast = yearRangeAfter === 0 || yearRangeAfter === null || isNaN(yearRangeAfter);
+            if (isNaN(yearRangeAfter)) yearRangeAfter = 5;
+
+            var isHijri = this.state.calendarType === 'hijri';
+            var todayYear = isHijri
+                ? this.getTodaysHijriDate().year
+                : getSaudiDateObject().getFullYear();
+            var start = todayYear - yearRangeBefore;
+            var end = useCurrentYearAsLast ? todayYear : todayYear + yearRangeAfter;
+
+            if (this.state.minDate) {
+                var minY = isHijri ? this.state.minDate._hijriYear : this.state.minDate.getFullYear();
+                if (minY > start) start = minY;
+            }
+            if (this.state.maxDate) {
+                var maxY = isHijri ? this.state.maxDate._hijriYear : this.state.maxDate.getFullYear();
+                if (maxY < end) end = maxY;
+            }
+            return { start: start, end: end };
         },
 
         renderYearOptions: function () {
@@ -1834,33 +2265,10 @@
 
             this.elements.yearDropdownMenu.innerHTML = '';
 
-            // Read year range from input element instead of dropdown menu
-            var yearRangeBefore = parseInt(this.elements.input.dataset.yearBefore) || 5;
-            var yearRangeAfter = parseInt(this.elements.input.dataset.yearAfter);
-
-            // If yearRangeAfter is 0, null, or undefined, use current year as last year
-            var useCurrentYearAsLast = yearRangeAfter === 0 || yearRangeAfter === null || isNaN(yearRangeAfter);
-            if (isNaN(yearRangeAfter)) {
-                yearRangeAfter = 5; // Default value if not specified
-            }
-
+            var range = this.getYearRange();
+            var startYear = range.start;
+            var endYear = range.end;
             var currentYear = this.getCurrentYear();
-            var startYear, endYear;
-
-            if (this.state.calendarType === 'hijri') {
-                // For Hijri calendar, use current Hijri year as reference
-                var todaysHijriDate = this.getTodaysHijriDate();
-                var todayHijriYear = todaysHijriDate.year;
-
-                startYear = todayHijriYear - yearRangeBefore;
-                endYear = useCurrentYearAsLast ? todayHijriYear : todayHijriYear + yearRangeAfter;
-            } else {
-                // For Gregorian calendar, use today's year as reference
-                var todayYear = getSaudiDateObject().getFullYear();
-                startYear = todayYear - yearRangeBefore;
-                endYear = useCurrentYearAsLast ? todayYear : todayYear + yearRangeAfter;
-            }
-
             var self = this;
 
             for (var year = startYear; year <= endYear; year++) {
