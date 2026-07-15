@@ -6,6 +6,9 @@ hero_description: A star-based input and display component for collecting user f
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "03/07/2026 - 02:01 AM"
 ---
 
 <!-- Display Rating -->

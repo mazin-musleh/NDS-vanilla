@@ -6,6 +6,9 @@ hero_description: Colored icon containers that draw attention to features, statu
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "07/07/2026 - 10:58 AM"
 ---
 
 <!-- Featured Icons -->

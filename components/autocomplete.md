@@ -6,6 +6,9 @@ hero_description: Remote typeahead search input with keyboard navigation, result
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "15/07/2026 - 01:15 AM"
 ---
 
 <!-- Autocomplete Input -->

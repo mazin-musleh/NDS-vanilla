@@ -6,6 +6,9 @@ hero_description: A drop-in placeholder that fills empty containers with an icon
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.1.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Generic Container -->

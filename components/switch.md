@@ -6,6 +6,9 @@ hero_description: Toggle switches for binary choices with clear visual feedback 
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Single Switch -->

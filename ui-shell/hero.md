@@ -6,6 +6,9 @@ hero_description: Full-width page banners for home page sliders and compact sub-
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "03/07/2026 - 11:35 PM"
 ---
 
 <!-- Sub Hero -->

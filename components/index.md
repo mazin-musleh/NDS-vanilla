@@ -44,6 +44,9 @@ sidemenu_mode: false
                             <hr class="nds-divider">
                             <div data-filter="tech" data-filter-legend="Technology" data-filter-type="checkbox"
                                 data-no-auto-close></div>
+                            <hr class="nds-divider">
+                            <div data-filter="since" data-filter-legend="Added in" data-filter-type="checkbox"
+                                data-filter-accordion data-no-auto-close></div>
                         </div>
                         <div class="nds-dropmenu-footer">
                             <hr class="nds-divider">
@@ -84,6 +87,13 @@ sidemenu_mode: false
                             <span class="nds-label" data-filter="tech">{{ tag }}</span>
                         </span>
                         {% endfor %}
+                        {%- assign comp_path = comp.url | split: "#" | first -%}
+                        {%- assign comp_page = site.pages | where: "url", comp_path | first -%}
+                        {%- if comp_page.since %}
+                        <span class="nds-tag nds-gray nds-sm">
+                            <span class="nds-label" data-filter="since">v{{ comp_page.since }}</span>
+                        </span>
+                        {%- endif %}
                     </div>
                 </div>
                 {% if comp.url %}

@@ -6,6 +6,9 @@ hero_description: A lightweight CSS-only utility for quick alignment, direction,
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "15/07/2026 - 11:47 AM"
 ---
 
 <!-- Basic Alignment -->

@@ -6,6 +6,9 @@ hero_description: Utilities for formatting large numbers with locale-aware separ
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.2.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Number Formatting -->

@@ -6,6 +6,9 @@ hero_description: Keep the DGA default, switch on dark mode, or make the system 
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.1.0"
+updated: "1.3.0"
+last_edit: "03/07/2026 - 05:43 PM"
 ---
 
 <!-- Experimental notice (dark mode) -->

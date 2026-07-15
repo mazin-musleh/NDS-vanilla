@@ -6,6 +6,9 @@ hero_description: "Every CSS custom property behind NDS: the color palette, prim
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.2.0"
+updated: "1.3.0"
+last_edit: "03/07/2026 - 03:06 AM"
 ---
 
 <!-- Version notice -->

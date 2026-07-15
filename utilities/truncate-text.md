@@ -6,6 +6,9 @@ hero_description: A single-class CSS utility that clips overflowing text with an
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.2.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Single-Line Truncation -->

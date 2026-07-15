@@ -6,6 +6,9 @@ hero_description: A controls bar above a table, list, or grid that arranges resu
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.4.0"
+updated: "1.4.0"
+last_edit: "15/07/2026 - 11:17 PM"
 ---
 
 <!-- Toolbar -->

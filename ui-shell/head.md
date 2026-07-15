@@ -6,6 +6,9 @@ hero_description: The stylesheets and scripts every NDS page loads so it paints 
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.1.0"
+updated: "1.3.0"
+last_edit: "04/07/2026 - 09:53 PM"
 ---
 
 <!-- Page Setup -->

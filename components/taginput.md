@@ -5,6 +5,8 @@ hero_title: Tag Input - National Design System
 hero_description: A free-text field that turns typed values into removable chip tags, committing on Enter or comma and submitting natively as an array.
 breadcrumb: [["Components", "/components"]]
 since: "1.4.0"
+updated: "1.4.0"
+last_edit: "15/07/2026 - 03:13 AM"
 lang: en
 direction: ltr
 ---

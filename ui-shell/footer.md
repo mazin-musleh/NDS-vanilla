@@ -6,6 +6,9 @@ hero_description: A site-wide footer that organizes secondary navigation, contac
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "02/07/2026 - 09:17 PM"
 ---
 
 <!-- Footer Structure -->

@@ -6,6 +6,9 @@ hero_description: A declarative download utility for turning any table, card lis
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.1.0"
+updated: "1.4.0"
+last_edit: "13/07/2026 - 01:15 AM"
 ---
 
 <!-- Table Export -->

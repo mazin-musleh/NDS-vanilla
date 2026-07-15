@@ -6,6 +6,9 @@ hero_description: A range input for selecting a single value or a continuous min
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.2.0"
+updated: "1.3.0"
+last_edit: "30/06/2026 - 11:50 PM"
 ---
 
 <!-- Single Slider -->

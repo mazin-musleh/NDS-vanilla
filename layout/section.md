@@ -6,6 +6,9 @@ hero_description: A structured container for organizing page content into titled
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "14/07/2026 - 12:13 AM"
 ---
 
 <!-- Section Structure Overview -->

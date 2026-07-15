@@ -6,6 +6,9 @@ hero_description: An identity block that presents a person's name, role, and sup
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.1.0"
+last_edit: "30/06/2026 - 11:50 PM"
 ---
 
 <!-- Overview -->

@@ -6,6 +6,9 @@ hero_description: A flexible filtering system for narrowing down content using s
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "15/07/2026 - 11:17 PM"
 ---
 
 <!-- Basic Client-Side Filter -->

@@ -155,7 +155,8 @@
                     <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Added in v{{ page.since }}</span></span>
                     {%- endif %}
                     {%- endif %}
-                    {%- if page.updated %}
+                    {%- comment %} Same version as since = never refactored — the Added tag says it all {%- endcomment %}
+                    {%- if page.updated and page.updated != page.since %}
                     {%- if _in_dev and page.updated == _dev_target %}
                     <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Updated in next release</span></span>
                     {%- else %}

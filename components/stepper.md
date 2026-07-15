@@ -6,6 +6,9 @@ hero_description: Step-by-step progress indicators for registration forms, onboa
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Stepper Layouts -->

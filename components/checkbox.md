@@ -6,6 +6,9 @@ hero_description: Multi-selection input controls with clear visual states and ac
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.1.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Single Checkbox -->

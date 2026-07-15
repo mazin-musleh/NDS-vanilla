@@ -6,6 +6,9 @@ hero_description: A persistent sidebar for navigating sections and pages within 
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Side Menu Structure -->

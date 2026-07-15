@@ -6,6 +6,9 @@ hero_description: A clipboard utility that turns any button into a one-click cop
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Literal Copy -->

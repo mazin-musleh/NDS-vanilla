@@ -6,6 +6,9 @@ hero_description: Circular and linear indicators for visualizing completion rate
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "04/07/2026 - 04:46 AM"
 ---
 
 <!-- Progress Circle -->

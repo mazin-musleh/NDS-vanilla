@@ -6,6 +6,9 @@ hero_description: A dashboard tile that pairs a key statistic with an inline spa
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.2"
+updated: "1.1.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Positive Trend -->

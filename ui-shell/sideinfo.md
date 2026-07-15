@@ -6,6 +6,9 @@ hero_description: A companion column placed alongside the main article for servi
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Side Info Structure -->

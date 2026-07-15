@@ -6,6 +6,9 @@ hero_description: Focuses the user on a single task or decision by overlaying a 
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Modal Dialog -->

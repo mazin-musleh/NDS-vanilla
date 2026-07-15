@@ -6,6 +6,9 @@ hero_description: Group related content into a single surface where users switch
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Standard Tabs -->

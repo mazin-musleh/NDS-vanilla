@@ -6,6 +6,9 @@ hero_description: Visualize data with bar, line, pie, and donut charts that rend
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.3.0"
+last_edit: "28/06/2026 - 01:27 PM"
 ---
 
 <!-- Bar Chart -->

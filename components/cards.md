@@ -6,6 +6,9 @@ hero_description: A composable container for grouping content, metrics, or actio
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "03/07/2026 - 03:39 AM"
 ---
 
 <!-- Standard Card -->

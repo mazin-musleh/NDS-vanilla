@@ -6,6 +6,9 @@ hero_description: Navigate large data sets with numbered page controls, or autom
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.4.0"
+last_edit: "14/07/2026 - 02:46 AM"
 ---
 
 <!-- Choosing a mode -->

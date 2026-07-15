@@ -6,6 +6,9 @@ hero_description: A semantic quotation block for surfacing attributed content wi
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
+since: "1.0.0"
+updated: "1.2.0"
+last_edit: "30/06/2026 - 11:50 PM"
 ---
 
 
