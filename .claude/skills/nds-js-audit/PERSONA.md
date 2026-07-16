@@ -72,7 +72,6 @@ destroy() {
 **Carve-outs (NOT divergence)**
 
 - **Two-phase lifecycle** where `cleanup()` releases per-open-cycle handlers and `destroy()` releases instance-lifetime handlers + invokes `cleanup()` first. Exemplar: `_js/nds-date-picker.js`. The principle: per-cycle release uses `cleanup()`; instance release uses `destroy()`. They coexist.
-- **Locally-scoped `function cleanup()` declarations** inside transitionend handlers (`_js/nds-accessibility.js`, `_js/nds-drawer.js`, `_js/nds-dropmenu.js`, `_js/nds-sidemenu.js`) are closure utilities, not public teardown methods. They share the word but not the meaning.
 
 **Audit behavior**
 
@@ -90,7 +89,7 @@ The verb pair encodes the concept, not the DOM mutation. Two components making a
 
 **Concept:** the surface fully captures attention. Singleton-open. Focus-trapped (`NDS.trapFocus`) and typically backdrop-paired (`NDS.Backdrop.show`). Opening is a state transition for the whole page.
 
-**Discriminator** (mechanically checkable): file invokes `NDS.trapFocus` OR `NDS.Backdrop.show`.
+**Discriminator** (mechanically checkable): file invokes `NDS.trapFocus` OR `NDS.Backdrop.show`, OR enforces singleton-open another way — delegating its lifecycle to `NDS.Dropmenu` (`NDS.Dropmenu.create` + `open()`/`close()` passthrough: `_js/nds-tooltip.js`, `_js/nds-autocomplete.js`), closing every other open instance on open (`_js/nds-dropmenu.js` `_openDropdowns`), or a deliberate no-trap disclosure panel that still owns the page's attention (`_js/nds-accessibility.js`, `"No inert / no backdrop"` comment).
 
 **Examples:** `_js/nds-modal.js`, `_js/nds-ipv.js`, `_js/nds-dropmenu.js`, `_js/nds-tooltip.js`, `_js/nds-autocomplete.js`, `_js/nds-accessibility.js`.
 
@@ -159,7 +158,7 @@ Component-emitted diagnostics carry the component's identity at the start of the
 **Carve-outs (NOT divergence)**
 
 - `_js/nds-core.js` and `_js/nds-loader.js` use the bracket form `[NDS.<api>]` / `[NDS]` / `[NDS:init]` because they're API namespaces and orchestration, not components. Out of scope of this entry.
-- **Programmatic-API-namespace modules** whose public surface is invoked as `NDS.<Name>.<method>(...)` (a sub-API, not a DOM-attached per-element component instance) may use the bracket form `[NDS.<Name>]` — same shape as core's `[NDS.i18n]`. Cite: `_js/nds-export.js` — `NDS.Export` (`export`/`csv`/`xls`/`pdf`/`collect`) is a stateless library/API namespace, so it emits `[NDS.Export] …`. (This carve-out tends to coincide with JSD-07's "declarative-delegation library" exemption — a module that is an API namespace there is usually one here too.)
+- **Programmatic-API-namespace modules** whose public surface is invoked as `NDS.<Name>.<method>(...)` (a sub-API, not a DOM-attached per-element component instance) may use the bracket form `[NDS.<Name>]` — same shape as core's `[NDS.i18n]`. Cite: `_js/nds-export.js` — `NDS.Export` (`export`/`csv`/`xls`/`pdf`/`collect`) is a stateless library/API namespace (loader-registered for detection only), so it emits `[NDS.Export] …`.
 
 **Audit behavior**
 
@@ -205,9 +204,9 @@ A factory creates per-element instances; the guard must distinguish "this specif
 
 **Carve-outs (NOT divergence)**
 
-- **Window-scope flags for tree-wide observers.** `_js/nds-tables.js` (`window.ndsTableClassObserverInitialized` ~L394, `window.ndsTabChangeHandlerInitialized` ~L407) coordinates two cross-module observers (responsive-table class mutations, tab-change events). The window flag is the right shape for that specific concern because there's no per-element target AND the guard needs to coordinate with sibling modules. Not divergence.
-- **JS-property per-element guards on document-sweeping controllers.** A factory-style controller that sweeps the whole document (rather than a registered per-instance selector) MAY mark each visited element with a JS property (`el._ndsXxxInitialized`) instead of the canonical attribute. The property IS on the element (satisfying 5.1's principle) and distinguishes per-element init; it just isn't CSS-selectable, so re-sweeps check the flag inline rather than filtering via `:not([data-…-initialized])`. Exemplar: `_js/nds-forms.js` (`_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized` markers). Not divergence. (A *registered* factory with a per-instance selector should still prefer the attribute form so the loader's rescan can selector-filter.)
-- **Instance-expando guards on registered factories.** A registered factory whose `create(el)` is idempotent through the instance back-ref itself MAY use that expando as the per-element guard instead of a parallel `data-nds-<name>-initialized` attribute — the instance IS the init state, and a second attribute channel written in lockstep could drift (the JSA-12 "single-reader state mirror" smell). The guard must be gated on successful construction (JSD-18). Tradeoff: loader rescans can't selector-filter; acceptable when instances-per-page stay few. Exemplar: `_js/nds-date-picker.js` (`createInstance` returns the existing instance when `dateInput._ndsDatePicker` is present). Not divergence.
+- **Window-scope flags for tree-wide observers.** `_js/nds-tables.js` (`window.ndsTableClassObserverInitialized` ~L608, `window.ndsTabChangeHandlerInitialized` ~L621) coordinates two cross-module observers (responsive-table class mutations, tab-change events). The window flag is the right shape for that specific concern because there's no per-element target AND the guard needs to coordinate with sibling modules. Not divergence.
+- **Non-attribute per-element guards.** The guard may live on the element in a non-attribute form when the structure justifies it: **(a)** a JS property on a document-sweeping controller (`_js/nds-forms.js` `_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized`) — per-element, just not CSS-selectable, so re-sweeps check inline; **(b)** the instance expando itself on a registered factory whose `create(el)` is idempotent through the back-ref (`_js/nds-date-picker.js` `_ndsDatePicker`) — the instance IS the init state, a parallel attribute channel could drift; must be gated on successful construction (JSD-18); **(c)** structural augmentation as the guard, when init's own DOM mutation is the idempotence marker (`_js/nds-customselect.js` `build()` checks the `.nds-dropmenu` class it stamps). Not divergence. A *registered* factory with a per-instance selector should still prefer the attribute form so the loader's rescan can selector-filter — see Audit behavior step 7.
+- **Repeat-safe init without a flag.** A singleton whose init is idempotent (or deliberately re-armable) by construction needs no `_initDone`: the guard IS the resource (`_js/nds-selection.js` `_controller` — nulled by `destroy()`, so `init()` re-arms by design; a one-way flag would break the cycle), documented abort-and-rebind semantics (`_js/nds-share.js` `init()` aborts and replaces its own `_abortController`), or per-item dedup state (`_js/nds-fontLoading.js` `fontStates`). Not divergence.
 
 **Audit behavior**
 
@@ -216,7 +215,9 @@ A factory creates per-element instances; the guard must distinguish "this specif
 3. Singleton using `data-nds-<name>-initialized` → flag.
 4. Window-global flag requires an inline comment within 3 lines naming the cross-module observer concern; otherwise flag.
 5. Singleton using a module-scope closure flag NOT named `_initDone` (e.g. `_installed`, `_wired`, `_ready`) → flag as a name divergence; migrate to `_initDone` or open a Phase 7 revision. Resolved (was the motivating finding): `_js/nds-voice-input.js` migrated `var _installed` → `var _initDone`.
-6. Factory whose per-element guard IS a DOM attribute but does NOT match `data-nds-<name>-initialized` (e.g. missing the `nds-` infix, like `data-swiper-initialized`) → flag as a name divergence; migrate or open a Phase 7 revision. Does NOT apply to the JS-property carve-out above. Resolved (was the motivating finding): `_js/nds-swiper.js` migrated `data-swiper-initialized` → `data-nds-swiper-initialized`.
+6. Factory whose per-element guard IS a DOM attribute but does NOT match `data-nds-<name>-initialized` (e.g. missing the `nds-` infix, like `data-swiper-initialized`) → flag as a name divergence; migrate or open a Phase 7 revision. Does NOT apply to the non-attribute carve-out above. Resolved (were the motivating findings): `_js/nds-swiper.js` `data-swiper-initialized`, `_js/nds-alert.js` `data-nds-alert-init`, `_js/nds-cooldown-button.js` `data-cooldown-wired` — all migrated to the canonical form.
+7. *Registered* factory with a per-instance selector using a JS-property guard (`el._ndsXxxInitialized`) where the attribute form would let loader rescans selector-filter → flag as a form divergence; migrate to `data-nds-<name>-initialized` or open a Phase 7 revision. Resolved (was the motivating divergence): `_js/nds-scroll-more.js` migrated `_ndsScrollMoreInitialized` → `data-nds-scroll-more-initialized`.
+8. Singleton `init()` that arms listeners/observers/timers with NO guard at all — no flag, no resource-presence check, none of the repeat-safe shapes in the carve-outs — → flag (a re-run stacks or re-schedules work). Resolved (was the motivating divergence): `_js/nds-cookies.js` `initializeCookies` gained the canonical `_initDone` guard.
 
 ---
 
@@ -249,7 +250,14 @@ Listener teardown should be atomic by default: one `.abort()` releases every lis
 
 **Audit behavior**
 
-Flag any `this.handlers.<key> = fn` pattern in a file where the component does NOT have a detectable two-phase lifecycle (i.e., does NOT have a `cleanup()` method removing a subset of `this.handlers.<key>` keys, paired with a `destroy()` removing the rest). Files with the documented two-phase shape pass.
+Flag any of these signal-less shapes in a file WITHOUT the documented two-phase-subset need (no `cleanup()` removing a subset of stored handlers paired with a `destroy()` removing the rest):
+1. `this.handlers.<key> = fn` map stores with teardown enumeration.
+2. Instance-property handler stores + straight-line `removeEventListener` teardown (`_js/nds-autocomplete.js` `this._onInput = …` and siblings, removed one-by-one in `destroy()`).
+3. Raw paired `addEventListener`/`removeEventListener` with no AbortController anywhere in the instance (`_js/nds-toc.js` `_onScroll`).
+4. `cloneNode(true)` + `replaceWith` listener-nuking teardown — it also destroys consumer-attached listeners on the element (`_js/nds-dropmenu.js` `destroy()`).
+5. Manual removal bookkeeping inside a `signal.addEventListener('abort', …)` callback where passing `{ signal }` to the original `addEventListener` would do it natively (`_js/nds-sidemenu.js` `setupScrollPeek`).
+
+Files with the documented two-phase shape pass.
 
 ---
 

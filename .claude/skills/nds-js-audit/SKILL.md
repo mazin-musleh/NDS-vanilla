@@ -192,7 +192,7 @@ The detection rules live in sibling files, one per rule group. Read the file(s) 
 | Group | File | Covers | Rules |
 |---|---|---|---|
 | JSP | `RULES-JSP.md` | performance — listener/observer pooling, scroll/resize throttling, forced-layout-at-init | 11 |
-| JSD | `RULES-JSD.md` | DRY/KISS — cross-file dedup, core promotion (JSD-05), persona conformance (JSD-15 → `PERSONA.md`), init-sentinel ordering | 18 |
+| JSD | `RULES-JSD.md` | DRY/KISS — cross-file dedup, core promotion (JSD-05), persona conformance (JSD-15 → `PERSONA.md`), init-sentinel ordering | 19 |
 | JSS | `RULES-JSS.md` | client-side security sinks — innerHTML XSS, eval, tabnabbing, postMessage origin, untrusted URLs | 6 |
 | JSA | `RULES-JSA.md` | architecture — unbounded caches, scheduling choice, complexity, in-file DRY, INP cost, CSS-subsumption, comment hygiene, index-space correctness | 17 |
 
