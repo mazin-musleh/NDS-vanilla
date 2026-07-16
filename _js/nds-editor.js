@@ -50,6 +50,7 @@
         return false;
     }
 
+    // Local fork — also escapes quotes for attribute contexts (openTag); NDS.escapeHtml doesn't. Do not swap.
     const escapeHtml = (s) => s.replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 
     // ---------- Interpret (normal markup → NDS vocabulary) ----------
@@ -222,10 +223,7 @@
             if (DROP_TAGS.has(child.tagName.toUpperCase())) { child.remove(); continue; }
             // Recurse first so nested disallowed tags resolve in one pass.
             sanitizeNode(child, allowed, trusted);
-            if (!allowed.has(child.tagName)) {
-                while (child.firstChild) node.insertBefore(child.firstChild, child);
-                child.remove();
-            }
+            if (!allowed.has(child.tagName)) unwrapEl(child);
         }
     }
 
@@ -241,8 +239,7 @@
                     el.setAttribute('href', href);
                     el.setAttribute('rel', 'noopener noreferrer');
                 } else {
-                    while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
-                    el.remove();
+                    unwrapEl(el);
                 }
             }
         }
@@ -260,10 +257,7 @@
                     || (trusted && trusted.has(child) && INLINE_REGION_TAGS.has(child.tagName));
                 if (!inlineOk) { bad = true; break; }
             }
-            if (bad) {
-                while (p.firstChild) p.parentNode.insertBefore(p.firstChild, p);
-                p.remove();
-            }
+            if (bad) unwrapEl(p);
         }
     }
 
@@ -329,11 +323,13 @@
 
         // Pass A — NDS component regions survive with their structure.
         const regions = [];
+        // Pre-order doc order: only the most recently accepted region can contain a later match.
+        let lastRegion = null;
         for (const el of Array.from(root.querySelectorAll('[class*="nds-"]'))) {
             if (!el.isConnected) continue; // removed inside an earlier region
-            if (regions.some(r => r.contains(el))) continue; // top-most roots only
+            if (lastRegion && lastRegion.contains(el)) continue; // top-most roots only
             if (!NDS_TAGS.has(el.tagName) || !hasNdsClass(el)) continue;
-            if (sanitizeRegion(el)) regions.push(el);
+            if (sanitizeRegion(el)) { regions.push(el); lastRegion = el; }
         }
         const trusted = new Set(regions);
 
@@ -419,7 +415,7 @@
     class NDSEditor {
         constructor(root) {
             this.root = root;
-            // Success signal — the init sweep gates the ndsEditor expando on it.
+            // Success signal — init() only runs (and registers root.ndsEditor) when construction succeeds.
             this.valid = false;
             if (root.hasAttribute('data-nds-editor-initialized')) return;
 
@@ -441,6 +437,7 @@
 
         init() {
             this.root.setAttribute('data-nds-editor-initialized', 'true');
+            this.root.ndsEditor = this;
             const { signal } = this.abortController;
 
             // ponytail: <p> as new-block separator — native Enter gives clean <p> per paragraph.
@@ -821,8 +818,7 @@
         document.querySelectorAll('.nds-editor').forEach(el => {
             if (el.closest('code, .code-example')) return;
             if (el.hasAttribute('data-nds-editor-initialized')) return;
-            const instance = new NDSEditor(el);
-            if (instance.valid) el.ndsEditor = instance;
+            new NDSEditor(el);
         });
     }
 
@@ -831,13 +827,9 @@
         NDS.Editor = {
             init: initializeEditors,
             reinit: initializeEditors,
-            create: (element) => new NDSEditor(element),
+            create: (element) => element.ndsEditor || new NDSEditor(element),
             destroy: (element) => element.ndsEditor?.destroy(),
             _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline
         };
-    }
-
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSEditor;
     }
 })();
