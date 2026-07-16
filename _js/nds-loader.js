@@ -338,6 +338,14 @@
             init: () => NDS.Autocomplete?.init?.(),
         },
         {
+            // Deferred: markup + CSS paint the surface; JS owns behavior only.
+            // Typing in the pre-bundle gap is native contenteditable and the
+            // first _syncSource() captures it.
+            name: 'Editor',
+            selector: '.nds-editor',
+            init: () => NDS.Editor?.init?.(),
+        },
+        {
             // Delegated: crit CSS holds each filter target container
             // ([data-filter-items]) hidden until init stamps
             // data-nds-filter-initialized on it — the data-nds-loaded pattern,

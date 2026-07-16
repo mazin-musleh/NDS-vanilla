@@ -69,7 +69,7 @@ class JSProcessor
       # plain pages never download/parse them. May later be split into smaller
       # per-component bundles (add a bundle here; the loader picks it up from the
       # generated manifest).
-      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-tooltip.js', 'nds-export.js', 'nds-upload.js']
+      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-tooltip.js', 'nds-export.js', 'nds-upload.js', 'nds-editor.js']
       # NOTE: nds-accessibility.js is intentionally NOT bundled here — it
       # builds to its own assets/js/nds-accessibility.min.js (optional add-on,
       # loaded by a separate <script> gated on site.accessibility).

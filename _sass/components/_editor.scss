@@ -1,0 +1,100 @@
+/**
+ * NDS Editor Component
+ * Rich-text editing surface (contenteditable) mirrored into a hidden textarea
+ * form field, with toolbar formatting, link popover, and source view.
+ * Wears the .nds-form-container.nds-textarea chrome; JS: _js/nds-editor.js.
+ */
+
+@use '../mixins' as *;
+
+.nds-editor {
+  --_min-size: var(--editor-min-size, 12rem);
+
+  .nds-editor-editable {
+    position: relative;
+    min-block-size: var(--_min-size);
+    inline-size: 100%;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    line-height: 1.6;
+    outline: none;
+    overflow-wrap: break-word;
+
+    &.is-empty::before {
+      content: attr(data-placeholder);
+      color: var(--form-field-text-placeholder);
+      pointer-events: none;
+      position: absolute;
+      inset-block-start: var(--spacing-md);
+      inset-inline-start: var(--spacing-md);
+    }
+
+    :is(h1, h2, h3, p, ul, ol) { margin-block: var(--spacing-sm); }
+    :is(ul, ol) { margin-inline-start: var(--spacing-lg); padding-inline-start: var(--spacing-md); }
+    :is(h1, h2, h3, p, ul, ol):first-child { margin-block-start: 0; }
+    :is(h1, h2, h3, p, ul, ol):last-child { margin-block-end: 0; }
+
+    // Transient <div> Chrome injects during editing — the sanitizer strips it
+    // from the form value; keep it visually flush. Classless only: NDS
+    // component divs pasted as content keep their own margins.
+    div:not([class]) { margin: 0; }
+  }
+
+  .nds-toolbar { --toolbar-margin-block: 0; }
+
+  // Pressed state for toolbar toggles — aria-pressed is standard ARIA; NDS buttons don't style it natively.
+  .nds-toolbar .nds-btn[aria-pressed="true"] { background: var(--form-field-background-darker); }
+
+  // Popover panels (link form, insert list) inside toolbar dropmenus.
+  .nds-editor-link-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    min-inline-size: 20rem;
+  }
+  .nds-editor-link-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: flex-end;
+  }
+
+  // Readonly: forms kills pointer events container-wide (its label-toggles-
+  // control rationale) and restores only .nds-form-action. Nothing here can
+  // change the value — cmd buttons carry real [disabled], the surface is
+  // contenteditable=false, the textarea is readOnly — so restore the readonly
+  // affordances: text selection/copy, and the source-view toggle. The
+  // disabled state stays fully inert (no carve-out).
+  &[data-state~="readonly"] :is(.nds-toolbar, .nds-editor-editable, .nds-editor-source) {
+    pointer-events: auto;
+  }
+
+  // Source textarea: clip-hidden in editor mode — NOT [hidden]/display:none, which
+  // NDS.Forms isFieldVisible treats as invisible (required validation would skip it).
+  &:not(.is-source) .nds-editor-source {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    min-block-size: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  // Source view: swap the editable for the textarea; formatting commands are inert.
+  &.is-source .nds-editor-editable { display: none; }
+  &.is-source .nds-toolbar .nds-btn[data-cmd] { opacity: 0.5; pointer-events: none; }
+
+  .nds-editor-source {
+    // Code always reads LTR, even on an RTL page.
+    direction: ltr;
+    text-align: left;
+    unicode-bidi: isolate;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: var(--typo-text-sm-FS);
+    line-height: var(--typo-text-sm-LH);
+    min-block-size: var(--_min-size);
+  }
+}
