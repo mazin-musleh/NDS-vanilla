@@ -63,7 +63,7 @@ class JSProcessor
       # drop `critical: true` from its loader registry entry (location is owned here, not the
       # registry — the build generates the namespace→bundle map from these lists).
       # nds-sort.js leads the list: it's the shared sort engine for filter/tables.
-      'nds-delegated.min.js' => ['nds-sort.js', 'nds-filter.js', 'nds-pagination.js', 'nds-swiper.js', 'nds-stepper.js', 'nds-breadcrumb.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-expandable.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-slider.js', 'nds-tables.js'],
+      'nds-delegated.min.js' => ['nds-sort.js', 'nds-filter.js', 'nds-pagination.js', 'nds-swiper.js', 'nds-stepper.js', 'nds-breadcrumb.js', 'nds-accordion.js', 'nds-tabs.js', 'nds-expandable.js', 'nds-copy.js', 'nds-share.js', 'nds-modal.js', 'nds-alert.js', 'nds-cityWeather.js', 'nds-timeDate.js', 'nds-digitalStamp.js', 'nds-progress.js', 'nds-voice-input.js', 'nds-numbers.js', 'nds-user-feedback.js', 'nds-rating.js', 'nds-slider.js', 'nds-tables.js', 'nds-selection.js'],
       # Extras — heavy, page-specific, zero-inbound leaf components. Injected by
       # nds-loader.js only when the page contains one of them (selector-gated), so
       # plain pages never download/parse them. May later be split into smaller

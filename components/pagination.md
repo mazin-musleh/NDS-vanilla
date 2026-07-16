@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "14/07/2026 - 02:46 AM"
+last_edit: "16/07/2026 - 02:15 AM"
 ---
 
 <!-- Choosing a mode -->
@@ -837,6 +837,89 @@ last_edit: "14/07/2026 - 02:46 AM"
     </div>
 </section>
 
+<!-- Records Counter -->
+<section id="paginationRecords" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Records Counter</h2>
+            <p class="nds-section-description">A "Showing x to y of z" line that pagination keeps live. Point any element at the paged container with <code class="nds-inline-code lang-html">data-paged-target="id"</code> and mark number slots inside it: the sentence, language, and emphasis stay yours, only the numbers are stamped. With an active <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a>, the count is the filtered count automatically</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Counter follows page changes</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <span class="nds-results-count" data-paged-target="pagination_records_demo">
+                                Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>4</b> of <b data-paged-count>9</b> items
+                            </span>
+                            <div id="pagination_records_demo" class="nds-paged-content nds-grid"
+                                style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;">
+                                <div class="nds-page-item nds-card nds-stroke">Card 1</div>
+                                <div class="nds-page-item nds-card nds-stroke">Card 2</div>
+                                <div class="nds-page-item nds-card nds-stroke">Card 3</div>
+                                <div class="nds-page-item nds-card nds-stroke">Card 4</div>
+                                <div class="nds-page-item nds-card nds-stroke">Card 5</div>
+                                <div class="nds-page-item nds-card nds-stroke">Card 6</div>
+                                <div class="nds-page-item nds-card nds-stroke">Card 7</div>
+                                <div class="nds-page-item nds-card nds-stroke">Card 8</div>
+                                <div class="nds-page-item nds-card nds-stroke">Card 9</div>
+                            </div>
+                            <nav class="nds-pagination" data-auto-pagination="pagination_records_demo" aria-label="Pagination"></nav>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button type="button" class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                        aria-controls="panel-pagination-records-1" id="tab-pagination-records-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-pagination-records-1"
+                                    aria-labelledby="tab-pagination-records-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;!-- Author the sentence; pagination stamps the numbers. Prerender the real
+     initial values so the line is correct before JS loads. --&gt;
+&lt;span class="nds-results-count" data-paged-target="pagination_records_demo"&gt;
+    Showing &lt;b data-paged-from&gt;1&lt;/b&gt;&ndash;&lt;b data-paged-to&gt;4&lt;/b&gt; of &lt;b data-paged-count&gt;9&lt;/b&gt; items
+&lt;/span&gt;
+&lt;div id="pagination_records_demo" class="nds-paged-content nds-grid"
+    style="--per-page: 4; --max-col: 4; --mid-col: 3; --min-col: 2;"&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 1&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 2&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 3&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 4&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 5&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 6&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 7&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 8&lt;/div&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 9&lt;/div&gt;
+&lt;/div&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="pagination_records_demo" aria-label="Pagination"&gt;&lt;/nav&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Built-in Features -->
 <section id="paginationFeatures" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -991,6 +1074,10 @@ last_edit: "14/07/2026 - 02:46 AM"
                             <td><code class="nds-inline-code lang-html">data-state="active"</code></td>
                             <td>Set on a page button to mark it as the current page. Updated automatically on navigation</td>
                         </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-paged-target="id"</code></td>
+                            <td>Set on any element to make it a records counter for the paged container with that id. Inside it, pagination stamps the current window and count into <code class="nds-inline-code lang-html">[data-paged-from]</code>, <code class="nds-inline-code lang-html">[data-paged-to]</code>, and <code class="nds-inline-code lang-html">[data-paged-count]</code> slots, with thousand separators. Auto-pagination only; for server pagination stamp the slots via <code class="nds-inline-code lang-js">NDS.Pagination.updateRecords()</code></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -1060,6 +1147,10 @@ NDS.Pagination.refresh(contentContainer, { keepPage: true }); // stay on current
 // nav controls. Keeps the current page by default; pass a page number to jump.
 NDS.Pagination.setTotalPages(navElement, 12);    // keep current page (clamped)
 NDS.Pagination.setTotalPages(navElement, 12, 1); // jump to page 1
+
+// Records counter, server pagination: stamp your own numbers through the same
+// [data-paged-target] slots the auto path fills (auto fills them by itself).
+NDS.Pagination.updateRecords('ordersList', { from: 21, to: 30, count: 1248 });
 
 // Tear down a removed nav (SPA): releases listeners and clears init state
 NDS.Pagination.destroy(navElement);

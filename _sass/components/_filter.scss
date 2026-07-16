@@ -52,9 +52,16 @@
     }
 }
 
-// Result-count line (e.g. "0 Result(s) found"); pairs with [data-filter-count].
+// Result-count line (e.g. "0 Result(s) found" / "Showing 1-6 of 48"); pairs
+// with [data-filter-count] or the pagination data-paged-* slots. <b> slots
+// read as medium emphasis, not full bold.
 .nds-results-count {
+    display: block;   // span-rooted; block so standalone counters sit on their own line
     color: var(--text-secondary-paragraph);
+
+    b {
+        font-weight: var(--font-weight-medium);
+    }
 }
 
 // Filter group opted into accordion (data-filter-accordion). Retune the

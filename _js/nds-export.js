@@ -23,18 +23,9 @@
 (function () {
     'use strict';
 
-    // A row counts as selected when it carries data-state="selected" (the NDS
-    // convention nds-tables.js maintains for table rows) OR when a checkbox
-    // with the .nds-check class inside it is checked. The second path lets
-    // card lists, definition lists, and any custom container "just work" with
-    // the canonical .nds-card-checkbox / nds-form-control markup — consumers
-    // don't need to wire a change listener that mirrors the checkbox state
-    // back onto a data-state attribute.
-    function isRowSelected(row) {
-        if (NDS.State.has(row, 'selected')) return true;
-        const cb = row.querySelector('input.nds-check');
-        return !!(cb && cb.checked);
-    }
+    // Selection rule lives in nds-core.js (NDS.isRowSelected), shared with the
+    // selection-count widget — see the semantics comment there.
+    const isRowSelected = (row) => NDS.isRowSelected(row);
 
     // A row filtered OUT by NDS.Filter carries data-filtered (hidden via the
     // critical-layer rule [data-filtered]{display:none!important}). This is a

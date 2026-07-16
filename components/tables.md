@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "15/07/2026 - 11:17 PM"
+last_edit: "16/07/2026 - 02:30 AM"
 ---
 
 <!-- Basic Table Section -->
@@ -577,7 +577,7 @@ last_edit: "15/07/2026 - 11:17 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Table with Selection</h2>
-            <p class="nds-section-description">Row checkboxes with a select-all header for bulk operations. The header checkbox shows an indeterminate state when some rows are selected. Pair with the <a class="nds-color" href="{{ 'components/export' | relative_url }}">Export</a> component to ship CSV, Excel, or PDF files of the selected rows.</p>
+            <p class="nds-section-description">Row checkboxes with a select-all header for bulk operations. The header checkbox shows an indeterminate state when some rows are selected, and with an active <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a> both it and select-all operate on the filtered rows only (selections made before filtering persist on hidden rows). Pair with the <a class="nds-color" href="{{ 'components/export' | relative_url }}">Export</a> component to ship files of the selected rows, and the <a class="nds-color" href="{{ 'components/selection' | relative_url }}">Selection</a> counter to show how many are selected.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">

@@ -470,6 +470,14 @@
   js: _js/nds-tables.js
   scss: _sass/components/_tables.scss
 
+- title: "Selection"
+  description: "Selected-items counter for tables, card grids, and checkbox lists, with a records-line swap while a selection is active"
+  icon: '<i class="hgi hgi-stroke hgi-check-list"></i>'
+  category: "Data"
+  tags: ["JS"]
+  url: "/components/selection.html"
+  js: _js/nds-selection.js
+
 - title: "Sort"
   description: "DOM-reorder engine for lists, grids, and tables with type auto-detect and URL sync"
   icon: '<i class="hgi hgi-stroke hgi-sorting-05"></i>'

@@ -136,6 +136,13 @@
                     this.updateRowSelectedStates();
                     this.dispatchSelectionEvent();
                 }, { signal });
+
+                // Filter re-stamps data-filtered on rows without any checkbox
+                // event — recompute the header state so select-all stays honest
+                // when the filtered view changes under an existing selection.
+                this._offFilterWatch = NDS.onAttrChange('tr', ['data-filtered'], (els) => {
+                    if (els.some(el => this.tbody.contains(el))) this.updateSelectAllState();
+                });
             }
         }
 
@@ -153,8 +160,20 @@
             this.table.dispatchEvent(event);
         }
 
+        // Select-all and the header state operate on the FILTERED view only:
+        // rows an active filter removed carry data-filtered and are excluded.
+        // Pagination-hidden rows (other pages) stay included, matching export.
+        // Selections already made on rows a filter later hides persist — the
+        // bulk-action truth export and the selection count also report.
+        eligibleCheckboxes() {
+            return this.rowCheckboxes.filter(checkbox => {
+                const tr = checkbox.closest('tr');
+                return !(tr && tr.hasAttribute('data-filtered'));
+            });
+        }
+
         handleSelectAll(checked) {
-            this.rowCheckboxes.forEach(checkbox => {
+            this.eligibleCheckboxes().forEach(checkbox => {
                 checkbox.checked = checked;
             });
 
@@ -179,10 +198,11 @@
         }
 
         updateSelectAllState() {
-            const checkedCount = this.rowCheckboxes.filter(cb => cb.checked).length;
-            const totalCount = this.rowCheckboxes.length;
+            const eligible = this.eligibleCheckboxes();
+            const checkedCount = eligible.filter(cb => cb.checked).length;
+            const totalCount = eligible.length;
 
-            this.selectAllCheckbox.checked = checkedCount === totalCount;
+            this.selectAllCheckbox.checked = totalCount > 0 && checkedCount === totalCount;
 
             const isIndeterminate = checkedCount > 0 && checkedCount < totalCount;
             NDS.Forms.setIndeterminate(this.selectAllCheckbox, isIndeterminate);
@@ -228,6 +248,7 @@
         destroy() {
             this.sort?.destroy();
             this.abortController?.abort();
+            if (this._offFilterWatch) { this._offFilterWatch(); this._offFilterWatch = null; }
             this.table.ndsTableControls = null;   // the table stays initialized; only its controls go
         }
     }

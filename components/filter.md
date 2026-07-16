@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "15/07/2026 - 11:17 PM"
+last_edit: "16/07/2026 - 02:30 AM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -2090,7 +2090,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-count</code></td><td>Place on any element linked via <code class="nds-inline-code lang-html">data-filter-target</code>. The filter writes the number of visible items into this element's <code class="nds-inline-code lang-html">textContent</code> after every filter pass. Pair with <code class="nds-inline-code lang-html">.nds-results-count</code> for the standard styling.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-count</code></td><td>Place on any element linked via <code class="nds-inline-code lang-html">data-filter-target</code>. The filter writes the number of visible items into this element's <code class="nds-inline-code lang-html">textContent</code> after every filter pass. Pair with <code class="nds-inline-code lang-html">.nds-results-count</code> for the standard styling. For lists that also paginate, prefer the <a class="nds-color" href="{{ 'components/pagination' | relative_url }}">Pagination</a> records counter (<code class="nds-inline-code lang-html">data-paged-target</code>): its count is the filtered count and it adds the "showing x to y" window.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-filter-query</code></td><td>Place on any element linked via <code class="nds-inline-code lang-html">data-filter-target</code>. The filter writes the active search keyword (wrapped in curly quotes) into this element's <code class="nds-inline-code lang-html">textContent</code>. When present, the search term is routed here instead of appearing as an applied-chip.</td></tr>
                     </tbody>
                 </table>

@@ -206,7 +206,10 @@ hideFeedback: true
             <div class="nds-toolbar">
                 <div class="nds-bar-row">
                     <div class="nds-bar-info">
-                        <span class="nds-results-count" data-filter-target="transactionsTableBody"><span data-filter-count>0</span> transaction(s)</span>
+                        <span class="nds-results-count" data-paged-target="transactionsTableBody" data-selection-target="transactionsTableBody">
+                            <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> transaction(s)</span>
+                            <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> transaction(s)</span>
+                        </span>
                     </div>
                     <div class="nds-bar-actions">
                         <div class="nds-dropmenu" data-columns-target="consoleTransactions">

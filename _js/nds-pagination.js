@@ -31,6 +31,8 @@
  *   - Shared NDS.onDOMRemove('.nds-pagination') sweep aborts the click AC
  *     and releases _offResize for navs torn down without an explicit destroy.
  *   - NDS.Pagination.destroy(nav) — explicit teardown for SPA consumers
+ *   - NDS.Pagination.updateRecords(listOrId, {from, to, count}) — stamp the
+ *     records slots ("x of y") from server/manual pagination
  *     (aborts the click AC, releases _offResize, clears the init stamps).
  *
  * Display pattern: [Prev] 1 2 3 ... [Last] [Next]
@@ -578,10 +580,12 @@
         const pagination = paginationNav.querySelector('.nds-pagination-list');
         const currentPage = pagination ? getCurrentPage(pagination) : 1;
 
-        // No pagination needed — show every item.
+        // No pagination needed — show every item. Bypasses showPage, so the
+        // records slots need their own stamp.
         if (totalPages <= 1) {
             items.forEach(item => item.hidden = false);
             paginationNav.innerHTML = '';
+            updateRecordSlots(contentForNav(paginationNav), items.length, 1, perPage);
             return;
         }
 
@@ -696,6 +700,31 @@
         }
     }
 
+    // ── Records slots ("x of y") ──────────────────────────────────────
+    // Author-owned counter widgets: an element with data-paged-target="<list id>"
+    // holds [data-paged-from]/[data-paged-to]/[data-paged-count] slots that get
+    // the current window and item count. Pagination pages the post-filter item
+    // set, so the count tracks active filters by construction. Sentence
+    // structure and language stay in the author's markup. Manual/server
+    // pagination doesn't route here — those slots stay author-owned.
+    function stampRecordSlots(listId, from, to, count) {
+        document.querySelectorAll(`[data-paged-target="${listId}"]`).forEach(wrap => {
+            // querySelectorAll: a wrapper may repeat a slot across views
+            // (e.g. data-paged-count in both the paged and selection lines).
+            const stamp = (sel, v) => wrap.querySelectorAll(sel).forEach(el => { el.textContent = NDS.formatNumber(v); });
+            stamp('[data-paged-from]', from);
+            stamp('[data-paged-to]', to);
+            stamp('[data-paged-count]', count);
+        });
+    }
+
+    function updateRecordSlots(list, count, pageNumber, perPage) {
+        if (!list || !list.id) return;
+        const from = count ? (pageNumber - 1) * perPage + 1 : 0;
+        const to = Math.min(pageNumber * perPage, count);
+        stampRecordSlots(list.id, from, to, count);
+    }
+
     // Write-only visibility (no layout read) — settles synchronously so the page swap never flashes all-items then hides.
     function showPage(items, pageNumber, perPage) {
         const start = (pageNumber - 1) * perPage;
@@ -704,6 +733,8 @@
         items.forEach((item, index) => {
             item.hidden = index < start || index >= end;
         });
+
+        if (items[0]) updateRecordSlots(items[0].closest('.nds-paged-content'), items.length, pageNumber, perPage);
     }
 
     function getCurrentPage(pagination) {
@@ -894,11 +925,13 @@
             targetPage = list ? Math.min(getCurrentPage(list), Math.max(1, totalPages)) : 1;
         }
 
-        // If no pagination needed (0 or 1 page), hide pagination and show all visible items
+        // If no pagination needed (0 or 1 page), hide pagination and show all
+        // visible items. Bypasses showPage, so the records slots need their own stamp.
         if (totalPages <= 1) {
             visibleItems.forEach(item => item.hidden = false);
             paginationNav.innerHTML = '';
             paginationNav.style.display = 'none';
+            updateRecordSlots(contentContainer, visibleItems.length, 1, perPage);
             return;
         }
 
@@ -1109,6 +1142,13 @@
             if (!Number.isFinite(min)) return;
             setActivePage(pagination, pageNumber);
             updatePrevNextStates(pagination, pageNumber, min, max);
+        },
+        // Server/manual pagination hook: push your own numbers through the same
+        // [data-paged-target] slot grammar the auto path stamps.
+        // NDS.Pagination.updateRecords('listId', { from: 21, to: 30, count: 214 })
+        updateRecords: function(listOrId, { from = 0, to = 0, count = 0 } = {}) {
+            const id = typeof listOrId === 'string' ? listOrId : (listOrId && listOrId.id);
+            if (id) stampRecordSlots(id, from, to, count);
         },
         setTotalPages,
     };

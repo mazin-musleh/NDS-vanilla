@@ -216,6 +216,11 @@
         // The loader's init is decoupled from DOMContentLoaded, so registering it
         // would risk init() running before that sibling bundle has executed.
         {
+            name: 'Selection',
+            selector: '[data-selection-target]',
+            init: () => NDS.Selection?.init?.(),
+        },
+        {
             name: 'Share',
             selector: '.nds-share',
             init: () => NDS.Share?.init?.(),

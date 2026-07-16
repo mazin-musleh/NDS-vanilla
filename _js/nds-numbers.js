@@ -27,7 +27,7 @@
             const num = parseFloat(numStr);
 
             if (!isNaN(num)) {
-                targetNode.textContent = `${prefix}${num.toLocaleString()}${suffix}`;
+                targetNode.textContent = `${prefix}${NDS.formatNumber(num)}${suffix}`;
             }
         }
     }
@@ -88,8 +88,8 @@
             const cfg = parseTarget(counter);
             const start = parseFloat(counter.getAttribute('data-start') || '0') || 0;
             const duration = parseInt(counter.getAttribute('data-duration') || '1000', 10);
-            // Pre-format target value to avoid toLocaleString() during animation
-            const formatNumber = (value) => value.toLocaleString(undefined, {
+            // Pre-format target value to avoid formatting work during animation
+            const formatNumber = (value) => NDS.formatNumber(value, {
                 minimumFractionDigits: cfg.decimals,
                 maximumFractionDigits: cfg.decimals
             });

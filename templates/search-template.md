@@ -38,7 +38,7 @@ exclude_showcase: false
 
         <div class="nds-section-head">
             <h2 class="nds-section-title">Search results <span data-filter-query data-filter-target="search_results_content"></span></h2>
-            <p class="nds-section-description nds-results-count"><span data-filter-count data-filter-target="search_results_content">0</span> Result(s) found</p>
+            <p class="nds-section-description nds-results-count" data-paged-target="search_results_content">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> result(s)</p>
         </div>
         <div class="nds-section-action">
             <div class="nds-dropmenu">
