@@ -271,7 +271,7 @@ fieldset {
     position: relative;
 
 
-    :is(input, textarea, select) {
+    :is(input, textarea, select, [contenteditable="true"]) {
         /* min-height: var(--_input-size); */
 
         // Strip the browser default outline on text-entry inputs — focus
