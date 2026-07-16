@@ -19,12 +19,6 @@
 
     var _initDone = false;
 
-    // Dispatch input + change so forms' delegated handlers sync the field.
-    function triggerEvents(element) {
-        element.dispatchEvent(new Event('input', { bubbles: true }));
-        element.dispatchEvent(new Event('change', { bubbles: true }));
-    }
-
     // Render a pre-selected value's display label. The hidden `.nds-select-value`
     // is the source of truth (it submits); the visible `.nds-select-input` is a
     // readonly, non-submitting display surface, so its label is DERIVED from the
@@ -141,8 +135,8 @@
         });
 
         // Dispatched input/change run forms' delegated field-state sync.
-        triggerEvents(selectInput);
-        if (hiddenInput) triggerEvents(hiddenInput);
+        NDS.triggerEvents(selectInput);
+        if (hiddenInput) NDS.triggerEvents(hiddenInput);
 
         formControl.dispatchEvent(new CustomEvent('selectChange', {
             detail: { value: value, text: text }

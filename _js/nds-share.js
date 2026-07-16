@@ -43,17 +43,8 @@
     // clipboard via the copy path (and any future direct-navigation caller).
     // Falls back to the page URL when the attribute is missing or its
     // scheme is outside the navigation allowlist.
-    const ALLOWED_SHARE_SCHEMES = ['http:', 'https:', 'mailto:', 'tel:'];
     function getShareUrl(wrapper) {
-        const raw = wrapper.getAttribute('data-share-url');
-        if (!raw) return window.location.href;
-        try {
-            const u = new URL(raw, window.location.href);
-            if (!ALLOWED_SHARE_SCHEMES.includes(u.protocol)) return window.location.href;
-            return u.href;
-        } catch {
-            return window.location.href;
-        }
+        return NDS.safeUrl(wrapper.getAttribute('data-share-url')) || window.location.href;
     }
 
     // Walk up to a `.nds-share` wrapper, falling back via the menu's

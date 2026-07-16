@@ -468,21 +468,13 @@
         for (let i = 0; i < headers.length; i++) headers[i].style.width = widths[i] + 'px';
     }
 
-    // Resolve a data-auto-pagination ref to its element. Canonical form is a bare
-    // id (matches filter's data-filter-target); a #id or any selector also works.
-    function resolveContentRef(ref) {
-        const byId = document.getElementById(ref.replace(/^#/, ''));
-        if (byId) return byId;
-        try { return document.querySelector(ref); } catch (e) { return null; }
-    }
-
     // The .nds-paged-content a nav controls. Explicit binding wins:
     // data-auto-pagination="gridId" (the content's id). With no value, falls back
     // to the legacy adjacency contract — the nav's immediately-preceding sibling.
     function contentForNav(paginationNav) {
         const ref = paginationNav.getAttribute('data-auto-pagination');
         if (ref) {
-            const el = resolveContentRef(ref);
+            const el = NDS.resolveEl(ref);
             if (el && el.classList.contains('nds-paged-content')) return el;
             console.warn(`NDS Pagination: data-auto-pagination="${ref}" matched no .nds-paged-content element.`, paginationNav);
             return null;
@@ -499,7 +491,7 @@
             const navs = document.querySelectorAll('.nds-pagination[data-auto-pagination]');
             for (const nav of navs) {
                 const ref = nav.getAttribute('data-auto-pagination');
-                if (ref && resolveContentRef(ref) === contentContainer) return nav;
+                if (ref && NDS.resolveEl(ref) === contentContainer) return nav;
             }
         }
         return contentContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]') || null;
@@ -748,29 +740,18 @@
 
     // ── Interaction layer (wired at init; runs on click / resize) ─────────
 
-    // Scroll the target back into view after a page change. Reads
-    // getBoundingClientRect once, early-returns when already in view (so the
-    // no-scroll path skips the getComputedStyle recalc), and only resolves the
-    // sticky-nav offset when we know we'll actually scroll.
+    // Scroll the target back into view after a page change — no-op when it
+    // already sits below the sticky nav. Tunable gap between the sticky nav
+    // and the scroll target: override per-page or globally via
+    // `--pagination-scroll-offset` (read off the nav element).
     function scrollToContent(pagination) {
         const paginationNav = pagination.closest('.nds-pagination');
         if (!paginationNav) return;
 
         const contentContainer = contentForNav(paginationNav);
-        const targetElement = contentContainer || paginationNav;
-
-        const nav = document.querySelector('.nds-main-nav');
-        const navHeight = nav ? nav.offsetHeight : 72;
-        const targetTop = targetElement.getBoundingClientRect().top;
-        if (targetTop >= navHeight) return;
-
-        // Tunable gap between the sticky nav and the pagination scroll target.
-        // Override per-page or globally via `--pagination-scroll-offset`.
-        const offsetVar = parseFloat(getComputedStyle(paginationNav).getPropertyValue('--pagination-scroll-offset'));
-        const offset = Number.isFinite(offsetVar) ? offsetVar : 120;
-        window.scrollTo({
-            top: targetTop + window.pageYOffset - navHeight - offset,
-            behavior: 'smooth',
+        NDS.scrollBelowNav(contentContainer || paginationNav, {
+            offsetVar: '--pagination-scroll-offset',
+            offsetEl: paginationNav,
         });
     }
 

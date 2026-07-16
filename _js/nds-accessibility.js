@@ -127,8 +127,6 @@
     let state = defaultState();
     let panel = null;
     let toggleBtn = null;
-    let navEl = null;          // .nds-main-nav  — sticky-header reference
-    let topbarEl = null;       // .nds-topbar    — sticky-header reference
     let openerEl = null;       // element that opened the panel — focus returns here
     let initAbortController = null;             // AbortController for listeners scoped to current init
     let openAbortController = null;         // listeners that only run while the panel is open
@@ -844,9 +842,7 @@
     // the sticky header. Re-runs on open + on resize-while-open.
     function updateHeaderOffset() {
         if (!panel) return;
-        const navBottom    = navEl    ? Math.max(0, navEl.getBoundingClientRect().bottom)    : 0;
-        const topbarBottom = topbarEl ? Math.max(0, topbarEl.getBoundingClientRect().bottom) : 0;
-        const visible = Math.max(navBottom, topbarBottom);
+        const visible = NDS.stickyHeaderBottom();
         if (visible > 0) panel.style.setProperty('--a11y-panel-top', visible + 'px');
         else panel.style.removeProperty('--a11y-panel-top');
     }
@@ -936,7 +932,6 @@
         if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
         if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
         if (maskControlsEl) { maskControlsEl.remove(); maskControlsEl = null; }
-        navEl = topbarEl = null;
     }
 
     // Module-scoped so it allocates once. Function-declaration hoisting
@@ -996,9 +991,6 @@
         toggleBtn = document.querySelector('[data-accessibility-toggle]');
         panel = document.querySelector('[data-accessibility-panel]');
         if (!toggleBtn || !panel) return;
-
-        navEl    = document.querySelector('.nds-main-nav');
-        topbarEl = document.querySelector('.nds-topbar');
 
         state = load();
         apply();

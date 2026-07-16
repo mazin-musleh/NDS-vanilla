@@ -10,11 +10,7 @@
 
     // Set --drawer-max-height for slider mode only
     const updateDrawerMaxHeight = (accMenu, drawer) => {
-        const nav = document.querySelector('.nds-main-nav');
-        const topbar = document.querySelector('.nds-topbar');
-        const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
-        const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
-        const visibleHeader = Math.max(navBottom, topbarBottom);
+        const visibleHeader = NDS.stickyHeaderBottom();
 
         accMenu.style.paddingTop = (visibleHeader > 0 ? visibleHeader + 8 : 0) + 'px';
         drawer.style.setProperty('--drawer-max-height', Math.max(window.innerHeight - visibleHeader - 16, 100) + 'px');

@@ -393,12 +393,6 @@
     // user sees. Columns are addressed by cell index, so colspan/rowspan header
     // cells aren't supported (the same assumption sort and export already make).
 
-    function resolveTable(ref) {
-        const byId = document.getElementById(ref.replace(/^#/, ''));
-        if (byId) return byId;
-        try { return document.querySelector(ref); } catch (e) { return null; }
-    }
-
     // `restored` marks a hide replayed from storage at init rather than chosen by
     // the user, so a consumer syncing the event to a server can ignore the replay.
     function setColumnHidden(table, index, hidden, restored = false) {
@@ -458,7 +452,7 @@
         constructor(root) {
             this.valid = false;
             this.root = root;
-            this.table = resolveTable(root.getAttribute('data-columns-target') || '');
+            this.table = NDS.resolveEl(root.getAttribute('data-columns-target') || '');
             this.list = root.querySelector('[data-columns-list]');
 
             if (!this.table || !this.list) {

@@ -444,8 +444,7 @@
             // Remove 'typing' so _onInput handler skips the fetch
             removeState(this.container, 'typing');
             // Trigger input/change events so forms JS updates state
-            this.input.dispatchEvent(new Event('input', { bubbles: true }));
-            this.input.dispatchEvent(new Event('change', { bubbles: true }));
+            NDS.triggerEvents(this.input);
 
             this.close();
             this.input.focus();

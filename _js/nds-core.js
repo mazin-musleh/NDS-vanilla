@@ -681,6 +681,85 @@
         return prefix + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
     };
 
+    // ── Element Reference Resolver ───────────────────────────────────
+    // Resolve a consumer-supplied reference to an element. Canonical form is
+    // a bare id ('resultsGrid' — matches data-auto-pagination /
+    // data-columns-target); '#id', any CSS selector, or an Element also
+    // work. Misses and invalid selectors return null.
+    // Usage: const grid = NDS.resolveEl('resultsGrid');
+    NDS.resolveEl = (ref) => {
+        if (!ref) return null;
+        if (typeof ref !== 'string') return ref;
+        const byId = document.getElementById(ref.replace(/^#/, ''));
+        if (byId) return byId;
+        try { return document.querySelector(ref); } catch { return null; }
+    };
+
+    // ── Programmatic Input Events ────────────────────────────────────
+    // Dispatch a bubbling input + change pair after a programmatic value
+    // write, so delegated form handlers (validation, counters, custom
+    // selects) observe it exactly as if the user had typed. Null el no-ops.
+    // Usage: input.value = text; NDS.triggerEvents(input);
+    NDS.triggerEvents = (el) => {
+        if (!el) return;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+
+    // ── Safe URL (scheme allowlist) ──────────────────────────────────
+    // Validate a consumer-supplied URL before it reaches an href, the
+    // clipboard, or window.open — javascript:/data:/vbscript: payloads are
+    // rejected. Relative URLs resolve against the page. Returns the
+    // normalized href, or null when the value is missing, unparsable, or
+    // off-allowlist (http/https/mailto/tel).
+    // Usage: const href = NDS.safeUrl(btn.dataset.href);
+    NDS.safeUrl = (raw) => {
+        if (!raw) return null;
+        try {
+            const u = new URL(raw, window.location.href);
+            return ['http:', 'https:', 'mailto:', 'tel:'].includes(u.protocol) ? u.href : null;
+        } catch {
+            return null;
+        }
+    };
+
+    // ── Sticky Header Bottom ─────────────────────────────────────────
+    // Visible bottom edge of the sticky chrome (.nds-topbar + .nds-main-nav)
+    // in viewport px — 0 when neither is present or both are scrolled away.
+    // Consumers position panels/drawers below it. Queries + gBCR reads run
+    // fresh per call (the nav's bottom moves on scroll) — cheap enough for
+    // rAF-throttled scroll handlers; keep it out of unthrottled loops.
+    // Usage: panel.style.setProperty('--panel-top', NDS.stickyHeaderBottom() + 'px');
+    NDS.stickyHeaderBottom = () => {
+        const nav = document.querySelector('.nds-main-nav');
+        const topbar = document.querySelector('.nds-topbar');
+        const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+        const topbarBottom = topbar ? Math.max(0, topbar.getBoundingClientRect().bottom) : 0;
+        return Math.max(navBottom, topbarBottom);
+    };
+
+    // ── Scroll Below Sticky Nav ──────────────────────────────────────
+    // Smooth-scroll `target` back into view below the sticky nav — no-op
+    // when its top already clears the nav. The gap past the nav is read
+    // from a consumer CSS custom property (opts.offsetVar, resolved on
+    // opts.offsetEl or the target; 120px default when unset/invalid).
+    // Respects prefers-reduced-motion (jumps instead of smooth-scrolling).
+    // Usage: NDS.scrollBelowNav(grid, { offsetVar: '--pagination-scroll-offset', offsetEl: nav });
+    NDS.scrollBelowNav = (target, opts = {}) => {
+        const nav = document.querySelector('.nds-main-nav');
+        const navHeight = nav ? nav.offsetHeight : 72;
+        const targetTop = target.getBoundingClientRect().top;
+        if (targetTop >= navHeight) return;
+        const offsetVar = opts.offsetVar
+            ? parseFloat(getComputedStyle(opts.offsetEl || target).getPropertyValue(opts.offsetVar))
+            : NaN;
+        const offset = Number.isFinite(offsetVar) ? offsetVar : 120;
+        window.scrollTo({
+            top: targetTop + window.pageYOffset - navHeight - offset,
+            behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth',
+        });
+    };
+
     // ── Transition Speed ─────────────────────────────────────────────
     // Reads --nds-transition-speed from document.documentElement and
     // returns the value in milliseconds. The CSS variable is set in

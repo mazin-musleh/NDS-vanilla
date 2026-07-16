@@ -20,20 +20,6 @@
 (function() {
     'use strict';
 
-    // Caller-supplied action.href flows into setAttribute('href', …); validate the
-    // scheme so a `javascript:`/`data:`/`vbscript:` payload cannot reach the parser.
-    // Mirrors the share.js pattern. Returns the safe href or null on rejection;
-    // callers downgrade rejected actions to plain buttons (the onClick still works).
-    const ALLOWED_ACTION_SCHEMES = ['http:', 'https:', 'mailto:', 'tel:'];
-    function safeActionHref(href) {
-        try {
-            const u = new URL(href, window.location.href);
-            return ALLOWED_ACTION_SCHEMES.includes(u.protocol) ? u.href : null;
-        } catch {
-            return null;
-        }
-    }
-
     const NDSAlert = {
         /**
          * Create and insert an alert
@@ -132,7 +118,8 @@
                 actions.forEach((action, index) => {
                     const classes = action.class || `nds-btn nds-${action.variant || 'subtle'} nds-${action.size || 'sm'}`;
                     let el;
-                    const validatedHref = action.href ? safeActionHref(action.href) : null;
+                    // NDS.safeUrl rejects javascript:/data: payloads → null downgrades the action to a plain button.
+                    const validatedHref = NDS.safeUrl(action.href);
                     if (validatedHref) {
                         el = document.createElement('a');
                         el.setAttribute('href', validatedHref);

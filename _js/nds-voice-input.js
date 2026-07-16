@@ -148,10 +148,6 @@
     }
 
     // ── Helpers ───────────────────────────────────────────────────────
-    function triggerEvents(el) {
-        el.dispatchEvent(new Event('input', { bubbles: true }));
-        el.dispatchEvent(new Event('change', { bubbles: true }));
-    }
 
     // Resolve the button's target input: explicit data attribute first (button
     // anywhere), then fall back to the surrounding form-control's primary input.
@@ -267,7 +263,7 @@
                         stop();
                         // Standard signal — forms (and any consumer) sync chrome
                         // off the input/change events, no reach into forms internals.
-                        triggerEvents(input);
+                        NDS.triggerEvents(input);
                     }
                 },
                 onError: function(error) {
