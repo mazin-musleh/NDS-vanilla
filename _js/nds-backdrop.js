@@ -26,14 +26,6 @@
   }
 
   /**
-   * Apply inline styles for z-index only
-   */
-  function applyStyles(config) {
-    if (!backdropElement) return;
-    backdropElement.style.zIndex = config.zIndex;
-  }
-
-  /**
    * Handle backdrop click
    */
   function handleClick(e) {
@@ -81,7 +73,7 @@
       currentConfig = newConfig;
 
       // Re-apply styles with new config
-      applyStyles(currentConfig);
+      backdropElement.style.zIndex = currentConfig.zIndex;
 
       // Re-attach event listeners with new config
       if (currentConfig.clickToClose) {
@@ -99,7 +91,7 @@
     activeCount = 1; // Initialize counter
 
     // Apply inline styles
-    applyStyles(currentConfig);
+    backdropElement.style.zIndex = currentConfig.zIndex;
 
     // Mark active synchronously so hide() can always clean up body state
     isActive = true;
@@ -171,29 +163,10 @@
   }
 
   /**
-   * Toggle backdrop
-   */
-  function toggle(config) {
-    if (isActive) {
-      hide();
-    } else {
-      show(config);
-    }
-  }
-
-  /**
    * Check if backdrop is active
    */
   function getIsActive() {
     return isActive;
-  }
-
-  /**
-   * Get backdrop element reference
-   */
-  function getElement() {
-    initBackdrop();
-    return backdropElement;
   }
 
   // Public API. Backdrop is not loader-registered — it is consumed on demand
@@ -202,9 +175,7 @@
   NDS.Backdrop = {
     show,
     hide,
-    toggle,
-    isActive: getIsActive,
-    getElement
+    isActive: getIsActive
   };
 
 })();

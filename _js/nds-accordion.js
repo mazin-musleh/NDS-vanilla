@@ -20,6 +20,7 @@
             }
 
             this.abortController = new AbortController();
+            this.valid = true;
             this.init();
         }
 
@@ -166,7 +167,7 @@
             NDS.State.set(collapse, 'opening');
 
             // Animate and dispatch event after
-            this.animateShow(collapse, () => {
+            this._animate(collapse, () => {
                 NDS.State.set(collapse, 'open');
                 // Dispatch custom event
                 this.dispatchToggleEvent(index, button, collapse, true);
@@ -196,7 +197,7 @@
             // Set collapse to closing, then remove after animation
             NDS.State.set(collapse, 'closing');
 
-            this.animateHide(collapse, () => {
+            this._animate(collapse, () => {
                 NDS.State.clear(collapse);
 
                 // Dispatch custom event
@@ -212,12 +213,7 @@
             });
         }
 
-        animateShow(collapse, callback) {
-            if (NDS.prefersReducedMotion) { callback(); return; }
-            NDS.onTransitionEnd(collapse, callback);
-        }
-
-        animateHide(collapse, callback) {
+        _animate(collapse, callback) {
             if (NDS.prefersReducedMotion) { callback(); return; }
             NDS.onTransitionEnd(collapse, callback);
         }
@@ -295,70 +291,29 @@
             if (!container.hasAttribute('data-nds-accordion-initialized')
                 && !container.ndsAccordion) {
                 const accordionInstance = new NDSAccordion(container);
-                container.ndsAccordion = accordionInstance;
-                // Defer the marker by one rAF so the browser commits the
-                // setupInitialState state change in a paint where the CSS
-                // gate (.nds-accordion:not([data-nds-accordion-initialized]))
-                // still applies — suppressing the init-time animation.
-                requestAnimationFrame(() => {
-                    container.setAttribute('data-nds-accordion-initialized', 'true');
-                });
+                // Stamp only successful constructions — buttons that render late
+                // stay eligible for the next reinit().
+                if (accordionInstance.valid) {
+                    container.ndsAccordion = accordionInstance;
+                    // Defer the marker by one rAF so the browser commits the
+                    // setupInitialState state change in a paint where the CSS
+                    // gate (.nds-accordion:not([data-nds-accordion-initialized]))
+                    // still applies — suppressing the init-time animation.
+                    requestAnimationFrame(() => {
+                        container.setAttribute('data-nds-accordion-initialized', 'true');
+                    });
+                }
             }
         });
     }
 
-    // Re-initialize when new content is added
-    function reinitializeAccordions() {
-        initializeAccordions();
-    }
-
     // CRITICAL: Expose global API immediately (called by unified init system)
-    if (typeof window !== 'undefined') {
-        NDS.Accordion = {
-            init: initializeAccordions,
-            reinit: reinitializeAccordions,
-            create: (container) => new NDSAccordion(container)
-        };
-    }
-
-    // Export for modules
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSAccordion;
-    }
+    NDS.Accordion = {
+        init: initializeAccordions,
+        reinit: initializeAccordions,
+        create: (container) => new NDSAccordion(container)
+    };
 
     // Note: Initialization now handled by nds-loader.js unified system
 })();
 
-/**
- * Usage Examples:
- * 
- * // Auto-initialization (happens automatically)
- * // Just add the HTML structure with .nds-accordion class
- * 
- * // Manual initialization
- * const accordionElement = document.querySelector('#myAccordion');
- * const accordionInstance = NDSAccordion.create(accordionElement);
- * 
- * // Programmatic control
- * accordionInstance.openItem(0);     // Open first item
- * accordionInstance.closeItem(1);    // Close second item
- * accordionInstance.toggleItem(2);   // Toggle third item
- * accordionInstance.closeAll();      // Close all items
- * 
- * // Get current state
- * const openItems = accordionInstance.getOpenItems();
- * 
- * // Listen for accordion events
- * document.addEventListener('nds:accordion:shown', (e) => {
- *     console.log('Accordion item opened:', e.detail.index);
- *     console.log('Button:', e.detail.button);
- *     console.log('Collapse:', e.detail.collapse);
- * });
- * 
- * document.addEventListener('nds:accordion:hidden', (e) => {
- *     console.log('Accordion item closed:', e.detail.index);
- * });
- * 
- * // Reinitialize after dynamic content changes
- * NDSAccordion.reinit();
- */

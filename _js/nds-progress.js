@@ -56,8 +56,7 @@
     let _offAttrChange;
 
     function init() {
-        const reduced = typeof window.matchMedia === 'function' &&
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const reduced = NDS.prefersReducedMotion;
         const canObserve = typeof IntersectionObserver !== 'undefined';
 
         document.querySelectorAll(SEL).forEach(el => {

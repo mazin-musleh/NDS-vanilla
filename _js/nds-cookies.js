@@ -30,8 +30,9 @@
 
     function ndsSetCookie(name, value, days) {
         if (isLocalFile) {
-            const item = { value, expires: Date.now() + (days * 86400000) };
-            localStorage.setItem('nds_' + name, JSON.stringify(item));
+            // NDS.cache uses the same nds_ prefix + {value, expires} envelope,
+            // so entries stored by earlier builds stay readable.
+            NDS.cache.set(name, value, days * 1440);
             return;
         }
         const expires = new Date();
@@ -40,18 +41,7 @@
     }
 
     function ndsGetCookie(name) {
-        if (isLocalFile) {
-            const raw = localStorage.getItem('nds_' + name);
-            if (!raw) return null;
-            try {
-                const item = JSON.parse(raw);
-                if (item.expires && Date.now() > item.expires) {
-                    localStorage.removeItem('nds_' + name);
-                    return null;
-                }
-                return item.value;
-            } catch (e) { return null; }
-        }
+        if (isLocalFile) return NDS.cache.get(name);
         const cookiePrefix = name + "=";
         const cookieArray = document.cookie.split(';');
         for (let i = 0; i < cookieArray.length; i++) {
@@ -169,7 +159,7 @@
 
     function ndsDeleteCookie(name) {
         if (isLocalFile) {
-            localStorage.removeItem('nds_' + name);
+            NDS.cache.clear(name);
             return;
         }
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';

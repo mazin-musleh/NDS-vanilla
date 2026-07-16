@@ -47,26 +47,14 @@
         return NDS.safeUrl(wrapper.getAttribute('data-share-url')) || window.location.href;
     }
 
-    // Walk up to a `.nds-share` wrapper, falling back via the menu's
-    // `_ownerDropmenu` backref. Needed because the share buttons usually
-    // live inside a `.nds-share.nds-dropmenu` whose menu portals to <body>
-    // when open — at that point the buttons are no longer DOM descendants
-    // of `.nds-share`, so plain `closest()` returns null.
-    function shareWrapperFrom(el) {
-        if (!el) return null;
-        const direct = el.closest('.nds-share');
-        if (direct) return direct;
-        const menu = el.closest('.nds-dropmenu-menu');
-        const owner = menu && menu._ownerDropmenu;
-        return owner && owner.classList.contains('nds-share') ? owner : null;
-    }
-
     async function copyLink(url, button) {
         // Soft dependency — share's copy-link action no-ops if NDS.Copy isn't bundled.
         if (!NDS.Copy) return;
         const ok = await NDS.Copy.writeText(url);
         if (!ok || !button) return;
-        const wrapper = shareWrapperFrom(button);
+        // NDS.closest is portal-aware — reaches .nds-share even after the
+        // dropmenu menu portals to <body>.
+        const wrapper = NDS.closest(button, '.nds-share');
         NDS.Copy.flash(button, {
             onRestore: () => {
                 if (wrapper && wrapper.ndsDropmenu) wrapper.ndsDropmenu.close();
@@ -75,7 +63,7 @@
     }
 
     function handleClick(button) {
-        const wrapper = shareWrapperFrom(button);
+        const wrapper = NDS.closest(button, '.nds-share');
         if (!wrapper) return;
         const url = getShareUrl(wrapper);
         const title = wrapper.getAttribute('data-share-title') || document.title;
@@ -95,7 +83,7 @@
         document.addEventListener('click', (e) => {
             const button = e.target.closest(TARGET_SELECTOR);
             if (!button) return;
-            const wrapper = shareWrapperFrom(button);
+            const wrapper = NDS.closest(button, '.nds-share');
             if (!wrapper) return;
             handleClick(button);
         }, { signal: _abortController.signal });

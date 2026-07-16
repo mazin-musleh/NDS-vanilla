@@ -7,8 +7,6 @@
  * the same engine serves both widgets without copy-pasted comparator logic.
  *
  * Public API:
- *   NDS.Sort.init(selector, options)    — auto-init matching containers
- *   NDS.Sort.reinit(selector)           — idempotent re-init
  *   NDS.Sort.create(root, options)      — factory → NDSSort instance
  *   NDS.Sort.getInstance(root)          — retrieve existing instance
  *   NDS.Sort.detectType(sampleValues)   — pure helper
@@ -368,42 +366,27 @@
     }
 
     // ── Global API ───────────────────────────────────────────────────────
+    // No init()/reinit() — sort has no auto-init selector; it is composed into
+    // other widgets via create() (filter, tables).
 
-    function initializeSorts() {
-        // No auto-init by selector (sort is composed into other widgets).
-        // Exposed for symmetry — takes an optional root+options pair.
-    }
+    NDS.Sort = {
+        create: (root, options) => {
+            if (!root) return null;
+            if (root.ndsSort) return root.ndsSort;
+            const instance = new NDSSort(root, options);
+            root.ndsSort = instance;
+            root.setAttribute('data-nds-sort-initialized', 'true');
+            return instance;
+        },
 
-    function reinitializeSorts() { initializeSorts(); }
+        getInstance: (root) => {
+            if (typeof root === 'string') root = document.querySelector(root);
+            return root?.ndsSort || null;
+        },
 
-    if (typeof window !== 'undefined') {
-        window.NDS = window.NDS || {};
-        NDS.Sort = {
-            init: initializeSorts,
-            reinit: reinitializeSorts,
-
-            create: (root, options) => {
-                if (!root) return null;
-                if (root.ndsSort) return root.ndsSort;
-                const instance = new NDSSort(root, options);
-                root.ndsSort = instance;
-                root.setAttribute('data-nds-sort-initialized', 'true');
-                return instance;
-            },
-
-            getInstance: (root) => {
-                if (typeof root === 'string') root = document.querySelector(root);
-                return root?.ndsSort || null;
-            },
-
-            // Pure helpers
-            detectType,
-            parseValue,
-            compare
-        };
-    }
-
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSSort;
-    }
+        // Pure helpers
+        detectType,
+        parseValue,
+        compare
+    };
 })();

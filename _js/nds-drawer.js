@@ -9,8 +9,7 @@
 
     const CONFIG = {
         selectors: {
-            drawer: '.nds-drawer',
-            list: '.nds-drawer-list'
+            drawer: '.nds-drawer'
         },
         states: {
             open: 'open',

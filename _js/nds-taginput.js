@@ -283,17 +283,10 @@
         });
     }
 
-    if (typeof window !== 'undefined') {
-        window.NDS = window.NDS || {};
-        NDS.TagInput = {
-            init: initializeTagInputs,
-            reinit: initializeTagInputs,
-            create: (element) => new NDSTagInput(element),
-            destroy: (element) => element.ndsTagInput?.destroy()
-        };
-    }
-
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSTagInput;
-    }
+    NDS.TagInput = {
+        init: initializeTagInputs,
+        reinit: initializeTagInputs,
+        create: (element) => new NDSTagInput(element),
+        destroy: (element) => element.ndsTagInput?.destroy()
+    };
 })();

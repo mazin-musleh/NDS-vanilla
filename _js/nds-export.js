@@ -25,7 +25,6 @@
 
     // Selection rule lives in nds-core.js (NDS.isRowSelected), shared with the
     // selection-count widget — see the semantics comment there.
-    const isRowSelected = (row) => NDS.isRowSelected(row);
 
     // A row filtered OUT by NDS.Filter carries data-filtered (hidden via the
     // critical-layer rule [data-filtered]{display:none!important}). This is a
@@ -64,7 +63,7 @@
                 ? Array.from(source.querySelectorAll('tbody tr.nds-page-item'))
                 : Array.from(tbody.children).filter(el => el.tagName === 'TR'))
                 .filter(row => !isRowFiltered(row));
-            if (scope === 'selected') return rows.filter(isRowSelected);
+            if (scope === 'selected') return rows.filter(NDS.isRowSelected);
             return rows;
         },
 
@@ -87,7 +86,7 @@
             const tbody = source.querySelector('tbody');
             if (!tbody) return false;
             return Array.from(tbody.children).some(tr =>
-                tr.tagName === 'TR' && !isRowFiltered(tr) && isRowSelected(tr));
+                tr.tagName === 'TR' && !isRowFiltered(tr) && NDS.isRowSelected(tr));
         }
     };
 
@@ -98,7 +97,7 @@
                 ? NDS.queryAll(source, sel)
                 : Array.from(source.children))
                 .filter(row => !isRowFiltered(row));
-            if (scope === 'selected') return rows.filter(isRowSelected);
+            if (scope === 'selected') return rows.filter(NDS.isRowSelected);
             return rows;
         },
 
@@ -133,7 +132,7 @@
         anySelected(source) {
             const sel = source.dataset.exportRows;
             const rows = sel ? NDS.queryAll(source, sel) : Array.from(source.children);
-            return rows.some(row => !isRowFiltered(row) && isRowSelected(row));
+            return rows.some(row => !isRowFiltered(row) && NDS.isRowSelected(row));
         }
     };
 
@@ -417,7 +416,7 @@
     // NDS.onDOMAdd covers buttons injected later (modals, dropmenus, dynamic
     // toolbars).
     const VALID_FORMATS = { csv: 1, xls: 1, pdf: 1 };
-    let _clickInstalled = false;
+    let _initDone = false;
 
     function onExportClick(e) {
         const btn = e.target.closest && e.target.closest('[data-export]');
@@ -436,16 +435,18 @@
     }
 
     function installClickListener() {
-        if (_clickInstalled) return;
-        _clickInstalled = true;
+        // Stable function reference — repeat adds (the onDOMAdd re-arm) dedupe
+        // natively per the addEventListener spec.
         document.addEventListener('click', onExportClick);
     }
 
     // Loader-driven (registered on selector [data-export], extras bundle):
     // install the delegated click handler + watch for buttons added later.
     function init() {
+        if (_initDone) return;
+        _initDone = true;
         installClickListener();
-        if (NDS.onDOMAdd) NDS.onDOMAdd('[data-export]', installClickListener);
+        NDS.onDOMAdd('[data-export]', installClickListener);
     }
 
     NDS.Export = {

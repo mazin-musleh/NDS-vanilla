@@ -150,7 +150,9 @@
                 });
                 alert.querySelector('.nds-alert-content').appendChild(actionsWrap);
                 // Late-created copy actions need the delegated .nds-copy binding even on
-                // pages that had no copy button at loader scan time (bind is idempotent)
+                // pages that had no copy button at loader scan time (bind is idempotent).
+                // Soft dependency — NDS.Copy ships in the extras bundle; copy actions
+                // no-op until it loads / if a consumer bundle excludes it.
                 if (actions.some(a => a.copy || a.copyTarget)) NDS.Copy?.init?.();
             }
 
@@ -289,7 +291,9 @@
                 // Add exit animation for toasts
                 if (el.classList.contains('nds-toast')) {
                     NDS.State.set(el, 'toast-hide');
-                    setTimeout(() => {
+                    // Removal tracks the CSS fade via the token-sourced duration
+                    // (reduced-motion / token bumps stay in sync automatically).
+                    NDS.onTransitionEnd(el, () => {
                         el.remove();
                         if (placeholder && !placeholder.children.length) {
                             if (placeholder._scrollSync) {
@@ -298,7 +302,7 @@
                             }
                             placeholder.remove();
                         }
-                    }, 300);
+                    });
                 } else {
                     el.remove();
                 }
@@ -318,13 +322,13 @@
         // Initialize existing alerts
         init() {
             document.querySelectorAll('.nds-alert').forEach(alert => {
-                if (alert.hasAttribute('data-nds-alert-init') || alert.closest('code, .code-example')) return;
+                if (alert.hasAttribute('data-nds-alert-initialized') || alert.closest('code, .code-example')) return;
 
                 const closeBtn = alert.querySelector('.nds-alert-close');
                 if (closeBtn) {
                     closeBtn.addEventListener('click', () => this.dismiss(alert));
                 }
-                alert.setAttribute('data-nds-alert-init', 'true');
+                alert.setAttribute('data-nds-alert-initialized', 'true');
             });
         },
     };

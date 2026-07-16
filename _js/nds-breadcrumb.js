@@ -20,6 +20,7 @@
                 return;
             }
 
+            this.valid = true;
             this.init();
         }
 
@@ -109,44 +110,22 @@
 
             if (!nav.hasAttribute('data-nds-breadcrumb-initialized')) {
                 const breadcrumbInstance = new NDSBreadcrumb(nav);
-                nav.ndsBreadcrumb = breadcrumbInstance;
-                nav.setAttribute('data-nds-breadcrumb-initialized', 'true');
+                // Stamp only successful constructions — an empty breadcrumb rendered
+                // late stays eligible for the next reinit().
+                if (breadcrumbInstance.valid) {
+                    nav.ndsBreadcrumb = breadcrumbInstance;
+                    nav.setAttribute('data-nds-breadcrumb-initialized', 'true');
+                }
             }
         });
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
-    if (typeof window !== 'undefined') {
-        NDS.Breadcrumb = {
-            init: initializeBreadcrumbs,
-            reinit: initializeBreadcrumbs,
-            create: (nav) => new NDSBreadcrumb(nav)
-        };
-    }
-
-    // Export for modules
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSBreadcrumb;
-    }
+    NDS.Breadcrumb = {
+        init: initializeBreadcrumbs,
+        reinit: initializeBreadcrumbs,
+        create: (nav) => new NDSBreadcrumb(nav)
+    };
 
     // Note: Initialization now handled by nds-loader.js unified system
 })();
-
-/**
- * Usage Examples:
- *
- * // Auto-initialization (happens automatically)
- * // Breadcrumbs with 5+ items will automatically collapse
- *
- * // Manual initialization
- * const breadcrumbNav = document.querySelector('.nds-breadcrumb-nav');
- * const breadcrumbInstance = NDSBreadcrumb.create(breadcrumbNav);
- *
- * // Reinitialize after dynamic content changes
- * NDSBreadcrumb.reinit();
- *
- * // Behavior:
- * // - 1-4 items: Normal breadcrumb display
- * // - 5+ items: Shows "Home > ... > [last 2 items]"
- * // - Click "..." to reveal hidden items in dropdown menu
- */

@@ -29,6 +29,7 @@
                 return;
             }
 
+            this.valid = true;
             this.init();
         }
 
@@ -149,7 +150,8 @@
             if (element.closest('code, .code-example')) return;
             if (!element.hasAttribute('data-nds-sideinfo-initialized')) {
                 const instance = new NDSSideInfo(element);
-                element._ndsSideInfo = instance;
+                // Expando only on successful construction (sentinel is stamped post-guard by init()).
+                if (instance.valid) element._ndsSideInfo = instance;
             }
         });
     }
@@ -160,7 +162,7 @@
         reinit: initializeComponents,
         create: (element) => {
             const instance = new NDSSideInfo(element);
-            element._ndsSideInfo = instance;
+            if (instance.valid) element._ndsSideInfo = instance;
             return instance;
         }
     };

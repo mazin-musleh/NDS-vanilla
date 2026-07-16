@@ -487,12 +487,10 @@
     // GLOBAL API
     // ==============================================
 
-    if (typeof window !== 'undefined') {
-        NDS.Code = {
-            init: initializeCodeProcessing,
-            reprocessCodeElement: reprocessCodeElement,
-            detectLanguage: detectLanguage
-        };
-    }
+    NDS.Code = {
+        init: initializeCodeProcessing,
+        reprocessCodeElement: reprocessCodeElement,
+        detectLanguage: detectLanguage
+    };
 
 })();

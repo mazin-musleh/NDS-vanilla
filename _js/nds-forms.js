@@ -1343,10 +1343,7 @@
 
         // Form Validation
         validateForm: Validator.validateForm.bind(Validator),
-        initForm: initForm,
-
-        // Mark as loaded
-        _loaded: true
+        initForm: initForm
     };
 
 })();

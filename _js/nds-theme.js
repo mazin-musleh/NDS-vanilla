@@ -16,8 +16,9 @@
 
     const root = document.documentElement;
     window.NDS = window.NDS || {};
-    NDS.STORAGE = NDS.STORAGE || { THEME: 'nds-theme' };
-    const STORAGE_KEY = NDS.STORAGE.THEME;      // full data-theme string ("dark crimson")
+    // Key is duplicated in the pre-paint FOUC script (head-inline-scripts.html) —
+    // a runtime override could only desync the two, so it's a plain const.
+    const STORAGE_KEY = 'nds-theme';            // full data-theme string ("dark crimson")
     const PALETTE_KEY = 'nds-palette';          // custom inline-seed theme only: { seeds, value }
     const TOGGLE_SEL = '[data-theme-toggle], #ndsThemeToggle';
     const SWITCH_SEL = '[data-theme-value]';

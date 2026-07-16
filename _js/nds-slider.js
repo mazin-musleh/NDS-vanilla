@@ -122,7 +122,7 @@
         // off the sync path and re-runs it on font-load / resize. .nds-stacked
         // toggles are handled by the onAttrChange watcher in bindOnce.
         if (container._sliderOffResize) container._sliderOffResize();
-        if (NDS.onElementResize) container._sliderOffResize = NDS.onElementResize(container, function () { applyReservation(container); });
+        container._sliderOffResize = NDS.onElementResize(container, function () { applyReservation(container); });
     }
 
     var bound = false;
@@ -138,7 +138,7 @@
         // Toggling .nds-stacked (a class change) neither re-runs init nor fires a
         // resize — re-apply the reservation when a container's class changes.
         // onAttrChange hands the callback a nodes array.
-        if (NDS.onAttrChange) NDS.onAttrChange('.nds-slider-container', ['class'], function (els) { els.forEach(applyReservation); });
+        NDS.onAttrChange('.nds-slider-container', ['class'], function (els) { els.forEach(applyReservation); });
     }
 
     NDS.Slider = {

@@ -41,6 +41,7 @@
 
             this.abortController = new AbortController();
             this.currentTabIndex = this.findActiveTabIndex();
+            this.valid = true;
             this.init();
         }
 
@@ -93,37 +94,14 @@
         setupWheelAndDrag() {
             if (this.isVertical) return;
 
-            // Mouse wheel: convert vertical wheel delta to horizontal scroll with ease-out.
-            let isScrolling = false;
+            // Mouse wheel: convert vertical wheel delta to native smooth horizontal
+            // scroll (successive deltas compose; no frame-rate assumptions).
             this.tabList.addEventListener('wheel', (e) => {
                 if (!this.needsScroll()) return;
                 if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
 
                 e.preventDefault();
-                if (isScrolling) return;
-
-                isScrolling = true;
-                this.tabList.style.scrollBehavior = 'auto';
-
-                const scrollAmount = e.deltaY * (NDS.isRTL ? -0.8 : 0.8);
-                const startScroll = this.tabList.scrollLeft;
-                const duration = 150;
-                let frame = 0;
-
-                const animate = () => {
-                    frame += 16;
-                    const progress = Math.min(frame / duration, 1);
-                    const easeOut = 1 - Math.pow(1 - progress, 3);
-                    this.tabList.scrollLeft = startScroll + (scrollAmount * easeOut);
-
-                    if (progress < 1) {
-                        requestAnimationFrame(animate);
-                    } else {
-                        isScrolling = false;
-                        this.tabList.style.scrollBehavior = 'smooth';
-                    }
-                };
-                requestAnimationFrame(animate);
+                this.tabList.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: 'smooth' });
             }, { passive: false, signal: this.abortController.signal });
 
             // Drag scroll.
@@ -332,20 +310,18 @@
             if (container.hasAttribute('data-nds-tabs-initialized')) return;
 
             const instance = new NDSTabs(container);
-            container.ndsTabs = instance;
-            container.setAttribute('data-nds-tabs-initialized', 'true');
+            // Stamp only successful constructions — late-filled tab markup stays
+            // eligible for the next reinit().
+            if (instance.valid) {
+                container.ndsTabs = instance;
+                container.setAttribute('data-nds-tabs-initialized', 'true');
+            }
         });
     }
 
-    if (typeof window !== 'undefined') {
-        NDS.Tabs = {
-            init: initializeTabs,
-            reinit: initializeTabs,
-            create: (container) => new NDSTabs(container)
-        };
-    }
-
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSTabs;
-    }
+    NDS.Tabs = {
+        init: initializeTabs,
+        reinit: initializeTabs,
+        create: (container) => new NDSTabs(container)
+    };
 })();

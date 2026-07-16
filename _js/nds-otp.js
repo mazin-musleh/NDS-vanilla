@@ -211,12 +211,15 @@
 
     function initOtpGroup(group) {
         if (!group || group._ndsOtpInit) return;
+
+        // Guard before stamping — a group whose inputs render late must stay
+        // eligible for the onDOMAdd re-arm, and the AC must not leak unaborted.
+        var inputs = getOtpInputs(group);
+        if (!inputs.length) return;
+
         group._ndsOtpInit = true;
         group._ndsOtpAC = new AbortController();
         var signal = group._ndsOtpAC.signal;
-
-        var inputs = getOtpInputs(group);
-        if (!inputs.length) return;
 
         inputs.forEach(function (input) {
             input.addEventListener('beforeinput', function (e) {
@@ -280,9 +283,7 @@
             dispatch(group, 'nds:otpClear');
             var inputs = getOtpInputs(group);
             if (inputs[0]) inputs[0].focus();
-        },
-
-        _loaded: true
+        }
     };
 
 })();

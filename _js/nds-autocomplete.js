@@ -638,7 +638,7 @@
         new NDSAutocomplete(container);
     }
 
-    var _delegated = false;
+    var _initDone = false;
 
     // Delegated + lazy (custom-select / voice-input pattern): instead of sweeping
     // and constructing every [data-url] container up front, build a container's
@@ -648,8 +648,8 @@
     // stays per-element — it holds results / activeIndex / in-flight abort,
     // runtime state that (unlike the custom-select's value) isn't in the DOM.
     function initializeAutocompletes() {
-        if (_delegated) return;
-        _delegated = true;
+        if (_initDone) return;
+        _initDone = true;
         document.addEventListener('focusin', function (e) {
             var t = e.target;
             if (!t || !t.closest) return;

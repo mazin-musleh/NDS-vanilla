@@ -282,13 +282,11 @@
                     console.warn('NDS DatePicker: Hijri conversion via Intl failed, using mathematical fallback:', e.message);
                 }
 
-                // Mathematical fallback using Julian Day method
-                try {
-                    return this.julianToHijri(this.gregorianToJulian(gDate));
-                } catch (e) {
-                    console.error('NDS DatePicker: all Hijri conversion methods failed:', e.message);
-                    throw new Error('Unable to convert Gregorian date to Hijri');
-                }
+                // No approximation tier: the old Julian-day math could be days off.
+                // Reaching here means Intl's islamic calendar is unavailable or
+                // returned an unparsable shape — fail loudly rather than mis-date.
+                console.error('NDS DatePicker: all Hijri conversion methods failed');
+                throw new Error('Unable to convert Gregorian date to Hijri');
             },
 
             /**
@@ -509,29 +507,6 @@
 
                 // Create date at noon Saudi time to avoid timezone issues with day-of-week
                 return new Date(year, month - 1, day, 12, 0, 0);
-            },
-
-            julianToHijri: function (jd) {
-                // Approximate conversion - Hijri epoch (July 16, 622 CE)
-                var hijriEpoch = 1948439.5;
-                var daysSinceEpoch = jd - hijriEpoch;
-                
-                // Average Hijri year is about 354.367 days
-                var avgHijriYear = 354.367;
-                var year = Math.floor(daysSinceEpoch / avgHijriYear) + 1;
-                
-                // Rough calculation for month and day
-                var daysIntoYear = daysSinceEpoch - ((year - 1) * avgHijriYear);
-                var month = Math.floor(daysIntoYear / 29.5) + 1;
-                var day = Math.floor(daysIntoYear % 29.5) + 1;
-                
-                // Ensure valid ranges
-                if (month > 12) { month = 12; }
-                if (month < 1) { month = 1; }
-                if (day > 30) { day = 30; }
-                if (day < 1) { day = 1; }
-                
-                return createHijriDate(day, month, year);
             },
 
             hijriToJulian: function (year, month, day) {
@@ -1389,9 +1364,7 @@
         // `offset` is in cells (1 = next day, 7 = next week). Maintains the
         // roving tabindex: only the focused cell stays tabbable.
         focusDayCell: function (currentBtn, offset) {
-            var cells = Array.prototype.slice.call(
-                this.elements.datesContainer.querySelectorAll('.nds-date-cell')
-            );
+            var cells = Array.from(this.elements.datesContainer.querySelectorAll('.nds-date-cell'));
             var idx = cells.indexOf(currentBtn);
             if (idx === -1) return;
 
@@ -1416,9 +1389,7 @@
             // N = move into next month then focus index (target - 42).
             var direction = target < 0 ? -1 : 1;
             this.navigateMonth(direction);
-            var newCells = Array.prototype.slice.call(
-                this.elements.datesContainer.querySelectorAll('.nds-date-cell')
-            );
+            var newCells = Array.from(this.elements.datesContainer.querySelectorAll('.nds-date-cell'));
             var newIdx = direction === -1
                 ? newCells.length + target  // target is negative
                 : target - newCells.length;
@@ -1460,9 +1431,7 @@
                     e.preventDefault();
                     // First day of the week the focused cell is on. Walk
                     // back until index % 7 === 0 (Sunday in the grid).
-                    var cells = Array.prototype.slice.call(
-                        this.elements.datesContainer.querySelectorAll('.nds-date-cell')
-                    );
+                    var cells = Array.from(this.elements.datesContainer.querySelectorAll('.nds-date-cell'));
                     var idx = cells.indexOf(btn);
                     if (idx === -1) return;
                     var weekStart = idx - (idx % 7);
@@ -1471,9 +1440,7 @@
                 }
                 case 'End': {
                     e.preventDefault();
-                    var cells2 = Array.prototype.slice.call(
-                        this.elements.datesContainer.querySelectorAll('.nds-date-cell')
-                    );
+                    var cells2 = Array.from(this.elements.datesContainer.querySelectorAll('.nds-date-cell'));
                     var idx2 = cells2.indexOf(btn);
                     if (idx2 === -1) return;
                     var weekEnd = idx2 - (idx2 % 7) + 6;

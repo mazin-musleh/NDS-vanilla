@@ -87,6 +87,7 @@
                 return;
             }
 
+            this.valid = true;
             this.init();
         }
 
@@ -307,8 +308,12 @@
                 }
 
                 const paginationInstance = new NDSPagination(container);
-                container.ndsPagination = paginationInstance;
-                container.setAttribute('data-nds-pagination-initialized', 'true');
+                // Stamp only successful constructions — a bailed (empty) nav stays
+                // eligible for the next reinit() instead of being skipped forever.
+                if (paginationInstance.valid) {
+                    container.ndsPagination = paginationInstance;
+                    container.setAttribute('data-nds-pagination-initialized', 'true');
+                }
 
                 // Initialize button states after pagination is ready
                 initializePaginationStates(container);

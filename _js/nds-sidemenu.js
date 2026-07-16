@@ -191,7 +191,7 @@
             const rect = getRect();
             const cx = rect.left + rect.width / 2;
             const cy = rect.top + rect.height / 2;
-            const dist = Math.sqrt((e.clientX - cx) ** 2 + (e.clientY - cy) ** 2);
+            const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
             toggleBtn.classList.toggle('nds-peek', dist > threshold);
         });
 
@@ -304,7 +304,5 @@
         ctx._offResize = NDS.onResize(resizeHandler);
     }
 
-    if (typeof window !== 'undefined') {
-        NDS.Sidemenu = { init: initializeSideMenu, destroy };
-    }
+    NDS.Sidemenu = { init: initializeSideMenu, destroy };
 })();

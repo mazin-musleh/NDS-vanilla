@@ -27,6 +27,7 @@
                 return;
             }
 
+            this.valid = true;
             this.init();
         }
 
@@ -256,8 +257,12 @@
 
             if (!container.hasAttribute('data-nds-expandable-initialized')) {
                 const expandableInstance = new NDSExpandable(container);
-                container.ndsExpandable = expandableInstance;
-                container.setAttribute('data-nds-expandable-initialized', 'true');
+                // Stamp only successful constructions — content that renders late
+                // stays eligible for the next reinit().
+                if (expandableInstance.valid) {
+                    container.ndsExpandable = expandableInstance;
+                    container.setAttribute('data-nds-expandable-initialized', 'true');
+                }
             }
         });
     }
@@ -278,19 +283,12 @@
     }
 
     // CRITICAL: Expose global API immediately (called by unified init system)
-    if (typeof window !== 'undefined') {
-        NDS.Expandable = {
-            init: initializeExpandableContent,
-            reinit: reinitializeExpandableContent,
-            recheckHeights: recheckAllHeights,
-            create: (container) => new NDSExpandable(container)
-        };
-    }
-
-    // Export for modules
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSExpandable;
-    }
+    NDS.Expandable = {
+        init: initializeExpandableContent,
+        reinit: reinitializeExpandableContent,
+        recheckHeights: recheckAllHeights,
+        create: (container) => new NDSExpandable(container)
+    };
 
     // Note: Initialization now handled by nds-loader.js unified system
 })();

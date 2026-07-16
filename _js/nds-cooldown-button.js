@@ -51,7 +51,7 @@
     'use strict';
 
     const SEL = '.nds-cooldown';
-    const WIRED_ATTR = 'data-cooldown-wired';
+    const WIRED_ATTR = 'data-nds-cooldown-button-initialized';
     const DEFAULT_TEMPLATE = '{s}';
 
     // One-shot init guard. A re-run of init (e.g. NDS.Init.initialize())

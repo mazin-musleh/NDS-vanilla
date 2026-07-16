@@ -66,7 +66,7 @@
 
         get isMinimal() { return _mqMinimal.matches; },
 
-        _reducedMotion: window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false,
+        _reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
         get reducedMotion() { return this._reducedMotion; },
         set reducedMotion(val) { this._reducedMotion = val; },
 
@@ -798,7 +798,6 @@
 
     function _bindWheelConversion(signal) {
         DOM.primary.style.scrollBehavior = 'smooth';
-        let scrolling = false;
 
         DOM.primary.addEventListener('wheel', (e) => {
             if (state.isMouseOverDropdown || state.isMinimal ||
@@ -806,24 +805,8 @@
                 !hasState(DOM.primary, 'has-more')) return;
 
             e.preventDefault();
-            if (scrolling) return;
-
-            scrolling = true;
-            DOM.primary.style.scrollBehavior = 'auto';
-
-            const start = DOM.primary.scrollLeft;
-            const mult = NDS.isRTL ? -0.8 : 0.8;
-            const delta = e.deltaY * mult;
-            let frame = 0;
-
-            const step = () => {
-                frame += 16;
-                const p = Math.min(frame / 150, 1);
-                DOM.primary.scrollLeft = start + delta * (1 - Math.pow(1 - p, 3));
-                if (p < 1) requestAnimationFrame(step);
-                else { scrolling = false; DOM.primary.style.scrollBehavior = 'smooth'; }
-            };
-            requestAnimationFrame(step);
+            // Native smooth scroll — successive deltas compose; no frame-rate assumptions.
+            DOM.primary.scrollBy({ left: e.deltaY * (NDS.isRTL ? -0.8 : 0.8), behavior: 'smooth' });
         }, { passive: false, signal });
     }
 
@@ -1120,10 +1103,8 @@
     }
 
     // Keep reduced-motion in sync
-    try {
-        window.matchMedia?.('(prefers-reduced-motion: reduce)')
-            ?.addEventListener('change', (e) => { state.reducedMotion = !!e.matches; });
-    } catch { }
+    window.matchMedia('(prefers-reduced-motion: reduce)')
+        .addEventListener('change', (e) => { state.reducedMotion = !!e.matches; });
 
     // Mode-flip listener: fires only when the viewport crosses
     // `--nds-minimal-nav-bp`. scheduleUpdate's updateBodyClass call then

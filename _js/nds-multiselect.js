@@ -64,6 +64,7 @@
             this.name = root.getAttribute('data-multiselect-name') || '';
             this.chipClass = root.getAttribute('data-chip-class') || 'nds-primary nds-sm';
             this.abortController = new AbortController();
+            this.valid = true;
             this.init();
         }
 
@@ -137,7 +138,7 @@
                 scroll.className = 'nds-dropmenu-scroll';
                 this.menu.prepend(scroll);
             }
-            while (scroll.firstChild) scroll.removeChild(scroll.firstChild);
+            scroll.replaceChildren();
 
             groups.forEach((group, i) => {
                 if (i) {
@@ -386,7 +387,7 @@
 
         renderChips() {
             const selected = this.getSelected();
-            while (this.chipsEl.firstChild) this.chipsEl.removeChild(this.chipsEl.firstChild);
+            this.chipsEl.replaceChildren();
             selected.forEach(value => { this.chipsEl.appendChild(this.buildChip(value)); });
             NDS.State[selected.length ? 'add' : 'remove'](this.root, 'filled');
 
@@ -428,21 +429,17 @@
         document.querySelectorAll('.nds-multiselect').forEach(el => {
             if (el.closest('code, .code-example')) return;
             if (el.hasAttribute('data-nds-multiselect-initialized')) return;
-            el.ndsMultiselect = new NDSMultiselect(el);
+            const instance = new NDSMultiselect(el);
+            // Expando only on successful construction — a bailed root must not hand
+            // consumers a half-built instance (populate()/apply() would throw).
+            if (instance.valid) el.ndsMultiselect = instance;
         });
     }
 
-    if (typeof window !== 'undefined') {
-        window.NDS = window.NDS || {};
-        NDS.Multiselect = {
-            init: initializeMultiselects,
-            reinit: initializeMultiselects,
-            create: (element) => new NDSMultiselect(element),
-            destroy: (element) => element.ndsMultiselect?.destroy()
-        };
-    }
-
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSMultiselect;
-    }
+    NDS.Multiselect = {
+        init: initializeMultiselects,
+        reinit: initializeMultiselects,
+        create: (element) => new NDSMultiselect(element),
+        destroy: (element) => element.ndsMultiselect?.destroy()
+    };
 })();

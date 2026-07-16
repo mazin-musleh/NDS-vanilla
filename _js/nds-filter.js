@@ -1662,6 +1662,7 @@
             if (fd && fd.currency) span.setAttribute('data-currency', fd.currency);
             if (fd && fd.unit) span.setAttribute('data-unit', fd.unit);
             span.textContent = value;
+            // Soft dependency — range chips render unformatted if NDS.Numbers isn't bundled.
             if (NDS.Numbers && NDS.Numbers.format) NDS.Numbers.format(span);
             return span;
         }
@@ -1849,7 +1850,8 @@
             // Hand off to accordion.js's own initializer — it wires listeners,
             // stamps data-nds-accordion-initialized (clears the skeleton), and
             // sets .ndsAccordion on the container. Skips already-inited roots,
-            // so multiple groups triggering this is cheap.
+            // so multiple groups triggering this is cheap. Soft dependency —
+            // groups render expanded, uncollapsible, if NDS.Accordion isn't bundled.
             NDS.Accordion?.reinit();
         }
 
@@ -2636,56 +2638,50 @@
     // GLOBAL API
     // ==============================================
 
-    if (typeof window !== 'undefined') {
-        NDS.Filter = {
-            init: initializeFilters,
-            reinit: reinitializeFilters,
-            create: (container) => new NDSFilter(container),
+    NDS.Filter = {
+        init: initializeFilters,
+        reinit: reinitializeFilters,
+        create: (container) => new NDSFilter(container),
 
-            getInstance: (container) => {
-                if (typeof container === 'string') {
-                    container = document.querySelector(container);
-                }
-                if (!container) return null;
-                // Direct backref (representative element), else resolve via the
-                // element's target linkage so any surface element works.
-                if (container.ndsFilter) return container.ndsFilter;
-                const id = container.getAttribute('data-filter-target');
-                return id ? (_instancesByTarget.get(id) || null) : null;
-            },
-
-            getByTarget: (targetId) => _instancesByTarget.get(targetId) || null,
-
-            /**
-             * Execute callback when a filter is ready, handling the race condition
-             * where the filter may already be initialized before the listener is added.
-             * @param {string|Element} container - Selector or element (any surface)
-             * @param {Function} callback - Receives the filter instance
-             */
-            whenReady: (container, callback) => {
-                if (typeof container === 'string') {
-                    container = document.querySelector(container);
-                }
-                if (!container) return;
-
-                // Already initialized — resolve immediately (backref or target map)
-                const existing = NDS.Filter.getInstance(container);
-                if (existing) {
-                    callback(existing);
-                    return;
-                }
-
-                // Not yet — ready bubbles from the representative element
-                container.addEventListener('nds:filter:ready', (e) => {
-                    callback(e.detail);
-                }, { once: true });
+        getInstance: (container) => {
+            if (typeof container === 'string') {
+                container = document.querySelector(container);
             }
-        };
-    }
+            if (!container) return null;
+            // Direct backref (representative element), else resolve via the
+            // element's target linkage so any surface element works.
+            if (container.ndsFilter) return container.ndsFilter;
+            const id = container.getAttribute('data-filter-target');
+            return id ? (_instancesByTarget.get(id) || null) : null;
+        },
 
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSFilter;
-    }
+        getByTarget: (targetId) => _instancesByTarget.get(targetId) || null,
+
+        /**
+         * Execute callback when a filter is ready, handling the race condition
+         * where the filter may already be initialized before the listener is added.
+         * @param {string|Element} container - Selector or element (any surface)
+         * @param {Function} callback - Receives the filter instance
+         */
+        whenReady: (container, callback) => {
+            if (typeof container === 'string') {
+                container = document.querySelector(container);
+            }
+            if (!container) return;
+
+            // Already initialized — resolve immediately (backref or target map)
+            const existing = NDS.Filter.getInstance(container);
+            if (existing) {
+                callback(existing);
+                return;
+            }
+
+            // Not yet — ready bubbles from the representative element
+            container.addEventListener('nds:filter:ready', (e) => {
+                callback(e.detail);
+            }, { once: true });
+        }
+    };
 
     // Note: Initialization handled by nds-loader.js unified system
 })();

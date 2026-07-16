@@ -108,6 +108,7 @@
             this._slidesMin = parseInt(container.getAttribute('slides-min')) || 1;
             this._peek = parseInt(container.getAttribute('peek')) || 0;
 
+            this.valid = true;
             this.init();
         }
 
@@ -634,7 +635,10 @@
         swipers.forEach(swiper => {
             if (swiper.closest('code, .code-example')) return;
             if (swiper.hasAttribute('data-nds-swiper-initialized')) return;
-            swiper._ndsSwiper = new NDSSwiper(swiper);
+            const instance = new NDSSwiper(swiper);
+            // Expando only on successful construction — retries must not inherit
+            // a half-built instance.
+            if (instance.valid) swiper._ndsSwiper = instance;
         });
     }
 
@@ -643,7 +647,7 @@
         reinit: initializeComponents,
         create: (element) => {
             const instance = new NDSSwiper(element);
-            element._ndsSwiper = instance;
+            if (instance.valid) element._ndsSwiper = instance;
             return instance;
         }
     };

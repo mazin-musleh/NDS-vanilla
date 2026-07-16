@@ -884,34 +884,29 @@
             if (el.closest('code, .code-example')) return;
             if (el.hasAttribute('data-nds-dropmenu-initialized')) return;
 
-            el.ndsDropmenu = new NDSDropmenu(el);
+            // Expando is self-assigned post-guard in the ctor — never stamp a bailed construction.
+            new NDSDropmenu(el);
         });
     }
 
     // Expose global API (called by nds-loader.js unified system)
-    if (typeof window !== 'undefined') {
-        NDS.Dropmenu = {
-            init: initializeDropmenus,
-            reinit: initializeDropmenus,
-            create: (element) => new NDSDropmenu(element),
-            // Walks up from `el` to find the .nds-dropmenu wrapper. Falls
-            // back to the menu's `_ownerDropmenu` backref when the menu has
-            // been portaled to <body> (so closest can't reach the wrapper
-            // through the DOM ancestor chain).
-            from: (el) => {
-                if (!el) return null;
-                return el.closest('.nds-dropmenu')
-                    || el.closest('.nds-dropmenu-menu')?._ownerDropmenu
-                    || null;
-            },
-            // Returns the menu element for a wrapper, regardless of whether
-            // the menu is currently nested inside or portaled to <body>.
-            menuOf: (dropmenu) => dropmenu?.querySelector('.nds-dropmenu-menu')
-                || dropmenu?._ownerMenu || null,
-        };
-    }
-
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = NDSDropmenu;
-    }
+    NDS.Dropmenu = {
+        init: initializeDropmenus,
+        reinit: initializeDropmenus,
+        create: (element) => new NDSDropmenu(element),
+        // Walks up from `el` to find the .nds-dropmenu wrapper. Falls
+        // back to the menu's `_ownerDropmenu` backref when the menu has
+        // been portaled to <body> (so closest can't reach the wrapper
+        // through the DOM ancestor chain).
+        from: (el) => {
+            if (!el) return null;
+            return el.closest('.nds-dropmenu')
+                || el.closest('.nds-dropmenu-menu')?._ownerDropmenu
+                || null;
+        },
+        // Returns the menu element for a wrapper, regardless of whether
+        // the menu is currently nested inside or portaled to <body>.
+        menuOf: (dropmenu) => dropmenu?.querySelector('.nds-dropmenu-menu')
+            || dropmenu?._ownerMenu || null,
+    };
 })();

@@ -25,6 +25,7 @@
             if (!this.entries.length) return;
 
             this.active = null;
+            this.valid = true;
             this.init();
         }
 
@@ -185,14 +186,16 @@
         document.querySelectorAll('.nds-toc').forEach(toc => {
             if (toc.closest('code, .code-example')) return;
             if (toc.hasAttribute('data-nds-toc-initialized')) return;
-            toc._ndsToc = new NDSToc(toc);
+            const instance = new NDSToc(toc);
+            // Expando only on successful construction (sentinel is stamped post-guard by init()).
+            if (instance.valid) toc._ndsToc = instance;
         });
     }
 
     NDS.Toc = {
         init: initializeComponents,
         reinit: initializeComponents,
-        create: (el) => { el._ndsToc = new NDSToc(el); return el._ndsToc; }
+        create: (el) => { const inst = new NDSToc(el); if (inst.valid) el._ndsToc = inst; return inst; }
     };
 
 })();

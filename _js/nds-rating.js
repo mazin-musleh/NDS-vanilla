@@ -208,7 +208,6 @@
   }
 
   NDS.Rating = {
-    initializeRatings,
     init: initializeRatings,
     reinit: initializeRatings,
     create: (element) => {

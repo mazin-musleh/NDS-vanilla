@@ -178,7 +178,6 @@
         init: initAll,
         reinit: initAll,
         create: initElement,
-        initElement,
         checkOverflow,
         destroy
     };

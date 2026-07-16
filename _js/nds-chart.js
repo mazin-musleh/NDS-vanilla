@@ -63,10 +63,11 @@
         return { min: niceMin, max: niceMax, step, steps };
     }
 
+    // Localized compact notation for the K/M tiers (e.g. "1.2K", Arabic "١٫٢ ألف");
+    // values below 1000 keep the old full-precision String(n) path.
+    const _compactFmt = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 1 });
     function formatNumber(n) {
-        if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
-        if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
-        return String(n);
+        return Math.abs(n) >= 1e3 ? _compactFmt.format(n) : String(n);
     }
 
     function chartColor(index) {

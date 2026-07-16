@@ -110,9 +110,8 @@
       return;
     }
 
-    // Scope all document-level listeners to an AbortController so any future
-    // re-init detaches the prior batch atomically instead of stacking listeners.
-    if (initAbortController) initAbortController.abort();
+    // Document-level listeners scoped to one AbortController. Init runs once
+    // (_initDone latches, never reset), so there is no prior batch to abort.
     initAbortController = new AbortController();
     const { signal } = initAbortController;
 
