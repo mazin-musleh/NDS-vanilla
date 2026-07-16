@@ -1,15 +1,17 @@
 /**
  * NDS Toolbar Component
  * Layout only — a controls row above any content region (table, list, grid).
- * It owns no state and no behavior. Two clusters bracket it: .nds-bar-info
- * leads, .nds-bar-actions trails, and the search / filter / sort surfaces sit
- * between them.
+ * It owns no state and no behavior. Two clusters bracket it: .nds-bar-start
+ * leads, .nds-bar-end trails, and the search / filter / sort surfaces sit
+ * between them. The names are positional, not semantic — a cluster holds
+ * whatever a bar needs at that edge, reporting or acting.
  *
  * Every element inside a cluster is a self-contained widget that wires itself
- * to its own component — the bar never mediates. .nds-bar-info takes whatever
- * a page needs to report: a [data-filter-count] slot, a [data-filter-query]
- * keyword, a record count, a selected-rows summary. .nds-bar-actions takes the
- * controls: an export group, a column-visibility menu, bulk actions.
+ * to its own component — the bar never mediates. A typical table bar reports
+ * from the start edge (a [data-filter-count] slot, a [data-filter-query]
+ * keyword, a record count, a selected-rows summary) and acts from the end edge
+ * (an export group, a column-visibility menu, bulk actions), but an editor bar
+ * is formatting controls at the start and a source toggle at the end.
  *
  * A bar wraps its items by default. Wrap them in .nds-bar-row instead to pin an
  * explicit line — a row lays out exactly like the bar, so clusters and search
@@ -55,16 +57,16 @@
     }
 
     // Clusters — widget slots that lay their children out as one bar item.
-    :is(.nds-bar-info, .nds-bar-actions) {
+    :is(.nds-bar-start, .nds-bar-end) {
         display: flex;
         align-items: center;
         gap: var(--spacing-md);
         flex-wrap: wrap;
     }
 
-    // Info keeps its natural leading spot; actions are pushed to the end edge
-    // of whichever bar or row holds them.
-    .nds-bar-actions {
+    // Start keeps its natural leading spot; end is pushed to the end edge
+    // of whichever bar or row holds it.
+    .nds-bar-end {
         margin-inline-start: auto;
         justify-content: flex-end;
     }
@@ -101,15 +103,15 @@
 // toolbar stays uncoupled from filter/export/pagination.
 
 // A cluster of nothing but hidden widgets would still eat a column gap.
-:is(.nds-bar-info, .nds-bar-actions):not(:has(> :not([hidden]))) {
+:is(.nds-bar-start, .nds-bar-end):not(:has(> :not([hidden]))) {
     display: none;
 }
 
 // A row is empty when it holds no visible child of its own AND no cluster
 // holding a visible child. Then it takes no line at all.
 .nds-bar-row:not(:has(
-    > :not([hidden], .nds-bar-info, .nds-bar-actions),
-    > :is(.nds-bar-info, .nds-bar-actions) > :not([hidden])
+    > :not([hidden], .nds-bar-start, .nds-bar-end),
+    > :is(.nds-bar-start, .nds-bar-end) > :not([hidden])
 )) {
     display: none;
 }

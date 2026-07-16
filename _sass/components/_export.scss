@@ -15,5 +15,5 @@
     margin-block-end: var(--spacing-md);
 
     // In a bar the cluster owns alignment and spacing.
-    .nds-bar-actions & { margin: 0; }
+    .nds-bar-end & { margin: 0; }
 }

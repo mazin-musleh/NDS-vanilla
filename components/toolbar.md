@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.4.0"
-last_edit: "15/07/2026 - 11:17 PM"
+last_edit: "17/07/2026 - 12:30 AM"
 ---
 
 <!-- Toolbar -->
@@ -22,14 +22,14 @@ last_edit: "15/07/2026 - 11:17 PM"
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Info and actions</div>
+                        <div class="demo-label">Start and end clusters</div>
                     </div>
                     <div class="demo-container">
                         <div class="nds-toolbar">
-                            <div class="nds-bar-info">
+                            <div class="nds-bar-start">
                                 <span class="nds-results-count">3 orders</span>
                             </div>
-                            <div class="nds-bar-actions">
+                            <div class="nds-bar-end">
                                 <div class="nds-export nds-btn-group">
                                     <button type="button" class="nds-btn nds-secondary-outline nds-md"
                                         data-export="csv" data-export-target="#toolbarOrders">
@@ -96,10 +96,10 @@ last_edit: "15/07/2026 - 11:17 PM"
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
-  &lt;div class="nds-bar-info"&gt;
+  &lt;div class="nds-bar-start"&gt;
     &lt;span class="nds-results-count"&gt;3 orders&lt;/span&gt;
   &lt;/div&gt;
-  &lt;div class="nds-bar-actions"&gt;
+  &lt;div class="nds-bar-end"&gt;
     &lt;div class="nds-export nds-btn-group"&gt;
       &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
         data-export="csv" data-export-target="#toolbarOrders"&gt;
@@ -170,10 +170,10 @@ last_edit: "15/07/2026 - 11:17 PM"
                     <div class="demo-container">
                         <div class="nds-toolbar">
                             <div class="nds-bar-row">
-                                <div class="nds-bar-info">
+                                <div class="nds-bar-start">
                                     <span class="nds-results-count" data-filter-target="toolbarRowsBody"><span data-filter-count>3</span> of 3 orders</span>
                                 </div>
-                                <div class="nds-bar-actions">
+                                <div class="nds-bar-end">
                                     <div class="nds-export nds-btn-group">
                                         <button type="button" class="nds-btn nds-secondary-outline nds-md"
                                             data-export="csv" data-export-target="#toolbarRowsTable">
@@ -204,7 +204,7 @@ last_edit: "15/07/2026 - 11:17 PM"
                                 </div>
                             </div>
                             <div class="nds-bar-row">
-                                <div class="nds-bar-info">
+                                <div class="nds-bar-start">
                                     <div class="nds-filter-applied" data-filter-target="toolbarRowsBody" hidden>
                                         <span class="nds-label">Applied Filters:</span>
                                         <div class="nds-chips"></div>
@@ -264,10 +264,10 @@ last_edit: "15/07/2026 - 11:17 PM"
 &lt;div class="nds-toolbar"&gt;
   &lt;!-- Row 1: counts lead, controls trail --&gt;
   &lt;div class="nds-bar-row"&gt;
-    &lt;div class="nds-bar-info"&gt;
+    &lt;div class="nds-bar-start"&gt;
       &lt;span class="nds-results-count" data-filter-target="toolbarRowsBody"&gt;&lt;span data-filter-count&gt;3&lt;/span&gt; of 3 orders&lt;/span&gt;
     &lt;/div&gt;
-    &lt;div class="nds-bar-actions"&gt;
+    &lt;div class="nds-bar-end"&gt;
       &lt;div class="nds-export nds-btn-group"&gt;
         &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
           data-export="csv" data-export-target="#toolbarRowsTable"&gt;
@@ -304,7 +304,7 @@ last_edit: "15/07/2026 - 11:17 PM"
 
   &lt;!-- Row 3: collapses to nothing until a filter lands --&gt;
   &lt;div class="nds-bar-row"&gt;
-    &lt;div class="nds-bar-info"&gt;
+    &lt;div class="nds-bar-start"&gt;
       &lt;div class="nds-filter-applied" data-filter-target="toolbarRowsBody" hidden&gt;
         &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
         &lt;div class="nds-chips"&gt;&lt;/div&gt;
@@ -363,7 +363,7 @@ last_edit: "15/07/2026 - 11:17 PM"
                         <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
                         <span class="nds-label">Leading and Trailing Clusters</span>
                     </span>
-                    <p class="nds-item-desc">Anything you place in <code class="nds-inline-code lang-html">nds-bar-info</code> sits at the leading edge, and <code class="nds-inline-code lang-html">nds-bar-actions</code> is pushed to the trailing edge at any bar width.</p>
+                    <p class="nds-item-desc">Anything you place in <code class="nds-inline-code lang-html">nds-bar-start</code> sits at the leading edge, and <code class="nds-inline-code lang-html">nds-bar-end</code> is pushed to the trailing edge at any bar width.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -417,8 +417,8 @@ last_edit: "15/07/2026 - 11:17 PM"
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use a <strong>toolbar</strong> directly above the content it controls: a <a class="nds-color" href="{{ 'components/tables' | relative_url }}">Table</a>, a card grid, or any list. Keep the content and its <a class="nds-color" href="{{ 'components/pagination' | relative_url }}">Pagination</a> as independent siblings below</li>
-                    <li>Put anything that <strong>reports</strong> in <code class="nds-inline-code lang-html">nds-bar-info</code>: a result count, applied-filter chips, auto-fill suggestions, a selection summary. Put anything that <strong>acts</strong> in <code class="nds-inline-code lang-html">nds-bar-actions</code>: an <a class="nds-color" href="{{ 'components/export' | relative_url }}">Export</a> group, a column menu, bulk actions</li>
-                    <li>Reach for <code class="nds-inline-code lang-html">nds-bar-row</code> only when you want a deliberate line break. Without one the bar wraps on its own, which is the right behavior for two or three controls</li>
+                    <li>The cluster names are <strong>positional, not semantic</strong>: put what leads in <code class="nds-inline-code lang-html">nds-bar-start</code> and what trails in <code class="nds-inline-code lang-html">nds-bar-end</code>, whatever those widgets do. A table bar usually reports from the start edge (a result count, applied-filter chips, a selection summary) and acts from the end edge (an <a class="nds-color" href="{{ 'components/export' | relative_url }}">Export</a> group, a column menu, bulk actions); an editor bar leads with formatting controls and trails with a source toggle</li>
+                    <li>A <code class="nds-inline-code lang-html">nds-bar-row</code> earns its place when it has a <strong>sibling to break from</strong> — another row, or a widget sitting directly in the bar. A row that is its bar's only child pins no break: the bar has one line either way, so the wrapper reads as deliberate structure while doing nothing. Without any row the bar wraps on its own, which is the right behavior for two or three controls</li>
                     <li>Do not use a toolbar for page-level navigation or the page's primary action. Those belong in the section head, described on the <a class="nds-color" href="{{ 'layout/section' | relative_url }}">Section</a> page</li>
                     <li>Do not nest a toolbar inside another toolbar. Add a <code class="nds-inline-code lang-html">nds-bar-row</code> instead, which is the same layout without the outer spacing</li>
                     <li>Every widget wires itself to its own content through a target attribute, so the bar imposes no structure on them. A custom layout built from <a class="nds-color" href="{{ 'layout/grid' | relative_url }}">Grid</a> works too, but the toolbar keeps bars consistent across a product</li>
@@ -435,8 +435,8 @@ last_edit: "15/07/2026 - 11:17 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-toolbar</code></td><td>The bar itself. A wrapping flex row that spans its container and clears space below</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-bar-row</code></td><td>Pins its children to a line of their own. Lays out identically to the bar, so clusters and search boxes work inside it</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-bar-info</code></td><td>Leading widget cluster. Groups reporting widgets so they space tighter than the bar's own gap</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-bar-actions</code></td><td>Trailing widget cluster. Pushed to the end edge of whichever bar or row holds it</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-bar-start</code></td><td>Leading widget cluster. Groups its widgets so they space tighter than the bar's own gap</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-bar-end</code></td><td>Trailing widget cluster. Pushed to the end edge of whichever bar or row holds it</td></tr>
                     </tbody>
                 </table>
             </div>

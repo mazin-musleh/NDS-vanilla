@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.4.0"
-last_edit: "13/07/2026 - 01:15 AM"
+last_edit: "17/07/2026 - 12:17 AM"
 ---
 
 <!-- Table Export -->
@@ -27,7 +27,7 @@ last_edit: "13/07/2026 - 01:15 AM"
                     <div class="demo-container">
                         <div class="state-demo" style="gap: 0;">
                             <div class="nds-toolbar">
-                                <div class="nds-bar-actions">
+                                <div class="nds-bar-end">
                                     <div class="nds-dropmenu" data-columns-target="exportOrdersTable">
                                         <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                             <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
@@ -153,7 +153,7 @@ last_edit: "13/07/2026 - 01:15 AM"
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
-  &lt;div class="nds-bar-actions"&gt;
+  &lt;div class="nds-bar-end"&gt;
     &lt;!-- Hiding a column stamps data-export-skip, so exports follow the view --&gt;
     &lt;div class="nds-dropmenu" data-columns-target="orders"&gt;
       &lt;button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
@@ -281,7 +281,7 @@ last_edit: "13/07/2026 - 01:15 AM"
                         <div class="state-demo" style="gap: 0;">
                             <div id="exportCardsDemo">
                                 <div class="nds-toolbar">
-                                    <div class="nds-bar-actions">
+                                    <div class="nds-bar-end">
                                         <div class="nds-export nds-btn-group">
                                             <button type="button" class="nds-btn nds-secondary-outline nds-md"
                                                 data-export="csv" data-export-target="#exportCardsList">
@@ -416,7 +416,7 @@ last_edit: "13/07/2026 - 01:15 AM"
                                         <code class="lang-html code">
 &lt;div id="servicesExport"&gt;
   &lt;div class="nds-toolbar"&gt;
-    &lt;div class="nds-bar-actions"&gt;
+    &lt;div class="nds-bar-end"&gt;
       &lt;div class="nds-export nds-btn-group"&gt;
         &lt;button type="button" class="nds-btn nds-secondary-outline nds-md"
                 data-export="csv" data-export-target="#services"&gt;

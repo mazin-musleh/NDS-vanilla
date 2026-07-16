@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "16/07/2026 - 02:30 AM"
+last_edit: "17/07/2026 - 12:17 AM"
 ---
 
 <!-- Basic Table Section -->
@@ -601,7 +601,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="demo-container">
                     <div class="state-demo" style="gap: 0;">
                         <div class="nds-toolbar">
-                            <div class="nds-bar-actions">
+                            <div class="nds-bar-end">
                                 <div class="nds-dropmenu" data-columns-target="selectionTable">
                                     <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                         <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
@@ -731,7 +731,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
-  &lt;div class="nds-bar-actions"&gt;
+  &lt;div class="nds-bar-end"&gt;
     &lt;!-- Checklist is built from the table's own &lt;thead&gt; --&gt;
     &lt;div class="nds-dropmenu" data-columns-target="selectionTable"&gt;
       &lt;button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;

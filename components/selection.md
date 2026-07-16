@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.4.0"
-last_edit: "16/07/2026 - 02:55 AM"
+last_edit: "17/07/2026 - 12:17 AM"
 ---
 
 <!-- Selection count on cards -->
@@ -27,7 +27,7 @@ last_edit: "16/07/2026 - 02:55 AM"
                     <div class="demo-container">
                         <div class="nds-toolbar">
                                 <div class="nds-bar-row">
-                                    <div class="nds-bar-info">
+                                    <div class="nds-bar-start">
                                         <span class="nds-results-count" data-selection-target="selection_cards_demo">
                                             <b data-selection-count>0</b> selected of <b data-selection-total>3</b> services
                                         </span>
@@ -106,7 +106,7 @@ last_edit: "16/07/2026 - 02:55 AM"
                                         <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
     &lt;div class="nds-bar-row"&gt;
-        &lt;div class="nds-bar-info"&gt;
+        &lt;div class="nds-bar-start"&gt;
             &lt;span class="nds-results-count" data-selection-target="selection_cards_demo"&gt;
                 &lt;b data-selection-count&gt;0&lt;/b&gt; selected of &lt;b data-selection-total&gt;3&lt;/b&gt; services
             &lt;/span&gt;
@@ -188,7 +188,7 @@ last_edit: "16/07/2026 - 02:55 AM"
                     <div class="demo-container">
                         <div class="nds-toolbar">
                                 <div class="nds-bar-row">
-                                    <div class="nds-bar-info">
+                                    <div class="nds-bar-start">
                                         <span class="nds-results-count" data-paged-target="selection_table_demo" data-selection-target="selection_table_demo">
                                             <span class="nds-records-view">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>4</b> of <b data-paged-count>6</b> requests</span>
                                             <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>6</b> requests</span>
@@ -307,7 +307,7 @@ last_edit: "16/07/2026 - 02:55 AM"
      Prerender the initial numbers. --&gt;
 &lt;div class="nds-toolbar"&gt;
     &lt;div class="nds-bar-row"&gt;
-        &lt;div class="nds-bar-info"&gt;
+        &lt;div class="nds-bar-start"&gt;
             &lt;span class="nds-results-count" data-paged-target="selection_table_demo" data-selection-target="selection_table_demo"&gt;
                 &lt;span class="nds-records-view"&gt;Showing &lt;b data-paged-from&gt;1&lt;/b&gt;&ndash;&lt;b data-paged-to&gt;4&lt;/b&gt; of &lt;b data-paged-count&gt;6&lt;/b&gt; requests&lt;/span&gt;
                 &lt;span class="nds-selection-view" hidden&gt;&lt;b data-selection-count&gt;0&lt;/b&gt; selected of &lt;b data-paged-count&gt;6&lt;/b&gt; requests&lt;/span&gt;

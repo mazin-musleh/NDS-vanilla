@@ -205,13 +205,13 @@ hideFeedback: true
         <div class="nds-section-body">
             <div class="nds-toolbar">
                 <div class="nds-bar-row">
-                    <div class="nds-bar-info">
+                    <div class="nds-bar-start">
                         <span class="nds-results-count" data-paged-target="transactionsTableBody" data-selection-target="transactionsTableBody">
                             <span class="nds-records-view">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> transaction(s)</span>
                             <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>0</b> transaction(s)</span>
                         </span>
                     </div>
-                    <div class="nds-bar-actions">
+                    <div class="nds-bar-end">
                         <div class="nds-dropmenu" data-columns-target="consoleTransactions">
                             <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                 <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
@@ -298,7 +298,7 @@ hideFeedback: true
                     </div>
                 </div>
                 <div class="nds-bar-row">
-                    <div class="nds-bar-info">
+                    <div class="nds-bar-start">
                         <div class="nds-filter-applied" data-filter-target="transactionsTableBody" hidden>
                             <span class="nds-label">Applied Filters:</span>
                             <div class="nds-chips"></div>
