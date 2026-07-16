@@ -121,7 +121,7 @@
     }
 
     function initElement(wrapper) {
-        if (wrapper._ndsScrollMoreInitialized) return;
+        if (wrapper.hasAttribute('data-nds-scroll-more-initialized')) return;
         const content = wrapper.querySelector(CONFIG.selectors.content);
         if (!content) return;
 
@@ -151,7 +151,7 @@
         // initial callback runs the first measure, so init stays free of
         // forced layout and hidden (display:none) instances measure on reveal.
         wrapper._offResizeObs = NDS.onElementResize(content, () => checkOverflow(wrapper));
-        wrapper._ndsScrollMoreInitialized = true;
+        wrapper.setAttribute('data-nds-scroll-more-initialized', 'true');
     }
 
     function initAll() {
@@ -171,7 +171,7 @@
             delete wrapper._offResizeObs;
         }
         delete wrapper._content;
-        delete wrapper._ndsScrollMoreInitialized;
+        wrapper.removeAttribute('data-nds-scroll-more-initialized');
     }
 
     NDS.ScrollMore = {

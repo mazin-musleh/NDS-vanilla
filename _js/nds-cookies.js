@@ -194,7 +194,11 @@
     }
 
 
+    let _initDone = false;
+
     function initializeCookies() {
+        if (_initDone) return;
+        _initDone = true;
         // Note: Consent is already checked on script load (lines 167-173)
         // This function only handles UI setup and event listeners
 

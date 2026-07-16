@@ -899,7 +899,9 @@
                 if (_navBackdropOwner) {
                     _navBackdropOwner = null;
                     cancelToggleAction();
-                    if (NDS.Backdrop.isActive()) NDS.Backdrop.hide();
+                    // Soft dependency — backdrop cleanup no-ops if NDS.Backdrop isn't
+                    // bundled (matches the guarded showNavBackdrop/hideNavBackdrop handoff).
+                    if (NDS.Backdrop && NDS.Backdrop.isActive()) NDS.Backdrop.hide();
                 }
             }
 

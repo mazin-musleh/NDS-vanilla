@@ -32,6 +32,13 @@
 
     if (!modal || !modal.classList.contains('nds-modal')) return;
 
+    // Soft dependency — same loud bail as init(): programmatic NDS.Modal.open()
+    // must not TypeError when a consumer bundle excludes nds-backdrop.js.
+    if (!NDS.Backdrop) {
+      console.error('NDS Modal: requires NDSBackdrop API. Please include nds-backdrop.js first.');
+      return;
+    }
+
     // Close existing modal if any
     if (activeModal) {
       close();
