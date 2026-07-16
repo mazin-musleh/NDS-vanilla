@@ -100,6 +100,9 @@
             this.bindEvents();
             this.renderChips();
             this.root.setAttribute('data-nds-multiselect-initialized', 'true');
+            // Registered here (not the sweep) so create()-made instances get the
+            // expando too — init() only runs on successful construction.
+            this.root.ndsMultiselect = this;
         }
 
         // Gather the option checkboxes and mirror data-multiselect-name onto
@@ -313,6 +316,7 @@
             this.abortController?.abort();
             NDS.aria.label(this.trigger, '');
             this.root.removeAttribute('data-nds-multiselect-initialized');
+            delete this.root.ndsMultiselect;
         }
 
         isOpen() {
@@ -429,17 +433,14 @@
         document.querySelectorAll('.nds-multiselect').forEach(el => {
             if (el.closest('code, .code-example')) return;
             if (el.hasAttribute('data-nds-multiselect-initialized')) return;
-            const instance = new NDSMultiselect(el);
-            // Expando only on successful construction — a bailed root must not hand
-            // consumers a half-built instance (populate()/apply() would throw).
-            if (instance.valid) el.ndsMultiselect = instance;
+            new NDSMultiselect(el);
         });
     }
 
     NDS.Multiselect = {
         init: initializeMultiselects,
         reinit: initializeMultiselects,
-        create: (element) => new NDSMultiselect(element),
+        create: (element) => element.ndsMultiselect || new NDSMultiselect(element),
         destroy: (element) => element.ndsMultiselect?.destroy()
     };
 })();
