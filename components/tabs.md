@@ -66,49 +66,49 @@ last_edit: "28/06/2026 - 01:27 PM"
                         <div class="nds-tabs" id="tabs-standard-1">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                         aria-controls="panel-tabs-standard-home" id="tab-tabs-standard-home" tabindex="0" data-label="Home">
                                         <span class="nds-label">Home</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-services" id="tab-tabs-standard-services" tabindex="-1"
                                         data-label="Services">
                                         <span class="nds-label">Services</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-about" id="tab-tabs-standard-about" tabindex="-1">
                                         <span class="nds-label">About</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-contact" id="tab-tabs-standard-contact" tabindex="-1">
                                         <span class="nds-label">Contact</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-support" id="tab-tabs-standard-support" tabindex="-1">
                                         <span class="nds-label">Support</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-resources" id="tab-tabs-standard-resources" tabindex="-1">
                                         <span class="nds-label">Resources</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-documentation" id="tab-tabs-standard-documentation" tabindex="-1">
                                         <span class="nds-label">Documentation</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-news" id="tab-tabs-standard-news" tabindex="-1">
                                         <span class="nds-label">News</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-feedback" id="tab-tabs-standard-feedback" tabindex="-1">
                                         <span class="nds-label">Feedback</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-standard-settings" id="tab-tabs-standard-settings" tabindex="-1">
                                         <span class="nds-label">Settings</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -227,12 +227,12 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                     aria-controls="panel-tabs-standard-code-1" id="tab-tabs-standard-code-1">
                                     <span class="nds-label">HTML</span>
                                 </button>
                             </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="nds-tab-content">
@@ -249,48 +249,48 @@ last_edit: "28/06/2026 - 01:27 PM"
     &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
         &lt;nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Basic tab navigation"&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home"&gt;
+                aria-controls="panel-home" id="tab-home" tabindex="0" data-label="Home" type="button"&gt;
                 &lt;span class="nds-label"&gt;Home&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
                 aria-controls="panel-services" id="tab-services" tabindex="-1"
-                data-label="Services"&gt;
+                data-label="Services" type="button"&gt;
                 &lt;span class="nds-label"&gt;Services&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-about" id="tab-about" tabindex="-1"&gt;
+                aria-controls="panel-about" id="tab-about" tabindex="-1" type="button"&gt;
                 &lt;span class="nds-label"&gt;About&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-contact" id="tab-contact" tabindex="-1"&gt;
+                aria-controls="panel-contact" id="tab-contact" tabindex="-1" type="button"&gt;
                 &lt;span class="nds-label"&gt;Contact&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-support" id="tab-support" tabindex="-1"&gt;
+                aria-controls="panel-support" id="tab-support" tabindex="-1" type="button"&gt;
                 &lt;span class="nds-label"&gt;Support&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-resources" id="tab-resources" tabindex="-1"&gt;
+                aria-controls="panel-resources" id="tab-resources" tabindex="-1" type="button"&gt;
                 &lt;span class="nds-label"&gt;Resources&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-documentation" id="tab-documentation" tabindex="-1"&gt;
+                aria-controls="panel-documentation" id="tab-documentation" tabindex="-1" type="button"&gt;
                 &lt;span class="nds-label"&gt;Documentation&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-news" id="tab-news" tabindex="-1"&gt;
+                aria-controls="panel-news" id="tab-news" tabindex="-1" type="button"&gt;
                 &lt;span class="nds-label"&gt;News&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-feedback" id="tab-feedback" tabindex="-1"&gt;
+                aria-controls="panel-feedback" id="tab-feedback" tabindex="-1" type="button"&gt;
                 &lt;span class="nds-label"&gt;Feedback&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-settings" id="tab-settings" tabindex="-1"&gt;
+                aria-controls="panel-settings" id="tab-settings" tabindex="-1" type="button"&gt;
                 &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
             &lt;/button&gt;
         &lt;/nav&gt;
-        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"&gt;&lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more" type="button"&gt;&lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/button&gt;
     &lt;/div&gt;
     &lt;div class="nds-tab-content"&gt;
@@ -471,23 +471,23 @@ last_edit: "28/06/2026 - 01:27 PM"
                         <div class="nds-tabs" id="tabs-icons-1">
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                         aria-controls="panel-tabs-icons-dashboard" id="tab-tabs-icons-dashboard" tabindex="0">
                                         <i class="hgi hgi-stroke hgi-home-05"></i>
                                         <span class="nds-label">Dashboard</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-icons-analytics" id="tab-tabs-icons-analytics" tabindex="-1">
                                         <i class="hgi hgi-stroke hgi-analytics-01"></i>
                                         <span class="nds-label">Analytics</span>
                                     </button>
-                                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                                         aria-controls="panel-tabs-icons-settings" id="tab-tabs-icons-settings" tabindex="-1">
                                         <i class="hgi hgi-stroke hgi-settings-01"></i>
                                         <span class="nds-label">Settings</span>
                                     </button>
                                 </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
@@ -519,12 +519,12 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <div class="nds-tabs nds-code nds-divided">
                         <div class="nds-tab-list-container nds-scroll-more">
                             <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                                <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                     aria-controls="panel-tabs-icons-code-1" id="tab-tabs-icons-code-1">
                                     <span class="nds-label">HTML</span>
                                 </button>
                             </nav>
-                            <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                             </button>
                         </div>
                         <div class="nds-tab-content">
@@ -541,22 +541,22 @@ last_edit: "28/06/2026 - 01:27 PM"
     &lt;div class="nds-tab-list-container nds-scroll-more"&gt;
         &lt;nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Icon tab navigation"&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
-                aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0"&gt;
+                aria-controls="panel-dashboard" id="tab-dashboard" tabindex="0" type="button"&gt;
                 &lt;i class="hgi hgi-stroke hgi-home-05"&gt;&lt;/i&gt;
                 &lt;span class="nds-label"&gt;Dashboard&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-analytics" id="tab-analytics" tabindex="-1"&gt;
+                aria-controls="panel-analytics" id="tab-analytics" tabindex="-1" type="button"&gt;
                 &lt;i class="hgi hgi-stroke hgi-analytics-01"&gt;&lt;/i&gt;
                 &lt;span class="nds-label"&gt;Analytics&lt;/span&gt;
             &lt;/button&gt;
             &lt;button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
-                aria-controls="panel-settings" id="tab-settings" tabindex="-1"&gt;
+                aria-controls="panel-settings" id="tab-settings" tabindex="-1" type="button"&gt;
                 &lt;i class="hgi hgi-stroke hgi-settings-01"&gt;&lt;/i&gt;
                 &lt;span class="nds-label"&gt;Settings&lt;/span&gt;
             &lt;/button&gt;
         &lt;/nav&gt;
-        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"&gt;&lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more" type="button"&gt;&lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
         &lt;/button&gt;
     &lt;/div&gt;
     &lt;div class="nds-tab-content"&gt;

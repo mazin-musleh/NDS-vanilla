@@ -66,12 +66,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-basic-1" id="tab-table-basic-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">
@@ -227,12 +227,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-sortable-1" id="tab-table-sortable-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">
@@ -445,12 +445,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-feedback-1" id="tab-table-feedback-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">
@@ -712,12 +712,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-checkbox-1" id="tab-table-checkbox-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">
@@ -915,12 +915,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-center-1" id="tab-table-center-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">
@@ -1019,12 +1019,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-align-1" id="tab-table-align-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">
@@ -1143,12 +1143,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-loading-1" id="tab-table-loading-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">
@@ -1261,12 +1261,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-responsive-1" id="tab-table-responsive-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">
@@ -1473,12 +1473,12 @@ last_edit: "16/07/2026 - 02:30 AM"
                 <div class="nds-tabs nds-code nds-divided">
                     <div class="nds-tab-list-container nds-scroll-more">
                         <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                 aria-controls="panel-table-paginated-1" id="tab-table-paginated-1">
                                 <span class="nds-tab-label">HTML</span>
                             </button>
                         </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                         </button>
                     </div>
                     <div class="nds-tab-content">

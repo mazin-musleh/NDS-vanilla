@@ -64,32 +64,32 @@ sidemenu_mode: top
         <div class="nds-tabs nds-divided nds-lg">
             <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Faculty member information">
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-cv"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-cv"
                         id="tab-cv" tabindex="0">
                         <span class="nds-label">Biography</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-research" id="tab-research" tabindex="-1">
                         <span class="nds-label">Research Interests</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-publications" id="tab-publications" tabindex="-1">
                         <span class="nds-label">Publications</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-experiences" id="tab-experiences" tabindex="-1">
                         <span class="nds-label">Experience</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-education" id="tab-education" tabindex="-1">
                         <span class="nds-label">Education</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-contact" id="tab-contact" tabindex="-1">
                         <span class="nds-label">Contact</span>
                     </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="nds-tab-content">

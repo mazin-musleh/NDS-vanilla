@@ -23,20 +23,20 @@ sidemenu_mode: false
             <div class="nds-tabs">
                 <div class="nds-tab-list-container nds-scroll-more">
                     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Service tab navigation">
-                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                             aria-controls="panel-1" id="tab-1">
                             <span class="nds-label">Steps</span>
                         </button>
-                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                             aria-controls="panel-2" id="tab-2" tabindex="-1">
                             <span class="nds-label">Requirements</span>
                         </button>
-                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                             aria-controls="panel-3" id="tab-3" tabindex="-1">
                             <span class="nds-label">Required Documents</span>
                         </button>
                     </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="nds-tab-content">

@@ -22,17 +22,17 @@ last_edit: "04/07/2026 - 09:53 PM"
             <div class="nds-tabs nds-code nds-divided">
                 <div class="nds-tab-list-container nds-scroll-more">
                     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Page setup code">
-                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true" aria-controls="panel-setup-html" id="tab-setup-html">
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-setup-html" id="tab-setup-html">
                             <span class="nds-tab-label">HTML</span>
                         </button>
-                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-setup-js" id="tab-setup-js">
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-js" id="tab-setup-js">
                             <span class="nds-tab-label">JavaScript</span>
                         </button>
-                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false" aria-controls="panel-setup-gate" id="tab-setup-gate">
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-gate" id="tab-setup-gate">
                             <span class="nds-tab-label">Critical Gate</span>
                         </button>
                     </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="nds-tab-content">

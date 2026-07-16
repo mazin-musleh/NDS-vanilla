@@ -77,19 +77,19 @@ sidemenu_mode: false
             <div class="nds-tabs nds-divided" id="faq-tabs">
                 <div class="nds-tab-list-container nds-scroll-more">
                     <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="FAQ categories">
-                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                             aria-controls="panel-faq-all" id="tab-faq-all" tabindex="0">
                             <span class="nds-label">All</span>
                         </button>
                         {% for category in categories %}
                         {% assign label = category_labels[forloop.index0] %}
-                        <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                             aria-controls="panel-faq-{{ category }}" id="tab-faq-{{ category }}" tabindex="-1">
                             <span class="nds-label">{{ label }}</span>
                         </button>
                         {% endfor %}
                     </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                     </button>
                 </div>
 

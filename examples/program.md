@@ -177,28 +177,28 @@ layout_class: nds-cardView
             <div class="nds-tabs nds-divided nds-lg" id="programTabs">
             <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Program details navigation">
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                         aria-controls="panel-objectives" id="tab-objectives" tabindex="0">
                         <span class="nds-label">Objectives</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-outcomes" id="tab-outcomes" tabindex="-1">
                         <span class="nds-label">Learning Outcomes</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-requirements" id="tab-requirements" tabindex="-1">
                         <span class="nds-label">Admission Requirements</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-curriculum" id="tab-curriculum" tabindex="-1">
                         <span class="nds-label">Study Plan</span>
                     </button>
-                    <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                         aria-controls="panel-description" id="tab-description" tabindex="-1">
                         <span class="nds-label">Course Descriptions</span>
                     </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
             </div>
             <div class="nds-tab-content">

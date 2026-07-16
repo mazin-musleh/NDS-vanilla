@@ -116,12 +116,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-text-input-1" id="tab-text-input-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -322,12 +322,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-prefix-suffix-1" id="tab-prefix-suffix-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -531,12 +531,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-phone-country-1" id="tab-phone-country-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -744,12 +744,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-number-input-1" id="tab-number-input-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -897,12 +897,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-search-input-1" id="tab-search-input-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -1053,12 +1053,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-email-input-1" id="tab-email-input-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -1214,12 +1214,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-password-input-1" id="tab-password-input-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -1366,12 +1366,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-textarea-1" id="tab-textarea-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -1527,12 +1527,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-select-1" id="tab-select-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -1687,12 +1687,12 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-nativeSelect-1" id="tab-nativeSelect-1">
                     <span class="nds-tab-label">HTML</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -1788,16 +1788,16 @@ direction: ltr
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-status-api-html" id="tab-status-api-html">
                     <span class="nds-tab-label">HTML</span>
                   </button>
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                     aria-controls="panel-status-api-js" id="tab-status-api-js">
                     <span class="nds-tab-label">JS API</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
@@ -1915,16 +1915,16 @@ var status = NDS.Forms.getStatus(field);
             <div class="nds-tabs nds-code nds-divided">
               <div class="nds-tab-list-container nds-scroll-more">
                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="true"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                     aria-controls="panel-permanent-html" id="tab-permanent-html">
                     <span class="nds-tab-label">HTML</span>
                   </button>
-                  <button class="nds-btn nds-subtle nds-tab" role="tab" aria-selected="false"
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
                     aria-controls="panel-permanent-js" id="tab-permanent-js">
                     <span class="nds-tab-label">JS API</span>
                   </button>
                 </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                 </button>
               </div>
               <div class="nds-tab-content">
