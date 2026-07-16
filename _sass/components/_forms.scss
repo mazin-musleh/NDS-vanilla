@@ -1,8 +1,18 @@
 @use '../mixins' as *;
 
-// .nds-form is a validation hook only — no layout. Consumers pick their own
-// layout (.nds-flex.nds-col, .nds-grid, or whatever their surrounding structure
-// requires). See _js/nds-forms.js initForm() for the validation wiring.
+// .nds-form is a validation hook — wiring lives in _js/nds-forms.js initForm().
+// It owns no layout: children carry their own layout classes (.nds-flex.nds-col,
+// .nds-grid, etc.), and `display: contents` removes the <form> from the box tree
+// so parent layout rules (e.g. .nds-main-content's flex column) reach those
+// children directly. Without this, a form wrapping .nds-content-section blocks
+// the flex chain: sections stay pinned at combined min-content, don't shrink to
+// viewport, and internal overflow affordances (tabs show-more, table scroll)
+// never trigger. Consumers styling the form as a box (padding, border,
+// background) should override with display: block.
+
+.nds-form {
+    display: contents;
+}
 
 .nds-form-container {
     --_form-width: var(--form-width, 100%);
