@@ -6,7 +6,9 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-x: auto;
+    // clip, not auto: auto turns main into a scroll container, which re-anchors
+    // sticky descendants (sidemenu, tabs) to main instead of the viewport.
+    overflow-x: clip;
 }
 
 .nds-content-layout {
