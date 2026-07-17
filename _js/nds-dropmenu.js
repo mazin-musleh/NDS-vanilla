@@ -111,10 +111,12 @@
             return textLike.includes(el.type);
         }
 
-        /** Get all focusable elements in the menu in DOM order */
+        /** Get all focusable elements in the menu in DOM order. [hidden]
+         *  elements are skipped — focus() on them silently fails, which would
+         *  wedge the Tab walk on their neighbor. */
         getFocusableElements() {
             return Array.from(this.menu.querySelectorAll(
-                'input:not([type="hidden"]):not(:disabled), textarea:not(:disabled), :is(a, button).nds-dropmenu-item:not(:disabled)'
+                'input:not([type="hidden"]):not(:disabled):not([hidden]), textarea:not(:disabled):not([hidden]), :is(a, button).nds-dropmenu-item:not(:disabled):not([hidden])'
             ));
         }
 
