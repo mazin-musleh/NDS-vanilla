@@ -24,6 +24,17 @@
   flex-direction: column !important;
 }
 
+// Reverse directions — flip visual child order (RTL action-flips, timelines).
+// Scoped to the flex utility (.nds-flex default row, or explicit .nds-row) so it
+// never overrides a component's own .nds-reverse (stepper column-reverse, sideinfo order).
+:is(.nds-flex, .nds-row).nds-reverse:not(.nds-col) {
+  flex-direction: row-reverse !important;
+}
+
+.nds-col.nds-reverse {
+  flex-direction: column-reverse !important;
+}
+
 // Wrap utilities
 .nds-wrap {
   flex-wrap: wrap !important;

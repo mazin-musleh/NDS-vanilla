@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "15/07/2026 - 11:47 AM"
+last_edit: "18/07/2026 - 12:58 AM"
 ---
 
 <!-- Basic Alignment -->
@@ -103,7 +103,7 @@ last_edit: "15/07/2026 - 11:47 AM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Direction Control</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-row</code> or <code class="nds-inline-code lang-html">nds-col</code> to flip the main axis.</p>
+            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-row</code> or <code class="nds-inline-code lang-html">nds-col</code> to flip the main axis. Add <code class="nds-inline-code lang-html">nds-reverse</code> to invert child order — <code class="nds-inline-code lang-html">row-reverse</code> on a row, <code class="nds-inline-code lang-html">column-reverse</code> with <code class="nds-inline-code lang-html">nds-col</code> — handy for RTL action-flip patterns.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -128,11 +128,15 @@ last_edit: "15/07/2026 - 11:47 AM"
                                 </div>
                             </div>
                         </div>
+                        <button class="nds-btn nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-reverse", ".nds-flex", "flexReverse"]'>
+                            <span class="nds-label">Reverse</span>
+                        </button>
                     </div>
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-flex nds-row" style="--gap: var(--spacing-md);">
+                        <div class="nds-flex nds-row">
                             <button class="nds-btn nds-primary nds-sm">
                                 <span class="nds-label">Accept</span>
                             </button>
@@ -166,7 +170,7 @@ last_edit: "15/07/2026 - 11:47 AM"
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;div class="nds-flex nds-row" style="--gap: var(--spacing-md);"&gt;
+&lt;div class="nds-flex nds-row"&gt;
     &lt;button class="nds-btn nds-primary nds-sm"&gt;
         &lt;span class="nds-label"&gt;Accept&lt;/span&gt;
     &lt;/button&gt;
@@ -222,8 +226,8 @@ last_edit: "15/07/2026 - 11:47 AM"
                     </div>
                 </div>
                 <div class="demo-container">
-                    <div class="state-demo">
-                        <div class="nds-flex nds-wrap" style="--gap: var(--spacing-sm);">
+                    <div class="state-demo" style="justify-content: stretch;">
+                        <div class="nds-flex nds-wrap" style="--gap: var(--spacing-sm); width: 300px;">
                             <span class="nds-tag nds-sm"><span class="nds-label">Government</span></span>
                             <span class="nds-tag nds-sm"><span class="nds-label">Digital Transformation</span></span>
                             <span class="nds-tag nds-sm"><span class="nds-label">Accessibility</span></span>
@@ -256,7 +260,7 @@ last_edit: "15/07/2026 - 11:47 AM"
                                     </button>
                                 </div>
                                 <code class="lang-html code">
-&lt;div class="nds-flex nds-wrap" style="--gap: var(--spacing-sm);"&gt;
+&lt;div class="nds-flex nds-wrap" style="--gap: var(--spacing-sm); width: 300px;"&gt;
     &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Government&lt;/span&gt;&lt;/span&gt;
     &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Digital Transformation&lt;/span&gt;&lt;/span&gt;
     &lt;span class="nds-tag nds-sm"&gt;&lt;span class="nds-label"&gt;Accessibility&lt;/span&gt;&lt;/span&gt;
@@ -356,6 +360,7 @@ last_edit: "15/07/2026 - 11:47 AM"
                         <tr><td><code class="nds-inline-code lang-html">nds-flex</code></td><td>Declares the element as a flex container with default gap, stretch cross-axis alignment, and start main-axis alignment</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-row</code></td><td>Sets <code class="nds-inline-code lang-html">flex-direction: row</code>. Unscoped: works with or without <code class="nds-inline-code lang-html">nds-flex</code> on the same element</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-col</code></td><td>Sets <code class="nds-inline-code lang-html">flex-direction: column</code>. Unscoped: works with or without <code class="nds-inline-code lang-html">nds-flex</code> on the same element</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-reverse</code></td><td>Reverses visual child order: <code class="nds-inline-code lang-html">row-reverse</code> on a flex or <code class="nds-inline-code lang-html">nds-row</code> container, <code class="nds-inline-code lang-html">column-reverse</code> when combined with <code class="nds-inline-code lang-html">nds-col</code>. Scoped to the flex utility, so it never overrides a component's own <code class="nds-inline-code lang-html">nds-reverse</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-wrap</code></td><td>Enables <code class="nds-inline-code lang-html">flex-wrap: wrap</code> so children flow onto multiple lines when the container is too narrow</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-nowrap</code></td><td>Forces <code class="nds-inline-code lang-html">flex-wrap: nowrap</code> so children stay on one line, potentially overflowing</td></tr>
                     </tbody>
@@ -368,7 +373,7 @@ last_edit: "15/07/2026 - 11:47 AM"
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--justify</code></td><td><code class="nds-inline-code lang-html">flex-start</code></td><td>Value for <code class="nds-inline-code lang-html">justify-content</code>. Accepts any valid CSS keyword such as <code class="nds-inline-code lang-html">center</code>, <code class="nds-inline-code lang-html">flex-end</code>, <code class="nds-inline-code lang-html">space-between</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--align</code></td><td><code class="nds-inline-code lang-html">center</code></td><td>Value for <code class="nds-inline-code lang-html">align-items</code>. Accepts keywords such as <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">stretch</code>, <code class="nds-inline-code lang-html">baseline</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--align</code></td><td><code class="nds-inline-code lang-html">stretch</code></td><td>Value for <code class="nds-inline-code lang-html">align-items</code>. Accepts keywords such as <code class="nds-inline-code lang-html">center</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">baseline</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between children. Accepts any CSS length or spacing token such as <code class="nds-inline-code lang-html">var(--spacing-md)</code> or <code class="nds-inline-code lang-html">0</code></td></tr>
                     </tbody>
                 </table>
