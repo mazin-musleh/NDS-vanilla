@@ -399,6 +399,15 @@
   js: _js/nds-autocomplete.js
   scss: _sass/components/_autocomplete.scss
 
+- title: "Editor"
+  description: "Rich text field that submits clean NDS markup, converting Word, Google Docs, and web pastes and inserting NDS components as blocks"
+  icon: '<i class="hgi hgi-stroke hgi-quill-write-02"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API", "Beta"]
+  url: "/components/editor.html"
+  js: _js/nds-editor.js
+  scss: _sass/components/_editor.scss
+
 - title: "Multiselect"
   description: "Multi-option select over a native checkbox group: removable chips, JSON-populated options, staged or instant commit"
   icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
