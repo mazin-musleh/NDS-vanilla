@@ -237,6 +237,19 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
         ],
     },
     {
+        // A class token is trusted only when the WHOLE token is word-safe:
+        // a markup-bearing token (nds-x<img…>) dies at the boundary instead
+        // of relying on every sink (remove picker labels) to escape it.
+        name: 'hostile-class-token-rejected',
+        html: '<div class="nds-x<img/src=x/onerror=alert(1)>"><p>نص سليم</p></div>',
+        expect: [
+            ['contains', '<p>نص سليم</p>'],
+            ['not', 'onerror'],
+            ['not', 'nds-x'],
+            ['not', '<img'],
+        ],
+    },
+    {
         // Pasted external links pick up the NDS.Link badge treatment before
         // the value syncs; the tagging round-trips as a kept nds region.
         name: 'pasted-external-link-tagged',
@@ -767,6 +780,57 @@ try {
         shellProblems.forEach(pr => console.log(`  ${pr}`));
     } else {
         console.log('PASS shell-delete-guard-e2e');
+    }
+
+    // E2E: the remove picker names a component by its well-formed nds- class
+    // and IGNORES a malformed token — even on DOM that never went through
+    // sanitize (componentNameOf's own /^nds-[\w-]+$/ gate, independent of the
+    // NDS_CLASS boundary strip). No markup-bearing token reaches the label sink.
+    const cnofOut = await page.evaluate(async () => {
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const removeBtn = root.querySelector('[data-cmd="remove"]');
+        const removeMenu = root.querySelector('[data-nds-editor-remove-dropmenu] .nds-dropmenu-menu');
+        const levels = root.querySelector('[data-nds-editor-remove-levels]');
+        const raf = () => new Promise(requestAnimationFrame);
+        const sel = getSelection();
+        window.__cnofXss = undefined;
+
+        // Build the region DIRECTLY (setAttribute bypasses the sanitizer) so the
+        // hostile token is live on the element the picker reads its name from.
+        editable.innerHTML = '';
+        const region = document.createElement('div');
+        region.setAttribute('class', 'nds-card nds-x<img/src=x/onerror=window.__cnofXss=1>');
+        region.textContent = 'محتوى';
+        editable.appendChild(region);
+
+        const r = document.createRange();
+        r.setStart(region.firstChild, 1);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+
+        const rows = removeMenu.querySelectorAll('[data-nds-editor-remove-level]');
+        const label = rows.length === 1 ? rows[0].textContent : '';
+        return {
+            oneLevel: rows.length === 1,
+            labelsWellFormedName: label.includes('nds-card'),
+            ignoresHostileToken: !label.includes('nds-x'),
+            noImgInPicker: !levels.querySelector('img'),
+            noOnerrorInHtml: !/onerror/i.test(levels.innerHTML),
+            noXssFired: window.__cnofXss !== 1,
+        };
+    });
+    const cnofProblems = Object.entries(cnofOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (cnofProblems.length) {
+        failures++;
+        console.log('FAIL remove-picker-componentname-safe-e2e');
+        cnofProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS remove-picker-componentname-safe-e2e');
     }
 
     // E2E: link popover Tab order skips the hidden Unlink — from Cancel, Tab

@@ -32,6 +32,12 @@
  * plain formatting vocabulary.
  *
  * Event: `nds:editor:ready` with { instance } after init.
+ *
+ * Tests: scripts/editor-fixtures.mjs drives the real sanitize/paste/shell-guard/
+ * history/link pipeline in a browser (`node scripts/editor-fixtures.mjs`, dev
+ * server on :4002). It is the editor's regression gate — EXTEND it with a fixture
+ * on ANY pipeline change (sanitizer, allowlists, paste, shell guards, toolbar),
+ * don't hand-roll a throwaway check.
  */
 
 (function () {
@@ -63,7 +69,11 @@
     const NDS_TAGS = new Set(['DIV', 'SPAN', 'BUTTON', 'A', 'I', 'P', 'BR', 'HR', 'STRONG', 'EM', 'B', 'U', 'S', 'STRIKE', 'SMALL',
         'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'UL', 'OL', 'LI', 'TABLE', 'CAPTION', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TH', 'TD',
         'FIGURE', 'FIGCAPTION', 'BLOCKQUOTE', 'CITE', 'IMG', 'DL', 'DT', 'DD']);
-    const NDS_CLASS = /^(?:nds-|hgi$|hgi-)/;
+    // Full-token validation, not a prefix test: a whitespace-free token can
+    // carry markup (nds-x<img…>), so trust requires the WHOLE token to be
+    // word-safe with real content after the prefix (`hgi` alone is the one
+    // bare base class) — hostile and empty-prefix tokens both die here.
+    const NDS_CLASS = /^(?:nds-[\w-]+|hgi(?:-[\w-]+)?)$/;
     // Region roots that may legitimately sit inline inside a <p>.
     const INLINE_REGION_TAGS = new Set(['SPAN', 'BUTTON', 'A', 'I']);
     // A table interpretMarkup stamped nds-table on is foreign content wearing an
@@ -533,7 +543,7 @@
     function cmdButtonHtml(cmd, extraClass = '') {
         const c = TOOLBAR_CMDS[cmd];
         const label = uiLabel(c);
-        const icon = typeof c.icon === 'string' ? c.icon : (document.dir === 'rtl' ? c.icon.rtl : c.icon.ltr);
+        const icon = typeof c.icon === 'string' ? c.icon : (NDS.isRTL ? c.icon.rtl : c.icon.ltr);
         return `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip${extraClass}" data-cmd="${cmd}"${c.toggle ? ' aria-pressed="false"' : ''} aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500"><i class="hgi hgi-stroke hgi-${icon}" aria-hidden="true"></i></button>`;
     }
 
@@ -568,7 +578,7 @@
     // The component name a shell shows in the remove picker — its first
     // nds class that isn't a generic atom.
     const componentNameOf = (el) =>
-        Array.from(el.classList).find(c => c.startsWith('nds-') && !NDS_ATOM_CLASSES.has(c)) || 'NDS';
+        Array.from(el.classList).find(c => /^nds-[\w-]+$/.test(c) && !NDS_ATOM_CLASSES.has(c)) || 'NDS';
 
     // Destructive with confirmation — the trigger opens a confirm popover
     // whose rows are filled per caret position (one destructive row per
@@ -862,7 +872,8 @@
             const toolbar = anchor.previousElementSibling;
             // Dropmenu (main) and Tooltip (earlier in this extras bundle) both
             // finished their sweeps before editor init — wire the generated
-            // elements directly.
+            // elements directly. Soft dependencies: the toolbar's dropmenus and
+            // tooltips stay inert if NDS.Dropmenu / NDS.Tooltip aren't bundled.
             toolbar.querySelectorAll('.nds-dropmenu').forEach(el => NDS.Dropmenu?.create?.(el));
             toolbar.querySelectorAll('.nds-tooltip').forEach(el => NDS.Tooltip?.create?.(el));
             return toolbar;
@@ -1167,7 +1178,9 @@
         // Anchors created after load (link insert, paste, source edits,
         // hydration) miss the loader's eager NDS.Link pass — re-run it so
         // external links pick up their badge and target BEFORE the value
-        // syncs, so the tagging round-trips into the form value.
+        // syncs, so the tagging round-trips into the form value. Soft
+        // dependency: links keep their href but skip external-badge tagging
+        // if NDS.Link isn't bundled.
         _refreshLinks() { NDS.Link?.init?.(); }
 
         _getAncestorTag(tagName) { return this._selAncestor(n => n.tagName === tagName); }
@@ -1418,7 +1431,7 @@
             if (!list) return;
             const chain = this._removeChain;
             list.innerHTML = chain.map((el, i) => ({ el, i })).reverse().map(({ el, i }, depth) =>
-                `<button type="button" class="nds-btn nds-subtle nds-destructive nds-dropmenu-item" data-nds-editor-remove-level="${i}" style="--_remove-depth: ${depth}"><span class="nds-label">${depth ? '– ' : ''}${componentNameOf(el)}</span></button>`
+                `<button type="button" class="nds-btn nds-subtle nds-destructive nds-dropmenu-item" data-nds-editor-remove-level="${i}" style="--_remove-depth: ${depth}"><span class="nds-label">${depth ? '– ' : ''}${escapeHtml(componentNameOf(el))}</span></button>`
             ).join('');
         }
 
