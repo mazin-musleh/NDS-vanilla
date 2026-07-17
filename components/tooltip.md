@@ -2,13 +2,13 @@
 layout: page
 title: Tooltip
 hero_title: Tooltip - National Design System
-hero_description: A click-activated balloon that reveals contextual guidance, definitions, or hints next to the term it relates to, with a status-colored icon chip and smart viewport positioning.
+hero_description: A click-activated balloon that reveals contextual guidance, definitions, or hints next to the term it relates to — with opt-in hover activation, a status-colored icon chip, and smart viewport positioning.
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "02/07/2026 - 10:11 PM"
+updated: "1.4.0"
+last_edit: "17/07/2026 - 06:24 PM"
 ---
 
 <!-- Help Tooltip -->
@@ -16,7 +16,7 @@ last_edit: "02/07/2026 - 10:11 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Help Tooltip</h2>
-            <p class="nds-section-description">Click the icon trigger to reveal a balloon with a title, message, and leading icon chip. Click again, click outside, scroll, or press Escape to dismiss.</p>
+            <p class="nds-section-description">Click the icon trigger to reveal a balloon with a title, message, and leading icon chip. Click again, click outside, scroll, or press Escape to dismiss. Add <code class="nds-inline-code lang-html">data-tooltip-hover</code> to open on hover and visible keyboard focus instead.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -161,7 +161,7 @@ last_edit: "02/07/2026 - 10:11 PM"
                         <div class="state-demo" style="display: flex; justify-content: center; padding: var(--spacing-4xl) var(--spacing-2xl);">
                             <p style="margin: 0; font-size: var(--typo-text-md-FS); line-height: var(--typo-text-md-LH);">
                                 The
-                                <span class="nds-tooltip"
+                                <span class="nds-tooltip nds-term" data-tooltip-hover
                                       data-tooltip-message="A 10-digit identifier issued to Saudi citizens by the Ministry of Interior.">National ID</span>
                                 field is required.
                             </p>
@@ -190,7 +190,7 @@ last_edit: "02/07/2026 - 10:11 PM"
                                     <code class="lang-html code">
 &lt;p&gt;
   The
-  &lt;span class="nds-tooltip"
+  &lt;span class="nds-tooltip nds-term" data-tooltip-hover
         data-tooltip-message="A 10-digit identifier issued to Saudi citizens by the Ministry of Interior."&gt;National ID&lt;/span&gt;
   field is required.
 &lt;/p&gt;
@@ -295,7 +295,7 @@ last_edit: "02/07/2026 - 10:11 PM"
                         <i class="hgi hgi-stroke hgi-plug-socket"></i>
                         <span class="nds-label">Auto-initialization</span>
                     </span>
-                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-tooltip</code> in the DOM wires itself up on page load. Click handlers, aria-describedby, and unique IDs are applied automatically.</p>
+                    <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-tooltip</code> in the DOM wires itself up on page load. Interaction handlers, aria-describedby, and unique IDs are applied automatically.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -330,7 +330,7 @@ last_edit: "02/07/2026 - 10:11 PM"
                         <i class="hgi hgi-stroke hgi-keyboard"></i>
                         <span class="nds-label">Multiple Dismissal Paths</span>
                     </span>
-                    <p class="nds-item-desc">Close by clicking the trigger again, clicking anywhere outside, pressing Escape, or scrolling the page. Only one tooltip stays open at a time.</p>
+                    <p class="nds-item-desc">Close by clicking the trigger again, clicking anywhere outside, pressing Escape, or scrolling the page. Hover-enabled tooltips also close when the pointer leaves. Only one tooltip stays open at a time.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -381,7 +381,8 @@ last_edit: "02/07/2026 - 10:11 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Role</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-tooltip</code></td><td>Inline root wrapping the trigger and the balloon. JS toggles <code class="nds-inline-code lang-html">data-state="open"</code> on this element while the balloon is visible. In text-trigger mode (no <code class="nds-inline-code lang-html">.nds-icon</code> descendant inside the trigger), the root itself receives <code class="nds-inline-code lang-html">cursor:help</code> and a dotted underline so the annotated term is visually marked.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-tooltip</code></td><td>Inline root wrapping the trigger and the balloon. JS toggles <code class="nds-inline-code lang-html">data-state="open"</code> on this element while the balloon is visible.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-term</code></td><td>Opt-in modifier on the root for inline text triggers: <code class="nds-inline-code lang-html">cursor:help</code> and a dotted underline mark the annotated term (as in the "National ID" example). Without it the trigger keeps its own affordance — chip, button, or custom.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-trigger</code></td><td>The clickable element. A <code class="nds-inline-code lang-html">&lt;button&gt;</code> wrapping an <code class="nds-inline-code lang-html">.nds-feedback-icon</code> chip is the canonical pattern. Omit this element when the root's own text content is the trigger (declarative text-trigger mode, as in the "National ID" example).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-balloon</code></td><td>The floating panel. Marked <code class="nds-inline-code lang-html">hidden</code> by default; JS toggles the attribute on open.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-tooltip-body</code></td><td>Text container inside the balloon. Sits beside the optional leading icon chip.</td></tr>
@@ -399,6 +400,7 @@ last_edit: "02/07/2026 - 10:11 PM"
                         <tr><td><code class="nds-inline-code lang-html">data-tooltip-title</code></td><td>Declarative shortcut. Set on <code class="nds-inline-code lang-html">.nds-tooltip</code> to have the JS generate the balloon title. Skipped when an explicit <code class="nds-inline-code lang-html">.nds-tooltip-balloon</code> child is present.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-tooltip-message</code></td><td>Declarative shortcut. Set on <code class="nds-inline-code lang-html">.nds-tooltip</code> to have the JS generate the balloon message paragraph. Either title or message (or both) is required for auto-generation to run.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-tooltip-status</code></td><td>Declarative shortcut. Set on <code class="nds-inline-code lang-html">.nds-tooltip</code> to control the generated chips' status (defaults to <code class="nds-inline-code lang-html">help</code>). Values match <code class="nds-inline-code lang-html">data-status</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-tooltip-hover</code></td><td>Opt-in on <code class="nds-inline-code lang-html">.nds-tooltip</code>: the balloon opens on mouse hover and visible keyboard focus instead of click. The optional value is the hover-open delay in milliseconds (e.g. <code class="nds-inline-code lang-html">data-tooltip-hover="500"</code>; bare attribute = <code class="nds-inline-code lang-html">120</code>) — keyboard focus and touch always open immediately. Mouse clicks then just dismiss (the trigger's own action proceeds); touch keeps tap-to-toggle. Without the attribute the tooltip is click-activated.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-status</code></td><td>Set on the inner <code class="nds-inline-code lang-html">.nds-feedback</code> wrappers (inside the trigger and inside the balloon) to drive icon glyph and color. Values: <code class="nds-inline-code lang-html">help</code>, <code class="nds-inline-code lang-html">info</code>, <code class="nds-inline-code lang-html">success</code>, <code class="nds-inline-code lang-html">warning</code>, <code class="nds-inline-code lang-html">error</code>, <code class="nds-inline-code lang-html">neutral</code>. Do not put <code class="nds-inline-code lang-html">data-status</code> on <code class="nds-inline-code lang-html">.nds-tooltip</code> itself.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Managed by JS on <code class="nds-inline-code lang-html">.nds-tooltip</code>. Set to <code class="nds-inline-code lang-html">open</code> while the balloon is visible; absent when closed. Used internally for CSS styling hooks (e.g. the idle-trigger neutral background).</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Set on <code class="nds-inline-code lang-html">.nds-tooltip-balloon</code> in source so the balloon starts closed. JS flips the attribute on open and close.</td></tr>

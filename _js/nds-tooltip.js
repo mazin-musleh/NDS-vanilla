@@ -130,6 +130,12 @@
         }
 
         init() {
+            // Hover mode is OPT-IN via data-tooltip-hover on the root; the
+            // value is the open delay in ms (bare attr = 120) — a pointer-
+            // intent filter only; keyboard focus and touch tap always open
+            // immediately. Default stays click-toggle.
+            this._hoverMode = this.root.hasAttribute('data-tooltip-hover');
+            this._hoverDelay = parseInt(this.root.dataset.tooltipHover, 10) || 120;
             this.balloon.setAttribute('role', 'tooltip');
             const id = this.balloon.id || NDS.uniqueId('nds-tooltip-');
             this.balloon.id = id;
@@ -152,10 +158,57 @@
 
         bindEvents() {
             const { signal } = this.abortController;
-            this.trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.isOpen ? this.close() : this.open();
-            }, { signal });
+
+            if (this._hoverMode) {
+                // Mouse: hover owns the balloon. The grace timer lets the pointer
+                // travel from trigger into the (portaled, adjacent) balloon.
+                // One timer serves both directions — a pending delayed open and a
+                // pending grace close are mutually exclusive.
+                const hoverOpen = (e) => {
+                    if (e.pointerType !== 'mouse') return;
+                    clearTimeout(this._hoverTimer);
+                    if (this.isOpen) return;
+                    if (this._hoverDelay) this._hoverTimer = setTimeout(() => this.open(), this._hoverDelay);
+                    else this.open();
+                };
+                const hoverClose = (e) => {
+                    if (e.pointerType !== 'mouse') return;
+                    // Always clears first — this also cancels a still-pending
+                    // delayed open when the pointer leaves during the wait.
+                    clearTimeout(this._hoverTimer);
+                    if (!this.isOpen) return;
+                    this._hoverTimer = setTimeout(() => this.close(), 120);
+                };
+                this.trigger.addEventListener('pointerenter', hoverOpen, { signal });
+                this.trigger.addEventListener('pointerleave', hoverClose, { signal });
+                this.balloon.addEventListener('pointerenter', (e) => {
+                    if (e.pointerType === 'mouse') clearTimeout(this._hoverTimer);
+                }, { signal });
+                this.balloon.addEventListener('pointerleave', hoverClose, { signal });
+
+                this.trigger.addEventListener('click', (e) => {
+                    // Mouse clicks don't toggle — hover already showed the balloon,
+                    // and the trigger's own action (a toolbar command, a link) must
+                    // proceed undisturbed; just dismiss.
+                    if (e.pointerType === 'mouse') { this.close(); return; }
+                    // Touch (and legacy keyboard-synthesized) clicks keep the toggle.
+                    e.preventDefault();
+                    this.isOpen ? this.close() : this.open();
+                }, { signal });
+
+                // Sighted keyboard users: show on visible focus, drop on blur.
+                this.trigger.addEventListener('focus', () => {
+                    if (this.trigger.matches(':focus-visible')) this.open();
+                }, { signal });
+                this.trigger.addEventListener('blur', () => this.close(), { signal });
+            } else {
+                // Default: click-toggle for every input type.
+                this.trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.isOpen ? this.close() : this.open();
+                }, { signal });
+            }
+
             this.trigger.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && this.isOpen) {
                     e.stopPropagation();
@@ -289,6 +342,7 @@
         // strand the document listener and the pooled scroll subscriber for
         // the page lifetime.
         destroy() {
+            clearTimeout(this._hoverTimer);
             if (this.isOpen) this.close();
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
             this.root.removeAttribute('data-nds-tooltip-initialized');

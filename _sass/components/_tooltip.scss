@@ -37,16 +37,10 @@
     }
   }
 
-  // Text-trigger mode — applies when the tooltip trigger has no icon.
-  // "Icon" = any `.nds-icon` descendant (the NDS icon base class, which
-  // also lives inside every `.nds-feedback-icon` chip). Covers:
-  //   - Root is the trigger (no `.nds-tooltip-trigger` child) → underline.
-  //   - Explicit `.nds-tooltip-trigger` that holds only text → underline.
-  //   - Explicit `.nds-tooltip-trigger` with `.nds-icon` inside → no underline.
-  // Custom triggers using raw `<svg>` or `<img>` should either wrap the
-  // graphic in `.nds-icon` (the design-system convention) or override
-  // `text-decoration: none` in author CSS.
-  &:not(:has(> .nds-tooltip-trigger .nds-icon)) {
+  // Term mode — OPT-IN via .nds-term on the root: the dotted "defined term"
+  // treatment for inline text triggers. Chip, button, and custom triggers
+  // keep their own affordance by default, no exclusions needed.
+  &.nds-term {
     cursor: help;
     text-decoration: underline dotted;
     text-underline-offset: 3px;
