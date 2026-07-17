@@ -66,12 +66,6 @@ direction: rtl
               <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-cmd="ul" aria-pressed="false" aria-label="قائمة نقطية"><i class="hgi hgi-stroke hgi-left-to-right-list-bullet" aria-hidden="true"></i></button>
               <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-cmd="ol" aria-pressed="false" aria-label="قائمة رقمية"><i class="hgi hgi-stroke hgi-left-to-right-list-number" aria-hidden="true"></i></button>
             </div>
-            <div class="nds-btn-group" data-nds-editor-block-ops hidden></div>
-            <div class="nds-btn-group" data-nds-editor-block-controls hidden>
-              <button type="button" class="nds-btn nds-neutral nds-md nds-icon-only" data-block-cmd="move-up" aria-label="نقل لأعلى"><i class="hgi hgi-stroke hgi-arrow-up-01" aria-hidden="true"></i></button>
-              <button type="button" class="nds-btn nds-neutral nds-md nds-icon-only" data-block-cmd="move-down" aria-label="نقل لأسفل"><i class="hgi hgi-stroke hgi-arrow-down-01" aria-hidden="true"></i></button>
-              <button type="button" class="nds-btn nds-primary nds-destructive nds-md nds-icon-only" data-block-cmd="delete" aria-label="حذف المكون"><i class="hgi hgi-stroke hgi-delete-02" aria-hidden="true"></i></button>
-            </div>
           </div>
           <div class="nds-bar-end">
             <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-source-toggle aria-pressed="false" aria-label="عرض مصدر HTML"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></button>
@@ -132,12 +126,6 @@ direction: rtl
             <div class="nds-btn-group">
               <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-cmd="ul" aria-pressed="false" aria-label="قائمة نقطية"><i class="hgi hgi-stroke hgi-left-to-right-list-bullet" aria-hidden="true"></i></button>
               <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-cmd="ol" aria-pressed="false" aria-label="قائمة رقمية"><i class="hgi hgi-stroke hgi-left-to-right-list-number" aria-hidden="true"></i></button>
-            </div>
-            <div class="nds-btn-group" data-nds-editor-block-ops hidden></div>
-            <div class="nds-btn-group" data-nds-editor-block-controls hidden>
-              <button type="button" class="nds-btn nds-neutral nds-md nds-icon-only" data-block-cmd="move-up" aria-label="نقل لأعلى"><i class="hgi hgi-stroke hgi-arrow-up-01" aria-hidden="true"></i></button>
-              <button type="button" class="nds-btn nds-neutral nds-md nds-icon-only" data-block-cmd="move-down" aria-label="نقل لأسفل"><i class="hgi hgi-stroke hgi-arrow-down-01" aria-hidden="true"></i></button>
-              <button type="button" class="nds-btn nds-primary nds-destructive nds-md nds-icon-only" data-block-cmd="delete" aria-label="حذف المكون"><i class="hgi hgi-stroke hgi-delete-02" aria-hidden="true"></i></button>
             </div>
           </div>
           <div class="nds-bar-end">
@@ -204,12 +192,6 @@ direction: rtl
               <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-cmd="ul" aria-pressed="false" aria-label="قائمة نقطية"><i class="hgi hgi-stroke hgi-left-to-right-list-bullet" aria-hidden="true"></i></button>
               <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-cmd="ol" aria-pressed="false" aria-label="قائمة رقمية"><i class="hgi hgi-stroke hgi-left-to-right-list-number" aria-hidden="true"></i></button>
             </div>
-            <div class="nds-btn-group" data-nds-editor-block-ops hidden></div>
-            <div class="nds-btn-group" data-nds-editor-block-controls hidden>
-              <button type="button" class="nds-btn nds-neutral nds-md nds-icon-only" data-block-cmd="move-up" aria-label="نقل لأعلى"><i class="hgi hgi-stroke hgi-arrow-up-01" aria-hidden="true"></i></button>
-              <button type="button" class="nds-btn nds-neutral nds-md nds-icon-only" data-block-cmd="move-down" aria-label="نقل لأسفل"><i class="hgi hgi-stroke hgi-arrow-down-01" aria-hidden="true"></i></button>
-              <button type="button" class="nds-btn nds-primary nds-destructive nds-md nds-icon-only" data-block-cmd="delete" aria-label="حذف المكون"><i class="hgi hgi-stroke hgi-delete-02" aria-hidden="true"></i></button>
-            </div>
           </div>
           <div class="nds-bar-end">
             <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-source-toggle aria-pressed="false" aria-label="عرض مصدر HTML"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></button>
@@ -232,7 +214,7 @@ direction: rtl
 
       <div class="nds-form-container nds-textarea nds-editor">
         <div class="nds-form-header">
-          <label id="composed-label" for="composed"><span class="nds-label">مستند بالمكونات (تجربة إدراج الكتل)</span></label>
+          <label id="composed-label" for="composed"><span class="nds-label">مستند مركب (لصق مكونات النظام)</span></label>
         </div>
 
         <div class="nds-toolbar">
@@ -273,18 +255,6 @@ direction: rtl
             <div class="nds-btn-group">
               <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-cmd="ul" aria-pressed="false" aria-label="قائمة نقطية"><i class="hgi hgi-stroke hgi-left-to-right-list-bullet" aria-hidden="true"></i></button>
               <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only" data-cmd="ol" aria-pressed="false" aria-label="قائمة رقمية"><i class="hgi hgi-stroke hgi-left-to-right-list-number" aria-hidden="true"></i></button>
-            </div>
-            <div class="nds-dropmenu" data-nds-editor-insert-dropmenu>
-              <button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-dropmenu-trigger" data-cmd="insert" aria-label="إدراج مكون"><i class="hgi hgi-stroke hgi-add-01" aria-hidden="true"></i></button>
-              <div class="nds-dropmenu-menu" hidden>
-                <div class="nds-dropmenu-scroll"></div>
-              </div>
-            </div>
-            <div class="nds-btn-group" data-nds-editor-block-ops hidden></div>
-            <div class="nds-btn-group" data-nds-editor-block-controls hidden>
-              <button type="button" class="nds-btn nds-neutral nds-md nds-icon-only" data-block-cmd="move-up" aria-label="نقل لأعلى"><i class="hgi hgi-stroke hgi-arrow-up-01" aria-hidden="true"></i></button>
-              <button type="button" class="nds-btn nds-neutral nds-md nds-icon-only" data-block-cmd="move-down" aria-label="نقل لأسفل"><i class="hgi hgi-stroke hgi-arrow-down-01" aria-hidden="true"></i></button>
-              <button type="button" class="nds-btn nds-primary nds-destructive nds-md nds-icon-only" data-block-cmd="delete" aria-label="حذف المكون"><i class="hgi hgi-stroke hgi-delete-02" aria-hidden="true"></i></button>
             </div>
           </div>
           <div class="nds-bar-end">

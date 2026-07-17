@@ -92,71 +92,11 @@ const FIXTURES = [
         expect: [['roundtrip', null]],
     },
     {
-        name: 'block-roundtrip-injection-proof',
-        html: '<div class="nds-editor-block" data-nds-block="alert" data-variant="success" onclick="evil()"><div class="nds-alert nds-card" data-status="success" role="alert"><span class="nds-alert-title" data-nds-slot="title">عنوان <img src=x onerror=x> <strong>مهم</strong></span><p class="nds-alert-description" data-nds-slot="description">نص الوصف</p><script>x</script></div></div>',
-        expect: [
-            ['contains', 'data-nds-block="alert"'],
-            ['contains', 'data-variant="success"'],
-            ['contains', '<strong>مهم</strong>'],
-            ['contains', 'نص الوصف'],
-            ['contains', 'nds-feedback'],
-            ['not', 'onclick'],
-            ['not', 'onerror'],
-            ['not', '<img'],
-            ['not', '<script'],
-        ],
-    },
-    {
-        name: 'block-unknown-name-degrades-safely',
+        name: 'legacy-block-wrapper-degrades-to-region',
         html: '<div class="nds-editor-block" data-nds-block="nonexistent"><p>محتوى محفوظ</p><span onclick="x()">نص</span></div>',
         expect: [
             ['contains', 'محتوى محفوظ'],
             ['not', 'onclick'],
-        ],
-    },
-    {
-        name: 'slot-content-policies',
-        html: '<div class="nds-editor-block" data-nds-block="table"><table class="nds-table"><thead><tr><th data-nds-slot="cell">الحالة</th></tr></thead><tbody><tr><td data-nds-slot="cell">الطلب <span class="nds-tag nds-sm" data-status="success"><span class="nds-label">نشط</span></span> <span onclick="x()">نص</span></td></tr></tbody></table></div><div class="nds-editor-block" data-nds-block="alert" data-variant="info"><div class="nds-alert nds-card"><span class="nds-alert-title" data-nds-slot="title">عنوان <span class="nds-tag"><span class="nds-label">وسم</span></span></span><p class="nds-alert-description" data-nds-slot="description">نص</p></div></div>',
-        expect: [
-            // rich cell: the NDS tag survives with classes + data-status…
-            ['contains', 'class="nds-tag nds-sm"'],
-            ['contains', 'data-status="success"'],
-            // …while non-NDS markup still reduces (junk span unwrapped, handler gone).
-            ['not', 'onclick'],
-            // inline title slot: the tag is stripped to its text.
-            ['contains', 'عنوان وسم'],
-            ['count', 'class="nds-tag', 1],
-        ],
-    },
-    {
-        name: 'raw-html-code-paste-renders',
-        paste: true,
-        plainOnly: true,
-        html: '<div class="nds-alert nds-card" data-status="success" role="alert"><div class="nds-alert-content"><div class="nds-alert-text"><span class="nds-alert-title">تم بنجاح</span></div></div></div>\n<p>فقرة <strong>منسقة</strong> بعد المكون.</p>',
-        expect: [
-            ['contains', 'class="nds-alert nds-card"'],
-            ['contains', '<strong>منسقة</strong>'],
-            ['not', '&lt;'],
-        ],
-    },
-    {
-        name: 'component-paste-gets-caret-escape',
-        paste: true,
-        plainOnly: true,
-        html: '<div class="nds-alert nds-card" data-status="info" role="alert"><div class="nds-alert-content"><div class="nds-alert-text"><span class="nds-alert-title">تنبيه أخير</span></div></div></div>',
-        expect: [
-            ['contains', 'class="nds-alert nds-card"'],
-            ['not', '<p><br></p>'],
-        ],
-    },
-    {
-        name: 'plain-prose-paste-still-escapes',
-        paste: true,
-        plainOnly: true,
-        html: 'المتغير أ < ب دائمًا\nوالسطر الثاني هنا',
-        expect: [
-            ['contains', '&lt;'],
-            ['contains', 'والسطر الثاني'],
         ],
     },
     {
@@ -407,81 +347,6 @@ try {
             console.log(`PASS ${f.name}`);
         }
     }
-    // E2E: insert a block through the instance API on the blocks-demo editor,
-    // read the serialized value back.
-    const insertOut = await page.evaluate(() => {
-        const root = document.getElementById('composed').closest('.nds-editor');
-        root.ndsEditor._insertBlock('table', '');
-        return document.getElementById('composed').value;
-    });
-    const insertProblems = [];
-    for (const needle of ['data-nds-block="table"', 'class="nds-table"', 'data-nds-slot="cell"']) {
-        if (!insertOut.includes(needle)) insertProblems.push(`MISSING ${needle}`);
-    }
-    if (insertOut.includes('data-nds-block-delete') || insertOut.includes('contenteditable')) {
-        insertProblems.push('LEAKED runtime arming into value');
-    }
-    if (insertProblems.length) {
-        failures++;
-        console.log('FAIL insert-block-e2e');
-        insertProblems.forEach(p => console.log(`  ${p}`));
-        console.log(`  OUT: ${insertOut}`);
-    } else {
-        console.log('PASS insert-block-e2e');
-    }
-
-    // E2E: block insert is a native undo entry (attrs baked, zero post-insert
-    // node mutations) — undo removes it from the value, redo restores it ARMED.
-    const undoOut = await page.evaluate(() => {
-        const root = document.getElementById('composed').closest('.nds-editor');
-        const src = document.getElementById('composed');
-        const editable = root.querySelector('.nds-editor-editable');
-        const before = src.value;
-        root.ndsEditor._insertBlock('alert', 'warning');
-        const after = src.value;
-        editable.focus();
-        document.execCommand('undo');
-        const undone = src.value;
-        document.execCommand('redo');
-        const redone = src.value;
-        const slot = editable.querySelector('[data-nds-block="alert"] [data-nds-slot]');
-        return {
-            inserted: after.includes('data-nds-block="alert"'),
-            undoReverted: undone === before,
-            redoRestored: redone.includes('data-nds-block="alert"'),
-            redoArmed: slot?.getAttribute('contenteditable') === 'true',
-        };
-    });
-    const undoProblems = Object.entries(undoOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
-    if (undoProblems.length) {
-        failures++;
-        console.log('FAIL insert-undo-redo-e2e');
-        undoProblems.forEach(pr => console.log(`  ${pr}`));
-    } else {
-        console.log('PASS insert-undo-redo-e2e');
-    }
-
-    // E2E: source round-trip re-arms blocks (atomic wrapper + editable slots).
-    const rearmOut = await page.evaluate(() => {
-        const root = document.getElementById('composed').closest('.nds-editor');
-        const srcBtn = root.querySelector('[data-source-toggle]');
-        srcBtn.click();
-        srcBtn.click();
-        const block = root.querySelector('.nds-editor-block');
-        return {
-            atomic: block?.getAttribute('contenteditable') === 'false',
-            slots: [...root.querySelectorAll('[data-nds-slot]')].every(sl => sl.getAttribute('contenteditable') === 'true'),
-        };
-    });
-    const rearmProblems = Object.entries(rearmOut).filter(([, v]) => !v).map(([k]) => `NOT RE-ARMED: ${k}`);
-    if (rearmProblems.length) {
-        failures++;
-        console.log('FAIL source-roundtrip-rearm-e2e');
-        rearmProblems.forEach(pr => console.log(`  ${pr}`));
-    } else {
-        console.log('PASS source-roundtrip-rearm-e2e');
-    }
-
     // E2E: Tab indents in source view (caret insert + line-wise + outdent),
     // through the real keydown path.
     const tabOut = await page.evaluate(() => {
@@ -542,91 +407,6 @@ try {
         console.log('PASS selection-carry-e2e');
     }
 
-    // E2E: toolbar block-controls group — shows on block activation, table
-    // ops are undoable single entries, controls survive undo via reactivation.
-    const ctlOut = await page.evaluate(async () => {
-        const raf2 = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-        const root = document.getElementById('composed').closest('.nds-editor');
-        const src = document.getElementById('composed');
-        const group = root.querySelector('[data-nds-editor-block-controls]');
-        const opsGroup = root.querySelector('[data-nds-editor-block-ops]');
-        // Hermetic: reset with real paragraphs so reorder ops have content
-        // to move past (an empty doc makes moves legitimate no-ops).
-        const editable = root.querySelector('.nds-editor-editable');
-        editable.innerHTML = '<p>فقرة أولى</p><p>فقرة ثانية</p>';
-        editable.dispatchEvent(new Event('input', { bubbles: true }));
-        root.ndsEditor._insertBlock('table', '');
-        await raf2();
-        // _insertBlock focuses the first cell slot -> focusin activates.
-        const shownOnInsert = !group.hidden && !opsGroup.hidden;
-        const hasOps = !!opsGroup.querySelector('[data-block-cmd="row-add"]');
-        opsGroup.querySelector('[data-block-cmd="row-add"]').click();
-        const rowsAfterAdd = (src.value.match(/<tr>/g) || []).length; // head + 3 body = 4
-        // Regression: the swap must NOT deactivate the block once the
-        // selectionchange rAF fires — focus continues in the fresh block.
-        await raf2();
-        const stillActiveAfterOp = !group.hidden
-            && !!root.querySelector('[data-nds-block="table"]').contains(getSelection().anchorNode);
-        // Ops are self-inverse — the documented recovery path (replace undo
-        // is a known Chrome ceiling, see _replaceBlock).
-        opsGroup.querySelector('[data-block-cmd="row-del"]').click();
-        const undoReverted = (src.value.match(/<tr>/g) || []).length === 3;
-        opsGroup.querySelector('[data-block-cmd="col-add"]').click();
-        const colsAfterAdd = (src.value.match(/<th /g) || []).length; // 3 + 1 = 4
-        // Reorder: doc is [p1, p2, block, trailing p]. move-up hops over p2;
-        // move-down returns; move-down at the trailing caret-escape p no-ops.
-        const order = () => [src.value.indexOf('فقرة أولى'), src.value.indexOf('data-nds-block'), src.value.indexOf('فقرة ثانية')];
-        group.querySelector('[data-block-cmd="move-up"]').click();
-        const [a1, b1, c1] = order();
-        const movedUp = a1 < b1 && b1 < c1;
-        group.querySelector('[data-block-cmd="move-down"]').click();
-        const [a2, b2, c2] = order();
-        const movedBack = a2 < c2 && c2 < b2;
-        const beforeNoop = src.value;
-        group.querySelector('[data-block-cmd="move-down"]').click();
-        const moveDownNoops = src.value === beforeNoop;
-        // Rapid move burst must never duplicate the block.
-        for (let i = 0; i < 6; i++) {
-            group.querySelector('[data-block-cmd="move-up"]').click();
-            group.querySelector('[data-block-cmd="move-down"]').click();
-        }
-        const noDuplication = (src.value.match(/<table/g) || []).length === 1
-            && root.querySelectorAll('.nds-editor-editable table').length === 1;
-        // Click-to-escape: clicking the block's atomic chrome parks the
-        // caret in the paragraph after it.
-        const blockNow = root.querySelector('[data-nds-block="table"]');
-        blockNow.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        const escN = getSelection().anchorNode;
-        const escEl = escN && (escN.nodeType === 3 ? escN.parentElement : escN);
-        const clickEscaped = !!escEl && escEl.tagName === 'P' && escEl.previousElementSibling === blockNow;
-        // Delete the block from the toolbar.
-        group.querySelector('[data-block-cmd="delete"]').click();
-        const deleted = !src.value.includes('data-nds-block="table"');
-        const hiddenAfterDelete = group.hidden && opsGroup.hidden;
-        return { shownOnInsert, hasOps, rowsAfterAdd, stillActiveAfterOp, undoReverted, colsAfterAdd, movedUp, movedBack, moveDownNoops, noDuplication, clickEscaped, deleted, hiddenAfterDelete };
-    });
-    const ctlProblems = [];
-    if (!ctlOut.shownOnInsert) ctlProblems.push('group not shown on insert');
-    if (!ctlOut.hasOps) ctlProblems.push('table ops not built');
-    if (ctlOut.rowsAfterAdd !== 4) ctlProblems.push(`row-add: expected 4 tr, got ${ctlOut.rowsAfterAdd}`);
-    if (!ctlOut.stillActiveAfterOp) ctlProblems.push('controls deactivated after op (focus lost)');
-    if (!ctlOut.undoReverted) ctlProblems.push('inverse op did not recover');
-    if (ctlOut.colsAfterAdd !== 4) ctlProblems.push(`col-add: expected 4 th, got ${ctlOut.colsAfterAdd}`);
-    if (!ctlOut.movedUp) ctlProblems.push('move-up failed');
-    if (!ctlOut.movedBack) ctlProblems.push('move-down failed');
-    if (!ctlOut.moveDownNoops) ctlProblems.push('move-down past trailing p should no-op');
-    if (!ctlOut.noDuplication) ctlProblems.push('rapid moves duplicated the block');
-    if (!ctlOut.clickEscaped) ctlProblems.push('click on block chrome did not park caret after it');
-    if (!ctlOut.deleted) ctlProblems.push('toolbar delete failed');
-    if (!ctlOut.hiddenAfterDelete) ctlProblems.push('group visible after delete');
-    if (ctlProblems.length) {
-        failures++;
-        console.log('FAIL toolbar-block-controls-e2e');
-        ctlProblems.forEach(pr => console.log(`  ${pr}`));
-    } else {
-        console.log('PASS toolbar-block-controls-e2e');
-    }
-
     // E2E: clicking the editor's empty space (below content) yields a fresh
     // line with the caret in it — and repeated clicks don't stack empties.
     const emptyClickOut = await page.evaluate(() => {
@@ -658,56 +438,17 @@ try {
         console.log('PASS empty-space-click-e2e');
     }
 
-    // E2E: alert status is a block op — one insert-menu row, switch after
-    // insert, current status pressed.
-    const statusOut = await page.evaluate(async () => {
-        const raf2 = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-        const root = document.getElementById('composed').closest('.nds-editor');
-        const src = document.getElementById('composed');
-        const editable = root.querySelector('.nds-editor-editable');
-        const opsGroup = root.querySelector('[data-nds-editor-block-ops]');
-        editable.innerHTML = '<p><br></p>';
-        editable.dispatchEvent(new Event('input', { bubbles: true }));
-        root.ndsEditor._prepInsertMenu();
-        const alertRows = root.querySelectorAll('[data-nds-editor-insert-dropmenu] [data-nds-insert="alert"]').length;
-        root.ndsEditor._insertBlock('alert', '');
-        await raf2();
-        const defaulted = src.value.includes('data-variant="success"') && src.value.includes('data-status="success"');
-        const warnBtn = opsGroup.querySelector('[data-block-cmd="status-warning"]');
-        warnBtn.click();
-        const switched = src.value.includes('data-variant="warning"') && src.value.includes('data-status="warning"') && !src.value.includes('"success"');
-        const pressedRight = opsGroup.querySelector('[data-block-cmd="status-warning"]').getAttribute('aria-pressed') === 'true'
-            && opsGroup.querySelector('[data-block-cmd="status-success"]').getAttribute('aria-pressed') === 'false';
-        const beforeNoop = src.value;
-        opsGroup.querySelector('[data-block-cmd="status-warning"]').click();
-        const noopOnSame = src.value === beforeNoop;
-        return { oneInsertRow: alertRows === 1, defaulted, switched, pressedRight, noopOnSame };
-    });
-    const statusProblems = Object.entries(statusOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
-    if (statusProblems.length) {
-        failures++;
-        console.log('FAIL alert-status-ops-e2e');
-        statusProblems.forEach(pr => console.log(`  ${pr}`));
-    } else {
-        console.log('PASS alert-status-ops-e2e');
-    }
-
-    // E2E: the container's focus state survives focus moves INTO block slots
-    // (separate editing hosts) and drops only on leaving the editor.
+    // E2E: the container's focus state follows real focus and drops only on
+    // leaving the editor.
     const focusOut = await page.evaluate(() => {
         const root = document.getElementById('composed').closest('.nds-editor');
         const editable = root.querySelector('.nds-editor-editable');
-        editable.innerHTML = '<p><br></p>';
-        editable.dispatchEvent(new Event('input', { bubbles: true }));
-        root.ndsEditor._insertBlock('alert', 'info');
         const has = () => (root.getAttribute('data-state') || '').split(/\s+/).includes('focus');
         editable.focus();
         const onSurface = has();
-        root.querySelector('[data-nds-slot]').focus();
-        const onSlot = has();
         document.getElementById('story').closest('.nds-editor').querySelector('.nds-editor-editable').focus();
         const afterLeave = !has();
-        return { onSurface, onSlot, afterLeave };
+        return { onSurface, afterLeave };
     });
     const focusProblems = Object.entries(focusOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
     if (focusProblems.length) {

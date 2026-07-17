@@ -60,19 +60,6 @@
     justify-content: flex-end;
   }
 
-  // Inserted NDS component blocks — atomic chrome, editable [data-nds-slot] islands.
-  .nds-editor-block {
-    position: relative;
-    margin-block: var(--spacing-md);
-
-    &:is(:hover, :focus-within) {
-      outline: 1px dashed var(--border-neutral-secondary);
-      outline-offset: 4px;
-    }
-
-    // A cleared slot collapses to zero width — keep a caret target.
-    [data-nds-slot]:empty::before { content: '\200B'; }
-  }
   // Readonly: forms kills pointer events container-wide (its label-toggles-
   // control rationale) and restores only .nds-form-action. Nothing here can
   // change the value — cmd buttons carry real [disabled], the surface is
