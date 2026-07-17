@@ -60,7 +60,7 @@
     // ==============================================
 
     // Error state - style form control border
-    &[data-status="error"] .nds-form-control {
+    &[data-status="error"] > .nds-form-control {
         border-color: var(--form-field-border-error);
 
         &::before {
@@ -69,7 +69,7 @@
     }
 
     // Success state
-    &[data-status="success"] .nds-form-control {
+    &[data-status="success"] > .nds-form-control {
         border-color: var(--form-field-border-success);
 
         &::before {
@@ -78,7 +78,7 @@
     }
 
     // Warning state
-    &[data-status="warning"] .nds-form-control {
+    &[data-status="warning"] > .nds-form-control {
         border-color: var(--form-field-border-warning);
 
         &::before {
@@ -87,7 +87,7 @@
     }
 
     // Info state
-    &[data-status="info"] .nds-form-control {
+    &[data-status="info"] > .nds-form-control {
         border-color: var(--form-field-border-info);
 
         &::before {
@@ -100,7 +100,7 @@
     // ==============================================
 
     // Focus state (not readonly)
-    &[data-state~="focus"]:not([data-state~="readonly"]) .nds-form-control {
+    &[data-state~="focus"]:not([data-state~="readonly"]) > .nds-form-control {
         &::before {
             width: 100%;
         }
@@ -114,7 +114,7 @@
     }
 
     // Active state (not readonly)
-    &[data-state~="active"]:not([data-state~="readonly"]) .nds-form-control {
+    &[data-state~="active"]:not([data-state~="readonly"]) > .nds-form-control {
         &::before {
             width: 50%;
         }
@@ -538,7 +538,7 @@ fieldset {
 
     // Without this, the [data-state~="active"] rule above swaps the bg to
     // --form-field-background-darker the moment the user types into a lighter field.
-    &.nds-lighter[data-state~="active"]:not([data-state~="readonly"]) .nds-form-control {
+    &.nds-lighter[data-state~="active"]:not([data-state~="readonly"]) > .nds-form-control {
         --_form-control-bg: var(--form-field-background-lighter);
     }
 }
