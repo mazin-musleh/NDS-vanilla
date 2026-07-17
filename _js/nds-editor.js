@@ -3,6 +3,9 @@
  * textarea form field. Toolbar formatting (bold/italic/underline/strike,
  * headings, lists), link popover, source view, and paste sanitization.
  *
+ * Status: BETA — ships with v1.4.0. Under heavy testing and real-project
+ * hardening; API and markup contract may still change.
+ *
  * Form carrier: the .nds-editor-source textarea (direct child of
  * .nds-form-control, clip-hidden — never [hidden], so NDS.Forms validation
  * still sees it) holds the sanitized pretty-printed HTML; bubbling
@@ -12,6 +15,12 @@
  * regions — buttons, tags, tables, cards, alerts…) is kept through sanitize
  * with a filtered class/attribute set; foreign markup still reduces to the
  * plain formatting vocabulary.
+ *
+ * Insertable blocks (NDS.Editor.registerBlock): <div class="nds-editor-block"
+ * data-nds-block="name" [data-variant]> wrapping canonical component markup.
+ * Chrome is contenteditable=false; [data-nds-slot] islands stay editable.
+ * Serialization re-renders every block from its registry template (slot text
+ * + variant only), so runtime state never reaches the form value.
  *
  * Event: `nds:editor:ready` with { instance } after init.
  */
@@ -44,10 +53,90 @@
     const NDS_CLASS = /^(?:nds-|hgi$|hgi-)/;
     // Region roots that may legitimately sit inline inside a <p>.
     const INLINE_REGION_TAGS = new Set(['SPAN', 'BUTTON', 'A', 'I']);
+    // A table interpretMarkup stamped nds-table on is foreign content wearing an
+    // NDS class, not markup an author claimed as NDS — so it gets table structure
+    // plus the plain vocabulary, never NDS_TAGS' IMG/BUTTON/DIV (which the generic
+    // whitelist strips, and which a converted table must not smuggle back in).
+    const CONVERTED_TAGS = new Set(['TABLE', 'CAPTION', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TH', 'TD', ...ALLOWED_TAGS]);
 
     function hasNdsClass(el) {
         for (const c of el.classList) if (NDS_CLASS.test(c)) return true;
         return false;
+    }
+
+    // ---------- Block registry (insertable NDS components) ----------
+    // <div class="nds-editor-block" data-nds-block="name" [data-variant]>
+    // wrapping canonical component markup. The wrapper is contenteditable=false;
+    // [data-nds-slot] islands stay editable. Serialization re-renders every
+    // block from its registry template (slot text + variant only), so runtime
+    // state and crafted attributes never survive the round-trip.
+    //
+    // The core ships NO block definitions — they register through the public
+    // NDS.Editor.registerBlock(). Built-ins live in _js/nds-editor-blocks.js,
+    // which is also the blueprint for extending the editor with new blocks.
+
+    const BLOCKS = new Map();
+
+    function registerBlock(def) {
+        if (!def || typeof def.name !== 'string' || typeof def.render !== 'function') {
+            console.warn('NDS Editor: registerBlock needs at least { name, render }', def);
+            return;
+        }
+        BLOCKS.set(def.name, def);
+    }
+
+    // Default parse: variant from the wrapper, innerHTML per [data-nds-slot] key.
+    function genericParse(def, el) {
+        const props = {};
+        if (def.variants) props.variant = el.getAttribute('data-variant') || '';
+        for (const key of def.slots || []) {
+            const slot = el.querySelector(`[data-nds-slot="${key}"]`);
+            props[key] = slot ? slot.innerHTML : '';
+        }
+        return props;
+    }
+
+    // Injection-proofing lives here, not in defs: unknown keys dropped, variant
+    // enum-validated, every slot string sanitized per its policy before
+    // render() sees it. Slots are ELEMENT CONTENT only — HTML serialization
+    // leaves quotes intact in text, so `<x a="${p.slot}">` in a render()
+    // breaks out. variant is the only attribute-safe prop (enum-validated).
+    function sanitizeProps(def, props) {
+        const clean = {};
+        if (def.variants) {
+            const keys = Object.keys(def.variants);
+            clean.variant = keys.includes(props.variant) ? props.variant : keys[0];
+        }
+        for (const key of def.slots || []) clean[key] = deepSanitizeSlot(props[key], slotPolicy(def, key));
+        return clean;
+    }
+
+    // Per-slot content policy — def.slotContent is a blanket policy string
+    // for every slot, or a map keyed by slot name (prop key or data-nds-slot
+    // value). 'inline' (default) = formatting tags only; 'rich' = the
+    // editor's NDS vocabulary (regions kept, never nested blocks); 'text' =
+    // plain text.
+    function slotPolicy(def, key) {
+        const sc = def.slotContent;
+        if (typeof sc === 'string') return sc;
+        return (sc && sc[key]) || 'inline';
+    }
+
+    function deepSanitizeSlot(value, policy) {
+        if (Array.isArray(value)) return value.map(v => deepSanitizeSlot(v, policy));
+        if (typeof value !== 'string') return '';
+        if (policy === 'rich') return sanitizeRich(value);
+        if (policy === 'text') return sanitizeText(value);
+        return sanitizeInline(value);
+    }
+
+    function buildBlock(def, props, doc) {
+        const wrapper = doc.createElement('div');
+        wrapper.className = 'nds-editor-block';
+        wrapper.setAttribute('data-nds-block', def.name);
+        if (props.variant) wrapper.setAttribute('data-variant', props.variant);
+        wrapper.innerHTML = def.render(props);
+        return wrapper;
     }
 
     // Local fork — also escapes quotes for attribute contexts (openTag); NDS.escapeHtml doesn't. Do not swap.
@@ -202,9 +291,12 @@
 
         // Plain tables become NDS tables — the flagship convert. The class
         // makes them an NDS region, so their structure survives enforcement.
+        // Returned so Pass A can hold them to CONVERTED_TAGS.
+        const converted = new Set();
         for (const t of root.querySelectorAll('table')) {
-            if (!hasNdsClass(t)) t.classList.add('nds-table');
+            if (!hasNdsClass(t)) { t.classList.add('nds-table'); converted.add(t); }
         }
+        return converted;
     }
 
     // ---------- Sanitizer (the trust boundary — all content routes through here) ----------
@@ -261,6 +353,17 @@
         }
     }
 
+    // Inline-only sanitize — block slot content and paste-into-slot.
+    function sanitizeInline(html) {
+        // Parse bare into <body> — same reason as sanitizeHtml: a wrapper element
+        // lets a stray </div> close it early and strand the tail.
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const root = doc.body;
+        sanitizeNode(root, INLINE_TAGS, null);
+        stripAttributes(root, null);
+        return root.innerHTML;
+    }
+
     // NDS-region attribute policy: nds-/hgi classes, aria/role, the styling
     // data attrs, checked href/src, and custom-property declarations from
     // style (NDS knobs like --card-width — inert until a component's own CSS
@@ -303,8 +406,8 @@
         return true;
     }
 
-    function sanitizeRegion(rootEl) {
-        sanitizeNode(rootEl, NDS_TAGS);
+    function sanitizeRegion(rootEl, allowed) {
+        sanitizeNode(rootEl, allowed);
         if (!scrubRegionElement(rootEl)) return false;
         for (const el of Array.from(rootEl.querySelectorAll('*'))) {
             if (!scrubRegionElement(el)) continue;
@@ -315,29 +418,89 @@
         return true;
     }
 
-    function sanitizeHtml(dirty) {
-        const doc = new DOMParser().parseFromString(`<div id="root">${dirty}</div>`, 'text/html');
-        const root = doc.getElementById('root');
+    function sanitizePipeline(dirty, allowBlocks) {
+        // Parse bare into <body>: wrapping in a root element lets a stray </div>
+        // close it early and strand the tail outside what we serialize back.
+        const doc = new DOMParser().parseFromString(dirty, 'text/html');
+        const root = doc.body;
 
-        interpretMarkup(root);
+        const converted = interpretMarkup(root);
+
+        const trusted = new Set(); // JS refs — unspoofable by input markup
+
+        // Pass A0 — registered blocks: parse → sanitize props → re-render the
+        // canonical template. The value never carries runtime state (arming,
+        // buttons, init stamps) because it is always a fresh render.
+        // Skipped for slot content ('rich' policy): blocks never nest, and
+        // skipping is what makes the slot-sanitize recursion terminate.
+        if (allowBlocks) for (const el of Array.from(root.querySelectorAll('[data-nds-block]'))) {
+            if (!el.isConnected) continue; // was inside a wrapper already rebuilt
+            if (el.parentElement && el.parentElement.closest('[data-nds-block]')) continue; // nested: outer rebuild discards it
+            const def = BLOCKS.get(el.getAttribute('data-nds-block'));
+            if (!def) continue; // unregistered wrapper degrades to the region/generic pass
+            try {
+                const raw = def.parse ? def.parse(el) : genericParse(def, el);
+                if (!raw) continue;
+                const fresh = buildBlock(def, sanitizeProps(def, raw), doc);
+                el.replaceWith(fresh);
+                trusted.add(fresh);
+            } catch (err) {
+                console.warn(`NDS Editor: block "${def.name}" failed to round-trip`, err);
+            }
+        }
 
         // Pass A — NDS component regions survive with their structure.
-        const regions = [];
         // Pre-order doc order: only the most recently accepted region can contain a later match.
         let lastRegion = null;
         for (const el of Array.from(root.querySelectorAll('[class*="nds-"]'))) {
             if (!el.isConnected) continue; // removed inside an earlier region
             if (lastRegion && lastRegion.contains(el)) continue; // top-most roots only
+            if (isInTrusted(el, trusted)) continue; // block internals stay template-owned
             if (!NDS_TAGS.has(el.tagName) || !hasNdsClass(el)) continue;
-            if (sanitizeRegion(el)) { regions.push(el); lastRegion = el; }
+            if (sanitizeRegion(el, converted.has(el) ? CONVERTED_TAGS : NDS_TAGS)) { trusted.add(el); lastRegion = el; }
         }
-        const trusted = new Set(regions);
 
-        // Pass B — generic whitelist outside regions.
+        // Pass B — generic whitelist outside trusted subtrees.
         sanitizeNode(root, ALLOWED_TAGS, trusted);
         stripAttributes(root, trusted);
         flattenBadPWrappers(root, trusted);
+
+        // Whitespace-only text between table structure elements is legal to
+        // the parser but Chrome's editing-mode insertHTML fosters it OUT of
+        // the table as junk paragraphs — strip it at the source.
+        for (const el of root.querySelectorAll('table, thead, tbody, tfoot, tr')) {
+            for (const n of Array.from(el.childNodes)) {
+                if (n.nodeType === Node.TEXT_NODE && !n.textContent.trim()) n.remove();
+            }
+        }
+        // Same story for whitespace between top-level blocks; spacing that
+        // separates inline runs is kept.
+        for (const n of Array.from(root.childNodes)) {
+            if (n.nodeType !== Node.TEXT_NODE || n.textContent.trim()) continue;
+            const blocky = (sib) => !sib || (sib.nodeType === Node.ELEMENT_NODE && !INLINE_TAGS.has(sib.tagName));
+            if (blocky(n.previousSibling) && blocky(n.nextSibling)) n.remove();
+        }
+        // Dead-empty paragraphs (no children, no text — editing-split debris)
+        // carry nothing. Intentional blank lines (<p><br></p>) are kept.
+        for (const pEl of Array.from(root.querySelectorAll('p'))) {
+            if (!pEl.firstElementChild && !pEl.textContent.trim()) pEl.remove();
+        }
         return root.innerHTML;
+    }
+
+    function sanitizeHtml(dirty) {
+        return sanitizePipeline(dirty, true);
+    }
+
+    // Slot 'rich' policy — the editor's NDS vocabulary, no nested blocks.
+    function sanitizeRich(dirty) {
+        return sanitizePipeline(dirty, false);
+    }
+
+    // Slot 'text' policy — plain text only.
+    function sanitizeText(html) {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return escapeHtml(doc.body.textContent || '');
     }
 
     // ---------- Pretty printer (source view / form value) ----------
@@ -367,14 +530,19 @@
     }
 
     const VOID_TAGS = new Set(['BR', 'HR', 'IMG', 'WBR']);
+    // Elements typing can continue in — anything else as a trailing node
+    // traps the caret (component regions, tables, block wrappers).
+    const FLOW_EXIT_TAGS = /^(?:P|H[1-3]|UL|OL)$/;
 
     function formatNode(node, depth) {
         const pad = '  '.repeat(depth);
         let out = '';
         for (const child of node.childNodes) {
             if (child.nodeType === Node.TEXT_NODE) {
+                // textContent is DECODED — re-escape or a literal "<" in root
+                // text corrupts the value's round-trip.
                 const t = child.textContent.replace(/\s+/g, ' ').trim();
-                if (t) out += pad + t + '\n';
+                if (t) out += pad + escapeHtml(t) + '\n';
                 continue;
             }
             if (child.nodeType !== Node.ELEMENT_NODE) continue;
@@ -431,6 +599,9 @@
             this.abortController = new AbortController();
             this._rafId = 0;
             this._savedRange = null;
+            this._activeBlock = null;
+            this._activeBlockDef = null;
+            this._focusWithin = false;
             this.valid = true;
             this.init();
         }
@@ -443,10 +614,15 @@
             // ponytail: <p> as new-block separator — native Enter gives clean <p> per paragraph.
             try { document.execCommand('defaultParagraphSeparator', false, 'p'); } catch { /* older UAs */ }
 
-            // Hydrate from a server-filled textarea (the restore path).
-            if (this.source.value.trim()) {
-                this.editable.innerHTML = sanitizeHtml(this.source.value) || '<p><br></p>';
-            }
+            // Hydrate from a server-filled textarea (the restore path), else
+            // canonicalize whatever the editable was server-rendered with — the
+            // editable must show what the form value holds, not a richer original.
+            const seed = this.source.value.trim() ? this.source.value : this.editable.innerHTML;
+            const clean = sanitizeHtml(seed) || '<p><br></p>';
+            // Only rewrite on an actual difference: typing in the pre-bundle gap is
+            // native contenteditable, and reassigning innerHTML would drop the caret.
+            if (clean !== this.editable.innerHTML) this.editable.innerHTML = clean;
+            this._armBlocks();
             this._syncSource();
 
             // preventDefault on mousedown keeps the editable's selection when a
@@ -454,10 +630,11 @@
             // NDS.Dropmenu's trigger click stopPropagations, so the toolbar click
             // delegate below never fires for it.
             this.toolbar.addEventListener('mousedown', (e) => {
-                const cmdBtn = e.target.closest('[data-cmd]');
+                const cmdBtn = e.target.closest('[data-cmd], [data-block-cmd]');
                 if (!cmdBtn) return;
                 e.preventDefault();
                 if (cmdBtn.dataset.cmd === 'link') this._prepLinkMenu();
+                else if (cmdBtn.dataset.cmd === 'insert') this._prepInsertMenu();
             }, { signal });
 
             this.toolbar.addEventListener('click', this._onToolbarClick.bind(this), { signal });
@@ -466,10 +643,48 @@
             this.editable.addEventListener('keydown', this._onKeydown.bind(this), { signal });
             document.addEventListener('selectionchange', this._scheduleToolbarSync.bind(this), { signal });
 
+            // Block activation — the toolbar's block-controls group shows for
+            // the block owning focus/selection (keyboard path runs through the
+            // selectionchange rAF; these cover mouse and slot focus).
+            this.editable.addEventListener('focusin', (e) => {
+                const block = e.target.closest?.('.nds-editor-block');
+                if (!block) return;
+                const slot = e.target.closest('[data-nds-slot]');
+                if (slot) block._ndsLastCell = slot;
+                this._setActiveBlock(block);
+            }, { signal });
+            this.editable.addEventListener('mousedown', (e) => {
+                this._setActiveBlock(e.target.closest?.('.nds-editor-block') || null);
+            }, { signal });
+            // Click-to-escape, two dead zones for the browser's caret mapping:
+            // a block's atomic chrome → caret into the paragraph after it;
+            // the editor's empty space below the content → a fresh line at the
+            // end (reusing a trailing empty paragraph — clicks don't stack them).
+            this.editable.addEventListener('click', (e) => {
+                if (e.target === this.editable) {
+                    const last = this.editable.lastElementChild;
+                    if (!last || e.clientY > last.getBoundingClientRect().bottom) this._placeCaretAtEnd();
+                    return;
+                }
+                const block = e.target.closest?.('.nds-editor-block');
+                if (block && !e.target.closest('[data-nds-slot]')) this._placeCaretAfter(block);
+            }, { signal });
+
             // Mirror NDS.Forms interactive states on the container — forms only
-            // delegates to input/textarea/select, so the contenteditable is skipped.
-            this.editable.addEventListener('focus', () => { NDS.State.add(this.root, 'focus'); this._valueAtFocus = this.source.value; }, { signal });
-            this.editable.addEventListener('blur', () => {
+            // delegates to input/textarea/select, so the contenteditable is
+            // skipped. Tracked with focusin/focusout on the ROOT: block slots
+            // are separate editing hosts, so an editable-only focus/blur pair
+            // drops the field's focus state (and fires a premature change
+            // event) the moment the user clicks into a block.
+            this.root.addEventListener('focusin', () => {
+                if (this._focusWithin) return;
+                this._focusWithin = true;
+                NDS.State.add(this.root, 'focus');
+                this._valueAtFocus = this.source.value;
+            }, { signal });
+            this.root.addEventListener('focusout', (e) => {
+                if (this.root.contains(e.relatedTarget)) return; // moving within the editor
+                this._focusWithin = false;
                 NDS.State.remove(this.root, 'focus');
                 NDS.State.remove(this.root, 'typing');
                 if (this.source.value !== this._valueAtFocus) {
@@ -486,6 +701,7 @@
             this.source.addEventListener('focus', () => {
                 if (!this.root.classList.contains('is-source')) this.editable.focus();
             }, { signal });
+            this.source.addEventListener('keydown', this._onSourceKeydown.bind(this), { signal });
 
             const linkMenu = this.root.querySelector('[data-nds-editor-link-dropmenu] .nds-dropmenu-menu');
             if (linkMenu) {
@@ -495,6 +711,16 @@
                 }, { signal });
                 linkMenu.querySelector('[data-nds-editor-link-url]')?.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') { e.preventDefault(); this._confirmLink(); }
+                }, { signal });
+            }
+
+            const insertMenu = this.root.querySelector('[data-nds-editor-insert-dropmenu] .nds-dropmenu-menu');
+            if (insertMenu) {
+                insertMenu.addEventListener('click', (e) => {
+                    const item = e.target.closest('[data-nds-insert]');
+                    if (!item) return;
+                    this.root.querySelector('[data-nds-editor-insert-dropmenu]')?.ndsDropmenu?.close?.();
+                    this._insertBlock(item.getAttribute('data-nds-insert'), item.getAttribute('data-nds-insert-variant') || '');
                 }, { signal });
             }
 
@@ -518,6 +744,7 @@
             this.toolbar.querySelectorAll('[data-cmd]').forEach(btn => { btn.disabled = !editable; });
             const srcBtn = this.toolbar.querySelector('[data-source-toggle]');
             if (srcBtn) srcBtn.disabled = disabled; // readonly may still view source
+            if (!editable) this._setActiveBlock(null);
         }
 
         destroy() {
@@ -531,10 +758,12 @@
 
         _onToolbarClick(e) {
             if (e.target.closest('[data-source-toggle]')) { this._toggleSourceView(); return; }
+            const blockBtn = e.target.closest('[data-block-cmd]');
+            if (blockBtn) { this._runBlockCommand(blockBtn.dataset.blockCmd); return; }
             const btn = e.target.closest('[data-cmd]');
             if (!btn || this.root.classList.contains('is-source')) return;
             const cmd = btn.dataset.cmd;
-            if (cmd === 'link') return; // dropmenu-backed — handled via mousedown prep + menu clicks
+            if (cmd === 'link' || cmd === 'insert') return; // dropmenu-backed — handled via mousedown prep + menu clicks
             this.editable.focus();
             this._applyCommand(cmd);
             this._syncSource();
@@ -544,19 +773,22 @@
         _applyCommand(cmd) {
             // ponytail: execCommand for writes — deprecated but universally supported, native
             // undo integration, browser-handled RTL/bidi. Replace per-command only if a UA misbehaves.
+            const inSlot = this._inSlot();
             switch (cmd) {
                 case 'bold':      document.execCommand('bold');          break;
                 case 'italic':    document.execCommand('italic');        break;
                 case 'underline': document.execCommand('underline');     break;
                 case 'strike':    document.execCommand('strikeThrough'); break;
-                case 'ul':        document.execCommand('insertUnorderedList'); break;
-                case 'ol':        document.execCommand('insertOrderedList');   break;
+                // Block slots are inline-only islands — block-level commands no-op inside them.
+                case 'ul': if (!inSlot) document.execCommand('insertUnorderedList'); break;
+                case 'ol': if (!inSlot) document.execCommand('insertOrderedList');   break;
                 case 'clear':     document.execCommand('removeFormat'); break;
                 case 'undo':      document.execCommand('undo'); break;
                 case 'redo':      document.execCommand('redo'); break;
                 case 'h1':
                 case 'h2':
                 case 'h3': {
+                    if (inSlot) break;
                     const targetTag = CMD_BLOCK_MAP[cmd];
                     const block = this._getBlockContext();
                     document.execCommand('formatBlock', false, (block && block.tagName === targetTag) ? 'P' : targetTag);
@@ -571,8 +803,12 @@
             const btn = this.toolbar.querySelector('[data-source-toggle]');
             const entering = !this.root.classList.contains('is-source');
             if (entering) {
+                this._setActiveBlock(null);
                 // Sync BEFORE showing so the user sees the exact value that would submit.
                 this._syncSource();
+                // Read the editor selection while it still exists — carried
+                // into the source so the user lands where they meant to edit.
+                const carry = this._computeSourceSelection();
                 // Match the source view to the rendered editable height (read
                 // before is-source hides it) — a long document would otherwise
                 // switch into a min-height-sized textarea.
@@ -581,9 +817,17 @@
                 this.source.removeAttribute('tabindex');
                 btn?.setAttribute('aria-pressed', 'true');
                 this.source.focus();
+                if (carry) {
+                    this.source.setSelectionRange(carry.start, carry.end);
+                    // Rough line-based scroll — enough to bring the selection into view.
+                    const line = this.source.value.slice(0, carry.start).split('\n').length;
+                    const lh = parseFloat(getComputedStyle(this.source).lineHeight) || 24;
+                    this.source.scrollTop = Math.max(0, (line - 3) * lh);
+                }
             } else {
                 // Sanitize whatever was typed in source view before it becomes visual DOM.
                 this.editable.innerHTML = sanitizeHtml(this.source.value) || '<p><br></p>';
+                this._armBlocks(); // the value holds clean unarmed blocks — re-arm the fresh DOM
                 this.root.classList.remove('is-source');
                 this.source.setAttribute('tabindex', '-1');
                 btn?.setAttribute('aria-pressed', 'false');
@@ -593,9 +837,95 @@
             }
         }
 
+        // Map the editor selection to a source-view range. Heuristic by
+        // design: the value is a TRANSFORMED document (rebuild + pretty
+        // print), so no exact DOM→source mapping exists — the selected text's
+        // occurrence index disambiguates repeats, and structure-heavy
+        // selections degrade to no carry. Never chase the exact version.
+        _computeSourceSelection() {
+            const sel = window.getSelection();
+            if (!sel.rangeCount || !this.editable.contains(sel.anchorNode)) return null;
+            const norm = (s) => s.replace(/\s+/g, ' ').trim();
+
+            let needle = norm(sel.toString());
+            if (!needle) {
+                // Collapsed caret — use the word around it.
+                const node = sel.anchorNode;
+                if (node.nodeType !== Node.TEXT_NODE) return null;
+                const text = node.textContent;
+                const at = sel.anchorOffset;
+                const before = /\S*$/.exec(text.slice(0, at))[0];
+                const after = /^\S*/.exec(text.slice(at))[0];
+                needle = norm(before + after);
+                if (!needle) return null;
+            }
+
+            // How many times does the needle occur BEFORE the selection? The
+            // same occurrence index locates it in the source string.
+            const range = sel.getRangeAt(0);
+            const pre = document.createRange();
+            pre.selectNodeContents(this.editable);
+            pre.setEnd(range.startContainer, range.startOffset);
+            const preText = norm(pre.toString());
+            let occ = 0;
+            for (let i = preText.indexOf(needle); i !== -1; i = preText.indexOf(needle, i + 1)) occ++;
+
+            const value = this.source.value;
+            let idx = -1, from = 0;
+            for (let k = 0; k <= occ; k++) {
+                idx = value.indexOf(needle, from);
+                if (idx === -1) break;
+                from = idx + 1;
+            }
+            if (idx === -1) idx = value.indexOf(needle); // fallback: first occurrence
+            if (idx === -1 && needle.length > 24) {
+                // Selection spans structure the printer reshaped — retry with its head.
+                needle = needle.slice(0, 24);
+                idx = value.indexOf(needle);
+            }
+            if (idx === -1) return null;
+            return { start: idx, end: idx + needle.length };
+        }
+
+        // Tab indents in source view (line-wise over a selection, Shift+Tab
+        // outdents); Escape-then-Tab releases the trap and moves focus — the
+        // code-editor convention. Edits go through execCommand('insertText')
+        // so the textarea's native undo survives.
+        _onSourceKeydown(e) {
+            if (e.key === 'Escape') { this._sourceTabEscape = true; return; }
+            if (e.key !== 'Tab') { this._sourceTabEscape = false; return; }
+            if (this._sourceTabEscape) { this._sourceTabEscape = false; return; }
+            e.preventDefault();
+            const ta = this.source;
+            const INDENT = '  ';
+            const { selectionStart: start, selectionEnd: end, value } = ta;
+            if (start === end && !e.shiftKey) {
+                document.execCommand('insertText', false, INDENT);
+                return;
+            }
+            // Line-wise: extend to the start of the first selected line.
+            const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+            const block = value.slice(lineStart, end);
+            const next = e.shiftKey
+                ? block.replace(/^ {1,2}/gm, '')
+                : block.replace(/^/gm, INDENT);
+            if (next === block) return;
+            ta.setSelectionRange(lineStart, end);
+            document.execCommand('insertText', false, next);
+            // Re-select the affected lines so repeated Tab/Shift+Tab flows.
+            ta.setSelectionRange(lineStart, lineStart + next.length);
+        }
+
         // ---------- Editing events ----------
 
-        _onInput() {
+        _onInput(e) {
+            // Undo/redo can restore blocks from pre-arm markup states — re-arm
+            // (attributes only, undo-tolerated) and drop a stale active block
+            // whose node the history swap disconnected.
+            if (e && (e.inputType === 'historyUndo' || e.inputType === 'historyRedo')) {
+                this._armBlocks();
+                if (this._activeBlock && !this._activeBlock.isConnected) this._setActiveBlock(null);
+            }
             this._syncSource();
             this._scheduleToolbarSync();
         }
@@ -611,8 +941,16 @@
                 }
                 return;
             }
+            // Block slots are inline-only: Enter inserts a line break, never a
+            // new paragraph.
+            if (e.key === 'Enter' && !e.shiftKey && this._inSlot()) {
+                e.preventDefault();
+                document.execCommand('insertHTML', false, '<br>');
+                return;
+            }
             // Tab nests list items; outside lists it keeps its native focus-move
-            // (never trap keyboard users inside the editor).
+            // (never trap keyboard users inside the editor; in table-cell slots
+            // it moves focus to the next cell island).
             if (e.key === 'Tab') {
                 const block = this._getBlockContext();
                 if (block && block.tagName === 'LI') {
@@ -628,13 +966,56 @@
             e.preventDefault();
             const html = e.clipboardData.getData('text/html');
             const text = e.clipboardData.getData('text/plain');
+            const slotCtx = this._slotContext();
+            const inSlot = !!slotCtx;
+            // Pasting into a slot honors the slot's content policy.
+            const sanitize = !inSlot ? sanitizeHtml
+                : slotCtx.policy === 'rich' ? sanitizeRich
+                : slotCtx.policy === 'text' ? sanitizeText
+                : sanitizeInline;
             let insert;
-            if (html) {
-                insert = sanitizeHtml(html);
+            if (text && /^\s*<[a-z!]/i.test(text) && /<\/[a-z][^>]*>|\/>/.test(text)) {
+                // Raw HTML source pasted as text (IDE, doc-page code blocks):
+                // the plain flavor IS markup — parse it through the pipeline
+                // instead of escaping it into visible tags.
+                insert = sanitize(text);
+            } else if (html) {
+                insert = sanitize(html);
             } else if (text) {
                 insert = escapeHtml(text).replace(/\n/g, '<br>');
             }
             if (!insert) return;
+            if (!inSlot) {
+                // A pasted fragment ending in a block element (component
+                // region, table…) leaves the caret trapped inside it — give
+                // typing a paragraph to continue in, like _insertBlock does.
+                // Trailing inline content is no trap; trailing whitespace is
+                // trimmed so Chrome doesn't wrap it into a junk paragraph.
+                const last = new DOMParser().parseFromString(insert, 'text/html').body.lastElementChild;
+                if (last && !FLOW_EXIT_TAGS.test(last.tagName) && !INLINE_TAGS.has(last.tagName)) {
+                    insert = insert.replace(/\s+$/, '') + '<p><br></p>';
+                }
+            }
+            if (!inSlot && isEffectivelyEmpty(this.editable)) {
+                // Empty document: set the content directly — Chrome's
+                // insertHTML insists on splitting the placeholder into a
+                // blank first line around block inserts.
+                // ponytail: this one paste isn't a native undo entry;
+                // recovery in an empty doc is select-all + delete.
+                const probe = new DOMParser().parseFromString(insert, 'text/html').body;
+                const inlineOnly = [...probe.children].every(c => INLINE_TAGS.has(c.tagName));
+                this.editable.innerHTML = inlineOnly ? `<p>${insert}</p>` : insert;
+                this._armBlocks();
+                const r = document.createRange();
+                r.selectNodeContents(this.editable);
+                r.collapse(false);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(r);
+                this._syncSource();
+                this._updateToolbarState();
+                return;
+            }
             // ponytail: execCommand('insertHTML') keeps the native undo stack; range fallback below.
             if (!document.execCommand('insertHTML', false, insert)) {
                 const sel = window.getSelection();
@@ -647,6 +1028,7 @@
                 while (tmp.firstChild) frag.appendChild(tmp.firstChild);
                 range.insertNode(frag);
             }
+            if (!inSlot) this._armBlocks(); // pasted serialized blocks arrive unarmed
             this._syncSource();
             this._updateToolbarState();
         }
@@ -668,6 +1050,24 @@
             sel.removeAllRanges();
             sel.addRange(range);
             return range;
+        }
+
+        _inSlot() {
+            return !!this._slotContext();
+        }
+
+        // The slot under the selection, its owning def, and its content policy.
+        _slotContext() {
+            const sel = window.getSelection();
+            if (!sel.rangeCount) return null;
+            let node = sel.anchorNode;
+            if (node && node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+            if (!node || !this.editable.contains(node)) return null;
+            const slot = node.closest('[data-nds-slot]');
+            if (!slot) return null;
+            const blockEl = slot.closest('[data-nds-block]');
+            const def = blockEl ? BLOCKS.get(blockEl.getAttribute('data-nds-block')) : null;
+            return { slot, def, policy: def ? slotPolicy(def, slot.getAttribute('data-nds-slot')) : 'inline' };
         }
 
         _getAncestorTag(tagName) {
@@ -744,6 +1144,280 @@
             this._updateToolbarState();
         }
 
+        // ---------- Blocks (insert menu + arming) ----------
+
+        _prepInsertMenu() {
+            this._saveSelection();
+            const scroll = this.root.querySelector('[data-nds-editor-insert-dropmenu] .nds-dropmenu-scroll');
+            if (!scroll) return;
+            // Rebuilt on every open so registerBlock() after init shows up
+            // immediately. One row per block — variant blocks insert with
+            // their default and switch via the block's ops afterwards.
+            let rows = '';
+            for (const def of BLOCKS.values()) {
+                rows += `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item"` +
+                    ` data-nds-insert="${escapeHtml(def.name)}">` +
+                    `<i class="hgi hgi-stroke ${escapeHtml(def.icon || 'hgi-add-01')}" aria-hidden="true"></i>` +
+                    `<span class="nds-label">${escapeHtml(def.label)}</span>` +
+                    `</button>`;
+            }
+            scroll.innerHTML = rows;
+        }
+
+        _insertBlock(name, variant) {
+            const def = BLOCKS.get(name);
+            if (!def) { console.warn(`NDS Editor: unknown block "${name}"`); return; }
+            const block = buildBlock(def, sanitizeProps(def, Object.assign({ variant }, def.defaults)), document);
+            // Arming is attributes-only, so it bakes into the insertHTML string
+            // — the insert stays a single clean native undo entry, and redo
+            // restores the block already armed.
+            this._armBlock(block);
+            block.setAttribute('data-nds-new', '');
+
+            this.editable.focus();
+            const sel = window.getSelection();
+            if (!this._restoreSelection()) {
+                const r = document.createRange();
+                r.selectNodeContents(this.editable);
+                r.collapse(false);
+                sel.removeAllRanges();
+                sel.addRange(r);
+            }
+            // Climb to the top-level child so the block never lands inside a <p>.
+            let anchor = sel.getRangeAt(0).startContainer;
+            while (anchor && anchor !== this.editable && anchor.parentNode !== this.editable) anchor = anchor.parentNode;
+            if (anchor && anchor !== this.editable) {
+                const r = document.createRange();
+                r.setStartAfter(anchor);
+                r.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(r);
+            }
+            // insertHTML keeps the undo stack; range fallback below.
+            if (!document.execCommand('insertHTML', false, block.outerHTML + '<p><br></p>')) {
+                const r = sel.getRangeAt(0);
+                const p = document.createElement('p');
+                p.innerHTML = '<br>';
+                r.insertNode(p);
+                r.insertNode(block);
+            }
+            const inserted = this.editable.querySelector('[data-nds-new]');
+            if (inserted) {
+                inserted.removeAttribute('data-nds-new');
+                const slot = inserted.querySelector('[data-nds-slot]');
+                if (slot) {
+                    // Select the seeded placeholder text for type-to-replace.
+                    slot.focus();
+                    const r = document.createRange();
+                    r.selectNodeContents(slot);
+                    sel.removeAllRanges();
+                    sel.addRange(r);
+                }
+            }
+            this._syncSource();
+            this._updateToolbarState();
+        }
+
+        _armBlocks() {
+            this.editable.querySelectorAll('[data-nds-block]').forEach(el => this._armBlock(el));
+        }
+
+        // A fresh line at the end (or the existing trailing empty paragraph),
+        // caret in it. New lines go through execCommand so the native undo
+        // history stays intact — and since trailing empty paragraphs never
+        // reach the form value, caret-escape clicks don't dirty the field.
+        _placeCaretAtEnd() {
+            const last = this.editable.lastElementChild;
+            const sel = window.getSelection();
+            this.editable.focus();
+            const r = document.createRange();
+            if (last && last.tagName === 'P' && !last.textContent.trim()) {
+                r.selectNodeContents(last);
+                r.collapse(false);
+                sel.removeAllRanges();
+                sel.addRange(r);
+                return;
+            }
+            r.selectNodeContents(this.editable);
+            r.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(r);
+            document.execCommand('insertParagraph');
+        }
+
+        // Caret into the paragraph following a block, minting one through
+        // execCommand when the block has no flow sibling.
+        _placeCaretAfter(block) {
+            const sel = window.getSelection();
+            this.editable.focus();
+            const next = block.nextElementSibling;
+            const r = document.createRange();
+            if (next && FLOW_EXIT_TAGS.test(next.tagName)) {
+                r.selectNodeContents(next);
+                r.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(r);
+                return;
+            }
+            r.setStartAfter(block);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+            document.execCommand('insertParagraph');
+        }
+
+        // ---------- Block activation + toolbar controls ----------
+
+        // Two toolbar groups show while a block is active: the authored
+        // [data-nds-editor-block-controls] (universal: move/delete) and the
+        // JS-owned [data-nds-editor-block-ops], (re)built when the block TYPE
+        // changes and hidden for types without ops.
+        _setActiveBlock(block) {
+            if (block === this._activeBlock) return;
+            this._activeBlock = block;
+            const controls = this.toolbar.querySelector('[data-nds-editor-block-controls]');
+            const opsGroup = this.toolbar.querySelector('[data-nds-editor-block-ops]');
+            const name = block ? block.getAttribute('data-nds-block') : null;
+            if (opsGroup && name !== this._activeBlockDef) {
+                this._activeBlockDef = name;
+                opsGroup.innerHTML = '';
+                const ops = name ? BLOCKS.get(name)?.ops : null;
+                for (const [cmd, op] of Object.entries(ops || {})) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = op.destructive
+                        ? 'nds-btn nds-primary nds-destructive nds-md nds-icon-only'
+                        : 'nds-btn nds-neutral nds-md nds-icon-only';
+                    btn.setAttribute('data-block-cmd', cmd);
+                    btn.setAttribute('aria-label', op.label);
+                    btn.innerHTML = `<i class="hgi hgi-stroke ${op.icon}" aria-hidden="true"></i>`;
+                    opsGroup.appendChild(btn);
+                }
+            }
+            if (controls) controls.hidden = !block;
+            if (opsGroup) opsGroup.hidden = !block || !opsGroup.childElementCount;
+            // Stateful ops (e.g. the alert's current status) show as pressed.
+            if (opsGroup && block && name) {
+                const def = BLOCKS.get(name);
+                const hasPressed = def && Object.values(def.ops || {}).some(op => op.pressed);
+                if (hasPressed) {
+                    const raw = def.parse ? def.parse(block) : genericParse(def, block);
+                    for (const btn of opsGroup.children) {
+                        const op = def.ops[btn.dataset.blockCmd];
+                        if (op?.pressed) btn.setAttribute('aria-pressed', raw && op.pressed(raw) ? 'true' : 'false');
+                    }
+                }
+            }
+        }
+
+        _runBlockCommand(cmd) {
+            const block = this._activeBlock;
+            if (!block || !block.isConnected) return;
+            if (NDS.State.has(this.root, 'disabled') || NDS.State.has(this.root, 'readonly')) return;
+            if (cmd === 'move-up' || cmd === 'move-down') {
+                this._moveBlock(block, cmd === 'move-up' ? -1 : 1);
+                return;
+            }
+            if (cmd === 'delete') {
+                // Through execCommand so removal is a native undo entry.
+                this.editable.focus();
+                const sel = window.getSelection();
+                const r = document.createRange();
+                r.setStartBefore(block);
+                r.setEndAfter(block);
+                sel.removeAllRanges();
+                sel.addRange(r);
+                if (!document.execCommand('delete')) block.remove();
+                this._setActiveBlock(null);
+                if (!this.editable.firstElementChild) this.editable.innerHTML = '<p><br></p>';
+                this._syncSource();
+                return;
+            }
+            const def = BLOCKS.get(block.getAttribute('data-nds-block'));
+            const op = def?.ops?.[cmd];
+            if (!op) return;
+            // Ops are data-level: parse current state → transform → re-render.
+            const props = sanitizeProps(def, def.parse ? def.parse(block) : genericParse(def, block));
+            const next = op.run(props, { blockEl: block, lastCell: block._ndsLastCell });
+            if (!next) return;
+            // Remember which slot held the caret — the swap destroys it, and
+            // focus must continue in the equivalent slot of the fresh block.
+            const slotIdx = Math.max(0, [...block.querySelectorAll('[data-nds-slot]')].indexOf(block._ndsLastCell));
+            this._replaceBlock(block, buildBlock(def, sanitizeProps(def, next), document), slotIdx);
+        }
+
+        // Swap a block for a freshly rendered version via execCommand.
+        // ponytail: KNOWN CEILING — Chrome silently drops this replace's undo
+        // entry in real sessions (the isolated primitive undoes fine in every
+        // probe; the poisoning interaction with prior session history is
+        // unpinned). Block ops are self-inverse (add row ↔ remove row), so
+        // recovery is the inverse button. Revisit only if Ctrl+Z here becomes
+        // a real user demand.
+        // Hop the block over its sibling as a DIRECT node move: order changes
+        // only, so nothing is serialized or re-parsed — duplication is
+        // impossible and the caret travels with the block. Not a native undo
+        // entry (the execCommand swap's entry was silently dropped by Chrome
+        // anyway); move-up ↔ move-down are the self-inverse recovery pair.
+        _moveBlock(block, dir) {
+            const sibling = dir < 0 ? block.previousElementSibling : block.nextElementSibling;
+            if (!sibling) return; // already at the edge
+            // Hopping below the trailing caret-escape paragraph would just
+            // mint another one — the block is effectively at the bottom.
+            if (dir > 0 && sibling === this.editable.lastElementChild
+                && sibling.tagName === 'P' && !sibling.textContent.trim()) return;
+
+            if (dir < 0) sibling.before(block);
+            else sibling.after(block);
+            this._setActiveBlock(block);
+            this._syncSource();
+        }
+
+        _replaceBlock(oldEl, newEl, focusSlotIdx = 0) {
+            this._armBlock(newEl);
+            newEl.setAttribute('data-nds-new', '');
+            this.editable.focus();
+            const sel = window.getSelection();
+            const r = document.createRange();
+            r.setStartBefore(oldEl);
+            r.setEndAfter(oldEl);
+            sel.removeAllRanges();
+            sel.addRange(r);
+            if (!document.execCommand('insertHTML', false, newEl.outerHTML)) {
+                oldEl.replaceWith(newEl);
+            }
+            const inserted = this.editable.querySelector('[data-nds-new]');
+            if (inserted) {
+                inserted.removeAttribute('data-nds-new');
+                this._setActiveBlock(inserted);
+                // Focus continuity: insertHTML leaves the caret AFTER the block,
+                // so the next selectionchange tick would deactivate it and hide
+                // the controls mid-flow. Return the caret to the equivalent slot.
+                const slots = inserted.querySelectorAll('[data-nds-slot]');
+                if (slots.length) {
+                    const slot = slots[Math.min(focusSlotIdx, slots.length - 1)];
+                    slot.focus();
+                    const r2 = document.createRange();
+                    r2.selectNodeContents(slot);
+                    r2.collapse(false);
+                    sel.removeAllRanges();
+                    sel.addRange(r2);
+                }
+            }
+            this._syncSource();
+        }
+
+        // Arming is ATTRIBUTES ONLY: the wrapper turns atomic
+        // (contenteditable=false), slots become editable islands. Attribute
+        // writes don't invalidate the native undo stack; node insertions
+        // inside the editable DO (measured) — so blocks carry NO chrome.
+        // Block commands (delete, def ops) live in the toolbar's
+        // block-controls group, shown while a block is active.
+        _armBlock(blockEl) {
+            if (!BLOCKS.has(blockEl.getAttribute('data-nds-block'))) return;
+            blockEl.setAttribute('contenteditable', 'false');
+            blockEl.querySelectorAll('[data-nds-slot]').forEach(slot => slot.setAttribute('contenteditable', 'true'));
+        }
+
         // ---------- Toolbar state ----------
 
         _scheduleToolbarSync() {
@@ -753,6 +1427,9 @@
                 const sel = window.getSelection();
                 if (!sel.rangeCount) return;
                 if (!this.editable.contains(sel.anchorNode)) return;
+                let node = sel.anchorNode;
+                if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+                this._setActiveBlock(node ? node.closest('.nds-editor-block') : null);
                 this._updateToolbarState();
             });
         }
@@ -791,7 +1468,7 @@
         // it. Keep an empty paragraph after any trailing block.
         _ensureTrailingParagraph() {
             const last = this.editable.lastElementChild;
-            if (!last || /^(?:P|H[1-3]|UL|OL)$/.test(last.tagName)) return;
+            if (!last || FLOW_EXIT_TAGS.test(last.tagName)) return;
             const p = document.createElement('p');
             p.innerHTML = '<br>';
             this.editable.appendChild(p);
@@ -804,7 +1481,10 @@
             const next = empty
                 ? ''
                 // ponytail: full sanitize+rebuild per input keeps the value canonical; debounce if profiling ever flags it.
-                : prettyPrintHtml(sanitizeHtml(this.editable.innerHTML));
+                : prettyPrintHtml(sanitizeHtml(this.editable.innerHTML))
+                    // The trailing caret-escape paragraph is an editing
+                    // affordance, not content — it stays out of the value.
+                    .replace(/\n?<p><br><\/p>$/, '');
             if (this.source.value === next) return;
             this.source.value = next;
             // Programmatic .value writes don't fire 'input' — dispatch so NDS.Forms delegation sees the change.
@@ -829,6 +1509,7 @@
             reinit: initializeEditors,
             create: (element) => element.ndsEditor || new NDSEditor(element),
             destroy: (element) => element.ndsEditor?.destroy(),
+            registerBlock,
             _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline
         };
     }
