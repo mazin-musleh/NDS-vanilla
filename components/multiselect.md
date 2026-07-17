@@ -6,7 +6,7 @@ hero_description: A form field for picking multiple options from grouped lists, 
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.4.0"
-last_edit: "15/07/2026 - 3:00 PM Saudi Arabia Time"
+last_edit: "15/07/2026 - 03:00 PM"
 lang: en
 direction: ltr
 ---

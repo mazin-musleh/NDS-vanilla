@@ -21,7 +21,7 @@ breadcrumb: [["Components", "/components"]]     # or mix linked + label: [["Pare
 # breadcrumb_root_url: /       # override root URL
 # sidemenu_mode:               # omit = default slider | top = top dropdown | false = hidden
 # hideFeedback: false          # hide user feedback section (page layout only)
-# last_edit: "04/12/2020 - 4:13 PM Saudi Arabia Time"  # DGA last-modified line at the end of the content (page/post layouts)
+# last_edit: "04/12/2020 - 04:13 PM"  # DGA last-modified line at the end of the content (page/post layouts)
 
 # === Data Overrides ===
 # mainnav: mainnav            # loads _data/mainnav/{value}.yml (default: mainnav)
