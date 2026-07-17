@@ -1510,7 +1510,7 @@
             create: (element) => element.ndsEditor || new NDSEditor(element),
             destroy: (element) => element.ndsEditor?.destroy(),
             registerBlock,
-            _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline
+            _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline, consumed by scripts/editor-fixtures.mjs
         };
     }
 })();
