@@ -67,6 +67,20 @@
         triggerEvents: NDS.triggerEvents,
     };
 
+    // A form-container's OWN field — skips fields living inside a NESTED
+    // form-container (the editor's link-popover URL input precedes the carrier
+    // textarea in DOM order; a multiselect option checkbox belongs to its
+    // check-container, not the wrapper being validated). Groups/feedback keep
+    // the legacy first-match behavior.
+    function ownField(container) {
+        var fields = container.querySelectorAll('input, textarea, select');
+        if (!container.classList.contains('nds-form-container')) return fields[0] || null;
+        for (var i = 0; i < fields.length; i++) {
+            if (fields[i].closest('.nds-form-container') === container) return fields[i];
+        }
+        return null;
+    }
+
     // ==============================================
     // STATUS MANAGEMENT API
     // ==============================================
@@ -130,7 +144,7 @@
                 }
 
                 // Accessibility
-                var input = container.querySelector('input, textarea, select');
+                var input = ownField(container);
                 if (input) {
                     input.setAttribute('aria-invalid', status === 'error' ? 'true' : 'false');
                 }
@@ -162,7 +176,7 @@
 
             NDS.Feedback.dismissAll(container);
 
-            var input = container.querySelector('input, textarea, select');
+            var input = ownField(container);
             if (input) {
                 input.removeAttribute('aria-invalid');
             }
@@ -381,7 +395,7 @@
                 // typing field isn't the carrier, checkValidity would false-fail.
                 if (container.classList.contains('nds-taginput')) return;
 
-                var input = container.querySelector('input, textarea, select');
+                var input = ownField(container);
                 if (!input || input.disabled) return;
 
                 var isInvalid = !input.checkValidity();
