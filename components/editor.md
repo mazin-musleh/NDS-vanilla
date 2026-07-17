@@ -2,7 +2,7 @@
 layout: page
 title: Editor
 hero_title: Editor - National Design System
-hero_description: A rich text field that upgrades a standard textarea into an editing surface with a generated, localized toolbar, converting pasted Word, Google Docs, and web content into clean NDS markup and keeping pasted NDS components intact while editing.
+hero_description: A rich text editor with a WYSIWYG editing surface that upgrades a standard textarea, adding a generated, localized toolbar and converting pasted Word, Google Docs, and web content into clean NDS markup while keeping pasted NDS components intact.
 hero_tags:
   - label: Beta
     style: nds-yellow
@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.4.0"
-last_edit: "17/07/2026 - 11:27 PM"
+last_edit: "18/07/2026 - 01:36 AM"
 ---
 
 <!-- Beta notice -->
@@ -40,7 +40,7 @@ last_edit: "17/07/2026 - 11:27 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Rich Text Editor</h2>
-            <p class="nds-section-description">The markup contract is a standard textarea field wearing one extra class: the editing surface, toolbar, and popovers are generated at load, and the textarea stays the form value</p>
+            <p class="nds-section-description">A rich text editor with a WYSIWYG surface — the markup contract is a standard textarea field wearing one extra class: the editing surface, toolbar, and popovers are generated at load, and the textarea stays the form value</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
