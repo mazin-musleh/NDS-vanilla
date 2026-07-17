@@ -3,12 +3,15 @@ layout: page
 title: Editor
 hero_title: Editor - National Design System
 hero_description: A rich text field that upgrades a standard textarea into an editing surface with a generated, localized toolbar, converting pasted Word, Google Docs, and web content into clean NDS markup and keeping pasted NDS components intact while editing.
+hero_tags:
+  - label: Beta
+    style: nds-yellow
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.4.0"
-last_edit: "17/07/2026 - 08:51 PM"
+last_edit: "17/07/2026 - 11:27 PM"
 ---
 
 <!-- Beta notice -->

@@ -83,8 +83,8 @@ sidemenu_mode: false
                             <span class="nds-label" data-filter="category">{{ comp.category }}</span>
                         </span>
                         {% for tag in comp.tags %}
-                        <span class="nds-tag {% if tag == 'Beta' %}nds-yellow{% else %}nds-gray{% endif %} nds-sm">
-                            <span class="nds-label" data-filter="tech">{{ tag }}</span>
+                        <span class="nds-tag {{ tag.style | default: 'nds-gray' }} nds-sm">
+                            <span class="nds-label" data-filter="tech">{{ tag.name | default: tag }}</span>
                         </span>
                         {% endfor %}
                         {%- assign comp_path = comp.url | split: "#" | first -%}

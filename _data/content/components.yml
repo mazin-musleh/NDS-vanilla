@@ -1,6 +1,7 @@
 # Component catalog for homepage listing
 # Tags (tech):   JS, CSS, API, Data
 # Tags (status): Experimental, New, Beta, Deprecated
+#   Color a status tag via the object form: { name: "Beta", style: "nds-yellow" }
 # Tags (kind):   Add-on (optional bundle, gated by a site.* flag)
 
 # Foundations
@@ -403,7 +404,7 @@
   description: "Rich text field that submits clean NDS markup, converting Word, Google Docs, and web pastes and inserting NDS components as blocks"
   icon: '<i class="hgi hgi-stroke hgi-quill-write-02"></i>'
   category: "Forms"
-  tags: ["JS", "CSS", "API", "Beta"]
+  tags: ["JS", "CSS", "API", { name: "Beta", style: "nds-yellow" }]
   url: "/components/editor.html"
   js: _js/nds-editor.js
   scss: _sass/components/_editor.scss

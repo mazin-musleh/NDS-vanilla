@@ -1,30 +1,20 @@
 {%- assign hero_bg = page.hero_image | default: site.hero_image_sub -%}
 
-{%- assign hero_action_file = page.heroaction | default: "heroaction" -%}
-{%- assign hero_data = site.data.hero[hero_action_file] -%}
-
-{%- if page.hero_tags -%}
-    {%- assign hero_tags = page.hero_tags -%}
-{%- elsif hero_data.tags -%}
-    {%- assign hero_tags = hero_data.tags -%}
-{%- endif -%}
+{%- comment %} Hero tags / actions / float actions come from page front matter — no data-file indirection. The share button floats inline-end by default (icon-only on mobile via nds-minimal); a page overrides with `hero_float_actions` or suppresses it with `hide_share_page: true`. {%- endcomment %}
+{%- assign hero_tags = page.hero_tags -%}
+{%- assign hero_actions = page.hero_actions -%}
 
 {%- if page.hero_float_actions -%}
     {%- assign _raw_float = page.hero_float_actions -%}
-{%- elsif hero_data.float_actions -%}
-    {%- assign _raw_float = hero_data.float_actions -%}
-{%- endif -%}
-{%- if _raw_float.items -%}
-    {%- assign hero_float_actions = _raw_float.items -%}
-    {%- assign hero_float_actions_class = _raw_float.class -%}
+    {%- if _raw_float.items -%}
+        {%- assign hero_float_actions = _raw_float.items -%}
+        {%- assign hero_float_actions_class = _raw_float.class -%}
+    {%- else -%}
+        {%- assign hero_float_actions = _raw_float -%}
+    {%- endif -%}
 {%- else -%}
-    {%- assign hero_float_actions = _raw_float -%}
-{%- endif -%}
-
-{%- if page.hero_actions -%}
-    {%- assign hero_actions = page.hero_actions -%}
-{%- elsif hero_data.actions -%}
-    {%- assign hero_actions = hero_data.actions -%}
+    {%- assign hero_float_actions = "share" | split: "," -%}
+    {%- assign hero_float_actions_class = "nds-minimal" -%}
 {%- endif -%}
 
 {%- assign _share_in_action = false -%}
@@ -164,7 +154,8 @@
                     {%- endif %}
                     {%- endif %}
                 </div>
-                {%- if hero_tags %}
+                {%- comment %} Rating is opt-in per page: set `rating: true` in the page front matter. Deliberately NOT tied to `hero_tags`, so a page's status tags never trigger it. {%- endcomment %}
+                {%- if page.rating %}
                 <div class="nds-dropmenu">
                     <button class="nds-section-rating nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger nds-md" type="button">
                         <div class="nds-rating nds-xs " data-rating="4.5">

@@ -14,7 +14,19 @@ breadcrumb:
 - ["Services List", "/examples/services-list"]
 lang: en
 direction: ltr
-heroaction: heroaction-service
+rating: true
+hero_tags:
+  - label: "ERP"
+    style: "nds-blue"
+  - label: "Most Used"
+    style: "nds-green"
+hero_float_actions:
+  class: nds-wrap
+  items:
+    - label: "Get Started"
+      url: "/university/announcement"
+      style: "nds-primary"
+    - share
 sidemenu_mode: false
 ---
 <section id="serviceTabs" class="nds-content-section nds-sideinfo-section">
