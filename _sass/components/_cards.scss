@@ -635,7 +635,6 @@ html:not([data-nds-loaded]) .nds-card {
 
   :is(.nds-card-title, .nds-card-subtitle, .nds-card-description,
     .nds-card-number, .nds-card-rating-text) {
-    animation: processing 1.5s ease-in-out infinite;
     @include skeleton-bar;
   }
 
@@ -643,7 +642,6 @@ html:not([data-nds-loaded]) .nds-card {
     aspect-ratio: var(--img-ratio, 2/1);
     border-radius: var(--radius-md);
     overflow: hidden;
-    animation: processing 1.5s ease-in-out infinite;
     @include skeleton-fill;
 
     img {
@@ -654,7 +652,6 @@ html:not([data-nds-loaded]) .nds-card {
   :is(.nds-tag, .nds-chip, .nds-btn) {
     border-color: transparent;
     border-radius: var(--nds-skeleton-radius);
-    animation: processing 1.5s ease-in-out infinite;
     @include skeleton-fill;
 
     >* {
@@ -663,7 +660,6 @@ html:not([data-nds-loaded]) .nds-card {
   }
 
   :is(.nds-featured-icon, .nds-avatar) {
-    animation: processing 1.5s ease-in-out infinite;
     @include skeleton-fill;
 
     :is(i, .nds-icon, img) {
@@ -674,7 +670,6 @@ html:not([data-nds-loaded]) .nds-card {
   // Rating renders as one bar (stars hidden, fit-content) like the other slots.
   .nds-rating {
     border-radius: var(--nds-skeleton-radius);
-    animation: processing 1.5s ease-in-out infinite;
     @include skeleton-fill;
 
     .nds-rating-star {

@@ -192,7 +192,6 @@
     .nds-accordion[data-filter-items]:not([data-nds-filter-initialized])) .nds-accordion-item {
 
     .nds-accordion-title {
-        animation: processing 1.5s ease-in-out infinite;
         @include skeleton-bar;
     }
 
@@ -201,7 +200,6 @@
     // would reveal the icon's shape); font glyphs die via the transparent
     // color from skeleton-fill.
     .nds-accordion-btn :is(.nds-icon, i) {
-        animation: processing 1.5s ease-in-out infinite;
         mask: none;
         border-radius: var(--nds-skeleton-radius);
         @include skeleton-fill;

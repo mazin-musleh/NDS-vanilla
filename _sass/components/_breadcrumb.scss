@@ -74,7 +74,6 @@
     .nds-breadcrumb-nav:is(.nds-loading, [data-state='loading'])) {
 
     :is(.nds-breadcrumb>li> :is(a, span), .nds-breadcrumb>li[aria-current="page"]) {
-        animation: processing 1.5s ease-in-out infinite;
         @include skeleton-bar;
     }
 

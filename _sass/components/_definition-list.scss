@@ -245,7 +245,6 @@
 
     :is(dt, .nds-item-title, dd, .nds-item-desc) {
         width: fit-content;
-        animation: processing 1.5s ease-in-out infinite;
         @include skeleton-bar;
     }
 

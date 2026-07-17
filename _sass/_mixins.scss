@@ -391,13 +391,16 @@ $breakpoints-range: (
 // SKELETON MIXINS
 // ==============================================
 
-// Paint any surface (text bar, image, icon) with the static skeleton
-// gradient. color:transparent hides the real glyphs the gradient covers;
-// harmless on image surfaces. Tokens live in _skeleton.scss (crit).
+// Paint any surface (text bar, image, icon) as a pulsing skeleton — it's a
+// loading indicator, so the pulse is part of the deal (the reduced-motion
+// keyframes override in _animations.scss flattens it). color:transparent
+// hides the real glyphs the gradient covers; harmless on image surfaces.
+// Tokens live in _skeleton.scss (crit).
 @mixin skeleton-fill {
   background: var(--nds-skeleton-fill);
   color: transparent !important;
   width: var(--nds-skeleton-width, fit-content);
+  animation: processing 1.5s ease-in-out infinite;
 }
 
 // Paint a text element as a skeleton bar — fill + radius, descendants'

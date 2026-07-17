@@ -721,7 +721,6 @@
 
     .nds-stepper-step :is(.nds-stepper-title, .nds-stepper-description, .nds-stepper-next) {
         width: fit-content;
-        animation: processing 1.5s ease-in-out infinite;
         @include skeleton-bar;
     }
 
