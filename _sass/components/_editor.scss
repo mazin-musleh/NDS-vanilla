@@ -2,7 +2,9 @@
  * NDS Editor Component
  * Rich-text editing surface (contenteditable) mirrored into a hidden textarea
  * form field, with toolbar formatting, link popover, and source view.
- * Wears the .nds-form-container.nds-textarea chrome; JS: _js/nds-editor.js.
+ * Markup contract: a standard .nds-form-container.nds-textarea field wearing
+ * .nds-editor — the editable and toolbar are JS-generated at init around the
+ * field's own textarea (adopt-a-textarea; JS: _js/nds-editor.js).
  * Status: BETA — ships with v1.4.0.
  */
 
@@ -10,10 +12,15 @@
 
 .nds-editor {
   --_min-size: var(--editor-min-size, 12rem);
+  // Growth cap — past it the surface scrolls internally, so the toolbar
+  // stays in reach instead of drifting out of the viewport.
+  --_max-size: var(--editor-max-size, 70vh);
 
   .nds-editor-editable {
     position: relative;
     min-block-size: var(--_min-size);
+    max-block-size: var(--_max-size);
+    overflow-y: auto;
     inline-size: 100%;
     padding: var(--spacing-md);
     border-radius: var(--radius-sm);
@@ -30,10 +37,10 @@
       inset-inline-start: var(--spacing-md);
     }
 
-    :is(h1, h2, h3, p, ul, ol) { margin-block: var(--spacing-sm); }
+    :is(h1, h2, h3, h4, p, ul, ol) { margin-block: var(--spacing-sm); }
     :is(ul, ol) { margin-inline-start: var(--spacing-lg); padding-inline-start: var(--spacing-md); }
-    :is(h1, h2, h3, p, ul, ol):first-child { margin-block-start: 0; }
-    :is(h1, h2, h3, p, ul, ol):last-child { margin-block-end: 0; }
+    :is(h1, h2, h3, h4, p, ul, ol):first-child { margin-block-start: 0; }
+    :is(h1, h2, h3, h4, p, ul, ol):last-child { margin-block-end: 0; }
 
     // Transient <div> Chrome injects during editing — the sanitizer strips it
     // from the form value; keep it visually flush. Classless only: NDS
@@ -41,23 +48,40 @@
     div:not([class]) { margin: 0; }
   }
 
-  .nds-toolbar { --toolbar-margin-block: 0; }
+  // One flex row: bar-start wraps its button groups internally; bar-end
+  // (source toggle) stays beside it instead of dropping to its own row,
+  // bottom-aligned so it hugs the line nearest the editing surface.
+  .nds-toolbar {
+    --toolbar-margin-block: 0;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+  }
 
   // Pressed state for toolbar toggles — aria-pressed is standard ARIA; NDS buttons don't style it natively.
   .nds-toolbar .nds-btn[aria-pressed="true"] { background: var(--form-field-background-darker); }
 
-  // Popover panels (link form, insert list) inside toolbar dropmenus.
+  // Link popover fields — layout only; panel chrome, footer, and the action
+  // row come from the dropmenu's canonical structure.
   .nds-editor-link-form {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
-    padding: var(--spacing-md);
+    gap: var(--spacing-xl);
     min-inline-size: 20rem;
   }
-  .nds-editor-link-actions {
+
+  // Remove picker rows — one destructive full-width row per removable level,
+  // indented by nesting depth (shell first, nested components under it).
+  [data-nds-editor-remove-levels] {
     display: flex;
-    gap: var(--spacing-sm);
-    justify-content: flex-end;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding-inline: var(--spacing-md);
+    margin-block-end: var(--spacing-md);
+
+    .nds-btn {
+      justify-content: flex-start;
+      padding-inline-start: calc(var(--spacing-md) + var(--_remove-depth, 0) * var(--spacing-2xl));
+    }
   }
 
   // Readonly: forms kills pointer events container-wide (its label-toggles-
@@ -97,5 +121,40 @@
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
     min-block-size: var(--_min-size);
+    max-block-size: var(--_max-size);
+  }
+
+  // ==============================================
+  // PRE-INIT SKELETON
+  // ==============================================
+  // Default pre-init state (tabs/tables pattern): the editable and toolbar
+  // are JS-generated from the extras bundle, so until the init stamp lands
+  // the header reserves the toolbar slot with a shimmer bar and the field's
+  // own textarea shimmers as the writing surface. Interaction holds — a
+  // half-alive field must not invite typing.
+  &:not([data-nds-editor-initialized]) {
+    // Box-identical swap: md-button row height + the container gap the real
+    // bar gets. ponytail: one row — a wrapped mobile toolbar lands taller;
+    // reserve a second row here if CLS ever flags it.
+    &:not([data-editor-toolbar="none"]) .nds-form-header::after {
+      content: '';
+      block-size: 32px; // .nds-md --btn-size
+      margin-block-start: var(--spacing-md);
+      --nds-skeleton-width: 100%;
+      @include skeleton-bar;
+    }
+
+    // The not-yet-adopted textarea IS the skeleton surface: the field box
+    // shimmers at the editor's min size and its value/placeholder never paint.
+    .nds-form-control > textarea {
+      min-block-size: var(--_min-size);
+      resize: none;
+      pointer-events: none;
+      --nds-skeleton-width: 100%;
+      @include skeleton-fill;
+      border-radius: var(--nds-skeleton-radius);
+
+      &::placeholder { color: transparent; }
+    }
   }
 }

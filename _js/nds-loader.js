@@ -338,9 +338,9 @@
             init: () => NDS.Autocomplete?.init?.(),
         },
         {
-            // Deferred: markup + CSS paint the surface; JS owns behavior only.
-            // Typing in the pre-bundle gap is native contenteditable and the
-            // first _syncSource() captures it.
+            // Deferred: adopts a standard textarea field at init — editable and
+            // toolbar are generated (data-editor-toolbar); the pre-init skeleton
+            // in _editor.scss holds the field until the stamp lands.
             name: 'Editor',
             selector: '.nds-editor',
             init: () => NDS.Editor?.init?.(),

@@ -1,5 +1,8 @@
-// Scratch: drive editor paste-pipeline fixtures through the real browser sanitize.
-// Run: node scratch-editor-fixtures.mjs  (dev server must be up on :4002)
+// Editor fixtures: drive the paste pipeline, shell guards, and history
+// through the real browser. Runs against components/editor.html (its live
+// demos pull the extras bundle) and injects its own two harness fields
+// (#story, #report) — the playground stays a clean scratch page.
+// Run: node scripts/editor-fixtures.mjs  (dev server must be up on :4002)
 import puppeteer from 'puppeteer-core';
 
 const FIXTURES = [
@@ -234,10 +237,65 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
         ],
     },
     {
-        // With an empty textarea, init used to leave the editable's server DOM raw
-        // and sanitize only into the form value — so what you saw wasn't what you
-        // submitted. The editable must come out canonical on its own.
-        name: 'init-canonicalizes-server-rendered-editable',
+        // Pasted external links pick up the NDS.Link badge treatment before
+        // the value syncs; the tagging round-trips as a kept nds region.
+        name: 'pasted-external-link-tagged',
+        paste: true,
+        html: '<p>راجع <a href="https://external.example/page">الدليل الخارجي</a> للمزيد.</p>',
+        expect: [
+            ['contains', 'nds-external'],
+            ['contains', 'target="_blank"'],
+            ['contains', 'rel="noopener noreferrer"'],
+        ],
+    },
+    {
+        // The one target the editor writes survives sanitize (with the rel
+        // pairing); every other target strips like any junk attribute.
+        name: 'anchor-target-blank-kept-others-stripped',
+        html: '<p><a href="https://a.example" target="_blank">خارجي</a> <a href="https://b.example" target="_top">داخلي</a></p>',
+        expect: [
+            ['contains', 'target="_blank"'],
+            ['contains', 'rel="noopener noreferrer"'],
+            ['not', '_top'],
+        ],
+    },
+    {
+        // An emptied component part survives the value round-trip (the
+        // dead-empty-paragraph sweep exempts trusted regions); generic
+        // empty paragraphs still drop.
+        name: 'emptied-region-part-survives',
+        html: '<div class="nds-alert nds-card"><p class="nds-alert-description"></p></div><p></p>',
+        expect: [
+            ['contains', 'nds-alert-description'],
+            ['count', '<p', 1],
+        ],
+    },
+    {
+        // h4 joined the vocabulary (default heading set is h2-h4; h1 stays a
+        // legal opt-in level); h5+ still unwraps to text.
+        name: 'h4-in-vocabulary-h5-not',
+        html: '<h4>عنوان رابع</h4><h5>خامس</h5>',
+        expect: [
+            ['contains', '<h4>عنوان رابع</h4>'],
+            ['not', '<h5'],
+        ],
+    },
+    {
+        // Toolbar alignment (logical values, incl. legacy Word align= attrs)
+        // survives sanitize; physical left/right junk strips with the rest.
+        name: 'block-alignment-kept-junk-stripped',
+        html: '<p style="text-align: center">وسط</p><p style="text-align: end">نهاية</p><h2 align="center">عنوان</h2><p style="text-align: left; color: red">فقرة</p>',
+        expect: [
+            ['count', 'text-align:', 3],
+            ['contains', 'text-align: end'],
+            ['not', 'left'],
+            ['not', 'color'],
+        ],
+    },
+    {
+        // Hydration canonicalizes what the generated editable DISPLAYS —
+        // the textarea's dirty value must come out clean on the surface.
+        name: 'init-canonicalizes-hydrated-value',
         init: true,
         html: '<div style="color:red" onclick="evil()">مسودة</div><script>alert(1)</script>',
         expect: [
@@ -276,25 +334,41 @@ const browser = await puppeteer.launch({
 });
 try {
     const page = await browser.newPage();
-    await page.goto('http://localhost:4002/NDS-vanilla/playground.html', { waitUntil: 'networkidle2', timeout: 60000 });
+    await page.goto('http://localhost:4002/NDS-vanilla/components/editor.html', { waitUntil: 'networkidle2', timeout: 60000 });
     await page.waitForSelector('.nds-editor[data-nds-editor-initialized]', { timeout: 20000 });
+
+    // Inject the harness fields the fixtures drive by id — self-contained, so
+    // no authored page has to carry them.
+    await page.evaluate(() => {
+        const host = document.createElement('div');
+        host.innerHTML = `
+          <div class="nds-form-container nds-textarea nds-editor">
+            <div class="nds-form-header"><label for="story"><span class="nds-label">القصة</span></label></div>
+            <div class="nds-form-control"><textarea class="nds-textarea" name="story" id="story" placeholder="اكتب هنا"></textarea></div>
+            <div class="nds-form-footer" data-feedback-target hidden></div>
+          </div>
+          <div class="nds-form-container nds-textarea nds-editor" data-editor-toolbar="bold italic underline strike | link | ul ol | source">
+            <div class="nds-form-header"><label for="report"><span class="nds-label">التقرير</span></label></div>
+            <div class="nds-form-control"><textarea class="nds-textarea" name="report" id="report" placeholder="اكتب هنا"></textarea></div>
+            <div class="nds-form-footer" data-feedback-target hidden></div>
+          </div>`;
+        document.body.appendChild(host);
+        host.querySelectorAll('.nds-editor').forEach(el => NDS.Editor.create(el));
+    });
 
     // Fixtures marked paste:true go through the REAL paste path: a synthetic
     // ClipboardEvent on the editable → _onPaste → insertHTML → _syncSource,
     // read back from the form textarea. Others call the sanitize hook directly.
     async function runFixture(f) {
-        // init:true builds the divergent shape — content server-rendered into the
-        // editable, textarea empty — then returns what the editable holds after a
-        // real NDS.Editor.create(). Proves init canonicalizes what it DISPLAYS,
-        // not just what it syncs to the form value.
+        // init:true drives the adopt-a-textarea path — a standard field whose
+        // textarea carries the (dirty) value — then returns what the GENERATED
+        // editable displays after a real NDS.Editor.create(). Proves hydration
+        // canonicalizes what it DISPLAYS, not just what it syncs back.
         if (f.init) return page.evaluate((html) => {
             const host = document.createElement('div');
             host.className = 'nds-form-container nds-textarea nds-editor';
-            host.innerHTML = '<div class="nds-toolbar"></div>'
-                + '<div class="nds-form-control">'
-                + '<div class="nds-editor-editable" contenteditable="true"></div>'
-                + '<textarea class="nds-editor-source"></textarea></div>';
-            host.querySelector('.nds-editor-editable').innerHTML = html;
+            host.innerHTML = '<div class="nds-form-control"><textarea class="nds-textarea"></textarea></div>';
+            host.querySelector('textarea').value = html;
             document.body.appendChild(host);
             NDS.Editor.create(host);
             const out = host.querySelector('.nds-editor-editable').innerHTML;
@@ -441,7 +515,7 @@ try {
     // E2E: the container's focus state follows real focus and drops only on
     // leaving the editor.
     const focusOut = await page.evaluate(() => {
-        const root = document.getElementById('composed').closest('.nds-editor');
+        const root = document.getElementById('report').closest('.nds-editor');
         const editable = root.querySelector('.nds-editor-editable');
         const has = () => (root.getAttribute('data-state') || '').split(/\s+/).includes('focus');
         editable.focus();
@@ -457,6 +531,292 @@ try {
         focusProblems.forEach(pr => console.log(`  ${pr}`));
     } else {
         console.log('PASS focus-state-mirroring-e2e');
+    }
+
+    // E2E: component shells are atomic to boundary deletes — a Backspace/
+    // Delete that would cross a shell edge (from either side) stops dead:
+    // prevented, nothing selected, shell intact. Removal is explicit-select
+    // only; inner text editing stays free.
+    const shellOut = await page.evaluate(async () => {
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+        const setCaret = (node, off) => {
+            const r = document.createRange();
+            r.setStart(node, off);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+        };
+        editable.innerHTML = '<div class="nds-card"><span class="nds-card-title">بطاقة</span></div><p>بعد</p>';
+        editable.focus();
+
+        setCaret(editable.querySelector('p').firstChild, 0);
+        const evb = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evb);
+        const cardIntact = !!editable.querySelector('.nds-card');
+        const boundaryStops = evb.defaultPrevented && sel.isCollapsed;
+
+        const title = editable.querySelector('.nds-card-title').firstChild;
+        setCaret(title, 0);
+        const ev = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(ev);
+        const innerEdgeBlocked = ev.defaultPrevented;
+
+        setCaret(title, 2);
+        const ev2 = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(ev2);
+        const innerEditFree = !ev2.defaultPrevented;
+
+        // The reported alert cases: caret in the EMPTY paragraph after the
+        // shell (element-container caret, not text) + Backspace, and in the
+        // empty paragraph before it (br filler in the way) + Delete.
+        // Whitespace between parts mirrors real pretty-printed pastes — it
+        // survives inside regions and double-click selections drag it along.
+        const ALERT = '<div class="nds-alert nds-card" data-status="success" role="alert">\n  <span class="nds-feedback nds-alert-icon nds-outline"><span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span></span>\n  <div class="nds-alert-content"><div class="nds-alert-text">\n    <span class="nds-alert-title">Success</span>\n    <p class="nds-alert-description">تم بنجاح</p>\n  </div></div>\n</div>';
+        editable.innerHTML = `<p><br></p>${ALERT}<p><br></p>`;
+        setCaret(editable.lastElementChild, 0);
+        const eva = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(eva);
+        const alertStopsFromAfter = eva.defaultPrevented && !!editable.querySelector('.nds-alert') && sel.isCollapsed;
+
+        setCaret(editable.firstElementChild, 0);
+        const evd = new KeyboardEvent('keydown', { key: 'Delete', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evd);
+        const alertStopsFromBefore = evd.defaultPrevented && !!editable.querySelector('.nds-alert') && sel.isCollapsed;
+
+        // Inner PART walls: description start Backspace / end Delete can't
+        // leak into sibling parts; mid-text editing stays free.
+        const desc = editable.querySelector('.nds-alert-description').firstChild;
+        setCaret(desc, 0);
+        const evp1 = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evp1);
+        const partStartBlocked = evp1.defaultPrevented;
+
+        setCaret(desc, desc.textContent.length);
+        const evp2 = new KeyboardEvent('keydown', { key: 'Delete', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evp2);
+        const partEndBlocked = evp2.defaultPrevented;
+
+        setCaret(desc, 2);
+        const evp3 = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evp3);
+        const partEditFree = !evp3.defaultPrevented;
+
+        // Cross-part SELECTION deletes are blocked (title→description would
+        // merge parts); a selection within one part stays a free text edit.
+        const alertTitle = editable.querySelector('.nds-alert-title').firstChild;
+        const r2 = document.createRange();
+        r2.setStart(alertTitle, 0);
+        r2.setEnd(desc, 2);
+        sel.removeAllRanges();
+        sel.addRange(r2);
+        const evx = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evx);
+        const crossPartSelectionBlocked = evx.defaultPrevented;
+
+        const r3 = document.createRange();
+        r3.setStart(desc, 0);
+        r3.setEnd(desc, 3);
+        sel.removeAllRanges();
+        sel.addRange(r3);
+        const evs = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evs);
+        const samePartSelectionFree = !evs.defaultPrevented;
+
+        // Full-part selection with the browser's over-reaching end boundary
+        // (endContainer = the wrapper, past the part) is still a same-part
+        // text edit — free; a drag spanning the whole shell from generic
+        // content on both sides stays the explicit-removal path — free.
+        const descP = editable.querySelector('.nds-alert-description');
+        const r4 = document.createRange();
+        r4.setStart(desc, 0);
+        r4.setEndAfter(descP);
+        sel.removeAllRanges();
+        sel.addRange(r4);
+        const evf = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evf);
+        const fullPartSelectionFree = !evf.defaultPrevented;
+
+        const r5 = document.createRange();
+        r5.setStart(editable.firstElementChild, 0);
+        r5.setEnd(editable.lastElementChild, 0);
+        sel.removeAllRanges();
+        sel.addRange(r5);
+        const evw = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evw);
+        const wholeShellDragFree = !evw.defaultPrevented;
+
+        // Double-click word selection: the trailing whitespace it drags along
+        // (the inter-part text node after the title span) must stay inert —
+        // same-part edit, free.
+        const wsAfterTitle = editable.querySelector('.nds-alert-title').nextSibling;
+        const r6 = document.createRange();
+        r6.setStart(alertTitle, 0);
+        r6.setEnd(wsAfterTitle, 1);
+        sel.removeAllRanges();
+        sel.addRange(r6);
+        const evdc = new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true, cancelable: true });
+        editable.dispatchEvent(evdc);
+        const wordSelectionFree = !evdc.defaultPrevented;
+
+        // Enter inside a part becomes a <br> line break — no block split, no
+        // duplicated part, caret stays inside.
+        setCaret(desc, 2);
+        const eve = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+        editable.dispatchEvent(eve);
+        const descEl = editable.querySelectorAll('.nds-alert-description');
+        const enterKeptPart = eve.defaultPrevented
+            && descEl.length === 1
+            && descEl[0].innerHTML.includes('<br>');
+
+        // Toolbar remove: caret-gated (disabled outside a shell, enabled
+        // inside); the destructive trigger opens a level-picker popover —
+        // the shell survives until a level row is clicked.
+        const removeBtn = root.querySelector('[data-cmd="remove"]');
+        const removeMenu = root.querySelector('[data-nds-editor-remove-dropmenu] .nds-dropmenu-menu');
+        const raf = () => new Promise(requestAnimationFrame);
+        setCaret(editable.firstElementChild, 0);
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        const removeDisabledOutside = removeBtn.disabled;
+        setCaret(desc, 1);
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        const removeEnabledInside = !removeBtn.disabled;
+
+        // Level picker: caret inside a nested component (tag chip in the
+        // description) lists both levels, innermost first; structural parts
+        // never list.
+        const descPEl = editable.querySelector('.nds-alert-description');
+        descPEl.innerHTML = 'تم <span class="nds-tag"><span class="nds-label">وسم</span></span> بنجاح';
+        setCaret(descPEl.querySelector('.nds-tag .nds-label').firstChild, 1);
+        removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        let rows = removeMenu.querySelectorAll('[data-nds-editor-remove-level]');
+        const nestedLevels = rows.length === 2
+            && rows[0].textContent.includes('nds-alert')
+            && rows[1].textContent.includes('nds-tag');
+
+        // Removing the inner (indented) level keeps the shell.
+        rows[1].click();
+        const innerLevelRemoved = !editable.querySelector('.nds-tag') && !!editable.querySelector('.nds-alert');
+
+        // Single level from plain part text; the shell survives the trigger
+        // click and dies on its row. Re-query: the removal's history
+        // neutralization re-parses the content, detaching old references.
+        setCaret(editable.querySelector('.nds-alert-description').firstChild, 1);
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        removeBtn.click();
+        await raf();
+        const removeConfirmGate = !!editable.querySelector('.nds-alert');
+        rows = removeMenu.querySelectorAll('[data-nds-editor-remove-level]');
+        const removeLevelNamed = rows.length === 1 && rows[0].textContent.includes('nds-alert');
+        rows[0].click();
+        const removeDeletesShell = !editable.querySelector('.nds-alert');
+
+        // Ctrl+Z right after removal restores the component via the editor's
+        // single-slot restore.
+        editable.focus();
+        editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true, bubbles: true, cancelable: true }));
+        const removeUndoRestores = !!editable.querySelector('.nds-alert');
+
+        // Unified editor history: remove a nested tag, type, then walk back —
+        // first undo lifts the typing, second restores the tag; redo re-runs
+        // the removal. The shell survives every step.
+        editable.innerHTML = '<div class="nds-alert nds-card"><p class="nds-alert-description">قبل <span class="nds-tag"><span class="nds-label">وسم</span></span> بعد</p></div><p>نص</p>';
+        root.ndsEditor._syncSource(); // snapshot the setup (direct innerHTML bypasses tracking)
+        setCaret(editable.querySelector('.nds-tag .nds-label').firstChild, 1);
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        const tagRow = [...removeMenu.querySelectorAll('[data-nds-editor-remove-level]')].find(b => b.textContent.includes('nds-tag'));
+        tagRow.click();
+        const histTagRemoved = !editable.querySelector('.nds-tag');
+        editable.focus();
+        document.execCommand('insertText', false, 'xyz');
+        const histTyped = editable.textContent.includes('xyz');
+        const undoKey = (key) => editable.dispatchEvent(new KeyboardEvent('keydown', { key, ctrlKey: true, bubbles: true, cancelable: true }));
+        undoKey('z');
+        const histTypingUndone = !editable.textContent.includes('xyz') && !editable.querySelector('.nds-tag');
+        undoKey('z');
+        const removalHistorySafe = histTagRemoved && histTyped && histTypingUndone
+            && !!editable.querySelector('.nds-alert');
+        const removalChainRestore = !!editable.querySelector('.nds-tag') && !!editable.querySelector('.nds-alert');
+        undoKey('y');
+        const removalRedoWorks = !editable.querySelector('.nds-tag') && !!editable.querySelector('.nds-alert');
+
+        // Selection OUTSIDE the editor: the gate disables and the picker
+        // yields no levels — page chrome (nds-content-layout…) must never
+        // list as removable.
+        const outsideText = document.querySelector('.nds-section-title').firstChild;
+        setCaret(outsideText, 0);
+        document.dispatchEvent(new Event('selectionchange'));
+        await raf(); await raf();
+        removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        const outsideSelectionSafe = removeBtn.disabled
+            && removeMenu.querySelectorAll('[data-nds-editor-remove-level]').length === 0;
+
+        return { cardIntact, boundaryStops, innerEdgeBlocked, innerEditFree, alertStopsFromAfter, alertStopsFromBefore, partStartBlocked, partEndBlocked, partEditFree, crossPartSelectionBlocked, samePartSelectionFree, fullPartSelectionFree, wholeShellDragFree, wordSelectionFree, enterKeptPart, removeDisabledOutside, removeEnabledInside, nestedLevels, innerLevelRemoved, removeConfirmGate, removeLevelNamed, removeDeletesShell, removeUndoRestores, removalHistorySafe, removalChainRestore, removalRedoWorks, outsideSelectionSafe };
+    });
+    const shellProblems = Object.entries(shellOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (shellProblems.length) {
+        failures++;
+        console.log('FAIL shell-delete-guard-e2e');
+        shellProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS shell-delete-guard-e2e');
+    }
+
+    // E2E: link popover Tab order skips the hidden Unlink — from Cancel, Tab
+    // lands on Confirm (the dropmenu's focus walk must ignore [hidden] items).
+    const linkTabOut = await page.evaluate(async () => {
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        editable.innerHTML = '<p>نص</p>';
+        editable.focus();
+        const sel = getSelection();
+        const r = document.createRange();
+        r.setStart(editable.querySelector('p').firstChild, 1);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        const linkBtn = root.querySelector('[data-cmd="link"]');
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await new Promise(requestAnimationFrame);
+        const menu = root.querySelector('[data-nds-editor-link-dropmenu] .nds-dropmenu-menu');
+        const cancel = menu.querySelector('[data-nds-editor-link-cancel]');
+        const confirm = menu.querySelector('[data-nds-editor-link-confirm]');
+        const unlinkHidden = menu.querySelector('[data-nds-editor-link-unlink]').hidden;
+        cancel.focus();
+        cancel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
+        const skipsHiddenUnlink = document.activeElement === confirm;
+
+        // Confirm an external link: the inserted anchor is canon (nds-link)
+        // and badge-tagged (nds-external + target), in DOM and value alike.
+        menu.querySelector('[data-nds-editor-link-text]').value = 'External guide';
+        menu.querySelector('[data-nds-editor-link-url]').value = 'https://external.example/guide';
+        menu.querySelector('[data-nds-editor-link-external]').checked = true;
+        menu.querySelector('[data-nds-editor-link-colored]').checked = true;
+        confirm.click();
+        const a = editable.querySelector('a');
+        const insertedLinkCanon = !!a
+            && a.classList.contains('nds-link')
+            && a.classList.contains('nds-primary')
+            && a.classList.contains('nds-external')
+            && a.getAttribute('target') === '_blank'
+            && root.querySelector('.nds-editor-source').value.includes('nds-primary');
+        return { unlinkHidden, skipsHiddenUnlink, insertedLinkCanon };
+    });
+    const linkTabProblems = Object.entries(linkTabOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (linkTabProblems.length) {
+        failures++;
+        console.log('FAIL link-popover-tab-e2e');
+        linkTabProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS link-popover-tab-e2e');
     }
 
     console.log(failures ? `\n${failures} fixture(s) failed` : '\nAll fixtures passed');
