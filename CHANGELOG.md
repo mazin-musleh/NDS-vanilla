@@ -6,26 +6,62 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-07-18
+
 ### Added
+- Editor (Beta) — new rich-text component: a standard NDS textarea upgraded into a contenteditable editing surface with a generated, localized toolbar. Pastes from Word, Google Docs, and the web convert to clean NDS markup, and pasted NDS components stay intact while editing. Ships as beta. See `components/editor.md`.
+- Tag Input — new component: free-text tags committed as removable chips while typing, posted natively as an array, with optional autocomplete assist/strict modes. See `components/taginput.md`.
+- Toolbar — new unified controls bar above tables, lists, and grids (search, filter, sort, column visibility, pagination). See `components/toolbar.md`.
+- Selection count — new component showing the number of selected rows/cards, paired with pagination's new x-of-y record slots.
+- Last edit — new component rendering the DGA "last modified" line from a page's `last_edit`.
+- Multiselect — options populated from JSON, apply-mode staging (staged or instant commit), and removable chips.
+- Date Picker — custom date formats, month/year grid modes, save-to-commit, min/max bounds, and a form-validation bridge.
+- Alert — pausable toast timer (hover to hold), corner positions, and copy actions.
+- Tables — column-visibility menu with hidden columns persisted across reloads, per-column alignment, and a count badge on the filter/columns triggers.
 - Tables — `data-align="center|start|end"` on a `<th>` aligns that whole column, header and body, including rows that arrive later from sorting, filtering, or pagination. See the [Tables doc page](https://mazin-musleh.github.io/NDS-vanilla/components/tables.html).
+- Filter — opt-in per-group accordion with an applied-count tag, and a loading spinner on the trigger during form submit.
+- Dropmenu — `data-anchor="start|end"` edge alignment with automatic viewport flip.
+- Cards — `nds-card-price` product pricing built on the numbers utility.
+- Forms — contenteditable elements receive form-control styling (backs the editor surface).
+- Hidden — new CSS-only visibility utility: the native `hidden` attribute now wins over any `display` value, and `data-hidden="mobile|tablet|…"` hides an element within exact viewport ranges. See `utilities/hidden.md`.
+- Mainnav — `--nds-brand-width` knob on the brand link.
+- Side info — background fill and opt-in `nds-sticky-sm/md` pinning.
+- Chips / Tags — `.nds-center` list modifier.
+- Featured Icons — `nds-subtle` style (flush glyph, no background or padding).
+- Versioning — release-anchored version tracking: `since` / `updated` / `last_edit` doc front matter, an index version filter, and "Added in vX" / "Updated in vX" hero tags.
+- Critical CSS — `critical_inline: 'minimal'` mode: a self-releasing one-line body hold.
 - Icons — documentation page covering both icon layers, a click-to-copy catalog of every inline UI icon, and the license terms. See `components/icons.md`.
 - Icons — logical arrows `nds-hgi-arrow-{next,prev}-{01,02}`: they follow reading direction, so one class means forward (or back) in both Arabic and English.
+- Icons — cart UI icon; `.nds-icon-checkmark` custom thicker glyph.
 - License — third-party notice for the bundled Hugeicons free set (MIT), previously shipped with no attribution.
 
 ### Changed
+- Flex — promoted to a layout primitive; the default cross-axis alignment changed from `center` to `stretch` (matches the CSS default; override per-container with `--align: center`). `nds-reverse` now also reverses a bare `.nds-flex` (`row-reverse`), not just `.nds-row` / `.nds-col`.
+- Forms — `.nds-form` decoupled from the layout flex chain; interactive-state styling and validation scope to a container's own control, so nested containers validate independently.
+- Layout — `main` uses `overflow-x: clip` instead of `auto` (auto broke sticky descendants).
+- Tables — a single init sentinel, and pagination binds to the `<tbody>` so rows added later still paginate.
 - Icons — the literal arrow classes (`nds-hgi-arrow-{left,right}-{01,02}` and the HGI font equivalents) no longer mirror on LTR pages. They now point where their name says, in both directions; direction-aware behavior moved to the new `next`/`prev` classes.
 - Icons — the filled status symbols are token-only (`--nds-icon-{alert,cancel,checkmark-solid,disc,help,info}`). Their `nds-hgi-solid-*` classes are removed: each is one layer of a mark the feedback icon composes over a disc, not a standalone icon.
 - Icons — the theme-toggle glyph is now `--nds-icon-paint-board`, exposed as `nds-hgi-paint-board`; the chrome alias `.nds-theme` is renamed `.nds-icon-theme`.
 - Icons — `nds-hgi-sun-01` removed; the dark-mode toggle uses `nds-hgi-sun-03`, the same sun the weather icons use.
 
 ### Fixed
+- Dropmenu — skip `[hidden]` items in the keyboard focus walk; flip on the real menu height and never cover the trigger; park the menu before revealing it.
+- Forms — an unbounded number input can no longer step past its initial value; native select OS-popup options align with the closed value; `.nds-form-action` stays clickable in readonly; taginput validates at the wrapper, not the typing field.
+- Button — loading state keeps its default background.
+- Multiselect / Editor — the instance is registered in `init()` so `create()` returns a destroyable instance with hooks.
+- Alert — wider icon→content gap.
+- Cards — flattened subtitle color; oncolor border shadow.
+- Mainnav — brand logo inverts in dark mode.
+- Pagination — `nds-md` control sizing below 360px.
+- Feedback Icons — inline-flex so the glyph flows inline.
+- Digital stamp — z-index so an open stamp covers the content beneath.
 - Icons — the theme-toggle glyph hardcoded its fill (`#161616`) instead of `currentColor`, so it ignored `color` and stayed near-black in dark mode.
 
 ### Migration
 
-- Arrows — markup that used `nds-hgi-arrow-left-01` (or `-02`) as a **next/forward** affordance must switch to `nds-hgi-arrow-next-01`, and `arrow-right-*` used as **previous/back** to `nds-hgi-arrow-prev-*`. Left as-is, the arrow now points literally left or right and no longer mirrors in English. Arrows that always meant a literal direction need no change.
-- Status symbols — replace `nds-hgi-solid-{alert,cancel,checkmark,disc,help,info}` with the Feedback Icons component, which composes the symbol over its disc.
-- Theme icon — replace `.nds-theme` with `.nds-icon-theme`.
+- Multiselect — now a UI layer over a native checkbox group, so the checkboxes *are* the form value. Migrate old markup: add `name="…[]"` to each `<input class="nds-check">`, use `checked` for pre-selection, and remove the hidden CSV carrier inputs (`<input type="hidden" name="…[]">`).
+- Flex — `.nds-flex`'s default cross-axis alignment changed from `center` to `stretch`. Containers that relied on the implicit centering now stretch their children; set `--align: center` to restore the previous look.
 
 ## [1.3.0] - 2026-07-04
 
@@ -271,7 +307,10 @@ Replace your bundled `nds-main.min.css` and `nds-main.min.js` with the v1.0.1 ve
 - Five project-specific Claude Code skills for contributors.
 - MIT license, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policies.
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.3.0...v1.4.0
+[1.3.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.5...v1.1.0
 [1.0.5]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.0.3...v1.0.4
