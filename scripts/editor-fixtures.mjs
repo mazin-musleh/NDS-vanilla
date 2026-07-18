@@ -80,13 +80,99 @@ const FIXTURES = [
         name: 'evil-payloads-neutralized',
         html: '<img src="x" onerror="alert(1)"><a href="javascript:alert(1)">اضغط</a><script>alert(2)</script><p style="position:absolute;inset:0">نص</p><svg onload="alert(3)"></svg>',
         expect: [
-            ['not', '<img'],
+            ['contains', '<img src="x">'], // scheme-less src is a legal relative URL; the handler is what dies
             ['not', 'javascript:'],
             ['not', '<script'],
             ['not', 'onerror'],
             ['not', 'onload'],
             ['not', 'position'],
             ['contains', '<p>نص</p>'],
+        ],
+    },
+    {
+        name: 'img-safe-src-kept-junk-stripped',
+        html: '<p>صورة <img src="https://example.com/a.png" alt="وصف" width="600" class="junk" loading="lazy" onerror="x()"> ضمن النص</p>',
+        expect: [
+            ['contains', '<img src="https://example.com/a.png" alt="وصف" width="600">'],
+            ['contains', '<p>'],
+            ['not', 'junk'],
+            ['not', 'loading'],
+            ['not', 'onerror'],
+        ],
+    },
+    {
+        // Only NUMERIC dims survive; percent/keyword junk goes.
+        name: 'img-non-numeric-dims-stripped',
+        html: '<img src="https://example.com/a.png" width="50%" height="auto">',
+        expect: [
+            ['contains', '<img src="https://example.com/a.png">'],
+            ['not', 'width'],
+            ['not', 'height'],
+        ],
+    },
+    {
+        // The reported case: canonical doc-example markup with a bare relative
+        // src (no ./ prefix) — the image must survive the region scrub.
+        name: 'nds-avatar-relative-src-kept',
+        html: '<div class="nds-avatar nds-lg nds-image-border"> <img src="path/to/avatar.jpg" alt="User Avatar"> </div>',
+        expect: [
+            ['contains', 'nds-avatar'],
+            ['contains', 'nds-image-border'],
+            ['contains', 'src="path/to/avatar.jpg"'],
+            ['contains', 'alt="User Avatar"'],
+        ],
+    },
+    {
+        // Relative trust must not open scheme smuggling: tab/newline inside
+        // and whitespace around a URL are what browsers strip before
+        // resolving — the scheme test sees the normalized form.
+        name: 'url-scheme-smuggling-rejected',
+        html: '<a href="jav' + String.fromCharCode(9) + 'ascript:alert(1)">رابط</a>'
+            + '<a href="  javascript:alert(2)">آخر</a>'
+            + '<img src="jav' + String.fromCharCode(10) + 'ascript:x">'
+            + '<a href="details.html">صفحة</a>',
+        expect: [
+            ['not', 'ascript:'],
+            ['not', 'javascript'],
+            ['not', '<img'],
+            ['contains', '<a href="details.html"'],
+            ['contains', 'رابط'],
+        ],
+    },
+    {
+        // A bare void tag pasted as TEXT is markup, not literal text — the
+        // raw-HTML heuristic must not demand a closing tag.
+        name: 'bare-img-tag-pasted-as-text',
+        paste: true,
+        plainOnly: true,
+        html: '<img src="data:image/png;base64,iVBORw0KGgo=" alt="لقطة">',
+        expect: [
+            ['contains', 'src="data:image/png;base64,iVBORw0KGgo="'],
+            ['not', '&lt;img'],
+        ],
+    },
+    {
+        name: 'img-data-image-kept',
+        html: '<img src="data:image/png;base64,iVBORw0KGgo=" alt="">',
+        expect: [['contains', 'src="data:image/png;base64,iVBORw0KGgo="']],
+    },
+    {
+        name: 'img-unsafe-src-dropped',
+        html: '<p>قبل</p><img src="data:text/html;base64,PHNjcmlwdD4="><img src="file:///C:/clip_image001.png"><p>بعد</p>',
+        expect: [
+            ['not', '<img'],
+            ['contains', '<p>قبل</p>'],
+            ['contains', '<p>بعد</p>'],
+        ],
+    },
+    {
+        name: 'figure-degrades-to-img+caption-paragraph',
+        html: '<figure><img src="https://example.com/i.jpg" alt="صورة"><figcaption>تعليق الصورة</figcaption></figure>',
+        expect: [
+            ['contains', '<img src="https://example.com/i.jpg" alt="صورة">'],
+            ['contains', '<p>تعليق الصورة</p>'],
+            ['not', '<figure'],
+            ['not', '<figcaption'],
         ],
     },
     {
@@ -215,12 +301,17 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
         // to a region — so its contents filter against NDS_TAGS (which has IMG)
         // instead of ALLOWED_TAGS (which doesn't). Same <img> at top level is
         // stripped; see evil-payloads-neutralized.
-        name: 'img-in-plain-table-stripped',
-        html: '<table><tbody><tr><td><img src="https://example.com/x.png" alt="صورة">خلية</td></tr></tbody></table>',
+        // Images joined the plain vocabulary (1.4.x): a converted table keeps
+        // a safe-src image, region-scrubbed; unsafe srcs still die whole.
+        name: 'img-in-plain-table-kept-scrubbed',
+        html: '<table><tbody><tr><td><img src="https://example.com/x.png" alt="صورة" width="80" onerror="x()">خلية</td><td><img src="file:///bad.png">أخرى</td></tr></tbody></table>',
         expect: [
             ['contains', 'class="nds-table"'],
-            ['contains', 'خلية'],
-            ['not', '<img'],
+            ['contains', 'src="https://example.com/x.png"'],
+            ['contains', 'alt="صورة"'],
+            ['contains', 'width="80"'],
+            ['not', 'onerror'],
+            ['count', '<img', 1],
         ],
     },
     {
@@ -355,7 +446,7 @@ try {
     await page.evaluate(() => {
         const host = document.createElement('div');
         host.innerHTML = `
-          <div class="nds-form-container nds-textarea nds-editor">
+          <div class="nds-form-container nds-textarea nds-editor" data-editor-image-embed="true">
             <div class="nds-form-header"><label for="story"><span class="nds-label">القصة</span></label></div>
             <div class="nds-form-control"><textarea class="nds-textarea" name="story" id="story" placeholder="اكتب هنا"></textarea></div>
             <div class="nds-form-footer" data-feedback-target hidden></div>
@@ -687,7 +778,7 @@ try {
         // inside); the destructive trigger opens a level-picker popover —
         // the shell survives until a level row is clicked.
         const removeBtn = root.querySelector('[data-cmd="remove"]');
-        const removeMenu = root.querySelector('[data-nds-editor-remove-dropmenu] .nds-dropmenu-menu');
+        const removeMenu = root.querySelector('[data-editor-remove-dropmenu] .nds-dropmenu-menu');
         const raf = () => new Promise(requestAnimationFrame);
         setCaret(editable.firstElementChild, 0);
         document.dispatchEvent(new Event('selectionchange'));
@@ -705,7 +796,7 @@ try {
         descPEl.innerHTML = 'تم <span class="nds-tag"><span class="nds-label">وسم</span></span> بنجاح';
         setCaret(descPEl.querySelector('.nds-tag .nds-label').firstChild, 1);
         removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
-        let rows = removeMenu.querySelectorAll('[data-nds-editor-remove-level]');
+        let rows = removeMenu.querySelectorAll('[data-editor-remove-level]');
         const nestedLevels = rows.length === 2
             && rows[0].textContent.includes('nds-alert')
             && rows[1].textContent.includes('nds-tag');
@@ -724,7 +815,7 @@ try {
         removeBtn.click();
         await raf();
         const removeConfirmGate = !!editable.querySelector('.nds-alert');
-        rows = removeMenu.querySelectorAll('[data-nds-editor-remove-level]');
+        rows = removeMenu.querySelectorAll('[data-editor-remove-level]');
         const removeLevelNamed = rows.length === 1 && rows[0].textContent.includes('nds-alert');
         rows[0].click();
         const removeDeletesShell = !editable.querySelector('.nds-alert');
@@ -744,7 +835,7 @@ try {
         document.dispatchEvent(new Event('selectionchange'));
         await raf(); await raf();
         removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
-        const tagRow = [...removeMenu.querySelectorAll('[data-nds-editor-remove-level]')].find(b => b.textContent.includes('nds-tag'));
+        const tagRow = [...removeMenu.querySelectorAll('[data-editor-remove-level]')].find(b => b.textContent.includes('nds-tag'));
         tagRow.click();
         const histTagRemoved = !editable.querySelector('.nds-tag');
         editable.focus();
@@ -769,7 +860,7 @@ try {
         await raf(); await raf();
         removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
         const outsideSelectionSafe = removeBtn.disabled
-            && removeMenu.querySelectorAll('[data-nds-editor-remove-level]').length === 0;
+            && removeMenu.querySelectorAll('[data-editor-remove-level]').length === 0;
 
         return { cardIntact, boundaryStops, innerEdgeBlocked, innerEditFree, alertStopsFromAfter, alertStopsFromBefore, partStartBlocked, partEndBlocked, partEditFree, crossPartSelectionBlocked, samePartSelectionFree, fullPartSelectionFree, wholeShellDragFree, wordSelectionFree, enterKeptPart, removeDisabledOutside, removeEnabledInside, nestedLevels, innerLevelRemoved, removeConfirmGate, removeLevelNamed, removeDeletesShell, removeUndoRestores, removalHistorySafe, removalChainRestore, removalRedoWorks, outsideSelectionSafe };
     });
@@ -790,8 +881,8 @@ try {
         const root = document.getElementById('story').closest('.nds-editor');
         const editable = root.querySelector('.nds-editor-editable');
         const removeBtn = root.querySelector('[data-cmd="remove"]');
-        const removeMenu = root.querySelector('[data-nds-editor-remove-dropmenu] .nds-dropmenu-menu');
-        const levels = root.querySelector('[data-nds-editor-remove-levels]');
+        const removeMenu = root.querySelector('[data-editor-remove-dropmenu] .nds-dropmenu-menu');
+        const levels = root.querySelector('[data-editor-remove-levels]');
         const raf = () => new Promise(requestAnimationFrame);
         const sel = getSelection();
         window.__cnofXss = undefined;
@@ -813,7 +904,7 @@ try {
         await raf(); await raf();
         removeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
 
-        const rows = removeMenu.querySelectorAll('[data-nds-editor-remove-level]');
+        const rows = removeMenu.querySelectorAll('[data-editor-remove-level]');
         const label = rows.length === 1 ? rows[0].textContent : '';
         return {
             oneLevel: rows.length === 1,
@@ -850,20 +941,20 @@ try {
         linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
         linkBtn.click();
         await new Promise(requestAnimationFrame);
-        const menu = root.querySelector('[data-nds-editor-link-dropmenu] .nds-dropmenu-menu');
-        const cancel = menu.querySelector('[data-nds-editor-link-cancel]');
-        const confirm = menu.querySelector('[data-nds-editor-link-confirm]');
-        const unlinkHidden = menu.querySelector('[data-nds-editor-link-unlink]').hidden;
+        const menu = root.querySelector('[data-editor-link-dropmenu] .nds-dropmenu-menu');
+        const cancel = menu.querySelector('[data-editor-link-cancel]');
+        const confirm = menu.querySelector('[data-editor-link-confirm]');
+        const unlinkHidden = menu.querySelector('[data-editor-link-unlink]').hidden;
         cancel.focus();
         cancel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
         const skipsHiddenUnlink = document.activeElement === confirm;
 
         // Confirm an external link: the inserted anchor is canon (nds-link)
         // and badge-tagged (nds-external + target), in DOM and value alike.
-        menu.querySelector('[data-nds-editor-link-text]').value = 'External guide';
-        menu.querySelector('[data-nds-editor-link-url]').value = 'https://external.example/guide';
-        menu.querySelector('[data-nds-editor-link-external]').checked = true;
-        menu.querySelector('[data-nds-editor-link-colored]').checked = true;
+        menu.querySelector('[data-editor-link-text]').value = 'External guide';
+        menu.querySelector('[data-editor-link-url]').value = 'https://external.example/guide';
+        menu.querySelector('[data-editor-link-external]').checked = true;
+        menu.querySelector('[data-editor-link-colored]').checked = true;
         confirm.click();
         const a = editable.querySelector('a');
         const insertedLinkCanon = !!a
@@ -881,6 +972,267 @@ try {
         linkTabProblems.forEach(pr => console.log(`  ${pr}`));
     } else {
         console.log('PASS link-popover-tab-e2e');
+    }
+
+    // E2E: image popover — insert by URL, upload a file (synthetic File
+    // through the real change→FileReader→URL-field path), and paste a
+    // clipboard image FILE (no text flavor) straight into the editable.
+    const imageOut = await page.evaluate(async () => {
+        const waitFor = async (fn) => {
+            for (let i = 0; i < 40; i++) {
+                if (fn()) return true;
+                await new Promise(r => setTimeout(r, 50));
+            }
+            return false;
+        };
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const source = root.querySelector('.nds-editor-source');
+        const setCaret = () => {
+            editable.innerHTML = '<p>نص</p>';
+            editable.focus();
+            const sel = getSelection();
+            const r = document.createRange();
+            r.setStart(editable.querySelector('p').firstChild, 1);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+        };
+
+        // 1 — insert by direct URL.
+        setCaret();
+        const imgBtn = root.querySelector('[data-cmd="image"]');
+        imgBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        imgBtn.click();
+        await new Promise(requestAnimationFrame);
+        const menu = root.querySelector('[data-editor-image-dropmenu] .nds-dropmenu-menu');
+        menu.querySelector('[data-editor-image-url]').value = 'https://example.com/pic.png';
+        menu.querySelector('[data-editor-image-alt]').value = 'وصف الصورة';
+        menu.querySelector('[data-editor-image-width]').value = '320';
+        menu.querySelector('[data-editor-image-height]').value = '200';
+        menu.querySelector('[data-editor-image-confirm]').click();
+        const urlImg = editable.querySelector('img');
+        const urlInsert = !!urlImg
+            && urlImg.getAttribute('src') === 'https://example.com/pic.png'
+            && urlImg.getAttribute('alt') === 'وصف الصورة'
+            && urlImg.getAttribute('width') === '320'
+            && urlImg.getAttribute('height') === '200'
+            && source.value.includes('https://example.com/pic.png')
+            && source.value.includes('width="320"');
+
+        // 2 — upload path: synthetic file rides change → FileReader → URL field.
+        setCaret();
+        imgBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        imgBtn.click();
+        await new Promise(requestAnimationFrame);
+        const fileInput = menu.querySelector('[data-editor-image-file]');
+        const dt = new DataTransfer();
+        dt.items.add(new File([new Uint8Array([137, 80, 78, 71])], 'صورة-مرفوعة.png', { type: 'image/png' }));
+        fileInput.files = dt.files;
+        fileInput.dispatchEvent(new Event('change'));
+        const urlField = menu.querySelector('[data-editor-image-url]');
+        const uploadRead = await waitFor(() => urlField.value.startsWith('data:image/png'));
+        const altSeeded = menu.querySelector('[data-editor-image-alt]').value === 'صورة-مرفوعة';
+        menu.querySelector('[data-editor-image-confirm]').click();
+        const uploadInsert = !!editable.querySelector('img[src^="data:image/png"]')
+            && source.value.includes('data:image/png;base64');
+
+        // 3 — paste a clipboard image file (screenshot shape: files only).
+        editable.innerHTML = '<p><br></p>';
+        editable.focus();
+        const sel = getSelection();
+        const r = document.createRange();
+        r.selectNodeContents(editable.firstElementChild);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        const pasteDt = new DataTransfer();
+        pasteDt.items.add(new File([new Uint8Array([137, 80, 78, 71])], 'screenshot.png', { type: 'image/png' }));
+        editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: pasteDt, bubbles: true, cancelable: true }));
+        const pasteInsert = await waitFor(() =>
+            !!editable.querySelector('img[src^="data:image/png"]')
+            && source.value.includes('data:image/png;base64'));
+
+        // 4 — clicking an image selects it whole (Chrome only sets a caret
+        // beside it): popover prefills for edit-in-place, and the remove
+        // picker can target the image's region (the avatar report).
+        editable.innerHTML = '<p>قبل</p><div class="nds-avatar nds-lg nds-image-border"><img src="/NDS-vanilla/assets/img/avatar1.webp" alt="صورة المستخدم"></div><p>بعد</p>';
+        const avatarImg = editable.querySelector('.nds-avatar img');
+        avatarImg.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        await new Promise(requestAnimationFrame);
+        await new Promise(requestAnimationFrame);
+        const sel2 = getSelection();
+        const clickSelects = sel2.rangeCount === 1 && !sel2.isCollapsed
+            && sel2.getRangeAt(0).startContainer === avatarImg.parentElement;
+        imgBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        imgBtn.click();
+        await new Promise(requestAnimationFrame);
+        const prefills = menu.querySelector('[data-editor-image-url]').value === '/NDS-vanilla/assets/img/avatar1.webp'
+            && menu.querySelector('[data-editor-image-alt]').value === 'صورة المستخدم';
+        menu.querySelector('[data-editor-image-cancel]').click();
+        await new Promise(requestAnimationFrame);
+        const rmBtn = root.querySelector('[data-cmd="remove"]');
+        const removeEnabled = !rmBtn.disabled;
+        rmBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        rmBtn.click();
+        await new Promise(requestAnimationFrame);
+        const level = root.querySelector('[data-editor-remove-level]');
+        const removeListsAvatar = !!level && level.textContent.includes('nds-avatar');
+        if (level) level.click();
+        await new Promise(r => setTimeout(r, 200));
+        const avatarRemoved = !editable.querySelector('.nds-avatar')
+            && !source.value.includes('nds-avatar');
+
+        // 5 — embed mode still enforces the size cap on screenshot paste
+        // (container's live-read NDS.Upload config; generated default 2MB).
+        editable.innerHTML = '<p><br></p>';
+        editable.focus();
+        const bigDt = new DataTransfer();
+        bigDt.items.add(new File([new Uint8Array(3 * 1024 * 1024)], 'big.png', { type: 'image/png' }));
+        editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: bigDt, bubbles: true, cancelable: true }));
+        await new Promise(r => setTimeout(r, 400));
+        const oversizePasteBlocked = !editable.querySelector('img')
+            && root.getAttribute('data-status') === 'warning';
+
+        return { urlInsert, uploadRead, altSeeded, uploadInsert, pasteInsert, clickSelects, prefills, removeEnabled, removeListsAvatar, avatarRemoved, oversizePasteBlocked };
+    });
+    const imageProblems = Object.entries(imageOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (imageProblems.length) {
+        failures++;
+        console.log('FAIL image-popover-e2e');
+        imageProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS image-popover-e2e');
+    }
+
+    // E2E: server-upload mode — the consumer stamps NDS.Upload's own attrs on
+    // the generated container; the URL field takes the server's {url} response
+    // and no base64 enters the value. The POST is intercepted in-flight.
+    await page.setRequestInterception(true);
+    const onFakeUpload = (req) => {
+        if (req.url().includes('/fake-upload')) {
+            req.respond({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: 'https://cdn.example.com/uploaded-42.png' }) });
+        } else req.continue();
+    };
+    page.on('request', onFakeUpload);
+    const serverOut = await page.evaluate(async () => {
+        const waitFor = async (fn) => {
+            for (let i = 0; i < 40; i++) {
+                if (fn()) return true;
+                await new Promise(r => setTimeout(r, 50));
+            }
+            return false;
+        };
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const source = root.querySelector('.nds-editor-source');
+        editable.innerHTML = '<p>نص</p>';
+        editable.focus();
+        const sel = getSelection();
+        const r = document.createRange();
+        r.setStart(editable.querySelector('p').firstChild, 1);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        const imgBtn = root.querySelector('[data-cmd="image"]');
+        imgBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        imgBtn.click();
+        await new Promise(requestAnimationFrame);
+        const menu = root.querySelector('[data-editor-image-dropmenu] .nds-dropmenu-menu');
+        const up = menu.querySelector('[data-editor-image-upload]');
+        // The doc page's showcase script hijacks beforeUpload into a fake
+        // slow simulation — stop it at the container so the REAL XHR runs,
+        // matching a consumer page (which doesn't load nds-showcase.js).
+        up.addEventListener('nds:upload:beforeUpload', (e) => e.stopPropagation());
+        up.dataset.uploadUrl = '/NDS-vanilla/fake-upload';
+        up.dataset.autoUpload = 'true';
+        const fileInput = menu.querySelector('[data-editor-image-file]');
+        const dt = new DataTransfer();
+        dt.items.add(new File([new Uint8Array([137, 80, 78, 71])], 'photo.png', { type: 'image/png' }));
+        fileInput.files = dt.files;
+        fileInput.dispatchEvent(new Event('change'));
+        const urlField = menu.querySelector('[data-editor-image-url]');
+        const serverUrlArrives = await waitFor(() => urlField.value === 'https://cdn.example.com/uploaded-42.png');
+        const chipComplete = await waitFor(() => !!menu.querySelector('.nds-file-item[data-status="success"]'));
+        menu.querySelector('[data-editor-image-confirm]').click();
+        const inserted = !!editable.querySelector('img[src="https://cdn.example.com/uploaded-42.png"]')
+            && source.value.includes('https://cdn.example.com/uploaded-42.png')
+            && !source.value.includes('data:image');
+        delete up.dataset.uploadUrl;
+        delete up.dataset.autoUpload;
+        return { serverUrlArrives, chipComplete, inserted };
+    });
+    page.off('request', onFakeUpload);
+    await page.setRequestInterception(false);
+    const serverProblems = Object.entries(serverOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (serverProblems.length) {
+        failures++;
+        console.log('FAIL image-server-upload-e2e');
+        serverProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS image-server-upload-e2e');
+    }
+
+    // E2E: default image policy — URL-only popover (no upload affordance, no
+    // base64): paste of an image file is blocked with the field's native
+    // forms feedback, data: URLs get an inline field error, and
+    // setImageUpload() turns the affordance on.
+    const policyOut = await page.evaluate(async () => {
+        const host = document.createElement('div');
+        host.innerHTML = `
+          <div class="nds-form-container nds-textarea nds-editor">
+            <div class="nds-form-header"><label for="plainpolicy"><span class="nds-label">حقل</span></label></div>
+            <div class="nds-form-control"><textarea class="nds-textarea" id="plainpolicy"></textarea></div>
+            <div class="nds-form-footer" data-feedback-target hidden></div>
+          </div>`;
+        document.body.appendChild(host);
+        const root = host.querySelector('.nds-editor');
+        const inst = NDS.Editor.create(root);
+        const editable = root.querySelector('.nds-editor-editable');
+        editable.focus();
+        const imgBtn = root.querySelector('[data-cmd="image"]');
+        imgBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        imgBtn.click();
+        await new Promise(requestAnimationFrame);
+        const menu = root.querySelector('[data-editor-image-dropmenu] .nds-dropmenu-menu');
+        const up = menu.querySelector('[data-editor-image-upload]');
+        const uploadHidden = up.style.display === 'none'
+            && menu.querySelector('[data-editor-image-or]').style.display === 'none';
+        const urlInput = menu.querySelector('[data-editor-image-url]');
+        urlInput.value = 'data:image/png;base64,iVBORw==';
+        menu.querySelector('[data-editor-image-confirm]').click();
+        const fieldError = urlInput.closest('.nds-form-container').getAttribute('data-status') === 'error'
+            && !editable.querySelector('img');
+        const confirmBlocked = menu.querySelector('[data-editor-image-confirm]').disabled;
+        await new Promise(r => setTimeout(r, 200)); // outlive the dropmenu's 100ms item auto-close
+        const staysOpenOnError = !menu.hidden;
+        urlInput.value = 'https://example.com/ok.png';
+        urlInput.dispatchEvent(new Event('input', { bubbles: true }));
+        const confirmReEnabled = !menu.querySelector('[data-editor-image-confirm]').disabled
+            && !urlInput.closest('.nds-form-container').hasAttribute('data-status');
+        menu.querySelector('[data-editor-image-cancel]').click();
+        await new Promise(r => setTimeout(r, 250));
+        const dt = new DataTransfer();
+        dt.items.add(new File([new Uint8Array([137, 80, 78, 71])], 's.png', { type: 'image/png' }));
+        editable.focus();
+        editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+        await new Promise(r => setTimeout(r, 400));
+        const pasteBlocked = !editable.querySelector('img')
+            && root.getAttribute('data-status') === 'warning'
+            && !!root.querySelector('.nds-form-footer .nds-feedback');
+        inst.setImageUpload({ uploadUrl: '/api/images' });
+        const apiShows = up.style.display !== 'none';
+        NDS.Editor.destroy(root);
+        host.remove();
+        return { uploadHidden, fieldError, confirmBlocked, staysOpenOnError, confirmReEnabled, pasteBlocked, apiShows };
+    });
+    const policyProblems = Object.entries(policyOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (policyProblems.length) {
+        failures++;
+        console.log('FAIL image-default-policy-e2e');
+        policyProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS image-default-policy-e2e');
     }
 
     console.log(failures ? `\n${failures} fixture(s) failed` : '\nAll fixtures passed');

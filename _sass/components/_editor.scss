@@ -46,6 +46,14 @@
     // from the form value; keep it visually flush. Classless only: NDS
     // component divs pasted as content keep their own margins.
     div:not([class]) { margin: 0; }
+
+    // Pasted/inserted content images — never wider than the surface; the
+    // pointer signals click-to-select over the surrounding text I-beam.
+    img { max-inline-size: 100%; block-size: auto; cursor: pointer; }
+
+    // Click-to-select paints the native selection wash over the image —
+    // tone it to a brand tint: feedback stays, the heavy blue goes.
+    img::selection { background: color-mix(in srgb, var(--background-primary) 25%, transparent); }
   }
 
   // One flex row: bar-start wraps its button groups internally; bar-end
@@ -60,18 +68,35 @@
   // Pressed state for toolbar toggles — aria-pressed is standard ARIA; NDS buttons don't style it natively.
   .nds-toolbar .nds-btn[aria-pressed="true"] { background: var(--form-field-background-darker); }
 
-  // Link popover fields — layout only; panel chrome, footer, and the action
-  // row come from the dropmenu's canonical structure.
-  .nds-editor-link-form {
+  // Popover width via the dropmenu's own knob (the filter/date-picker
+  // pattern); min() keeps it inside small viewports.
+  [data-editor-link-dropmenu],
+  [data-editor-image-dropmenu] {
+    // Viewport padding per side (16px on mobile, where the min() bites).
+    --dropmenu-min-width: min(22rem, calc(100vw - var(--nds-viewport-padding) * 2));
+  }
+
+  // Link/image popover fields — layout only; panel chrome, footer, and the
+  // action row come from the dropmenu's canonical structure.
+  .nds-editor-link-form,
+  .nds-editor-image-form {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xl);
-    min-inline-size: 20rem;
+  }
+
+  // The column's own gap already spaces the section dividers.
+  .nds-editor-image-form { --divider: 0; }
+
+  // Width/height share one row inside the image popover column.
+  .nds-editor-image-dims {
+    display: flex;
+    gap: var(--spacing-md);
   }
 
   // Remove picker rows — one destructive full-width row per removable level,
   // indented by nesting depth (shell first, nested components under it).
-  [data-nds-editor-remove-levels] {
+  [data-editor-remove-levels] {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);

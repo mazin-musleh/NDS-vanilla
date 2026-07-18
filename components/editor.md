@@ -10,8 +10,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.4.0"
-last_edit: "18/07/2026 - 01:36 AM"
+updated: "1.4.x"
+last_edit: "19/07/2026 - 02:45 AM"
 ---
 
 <!-- Beta notice -->
@@ -262,6 +262,83 @@ last_edit: "18/07/2026 - 01:36 AM"
     </div>
 </section>
 
+<!-- Images -->
+<section id="editorImages" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Images</h2>
+            <p class="nds-section-description">The image popover inserts by URL, and pasted content keeps its images with safe sources, alt text, and numeric dimensions. Click an image to select it: the popover then edits it in place, the link popover wraps it in a link, and the remove button targets its component. By default no base64 enters the value — uploads appear only when a server endpoint is configured, and embedding is a per-field opt-in</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Embed opt-in: try uploading, pasting a screenshot, or clicking the image</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-form-container nds-textarea nds-editor" data-editor-image-embed="true">
+                                <div class="nds-form-header">
+                                    <label for="editor-images-field"><span class="nds-label">Illustrated article</span></label>
+                                </div>
+                                <div class="nds-form-control">
+                                    <textarea class="nds-textarea" name="editor-images" id="editor-images-field" placeholder="Write here">
+<p>Click the image to select it, then use the toolbar's image button to edit it in place.</p>
+<img src="{{ 'assets/img/riyadhcenter3s.webp' | relative_url }}" alt="Riyadh center" width="480">
+<p>Paste a screenshot here, upload a file, or insert one from a link.</p>
+                                    </textarea>
+                                </div>
+                                <div class="nds-form-footer" data-feedback-target hidden></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                        aria-controls="panel-editor-images-1" id="tab-editor-images-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-editor-images-1"
+                                    aria-labelledby="tab-editor-images-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                    <code class="lang-html code">
+&lt;div class="nds-form-container nds-textarea nds-editor" data-editor-image-embed="true"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="editor-images-field"&gt;&lt;span class="nds-label"&gt;Illustrated article&lt;/span&gt;&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;textarea class="nds-textarea" name="editor-images" id="editor-images-field" placeholder="Write here"&gt;
+&lt;p&gt;Click the image to select it, then use the toolbar's image button to edit it in place.&lt;/p&gt;
+&lt;img src="assets/img/riyadhcenter3s.webp" alt="Riyadh center" width="480"&gt;
+&lt;p&gt;Paste a screenshot here, upload a file, or insert one from a link.&lt;/p&gt;
+    &lt;/textarea&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
+                                    </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- States -->
 <section id="editorStates" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
@@ -435,6 +512,13 @@ last_edit: "18/07/2026 - 01:36 AM"
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-image-add-01"></i>
+                        <span class="nds-label">Image Insertion</span>
+                    </span>
+                    <p class="nds-item-desc">Insert from a link, upload to your server through the embedded NDS Upload, or opt in to data:image embedding. Click any image to edit it in place, link it, or remove it.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-text-check"></i>
                         <span class="nds-label">Native Form Integration</span>
                     </span>
@@ -492,6 +576,8 @@ last_edit: "18/07/2026 - 01:36 AM"
                     <li>The default heading commands are <code class="nds-inline-code lang-html">h2 h3 h4</code> because the page already owns its h1. Add the <code class="nds-inline-code lang-html">h1</code> token only for fields that author complete pages</li>
                     <li>Add <code class="nds-inline-code lang-html">required</code> to the textarea (and <code class="nds-inline-code lang-html">data-required</code> on the container) for mandatory fields: validation works natively because the value is a real form field</li>
                     <li>Links marked "Open in new tab" get <code class="nds-inline-code lang-html">target="_blank"</code> with <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code> paired automatically, and only that target survives sanitization</li>
+                    <li><strong>Wire image uploads to your server</strong> with <code class="nds-inline-code lang-js">setImageUpload()</code>: files POST through the embedded <a class="nds-color" href="{{ 'components/upload' | relative_url }}">NDS Upload</a> (progress, retry, and error feedback included) and the returned URL is inserted. Without an endpoint the popover is URL-only, and pasted screenshots show a field notice instead of silently embedding</li>
+                    <li>Reserve <code class="nds-inline-code lang-html">data-editor-image-embed="true"</code> for fields without an upload backend: base64 bloats the stored value (~37% over the file size) and embedded images can't be cached or served optimized</li>
                     <li>To remove a pasted component, use the toolbar's remove button (it lists the component levels at the caret) or select the whole component and delete. Boundary deletes never break a component apart</li>
                     <li>Cap tall fields with <code class="nds-inline-code lang-html">--editor-max-size</code>: past the cap the surface scrolls internally and the toolbar stays in reach</li>
                     <li>The whole component is <strong>beta</strong>: expect refinements while it hardens through real-project use</li>
@@ -523,6 +609,7 @@ last_edit: "18/07/2026 - 01:36 AM"
                         <tr><td><code class="nds-inline-code lang-html">bold</code> / <code class="nds-inline-code lang-html">italic</code> / <code class="nds-inline-code lang-html">underline</code> / <code class="nds-inline-code lang-html">strike</code></td><td>Inline formatting toggles</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">clear</code></td><td>Remove inline formatting from the selection</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">link</code></td><td>Link popover: link text, URL, an "Open in new tab" option, and unlink for existing links</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">image</code></td><td>Image popover: insert from a link with alt text and width/height, edit a clicked image in place. An upload section appears when a server endpoint is configured or embedding is opted in</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">h2</code> / <code class="nds-inline-code lang-html">h3</code> / <code class="nds-inline-code lang-html">h4</code></td><td>Heading toggles for the current block</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">h1</code></td><td>Available but not in the default set: add it only for full-page authoring fields</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">align-start</code> / <code class="nds-inline-code lang-html">align-center</code> / <code class="nds-inline-code lang-html">align-end</code> / <code class="nds-inline-code lang-html">align-justify</code></td><td>Logical block alignment that follows text direction</td></tr>
@@ -535,11 +622,12 @@ last_edit: "18/07/2026 - 01:36 AM"
 
             <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>
-                <p>Configuration rides the native textarea attributes: <code class="nds-inline-code lang-html">placeholder</code>, <code class="nds-inline-code lang-html">required</code>, <code class="nds-inline-code lang-html">readonly</code>, and <code class="nds-inline-code lang-html">disabled</code> all carry over to the editing surface. The editor adds one attribute of its own:</p>
+                <p>Configuration rides the native textarea attributes: <code class="nds-inline-code lang-html">placeholder</code>, <code class="nds-inline-code lang-html">required</code>, <code class="nds-inline-code lang-html">readonly</code>, and <code class="nds-inline-code lang-html">disabled</code> all carry over to the editing surface. The editor adds these attributes of its own:</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-editor-toolbar</code></td><td>Set on the container to pick the toolbar commands. See the Toolbar Commands table for tokens and the grouping syntax</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-editor-image-embed="true"</code></td><td>Opt-in: uploaded and pasted image files embed into the value as <code class="nds-inline-code lang-html">data:image</code> URLs, capped at 2MB per image by default (raise via <code class="nds-inline-code lang-js">setImageUpload</code>). For demos and back-office fields without an upload backend — real deployments should configure a server upload instead (see the JavaScript API), since embedded base64 bloats the stored value and can't be cached or optimized</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Managed on the container at runtime: <code class="nds-inline-code lang-html">readonly</code> and <code class="nds-inline-code lang-html">disabled</code> toggled through <code class="nds-inline-code lang-js">NDS.State</code>. Initial state comes from the textarea's native attributes</td></tr>
                     </tbody>
                 </table>
@@ -584,6 +672,27 @@ el.addEventListener('nds:editor:ready', (e) =&gt; {
 const value = textarea.value;
 textarea.addEventListener('input', onEdit);    // fires on every edit
 textarea.addEventListener('change', onCommit); // fires on blur when changed
+
+// ── Image upload configuration ───────────────────────
+// The popover's upload section is a standard NDS Upload; setImageUpload
+// forwards ANY of its config keys to that container (they map 1:1 to the
+// data-* attributes on the File Upload page). With an endpoint configured
+// the upload section appears, files POST one per request ("file" field),
+// and the response's { url } (or a bare URL body) is inserted — no base64.
+el.addEventListener('nds:editor:ready', (e) =&gt; {
+    e.detail.instance.setImageUpload({
+        uploadUrl: '/api/images',            // server endpoint (data-upload-url)
+        autoUpload: true,                    // upload on selection (data-auto-upload)
+        maxFileSize: 5 * 1024 * 1024,        // bytes; generated default: 2MB (data-max-file-size)
+        allowedTypes: 'jpg,png,webp',        // generated default: jpg,jpeg,png,gif,webp,svg (data-allowed-types)
+        allowedMimeTypes: 'image/*',         // optional second check (data-allowed-mime-types)
+    });
+});
+// The same 2MB default cap also gates screenshot paste in embed mode —
+// raising maxFileSize raises both. Size/type violations render in the file
+// chip; paste violations use the field's feedback message.
+// NDS Upload events (nds:upload:success, nds:upload:error…) bubble from the
+// container for custom handling — see the File Upload component page.
 
 // ── Runtime states ───────────────────────────────────
 // Initial state comes from the textarea's readonly / disabled attributes.
