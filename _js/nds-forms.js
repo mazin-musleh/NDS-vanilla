@@ -125,9 +125,16 @@
                             target = foundTarget;
                         }
                     } else {
-                        var markedTarget = container.querySelector('[data-feedback-target]');
-                        if (markedTarget) {
-                            target = markedTarget;
+                        // Own the marked target — skip footers of NESTED
+                        // form-containers (the editor's popover fields sit in
+                        // the toolbar BEFORE the field's own footer; same
+                        // rationale as ownField above).
+                        var marked = container.querySelectorAll('[data-feedback-target]');
+                        for (var t = 0; t < marked.length; t++) {
+                            if (marked[t].closest('.nds-form-container, .nds-form-group, .nds-feedback') === container) {
+                                target = marked[t];
+                                break;
+                            }
                         }
                     }
 
