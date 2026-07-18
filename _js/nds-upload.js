@@ -33,7 +33,8 @@
             mimeNotAllowed: 'File type not allowed',
             maxFilesReached: 'Maximum number of files reached',
             networkError: 'Network error',
-            uploadCancelled: 'Upload cancelled'
+            uploadCancelled: 'Upload cancelled',
+            uploadFailed: 'Upload failed'
         },
         ar: {
             sizeExceeds: 'حجم الملف يتجاوز',
@@ -41,7 +42,8 @@
             mimeNotAllowed: 'نوع الملف غير مسموح',
             maxFilesReached: 'تم الوصول للحد الأقصى لعدد الملفات',
             networkError: 'خطأ في الشبكة',
-            uploadCancelled: 'تم إلغاء الرفع'
+            uploadCancelled: 'تم إلغاء الرفع',
+            uploadFailed: 'فشل الرفع'
         }
     };
 
@@ -564,11 +566,16 @@
                     });
                 } else {
                     fileData.status = 'error';
-                    fileData.error = xhr.statusText;
+                    // Chip message: server's JSON {error} convention, else
+                    // statusText (empty over HTTP/2), else localized generic.
+                    let serverMsg = '';
+                    try { serverMsg = JSON.parse(xhr.response)?.error || ''; } catch { /* non-JSON body */ }
+                    fileData.error = serverMsg || xhr.statusText || msg('uploadFailed');
                     this._dispatchEvent('nds:upload:error', {
                         fileData: this._toPublic(fileData),
-                        error: xhr.statusText,
-                        status: xhr.status
+                        error: fileData.error,
+                        status: xhr.status,
+                        response: xhr.response
                     });
                 }
                 this._updateFileItem(fileData.id);

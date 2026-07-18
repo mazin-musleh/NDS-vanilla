@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.4.x"
+last_edit: "19/07/2026 - 12:55 AM"
 ---
 
 <!-- File Upload -->
@@ -355,6 +355,7 @@ uploadButton.addEventListener('click', () =&gt; {
                 <ul>
                     <li>Files never ride a native form submit. The component clears the native <code class="nds-inline-code lang-html">&lt;input&gt;</code> after selection, so always send them with <code class="nds-inline-code lang-js">getAllFiles()</code> or <code class="nds-inline-code lang-html">data-upload-url</code>.</li>
                     <li><code class="nds-inline-code lang-html">data-upload-url</code> receives <strong>one file per request</strong>, not all of them at once, so the endpoint should accept a single <code class="nds-inline-code lang-js">file</code> field per POST.</li>
+                    <li>On a failed upload, the file row shows the server's message when the response body is JSON with an <code class="nds-inline-code lang-js">error</code> field (e.g. <code class="nds-inline-code lang-js">{"error": "Quota exceeded"}</code>), falling back to the HTTP status text, then a localized generic message. Override manually anytime with <code class="nds-inline-code lang-js">setFileStatus(fileId, 'error', { error })</code>.</li>
                     <li>The input's <code class="nds-inline-code lang-html">accept</code> attribute only hints the OS picker and is advisory. Just set <code class="nds-inline-code lang-html">data-allowed-types</code> (which actually enforces extensions) and the component fills <code class="nds-inline-code lang-html">accept</code> from it automatically, so you never hand-write the picker filter or risk it drifting from what is enforced.</li>
                 </ul>
             </div>
@@ -420,7 +421,7 @@ uploadButton.addEventListener('click', () =&gt; {
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:beforeUpload</code> (cancelable)</td><td><code class="nds-inline-code lang-js">{ fileData, formData, xhr }</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:progress</code></td><td><code class="nds-inline-code lang-js">{ fileData, progress }</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:success</code></td><td><code class="nds-inline-code lang-js">{ fileData, response }</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-js">nds:upload:error</code></td><td><code class="nds-inline-code lang-js">{ fileData, error, status? }</code>: <code class="nds-inline-code lang-js">status</code> (HTTP status code) is present for HTTP errors only; network-level errors omit it</td></tr>
+                        <tr><td><code class="nds-inline-code lang-js">nds:upload:error</code></td><td><code class="nds-inline-code lang-js">{ fileData, error, status?, response? }</code>: <code class="nds-inline-code lang-js">status</code> (HTTP status code) and <code class="nds-inline-code lang-js">response</code> (raw response body) are present for HTTP errors only; network-level errors omit them</td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:removed</code></td><td><code class="nds-inline-code lang-js">{ fileData, fileId }</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-js">nds:upload:maxFilesReached</code></td><td><code class="nds-inline-code lang-js">{ maxFiles, currentCount }</code></td></tr>
                     </tbody>
