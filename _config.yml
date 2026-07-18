@@ -1,5 +1,5 @@
 title: "NDS - Vanilla National Design System"
-version: 1.4.0     # build stamp: {next-version}-dev during development; finalized in the release commit (renumber freely if scope changes, e.g. 2.0.0)
+version: 1.4.x-dev     # build stamp: released line + .x-dev during development (never the guessed next number); finalized in the release commit, which also sweeps the 1.4.x since/updated doc stamps to the real number
 latest_release: 1.4.0  # last published release (tag + GitHub Release artifact)
 description: "An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
 

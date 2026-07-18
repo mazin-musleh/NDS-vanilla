@@ -18,8 +18,9 @@
         {%- else %}
         {%- comment %} Dev preview: NDS.Tooltip's declarative content-trigger mode
             (the pill itself is the trigger; balloon is generated and portaled) {%- endcomment %}
-        <span class="nds-tag nds-xs nds-topbar-version nds-tooltip" data-hidden="mobile"
-            data-tooltip-message="Documentation preview: ahead of current release v{{ site.latest_release }}">
+        <span class="nds-tag nds-xs nds-topbar-version nds-tooltip nds-term" data-hidden="mobile"
+            data-tooltip-message="Documentation preview: ahead of current release v{{ site.latest_release }}"
+            data-tooltip-hover="500">
             <span class="nds-label">v{{ site.version }}</span>
         </span>
         {%- endif %}
