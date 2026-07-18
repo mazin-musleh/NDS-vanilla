@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.3.0"
-last_edit: "04/07/2026 - 09:53 PM"
+last_edit: "18/07/2026 - 03:05 AM"
 ---
 
 <!-- Page Setup -->
@@ -51,14 +51,14 @@ last_edit: "04/07/2026 - 09:53 PM"
   &lt;title&gt;Page Title&lt;/title&gt;
 
   &lt;!-- Critical CSS — render-blocking, so first paint has the real tokens (no flash). --&gt;
-  &lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver=1.3.0"&gt;
+  &lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"&gt;
 
   &lt;!-- Main CSS — deferred; loads the icon sheets once it applies. --&gt;
-  &lt;link rel="preload" href="assets/css/nds-main.min.css?ver=1.3.0" as="style"
+  &lt;link rel="preload" href="assets/css/nds-main.min.css?ver={{ site.latest_release }}" as="style"
         onload="this.onload=null;this.rel='stylesheet';window.loadDeferredAssets?loadDeferredAssets():window.__ndsDeferredPending=true"&gt;
-  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-main.min.css?ver=1.3.0"&gt;&lt;/noscript&gt;
-  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-icons.min.css?ver=1.3.0"&gt;&lt;/noscript&gt;
-  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/hgi-rounded-stroke-min.css?ver=1.3.0"&gt;&lt;/noscript&gt;
+  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-main.min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
+  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-icons.min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
+  &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/hgi-rounded-stroke-min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
 
   &lt;link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg"&gt;
 
@@ -67,7 +67,7 @@ last_edit: "04/07/2026 - 09:53 PM"
 &lt;/head&gt;
 
 &lt;!-- ...page content... then just before &lt;/body&gt;: --&gt;
-&lt;script defer src="assets/js/nds-main.min.js?ver=1.3.0"&gt;&lt;/script&gt;
+&lt;script defer src="assets/js/nds-main.min.js?ver={{ site.latest_release }}"&gt;&lt;/script&gt;
                             </code>
                         </div>
                     </div>
@@ -95,13 +95,13 @@ last_edit: "04/07/2026 - 09:53 PM"
 function loadDeferredAssets() {
   var icons = document.createElement('link');
   icons.rel = 'stylesheet';
-  icons.href = 'assets/css/nds-icons.min.css?ver=1.3.0';
+  icons.href = 'assets/css/nds-icons.min.css?ver={{ site.latest_release }}';
   icons.onload = function () { document.documentElement.setAttribute('data-nds-icons-loaded', ''); };
   document.head.appendChild(icons);
 
   var hgi = document.createElement('link');
   hgi.rel = 'stylesheet';
-  hgi.href = 'assets/css/hgi-rounded-stroke-min.css?ver=1.3.0';
+  hgi.href = 'assets/css/hgi-rounded-stroke-min.css?ver={{ site.latest_release }}';
   document.head.appendChild(hgi);
 }
 if (window.__ndsDeferredPending) loadDeferredAssets();
@@ -160,9 +160,9 @@ i.hgi-stroke { opacity: 0; }
                 </div>
                 <div class="nds-expandable-content">
                     <code class="lang-html code">
-&lt;link rel="preload" href="assets/css/nds.critical.min.css?ver=1.3.0" as="style"
+&lt;link rel="preload" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}" as="style"
       onload="this.onload=null;this.rel='stylesheet'"&gt;
-&lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver=1.3.0"&gt;&lt;/noscript&gt;
+&lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds.critical.min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
                     </code>
                 </div>
             </div>
