@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.x"
-last_edit: "19/07/2026 - 12:55 AM"
+last_edit: "19/07/2026 - 03:40 PM"
 ---
 
 <!-- File Upload -->
@@ -486,6 +486,7 @@ upload.setFileProgress(fileId, 75);     // Auto-transitions to 'processing' at 1
 upload.setDisabled(true);               // Disable input, drag-and-drop, and buttons
 upload.refreshUI();                     // Force full UI rebuild
 upload.getConfig();                     // Returns frozen copy of current config
+upload.validateFile(file);              // Size/type/MIME checks against live config, nothing staged — [] on pass, [messages] on fail
 upload.destroy();                       // Remove listeners, abort uploads, clean DOM
 
 // ── Intercept uploads for custom headers ────────────

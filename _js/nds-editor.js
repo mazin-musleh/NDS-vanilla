@@ -1280,18 +1280,25 @@
                 // Same size/type/MIME gates as the popover upload — full
                 // parity via NDS.Upload's live validateFile(), so pasted files
                 // honor allowedTypes/allowedMimeTypes too, not just size.
-                // Insert order follows clipboard order; FileReader is async so
-                // each load re-uses the current caret via execCommand.
                 const host = this.root.querySelector('[data-editor-image-upload]');
                 let firstError = '';
-                for (const file of files) {
-                    const errors = host?.ndsUpload?.validateFile?.(file) || [];
-                    if (errors.length) { firstError ||= errors[0]; continue; }
-                    const fr = new FileReader();
-                    fr.onload = () => this._insertImage(fr.result, '');
-                    fr.readAsDataURL(file);
-                }
+                const valid = files.filter(f => {
+                    const errors = host?.ndsUpload?.validateFile?.(f) || [];
+                    if (errors.length) { firstError ||= errors[0]; return false; }
+                    return true;
+                });
                 if (firstError) this._notice(firstError);
+                // Reads chain sequentially — parallel FileReaders complete in
+                // size order, not clipboard order. Each load inserts at the
+                // current caret, so the chain preserves clipboard order.
+                const embedNext = (i) => {
+                    if (i >= valid.length) return;
+                    const fr = new FileReader();
+                    fr.onload = () => { this._insertImage(fr.result, ''); embedNext(i + 1); };
+                    fr.onerror = () => embedNext(i + 1);
+                    fr.readAsDataURL(valid[i]);
+                };
+                embedNext(0);
                 return;
             }
             // A pasted fragment ending in a block element (component region,
@@ -1854,11 +1861,6 @@
             return host?.ndsUpload?.getConfig?.().uploadUrl || host?.dataset.uploadUrl || '';
         }
 
-        _imageUploadConfigured(host) {
-            const url = host?.ndsUpload?.getConfig?.().uploadUrl || host?.dataset.uploadUrl;
-            return !!url && url !== 'embed';
-        }
-
         // The upload affordance shows only when it leads somewhere real:
         // embed opted in, or an endpoint configured on the container
         // (live-read, so consumer JS can stamp NDS.Upload attrs any time
@@ -1867,7 +1869,7 @@
             const dropmenu = this.root.querySelector('[data-editor-image-dropmenu]');
             const host = dropmenu?.querySelector('[data-editor-image-upload]');
             if (!host) return;
-            const show = this._imageEmbedAllowed() || this._imageUploadConfigured(host);
+            const show = !!this._imageUploadUrl();
             host.style.display = show ? '' : 'none';
             const divider = dropmenu.querySelector('[data-editor-image-or]');
             if (divider) divider.style.display = show ? '' : 'none';
@@ -1883,11 +1885,14 @@
         setImageUpload(config = {}) {
             const host = this.root.querySelector('[data-editor-image-upload]');
             if (host) {
-                if (config.uploadUrl === 'embed') config = { ...config, autoUpload: false };
                 for (const [k, v] of Object.entries(config)) {
                     if (v == null || v === false) delete host.dataset[k];
                     else host.dataset[k] = String(v);
                 }
+                // Effective-URL check, not just this call's keys — a later
+                // setImageUpload({ autoUpload: true }) must not re-arm a POST
+                // to "/embed" while the sentinel is in force.
+                if (this._imageUploadUrl() === 'embed') delete host.dataset.autoUpload;
                 this._syncImageUploadVisibility();
             }
             return this;

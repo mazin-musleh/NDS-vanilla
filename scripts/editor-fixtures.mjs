@@ -1095,7 +1095,44 @@ try {
         const oversizePasteBlocked = !editable.querySelector('img')
             && root.getAttribute('data-status') === 'warning';
 
-        return { urlInsert, uploadRead, altSeeded, uploadInsert, pasteInsert, clickSelects, prefills, removeEnabled, removeListsAvatar, avatarRemoved, oversizePasteBlocked };
+        // 6 — multi-image paste embeds every file in clipboard order (reads
+        // chain sequentially; parallel readers would finish size-ordered, so
+        // the big first file landing first proves the chain).
+        editable.innerHTML = '<p><br></p>';
+        editable.focus();
+        const sel6 = getSelection();
+        const r6 = document.createRange();
+        r6.selectNodeContents(editable.firstElementChild);
+        r6.collapse(true);
+        sel6.removeAllRanges();
+        sel6.addRange(r6);
+        const multiDt = new DataTransfer();
+        multiDt.items.add(new File([new Uint8Array(256 * 1024)], 'first.png', { type: 'image/png' }));
+        multiDt.items.add(new File([new Uint8Array([137, 80, 78, 71])], 'second.png', { type: 'image/png' }));
+        editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: multiDt, bubbles: true, cancelable: true }));
+        await waitFor(() => editable.querySelectorAll('img').length === 2);
+        const multiImgs = editable.querySelectorAll('img');
+        const multiPasteOrdered = multiImgs.length === 2
+            && multiImgs[0].src.length > multiImgs[1].src.length;
+
+        // 7 — paste parity beyond size: a disallowed extension is rejected
+        // through the same live validateFile() gates.
+        NDS.Forms?.clearStatus?.(root);
+        editable.innerHTML = '<p><br></p>';
+        editable.focus();
+        const bmpDt = new DataTransfer();
+        bmpDt.items.add(new File([new Uint8Array([66, 77])], 'picture.bmp', { type: 'image/bmp' }));
+        editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: bmpDt, bubbles: true, cancelable: true }));
+        await new Promise(r => setTimeout(r, 400));
+        const typePasteBlocked = !editable.querySelector('img')
+            && root.getAttribute('data-status') === 'warning';
+
+        // 8 — the 'embed' sentinel keeps autoUpload off across LATER calls,
+        // not just the call that set it — no re-armed POST to "/embed".
+        root.ndsEditor.setImageUpload({ autoUpload: true });
+        const embedAutoUploadOff = !('autoUpload' in root.querySelector('[data-editor-image-upload]').dataset);
+
+        return { urlInsert, uploadRead, altSeeded, uploadInsert, pasteInsert, clickSelects, prefills, removeEnabled, removeListsAvatar, avatarRemoved, oversizePasteBlocked, multiPasteOrdered, typePasteBlocked, embedAutoUploadOff };
     });
     const imageProblems = Object.entries(imageOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
     if (imageProblems.length) {
@@ -1159,7 +1196,7 @@ try {
         const inserted = !!editable.querySelector('img[src="https://cdn.example.com/uploaded-42.png"]')
             && source.value.includes('https://cdn.example.com/uploaded-42.png')
             && !source.value.includes('data:image');
-        delete up.dataset.uploadUrl;
+        up.dataset.uploadUrl = 'embed'; // restore the fixture's embed stamp
         delete up.dataset.autoUpload;
         return { serverUrlArrives, chipComplete, inserted };
     });
