@@ -60,7 +60,7 @@
     pointer-events: none;
   }
 
-  &:is(.focus, :focus-visible) {
+  &:is(.focus, :focus-visible, [data-state~="focused"]) {
     @include btn-focus;
   }
 
@@ -261,7 +261,7 @@
     --btn-color: var(--colors-base-black);
     --btn-loading-color: var(--colors-base-black);
 
-    &:is(.focus, :focus-visible) {
+    &:is(.focus, :focus-visible, [data-state~="focused"]) {
       @include btn-focus-oncolor;
     }
   }
