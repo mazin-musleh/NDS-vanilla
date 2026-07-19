@@ -60,7 +60,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                         </div>
                                         <div class="nds-dropmenu-footer">
                                             <hr class="nds-divider">
-                                            <div class="nds-dropmenu-action nds-grid">
+                                            <div class="nds-dropmenu-action">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                     data-filter-action="clear" data-no-auto-close>
                                                     <span class="nds-label">Reset</span>
@@ -165,7 +165,7 @@ last_edit: "16/07/2026 - 02:30 AM"
       &lt;/div&gt;
       &lt;div class="nds-dropmenu-footer"&gt;
         &lt;hr class="nds-divider"&gt;
-        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+        &lt;div class="nds-dropmenu-action"&gt;
           &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close&gt;
             &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
@@ -249,7 +249,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                     </div>
                                     <div class="nds-dropmenu-footer">
                                         <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action nds-grid">
+                                        <div class="nds-dropmenu-action">
                                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                 data-filter-action="clear" data-no-auto-close>
                                                 <span class="nds-label">Reset</span>
@@ -347,7 +347,7 @@ last_edit: "16/07/2026 - 02:30 AM"
     &lt;/div&gt;
     &lt;div class="nds-dropmenu-footer"&gt;
       &lt;hr class="nds-divider"&gt;
-      &lt;div class="nds-dropmenu-action nds-grid"&gt;
+      &lt;div class="nds-dropmenu-action"&gt;
         &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
           data-filter-action="clear" data-no-auto-close&gt;
           &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
@@ -448,7 +448,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                     </div>
                                     <div class="nds-dropmenu-footer">
                                         <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action nds-grid">
+                                        <div class="nds-dropmenu-action">
                                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                 data-filter-action="clear" data-no-auto-close>
                                                 <span class="nds-label">Reset</span>
@@ -546,7 +546,7 @@ last_edit: "16/07/2026 - 02:30 AM"
     &lt;/div&gt;
     &lt;div class="nds-dropmenu-footer"&gt;
       &lt;hr class="nds-divider"&gt;
-      &lt;div class="nds-dropmenu-action nds-grid"&gt;
+      &lt;div class="nds-dropmenu-action"&gt;
         &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
           data-filter-action="clear" data-no-auto-close&gt;
           &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
@@ -646,7 +646,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                     </div>
                                     <div class="nds-dropmenu-footer">
                                         <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action nds-grid">
+                                        <div class="nds-dropmenu-action">
                                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                 data-filter-action="clear" data-no-auto-close>
                                                 <span class="nds-label">Reset</span>
@@ -756,7 +756,7 @@ last_edit: "16/07/2026 - 02:30 AM"
     &lt;/div&gt;
     &lt;div class="nds-dropmenu-footer"&gt;
       &lt;hr class="nds-divider"&gt;
-      &lt;div class="nds-dropmenu-action nds-grid"&gt;
+      &lt;div class="nds-dropmenu-action"&gt;
         &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
           data-filter-action="clear" data-no-auto-close&gt;
           &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
@@ -861,7 +861,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                         </div>
                                         <div class="nds-dropmenu-footer">
                                             <hr class="nds-divider">
-                                            <div class="nds-dropmenu-action nds-grid">
+                                            <div class="nds-dropmenu-action">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close><span class="nds-label">Reset</span></button>
                                                 <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply"><span class="nds-label">Apply</span></button>
                                             </div>
@@ -916,7 +916,7 @@ last_edit: "16/07/2026 - 02:30 AM"
       &lt;/div&gt;
       &lt;div class="nds-dropmenu-footer"&gt;
         &lt;hr class="nds-divider"&gt;
-        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+        &lt;div class="nds-dropmenu-action"&gt;
           &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close&gt;&lt;span class="nds-label"&gt;Reset&lt;/span&gt;&lt;/button&gt;
           &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
@@ -998,7 +998,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                         </div>
                                         <div class="nds-dropmenu-footer">
                                             <hr class="nds-divider">
-                                            <div class="nds-dropmenu-action nds-grid">
+                                            <div class="nds-dropmenu-action">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                     data-filter-action="clear" data-no-auto-close>
                                                     <span class="nds-label">Reset</span>
@@ -1094,7 +1094,7 @@ last_edit: "16/07/2026 - 02:30 AM"
       &lt;/div&gt;
       &lt;div class="nds-dropmenu-footer"&gt;
         &lt;hr class="nds-divider"&gt;
-        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+        &lt;div class="nds-dropmenu-action"&gt;
           &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close&gt;
             &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
@@ -1196,7 +1196,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                         </div>
                                         <div class="nds-dropmenu-footer">
                                             <hr class="nds-divider">
-                                            <div class="nds-dropmenu-action nds-grid">
+                                            <div class="nds-dropmenu-action">
                                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-filter-action="clear" data-no-auto-close><span class="nds-label">Reset</span></button>
                                                 <button class="nds-btn nds-primary nds-dropmenu-item" type="button" data-filter-action="apply"><span class="nds-label">Apply</span></button>
                                             </div>
@@ -1291,7 +1291,7 @@ last_edit: "16/07/2026 - 02:30 AM"
       &lt;/div&gt;
       &lt;div class="nds-dropmenu-footer"&gt;
         &lt;hr class="nds-divider"&gt;
-        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+        &lt;div class="nds-dropmenu-action"&gt;
           &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close&gt;&lt;span class="nds-label"&gt;Reset&lt;/span&gt;&lt;/button&gt;
           &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
@@ -1378,7 +1378,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                     </div>
                                     <div class="nds-dropmenu-footer">
                                         <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action nds-grid">
+                                        <div class="nds-dropmenu-action">
                                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                                 data-filter-action="clear" data-no-auto-close>
                                                 <span class="nds-label">Reset</span>
@@ -1494,7 +1494,7 @@ last_edit: "16/07/2026 - 02:30 AM"
     &lt;/div&gt;
     &lt;div class="nds-dropmenu-footer"&gt;
       &lt;hr class="nds-divider"&gt;
-      &lt;div class="nds-dropmenu-action nds-grid"&gt;
+      &lt;div class="nds-dropmenu-action"&gt;
         &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
           data-filter-action="clear" data-no-auto-close&gt;
           &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
@@ -1600,7 +1600,7 @@ last_edit: "16/07/2026 - 02:30 AM"
     &lt;/div&gt;
     &lt;div class="nds-dropmenu-footer"&gt;
       &lt;hr class="nds-divider"&gt;
-      &lt;div class="nds-dropmenu-action nds-grid"&gt;
+      &lt;div class="nds-dropmenu-action"&gt;
         &lt;button class="nds-btn nds-secondary nds-dropmenu-item"
           type="button" data-filter-action="clear"
           data-no-auto-close&gt;
@@ -1785,7 +1785,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
           &lt;/div&gt;
           &lt;div class="nds-dropmenu-footer"&gt;
             &lt;hr class="nds-divider"&gt;
-            &lt;div class="nds-dropmenu-action nds-grid"&gt;
+            &lt;div class="nds-dropmenu-action"&gt;
               &lt;button class="nds-btn nds-secondary nds-dropmenu-item"
                 type="button" data-filter-action="clear"
                 data-no-auto-close&gt;

@@ -496,7 +496,7 @@
             btn.appendChild(label);
 
             const action = document.createElement('div');
-            action.className = 'nds-dropmenu-action nds-grid';
+            action.className = 'nds-dropmenu-action';
             action.appendChild(btn);
 
             const divider = document.createElement('hr');

@@ -1400,7 +1400,7 @@ last_edit: "17/07/2026 - 12:17 AM"
                                 </div>
                                 <div class="nds-dropmenu-footer">
                                     <hr class="nds-divider">
-                                    <div class="nds-dropmenu-action nds-grid">
+                                    <div class="nds-dropmenu-action">
                                         <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                             data-filter-action="clear" data-no-auto-close>
                                             <span class="nds-label">Reset</span>
@@ -1514,7 +1514,7 @@ last_edit: "17/07/2026 - 12:17 AM"
       &lt;/div&gt;
       &lt;div class="nds-dropmenu-footer"&gt;
         &lt;hr class="nds-divider"&gt;
-        &lt;div class="nds-dropmenu-action nds-grid"&gt;
+        &lt;div class="nds-dropmenu-action"&gt;
           &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
             data-filter-action="clear" data-no-auto-close&gt;
             &lt;span class="nds-label"&gt;Reset&lt;/span&gt;

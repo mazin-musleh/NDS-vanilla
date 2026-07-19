@@ -364,7 +364,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                     </div>
                                     <div class="nds-dropmenu-footer">
                                         <hr class="nds-divider">
-                                        <div class="nds-dropmenu-action nds-grid">
+                                        <div class="nds-dropmenu-action">
                                             <button class="nds-btn nds-secondary nds-dropmenu-item" type="button" data-no-auto-close
                                                 onclick="this.closest('.nds-dropmenu-menu').querySelectorAll('input').forEach(c=>c.checked=false)">
                                                 <span class="nds-label">Reset</span>
@@ -448,7 +448,7 @@ last_edit: "28/06/2026 - 01:27 PM"
     &lt;/div&gt;
     &lt;div class="nds-dropmenu-footer"&gt;
       &lt;hr class="nds-divider"&gt;
-      &lt;div class="nds-dropmenu-action nds-grid"&gt;
+      &lt;div class="nds-dropmenu-action"&gt;
         &lt;button class="nds-btn nds-secondary nds-dropmenu-item"
           type="button" data-no-auto-close&gt;
           &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
@@ -1029,7 +1029,7 @@ document.getElementById('my-lazy-dropmenu').addEventListener('nds:dropmenu:prepa
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-dropmenu-action</code></td>
-                            <td>Action bar inside the footer for buttons like Clear and Apply. Combine with <code class="nds-inline-code lang-html">nds-grid</code> for side-by-side layout.</td>
+                            <td>Action bar inside the footer for buttons like Clear and Apply. Buttons lay out side-by-side and share the row equally.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-dropmenu-group</code></td>

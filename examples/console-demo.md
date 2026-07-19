@@ -283,7 +283,7 @@ hideFeedback: true
                             </div>
                             <div class="nds-dropmenu-footer">
                                 <hr class="nds-divider">
-                                <div class="nds-dropmenu-action nds-grid">
+                                <div class="nds-dropmenu-action">
                                     <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                         data-filter-action="clear" data-no-auto-close>
                                         <span class="nds-label">Reset</span>
@@ -500,7 +500,7 @@ hideFeedback: true
                         </div>
                         <div class="nds-dropmenu-footer">
                             <hr class="nds-divider">
-                            <div class="nds-dropmenu-action nds-grid">
+                            <div class="nds-dropmenu-action">
                                 <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
                                     data-filter-action="clear" data-no-auto-close>
                                     <span class="nds-label">Reset</span>

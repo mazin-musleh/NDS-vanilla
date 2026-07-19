@@ -268,7 +268,7 @@ last_edit: "03/07/2026 - 02:01 AM"
                                     </div>
                                     <div class="nds-dropmenu-footer">
                                         <hr class="nds-divider nds-lg">
-                                        <div class="nds-dropmenu-action nds-grid">
+                                        <div class="nds-dropmenu-action">
                                             <button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close>
                                                 <span class="nds-label">Vote</span>
                                             </button>
@@ -324,7 +324,7 @@ last_edit: "03/07/2026 - 02:01 AM"
         &lt;/div&gt;
         &lt;div class="nds-dropmenu-footer"&gt;
             &lt;hr class="nds-divider nds-lg"&gt;
-            &lt;div class="nds-dropmenu-action nds-grid"&gt;
+            &lt;div class="nds-dropmenu-action"&gt;
                 &lt;button class="nds-btn nds-primary nds-dropmenu-item" data-no-auto-close&gt;
                     &lt;span class="nds-label"&gt;Vote&lt;/span&gt;
                 &lt;/button&gt;

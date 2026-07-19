@@ -609,7 +609,7 @@
             + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-colored"><span class="nds-label">${uiLabel(S.colored)}</span></label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-colored" class="nds-check" data-editor-link-colored /></div></div>`
             + '</div></div>'
-            + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action nds-grid">'
+            + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
             + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-link-cancel><span class="nds-label">${uiLabel(S.cancel)}</span></button>`
             + `<button type="button" class="nds-btn nds-destructive nds-secondary-outline nds-dropmenu-item" data-editor-link-unlink hidden><span class="nds-label">${uiLabel(S.unlink)}</span></button>`
             + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-link-confirm data-dropmenu-primary data-no-auto-close><span class="nds-label">${uiLabel(S.insert)}</span></button>`
@@ -642,7 +642,7 @@
             + textFieldHtml(`${idBase}-image-height`, uiLabel(S.height), 'text', 'inputmode="numeric" data-editor-image-height', 'auto', ' nds-md')
             + '</div>'
             + '</div></div>'
-            + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action nds-grid">'
+            + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
             + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-image-cancel><span class="nds-label">${uiLabel(S.cancel)}</span></button>`
             + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-image-confirm data-dropmenu-primary data-no-auto-close><span class="nds-label">${uiLabel(S.insert)}</span></button>`
             + '</div></div></div></div>';
@@ -667,7 +667,7 @@
             + `<div class="nds-dropmenu-group"><span class="nds-label">${uiLabel(S.removePrompt)}</span></div>`
             + '<div data-editor-remove-levels></div>'
             + '</div>'
-            + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action nds-grid">'
+            + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
             + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-remove-cancel><span class="nds-label">${uiLabel(S.cancel)}</span></button>`
             + '</div></div></div></div>';
     }

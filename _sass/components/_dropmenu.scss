@@ -54,18 +54,6 @@
     }
   }
 
-  // ==============================================
-  // 5. INNER COMPONENTS — sticky action footer
-  // ==============================================
-
-  &-action {
-    --gap: var(--spacing-lg);
-
-    .nds-btn {
-      width: 100%;
-      justify-content: center;
-    }
-  }
 }
 
 // ==============================================
@@ -143,6 +131,22 @@
   .nds-form-control {
     min-width: unset;
     width: 100%;
+  }
+
+  // Action bar (footer): side-by-side buttons (Clear / Apply). Previously
+  // paired with `nds-grid` in markup — flex is lighter and shares the
+  // spacing token. Buttons split the row equally and center their labels.
+  .nds-dropmenu-action {
+    display: flex;
+    gap: var(--spacing-md);
+
+    > * {
+      flex: 1 0 fit-content;
+    }
+
+    .nds-btn {
+      justify-content: center;
+    }
   }
 
   // ── States & animations (applied directly on the menu) ─────────
