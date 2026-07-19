@@ -647,10 +647,40 @@
         return { input: target, formControl: formControl, formContainer: formControl.closest('.nds-form-container') };
     }
 
+    // A container's OWN control — the first .nds-form-control whose nearest
+    // form-container ancestor IS this container (skips controls belonging to
+    // nested containers, e.g. an editor's toolbar popover fields).
+    function ownControl(container) {
+        var controls = container.querySelectorAll('.nds-form-control');
+        for (var i = 0; i < controls.length; i++) {
+            if (controls[i].closest('.nds-form-container') === container) return controls[i];
+        }
+        return null;
+    }
+
     function installFormDelegation() {
         if (_delegationInstalled) return;
         _delegationInstalled = true;
         var doc = document;
+
+        // While a form-container is focus/active, mark its OWN control with a
+        // single `target` gate. The container keeps the real state; `target`
+        // just lets the CSS descendant match (container[state] .control[target])
+        // reach that one control — through any layout wrapper, at any depth,
+        // never a nested container's control. Fires for EVERY stamper (generic
+        // delegation, editor, multiselect) since all go through NDS.State.
+        var syncTarget = function(container) {
+            var f = ownControl(container);
+            if (!f) return;
+            if (NDS.State.has(container, 'focus') || NDS.State.has(container, 'active'))
+                NDS.State.add(f, 'target');
+            else
+                NDS.State.remove(f, 'target');
+        };
+        ['focus', 'active'].forEach(function(state) {
+            NDS.State.onAdd(state, '.nds-form-container', syncTarget);
+            NDS.State.onRemove(state, '.nds-form-container', syncTarget);
+        });
 
         // Mouse press → `active` token. mousedown adds; mouseup/mouseout
         // remove. mouseout stands in for the old per-element mouseleave —

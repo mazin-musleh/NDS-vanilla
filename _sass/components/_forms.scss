@@ -99,8 +99,12 @@
     // FORM CONTAINER STATE (data-state attribute)
     // ==============================================
 
-    // Focus state (not readonly)
-    &[data-state~="focus"]:not([data-state~="readonly"]) > .nds-form-control {
+    // Focus state (not readonly). nds-forms.js stamps `target` on the
+    // container's OWN control (State.onAdd hook); the container keeps the
+    // focus/active state, `target` just gates the descendant match to that one
+    // control — so it reaches through any layout wrapper (.nds-search-content…)
+    // and never bleeds into a nested container's control.
+    &[data-state~="focus"]:not([data-state~="readonly"]) .nds-form-control[data-state~="target"] {
         &::before {
             width: 100%;
         }
@@ -114,7 +118,7 @@
     }
 
     // Active state (not readonly)
-    &[data-state~="active"]:not([data-state~="readonly"]) > .nds-form-control {
+    &[data-state~="active"]:not([data-state~="readonly"]) .nds-form-control[data-state~="target"] {
         &::before {
             width: 50%;
         }
