@@ -589,6 +589,18 @@
             if (this.shouldPortal) {
                 this.menu.setAttribute('data-portal', '');
                 NDS.portal(this.menu, { snapshotVars: PORTAL_VARS, force: true });
+                // Match the trigger's stacking layer. The portaled menu lives
+                // at <body> with the SCSS default (z-index: 1000), so a
+                // trigger inside a higher-stacked ancestor (modal, topbar,
+                // sticky bar) would paint OVER the menu. Walk the trigger's
+                // ancestor chain, take the highest numeric z-index, and only
+                // override the CSS default when it wins.
+                let z = 0;
+                for (let n = this.trigger; n && n !== document.body; n = n.parentElement) {
+                    const v = parseInt(getComputedStyle(n).zIndex, 10);
+                    if (v > z) z = v;
+                }
+                if (z > 1000) this.menu.style.zIndex = String(z);
             }
 
             addState(this.dropmenu, 'open', 'opening');
