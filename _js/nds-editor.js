@@ -53,10 +53,11 @@
     const DROP_TAGS = new Set(['STYLE', 'SCRIPT', 'HEAD', 'META', 'LINK', 'TITLE', 'XML', 'TEMPLATE', 'NOSCRIPT', 'IFRAME', 'FRAME', 'OBJECT', 'EMBED', 'SVG', 'MATH', 'SELECT', 'TEXTAREA', 'INPUT', 'AUDIO', 'VIDEO', 'CANVAS', 'MAP', 'BASE']);
     const INLINE_TAGS  = new Set(['BR', 'STRONG', 'EM', 'B', 'I', 'U', 'S', 'STRIKE', 'A']);
     const BLOCK_TAGS   = new Set(['P', 'H1', 'H2', 'H3', 'H4', 'LI']);
-    // The one style sanitize keeps on generic blocks: the toolbar's LOGICAL
-    // alignment. start is the default (never serialized); physical left/right
-    // — foreign paste junk — strips with everything else.
-    const ALIGN_VALUES = new Set(['center', 'end', 'justify']);
+    // Alignment values sanitize keeps on generic blocks: the toolbar writes
+    // PHYSICAL left/right/center/justify (orthogonal to the dir command);
+    // logical start/end are also accepted so already-saved content and
+    // bidi-aware pastes round-trip unchanged.
+    const ALIGN_VALUES = new Set(['left', 'right', 'center', 'justify', 'start', 'end']);
     const CMD_BLOCK_MAP = { h1: 'H1', h2: 'H2', h3: 'H3', h4: 'H4' };
     // One trust decision for every URL the editor keeps: scheme-less URLs
     // (relative — path/to/img.jpg, page.html, #anchor — doc-example canon)
@@ -325,8 +326,13 @@
             // Legacy Word markup carries align="center" as an attribute.
             const align = BLOCK_TAGS.has(el.tagName)
                 ? (el.style.textAlign || el.getAttribute('align') || '').toLowerCase() : '';
+            // Absolute text direction (toolbar dir command; pasted bidi
+            // content) survives on blocks — the browser owns the flip.
+            const dir = BLOCK_TAGS.has(el.tagName)
+                ? (el.getAttribute('dir') || '').toLowerCase() : '';
             for (const attr of Array.from(el.attributes)) el.removeAttribute(attr.name);
             if (ALIGN_VALUES.has(align)) el.style.textAlign = align;
+            if (dir === 'ltr' || dir === 'rtl') el.setAttribute('dir', dir);
             if (isAnchor) {
                 if (href && safeUrl(href)) {
                     el.setAttribute('href', href);
@@ -552,7 +558,7 @@
 
     // ---------- Toolbar generation ----------
 
-    const TOOLBAR_DEFAULT = 'undo redo | bold italic underline strike clear | link image | h2 h3 h4 | align-start align-center align-end align-justify | ul ol | remove | source';
+    const TOOLBAR_DEFAULT = 'undo redo | bold italic underline strike clear | link image | h2 h3 h4 | align-left align-center align-right align-justify | dir-ltr dir-rtl | ul ol | remove | source';
     const TOOLBAR_CMDS = {
         undo:      { icon: 'arrow-turn-backward',                     en: 'Undo',             ar: 'تراجع' },
         redo:      { icon: 'arrow-turn-forward',                      en: 'Redo',             ar: 'إعادة' },
@@ -571,11 +577,20 @@
         h4:        { icon: 'heading-04',                toggle: true, en: 'Heading 4',        ar: 'عنوان 4' },
         ul:        { icon: 'left-to-right-list-bullet', toggle: true, en: 'Bulleted list',    ar: 'قائمة نقطية' },
         ol:        { icon: 'left-to-right-list-number', toggle: true, en: 'Numbered list',    ar: 'قائمة رقمية' },
-        // Alignment is LOGICAL (start/end) — icons flip with document direction.
-        'align-start':   { icon: { ltr: 'text-align-left', rtl: 'text-align-right' },  toggle: true, en: 'Align start',  ar: 'محاذاة البداية' },
+        // Alignment is PHYSICAL (left/right) — absolute icons, never flip;
+        // orthogonal to the dir command. Re-clicking the active one clears it
+        // back to natural (direction-following).
+        'align-left':    { icon: 'text-align-left',                                    toggle: true, en: 'Align left',   ar: 'محاذاة لليسار' },
         'align-center':  { icon: 'text-align-center',                                  toggle: true, en: 'Align center', ar: 'توسيط' },
-        'align-end':     { icon: { ltr: 'text-align-right', rtl: 'text-align-left' },  toggle: true, en: 'Align end',    ar: 'محاذاة النهاية' },
+        'align-right':   { icon: 'text-align-right',                                   toggle: true, en: 'Align right',  ar: 'محاذاة لليمين' },
         'align-justify': { icon: 'text-align-justify-center',                          toggle: true, en: 'Justify',      ar: 'ضبط' },
+        // Direction is ABSOLUTE (ltr/rtl) — icons never flip; each writes the
+        // native `dir` on the caret's block(s), toggling off clears it back
+        // to the editor's inherited direction.
+        // Direction buttons use the inline pilcrow glyphs (mask-based, not in
+        // the HGI font): pilcrow-right = LTR, pilcrow-left = RTL.
+        'dir-ltr':       { icon: 'pilcrow-right', inlineIcon: true,                    toggle: true, en: 'Left to right', ar: 'من اليسار إلى اليمين' },
+        'dir-rtl':       { icon: 'pilcrow-left', inlineIcon: true,                     toggle: true, en: 'Right to left', ar: 'من اليمين إلى اليسار' },
         // Caret-gated: enabled only while the caret sits inside a pasted
         // component — the explicit removal path the shell guards point to.
         remove:    { icon: 'delete-02',                               en: 'Remove component', ar: 'إزالة المكون' },
@@ -613,7 +628,12 @@
         const c = TOOLBAR_CMDS[cmd];
         const label = uiLabel(c);
         const icon = typeof c.icon === 'string' ? c.icon : (NDS.isRTL ? c.icon.rtl : c.icon.ltr);
-        return `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip${extraClass}" data-cmd="${cmd}"${c.toggle ? ' aria-pressed="false"' : ''} aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500"><i class="hgi hgi-stroke hgi-${icon}" aria-hidden="true"></i></button>`;
+        // inlineIcon: paint from the mask-based UI-icon sheet (.nds-icon) rather
+        // than the HGI font — for glyphs not (yet) in the font, e.g. pilcrow.
+        const iconHtml = c.inlineIcon
+            ? `<i class="nds-icon nds-${icon}" aria-hidden="true"></i>`
+            : `<i class="hgi hgi-stroke hgi-${icon}" aria-hidden="true"></i>`;
+        return `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip${extraClass}" data-cmd="${cmd}"${c.toggle ? ' aria-pressed="false"' : ''} aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500">${iconHtml}</button>`;
     }
 
     function textFieldHtml(id, labelStr, type, dataAttr, placeholder, extraClass = '') {
@@ -1121,10 +1141,12 @@
                     document.execCommand('formatBlock', false, (block && block.tagName === targetTag) ? 'P' : targetTag);
                     break;
                 }
-                case 'align-start':   this._applyAlignment('');        break;
+                case 'align-left':    this._applyAlignment('left');    break;
                 case 'align-center':  this._applyAlignment('center');  break;
-                case 'align-end':     this._applyAlignment('end');     break;
+                case 'align-right':   this._applyAlignment('right');   break;
                 case 'align-justify': this._applyAlignment('justify'); break;
+                case 'dir-ltr':       this._applyDirection('ltr');     break;
+                case 'dir-rtl':       this._applyDirection('rtl');     break;
                 default:
                     console.warn(`NDS Editor: unknown command "${cmd}"`);
             }
@@ -1799,11 +1821,13 @@
             return blocked;
         }
 
-        // Logical text-align inline on every block the selection touches;
-        // start = cleared (the default). Native justify* commands write
-        // physical left/right, which sanitize (rightly) strips — so this is
-        // hand-rolled. ponytail: direct DOM writes — alignment ops don't
-        // join the native undo stack.
+        // Physical text-align (left/right/center/justify) inline on every block
+        // the selection touches. Re-clicking the active value clears it back to
+        // natural (direction-following) — mirrors the dir toggle, and replaces
+        // the old logical "start" reset button. Native justify* commands are
+        // avoided (they write physical left/right unpredictably); this is a
+        // direct DOM write. ponytail: alignment ops don't join the native undo
+        // stack.
         _applyAlignment(value) {
             const sel = window.getSelection();
             if (!sel.rangeCount) return;
@@ -1816,10 +1840,36 @@
                 const block = this._getBlockContext();
                 if (block) blocks = [block];
             }
+            const clear = blocks.length && blocks.every(b => b.style.textAlign === value);
             for (const b of blocks) {
-                if (value) b.style.textAlign = value;
-                else b.style.removeProperty('text-align');
+                if (clear) b.style.removeProperty('text-align');
+                else b.style.textAlign = value;
                 if (!b.getAttribute('style')) b.removeAttribute('style');
+            }
+        }
+
+        // Absolute text direction via the native `dir` attribute on every
+        // block the selection touches — the browser handles bidi/logical
+        // flipping. Re-clicking the active direction clears it (revert to the
+        // editor's inherited direction). Independent of alignment (its own
+        // attribute), so the two coexist. ponytail: direct DOM write — no
+        // execCommand path writes `dir`.
+        _applyDirection(value) {
+            const sel = window.getSelection();
+            if (!sel.rangeCount) return;
+            const range = sel.getRangeAt(0);
+            let blocks = [];
+            for (const el of this.editable.querySelectorAll('p, h1, h2, h3, h4, li')) {
+                if (range.intersectsNode(el)) blocks.push(el);
+            }
+            if (!blocks.length) {
+                const block = this._getBlockContext();
+                if (block) blocks = [block];
+            }
+            const clear = blocks.length && blocks.every(b => b.getAttribute('dir') === value);
+            for (const b of blocks) {
+                if (clear) b.removeAttribute('dir');
+                else b.setAttribute('dir', value);
             }
         }
 
@@ -2271,7 +2321,8 @@
                 else if (CMD_BLOCK_MAP[cmd]) pressed = blockTag === CMD_BLOCK_MAP[cmd];
                 else if (cmd === 'ul')        pressed = inList === 'UL';
                 else if (cmd === 'ol')        pressed = inList === 'OL';
-                else if (cmd.startsWith('align-')) pressed = (block?.style.textAlign || 'start') === cmd.slice(6);
+                else if (cmd.startsWith('align-')) pressed = block?.style.textAlign === cmd.slice(6);
+                else if (cmd.startsWith('dir-')) pressed = block?.getAttribute('dir') === cmd.slice(4);
                 btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
             }
         }

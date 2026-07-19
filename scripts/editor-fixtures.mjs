@@ -269,8 +269,11 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
             ['contains', '<strong>عنوان غامق</strong>'],
             ['contains', '<em>مائل</em>'],
             ['contains', '<u> تحته خط</u>'],
-            ['contains', '<li>البند الأول</li>'],
-            ['contains', '<li>البند الثاني</li>'],
+            // Per-block bidi direction survives (like Word's align=) — the
+            // plain-vocabulary blocks keep dir; region cells scrub clean.
+            ['contains', '<p dir="rtl">'],
+            ['contains', '<li dir="rtl">البند الأول</li>'],
+            ['contains', '<li dir="rtl">البند الثاني</li>'],
             ['contains', 'class="nds-table"'],
             ['contains', '<td>خلية ١</td>'],
             ['contains', '<td><strong>خلية غامقة</strong></td>'],
@@ -420,15 +423,30 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
         ],
     },
     {
-        // Toolbar alignment (logical values, incl. legacy Word align= attrs)
-        // survives sanitize; physical left/right junk strips with the rest.
+        // Toolbar alignment is PHYSICAL (left/right/center/justify) — all
+        // survive sanitize, incl. legacy Word align= attrs; logical start/end
+        // stay accepted for already-saved content; non-alignment style strips.
         name: 'block-alignment-kept-junk-stripped',
-        html: '<p style="text-align: center">وسط</p><p style="text-align: end">نهاية</p><h2 align="center">عنوان</h2><p style="text-align: left; color: red">فقرة</p>',
+        html: '<p style="text-align: center">وسط</p><p style="text-align: end">نهاية</p><h2 align="center">عنوان</h2><p style="text-align: left; color: red">يسار</p><p style="text-align: right">يمين</p>',
         expect: [
-            ['count', 'text-align:', 3],
+            ['count', 'text-align:', 5],
+            ['contains', 'text-align: left'],
+            ['contains', 'text-align: right'],
             ['contains', 'text-align: end'],
-            ['not', 'left'],
             ['not', 'color'],
+        ],
+    },
+    {
+        // Toolbar direction (native dir on blocks) survives; a bogus value and
+        // dir on a non-block (inline) both strip. dir + align coexist.
+        name: 'block-direction-kept-junk-stripped',
+        html: '<p dir="rtl">يمين</p><h2 dir="ltr" style="text-align:center">left heading</h2><p dir="sideways">فقرة</p><p>نص <span dir="rtl">مضمّن</span></p>',
+        expect: [
+            ['contains', '<p dir="rtl">يمين</p>'],
+            ['contains', 'dir="ltr"'],
+            ['contains', 'text-align: center'],
+            ['count', 'dir=', 2],
+            ['not', 'sideways'],
         ],
     },
     {
@@ -1318,6 +1336,118 @@ try {
         atomGuardProblems.forEach(pr => console.log(`  ${pr}`));
     } else {
         console.log('PASS atom-caret-guard-e2e');
+    }
+
+    // E2E: toolbar direction command — dir-rtl/dir-ltr write the native dir on
+    // the caret's block, re-click clears it, the buttons reflect pressed
+    // state, and the direction round-trips into the form value.
+    const dirOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const source = root.querySelector('.nds-editor-source');
+        const dirLtr = root.querySelector('[data-cmd="dir-ltr"]');
+        const dirRtl = root.querySelector('[data-cmd="dir-rtl"]');
+        const toolbarHasButtons = !!dirLtr && !!dirRtl;
+        const clickCmd = async (btn) => {
+            btn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+            btn.click();
+            await raf();
+        };
+        const putCaret = () => {
+            editable.focus();
+            const p = editable.querySelector('p');
+            const r = document.createRange();
+            r.setStart(p.firstChild, 1);
+            r.collapse(true);
+            const sel = getSelection();
+            sel.removeAllRanges();
+            sel.addRange(r);
+        };
+        editable.innerHTML = '<p>نص</p>';
+        putCaret();
+        await clickCmd(dirRtl);
+        const setRtl = editable.querySelector('p').getAttribute('dir') === 'rtl'
+            && dirRtl.getAttribute('aria-pressed') === 'true'
+            && source.value.includes('dir="rtl"');
+        // Switch to LTR (not additive — replaces rtl).
+        putCaret();
+        await clickCmd(dirLtr);
+        const switchLtr = editable.querySelector('p').getAttribute('dir') === 'ltr'
+            && dirLtr.getAttribute('aria-pressed') === 'true'
+            && dirRtl.getAttribute('aria-pressed') === 'false';
+        // Re-click the active direction clears it (revert to inherited).
+        putCaret();
+        await clickCmd(dirLtr);
+        const toggleClears = !editable.querySelector('p').hasAttribute('dir')
+            && dirLtr.getAttribute('aria-pressed') === 'false'
+            && !source.value.includes('dir=');
+        return { toolbarHasButtons, setRtl, switchLtr, toggleClears };
+    });
+    const dirProblems = Object.entries(dirOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (dirProblems.length) {
+        failures++;
+        console.log('FAIL toolbar-direction-e2e');
+        dirProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS toolbar-direction-e2e');
+    }
+
+    // E2E: toolbar alignment is PHYSICAL — align-left/right write text-align
+    // left/right (not logical start/end), buttons reflect pressed state, one
+    // replaces the other, re-clicking the active one clears to natural, and it
+    // round-trips into the value.
+    const alignOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const source = root.querySelector('.nds-editor-source');
+        const aLeft = root.querySelector('[data-cmd="align-left"]');
+        const aRight = root.querySelector('[data-cmd="align-right"]');
+        const noLogicalTokens = !root.querySelector('[data-cmd="align-start"], [data-cmd="align-end"]');
+        const clickCmd = async (btn) => {
+            btn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+            btn.click();
+            await raf();
+        };
+        const putCaret = () => {
+            editable.focus();
+            const p = editable.querySelector('p');
+            const r = document.createRange();
+            r.setStart(p.firstChild, 1);
+            r.collapse(true);
+            const sel = getSelection();
+            sel.removeAllRanges();
+            sel.addRange(r);
+        };
+        editable.innerHTML = '<p>نص</p>';
+        putCaret();
+        await clickCmd(aLeft);
+        const setLeft = editable.querySelector('p').style.textAlign === 'left'
+            && aLeft.getAttribute('aria-pressed') === 'true'
+            && source.value.includes('text-align: left');
+        // Right replaces left (not additive).
+        putCaret();
+        await clickCmd(aRight);
+        const p = editable.querySelector('p');
+        const switchRight = p.style.textAlign === 'right'
+            && aRight.getAttribute('aria-pressed') === 'true'
+            && aLeft.getAttribute('aria-pressed') === 'false';
+        // Re-click the active alignment clears it back to natural.
+        putCaret();
+        await clickCmd(aRight);
+        const toggleClears = !editable.querySelector('p').style.textAlign
+            && aRight.getAttribute('aria-pressed') === 'false'
+            && !source.value.includes('text-align');
+        return { noLogicalTokens, setLeft, switchRight, toggleClears };
+    });
+    const alignProblems = Object.entries(alignOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (alignProblems.length) {
+        failures++;
+        console.log('FAIL toolbar-alignment-e2e');
+        alignProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS toolbar-alignment-e2e');
     }
 
     // E2E: image popover — insert by URL, upload a file (synthetic File
