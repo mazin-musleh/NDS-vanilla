@@ -100,6 +100,15 @@
         return false;
     }
 
+    // The editor's own link stamps aren't component identity — an anchor
+    // carrying any OTHER nds class is a component wearing link duty (a
+    // converted button/tag/chip/avatar…), which canon styling must not touch.
+    const LINK_STAMP_CLASSES = new Set(['nds-link', 'nds-primary', 'nds-external']);
+    function isComponentAnchor(a) {
+        for (const c of a.classList) if (!LINK_STAMP_CLASSES.has(c) && NDS_CLASS.test(c)) return true;
+        return false;
+    }
+
     // Local fork — also escapes quotes for attribute contexts (openTag); NDS.escapeHtml doesn't. Do not swap.
     const escapeHtml = (s) => s.replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 
@@ -122,6 +131,16 @@
         const next = el.ownerDocument.createElement(tag);
         while (el.firstChild) next.appendChild(el.firstChild);
         el.replaceWith(next);
+        return next;
+    }
+
+    // renameEl + attribute carry-over minus `drop` — for tag swaps that keep
+    // component identity (the button ⇄ anchor link conversion).
+    function convertTag(el, tag, drop) {
+        const next = renameEl(el, tag);
+        for (const { name, value } of el.attributes) {
+            if (!drop.includes(name)) next.setAttribute(name, value);
+        }
         return next;
     }
 
@@ -295,6 +314,7 @@
             const isImg = el.tagName === 'IMG';
             const href = isAnchor ? cleanUrl(el.getAttribute('href') || '') : null;
             const external = isAnchor && el.getAttribute('target') === '_blank';
+            const noExt = isAnchor && el.hasAttribute('data-no-external');
             const src = isImg ? cleanUrl(el.getAttribute('src') || '') : null;
             const alt = isImg ? el.getAttribute('alt') : null;
             // Numeric width/height survive — the popover writes them, and
@@ -312,6 +332,8 @@
                     el.setAttribute('href', href);
                     if (external) el.setAttribute('target', '_blank');
                     el.setAttribute('rel', 'noopener noreferrer');
+                    // Author badge opt-out (NDS.Link honors it) survives.
+                    if (noExt) el.setAttribute('data-no-external', '');
                 } else {
                     unwrapEl(el);
                 }
@@ -364,7 +386,9 @@
         const kept = [];
         for (const attr of Array.from(el.attributes)) {
             const n = attr.name;
-            if (/^aria-/i.test(n) || n === 'role' || n === 'data-status' || n === 'data-state'
+            // data-no-external rides with any region element — NDS.Link's
+            // closest() honors it on containers, not just anchors.
+            if (/^aria-/i.test(n) || n === 'role' || n === 'data-status' || n === 'data-state' || n === 'data-no-external'
                 || (tag === 'IMG' && (n === 'alt' || ((n === 'width' || n === 'height') && /^\d+$/.test(attr.value))))
                 || ((tag === 'TD' || tag === 'TH') && (n === 'colspan' || n === 'rowspan' || n === 'scope'))) {
                 kept.push([n, attr.value]);
@@ -562,6 +586,7 @@
         text:     { en: 'Text',   ar: 'النص' },
         external: { en: 'Open in new tab', ar: 'فتح في تبويب جديد' },
         colored:  { en: 'Colored link', ar: 'رابط ملون' },
+        noBadge:  { en: 'Hide external badge', ar: 'إخفاء شارة الرابط الخارجي' },
         fromLink: { en: 'From link', ar: 'من رابط' },
         or:       { en: 'OR', ar: 'أو' },
         attrs:    { en: 'Attributes', ar: 'الخصائص' },
@@ -606,6 +631,8 @@
             + textFieldHtml(`${idBase}-link-url`, uiLabel(S.url), 'url', 'data-editor-link-url', 'https://')
             + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-external"><span class="nds-label">${uiLabel(S.external)}</span></label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-external" class="nds-check" data-editor-link-external /></div></div>`
+            + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-noexternal"><span class="nds-label">${uiLabel(S.noBadge)}</span></label></div>`
+            + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-noexternal" class="nds-check" data-editor-link-noexternal /></div></div>`
             + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-colored"><span class="nds-label">${uiLabel(S.colored)}</span></label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-colored" class="nds-check" data-editor-link-colored /></div></div>`
             + '</div></div>'
@@ -800,11 +827,22 @@
             // Chrome only places the caret BESIDE a clicked image — select it
             // whole instead: the selection shape the image popover
             // (edit-in-place), the link popover (wrap in <a>), the remove
-            // gate, and plain Backspace all key on.
+            // gate, and plain Backspace all key on. Clicks inside a TEXTLESS
+            // atom (featured icon, icon-only button) select the atom whole
+            // for the same reason: no caret position inside is worth having —
+            // typing or Enter there only breaks the component.
             this.editable.addEventListener('click', (e) => {
-                if (e.target.tagName !== 'IMG') return;
+                let target = e.target.tagName === 'IMG' ? e.target : null;
+                if (!target) {
+                    let atom = null;
+                    for (let el = e.target; el && el !== this.editable; el = el.parentElement) {
+                        if (el.tagName === 'BUTTON' || (INLINE_REGION_TAGS.has(el.tagName) && hasNdsClass(el))) atom = el;
+                    }
+                    if (atom && !atom.textContent.trim()) target = atom;
+                }
+                if (!target) return;
                 const r = document.createRange();
-                r.selectNode(e.target);
+                r.selectNode(target);
                 const sel = window.getSelection();
                 sel.removeAllRanges();
                 sel.addRange(r);
@@ -979,6 +1017,8 @@
         destroy() {
             if (this._rafId) cancelAnimationFrame(this._rafId);
             clearTimeout(this._noticeTimer);
+            this._selectedMark?.removeAttribute('data-editor-selected');
+            this._selectedMark = null;
             this.abortController.abort();
             // Generated surfaces go; the adopted textarea reverts to a plain,
             // working field.
@@ -1390,6 +1430,23 @@
 
         _getAncestorTag(tagName) { return this._selAncestor(n => n.tagName === tagName); }
 
+        // The linkable ATOM at the caret: ANY <button>, or the OUTERMOST
+        // nds-classed inline element (tag, chip, featured-icon, label…) —
+        // caret inside it, or the atom itself click-selected whole. Linking
+        // converts the atom whole to <a … href> — an anchor nested inside an
+        // atom is meaningless. Unlink converts back.
+        _linkableAtom() {
+            const isAtom = (n) => n.tagName === 'BUTTON' || (INLINE_REGION_TAGS.has(n.tagName) && hasNdsClass(n));
+            const picked = this._selectedNode();
+            if (picked && isAtom(picked)) return picked;
+            let atom = null;
+            this._selAncestor(n => {
+                if (isAtom(n)) atom = n;
+                return false; // keep climbing — outermost match wins
+            });
+            return atom;
+        }
+
         _getBlockContext() { return this._selAncestor(n => BLOCK_TAGS.has(n.tagName)); }
 
         // ---------- Component-shell delete guard ----------
@@ -1630,8 +1687,8 @@
         // components indented under it (nds-card / – nds-tag).
         _prepRemoveMenu() {
             this._saveSelection();
-            const sel = window.getSelection();
-            this._removeChain = sel.rangeCount ? this._removeLevels(sel.getRangeAt(0).startContainer) : [];
+            const node = this._componentCaretNode();
+            this._removeChain = node ? this._removeLevels(node) : [];
             const list = this.root.querySelector('[data-editor-remove-levels]');
             if (!list) return;
             const chain = this._removeChain;
@@ -1656,16 +1713,24 @@
             this._restoreSelection();
         }
 
+        // The node the component commands key on: a click-selected component
+        // counts as its own caret position (the selection anchor is only its
+        // PARENT, which would miss it).
+        _componentCaretNode() {
+            const picked = this._selectedNode();
+            if (picked && hasNdsClass(picked)) return picked;
+            const sel = window.getSelection();
+            return (sel.rangeCount && this.editable.contains(sel.anchorNode)) ? sel.anchorNode : null;
+        }
+
         // The remove command is caret-gated — live only when the caret sits
-        // inside a component on an editable surface.
+        // inside (or whole-selects) a component on an editable surface.
         _syncRemoveState() {
             const rm = this.toolbar?.querySelector('[data-cmd="remove"]');
             if (!rm) return;
-            const sel = window.getSelection();
-            const region = (this.editable.getAttribute('contenteditable') === 'true'
-                && sel.rangeCount && this.editable.contains(sel.anchorNode))
-                ? this._regionRootOf(sel.anchorNode) : null;
-            rm.disabled = !region;
+            const node = this.editable.getAttribute('contenteditable') === 'true'
+                ? this._componentCaretNode() : null;
+            rm.disabled = !(node && this._regionRootOf(node));
         }
 
         // Enter inside a shell would SPLIT the caret's block — the browser
@@ -1678,6 +1743,20 @@
             const range = sel.getRangeAt(0);
             if (!range.collapsed && this._selectionClipsShell(range)) {
                 e.preventDefault();
+                return true;
+            }
+            // A caret inside an INLINE atom (chip, tag, featured icon,
+            // button) never takes a line break — even a <br> breaks its
+            // one-line shape. Enter ESCAPES to after the atom instead; a
+            // second Enter then behaves normally from outside it.
+            const atom = range.collapsed ? this._linkableAtom() : null;
+            if (atom) {
+                e.preventDefault();
+                const r = document.createRange();
+                r.setStartAfter(atom);
+                r.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(r);
                 return true;
             }
             if (!this._regionRootOf(range.startContainer)) return false;
@@ -1755,21 +1834,48 @@
             const externalInput = dropmenu.querySelector('[data-editor-link-external]');
             const unlinkBtn = dropmenu.querySelector('[data-editor-link-unlink]');
             const existing = this._getAncestorTag('A');
+            const atom = existing ? null : this._linkableAtom();
+            const img = existing || atom ? null : this._selectedImage();
+            const asComponent = !!atom || !!(existing && isComponentAnchor(existing));
             const sel = window.getSelection();
             const selected = (sel.rangeCount && !sel.isCollapsed && this.editable.contains(sel.anchorNode))
                 ? sel.toString().replace(/\s+/g, ' ').trim() : '';
+            const target = existing || atom;
+            // Opaque targets — an image, an icon-only atom — have nothing to
+            // rename, so the text field doesn't apply.
+            const asOpaque = !!img || !!(target && !target.querySelector('.nds-label') && !target.textContent.trim());
             // Text shows the existing link's label, else the selection —
-            // editable either way (typing it replaces the linked text).
-            if (textInput) textInput.value = existing ? existing.textContent : selected;
+            // editable either way (typing it replaces the linked text). A
+            // component reads its .nds-label (raw textContent carries the
+            // markup's indentation).
+            if (textInput) {
+                textInput.value = asOpaque ? '' : !target ? selected
+                    : asComponent ? (target.querySelector('.nds-label') || target).textContent.trim()
+                    : target.textContent;
+                textInput.closest('.nds-form-container').hidden = asOpaque;
+            }
             if (urlInput) urlInput.value = existing?.getAttribute('href') || 'https://';
             if (externalInput) externalInput.checked = existing?.getAttribute('target') === '_blank';
+            // Badge opt-out reads the target too (an unlinked button keeps the
+            // stamp, so re-linking remembers it).
+            const noExternalInput = dropmenu.querySelector('[data-editor-link-noexternal]');
+            if (noExternalInput) noExternalInput.checked = !!target?.hasAttribute('data-no-external');
             const coloredInput = dropmenu.querySelector('[data-editor-link-colored]');
-            if (coloredInput) coloredInput.checked = !!existing?.classList.contains('nds-primary');
+            if (coloredInput) {
+                coloredInput.checked = !asComponent && !asOpaque && !!existing?.classList.contains('nds-primary');
+                // On a component nds-primary is the VARIANT, not link color —
+                // the checkbox would corrupt it, so it hides. Link color is
+                // equally meaningless on an image wrapper.
+                coloredInput.closest('.nds-form-container').hidden = asComponent || asOpaque;
+            }
             if (unlinkBtn) unlinkBtn.hidden = !existing;
             if (urlInput) NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
             dropmenu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
-            // After the dropmenu opens (next frame), select the URL for quick overwrite.
-            setTimeout(() => urlInput?.select?.(), 60);
+            // After the dropmenu opens (next frame), select the URL for quick
+            // overwrite — only if it's STILL open: a stale timer after a fast
+            // unlink/cancel/confirm would steal focus AND the document
+            // selection from whatever the user did next.
+            setTimeout(() => { if (dropmenu.ndsDropmenu?.isOpen) urlInput?.select?.(); }, 60);
         }
 
         _confirmLink() {
@@ -1777,6 +1883,7 @@
             const url = cleanUrl((dropmenu?.querySelector('[data-editor-link-url]')?.value || '').trim());
             const text = (dropmenu?.querySelector('[data-editor-link-text]')?.value || '').trim();
             const external = !!dropmenu?.querySelector('[data-editor-link-external]')?.checked;
+            const noExternal = !!dropmenu?.querySelector('[data-editor-link-noexternal]')?.checked;
             const colored = !!dropmenu?.querySelector('[data-editor-link-colored]')?.checked;
             if (!url || url === 'https://' || !safeUrl(url)) {
                 this._fieldError(dropmenu?.querySelector('[data-editor-link-url]'), uiLabel(TOOLBAR_STRINGS.invalidUrl));
@@ -1787,23 +1894,78 @@
             this.editable.focus();
             this._restoreSelection();
             const sel = window.getSelection();
-            // Canon stamp: nds-link always, nds-primary per the colored
-            // checkbox, target/rel per the external checkbox (rel pairs every
-            // _blank against tabnabbing; sanitize enforces the same).
+            const existing = this._getAncestorTag('A');
+            const atom = existing ? null : this._linkableAtom();
+            const img = existing || atom ? null : this._selectedImage();
+            const asComponent = !!atom || !!(existing && isComponentAnchor(existing));
+            const target = existing || atom;
+            const asOpaque = !!img || !!(target && !target.querySelector('.nds-label') && !target.textContent.trim());
+            // Canon stamp: nds-link + nds-primary per the colored checkbox —
+            // but never on a component (its classes ARE its identity) or an
+            // image wrapper (text styling has nothing to color). target/rel
+            // per the external checkbox (rel pairs every _blank against
+            // tabnabbing; sanitize enforces the same).
             const applyCanon = (a) => {
                 if (!a) return;
-                a.classList.add('nds-link');
-                a.classList.toggle('nds-primary', colored);
+                if (!asComponent && !asOpaque) {
+                    a.classList.add('nds-link');
+                    a.classList.toggle('nds-primary', colored);
+                }
                 if (external) a.setAttribute('target', '_blank');
-                else a.removeAttribute('target');
+                else { a.removeAttribute('target'); a.classList.remove('nds-external'); }
                 a.setAttribute('rel', 'noopener noreferrer');
+                // Badge opt-out: NDS.Link skips [data-no-external] on its
+                // tagging pass (stamped before _refreshLinks re-tags).
+                if (noExternal) { a.setAttribute('data-no-external', ''); a.classList.remove('nds-external'); }
+                else a.removeAttribute('data-no-external');
             };
-            const existing = this._getAncestorTag('A');
+            // Renaming retargets the .nds-label when the anchor wraps one
+            // (converted buttons); a plain anchor replaces the linked text
+            // wholesale (inline formatting goes).
+            const setText = (el) => {
+                if (!text) return;
+                const label = el.querySelector('.nds-label');
+                if (label) { if (text !== label.textContent) label.textContent = text; }
+                else if (text !== el.textContent) el.textContent = text;
+            };
             if (existing) {
                 existing.setAttribute('href', url);
-                // Renaming replaces the linked text wholesale (inline formatting inside goes).
-                if (text && text !== existing.textContent) existing.textContent = text;
+                setText(existing);
                 applyCanon(existing);
+            } else if (atom) {
+                // Whole-atom conversion: <button>/<span class="nds-tag…">… →
+                // <a> with the same classes/attrs; type/disabled are
+                // anchor-alien (sanitize re-stamps type if it ever pastes
+                // back as a button).
+                const a = convertTag(atom, 'a', ['type', 'disabled']);
+                a.setAttribute('href', url);
+                setText(a);
+                applyCanon(a);
+            } else if (img) {
+                // Link the component, not its img: climb textless nds-classed
+                // shells (avatar…) and convert the outermost; a bare image
+                // wraps instead — <img> itself can't become <a>.
+                let shell = img;
+                while (shell.parentElement && shell.parentElement !== this.editable
+                    && hasNdsClass(shell.parentElement) && !shell.parentElement.textContent.trim()) {
+                    shell = shell.parentElement;
+                }
+                let a;
+                if (shell === img) {
+                    a = document.createElement('a');
+                    img.replaceWith(a);
+                    a.appendChild(img);
+                } else {
+                    a = convertTag(shell, 'a', ['type', 'disabled']);
+                }
+                a.setAttribute('href', url);
+                applyCanon(a);
+                // Re-select the image (the click-select shape) so follow-up
+                // popover opens still see it.
+                const r = document.createRange();
+                r.selectNode(img);
+                sel.removeAllRanges();
+                sel.addRange(r);
             } else if (sel.rangeCount && !sel.isCollapsed
                 && (!text || text === sel.toString().replace(/\s+/g, ' ').trim())) {
                 // Unchanged text: createLink keeps inline formatting inside the selection.
@@ -1813,7 +1975,7 @@
                 // Typed/changed text (or no selection): the anchor replaces the
                 // selection whole — built complete so no post-insert lookup is needed.
                 document.execCommand('insertHTML', false,
-                    `<a class="nds-link${colored ? ' nds-primary' : ''}" href="${escapeHtml(url)}"${external ? ' target="_blank"' : ''} rel="noopener noreferrer">${escapeHtml(text || url)}</a>`);
+                    `<a class="nds-link${colored ? ' nds-primary' : ''}" href="${escapeHtml(url)}"${external ? ' target="_blank"' : ''}${noExternal ? ' data-no-external=""' : ''} rel="noopener noreferrer">${escapeHtml(text || url)}</a>`);
             }
             this._refreshLinks();
             this._syncSource();
@@ -1824,10 +1986,23 @@
             this.root.querySelector('[data-editor-link-dropmenu]')?.ndsDropmenu?.close?.();
             this.editable.focus();
             this._restoreSelection();
+            const existing = this._getAncestorTag('A');
+            // A component anchor reverts whole — execCommand('unlink') would
+            // unwrap it and strand its children. nds-btn goes back to
+            // <button>; other atoms re-root as <span> (identity lives in the
+            // classes, not the tag).
+            if (existing && isComponentAnchor(existing)) {
+                const tag = existing.classList.contains('nds-btn') ? 'button' : 'span';
+                const el = convertTag(existing, tag, ['href', 'target', 'rel']);
+                el.classList.remove('nds-external'); // link-only stamp
+                if (tag === 'button') el.setAttribute('type', 'button');
+                this._syncSource();
+                this._updateToolbarState();
+                return;
+            }
             // execCommand('unlink') needs a selection that intersects the
             // anchor — a collapsed caret inside the link no-ops. Select the
             // whole anchor first.
-            const existing = this._getAncestorTag('A');
             if (existing) {
                 const sel = window.getSelection();
                 const r = document.createRange();
@@ -1917,9 +2092,9 @@
             if (primary) primary.disabled = true;
         }
 
-        // The "image is selected" selection shape browsers produce when an
-        // <img> in the editable is clicked: a one-node range over the element.
-        _selectedImage() {
+        // The "element is selected" shape the click-select handler (and
+        // browsers, for images) produce: a one-node range over the element.
+        _selectedNode() {
             const sel = window.getSelection();
             if (!sel.rangeCount) return null;
             const r = sel.getRangeAt(0);
@@ -1927,7 +2102,12 @@
                 || r.startContainer.nodeType !== Node.ELEMENT_NODE
                 || r.endOffset - r.startOffset !== 1) return null;
             const n = r.startContainer.childNodes[r.startOffset];
-            return (n && n.tagName === 'IMG' && this.editable.contains(n)) ? n : null;
+            return (n && n.nodeType === Node.ELEMENT_NODE && this.editable.contains(n)) ? n : null;
+        }
+
+        _selectedImage() {
+            const n = this._selectedNode();
+            return n?.tagName === 'IMG' ? n : null;
         }
 
         _prepImageMenu() {
@@ -1951,7 +2131,9 @@
             if (urlInput) NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
             dropmenu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
             this._syncImageUploadVisibility();
-            setTimeout(() => urlInput?.select?.(), 60);
+            // Open-guarded like the link popover's — a stale timer would
+            // steal focus and the document selection.
+            setTimeout(() => { if (dropmenu.ndsDropmenu?.isOpen) urlInput?.select?.(); }, 60);
         }
 
         _confirmImage() {
@@ -2036,12 +2218,36 @@
                 const sel = window.getSelection();
                 // The remove gate must react to the selection LEAVING the
                 // editable too — a stale enabled state would let the picker
-                // target whatever the outside selection sits in.
+                // target whatever the outside selection sits in. Same for the
+                // selected-component marker.
                 this._syncRemoveState();
+                this._syncSelectedMark();
                 if (!sel.rangeCount) return;
                 if (!this.editable.contains(sel.anchorNode)) return;
                 this._updateToolbarState();
             });
+        }
+
+        // Selected/active-component feedback: a click-selected component
+        // marks itself; a caret INSIDE a component marks the innermost
+        // removable level — the same component the remove command targets
+        // first, so the ring doubles as remove-is-armed feedback. CSS draws
+        // the system focus ring on the marker (the native ::selection wash
+        // only paints text runs — textless atoms would show nothing). The
+        // marker never reaches the value: _syncSource re-sanitizes, which
+        // drops it.
+        _syncSelectedMark() {
+            const picked = this._selectedNode();
+            let next = null;
+            if (picked && (picked.tagName === 'BUTTON' || hasNdsClass(picked))) next = picked;
+            else {
+                const node = this._componentCaretNode();
+                next = node ? (this._removeLevels(node)[0] || null) : null;
+            }
+            if (next === this._selectedMark) return;
+            this._selectedMark?.removeAttribute('data-editor-selected');
+            next?.setAttribute('data-editor-selected', '');
+            this._selectedMark = next;
         }
 
         _updateToolbarState() {

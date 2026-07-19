@@ -353,6 +353,41 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
         ],
     },
     {
+        // A linked atom (converted whole by the link command) round-trips
+        // through the region scrub intact.
+        name: 'linked-atom-region-round-trips',
+        paste: true,
+        html: '<p><a class="nds-featured-icon" href="https://example.com/f" rel="noopener noreferrer"><i class="hgi hgi-stroke hgi-stars"></i></a></p>',
+        expect: [
+            ['contains', 'nds-featured-icon'],
+            ['contains', 'href="https://example.com/f"'],
+            ['contains', 'hgi-stars'],
+        ],
+    },
+    {
+        // The author badge opt-out survives the plain-anchor scrub and
+        // NDS.Link's tagging pass respects it — no nds-external stamped.
+        name: 'anchor-no-external-optout-kept',
+        paste: true,
+        html: '<p>راجع <a href="https://external.example/page" data-no-external>الدليل</a> هنا.</p>',
+        expect: [
+            ['contains', 'data-no-external'],
+            ['not', 'nds-external'],
+        ],
+    },
+    {
+        // Same opt-out through the NDS-region scrub (a linked button
+        // component keeps the stamp).
+        name: 'btn-anchor-region-keeps-no-external',
+        paste: true,
+        html: '<p><a class="nds-btn nds-primary" href="https://external.example/go" data-no-external><span class="nds-label">زر</span></a></p>',
+        expect: [
+            ['contains', 'data-no-external'],
+            ['contains', 'nds-btn'],
+            ['not', 'nds-external'],
+        ],
+    },
+    {
         // The one target the editor writes survives sanitize (with the rel
         // pairing); every other target strips like any junk attribute.
         name: 'anchor-target-blank-kept-others-stripped',
@@ -964,7 +999,26 @@ try {
             && a.classList.contains('nds-external')
             && a.getAttribute('target') === '_blank'
             && root.querySelector('.nds-editor-source').value.includes('nds-primary');
-        return { unlinkHidden, skipsHiddenUnlink, insertedLinkCanon };
+
+        // Re-edit with the badge opt-out: data-no-external stamps, the auto
+        // badge class clears, and NDS.Link's re-tag pass respects the stamp.
+        const r2 = document.createRange();
+        r2.setStart(a.firstChild, 1);
+        r2.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r2);
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await new Promise(requestAnimationFrame);
+        const noExtInput = menu.querySelector('[data-editor-link-noexternal]');
+        const optOutUnchecked = !noExtInput.checked;
+        noExtInput.checked = true;
+        confirm.click();
+        const badgeOptOut = a.hasAttribute('data-no-external')
+            && !a.classList.contains('nds-external')
+            && a.getAttribute('target') === '_blank'
+            && root.querySelector('.nds-editor-source').value.includes('data-no-external');
+        return { unlinkHidden, skipsHiddenUnlink, insertedLinkCanon, optOutUnchecked, badgeOptOut };
     });
     const linkTabProblems = Object.entries(linkTabOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
     if (linkTabProblems.length) {
@@ -973,6 +1027,297 @@ try {
         linkTabProblems.forEach(pr => console.log(`  ${pr}`));
     } else {
         console.log('PASS link-popover-tab-e2e');
+    }
+
+    // E2E: link on a .nds-btn component converts the element whole (button ⇄
+    // anchor, classes/aria carried, label renamed in place) — never a
+    // label-wrapping <a> inside the button. Unlink converts back.
+    const linkBtnOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const source = root.querySelector('.nds-editor-source');
+        editable.innerHTML = '<p>قبل <button class="nds-btn nds-primary" type="button" aria-label="زر"><span class="nds-label">زر</span></button> بعد</p>';
+        editable.focus();
+        // Caret inside the label text — the reported flow (clicking the button).
+        const sel = getSelection();
+        const r = document.createRange();
+        r.setStart(editable.querySelector('.nds-label').firstChild, 1);
+        r.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r);
+        const linkBtn = root.querySelector('[data-cmd="link"]');
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        const menu = root.querySelector('[data-editor-link-dropmenu] .nds-dropmenu-menu');
+        const prefills = menu.querySelector('[data-editor-link-text]').value === 'زر';
+        const coloredHidden = menu.querySelector('[data-editor-link-colored]').closest('.nds-form-container').hidden;
+        menu.querySelector('[data-editor-link-text]').value = 'رابط الزر';
+        menu.querySelector('[data-editor-link-url]').value = 'https://example.com/action';
+        menu.querySelector('[data-editor-link-external]').checked = true;
+        menu.querySelector('[data-editor-link-confirm]').click();
+        await raf();
+        const a = editable.querySelector('a.nds-btn');
+        const converted = !!a && !editable.querySelector('button')
+            && a.classList.contains('nds-primary')
+            && !a.classList.contains('nds-link')
+            && a.getAttribute('href') === 'https://example.com/action'
+            && a.getAttribute('target') === '_blank'
+            && a.getAttribute('rel') === 'noopener noreferrer'
+            && a.getAttribute('aria-label') === 'زر'
+            && !a.hasAttribute('type');
+        const labelRenamed = a?.querySelector('.nds-label')?.textContent === 'رابط الزر';
+        const valueHasAnchor = /<a [^>]*nds-btn/.test(source.value);
+
+        // Unlink converts back whole (execCommand unlink would unwrap the
+        // element and strand its children).
+        const r2 = document.createRange();
+        r2.setStart(a.querySelector('.nds-label').firstChild, 1);
+        r2.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r2);
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        const unlinkVisible = !menu.querySelector('[data-editor-link-unlink]').hidden;
+        menu.querySelector('[data-editor-link-unlink]').click();
+        await raf();
+        const back = editable.querySelector('button.nds-btn');
+        const reverted = !!back && !editable.querySelector('a')
+            && back.getAttribute('type') === 'button'
+            && !back.hasAttribute('href') && !back.hasAttribute('target') && !back.hasAttribute('rel')
+            && !back.classList.contains('nds-external')
+            && back.querySelector('.nds-label')?.textContent === 'رابط الزر';
+
+        // ANY button converts, not just .nds-btn — a link nested inside a
+        // button is meaningless, so a classless sub-button converts whole too.
+        editable.innerHTML = '<p><button type="button"><span class="nds-label">إجراء</span></button></p>';
+        const r3 = document.createRange();
+        r3.setStart(editable.querySelector('.nds-label').firstChild, 1);
+        r3.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r3);
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        menu.querySelector('[data-editor-link-url]').value = 'https://example.com/act';
+        menu.querySelector('[data-editor-link-confirm]').click();
+        await raf();
+        const plainA = editable.querySelector('a');
+        const anyBtnConverts = !!plainA && !editable.querySelector('button')
+            && plainA.getAttribute('href') === 'https://example.com/act'
+            && !plainA.hasAttribute('type')
+            && plainA.querySelector('.nds-label')?.textContent === 'إجراء';
+
+        // Inline atoms convert too — the OUTERMOST nds wrapper at the caret
+        // (featured-icon around an <i>), never a link inside the atom. Its
+        // icon-only content also hides the text field (nothing to rename).
+        editable.innerHTML = '<p>ميزة <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-stars"></i></span> هنا</p>';
+        const r4 = document.createRange();
+        r4.setStart(editable.querySelector('.nds-featured-icon i'), 0);
+        r4.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r4);
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        const atomTextHidden = menu.querySelector('[data-editor-link-text]').closest('.nds-form-container').hidden;
+        menu.querySelector('[data-editor-link-url]').value = 'https://example.com/feature';
+        menu.querySelector('[data-editor-link-confirm]').click();
+        await raf();
+        const featA = editable.querySelector('a.nds-featured-icon');
+        const atomConverts = !!featA && !editable.querySelector('span.nds-featured-icon')
+            && !!featA.querySelector('i.hgi-stars')
+            && featA.getAttribute('href') === 'https://example.com/feature'
+            && !featA.classList.contains('nds-link');
+
+        // Atom unlink re-roots as <span> (identity lives in the classes).
+        const r5 = document.createRange();
+        r5.setStart(featA.querySelector('i'), 0);
+        r5.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(r5);
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        menu.querySelector('[data-editor-link-unlink]').click();
+        await raf();
+        const atomReverts = !!editable.querySelector('span.nds-featured-icon i.hgi-stars')
+            && !editable.querySelector('a');
+
+        // An avatar links via its image: the textless nds SHELL converts
+        // whole — no anchor nested inside the component.
+        editable.innerHTML = '<p>الملف</p><div class="nds-avatar nds-lg"><img src="/NDS-vanilla/assets/img/avatar1.webp" alt="صورة"></div>';
+        const avImg = editable.querySelector('.nds-avatar img');
+        avImg.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        await raf(); await raf();
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        menu.querySelector('[data-editor-link-url]').value = 'https://example.com/profile';
+        menu.querySelector('[data-editor-link-confirm]').click();
+        await raf();
+        const avA = editable.querySelector('a.nds-avatar');
+        const shellConverts = !!avA && !editable.querySelector('div.nds-avatar')
+            && !!avA.querySelector('img')
+            && avA.getAttribute('href') === 'https://example.com/profile'
+            && !avA.querySelector('a');
+        return { prefills, coloredHidden, converted, labelRenamed, valueHasAnchor, unlinkVisible, reverted, anyBtnConverts, atomTextHidden, atomConverts, atomReverts, shellConverts };
+    });
+    const linkBtnProblems = Object.entries(linkBtnOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (linkBtnProblems.length) {
+        failures++;
+        console.log('FAIL link-button-convert-e2e');
+        linkBtnProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS link-button-convert-e2e');
+    }
+
+    // E2E: a selected (clicked) image accepts a link — wraps in <a href>
+    // (no nds-link canon, text field hidden), edits in place on re-open,
+    // unlink unwraps and frees the image.
+    const linkImgOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const source = root.querySelector('.nds-editor-source');
+        editable.innerHTML = '<p>صورة <img src="/NDS-vanilla/assets/img/avatar1.webp" alt="وصف"> هنا</p>';
+        editable.focus();
+        const img = editable.querySelector('img');
+        img.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        await raf(); await raf();
+        const linkBtn = root.querySelector('[data-cmd="link"]');
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        const menu = root.querySelector('[data-editor-link-dropmenu] .nds-dropmenu-menu');
+        const textHidden = menu.querySelector('[data-editor-link-text]').closest('.nds-form-container').hidden;
+        menu.querySelector('[data-editor-link-url]').value = 'https://example.com/full';
+        menu.querySelector('[data-editor-link-external]').checked = true;
+        menu.querySelector('[data-editor-link-confirm]').click();
+        await raf();
+        const a = editable.querySelector('a');
+        const wrapped = !!a && a.querySelector('img') === img
+            && a.getAttribute('href') === 'https://example.com/full'
+            && a.getAttribute('target') === '_blank'
+            && a.getAttribute('rel') === 'noopener noreferrer'
+            && !a.classList.contains('nds-link')
+            && source.value.includes('https://example.com/full');
+
+        // Re-open on the wrapped image: prefills for edit-in-place; unlink
+        // unwraps and frees the image.
+        img.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        await raf(); await raf();
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        const prefilled = menu.querySelector('[data-editor-link-url]').value === 'https://example.com/full';
+        const unlinkItem = menu.querySelector('[data-editor-link-unlink]');
+        const unlinkShown = !unlinkItem.hidden;
+        unlinkItem.click();
+        await raf();
+        const unwrapped = !editable.querySelector('a') && !!editable.querySelector('img');
+        return { textHidden, wrapped, prefilled, unlinkShown, unwrapped };
+    });
+    const linkImgProblems = Object.entries(linkImgOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (linkImgProblems.length) {
+        failures++;
+        console.log('FAIL link-image-wrap-e2e');
+        linkImgProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS link-image-wrap-e2e');
+    }
+
+    // E2E: atom caret guards — clicking a textless atom selects it whole (no
+    // trapped caret), the whole-selected atom still links by conversion, and
+    // Enter inside an inline atom ESCAPES to after it (no split, no <br>).
+    const atomGuardOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const root = document.getElementById('story').closest('.nds-editor');
+        const editable = root.querySelector('.nds-editor-editable');
+        const sel = getSelection();
+
+        // 1 — click on the icon selects the featured-icon atom whole.
+        editable.innerHTML = '<p>قبل <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-stars"></i></span> بعد</p>';
+        editable.focus();
+        const feat = editable.querySelector('.nds-featured-icon');
+        feat.querySelector('i').dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+        await raf();
+        const r0 = sel.rangeCount ? sel.getRangeAt(0) : null;
+        const clickSelectsAtom = !!r0 && !r0.collapsed
+            && r0.startContainer === feat.parentElement
+            && r0.startContainer.childNodes[r0.startOffset] === feat;
+        // Selected-component feedback marker (rAF-throttled selectionchange).
+        await raf(); await raf();
+        const markerStamped = feat.hasAttribute('data-editor-selected');
+        // The whole-selected atom arms the remove command and lists in the
+        // picker (the selection anchor alone — its parent — would miss it).
+        const rmBtn = root.querySelector('[data-cmd="remove"]');
+        const removeArmedForAtom = !rmBtn.disabled;
+        rmBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        const removeListsAtom = Array.from(root.querySelectorAll('[data-editor-remove-level]'))
+            .some(b => b.textContent.includes('nds-featured-icon'));
+
+        // 2 — the whole-selected atom links by conversion.
+        const linkBtn = root.querySelector('[data-cmd="link"]');
+        const menu = root.querySelector('[data-editor-link-dropmenu] .nds-dropmenu-menu');
+        linkBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+        linkBtn.click();
+        await raf();
+        menu.querySelector('[data-editor-link-url]').value = 'https://example.com/star';
+        menu.querySelector('[data-editor-link-confirm]').click();
+        await raf();
+        const selectedAtomConverts = !!editable.querySelector('a.nds-featured-icon[href="https://example.com/star"] i.hgi-stars')
+            && !editable.querySelector('span.nds-featured-icon');
+        // The marker is UI state, never value content (sanitize drops it).
+        const markerNotInValue = !root.querySelector('.nds-editor-source').value.includes('data-editor-selected');
+
+        // 3 — Enter inside a chip label escapes AFTER the chip, chip intact.
+        editable.innerHTML = '<p>قبل <span class="nds-chip"><span class="nds-label">مكتمل</span></span> بعد</p>';
+        const chip = editable.querySelector('.nds-chip');
+        const rc = document.createRange();
+        rc.setStart(chip.querySelector('.nds-label').firstChild, 2);
+        rc.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(rc);
+        // A caret INSIDE a component rings it too (remove-armed feedback).
+        await raf(); await raf();
+        const caretMarksChip = chip.hasAttribute('data-editor-selected');
+        const beforeChip = editable.innerHTML;
+        const prevented = !editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+        const afterChip = sel.getRangeAt(0);
+        const chipEnterEscapes = prevented
+            && editable.innerHTML === beforeChip
+            && afterChip.collapsed
+            && afterChip.startContainer === chip.parentElement
+            && afterChip.startOffset === Array.prototype.indexOf.call(chip.parentElement.childNodes, chip) + 1;
+
+        // 4 — Enter inside a featured-icon's <i> escapes too.
+        editable.innerHTML = '<p>قبل <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-stars"></i></span> بعد</p>';
+        const feat2 = editable.querySelector('.nds-featured-icon');
+        const ri = document.createRange();
+        ri.setStart(feat2.querySelector('i'), 0);
+        ri.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(ri);
+        const before2 = editable.innerHTML;
+        const prevented2 = !editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+        const iconEnterEscapes = prevented2 && editable.innerHTML === before2
+            && sel.getRangeAt(0).collapsed
+            && sel.getRangeAt(0).startContainer === feat2.parentElement;
+        // Caret escaped to plain text → no component context → marker cleared.
+        await raf(); await raf();
+        const markerCleared = !editable.querySelector('[data-editor-selected]');
+        return { clickSelectsAtom, markerStamped, removeArmedForAtom, removeListsAtom, selectedAtomConverts, markerNotInValue, caretMarksChip, chipEnterEscapes, iconEnterEscapes, markerCleared };
+    });
+    const atomGuardProblems = Object.entries(atomGuardOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (atomGuardProblems.length) {
+        failures++;
+        console.log('FAIL atom-caret-guard-e2e');
+        atomGuardProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS atom-caret-guard-e2e');
     }
 
     // E2E: image popover — insert by URL, upload a file (synthetic File

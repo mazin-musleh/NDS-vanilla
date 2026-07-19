@@ -54,6 +54,15 @@
     // Click-to-select paints the native selection wash over the image —
     // tone it to a brand tint: feedback stays, the heavy blue goes.
     img::selection { background: color-mix(in srgb, var(--background-primary) 25%, transparent); }
+
+    // Whole-selected component (click-select) — the selection wash only
+    // paints text runs, so textless atoms would show nothing; JS stamps
+    // this ephemeral marker (sanitize keeps it out of the value) and the
+    // system focus ring provides the feedback.
+    [data-editor-selected] {
+      outline: 2px solid var(--focus-outline);
+      outline-offset: 1px;
+    }
   }
 
   // One flex row: bar-start wraps its button groups internally; bar-end
