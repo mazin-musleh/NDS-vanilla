@@ -188,6 +188,14 @@
             return Object.freeze({ ...this._readConfig() });
         }
 
+        // Public: run size/extension/MIME checks against the live config
+        // WITHOUT staging the file. Returns [] on pass, [messages] on fail.
+        // Consumers (e.g. rich text editors) need paste parity without adding
+        // a file chip.
+        validateFile(file) {
+            return this._validateFile(file, this._readConfig());
+        }
+
         // ==============================================
         // FILE MANAGEMENT
         // ==============================================

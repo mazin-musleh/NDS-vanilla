@@ -446,7 +446,7 @@ try {
     await page.evaluate(() => {
         const host = document.createElement('div');
         host.innerHTML = `
-          <div class="nds-form-container nds-textarea nds-editor" data-editor-image-embed="true">
+          <div class="nds-form-container nds-textarea nds-editor" id="story-editor">
             <div class="nds-form-header"><label for="story"><span class="nds-label">القصة</span></label></div>
             <div class="nds-form-control"><textarea class="nds-textarea" name="story" id="story" placeholder="اكتب هنا"></textarea></div>
             <div class="nds-form-footer" data-feedback-target hidden></div>
@@ -458,6 +458,7 @@ try {
           </div>`;
         document.body.appendChild(host);
         host.querySelectorAll('.nds-editor').forEach(el => NDS.Editor.create(el));
+        document.getElementById('story-editor').ndsEditor?.setImageUpload({ uploadUrl: 'embed' });
     });
 
     // Fixtures marked paste:true go through the REAL paste path: a synthetic

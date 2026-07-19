@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.4.x"
-last_edit: "19/07/2026 - 02:45 AM"
+last_edit: "19/07/2026 - 04:00 AM"
 ---
 
 <!-- Beta notice -->
@@ -277,7 +277,7 @@ last_edit: "19/07/2026 - 02:45 AM"
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-form-container nds-textarea nds-editor" data-editor-image-embed="true">
+                            <div class="nds-form-container nds-textarea nds-editor" id="editor-images-container">
                                 <div class="nds-form-header">
                                     <label for="editor-images-field"><span class="nds-label">Illustrated article</span></label>
                                 </div>
@@ -290,6 +290,17 @@ last_edit: "19/07/2026 - 02:45 AM"
                                 </div>
                                 <div class="nds-form-footer" data-feedback-target hidden></div>
                             </div>
+                            <script>
+                                document.getElementById('editor-images-container')
+                                    .addEventListener('nds:editor:ready', (e) => {
+                                        e.detail.instance.setImageUpload({
+                                            uploadUrl: 'embed',
+                                            maxFileSize: 2 * 1024 * 1024,
+                                            allowedTypes: 'jpg,png,webp',
+                                            allowedMimeTypes: 'image/*',
+                                        });
+                                    });
+                            </script>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -299,6 +310,10 @@ last_edit: "19/07/2026 - 02:45 AM"
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
                                         aria-controls="panel-editor-images-1" id="tab-editor-images-1">
                                         <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                        aria-controls="panel-editor-images-js" id="tab-editor-images-js">
+                                        <span class="nds-tab-label">JS API</span>
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
@@ -314,7 +329,7 @@ last_edit: "19/07/2026 - 02:45 AM"
                                     </div>
                                     <div class="nds-expandable-content">
                                     <code class="lang-html code">
-&lt;div class="nds-form-container nds-textarea nds-editor" data-editor-image-embed="true"&gt;
+&lt;div class="nds-form-container nds-textarea nds-editor" id="editor-images-container"&gt;
   &lt;div class="nds-form-header"&gt;
     &lt;label for="editor-images-field"&gt;&lt;span class="nds-label"&gt;Illustrated article&lt;/span&gt;&lt;/label&gt;
   &lt;/div&gt;
@@ -327,6 +342,30 @@ last_edit: "19/07/2026 - 02:45 AM"
   &lt;/div&gt;
   &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
+                                    </code>
+                                    </div>
+                                </div>
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-editor-images-js"
+                                    aria-labelledby="tab-editor-images-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                    <code class="lang-javascript code">// Editors auto-initialize; hook into the ready event to configure the
+// image popover. 'embed' inlines files as data:image URLs — swap for a
+// real endpoint (uploadUrl: '/api/images', autoUpload: true) in production.
+// Size/type validation is the same either way (NDS Upload gates before insert).
+document.getElementById('editor-images-container')
+    .addEventListener('nds:editor:ready', (e) =&gt; {
+        e.detail.instance.setImageUpload({
+            uploadUrl: 'embed',
+            maxFileSize: 2 * 1024 * 1024,   // bytes (2MB — also the default)
+            allowedTypes: 'jpg,png,webp',   // extensions; default jpg,jpeg,png,gif,webp,svg
+            allowedMimeTypes: 'image/*',    // optional second check
+        });
+    });
                                     </code>
                                     </div>
                                 </div>
@@ -576,8 +615,8 @@ last_edit: "19/07/2026 - 02:45 AM"
                     <li>The default heading commands are <code class="nds-inline-code lang-html">h2 h3 h4</code> because the page already owns its h1. Add the <code class="nds-inline-code lang-html">h1</code> token only for fields that author complete pages</li>
                     <li>Add <code class="nds-inline-code lang-html">required</code> to the textarea (and <code class="nds-inline-code lang-html">data-required</code> on the container) for mandatory fields: validation works natively because the value is a real form field</li>
                     <li>Links marked "Open in new tab" get <code class="nds-inline-code lang-html">target="_blank"</code> with <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code> paired automatically, and only that target survives sanitization</li>
-                    <li><strong>Wire image uploads to your server</strong> with <code class="nds-inline-code lang-js">setImageUpload()</code>: files POST through the embedded <a class="nds-color" href="{{ 'components/upload' | relative_url }}">NDS Upload</a> (progress, retry, and error feedback included) and the returned URL is inserted. Without an endpoint the popover is URL-only, and pasted screenshots show a field notice instead of silently embedding</li>
-                    <li>Reserve <code class="nds-inline-code lang-html">data-editor-image-embed="true"</code> for fields without an upload backend: base64 bloats the stored value (~37% over the file size) and embedded images can't be cached or served optimized</li>
+                    <li><strong>Wire image uploads to your server</strong> with <code class="nds-inline-code lang-js">setImageUpload({ uploadUrl: '/api/…' })</code>: files POST through the embedded <a class="nds-color" href="{{ 'components/upload' | relative_url }}">NDS Upload</a> (progress, retry, and error feedback included) and the returned URL is inserted. Without an endpoint the popover is URL-only, and pasted screenshots show a field notice instead of silently embedding</li>
+                    <li>Reserve <code class="nds-inline-code lang-js">setImageUpload({ uploadUrl: 'embed' })</code> for fields without an upload backend: base64 bloats the stored value (~37% over the file size) and embedded images can't be cached or served optimized</li>
                     <li>To remove a pasted component, use the toolbar's remove button (it lists the component levels at the caret) or select the whole component and delete. Boundary deletes never break a component apart</li>
                     <li>Cap tall fields with <code class="nds-inline-code lang-html">--editor-max-size</code>: past the cap the surface scrolls internally and the toolbar stays in reach</li>
                     <li>The whole component is <strong>beta</strong>: expect refinements while it hardens through real-project use</li>
@@ -627,7 +666,6 @@ last_edit: "19/07/2026 - 02:45 AM"
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-editor-toolbar</code></td><td>Set on the container to pick the toolbar commands. See the Toolbar Commands table for tokens and the grouping syntax</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-editor-image-embed="true"</code></td><td>Opt-in: uploaded and pasted image files embed into the value as <code class="nds-inline-code lang-html">data:image</code> URLs, capped at 2MB per image by default (raise via <code class="nds-inline-code lang-js">setImageUpload</code>). For demos and back-office fields without an upload backend — real deployments should configure a server upload instead (see the JavaScript API), since embedded base64 bloats the stored value and can't be cached or optimized</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state</code></td><td>Managed on the container at runtime: <code class="nds-inline-code lang-html">readonly</code> and <code class="nds-inline-code lang-html">disabled</code> toggled through <code class="nds-inline-code lang-js">NDS.State</code>. Initial state comes from the textarea's native attributes</td></tr>
                     </tbody>
                 </table>
@@ -676,13 +714,16 @@ textarea.addEventListener('change', onCommit); // fires on blur when changed
 // ── Image upload configuration ───────────────────────
 // The popover's upload section is a standard NDS Upload; setImageUpload
 // forwards ANY of its config keys to that container (they map 1:1 to the
-// data-* attributes on the File Upload page). With an endpoint configured
-// the upload section appears, files POST one per request ("file" field),
-// and the response's { url } (or a bare URL body) is inserted — no base64.
+// data-* attributes on the File Upload page). Without setImageUpload the
+// popover is URL-only. Two modes for the uploadUrl:
+//   - a real endpoint: files POST one per request ("file" field), and the
+//     response's { url } (or a bare URL body) is inserted — no base64.
+//   - 'embed' (reserved sentinel): files embed as data:image URLs. No POST
+//     is sent; for demos and back-office fields without an upload backend.
 el.addEventListener('nds:editor:ready', (e) =&gt; {
     e.detail.instance.setImageUpload({
-        uploadUrl: '/api/images',            // server endpoint (data-upload-url)
-        autoUpload: true,                    // upload on selection (data-auto-upload)
+        uploadUrl: '/api/images',            // server endpoint, or 'embed' for base64 (data-upload-url)
+        autoUpload: true,                    // upload on selection; ignored for 'embed' (data-auto-upload)
         maxFileSize: 5 * 1024 * 1024,        // bytes; generated default: 2MB (data-max-file-size)
         allowedTypes: 'jpg,png,webp',        // generated default: jpg,jpeg,png,gif,webp,svg (data-allowed-types)
         allowedMimeTypes: 'image/*',         // optional second check (data-allowed-mime-types)

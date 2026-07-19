@@ -568,7 +568,6 @@
         invalidImageUrl: { en: 'Enter a valid image URL', ar: 'أدخل رابط صورة صالحًا' },
         invalidUrl:      { en: 'Enter a valid URL', ar: 'أدخل رابطًا صالحًا' },
         pasteBlocked:    { en: 'Pasting images is not available — use the image dialog', ar: 'لصق الصور غير متاح — استخدم نافذة إدراج الصورة' },
-        imageTooLarge:   { en: 'Image exceeds the size limit', ar: 'الصورة تتجاوز الحد المسموح للحجم' },
         alt:      { en: 'Alt text', ar: 'النص البديل' },
         width:    { en: 'Width (px)', ar: 'العرض (بكسل)' },
         height:   { en: 'Height (px)', ar: 'الارتفاع (بكسل)' },
@@ -890,17 +889,21 @@
                     // Generated after the loader's sweep — init is idempotent.
                     NDS.Upload?.init?.();
                     // Chosen file → URL field (alt seeds from the file name).
-                    // The upload container is a plain nds-upload — consumers
-                    // configure server upload with ITS own API (data-upload-url
-                    // / data-auto-upload, stamped e.g. on nds:editor:ready).
-                    // With an uploadUrl the URL arrives via nds:upload:success;
-                    // without one the file embeds as a data:image URL.
+                    // Consumers configure the popover's upload container
+                    // through the editor's setImageUpload() (uploadUrl,
+                    // autoUpload, maxFileSize, allowedTypes…). uploadUrl:
+                    // 'embed' is a reserved sentinel — files embed as
+                    // data:image URLs; any other URL POSTs and the URL arrives
+                    // via nds:upload:success.
                     uploadHost.addEventListener('nds:upload:selected', (e) => {
                         const file = e.detail.files[0];
                         if (!file) return;
                         const altInput = imageMenu.querySelector('[data-editor-image-alt]');
                         if (altInput && !altInput.value) altInput.value = file.name.replace(/\.[^.]+$/, '');
-                        if (uploadHost.ndsUpload?.getConfig?.().uploadUrl) return;
+                        // Server mode short-circuits (nds:upload:success drives
+                        // the URL); embed mode falls through to the FileReader.
+                        const url = uploadHost.ndsUpload?.getConfig?.().uploadUrl;
+                        if (url && url !== 'embed') return;
                         const fr = new FileReader();
                         fr.onload = () => {
                             const urlInput = imageMenu.querySelector('[data-editor-image-url]');
@@ -1263,29 +1266,32 @@
                 insert = escapeHtml(text).replace(/\n/g, '<br>');
             }
             if (!insert) {
-                // No usable text flavor — a clipboard image FILE (screenshot,
-                // copied bitmap) embeds as a data:image URL, but only in
-                // embed mode; the default politely points at the image
-                // dialog. Mixed text+image clipboards (Word) keep the text
-                // flavor; the file is unplaceable there and stays dropped.
-                const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'));
-                if (!file) return;
+                // No usable text flavor — clipboard image FILES (screenshots,
+                // copied bitmaps) embed as data:image URLs, but only in embed
+                // mode; the default politely points at the image dialog.
+                // Mixed text+image clipboards (Word) keep the text flavor; the
+                // files are unplaceable there and stay dropped.
+                const files = Array.from(e.clipboardData.files).filter(f => f.type.startsWith('image/'));
+                if (!files.length) return;
                 if (!this._imageEmbedAllowed()) {
                     this._notice(uiLabel(TOOLBAR_STRINGS.pasteBlocked));
                     return;
                 }
-                // Same size cap as the popover upload (the container's
-                // live-read NDS.Upload config; generated default 2MB) —
-                // base64 inflates ~37% into the form value.
+                // Same size/type/MIME gates as the popover upload — full
+                // parity via NDS.Upload's live validateFile(), so pasted files
+                // honor allowedTypes/allowedMimeTypes too, not just size.
+                // Insert order follows clipboard order; FileReader is async so
+                // each load re-uses the current caret via execCommand.
                 const host = this.root.querySelector('[data-editor-image-upload]');
-                const cap = host?.ndsUpload?.getConfig?.().maxFileSize || 2097152;
-                if (file.size > cap) {
-                    this._notice(uiLabel(TOOLBAR_STRINGS.imageTooLarge));
-                    return;
+                let firstError = '';
+                for (const file of files) {
+                    const errors = host?.ndsUpload?.validateFile?.(file) || [];
+                    if (errors.length) { firstError ||= errors[0]; continue; }
+                    const fr = new FileReader();
+                    fr.onload = () => this._insertImage(fr.result, '');
+                    fr.readAsDataURL(file);
                 }
-                const fr = new FileReader();
-                fr.onload = () => this._insertImage(fr.result, '');
-                fr.readAsDataURL(file);
+                if (firstError) this._notice(firstError);
                 return;
             }
             // A pasted fragment ending in a block element (component region,
@@ -1839,10 +1845,18 @@
         // Base64 embedding is the niche opt-in (demo docs, back-office, no
         // backend) — real deployments upload to a server or link out, so the
         // default popover is URL-only and pasted image FILES don't embed.
-        _imageEmbedAllowed() { return this.root.dataset.editorImageEmbed === 'true'; }
+        // Opted in via setImageUpload({ uploadUrl: 'embed' }) — a reserved
+        // sentinel that shares the container config with the server path.
+        _imageEmbedAllowed() { return this._imageUploadUrl() === 'embed'; }
+
+        _imageUploadUrl() {
+            const host = this.root.querySelector('[data-editor-image-upload]');
+            return host?.ndsUpload?.getConfig?.().uploadUrl || host?.dataset.uploadUrl || '';
+        }
 
         _imageUploadConfigured(host) {
-            return !!(host?.ndsUpload?.getConfig?.().uploadUrl || host?.dataset.uploadUrl);
+            const url = host?.ndsUpload?.getConfig?.().uploadUrl || host?.dataset.uploadUrl;
+            return !!url && url !== 'embed';
         }
 
         // The upload affordance shows only when it leads somewhere real:
@@ -1863,9 +1877,13 @@
         // maxFileSize, allowedTypes…) to the image popover's upload container
         // as dataset keys — NDS.Upload reads them live. Value null/false
         // removes a key. Chainable.
+        // uploadUrl: 'embed' is a reserved sentinel — files embed as data:image
+        // URLs instead of POSTing. autoUpload is forced off in that mode so
+        // NDS.Upload never sends an XHR to "/embed".
         setImageUpload(config = {}) {
             const host = this.root.querySelector('[data-editor-image-upload]');
             if (host) {
+                if (config.uploadUrl === 'embed') config = { ...config, autoUpload: false };
                 for (const [k, v] of Object.entries(config)) {
                     if (v == null || v === false) delete host.dataset[k];
                     else host.dataset[k] = String(v);
