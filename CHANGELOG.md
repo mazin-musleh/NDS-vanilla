@@ -6,6 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-07-20
+
+### Added
+- Editor — image support: insert by URL from a popover (with alt, width, height), click an image to select it for edit-in-place, link wrapping, or removal, plus paste and drag-in uploads through an embedded NDS Upload. `setImageUpload()` configures both modes; the default policy is URL-only, and the `'embed'` upload-URL sentinel opts into base64 embedding behind a 2 MB cap. See `components/editor.md`.
+- Editor — link now wraps a whole atom (button, tag, chip, featured icon, avatar, image) as an `<a>` and unwraps it again, never nesting; `data-no-external` opts an atom out. A selection ring marks the selected or remove-armed component, Enter escapes an inline atom, and clicking a textless atom selects it whole.
+- Editor — RTL/LTR direction command writing a native `dir` per block, physical alignment (left, right, center, justify), and new pilcrow direction icons.
+- Upload — `NDS.Upload.validateFile()` public API for size, type, and MIME validation.
+- Upload — a failed upload surfaces the server's JSON `{error}` in the file chip, falling back to `statusText` and then a localized generic message; `nds:upload:error` carries the raw response.
+
+### Changed
+- Dropmenu — `.nds-dropmenu-action` owns its layout (flex row, `--spacing-md` gap, children sharing the row equally without crushing their labels). The `nds-grid` pairing is dropped from its canonical markup.
+- Upload — in the non-dropbox row layout, `.nds-file-upload`'s form control sizes to its content (`--input-size: fit-content`) instead of a fixed 40px, and the action no longer stretches past its button.
+- Versioning — dev builds stamp the released line plus `.x-dev` (`1.4.x-dev`) rather than a guessed next number; doc `since` / `updated` stamps use `1.4.x` until the release commit sweeps them to the real version.
+
+### Fixed
+- Dropmenu — a portaled menu now takes its trigger's stacking layer, so a trigger inside a modal or the topbar no longer paints over its own menu.
+- Forms — focus and active states reach a control nested under a layout wrapper again (the mainnav and homepage search boxes lost their focus effect).
+- Forms — feedback resolves to the owning container, so a nested container's target (the editor's popover fields) no longer claims it.
+- Button — `[data-state~="focused"]` paints the focus ring on `.nds-btn`, matching the hover/pressed/selected convention.
+
+### Migrating from v1.4.0
+
+- Replace the built bundles (`nds-main.min.*` and the loader-injected `nds-delegated`/`nds-extras`, plus the `nds-accessibility`/`nds-showcase`/theme bundles).
+- Dropmenu — markup still pairing `nds-grid` with `.nds-dropmenu-action` keeps working, but the action bar's `--gap` override is gone, so those buttons now sit at the grid's default `--spacing-2xl` gap. Drop `nds-grid` from the element to get the built-in spacing.
+
 ## [1.4.0] - 2026-07-18
 
 ### Added
@@ -307,7 +332,8 @@ Replace your bundled `nds-main.min.css` and `nds-main.min.js` with the v1.0.1 ve
 - Five project-specific Claude Code skills for contributors.
 - MIT license, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY policies.
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.1.0...v1.2.0

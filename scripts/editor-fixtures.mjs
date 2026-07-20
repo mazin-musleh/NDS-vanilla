@@ -304,7 +304,7 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
         // to a region — so its contents filter against NDS_TAGS (which has IMG)
         // instead of ALLOWED_TAGS (which doesn't). Same <img> at top level is
         // stripped; see evil-payloads-neutralized.
-        // Images joined the plain vocabulary (1.4.x): a converted table keeps
+        // Images joined the plain vocabulary (1.4.1): a converted table keeps
         // a safe-src image, region-scrubbed; unsafe srcs still die whole.
         name: 'img-in-plain-table-kept-scrubbed',
         html: '<table><tbody><tr><td><img src="https://example.com/x.png" alt="صورة" width="80" onerror="x()">خلية</td><td><img src="file:///bad.png">أخرى</td></tr></tbody></table>',
