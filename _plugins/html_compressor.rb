@@ -1,7 +1,8 @@
 # HTML Compressor for National Design System
 #
 # Reformats generated HTML files in _site/ with htmlbeautifier: consistent
-# indentation, jammed include-boundary tags split, blank lines removed.
+# indentation, blank lines removed, and <head> tags jammed together by Liquid
+# trim markers broken back onto their own lines (htmlbeautifier won't do this).
 # <code> blocks are shielded (byte-preserved) — doc code samples are
 # whitespace-significant but not wrapped in <pre>, which htmlbeautifier
 # would otherwise flatten. <pre>/<textarea>/<script>/<style> are preserved
@@ -16,6 +17,10 @@ require 'htmlbeautifier'
 class HtmlCompressor
   FILE_EXTENSIONS = %w[.html].freeze
   CODE_RE = /<code\b[^>]*>.*?<\/code>/mi
+  HEAD_RE = /<head\b.*?<\/head>/mi
+  # A script/style block (matched whole, so its body is never split) or a tag
+  # boundary — `>` plus any gap, leaving the `<` for the next scan position.
+  HEAD_SPLIT_RE = /<(script|style)\b.*?<\/\1>|>\s*(?=<)/mi
 
   def initialize(dry_run: false)
     @dry_run = dry_run
@@ -69,7 +74,7 @@ class HtmlCompressor
 
     # Shield <code> elements so the beautifier can't touch their whitespace
     blocks = []
-    shielded = content.gsub(CODE_RE) { |m| blocks << m; "___NDS_CODE_SHIELD_#{blocks.size - 1}___" }
+    shielded = split_head(content).gsub(CODE_RE) { |m| blocks << m; "___NDS_CODE_SHIELD_#{blocks.size - 1}___" }
     cleaned = HtmlBeautifier.beautify(shielded, indent: '  ')
                 .gsub(/___NDS_CODE_SHIELD_(\d+)___/) { blocks[$1.to_i] } + "\n"
 
@@ -81,6 +86,15 @@ class HtmlCompressor
     puts "  ✓ #{relative_path} (#{delta >= 0 ? '+' : ''}#{delta} lines)"
 
     File.binwrite(file_path, cleaned) unless @dry_run
+  end
+
+  # htmlbeautifier only re-indents lines that already exist — it never splits tags
+  # that Liquid's `{%- -%}` trim markers jammed onto one line. Nothing in <head>
+  # renders, so break every tag boundary there and let the beautifier indent it.
+  def split_head(html)
+    html.sub(HEAD_RE) do |head|
+      "\n" + head.gsub(HEAD_SPLIT_RE) { |m| m.start_with?('<') ? m : ">\n" }
+    end
   end
 end
 
