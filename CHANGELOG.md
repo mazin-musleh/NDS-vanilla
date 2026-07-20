@@ -18,7 +18,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 - Dropmenu — `.nds-dropmenu-action` owns its layout (flex row, `--spacing-md` gap, children sharing the row equally without crushing their labels). The `nds-grid` pairing is dropped from its canonical markup.
 - Upload — in the non-dropbox row layout, `.nds-file-upload`'s form control sizes to its content (`--input-size: fit-content`) instead of a fixed 40px, and the action no longer stretches past its button.
-- Versioning — dev builds stamp the released line plus `.x-dev` (`1.4.x-dev`) rather than a guessed next number; doc `since` / `updated` stamps use `1.4.x` until the release commit sweeps them to the real version.
 
 ### Fixed
 - Dropmenu — a portaled menu now takes its trigger's stacking layer, so a trigger inside a modal or the topbar no longer paints over its own menu.
