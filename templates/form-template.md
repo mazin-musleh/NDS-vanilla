@@ -364,7 +364,7 @@ sidemenu_mode: false
             </form>
         </div>
 
-        <aside class="nds-sideinfo nds-sticky nds-sticky-md nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
+        <aside class="nds-sideinfo nds-card nds-stroke nds-shadow nds-sticky nds-sticky-md nds-top" aria-label="Application progress" style="--nds-sideinfo-top-offset: var(--spacing-6xl);">
             <!-- Vertical fallback (tablet + desktop) with a radial override on
                  mobile so the 4-step flow stays compact on small screens. -->
             <div class="nds-stepper nds-radial nds-vertical-lg"
@@ -438,7 +438,7 @@ sidemenu_mode: false
         const panels = document.querySelectorAll('[data-form-step]');
 
         const requiredNotice = document.querySelector('#formTemplate .nds-required-notice');
-        const mainContent = document.querySelector('#formTemplate .nds-info-content');
+        const formSection = document.getElementById('formTemplate');
         const mainNav = document.querySelector('.nds-main-nav');
         const reducedMotionMQL = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -448,19 +448,19 @@ sidemenu_mode: false
             });
             // The success panel has no required fields, so hide the notice there.
             if (requiredNotice) requiredNotice.hidden = step === 4;
-            // Same scroll-to-top semantics as nds-pagination.js: only scroll
-            // when the form top is hidden behind the sticky main nav.
-            if (mainContent) {
-                const navHeight = mainNav ? mainNav.offsetHeight : 72;
-                const targetTop = mainContent.getBoundingClientRect().top;
-                if (targetTop < navHeight) {
-                    window.scrollTo({
-                        top: targetTop + window.pageYOffset - navHeight - 16,
-                        behavior: reducedMotionMQL.matches ? 'auto' : 'smooth'
-                    });
-                }
-            }
             const panel = document.querySelector('#formTemplate [data-form-step]:not([hidden])');
+            // Scroll to the form section top, not the panel. The section sits above
+            // all the dynamic content (notice, panels, mobile stepper strip), so its
+            // position never drifts and the scroll lands the same on every step. Land
+            // it flush under the nav — the mobile strip pins at exactly navHeight.
+            const navHeight = mainNav ? mainNav.offsetHeight : 72;
+            const sectionTop = formSection.getBoundingClientRect().top;
+            if (sectionTop < navHeight) {
+                window.scrollTo({
+                    top: sectionTop + window.pageYOffset - navHeight,
+                    behavior: reducedMotionMQL.matches ? 'auto' : 'smooth'
+                });
+            }
             if (panel) focusNext(panel);
         }
 

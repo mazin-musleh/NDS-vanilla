@@ -53,10 +53,20 @@
             top: calc(var(--nds-nav-height));
             padding-block: var(--spacing-xl);
             padding-inline: var(--nds-viewport-padding);
-            margin-block-start: calc(var(--spacing-4xl) * -1);
+            // Cancel the section's padding-block (--spacing-5xl) so the pinned
+            // strip sits flush at the section's top edge, not 8px below it.
+            margin-block-start: calc(var(--spacing-5xl) * -1);
+            border: 0;
+            // Square the top corners so the full-width strip meets the nav cleanly.
+            border-start-start-radius: 0;
+            border-start-end-radius: 0;
+            --card-width: 100vw;
             width: 100vw !important;
             margin-inline: calc(50% - 50vw);
             box-shadow: var(--shadow-md);
+            // Clip the top so --shadow-md doesn't bleed above the strip onto the
+            // nav; the bottom drop shadow still shows (sides are off-viewport at 100vw).
+            clip-path: inset(0 0 -16px 0);
             z-index: 999;
         }
 
