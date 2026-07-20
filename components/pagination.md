@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "16/07/2026 - 02:15 AM"
+updated: "1.4.x"
+last_edit: "20/07/2026 - 11:14 PM"
 ---
 
 <!-- Choosing a mode -->
@@ -995,7 +995,7 @@ last_edit: "16/07/2026 - 02:15 AM"
                     <li>Both <code class="nds-inline-code lang-html">&lt;button&gt;</code> and <code class="nds-inline-code lang-html">&lt;a&gt;</code> elements work inside pagination items. Use buttons for client-side navigation, anchors for distinct URLs</li>
                     <li>Bind a nav to its content by id — <code class="nds-inline-code lang-html">data-auto-pagination="gridId"</code> matching the wrapper's <code class="nds-inline-code lang-html">id</code> (the same convention as filter's <code class="nds-inline-code lang-html">data-filter-target</code>). Omit the value to bind the immediately-preceding wrapper instead</li>
                     <li>Keep <code class="nds-inline-code lang-html">nds-page-item</code> (your <strong>content</strong> items) distinct from <code class="nds-inline-code lang-html">nds-pagination-item</code> (the nav's <code class="nds-inline-code lang-html">&lt;li&gt;</code> controls) — similar names, opposite roles</li>
-                    <li>For server or AJAX pagination, listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> (its <code class="nds-inline-code lang-js">detail.page</code> is the resolved page), load that page, then call <code class="nds-inline-code lang-js">NDS.Pagination.setPage()</code> to highlight it. When a new query changes the total page count, call <code class="nds-inline-code lang-js">NDS.Pagination.setTotalPages()</code> to rebuild the controls (it keeps the current page; pass a page number to jump). NDS owns the nav UI, you own the data</li>
+                    <li>For server or AJAX pagination, listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> (its <code class="nds-inline-code lang-js">detail.page</code> is the resolved page), load that page, then call <code class="nds-inline-code lang-js">NDS.Pagination.setPage()</code> to highlight it (calling it once the response lands also scrolls the content back into view, with no delay to guess). When a new query changes the total page count, call <code class="nds-inline-code lang-js">NDS.Pagination.setTotalPages()</code> to rebuild the controls (it keeps the current page; pass a page number to jump). NDS owns the nav UI, you own the data</li>
                     <li>Attach your logic to the nav, not to individual page buttons: listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> or give each page a distinct <code class="nds-inline-code lang-html">&lt;a href&gt;</code>. Collapsing rebuilds the page buttons, so custom classes, <code class="nds-inline-code lang-html">data-*</code> attributes, <code class="nds-inline-code lang-html">href</code>, and inline <code class="nds-inline-code lang-html">onclick</code> survive, but a listener added with <code class="nds-inline-code lang-js">addEventListener</code> on a button does not</li>
                     <li>For content pagination, adding or removing <code class="nds-inline-code lang-html">nds-page-item</code> elements re-paginates automatically and keeps the current page, no re-init needed, at any nesting (cards, list items, table rows). A wholesale content swap that injects a brand-new nav (e.g. a filter's AJAX HTML mode) still needs <code class="nds-inline-code lang-js">NDS.Pagination.reinit()</code>, or have the server return it already paginated</li>
                     <li>Don't paginate a continuously growing feed. Use <a class="nds-color" href="{{ 'components/scroll-more' | relative_url }}">Scroll More</a> for load-on-scroll content where the total count isn't fixed</li>
@@ -1075,6 +1075,10 @@ last_edit: "16/07/2026 - 02:15 AM"
                             <td>Set on a page button to mark it as the current page. Updated automatically on navigation</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-html">data-pagination-no-scroll</code></td>
+                            <td>Add to <code class="nds-inline-code lang-html">nds-pagination</code> to stop a page change from scrolling the content back into view. Scrolling is on by default and already skips itself when the content sits below the sticky nav. Opt out when you want to decide per page change, then call <code class="nds-inline-code lang-js">NDS.Pagination.scrollToContent()</code> yourself</td>
+                        </tr>
+                        <tr>
                             <td><code class="nds-inline-code lang-html">data-paged-target="id"</code></td>
                             <td>Set on any element to make it a records counter for the paged container with that id. Inside it, pagination stamps the current window and count into <code class="nds-inline-code lang-html">[data-paged-from]</code>, <code class="nds-inline-code lang-html">[data-paged-to]</code>, and <code class="nds-inline-code lang-html">[data-paged-count]</code> slots, with thousand separators. Auto-pagination only; for server pagination stamp the slots via <code class="nds-inline-code lang-js">NDS.Pagination.updateRecords()</code></td>
                         </tr>
@@ -1134,8 +1138,24 @@ NDS.Pagination.initAuto();
 // Create a single pagination instance
 const instance = NDS.Pagination.create(element);
 
-// Navigate to a specific page
+// Navigate to a specific page. Scrolls the content back into view unless the nav
+// carries data-pagination-no-scroll.
 NDS.Pagination.setPage(containerElement, 3);
+
+// Scroll the paged content back under the sticky nav. Ignores
+// data-pagination-no-scroll: the explicit call is the intent. No-ops when the
+// content already sits below the nav, so it stays quiet on wide screens.
+NDS.Pagination.scrollToContent(navElement);
+
+// Opting out lets you decide per page change, e.g. skip the scroll on a failed
+// request so the user keeps looking at the error instead of an empty grid.
+document.addEventListener('nds:pagination:change', async (e) => {
+  const res = await fetch(`/orders?page=${e.detail.page}`);
+  if (!res.ok) return showError();
+  renderRows(await res.json());
+  NDS.Pagination.setPage(e.detail.pagination, e.detail.page);
+  NDS.Pagination.scrollToContent(e.detail.pagination);
+});
 
 // Auto-pagination re-paginates on its own when nds-page-item elements are
 // added or removed (current page kept), no call needed. Use refresh() only to

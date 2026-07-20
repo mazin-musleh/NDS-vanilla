@@ -22,7 +22,8 @@
  *   - Per-nav click handler for manual pagination (_wireManualNavClicks),
  *     scoped via paginationNav._ndsClickAC; DOM removal GCs it automatically.
  *   - Per-nav click handler for auto-pagination (wireAutoClicks).
- *   - goToPage / scrollToContent (sticky-nav-aware smooth scroll)
+ *   - goToPage / scrollToContent (sticky-nav-aware smooth scroll; opt out per nav
+ *     via data-pagination-no-scroll)
  *   - refreshAutoPagination (filter-driven; the NDS.Pagination.refresh entry)
  *   - The per-container --per-page ResizeObserver + the .nds-paged-content
  *     onDOMRemove cleanup
@@ -760,6 +761,17 @@
         });
     }
 
+    // Page-change scroll is on by default; opt out per nav with
+    // data-pagination-no-scroll. Server-driven pages get it from setPage(), which
+    // the consumer calls once its fetch resolves — real response timing, no delay
+    // to guess. NDS.Pagination.scrollToContent() ignores the attribute: calling it
+    // explicitly is the intent.
+    function _scrollOnPageChange(pagination) {
+        const nav = pagination.closest('.nds-pagination');
+        if (nav?.hasAttribute('data-pagination-no-scroll')) return;
+        scrollToContent(pagination);
+    }
+
     // Dispatch nds:pagination:change after a user-initiated page change. detail
     // mirrors the sibling :change family (filter/sort/stepper/tab): new value +
     // previous + total + the component element. Fired on the .nds-pagination nav,
@@ -779,7 +791,7 @@
         setActivePage(pagination, pageNumber);
         updatePrevNextStates(pagination, pageNumber, 1, totalPages);
         showPage(items, pageNumber, perPage);
-        scrollToContent(pagination);
+        _scrollOnPageChange(pagination);
 
         _dispatchPageChange(pagination, pageNumber, previousPage, totalPages);
     }
@@ -1019,7 +1031,7 @@
         setActivePage(pagination, targetPageNum);
         const { min, max } = pageBounds(allPageElements);
         updatePrevNextStates(pagination, targetPageNum, min, max);
-        scrollToContent(pagination);
+        _scrollOnPageChange(pagination);
         _dispatchPageChange(pagination, targetPageNum, previousPage, max);
     }
 
@@ -1128,6 +1140,12 @@
             if (!Number.isFinite(min)) return;
             setActivePage(pagination, pageNumber);
             updatePrevNextStates(pagination, pageNumber, min, max);
+            _scrollOnPageChange(pagination);
+        },
+        // Manual scroll for consumers driving their own page changes. Ignores
+        // data-pagination-no-scroll — the explicit call is the intent.
+        scrollToContent: function(container) {
+            scrollToContent(container.querySelector('.nds-pagination-list') || container);
         },
         // Server/manual pagination hook: push your own numbers through the same
         // [data-paged-target] slot grammar the auto path stamps.
