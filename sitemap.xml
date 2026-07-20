@@ -15,6 +15,12 @@ permalink: /sitemap.xml
     <lastmod>{{ page.last_modified_at | date_to_xmlschema }}</lastmod>
     {%- elsif page.date %}
     <lastmod>{{ page.date | date_to_xmlschema }}</lastmod>
+    {%- elsif page.last_edit %}
+    {%- comment %} last_edit is a display string "DD/MM/YYYY - HH:MM AM/PM"; reorder to YYYY-MM-DD (date-only lastmod is valid). {%- endcomment %}
+    {%- assign _dmy = page.last_edit | split: " - " | first | split: "/" %}
+    {%- if _dmy.size == 3 %}
+    <lastmod>{{ _dmy[2] }}-{{ _dmy[1] }}-{{ _dmy[0] }}</lastmod>
+    {%- endif %}
     {%- endif %}
   </url>
 {%- endfor -%}
