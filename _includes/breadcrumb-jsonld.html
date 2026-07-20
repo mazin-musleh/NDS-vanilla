@@ -1,24 +1,24 @@
 {%- comment -%} BreadcrumbList JSON-LD mirroring the visible sub-hero breadcrumb from the same front matter (so they can't drift): pair → linked item, bare string → name only, absolute URLs. {%- endcomment -%}
-{%- assign home_text = 'الرئيسية' -%}{%- if page.lang == 'en' -%}{%- assign home_text = 'Home' -%}{%- endif -%}
-{%- assign bc_root = page.breadcrumb_root | default: home_text -%}
-{%- assign bc_root_url = page.breadcrumb_root_url | default: '/' -%}
+{%- assign home_text = 'الرئيسية' -%}{%- if page.lang == 'en' -%}{%- assign home_text = 'Home' -%}{%- endif %}
+{%- assign bc_root = page.breadcrumb_root | default: home_text %}
+{%- assign bc_root_url = page.breadcrumb_root_url | default: '/' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {%- assign pos = 1 -%}
+    {%- assign pos = 1 %}
     { "@type": "ListItem", "position": {{ pos }}, "name": {{ bc_root | jsonify }}, "item": {{ bc_root_url | absolute_url | jsonify }} }
-    {%- if page.breadcrumb -%}
-    {%- for crumb in page.breadcrumb -%}
+    {%- if page.breadcrumb %}
+    {%- for crumb in page.breadcrumb %}
     {%- assign pos = pos | plus: 1 -%},
     {%- if crumb.first %}
     { "@type": "ListItem", "position": {{ pos }}, "name": {{ crumb[0] | jsonify }}, "item": {{ crumb[1] | absolute_url | jsonify }} }
     {%- else %}
     { "@type": "ListItem", "position": {{ pos }}, "name": {{ crumb | jsonify }} }
-    {%- endif -%}
-    {%- endfor -%}
-    {%- endif -%}
+    {%- endif %}
+    {%- endfor %}
+    {%- endif %}
     {%- assign pos = pos | plus: 1 -%},
     { "@type": "ListItem", "position": {{ pos }}, "name": {{ page.title | jsonify }}, "item": {{ page.url | absolute_url | jsonify }} }
   ]

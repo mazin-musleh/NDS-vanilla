@@ -1,16 +1,16 @@
 ---
 layout: default
 ---
-{%- include hero.html hero_type="sub" %}
+{% include hero.html hero_type="sub" %}
 <div class="nds-content-layout {%- if page.sidemenu_mode != false %} nds-wSideMenu{%- endif %} {{ page.layout_class }}">
     {%- if page.sidemenu_mode != false %}
-    {%- include sidemenu.html %}
+    {% include sidemenu.html %}
     {%- endif %}
     <div class="nds-main-content">
         {{ content }}
-        {%- include last-edit.html %}
+        {% include last-edit.html %}
     </div>
 </div>
 {%- if page.hideFeedback != true %}
-{%- include user-feedback.html %}
+{% include user-feedback.html %}
 {%- endif %}

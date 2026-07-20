@@ -1,4 +1,4 @@
-{%- assign variant = include.variant | default: 'default' -%}
+{%- assign variant = include.variant | default: 'default' %}
 <figure class="nds-quote{% if variant == 'transparent' %} nds-transparent{% endif %}">
     <blockquote class="nds-quote-body"{% if include.cite %} cite="{{ include.cite }}"{% endif %}>
         {% if include.title %}<span class="nds-quote-title">{{ include.title }}</span>{% endif %}

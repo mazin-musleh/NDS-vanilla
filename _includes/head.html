@@ -1,42 +1,42 @@
 <head>
-    {%- assign site_title = page.siteTitle | default: site.title -%}
+    {%- assign site_title = page.siteTitle | default: site.title %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{%- if page.title %}{{ page.title }} | {%- endif %} {{ site_title }}</title>
-    {%- include seo-meta.html -%}
+    {% include seo-meta.html %}
     {%- comment -%} Preload first hero slide so LCP can start before body parse — only on layouts that render the main slider {%- endcomment -%}
-    {%- if page.layout == 'home' -%}
-    {%- if page.hero_sliders -%}
-    {%- assign _hs = page.hero_sliders -%}
-    {%- else -%}
-    {%- assign _hs_name = page.herosliders | default: site.herosliders | default: "herosliders" -%}
-    {%- assign _hs = site.data.hero[_hs_name] -%}
-    {%- endif -%}
-    {%- if _hs and _hs.size > 0 -%}
-    {%- assign _first = _hs[0] -%}
-    {%- if _first.src_small -%}
+    {%- if page.layout == 'home' %}
+    {%- if page.hero_sliders %}
+    {%- assign _hs = page.hero_sliders %}
+    {%- else %}
+    {%- assign _hs_name = page.herosliders | default: site.herosliders | default: "herosliders" %}
+    {%- assign _hs = site.data.hero[_hs_name] %}
+    {%- endif %}
+    {%- if _hs and _hs.size > 0 %}
+    {%- assign _first = _hs[0] %}
+    {%- if _first.src_small %}
     <link rel="preload" as="image" href="{{ _first.src_small | relative_url }}" media="(max-width: 768px)" fetchpriority="high">
     <link rel="preload" as="image" href="{{ _first.src | relative_url }}" media="(min-width: 769px)" fetchpriority="high">
-    {%- else -%}
+    {%- else %}
     <link rel="preload" as="image" href="{{ _first.src | relative_url }}" fetchpriority="high">
-    {%- endif -%}
-    {%- endif -%}
-    {%- endif -%}
+    {%- endif %}
+    {%- endif %}
+    {%- endif %}
     {%- comment -%} Critical CSS. Default: render-blocking <link> (fastest LCP/FCP on slow networks, cacheable across pages). Opt in to the inline skeleton gate + async crit with `critical_inline: true` (site or page) — non-blocking first paint; the gate is auto-generated from _sass/_fold.scss so it can't drift from the crit file. {%- endcomment -%}
-    {%- if site.critical_inline or page.critical_inline -%}
-    {%- include critical-inline.html -%}
+    {%- if site.critical_inline or page.critical_inline %}
+    {% include critical-inline.html %}
     <link rel="preload" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="high"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
-    {%- else -%}
+    {%- else %}
     <link rel="stylesheet" href="{{ 'assets/css/nds.critical.min.css' | relative_url }}?ver={{ site.asset_ver }}">
-    {%- endif -%}
+    {%- endif %}
     {%- if site.brand %}
     <!-- Default stylesheet theme: render-blocking so it resolves before paint (no flash). Only stylesheet themes need their own file; seed themes ride the [data-palette] slot in critical. -->
-    {%- assign _brands_flat = "" | split: "" -%}{%- for _g in site.data.themes -%}{%- assign _brands_flat = _brands_flat | concat: _g.list -%}{%- endfor -%}
-    {%- assign _brand = _brands_flat | where: 'value', site.brand | first -%}
+    {%- assign _brands_flat = "" | split: "" -%}{%- for _g in site.data.themes -%}{%- assign _brands_flat = _brands_flat | concat: _g.list -%}{%- endfor %}
+    {%- assign _brand = _brands_flat | where: 'value', site.brand | first %}
     {%- if _brand.css %}
     <link id="nds-theme-stylesheet" rel="stylesheet" href="{{ _brand.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
@@ -82,19 +82,19 @@
     </noscript>
     {%- endunless %}
     {%- if site.perf_monitor %}
-    {%- include perf-monitor.html %}
+    {% include perf-monitor.html %}
     {%- endif %}
     {%- if site.debug %}
     <!-- Debug: enable the loader's per-component init logging + timing (pre-eval). -->
     <script>window.NDSInitConfig = { enableTiming: true, enableLogging: true };</script>
     {%- endif %}
     {%- comment -%} Site-wide WebSite + Organization entity graph (every page) {%- endcomment -%}
-    {%- include website-jsonld.html -%}
+    {% include website-jsonld.html %}
     {%- comment -%} BreadcrumbList JSON-LD — sub-hero layouts only (page/post/console) {%- endcomment -%}
-    {%- if page.layout == 'page' or page.layout == 'post' or page.layout == 'console' -%}
-    {%- include breadcrumb-jsonld.html -%}
-    {%- endif -%}
+    {%- if page.layout == 'page' or page.layout == 'post' or page.layout == 'console' %}
+    {% include breadcrumb-jsonld.html %}
+    {%- endif %}
     <!-- Theme/brand stamp (FOUC guard) — placed last so resource preloads kick off first. -->
-    {%- include head-inline-scripts.html -%}
-    {%- include google-analytics.html -%}
+    {% include head-inline-scripts.html %}
+    {% include google-analytics.html %}
 </head>

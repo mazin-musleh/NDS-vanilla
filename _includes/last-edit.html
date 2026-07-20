@@ -1,15 +1,15 @@
-{%- comment -%}
+{%- comment %}
 DGA last-modified line at the end of .nds-main-content. Opt-in per page:
 set `last_edit` in front matter with a preformatted date string, e.g.
   last_edit: "04/12/2020 - 04:13 PM"
 The value is author-formatted; the include only localizes the label.
-{%- endcomment -%}
+{%- endcomment %}
 {%- if page.last_edit %}
 <section class="nds-last-edit nds-content-section">
-    {%- if page.lang == "ar" or page.lang == nil -%}
+    {%- if page.lang == "ar" or page.lang == nil %}
     تاريخ آخر تعديل: {{ page.last_edit }}
-    {%- else -%}
+    {%- else %}
     Last Modified Date: {{ page.last_edit }}
-    {%- endif -%}
+    {%- endif %}
 </section>
 {%- endif %}

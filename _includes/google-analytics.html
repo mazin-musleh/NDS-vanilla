@@ -1,4 +1,4 @@
-{%- comment -%}
+{%- comment %}
   Google Analytics — gated TWO ways:
     1. `jekyll.environment == "production"` — GitHub Pages sets JEKYLL_ENV=production
        automatically; local `bundle exec jekyll serve` runs in development, so this
@@ -24,8 +24,8 @@
   PSI never traces it — no consent-timing or PSI-request-chain tradeoff.
   Cost: zero-interaction bounces go untracked (they were consent-denied
   anyway). Cookie read uses regex (no array allocation).
-{%- endcomment -%}
-{%- if jekyll.environment == "production" and site.google_analytics and site.google_analytics != "" -%}
-{%- assign ga_id = site.google_analytics -%}
+{%- endcomment %}
+{%- if jekyll.environment == "production" and site.google_analytics and site.google_analytics != "" %}
+{%- assign ga_id = site.google_analytics %}
 <script>window.GA_TRACKING_ID='{{ ga_id }}';window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});try{var m=document.cookie.match(/(?:^|; )cookieConsent=([^;]+)/),v=m&&m[1];if(v==='accepted')gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted'});else if(v==='declined')window['ga-disable-{{ ga_id }}']=!0}catch(e){}gtag('config','{{ ga_id }}',{anonymize_ip:!0});(function(){var f,t,o={once:!0,passive:!0,capture:!0},e=['pointerdown','keydown','scroll','touchstart','wheel','mousemove'];function l(){var s=document.createElement('script');s.async=!0;s.src='https://www.googletagmanager.com/gtag/js?id={{ ga_id }}';s.fetchPriority='low';document.head.appendChild(s)}function k(){f||(f=1,clearTimeout(t),e.forEach(function(x){removeEventListener(x,k,o)}),l())}e.forEach(function(x){addEventListener(x,k,o)});t=setTimeout(k,1e4)})()</script>
-{%- endif -%}
+{%- endif %}

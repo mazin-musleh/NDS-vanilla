@@ -4,13 +4,13 @@ Determine hero sliders source:
 2. Use page.herosliders to specify which data file to load (e.g., "herosliders-about")
 3. Fall back to site.herosliders config (default: "herosliders")
 4. Load from site.data[hero_file_name]
-{%- endcomment -%}
-{%- if page.hero_sliders -%}
-{%- assign hero_sliders = page.hero_sliders -%}
-{%- else -%}
-{%- assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" -%}
-{%- assign hero_sliders = site.data.hero[hero_file_name] -%}
-{%- endif -%}
+{%- endcomment %}
+{%- if page.hero_sliders %}
+{%- assign hero_sliders = page.hero_sliders %}
+{%- else %}
+{%- assign hero_file_name = page.herosliders | default: site.herosliders | default: "herosliders" %}
+{%- assign hero_sliders = site.data.hero[hero_file_name] %}
+{%- endif %}
 <section class="nds-hero-section">
     <div class="nds-swiper nds-hero nds-oncolor nds-full-width" style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">

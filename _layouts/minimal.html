@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: 'en' }}" dir="{{ page.direction | default: 'ltr' }}">
-{%- include head.html %}
-{%- assign page_bg = page.page_bg | default: page.hero_image -%}
+{% include head.html %}
+{%- assign page_bg = page.page_bg | default: page.hero_image %}
 <body class="{{ page.body_class }}{% if page_bg %} nds-page-bg{% endif %}"{% if page_bg %} style="--bg-img: url('{{ page_bg | relative_url }}'); --bg-opacity-top: {{ page.bg_opacity_top | default: '80%' }}; --bg-opacity-bottom: {{ page.bg_opacity_bottom | default: '80%' }};"{% endif %}>
     <main>
         <div class="nds-content-layout nds-content-wrapper {{ page.layout_class }}">

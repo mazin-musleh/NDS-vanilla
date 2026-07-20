@@ -1,41 +1,41 @@
-{%- assign hero_bg = page.hero_image | default: site.hero_image_sub -%}
+{%- assign hero_bg = page.hero_image | default: site.hero_image_sub %}
 
 {%- comment %} Hero tags / actions / float actions come from page front matter — no data-file indirection. The share button floats inline-end by default (icon-only on mobile via nds-minimal); a page overrides with `hero_float_actions` or suppresses it with `hide_share_page: true`. {%- endcomment %}
-{%- assign hero_tags = page.hero_tags -%}
-{%- assign hero_actions = page.hero_actions -%}
+{%- assign hero_tags = page.hero_tags %}
+{%- assign hero_actions = page.hero_actions %}
 
-{%- if page.hero_float_actions -%}
-    {%- assign _raw_float = page.hero_float_actions -%}
-    {%- if _raw_float.items -%}
-        {%- assign hero_float_actions = _raw_float.items -%}
-        {%- assign hero_float_actions_class = _raw_float.class -%}
-    {%- else -%}
-        {%- assign hero_float_actions = _raw_float -%}
-    {%- endif -%}
-{%- else -%}
-    {%- assign hero_float_actions = "share" | split: "," -%}
-    {%- assign hero_float_actions_class = "nds-minimal" -%}
-{%- endif -%}
+{%- if page.hero_float_actions %}
+    {%- assign _raw_float = page.hero_float_actions %}
+    {%- if _raw_float.items %}
+        {%- assign hero_float_actions = _raw_float.items %}
+        {%- assign hero_float_actions_class = _raw_float.class %}
+    {%- else %}
+        {%- assign hero_float_actions = _raw_float %}
+    {%- endif %}
+{%- else %}
+    {%- assign hero_float_actions = "share" | split: "," %}
+    {%- assign hero_float_actions_class = "nds-minimal" %}
+{%- endif %}
 
-{%- assign _share_in_action = false -%}
-{%- for item in hero_actions -%}
-    {%- if item == "share" -%}{%- assign _share_in_action = true -%}{%- endif -%}
-{%- endfor -%}
-{%- assign _share_in_float = false -%}
-{%- for item in hero_float_actions -%}
-    {%- if item == "share" -%}{%- assign _share_in_float = true -%}{%- endif -%}
-{%- endfor -%}
-{%- if page.hide_share_page -%}
-    {%- assign share_placement = "hidden" -%}
-{%- elsif _share_in_action -%}
-    {%- assign share_placement = "action" -%}
-{%- elsif _share_in_float -%}
-    {%- assign share_placement = "float" -%}
-{%- else -%}
-    {%- assign share_placement = "hidden" -%}
-{%- endif -%}
+{%- assign _share_in_action = false %}
+{%- for item in hero_actions %}
+    {%- if item == "share" -%}{%- assign _share_in_action = true -%}{%- endif %}
+{%- endfor %}
+{%- assign _share_in_float = false %}
+{%- for item in hero_float_actions %}
+    {%- if item == "share" -%}{%- assign _share_in_float = true -%}{%- endif %}
+{%- endfor %}
+{%- if page.hide_share_page %}
+    {%- assign share_placement = "hidden" %}
+{%- elsif _share_in_action %}
+    {%- assign share_placement = "action" %}
+{%- elsif _share_in_float %}
+    {%- assign share_placement = "float" %}
+{%- else %}
+    {%- assign share_placement = "hidden" %}
+{%- endif %}
 
-{%- unless share_placement == "hidden" -%}
+{%- unless share_placement == "hidden" %}
 {%- capture share_html %}
             <div class="nds-share nds-dropmenu">
                 <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"
@@ -66,21 +66,21 @@
                 </div>
             </div>
 {%- endcapture -%}
-{%- endunless -%}
+{%- endunless %}
 
-{%- assign _has_float = false -%}
-{%- for item in hero_float_actions -%}
-    {%- if item == "share" -%}
-        {%- if share_placement == "float" -%}{%- assign _has_float = true -%}{%- endif -%}
-    {%- else -%}
-        {%- assign _has_float = true -%}
-    {%- endif -%}
-{%- endfor -%}
-{%- assign _has_action = false -%}
-{%- for item in hero_actions -%}
-    {%- unless item == "share" -%}{%- assign _has_action = true -%}{%- endunless -%}
-{%- endfor -%}
-{%- if share_placement == "action" -%}{%- assign _has_action = true -%}{%- endif -%}
+{%- assign _has_float = false %}
+{%- for item in hero_float_actions %}
+    {%- if item == "share" %}
+        {%- if share_placement == "float" -%}{%- assign _has_float = true -%}{%- endif %}
+    {%- else %}
+        {%- assign _has_float = true %}
+    {%- endif %}
+{%- endfor %}
+{%- assign _has_action = false %}
+{%- for item in hero_actions %}
+    {%- unless item == "share" -%}{%- assign _has_action = true -%}{%- endunless %}
+{%- endfor %}
+{%- if share_placement == "action" -%}{%- assign _has_action = true -%}{%- endif %}
 <section class="nds-hero-section nds-sub{%- if page.hero_style and page.hero_style != "" %} {{ page.hero_style }}{%- endif %}"
     {%- if hero_bg %} style="--hero_image: url('{{ hero_bg | relative_url }}');"{%- endif %}>
     <nav class="nds-breadcrumb-nav" aria-label="Breadcrumb">
@@ -135,8 +135,8 @@
                         A number equal to the in-development target ({version} minus -dev) renders
                         as "next release" and flips automatically when the release lands
                         (version == latest_release). {%- endcomment %}
-                    {%- assign _dev_target = site.version | remove: "-dev" -%}
-                    {%- assign _in_dev = true -%}
+                    {%- assign _dev_target = site.version | remove: "-dev" %}
+                    {%- assign _in_dev = true %}
                     {%- if site.version == site.latest_release -%}{%- assign _in_dev = false -%}{%- endif %}
                     {%- if page.since %}
                     {%- if _in_dev and page.since == _dev_target %}
