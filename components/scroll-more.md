@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.1.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.4.x"
+last_edit: "21/07/2026 - 09:08 PM"
 ---
 
 <!-- Vertical Overflow -->
@@ -126,7 +126,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-scroll-more" style="--scroll-max-width: 480px;">
-                                <div class="nds-scroll-more-content nds-flex">
+                                <div class="nds-scroll-more-content nds-flex" style="align-items: center;">
                                     <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">All</span></button>
                                     <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Healthcare</span></button>
                                     <button class="nds-btn nds-subtle nds-sm"><span class="nds-label">Education</span></button>
@@ -165,7 +165,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                     </div>
                                     <code class="lang-html code">
 &lt;div class="nds-scroll-more" style="--scroll-max-width: 480px;"&gt;
-  &lt;div class="nds-scroll-more-content nds-flex"&gt;
+  &lt;div class="nds-scroll-more-content nds-flex" style="align-items: center;"&gt;
     &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;All&lt;/span&gt;&lt;/button&gt;
     &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Healthcare&lt;/span&gt;&lt;/button&gt;
     &lt;button class="nds-btn nds-subtle nds-sm"&gt;&lt;span class="nds-label"&gt;Education&lt;/span&gt;&lt;/button&gt;

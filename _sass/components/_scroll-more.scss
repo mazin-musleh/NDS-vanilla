@@ -54,6 +54,7 @@
     --mask-fade-distance: var(--_scroll-fade);
 
     overflow: auto;
+    align-self: stretch;   // viewport must fill the wrapper's cross-axis even if the consumer sets align-items:center
     flex: 1;
     min-width: 0;
     min-height: 0;
@@ -175,7 +176,7 @@
 // Horizontal: rotate the entire button so icon + label read vertically.
 .nds-scroll-more[data-axis="horizontal"] > .nds-show-more {
     align-self: stretch;
-    height: auto !important;
+    height: auto;
     writing-mode: vertical-rl;
     text-orientation: sideways;
     --_icon-rotate: 90deg;

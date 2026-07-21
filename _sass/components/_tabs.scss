@@ -347,15 +347,6 @@ section>.nds-max-width {
   flex-direction: row;
 }
 
-// Override scroll-more's horizontal stretch rule (`align-self: stretch` +
-// `height: auto !important` in _scroll-more.scss) so the show-more button stays
-// at tab height instead of matching the full flex-row height (tabs + 3px rail).
-// Specificity bumped via :not(.nds-vertical) to beat scroll-more's selector,
-// since tabs loads before scroll-more in the bundle.
-.nds-tabs:not(.nds-vertical) .nds-tab.nds-show-more {
-  align-self: center;
-  height: var(--btn-size) !important;
-}
 // ==============================================
 // PROCESSING SKELETON
 // ==============================================
