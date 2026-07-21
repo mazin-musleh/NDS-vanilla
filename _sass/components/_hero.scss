@@ -89,6 +89,7 @@
         flex-direction: column;
         justify-content: center;
         gap: var(--spacing-3xl);
+        isolation: isolate; // contain the z-index:-1 image ::after in its own stacking context
 
         // Image layer — mask fades it to transparent so background-color shows through
         &::after {
