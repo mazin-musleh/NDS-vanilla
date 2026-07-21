@@ -63,7 +63,7 @@
         display: flex;
         align-items: center;
         flex-direction: row;
-        flex: 1 1 var(--nds-brand-width, auto);
+        flex: 0 1 var(--nds-brand-width, auto);
         font-weight: var(--font-weight-bold);
         text-decoration: none;
         gap: var(--spacing-lg);
