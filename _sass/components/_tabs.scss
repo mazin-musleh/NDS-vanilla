@@ -114,7 +114,11 @@
   // `:is(.nds-center, .center)` covers both the prefixed class and the legacy
   // unprefixed one. `margin-inline: auto` horizontally centers the fit-content
   // strip without touching block margins (owned by surrounding layout).
-  .nds-tab-list:is(.nds-center, .center) {
+  // Center only while the tabs fit. Once scroll-more flags overflow, centering
+  // would push the leading tabs past the scroll origin (scrollLeft can't go
+  // negative) where they're unreachable — so gate on the parent's has-more and
+  // fall back to the base start-align.
+  .nds-scroll-more:not([data-state~="has-more"]) > .nds-tab-list:is(.nds-center, .center) {
     justify-content: center;
     width: fit-content;
     margin-inline: auto;
