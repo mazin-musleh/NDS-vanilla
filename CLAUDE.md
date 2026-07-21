@@ -14,16 +14,16 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 
 ## Files to Ignore
 
-- **NEVER read** any `.min.js` or `.min.css` files (minified output)
+- **NEVER read** any `.min.js` or `.min.css` files (minified output) — grepping or size-checking the built output is fine, just don't Read the blob into context. (`.min.scss` files are Sass source, not covered.)
 
 ## Tool Restrictions
 
 - **NEVER use `sed`** for file edits — it rewrites every file it opens even with no match, polluting git diffs.
-- **For mass/bulk edits** — write a targeted script (Python, Ruby, etc.) that reads each file, checks for a match, and only writes back files that actually changed.
+- **For mass/bulk edits** — write a targeted script (Python, Ruby, etc.) that reads each file, checks for a match, and only writes back files that actually changed. Preserve existing line endings (write LF, not CRLF) and check `git diff --numstat` after — the repo is `autocrlf=true` with no `.gitattributes`, so a script that re-encodes line endings pollutes the diff.
 
 ## Using Components (CRITICAL)
 
-**NEVER guess a component's markup structure.** Before placing any NDS component on a page, open its doc page at `components/[name].md` and copy the canonical markup from the `<code class="lang-html code">` block (or the live demo above it). Class names, element nesting, required modifier classes, `data-*` attributes, and ARIA roles must match the doc exactly. Also check `examples/*.md` for real-world usage patterns. If the doc is missing or unclear, read the component's SCSS in `_sass/components/_[name].scss` — do not invent structure from memory.
+**NEVER guess a component's markup structure.** Before placing any NDS component on a page, open its doc page at `components/[name].md` and copy the canonical markup from its code block (or the live demo above it). Class names, element nesting, required modifier classes, `data-*` attributes, and ARIA roles must match the doc exactly. Also check `examples/*.md` for real-world usage patterns. If the doc is missing or unclear, read the component's SCSS in `_sass/components/_[name].scss` — do not invent structure from memory.
 
 ## RTL/LTR Support (CRITICAL)
 
@@ -118,14 +118,14 @@ Every component/utility/layout doc page in `components/`, `layout/`, `utilities/
 
 ```yaml
 since: "1.0.0"                                    # version the doc first shipped (never changes)
-updated: "1.4.0"                                  # version of the most recent refactor
-last_edit: "15/07/2026 - 02:35 PM"  # human timestamp of the most recent doc edit (GMT+3)
+updated: "1.4.0"                                  # version of the most recent component change (source or doc)
+last_edit: "15/07/2026 - 02:35 PM"  # timestamp of the most recent doc content edit (GMT+3)
 ```
 
 **When to update:**
 - `since` — set once at creation, never touched again.
-- `updated` — bump on any refactor that changes the component's public API, markup, JS behavior, or added/removed features. Value = current `version` in `_config.yml` (strip `-dev`).
-- `last_edit` — refresh on ANY doc edit (typo fix, new demo card, table row, wording tweak). Format: `DD/MM/YYYY - HH:MM AM/PM` in GMT+3 (Asia/Riyadh). The environment's `date` command is unreliable for this — ask the user for the current time if unsure, or use `date -u '+%d/%m/%Y'` for the date and manually add 3 hours to the UTC time.
+- `updated` — bump on ANY change to the component, source (SCSS/JS) or doc — not just public-API/markup/feature refactors. Value = current `version` in `_config.yml` (strip `-dev`).
+- `last_edit` — refresh ONLY when the doc's content changes (typo fix, new demo card, table row, wording tweak). A source fix that visibly changes what the doc page RENDERS (e.g. a demo now displaying correctly) counts as a content change — bump it. A version-tag-only bump (`updated`/`since`) does NOT — leave `last_edit` untouched, no sync needed. Format: `DD/MM/YYYY - HH:MM AM/PM` in GMT+3 (Asia/Riyadh). The environment's `date` command is unreliable for this — ask the user for the current time if unsure, or use `date -u '+%d/%m/%Y'` for the date and manually add 3 hours to the UTC time.
 
 **Reference implementation:** `components/multiselect.md`, `components/date-picker.md`.
 
