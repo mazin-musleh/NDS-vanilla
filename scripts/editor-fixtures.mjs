@@ -465,6 +465,30 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
         ],
     },
     {
+        // Bare-text hydration wraps loose top-level text/inline into <p> —
+        // without it, alignment/dir/heading commands can't find a block
+        // ancestor and silently no-op.
+        name: 'init-wraps-loose-text-in-paragraph',
+        init: true,
+        html: 'مرحبا <strong>بالعالم</strong>',
+        expect: [
+            ['contains', '<p>مرحبا <strong>بالعالم</strong></p>'],
+        ],
+    },
+    {
+        // Pasted markup often carries source-formatting newlines inside
+        // block tags — those render fine but survive verbatim in the
+        // pretty printer's `<p>${innerHTML}</p>` branch, bloating the
+        // stored form value with blank lines.
+        name: 'paste-collapses-block-inner-whitespace',
+        paste: true,
+        html: '<p style="text-align: left;">\n  AppIntro3\n</p>',
+        expect: [
+            ['contains', '<p style="text-align: left;">AppIntro3</p>'],
+            ['not', '<p style="text-align: left;">\n'],
+        ],
+    },
+    {
         // The docs ARE the component palette: select a live demo on components/alert.md,
         // copy, paste here. Verbatim from that page — the docs→editor contract, which is
         // the insertion path that makes registerBlock unnecessary. Structure, status,

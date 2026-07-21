@@ -478,6 +478,21 @@
             if (trusted.size && isInTrusted(pEl, trusted)) continue;
             if (!pEl.firstElementChild && !pEl.textContent.trim()) pEl.remove();
         }
+        // Collapse whitespace runs inside text-bearing blocks and trim the
+        // block's leading/trailing text edges — pasted markup often carries
+        // source-formatting newlines (`<p>\n  text\n</p>`) that render fine
+        // in the browser but survive verbatim through the pretty printer,
+        // bloating the source-view and stored form value.
+        for (const el of root.querySelectorAll('p, h1, h2, h3, h4, li')) {
+            if (trusted.size && isInTrusted(el, trusted)) continue;
+            for (const n of el.childNodes) {
+                if (n.nodeType === Node.TEXT_NODE) n.textContent = n.textContent.replace(/\s+/g, ' ');
+            }
+            const first = el.firstChild;
+            if (first?.nodeType === Node.TEXT_NODE) first.textContent = first.textContent.replace(/^ /, '');
+            const last = el.lastChild;
+            if (last?.nodeType === Node.TEXT_NODE) last.textContent = last.textContent.replace(/ $/, '');
+        }
         return root.innerHTML;
     }
 
@@ -793,6 +808,7 @@
 
             // Hydrate from the adopted textarea's value (server-filled or empty).
             this.editable.innerHTML = sanitizeHtml(this.source.value) || '<p><br></p>';
+            this._normalizeLooseBlocks();
             this._refreshLinks();
             this._syncSource();
             // Seed the history base — the initial value stays reachable even
@@ -1179,6 +1195,7 @@
             } else {
                 // Sanitize whatever was typed in source view before it becomes visual DOM.
                 this.editable.innerHTML = sanitizeHtml(this.source.value) || '<p><br></p>';
+                this._normalizeLooseBlocks();
                 this._refreshLinks();
                 this.root.classList.remove('is-source');
                 this.source.setAttribute('tabindex', '-1');
@@ -1658,6 +1675,7 @@
             const snap = this._history[idx];
             this._histSuspend = true;
             this.editable.innerHTML = snap.v ? sanitizeHtml(snap.v) : '<p><br></p>';
+            this._normalizeLooseBlocks();
             this._refreshLinks();
             this._syncSource();
             this._histSuspend = false;
@@ -2332,6 +2350,30 @@
         }
 
         // ---------- Form value sync ----------
+
+        // Loose top-level text / inline nodes (from a value the author wrote
+        // as bare text — no <p> wrapper) can't take a block command:
+        // _getBlockContext walks up looking for a BLOCK_TAGS ancestor and
+        // hits the editable root, so alignment / dir / heading all no-op.
+        // Wrap each run of loose siblings into a <p> after every hydrate.
+        _normalizeLooseBlocks() {
+            let group = null;
+            const flush = () => {
+                if (!group) return;
+                const p = document.createElement('p');
+                this.editable.insertBefore(p, group[0]);
+                for (const n of group) p.appendChild(n);
+                group = null;
+            };
+            for (const n of Array.from(this.editable.childNodes)) {
+                const isText = n.nodeType === Node.TEXT_NODE && n.textContent.trim();
+                const isInline = n.nodeType === Node.ELEMENT_NODE
+                    && (INLINE_TAGS.has(n.tagName) || n.tagName === 'IMG' || INLINE_REGION_TAGS.has(n.tagName));
+                if (isText || isInline) (group ||= []).push(n);
+                else flush();
+            }
+            flush();
+        }
 
         // A block element (table, card, figure…) as the document's last node
         // traps the caret — there is nowhere to click/arrow to continue after
