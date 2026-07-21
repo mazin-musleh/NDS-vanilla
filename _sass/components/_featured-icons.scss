@@ -95,7 +95,7 @@
     background-color: var(--_featuredicon-dark-bg);
     border: 2px solid transparent;
 
-    :is(.nds-icon, i) {
+    :is(.nds-icon, i, svg) {
       color: var(--icon-oncolor);
     }
 
