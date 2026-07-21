@@ -649,7 +649,7 @@ html:not([data-nds-loaded]) .nds-card {
     }
   }
 
-  :is(.nds-tag, .nds-chip, .nds-btn) {
+  :is(.nds-tag, .nds-chip, .nds-btn):not(.nds-tab) {
     border-color: transparent;
     border-radius: var(--nds-skeleton-radius);
     @include skeleton-fill;
