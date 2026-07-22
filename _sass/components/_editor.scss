@@ -85,38 +85,9 @@
     --dropmenu-min-width: min(22rem, calc(100vw - var(--nds-viewport-padding) * 2));
   }
 
-  // Link/image popover fields — layout only; panel chrome, footer, and the
-  // action row come from the dropmenu's canonical structure.
-  .nds-editor-link-form,
-  .nds-editor-image-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xl);
-  }
-
-  // The column's own gap already spaces the section dividers.
-  .nds-editor-image-form { --divider: 0; }
-
-  // Width/height share one row inside the image popover column.
-  .nds-editor-image-dims {
-    display: flex;
-    gap: var(--spacing-md);
-  }
-
-  // Remove picker rows — one destructive full-width row per removable level,
-  // indented by nesting depth (shell first, nested components under it).
-  [data-editor-remove-levels] {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-    padding-inline: var(--spacing-md);
-    margin-block-end: var(--spacing-md);
-
-    .nds-btn {
-      justify-content: flex-start;
-      padding-inline-start: calc(var(--spacing-md) + var(--_remove-depth, 0) * var(--spacing-2xl));
-    }
-  }
+  // Popover field layout lives OUTSIDE this .nds-editor nesting (below the
+  // block) — with data-dropmenu-portal the menu detaches to <body> and an
+  // ancestor-scoped rule would stop matching.
 
   // Readonly: forms kills pointer events container-wide (its label-toggles-
   // control rationale) and restores only .nds-form-action. Nothing here can
@@ -190,5 +161,28 @@
 
       &::placeholder { color: transparent; }
     }
+  }
+}
+
+// Popover fields reuse the shared form-layout classes rather than editor-local
+// rules, so nothing is anchored on .nds-editor (which the menu leaves when it
+// portals to <body>): the field groups carry .nds-form-group (column stack,
+// spacing-xl gap) and the width/height row adds .nds-row. Only the image form's
+// divider override stays editor-specific — the group gap already spaces the
+// "or"/"attrs" dividers.
+.nds-editor-image-form { --divider: 0; }
+
+// Remove picker rows — one destructive full-width row per removable level,
+// indented by nesting depth (shell first, nested components under it).
+[data-editor-remove-levels] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding-inline: var(--spacing-md);
+  margin-block-end: var(--spacing-md);
+
+  .nds-btn {
+    justify-content: flex-start;
+    padding-inline-start: calc(var(--spacing-md) + var(--_remove-depth, 0) * var(--spacing-2xl));
   }
 }

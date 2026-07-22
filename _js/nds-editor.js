@@ -660,8 +660,8 @@
     function linkDropmenuHtml(idBase) {
         const S = TOOLBAR_STRINGS;
         return `<div class="nds-dropmenu" data-editor-link-dropmenu>${cmdButtonHtml('link', ' nds-dropmenu-trigger')}`
-            + '<div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">'
-            + '<div class="nds-dropmenu-group nds-editor-link-form">'
+            + '<div class="nds-dropmenu-menu nds-editor-link-menu" hidden><div class="nds-dropmenu-scroll">'
+            + '<div class="nds-dropmenu-group nds-form-group">'
             + textFieldHtml(`${idBase}-link-text`, uiLabel(S.text), 'text', 'data-editor-link-text')
             + textFieldHtml(`${idBase}-link-url`, uiLabel(S.url), 'url', 'data-editor-link-url', 'https://')
             + `<div class="nds-form-container nds-check-container"><div class="nds-form-header"><label for="${idBase}-link-external"><span class="nds-label">${uiLabel(S.external)}</span></label></div>`
@@ -683,8 +683,8 @@
     function imageDropmenuHtml(idBase) {
         const S = TOOLBAR_STRINGS;
         return `<div class="nds-dropmenu" data-editor-image-dropmenu>${cmdButtonHtml('image', ' nds-dropmenu-trigger')}`
-            + '<div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">'
-            + '<div class="nds-dropmenu-group nds-editor-image-form">'
+            + '<div class="nds-dropmenu-menu nds-editor-image-menu" hidden><div class="nds-dropmenu-scroll">'
+            + '<div class="nds-dropmenu-group nds-form-group nds-editor-image-form">'
             + textFieldHtml(`${idBase}-image-url`, uiLabel(S.fromLink), 'url', 'data-editor-image-url', 'https://')
             + `<div class="nds-divider" data-editor-image-or>${uiLabel(S.or)}</div>`
             // Canonical single-file nds-upload (no dropzone) — NDS.Upload owns
@@ -699,7 +699,7 @@
             + '</div>'
             + `<div class="nds-divider">${uiLabel(S.attrs)}</div>`
             + textFieldHtml(`${idBase}-image-alt`, uiLabel(S.alt), 'text', 'data-editor-image-alt', '', ' nds-md')
-            + '<div class="nds-editor-image-dims">'
+            + '<div class="nds-form-group nds-row">'
             + textFieldHtml(`${idBase}-image-width`, uiLabel(S.width), 'text', 'inputmode="numeric" data-editor-image-width', 'auto', ' nds-md')
             + textFieldHtml(`${idBase}-image-height`, uiLabel(S.height), 'text', 'inputmode="numeric" data-editor-image-height', 'auto', ' nds-md')
             + '</div>'
@@ -725,7 +725,7 @@
     function removeDropmenuHtml() {
         const S = TOOLBAR_STRINGS;
         return `<div class="nds-dropmenu" data-editor-remove-dropmenu>${cmdButtonHtml('remove', ' nds-dropmenu-trigger nds-destructive')}`
-            + '<div class="nds-dropmenu-menu" hidden><div class="nds-dropmenu-scroll">'
+            + '<div class="nds-dropmenu-menu nds-editor-remove-menu" hidden><div class="nds-dropmenu-scroll">'
             + `<div class="nds-dropmenu-group"><span class="nds-label">${uiLabel(S.removePrompt)}</span></div>`
             + '<div data-editor-remove-levels></div>'
             + '</div>'
@@ -1118,7 +1118,13 @@
             // finished their sweeps before editor init — wire the generated
             // elements directly. Soft dependencies: the toolbar's dropmenus and
             // tooltips stay inert if NDS.Dropmenu / NDS.Tooltip aren't bundled.
-            toolbar.querySelectorAll('.nds-dropmenu').forEach(el => NDS.Dropmenu?.create?.(el));
+            // Portal opt-in propagates from the editor root: data-dropmenu-portal
+            // stamps data-portal on each menu before create() reads shouldPortal.
+            const portalMenus = this.root.hasAttribute('data-dropmenu-portal');
+            toolbar.querySelectorAll('.nds-dropmenu').forEach(el => {
+                if (portalMenus) el.setAttribute('data-portal', '');
+                NDS.Dropmenu?.create?.(el);
+            });
             toolbar.querySelectorAll('.nds-tooltip').forEach(el => NDS.Tooltip?.create?.(el));
             return toolbar;
         }
@@ -1948,13 +1954,16 @@
 
         _confirmLink() {
             const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
-            const url = cleanUrl((dropmenu?.querySelector('[data-editor-link-url]')?.value || '').trim());
-            const text = (dropmenu?.querySelector('[data-editor-link-text]')?.value || '').trim();
-            const external = !!dropmenu?.querySelector('[data-editor-link-external]')?.checked;
-            const noExternal = !!dropmenu?.querySelector('[data-editor-link-noexternal]')?.checked;
-            const colored = !!dropmenu?.querySelector('[data-editor-link-colored]')?.checked;
+            // Fields live in the menu, which portal detaches to <body> while
+            // open — query it via menuOf (nested or portaled), not the wrapper.
+            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const url = cleanUrl((menu?.querySelector('[data-editor-link-url]')?.value || '').trim());
+            const text = (menu?.querySelector('[data-editor-link-text]')?.value || '').trim();
+            const external = !!menu?.querySelector('[data-editor-link-external]')?.checked;
+            const noExternal = !!menu?.querySelector('[data-editor-link-noexternal]')?.checked;
+            const colored = !!menu?.querySelector('[data-editor-link-colored]')?.checked;
             if (!url || url === 'https://' || !safeUrl(url)) {
-                this._fieldError(dropmenu?.querySelector('[data-editor-link-url]'), uiLabel(TOOLBAR_STRINGS.invalidUrl));
+                this._fieldError(menu?.querySelector('[data-editor-link-url]'), uiLabel(TOOLBAR_STRINGS.invalidUrl));
                 return;
             }
             dropmenu?.ndsDropmenu?.close?.();
@@ -2100,7 +2109,11 @@
         _imageEmbedAllowed() { return this._imageUploadUrl() === 'embed'; }
 
         _imageUploadUrl() {
-            const host = this.root.querySelector('[data-editor-image-upload]');
+            // Consulted during _confirmImage (menu open) — the upload host is
+            // inside the menu, which portal detaches to <body>, so reach it via
+            // menuOf rather than this.root's subtree.
+            const menu = NDS.Dropmenu?.menuOf?.(this.root.querySelector('[data-editor-image-dropmenu]'));
+            const host = (menu || this.root).querySelector('[data-editor-image-upload]');
             return host?.ndsUpload?.getConfig?.().uploadUrl || host?.dataset.uploadUrl || '';
         }
 
@@ -2206,17 +2219,20 @@
 
         _confirmImage() {
             const dropmenu = this.root.querySelector('[data-editor-image-dropmenu]');
-            const url = cleanUrl((dropmenu?.querySelector('[data-editor-image-url]')?.value || '').trim());
-            const alt = (dropmenu?.querySelector('[data-editor-image-alt]')?.value || '').trim();
+            // Fields live in the menu, which portal detaches to <body> while
+            // open — query it via menuOf (nested or portaled), not the wrapper.
+            const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
+            const url = cleanUrl((menu?.querySelector('[data-editor-image-url]')?.value || '').trim());
+            const alt = (menu?.querySelector('[data-editor-image-alt]')?.value || '').trim();
             // Dims are the numeric width/height ATTRIBUTES (aspect + CLS);
             // empty/invalid = natural size.
-            const width = parseInt(dropmenu?.querySelector('[data-editor-image-width]')?.value, 10) || 0;
-            const height = parseInt(dropmenu?.querySelector('[data-editor-image-height]')?.value, 10) || 0;
+            const width = parseInt(menu?.querySelector('[data-editor-image-width]')?.value, 10) || 0;
+            const height = parseInt(menu?.querySelector('[data-editor-image-height]')?.value, 10) || 0;
             // 'https://' alone is the untouched placeholder, not a URL; data:
             // srcs are embed-mode only.
             if (!url || url === 'https://' || !safeSrc(url)
                 || (url.startsWith('data:') && !this._imageEmbedAllowed())) {
-                this._fieldError(dropmenu?.querySelector('[data-editor-image-url]'), uiLabel(TOOLBAR_STRINGS.invalidImageUrl));
+                this._fieldError(menu?.querySelector('[data-editor-image-url]'), uiLabel(TOOLBAR_STRINGS.invalidImageUrl));
                 return;
             }
             dropmenu?.ndsDropmenu?.close?.();
