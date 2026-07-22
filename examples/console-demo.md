@@ -212,14 +212,14 @@ hideFeedback: true
                         </span>
                     </div>
                     <div class="nds-bar-end">
-                        <div class="nds-dropmenu nds-center"
+                        <div class="nds-dropmenu"
                              data-select-name="perPage"
                              data-select-value="10"
                              data-per-page-target="transactionsTableBody">
                             <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                 <span class="nds-label">10</span>
                             </button>
-                            <div class="nds-dropmenu-menu" hidden>
+                            <div class="nds-dropmenu-menu nds-center" hidden>
                                 <div class="nds-dropmenu-scroll">
                                     <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="10"><span class="nds-label">10</span></button>
                                     <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="25"><span class="nds-label">25</span></button>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.x"
-last_edit: "22/07/2026 - 01:45 PM"
+last_edit: "22/07/2026 - 03:19 PM"
 ---
 
 <!-- Choosing a mode -->
@@ -937,14 +937,14 @@ last_edit: "22/07/2026 - 01:45 PM"
                         <div class="state-demo">
                             <div class="nds-toolbar">
                                 <div class="nds-bar-start">
-                                    <div class="nds-dropmenu nds-center"
+                                    <div class="nds-dropmenu"
                                          data-select-name="perPage"
                                          data-select-value="6"
                                          data-per-page-target="pagination_perpage_demo">
                                         <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                             <span class="nds-label">6</span>
                                         </button>
-                                        <div class="nds-dropmenu-menu" hidden>
+                                        <div class="nds-dropmenu-menu nds-center" hidden>
                                             <div class="nds-dropmenu-scroll">
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="6"><span class="nds-label">6</span></button>
                                                 <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="12"><span class="nds-label">12</span></button>
@@ -994,14 +994,14 @@ last_edit: "22/07/2026 - 01:45 PM"
      paint agrees with the trigger label. --&gt;
 &lt;div class="nds-toolbar"&gt;
     &lt;div class="nds-bar-start"&gt;
-        &lt;div class="nds-dropmenu nds-center"
+        &lt;div class="nds-dropmenu"
              data-select-name="perPage"
              data-select-value="6"
              data-per-page-target="pagination_perpage_demo"&gt;
             &lt;button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
                 &lt;span class="nds-label"&gt;6&lt;/span&gt;
             &lt;/button&gt;
-            &lt;div class="nds-dropmenu-menu" hidden&gt;
+            &lt;div class="nds-dropmenu-menu nds-center" hidden&gt;
                 &lt;div class="nds-dropmenu-scroll"&gt;
                     &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="6"&gt;&lt;span class="nds-label"&gt;6&lt;/span&gt;&lt;/button&gt;
                     &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="12"&gt;&lt;span class="nds-label"&gt;12&lt;/span&gt;&lt;/button&gt;

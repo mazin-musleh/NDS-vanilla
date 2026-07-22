@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.x"
-last_edit: "22/07/2026 - 01:45 PM"
+last_edit: "22/07/2026 - 03:19 PM"
 ---
 
 <!-- Standard Dropmenu -->
@@ -678,18 +678,23 @@ last_edit: "22/07/2026 - 01:45 PM"
     </div>
 </section>
 
-<!-- Select Mode Dropmenu -->
+<!-- Select Mode Dropmenu (centered per-page picker) -->
 <section id="dropmenuSelectMode" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Select Mode</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-select-name</code> to turn a dropmenu into a value picker. Each item needs <code class="nds-inline-code lang-html">data-value</code>; the chosen value is written to a hidden input so the selection ships with a form. The trigger label updates to reflect the current selection.</p>
+            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-select-name</code> to turn a dropmenu into a value picker. Each item needs <code class="nds-inline-code lang-html">data-value</code>; the chosen value is written to a hidden input so the selection ships with a form, and the trigger label updates to reflect the current selection. Add <code class="nds-inline-code lang-html">nds-center</code> to the <code class="nds-inline-code lang-html">.nds-dropmenu-menu</code> to center-align every item's label — handy for compact pickers whose labels are short (numbers, currencies, states). To re-slice a live list, point the picker at a Pagination container with <code class="nds-inline-code lang-html">data-per-page-target</code> (see <a class="nds-color" href="{{ 'components/pagination' | relative_url }}">Pagination · Per-page Picker</a>).</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-center", "#dropmenu-select-demo .nds-dropmenu-menu", "dropmenuCentered"]'
+                                data-state="selected">
+                                <span class="nds-label">Center</span>
+                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
@@ -698,28 +703,41 @@ last_edit: "22/07/2026 - 01:45 PM"
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <div class="nds-dropmenu" data-select-name="priority" data-select-value="medium">
-                                <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger">
-                                    <i class="hgi hgi-stroke hgi-toggle-on" aria-hidden="true"></i>
-                                    <span class="nds-label">Medium</span>
+                            <div class="nds-dropmenu"
+                                 id="dropmenu-select-demo"
+                                 data-select-name="perPage"
+                                 data-select-value="10">
+                                <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                    <span class="nds-label">10</span>
                                 </button>
-                                <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-menu nds-center" hidden>
                                     <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="low">
-                                            <span class="nds-label">Low</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="medium">
-                                            <span class="nds-label">Medium</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="high">
-                                            <span class="nds-label">High</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="critical">
-                                            <span class="nds-label">Critical</span>
-                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="5"><span class="nds-label">5</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="10"><span class="nds-label">10</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="25"><span class="nds-label">25</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="50"><span class="nds-label">50</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="100"><span class="nds-label">100</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="250"><span class="nds-label">250</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="500"><span class="nds-label">500</span></button>
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                            (function() {
+                                var el = document.getElementById('dropmenu-select-demo');
+                                if (!el) return;
+                                el.addEventListener('nds:dropmenu:selected', function(e) {
+                                    NDS.Alert.create({
+                                        variant: 'success',
+                                        title: 'Per-page updated',
+                                        description: 'Now showing ' + e.detail.value + ' items per page.',
+                                        display: 'toast',
+                                        position: 'top',
+                                        duration: 3000
+                                    });
+                                });
+                            })();
+                            </script>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -749,28 +767,24 @@ last_edit: "22/07/2026 - 01:45 PM"
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
 &lt;!-- data-select-name: field name for the hidden input
-     data-select-value: pre-select "medium" on init --&gt;
+     data-select-value: pre-select "10" on init
+     nds-center on the menu: each item label sits centered
+     nds-menu-btn: caret appears via the button's own ::after --&gt;
 &lt;div class="nds-dropmenu"
-  data-select-name="priority"
-  data-select-value="medium"&gt;
-  &lt;button class="nds-btn nds-secondary-outline nds-dropmenu-trigger"&gt;
-    &lt;i class="hgi hgi-stroke hgi-toggle-on" aria-hidden="true"&gt;&lt;/i&gt;
-    &lt;span class="nds-label"&gt;Medium&lt;/span&gt;
+  data-select-name="perPage"
+  data-select-value="10"&gt;
+  &lt;button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
+    &lt;span class="nds-label"&gt;10&lt;/span&gt;
   &lt;/button&gt;
-  &lt;div class="nds-dropmenu-menu" hidden&gt;
+  &lt;div class="nds-dropmenu-menu nds-center" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="low"&gt;
-        &lt;span class="nds-label"&gt;Low&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="medium"&gt;
-        &lt;span class="nds-label"&gt;Medium&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="high"&gt;
-        &lt;span class="nds-label"&gt;High&lt;/span&gt;
-      &lt;/button&gt;
-      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="critical"&gt;
-        &lt;span class="nds-label"&gt;Critical&lt;/span&gt;
-      &lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="5"&gt;&lt;span class="nds-label"&gt;5&lt;/span&gt;&lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="10"&gt;&lt;span class="nds-label"&gt;10&lt;/span&gt;&lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="25"&gt;&lt;span class="nds-label"&gt;25&lt;/span&gt;&lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="50"&gt;&lt;span class="nds-label"&gt;50&lt;/span&gt;&lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="100"&gt;&lt;span class="nds-label"&gt;100&lt;/span&gt;&lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="250"&gt;&lt;span class="nds-label"&gt;250&lt;/span&gt;&lt;/button&gt;
+      &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="500"&gt;&lt;span class="nds-label"&gt;500&lt;/span&gt;&lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
@@ -786,114 +800,22 @@ last_edit: "22/07/2026 - 01:45 PM"
                                     </div>
                                     <code class="lang-javascript code">
 // nds:dropmenu:selected fires on the wrapper when an item is chosen.
-// detail: { dropmenu, item, value }
-document.querySelector('.nds-dropmenu').addEventListener('nds:dropmenu:selected', (e) =&gt; {
-    console.log('Selected:', e.detail.value);
-});
+// detail: { dropmenu, item, value } — here we surface it as a toast.
+document.getElementById('dropmenu-select-demo')
+    .addEventListener('nds:dropmenu:selected', (e) =&gt; {
+        NDS.Alert.create({
+            variant: 'success',
+            title: 'Per-page updated',
+            description: `Now showing ${e.detail.value} items per page.`,
+            display: 'toast',
+            position: 'top',
+            duration: 3000
+        });
+    });
 
 // The hidden input also fires a native `change` event so the selection
 // integrates with standard form libraries and submit handlers.
 </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Centered value picker (per-page control) -->
-<section id="dropmenuCentered" class="nds-content-section nds-demo-section">
-    <div class="nds-section-wrapper">
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Centered Picker</h2>
-            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">nds-center</code> to center-align the trigger's label and every item's label. Use it for compact value pickers whose labels are short (numbers, currencies, states) — start-aligned text looks off in a narrow control. The example below wires the picker to a Pagination container so the selection re-slices the pages live (see <a class="nds-color" href="{{ 'components/pagination' | relative_url }}">Pagination · Per-page Picker</a>).</p>
-        </div>
-        <div class="nds-section-body">
-            <div class="nds-showcase">
-                <div class="nds-demo-card">
-                    <div class="demo-header">
-                        <div class="demo-action">
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-center", "#dropmenu-centered-demo", "dropmenuCentered"]'
-                                data-state="selected">
-                                <span class="nds-label">Center</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
-                                <span class="nds-label">Remove bg</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="demo-container">
-                        <div class="state-demo">
-                            <div class="nds-dropmenu nds-center"
-                                 id="dropmenu-centered-demo"
-                                 data-select-name="perPage"
-                                 data-select-value="10">
-                                <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
-                                    <span class="nds-label">10</span>
-                                </button>
-                                <div class="nds-dropmenu-menu" hidden>
-                                    <div class="nds-dropmenu-scroll">
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="5"><span class="nds-label">5</span></button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="10"><span class="nds-label">10</span></button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="25"><span class="nds-label">25</span></button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="50"><span class="nds-label">50</span></button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="100"><span class="nds-label">100</span></button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="250"><span class="nds-label">250</span></button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="500"><span class="nds-label">500</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="demo-code">
-                        <div class="nds-tabs nds-code nds-divided">
-                            <div class="nds-tab-list-container nds-scroll-more">
-                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-dropmenu-centered-1" id="tab-dropmenu-centered-1">
-                                        <span class="nds-tab-label">HTML</span>
-                                    </button>
-                                </nav>
-                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
-                                    id="panel-dropmenu-centered-1" aria-labelledby="tab-dropmenu-centered-1">
-                                    <div class="nds-code-action">
-                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                            <i class="nds-icon nds-hgi-copy-01"></i>
-                                        </button>
-                                    </div>
-                                    <div class="nds-expandable-content">
-                                        <code class="lang-html code">
-&lt;!-- nds-center: trigger label + each item label sit centered.
-     nds-menu-btn: caret appears via the button's own ::after. --&gt;
-&lt;div class="nds-dropmenu nds-center"
-     data-select-name="perPage"
-     data-select-value="10"&gt;
-    &lt;button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
-        &lt;span class="nds-label"&gt;10&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden&gt;
-        &lt;div class="nds-dropmenu-scroll"&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="5"&gt;&lt;span class="nds-label"&gt;5&lt;/span&gt;&lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="10"&gt;&lt;span class="nds-label"&gt;10&lt;/span&gt;&lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="25"&gt;&lt;span class="nds-label"&gt;25&lt;/span&gt;&lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="50"&gt;&lt;span class="nds-label"&gt;50&lt;/span&gt;&lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="100"&gt;&lt;span class="nds-label"&gt;100&lt;/span&gt;&lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="250"&gt;&lt;span class="nds-label"&gt;250&lt;/span&gt;&lt;/button&gt;
-            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="500"&gt;&lt;span class="nds-label"&gt;500&lt;/span&gt;&lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-                                        </code>
-                                    </div>
                                 </div>
                             </div>
                         </div>
