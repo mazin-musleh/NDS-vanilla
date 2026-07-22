@@ -67,7 +67,7 @@
         // role="combobox" so the aria-expanded / aria-haspopup the dropmenu
         // stamps on the trigger are valid on an <input>.
         selectInput.setAttribute('role', 'combobox');
-        dropdown.classList.add('nds-dropmenu-menu');
+        dropdown.classList.add('nds-dropmenu-menu', 'nds-select-menu');
         dropdown.removeAttribute('hidden');
         var optionsContainer = dropdown.querySelector('.nds-select-options');
         if (optionsContainer) optionsContainer.classList.add('nds-dropmenu-scroll');

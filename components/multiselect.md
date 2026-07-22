@@ -5,7 +5,7 @@ hero_title: Multiselect - National Design System
 hero_description: A form field for picking multiple options from grouped lists, with selections shown as removable chips and submitted natively as a checkbox array.
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.4.0"
+updated: "1.4.x"
 last_edit: "15/07/2026 - 03:00 PM"
 lang: en
 direction: ltr

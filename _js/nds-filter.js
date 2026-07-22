@@ -44,6 +44,18 @@
             // surface set, so the constructor skips re-scanning the document for them.
             this._targetRoots = this.resolveTargetRoots(surfaces);
 
+            // Portal-safe identifier on the filter's own dropmenu menu (rule: a
+            // component-owned menu names itself so styling/hooks survive the menu
+            // portaling to <body>). The .nds-filter anchor IS the dropmenu wrapper
+            // when filters render in a dropdown; the own-descendant check skips a
+            // nested sub-component's menu (e.g. a multiselect used as a control).
+            this._targetRoots.forEach(root => {
+                if (!root.matches || !root.matches('.nds-dropmenu')) return;
+                root.querySelectorAll('.nds-dropmenu-menu').forEach(m => {
+                    if (m.closest('.nds-dropmenu') === root) m.classList.add('nds-filter-menu');
+                });
+            });
+
             // Get all filterable items (empty array if no target)
             this.items = this.targetContainer
                 ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))

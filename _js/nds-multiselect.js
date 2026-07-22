@@ -60,6 +60,9 @@
                 console.warn('NDS Multiselect: missing required elements', root);
                 return;
             }
+            // Portal-safe identifier so custom styling / consumer hooks survive
+            // the menu portaling to <body> (rule: every owned menu names itself).
+            this.menu.classList.add('nds-multiselect-menu');
 
             this.name = root.getAttribute('data-multiselect-name') || '';
             this.chipClass = root.getAttribute('data-chip-class') || 'nds-primary nds-sm';

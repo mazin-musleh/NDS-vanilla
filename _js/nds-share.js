@@ -80,6 +80,12 @@
     function init() {
         if (_abortController) _abortController.abort();
         _abortController = new AbortController();
+        // Portal-safe identifier on each share menu (rule: a component-owned
+        // menu names itself so styling/hooks survive the menu portaling to
+        // <body>). Share items are plain buttons — no nested dropmenu to
+        // mis-stamp — so a scoped sweep is unambiguous.
+        document.querySelectorAll('.nds-share .nds-dropmenu-menu')
+            .forEach(m => m.classList.add('nds-share-menu'));
         document.addEventListener('click', (e) => {
             const button = e.target.closest(TARGET_SELECTOR);
             if (!button) return;

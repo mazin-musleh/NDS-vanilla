@@ -63,7 +63,7 @@
             NDS.aria.label(button, 'More');
 
             const menu = document.createElement('div');
-            menu.className = 'nds-dropmenu-menu';
+            menu.className = 'nds-dropmenu-menu nds-breadcrumb-menu';
             NDS.aria.hidden(menu, true);
 
             const scroll = document.createElement('div');

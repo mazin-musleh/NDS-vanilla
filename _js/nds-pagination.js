@@ -165,7 +165,7 @@
     // around their own items (number-only _ellipsisLi, markup-preserving _ellipsisLiM).
     // One definition so a dropmenu-markup change can't drift between the two.
     function _ellipsisShell(itemsHTML) {
-        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="More pages"><span class="nds-label"></span></button><div class="nds-dropmenu-menu" aria-hidden="true"><div class="nds-dropmenu-scroll">${itemsHTML}</div></div></div></li>`;
+        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="More pages"><span class="nds-label"></span></button><div class="nds-dropmenu-menu nds-pagination-menu" aria-hidden="true"><div class="nds-dropmenu-scroll">${itemsHTML}</div></div></div></li>`;
     }
 
     // Ellipsis <li> whose dropdown holds the collapsed range — entry-based twin

@@ -39,6 +39,12 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 
 **Responsive/accessibility mixins** — see `_sass/_mixins.scss`.
 
+**Every dropmenu menu carries a `.nds-{component}-menu` identifier, and its styling is portal-safe or it doesn't ship.** A `.nds-dropmenu-menu` may portal to `<body>` (wrapper opt-in `data-portal`), which moves ONLY the menu — orphaning any rule scoped under its component ancestor AND any hook set on the wrapper.
+- **Identify the menu by default.** Give every component's `.nds-dropmenu-menu` a `.nds-{component}-menu` class (suffix `-menu`), regardless of whether it portals or needs custom styling today. It's the one selector that both travels to `<body>` and names the instance — a stable, portal-safe hook we and consumers can opt into. Stamp it wherever a component owns or drives the menu: in the generator string (editor/pagination/breadcrumb/custom-select), or at init via `classList.add` for an authored menu the component drives (multiselect/filter/share) — use an own-descendant check when the component may nest sub-menus. Only a truly generic `.nds-dropmenu` with NO owning component (pagination's `data-per-page-target` per-page picker, a standalone menu) is skipped — that one's the consumer's to identify. Models: `.nds-theme-menu`, `.nds-autocomplete-menu`. (Legacy `.nds-rating-dropmenu` / `.nds-date-picker-dropdown` are grandfathered — new menus use `-menu`.)
+- **Default styling: the shared `.nds-dropmenu-menu` covers it** — renders right in every mode, portaled or in-place. Most menus add nothing beyond the identifier.
+- **Custom styling is opt-in and must be justified** — first confirm the shared styling genuinely falls short (don't add custom for its own sake). When warranted, anchor it on the menu (the `.nds-{component}-menu` class, a self-rooted content class like editor's `.nds-editor-link-form`, or a generic modifier like `.nds-center`) — **never on the component root** (`.nds-editor .nds-editor-link-form`), which dies the moment the menu portals.
+- **Knobs stay on the wrapper** (`--dropmenu-min-width`, …) — the portal snapshots them onto the menu.
+
 ## Design Tokens (CRITICAL)
 
 **Four tiers** (+ knobs):
