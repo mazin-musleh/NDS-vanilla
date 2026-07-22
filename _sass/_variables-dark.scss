@@ -19,6 +19,11 @@
     --background-footer: var(--colors-primary-alpha-30);
     --background-menu: var(--background-default);
     --background-stripe: var(--colors-neutral-850);
+    // Directional surfaces around the base (neutral-800): elevated lifts
+    // one step lighter, sunken drops to page-body depth. oncolor stays
+    // white in both modes — it sits on colored fills that remain branded.
+    --background-surface-elevated: var(--colors-neutral-750);
+    --background-surface-sunken: var(--colors-neutral-950);
     // Brand surface knob — dark value. sub-hero + brand sections read this in both
     // modes, so they need no dark special-case of their own. Brand-tracked (alpha
     // follows the active --colors-primary). Brands @use'd before this layer, so a

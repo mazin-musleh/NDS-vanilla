@@ -292,6 +292,11 @@
     --tag-border-error-light: var(--border-error-light);
     --tag-dot: var(--colors-alpha-white-60);
 
+    // ── upload ──
+    --upload-background-dropbox-default: var(--colors-neutral-100);
+    --upload-background-dropbox-active: var(--background-success-faint);
+    --upload-background-file-item: var(--colors-neutral-100);
+
     // ── tooltip ──
     --tooltip-padding: var(--spacing-md);
     --tooltip-gap: var(--spacing-md);

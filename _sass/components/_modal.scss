@@ -36,7 +36,14 @@
   &.nds-card {
     max-width: 600px;
     width: calc(100% - var(--spacing-xl) * 2);
-    overflow-y: auto;
+
+    // Only the content area scrolls — header and actions stay pinned.
+    // min-height:0 lets the flex child shrink below its intrinsic size
+    // so overflow actually engages inside the modal's max-height.
+    .nds-card-content {
+      overflow-y: auto;
+      min-height: 0;
+    }
 
     // Desktop: centered with margin auto
     transform: translateY(0);

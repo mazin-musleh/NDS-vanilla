@@ -133,6 +133,10 @@
     --button-indicator-pressed: var(--background-surface-oncolor);
     --button-indicator-selected: var(--background-surface-oncolor);
 
+    // ─── Upload (drop zone dip — matches --background-stripe depth) ───
+    --upload-background-dropbox-default: var(--colors-neutral-850);
+    --upload-background-file-item: var(--colors-neutral-850);
+
     // ─── Stepper ───
     --stepper-button-completed: var(--colors-primary-500);
     --stepper-button-completed-hovered: var(--colors-primary-600);

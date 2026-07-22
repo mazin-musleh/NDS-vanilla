@@ -292,7 +292,7 @@
 // Editor content (.nds-editor-editable) is exempt: tables pasted into the
 // editor are editor-owned display copies tables JS never wires.
 .nds-table:is([data-state~="loading"], .nds-loading) tbody tr td,
-.nds-table:not([data-nds-tables-initialized], .nds-editor-editable *) tbody tr td,
+.nds-table:not([data-nds-tables-initialized], [data-nds-tables-initialized] .nds-table, .nds-editor-editable *) tbody tr td,
 :is(tbody.nds-loading,
     tbody[data-filter-items]:not([data-nds-filter-initialized]),
     tbody.nds-paged-content:not([data-paged-initialized])) tr td {

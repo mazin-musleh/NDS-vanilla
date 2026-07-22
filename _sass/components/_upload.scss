@@ -14,11 +14,7 @@
             padding: var(--spacing-3xl);
             border: 2px dashed var(--border-neutral-primary) !important;
             border-radius: var(--radius-sm);
-            background-color: var(--background-surface-sunken);
-
-            @include dark {
-                background-color: var(--background-default);
-            }
+            background-color: var(--upload-background-dropbox-default);
 
             .nds-upload-zone {
                 display: flex;
@@ -32,7 +28,7 @@
 
             &[data-state~="drag-over"] {
                 border-color: var(--border-success) !important;
-                background-color: var(--background-success-faint);
+                background-color: var(--upload-background-dropbox-active);
                 color: var(--text-success);
 
                 .nds-upload-icon {
@@ -151,13 +147,9 @@
         padding: var(--spacing-md);
         border: 1px solid var(--border-neutral-primary);
         border-radius: var(--radius-sm);
-        background-color: var(--background-surface-sunken);
+        background-color: var(--upload-background-file-item);
         gap: var(--spacing-md);
         min-height: 36px;
-
-        @include dark {
-            background-color: var(--background-default);
-        }
 
         // Status-driven visibility: feedback shown by default, progress hidden
         .nds-feedback { display: flex; }
