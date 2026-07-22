@@ -212,6 +212,24 @@ hideFeedback: true
                         </span>
                     </div>
                     <div class="nds-bar-end">
+                        <div class="nds-dropmenu nds-center"
+                             data-select-name="perPage"
+                             data-select-value="10"
+                             data-per-page-target="transactionsTableBody">
+                            <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                <span class="nds-label">10</span>
+                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-scroll">
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="10"><span class="nds-label">10</span></button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="25"><span class="nds-label">25</span></button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="50"><span class="nds-label">50</span></button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="100"><span class="nds-label">100</span></button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="250"><span class="nds-label">250</span></button>
+                                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="500"><span class="nds-label">500</span></button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="nds-dropmenu" data-columns-target="consoleTransactions">
                             <button class="nds-btn nds-neutral nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
                                 <i class="nds-icon nds-hgi-view-off-slash" aria-hidden="true"></i>
@@ -372,7 +390,7 @@ hideFeedback: true
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="transactionsTableBody" class="nds-paged-content" data-filter-items="tr">
+                    <tbody id="transactionsTableBody" class="nds-paged-content" data-filter-items="tr" style="--per-page:10;">
                         {% for txn in site.data.content.transactions %}
                         <tr class="nds-page-item">
                             <td>

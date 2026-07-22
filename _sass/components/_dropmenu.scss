@@ -54,6 +54,15 @@
     }
   }
 
+  // Center-align both the trigger's label and every item's label — used when
+  // the dropmenu is a compact value picker (per-page, currency…) whose short
+  // labels look off pinned to the start.
+  &.nds-center {
+    :is(.nds-dropmenu-trigger, .nds-dropmenu-item) {
+      justify-content: center;
+    }
+  }
+
 }
 
 // ==============================================

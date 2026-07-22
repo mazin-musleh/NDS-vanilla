@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.x"
-last_edit: "20/07/2026 - 11:14 PM"
+last_edit: "22/07/2026 - 01:45 PM"
 ---
 
 <!-- Choosing a mode -->
@@ -909,6 +909,118 @@ last_edit: "20/07/2026 - 11:14 PM"
     &lt;div class="nds-page-item nds-card nds-stroke"&gt;Card 9&lt;/div&gt;
 &lt;/div&gt;
 &lt;nav class="nds-pagination" data-auto-pagination="pagination_records_demo" aria-label="Pagination"&gt;&lt;/nav&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Per-page picker -->
+<section id="paginationPerPage" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Per-page Picker</h2>
+            <p class="nds-section-description">Any <code class="nds-inline-code lang-html">nds-dropmenu</code> in <strong>select mode</strong> (<code class="nds-inline-code lang-html">data-select-name</code>) becomes a records-per-page control by adding <code class="nds-inline-code lang-html">data-per-page-target="id"</code>. Each item's <code class="nds-inline-code lang-html">data-value</code> is the new <code class="nds-inline-code lang-html">--per-page</code>. Pagination re-slices the target on selection — same id-ref pattern as <code class="nds-inline-code lang-html">data-auto-pagination</code>. For server-side navs, listen to <code class="nds-inline-code lang-html">nds:dropmenu:selected</code> and drive your own fetch with <code class="nds-inline-code lang-html">NDS.Pagination.updateRecords</code> + <code class="nds-inline-code lang-html">setTotalPages</code></p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Picker rewires --per-page live</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-toolbar">
+                                <div class="nds-bar-start">
+                                    <div class="nds-dropmenu nds-center"
+                                         data-select-name="perPage"
+                                         data-select-value="6"
+                                         data-per-page-target="pagination_perpage_demo">
+                                        <button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button">
+                                            <span class="nds-label">6</span>
+                                        </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="6"><span class="nds-label">6</span></button>
+                                                <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="12"><span class="nds-label">12</span></button>
+                                                <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="24"><span class="nds-label">24</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nds-bar-end">
+                                    <span class="nds-results-count" data-paged-target="pagination_perpage_demo">
+                                        Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>6</b> of <b data-paged-count>24</b> items
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="pagination_perpage_demo" class="nds-paged-content nds-grid"
+                                style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 2;">
+                                {% for i in (1..24) %}
+                                <div class="nds-page-item nds-card nds-stroke">Item {{ i }}</div>
+                                {% endfor %}
+                            </div>
+                            <nav class="nds-pagination" data-auto-pagination="pagination_perpage_demo" aria-label="Pagination"></nav>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                        aria-controls="panel-pagination-perpage-1" id="tab-pagination-perpage-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-pagination-perpage-1"
+                                    aria-labelledby="tab-pagination-perpage-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;!-- Standard dropmenu SELECT MODE + data-per-page-target="id". Set the
+     container's inline --per-page to match data-select-value so the first
+     paint agrees with the trigger label. --&gt;
+&lt;div class="nds-toolbar"&gt;
+    &lt;div class="nds-bar-start"&gt;
+        &lt;div class="nds-dropmenu nds-center"
+             data-select-name="perPage"
+             data-select-value="6"
+             data-per-page-target="pagination_perpage_demo"&gt;
+            &lt;button class="nds-btn nds-secondary-outline nds-md nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
+                &lt;span class="nds-label"&gt;6&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;div class="nds-dropmenu-menu" hidden&gt;
+                &lt;div class="nds-dropmenu-scroll"&gt;
+                    &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="6"&gt;&lt;span class="nds-label"&gt;6&lt;/span&gt;&lt;/button&gt;
+                    &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="12"&gt;&lt;span class="nds-label"&gt;12&lt;/span&gt;&lt;/button&gt;
+                    &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="24"&gt;&lt;span class="nds-label"&gt;24&lt;/span&gt;&lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-bar-end"&gt;
+        &lt;span class="nds-results-count" data-paged-target="pagination_perpage_demo"&gt;
+            Showing &lt;b data-paged-from&gt;1&lt;/b&gt;&ndash;&lt;b data-paged-to&gt;6&lt;/b&gt; of &lt;b data-paged-count&gt;24&lt;/b&gt; items
+        &lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="pagination_perpage_demo" class="nds-paged-content nds-grid" style="--per-page: 6;"&gt;
+    &lt;div class="nds-page-item nds-card nds-stroke"&gt;Item 1&lt;/div&gt;
+    &lt;!-- … --&gt;
+&lt;/div&gt;
+&lt;nav class="nds-pagination" data-auto-pagination="pagination_perpage_demo" aria-label="Pagination"&gt;&lt;/nav&gt;
                                     </code>
                                 </div>
                             </div>

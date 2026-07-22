@@ -503,9 +503,34 @@
         return contentContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]') || null;
     }
 
+    // Per-page picker: any nds-dropmenu carrying `data-per-page-target="<id>"`
+    // rewires the linked .nds-paged-content's --per-page from its selected
+    // value. Dropmenu SELECT MODE (data-select-name) already emits the event,
+    // maintains the trigger label + `selected` state, and closes the menu —
+    // this delegate only reacts. One document-level listener covers every
+    // widget on the page; guarded so re-init doesn't duplicate.
+    let _perPageWired = false;
+    function _wirePerPagePickers() {
+        if (_perPageWired) return;
+        _perPageWired = true;
+        document.addEventListener('nds:dropmenu:selected', (e) => {
+            const { dropmenu, value } = e.detail;
+            const ref = dropmenu.getAttribute('data-per-page-target');
+            if (!ref) return;
+            const target = NDS.resolveEl(ref);
+            if (!target || !target.classList.contains('nds-paged-content')) return;
+            const perPage = parseInt(value, 10);
+            if (!(perPage > 0)) return;
+            target.style.setProperty('--per-page', perPage);
+            target._ndsPerPage = perPage;
+            refreshAutoPagination(target);
+        });
+    }
+
     // Auto-Pagination Generator for content-based pagination
     function initializeAutoPagination() {
         document.querySelectorAll('.nds-pagination[data-auto-pagination]').forEach(setupAutoContainer);
+        _wirePerPagePickers();
     }
 
     // Wire one auto-pagination container: paginate to final state now, then
