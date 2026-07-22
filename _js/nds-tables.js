@@ -77,7 +77,11 @@
                 : null;
 
             this.sort = NDS.Sort.create(this.table, {
-                items: () => Array.from(this.tbody.querySelectorAll('tr')),
+                // Direct children only — a nested <table> inside a <td> is valid
+                // HTML (row-expansion / master-detail views), and its rows would
+                // otherwise get swept into the outer sort and reparented under
+                // this tbody via reorderIn, destroying the nested table.
+                items: () => Array.from(this.tbody.querySelectorAll(':scope > tr')),
                 reorderIn: this.tbody,
                 triggers: '.nds-sort-btn',
                 mode: 'cycle',

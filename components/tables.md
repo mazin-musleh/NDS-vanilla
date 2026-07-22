@@ -7,7 +7,7 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
+updated: "1.4.x"
 last_edit: "17/07/2026 - 12:17 AM"
 ---
 
