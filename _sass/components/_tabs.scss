@@ -164,7 +164,7 @@
 
   @include btn-indicator('b');
 
-  .nds-lg & {
+  .nds-tabs.nds-lg & {
     --btn-size: 48px;
   }
 
@@ -226,8 +226,15 @@
 }
 
 .nds-tab-panel {
-  padding: var(--spacing-2xl);
-
+  // Knobs: shorthand `--tab-panel-padding` retunes both axes, axial
+  // `--tab-panel-padding-{inline,block}` overrides just one. Axial wins
+  // over shorthand via the nested fallback. Apply on the panel to
+  // override one, or on .nds-tab-content to retune every panel at once
+  // — inheritance flows through since the panel's declaration is the
+  // private --_x, not the public knob.
+  --_tab-panel-padding-inline: var(--tab-panel-padding-inline, var(--tab-panel-padding, var(--spacing-2xl)));
+  --_tab-panel-padding-block: var(--tab-panel-padding-block, var(--tab-panel-padding, var(--spacing-2xl)));
+  padding: var(--_tab-panel-padding-block) var(--_tab-panel-padding-inline);
   &:focus {
     outline: none;
   }
@@ -275,8 +282,11 @@
     padding-inline: var(--_card-padding);
     padding-block: var(--spacing-2xl);
 
+    // Card variant zeroes the panel padding (the tab-content already
+    // supplies the card gutter). Overrides still route through the knobs
+    // so a consumer's --tab-panel-padding{,-inline,-block} still wins.
     .nds-tab-panel {
-      padding: 0;
+      --_tab-panel-padding: var(--tab-panel-padding, 0);
     }
   }
 
@@ -311,8 +321,11 @@
   padding-inline: var(--_card-padding);
   padding-block: var(--spacing-2xl);
 
+  // Same shape as the .nds-tabs.nds-card branch — zero by default
+  // (tab-content owns the gutter), but consumer's public knobs still win.
   .nds-tab-panel {
-    padding: 0;
+    --_tab-panel-padding-inline: var(--tab-panel-padding-inline, var(--tab-panel-padding, 0));
+    --_tab-panel-padding-block: var(--tab-panel-padding-block, var(--tab-panel-padding, 0));
   }
 }
 
