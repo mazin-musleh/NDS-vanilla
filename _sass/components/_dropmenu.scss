@@ -128,6 +128,23 @@
     justify-content: center;
   }
 
+  // Search box (opt-in via `data-search` on the dropmenu — JS injects the
+  // markup at init). Sits above the scroll so a tall filtered list still
+  // scrolls behind a pinned input. The `nds-dropmenu-search` modifier is a
+  // menu-scoped padding tweak on the canonical .nds-form-container; the
+  // form-container itself does the search-input chrome.
+  .nds-dropmenu-search {
+    margin: 0 0 var(--spacing-md);
+  }
+
+  // Search-empty placeholder — JS injects a `.nds-empty-placeholder` inside
+  // the scroll and toggles [hidden] based on filter results. Visual base
+  // comes from _empty.scss (shared with NDS.Empty). Only the padding
+  // shrinks here — menu context is tighter than a full container.
+  .nds-empty-placeholder {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
+
   .nds-dropmenu-group>.nds-label {
     font-size: var(--typo-text-sm-FS);
     font-weight: var(--font-weight-bold);

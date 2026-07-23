@@ -163,7 +163,129 @@
             this.setupAria();
             this.setupEventListeners();
             this.setupSelectMode();
+            this.setupSearch();
             this.dropmenu.setAttribute('data-nds-dropmenu-initialized', 'true');
+        }
+
+        // ==============================================
+        // SEARCH MODE (opt-in filter box)
+        // ==============================================
+        // `data-search`         — always show the search box.
+        // `data-search="50"`    — show only when the menu holds ≥ 50 filterable items.
+        // `data-search-empty="…"` — override the default "No results" text.
+        //
+        // Item selector — a single attribute drives both opt-in and opt-out:
+        //   default: every `.nds-dropmenu-item` is filterable.
+        //   `[data-search-item]`         opts a custom wrapper INTO the filter
+        //                                 (checkbox labels, group rows).
+        //   `[data-search-item="false"]` opts a specific item OUT (e.g. a persistent
+        //                                 "Select all" row that must always show).
+        //
+        // Per-item `data-search-value="…"` appends extra tokens to the haystack
+        // (English aliases next to an Arabic label, IDs, keywords).
+
+        setupSearch() {
+            const attr = this.dropmenu.getAttribute('data-search');
+            if (attr === null) return;
+
+            const itemSelector = ':is(.nds-dropmenu-item, [data-search-item]):not([data-search-item="false"])';
+            const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
+            if (!scroll) return;
+
+            const items = () => Array.from(this.menu.querySelectorAll(itemSelector));
+            const threshold = parseInt(attr, 10) || 0;
+            if (threshold && items().length < threshold) return;
+
+            // Search box — canonical `.nds-form-container > .nds-form-control` so
+            // nds-forms.js wires the .nds-clear button (auto show/hide + reset)
+            // for free. The `nds-dropmenu-search` modifier is a menu-scoped
+            // padding/border tweak, not a new component.
+            const searchHTML = `<div class="nds-form-container nds-dropmenu-search">
+                <div class="nds-form-control">
+                    <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                    <input type="text" class="nds-search-input" aria-label="Search items" placeholder="Search…">
+                    <div class="nds-form-action">
+                        <button type="button" class="nds-btn nds-subtle nds-clear" aria-label="Clear search" hidden>
+                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+            this.menu.insertAdjacentHTML('afterbegin', searchHTML);
+
+            // Empty state — reuses .nds-empty-placeholder for the visual grammar
+            // (shared with NDS.Empty via _empty.scss) and carries
+            // data-nds-empty-placeholder so if someone ever wraps the scroll in
+            // nds-empty it's recognized as an existing placeholder (not counted
+            // as a real child, not re-injected). JS toggles [hidden] directly
+            // — NDS.Empty's own detection triggers on CHILD absence, not
+            // VISIBILITY, so hidden-item filtering would never fire it.
+            // Injected at TOP of scroll so the "No results" message sits under
+            // the search input (it IS the search's response). Also reads
+            // correctly when opt-out items (data-search-item="false") are
+            // pinned — they stay visible as a footer of always-available
+            // actions below the empty message.
+            const emptyHTML = `<div class="nds-empty-placeholder" data-nds-empty-placeholder hidden aria-live="polite">
+                <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                <span class="nds-empty-message"></span>
+            </div>`;
+            scroll.insertAdjacentHTML('afterbegin', emptyHTML);
+            scroll.querySelector('[data-nds-empty-placeholder] .nds-empty-message').textContent =
+                this.dropmenu.getAttribute('data-search-empty') || 'No results';
+
+            this.searchInput = this.menu.querySelector('.nds-dropmenu-search .nds-search-input');
+            const emptyEl = scroll.querySelector('[data-nds-empty-placeholder]');
+
+            // Case-insensitive + diacritic-stripped so "مطار" matches "المَطار"
+            // and "cafe" matches "café". Arabic harakat are in the Unicode
+            // Diacritic category, so \p{Diacritic} covers both scripts in one pass.
+            const norm = (s) => (s || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+
+            const filter = () => {
+                const q = norm(this.searchInput.value.trim());
+                let visible = 0;
+                for (const item of items()) {
+                    const haystack = norm(item.textContent + ' ' + (item.getAttribute('data-search-value') || ''));
+                    const match = !q || haystack.includes(q);
+                    item.hidden = !match;
+                    if (match) visible++;
+                }
+                emptyEl.hidden = visible > 0 || !q;
+            };
+
+            // nds-forms.js's clear button dispatches an `input` event on the
+            // field, so this same handler covers both typing AND clear-click.
+            this.searchInput.addEventListener('input', filter);
+
+            this.searchInput.addEventListener('keydown', (e) => {
+                // Two-stage Escape: first press clears the query, second closes
+                // the menu (falls through to the existing menu-scope onEscape).
+                if (e.key === 'Escape') {
+                    if (this.searchInput.value) {
+                        e.stopPropagation();
+                        this.searchInput.value = '';
+                        filter();
+                    }
+                    return;
+                }
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    this.menu.querySelector(itemSelector + ':not([hidden])')?.focus();
+                    return;
+                }
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.menu.querySelector(itemSelector + ':not([hidden])')?.click();
+                }
+            });
+
+            // Autofocus on open, reset on close — each open is a fresh state.
+            this.dropmenu.addEventListener('nds:dropmenu:opened', () => this.searchInput.focus());
+            this.dropmenu.addEventListener('nds:dropmenu:closed', () => {
+                if (!this.searchInput.value) return;
+                this.searchInput.value = '';
+                filter();
+            });
         }
 
         // ==============================================

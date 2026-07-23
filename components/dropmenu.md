@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.x"
-last_edit: "22/07/2026 - 03:19 PM"
+last_edit: "23/07/2026 - 10:47 AM"
 ---
 
 <!-- Standard Dropmenu -->
@@ -816,6 +816,107 @@ document.getElementById('dropmenu-select-demo')
 // The hidden input also fires a native `change` event so the selection
 // integrates with standard form libraries and submit handlers.
 </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Searchable Dropmenu -->
+<section id="dropmenuSearch" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Searchable</h2>
+            <p class="nds-section-description">Add <code class="nds-inline-code lang-html">data-search</code> to inject a search box at the top of the menu. Match is case- and diacritic-insensitive, so <code class="nds-inline-code lang-html">"cafe"</code> matches <code class="nds-inline-code lang-html">"café"</code> and <code class="nds-inline-code lang-html">"مطار"</code> matches <code class="nds-inline-code lang-html">"المَطار"</code>. Set a threshold with <code class="nds-inline-code lang-html">data-search="50"</code> to skip injection when the menu holds fewer than N filterable items. Per-item <code class="nds-inline-code lang-html">data-search-value="…"</code> appends extra tokens (English aliases next to an Arabic label, IDs, keywords). Opt an item OUT with <code class="nds-inline-code lang-html">data-search-item="false"</code> to keep it always visible below the empty-state message. Override the "No results" text via <code class="nds-inline-code lang-html">data-search-empty="…"</code></p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div class="nds-dropmenu"
+                                 data-search
+                                 data-select-name="country"
+                                 data-select-value="SA"
+                                 style="--dropmenu-min-width: 260px;">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button">
+                                    <span class="nds-label">Choose a country</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="SA" data-search-value="Saudi Arabia KSA"><span class="nds-label">المَملَكة العَربيَّة السَعوديَّة</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="AE" data-search-value="United Arab Emirates UAE"><span class="nds-label">الإمارات العربية المتحدة</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="KW" data-search-value="Kuwait"><span class="nds-label">الكويت</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="QA" data-search-value="Qatar"><span class="nds-label">قطر</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="BH" data-search-value="Bahrain"><span class="nds-label">البحرين</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="OM" data-search-value="Oman"><span class="nds-label">سلطنة عُمان</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="EG" data-search-value="Egypt"><span class="nds-label">مصر</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="JO" data-search-value="Jordan"><span class="nds-label">الأردن</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="MA" data-search-value="Morocco"><span class="nds-label">المغرب</span></button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item" data-value="TN" data-search-value="Tunisia"><span class="nds-label">تونس</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                        aria-controls="panel-dropmenu-search-1" id="tab-dropmenu-search-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel"
+                                    id="panel-dropmenu-search-1" aria-labelledby="tab-dropmenu-search-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <div class="nds-expandable-content">
+                                        <code class="lang-html code">
+&lt;!-- data-search: always-on. Use data-search="50" to only show the box
+     when the menu holds ≥ 50 items. Combines with SELECT MODE — the
+     chosen item ships as `country` in the form, its Arabic label mirrors
+     to the trigger. data-search-value adds English aliases so "Saudi"
+     matches the Arabic row. --&gt;
+&lt;div class="nds-dropmenu" data-search
+     data-select-name="country" data-select-value="SA"&gt;
+    &lt;button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" type="button"&gt;
+        &lt;span class="nds-label"&gt;Choose a country&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="nds-dropmenu-menu" hidden&gt;
+        &lt;div class="nds-dropmenu-scroll"&gt;
+            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="SA" data-search-value="Saudi Arabia KSA"&gt;
+                &lt;span class="nds-label"&gt;المَملَكة العَربيَّة السَعوديَّة&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;button class="nds-btn nds-subtle nds-dropmenu-item" data-value="AE" data-search-value="United Arab Emirates UAE"&gt;
+                &lt;span class="nds-label"&gt;الإمارات العربية المتحدة&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;!-- … --&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                                        </code>
+                                    </div>
                                 </div>
                             </div>
                         </div>
