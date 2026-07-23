@@ -52,11 +52,9 @@
             if (!this.formControl || !this.input) return;
 
             this.clearBtn = this.formControl.querySelector('.nds-form-action .nds-clear');
-            // Dedicated inert fetch spinner — a hidden .nds-loading span in the
-            // action slot. Fields where a clear affordance makes no sense
-            // (taginput assist: chips own removal) ship this instead of the
-            // clear button; when absent, the clear button doubles as spinner.
-            this.spinnerEl = this.formControl.querySelector('.nds-form-action .nds-loading');
+            // Loading UX is delegated to forms' form-scope state hook: we just
+            // flip data-state="loading" on the container and forms handles the
+            // spinner shell + sibling swap + restore. Zero consumer markup.
 
             // Config from container attributes
             this.url = containerElement.getAttribute('data-url');
@@ -340,17 +338,9 @@
         // ==============================================
 
         setLoading(isLoading) {
-            if (this.spinnerEl) this.spinnerEl.toggleAttribute('hidden', !isLoading);
-            if (!this.clearBtn) return;
-
-            if (isLoading) {
-                this.clearBtn.removeAttribute('hidden');
-                addState(this.clearBtn, 'loading');
-            } else {
-                removeState(this.clearBtn, 'loading');
-                var hasValue = this.input.value.trim() !== '';
-                this.clearBtn.toggleAttribute('hidden', !hasValue);
-            }
+            // Delegated to forms' state hook — see nds-forms.js loading branch.
+            if (isLoading) addState(this.container, 'loading');
+            else removeState(this.container, 'loading');
         }
 
         // ==============================================

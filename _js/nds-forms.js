@@ -33,21 +33,74 @@
         el.querySelectorAll('input, textarea, select').forEach(function(inp) { inp.readOnly = false; });
     });
 
+    // ── Loading state — form-scope opt-in ──────────────────────────────
+    // Any consumer (autocomplete, remote-validate, custom fetch) can flip
+    // data-state="loading" on the form-container or form-control; forms
+    // owns the visual UX in one place: reuse [data-loading-slot] / legacy
+    // .nds-loading if authored, else auto-create a spinner shell in the
+    // .nds-form-action (creating that slot too if missing). While loading,
+    // hide every other action-slot child and stamp data-state="loading" on
+    // the shell — nds-btn's CSS renders the spinner from that state.
+    // On exit, restore siblings; the .nds-clear button's visibility is
+    // re-computed from the current input value (may have emptied mid-fetch).
+    function _ensureLoadingShell(fc) {
+        var action = fc.querySelector('.nds-form-action');
+        if (!action) {
+            action = document.createElement('div');
+            action.className = 'nds-form-action';
+            fc.appendChild(action);
+        }
+        var shell = action.querySelector('[data-loading-slot], .nds-loading');
+        if (!shell) {
+            shell = document.createElement('button');
+            shell.type = 'button';
+            shell.className = 'nds-btn nds-subtle';
+            shell.hidden = true;
+            shell.setAttribute('data-loading-slot', '');
+            shell.setAttribute('aria-label', 'Loading');
+            shell.innerHTML = '<i class="nds-icon" aria-hidden="true"></i>';
+            action.appendChild(shell);
+        }
+        return { action: action, shell: shell };
+    }
+
     NDS.State.onAdd('loading', FORM_SCOPE, function(el) {
         var fc = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
         if (!fc) return;
-        var clearBtn = fc.querySelector('.nds-form-action .nds-clear');
-        if (clearBtn) {
-            clearBtn.removeAttribute('hidden');
-            NDS.State.add(clearBtn, 'loading');
+        var refs = _ensureLoadingShell(fc);
+
+        // Snapshot resting hidden state on first enter — captures the
+        // baseline right before we swap it, so exit can restore accurately.
+        if (!fc._ndsLoadingRest) {
+            fc._ndsLoadingRest = new Map();
+            for (var i = 0; i < refs.action.children.length; i++) {
+                var child = refs.action.children[i];
+                if (child === refs.shell) continue;
+                fc._ndsLoadingRest.set(child, child.hidden);
+            }
         }
+        fc._ndsLoadingRest.forEach(function(_, child) { child.hidden = true; });
+        refs.shell.hidden = false;
+        NDS.State.add(refs.shell, 'loading');
     });
 
     NDS.State.onRemove('loading', FORM_SCOPE, function(el) {
         var fc = el.classList.contains('nds-form-control') ? el : el.querySelector('.nds-form-control');
         if (!fc) return;
-        var clearBtn = fc.querySelector('.nds-form-action .nds-clear');
-        if (clearBtn) NDS.State.remove(clearBtn, 'loading');
+        var action = fc.querySelector('.nds-form-action');
+        if (!action) return;
+        var shell = action.querySelector('[data-loading-slot], .nds-loading');
+        if (shell) {
+            NDS.State.remove(shell, 'loading');
+            shell.hidden = true;
+        }
+        if (!fc._ndsLoadingRest) return;
+        var input = fc.querySelector('input, textarea, select');
+        var hasValue = !!(input && String(input.value || '').trim());
+        fc._ndsLoadingRest.forEach(function(wasHidden, child) {
+            if (child.classList.contains('nds-clear')) child.hidden = !hasValue;
+            else child.hidden = wasHidden;
+        });
     });
 
     // ==============================================

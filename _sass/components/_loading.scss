@@ -17,8 +17,10 @@
 // NDS LOADING COMPONENT
 // ==============================================
 
-.nds-loading,
-[data-state~="loading"] {
+// Form-scope elements own their own loading UX (spinner shell in the
+// .nds-form-action, sibling swap — see nds-forms.js loading state hook),
+// so exempt them from the whole-container overlay to avoid double spinners.
+:is(.nds-loading, [data-state~="loading"]):not(.nds-form-container, .nds-form-group, .nds-form-control) {
   // Private tokens — resolve public overrides with semantic fallbacks
   --_loading-size: var(--loading-size, 32px);
   --_loading-border: var(--loading-border, 3px);
@@ -29,7 +31,7 @@
   pointer-events: none;
 
   // Dim children (not applicable to buttons — they handle their own loading)
-  &:not(.nds-btn) > * {
+  &:not(.nds-btn)>* {
     opacity: var(--_loading-opacity);
   }
 
