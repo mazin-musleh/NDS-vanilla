@@ -20,7 +20,9 @@
 // Form-scope elements own their own loading UX (spinner shell in the
 // .nds-form-action, sibling swap — see nds-forms.js loading state hook),
 // so exempt them from the whole-container overlay to avoid double spinners.
-:is(.nds-loading, [data-state~="loading"]):not(.nds-form-container, .nds-form-group, .nds-form-control) {
+// :where() keeps the exemption at zero specificity — a plain :not() would
+// lift the whole rule to (0,2,0) and beat consumers' own (0,1,0) rules.
+:is(.nds-loading, [data-state~="loading"]):not(:where(.nds-form-container, .nds-form-group, .nds-form-control)) {
   // Private tokens — resolve public overrides with semantic fallbacks
   --_loading-size: var(--loading-size, 32px);
   --_loading-border: var(--loading-border, 3px);
