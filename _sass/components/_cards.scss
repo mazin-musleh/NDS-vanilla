@@ -135,12 +135,16 @@
   .nds-card-header {
     position: relative;
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-xl);
 
     &:is(:has(.nds-close), .nds-rowView) {
       width: 100%;
       flex-direction: row;
       justify-content: space-between;
+    }
+
+    > :is(.nds-card-text, .nds-card-title) {
+      padding-top: var(--spacing-md);
     }
   }
 
@@ -610,6 +614,7 @@
     opacity: 0.5;
   }
 }
+
 // ==============================================
 // PROCESSING SKELETON
 // ==============================================
@@ -628,8 +633,8 @@
 // stamp (html:not([data-nds-loaded])): the no-JS-component default for
 // the visible pre-stamp window (regions revealed at main-CSS load).
 :is(:is(.nds-grid, .nds-paged-content):is(.nds-loading, [data-state='loading']),
-    .nds-grid[data-filter-items]:not([data-nds-filter-initialized]),
-    .nds-paged-content:not([data-paged-initialized])) .nds-card,
+  .nds-grid[data-filter-items]:not([data-nds-filter-initialized]),
+  .nds-paged-content:not([data-paged-initialized])) .nds-card,
 .nds-card:is(.nds-loading, [data-state='loading']),
 html:not([data-nds-loaded]) .nds-card {
 
