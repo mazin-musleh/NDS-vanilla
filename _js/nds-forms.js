@@ -56,6 +56,7 @@
             shell.type = 'button';
             shell.className = 'nds-btn nds-subtle';
             shell.hidden = true;
+            shell.disabled = true;  // inert affordance — keeps it out of the tab order while loading
             shell.setAttribute('data-loading-slot', '');
             shell.setAttribute('aria-label', 'Loading');
             shell.innerHTML = '<i class="nds-icon" aria-hidden="true"></i>';
