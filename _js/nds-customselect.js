@@ -68,6 +68,10 @@
         // stamps on the trigger are valid on an <input>.
         selectInput.setAttribute('role', 'combobox');
         dropdown.classList.add('nds-dropmenu-menu', 'nds-select-menu');
+        // Back-reference so onOptionClick can find the owning form-control
+        // after NDS.Dropmenu portals the menu to <body> — a portaled option's
+        // closest('.nds-form-control') walk stops at <body> and returns null.
+        dropdown._selectFormControl = formControl;
         dropdown.removeAttribute('hidden');
         var optionsContainer = dropdown.querySelector('.nds-select-options');
         if (optionsContainer) optionsContainer.classList.add('nds-dropmenu-scroll');
@@ -116,7 +120,12 @@
         if (!t || !t.closest) return;
         var option = t.closest('.nds-select-option');
         if (!option) return;
-        var formControl = option.closest('.nds-form-control');
+        // Walk to the enclosing menu first — the option is always its
+        // descendant, portaled or not — then read the back-reference
+        // stamped in build(). Fall back to closest() for the in-place path.
+        var menu = option.closest('.nds-select-dropdown, .nds-dropmenu-menu');
+        var formControl = (menu && menu._selectFormControl)
+                        || option.closest('.nds-form-control');
         if (!formControl) return;
         var selectInput = formControl.querySelector('.nds-select-input');
         if (!selectInput) return;
@@ -129,7 +138,11 @@
         selectInput.value = text;
         if (hiddenInput) hiddenInput.value = value;
 
-        formControl.querySelectorAll('.nds-select-option').forEach(function (o) {
+        // Query options from the menu, not the form-control — while portaled,
+        // the options live under <body> and formControl.querySelectorAll would
+        // return nothing (so the selected marker would never update, and the
+        // next open would still show the initial selection highlighted).
+        (menu || formControl).querySelectorAll('.nds-select-option').forEach(function (o) {
             if (o.dataset.value === value) NDS.State.add(o, 'selected');
             else NDS.State.remove(o, 'selected');
         });

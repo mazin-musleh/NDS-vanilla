@@ -709,6 +709,23 @@
             // switch positioning to `fixed` (the menu's CSS targets
             // `.nds-dropmenu-menu[data-portal]`).
             if (this.shouldPortal) {
+                // Pre-resolve percentage widths against the wrapper's own
+                // dimensions BEFORE portaling. A rule like
+                // `--dropmenu-min-width: 100%` (custom-select, filter, …)
+                // resolves against the in-place containing block (the
+                // .nds-dropmenu wrapper). After portal the menu is
+                // position:fixed under <body>, so `100%` would resolve
+                // to the viewport — the menu blows up to full-page-width.
+                // Snapshot the pixel value while we're still in place; the
+                // NDS.portal snapshot below then preserves the px verbatim.
+                const wrapperWidth = this.dropmenu.getBoundingClientRect().width;
+                const wcs = getComputedStyle(this.dropmenu);
+                for (const varName of ['--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width']) {
+                    const v = wcs.getPropertyValue(varName).trim();
+                    if (v && v.endsWith('%')) {
+                        this.menu.style.setProperty(varName, (wrapperWidth * parseFloat(v) / 100) + 'px');
+                    }
+                }
                 this.menu.setAttribute('data-portal', '');
                 NDS.portal(this.menu, { snapshotVars: PORTAL_VARS, force: true });
                 // Match the trigger's stacking layer. The portaled menu lives
