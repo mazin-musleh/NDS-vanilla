@@ -29,7 +29,7 @@
          * @param {string} options.description - Alert description
          * @param {string|Element} options.target - Target selector or element
          * @param {boolean} options.closable - Show close button (default: true)
-         * @param {boolean} options.shadow - Add shadow effect (default: false)
+         * @param {boolean} options.shadow - Add shadow effect (default: true for toasts, false otherwise)
          * @param {boolean} options.color - Add color variant (default: false)
          * @param {string} options.id - Custom ID (optional)
          * @param {boolean} options.prepend - Prepend instead of append (default: false)
@@ -52,7 +52,7 @@
                 description = '',
                 target = null,
                 closable = true,
-                shadow = false,
+                shadow = options.display === 'toast',
                 color = false,
                 id = null,
                 prepend = false,
@@ -68,7 +68,7 @@
             if (shadow) alert.classList.add('nds-shadow');
             if (color) alert.classList.add('nds-color');
             if (display === 'inline') alert.classList.add('nds-inline');
-            if (display === 'toast') alert.classList.add('nds-toast');
+            if (display === 'toast') alert.classList.add('nds-toast', 'nds-stroke');
             if (id) alert.id = id;
             alert.setAttribute('role', 'alert');
 

@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "15/07/2026 - 09:43 PM"
+updated: "1.4.x"
+last_edit: "23/07/2026 - 03:53 PM"
 ---
 
 <!-- Variants -->
@@ -787,7 +787,7 @@ NDS.Alert.create({
                                     </div>
                                     <code class="lang-html code">
 &lt;div class="nds-alert-placeholder" data-position="top"&gt;
-  &lt;div class="nds-alert nds-card nds-toast nds-shadow" data-status="success" role="alert" data-state="toast-show"&gt;
+  &lt;div class="nds-alert nds-card nds-toast nds-shadow nds-stroke" data-status="success" role="alert" data-state="toast-show"&gt;
     &lt;span class="nds-feedback nds-alert-icon nds-outline"&gt;
       &lt;span class="nds-feedback-icon"&gt;
         &lt;i class="nds-icon" aria-hidden="true"&gt;&lt;/i&gt;
@@ -825,8 +825,7 @@ NDS.Alert.create({
     description: 'Changes saved successfully!',
     display: 'toast',
     position: 'top',
-    duration: 4000,
-    shadow: true
+    duration: 4000
 });</code>
                                 </div>
                             </div>
@@ -990,7 +989,7 @@ const alert = NDS.Alert.create({
     description: 'Saved.',    // Alert body text
     target: '#container',     // CSS selector or DOM element to insert into
     closable: true,           // Show close button (default: true)
-    shadow: false,            // Add nds-shadow class (default: false)
+    shadow: false,            // Add nds-shadow class (default: true for toasts, else false)
     color: false,             // Add nds-color background (default: false)
     id: 'my-alert',           // Custom element ID (optional)
     prepend: false,           // Insert at start of target (default: false)
@@ -1019,9 +1018,8 @@ NDS.Alert.create({
     position: 'top',          // 'top' | 'bottom', plus optional inline side
                               // '-start' | '-end' | '-left' | '-right'
                               // e.g. 'top-start', 'bottom-left' (default: 'top' = inline end)
-    duration: 4000,           // Auto-dismiss in ms, 0 = manual (default: 0)
+    duration: 4000            // Auto-dismiss in ms, 0 = manual (default: 0)
                               // Timer pauses on hover/focus; a click pins the toast until closed
-    shadow: true
 });
 
 // ── Dismiss ──────────────────────────────────────────

@@ -332,6 +332,9 @@
 // ==============================================
 
 .nds-alert.nds-toast {
+  // Floats over content — deeper lift than the card's --shadow-md
+  &.nds-shadow { box-shadow: var(--shadow-2xl); }
+
   width: fit-content;
   min-width: 300px;
   max-width: 600px;
