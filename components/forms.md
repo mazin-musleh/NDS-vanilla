@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.4.x"
-last_edit: "20/07/2026 - 02:29 AM"
+last_edit: "23/07/2026 - 02:12 PM"
 lang: en
 direction: ltr
 ---
@@ -1863,6 +1863,131 @@ var status = NDS.Forms.getStatus(field);
   </div>
 </section>
 
+<!-- Loading State -->
+<section id="formLoading" class="nds-content-section nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Loading State</h2>
+      <p class="nds-section-description">Flip <code class="nds-inline-code lang-html">data-state="loading"</code> on any form-container / form-group / form-control (via <code class="nds-inline-code lang-js">NDS.State.add</code>) and forms handles the visual UX: auto-creates a <code class="nds-inline-code lang-html">[data-loading-slot]</code> spinner in <code class="nds-inline-code lang-html">.nds-form-action</code> (creating the slot if missing), hides sibling action buttons, and stamps <code class="nds-inline-code lang-html">data-state="loading"</code> on the shell — <code class="nds-inline-code lang-html">.nds-btn</code>'s CSS renders the spinner. On exit the siblings restore; <code class="nds-inline-code lang-html">.nds-clear</code> re-computes from the current input value. Zero markup burden — same UX for remote validation, autocomplete, custom fetch, anything</p>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-showcase">
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-action">
+              <button class="nds-btn nds-secondary-outline demo-toggle-btn" id="loading-toggle-btn">
+                <span class="nds-label">Simulate 2s load</span>
+              </button>
+            </div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo">
+              <div class="nds-form-container" id="loading-demo-container">
+                <div class="nds-form-header">
+                  <label for="loading-demo-input">
+                    <span class="nds-label">Username</span>
+                  </label>
+                </div>
+                <div class="nds-form-control">
+                  <input type="text" id="loading-demo-input" class="nds-input" placeholder="Type then click the button...">
+                  <div class="nds-form-action">
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-loading-html" id="tab-loading-html">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                    aria-controls="panel-loading-js" id="tab-loading-js">
+                    <span class="nds-tab-label">JS API</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-loading-html"
+                  aria-labelledby="tab-loading-html">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
+&lt;!-- Author the field as usual. Forms owns the spinner shell —
+     you don't add a &lt;button data-loading-slot&gt; unless you want a
+     custom label / icon; auto-creation covers the default case. --&gt;
+&lt;div class="nds-form-container" id="username-field"&gt;
+  &lt;div class="nds-form-header"&gt;
+    &lt;label for="username"&gt;&lt;span class="nds-label"&gt;Username&lt;/span&gt;&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-control"&gt;
+    &lt;input type="text" id="username" class="nds-input"&gt;
+    &lt;div class="nds-form-action"&gt;
+      &lt;button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden&gt;
+        &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
+&lt;/div&gt;
+                  </code>
+                  </div>
+                </div>
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-loading-js"
+                  aria-labelledby="tab-loading-js" hidden>
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-javascript code">var field = document.getElementById('username-field');
+
+// Enter loading — spinner shell in, action siblings hidden.
+NDS.State.add(field, 'loading');
+
+// Exit loading — siblings restored, .nds-clear re-syncs to input value.
+NDS.State.remove(field, 'loading');
+
+// Wrapping a fetch:
+async function checkAvailability(name) {
+  NDS.State.add(field, 'loading');
+  try {
+    var res = await fetch('/api/username?name=' + encodeURIComponent(name));
+    var { available } = await res.json();
+    NDS.Forms.setStatus({
+      element: field,
+      status: available ? 'success' : 'error',
+      message: available ? 'Username is available' : 'Already taken',
+    });
+  } finally {
+    NDS.State.remove(field, 'loading');
+  }
+}</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Permanent Feedback -->
 <section id="formPermanentFeedback" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
@@ -2281,6 +2406,16 @@ hiddenInput.addEventListener('change', function(e) {
       });
       document.getElementById('status-clear-btn').addEventListener('click', function () {
         NDS.Forms.clearStatus(statusContainer);
+      });
+    }
+
+    // Loading state demo — flip data-state="loading" for 2s, then release.
+    var loadingContainer = document.getElementById('loading-demo-container');
+    var loadingBtn = document.getElementById('loading-toggle-btn');
+    if (loadingContainer && loadingBtn) {
+      loadingBtn.addEventListener('click', function () {
+        NDS.State.add(loadingContainer, 'loading');
+        setTimeout(function () { NDS.State.remove(loadingContainer, 'loading'); }, 2000);
       });
     }
 
