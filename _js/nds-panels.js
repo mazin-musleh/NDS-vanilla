@@ -29,8 +29,6 @@
     // collapses to one close + one open, never a queue of animations.
     let pendingOpen = null;
 
-    const panelEl = (ref) => (typeof ref === 'string' ? document.getElementById(ref) : ref);
-
     const togglesFor = (panel) =>
         panel.id ? document.querySelectorAll('[data-panel-toggle="' + panel.id + '"]') : [];
 
@@ -105,7 +103,7 @@
         togglesFor(panel).forEach(btn => NDS.aria.expanded(btn, true));
 
         // Force reflow so the closed offset paints before the open transition.
-        panel.offsetHeight; // eslint-disable-line no-unused-expressions
+        void panel.offsetHeight;
 
         addState(panel, 'open', 'opening');
 
@@ -121,7 +119,7 @@
     }
 
     function open(ref) {
-        const panel = panelEl(ref);
+        const panel = NDS.resolveEl(ref);
         if (!panel) return;
 
         pendingOpen = null;              // supersede any swap already waiting
@@ -143,7 +141,7 @@
     }
 
     function close(ref) {
-        const panel = panelEl(ref);
+        const panel = NDS.resolveEl(ref);
         if (!panel || !hasState(panel, 'open') || hasState(panel, 'closing')) return;
 
         addState(panel, 'closing');
@@ -184,14 +182,14 @@
     }
 
     function toggle(ref) {
-        const panel = panelEl(ref);
+        const panel = NDS.resolveEl(ref);
         if (!panel) return;
         if (hasState(panel, 'open') && !hasState(panel, 'closing')) close(panel);
         else open(panel);
     }
 
     const isOpen = (ref) => {
-        const panel = panelEl(ref);
+        const panel = NDS.resolveEl(ref);
         return !!panel && hasState(panel, 'open') && !hasState(panel, 'closing');
     };
 
@@ -249,6 +247,10 @@
             delete panel._openAC;
         }
         if (panel.hasAttribute('data-panel-modal') && hasState(panel, 'open')) NDS.Backdrop.hide();
+        // Mirrors close()'s toggle reset: destroy skips the close path, so without
+        // this a destroyed-while-open panel leaves every toggle claiming
+        // aria-expanded="true" for a surface that is now hidden and unwired.
+        if (hasState(panel, 'open')) togglesFor(panel).forEach(btn => NDS.aria.expanded(btn, false));
         clearState(panel);
         panel.setAttribute('hidden', '');
         if (openPanel === panel) openPanel = null;

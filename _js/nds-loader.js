@@ -428,12 +428,12 @@
             critical: true,
         },
         {
-            // Delegated: routing moves each [data-fab-pos] FAB into its corner
-            // dock. A FAB is non-critical chrome, so it rides the delegated
-            // bundle alongside the panels it toggles (both appear together —
-            // no visible-but-dead FAB in the pre-panel gap). Pre-route flash is
-            // prevented by the _fab.scss guard that hides an un-routed FAB until
-            // its data-nds-fab-initialized stamp lands. Cold init — pure appendChild.
+            // Delegated: routing moves each .nds-fab into its edge dock. A FAB is
+            // non-critical chrome, so it rides the delegated bundle alongside the
+            // panels it toggles (both appear together — no visible-but-dead FAB in
+            // the pre-panel gap). Pre-route flash is prevented by the FAB's own
+            // `hidden` attribute (the universal [hidden] rule in _fold.scss);
+            // register() strips it once docked. Cold init — pure appendChild.
             name: 'Fab',
             selector: '.nds-fab, .nds-fab-dock',
             init: () => NDS.Fab?.init?.(),

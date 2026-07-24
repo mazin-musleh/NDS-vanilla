@@ -21,8 +21,10 @@
  *                             top sheet or a FAB with no panel → the reading-end
  *                             edge; a bottom sheet resolves to the bottom dock
  *
- * Delegated: routing runs after the reveal; the _fab.scss guard hides a
- * .nds-fab until its stamp lands so it never flashes at its source spot.
+ * Delegated: routing runs after the reveal. A FAB ships with `hidden`, so the
+ * universal [hidden] rule in _fold.scss (blocking critical CSS) keeps it off
+ * first paint; register() strips the attribute once the FAB is docked, so it
+ * never flashes at its source spot.
  * Injected FABs (built by another component) call NDS.Fab.register(fab).
  */
 
@@ -33,6 +35,9 @@
     const DEFAULT_POS = 'right';   // physical default edge
 
     const order = (el) => parseInt(el.dataset.fabOrder, 10) || 0;
+    // Measured px, trimmed to 2dp: a hundredth of a pixel is far under a device
+    // pixel, and it keeps an inspected --_fab-ride readable vs a 16-digit float.
+    const px = (n) => Math.round(n * 100) / 100 + 'px';
     // A JS-made dock always stamps its position (below), but an authored bare
     // <div class="nds-fab-dock"> may omit it — treat that as 'right' so both
     // resolve to the same edge.
@@ -104,13 +109,23 @@
         const side = panel.getAttribute('data-panel-side') || 'end';
         if (side === 'top') return;
 
-        const state = panel.getAttribute('data-state') || '';
         // Reads the START of the slide, not its end: data-state gains `open` up
         // front and `closing` before the return trip, where nds:panel:opened
         // only lands after the transition — too late to travel together.
-        const riding = state.includes('open') && !state.includes('closing');
+        const riding = NDS.State.has(panel, 'open') && !NDS.State.has(panel, 'closing');
         const sheet = side === 'bottom';
         const edge = sideToEdge(side);
+
+        // Size is settled the moment `open` lands: the panel animates on transform,
+        // which never reflows it — and a pure translate leaves the rect's own
+        // width/height untouched, so it can be read mid-slide. Measured on the first
+        // thumb that rides and reused for the rest — a panel with no thumb never
+        // measures, and no thumb's style write forces a reflow for the next's read.
+        // getBoundingClientRect, NOT offsetWidth/offsetHeight: those round to whole
+        // pixels, and a sheet capped at 60svh minus the live header offset is almost
+        // never an integer — rounding up sends the thumb a pixel past the edge.
+        // The whole function goes in the var so one CSS rule carries either axis.
+        let ride;
 
         document.querySelectorAll('[data-panel-toggle="' + panel.id + '"]').forEach(btn => {
             const fab = btn.closest('.nds-fab');
@@ -118,12 +133,13 @@
             if (resolvePos(fab) !== edge) return;   // not the same edge — nothing to ride
 
             if (!riding) { fab.removeAttribute('data-fab-riding'); return; }
-            // Size is settled the moment `open` lands: the panel animates on
-            // transform, which never reflows it. The whole function goes in the
-            // var so one CSS rule carries either axis.
-            fab.style.setProperty('--_fab-ride', sheet
-                ? 'translateY(-' + panel.offsetHeight + 'px)'
-                : 'translateX(' + (edge === 'left' ? '' : '-') + panel.offsetWidth + 'px)');
+            if (ride === undefined) {
+                const rect = panel.getBoundingClientRect();
+                ride = sheet
+                    ? 'translateY(-' + px(rect.height) + ')'
+                    : 'translateX(' + (edge === 'left' ? '' : '-') + px(rect.width) + ')';
+            }
+            fab.style.setProperty('--_fab-ride', ride);
             fab.setAttribute('data-fab-riding', '');
         });
     }
@@ -187,7 +203,6 @@
         init,
         reinit: init,
         register,
-        adopt: register,   // alias — "adopt this element into its slot"
         dock,
         resolvePos,
     };
