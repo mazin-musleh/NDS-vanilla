@@ -96,6 +96,11 @@
                 escapeClose: !isStatic,
                 clickToClose: !isStatic,
             });
+            // Record that WE raised it. data-panel-modal is consumer-mutable, so
+            // re-reading it at close would skip the hide if it changed while open —
+            // and Backdrop refcounts, so one missed hide pins activeCount above zero
+            // and suppresses every later teardown (scroll lock included).
+            panel._backdrop = true;
             document.addEventListener('keydown',
                 NDS.trapFocus(() => (openPanel === panel ? panel : null)), { signal });
         }
@@ -150,7 +155,10 @@
             panel._openAC.abort();
             delete panel._openAC;
         }
-        if (panel.hasAttribute('data-panel-modal')) NDS.Backdrop.hide();
+        if (panel._backdrop) {
+            NDS.Backdrop.hide();
+            delete panel._backdrop;
+        }
 
         togglesFor(panel).forEach(btn => NDS.aria.expanded(btn, false));
 
@@ -160,13 +168,17 @@
             if (openPanel === panel) openPanel = null;
 
             // Return focus to the opener only when nothing is queued — the
-            // incoming panel takes focus itself a moment later.
-            if (!pendingOpen) {
-                const opener = panel._opener;
-                if (opener && typeof opener.focus === 'function' && document.contains(opener)) {
-                    opener.focus();
-                }
-                delete panel._opener;
+            // incoming panel takes focus itself a moment later. Drop the
+            // reference unless THIS panel is the one coming back: a re-open
+            // mid-close never re-stamps it (bindToggles only stamps a panel that
+            // isn't open, and `open` is still set while closing), so deleting it
+            // here would strand the next close with no trigger to return to.
+            // A swap to a different panel does drop it — holding it would later
+            // throw focus at a button that open never came from.
+            const opener = panel._opener;
+            if (pendingOpen !== panel) delete panel._opener;
+            if (!pendingOpen && opener && typeof opener.focus === 'function' && document.contains(opener)) {
+                opener.focus();
             }
 
             panel.dispatchEvent(new CustomEvent('nds:panel:closed', {
@@ -246,7 +258,10 @@
             panel._openAC.abort();
             delete panel._openAC;
         }
-        if (panel.hasAttribute('data-panel-modal') && hasState(panel, 'open')) NDS.Backdrop.hide();
+        if (panel._backdrop) {
+            NDS.Backdrop.hide();
+            delete panel._backdrop;
+        }
         // Mirrors close()'s toggle reset: destroy skips the close path, so without
         // this a destroyed-while-open panel leaves every toggle claiming
         // aria-expanded="true" for a surface that is now hidden and unwired.
