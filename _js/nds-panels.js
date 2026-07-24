@@ -246,6 +246,13 @@
     }
 
     function destroyPanel(panel) {
+        // Cancelling the transition below drops the close callback that would
+        // have flushed the swap slot, so carry a pending OTHER panel over and
+        // open it once teardown is done — destroying this one says nothing
+        // about the caller's request to open that one.
+        const pending = pendingOpen !== panel ? pendingOpen : null;
+        pendingOpen = null;
+
         if (panel._cancelAnim) {
             panel._cancelAnim();
             delete panel._cancelAnim;
@@ -269,9 +276,10 @@
         clearState(panel);
         panel.setAttribute('hidden', '');
         if (openPanel === panel) openPanel = null;
-        if (pendingOpen === panel) pendingOpen = null;
         delete panel._opener;
         panel.removeAttribute(INIT_ATTR);
+
+        if (pending) _open(pending);
     }
 
     // Toggles are delegated from the document: a toggle may live anywhere
