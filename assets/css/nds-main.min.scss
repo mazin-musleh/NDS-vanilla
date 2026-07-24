@@ -104,6 +104,8 @@
 @use 'components/chart';
 @use 'components/cooldown-button';
 @use 'components/metric';
+@use 'components/panel';
+@use 'components/fab';
 
 // Import utilities
 @use 'utilities';

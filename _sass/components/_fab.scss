@@ -1,0 +1,135 @@
+// ==============================================
+// FAB DOCK
+// ==============================================
+// Fixed corner slot that stacks floating action buttons. Pure layout — it
+// never restyles its children, so FABs of different sizes and shapes (56px
+// circle, 40px circle, an edge-flush thumb) can share it.
+//
+// The dock is a static slot; the POSITION lives on each FAB (data-fab-pos)
+// and nds-fab.js routes the FAB into the slot whose data-fab-dock-pos matches.
+// So this file only styles the slots — one per corner.
+
+@use '../mixins' as *;
+
+// Flash guard: a FAB ships with the `hidden` attribute and nds-fab.js strips it
+// once the FAB is routed into its dock. No fab-specific CSS is needed — the
+// universal `[hidden] { display: none !important }` rule (in _fold.scss, the
+// blocking critical CSS) hides it from first paint, wherever it's authored
+// (body-level or in content), and its `!important` beats both `.nds-btn`'s
+// display and a container FAB's inline `display:flex`. A FAB with no `hidden`
+// still works; it just isn't flash-protected before routing.
+
+.nds-fab-dock {
+    --_fab-dock-offset: var(--fab-dock-offset, var(--spacing-2xl));
+    --_fab-dock-gap:    var(--fab-dock-gap, var(--spacing-md));
+    --_fab-dock-z:      var(--fab-dock-z, 899);   // above page chrome, below modal/backdrop (1100)
+
+    position: fixed;
+    inset-block-end: var(--_fab-dock-offset);
+    z-index: var(--_fab-dock-z);
+    // Physical corner dock — force LTR so the flex cross-axis alignment (and
+    // the flush margins) resolve to physical left/right regardless of page dir.
+    direction: ltr;
+
+    display: flex;
+    // Reversed so the FIRST child sits closest to the corner and later ones
+    // stack upward — markup order reads bottom-up, matching the visual.
+    flex-direction: column-reverse;
+    gap: var(--_fab-dock-gap);
+    // Mixed widths hug the same physical edge: a circle and a wide thumb line up.
+    align-items: flex-end;
+
+    // The dock spans the gaps between its buttons; without this its empty
+    // column would swallow clicks meant for the page behind it.
+    pointer-events: none;
+    transition: transform var(--nds-transition);
+
+    > * {
+        pointer-events: auto;
+    }
+
+    @include reduced-motion { transition: none; }
+
+    // Re-resolve the private var rather than writing the public knob, so a
+    // consumer's --fab-dock-offset (set here or on an ancestor) still wins.
+    @include mobile {
+        --_fab-dock-offset: var(--fab-dock-offset, var(--spacing-xl));
+    }
+}
+
+// ----------------------------------------------
+// Page-end tuck
+// ----------------------------------------------
+// nds-fab.js sets data-fab-tucked on <html> when a zero-height sentinel at the
+// end of <body> nears the viewport — footer-independent, works with or without
+// a footer. Each dock slides out past its OWN physical edge (edge-aligned FABs
+// cross the edge together, so no staggered exit). No direction flip — the docks
+// are physical. The flag lives on the root so docks created later respond too.
+[data-fab-tucked] .nds-fab-dock {
+    pointer-events: none;
+
+    > * { pointer-events: none; }
+}
+
+// Right (also the attribute-less default) slides right; left slides left;
+// center has no side edge, so it drops straight down.
+[data-fab-tucked] .nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) {
+    transform: translateX(calc(100% + var(--_fab-dock-offset)));
+}
+[data-fab-tucked] .nds-fab-dock[data-fab-dock-pos="left"] {
+    transform: translateX(calc(-100% - var(--_fab-dock-offset)));
+}
+[data-fab-tucked] .nds-fab-dock[data-fab-dock-pos="center"] {
+    transform: translateY(calc(100% + var(--_fab-dock-offset)));
+}
+
+// Zero-height IntersectionObserver target at the end of <body>.
+.nds-fab-sentinel {
+    height: 0;
+    pointer-events: none;
+}
+
+// ----------------------------------------------
+// Position variants — two physical corners only
+// ----------------------------------------------
+// Static PHYSICAL docks — left, right (default), center. Keeping the DOCKS
+// physical (while a FAB's logical start/end resolves onto them in JS) means a
+// FAB can never land on two different dock elements at the same corner.
+// Attribute-less === right.
+.nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) {
+    right: var(--_fab-dock-offset);
+    left: auto;
+    align-items: flex-end;
+}
+
+.nds-fab-dock[data-fab-dock-pos="left"] {
+    left: var(--_fab-dock-offset);
+    right: auto;
+    align-items: flex-start;
+}
+
+// Centered horizontally with no transform, so the tuck's translateY is free.
+// Stacks as a ROW along the bottom edge — there's no corner to stack up from —
+// so data-fab-order reads left-to-right; mixed-height FABs share the bottom line.
+.nds-fab-dock[data-fab-dock-pos="center"] {
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: fit-content;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+// ----------------------------------------------
+// Edge-flush child
+// ----------------------------------------------
+// For thumb-shaped FABs that sit against the viewport edge with only their
+// inner corners rounded (the .nds-sidemenu-toggle shape). Cancels the dock's
+// inset for that one child. Physical margins (the dock is direction:ltr).
+.nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) .nds-fab-flush {
+    margin-right: calc(var(--_fab-dock-offset) * -1);
+}
+
+.nds-fab-dock[data-fab-dock-pos="left"] .nds-fab-flush {
+    margin-left: calc(var(--_fab-dock-offset) * -1);
+}

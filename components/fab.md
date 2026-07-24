@@ -1,0 +1,414 @@
+---
+layout: page
+title: FAB
+hero_title: FAB - National Design System
+hero_description: A floating action button that pins to a bottom corner of the viewport for a primary or persistent action, stacking with others in the same corner and, when it opens a panel, following that panel to its edge.
+breadcrumb: [["Components", "/components"]]
+since: "1.4.x"
+updated: "1.4.x"
+last_edit: "24/07/2026 - 02:04 AM"
+lang: en
+direction: ltr
+---
+
+<!-- Floating Action Button -->
+<section id="fabOverview" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Floating Action Button</h2>
+            <p class="nds-section-description">Mark any button <code class="nds-inline-code lang-html">nds-fab</code> and give it a corner with <code class="nds-inline-code lang-html">data-fab-pos</code>. It lifts out of the document to a fixed dock in that corner; buttons sharing a corner stack automatically, ordered by <code class="nds-inline-code lang-html">data-fab-order</code>. No dock element to author.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Click a button to inject a real FAB into this page — each pins to a viewport corner and stacks</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-md);">
+                                <button class="nds-btn nds-primary" type="button" data-fab-inject="end"><span class="nds-label">Add end FAB</span></button>
+                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="start"><span class="nds-label">Add start FAB</span></button>
+                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="left"><span class="nds-label">Add left FAB</span></button>
+                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="right"><span class="nds-label">Add right FAB</span></button>
+                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="center"><span class="nds-label">Add center FAB</span></button>
+                                <button class="nds-btn nds-subtle" type="button" data-fab-clear><span class="nds-label">Clear all</span></button>
+                            </div>
+                            <p style="margin-block-start: var(--spacing-lg); color: var(--text-secondary-paragraph);">FABs appear at the real viewport corners and stack in a column. On this LTR page <strong>end</strong> and <strong>right</strong> share the right corner, <strong>start</strong> and <strong>left</strong> the left. Click any FAB to remove it.</p>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                        aria-controls="panel-fab-basic-1" id="tab-fab-basic-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                        aria-controls="panel-fab-basic-js" id="tab-fab-basic-js">
+                                        <span class="nds-tab-label">JS API</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-basic-1"
+                                    aria-labelledby="tab-fab-basic-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;!-- Author each FAB anywhere; routing moves it to the corner. --&gt;
+&lt;button class="nds-btn nds-fab nds-primary nds-circle nds-icon-only" type="button"
+        data-fab-pos="end" data-fab-order="0" hidden aria-label="Compose"&gt;
+  &lt;i class="hgi hgi-stroke hgi-plus-sign"&gt;&lt;/i&gt;
+&lt;/button&gt;
+
+&lt;button class="nds-btn nds-fab nds-secondary nds-circle nds-icon-only" type="button"
+        data-fab-pos="end" data-fab-order="1" hidden aria-label="Share"&gt;
+  &lt;i class="hgi hgi-stroke hgi-share-01"&gt;&lt;/i&gt;
+&lt;/button&gt;
+
+&lt;button class="nds-btn nds-fab nds-secondary nds-circle nds-icon-only" type="button"
+        data-fab-pos="end" data-fab-order="2" hidden aria-label="Help"&gt;
+  &lt;i class="hgi hgi-stroke hgi-help-circle"&gt;&lt;/i&gt;
+&lt;/button&gt;
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-basic-js"
+                                    aria-labelledby="tab-fab-basic-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript">
+// Build a FAB at runtime and route it to a corner —
+// this is exactly what the demo buttons above do.
+const fab = document.createElement('button');
+fab.className = 'nds-btn nds-fab nds-primary nds-circle nds-icon-only';
+fab.style.setProperty('--btn-size', '56px');
+fab.setAttribute('aria-label', 'Compose');
+fab.innerHTML = '&lt;i class="hgi hgi-stroke hgi-plus-sign"&gt;&lt;/i&gt;';
+
+NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end' | 'auto'
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Grouped and Edge-Flush FABs -->
+<section id="fabShapes" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Grouped and Edge-Flush FABs</h2>
+            <p class="nds-section-description">A <code class="nds-inline-code lang-html">nds-fab</code> can be a container, not only a button: group related actions in one element and they travel and stack as a single item. Add <code class="nds-inline-code lang-html">nds-fab-flush</code> to a thumb-shaped FAB so it sits against the viewport edge with only its inner corners rounded.</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-label">Inject a share cluster (start corner) or an edge thumb (right edge)</div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-md);">
+                                <button class="nds-btn nds-primary" type="button" data-fab-inject="group"><span class="nds-label">Add share cluster</span></button>
+                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="flush"><span class="nds-label">Add edge thumb</span></button>
+                                <button class="nds-btn nds-subtle" type="button" data-fab-clear><span class="nds-label">Clear all</span></button>
+                            </div>
+                            <p style="margin-block-start: var(--spacing-lg); color: var(--text-secondary-paragraph);">The <strong>cluster</strong> is one <code class="nds-inline-code lang-html">nds-fab</code> container holding three buttons — it stacks as a single item. The <strong>thumb</strong> uses <code class="nds-inline-code lang-html">nds-fab-flush</code> to sit flush against the edge. Click either to remove it.</p>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                        aria-controls="panel-fab-shapes-1" id="tab-fab-shapes-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-shapes-1"
+                                    aria-labelledby="tab-fab-shapes-1">
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;!-- Grouped: one nds-fab CONTAINER stacks as a single item --&gt;
+&lt;div class="nds-fab" data-fab-pos="start" hidden
+     style="display:flex; flex-direction:column; gap:var(--spacing-xs);
+            padding:var(--spacing-xs); background:var(--background-menu);
+            border-radius:var(--radius-full); box-shadow:var(--shadow-md);"&gt;
+  &lt;button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button"
+          style="--btn-size:44px" aria-label="Share"&gt;
+    &lt;i class="hgi hgi-stroke hgi-share-01"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+  &lt;button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button"
+          style="--btn-size:44px" aria-label="Copy link"&gt;
+    &lt;i class="hgi hgi-stroke hgi-link-01"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+  &lt;button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button"
+          style="--btn-size:44px" aria-label="Email"&gt;
+    &lt;i class="hgi hgi-stroke hgi-mail-01"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Edge-flush thumb: nds-fab-flush sits against the edge, inner corners rounded --&gt;
+&lt;button class="nds-btn nds-fab nds-fab-flush nds-primary nds-icon-only" type="button"
+        data-fab-pos="right" hidden aria-label="Open menu"
+        style="--btn-size:48px; border-radius:var(--radius-md) 0 0 var(--radius-md);"&gt;
+  &lt;i class="hgi hgi-stroke hgi-menu-01"&gt;&lt;/i&gt;
+&lt;/button&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    var seq = 0;
+    var KIND = {
+        end:    { icon: 'hgi-plus-sign',      cls: 'nds-primary' },
+        start:  { icon: 'hgi-menu-01',        cls: 'nds-secondary' },
+        left:   { icon: 'hgi-arrow-left-01',  cls: 'nds-secondary' },
+        right:  { icon: 'hgi-arrow-right-01', cls: 'nds-secondary' },
+        center: { icon: 'hgi-star',           cls: 'nds-primary' }
+    };
+    function tag(el, pos) {
+        el.dataset.fabPos = pos;
+        el.dataset.fabOrder = String(seq++);
+        el.dataset.demoFab = '';
+        el.title = 'Click to remove';
+        el.addEventListener('click', function () { el.remove(); });
+        NDS.Fab.register(el, pos);
+    }
+    function circle(pos) {
+        var k = KIND[pos] || KIND.end;
+        var fab = document.createElement('button');
+        fab.type = 'button';
+        fab.className = 'nds-btn nds-fab nds-circle nds-icon-only ' + k.cls;
+        fab.style.setProperty('--btn-size', '56px');
+        fab.setAttribute('aria-label', 'Demo ' + pos + ' FAB — click to remove');
+        fab.innerHTML = '<i class="hgi hgi-stroke ' + k.icon + '"></i>';
+        tag(fab, pos);
+    }
+    function cluster() {
+        var box = document.createElement('div');
+        box.className = 'nds-fab';
+        box.style.cssText = 'display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-xs);background:var(--background-menu);border-radius:var(--radius-full);box-shadow:var(--shadow-md);';
+        box.innerHTML =
+            '<button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button" style="--btn-size:44px" aria-label="Share"><i class="hgi hgi-stroke hgi-share-01"></i></button>' +
+            '<button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button" style="--btn-size:44px" aria-label="Copy link"><i class="hgi hgi-stroke hgi-link-01"></i></button>' +
+            '<button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button" style="--btn-size:44px" aria-label="Email"><i class="hgi hgi-stroke hgi-mail-01"></i></button>';
+        tag(box, 'start');
+    }
+    function thumb() {
+        var fab = document.createElement('button');
+        fab.type = 'button';
+        fab.className = 'nds-btn nds-fab nds-fab-flush nds-primary nds-icon-only';
+        fab.style.cssText = '--btn-size:48px;border-radius:var(--radius-md) 0 0 var(--radius-md);';
+        fab.setAttribute('aria-label', 'Edge thumb — click to remove');
+        fab.innerHTML = '<i class="hgi hgi-stroke hgi-menu-01"></i>';
+        tag(fab, 'right');
+    }
+    function inject(kind) {
+        if (!window.NDS || !NDS.Fab) return;
+        if (kind === 'group') cluster();
+        else if (kind === 'flush') thumb();
+        else circle(kind);
+    }
+    document.addEventListener('click', function (e) {
+        var add = e.target.closest('[data-fab-inject]');
+        if (add) { inject(add.getAttribute('data-fab-inject')); return; }
+        if (e.target.closest('[data-fab-clear]')) {
+            document.querySelectorAll('.nds-fab[data-demo-fab]').forEach(function (f) { f.remove(); });
+        }
+    });
+})();
+</script>
+
+<!-- Built-in Features -->
+<section id="fabFeatures" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Built-in Features</h2>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
+                        <span class="nds-label">Auto-initialization</span>
+                    </span>
+                    <p class="nds-item-desc">Every .nds-fab is routed to its corner on load. Nothing to call, no dock element to author.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-maximize-screen"></i>
+                        <span class="nds-label">Two Corner Docks</span>
+                    </span>
+                    <p class="nds-item-desc">FABs resolve to one of two fixed bottom corners (plus an optional center), so logical and physical positions never overlap.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-arrow-all-direction"></i>
+                        <span class="nds-label">Direction-Aware Routing</span>
+                    </span>
+                    <p class="nds-item-desc">Logical start and end resolve by text direction, and a runtime direction flip re-routes them; physical left and right stay put.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-target-02"></i>
+                        <span class="nds-label">Panel Following</span>
+                    </span>
+                    <p class="nds-item-desc">An auto FAB lands in the corner of the panel it toggles, so the trigger sits where the panel slides in from.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-layers-01"></i>
+                        <span class="nds-label">Automatic Stacking</span>
+                    </span>
+                    <p class="nds-item-desc">FABs sharing a corner stack in a column, ordered by data-fab-order, with the lowest sitting closest to the corner.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-transition-left"></i>
+                        <span class="nds-label">Page-End Tuck</span>
+                    </span>
+                    <p class="nds-item-desc">Near the bottom of a scrollable page each dock slides out to its edge so a fixed FAB never covers footer content.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-drag-drop"></i>
+                        <span class="nds-label">Mixed Shapes and Sizes</span>
+                    </span>
+                    <p class="nds-item-desc">Circles, edge-flush thumbs, and multi-button containers share a corner without being resized; each keeps its own size and shape.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-api"></i>
+                        <span class="nds-label">Programmatic Control</span>
+                    </span>
+                    <p class="nds-item-desc">Register a FAB built at runtime, or by another component, straight into its corner through the JS API.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Usage Guidelines -->
+<section id="fabGuidelines" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Usage Guidelines</h2>
+        </div>
+        <div class="nds-section-body">
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Best Practices</h3>
+                <ul>
+                    <li>Use a <strong>FAB</strong> for one primary or persistent action that should stay reachable as the user scrolls: compose, add, open filters, or start a chat</li>
+                    <li>Keep FABs few. A corner crowded with actions loses the "primary action" meaning; move secondary actions into a <a class="nds-color" href="{{ 'components/panel' | relative_url }}">Panel</a> the FAB opens</li>
+                    <li>Do not use a FAB for an action tied to a specific place in the content. Put an inline <a class="nds-color" href="{{ 'components/buttons' | relative_url }}">Button</a> next to what it acts on instead</li>
+                    <li>Prefer logical <code class="nds-inline-code lang-html">start</code> and <code class="nds-inline-code lang-html">end</code> (or <code class="nds-inline-code lang-html">auto</code>) so the corner follows reading direction. Reserve <code class="nds-inline-code lang-html">left</code> and <code class="nds-inline-code lang-html">right</code> for an action that must stay in the same physical corner in any language</li>
+                    <li>Give a FAB that opens a panel <code class="nds-inline-code lang-html">data-fab-pos="auto"</code> so it sits in the same corner the panel slides from</li>
+                    <li>Order a stack with <code class="nds-inline-code lang-html">data-fab-order</code>: the lowest number sits closest to the corner. Put the primary action lowest</li>
+                    <li>Group related actions (a share cluster, for example) in a single <code class="nds-inline-code lang-html">nds-fab</code> container so they travel and stack as one item</li>
+                    <li>Add <code class="nds-inline-code lang-html">nds-fab-flush</code> to a thumb-shaped FAB that should sit against the viewport edge with only its inner corners rounded</li>
+                    <li>Ship each FAB with the <code class="nds-inline-code lang-html">hidden</code> attribute so it never flashes at its authored spot before routing lifts it to the corner</li>
+                </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-fab</code></td><td>Marks an element (a button or a container) as a FAB. Routing moves it into its corner dock</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-fab-flush</code></td><td>Set on a FAB to cancel the dock's edge offset, so an edge-thumb sits flush against the viewport edge</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Data Attributes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">data-fab-pos</code></td><td>Set on a <code class="nds-inline-code lang-html">.nds-fab</code> to pick its corner. Values: <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">center</code> (physical, fixed); <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">end</code> (logical, resolve by direction); <code class="nds-inline-code lang-html">auto</code> (default, follow the toggled panel's side)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-fab-order</code></td><td>Set on a <code class="nds-inline-code lang-html">.nds-fab</code> to order the stack in its corner. Lower numbers sit closer to the corner. Default <code class="nds-inline-code lang-html">0</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-panel-toggle</code></td><td>Set on a FAB to open a <a class="nds-color" href="{{ 'components/panel' | relative_url }}">Panel</a> by <code class="nds-inline-code lang-html">id</code>. With <code class="nds-inline-code lang-html">data-fab-pos="auto"</code>, the FAB follows that panel to its corner</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-fab-dock-pos</code></td><td>Set on a hand-authored <code class="nds-inline-code lang-html">.nds-fab-dock</code> to fix its corner. Docks are usually created automatically, so this is rarely needed</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-offset</code></td><td><code class="nds-inline-code lang-html">--spacing-2xl</code></td><td>Distance from the viewport edges to the dock (reduced to <code class="nds-inline-code lang-html">--spacing-xl</code> on mobile)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-gap</code></td><td><code class="nds-inline-code lang-html">--spacing-md</code></td><td>Gap between stacked FABs in a corner</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-z</code></td><td><code class="nds-inline-code lang-html">899</code></td><td>Stacking order of the docks, below modals and backdrops</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">JavaScript API</h3>
+                <p>Authored <code class="nds-inline-code lang-js">.nds-fab</code> elements route automatically, so most pages never call this API. Use <strong>NDS.Fab.register</strong> for a FAB built at runtime or injected by another component.</p>
+                <div class="nds-code nds-expandable">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <div class="nds-expandable-content">
+                        <code class="lang-javascript line-numbers">
+// ── Register a FAB built at runtime ──────────────────
+// Routes by the element's own data-fab-pos (default auto)
+NDS.Fab.register(fabElement);
+
+// ...or force a corner, ignoring its data-fab-pos
+NDS.Fab.register(fabElement, 'left');   // 'left' | 'right' | 'center' | 'start' | 'end'
+
+// ── Resolve where a FAB would land ───────────────────
+NDS.Fab.resolvePos(fabElement);         // → 'left' | 'right' | 'center'
+
+// ── Find or create a corner dock ─────────────────────
+const dock = NDS.Fab.dock('right');     // the .nds-fab-dock at that corner
+
+// ── Re-scan authored FABs (e.g. after injecting HTML) ─
+NDS.Fab.init();
+</code>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

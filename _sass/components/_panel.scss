@@ -1,0 +1,220 @@
+// ==============================================
+// PANEL
+// ==============================================
+// Content-agnostic slide-in surface. The panel owns position, slide and
+// chrome; it never styles what authors put inside it.
+//
+// `data-panel-side` picks the edge: start/end are LOGICAL (flip with dir),
+// left/right/top/bottom are PHYSICAL (fixed). Only one panel is ever open
+// (nds-panel.js enforces it), so every instance shares one --panel-z and
+// markup order is irrelevant.
+
+@use '../mixins' as *;
+
+// Emits a side's closed offset + its closing offset. transform is physical,
+// so each side (and, for logical sides, each direction) needs its own value
+// written EXPLICITLY rather than through a var() — the engine interpolates
+// closed↔open reliably that way (same reason as _accessibility.scss).
+// `closing` carries !important to beat the shared open rule's !important;
+// it also outranks it on specificity, so source order doesn't matter.
+@mixin panel-slide($closed) {
+    transform: $closed;
+
+    &[data-state~="closing"] {
+        transform: $closed !important;
+    }
+}
+
+// ----------------------------------------------
+// Root
+// ----------------------------------------------
+.nds-panel {
+    --_panel-width:   var(--panel-width, min(420px, 100vw));
+    // svh (not vh/dvh) so the sheet is sized for the smaller mobile viewport
+    // and never gets cut off when the URL bar expands.
+    --_panel-height:  var(--panel-height, 60svh);
+    // Sit below the sticky header by default — the nav paints at a higher
+    // z-index (1000 > 999), so a panel pinned to top:0 would clip under it.
+    // Priority: consumer knob --panel-top → JS live measurement --_header-offset
+    // (refined to the header bottom incl. topbar, on open + scroll) →
+    // nav-height baseline (pre-JS / scrolled-down). Setting --panel-top wins
+    // over auto-tracking; set it to 0 for a full-cover panel (needs a z-index
+    // above the nav to not clip).
+    --_panel-top:     var(--panel-top, var(--_header-offset, var(--nds-nav-height, 72px)));
+    --_panel-padding: var(--panel-padding, var(--spacing-lg));
+    --_panel-gap:     var(--panel-gap, var(--spacing-md));
+    --_panel-z:       var(--panel-z, 999);
+    --_panel-radius:  var(--panel-radius, 0);
+
+    position: fixed;
+    z-index: var(--_panel-z);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-menu);
+    color: var(--text-default);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--_panel-radius);
+    overflow: hidden;            // scroll belongs to .nds-panel-body
+    overscroll-behavior: contain;
+}
+
+// Open offset and the transition are side-agnostic — declared once. Every
+// side's closed/closing transform is more specific, so only `open` needs
+// !important to win over the closed offset.
+.nds-panel[data-state~="open"] {
+    transform: translate(0, 0) !important;
+}
+
+.nds-panel:is([data-state~="open"], [data-state~="closing"]) {
+    transition: transform var(--nds-transition);
+}
+
+// ----------------------------------------------
+// Inline sides — start / end / left / right
+// ----------------------------------------------
+// Block insets span from --_panel-top (the header bottom by default; see the
+// root) to the viewport floor.
+.nds-panel:is(
+    :not([data-panel-side]),
+    [data-panel-side="end"],
+    [data-panel-side="start"],
+    [data-panel-side="left"],
+    [data-panel-side="right"]
+) {
+    inset-block-start: var(--_panel-top);
+    inset-block-end: 0;
+    width: var(--_panel-width);
+}
+
+// ----- Logical: end (also the no-attribute default) -----
+// RTL base: inline-end is the LEFT edge, so it hides to the left.
+.nds-panel:is(:not([data-panel-side]), [data-panel-side="end"]) {
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+    @include panel-slide(translateX(-100%));
+
+    @include ltr {
+        @include panel-slide(translateX(100%));
+    }
+}
+
+// ----- Logical: start -----
+.nds-panel[data-panel-side="start"] {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    @include panel-slide(translateX(100%));
+
+    @include ltr {
+        @include panel-slide(translateX(-100%));
+    }
+}
+
+// ----- Physical: left / right -----
+// Physical properties only — mixing `inset-inline: auto` in here would
+// cascade-clobber left/right by source order in whichever direction the
+// logical→physical mapping coincides.
+.nds-panel[data-panel-side="left"] {
+    left: 0;
+    right: auto;
+    @include panel-slide(translateX(-100%));
+}
+
+.nds-panel[data-panel-side="right"] {
+    right: 0;
+    left: auto;
+    @include panel-slide(translateX(100%));
+}
+
+// ----------------------------------------------
+// Block sides — top / bottom
+// ----------------------------------------------
+// Full-width sheets. The Y axis is direction-independent — no ltr variants.
+// max-height (not height) so a sheet fits its content, growing up to
+// --panel-height but no further than the gap between the header and the floor,
+// so a tall sheet can't clip under the (higher-z) nav: a top sheet's bottom
+// stays on the floor, a bottom sheet's top stays at the header. --_panel-top is
+// the live header offset (JS-tracked for sheets too), so the cap follows the
+// topbar as it scrolls in and out. The body scrolls when content exceeds the cap.
+.nds-panel:is([data-panel-side="top"], [data-panel-side="bottom"]) {
+    inset-inline: 0;
+    width: auto;
+    max-height: min(var(--_panel-height), calc(100svh - var(--_panel-top)));
+}
+
+.nds-panel[data-panel-side="top"] {
+    top: var(--_panel-top);
+    bottom: auto;
+    @include panel-slide(translateY(-100%));
+}
+
+.nds-panel[data-panel-side="bottom"] {
+    bottom: 0;
+    top: auto;
+    // Upward-cast shadow for a sheet rising from the floor (matches the cookie popup).
+    box-shadow: var(--shadow-md-top);
+    @include panel-slide(translateY(100%));
+}
+
+// A full-width sheet keeps a full-bleed background but insets its CONTENT with
+// the same responsive gutter as .nds-content-wrapper: on wide screens the inline
+// padding grows to cap the content at the page max-width and center it; below
+// that width it falls back to the page's viewport gutter. So the sheet's content
+// lines up with page content at every size — a static inline padding would drift
+// from the page grid. Only the panel's own parts are wrapped; content authored
+// outside them can use .nds-content-wrapper directly. Block padding stays
+// --_panel-padding. Knob: --panel-content-width (the max content width).
+// Set --panel-content-width: 100% for a full-width sheet — the max() floors the
+// padding at the page gutter, so content spans the full width with the standard
+// page gutter (never edge-to-edge, which would crowd the viewport edge).
+.nds-panel:is([data-panel-side="top"], [data-panel-side="bottom"])
+    :is(.nds-panel-header, .nds-panel-body, .nds-panel-footer) {
+    --_panel-content-width: var(--panel-content-width, var(--nds-content-MaxWidth));
+    width: 100%;
+    padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--_panel-content-width)) / 2));
+}
+
+// ----------------------------------------------
+// Parts — all optional
+// ----------------------------------------------
+.nds-panel-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--_panel-gap);
+    padding: var(--_panel-padding);
+    border-block-end: 1px solid var(--divider-color);
+}
+
+.nds-panel-title {
+    display: block;
+    flex: 1;
+    margin: 0;
+    font-size: var(--typo-text-lg-FS);
+    line-height: var(--typo-text-lg-LH);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-display);
+}
+
+// min-height:0 lets the flex child shrink below its intrinsic size so
+// overflow actually engages inside the panel's fixed height.
+.nds-panel-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    padding: var(--_panel-padding);
+}
+
+.nds-panel-footer {
+    flex-shrink: 0;
+    display: flex;
+    gap: var(--_panel-gap);
+    padding: var(--_panel-padding);
+    border-block-start: 1px solid var(--divider-color);
+}
+
+// A .nds-scroll-more used in place of the body claims the same remaining height.
+.nds-panel > .nds-scroll-more {
+    flex: 1 1 auto;
+    min-height: 0;
+}

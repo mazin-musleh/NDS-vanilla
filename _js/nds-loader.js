@@ -393,6 +393,15 @@
             init: () => NDS.Alert?.init?.(),
         },
         {
+            // Delegated: the panel ships [hidden], so markup + CSS paint it
+            // correctly with the JS deleted — zero first paint, zero CLS.
+            // Toggle clicks in the pre-bundle gap no-op and recover on the
+            // next click (the Tabs/Tables/Accordion precedent).
+            name: 'Panel',
+            selector: '.nds-panel',
+            init: () => NDS.Panel?.init?.(),
+        },
+        {
             name: 'UserFeedback',
             selector: '.nds-user-feedback',
             init: () => NDS.UserFeedback?.init?.(),
@@ -417,6 +426,17 @@
             selector: '.nds-cooldown',
             init: () => NDS.CooldownButton?.init?.(),
             critical: true,
+        },
+        {
+            // Delegated: routing moves each [data-fab-pos] FAB into its corner
+            // dock. A FAB is non-critical chrome, so it rides the delegated
+            // bundle alongside the panels it toggles (both appear together —
+            // no visible-but-dead FAB in the pre-panel gap). Pre-route flash is
+            // prevented by the _fab.scss guard that hides an un-routed FAB until
+            // its data-nds-fab-initialized stamp lands. Cold init — pure appendChild.
+            name: 'Fab',
+            selector: '.nds-fab, .nds-fab-dock',
+            init: () => NDS.Fab?.init?.(),
         },
         // Topbar widgets — placed last because they're non-critical chrome
         // (digital stamp, clock, hijri date, weather, city). Their updates are
