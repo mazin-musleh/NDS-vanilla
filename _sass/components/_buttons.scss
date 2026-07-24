@@ -833,6 +833,20 @@
   }
 }
 
+// The seam tint above is the hover background, which assumes hover differs from
+// rest. Secondary sets them to one value on purpose, so its divider disappears —
+// and outline, borrowing the same hover value, draws its seam in the secondary
+// FILL colour rather than an edge colour. Both draw a real border instead:
+// --btn-border where the variant has one (so outline's seam matches its own edge
+// in either mode), falling back to the neutral edge for solid secondary.
+.nds-btn-group:not(.nds-vertical) .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child) {
+  border-inline-start-color: var(--btn-border, var(--border-neutral-primary));
+}
+
+.nds-btn-group.nds-vertical .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child) {
+  border-block-start-color: var(--btn-border, var(--border-neutral-primary));
+}
+
 // ==============================================
 // BUTTON PROGRESS ANIMATION
 // ==============================================
