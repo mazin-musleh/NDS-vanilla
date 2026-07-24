@@ -18,8 +18,8 @@
     --a11y-text-LH:        20px;
     --a11y-section-FS:     16px;
     --a11y-section-LH:     24px;
-    --a11y-title-FS:       20px;
-    --a11y-title-LH:       30px;
+    --a11y-title-FS:       18px;   // --typo-text-lg, frozen
+    --a11y-title-LH:       28px;
     --a11y-icon-FS:        24px;
     --a11y-font-family:    var(--nds-font-brand);
 
@@ -64,10 +64,8 @@
 }
 
 // ----------------------------------------------
-// Floating action button — an .nds-fab. The dock owns the edge, the inset,
-// the z-index and the lift; data-fab-pos picks which edge. Size comes from
-// the FAB ladder (--btn-size 40 → 56 desktop / 48 mobile), which lands on the
-// same footprint this button has always had, so no size override here.
+// Floating action button — an .nds-fab, so the dock owns edge, inset, z-index,
+// lift and size. Only the icon pin and zero padding are this button's own.
 // ----------------------------------------------
 .nds-accessibility-toggle {
     padding: 0;
@@ -96,19 +94,16 @@
 // ----------------------------------------------
 // Header
 // ----------------------------------------------
-// The header is .nds-panel-header — layout, padding and divider come from
-// there. Its .nds-panel-title carries flex:1, which pushes the close button to
-// the far end, so no justify-content override is needed here.
-//
-// Only the type scale is a11y's own: pinned like the panel's buttons, so the
-// title holds its size when the user scales page text.
-.nds-accessibility-panel-title {
+// Same size as .nds-panel-title, minus the scaling: that token multiplies by
+// --user-font-scale, and the panel must not deform as the visitor raises font
+// scaling from inside it.
+.nds-accessibility-panel .nds-panel-title {
     font-size: var(--a11y-title-FS);
     line-height: var(--a11y-title-LH);
 }
 
 // Theme + language quick toggles, top of the scrollable body.
-.nds-accessibility-panel-quick {
+.nds-accessibility-quick {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
@@ -117,8 +112,22 @@
 // ----------------------------------------------
 // Body — sections + tile grids
 // ----------------------------------------------
-.nds-accessibility-panel-body {
+// The body holds the scroll helper rather than sitting inside it, so the helper
+// has to be told to fill it and the body has to stop scrolling on its own.
+.nds-accessibility-panel .nds-panel-body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;   // the scroll belongs to .nds-scroll-more-content
+    padding: 0;         // padding rides inside the scroller, under the fade
+}
+
+.nds-accessibility-panel .nds-panel-body > .nds-scroll-more {
     flex: 1 1 auto;
+    min-height: 0;
+}
+
+// Padding on the scrolling element is scroll-more's documented hook.
+.nds-accessibility-panel .nds-scroll-more-content {
     padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
@@ -214,9 +223,8 @@
 // ----------------------------------------------
 // Footer — Reset action.
 // ----------------------------------------------
-// Layout, padding and the top divider come from .nds-panel-footer; only the
-// reset action's own chrome lives here.
-.nds-accessibility-panel-footer {
+// Only the reset action's own chrome; the rest is .nds-panel-footer.
+.nds-accessibility-panel .nds-panel-footer {
     .nds-btn {
         --btn-width: 100%;
     }

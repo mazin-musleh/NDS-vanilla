@@ -85,8 +85,8 @@ last_edit: "25/07/2026 - 01:20 AM"
        data-accessibility-panel
        hidden&gt;
 
-    &lt;div class="nds-panel-header nds-accessibility-panel-header"&gt;
-        &lt;h2 class="nds-panel-title nds-accessibility-panel-title" data-i18n="panel_title"&gt;Accessibility Tools&lt;/h2&gt;
+    &lt;div class="nds-panel-header"&gt;
+        &lt;h2 class="nds-panel-title" data-i18n="panel_title"&gt;Accessibility Tools&lt;/h2&gt;
         &lt;button class="nds-btn nds-subtle nds-icon-only"
                 data-accessibility-close
                 data-panel-close
@@ -97,14 +97,14 @@ last_edit: "25/07/2026 - 01:20 AM"
         &lt;/button&gt;
     &lt;/div&gt;
 
-    &lt;div class="nds-scroll-more nds-divided"&gt;
-        &lt;div class="nds-scroll-more-content"&gt;
-            &lt;div class="nds-accessibility-panel-body"&gt;
+    &lt;div class="nds-panel-body"&gt;
+        &lt;div class="nds-scroll-more nds-divided"&gt;
+            &lt;div class="nds-scroll-more-content"&gt;
 
                 &lt;div class="nds-sr-only" data-a11y-status role="status" aria-live="polite" aria-atomic="true"&gt;&lt;/div&gt;
 
                 &lt;!-- Display &amp; Language — quick toggles --&gt;
-                &lt;div class="nds-accessibility-panel-quick"&gt;
+                &lt;div class="nds-accessibility-quick"&gt;
                     &lt;button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
                             data-theme-toggle
                             type="button"
@@ -273,14 +273,14 @@ last_edit: "25/07/2026 - 01:20 AM"
                             &lt;div class="nds-grid" role="group" aria-label="Readable experience controls" data-i18n-attr="aria-label:aria_readable"&gt;
 
                                 &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-setting="font-step" data-a11y-cycle="0,1,2,3" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"&gt;&lt;/i&gt;
+                                    &lt;i class="hgi hgi-stroke hgi-text-smallcaps" aria-hidden="true"&gt;&lt;/i&gt;
                                     &lt;span class="nds-label" data-i18n="font_sizing"&gt;Font Sizing&lt;/span&gt;
                                     &lt;span class="nds-accessibility-tile-bars" data-a11y-bars aria-hidden="true"&gt;&lt;/span&gt;
                                     &lt;span class="nds-sr-only" data-a11y-value data-i18n="default"&gt;Default&lt;/span&gt;
                                 &lt;/button&gt;
 
                                 &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-mode="dyslexia" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-text-italic" aria-hidden="true"&gt;&lt;/i&gt;
+                                    &lt;i class="hgi hgi-stroke hgi-glasses" aria-hidden="true"&gt;&lt;/i&gt;
                                     &lt;span class="nds-label" data-i18n="dyslexia"&gt;Dyslexia Friendly&lt;/span&gt;
                                 &lt;/button&gt;
 
@@ -380,7 +380,7 @@ last_edit: "25/07/2026 - 01:20 AM"
                                 &lt;/button&gt;
 
                                 &lt;button type="button" class="nds-btn nds-secondary-outline nds-indicator" data-a11y-visual="cvd-deutan" data-visual-id="cvd-deutan" aria-pressed="false"&gt;
-                                    &lt;i class="hgi hgi-stroke hgi-eye" aria-hidden="true"&gt;&lt;/i&gt;
+                                    &lt;i class="hgi hgi-stroke hgi-colors" aria-hidden="true"&gt;&lt;/i&gt;
                                     &lt;span class="nds-label" data-i18n-label&gt;&lt;/span&gt;
                                 &lt;/button&gt;
 
@@ -393,13 +393,13 @@ last_edit: "25/07/2026 - 01:20 AM"
         &lt;/div&gt;
 
             &lt;/div&gt;
+            &lt;button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="Scroll panel" data-i18n-attr="aria-label:scroll_panel"&gt;
+                &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
+            &lt;/button&gt;
         &lt;/div&gt;
-        &lt;button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="Scroll panel" data-i18n-attr="aria-label:scroll_panel"&gt;
-            &lt;i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;/button&gt;
     &lt;/div&gt;
 
-    &lt;div class="nds-panel-footer nds-accessibility-panel-footer"&gt;
+    &lt;div class="nds-panel-footer"&gt;
         &lt;button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset"&gt;
             &lt;span class="nds-label" data-i18n="reset"&gt;Reset Settings&lt;/span&gt;
             &lt;div class="nds-progress-circle"&gt;
@@ -763,11 +763,7 @@ last_edit: "25/07/2026 - 01:20 AM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-toggle</code></td><td>Panel-specific chrome for the trigger. Pair with <code class="nds-inline-code lang-html">nds-fab</code> so the <a class="nds-color" href="{{ 'components/fab' | relative_url }}">Fab</a> dock owns its edge, inset and size, plus <code class="nds-inline-code lang-html">nds-btn nds-primary nds-circle</code> for the default visual.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel</code></td><td>Panel-specific chrome. Pair with <code class="nds-inline-code lang-html">nds-panel</code> so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component owns position, width, the header offset and the slide.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-header</code></td><td>Title row plus close button. Pair with <code class="nds-inline-code lang-html">nds-panel-header</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-title</code></td><td>Panel heading inside the header. Pair with <code class="nds-inline-code lang-html">nds-panel-title</code>; the 20px/30px size is pinned to the panel's private font tokens so global font-scaling does not affect the chrome.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-quick</code></td><td>Inline-flex row of quick-toggle buttons (theme toggle, language switch) at the top of the panel body. Lays its children out horizontally with a small gap.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-body</code></td><td>Content wrapper inside the panel's <code class="nds-inline-code lang-html">nds-scroll-more</code>, which takes the body slot.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-footer</code></td><td>Footer that hosts the reset action. Pair with <code class="nds-inline-code lang-html">nds-panel-footer</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-quick</code></td><td>Inline-flex row of quick-toggle buttons (theme toggle, language switch) at the top of the scrollable body.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-modes</code></td><td>Sized accordion modifier used by the Modes section. Adjusts switch-row padding to match the tile grids.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-a11y-count</code></td><td>Tag pill next to each accordion title showing how many controls in that section are active. Hides itself when empty.</td></tr>
                     </tbody>

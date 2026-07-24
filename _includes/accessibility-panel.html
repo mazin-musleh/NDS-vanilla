@@ -24,8 +24,8 @@ routed into its dock. data-fab-pos pairs with the panel's data-panel-side below.
        data-accessibility-panel
        hidden>
 
-    <div class="nds-panel-header nds-accessibility-panel-header">
-        <h2 class="nds-panel-title nds-accessibility-panel-title" data-i18n="panel_title">Accessibility Tools</h2>
+    <div class="nds-panel-header">
+        <h2 class="nds-panel-title" data-i18n="panel_title">Accessibility Tools</h2>
         <button class="nds-btn nds-subtle nds-icon-only"
                 data-accessibility-close
                 data-panel-close
@@ -36,14 +36,14 @@ routed into its dock. data-fab-pos pairs with the panel's data-panel-side below.
         </button>
     </div>
 
-    <div class="nds-scroll-more nds-divided">
-        <div class="nds-scroll-more-content">
-            <div class="nds-accessibility-panel-body">
+    <div class="nds-panel-body">
+        <div class="nds-scroll-more nds-divided">
+            <div class="nds-scroll-more-content">
 
                 <div class="nds-sr-only" data-a11y-status role="status" aria-live="polite" aria-atomic="true"></div>
 
                 <!-- Display & Language — quick toggles -->
-                <div class="nds-accessibility-panel-quick">
+                <div class="nds-accessibility-quick">
                     <button class="nds-btn nds-subtle nds-icon-only nds-theme-toggle-wrap"
                             data-theme-toggle
                             type="button"
@@ -332,13 +332,13 @@ routed into its dock. data-fab-pos pairs with the panel's data-panel-side below.
         </div>
 
             </div>
+            <button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="Scroll panel" data-i18n-attr="aria-label:scroll_panel">
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
         </div>
-        <button class="nds-btn nds-subtle nds-show-more" type="button" aria-label="Scroll panel" data-i18n-attr="aria-label:scroll_panel">
-            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-        </button>
     </div>
 
-    <div class="nds-panel-footer nds-accessibility-panel-footer">
+    <div class="nds-panel-footer">
         <button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset">
             <span class="nds-label" data-i18n="reset">Reset Settings</span>
             <div class="nds-progress-circle">
