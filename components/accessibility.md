@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.5"
-updated: "1.3.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.4.x"
+last_edit: "25/07/2026 - 01:20 AM"
 ---
 
 <!-- Trigger -->
@@ -30,7 +30,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                     type="button"
                                     data-accessibility-demo-open
                                     aria-label="Open accessibility panel"
-                                    style="position: static;">
+                                    style="--btn-size: 56px;">
                                 <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
                             </button>
                             <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
@@ -65,28 +65,31 @@ last_edit: "28/06/2026 - 01:27 PM"
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;button class="nds-btn nds-primary nds-circle nds-accessibility-toggle"
+&lt;button class="nds-btn nds-primary nds-circle nds-fab nds-accessibility-toggle"
         type="button"
         aria-label="Accessibility settings"
         data-i18n-attr="aria-label:panel_label"
         aria-controls="ndsAccessibilityPanel"
         aria-expanded="false"
-        data-a11y-pos="end"
-        data-accessibility-toggle&gt;
+        data-fab-pos="end"
+        data-accessibility-toggle
+        hidden&gt;
     &lt;i class="nds-icon nds-hgi-accessibility" aria-hidden="true"&gt;&lt;/i&gt;
 &lt;/button&gt;
 
 &lt;aside id="ndsAccessibilityPanel"
-       class="nds-accessibility-panel"
+       class="nds-panel nds-accessibility-panel"
+       data-panel-side="end"
        aria-label="Accessibility settings"
        data-i18n-attr="aria-label:panel_label"
        data-accessibility-panel
        hidden&gt;
 
-    &lt;div class="nds-accessibility-panel-header"&gt;
-        &lt;h2 class="nds-accessibility-panel-title" data-i18n="panel_title"&gt;Accessibility Tools&lt;/h2&gt;
+    &lt;div class="nds-panel-header nds-accessibility-panel-header"&gt;
+        &lt;h2 class="nds-panel-title nds-accessibility-panel-title" data-i18n="panel_title"&gt;Accessibility Tools&lt;/h2&gt;
         &lt;button class="nds-btn nds-subtle nds-icon-only"
                 data-accessibility-close
+                data-panel-close
                 type="button"
                 aria-label="Close accessibility panel"
                 data-i18n-attr="aria-label:close_panel"&gt;
@@ -396,7 +399,7 @@ last_edit: "28/06/2026 - 01:27 PM"
         &lt;/button&gt;
     &lt;/div&gt;
 
-    &lt;div class="nds-accessibility-panel-footer"&gt;
+    &lt;div class="nds-panel-footer nds-accessibility-panel-footer"&gt;
         &lt;button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset"&gt;
             &lt;span class="nds-label" data-i18n="reset"&gt;Reset Settings&lt;/span&gt;
             &lt;div class="nds-progress-circle"&gt;
@@ -533,16 +536,14 @@ last_edit: "28/06/2026 - 01:27 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">FAB Position</h2>
-            <p class="nds-section-description">Anchor the FAB to either edge so it does not collide with chat widgets, cookie banners, or layouts that already pin content to a corner. The slide-in panel mirrors the FAB side automatically.</p>
+            <p class="nds-section-description">Anchor the FAB and the panel to whichever edge suits the layout, so neither collides with chat widgets, cookie banners, or content already pinned to a corner. The two attributes are set separately and should name the same side.</p>
         </div>
         <div class="nds-section-body">
             <table class="nds-table nds-responsive">
-                <thead><tr><th>Value</th><th>Type</th><th>Behavior</th></tr></thead>
+                <thead><tr><th>Attribute</th><th>Set on</th><th>Behavior</th></tr></thead>
                 <tbody>
-                    <tr><td><code class="nds-inline-code lang-html">data-a11y-pos="end"</code></td><td>Logical</td><td>Default. Anchors to the inline-end corner: bottom-right in LTR, bottom-left in RTL. Panel slides in from the same side.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">data-a11y-pos="start"</code></td><td>Logical</td><td>Anchors to the inline-start corner: bottom-left in LTR, bottom-right in RTL. Flips with text direction.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">data-a11y-pos="left"</code></td><td>Physical</td><td>Always pins to bottom-left regardless of direction. Use when chrome on the right edge would clash.</td></tr>
-                    <tr><td><code class="nds-inline-code lang-html">data-a11y-pos="right"</code></td><td>Physical</td><td>Always pins to bottom-right regardless of direction.</td></tr>
+                    <tr><td><code class="nds-inline-code lang-html">data-fab-pos="end"</code></td><td>FAB</td><td>Default. Logical: the inline-end corner, so bottom-right in LTR and bottom-left in RTL. Accepts <code class="nds-inline-code lang-html">start</code>, and physical <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
+                    <tr><td><code class="nds-inline-code lang-html">data-panel-side="end"</code></td><td>Panel</td><td>Which edge the panel slides from. Same logical and physical vocabulary as the FAB, plus <code class="nds-inline-code lang-html">top</code>. Set it to match the FAB so the pair reads as one control.</td></tr>
                 </tbody>
             </table>
         </div>
@@ -744,7 +745,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <li>Treat the FAB as part of the site chrome. Keep it on every page so visitors who tuned the panel on one page do not lose their entry point on the next</li>
                     <li>Add a redundant entry point in the footer or main menu (a link that calls <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code>) so keyboard users can reach the panel from the natural tab order without hunting for a corner</li>
                     <li>Place custom triggers near content visitors are likely to return to. The panel returns focus to the opener on close (W3C APG Disclosure requirement), and the browser scrolls that element into view if it is offscreen, so a trigger high on the page will yank the visitor back to it after they close the panel</li>
-                    <li>Move the FAB with <code class="nds-inline-code lang-html">data-a11y-pos</code> when chat widgets, cookie banners, or sticky CTAs already occupy a corner. Logical <code class="nds-inline-code lang-html">start</code> and <code class="nds-inline-code lang-html">end</code> flip with text direction; physical <code class="nds-inline-code lang-html">left</code> and <code class="nds-inline-code lang-html">right</code> stay put</li>
+                    <li>Move the pair with <code class="nds-inline-code lang-html">data-fab-pos</code> on the FAB and <code class="nds-inline-code lang-html">data-panel-side</code> on the panel when chat widgets, cookie banners, or sticky CTAs already occupy a corner. Logical <code class="nds-inline-code lang-html">start</code> and <code class="nds-inline-code lang-html">end</code> flip with text direction; physical <code class="nds-inline-code lang-html">left</code> and <code class="nds-inline-code lang-html">right</code> stay put</li>
                     <li>Do not duplicate the panel markup. The component initializes the first <code class="nds-inline-code lang-html">[data-accessibility-panel]</code> it finds and ignores any siblings, so a second include silently falls back to a dead element</li>
                     <li>Do not put bundle-equivalent toggles in your own settings page. They will fight the panel's persistence and confuse visitors who tuned modes elsewhere. Link to the panel instead</li>
                     <li>If your design overrides body typography, scope <code class="nds-inline-code lang-html">--user-line-height</code>, <code class="nds-inline-code lang-html">--user-letter-spacing</code>, and <code class="nds-inline-code lang-html">--user-word-spacing</code> consumers behind the matching <code class="nds-inline-code lang-html">[data-a11y~="has-{prop}"]</code> selectors so untouched pages stay at your defaults</li>
@@ -760,13 +761,13 @@ last_edit: "28/06/2026 - 01:27 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-toggle</code></td><td>Floating action button. Combine with <code class="nds-inline-code lang-html">nds-btn nds-primary nds-circle</code> for the default visual.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel</code></td><td>Slide-in panel container. Pin a fixed inline-start position; the panel handles its own slide direction off the FAB's <code class="nds-inline-code lang-html">data-a11y-pos</code>.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-header</code></td><td>Title row plus close button.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-title</code></td><td>Panel heading inside the header. Rendered at 20px/30px bold, pinned to the panel's private font tokens so global font-scaling does not affect the chrome.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-toggle</code></td><td>Panel-specific chrome for the trigger. Pair with <code class="nds-inline-code lang-html">nds-fab</code> so the <a class="nds-color" href="{{ 'components/fab' | relative_url }}">Fab</a> dock owns its edge, inset and size, plus <code class="nds-inline-code lang-html">nds-btn nds-primary nds-circle</code> for the default visual.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel</code></td><td>Panel-specific chrome. Pair with <code class="nds-inline-code lang-html">nds-panel</code> so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component owns position, width, the header offset and the slide.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-header</code></td><td>Title row plus close button. Pair with <code class="nds-inline-code lang-html">nds-panel-header</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-title</code></td><td>Panel heading inside the header. Pair with <code class="nds-inline-code lang-html">nds-panel-title</code>; the 20px/30px size is pinned to the panel's private font tokens so global font-scaling does not affect the chrome.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-quick</code></td><td>Inline-flex row of quick-toggle buttons (theme toggle, language switch) at the top of the panel body. Lays its children out horizontally with a small gap.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-body</code></td><td>Scrollable section list with the accessibility accordion.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-footer</code></td><td>Sticky footer that hosts the reset action.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-body</code></td><td>Content wrapper inside the panel's <code class="nds-inline-code lang-html">nds-scroll-more</code>, which takes the body slot.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-accessibility-panel-footer</code></td><td>Footer that hosts the reset action. Pair with <code class="nds-inline-code lang-html">nds-panel-footer</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-accessibility-modes</code></td><td>Sized accordion modifier used by the Modes section. Adjusts switch-row padding to match the tile grids.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-a11y-count</code></td><td>Tag pill next to each accordion title showing how many controls in that section are active. Hides itself when empty.</td></tr>
                     </tbody>
@@ -780,16 +781,17 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-toggle</code></td><td>Mark a button as the panel opener. The first match in DOM order is the canonical trigger; additional buttons should call <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code> instead.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel</code></td><td>Mark the panel root. Required for auto-init.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-close</code></td><td>Mark a button inside the panel to close it.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-close</code></td><td>Mark the close button. Pair with <code class="nds-inline-code lang-html">data-panel-close</code>, which is what actually closes the panel.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-action="reset"</code></td><td>Mark the reset button. Two-click confirmation with a 5-second arming window is wired automatically.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-a11y-pos</code></td><td>Set on the FAB to position the FAB plus panel pair. Values: <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-fab-pos</code></td><td>Set on the FAB to pick its dock edge. Values: <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>Set on the panel to pick the edge it slides from. Set it to the same side as the FAB.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-mode</code></td><td>Mark a switch or button as a bundle or primitive toggle. Value matches a key from <code class="nds-inline-code lang-js">MODE_BUNDLES</code> or a primitive token name.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-visual</code></td><td>Mark a button as a visual-filter selector. Joining the mutex group: clicking it mutes every other filter automatically.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-setting</code></td><td>Mark a button as a cycling setting. Pair with <code class="nds-inline-code lang-html">data-a11y-cycle</code> to declare the value sequence.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-cycle</code></td><td>Comma-separated list of values the setting tile cycles through. The first value is "off" and renders no active tile-bars.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-exclude-token</code></td><td>Drop a tile from the rendered panel when the loaded i18n file lists the token in <code class="nds-inline-code lang-js">exclude_controls</code>. Used to hide letter-spacing on Arabic.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-a11y-status</code></td><td>Place on a <code class="nds-inline-code lang-html">role="status"</code> live region inside the panel body. Used by <code class="nds-inline-code lang-js">NDS.announce()</code> to deliver polite WCAG 4.1.3 announcements for every toggle, cycle, and reset.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-state</code> on <code class="nds-inline-code lang-html">.nds-accessibility-panel</code></td><td>Managed by <code class="nds-inline-code lang-js">open()</code> and <code class="nds-inline-code lang-js">close()</code>. Values: <code class="nds-inline-code lang-html">open</code> (slides the panel into view with a CSS transition), <code class="nds-inline-code lang-html">closing</code> (slides it back out; cleared and <code class="nds-inline-code lang-html">hidden</code> re-applied on transitionend).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state</code> on the panel</td><td>Managed by the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component. Values: <code class="nds-inline-code lang-html">open</code> (slides the panel into view), <code class="nds-inline-code lang-html">opening</code> and <code class="nds-inline-code lang-html">closing</code> (the transition windows; cleared and <code class="nds-inline-code lang-html">hidden</code> re-applied when the slide ends).</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -818,9 +820,9 @@ last_edit: "28/06/2026 - 01:27 PM"
                         <tr><td><code class="nds-inline-code lang-html">--user-line-height</code></td><td>normal</td><td>Visitor-tuned line-height applied to body copy when <code class="nds-inline-code lang-html">has-line-height</code> is on.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--user-letter-spacing</code></td><td>0</td><td>Visitor-tuned letter-spacing applied when <code class="nds-inline-code lang-html">has-letter-spacing</code> is on.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--user-word-spacing</code></td><td>0</td><td>Visitor-tuned word-spacing applied when <code class="nds-inline-code lang-html">has-word-spacing</code> is on.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--a11y-fab-offset</code></td><td><code class="nds-inline-code lang-html">--spacing-2xl</code></td><td>Distance from the viewport edge for the FAB. Drops to <code class="nds-inline-code lang-html">--spacing-xl</code> on mobile.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--a11y-panel-width</code></td><td><code class="nds-inline-code lang-js">min(420px, 100vw)</code></td><td>Panel width. Falls back to full viewport on narrow screens.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--a11y-panel-top</code></td><td><code class="nds-inline-code lang-html">--nds-nav-height</code></td><td>Top inset of the panel. JS overrides at runtime by measuring the visible bottom edge of the topbar plus mainnav so a sticky header is never overlapped.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-offset</code></td><td><code class="nds-inline-code lang-js">calc(var(--nds-viewport-padding) / 2)</code></td><td>Distance from the viewport edge, set on the <a class="nds-color" href="{{ 'components/fab' | relative_url }}">Fab</a> dock. Applies to every FAB sharing that edge, not just this one.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--panel-width</code></td><td><code class="nds-inline-code lang-js">min(420px, 100vw)</code></td><td>Panel width, set on the panel. Falls back to full viewport on narrow screens.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--panel-top</code></td><td><code class="nds-inline-code lang-html">--nds-nav-height</code></td><td>Top inset of the panel. Leave it unset and the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component tracks the live bottom edge of the topbar plus mainnav, so a sticky header is never overlapped.</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -91,12 +91,15 @@ html[data-theme~=dark] :where(.nds-main-nav .nds-brand.nds-oncolor :is(img, svg)
    un-hide before crit (the crit-vs-main load race). The inline additionally
    hides the hero body/wrapper/breadcrumb (see $inline block) — the critical
    file reveals the hero body/wrapper instead, main reveals the breadcrumb. */
+/* The accessibility FAB is not listed: it ships `hidden` and nds-fab.js strips
+   that once the button is routed into its dock, so the [hidden] rule below is
+   already its flash guard. Adding a visibility hold here would outlive the
+   route and leave it permanently invisible. */
 :where(.nds-topbar > *,
     .nds-main-nav > *,
     .nds-hero-section .nds-section-action,
     .nds-content-layout,
     .nds-user-feedback-section,
-    .nds-accessibility-toggle,
     .nds-footer) {
     visibility: hidden;
 }

@@ -126,7 +126,6 @@ html[data-nds-loaded] :where(
     .nds-topbar > *,
     .nds-main-nav > *,
     .nds-user-feedback-section,
-    .nds-accessibility-toggle,
     .nds-hero-section .nds-breadcrumb-nav
 ) {
     visibility: var(--nds-crit-reveal, hidden);

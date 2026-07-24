@@ -64,40 +64,16 @@
 }
 
 // ----------------------------------------------
-// Floating action button
+// Floating action button — an .nds-fab. The dock owns the edge, the inset,
+// the z-index and the lift; data-fab-pos picks which edge. Size comes from
+// the FAB ladder (--btn-size 40 → 56 desktop / 48 mobile), which lands on the
+// same footprint this button has always had, so no size override here.
 // ----------------------------------------------
 .nds-accessibility-toggle {
-    position: fixed;
-    --a11y-btn-size:   56px;
-    --a11y-fab-offset: var(--spacing-2xl);
-    inset-block-end: var(--a11y-fab-offset);
-    inset-inline-end: var(--a11y-fab-offset);
-    inset-inline-start: auto;
-    z-index: 899;          // below modal (1100), above page chrome
     padding: 0;
-    box-shadow: var(--shadow-lg);
 
-    @include mobile {
-        --a11y-btn-size:   48px;
-        --a11y-fab-offset: var(--spacing-xl);
-    }
-
-    // Position variants. `start`/`end` are LOGICAL (flip with dir);
-    // `left`/`right` are PHYSICAL (fixed). Matching panel rules below
-    // use a sibling combinator so both elements flip from one attribute.
-    &[data-a11y-pos="start"] {
-        inset-inline-start: var(--a11y-fab-offset);
-        inset-inline-end: auto;
-    }
-    &[data-a11y-pos="left"] {
-        left: var(--a11y-fab-offset);
-        right: auto;
-    }
-    &[data-a11y-pos="right"] {
-        right: var(--a11y-fab-offset);
-        left: auto;
-    }
-
+    // Pinned like the panel's buttons: literal px bypasses the --user-font-scale
+    // calc, so the icon stays put when the user scales page text.
     i.hgi,
     i.nds-icon {
         font-size: var(--a11y-icon-FS);
@@ -106,115 +82,29 @@
 }
 
 // ----------------------------------------------
-// Panel — fixed, full-height, slides in from inline-end (default).
+// Panel — the surface is an .nds-panel; position, width, z-index, the
+// header offset and the slide all come from components/panels. `end` is the
+// default side, and data-panel-side on the element picks any other. Only the
+// a11y-specific chrome lives here.
 // ----------------------------------------------
 .nds-accessibility-panel {
-    --a11y-panel-width: min(420px, 100vw);
-    // JS overrides at runtime by measuring sticky-header bottom; falls
-    // back to --nds-nav-height before JS hydrates.
-    --a11y-panel-top: var(--nds-nav-height, 72px);
-
-    position: fixed;
-    inset-block-start: var(--a11y-panel-top);
-    inset-block-end: 0;
-    inset-inline-end: 0;
-    inset-inline-start: auto;
-    width: var(--a11y-panel-width);
-    background-color: var(--background-menu);
-    color: var(--text-default);
+    // Deeper than the panel default: this one floats over live page content
+    // the user is watching change, so it needs to read as further off the page.
     box-shadow: var(--shadow-lg);
-    z-index: 999;          // above FAB, sidemenu; below modal
-    overflow: hidden;      // scroll delegated to inner .nds-scroll-more
-    overscroll-behavior: contain;
-    display: flex;
-    flex-direction: column;
-
-    // translateX is physical, so each writing direction needs its own
-    // closed offset. Explicit values (not a var()) so the engine
-    // interpolates closed↔open reliably across browsers.
-    transform: translateX(-100%);
-    @include ltr {
-        transform: translateX(100%);
-    }
-
-    &[data-state~="open"] {
-        transform: translateX(0) !important;
-        transition: transform var(--nds-transition);
-    }
-
-    &[data-state~="closing"] {
-        transform: translateX(-100%) !important;
-        transition: transform var(--nds-transition);
-
-        @include ltr {
-            transform: translateX(100%) !important;
-        }
-    }
-}
-
-// ----- Start-side variant -----
-// Inverse of the default end-side. Triggered by `data-a11y-pos="start"`
-// on the FAB; the panel picks it up via subsequent-sibling combinator.
-.nds-accessibility-toggle[data-a11y-pos="start"] ~ .nds-accessibility-panel {
-    inset-inline-start: 0;
-    inset-inline-end: auto;
-    transform: translateX(100%);
-
-    &[data-state~="closing"] {
-        transform: translateX(100%) !important;
-    }
-}
-:is(html[dir="ltr"], html.ltr) .nds-accessibility-toggle[data-a11y-pos="start"] ~ .nds-accessibility-panel {
-    transform: translateX(-100%);
-
-    &[data-state~="closing"] {
-        transform: translateX(-100%) !important;
-    }
-}
-
-// ----- Physical left / right variants -----
-// PHYSICAL only — mixing `inset-inline: auto` here would cascade-clobber
-// `left`/`right` via source order in whichever direction the logical-to-
-// physical mapping coincides. Higher specificity wins over the base's
-// logical inset-inline-* declarations.
-.nds-accessibility-toggle[data-a11y-pos="left"] ~ .nds-accessibility-panel {
-    left: 0;
-    right: auto;
-    transform: translateX(-100%);
-
-    &[data-state~="closing"] {
-        transform: translateX(-100%) !important;
-    }
-}
-
-.nds-accessibility-toggle[data-a11y-pos="right"] ~ .nds-accessibility-panel {
-    right: 0;
-    left: auto;
-    transform: translateX(100%);
-
-    &[data-state~="closing"] {
-        transform: translateX(100%) !important;
-    }
 }
 
 // ----------------------------------------------
 // Header
 // ----------------------------------------------
-.nds-accessibility-panel-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-md);
-    padding: var(--spacing-lg);
-    border-block-end: 1px solid var(--divider-color);
-}
-
+// The header is .nds-panel-header — layout, padding and divider come from
+// there. Its .nds-panel-title carries flex:1, which pushes the close button to
+// the far end, so no justify-content override is needed here.
+//
+// Only the type scale is a11y's own: pinned like the panel's buttons, so the
+// title holds its size when the user scales page text.
 .nds-accessibility-panel-title {
-    margin: 0;
     font-size: var(--a11y-title-FS);
     line-height: var(--a11y-title-LH);
-    font-weight: var(--font-weight-bold);
-    color: var(--text-display);
 }
 
 // Theme + language quick toggles, top of the scrollable body.
@@ -324,13 +214,9 @@
 // ----------------------------------------------
 // Footer — Reset action.
 // ----------------------------------------------
+// Layout, padding and the top divider come from .nds-panel-footer; only the
+// reset action's own chrome lives here.
 .nds-accessibility-panel-footer {
-    flex-shrink: 0;
-    display: flex;
-    gap: var(--spacing-md);
-    padding: var(--spacing-lg);
-    border-block-start: 1px solid var(--divider-color);
-
     .nds-btn {
         --btn-width: 100%;
     }

@@ -1,25 +1,34 @@
-<button class="nds-btn nds-primary nds-circle nds-accessibility-toggle"
+{%- comment -%}
+The FAB is deliberately NOT a [data-panel-toggle]: nds-accessibility.js lazy-inits
+on the first click, so Panel's delegated handler would open a panel whose tiles
+aren't wired yet. It ships `hidden` — nds-fab.js strips that once the button is
+routed into its dock. data-fab-pos pairs with the panel's data-panel-side below.
+{%- endcomment -%}
+<button class="nds-btn nds-primary nds-circle nds-fab nds-accessibility-toggle"
         type="button"
         aria-label="Accessibility settings"
         data-i18n-attr="aria-label:panel_label"
         aria-controls="ndsAccessibilityPanel"
         aria-expanded="false"
-        data-a11y-pos="end"
-        data-accessibility-toggle>
+        data-fab-pos="end"
+        data-accessibility-toggle
+        hidden>
     <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
 </button>
 
 <aside id="ndsAccessibilityPanel"
-       class="nds-accessibility-panel"
+       class="nds-panel nds-accessibility-panel"
+       data-panel-side="end"
        aria-label="Accessibility settings"
        data-i18n-attr="aria-label:panel_label"
        data-accessibility-panel
        hidden>
 
-    <div class="nds-accessibility-panel-header">
-        <h2 class="nds-accessibility-panel-title" data-i18n="panel_title">Accessibility Tools</h2>
+    <div class="nds-panel-header nds-accessibility-panel-header">
+        <h2 class="nds-panel-title nds-accessibility-panel-title" data-i18n="panel_title">Accessibility Tools</h2>
         <button class="nds-btn nds-subtle nds-icon-only"
                 data-accessibility-close
+                data-panel-close
                 type="button"
                 aria-label="Close accessibility panel"
                 data-i18n-attr="aria-label:close_panel">
@@ -329,7 +338,7 @@
         </button>
     </div>
 
-    <div class="nds-accessibility-panel-footer">
+    <div class="nds-panel-footer nds-accessibility-panel-footer">
         <button class="nds-btn nds-secondary-outline" type="button" data-accessibility-action="reset">
             <span class="nds-label" data-i18n="reset">Reset Settings</span>
             <div class="nds-progress-circle">

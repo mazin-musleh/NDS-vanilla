@@ -129,7 +129,6 @@
     let toggleBtn = null;
     let openerEl = null;       // element that opened the panel — focus returns here
     let initAbortController = null;             // AbortController for listeners scoped to current init
-    let openAbortController = null;         // listeners that only run while the panel is open
     let maskAbortController = null;         // reading-mask pointer listener (lifecycle = mode on/off)
     let maskTopEl = null;
     let maskBottomEl = null;
@@ -838,71 +837,33 @@
         btn.style.removeProperty('--progress-duration');
     }
 
-    // Measure the visible bottom of topbar+mainnav so the panel sits below
-    // the sticky header. Re-runs on open + on resize-while-open.
-    function updateHeaderOffset() {
-        if (!panel) return;
-        const visible = NDS.stickyHeaderBottom();
-        if (visible > 0) panel.style.setProperty('--a11y-panel-top', visible + 'px');
-        else panel.style.removeProperty('--a11y-panel-top');
-    }
+    // ----------------------------------------------
+    // Open / Close — NDS.Panel owns the lifecycle: the slide, the sticky-header
+    // offset, scroll re-measurement, Escape, outside-click, and focus-in. What
+    // stays here is only what Panel cannot know about:
+    //   • the lazy-arm boot gate — the FAB is deliberately NOT a
+    //     [data-panel-toggle], or Panel's delegated handler would open a panel
+    //     whose tiles init() has not wired yet;
+    //   • the loading affordance covering the first (heavy) layout;
+    //   • mirroring open state onto the FAB, since Panel only manages the
+    //     toggles it owns.
+    // Soft dependency — NDS.Panel ships in the delegated bundle and a consumer
+    // can omit it; the FAB then no-ops instead of throwing.
+    // ----------------------------------------------
+    const panelIsOpen = () => !!(panel && NDS.Panel?.isOpen?.(panel));
 
-    // ----------------------------------------------
-    // Open / Close — transitionend + safety-net timer (mirrors sidemenu)
-    // ----------------------------------------------
     function open() {
-        if (!panel || hasState(panel, 'open')) return;
-
+        if (!panel) return;
         openerEl = document.activeElement;
-        panel.removeAttribute('hidden');
-
-        // Layout reads first, style writes after.
-        updateHeaderOffset();
-
-        // Track topbar appearance/disappearance during scroll. Scoped to
-        // openAbortController so it tears down on close — zero scroll cost when closed.
-        openAbortController = new AbortController();
-        const onPanelScroll = NDS.rafThrottle(updateHeaderOffset);
-        window.addEventListener('scroll', onPanelScroll, { passive: true, signal: openAbortController.signal });
-
-        // No inert / no backdrop — Disclosure pattern, page stays
-        // interactive so users can watch tiles affect live content.
-
-        NDS.aria.expanded(toggleBtn, true);
-
-        // Force reflow so the from-state paints before the to-state transition.
-        // eslint-disable-next-line no-unused-expressions
-        panel.offsetHeight;
-
-        addState(panel, 'open', 'opening');
-        const onOpened = () => {
-            removeState(panel, 'opening');
-            panel.removeEventListener('transitionend', onOpened);
-            const closeBtn = panel.querySelector('[data-accessibility-close]');
-            if (closeBtn) closeBtn.focus();
-        };
-        panel.addEventListener('transitionend', onOpened);
+        NDS.Panel?.open?.(panel);
     }
 
     function close() {
-        if (!panel || !hasState(panel, 'open')) return;
-        addState(panel, 'closing');
-
-        if (openAbortController) { openAbortController.abort(); openAbortController = null; }
-
-        NDS.onTransitionEnd(panel, () => {
-            clearState(panel);
-            panel.setAttribute('hidden', '');
-
-            NDS.aria.expanded(toggleBtn, false);
-
-            if (openerEl && typeof openerEl.focus === 'function') openerEl.focus();
-            openerEl = null;
-        }, { fallbackMs: NDS.transitionSpeed() + 100 });
+        if (panel) NDS.Panel?.close?.(panel);
     }
 
     function toggle() {
-        if (hasState(panel, 'open')) { close(); return; }
+        if (panelIsOpen()) { close(); return; }
         if (_openLoadingTimer) return;            // mid loading-delay — ignore re-clicks
         // Every open re-lays-out the panel (its subtree is display:none while
         // closed). Show the FAB's loading state for instant click feedback and
@@ -919,15 +880,15 @@
     // Init / destroy
     // ----------------------------------------------
     function destroy() {
-        // Route through close() first so the open-state cleanup runs before the AbortController aborts.
-        if (panel && hasState(panel, 'open')) close();
+        // Route through close() first so Panel's open-state cleanup runs before
+        // the AbortController aborts the state-mirroring listeners.
+        if (panelIsOpen()) close();
         if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
         if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; }
         if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
         if (_openLoadingTimer) { clearTimeout(_openLoadingTimer); _openLoadingTimer = null; }
         if (toggleBtn) removeState(toggleBtn, 'loading');
         if (initAbortController) { initAbortController.abort(); initAbortController = null; }
-        if (openAbortController) { openAbortController.abort(); openAbortController = null; }
         if (maskAbortController) { maskAbortController.abort(); maskAbortController = null; }
         if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
         if (maskBottomEl)   { maskBottomEl.remove();   maskBottomEl   = null; }
@@ -1003,25 +964,19 @@
             toggle();
         }, { signal });
 
-        panel.addEventListener('click', (e) => {
-            if (e.target.closest('[data-accessibility-close]')) {
-                e.stopPropagation();
-                close();
-            }
+        // Panel drives the close button, Escape and outside-click itself. It
+        // can't touch the FAB though — that button is not one of its toggles —
+        // so mirror the lifecycle onto it from Panel's own events.
+        panel.addEventListener('nds:panel:opened', () => {
+            NDS.aria.expanded(toggleBtn, true);
         }, { signal });
 
-        document.addEventListener('keydown', (e) => {
-            if ((e.key === 'Escape' || e.key === 'Esc') && hasState(panel, 'open')) {
-                e.preventDefault();
-                close();
+        panel.addEventListener('nds:panel:closed', () => {
+            NDS.aria.expanded(toggleBtn, false);
+            if (openerEl && typeof openerEl.focus === 'function' && document.contains(openerEl)) {
+                openerEl.focus();
             }
-        }, { signal });
-
-        document.addEventListener('click', (e) => {
-            if (!hasState(panel, 'open')) return;
-            if (panel.contains(e.target)) return;
-            if (toggleBtn.contains(e.target)) return;
-            close();
+            openerEl = null;
         }, { signal });
 
         // Re-apply when an OS preference flips mid-session.
@@ -1029,15 +984,13 @@
             OS_MQ[k].addEventListener('change', () => apply(), { signal });
         }
 
-        // Close on width change; re-measure header offset on every resize tick.
+        // Close on width change. Panel re-measures the header offset itself.
         let prevW = window.innerWidth;
         const offResize = NDS.onResize(() => {
             const w = window.innerWidth;
-            if (w !== prevW) {
-                prevW = w;
-                if (hasState(panel, 'open')) { close(); return; }
-            }
-            if (hasState(panel, 'open')) updateHeaderOffset();
+            if (w === prevW) return;
+            prevW = w;
+            if (panelIsOpen()) close();
         });
         signal.addEventListener('abort', offResize);
 
