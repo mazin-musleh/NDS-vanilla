@@ -168,7 +168,7 @@ Flag any component-file `console.warn(...)` or `console.error(...)` whose first 
 
 ### 5. Init guard sentinel
 
-The sentinel form follows the component's structural shape — different shapes for different shapes:
+The guard's form follows the guard's scope. Two canonical shapes, and a set of scope-matched carve-outs below:
 
 #### 5.1 Factory components → `data-nds-<name>-initialized` (DOM attribute)
 
@@ -204,9 +204,12 @@ A factory creates per-element instances; the guard must distinguish "this specif
 
 **Carve-outs (NOT divergence)**
 
-- **Window-scope flags for tree-wide observers.** `_js/nds-tables.js` (`window.ndsTableClassObserverInitialized` ~L608, `window.ndsTabChangeHandlerInitialized` ~L621) coordinates two cross-module observers (responsive-table class mutations, tab-change events). The window flag is the right shape for that specific concern because there's no per-element target AND the guard needs to coordinate with sibling modules. Not divergence.
-- **Non-attribute per-element guards.** The guard may live on the element in a non-attribute form when the structure justifies it: **(a)** a JS property on a document-sweeping controller (`_js/nds-forms.js` `_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized`) — per-element, just not CSS-selectable, so re-sweeps check inline; **(b)** the instance expando itself on a registered factory whose `create(el)` is idempotent through the back-ref (`_js/nds-date-picker.js` `_ndsDatePicker`) — the instance IS the init state, a parallel attribute channel could drift; must be gated on successful construction (JSD-18); **(c)** structural augmentation as the guard, when init's own DOM mutation is the idempotence marker (`_js/nds-customselect.js` `build()` checks the `.nds-dropmenu` class it stamps). Not divergence. A *registered* factory with a per-instance selector should still prefer the attribute form so the loader's rescan can selector-filter — see Audit behavior step 7.
-- **Repeat-safe init without a flag.** A singleton whose init is idempotent (or deliberately re-armable) by construction needs no `_initDone`: the guard IS the resource (`_js/nds-selection.js` `_controller` — nulled by `destroy()`, so `init()` re-arms by design; a one-way flag would break the cycle), documented abort-and-rebind semantics (`_js/nds-share.js` `init()` aborts and replaces its own `_abortController`), or per-item dedup state (`_js/nds-fontLoading.js` `fontStates`). Not divergence.
+Each shape below matches its form to what it actually guards, so none is divergence:
+
+- **Per-element scope, non-attribute form.** The marker lives on the element without being an attribute when the structure justifies it: a JS property on a document-sweeping controller (`_js/nds-forms.js` `_ndsInitialized` / `_ndsFormInitialized` / `_switchInitialized`) — per-element, just not CSS-selectable, so re-sweeps check inline; the instance expando where `create(el)` is idempotent through the back-ref (`_js/nds-date-picker.js` `_ndsDatePicker`) — the instance IS the init state and a parallel attribute channel could drift, so it must be gated on successful construction (JSD-18); or init's own DOM mutation as the marker (`_js/nds-customselect.js` `build()` checks the `.nds-dropmenu` class it stamps). A *registered* factory with a per-instance selector still prefers the attribute form so loader rescans can selector-filter — see Audit behavior step 7.
+- **Resource scope, no flag at all.** When init is idempotent or deliberately re-armable, the resource IS the guard: `_js/nds-selection.js` `_controller` (nulled by `destroy()` so `init()` re-arms by design — a one-way flag would break the cycle), `_js/nds-share.js` `init()` (documented abort-and-rebind of its own `_abortController`), `_js/nds-fontLoading.js` `fontStates` (per-item dedup).
+- **Cross-module scope, window flag.** A guard that must coordinate with sibling modules has no per-element target and belongs on `window`: `_js/nds-tables.js` `window.ndsTableClassObserverInitialized` (~L608) and `window.ndsTabChangeHandlerInitialized` (~L621), covering responsive-table class mutations and tab-change events. Requires the inline comment named in Audit behavior step 4.
+- **Page-level sub-concern inside a factory, named boolean.** A factory's own guard stays 5.1's attribute; a separate module-scope boolean gating one-time page-level setup (document delegation, singleton observers, a body-appended sentinel) is orthogonal to both 5.1 and 5.2 and is named for what it latches rather than `_initDone`: `runtimeSet` guarding `setupRuntime` (`_js/nds-fab.js` ~L132), `togglesBound` guarding `bindToggles` (`_js/nds-panels.js` ~L262) — both files carry the canonical attribute for their own init. Step 5's name check governs singleton MODULES only and must not fire on these.
 
 **Audit behavior**
 
@@ -247,6 +250,7 @@ Listener teardown should be atomic by default: one `.abort()` releases every lis
 
 - **Two-phase lifecycle with subset cleanup.** When a component genuinely needs to release a strict subset of listeners (per-open-cycle handlers) while keeping others alive, AbortController is structurally wrong — `.abort()` releases everything. Per-handler storage is correct because partial release is the requirement. Exemplar: `_js/nds-date-picker.js` (handler stores around `bindNavigationEvents` / `bindActionEvents`; partial removal in `cleanup()`, full removal in `destroy()`).
 - **Per-element AbortControllers stored on the element** (`el._ndsFilterAC`) scope a different lifetime (the element's, not the instance's). Out of scope.
+- **Pooled-handle abort bridge.** `signal.addEventListener('abort', off)` that releases an `NDS.on*` unsubscribe handle is the canonical way to tie a pooled subscription to the same teardown as the signal's listeners — the pooled helpers take no `signal`, so there is no native alternative to strip it in favour of. Exemplars: the `offResize` bridges in `_js/nds-panels.js` `_open` (~L89) and `_js/nds-accessibility.js` (~L480, ~L1042). Discriminator vs Audit behavior #5: that shape wraps a plain `removeEventListener` which `{ signal }` covers natively; this one has no `{ signal }` route at all.
 
 **Audit behavior**
 
