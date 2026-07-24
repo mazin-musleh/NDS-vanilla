@@ -282,6 +282,11 @@
     .nds-btn.nds-oncolor,
     :where(:root[data-theme~="dark"]) .nds-btn:not(.nds-primary, .nds-neutral) {
       --btn-color-disabled: var(--text-default-oncolor-disabled);
+      // The alpha wash is an ONCOLOR treatment: the button sits on an arbitrary
+      // brand fill, so any fixed neutral would fight it. Dark overrides the
+      // surface below — the theme's backdrop is known, so the button gets to sit
+      // ON it instead of veiling it, which also keeps secondary distinct from
+      // subtle (whose hover is this very value).
       &.nds-secondary {
         --btn-bg: var(--button-background-transparent-hovered);
         --btn-bg-hover: var(--button-background-transparent-hovered);
@@ -338,6 +343,17 @@
           color: var(--button-label-transparent-pressed-oncolor);
         }
       }
+    }
+
+    // Dark secondary reads its OWN family, same as light — the oncolor wash
+    // above is for a button on a brand fill, and dark isn't that. Hence
+    // :not(.nds-oncolor): a secondary on a brand fill keeps the wash in dark
+    // too. Same weight as the rule it overrides, so it has to stay below it.
+    :where(:root[data-theme~="dark"]) &.nds-secondary:not(.nds-oncolor) {
+      --btn-bg: var(--button-background-secondary-default);
+      --btn-bg-hover: var(--button-background-secondary-hovered);
+      --btn-bg-active: var(--button-background-secondary-pressed);
+      --btn-bg-selected: var(--button-background-secondary-selected);
     }
   }
 
