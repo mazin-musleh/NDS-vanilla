@@ -433,7 +433,8 @@
             // panels it toggles (both appear together — no visible-but-dead FAB in
             // the pre-panel gap). Pre-route flash is prevented by the FAB's own
             // `hidden` attribute (the universal [hidden] rule in _fold.scss);
-            // register() strips it once docked. Cold init — pure appendChild.
+            // register() strips it once docked. Cold init — appendChild plus
+            // pooled observers, no layout reads.
             name: 'Fab',
             selector: '.nds-fab, .nds-fab-dock',
             init: () => NDS.Fab?.init?.(),

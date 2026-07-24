@@ -59,7 +59,13 @@
     function resolvePos(fab, override) {
         const p = override || fab.dataset.fabPos || 'auto';
         if (p !== 'auto') return sideToEdge(p);
-        const panel = fab.dataset.panelToggle ? document.getElementById(fab.dataset.panelToggle) : null;
+        // The toggle is the FAB itself, or — on a group — one of its buttons, so
+        // `auto` has to descend to find it. ridePanel climbs the same boundary
+        // from the other side (btn.closest('.nds-fab')); both must agree or a
+        // grouped FAB docks at one edge while its panel opens from another.
+        const id = fab.dataset.panelToggle
+            || fab.querySelector('[data-panel-toggle]')?.dataset.panelToggle;
+        const panel = id ? document.getElementById(id) : null;
         return sideToEdge(panel ? (panel.getAttribute('data-panel-side') || 'end') : 'end');
     }
 
