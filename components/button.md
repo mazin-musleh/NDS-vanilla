@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.4.x"
+last_edit: "24/07/2026 - 04:05 PM"
 ---
 
 <!-- Standard -->
@@ -689,6 +689,10 @@ last_edit: "28/06/2026 - 01:27 PM"
                                     </div>
                                 </div>
                             </div>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-vertical", ".nds-btn-group", "groupAxis"]'>
+                                <span class="nds-label">Vertical</span>
+                            </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
                                 <span class="nds-label">Remove bg</span>
@@ -1398,6 +1402,7 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
                         <tr><td><code class="nds-inline-code lang-html">nds-progress</code></td><td>Shows the <code class="nds-inline-code lang-html">.nds-progress-circle</code> overlay</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-progress-static</code></td><td>Disables the countdown animation; progress driven by <code class="nds-inline-code lang-html">--progress-value</code></td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-cooldown</code></td><td>Marks the button for cooldown behavior. Requires <code class="nds-inline-code lang-html">data-cooldown</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-vertical</code></td><td>Set on a <code class="nds-inline-code lang-html">.nds-btn-group</code> to stack it down instead of across. The rounded corners move to the top and bottom of the column and the seam runs along the block axis</td></tr>
                     </tbody>
                 </table>
             </div>

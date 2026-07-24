@@ -195,7 +195,7 @@
   /* Secondary Outline Button */
   &.nds-secondary-outline {
     --btn-bg: var(--button-background-transparent-default);
-    --btn-bg-hover: var(--button-background-secondary-default);
+    --btn-bg-hover: var(--button-background-secondary-hovered);
     --btn-bg-active: var(--button-background-secondary-pressed);
     --btn-bg-selected: var(--button-background-secondary-selected);
     --btn-bg-disabled: var(--button-background-transparent-default);
@@ -210,7 +210,7 @@
   /* Subtle Button */
   &.nds-subtle {
     --btn-bg: var(--button-background-transparent-default);
-    --btn-bg-hover: var(--button-background-secondary-default);
+    --btn-bg-hover: var(--button-background-secondary-hovered);
     --btn-bg-active: var(--button-background-secondary-pressed);
     --btn-bg-selected: var(--button-background-secondary-selected);
     --btn-bg-disabled: transparent;
@@ -242,9 +242,15 @@
     }
   }
 
-  // Button group border handling
-  .nds-btn-group &:not(:first-child) {
+  // Button group border handling. The seam is the edge facing the previous
+  // button, so it follows the group's axis — tinting inline-start in a column
+  // would colour the group's outer side edge and leave the real seam plain.
+  .nds-btn-group:not(.nds-vertical) &:not(:first-child) {
     border-inline-start-color: var(--_btn-bg-hover);
+  }
+
+  .nds-btn-group.nds-vertical &:not(:first-child) {
+    border-block-start-color: var(--_btn-bg-hover);
   }
 
   // ==============================================
@@ -778,6 +784,35 @@
 
     &:is(:hover, :focus, .nds-active) {
       z-index: 2;
+    }
+  }
+
+  // Stack down instead of across. The seam moves from the inline axis to the
+  // block axis, so each rule below restores what the horizontal rule collapsed
+  // and collapses its own axis — the rounded corners move from the two ends of
+  // the row to the top and bottom of the column.
+  &.nds-vertical {
+    flex-direction: column;
+
+    .nds-btn {
+      &:not(:last-child) {
+        border-inline-end-width: 1px;
+        border-block-end-width: 0;
+      }
+
+      &+.nds-btn {
+        border-block-start-width: 1px;
+      }
+
+      &:first-child {
+        border-start-end-radius: var(--btn-group-radius);
+        border-end-start-radius: 0;
+      }
+
+      &:last-child {
+        border-end-start-radius: var(--btn-group-radius);
+        border-start-end-radius: 0;
+      }
     }
   }
 }

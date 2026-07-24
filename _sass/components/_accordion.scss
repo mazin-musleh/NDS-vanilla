@@ -53,7 +53,7 @@
     /* Accordion Buttons */
     .nds-accordion-btn {
         --btn-bg: var(--button-background-transparent-default);
-        --btn-bg-hover: var(--button-background-secondary-default);
+        --btn-bg-hover: var(--button-background-secondary-hovered);
         --btn-bg-active: var(--button-background-secondary-pressed);
         --btn-bg-selected: var(--button-background-transparent-default) !important;
         --btn-height: var(--_accordion-header-height);
