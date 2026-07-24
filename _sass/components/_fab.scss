@@ -3,7 +3,7 @@
 // ==============================================
 // Fixed corner slot that stacks floating action buttons. Pure layout — it
 // never restyles its children, so FABs of different sizes and shapes (56px
-// circle, 40px circle, an edge-flush button group) can share it.
+// circle, 40px circle, an edge thumb) can share it.
 //
 // The dock is a static slot; the POSITION lives on each FAB (data-fab-pos)
 // and nds-fab.js routes the FAB into the slot whose data-fab-dock-pos matches.
@@ -116,7 +116,7 @@
     inset-block-end: var(--_fab-dock-offset);
     z-index: var(--_fab-dock-z);
     // Physical corner dock — force LTR so the flex cross-axis alignment (and
-    // the flush margins) resolve to physical left/right regardless of page dir.
+    // the thumb margins) resolve to physical left/right regardless of page dir.
     direction: ltr;
 
     display: flex;
@@ -203,7 +203,7 @@
 }
 
 // ----------------------------------------------
-// Edge-flush child
+// Edge thumb
 // ----------------------------------------------
 // For a FAB that sits against the viewport edge with only its inner corners
 // rounded. Cancels the dock's inset and drops the radius AND the border on the
@@ -215,10 +215,10 @@
 // shorthand and .nds-circle. The centre dock has no side edge, so it meets the
 // floor instead — same treatment, block axis.
 //
-// A flushed .nds-btn-group carries its corners on its first/last child, not on
+// A thumbed .nds-btn-group carries its corners on its first/last child, not on
 // itself, so those are squared too — blanket, not :first-child/:last-child,
 // since which child owns the edge corner flips with the group's orientation.
-.nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) .nds-fab-flush {
+.nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) .nds-fab-thumb {
     margin-right: calc(var(--_fab-dock-offset) * -1);
 
     &, > .nds-btn {
@@ -228,7 +228,7 @@
     }
 }
 
-.nds-fab-dock[data-fab-dock-pos="left"] .nds-fab-flush {
+.nds-fab-dock[data-fab-dock-pos="left"] .nds-fab-thumb {
     margin-left: calc(var(--_fab-dock-offset) * -1);
 
     &, > .nds-btn {
@@ -238,7 +238,7 @@
     }
 }
 
-.nds-fab-dock[data-fab-dock-pos="center"] .nds-fab-flush {
+.nds-fab-dock[data-fab-dock-pos="center"] .nds-fab-thumb {
     margin-bottom: calc(var(--_fab-dock-offset) * -1);
 
     &, > .nds-btn {

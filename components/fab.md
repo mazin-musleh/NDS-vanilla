@@ -6,7 +6,7 @@ hero_description: Pins to a bottom corner of the viewport for a primary or persi
 breadcrumb: [["Components", "/components"]]
 since: "1.4.x"
 updated: "1.4.x"
-last_edit: "24/07/2026 - 07:40 PM"
+last_edit: "24/07/2026 - 08:10 PM"
 lang: en
 direction: ltr
 ---
@@ -107,8 +107,8 @@ direction: ltr
                                 <span class="nds-label">Circle</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-fab-flush", ".nds-demo", "fabFlush"]'>
-                                <span class="nds-label">Flush</span>
+                                data-toggler='["nds-fab-thumb", ".nds-demo", "fabThumb"]'>
+                                <span class="nds-label">Thumb</span>
                             </button>
                         </div>
                     </div>
@@ -290,8 +290,8 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                                 <span class="nds-label">Vertical</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-fab-flush", ".nds-demo", "grpFlush"]'>
-                                <span class="nds-label">Flush</span>
+                                data-toggler='["nds-fab-thumb", ".nds-demo", "grpThumb"]'>
+                                <span class="nds-label">Thumb</span>
                             </button>
                         </div>
                     </div>
@@ -442,7 +442,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                         <i class="hgi hgi-stroke hgi-drag-drop"></i>
                         <span class="nds-label">Mixed Shapes and Sizes</span>
                     </span>
-                    <p class="nds-item-desc">Circles, edge-flush buttons, and multi-button groups share a corner without being resized; each keeps its own size and shape.</p>
+                    <p class="nds-item-desc">Circles, edge thumbs, and multi-button groups share a corner without being resized; each keeps its own size and shape.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -474,7 +474,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                     <li>Give a FAB that opens a panel <code class="nds-inline-code lang-html">data-fab-pos="auto"</code> so it sits in the same corner the panel slides from</li>
                     <li>Order a stack with <code class="nds-inline-code lang-html">data-fab-order</code>: the lowest number sits closest to the corner. Put the primary action lowest</li>
                     <li>Group related actions (a share cluster, for example) in a single <code class="nds-inline-code lang-html">nds-btn-group nds-vertical</code> so they travel and stack as one item. It is the ordinary button group — do not restyle it for the corner; pick the button variant and size you want and let the group be</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-fab-flush</code> to a FAB — a button or a whole group — that should sit against the viewport edge. Do not hand-write the squared corners; the dock the FAB lands in decides them, and a hard-coded radius breaks the moment the FAB moves corner</li>
+                    <li>Add <code class="nds-inline-code lang-html">nds-fab-thumb</code> to a FAB — a button or a whole group — that should sit against the viewport edge. Do not hand-write the squared corners; the dock the FAB lands in decides them, and a hard-coded radius breaks the moment the FAB moves corner</li>
                     <li>Ship each FAB with the <code class="nds-inline-code lang-html">hidden</code> attribute so it never flashes at its authored spot before routing lifts it to the corner</li>
                 </ul>
             </div>
@@ -485,7 +485,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">nds-fab</code></td><td>Marks an element (a button or a container) as a FAB. Routing moves it into its corner dock, and it gains a shadow so it reads as detached from the page. On a button it also sets the footprint — <code class="nds-inline-code lang-html">16px</code> larger than the same button inline (<code class="nds-inline-code lang-html">8px</code> on small screens), so every size class still applies: LG 56, MD 48, SM 40. It also gives <code class="nds-inline-code lang-html">nds-secondary-outline</code> and <code class="nds-inline-code lang-html">nds-subtle</code> an opaque fill so page content cannot read through them</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-fab-flush</code></td><td>Set on a FAB to cancel the dock's edge offset, so it sits flush against the viewport edge. The corners on that edge are squared off automatically, picked from the corner the FAB docks in — a logical <code class="nds-inline-code lang-html">start</code>/<code class="nds-inline-code lang-html">end</code> FAB gets the right side in both directions. The centre dock has no side edge, so it meets the bottom edge instead</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-fab-thumb</code></td><td>Turns a FAB into an edge thumb: it gives up the dock's inset and sits against the viewport edge. The corners on that edge are squared off automatically, picked from the corner the FAB docks in — a logical <code class="nds-inline-code lang-html">start</code>/<code class="nds-inline-code lang-html">end</code> FAB gets the right side in both directions. The centre dock has no side edge, so it meets the bottom edge instead</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-btn-group</code></td><td>Not a FAB class — the <a class="nds-color" href="{{ 'components/button' | relative_url }}">Button</a> group. Mark one <code class="nds-inline-code lang-html">nds-fab</code> and several actions travel and stack as a single dock item, at the buttons' own size and variant. Add <code class="nds-inline-code lang-html">nds-vertical</code> to stack it down a corner instead of across</td></tr>
                     </tbody>
                 </table>
