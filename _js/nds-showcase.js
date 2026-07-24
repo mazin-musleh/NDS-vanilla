@@ -2430,23 +2430,46 @@
 
     function createFabFromDemo(button) {
         const demoCard = NDS.closest(button, '.nds-demo-card');
-        const tpl = demoCard?.querySelector('.nds-demo[data-fab-pos]');
-        if (!tpl || !NDS.Fab) return;
+        if (!demoCard || !NDS.Fab) return;
+        // A card with more than one template says which to clone; the rest have
+        // exactly one and say nothing.
+        const pick = button.getAttribute('data-fab-template');
+        const tpl = pick ? demoCard.querySelector(pick) : demoCard.querySelector('.nds-demo[data-fab-pos]');
+        if (!tpl) return;
 
+        const n = fabDemoSeq++;
         const fab = tpl.cloneNode(true);
         fab.classList.remove('nds-demo');
         fab.classList.add('nds-fab');
         fab.removeAttribute('hidden');
-        fab.dataset.fabOrder = String(fabDemoSeq++);
+        fab.dataset.fabOrder = String(n);
         fab.dataset.demoFab = '';
-        fab.title = 'Click to remove';
-        fab.addEventListener('click', () => fab.remove());
 
+        // Every FAB gets its OWN panel. Sharing one means each new FAB re-points
+        // at the same id, so they all ride together and each click toggles
+        // whatever the last one did — the pairing stops being legible.
+        const panelTpl = demoCard.querySelector('.nds-panel');
+        const toggle = fab.matches('[data-panel-toggle]') ? fab : fab.querySelector('[data-panel-toggle]');
+        if (panelTpl && toggle) {
+            const panel = panelTpl.cloneNode(true);
+            panel.id = panelTpl.id + '-' + n;
+            panel.removeAttribute('data-nds-panel-initialized');   // the template's stamp came with the clone
+            panel.dataset.demoFab = '';
+            document.body.appendChild(panel);
+            NDS.Panel?.create?.(panel);
+            toggle.setAttribute('data-panel-toggle', panel.id);
+        }
+
+        // Removal is the Clear all button's job, not a click on the FAB: the
+        // template carries data-panel-toggle, so a click belongs to the panel.
         NDS.Fab.register(fab);   // routes by the clone's own data-fab-pos
     }
 
     function clearDemoFabs() {
-        document.querySelectorAll('.nds-fab[data-demo-fab]').forEach(fab => fab.remove());
+        document.querySelectorAll('[data-demo-fab]').forEach(el => {
+            if (el.classList.contains('nds-panel')) NDS.Panel?.destroy?.(el);
+            el.remove();
+        });
     }
 
     // Pristine source cached PER code element: both FAB cards carry a JS tab, and

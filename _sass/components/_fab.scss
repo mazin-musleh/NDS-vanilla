@@ -1,13 +1,13 @@
 // ==============================================
 // FAB DOCK
 // ==============================================
-// Fixed corner slot that stacks floating action buttons. Pure layout — it
+// Fixed edge slot that stacks floating action buttons. Pure layout — it
 // never restyles its children, so FABs of different sizes and shapes (56px
 // circle, 40px circle, an edge thumb) can share it.
 //
 // The dock is a static slot; the POSITION lives on each FAB (data-fab-pos)
 // and nds-fab.js routes the FAB into the slot whose data-fab-dock-pos matches.
-// So this file only styles the slots — one per corner.
+// So this file only styles the slots — one per edge.
 
 @use '../mixins' as *;
 
@@ -31,6 +31,22 @@
 // the whole group instead of one per button.
 .nds-fab-dock > .nds-fab {
     box-shadow: var(--shadow-lg);
+}
+
+// Riding the panel — nds-fab.js stamps this on a thumb whose panel slides from
+// the same edge, with the distance measured off that panel. On the FAB, not the
+// dock, so the page-end tuck keeps its own transform and the two compose. Same
+// timing as the panel, so they travel together.
+.nds-fab-dock > .nds-fab-thumb {
+    transition: transform var(--nds-transition);
+
+    @include reduced-motion { transition: none; }
+
+    // The var carries the whole function, not just a distance — a side panel
+    // rides on X, a bottom sheet on Y, one rule either way.
+    &[data-fab-riding] {
+        transform: var(--_fab-ride);
+    }
 }
 
 // Default footprint — one step up from the same button inline, because a FAB is
@@ -107,7 +123,7 @@
 
 .nds-fab-dock {
     // Half the page gutter — tied to it so the inset narrows with the page on
-    // mobile on its own, but tighter than page content: a FAB hugs the corner.
+    // mobile on its own, but tighter than page content: a FAB hugs the edge.
     --_fab-dock-offset: var(--fab-dock-offset, calc(var(--nds-viewport-padding) / 2));
     --_fab-dock-gap:    var(--fab-dock-gap, var(--spacing-md));
     --_fab-dock-z:      var(--fab-dock-z, 899);   // above page chrome, below modal/backdrop (1100)
@@ -115,12 +131,12 @@
     position: fixed;
     inset-block-end: var(--_fab-dock-offset);
     z-index: var(--_fab-dock-z);
-    // Physical corner dock — force LTR so the flex cross-axis alignment (and
+    // Physical edge dock — force LTR so the flex cross-axis alignment (and
     // the thumb margins) resolve to physical left/right regardless of page dir.
     direction: ltr;
 
     display: flex;
-    // Reversed so the FIRST child sits closest to the corner and later ones
+    // Reversed so the FIRST child sits closest to the edge and later ones
     // stack upward — markup order reads bottom-up, matching the visual.
     flex-direction: column-reverse;
     gap: var(--_fab-dock-gap);
@@ -154,14 +170,14 @@
 }
 
 // Right (also the attribute-less default) slides right; left slides left;
-// center has no side edge, so it drops straight down.
+// bottom has no side edge, so it drops straight down.
 [data-fab-tucked] .nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) {
     transform: translateX(calc(100% + var(--_fab-dock-offset)));
 }
 [data-fab-tucked] .nds-fab-dock[data-fab-dock-pos="left"] {
     transform: translateX(calc(-100% - var(--_fab-dock-offset)));
 }
-[data-fab-tucked] .nds-fab-dock[data-fab-dock-pos="center"] {
+[data-fab-tucked] .nds-fab-dock[data-fab-dock-pos="bottom"] {
     transform: translateY(calc(100% + var(--_fab-dock-offset)));
 }
 
@@ -172,11 +188,11 @@
 }
 
 // ----------------------------------------------
-// Position variants — two physical corners only
+// Position variants — physical edges only
 // ----------------------------------------------
-// Static PHYSICAL docks — left, right (default), center. Keeping the DOCKS
+// Static PHYSICAL docks — left, right (default), bottom. Keeping the DOCKS
 // physical (while a FAB's logical start/end resolves onto them in JS) means a
-// FAB can never land on two different dock elements at the same corner.
+// FAB can never land on two different dock elements at the same edge.
 // Attribute-less === right.
 .nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) {
     right: var(--_fab-dock-offset);
@@ -191,9 +207,9 @@
 }
 
 // Centered horizontally with no transform, so the tuck's translateY is free.
-// Stacks as a ROW along the bottom edge — there's no corner to stack up from —
+// Stacks as a ROW along the bottom edge — there's no side edge to stack up from —
 // so data-fab-order reads left-to-right; mixed-height FABs share the bottom line.
-.nds-fab-dock[data-fab-dock-pos="center"] {
+.nds-fab-dock[data-fab-dock-pos="bottom"] {
     left: 0;
     right: 0;
     margin-inline: auto;
@@ -212,7 +228,7 @@
 // dock is direction:ltr and its
 // position is physical, so the outer side is known here even when the FAB itself
 // asked for a logical start/end. Longhand corners outrank .nds-btn's radius
-// shorthand and .nds-circle. The centre dock has no side edge, so it meets the
+// shorthand and .nds-circle. The bottom dock has no side edge, so it meets the
 // floor instead — same treatment, block axis.
 //
 // A thumbed .nds-btn-group carries its corners on its first/last child, not on
@@ -238,7 +254,7 @@
     }
 }
 
-.nds-fab-dock[data-fab-dock-pos="center"] .nds-fab-thumb {
+.nds-fab-dock[data-fab-dock-pos="bottom"] .nds-fab-thumb {
     margin-bottom: calc(var(--_fab-dock-offset) * -1);
 
     &, > .nds-btn {
