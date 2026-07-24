@@ -1,12 +1,12 @@
 ---
 layout: page
-title: FAB
-hero_title: FAB - National Design System
-hero_description: A floating action button that pins to a bottom corner of the viewport for a primary or persistent action, stacking with others in the same corner and, when it opens a panel, following that panel to its edge.
+title: Floating Action Button
+hero_title: Floating Action Button - National Design System
+hero_description: Pins to a bottom corner of the viewport for a primary or persistent action, stacking with others in the same corner and, when it opens a panel, following that panel to its edge.
 breadcrumb: [["Components", "/components"]]
 since: "1.4.x"
 updated: "1.4.x"
-last_edit: "24/07/2026 - 02:04 AM"
+last_edit: "24/07/2026 - 02:38 PM"
 lang: en
 direction: ltr
 ---
@@ -331,7 +331,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                 <h3 class="nds-block-title">Best Practices</h3>
                 <ul>
                     <li>Use a <strong>FAB</strong> for one primary or persistent action that should stay reachable as the user scrolls: compose, add, open filters, or start a chat</li>
-                    <li>Keep FABs few. A corner crowded with actions loses the "primary action" meaning; move secondary actions into a <a class="nds-color" href="{{ 'components/panel' | relative_url }}">Panel</a> the FAB opens</li>
+                    <li>Keep FABs few. A corner crowded with actions loses the "primary action" meaning; move secondary actions into a <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> the FAB opens</li>
                     <li>Do not use a FAB for an action tied to a specific place in the content. Put an inline <a class="nds-color" href="{{ 'components/buttons' | relative_url }}">Button</a> next to what it acts on instead</li>
                     <li>Prefer logical <code class="nds-inline-code lang-html">start</code> and <code class="nds-inline-code lang-html">end</code> (or <code class="nds-inline-code lang-html">auto</code>) so the corner follows reading direction. Reserve <code class="nds-inline-code lang-html">left</code> and <code class="nds-inline-code lang-html">right</code> for an action that must stay in the same physical corner in any language</li>
                     <li>Give a FAB that opens a panel <code class="nds-inline-code lang-html">data-fab-pos="auto"</code> so it sits in the same corner the panel slides from</li>
@@ -360,7 +360,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-fab-pos</code></td><td>Set on a <code class="nds-inline-code lang-html">.nds-fab</code> to pick its corner. Values: <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">center</code> (physical, fixed); <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">end</code> (logical, resolve by direction); <code class="nds-inline-code lang-html">auto</code> (default, follow the toggled panel's side)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-fab-order</code></td><td>Set on a <code class="nds-inline-code lang-html">.nds-fab</code> to order the stack in its corner. Lower numbers sit closer to the corner. Default <code class="nds-inline-code lang-html">0</code></td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-panel-toggle</code></td><td>Set on a FAB to open a <a class="nds-color" href="{{ 'components/panel' | relative_url }}">Panel</a> by <code class="nds-inline-code lang-html">id</code>. With <code class="nds-inline-code lang-html">data-fab-pos="auto"</code>, the FAB follows that panel to its corner</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-panel-toggle</code></td><td>Set on a FAB to open a <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> by <code class="nds-inline-code lang-html">id</code>. With <code class="nds-inline-code lang-html">data-fab-pos="auto"</code>, the FAB follows that panel to its corner</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-fab-dock-pos</code></td><td>Set on a hand-authored <code class="nds-inline-code lang-html">.nds-fab-dock</code> to fix its corner. Docks are usually created automatically, so this is rarely needed</td></tr>
                     </tbody>
                 </table>

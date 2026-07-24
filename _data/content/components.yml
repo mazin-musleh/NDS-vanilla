@@ -139,15 +139,6 @@
   js: _js/nds-empty.js
   scss: _sass/components/_empty.scss
 
-- title: "FAB"
-  description: "Floating action button that pins to a viewport corner and stacks with others"
-  icon: '<i class="hgi hgi-stroke hgi-add-circle"></i>'
-  category: "UI"
-  tags: ["JS", "CSS"]
-  url: "/components/fab.html"
-  js: _js/nds-fab.js
-  scss: _sass/components/_fab.scss
-
 - title: "Featured Icons"
   description: "Decorative icon containers with shape and color options"
   icon: '<i class="hgi hgi-stroke hgi-star"></i>'
@@ -163,6 +154,15 @@
   tags: ["CSS"]
   url: "/components/feedback-icons.html"
   scss: _sass/components/_feedback-icons.scss
+
+- title: "Floating Action Button"
+  description: "Pins to a viewport corner and stacks with others"
+  icon: '<i class="hgi hgi-stroke hgi-add-circle"></i>'
+  category: "UI"
+  tags: ["JS", "CSS"]
+  url: "/components/fab.html"
+  js: _js/nds-fab.js
+  scss: _sass/components/_fab.scss
 
 - title: "Image Popup Viewer"
   description: "Fullscreen image preview with zoom and navigation"
@@ -208,14 +208,14 @@
   js: _js/nds-pagination.js
   scss: _sass/components/_pagination.scss
 
-- title: "Panel"
+- title: "Panels"
   description: "Content-agnostic surface that slides in from any edge of the viewport"
   icon: '<i class="hgi hgi-stroke hgi-layout-right"></i>'
   category: "UI"
   tags: ["JS", "CSS"]
-  url: "/components/panel.html"
-  js: _js/nds-panel.js
-  scss: _sass/components/_panel.scss
+  url: "/components/panels.html"
+  js: _js/nds-panels.js
+  scss: _sass/components/_panels.scss
 
 - title: "Persona"
   description: "Identity block with avatar, name, role, and optional action row"

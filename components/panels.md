@@ -1,12 +1,12 @@
 ---
 layout: page
-title: Panel
-hero_title: Panel - National Design System
+title: Panels
+hero_title: Panels - National Design System
 hero_description: A content-agnostic surface that slides in from any edge of the viewport, for settings, filters, details, or any secondary content you want to reveal on demand without leaving the page.
 breadcrumb: [["Components", "/components"]]
 since: "1.4.x"
 updated: "1.4.x"
-last_edit: "24/07/2026 - 12:25 AM"
+last_edit: "24/07/2026 - 02:45 PM"
 lang: en
 direction: ltr
 ---
@@ -75,7 +75,7 @@ direction: ltr
                                     <p>Escape and an outside click both close it, unless Static is on.</p>
                                 </div>
                                 <div class="nds-panel-footer">
-                                    <button class="nds-btn nds-primary" type="button" style="--btn-width: 100%" data-panel-close>
+                                    <button class="nds-btn nds-primary nds-full" type="button" data-panel-close>
                                         <span class="nds-label">Done</span>
                                     </button>
                                 </div>
@@ -119,7 +119,7 @@ direction: ltr
     &lt;p&gt;Panel content lives here.&lt;/p&gt;
   &lt;/div&gt;
   &lt;div class="nds-panel-footer"&gt;
-    &lt;button class="nds-btn nds-primary" type="button" style="--btn-width: 100%" data-panel-close&gt;
+    &lt;button class="nds-btn nds-primary nds-full" type="button" data-panel-close&gt;
       &lt;span class="nds-label"&gt;Done&lt;/span&gt;
     &lt;/button&gt;
   &lt;/div&gt;

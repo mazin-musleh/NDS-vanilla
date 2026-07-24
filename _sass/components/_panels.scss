@@ -6,7 +6,7 @@
 //
 // `data-panel-side` picks the edge: start/end are LOGICAL (flip with dir),
 // left/right/top/bottom are PHYSICAL (fixed). Only one panel is ever open
-// (nds-panel.js enforces it), so every instance shares one --panel-z and
+// (nds-panels.js enforces it), so every instance shares one --panel-z and
 // markup order is irrelevant.
 
 @use '../mixins' as *;
