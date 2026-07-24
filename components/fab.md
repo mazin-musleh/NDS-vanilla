@@ -6,12 +6,12 @@ hero_description: Pins to a bottom corner of the viewport for a primary or persi
 breadcrumb: [["Components", "/components"]]
 since: "1.4.x"
 updated: "1.4.x"
-last_edit: "24/07/2026 - 02:38 PM"
+last_edit: "24/07/2026 - 07:40 PM"
 lang: en
 direction: ltr
 ---
 
-<!-- Floating Action Button -->
+<!-- Single FAB -->
 <section id="fabOverview" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
@@ -22,19 +22,118 @@ direction: ltr
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Click a button to inject a real FAB into this page — each pins to a viewport corner and stacks</div>
+                        <div class="demo-action">
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Corner: ">
+                                    <span class="nds-label">Corner: End</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["data-fab-pos=end", ".nds-demo", "fabPos", "attr"]'>
+                                            <span class="nds-label">End</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-fab-pos=start", ".nds-demo", "fabPos", "attr"]'>
+                                            <span class="nds-label">Start</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-fab-pos=left", ".nds-demo", "fabPos", "attr"]'>
+                                            <span class="nds-label">Left</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-fab-pos=right", ".nds-demo", "fabPos", "attr"]'>
+                                            <span class="nds-label">Right</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-fab-pos=center", ".nds-demo", "fabPos", "attr"]'>
+                                            <span class="nds-label">Center</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Variant: ">
+                                    <span class="nds-label">Variant: Primary</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["nds-primary", ".nds-demo", "fabVariant"]'>
+                                            <span class="nds-label">Primary</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-neutral", ".nds-demo", "fabVariant"]'>
+                                            <span class="nds-label">Neutral</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-secondary", ".nds-demo", "fabVariant"]'>
+                                            <span class="nds-label">Secondary</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-secondary-outline", ".nds-demo", "fabVariant"]'>
+                                            <span class="nds-label">Secondary Outline</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-subtle", ".nds-demo", "fabVariant"]'>
+                                            <span class="nds-label">Subtle</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                    <span class="nds-label">Size: LG</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-demo", "fabSize"]'>
+                                            <span class="nds-label">LG</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-md", ".nds-demo", "fabSize"]'>
+                                            <span class="nds-label">MD</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-sm", ".nds-demo", "fabSize"]'>
+                                            <span class="nds-label">SM</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["nds-circle", ".nds-demo", "fabCircle"]'>
+                                <span class="nds-label">Circle</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-fab-flush", ".nds-demo", "fabFlush"]'>
+                                <span class="nds-label">Flush</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="demo-container">
-                        <div class="state-demo">
-                            <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-md);">
-                                <button class="nds-btn nds-primary" type="button" data-fab-inject="end"><span class="nds-label">Add end FAB</span></button>
-                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="start"><span class="nds-label">Add start FAB</span></button>
-                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="left"><span class="nds-label">Add left FAB</span></button>
-                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="right"><span class="nds-label">Add right FAB</span></button>
-                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="center"><span class="nds-label">Add center FAB</span></button>
-                                <button class="nds-btn nds-subtle" type="button" data-fab-clear><span class="nds-label">Clear all</span></button>
+                        <div class="state-demo" style="flex-direction: column; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
+                            <div style="display: flex; gap: var(--spacing-md);">
+                                <button class="nds-btn nds-primary nds-lg demo-action-btn" type="button" data-action="fab-add">
+                                    <i class="hgi hgi-stroke hgi-plus-sign"></i>
+                                    <span class="nds-label">Add FAB</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-lg demo-action-btn" type="button" data-action="fab-clear">
+                                    <span class="nds-label">Clear all</span>
+                                </button>
                             </div>
-                            <p style="margin-block-start: var(--spacing-lg); color: var(--text-secondary-paragraph);">FABs appear at the real viewport corners and stack in a column. On this LTR page <strong>end</strong> and <strong>right</strong> share the right corner, <strong>start</strong> and <strong>left</strong> the left. Click any FAB to remove it.</p>
+                            <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
+                                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                Pick a corner above, then add one — it lands at the real viewport corner. Click a FAB to remove it
+                            </span>
+                            <!-- The toggles above mutate this; the button clones it. Kept out of
+                                 sight because a FAB only reads right at a corner, and it stays
+                                 off .nds-fab so routing leaves it here. -->
+                            <button class="nds-btn nds-primary nds-circle nds-icon-only nds-demo" type="button"
+                                data-fab-pos="end" aria-label="Compose" hidden>
+                                <i class="hgi hgi-stroke hgi-plus-sign"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -42,11 +141,11 @@ direction: ltr
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-fab-basic-1" id="tab-fab-basic-1">
+                                        aria-controls="panel-fab-single-html" id="tab-fab-single-html">
                                         <span class="nds-tab-label">HTML</span>
                                     </button>
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
-                                        aria-controls="panel-fab-basic-js" id="tab-fab-basic-js">
+                                        aria-controls="panel-fab-single-js" id="tab-fab-single-js">
                                         <span class="nds-tab-label">JS API</span>
                                     </button>
                                 </nav>
@@ -54,44 +153,32 @@ direction: ltr
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-basic-1"
-                                    aria-labelledby="tab-fab-basic-1">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-single-html"
+                                    aria-labelledby="tab-fab-single-html">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;!-- Author each FAB anywhere; routing moves it to the corner. --&gt;
 &lt;button class="nds-btn nds-fab nds-primary nds-circle nds-icon-only" type="button"
-        data-fab-pos="end" data-fab-order="0" hidden aria-label="Compose"&gt;
+        data-fab-pos="end" aria-label="Compose" hidden&gt;
   &lt;i class="hgi hgi-stroke hgi-plus-sign"&gt;&lt;/i&gt;
 &lt;/button&gt;
 
-&lt;button class="nds-btn nds-fab nds-secondary nds-circle nds-icon-only" type="button"
-        data-fab-pos="end" data-fab-order="1" hidden aria-label="Share"&gt;
-  &lt;i class="hgi hgi-stroke hgi-share-01"&gt;&lt;/i&gt;
-&lt;/button&gt;
-
-&lt;button class="nds-btn nds-fab nds-secondary nds-circle nds-icon-only" type="button"
-        data-fab-pos="end" data-fab-order="2" hidden aria-label="Help"&gt;
-  &lt;i class="hgi hgi-stroke hgi-help-circle"&gt;&lt;/i&gt;
-&lt;/button&gt;
                                     </code>
                                 </div>
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-basic-js"
-                                    aria-labelledby="tab-fab-basic-js" hidden>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-single-js"
+                                    aria-labelledby="tab-fab-single-js" hidden>
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-javascript">
-// Build a FAB at runtime and route it to a corner —
-// this is exactly what the demo buttons above do.
+// Route a FAB built at runtime — what the demo button above does
 const fab = document.createElement('button');
 fab.className = 'nds-btn nds-fab nds-primary nds-circle nds-icon-only';
-fab.style.setProperty('--btn-size', '56px');
 fab.setAttribute('aria-label', 'Compose');
 fab.innerHTML = '&lt;i class="hgi hgi-stroke hgi-plus-sign"&gt;&lt;/i&gt;';
 
@@ -107,27 +194,127 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
     </div>
 </section>
 
-<!-- Grouped and Edge-Flush FABs -->
-<section id="fabShapes" class="nds-content-section nds-demo-section">
+<!-- Grouped FAB -->
+<section id="fabGroup" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Grouped and Edge-Flush FABs</h2>
-            <p class="nds-section-description">A <code class="nds-inline-code lang-html">nds-fab</code> can be a container, not only a button: group related actions in one element and they travel and stack as a single item. Add <code class="nds-inline-code lang-html">nds-fab-flush</code> to a thumb-shaped FAB so it sits against the viewport edge with only its inner corners rounded.</p>
+            <h2 class="nds-section-title">Grouped FAB</h2>
+            <p class="nds-section-description">A FAB can be a container, not only a button. Mark an <code class="nds-inline-code lang-html">nds-btn-group</code> and its actions travel and stack as a single dock item, at the buttons' own size and variant — add <code class="nds-inline-code lang-html">nds-vertical</code> to run it down the corner instead of across.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Inject a share cluster (start corner) or an edge thumb (right edge)</div>
+                        <div class="demo-action">
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Corner: ">
+                                    <span class="nds-label">Corner: End</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["data-fab-pos=end", ".nds-demo", "grpPos", "attr"]'>
+                                            <span class="nds-label">End</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-fab-pos=start", ".nds-demo", "grpPos", "attr"]'>
+                                            <span class="nds-label">Start</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-fab-pos=left", ".nds-demo", "grpPos", "attr"]'>
+                                            <span class="nds-label">Left</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-fab-pos=right", ".nds-demo", "grpPos", "attr"]'>
+                                            <span class="nds-label">Right</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-fab-pos=center", ".nds-demo", "grpPos", "attr"]'>
+                                            <span class="nds-label">Center</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Variant: ">
+                                    <span class="nds-label">Variant: Subtle</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-primary", ".nds-demo .nds-btn", "grpVariant"]'>
+                                            <span class="nds-label">Primary</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-neutral", ".nds-demo .nds-btn", "grpVariant"]'>
+                                            <span class="nds-label">Neutral</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-secondary", ".nds-demo .nds-btn", "grpVariant"]'>
+                                            <span class="nds-label">Secondary</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-secondary-outline", ".nds-demo .nds-btn", "grpVariant"]'>
+                                            <span class="nds-label">Secondary Outline</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["nds-subtle", ".nds-demo .nds-btn", "grpVariant"]'>
+                                            <span class="nds-label">Subtle</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                    <span class="nds-label">Size: LG</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-demo .nds-btn", "grpSize"]'>
+                                            <span class="nds-label">LG</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-md", ".nds-demo .nds-btn", "grpSize"]'>
+                                            <span class="nds-label">MD</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-sm", ".nds-demo .nds-btn", "grpSize"]'>
+                                            <span class="nds-label">SM</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="nds-btn nds-subtle demo-toggle-btn" data-state="selected"
+                                data-toggler='["nds-vertical", ".nds-demo", "grpAxis"]'>
+                                <span class="nds-label">Vertical</span>
+                            </button>
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-fab-flush", ".nds-demo", "grpFlush"]'>
+                                <span class="nds-label">Flush</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="demo-container">
-                        <div class="state-demo">
-                            <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-md);">
-                                <button class="nds-btn nds-primary" type="button" data-fab-inject="group"><span class="nds-label">Add share cluster</span></button>
-                                <button class="nds-btn nds-secondary-outline" type="button" data-fab-inject="flush"><span class="nds-label">Add edge thumb</span></button>
-                                <button class="nds-btn nds-subtle" type="button" data-fab-clear><span class="nds-label">Clear all</span></button>
+                        <div class="state-demo" style="flex-direction: column; gap: var(--spacing-lg); padding: var(--spacing-2xl);">
+                            <div style="display: flex; gap: var(--spacing-md);">
+                                <button class="nds-btn nds-primary nds-lg demo-action-btn" type="button" data-action="fab-add">
+                                    <i class="hgi hgi-stroke hgi-plus-sign"></i>
+                                    <span class="nds-label">Add group</span>
+                                </button>
+                                <button class="nds-btn nds-subtle nds-lg demo-action-btn" type="button" data-action="fab-clear">
+                                    <span class="nds-label">Clear all</span>
+                                </button>
                             </div>
-                            <p style="margin-block-start: var(--spacing-lg); color: var(--text-secondary-paragraph);">The <strong>cluster</strong> is one <code class="nds-inline-code lang-html">nds-fab</code> container holding three buttons — it stacks as a single item. The <strong>thumb</strong> uses <code class="nds-inline-code lang-html">nds-fab-flush</code> to sit flush against the edge. Click either to remove it.</p>
+                            <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
+                                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                The whole group is one dock item, so it stacks as one. Click it to remove it
+                            </span>
+                            <div class="nds-btn-group nds-vertical nds-demo" data-fab-pos="end" hidden>
+                                <button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Share"><i class="hgi hgi-stroke hgi-share-01"></i></button>
+                                <button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Copy link"><i class="hgi hgi-stroke hgi-link-01"></i></button>
+                                <button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Email"><i class="hgi hgi-stroke hgi-mail-01"></i></button>
+                            </div>
                         </div>
                     </div>
                     <div class="demo-code">
@@ -135,47 +322,60 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                             <div class="nds-tab-list-container nds-scroll-more">
                                 <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
                                     <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                        aria-controls="panel-fab-shapes-1" id="tab-fab-shapes-1">
+                                        aria-controls="panel-fab-group-html" id="tab-fab-group-html">
                                         <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false"
+                                        aria-controls="panel-fab-group-js" id="tab-fab-group-js">
+                                        <span class="nds-tab-label">JS API</span>
                                     </button>
                                 </nav>
                                 <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-shapes-1"
-                                    aria-labelledby="tab-fab-shapes-1">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-group-html"
+                                    aria-labelledby="tab-fab-group-html">
                                     <div class="nds-code-action">
                                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;!-- Grouped: one nds-fab CONTAINER stacks as a single item --&gt;
-&lt;div class="nds-fab" data-fab-pos="start" hidden
-     style="display:flex; flex-direction:column; gap:var(--spacing-xs);
-            padding:var(--spacing-xs); background:var(--background-menu);
-            border-radius:var(--radius-full); box-shadow:var(--shadow-md);"&gt;
-  &lt;button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button"
-          style="--btn-size:44px" aria-label="Share"&gt;
+&lt;div class="nds-fab nds-btn-group nds-vertical" data-fab-pos="end" hidden&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Share"&gt;
     &lt;i class="hgi hgi-stroke hgi-share-01"&gt;&lt;/i&gt;
   &lt;/button&gt;
-  &lt;button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button"
-          style="--btn-size:44px" aria-label="Copy link"&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Copy link"&gt;
     &lt;i class="hgi hgi-stroke hgi-link-01"&gt;&lt;/i&gt;
   &lt;/button&gt;
-  &lt;button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button"
-          style="--btn-size:44px" aria-label="Email"&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Email"&gt;
     &lt;i class="hgi hgi-stroke hgi-mail-01"&gt;&lt;/i&gt;
   &lt;/button&gt;
 &lt;/div&gt;
+                                    </code>
+                                </div>
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-fab-group-js"
+                                    aria-labelledby="tab-fab-group-js" hidden>
+                                    <div class="nds-code-action">
+                                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-javascript">
+// register() takes a CONTAINER as readily as a button — the whole
+// group routes as one dock item, exactly like the demo above
+const fab = document.createElement('div');
+fab.className = 'nds-fab nds-btn-group nds-vertical';
+fab.innerHTML = `
+  &lt;button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Share"&gt;
+    &lt;i class="hgi hgi-stroke hgi-share-01"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+  &lt;button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Email"&gt;
+    &lt;i class="hgi hgi-stroke hgi-mail-01"&gt;&lt;/i&gt;
+  &lt;/button&gt;`;
 
-&lt;!-- Edge-flush thumb: nds-fab-flush sits against the edge, inner corners rounded --&gt;
-&lt;button class="nds-btn nds-fab nds-fab-flush nds-primary nds-icon-only" type="button"
-        data-fab-pos="right" hidden aria-label="Open menu"
-        style="--btn-size:48px; border-radius:var(--radius-md) 0 0 var(--radius-md);"&gt;
-  &lt;i class="hgi hgi-stroke hgi-menu-01"&gt;&lt;/i&gt;
-&lt;/button&gt;
+NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end' | 'auto'
                                     </code>
                                 </div>
                             </div>
@@ -186,69 +386,6 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
         </div>
     </div>
 </section>
-
-<script>
-(function () {
-    var seq = 0;
-    var KIND = {
-        end:    { icon: 'hgi-plus-sign',      cls: 'nds-primary' },
-        start:  { icon: 'hgi-menu-01',        cls: 'nds-secondary' },
-        left:   { icon: 'hgi-arrow-left-01',  cls: 'nds-secondary' },
-        right:  { icon: 'hgi-arrow-right-01', cls: 'nds-secondary' },
-        center: { icon: 'hgi-star',           cls: 'nds-primary' }
-    };
-    function tag(el, pos) {
-        el.dataset.fabPos = pos;
-        el.dataset.fabOrder = String(seq++);
-        el.dataset.demoFab = '';
-        el.title = 'Click to remove';
-        el.addEventListener('click', function () { el.remove(); });
-        NDS.Fab.register(el, pos);
-    }
-    function circle(pos) {
-        var k = KIND[pos] || KIND.end;
-        var fab = document.createElement('button');
-        fab.type = 'button';
-        fab.className = 'nds-btn nds-fab nds-circle nds-icon-only ' + k.cls;
-        fab.style.setProperty('--btn-size', '56px');
-        fab.setAttribute('aria-label', 'Demo ' + pos + ' FAB — click to remove');
-        fab.innerHTML = '<i class="hgi hgi-stroke ' + k.icon + '"></i>';
-        tag(fab, pos);
-    }
-    function cluster() {
-        var box = document.createElement('div');
-        box.className = 'nds-fab';
-        box.style.cssText = 'display:flex;flex-direction:column;gap:var(--spacing-xs);padding:var(--spacing-xs);background:var(--background-menu);border-radius:var(--radius-full);box-shadow:var(--shadow-md);';
-        box.innerHTML =
-            '<button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button" style="--btn-size:44px" aria-label="Share"><i class="hgi hgi-stroke hgi-share-01"></i></button>' +
-            '<button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button" style="--btn-size:44px" aria-label="Copy link"><i class="hgi hgi-stroke hgi-link-01"></i></button>' +
-            '<button class="nds-btn nds-subtle nds-circle nds-icon-only" type="button" style="--btn-size:44px" aria-label="Email"><i class="hgi hgi-stroke hgi-mail-01"></i></button>';
-        tag(box, 'start');
-    }
-    function thumb() {
-        var fab = document.createElement('button');
-        fab.type = 'button';
-        fab.className = 'nds-btn nds-fab nds-fab-flush nds-primary nds-icon-only';
-        fab.style.cssText = '--btn-size:48px;border-radius:var(--radius-md) 0 0 var(--radius-md);';
-        fab.setAttribute('aria-label', 'Edge thumb — click to remove');
-        fab.innerHTML = '<i class="hgi hgi-stroke hgi-menu-01"></i>';
-        tag(fab, 'right');
-    }
-    function inject(kind) {
-        if (!window.NDS || !NDS.Fab) return;
-        if (kind === 'group') cluster();
-        else if (kind === 'flush') thumb();
-        else circle(kind);
-    }
-    document.addEventListener('click', function (e) {
-        var add = e.target.closest('[data-fab-inject]');
-        if (add) { inject(add.getAttribute('data-fab-inject')); return; }
-        if (e.target.closest('[data-fab-clear]')) {
-            document.querySelectorAll('.nds-fab[data-demo-fab]').forEach(function (f) { f.remove(); });
-        }
-    });
-})();
-</script>
 
 <!-- Built-in Features -->
 <section id="fabFeatures" class="nds-content-section nds-demo-section">
@@ -305,7 +442,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                         <i class="hgi hgi-stroke hgi-drag-drop"></i>
                         <span class="nds-label">Mixed Shapes and Sizes</span>
                     </span>
-                    <p class="nds-item-desc">Circles, edge-flush thumbs, and multi-button containers share a corner without being resized; each keeps its own size and shape.</p>
+                    <p class="nds-item-desc">Circles, edge-flush buttons, and multi-button groups share a corner without being resized; each keeps its own size and shape.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -332,12 +469,12 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                 <ul>
                     <li>Use a <strong>FAB</strong> for one primary or persistent action that should stay reachable as the user scrolls: compose, add, open filters, or start a chat</li>
                     <li>Keep FABs few. A corner crowded with actions loses the "primary action" meaning; move secondary actions into a <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> the FAB opens</li>
-                    <li>Do not use a FAB for an action tied to a specific place in the content. Put an inline <a class="nds-color" href="{{ 'components/buttons' | relative_url }}">Button</a> next to what it acts on instead</li>
+                    <li>Do not use a FAB for an action tied to a specific place in the content. Put an inline <a class="nds-color" href="{{ 'components/button' | relative_url }}">Button</a> next to what it acts on instead</li>
                     <li>Prefer logical <code class="nds-inline-code lang-html">start</code> and <code class="nds-inline-code lang-html">end</code> (or <code class="nds-inline-code lang-html">auto</code>) so the corner follows reading direction. Reserve <code class="nds-inline-code lang-html">left</code> and <code class="nds-inline-code lang-html">right</code> for an action that must stay in the same physical corner in any language</li>
                     <li>Give a FAB that opens a panel <code class="nds-inline-code lang-html">data-fab-pos="auto"</code> so it sits in the same corner the panel slides from</li>
                     <li>Order a stack with <code class="nds-inline-code lang-html">data-fab-order</code>: the lowest number sits closest to the corner. Put the primary action lowest</li>
-                    <li>Group related actions (a share cluster, for example) in a single <code class="nds-inline-code lang-html">nds-fab</code> container so they travel and stack as one item</li>
-                    <li>Add <code class="nds-inline-code lang-html">nds-fab-flush</code> to a thumb-shaped FAB that should sit against the viewport edge with only its inner corners rounded</li>
+                    <li>Group related actions (a share cluster, for example) in a single <code class="nds-inline-code lang-html">nds-btn-group nds-vertical</code> so they travel and stack as one item. It is the ordinary button group — do not restyle it for the corner; pick the button variant and size you want and let the group be</li>
+                    <li>Add <code class="nds-inline-code lang-html">nds-fab-flush</code> to a FAB — a button or a whole group — that should sit against the viewport edge. Do not hand-write the squared corners; the dock the FAB lands in decides them, and a hard-coded radius breaks the moment the FAB moves corner</li>
                     <li>Ship each FAB with the <code class="nds-inline-code lang-html">hidden</code> attribute so it never flashes at its authored spot before routing lifts it to the corner</li>
                 </ul>
             </div>
@@ -347,8 +484,9 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Class</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">nds-fab</code></td><td>Marks an element (a button or a container) as a FAB. Routing moves it into its corner dock</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-fab-flush</code></td><td>Set on a FAB to cancel the dock's edge offset, so an edge-thumb sits flush against the viewport edge</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-fab</code></td><td>Marks an element (a button or a container) as a FAB. Routing moves it into its corner dock, and it gains a shadow so it reads as detached from the page. On a button it also sets the footprint — <code class="nds-inline-code lang-html">16px</code> larger than the same button inline (<code class="nds-inline-code lang-html">8px</code> on small screens), so every size class still applies: LG 56, MD 48, SM 40. It also gives <code class="nds-inline-code lang-html">nds-secondary-outline</code> and <code class="nds-inline-code lang-html">nds-subtle</code> an opaque fill so page content cannot read through them</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-fab-flush</code></td><td>Set on a FAB to cancel the dock's edge offset, so it sits flush against the viewport edge. The corners on that edge are squared off automatically, picked from the corner the FAB docks in — a logical <code class="nds-inline-code lang-html">start</code>/<code class="nds-inline-code lang-html">end</code> FAB gets the right side in both directions. The centre dock has no side edge, so it meets the bottom edge instead</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-btn-group</code></td><td>Not a FAB class — the <a class="nds-color" href="{{ 'components/button' | relative_url }}">Button</a> group. Mark one <code class="nds-inline-code lang-html">nds-fab</code> and several actions travel and stack as a single dock item, at the buttons' own size and variant. Add <code class="nds-inline-code lang-html">nds-vertical</code> to stack it down a corner instead of across</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -371,7 +509,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'center' | 'start' | 'end'
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-offset</code></td><td><code class="nds-inline-code lang-html">--spacing-2xl</code></td><td>Distance from the viewport edges to the dock (reduced to <code class="nds-inline-code lang-html">--spacing-xl</code> on mobile)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--fab-dock-offset</code></td><td><code class="nds-inline-code lang-html">calc(--nds-viewport-padding / 2)</code></td><td>Distance from the viewport edges to the dock. Half the page gutter, so it narrows with the page on mobile</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--fab-dock-gap</code></td><td><code class="nds-inline-code lang-html">--spacing-md</code></td><td>Gap between stacked FABs in a corner</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--fab-dock-z</code></td><td><code class="nds-inline-code lang-html">899</code></td><td>Stacking order of the docks, below modals and backdrops</td></tr>
                     </tbody>

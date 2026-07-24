@@ -751,6 +751,9 @@
             updateChartCodeFromToggles(demoCard);
         }
 
+        // Update the FAB JS code example from the card's demo template
+        updateFabCodeFromToggles(demoCard);
+
         // Clean up and re-scan grid last-row borders after any toggle change.
         // Remove nds-last-row from divided lists before rescanning (esp. from grid view).
         togglePairs.forEach(([classNames, targetSelector, type]) => {
@@ -2408,11 +2411,74 @@
         'random-progress-value': btn => randomProgressValue(btn),
         'toast-show': btn => createAlertFromDemo(btn, true),
         'alert-create': btn => createAlertFromDemo(btn, false),
-        'cookie-show': btn => showCookiePopupFromDemo(btn)
+        'cookie-show': btn => showCookiePopupFromDemo(btn),
+        'fab-add': btn => createFabFromDemo(btn),
+        'fab-clear': () => clearDemoFabs()
     };
     function demoActionDispatch(actionBtn) {
         var handler = DEMO_ACTIONS[actionBtn.getAttribute('data-action')];
         if (handler) handler(actionBtn);
+    }
+
+    // ── FAB demos ─────────────────────────────────────────────────────────
+    // The hidden .nds-demo template in a FAB card is the single source of truth:
+    // the toggles mutate it, the Add button clones it, and the JS tab is
+    // rewritten from it — so what lands at the corner and what the two code tabs
+    // show can't drift apart. The template stays off .nds-fab so routing leaves
+    // it in the card, and hidden because a FAB only reads right at a corner.
+    var fabDemoSeq = 0;
+
+    function createFabFromDemo(button) {
+        const demoCard = NDS.closest(button, '.nds-demo-card');
+        const tpl = demoCard?.querySelector('.nds-demo[data-fab-pos]');
+        if (!tpl || !NDS.Fab) return;
+
+        const fab = tpl.cloneNode(true);
+        fab.classList.remove('nds-demo');
+        fab.classList.add('nds-fab');
+        fab.removeAttribute('hidden');
+        fab.dataset.fabOrder = String(fabDemoSeq++);
+        fab.dataset.demoFab = '';
+        fab.title = 'Click to remove';
+        fab.addEventListener('click', () => fab.remove());
+
+        NDS.Fab.register(fab);   // routes by the clone's own data-fab-pos
+    }
+
+    function clearDemoFabs() {
+        document.querySelectorAll('.nds-fab[data-demo-fab]').forEach(fab => fab.remove());
+    }
+
+    // Pristine source cached PER code element: both FAB cards carry a JS tab, and
+    // one shared snapshot would rewrite one card's sample into the other.
+    var fabJsSource = new WeakMap();
+
+    function updateFabCodeFromToggles(demoCard) {
+        const tpl = demoCard.querySelector('.nds-demo[data-fab-pos]');
+        const code = demoCard.querySelector('code.lang-javascript');
+        if (!tpl || !code || !NDS.Code) return;
+
+        if (!fabJsSource.has(code)) fabJsSource.set(code, code.textContent);
+
+        // Place the marker where each sample authors it: after nds-btn on a
+        // button, first on a group (which has no nds-btn of its own).
+        const list = [...tpl.classList].filter(cls => cls !== 'nds-demo');
+        list.splice(list.indexOf('nds-btn') + 1, 0, 'nds-fab');
+
+        let updated = fabJsSource.get(code)
+            .replace(/(fab\.className = ')[^']*(')/, `$1${list.join(' ')}$2`)
+            .replace(/(NDS\.Fab\.register\(fab, ')[^']*(')/, `$1${tpl.dataset.fabPos || 'end'}$2`);
+
+        // A group builds its children inside fab.innerHTML, and the variant and
+        // size toggles land on those children — so the string needs them too.
+        // Every child is toggled through one selector, so they share a class
+        // list. No-op on a single FAB: it has no descendant buttons.
+        const child = tpl.querySelector('.nds-btn');
+        if (child) updated = updated.replace(/(class=")nds-btn[^"]*(")/g, `$1${child.className}$2`);
+
+        delete code.dataset.originalContent;
+        code.textContent = updated;
+        NDS.Code.reprocessCodeElement(code);
     }
 
     // Show the site-wide cookie popup, honoring the demo card's layout toggle

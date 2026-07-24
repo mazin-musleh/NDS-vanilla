@@ -3,7 +3,7 @@
 // ==============================================
 // Fixed corner slot that stacks floating action buttons. Pure layout — it
 // never restyles its children, so FABs of different sizes and shapes (56px
-// circle, 40px circle, an edge-flush thumb) can share it.
+// circle, 40px circle, an edge-flush button group) can share it.
 //
 // The dock is a static slot; the POSITION lives on each FAB (data-fab-pos)
 // and nds-fab.js routes the FAB into the slot whose data-fab-dock-pos matches.
@@ -16,11 +16,99 @@
 // universal `[hidden] { display: none !important }` rule (in _fold.scss, the
 // blocking critical CSS) hides it from first paint, wherever it's authored
 // (body-level or in content), and its `!important` beats both `.nds-btn`'s
-// display and a container FAB's inline `display:flex`. A FAB with no `hidden`
+// display and `.nds-btn-group`'s. A FAB with no `hidden`
 // still works; it just isn't flash-protected before routing.
 
+// Lift — a docked FAB floats over content, so it needs a shadow to read as
+// detached rather than printed on the page. Same depth as
+// .nds-accessibility-toggle, the FAB that predates this file.
+//
+// Keyed on the dock child rather than .nds-fab itself: register() always appends
+// to the dock, so a routed FAB is always a direct child. That leaves out a FAB
+// still awaiting routing (in flow, so nothing to float above) and a nested
+// marker (mis-marked markup, which routing also skips in favour of the outermost
+// FAB). On the child, not its buttons, so a grouped FAB casts ONE shadow around
+// the whole group instead of one per button.
+.nds-fab-dock > .nds-fab {
+    box-shadow: var(--shadow-lg);
+}
+
+// Default footprint — one step up from the same button inline, because a FAB is
+// a standing touch target rather than something you aim at within a layout.
+// Additive, so every size class keeps working: LG 40→56, MD 32→48, SM 24→40,
+// and a consumer's own --btn-size scales with it. Written on the PRIVATE var
+// because reading --btn-size to set --btn-size is a cycle; the mixin's padding,
+// icon and font-size calcs all read --_btn-size, so they follow.
+//
+// :is(.nds-fab, .nds-fab *) is "the FAB itself, or anything inside one" — every
+// rule below is scoped to a FAB button OR a grouped FAB's child, since the group
+// carries .nds-fab and its buttons don't. Both branches are one class, so :is()
+// contributes 0,1,0 and each rule keeps the weight the two-selector form had.
+// Sizing has to reach those children directly: .nds-btn re-declares --_btn-size
+// on every button, so a value set on the group wrapper would be shadowed.
+.nds-btn:is(.nds-fab, .nds-fab *) {
+    --_btn-size: calc(var(--btn-size) + 16px);
+
+    @include mobile {
+        --_btn-size: calc(var(--btn-size) + 8px);
+    }
+}
+
+// Outline and subtle both rest on a transparent fill, which works inline but not
+// over scrolling content — page text reads straight through a floating one. They
+// take different surfaces so they stay apart when docked side by side: outline
+// on the raised secondary, subtle on the page's own. Both families re-bind for
+// dark, so one rule each covers both modes.
+//
+// Each has to outrank its dark re-bind in _buttons.scss, whose :where() prefix
+// costs nothing and leaves it at .nds-btn:not(…).nds-{variant}. Hence the
+// .nds-btn here: it matches that weight and wins on source order (this file is
+// @used after components/buttons — keep it that way).
+.nds-btn:is(.nds-fab, .nds-fab *).nds-secondary-outline {
+    --btn-bg: var(--button-background-secondary-default);
+    --btn-bg-disabled: var(--button-background-secondary-default);
+}
+
+// Subtle fills with the page's own surface, so it has no edge of its own to show
+// against the page — the border draws one. Only the resting rung is set: hover,
+// pressed and selected all fall back to --btn-border, and the token re-binds for
+// dark on its own.
+.nds-btn:is(.nds-fab, .nds-fab *).nds-subtle {
+    --btn-bg: var(--background-default);
+    --btn-bg-disabled: var(--background-default);
+    --btn-border: var(--border-neutral-secondary);
+    --btn-border-disabled: var(--border-neutral-secondary);
+}
+
+// A subtle group's seam is the shared hover tint, which sits a step off the edge
+// the rule above just gave it. Matched to that edge here rather than in
+// _buttons.scss, so a plain subtle group keeps its softer divider — only a
+// docked one, which has a real border to agree with, is pulled into line.
+//
+// No axis split: whichever edge isn't the seam is the button's own outer edge,
+// already drawn in --btn-border, so the second declaration is a no-op there.
+// That only holds because subtle FABs HAVE a border — the same collapse on the
+// secondary rules in _buttons.scss would paint a stray edge on a variant whose
+// border is transparent.
+.nds-fab.nds-btn-group .nds-btn.nds-subtle:not(:first-child) {
+    border-inline-start-color: var(--btn-border);
+    border-block-start-color: var(--btn-border);
+}
+
+// In dark both variants have every state swapped to an alpha wash — an oncolor
+// treatment — which would undo the opaque rest above the moment you hover. This
+// re-states the light routing, a no-op in light and the fix in dark: those rungs
+// re-bind for dark themselves, so the states stay opaque in both modes.
+.nds-btn:is(.nds-fab, .nds-fab *):is(.nds-secondary-outline, .nds-subtle) {
+    --btn-bg-hover: var(--button-background-secondary-hovered);
+    --btn-bg-active: var(--button-background-secondary-pressed);
+    --btn-bg-selected: var(--button-background-secondary-selected);
+}
+
 .nds-fab-dock {
-    --_fab-dock-offset: var(--fab-dock-offset, var(--spacing-2xl));
+    // Half the page gutter — tied to it so the inset narrows with the page on
+    // mobile on its own, but tighter than page content: a FAB hugs the corner.
+    --_fab-dock-offset: var(--fab-dock-offset, calc(var(--nds-viewport-padding) / 2));
     --_fab-dock-gap:    var(--fab-dock-gap, var(--spacing-md));
     --_fab-dock-z:      var(--fab-dock-z, 899);   // above page chrome, below modal/backdrop (1100)
 
@@ -36,7 +124,7 @@
     // stack upward — markup order reads bottom-up, matching the visual.
     flex-direction: column-reverse;
     gap: var(--_fab-dock-gap);
-    // Mixed widths hug the same physical edge: a circle and a wide thumb line up.
+    // Mixed widths hug the same physical edge: a circle and a wide group line up.
     align-items: flex-end;
 
     // The dock spans the gaps between its buttons; without this its empty
@@ -49,12 +137,6 @@
     }
 
     @include reduced-motion { transition: none; }
-
-    // Re-resolve the private var rather than writing the public knob, so a
-    // consumer's --fab-dock-offset (set here or on an ancestor) still wins.
-    @include mobile {
-        --_fab-dock-offset: var(--fab-dock-offset, var(--spacing-xl));
-    }
 }
 
 // ----------------------------------------------
@@ -123,13 +205,45 @@
 // ----------------------------------------------
 // Edge-flush child
 // ----------------------------------------------
-// For thumb-shaped FABs that sit against the viewport edge with only their
-// inner corners rounded (the .nds-sidemenu-toggle shape). Cancels the dock's
-// inset for that one child. Physical margins (the dock is direction:ltr).
+// For a FAB that sits against the viewport edge with only its inner corners
+// rounded. Cancels the dock's inset and drops the radius AND the border on the
+// side that meets the edge — an edge the viewport clips has no outline to draw,
+// and a stray hairline there reads as a seam. Physical margins and corners — the
+// dock is direction:ltr and its
+// position is physical, so the outer side is known here even when the FAB itself
+// asked for a logical start/end. Longhand corners outrank .nds-btn's radius
+// shorthand and .nds-circle. The centre dock has no side edge, so it meets the
+// floor instead — same treatment, block axis.
+//
+// A flushed .nds-btn-group carries its corners on its first/last child, not on
+// itself, so those are squared too — blanket, not :first-child/:last-child,
+// since which child owns the edge corner flips with the group's orientation.
 .nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) .nds-fab-flush {
     margin-right: calc(var(--_fab-dock-offset) * -1);
+
+    &, > .nds-btn {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right-width: 0;
+    }
 }
 
 .nds-fab-dock[data-fab-dock-pos="left"] .nds-fab-flush {
     margin-left: calc(var(--_fab-dock-offset) * -1);
+
+    &, > .nds-btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left-width: 0;
+    }
+}
+
+.nds-fab-dock[data-fab-dock-pos="center"] .nds-fab-flush {
+    margin-bottom: calc(var(--_fab-dock-offset) * -1);
+
+    &, > .nds-btn {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-width: 0;
+    }
 }

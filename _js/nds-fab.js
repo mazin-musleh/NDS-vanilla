@@ -112,6 +112,7 @@
         NDS.onAttrChange('html', ['dir'], () => {
             document.querySelectorAll('.nds-fab').forEach(fab => {
                 if (fab.closest('code, .code-example')) return;
+                if (fab.parentElement?.closest('.nds-fab')) return;   // outermost wins, as in init()
                 register(fab);
             });
         });
@@ -121,10 +122,16 @@
     // explicit register call) is skipped, so a button placed by hand inside an
     // authored dock (not marked .nds-fab) is never touched, and reinit only
     // picks up newcomers.
+    //
+    // A nested .nds-fab is skipped so the OUTERMOST one wins. Without this the
+    // scan docks the group, then docks each marked child in turn — appending
+    // moves them out, leaving the group empty. The guard is here rather than in
+    // register() because an explicit register(child) call is deliberate.
     function init() {
         document.querySelectorAll('.nds-fab').forEach(fab => {
             if (fab.hasAttribute(INIT_ATTR)) return;
             if (fab.closest('code, .code-example')) return;
+            if (fab.parentElement?.closest('.nds-fab')) return;
             register(fab);
         });
     }
