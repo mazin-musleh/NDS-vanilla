@@ -6,7 +6,7 @@ hero_description: Pins to an edge of the viewport for a primary or persistent ac
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
 updated: "1.5.0"
-last_edit: "25/07/2026 - 09:45 PM"
+last_edit: "26/07/2026 - 12:56 AM"
 lang: en
 direction: ltr
 ---
@@ -181,8 +181,9 @@ direction: ltr
                                         </button>
                                     </div>
                                     <code class="lang-html code">
+&lt;!-- data-fab-order stacks FABs sharing an edge: lower sits closer to it --&gt;
 &lt;button class="nds-btn nds-fab nds-primary nds-circle nds-icon-only" type="button"
-        data-fab-pos="end" data-panel-toggle="details" aria-label="Open panel" hidden&gt;
+        data-fab-pos="end" data-fab-order="0" data-panel-toggle="details" aria-label="Open panel" hidden&gt;
   &lt;i class="hgi hgi-stroke hgi-menu-01"&gt;&lt;/i&gt;
 &lt;/button&gt;
 
@@ -386,7 +387,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'bottom' | 'start' | 'end'
                                     </div>
                                     <code class="lang-html code">
 &lt;!-- The toggle lives on a child; with nds-fab-thumb the whole group rides --&gt;
-&lt;div class="nds-fab nds-btn-group nds-vertical" data-fab-pos="end" hidden&gt;
+&lt;div class="nds-fab nds-btn-group nds-vertical" data-fab-pos="end" data-fab-order="0" hidden&gt;
   &lt;button class="nds-btn nds-subtle nds-icon-only" type="button"
           data-panel-toggle="share-panel" aria-label="Open panel"&gt;
     &lt;i class="hgi hgi-stroke hgi-menu-01"&gt;&lt;/i&gt;
@@ -414,6 +415,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'bottom' | 'start' | 'end'
 // group routes as one dock item, exactly like the demo above
 const fab = document.createElement('div');
 fab.className = 'nds-fab nds-btn-group nds-vertical';
+fab.dataset.fabOrder = '0';     // lower sits closer to the edge when FABs share one
 fab.innerHTML = `
   &lt;button class="nds-btn nds-subtle nds-icon-only" type="button" aria-label="Share"&gt;
     &lt;i class="hgi hgi-stroke hgi-share-01"&gt;&lt;/i&gt;
