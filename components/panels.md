@@ -6,7 +6,7 @@ hero_description: A content-agnostic surface that slides in from any edge of the
 breadcrumb: [["Components", "/components"]]
 since: "1.4.x"
 updated: "1.4.x"
-last_edit: "24/07/2026 - 02:45 PM"
+last_edit: "25/07/2026 - 04:09 PM"
 lang: en
 direction: ltr
 ---
@@ -71,8 +71,10 @@ direction: ltr
                                     </button>
                                 </div>
                                 <div class="nds-panel-body">
-                                    <p>Panel content lives here. With Modal off the page stays interactive, so you can watch the content behind it react while the panel is open.</p>
-                                    <p>Escape and an outside click both close it, unless Static is on.</p>
+                                    <div class="nds-content-placeholder">
+                                        <span>Swap with content component</span>
+                                        <span>استبدل هذا العنصر بأي عنصر آخر</span>
+                                    </div>
                                 </div>
                                 <div class="nds-panel-footer">
                                     <button class="nds-btn nds-primary nds-full" type="button" data-panel-close>
@@ -193,7 +195,10 @@ direction: ltr
                                     </button>
                                 </div>
                                 <div class="nds-panel-body">
-                                    <p>A bottom sheet is a good fit for mobile actions, secondary details, or a compact form. The vertical axis does not flip with text direction.</p>
+                                    <div class="nds-content-placeholder">
+                                        <span>Swap with content component</span>
+                                        <span>استبدل هذا العنصر بأي عنصر آخر</span>
+                                    </div>
                                 </div>
                             </aside>
                         </div>

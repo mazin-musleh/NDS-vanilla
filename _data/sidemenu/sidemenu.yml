@@ -309,6 +309,9 @@
     - label: "Utilities"
       is_group: true
       children:
+        - label: "Content Placeholder"
+          url: "/utilities/content-placeholder"
+          href: "/utilities/content-placeholder.html"
         - label: "Cookies"
           url: "/components/cookies"
           href: "/components/cookies.html"

@@ -201,6 +201,32 @@
   [data-hidden~="desktop"][data-hidden~="sr"] { @include label-hidden; }
 }
 
+// ==============================================
+// CONTENT SLOT UTILITY
+// ==============================================
+
+// Dashed stand-in marking where real content belongs — a panel body, a card,
+// a template region the consumer swaps out. Fills a definite-height parent,
+// falls back to the min-height. Content is authored inside it, so any language
+// or line count works.
+.nds-content-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  min-height: max(120px, 100%);
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  border: 2px dashed var(--border-primary);
+  border-radius: var(--radius-sm);
+  background-color: var(--background-primary-faint);
+  color: var(--text-primary-strong);
+  text-align: center;
+  font-size: var(--typo-text-clamp-xs-FS);
+  line-height: var(--typo-text-clamp-xs-LH);
+  font-weight: var(--font-weight-bold);
+}
+
 // Small red notice shown above a form ("*Required information" etc.).
 .nds-required-notice {
   color: var(--text-error);
