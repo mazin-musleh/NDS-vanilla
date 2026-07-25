@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.x"
-last_edit: "21/07/2026 - 09:59 PM"
+last_edit: "25/07/2026 - 07:45 PM"
 ---
 
 <!-- Standard Tabs -->
@@ -770,6 +770,21 @@ last_edit: "21/07/2026 - 09:59 PM"
                             <td><code class="nds-inline-code lang-html">--btn-indicator-size</code></td>
                             <td>3px</td>
                             <td>Thickness of the active tab indicator bar and divider line</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--tab-button-gap</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--spacing-xs)</code></td>
+                            <td>Gap between a tab's icon and its label</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--tab-button-padding-block</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--spacing-lg)</code></td>
+                            <td>Vertical padding inside each tab button</td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">--tab-button-padding-inline</code></td>
+                            <td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td>
+                            <td>Horizontal padding inside each tab button</td>
                         </tr>
                     </tbody>
                 </table>

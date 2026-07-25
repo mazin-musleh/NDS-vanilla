@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.4.x"
+last_edit: "25/07/2026 - 07:45 PM"
 ---
 
 <!-- Stepper Layouts -->
@@ -785,6 +785,8 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-size</code></td><td>32px</td><td>Circle diameter for linear steppers. Overridden by size classes</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--stepper-gap</code></td><td>token-based</td><td>Spacing between steps. Adjusts automatically with size classes</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--stepper-indicator-gap</code></td><td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td><td>Base spacing between steps that <code class="nds-inline-code lang-html">--stepper-gap</code> derives from; the size classes scale it by 1.2 and 1.5</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--stepper-text-padding</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Gap between the step indicator and its text block</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--gap</code></td><td>var(--spacing-xl)</td><td>Vertical gap between the step's text block and any <code class="nds-inline-code lang-html">.nds-stepper-action</code> buttons. Set on the <code class="nds-inline-code lang-html">.nds-stepper</code> container</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--progress-size</code></td><td>var(--stepper-size)</td><td>Circle diameter for radial steppers. Inherits from <code class="nds-inline-code lang-html">--stepper-size</code>, which radial size classes override</td></tr>
                     </tbody>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.4.x"
-last_edit: "17/07/2026 - 12:17 AM"
+last_edit: "25/07/2026 - 07:45 PM"
 ---
 
 <!-- Basic Table Section -->
@@ -1770,6 +1770,8 @@ last_edit: "17/07/2026 - 12:17 AM"
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">--table-row-height</code></td><td>64px (48px in compact)</td><td>Row height for data cells. Set on the table or use <code class="nds-inline-code lang-html">nds-compact</code> for the 48px preset</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--table-cell-padding-block</code></td><td><code class="nds-inline-code lang-html">var(--spacing-md)</code></td><td>Vertical padding inside header and data cells</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--table-cell-padding-inline</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Horizontal padding inside header and data cells. Also sets the inset of the row separator</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--max-width</code></td><td>100%</td><td>Maximum width of the responsive scroll wrapper</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--min-width</code></td><td>auto-calculated</td><td>Minimum width of the table inside the wrapper. Prevents cells from shrinking below content width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--mask-fade-distance</code></td><td>48px</td><td>Width of the gradient fade mask on scroll edges</td></tr>
