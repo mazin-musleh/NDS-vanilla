@@ -12,9 +12,9 @@ Credit to the [Digital Government Authority (DGA)](https://dga.gov.sa/) for unif
 
 **Highlights:**
 - **Framework-free.** Plain HTML, CSS, and JavaScript, with zero runtime dependencies. Drop it into any stack.
-- **More than components.** A full layout system, ready-to-deploy page templates, and a live documentation site — all built on a 3-tier design-token system (color, semantic, component).
+- **More than components.** A full layout system, ready-to-deploy page templates, and a live documentation site — all built on a 4-tier design-token system (palette, primitives, semantic, component).
 - **Compliance-ready out of the box.** Official DGA page templates as live, working code. Every component adheres to the official design tokens, typography, spacing, and interaction patterns.
-- **Performance-first.** 100% PageSpeed score with Core Web Vitals (LCP, CLS, INP) passing. A smart loader ships only the JavaScript each page uses — a lean ~35 KB core (gzipped) out of a ~93 KB full library — behind ~10 KB of critical CSS.
+- **Performance-first.** 100% PageSpeed score with Core Web Vitals (LCP, CLS, INP) passing. A smart loader ships only the JavaScript each page uses — a lean ~39 KB core (gzipped) out of a ~120 KB full library — behind ~10 KB of critical CSS.
 - **Bilingual & themeable.** RTL (Arabic) by default with full LTR (English) support, light/dark mode, and full re-branding: generate a palette from one OKLCH seed, pick a predefined theme, or drop in a stylesheet theme — all from a single HTML attribute, no rebuild.
 
 > **Accessibility:** Components are manually tested for WCAG 2.1 AA compliance. A formal automated audit (axe-core + screen reader) is planned for a future release. Known gaps are tracked via issues labeled `accessibility`.
@@ -36,7 +36,7 @@ Quick links:
 
 | Area | What you get |
 |---|---|
-| **Components** | 75+ UI components — buttons, forms, modals, charts, date pickers (Gregorian + Hijri), navigation, and more. |
+| **Components** | 85+ UI components — buttons, forms, modals, charts, date pickers (Gregorian + Hijri), panels, navigation, and more. |
 | **Layout** | A section model and responsive grid for composing pages. |
 | **UI shell** | Header, footer, hero, side menu, top bar, and side-info — the page chrome. |
 | **Utilities** | Drop-in helpers: copy, share, number formatting, text truncation, dividers, and more. |
@@ -68,7 +68,7 @@ Everything is RTL (Arabic) first with LTR (English) support, and is documented w
 
 > **For contributors only.** If you just want to use NDS in your project, see *Build a site using NDS* above — no build tools required.
 
-**Requirements:** Ruby 3.x + Bundler to run Jekyll. Node.js 20+ only if you edit `_js/` source (it bundles and minifies with Terser).
+**Requirements:** Ruby 3.x + Bundler to run Jekyll. Node.js 18+ only if you edit `_js/` source (it bundles and minifies with Terser).
 
 ### 1. Install Ruby + Bundler
 
@@ -111,6 +111,8 @@ npm install                       # installs Terser — only needed if editing _
 bundle exec jekyll serve          # http://localhost:4002/NDS-vanilla/
 ```
 
+The server also binds `0.0.0.0` and prints a LAN URL alongside the localhost one, so you can open the site on a phone or tablet on the same network — useful for checking RTL layouts and touch targets on a real device.
+
 ### Other commands
 
 ```bash
@@ -147,7 +149,7 @@ Based on the public Saudi DGA design specifications published on Figma. This is 
 **The default visual identity is reserved for Saudi Arabia government entities.** If you are not a Saudi government organization, you must replace the following before deploying:
 
 - **Logos and marks**: [`assets/img/dga-logo-icon.svg`](assets/img/dga-logo-icon.svg), [`2030-vision.svg`](assets/img/2030-vision.svg), and [`palm_swords.svg`](assets/img/palm_swords.svg) are official government trademarks.
-- **Design tokens**: the DGA brand identity in [`_sass/themes/_dga.scss`](_sass/themes/_dga.scss) and the foundation color, typography, and spacing primitives in [`_sass/tokens/_primitives.scss`](_sass/tokens/_primitives.scss) are the DGA-defined identity. Re-theme them to your own brand via the 3-tier token system (see [CLAUDE.md](CLAUDE.md#design-tokens-critical)).
+- **Design tokens**: the DGA brand identity in [`_sass/themes/_dga.scss`](_sass/themes/_dga.scss) and the foundation typography and spacing primitives in [`_sass/tokens/_primitives.scss`](_sass/tokens/_primitives.scss) are the DGA-defined identity. Re-theme them to your own brand via the 4-tier token system (see [CLAUDE.md](CLAUDE.md#design-tokens-critical)).
 - **Digital-stamp component**: the DGA digital-stamp in the top bar ([`_includes/topbar.html`](_includes/topbar.html), styled in [`_sass/components/_DGAdigitalStamp.scss`](_sass/components/_DGAdigitalStamp.scss)) is a Saudi government compliance feature. Remove it or replace it with your own equivalent.
 - **Copy**: `.gov.sa` email domains, "Digital Government Authority" labels, and Saudi-specific demo content throughout `_data/` and demo pages.
 

@@ -3,9 +3,13 @@
 Thanks for your interest. Issues and pull requests are welcome.
 
 - **Found a bug?** [Open a bug report](https://github.com/mazin-musleh/NDS-vanilla/issues/new?template=bug_report.yml).
-- **Small fix (typo, broken link, obvious bug)?** Send a PR directly.
-- **Want a feature or new component?** Start with a [Discussion](https://github.com/mazin-musleh/NDS-vanilla/discussions) so we can align on scope before any code is written.
 - **Got a question or idea?** Use [Discussions](https://github.com/mazin-musleh/NDS-vanilla/discussions).
+
+## Which changes take a PR
+
+**Send a PR directly** for typos, broken links, doc corrections, and obvious bug fixes. No discussion needed.
+
+**Open a [Discussion](https://github.com/mazin-musleh/NDS-vanilla/discussions) first** for anything touching `_sass/`, `_js/`, the design tokens, or adding a component. PRs opened without one are closed unreviewed — not because the idea is unwelcome, but because this codebase has strict conventions (four token tiers, RTL-by-default styling, portal-safe menus, three JS bundle tiers) documented in [CLAUDE.md](CLAUDE.md), and a PR written without them can't be merged however good the idea is. Align on scope first and the code lands.
 
 ---
 
@@ -24,12 +28,13 @@ The issue form enforces most of these. Fill it in.
 
 ## Running the project locally
 
-**Requirements:** Ruby 3.x, Bundler, Jekyll. Node.js 20+ is required if you edit any file under `_js/` — Terser is invoked by `_plugins/js_processor.rb` to bundle the JS.
+**Requirements:** Ruby 3.x, Bundler, Jekyll. Node.js 18+ is required if you edit any file under `_js/` — Terser is invoked by `_plugins/js_processor.rb` to bundle the JS.
 
 ```bash
 git clone https://github.com/mazin-musleh/NDS-vanilla.git
 cd NDS-vanilla
 bundle install
+npm install                        # installs Terser — only needed if editing _js/
 bundle exec jekyll serve           # http://localhost:4002/NDS-vanilla/
 ruby _plugins/js_processor.rb      # rebuild assets/js/*.min.js after any _js/ change
 ```

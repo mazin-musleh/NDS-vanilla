@@ -6,8 +6,8 @@ hero_description: A dashed stand-in that marks where real content belongs, for t
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.4.x"
-updated: "1.4.x"
+since: "1.5.0"
+updated: "1.5.0"
 last_edit: "25/07/2026 - 10:45 PM"
 ---
 

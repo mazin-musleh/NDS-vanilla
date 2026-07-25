@@ -4,9 +4,9 @@ title: Panels
 hero_title: Panels - National Design System
 hero_description: A content-agnostic surface that slides in from any edge of the viewport, for settings, filters, details, or any secondary content you want to reveal on demand without leaving the page.
 breadcrumb: [["Components", "/components"]]
-since: "1.4.x"
-updated: "1.4.x"
-last_edit: "25/07/2026 - 09:10 PM"
+since: "1.5.0"
+updated: "1.5.0"
+last_edit: "25/07/2026 - 09:45 PM"
 lang: en
 direction: ltr
 ---
@@ -394,7 +394,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--panel-content-width</code></td><td><code class="nds-inline-code lang-html">--nds-content-MaxWidth</code></td><td>Max width of a top or bottom sheet's content, centered within the full-bleed sheet and aligned to the page gutter on narrower screens. Set to <code class="nds-inline-code lang-html">100%</code> for full-width content</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--panel-top</code></td><td>sticky header bottom</td><td>Block-start offset. Set it to override the automatic header tracking with a fixed value</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--panel-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-lg</code></td><td>Padding of the header, body, and footer</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--panel-gap</code></td><td><code class="nds-inline-code lang-html">--spacing-md</code></td><td>Gap between items in the header and footer rows</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--panel-gap</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Gap between the panel's header, body and footer</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--panel-radius</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Corner radius of the panel surface</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--panel-z</code></td><td><code class="nds-inline-code lang-html">999</code></td><td>Stacking order of the panel</td></tr>
                     </tbody>

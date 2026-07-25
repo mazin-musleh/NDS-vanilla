@@ -6,6 +6,57 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-07-25
+
+### Added
+- Panels — new component: a slide-in surface on any side plus top and bottom sheets, with an optional modal backdrop and focus trap. See `components/panels.md`.
+- Floating Action Button — new component: FABs that dock themselves by `data-fab-pos`, in a size ladder, grouped clusters, and edge thumbs that ride their panel open. See `components/fab.md`.
+- Content placeholder — new utility: a dashed slot marker for a region awaiting a real component. See `utilities/content-placeholder.md`.
+- Dropmenu — `data-search` adds a search box that filters items, diacritic-insensitive.
+- Dropmenu — `nds-center` centers item labels.
+- Dropmenu — component-owned menus carry a `.nds-{component}-menu` class that survives portaling.
+- Pagination — `data-per-page-target="<id>"` turns any dropmenu into a per-page picker.
+- Pagination — `data-pagination-no-scroll` opts a nav out of the page-change scroll; `NDS.Pagination.scrollToContent()` runs it manually.
+- Buttons — `nds-vertical` stacks a button group.
+- Tabs — `--tab-panel-padding`, `--tab-panel-padding-inline` and `--tab-panel-padding-block` knobs.
+- Forms — `data-state="loading"` on a form container, group or control renders the spinner shell. See `components/forms.md`.
+- Alert — toasts ship with a shadow and stroke by default.
+- Upload — `--upload-background-dropbox-default`, `--upload-background-dropbox-active` and `--upload-background-file-item` tokens.
+- Editor — toolbar menus portal out of a clipping ancestor.
+- Tokens — the reference page now covers the app-shell, transition and font-weight tiers.
+
+### Changed
+- Tokens — one file per tier (`tokens/_primitives`, `_semantic`, `_components`), each with its dark block colocated. Compiled output is unchanged.
+- Tokens — nine spacing dials moved off `:root` onto their components: `--tooltip-padding`, `--tooltip-gap`, `--table-cell-padding-block`, `--table-cell-padding-inline`, `--tab-button-gap`, `--tab-button-padding-block`, `--tab-button-padding-inline`, `--stepper-indicator-gap`, `--stepper-text-padding`. Setting them works as before.
+- Accessibility — the panel and FAB are now the shared Panels and FAB components, and the 500 ms open delay is gone.
+- Cards — wider header gap, and titles top-pad to sit level with a leading avatar or icon. Modal inherits both.
+- Buttons — dark `secondary` reads its own colour family instead of the shared alpha wash, restoring its hover feedback.
+- Autocomplete — `setLoading()` uses the shared form loading state.
+- Modal — only the card content scrolls; header and actions stay pinned.
+- Hero — tighter bottom padding on the flat sub-hero.
+
+### Fixed
+- Buttons — the group seam is visible on `secondary` and takes the right colour on outline.
+- Dropmenu — percentage widths survive portaling instead of blowing up to viewport width.
+- Custom select — options still select once the menu portals.
+- Tables — sorting no longer tears apart a table nested in a cell.
+- Tabs — loading cards keep the tab skeleton, the divided vertical indicator sits level, and an overflowing centered list stays scroll-reachable.
+- Scroll more — horizontal overflow is detected when the wrapper sets `align-items`.
+- Hero — the sub-hero's background image no longer paints behind an ancestor.
+- Mainnav — the brand no longer stretches across the nav row.
+- Featured icons — `oncolor` reaches an inline `<svg>`.
+- Editor — loose top-level text gets a paragraph so alignment, direction and headings apply to it; pasted whitespace collapses.
+- Form template — the pinned stepper strip sits flush under the nav on mobile.
+- Tokens — `--border-neutral-light` is defined in light mode; `--background-surface-elevated` and `-sunken` gain dark rebinds.
+- JS lifecycle — listeners release through `AbortController`, fixing dropmenu re-init after `destroy()`, taginput's `create()`/`destroy()` pairing, and date-picker leaving orphan menus behind.
+- SEO — `sitemap.xml` emits `lastmod` from each page's `last_edit`.
+- Docs — index grids tag unreleased components "Next release"; the FAB and IPV cards are findable by abbreviation.
+
+### Migrating from v1.4.1
+
+- Replace the built bundles (`nds-main.min.*` and the loader-injected `nds-delegated`/`nds-extras`, plus the `nds-accessibility`/`nds-showcase`/theme bundles).
+- Accessibility panel — reworked onto the shared Panels and FAB components. Copy the new markup from `components/accessibility.md`.
+
 ## [1.4.1] - 2026-07-20
 
 ### Added

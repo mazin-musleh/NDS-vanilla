@@ -1,14 +1,10 @@
 {
   "name": "nds-vanilla",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Vanilla HTML/CSS/JS implementation of Saudi Arabia's National Design System. RTL/LTR native, zero runtime dependencies.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "bundle exec jekyll build",
-    "serve": "bundle exec jekyll serve",
-    "serve:network": "bundle exec jekyll serve",
-    "dev": "bundle exec jekyll serve",
-    "start": "bundle exec jekyll serve"
+    "serve": "bundle exec jekyll serve"
   },
   "keywords": [
     "jekyll",
