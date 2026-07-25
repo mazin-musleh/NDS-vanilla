@@ -112,6 +112,7 @@
         }
 
         &.nds-flat {
+            --section-padding-block-end: var(--spacing-xl);
             background: var(--background-default) !important;
             box-shadow: unset !important;
 
