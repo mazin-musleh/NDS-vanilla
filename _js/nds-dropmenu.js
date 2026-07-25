@@ -160,6 +160,9 @@
         // ==============================================
 
         init() {
+            // One controller for every listener this instance attaches, so destroy()
+            // releases them atomically without touching consumer-attached listeners.
+            this.abortController = new AbortController();
             this.setupAria();
             this.setupEventListeners();
             this.setupSelectMode();
@@ -189,8 +192,11 @@
             if (attr === null) return;
 
             const itemSelector = ':is(.nds-dropmenu-item, [data-search-item]):not([data-search-item="false"])';
-            const scroll = this.menu.querySelector('.nds-dropmenu-scroll');
+            // Nesting-aware: a plain querySelector would grab the scroll of a
+            // nested sub-dropmenu and inject this menu's search box into it.
+            const scroll = this._findOwnDescendant(this.dropmenu, '.nds-dropmenu-scroll');
             if (!scroll) return;
+            const { signal } = this.abortController;
 
             const items = () => Array.from(this.menu.querySelectorAll(itemSelector));
             const threshold = parseInt(attr, 10) || 0;
@@ -212,6 +218,10 @@
                 </div>
             </div>`;
             this.menu.insertAdjacentHTML('afterbegin', searchHTML);
+            // Hold the node we just injected — destroy() removes exactly this one,
+            // rather than re-querying (which can mis-hit a nested menu's box, and
+            // would miss entirely while the menu is portaled to <body>).
+            const searchBox = this.menu.firstElementChild;
 
             // Empty state — reuses .nds-empty-placeholder for the visual grammar
             // (shared with NDS.Empty via _empty.scss) and carries
@@ -253,9 +263,20 @@
                 emptyEl.hidden = visible > 0 || !q;
             };
 
+            // destroy() calls this: replay the filter with an empty query (its own
+            // semantics, not a blanket [hidden] sweep) then drop both injected nodes.
+            this._teardownSearch = () => {
+                this.searchInput.value = '';
+                filter();
+                searchBox.remove();
+                emptyEl.remove();
+                this.searchInput = null;
+                this._teardownSearch = null;
+            };
+
             // nds-forms.js's clear button dispatches an `input` event on the
             // field, so this same handler covers both typing AND clear-click.
-            this.searchInput.addEventListener('input', filter);
+            this.searchInput.addEventListener('input', filter, { signal });
 
             this.searchInput.addEventListener('keydown', (e) => {
                 // Two-stage Escape: first press clears the query, second closes
@@ -277,15 +298,15 @@
                     e.preventDefault();
                     this.menu.querySelector(itemSelector + ':not([hidden])')?.click();
                 }
-            });
+            }, { signal });
 
             // Autofocus on open, reset on close — each open is a fresh state.
-            this.dropmenu.addEventListener('nds:dropmenu:opened', () => this.searchInput.focus());
+            this.dropmenu.addEventListener('nds:dropmenu:opened', () => this.searchInput.focus(), { signal });
             this.dropmenu.addEventListener('nds:dropmenu:closed', () => {
                 if (!this.searchInput.value) return;
                 this.searchInput.value = '';
                 filter();
-            });
+            }, { signal });
         }
 
         // ==============================================
@@ -310,6 +331,7 @@
             const name = this.dropmenu.getAttribute('data-select-name');
             if (!name) return;
             this.isSelect = true;
+            const { signal } = this.abortController;
 
             let hidden = this.dropmenu.querySelector('input[type="hidden"][data-nds-select-value]');
             if (!hidden) {
@@ -343,7 +365,7 @@
             this.menu.addEventListener('click', (e) => {
                 const item = e.target.closest('.nds-dropmenu-item');
                 if (item && item.hasAttribute('data-value')) this.applySelection(item);
-            });
+            }, { signal });
         }
 
         applySelection(item, opts = {}) {
@@ -403,6 +425,7 @@
         // ==============================================
 
         setupEventListeners() {
+            const { signal } = this.abortController;
             // Trigger click (skip if programmatic-only mode)
             if (!this.dropmenu.hasAttribute('data-dropmenu-no-click')) {
                 this.trigger.addEventListener('click', (e) => {
@@ -420,7 +443,7 @@
                         ? e.clientX
                         : null;
                     this.toggle();
-                });
+                }, { signal });
             }
 
             // Outside click — registered at CAPTURE phase so it fires before
@@ -439,7 +462,7 @@
                 if (this._cancelDelayedOpen()) return;
                 if (this.isOpen) this.close();
             };
-            document.addEventListener('click', this.handleOutsideClick, true);
+            document.addEventListener('click', this.handleOutsideClick, { capture: true, signal });
 
             // Trigger + menu keyboard (skip if the consumer owns its own
             // keyboard navigation — date-picker uses 2D grid keys for the
@@ -447,7 +470,7 @@
             // Escape stays bound below in either case so close-on-escape
             // remains uniform across dropmenus.
             if (!this.dropmenu.hasAttribute('data-dropmenu-no-keys')) {
-                this.trigger.addEventListener('keydown', (e) => this.handleTriggerKeydown(e));
+                this.trigger.addEventListener('keydown', (e) => this.handleTriggerKeydown(e), { signal });
 
                 this.menu.addEventListener('keydown', (e) => {
                     // For inputs: only handle Tab and Alt+Arrow
@@ -457,7 +480,7 @@
                         if (!isNavKey) return;
                     }
                     this.handleMenuKeydown(e);
-                });
+                }, { signal });
             }
 
             // Escape — listen on both dropmenu (for trigger focus) and menu
@@ -475,8 +498,8 @@
                     this.trigger.focus();
                 }
             };
-            this.dropmenu.addEventListener('keydown', onEscape);
-            this.menu.addEventListener('keydown', onEscape);
+            this.dropmenu.addEventListener('keydown', onEscape, { signal });
+            this.menu.addEventListener('keydown', onEscape, { signal });
 
             // Item click auto-close + portal-aware re-dispatch.
             // When the menu is portaled to <body>, native click events on items
@@ -523,7 +546,7 @@
                 synthetic.ndsDropmenuRedispatch = true;
                 synthetic.ndsDropmenuItem = item;
                 this.dropmenu.dispatchEvent(synthetic);
-            });
+            }, { signal });
         }
 
         // ==============================================
@@ -1009,26 +1032,44 @@
         }
 
         destroy() {
-            // Cancel a pending delayed-open timer so it can't fire on the
-            // detached/cloned wrapper after teardown.
+            // A constructor bail (missing menu, or a wrapper someone else already
+            // initialized) never runs init(), so this instance owns nothing. Bail
+            // before the deletes below — they'd strip the REAL instance's stamp and
+            // expando while its listeners stayed live, and the next reinit() sweep
+            // would then attach a second instance on top.
+            if (!this.abortController) return;
+            // Cancel a pending delayed-open timer so it can't fire after teardown.
             clearTimeout(this._delayTimer);
-            // Drain the open-lifecycle subscriptions before tearing the
-            // wrapper down. close() releases this._offScroll (NDS.onOutsideScroll)
-            // and this._unsubResize (NDS.onResize) synchronously at the top of
-            // its body — without this guard, destroy-while-open strands both
-            // pooled subscribers for the page lifetime.
+            // Drain the open-lifecycle subscriptions before releasing the rest.
+            // close() releases this._offScroll (NDS.onOutsideScroll) and
+            // this._unsubResize (NDS.onResize) synchronously at the top of its
+            // body — without this guard, destroy-while-open strands both pooled
+            // subscribers for the page lifetime.
             if (this.isOpen) this.close();
-            // close() schedules NDS.unportal via setTimeout 200ms later;
-            // calling it synchronously here ensures the menu is restored to
-            // its original parent before replaceWith detaches that parent —
-            // otherwise the late unportal reparents into a detached node.
-            // No-op when shouldPortal is false (unportal returns early).
+            // close() schedules NDS.unportal via setTimeout 200ms later; calling
+            // it synchronously here restores the menu to its original parent now,
+            // so nothing reparents into a stale position afterwards. No-op when
+            // shouldPortal is false (unportal returns early).
             if (this.shouldPortal) NDS.unportal(this.menu);
-            if (this.handleOutsideClick) {
-                document.removeEventListener('click', this.handleOutsideClick, true);
-            }
-            const clone = this.dropmenu.cloneNode(true);
-            this.dropmenu.replaceWith(clone);
+            // One abort releases every listener this instance attached — and only
+            // those. The former cloneNode/replaceWith swap also destroyed listeners
+            // consumers had attached to the wrapper, and its clone inherited
+            // data-nds-dropmenu-initialized while losing the .ndsDropmenu expando,
+            // which left the element permanently ineligible for re-init.
+            this.abortController.abort();
+            // Undo setupSearch's injection and its filtering. The clone used to
+            // discard both for free; now that the wrapper survives, a destroy →
+            // re-init would otherwise stack a second search box and leave items
+            // hidden behind a search field that reads as empty.
+            this._teardownSearch?.();
+            // Only release the shared registration when THIS instance still owns it.
+            // A stale instance destroyed after the wrapper was re-initialized would
+            // otherwise strip the new instance's expando and stamp.
+            if (this.dropmenu.ndsDropmenu !== this) return;
+            delete this.menu._ownerDropmenu;
+            delete this.dropmenu._ownerMenu;
+            delete this.dropmenu.ndsDropmenu;
+            this.dropmenu.removeAttribute('data-nds-dropmenu-initialized');
         }
     }
 

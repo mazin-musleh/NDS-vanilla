@@ -797,9 +797,11 @@
             this.elements.input.insertAdjacentElement('afterend', dropdown);
         },
 
-        // Remove dropdown DOM
+        // Remove dropdown DOM. Optional-chained on container: cacheElements
+        // returns {} when the container is gone, and destroy() calls this — a
+        // throw there would skip the rest of teardown.
         removeDropdownDOM: function () {
-            var dropdown = this.elements.container.querySelector(UIConfig.selectors.dropdown);
+            var dropdown = this.elements.container?.querySelector(UIConfig.selectors.dropdown);
             if (dropdown) {
                 dropdown.remove();
             }
@@ -2456,10 +2458,9 @@
         // Destroy instance
         destroy: function () {
             // Destroy inner month/year dropmenus FIRST — they hold their own
-            // document-level outside-click listeners, and the outer destroy
-            // below replaces formControl with a clone that detaches their
-            // DOM. Tearing them down while still attached keeps NDSDropmenu's
-            // own cleanup path (removeEventListener) unambiguous.
+            // document-level outside-click listeners, and removeDropdownDOM()
+            // below detaches the subtree they live in. Tearing them down while
+            // still attached lets NDSDropmenu.destroy() unwind against live nodes.
             if (this.monthDropmenuInstance) {
                 this.monthDropmenuInstance.destroy();
                 this.monthDropmenuInstance = null;
@@ -2501,7 +2502,15 @@
                 delete this.elements.input._ndsDatePicker;
             }
 
+            // cleanup() first — it releases listeners on the dropdown's children,
+            // so it needs them still attached. Then drop the dropdown subtree the
+            // instance built. NDSDropmenu.destroy() un-stamps the month/year
+            // wrappers, so leaving them behind would let a later
+            // NDS.Dropmenu.reinit() adopt them as bare menus wired to no calendar.
+            // isDropdownCreated resets so a re-created picker rebuilds from scratch.
             this.cleanup();
+            this.removeDropdownDOM();
+            this.isDropdownCreated = false;
         }
     };
 

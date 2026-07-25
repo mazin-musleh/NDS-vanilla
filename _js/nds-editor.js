@@ -931,7 +931,9 @@
             this.root.querySelectorAll('[data-editor-link-dropmenu] .nds-dropmenu-menu, [data-editor-image-dropmenu] .nds-dropmenu-menu').forEach(menu => {
                 menu.addEventListener('input', (e) => {
                     const field = e.target.closest('.nds-form-container');
-                    if (field?.hasAttribute('data-status')) NDS.Forms?.clearStatus?.(field);
+                    // Soft dependency — NDS.Forms ships in the main bundle; the menu's
+                    // field feedback just stays put if a consumer bundle excludes it.
+                    if (field && NDS.Status.get(field) !== '') NDS.Forms?.clearStatus?.(field);
                     const primary = menu.querySelector('[data-dropmenu-primary]');
                     if (primary) primary.disabled = false;
                 }, { signal });
@@ -960,7 +962,9 @@
                 }, { signal });
                 const uploadHost = imageMenu.querySelector('[data-editor-image-upload]');
                 if (uploadHost) {
-                    // Generated after the loader's sweep — init is idempotent.
+                    // Generated after the loader's sweep — init is idempotent. Soft
+                    // dependency — the host stays a plain URL field if NDS.Upload
+                    // isn't bundled.
                     NDS.Upload?.init?.();
                     // Chosen file → URL field (alt seeds from the file name).
                     // Consumers configure the popover's upload container
@@ -1121,10 +1125,16 @@
             // Portal opt-in propagates from the editor root: data-dropmenu-portal
             // stamps data-portal on each menu before create() reads shouldPortal.
             const portalMenus = this.root.hasAttribute('data-dropmenu-portal');
+            // Soft dependency — NDS.Dropmenu ships in the main bundle, so this
+            // normally runs; without it the link/image menus never open and every
+            // downstream menuOf read below is unreachable, which is why those are
+            // optional-chained too. Toolbar buttons that don't open a menu still work.
             toolbar.querySelectorAll('.nds-dropmenu').forEach(el => {
                 if (portalMenus) el.setAttribute('data-portal', '');
                 NDS.Dropmenu?.create?.(el);
             });
+            // Soft dependency — toolbar buttons keep their title/aria labels and
+            // stay fully usable if NDS.Tooltip isn't bundled.
             toolbar.querySelectorAll('.nds-tooltip').forEach(el => NDS.Tooltip?.create?.(el));
             return toolbar;
         }
@@ -1943,6 +1953,7 @@
                 coloredInput.closest('.nds-form-container').hidden = asComponent || asOpaque;
             }
             if (unlinkBtn) unlinkBtn.hidden = !existing;
+            // Soft dependency — a stale field error just lingers if NDS.Forms isn't bundled.
             if (urlInput) NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
             dropmenu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
             // After the dropmenu opens (next frame), select the URL for quick
@@ -1956,6 +1967,8 @@
             const dropmenu = this.root.querySelector('[data-editor-link-dropmenu]');
             // Fields live in the menu, which portal detaches to <body> while
             // open — query it via menuOf (nested or portaled), not the wrapper.
+            // Optional-chained per the soft dependency on NDS.Dropmenu declared
+            // where the toolbar menus are created.
             const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
             const url = cleanUrl((menu?.querySelector('[data-editor-link-url]')?.value || '').trim());
             const text = (menu?.querySelector('[data-editor-link-text]')?.value || '').trim();
@@ -2111,7 +2124,8 @@
         _imageUploadUrl() {
             // Consulted during _confirmImage (menu open) — the upload host is
             // inside the menu, which portal detaches to <body>, so reach it via
-            // menuOf rather than this.root's subtree.
+            // menuOf rather than this.root's subtree. Optional-chained per the soft
+            // dependency on NDS.Dropmenu declared where the toolbar menus are created.
             const menu = NDS.Dropmenu?.menuOf?.(this.root.querySelector('[data-editor-image-dropmenu]'));
             const host = (menu || this.root).querySelector('[data-editor-image-upload]');
             return host?.ndsUpload?.getConfig?.().uploadUrl || host?.dataset.uploadUrl || '';
@@ -2155,7 +2169,8 @@
         }
 
         // Transient author-facing notice through the field's native forms
-        // feedback (the editor root IS a form container).
+        // feedback (the editor root IS a form container). Soft dependency —
+        // the notice is silently dropped if NDS.Forms isn't bundled.
         _notice(message) {
             if (!NDS.Forms?.setStatus) return;
             NDS.Forms.setStatus({ element: this.root, status: 'warning', message });
@@ -2164,7 +2179,8 @@
         }
 
         // Inline error on a popover field via the same forms mechanism; the
-        // menu's primary (Insert) stays blocked until the error clears.
+        // menu's primary (Insert) stays blocked until the error clears. Soft
+        // dependency — without NDS.Forms the block still lands, just unexplained.
         _fieldError(input, message) {
             const field = input?.closest('.nds-form-container');
             if (!field) return;
@@ -2209,6 +2225,7 @@
             // lingers, stale field errors clear, and the upload affordance
             // reflects the CURRENT config.
             dropmenu.querySelector('[data-editor-image-upload]')?.ndsUpload?.clearAllFiles?.();
+            // Soft dependency — a stale field error just lingers if NDS.Forms isn't bundled.
             if (urlInput) NDS.Forms?.clearStatus?.(urlInput.closest('.nds-form-container'));
             dropmenu.querySelector('[data-dropmenu-primary]')?.removeAttribute('disabled');
             this._syncImageUploadVisibility();
@@ -2221,6 +2238,8 @@
             const dropmenu = this.root.querySelector('[data-editor-image-dropmenu]');
             // Fields live in the menu, which portal detaches to <body> while
             // open — query it via menuOf (nested or portaled), not the wrapper.
+            // Optional-chained per the soft dependency on NDS.Dropmenu declared
+            // where the toolbar menus are created.
             const menu = NDS.Dropmenu?.menuOf?.(dropmenu) || dropmenu;
             const url = cleanUrl((menu?.querySelector('[data-editor-image-url]')?.value || '').trim());
             const alt = (menu?.querySelector('[data-editor-image-alt]')?.value || '').trim();

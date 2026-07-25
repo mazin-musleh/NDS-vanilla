@@ -94,6 +94,8 @@
         init() {
             this.onClick = this.onClick.bind(this);
             this.update = this.update.bind(this);
+            this.abortController = new AbortController();
+            const { signal } = this.abortController;
 
             // Drop any static active state so the scrollspy is the single source of truth.
             this.entries.forEach(e => {
@@ -101,13 +103,14 @@
                 NDS.State.remove(e.link, 'active');
             });
 
-            this.links.forEach(link => link.addEventListener('click', this.onClick));
+            this.links.forEach(link => link.addEventListener('click', this.onClick, { signal }));
 
             // Scroll + resize both change which section is at the top;
             // rafThrottle keeps the scroll handler off the layout thread.
-            this._onScroll = NDS.rafThrottle(this.update);
-            window.addEventListener('scroll', this._onScroll, { passive: true });
-            this._offResize = NDS.onResize(this.update);
+            window.addEventListener('scroll', NDS.rafThrottle(this.update), { passive: true, signal });
+            // Pooled handle takes no signal — bridge it onto the same teardown.
+            const offResize = NDS.onResize(this.update);
+            signal.addEventListener('abort', offResize);
 
             // The first highlight pass measures heading positions
             // (getBoundingClientRect + nav.offsetHeight). Deferring it to an
@@ -175,9 +178,7 @@
         }
 
         destroy() {
-            this.links.forEach(link => link.removeEventListener('click', this.onClick));
-            if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
-            if (this._offResize) this._offResize();
+            this.abortController?.abort();
             this.toc.removeAttribute('data-nds-toc-initialized');
         }
     }

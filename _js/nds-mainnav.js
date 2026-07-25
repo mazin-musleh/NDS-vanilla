@@ -66,9 +66,7 @@
 
         get isMinimal() { return _mqMinimal.matches; },
 
-        _reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-        get reducedMotion() { return this._reducedMotion; },
-        set reducedMotion(val) { this._reducedMotion = val; },
+        get reducedMotion() { return NDS.prefersReducedMotion; },
 
         _durations: new WeakMap(),
         getDuration(el) {
@@ -1103,10 +1101,6 @@
         // is in the shell).
         overflow.schedule('immediate');
     }
-
-    // Keep reduced-motion in sync
-    window.matchMedia('(prefers-reduced-motion: reduce)')
-        .addEventListener('change', (e) => { state.reducedMotion = !!e.matches; });
 
     // Mode-flip listener: fires only when the viewport crosses
     // `--nds-minimal-nav-bp`. scheduleUpdate's updateBodyClass call then

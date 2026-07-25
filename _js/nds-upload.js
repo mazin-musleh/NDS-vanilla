@@ -119,20 +119,16 @@
                 this._fileInput.setAttribute('accept', allowedTypes.map(t => '.' + t).join(','));
             }
 
-            // Bind event handlers (for cleanup in destroy)
-            this._onFileChange = this._handleFileInput.bind(this);
-            this._onFileListClick = this._handleFileListClick.bind(this);
-            this._onBrowseClick = this._handleBrowseClick.bind(this);
-            this._onDragOver = this._handleDragOver.bind(this);
-            this._onDragLeave = this._handleDragLeave.bind(this);
-            this._onDrop = this._handleDrop.bind(this);
-            this._onUploadZoneClick = this._handleUploadZoneClick.bind(this);
+            // Two lifetimes, two controllers: this one spans the instance, while
+            // dragAbortController below is re-armed per dropbox cycle (the drag
+            // listeners come and go with the `dropbox` state, independently of destroy).
+            this.abortController = new AbortController();
+            const { signal } = this.abortController;
 
-            // Wire up listeners
-            this._fileInput.addEventListener('change', this._onFileChange);
-            this._fileList.addEventListener('click', this._onFileListClick);
+            this._fileInput.addEventListener('change', this._handleFileInput.bind(this), { signal });
+            this._fileList.addEventListener('click', this._handleFileListClick.bind(this), { signal });
             if (this._browseBtn) {
-                this._browseBtn.addEventListener('click', this._onBrowseClick);
+                this._browseBtn.addEventListener('click', this._handleBrowseClick.bind(this), { signal });
             }
 
             // Drag and drop
@@ -374,12 +370,7 @@
         }
 
         destroy() {
-            // Remove event listeners
-            this._fileInput.removeEventListener('change', this._onFileChange);
-            this._fileList.removeEventListener('click', this._onFileListClick);
-            if (this._browseBtn) {
-                this._browseBtn.removeEventListener('click', this._onBrowseClick);
-            }
+            this.abortController?.abort();
 
             // Tear down drag and observer
             this._removeDragAndDrop();
@@ -780,22 +771,22 @@
             if (!NDS.State.has(this.container, 'dropbox')) return;
             if (this._dragListenersActive) return;
 
-            this._dropZone.addEventListener('dragover', this._onDragOver);
-            this._dropZone.addEventListener('dragleave', this._onDragLeave);
-            this._dropZone.addEventListener('drop', this._onDrop);
-            this._uploadZone.addEventListener('click', this._onUploadZoneClick);
+            // Per-cycle controller — the dropbox state can toggle these off and
+            // on many times over one instance's life.
+            this.dragAbortController = new AbortController();
+            const { signal } = this.dragAbortController;
+            this._dropZone.addEventListener('dragover', this._handleDragOver.bind(this), { signal });
+            this._dropZone.addEventListener('dragleave', this._handleDragLeave.bind(this), { signal });
+            this._dropZone.addEventListener('drop', this._handleDrop.bind(this), { signal });
+            this._uploadZone.addEventListener('click', this._handleUploadZoneClick.bind(this), { signal });
             this._dragListenersActive = true;
         }
 
         _removeDragAndDrop() {
             if (!this._dragListenersActive) return;
 
-            this._dropZone.removeEventListener('dragover', this._onDragOver);
-            this._dropZone.removeEventListener('dragleave', this._onDragLeave);
-            this._dropZone.removeEventListener('drop', this._onDrop);
-            if (this._uploadZone) {
-                this._uploadZone.removeEventListener('click', this._onUploadZoneClick);
-            }
+            this.dragAbortController.abort();
+            this.dragAbortController = null;
             NDS.State.remove(this._dropZone, 'drag-over');
             this._dragListenersActive = false;
         }

@@ -195,20 +195,17 @@
             toggleBtn.classList.toggle('nds-peek', dist > threshold);
         });
 
-        window.addEventListener('scroll', scrollHandler, { passive: true });
+        const { signal } = abortController;
+        window.addEventListener('scroll', scrollHandler, { passive: true, signal });
+        window.addEventListener('mousemove', mousemoveHandler, { passive: true, signal });
+        // Pooled handle takes no signal — bridge it onto the same teardown.
         const offResize = NDS.onResize(invalidate);
-        window.addEventListener('mousemove', mousemoveHandler, { passive: true });
-
-        abortController.signal.addEventListener('abort', () => {
-            window.removeEventListener('scroll', scrollHandler);
-            window.removeEventListener('mousemove', mousemoveHandler);
-            offResize();
-        });
+        signal.addEventListener('abort', offResize);
     }
 
     function destroy() {
         if (currentInstance) {
-            const { abortController, _offResize, accMenu, animTarget, toggleBtn, isTopMode, drawer } = currentInstance;
+            const { abortController, accMenu, animTarget, toggleBtn, isTopMode, drawer } = currentInstance;
 
             // Close menu if open before destroying
             if (hasState(animTarget, 'open')) {
@@ -228,10 +225,7 @@
                 accMenu.style.removeProperty('z-index');
             }
 
-            // Detach the NDS.onResize subscriber (pooled, so must be explicitly unsubscribed).
-            if (_offResize) _offResize();
-
-            // Abort all listeners registered via this AbortController
+            // One abort releases every listener plus the bridged pooled subscribers.
             abortController.abort();
             currentInstance = null;
         }
@@ -298,10 +292,11 @@
                 if (hasState(animTarget, 'open')) closeMenu(ctx);
             }
         };
-        // Capture the unsubscribe handle so destroy() can detach the resize subscriber.
-        // Each initializeSideMenu() call would otherwise leak a new pooled subscriber on top
-        // of the previous one (the stale handler keeps mutating state via ctx closure).
-        ctx._offResize = NDS.onResize(resizeHandler);
+        // Pooled handle takes no signal — bridge it onto the same teardown, or each
+        // initializeSideMenu() call leaks a new subscriber on top of the previous one
+        // (the stale handler keeps mutating state via the ctx closure).
+        const offResize = NDS.onResize(resizeHandler);
+        abortController.signal.addEventListener('abort', offResize);
     }
 
     NDS.Sidemenu = { init: initializeSideMenu, destroy };

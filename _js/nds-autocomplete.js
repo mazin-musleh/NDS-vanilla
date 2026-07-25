@@ -75,7 +75,11 @@
             this.cache = null;
             this.results = [];
             this.activeIndex = -1;
-            this.abortController = null;
+            // Two lifetimes: abortController spans the instance and releases every
+            // listener; fetchAbortController is re-armed per request to cancel the
+            // in-flight suggestion fetch when a newer keystroke supersedes it.
+            this.abortController = new AbortController();
+            this.fetchAbortController = null;
             this.selectedItem = null;
             this.dropmenuInstance = null;
 
@@ -153,6 +157,8 @@
             // Track held keys to prevent fetch spam (e.g. holding backspace)
             this._keyHeld = false;
 
+            const { signal } = this.abortController;
+
             // Input typing — only process when 'typing' state is set by forms JS
             this._onInput = () => {
                 if (!NDS.State.has(this.container, 'typing')) return;
@@ -168,53 +174,50 @@
                     this.results = [];
                 }
             };
-            this.input.addEventListener('input', this._onInput);
+            // Kept as a field, not inlined — the keyup handler below re-runs it directly.
+            this.input.addEventListener('input', this._onInput, { signal });
 
             // Prevent dropmenu's trigger click-to-toggle on the input
             // (we control open/close via typing, not clicking)
-            this._onInputClick = (e) => e.stopPropagation();
-            this.input.addEventListener('click', this._onInputClick);
+            this.input.addEventListener('click', (e) => e.stopPropagation(), { signal });
 
             // Keyboard navigation — stopPropagation prevents dropmenu's trigger keydown
-            this._onKeydown = (e) => {
+            this.input.addEventListener('keydown', (e) => {
                 this._keyHeld = e.repeat;
                 this.handleKeydown(e);
-            };
-            this.input.addEventListener('keydown', this._onKeydown);
+            }, { signal });
 
             // Fetch after held key is released
-            this._onKeyup = () => {
+            this.input.addEventListener('keyup', () => {
                 if (!this._keyHeld) return;
                 this._keyHeld = false;
                 this._onInput();
-            };
-            this.input.addEventListener('keyup', this._onKeyup);
+            }, { signal });
 
             // Clear button — extends existing forms clear behavior
             if (this.clearBtn) {
-                this._onClear = (e) => { e.stopPropagation(); this.handleClear(); };
-                this.clearBtn.addEventListener('click', this._onClear);
+                this.clearBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.handleClear();
+                }, { signal });
             }
 
             // Open on focus if results exist
-            this._onFocus = () => {
+            this.input.addEventListener('focus', () => {
                 if (this.results.length > 0 && !this.dropmenuInstance.isOpen && !this.selectedItem) {
                     this.renderResults(this.results, this.input.value.trim());
                 }
-            };
-            this.input.addEventListener('focus', this._onFocus);
+            }, { signal });
 
             // Sync aria-expanded when dropmenu opens/closes
-            this._onDropmenuOpened = () => {
+            this.container.addEventListener('nds:dropmenu:opened', () => {
                 NDS.aria.expanded(this.input, true);
-            };
-            this._onDropmenuClosed = () => {
+            }, { signal });
+            this.container.addEventListener('nds:dropmenu:closed', () => {
                 NDS.aria.expanded(this.input, false);
                 this.input.removeAttribute('aria-activedescendant');
                 this.activeIndex = -1;
-            };
-            this.container.addEventListener('nds:dropmenu:opened', this._onDropmenuOpened);
-            this.container.addEventListener('nds:dropmenu:closed', this._onDropmenuClosed);
+            }, { signal });
         }
 
         // ==============================================
@@ -234,15 +237,15 @@
 
         // Fetch URL?q=value on every call — server is expected to filter.
         async _fetchEach(query) {
-            if (this.abortController) this.abortController.abort();
-            this.abortController = new AbortController();
+            if (this.fetchAbortController) this.fetchAbortController.abort();
+            this.fetchAbortController = new AbortController();
 
             this.setLoading(true);
 
             try {
                 var separator = this.url.includes('?') ? '&' : '?';
                 var fetchUrl = this.url + separator + this.queryParam + '=' + encodeURIComponent(query);
-                var response = await fetch(fetchUrl, { signal: this.abortController.signal });
+                var response = await fetch(fetchUrl, { signal: this.fetchAbortController.signal });
                 var data = await this._readJsonLimited(response);
                 this.results = this._extractResults(data);
                 if (this.customFilter) this.results = this.customFilter(this.results, query) || [];
@@ -263,11 +266,11 @@
         // on every subsequent call.
         async _fetchOnceAndFilter(query) {
             if (!this.cache) {
-                if (this.abortController) this.abortController.abort();
-                this.abortController = new AbortController();
+                if (this.fetchAbortController) this.fetchAbortController.abort();
+                this.fetchAbortController = new AbortController();
                 this.setLoading(true);
                 try {
-                    var response = await fetch(this.url, { signal: this.abortController.signal });
+                    var response = await fetch(this.url, { signal: this.fetchAbortController.signal });
                     var data = await this._readJsonLimited(response);
                     this.cache = this._extractResults(data);
                 } catch (error) {
@@ -582,24 +585,9 @@
         }
 
         destroy() {
-            if (this.abortController) this.abortController.abort();
-
-            this.input.removeEventListener('input', this._onInput);
-            this.input.removeEventListener('click', this._onInputClick);
-            this.input.removeEventListener('keydown', this._onKeydown);
-            this.input.removeEventListener('keyup', this._onKeyup);
-            this.input.removeEventListener('focus', this._onFocus);
-
-            if (this.clearBtn && this._onClear) {
-                this.clearBtn.removeEventListener('click', this._onClear);
-            }
-
-            if (this._onDropmenuOpened) {
-                this.container.removeEventListener('nds:dropmenu:opened', this._onDropmenuOpened);
-            }
-            if (this._onDropmenuClosed) {
-                this.container.removeEventListener('nds:dropmenu:closed', this._onDropmenuClosed);
-            }
+            // Optional-chained: create() can hand back a half-constructed instance.
+            this.abortController?.abort();
+            this.fetchAbortController?.abort();
 
             if (this.dropmenuInstance) {
                 this.dropmenuInstance.destroy();

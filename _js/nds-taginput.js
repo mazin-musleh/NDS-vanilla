@@ -35,8 +35,9 @@
     class NDSTagInput {
         constructor(root) {
             this.root = root;
-            // Success signal — the init sweep gates the ndsTagInput expando on
-            // it so a bail below never hands consumers a half-built instance.
+            // Success signal — init() only runs (and registers root.ndsTagInput)
+            // when construction succeeds, so a bail below never hands consumers
+            // a half-built instance.
             this.valid = false;
             if (root.hasAttribute('data-nds-taginput-initialized')) return;
 
@@ -70,6 +71,9 @@
             ).map(h => h.value).filter(Boolean);
             this.bindEvents();
             this.renderChips();
+            // Registered here, not in the init sweep, so create() gets the backref
+            // destroy() reads — every guard has passed by the time init() runs.
+            this.root.ndsTagInput = this;
             this.root.setAttribute('data-nds-taginput-initialized', 'true');
         }
 
@@ -154,6 +158,7 @@
 
         destroy() {
             this.abortController?.abort();
+            delete this.root.ndsTagInput;
             this.root.removeAttribute('data-nds-taginput-initialized');
         }
 
@@ -278,15 +283,20 @@
         document.querySelectorAll('.nds-taginput').forEach(el => {
             if (el.closest('code, .code-example')) return;
             if (el.hasAttribute('data-nds-taginput-initialized')) return;
-            const instance = new NDSTagInput(el);
-            if (instance.valid) el.ndsTagInput = instance;
+            new NDSTagInput(el);
         });
     }
 
     NDS.TagInput = {
         init: initializeTagInputs,
         reinit: initializeTagInputs,
-        create: (element) => new NDSTagInput(element),
+        // Construction fails (missing required elements, or the root is already
+        // initialized) → null, never a dud instance whose every method throws.
+        create: (element) => {
+            if (element.ndsTagInput) return element.ndsTagInput;
+            const inst = new NDSTagInput(element);
+            return inst.valid ? inst : null;
+        },
         destroy: (element) => element.ndsTagInput?.destroy()
     };
 })();
