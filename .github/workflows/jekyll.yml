@@ -7,9 +7,27 @@
 name: Deploy Jekyll site to Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting the default branch. The ignore list mirrors the
+  # `exclude:` entries in _config.yml — files Jekyll never copies into _site,
+  # so a push touching only these can't change what's deployed. Gemfile* and
+  # .github/ stay out of it: they change the build itself.
   push:
     branches: ["main"]
+    paths-ignore:
+      - 'CHANGELOG.md'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'CODE_OF_CONDUCT.md'
+      - 'SECURITY.md'
+      - 'LICENSE'
+      - 'CLAUDE.md'
+      - '.claude/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.gitignore'
+      - 'standard-page.md'
+      - 'subsite.md'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
