@@ -110,6 +110,11 @@
     --border-secondary-light: var(--colors-secondary-200);
     --border-tertiary: var(--colors-tertiary-500);
     --border-tertiary-light: var(--colors-tertiary-200);
+    // Shares the light value with --border-neutral-primary but is NOT a synonym:
+    // it re-binds to neutral-400 in dark (primary goes to 600). Alert's neutral
+    // stripe reads it — before this existed the light mode fell through to
+    // --_alert-stripe's fallback, which resolved to this same neutral-300.
+    --border-neutral-light: var(--colors-neutral-300);
     --border-neutral-primary: var(--colors-neutral-300);
     --border-neutral-secondary: var(--colors-neutral-200);
     --border-neutral-tertiary: var(--colors-neutral-100);
