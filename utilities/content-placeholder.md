@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.x"
 updated: "1.4.x"
-last_edit: "25/07/2026 - 04:35 PM"
+last_edit: "25/07/2026 - 10:45 PM"
 ---
 
 <!-- Content Placeholder -->
@@ -22,7 +22,29 @@ last_edit: "25/07/2026 - 04:35 PM"
             <div class="nds-showcase">
                 <div class="nds-demo-card">
                     <div class="demo-header">
-                        <div class="demo-label">Marking where content goes</div>
+                        <div class="demo-action">
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                    <span class="nds-label">Size: Default</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Default">
+                                            <span class="nds-label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-sm", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Small">
+                                            <span class="nds-label">Small</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-lg", ".nds-content-placeholder", "placeholderSize"]' data-trigger-label="Large">
+                                            <span class="nds-label">Large</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
@@ -129,7 +151,30 @@ last_edit: "25/07/2026 - 04:35 PM"
                     <li>Give the parent a height when the placeholder should fill it. In a content-sized parent it settles at its 120px floor</li>
                     <li>Keep the label to a line or two. The region is sized by the layout around it, not by the text inside it</li>
                     <li>Add a second line in another language when the template is handed to a bilingual team. Each line is centered on its own, so mixed scripts stack cleanly</li>
+                    <li>Override <code class="nds-inline-code lang-html">--placeholder-FS</code> when a placeholder sits in an unusually large or small region and the default label reads out of proportion. Set <code class="nds-inline-code lang-html">--placeholder-LH</code> alongside it so the two lines keep their rhythm</li>
                 </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Modifier Classes</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Class</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td>Drops the label to the 2xs type ladder for tight regions, without hand-setting the size knobs</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td>Lifts the label to the sm type ladder for large regions</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">CSS Custom Properties</h3>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--placeholder-FS</code></td><td><code class="nds-inline-code lang-html">var(--typo-text-xs-FS)</code></td><td>Label font size. Set it on the placeholder, or on an ancestor to retune every placeholder inside</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--placeholder-LH</code></td><td><code class="nds-inline-code lang-html">var(--typo-text-xs-LH)</code></td><td>Label line height. Pair it with any <code class="nds-inline-code lang-html">--placeholder-FS</code> override</td></tr>
+                    </tbody>
+                </table>
             </div>
 
         </div>

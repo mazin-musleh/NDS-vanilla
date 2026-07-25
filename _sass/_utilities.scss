@@ -222,9 +222,22 @@
   background-color: var(--background-primary-faint);
   color: var(--text-primary-strong);
   text-align: center;
-  font-size: var(--typo-text-clamp-xs-FS);
-  line-height: var(--typo-text-clamp-xs-LH);
+  font-size: var(--placeholder-FS, var(--typo-text-xs-FS));
+  line-height: var(--placeholder-LH, var(--typo-text-xs-LH));
   font-weight: var(--font-weight-bold);
+}
+
+// Size presets — one step down for tight regions, one up for large ones. They
+// set the knobs rather than the properties, so an instance that also carries
+// its own --placeholder-FS still wins.
+.nds-content-placeholder.nds-sm {
+  --placeholder-FS: var(--typo-text-2xs-FS);
+  --placeholder-LH: var(--typo-text-2xs-LH);
+}
+
+.nds-content-placeholder.nds-lg {
+  --placeholder-FS: var(--typo-text-sm-FS);
+  --placeholder-LH: var(--typo-text-sm-LH);
 }
 
 // Small red notice shown above a form ("*Required information" etc.).
