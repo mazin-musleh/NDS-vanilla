@@ -71,7 +71,8 @@ last_edit: "25/07/2026 - 01:20 AM"
         data-i18n-attr="aria-label:panel_label"
         aria-controls="ndsAccessibilityPanel"
         aria-expanded="false"
-        data-fab-pos="end"
+        data-fab-pos="auto"
+        data-panel-toggle="ndsAccessibilityPanel"
         data-accessibility-toggle
         hidden&gt;
     &lt;i class="nds-icon nds-hgi-accessibility" aria-hidden="true"&gt;&lt;/i&gt;
@@ -88,8 +89,7 @@ last_edit: "25/07/2026 - 01:20 AM"
     &lt;div class="nds-panel-header"&gt;
         &lt;h2 class="nds-panel-title" data-i18n="panel_title"&gt;Accessibility Tools&lt;/h2&gt;
         &lt;button class="nds-btn nds-subtle nds-icon-only"
-                data-accessibility-close
-                data-panel-close
+                        data-panel-close
                 type="button"
                 aria-label="Close accessibility panel"
                 data-i18n-attr="aria-label:close_panel"&gt;
@@ -542,7 +542,7 @@ last_edit: "25/07/2026 - 01:20 AM"
             <table class="nds-table nds-responsive">
                 <thead><tr><th>Attribute</th><th>Set on</th><th>Behavior</th></tr></thead>
                 <tbody>
-                    <tr><td><code class="nds-inline-code lang-html">data-fab-pos="end"</code></td><td>FAB</td><td>Default. Logical: the inline-end corner, so bottom-right in LTR and bottom-left in RTL. Accepts <code class="nds-inline-code lang-html">start</code>, and physical <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
+                    <tr><td><code class="nds-inline-code lang-html">data-fab-pos="auto"</code></td><td>FAB</td><td>What the panel ships. Follows the panel it names in <code class="nds-inline-code lang-html">aria-controls</code>, so changing the side below moves both. Pin an edge instead with <code class="nds-inline-code lang-html">end</code> or <code class="nds-inline-code lang-html">start</code> (logical), or physical <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
                     <tr><td><code class="nds-inline-code lang-html">data-panel-side="end"</code></td><td>Panel</td><td>Which edge the panel slides from. Same logical and physical vocabulary as the FAB, plus <code class="nds-inline-code lang-html">top</code>. Set it to match the FAB so the pair reads as one control.</td></tr>
                 </tbody>
             </table>
@@ -775,9 +775,9 @@ last_edit: "25/07/2026 - 01:20 AM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-toggle</code></td><td>Mark a button as the panel opener. The first match in DOM order is the canonical trigger; additional buttons should call <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code> instead.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-toggle</code></td><td>Marks the FAB so the panel can localize it and arm itself on the first click. Opening is <code class="nds-inline-code lang-html">data-panel-toggle</code>'s job; additional triggers call <code class="nds-inline-code lang-js">NDS.Accessibility.open()</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-panel-toggle</code></td><td>Set to the panel's id so the <a class="nds-color" href="{{ 'components/panels' | relative_url }}">Panel</a> component opens it, tracks <code class="nds-inline-code lang-html">aria-expanded</code>, and returns focus on close.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-panel</code></td><td>Mark the panel root. Required for auto-init.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-accessibility-close</code></td><td>Mark the close button. Pair with <code class="nds-inline-code lang-html">data-panel-close</code>, which is what actually closes the panel.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-accessibility-action="reset"</code></td><td>Mark the reset button. Two-click confirmation with a 5-second arming window is wired automatically.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-fab-pos</code></td><td>Set on the FAB to pick its dock edge. Values: <code class="nds-inline-code lang-html">end</code>, <code class="nds-inline-code lang-html">start</code>, <code class="nds-inline-code lang-html">left</code>, <code class="nds-inline-code lang-html">right</code>, <code class="nds-inline-code lang-html">bottom</code>.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-panel-side</code></td><td>Set on the panel to pick the edge it slides from. Set it to the same side as the FAB.</td></tr>
@@ -898,17 +898,16 @@ NDS.Accessibility.reset();
 </section>
 
 <script>
-    // Defer open() past the current click cycle. Otherwise the panel's own
-    // outside-click-to-close listener (also bound on document) sees the
-    // just-opened state and immediately closes it on the same click.
+    // toggle(), not open(): a second click on the trigger has to close the panel.
+    // Calling open() mid-close would land in the panel's swap queue and reopen it.
+    // No defer needed - close() aborts the panel's outside-click listener during
+    // this same dispatch, and the open path is already behind the FAB's delay.
     document.addEventListener('click', (e) => {
         const trigger = e.target.closest('[data-accessibility-demo-open]');
         if (!trigger) return;
         e.preventDefault();
-        setTimeout(() => {
-            if (window.NDS && NDS.Accessibility && typeof NDS.Accessibility.open === 'function') {
-                NDS.Accessibility.open();
-            }
-        }, 0);
+        if (window.NDS && NDS.Accessibility && typeof NDS.Accessibility.toggle === 'function') {
+            NDS.Accessibility.toggle(trigger);
+        }
     });
 </script>

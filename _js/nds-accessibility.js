@@ -137,7 +137,6 @@
     let resetDoneTimer = null;      // post-reset visible-flash
     let resetCountdownTimer = null; // mid-arming SR announcement
     let _initDone = false;
-    let _openLoadingTimer = null; // FAB loading-state delay before each open
 
     function defaultState() {
         return {
@@ -852,8 +851,17 @@
     // ----------------------------------------------
     const panelIsOpen = () => !!(panel && NDS.Panel?.isOpen?.(panel));
 
+    // The boot gate only arms on a saved-prefs load or a FAB click, so a consumer
+    // wiring their own trigger — the documented pattern — would otherwise call into
+    // a component with no panel reference yet and get silence. Arming here keeps
+    // the no-prefs, no-interaction session at zero init cost either way.
+    function ensureArmed() {
+        if (!_initDone) init();
+        return !!panel;
+    }
+
     function open() {
-        if (!panel) return;
+        if (!ensureArmed()) return;
         openerEl = document.activeElement;
         NDS.Panel?.open?.(panel);
     }
@@ -863,17 +871,8 @@
     }
 
     function toggle() {
-        if (panelIsOpen()) { close(); return; }
-        if (_openLoadingTimer) return;            // mid loading-delay — ignore re-clicks
-        // Every open re-lays-out the panel (its subtree is display:none while
-        // closed). Show the FAB's loading state for instant click feedback and
-        // run the heavy open() off the interaction frame.
-        addState(toggleBtn, 'loading');
-        _openLoadingTimer = setTimeout(() => {
-            _openLoadingTimer = null;
-            removeState(toggleBtn, 'loading');
-            open();
-        }, 500);
+        if (!ensureArmed()) return;
+        NDS.Panel?.toggle?.(panel);
     }
 
     // ----------------------------------------------
@@ -886,8 +885,6 @@
         if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
         if (resetDoneTimer) { clearTimeout(resetDoneTimer); resetDoneTimer = null; }
         if (resetCountdownTimer) { clearTimeout(resetCountdownTimer); resetCountdownTimer = null; }
-        if (_openLoadingTimer) { clearTimeout(_openLoadingTimer); _openLoadingTimer = null; }
-        if (toggleBtn) removeState(toggleBtn, 'loading');
         if (initAbortController) { initAbortController.abort(); initAbortController = null; }
         if (maskAbortController) { maskAbortController.abort(); maskAbortController = null; }
         if (maskTopEl)      { maskTopEl.remove();      maskTopEl      = null; }
@@ -953,26 +950,20 @@
         panel = document.querySelector('[data-accessibility-panel]');
         if (!toggleBtn || !panel) return;
 
+        // Stamped here, not just in the boot gate, so the marker is true whichever
+        // path armed the component.
+        panel.setAttribute('data-armed', '');
+
         state = load();
         apply();
 
         initAbortController = new AbortController();
         const { signal } = initAbortController;
 
-        toggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggle();
-        }, { signal });
-
-        // Panel drives the close button, Escape and outside-click itself. It
-        // can't touch the FAB though — that button is not one of its toggles —
-        // so mirror the lifecycle onto it from Panel's own events.
-        panel.addEventListener('nds:panel:opened', () => {
-            NDS.aria.expanded(toggleBtn, true);
-        }, { signal });
-
+        // Panel drives open/close, aria-expanded and focus-return for the FAB,
+        // which is one of its toggles. Only a programmatic open has no opener for
+        // Panel to return to, so cover that case here.
         panel.addEventListener('nds:panel:closed', () => {
-            NDS.aria.expanded(toggleBtn, false);
             if (openerEl && typeof openerEl.focus === 'function' && document.contains(openerEl)) {
                 openerEl.focus();
             }
@@ -1038,8 +1029,14 @@
 
     try { if (localStorage.getItem(STORAGE_KEY)) arm(); } catch (e) {}
 
-    fab.addEventListener('click', () => {
+    // Capture phase: the FAB is a [data-panel-toggle], so Panel opens it from a
+    // bubble-phase handler. Arming ahead of that wires the tiles before the panel
+    // they live in is shown. Removed by hand rather than with `once`, which would
+    // burn on the first click anywhere on the page.
+    const armOnFirstClick = (e) => {
+        if (!e.target.closest('[data-accessibility-toggle]')) return;
+        document.removeEventListener('click', armOnFirstClick, true);
         arm();
-        NDS.Accessibility.toggle();
-    }, { once: true });
+    };
+    document.addEventListener('click', armOnFirstClick, true);
 })();

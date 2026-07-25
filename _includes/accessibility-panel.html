@@ -1,8 +1,9 @@
 {%- comment -%}
-The FAB is deliberately NOT a [data-panel-toggle]: nds-accessibility.js lazy-inits
-on the first click, so Panel's delegated handler would open a panel whose tiles
-aren't wired yet. It ships `hidden` — nds-fab.js strips that once the button is
-routed into its dock. data-fab-pos pairs with the panel's data-panel-side below.
+Panel opens this FAB: it is one of its toggles, and nds-accessibility.js arms
+itself from a capture-phase listener so the tiles are wired before the panel
+is shown. It ships `hidden` — nds-fab.js strips that once the button is
+routed into its dock. data-fab-pos="auto" follows the panel: the FAB names
+it via aria-controls, so only data-panel-side below picks the edge.
 {%- endcomment -%}
 <button class="nds-btn nds-primary nds-circle nds-fab nds-accessibility-toggle"
         type="button"
@@ -10,7 +11,8 @@ routed into its dock. data-fab-pos pairs with the panel's data-panel-side below.
         data-i18n-attr="aria-label:panel_label"
         aria-controls="ndsAccessibilityPanel"
         aria-expanded="false"
-        data-fab-pos="end"
+        data-fab-pos="auto"
+        data-panel-toggle="ndsAccessibilityPanel"
         data-accessibility-toggle
         hidden>
     <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
@@ -27,7 +29,6 @@ routed into its dock. data-fab-pos pairs with the panel's data-panel-side below.
     <div class="nds-panel-header">
         <h2 class="nds-panel-title" data-i18n="panel_title">Accessibility Tools</h2>
         <button class="nds-btn nds-subtle nds-icon-only"
-                data-accessibility-close
                 data-panel-close
                 type="button"
                 aria-label="Close accessibility panel"
