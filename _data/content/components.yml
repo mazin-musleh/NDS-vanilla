@@ -156,7 +156,7 @@
   scss: _sass/components/_feedback-icons.scss
 
 - title: "Floating Action Button"
-  description: "Pins to a viewport corner and stacks with others"
+  description: "FAB that pins to a viewport corner and stacks with others"
   icon: '<i class="hgi hgi-stroke hgi-add-circle"></i>'
   category: "UI"
   tags: ["JS", "CSS"]
@@ -165,7 +165,7 @@
   scss: _sass/components/_fab.scss
 
 - title: "Image Popup Viewer"
-  description: "Fullscreen image preview with zoom and navigation"
+  description: "IPV fullscreen image preview with zoom and navigation"
   icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
   category: "UI"
   tags: ["JS", "CSS"]
