@@ -66,6 +66,8 @@
 // ==============================================
 
 .nds-table {
+    --_cell-padding-block: var(--table-cell-padding-block, var(--spacing-md));
+    --_cell-padding-inline: var(--table-cell-padding-inline, var(--spacing-xl));
     width: 100%;
     background-color: var(--table-cell-border);
     border: 1px solid var(--table-cell-border);
@@ -94,7 +96,7 @@
         color: var(--table-text-head);
         font-weight: var(--font-weight-semibold);
         font-size: var(--typo-text-sm-FS);
-        padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
+        padding: var(--_cell-padding-block) var(--_cell-padding-inline);
         border-left: 1px solid var(--table-cell-border);
         border-bottom: 1px solid var(--table-cell-border);
         text-align: start;
@@ -118,7 +120,7 @@
     // ── Data cells ──
 
     td {
-        padding: var(--table-cell-padding-block) var(--table-cell-padding-inline);
+        padding: var(--_cell-padding-block) var(--_cell-padding-inline);
         vertical-align: middle;
         background-color: var(--table-background-cell);
         color: var(--table-text-body);
@@ -307,7 +309,7 @@
     &::before {
         content: "";
         position: absolute;
-        inset-inline: var(--table-cell-padding-inline);
+        inset-inline: var(--_cell-padding-inline);
         top: 50%;
         translate: 0 -50%;
         height: var(--typo-text-md-LH);

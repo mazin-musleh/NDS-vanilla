@@ -71,8 +71,8 @@
   --_tooltip-bg: var(--tooltip-background-default);
   --_tooltip-title: var(--tooltip-text-heading-default);
   --_tooltip-body: var(--tooltip-text-paragraph-default);
-  --_tooltip-padding: var(--tooltip-padding);
-  --_tooltip-gap: var(--tooltip-gap);
+  --_tooltip-padding: var(--tooltip-padding, var(--spacing-md));
+  --_tooltip-gap: var(--tooltip-gap, var(--spacing-md));
   --_tooltip-arrow-size: var(--tooltip-arrow-size, 10px);
   --_tooltip-max-width: var(--tooltip-max-width, 240px);
   --_arrow-inline-start: 16px;

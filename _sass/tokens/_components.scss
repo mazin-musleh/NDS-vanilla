@@ -208,8 +208,6 @@
     --slider-thumb-border: var(--colors-alpha-black-10);          // thumb ring — 10% black overlay: brand-agnostic, so it never clashes under rebrand (Figma's --border-success is a fixed status color that wouldn't follow the brand). Mode-invariant.
 
     // ── stepper ──
-    --stepper-indicator-gap: var(--spacing-md);
-    --stepper-text-padding: var(--spacing-xl);
     --stepper-button-completed: var(--colors-primary-600);
     --stepper-button-completed-hovered: var(--colors-primary-700);
     --stepper-button-current: var(--colors-primary-600);
@@ -244,8 +242,6 @@
     --switch-neutral-pressed: var(--controls-neutral-pressed);
 
     // ── table ──
-    --table-cell-padding-block: var(--spacing-md);
-    --table-cell-padding-inline: var(--spacing-xl);
     --table-cell-border: var(--colors-neutral-300);
     --table-text-head: var(--colors-neutral-700);
     --table-text-body: var(--text-default);
@@ -254,11 +250,6 @@
     --table-background-row: var(--background-stripe);
     --table-background-cell: var(--background-default);
     --table-background-row-selected: var(--colors-primary-50);
-
-    // ── tabs ──
-    --tab-button-gap: var(--spacing-xs);
-    --tab-button-padding-block: var(--spacing-lg);
-    --tab-button-padding-inline: var(--spacing-xl);
 
     // ── tag ──
     --tag-background-neutral: var(--colors-neutral-600);
@@ -296,8 +287,6 @@
     --tag-dot: var(--colors-alpha-white-60);
 
     // ── tooltip ──
-    --tooltip-padding: var(--spacing-md);
-    --tooltip-gap: var(--spacing-md);
     --tooltip-background-default: var(--colors-base-white);
     --tooltip-text-heading-default: var(--text-display);
     --tooltip-text-paragraph-default: var(--text-primary-paragraph);
