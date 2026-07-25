@@ -24,10 +24,14 @@ module NDS
     # Primitive + semantic tiers bucket by name prefix, first match wins — so
     # order matters: brand colours before the catch-all --colors-, and the
     # layout aliases before --text-/--icon-.
+    # `font` precedes `layout` so --nds-font-* lands there rather than in the
+    # catch-all --nds- shell bucket.
     PRIMITIVE_CATS = [
       ['spacing',     'Spacing',              ['--spacing-']],
       ['radius',      'Radius',               ['--radius-']],
       ['typography',  'Typography',           ['--typo-']],
+      ['font',        'Font',                 ['--nds-font-', '--font-weight-']],
+      ['layout',      'Layout & shell',       ['--paragraph-', '--nds-']],
       ['color-brand', 'Brand colors',         ['--colors-primary-', '--colors-secondary-', '--colors-tertiary-', '--colors-neutral-']],
       ['color-base',  'Base, status & alpha', ['--colors-']]
     ].freeze
