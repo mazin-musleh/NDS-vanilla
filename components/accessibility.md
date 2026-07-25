@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.4.x"
-last_edit: "25/07/2026 - 01:20 AM"
+last_edit: "25/07/2026 - 09:25 PM"
 ---
 
 <!-- Trigger -->
@@ -87,7 +87,12 @@ last_edit: "25/07/2026 - 01:20 AM"
        hidden&gt;
 
     &lt;div class="nds-panel-header"&gt;
-        &lt;h2 class="nds-panel-title" data-i18n="panel_title"&gt;Accessibility Tools&lt;/h2&gt;
+        &lt;span class="nds-featured-icon nds-circle"&gt;
+            &lt;i class="nds-icon nds-hgi-accessibility" aria-hidden="true"&gt;&lt;/i&gt;
+        &lt;/span&gt;
+        &lt;div class="nds-panel-text"&gt;
+            &lt;h2 class="nds-panel-title" data-i18n="panel_title"&gt;Accessibility Tools&lt;/h2&gt;
+        &lt;/div&gt;
         &lt;button class="nds-btn nds-subtle nds-icon-only"
                         data-panel-close
                 type="button"

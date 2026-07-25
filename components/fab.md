@@ -6,7 +6,7 @@ hero_description: Pins to an edge of the viewport for a primary or persistent ac
 breadcrumb: [["Components", "/components"]]
 since: "1.4.x"
 updated: "1.4.x"
-last_edit: "24/07/2026 - 11:10 PM"
+last_edit: "25/07/2026 - 09:45 PM"
 lang: en
 direction: ltr
 ---
@@ -136,13 +136,22 @@ direction: ltr
                             </button>
                             <aside id="fab-panel" class="nds-panel" data-panel-side="end" aria-label="Demo panel" hidden>
                                 <div class="nds-panel-header">
-                                    <span class="nds-panel-title">Panel</span>
+                                    <span class="nds-featured-icon nds-circle">
+                                        <i class="hgi hgi-stroke hgi-stars"></i>
+                                    </span>
+                                    <div class="nds-panel-text">
+                                        <span class="nds-panel-title">Panel</span>
+                                        <p class="nds-panel-description">Opened by the FAB on the chosen edge.</p>
+                                    </div>
                                     <button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close panel">
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
                                 <div class="nds-panel-body">
-                                    <p>Each FAB gets its own panel. Turn Thumb on and the FAB rides this panel out instead of being buried by it — a circle stays put.</p>
+                                    <div class="nds-content-placeholder">
+                                        <span>Swap with content component</span>
+                                        <span>استبدل هذا العنصر بأي عنصر آخر</span>
+                                    </div>
                                 </div>
                             </aside>
                         </div>
@@ -331,13 +340,22 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'bottom' | 'start' | 'end'
                             </div>
                             <aside id="group-panel" class="nds-panel" data-panel-side="end" aria-label="Demo panel" hidden>
                                 <div class="nds-panel-header">
-                                    <span class="nds-panel-title">Panel</span>
+                                    <span class="nds-featured-icon nds-circle">
+                                        <i class="hgi hgi-stroke hgi-stars"></i>
+                                    </span>
+                                    <div class="nds-panel-text">
+                                        <span class="nds-panel-title">Panel</span>
+                                        <p class="nds-panel-description">Opened by the group's first button.</p>
+                                    </div>
                                     <button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close panel">
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
                                 <div class="nds-panel-body">
-                                    <p>Only the first button carries <code class="nds-inline-code lang-html">data-panel-toggle</code>, and with Thumb on the whole group rides out together.</p>
+                                    <div class="nds-content-placeholder">
+                                        <span>Swap with content component</span>
+                                        <span>استبدل هذا العنصر بأي عنصر آخر</span>
+                                    </div>
                                 </div>
                             </aside>
                         </div>
