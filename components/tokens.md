@@ -7,10 +7,15 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.2.0"
-updated: "1.3.0"
-last_edit: "03/07/2026 - 03:06 AM"
+updated: "1.4.x"
+last_edit: "25/07/2026 - 08:05 PM"
 ---
 
+{%- comment %} Version notice: only when this cycle actually moved the token layer — page.updated
+carries the in-development target (site.version minus -dev), the same test since.html uses. A
+released build, or a dev cycle that left the tokens alone, matches its bundle and says nothing. {%- endcomment %}
+{%- assign _dev_target = site.version | remove: "-dev" %}
+{%- if site.version != site.latest_release and page.updated == _dev_target %}
 <!-- Version notice -->
 <section class="nds-content-section">
     <div class="nds-section-wrapper">
@@ -23,14 +28,15 @@ last_edit: "03/07/2026 - 03:06 AM"
                 </span>
                 <div class="nds-alert-content">
                     <div class="nds-alert-text">
-                        <span class="nds-alert-title">Version {{ site.version }}</span>
-                        <p class="nds-alert-description">This reference is generated from the design-token source of National Design System {{ site.version }}. Names and values reflect the current release and refresh automatically on every build.</p>
+                        <span class="nds-alert-title">Documentation preview</span>
+                        <p class="nds-alert-description">Every name and value below is parsed straight from the design-token SCSS on each build. This preview runs ahead of the current release (v{{ site.latest_release }}), so it can list tokens that the published bundle does not carry yet.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+{%- endif %}
 
 <!-- Token hierarchy -->
 <section id="tokensHierarchy" class="nds-content-section nds-demo-section">
