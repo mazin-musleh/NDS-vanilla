@@ -307,7 +307,7 @@ $a11y-filters: (
 
 // ----------------------------------------------
 // Font sizing — single global multiplier. Every --typo-* token in
-// _variables-critical.scss wraps in `calc(value * var(--user-font-scale, 1))`,
+// tokens/_primitives.scss wraps in `calc(value * var(--user-font-scale, 1))`,
 // so setting --user-font-scale at :root cascades to every consumer. The
 // panel chrome reads literal-px tokens so it doesn't grow.
 // ----------------------------------------------

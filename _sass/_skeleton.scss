@@ -332,7 +332,7 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
 
 /* ── Nav background + shadow ──
    Paint the main-nav bar from first byte. Both --background-nav and
-   --shadow-md live in variables-critical so the var() refs resolve. */
+   --shadow-md live in the critical token layer so the var() refs resolve. */
 .nds-main-nav {
     background-color: var(--background-nav);
     box-shadow: var(--shadow-md);

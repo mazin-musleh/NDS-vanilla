@@ -90,7 +90,7 @@
             order: -1;
         }
 
-        // Size variants — default (lg) 400px defined in _variables-critical.
+        // Size variants — default (lg) 400px defined in tokens/_primitives.scss.
         &.nds-sm { --nds-sideinfo-width: 200px; }
         &.nds-md { --nds-sideinfo-width: 300px; }
         &.nds-lg { --nds-sideinfo-width: 400px; }

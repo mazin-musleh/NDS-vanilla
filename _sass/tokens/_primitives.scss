@@ -1,8 +1,8 @@
 // ════════════════════════════════════════════════════════════════════════════
-// PRIMITIVES — dimension scales (no color)
-// Dimension scales, direct values on the size vocabulary (no numeric rungs).
-// The full color palette lives in themes/_dga.scss; semantic meanings in
-// tokens/_semantic.scss.
+// PRIMITIVES — the dimension vocabulary (no color)
+// Spacing / radius / typo scales, app-shell dimensions, transition and font
+// knobs — direct values on the size names (no numeric rungs). The full color
+// palette lives in themes/_dga.scss; semantic meanings in tokens/_semantic.scss.
 // ════════════════════════════════════════════════════════════════════════════
 @use '../mixins' as *;
 
@@ -116,4 +116,44 @@
     --typo-text-xs-LH:  calc(18px * var(--user-font-scale, 1));
     --typo-text-2xs-FS: calc(10px * var(--user-font-scale, 1));
     --typo-text-2xs-LH: calc(16px * var(--user-font-scale, 1));
+
+    // ── App shell — layout dimensions, transition, font ──
+    --nds-nav-height: 72px;
+    --nds-minimal-nav-item-height: 40px;
+    --nds-sidemenu-width: 260px;
+    --nds-sidemenu-toggle-height: 56px;
+    --nds-sideinfo-width: 400px;
+    --nds-minimal-nav-bp: 960px;
+    --nds-content-MaxWidth: 1280px;
+    --nds-viewport-base-padding: 32px;
+    --nds-viewport-padding: var(--nds-viewport-base-padding);
+
+    --nds-transition-speed: .2;
+    --nds-transition-effect: ease;
+    --nds-transition: calc(var(--nds-transition-speed) * 1s) var(--nds-transition-effect);
+
+    // Font family. --nds-font-brand is the brand typeface KNOB (DGA default here;
+    // runtime brands override it — see themes/_register.scss). --nds-font-family is the
+    // EFFECTIVE font everything consumes; it reads the knob, and the a11y dyslexia
+    // mode overrides it. a11y references --nds-font-brand so it follows the brand.
+    --nds-font-brand: 'IBM Plex Sans Arabic', sans-serif;
+    --nds-font-family: var(--nds-font-brand);
+
+    // Per-theme font-weight scale. DGA defaults (IBM Plex faces: Regular 300-400,
+    // Medium 500, SemiBold 600, Bold 700) sit one step heavier than the runtime
+    // brand fonts; themes/_register.scss shifts the Cairo/Readex Pro themes' scale
+    // down a step so they render at their natural lighter baseline. Custom
+    // [data-palette] inline themes inherit the DGA defaults unless they set their own.
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --paragraph-max-width: 720px; // readable paragraph line-length
+}
+
+@include mobile {
+    :root {
+        --nds-viewport-padding: calc(var(--nds-viewport-base-padding) / 2);
+    }
 }

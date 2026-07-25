@@ -12,23 +12,21 @@
  */
 
 // Foundation token layer — single source of truth (primitives → DGA palette/slots →
-// semantic → dark). Lives in crit, not main, so first paint has the REAL tokens — no
-// bootstrap copies, no DGA hex fallbacks. Stays under the ~14 KB first-RTT budget.
+// brand ramps → semantic). Lives in crit, not main, so first paint has the REAL
+// tokens — no bootstrap copies, no DGA hex fallbacks. Stays under the ~14 KB
+// first-RTT budget. Component dials live in the main bundle (tokens/components).
 @use 'tokens/primitives';
 @use 'themes/dga';
-@use 'tokens/semantic';
 
-// Runtime brand slot overrides ([data-brand]) — after the light foundation, and
-// BEFORE the dark layer, so a brand's dark surface (variables-dark) wins over its
-// light --background-primary-light default for brand+dark pages (the knob carries both
-// modes; consumers stay mode-agnostic).
+// Runtime brand slot overrides ([data-theme~=] / [data-palette]) — emitted BEFORE
+// semantic so semantic's dark block, which matches these selectors' specificity,
+// wins for brand+dark pages (a brand's light --background-primary-light must not
+// beat the dark surface). Semantic's light block is plain :root, so brands outrank
+// it on specificity regardless of order.
 @use 'themes/register';
 
-// Critical layout / typography / spacing tokens (colour bootstrap removed — now above).
-@use 'variables-critical';
-
-// Dark-mode foundation overrides (after semantic + brands).
-@use 'variables-dark';
+// Meaning layer, light + dark (tokens/_semantic.scss carries both).
+@use 'tokens/semantic';
 
 // Import fonts - Required for proper text rendering
 @use 'fonts';

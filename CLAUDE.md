@@ -47,13 +47,24 @@ ruby _plugins/js_processor.rb # REQUIRED after any _js/ changes (bundles & minif
 
 ## Design Tokens (CRITICAL)
 
-**Four tiers** (+ knobs):
-1. **Palette** `--colors-*` (`themes/_dga.scss` — vendored, DO NOT MODIFY; runtime theme ramps): raw values, zero meaning.
-2. **Primitives** (`tokens/_primitives.scss`): dimension vocabulary — direct values on the size names (`--spacing-md`, `--radius-sm`, typo ladders). No numeric rungs.
-3. **Semantic** (`tokens/_semantic.scss`): ONE name per meaning, system-wide (e.g. `--background-overlay`, `--text-oncolor-primary`). Dark rebinds in `_variables-dark.scss`.
-4. **Component** (`tokens/_components.scss`, dark in `tokens/_components-dark.scss`): `--{component}-{property}-{variant}-{state}` — a per-component dial.
+**Four tiers, one file each — light block first, `:root[data-theme~="dark"]` block at the bottom of the same file** (+ knobs):
+1. **Palette** `--colors-*` (`themes/_dga.scss` — vendored, DO NOT MODIFY; runtime ramps in `themes/_register.scss`): raw values, zero meaning.
+2. **Primitives** (`tokens/_primitives.scss`): dimension vocabulary — direct values on the size names (`--spacing-md`, `--radius-sm`, typo ladders, app-shell dims, transition + font knobs). No numeric rungs, no color.
+3. **Semantic** (`tokens/_semantic.scss`, critical bundle): ONE name per meaning, system-wide (e.g. `--background-overlay`, `--text-oncolor-primary`). Its dark block matches `themes/_register.scss` on specificity, so crit `@use`s it AFTER register — keep that order.
+4. **Component** (`tokens/_components.scss`, main bundle): `--{component}-{property}-{variant}-{state}` — a per-component dial.
+
+Rule-level dark tweaks (not tokens) stay next to the rule they modify via `@include dark`. `_variables-a11y.scss` is a separate `[data-a11y]` overlay in the accessibility bundle, not a tier.
 
 **Knobs** (`--btn-size`, `--section-*`, `--hero-*`) are NOT tokens: per-instance styling the consumer sets on the element, undefined by default, resolved via the `--_x: var(--x, default)` private pattern. Tokens theme the system; knobs style one element.
+
+**Global token or component knob? A value goes global (`:root`) only if something must REACH it from `:root` — stop at the first yes:**
+1. A **mode layer re-binds it** — dark, `[data-a11y]`, or a brand. They all write at `:root[…]` and cannot reach a value declared on a component selector.
+2. **Another component reads it** — a cross-component contract needs one name both sides see.
+3. You are **promising consumers a per-component dial** — real only if design would retune this component alone (the DGA sheet names it, or design asked). Inventing the promise is how rename-only layers get minted.
+
+Otherwise it is a knob: declare it on the component, `--_x: var(--x, default)`. **Promote a knob to a token the moment 1 or 2 becomes true** — custom properties resolve by inheritance proximity, not specificity, so a declaration on the component root beats EVERY `:root` override (dark, a11y, consumer sheet), no matter how many attributes that selector carries.
+
+**Invariant: a component file never re-binds a global token — it sets its own knobs.** Token dark lives in the tier file's dark block; knob dark lives in the component file next to the knob (`@include dark`). The two never collide, and that is checkable: no name set inside an `@include dark` block may appear in `_sass/tokens/`.
 
 **Authoring test — when a component needs a value, stop at the first hit:**
 1. A semantic token with the same MEANING exists (and behaves right in dark) → consume it.

@@ -8,7 +8,7 @@
 // A theme is a set of SEED vars (--brand-primary required; --brand-secondary /
 // --brand-tertiary / --neutral-tint / --nds-font-brand optional). The OKLCH engine
 // derives the full ramp, alphas and a temperature-matched neutral scale; DARK MODE
-// FOLLOWS AUTOMATICALLY (_variables-dark.scss remaps semantic tokens onto the same
+// FOLLOWS AUTOMATICALLY (tokens/_semantic.scss's dark block remaps them onto the same
 // seed-derived steps — one seed change reskins both modes; rare contrast misses are
 // hand-corrected via the doubled :root:root[data-theme~="dark"]).
 //

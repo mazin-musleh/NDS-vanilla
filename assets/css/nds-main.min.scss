@@ -10,18 +10,18 @@
  * Author: {{ site.author }}
  * Profile: {{ site.author_profile }}
  */
-// Note: variables-critical, fonts, reset, and hero are in nds.critical.min.scss.
-// Everything else — including skeleton, section-layout, block, content-layout,
-// grid, and search-box — lives here.
+// Note: the foundation token tiers, fonts, reset, and hero are in
+// nds.critical.min.scss. Everything else — including skeleton, section-layout,
+// block, content-layout, grid, and search-box — lives here.
 
-// Import variables (CSS custom properties)
+// Component token tier, light + dark (tokens/_components.scss carries both).
+// The foundation tiers (primitives / DGA palette / brands / semantic) live in the
+// critical bundle — render-blocking on every page, so these component tokens
+// resolve their foundation refs from there.
 // NOTE: a11y mode overrides (variables-a11y) + the accessibility panel
 // (components/accessibility) live in the optional assets/css/nds-accessibility.min.css
 // bundle — not here. Core only reads --user-* a11y vars with fallbacks.
-// Component token tier. The foundation tiers (primitives/DGA/semantic/dark) live in
-// the critical bundle now (single source of truth) — render-blocking on every page,
-// so these component tokens resolve their foundation refs from there.
-@use 'variables';
+@use 'tokens/components';
 
 // Layout primitives (moved from critical). section-layout stays in crit
 // because hero depends on it; block/content-layout/grid stay here.
