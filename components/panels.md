@@ -6,7 +6,7 @@ hero_description: A content-agnostic surface that slides in from any edge of the
 breadcrumb: [["Components", "/components"]]
 since: "1.4.x"
 updated: "1.4.x"
-last_edit: "25/07/2026 - 04:09 PM"
+last_edit: "25/07/2026 - 09:10 PM"
 lang: en
 direction: ltr
 ---
@@ -65,7 +65,13 @@ direction: ltr
                             </button>
                             <aside id="panel-side-demo" class="nds-panel" data-panel-side="end" aria-label="Settings panel" hidden>
                                 <div class="nds-panel-header">
-                                    <span class="nds-panel-title">Settings</span>
+                                    <span class="nds-featured-icon nds-circle">
+                                        <i class="hgi hgi-stroke hgi-stars"></i>
+                                    </span>
+                                    <div class="nds-panel-text">
+                                        <span class="nds-panel-title">Settings</span>
+                                        <p class="nds-panel-description">Adjust how this page behaves.</p>
+                                    </div>
                                     <button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close panel">
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
@@ -112,7 +118,13 @@ direction: ltr
 
 &lt;aside id="settings-panel" class="nds-panel" data-panel-side="end" aria-label="Settings panel" hidden&gt;
   &lt;div class="nds-panel-header"&gt;
-    &lt;span class="nds-panel-title"&gt;Settings&lt;/span&gt;
+    &lt;span class="nds-featured-icon nds-circle"&gt;
+      &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;div class="nds-panel-text"&gt;
+      &lt;span class="nds-panel-title"&gt;Settings&lt;/span&gt;
+      &lt;p class="nds-panel-description"&gt;Adjust how this page behaves.&lt;/p&gt;
+    &lt;/div&gt;
     &lt;button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close panel"&gt;
       &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
@@ -189,7 +201,13 @@ direction: ltr
                             <aside id="panel-sheet-demo" class="nds-panel" data-panel-side="bottom"
                                 aria-label="Details sheet" hidden>
                                 <div class="nds-panel-header">
-                                    <span class="nds-panel-title">Details</span>
+                                    <span class="nds-featured-icon nds-circle">
+                                        <i class="hgi hgi-stroke hgi-stars"></i>
+                                    </span>
+                                    <div class="nds-panel-text">
+                                        <span class="nds-panel-title">Details</span>
+                                        <p class="nds-panel-description">A closer look at the selected item.</p>
+                                    </div>
                                     <button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close sheet">
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
@@ -231,7 +249,13 @@ direction: ltr
 &lt;aside id="details-sheet" class="nds-panel" data-panel-side="bottom"
        aria-label="Details sheet" hidden&gt;
   &lt;div class="nds-panel-header"&gt;
-    &lt;span class="nds-panel-title"&gt;Details&lt;/span&gt;
+    &lt;span class="nds-featured-icon nds-circle"&gt;
+      &lt;i class="hgi hgi-stroke hgi-stars"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;div class="nds-panel-text"&gt;
+      &lt;span class="nds-panel-title"&gt;Details&lt;/span&gt;
+      &lt;p class="nds-panel-description"&gt;A closer look at the selected item.&lt;/p&gt;
+    &lt;/div&gt;
     &lt;button class="nds-btn nds-subtle nds-icon-only" type="button" data-panel-close aria-label="Close sheet"&gt;
       &lt;i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"&gt;&lt;/i&gt;
     &lt;/button&gt;
@@ -340,6 +364,7 @@ direction: ltr
                     <li>Choose a <code class="nds-inline-code lang-html">bottom</code> sheet for mobile-first actions and a side panel for desktop-oriented settings or filters</li>
                     <li>Add <code class="nds-inline-code lang-html">data-panel-static</code> to a panel holding an unsaved form so a stray Escape or outside click cannot discard the user's work</li>
                     <li>Header, body, and footer are all optional. Drop content straight into <code class="nds-inline-code lang-html">.nds-panel-body</code>, or swap it for an <a class="nds-color" href="{{ 'components/scroll-more' | relative_url }}">Scroll More</a> wrapper for long scrolling content with fade edges</li>
+                    <li>Keep the header's title inside <code class="nds-inline-code lang-html">.nds-panel-text</code>, the same title-plus-description pairing <a class="nds-color" href="{{ 'components/cards' | relative_url }}">Cards</a> use. Add a <code class="nds-inline-code lang-html">.nds-panel-description</code> beside the title when the panel needs a subtitle, and drop the wrapper only for a bare title: it still fills the row on its own, so a leading icon and the close button stay where they are</li>
                     <li>Set <code class="nds-inline-code lang-html">--panel-content-width: 100%</code> on a sheet whose content should span the full width (a media row, a wide table) instead of capping to the page max-width</li>
                     <li>Ship the panel with the <code class="nds-inline-code lang-html">hidden</code> attribute so it never flashes before the script loads</li>
                 </ul>
