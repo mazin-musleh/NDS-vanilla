@@ -172,4 +172,13 @@ Use `/nds-doc [name]` to create, refine, or audit documentation pages under `com
 
 - Do NOT add `Co-Authored-By` lines to commit messages
 - Always propose the commit message and wait for explicit user approval before running `git commit` — never commit unreviewed
+- Approval to commit is not approval to tag, push, or publish a release — each needs its own explicit go-ahead
 - Keep commit messages brief and to the point — short subject line, body only when the "why" isn't obvious from the diff
+
+## Releases
+
+**Never hand-roll the template zip** — `python scripts/mkrelease.py` builds it. A plain `jekyll build` zip ships absolute `/NDS-vanilla/` asset paths that 404 the moment a consumer drops the folder into their own project. The script builds, runs `_plugins/baseurl_cleaner.rb` (paths → depth-relative) then `_plugins/html_compressor.rb`, drops the five docs-site-only files (`playground.html`, `TOKEN-MIGRATION.md`, `llms.txt`, `robots.txt`, `sitemap.xml`), adds `CHANGELOG.md` + `LICENSE`, and verifies the result before handing over `dist/nds-vanilla-template-v<version>.zip`.
+
+**Release commit** — `_config.yml` `version` + `latest_release` to the real number, `package.json` / `package-lock.json` to match, sweep the `X.Y.x` `since`/`updated` doc stamps, then `ruby _plugins/js_processor.rb` (the bundle banner carries the version). Annotated tag `vX.Y.Z`, then `gh release create` with the CHANGELOG section as notes plus the zip.
+
+**Changelog** — `### Migrating from vX.Y.Z` leads with the bundle-replacement step, then breaking markup/API edits only; visual shifts and new tokens belong in Changed. A fix for something added in the same cycle never shipped — leave it out. Doc references are live `https://mazin-musleh.github.io/NDS-vanilla/….html` links, never `.md` paths: template users only get HTML.
