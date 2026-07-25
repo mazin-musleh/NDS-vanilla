@@ -9,9 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [1.5.0] - 2026-07-25
 
 ### Added
-- Panels — new component: a slide-in surface on any side plus top and bottom sheets, with an optional modal backdrop and focus trap. See `components/panels.md`.
-- Floating Action Button — new component: FABs that dock themselves by `data-fab-pos`, in a size ladder, grouped clusters, and edge thumbs that ride their panel open. See `components/fab.md`.
-- Content placeholder — new utility: a dashed slot marker for a region awaiting a real component. See `utilities/content-placeholder.md`.
+- Panels — new component: a slide-in surface on any side plus top and bottom sheets, with an optional modal backdrop and focus trap. See the [Panels doc page](https://mazin-musleh.github.io/NDS-vanilla/components/panels.html).
+- Floating Action Button — new component: FABs that dock themselves by `data-fab-pos`, in a size ladder, grouped clusters, and edge thumbs that ride their panel open. See the [FAB doc page](https://mazin-musleh.github.io/NDS-vanilla/components/fab.html).
+- Content placeholder — new utility: a dashed slot marker for a region awaiting a real component. See the [Content placeholder doc page](https://mazin-musleh.github.io/NDS-vanilla/utilities/content-placeholder.html).
 - Dropmenu — `data-search` adds a search box that filters items, diacritic-insensitive.
 - Dropmenu — `nds-center` centers item labels.
 - Dropmenu — component-owned menus carry a `.nds-{component}-menu` class that survives portaling.
@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Pagination — `data-pagination-no-scroll` opts a nav out of the page-change scroll; `NDS.Pagination.scrollToContent()` runs it manually.
 - Buttons — `nds-vertical` stacks a button group.
 - Tabs — `--tab-panel-padding`, `--tab-panel-padding-inline` and `--tab-panel-padding-block` knobs.
-- Forms — `data-state="loading"` on a form container, group or control renders the spinner shell. See `components/forms.md`.
+- Forms — `data-state="loading"` on a form container, group or control renders the spinner shell. See the [Forms doc page](https://mazin-musleh.github.io/NDS-vanilla/components/forms.html).
 - Alert — toasts ship with a shadow and stroke by default.
 - Upload — `--upload-background-dropbox-default`, `--upload-background-dropbox-active` and `--upload-background-file-item` tokens.
 - Editor — toolbar menus portal out of a clipping ancestor.
@@ -55,12 +55,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Migrating from v1.4.1
 
 - Replace the built bundles (`nds-main.min.*` and the loader-injected `nds-delegated`/`nds-extras`, plus the `nds-accessibility`/`nds-showcase`/theme bundles).
-- Accessibility panel — reworked onto the shared Panels and FAB components. Copy the new markup from `components/accessibility.md`.
+- Accessibility panel — reworked onto the shared Panels and FAB components. Copy the new markup from the [Accessibility doc page](https://mazin-musleh.github.io/NDS-vanilla/components/accessibility.html).
 
 ## [1.4.1] - 2026-07-20
 
 ### Added
-- Editor — image support: insert by URL from a popover (with alt, width, height), click an image to select it for edit-in-place, link wrapping, or removal, plus paste and drag-in uploads through an embedded NDS Upload. `setImageUpload()` configures both modes; the default policy is URL-only, and the `'embed'` upload-URL sentinel opts into base64 embedding behind a 2 MB cap. See `components/editor.md`.
+- Editor — image support: insert by URL from a popover (with alt, width, height), click an image to select it for edit-in-place, link wrapping, or removal, plus paste and drag-in uploads through an embedded NDS Upload. `setImageUpload()` configures both modes; the default policy is URL-only, and the `'embed'` upload-URL sentinel opts into base64 embedding behind a 2 MB cap. See the [Editor doc page](https://mazin-musleh.github.io/NDS-vanilla/components/editor.html).
 - Editor — link now wraps a whole atom (button, tag, chip, featured icon, avatar, image) as an `<a>` and unwraps it again, never nesting; `data-no-external` opts an atom out. A selection ring marks the selected or remove-armed component, Enter escapes an inline atom, and clicking a textless atom selects it whole.
 - Editor — RTL/LTR direction command writing a native `dir` per block, physical alignment (left, right, center, justify), and new pilcrow direction icons.
 - Upload — `NDS.Upload.validateFile()` public API for size, type, and MIME validation.
@@ -84,9 +84,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [1.4.0] - 2026-07-18
 
 ### Added
-- Editor (Beta) — new rich-text component: a standard NDS textarea upgraded into a contenteditable editing surface with a generated, localized toolbar. Pastes from Word, Google Docs, and the web convert to clean NDS markup, and pasted NDS components stay intact while editing. Ships as beta. See `components/editor.md`.
-- Tag Input — new component: free-text tags committed as removable chips while typing, posted natively as an array, with optional autocomplete assist/strict modes. See `components/taginput.md`.
-- Toolbar — new unified controls bar above tables, lists, and grids (search, filter, sort, column visibility, pagination). See `components/toolbar.md`.
+- Editor (Beta) — new rich-text component: a standard NDS textarea upgraded into a contenteditable editing surface with a generated, localized toolbar. Pastes from Word, Google Docs, and the web convert to clean NDS markup, and pasted NDS components stay intact while editing. Ships as beta. See the [Editor doc page](https://mazin-musleh.github.io/NDS-vanilla/components/editor.html).
+- Tag Input — new component: free-text tags committed as removable chips while typing, posted natively as an array, with optional autocomplete assist/strict modes. See the [Tag Input doc page](https://mazin-musleh.github.io/NDS-vanilla/components/taginput.html).
+- Toolbar — new unified controls bar above tables, lists, and grids (search, filter, sort, column visibility, pagination). See the [Toolbar doc page](https://mazin-musleh.github.io/NDS-vanilla/components/toolbar.html).
 - Selection count — new component showing the number of selected rows/cards, paired with pagination's new x-of-y record slots.
 - Last edit — new component rendering the DGA "last modified" line from a page's `last_edit`.
 - Multiselect — options populated from JSON, apply-mode staging (staged or instant commit), and removable chips.
@@ -98,14 +98,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Dropmenu — `data-anchor="start|end"` edge alignment with automatic viewport flip.
 - Cards — `nds-card-price` product pricing built on the numbers utility.
 - Forms — contenteditable elements receive form-control styling (backs the editor surface).
-- Hidden — new CSS-only visibility utility: the native `hidden` attribute now wins over any `display` value, and `data-hidden="mobile|tablet|…"` hides an element within exact viewport ranges. See `utilities/hidden.md`.
+- Hidden — new CSS-only visibility utility: the native `hidden` attribute now wins over any `display` value, and `data-hidden="mobile|tablet|…"` hides an element within exact viewport ranges. See the [Hidden doc page](https://mazin-musleh.github.io/NDS-vanilla/utilities/hidden.html).
 - Mainnav — `--nds-brand-width` knob on the brand link.
 - Side info — background fill and opt-in `nds-sticky-sm/md` pinning.
 - Chips / Tags — `.nds-center` list modifier.
 - Featured Icons — `nds-subtle` style (flush glyph, no background or padding).
 - Versioning — release-anchored version tracking: `since` / `updated` / `last_edit` doc front matter, an index version filter, and "Added in vX" / "Updated in vX" hero tags.
 - Critical CSS — `critical_inline: 'minimal'` mode: a self-releasing one-line body hold.
-- Icons — documentation page covering both icon layers, a click-to-copy catalog of every inline UI icon, and the license terms. See `components/icons.md`.
+- Icons — documentation page covering both icon layers, a click-to-copy catalog of every inline UI icon, and the license terms. See the [Icons doc page](https://mazin-musleh.github.io/NDS-vanilla/components/icons.html).
 - Icons — logical arrows `nds-hgi-arrow-{next,prev}-{01,02}`: they follow reading direction, so one class means forward (or back) in both Arabic and English.
 - Icons — cart UI icon; `.nds-icon-checkmark` custom thicker glyph.
 - License — third-party notice for the bundled Hugeicons free set (MIT), previously shipped with no attribution.
@@ -161,7 +161,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Migrating from v1.2.0
 
 - Replace the built bundles (`nds-main.min.*` and the loader-injected `nds-delegated`/`nds-extras`, plus the `nds-accessibility`/`nds-showcase`/theme bundles).
-- Token overrides — only consumers who **override or reference NDS token custom properties** in their own CSS are affected; classes and component rendering are otherwise unchanged. See the [Token Migration Reference](TOKEN-MIGRATION.md) for the full old→new name map.
+- Token overrides — only consumers who **override or reference NDS token custom properties** in their own CSS are affected; classes and component rendering are otherwise unchanged. See the [Token Migration Reference](https://github.com/mazin-musleh/NDS-vanilla/blob/main/TOKEN-MIGRATION.md) for the full old→new name map.
 - Hero — copied hero markup with inline structural styles still works but those styles are now redundant (CSS owns them); a slide that doesn't stamp `--overlay` now renders at `0.7` (was `0.20`) — stamp an explicit value to pin it.
 - Head — v1.2.0 pages shipped an inline critical-gate `<style>` + async-loaded critical `<link>` (preload/`onload` swap + `<noscript>`). A copied `<head>` still works, but the inline snapshot can drift from the 1.3.0 crit file; the canonical, drift-proof setup is a single render-blocking `<link rel="stylesheet" href="assets/css/nds.critical.min.css">` (first paint stays theme/dark-correct). Redundant but harmless if left.
 
