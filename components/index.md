@@ -90,9 +90,19 @@ sidemenu_mode: false
                         {%- assign comp_path = comp.url | split: "#" | first -%}
                         {%- assign comp_page = site.pages | where: "url", comp_path | first -%}
                         {%- if comp_page.since %}
-                        <span class="nds-tag nds-gray nds-sm">
+                        {%- comment %} Same dev-target test as _includes/since.html: while the docs run ahead of
+                           the release, a page stamped with the in-development target reads "Next release"
+                           rather than the 1.4.x placeholder. The label is also the filter facet value. {%- endcomment %}
+                        {%- assign _dev_target = site.version | remove: "-dev" %}
+                        {%- if comp_page.since == _dev_target and site.version != site.latest_release %}
+                        <span class="nds-tag nds-blue nds-sm">
+                            <span class="nds-label" data-filter="since">Next release</span>
+                        </span>
+                        {%- else %}
+                        <span class="nds-tag nds-green nds-sm">
                             <span class="nds-label" data-filter="since">v{{ comp_page.since }}</span>
                         </span>
+                        {%- endif %}
                         {%- endif %}
                     </div>
                 </div>
