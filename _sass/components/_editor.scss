@@ -172,6 +172,13 @@
 // "or"/"attrs" dividers.
 .nds-editor-image-form { --divider: 0; }
 
+// The image popover stacks more than the shared 400px scroll cap allows (URL,
+// upload, alt, and the width/height row), so it gets a viewport-relative cap
+// instead. Anchored on the menu class, never .nds-editor — the menu portals to
+// <body>. svh, matching the sheet/modal caps: sized for the smaller mobile
+// viewport so the popover doesn't outgrow the screen when the URL bar shows.
+.nds-editor-image-menu .nds-dropmenu-scroll { max-height: 70svh; }
+
 // Remove picker rows — one destructive full-width row per removable level,
 // indented by nesting depth (shell first, nested components under it).
 [data-editor-remove-levels] {
