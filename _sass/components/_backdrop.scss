@@ -22,7 +22,7 @@
 
   &[data-state~="active"] {
     opacity: 1;
-    backdrop-filter: var(--backdrop-blur, blur(2px));
+    backdrop-filter: var(--backdrop-blur, none);
   }
 }
 
