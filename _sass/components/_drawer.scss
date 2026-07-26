@@ -333,16 +333,8 @@
 // SIZE VARIANTS
 // ==============================================
 
-.nds-drawer.nds-sm {
-    --drawer-indent: var(--spacing-lg);
-    --drawer-indicator-width: 2px;
-
-    .nds-btn { --btn-size: 32px; }
-}
-
 .nds-drawer.nds-lg {
     --drawer-indent: var(--spacing-2xl);
-    --drawer-indicator-width: 4px;
 
     .nds-btn { --btn-size: 48px; }
 }

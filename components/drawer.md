@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "14/07/2026 - 12:13 AM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 10:05 PM"
 ---
 
 <!-- Nested Menu -->
@@ -34,10 +34,6 @@ last_edit: "14/07/2026 - 12:13 AM"
                                             data-toggler='["", ".nds-drawer", "drawerSize"]'
                                             data-trigger-label="Medium">
                                             <span class="nds-label">Medium (default)</span>
-                                        </button>
-                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
-                                            data-toggler='["nds-sm", ".nds-drawer", "drawerSize"]'>
-                                            <span class="nds-label">Small</span>
                                         </button>
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["nds-lg", ".nds-drawer", "drawerSize"]'>
@@ -1189,12 +1185,8 @@ last_edit: "14/07/2026 - 12:13 AM"
                     </thead>
                     <tbody>
                         <tr>
-                            <td><code class="nds-inline-code lang-html">nds-sm</code></td>
-                            <td>Compact size with tighter indentation (<code class="nds-inline-code lang-html">--spacing-lg</code>) and a 2px active indicator.</td>
-                        </tr>
-                        <tr>
                             <td><code class="nds-inline-code lang-html">nds-lg</code></td>
-                            <td>Roomier size with wider indentation (<code class="nds-inline-code lang-html">--spacing-2xl</code>) and a 4px active indicator.</td>
+                            <td>Roomier size with taller items (48px) and wider indentation (<code class="nds-inline-code lang-html">--spacing-2xl</code>).</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-divided</code></td>
@@ -1273,7 +1265,7 @@ last_edit: "14/07/2026 - 12:13 AM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">--drawer-indent</code></td>
                             <td><code class="nds-inline-code lang-html">calc(var(--spacing-xl))</code></td>
-                            <td>Submenu indentation, derived from the button's inline padding. Overridden to <code class="nds-inline-code lang-html">--spacing-lg</code> by <code class="nds-inline-code lang-html">nds-sm</code> and <code class="nds-inline-code lang-html">--spacing-2xl</code> by <code class="nds-inline-code lang-html">nds-lg</code>.</td>
+                            <td>Submenu indentation, derived from the button's inline padding. Overridden to <code class="nds-inline-code lang-html">--spacing-2xl</code> by <code class="nds-inline-code lang-html">nds-lg</code>.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--drawer-divider</code></td>
@@ -1283,7 +1275,7 @@ last_edit: "14/07/2026 - 12:13 AM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">--drawer-indicator-width</code></td>
                             <td><code class="nds-inline-code lang-html">5px</code></td>
-                            <td>Thickness of the active/hover indicator bar. Overridden by <code class="nds-inline-code lang-html">nds-sm</code> (2px) and <code class="nds-inline-code lang-html">nds-lg</code> (4px).</td>
+                            <td>Thickness of the active/hover indicator bar.</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--drawer-indicator</code></td>
