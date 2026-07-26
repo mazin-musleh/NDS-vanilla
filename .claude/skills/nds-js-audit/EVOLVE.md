@@ -84,7 +84,7 @@ Then, for each approved edit, modify the appropriate file under `.claude/skills/
 - **NEW ENTRY**: append a new entry to PERSONA.md using the four-field shape (Canonical, Why (and rejected alternatives), Carve-outs, Audit behavior), citing ≥1 motivating site by symbol. Renumber subsequent entries if added mid-document.
 
 **Persona bookkeeping edits → PERSONA.md (no quality bar — citation hygiene only):**
-- **EXPIRE RESOLVED FINDING**: when an entry's check finds zero divergent sites but the entry still carries a `Motivating finding:` pointer, rewrite it to `Resolved (was the motivating finding): … migrated to <canonical>`.
+- **EXPIRE RESOLVED FINDING**: when an entry's check finds zero divergent sites but the entry still carries a `Motivating finding:` pointer, **delete the pointer**. Do not rewrite it into a "Resolved (was …)" note — a resolved example teaches nothing the present-tense rule doesn't, and it is read on every run that loads the group file. The rule text already states what to detect; git history holds what it used to catch. Report the deletion under `Bookkeeping reconciled` so the change is never silent.
 - **HEAL CITATION**: citations are **symbol-anchored** — the greppable identifier/token (function, field, attribute, comment text) is the authoritative anchor; the line number is a decaying hint. Grep the symbol: still present → rewrite the line hint; gone → the citation is expired (mark it `(citation expired <date> — <symbol> refactored away)` or resolve the motivating example), never trust the bare line.
 
 After applying, append the diff to the report as the `## Catalog evolved (applied)` block (covering both files when both were touched):
@@ -99,7 +99,7 @@ After applying, append the diff to the report as the `## Catalog evolved (applie
 - No deletions this round
 
 ### Bookkeeping reconciled (no quality bar — measured facts)
-- PERSONA.md entry 5: expired resolved findings (voice-input _installed→_initDone, swiper data-swiper-initialized→data-nds-swiper-initialized)
+- PERSONA.md entry 5: deleted 2 resolved motivating-finding pointers (both sites migrated; rules unchanged)
 - PERSONA.md entry 1: healed citation (`fetchAbortController` moved; line hint updated)
 - RULES-JSP.md JSP-02: healed exemplar citation (`NDS.onOutsideScroll` moved; line hint updated)
 
