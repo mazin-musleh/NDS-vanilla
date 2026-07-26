@@ -461,7 +461,7 @@ bundle_sizes:
                 <h2 class="nds-section-title">Architecture & Performance</h2>
                 <p class="nds-section-description">Built with a performance-first and compatibility approach.</p>
                 <p>
-                    <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/0x6coenrvy?form_factor=mobile"
+                    <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/wkdqtygsfs?form_factor=mobile"
                         target="_blank" rel="noopener" class="nds-color">View the PageSpeed Insights report</a>
                 </p>
             </div>
