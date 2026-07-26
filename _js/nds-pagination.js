@@ -106,22 +106,21 @@
     }
 
     // ── Live ellipsis collapse (any manual mode) ─────────────────────────
-    // Attributes the builders own — everything else on an author page button is
-    // preserved verbatim through collapse. data-state stays NDS.State-managed
-    // (never a literal attribute); class/href/type/aria-current are emitted by
-    // the builder from dedicated model fields.
-    const _MANAGED_ATTRS = new Set(['class', 'href', 'type', 'aria-current', 'data-state']);
+    // Author page controls are MOVED between the visible strip and the ellipsis
+    // dropdown, never re-serialized — class, href, label markup, custom
+    // attributes and any consumer-attached listener survive collapse intact.
+    // Only what the collapse owns is re-stamped: the dropdown marker class,
+    // aria-current, and data-state (NDS.State-managed, never a literal attribute).
+    // Local fork of NDS.escapeHtml — also escapes quotes for the attribute
+    // context (a data-page-url href); core's version doesn't. Do not swap.
     const _escAttr = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-    const _attrStr = attrs => { let s = ''; for (const n in attrs) s += ` ${n}="${_escAttr(attrs[n])}"`; return s; };
     // data-page-url template ("?page={page}") → page-to-href function, or null.
     const _urlFn = pageUrl => pageUrl ? (p => _escAttr(pageUrl.replace('{page}', p))) : null;
 
-    // Capture the full ordered page-button set from a manual nav's list, whether
-    // it is currently flat or already collapsed (visible buttons + ellipsis
-    // dropdown items). Each entry is a faithful round-trip of the author's control
-    // — element type (button/anchor), href, label markup, class, and any extra
-    // attributes (data-*, title, custom aria) — so collapse preserves custom
-    // markup, not just the page number.
+    // Capture the ordered page-control set from a manual nav's list, whether it
+    // is currently flat or already collapsed (visible buttons + ellipsis
+    // dropdown items). Entries carry the LIVE element, so the rebuild reparents
+    // the author's own node instead of reconstructing it from captured fields.
     function _capturePageModel(list) {
         const seen = new Set();
         const model = [];
@@ -129,56 +128,54 @@
             const num = pageNumberOf(el);
             if (isNaN(num) || seen.has(num)) return;
             seen.add(num);
-            const attrs = {};
-            for (let i = 0; i < el.attributes.length; i++) {
-                const a = el.attributes[i];
-                if (!_MANAGED_ATTRS.has(a.name)) attrs[a.name] = a.value;
-            }
-            model.push({
-                num,
-                tag: el.tagName.toLowerCase() === 'a' ? 'a' : 'button',
-                href: el.getAttribute('href'),
-                // Class minus the positional dropdown marker — the ellipsis builder
-                // re-adds nds-dropmenu-item when this page collapses in.
-                className: (el.getAttribute('class') || '').split(/\s+/).filter(c => c && c !== 'nds-dropmenu-item').join(' '),
-                attrs,
-                labelHTML: el.innerHTML,
-                active: el.ariaCurrent === 'page' || NDS.State.has(el, 'active'),
-            });
+            model.push({ num, el, active: el.ariaCurrent === 'page' || NDS.State.has(el, 'active') });
         };
         list.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis) a').forEach(push);
         getPaginationDropmenuItems(list).forEach(push);
         return model.sort((a, b) => a.num - b.num);
     }
 
-    // Render one captured page control (button or anchor), preserving the author's
-    // class + pass-through attributes. dropdownItem=true re-adds the dropmenu marker.
-    function _control(e, activeNum, dropdownItem) {
-        const cls = dropdownItem ? `${e.className} nds-dropmenu-item` : e.className;
-        const cur = e.num === activeNum ? ' aria-current="page"' : '';
-        const extra = _attrStr(e.attrs);
-        return e.tag === 'a'
-            ? `<a class="${cls}"${e.href != null ? ` href="${_escAttr(e.href)}"` : ''}${cur}${extra}>${e.labelHTML}</a>`
-            : `<button type="button" class="${cls}"${cur}${extra}>${e.labelHTML}</button>`;
+    // Re-stamp the collapse-owned bits on a captured control and hand back the
+    // live node for reparenting. data-state is cleared here and re-set by
+    // activateGeneratedPage. type is collapse-owned, not author markup: every
+    // <button> is pinned to type="button" so a nav inside a <form> can't submit
+    // on a page click.
+    function _stampControl(e, activeNum, dropdownItem) {
+        const el = e.el;
+        el.classList.toggle('nds-dropmenu-item', !!dropdownItem);
+        NDS.aria.current(el, e.num === activeNum ? 'page' : null);
+        NDS.State.clear(el);
+        if (el.tagName === 'BUTTON') el.setAttribute('type', 'button');
+        return el;
     }
 
-    // One page <li> from a model entry — preserves the author's control markup
-    // (class/attrs/href/label) the data-driven _pageLi builder doesn't carry.
+    // One page <li> wrapping the author's own control node.
     function _pageLiM(e, activeNum) {
-        return `<li class="nds-pagination-item page_${e.num}">${_control(e, activeNum, false)}</li>`;
+        const li = document.createElement('li');
+        li.className = `nds-pagination-item page_${e.num}`;
+        li.appendChild(_stampControl(e, activeNum, false));
+        return li;
     }
 
-    // Shared ellipsis <li> chrome — the dropmenu shell both ellipsis builders wrap
-    // around their own items (number-only _ellipsisLi, markup-preserving _ellipsisLiM).
-    // One definition so a dropmenu-markup change can't drift between the two.
-    function _ellipsisShell(itemsHTML) {
-        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="${_t('more')}"><span class="nds-label"></span></button><div class="nds-dropmenu-menu nds-pagination-menu" aria-hidden="true"><div class="nds-dropmenu-scroll">${itemsHTML}</div></div></div></li>`;
+    // The ellipsis <li>: an EMPTY dropmenu shell, one definition for both
+    // consumers so a dropmenu-markup change can't drift between them.
+    // Generated navs (generatePaginationHTML) leave it empty — the collapsed
+    // range never materializes eagerly, _wireEllipsisLazy windows rows in on
+    // open. reconcileCollapse parses it and reparents the author's controls
+    // into the scroll container, which stays eager.
+    function _ellipsisShell() {
+        return `<li class="nds-pagination-item nds-pagination-ellipsis"><div class="nds-dropmenu"><button type="button" class="nds-btn nds-subtle nds-ellipsis nds-indicator nds-dropmenu-trigger" aria-label="${_t('more')}"><span class="nds-label"></span></button><div class="nds-dropmenu-menu nds-pagination-menu" aria-hidden="true"><div class="nds-dropmenu-scroll"></div></div></div></li>`;
     }
 
-    // Ellipsis <li> whose dropdown holds the collapsed range — entry-based twin
-    // of _ellipsisLi, carrying each hidden page's author markup.
+    // Ellipsis <li> whose dropdown holds the collapsed range — reparents each
+    // hidden page's author control into the shell's scroll container.
     function _ellipsisLiM(entries, activeNum) {
-        return _ellipsisShell(entries.map(e => _control(e, activeNum, true)).join(''));
+        const tpl = document.createElement('template');
+        tpl.innerHTML = _ellipsisShell();
+        const li = tpl.content.firstElementChild;
+        const scroll = li.querySelector('.nds-dropmenu-scroll');
+        entries.forEach(e => scroll.appendChild(_stampControl(e, activeNum, true)));
+        return li;
     }
 
     // Collapse (or expand) a manual nav's page buttons to the canonical shape —
@@ -210,12 +207,19 @@
         const prevLi = list.querySelector('.nds-pagination-prev');
         const nextLi = list.querySelector('.nds-pagination-next');
 
-        const pages = model.length > 5
-            ? _pageLiM(model[0], activeNum) + _pageLiM(model[1], activeNum) + _pageLiM(model[2], activeNum)
-              + _ellipsisLiM(model.slice(3, -1), activeNum) + _pageLiM(model[model.length - 1], activeNum)
-            : model.map(e => _pageLiM(e, activeNum)).join('');
+        // Build the new page area first: each builder MOVES the author's control
+        // out of its old row into the fragment, so replaceChildren below only
+        // discards the emptied <li> shells.
+        const pages = document.createDocumentFragment();
+        if (model.length > 5) {
+            for (let i = 0; i < 3; i++) pages.appendChild(_pageLiM(model[i], activeNum));
+            pages.appendChild(_ellipsisLiM(model.slice(3, -1), activeNum));
+            pages.appendChild(_pageLiM(model[model.length - 1], activeNum));
+        } else {
+            model.forEach(e => pages.appendChild(_pageLiM(e, activeNum)));
+        }
 
-        list.innerHTML = pages; // page area only…
+        list.replaceChildren(pages); // page area only…
         if (prevLi) list.insertAdjacentElement('afterbegin', prevLi); // …prev/next are the author's, preserved
         if (nextLi) list.insertAdjacentElement('beforeend', nextLi);
 
@@ -346,20 +350,7 @@
                     _wireManualNavClicks(container);
                     _wireCollapseWatch(); // live ellipsis re-collapse on dynamic <li> changes
 
-                    // Opt-in URL restore: land on ?page=N silently — no event
-                    // (not user intent), no scroll. Clamped on data-driven navs;
-                    // ignored on author navs when the page doesn't exist.
-                    const urlPage = _readPageParam(container);
-                    if (urlPage) {
-                        const pagination = container.querySelector('.nds-pagination-list') || container;
-                        const total = parseInt(container.dataset.totalPages);
-                        const page = total > 0 ? Math.min(urlPage, total) : urlPage;
-                        if (_pageExists(pagination, page)) {
-                            setActivePage(pagination, page);
-                            const { min, max } = pageBounds(getAllPageElements(pagination));
-                            updatePrevNextStates(pagination, page, min, max);
-                        }
-                    }
+                    _restoreUrlPage(container);
                 }
 
                 // Universal reveal: a non-auto pagination releases its paged-content's
@@ -623,10 +614,10 @@
             contentContainer.setAttribute('data-paged-initialized', '');
 
             // Wire interaction: clicks + the --per-page ResizeObserver.
-            // _wireAutoNav re-queries items live (per click, per resize), so the
-            // spec carries only the per-container handles + the perPage baseline
+            // _wireAutoNav re-queries items live (per click, per resize), so it
+            // takes only the per-container handles + the perPage baseline
             // (which the resize observer detects changes against).
-            _wireAutoNav({ paginationNav, contentContainer, perPage });
+            _wireAutoNav(paginationNav, contentContainer, perPage);
         };
 
         // Tables defer one frame: by the next paint the collapsed table is
@@ -743,15 +734,6 @@
             : `<button type="button" class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" aria-label="${_t('page')} ${i}"${cur}><span class="nds-label">${i}</span></button>`;
     }
 
-    // Ellipsis <li>: an EMPTY dropmenu shell. The collapsed range never
-    // materializes eagerly — wireGeneratedPagination stamps it on the scroll
-    // container and _wireEllipsisLazy windows it in on open. Structure mirrors
-    // _ellipsisLiM (the markup-preserving twin, which stays eager), so
-    // NDS.Dropmenu.create and the click handler treat them the same.
-    function _ellipsisLi() {
-        return _ellipsisShell('');
-    }
-
     // Build a pagination list. Above 5 pages, emits the collapsed shape directly
     // — [Prev] 1 2 3 [ellipsis of 4..N-1] N [Next] — so every generated nav skips
     // a build-all-then-collapse round-trip (no NDSPagination needed).
@@ -764,7 +746,7 @@
         let html = '<ul class="nds-pagination-list">' + _prevLi(activePage === 1, url, activePage - 1);
         if (totalPages > 5) {
             html += _pageLi(1, activePage, url) + _pageLi(2, activePage, url) + _pageLi(3, activePage, url);
-            html += _ellipsisLi();
+            html += _ellipsisShell(); // empty — _wireEllipsisLazy windows rows in on open
             html += _pageLi(totalPages, activePage, url);
         } else {
             for (let i = 1; i <= totalPages; i++) html += _pageLi(i, activePage, url);
@@ -852,13 +834,28 @@
     }
 
     function _writePageParam(nav, page) {
-        const attr = nav && nav.getAttribute && nav.getAttribute('data-page-param');
+        const attr = nav.getAttribute('data-page-param');
         if (attr == null) return;
         const params = new URLSearchParams(window.location.search);
         if (page > 1) params.set(attr || 'page', page);
         else params.delete(attr || 'page');
         const qs = params.toString();
         window.history.replaceState({}, '', qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
+    }
+
+    // Land a manual nav on ?page=N at init, silently — no event (not user
+    // intent), no scroll. Clamped on data-driven navs; ignored on author navs
+    // when the page doesn't exist. No-op without data-page-param.
+    function _restoreUrlPage(nav) {
+        const urlPage = _readPageParam(nav);
+        if (!urlPage) return;
+        const pagination = nav.querySelector('.nds-pagination-list') || nav;
+        const total = parseInt(nav.dataset.totalPages);
+        const page = total > 0 ? Math.min(urlPage, total) : urlPage;
+        if (!_pageExists(pagination, page)) return;
+        setActivePage(pagination, page);
+        const { min, max } = pageBounds(getAllPageElements(pagination));
+        updatePrevNextStates(pagination, page, min, max);
     }
 
     // ── Lazy ellipsis menu (windowed) ─────────────────────────────────────
@@ -986,7 +983,9 @@
             </div>
         </div>`);
         const box = menu.firstElementChild;
-        NDS.Forms?.initializeContainer(box); // standard container wiring (soft-dep)
+        // Soft dependency — the jump box stays a plain input if NDS.Forms isn't
+        // bundled (no clear button, no container interaction states).
+        NDS.Forms?.initializeContainer(box);
         const input = box.querySelector('input');
 
         input.addEventListener('input', () => {
@@ -1240,9 +1239,7 @@
     // the --per-page ResizeObserver + (once) the shared .nds-paged-content
     // onDOMRemove cleanup. Called from setupAutoContainer's initial paint and
     // for any auto-pagination registered after init.
-    function _wireAutoNav(spec) {
-        const { paginationNav, contentContainer, perPage } = spec;
-
+    function _wireAutoNav(paginationNav, contentContainer, perPage) {
         // Live item set: re-queried each click + each resize so a filter
         // change after init (Filter calls refresh; refresh replaces the list
         // + the OLD click closure with it, but THIS resize observer survives
