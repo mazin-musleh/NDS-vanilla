@@ -148,8 +148,9 @@
         if (_navBackdropOwner === owner) return;
         const replacing = _navBackdropOwner !== null;
         _navBackdropOwner = owner;
-        NDS.Backdrop.show({ zIndex: 999, onClick });
-        if (replacing) NDS.Backdrop.hide();
+        // `replace` swaps ownership atomically — no tear-down/re-init flicker
+        // between sibling flyouts.
+        NDS.Backdrop.show({ zIndex: 999, onClick, replace: replacing });
     };
 
     const hideNavBackdrop = (owner) => {

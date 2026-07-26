@@ -9,9 +9,15 @@
 
   // Single shared backdrop element
   let backdropElement = null;
-  let currentConfig = null;
+  // Ownership stack — nested consumers (panel → modal) push their config; when
+  // the top consumer hides, the prior owner's config (zIndex, onClick,
+  // listeners) is restored so the backdrop returns to serving the layer
+  // beneath. A counter alone would keep the backdrop up but leave it stuck on
+  // the last-in config, orphaning the underlying owner's dismiss handler.
+  let stack = [];
   let isActive = false;
-  let activeCount = 0; // Track how many components are using the backdrop
+
+  const top = () => stack[stack.length - 1];
 
   /**
    * Initialize backdrop element (created once)
@@ -29,8 +35,9 @@
    * Handle backdrop click
    */
   function handleClick(e) {
-    if (e.target === backdropElement && currentConfig?.onClick) {
-      currentConfig.onClick();
+    const cfg = top();
+    if (e.target === backdropElement && cfg?.onClick) {
+      cfg.onClick();
     }
   }
 
@@ -38,8 +45,26 @@
    * Handle ESC key
    */
   function handleEscape(e) {
-    if ((e.key === 'Escape' || e.key === 'Esc') && currentConfig?.onClick) {
-      currentConfig.onClick();
+    const cfg = top();
+    if ((e.key === 'Escape' || e.key === 'Esc') && cfg?.onClick) {
+      cfg.onClick();
+    }
+  }
+
+  // Rebind listeners and zIndex to the current top-of-stack config. Called on
+  // every push and after every non-terminal pop so the backdrop always speaks
+  // for its actual current owner.
+  function applyTop() {
+    const cfg = top();
+    if (!cfg) return;
+    backdropElement.removeEventListener('click', handleClick);
+    document.removeEventListener('keydown', handleEscape);
+    backdropElement.style.zIndex = cfg.zIndex;
+    if (cfg.clickToClose) {
+      backdropElement.addEventListener('click', handleClick);
+    }
+    if (cfg.escapeClose) {
+      document.addEventListener('keydown', handleEscape);
     }
   }
 
@@ -60,39 +85,17 @@
       clickToClose: config.clickToClose !== false
     };
 
-    // If already active, just update the configuration
-    if (isActive) {
-      // Increment counter for new component using backdrop
-      activeCount++;
+    const wasActive = isActive;
+    // replace: swap the current top-of-stack owner in place (atomic hand-off),
+    // instead of stacking on top. Used by mainnav to switch owners between
+    // sibling flyouts without a tear-down/re-init flicker.
+    if (config.replace && wasActive) stack.pop();
+    stack.push(newConfig);
+    applyTop();
 
-      // Remove old event listeners
-      backdropElement.removeEventListener('click', handleClick);
-      document.removeEventListener('keydown', handleEscape);
-
-      // Update config
-      currentConfig = newConfig;
-
-      // Re-apply styles with new config
-      backdropElement.style.zIndex = currentConfig.zIndex;
-
-      // Re-attach event listeners with new config
-      if (currentConfig.clickToClose) {
-        backdropElement.addEventListener('click', handleClick);
-      }
-      if (currentConfig.escapeClose) {
-        document.addEventListener('keydown', handleEscape);
-      }
-
-      return;
-    }
+    if (wasActive) return;
 
     // First time showing - set up everything
-    currentConfig = newConfig;
-    activeCount = 1; // Initialize counter
-
-    // Apply inline styles
-    backdropElement.style.zIndex = currentConfig.zIndex;
-
     // Mark active synchronously so hide() can always clean up body state
     isActive = true;
 
@@ -102,23 +105,15 @@
     setTimeout(() => {
       if (!isActive) return;
       NDS.State.set(backdropElement, 'active');
-      if (currentConfig.preventScroll) {
+      if (newConfig.preventScroll) {
         NDS.scrollLock.lock();
       }
       NDS.State.set(document.body, 'backdrop');
     }, speed);
 
-    // Attach event listeners
-    if (currentConfig.clickToClose) {
-      backdropElement.addEventListener('click', handleClick);
-    }
-    if (currentConfig.escapeClose) {
-      document.addEventListener('keydown', handleEscape);
-    }
-
     // Call onShow callback
-    if (currentConfig.onShow) {
-      currentConfig.onShow();
+    if (newConfig.onShow) {
+      newConfig.onShow();
     }
   }
 
@@ -128,15 +123,16 @@
   function hide() {
     if (!isActive || !backdropElement) return;
 
-    // Decrement counter
-    activeCount--;
+    const popped = stack.pop();
 
-    // If other components are still using the backdrop, don't hide it
-    if (activeCount > 0) {
+    // If a prior owner is still on the stack, hand control back to it —
+    // don't tear down.
+    if (stack.length > 0) {
+      applyTop();
       return;
     }
 
-    // Remove event listeners
+    // Last owner leaving — full teardown
     backdropElement.removeEventListener('click', handleClick);
     document.removeEventListener('keydown', handleEscape);
 
@@ -147,7 +143,7 @@
 
     // Restore body state and scroll immediately
     NDS.State.clear(document.body);
-    if (currentConfig?.preventScroll) {
+    if (popped?.preventScroll) {
       NDS.scrollLock.unlock();
     }
 
@@ -156,9 +152,7 @@
     setTimeout(() => {
       if (isActive) return;
       backdropElement.style.display = '';
-      if (currentConfig?.onHide) currentConfig.onHide();
-      currentConfig = null;
-      activeCount = 0;
+      if (popped?.onHide) popped.onHide();
     }, speed);
   }
 
