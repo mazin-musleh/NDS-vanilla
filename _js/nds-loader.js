@@ -364,13 +364,13 @@
         },
         {
             // Delegated: pre-init paint is covered by CSS — the
-            // data-paged-initialized skeleton (crit) shows the first 6 items and
-            // collapses table rows, and _pagination.scss reserves the empty
-            // nav's row height — so init landing after the reveal inserts the
-            // list without shifting content. Bounded known shifts: --per-page ≠ 6,
-            // including the unset default (readPerPage resolves it to 5, so those
-            // containers drop one item); manual >5-page lists collapse to the
-            // ellipsis post-reveal. Registered AFTER Filter so
+            // data-paged-initialized skeleton (crit) shows the first 5 items —
+            // readPerPage's default, so a container that sets no --per-page has
+            // no boundary shift at all — and collapses table rows, and
+            // _pagination.scss reserves the empty nav's row height, so init
+            // landing after the reveal inserts the list without shifting
+            // content. Bounded known shifts: --per-page ≠ 5; manual >5-page
+            // lists collapse to the ellipsis post-reveal. Registered AFTER Filter so
             // a URL-active filter has stamped data-filtered before this paint;
             // Filter's refresh call during its init lands before this nav's
             // setup and is skipped (refreshAutoPagination's pre-init guard).

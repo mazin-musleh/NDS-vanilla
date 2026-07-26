@@ -504,6 +504,10 @@
         if (!headers || !headers.length) return;
         const widths = [];
         for (let i = 0; i < headers.length; i++) widths.push(headers[i].getBoundingClientRect().width);
+        // Nothing laid out to read (unrendered container — collapsed accordion,
+        // inactive tab panel, never-painted background tab): writing these would
+        // pin every column to 0px. Skip the lock; pages just size themselves.
+        if (!widths.some(w => w > 0)) return;
         for (let i = 0; i < headers.length; i++) headers[i].style.width = widths[i] + 'px';
     }
 
@@ -630,8 +634,16 @@
         // pre-paint forced reflow. The skeleton shows the first rows in the
         // meantime, so the one-frame defer is invisible. Grids have no column
         // lock, so they paginate synchronously.
-        if (items[0] && items[0].tagName === 'TR') requestAnimationFrame(paginate);
-        else paginate();
+        // A hidden document never runs rAF, so a timer races it behind a
+        // one-shot latch: in the foreground rAF wins and keeps the free read
+        // (the timer then no-ops), while a tab opened in the background still
+        // paginates and releases its skeleton instead of waiting for focus.
+        if (items[0] && items[0].tagName === 'TR') {
+            let kicked = false;
+            const kick = () => { if (kicked) return; kicked = true; paginate(); };
+            requestAnimationFrame(kick);
+            setTimeout(kick, 100);
+        } else paginate();
 
         // Re-paginate automatically when items are added/removed. Default for all
         // auto-pagination; wired once per page, subsequent calls no-op.
