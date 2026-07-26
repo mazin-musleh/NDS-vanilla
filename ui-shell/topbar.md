@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "15/07/2026 - 11:20 PM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 09:20 PM"
 ---
 
 <!-- Topbar -->
@@ -53,11 +53,11 @@ last_edit: "15/07/2026 - 11:20 PM"
     &lt;span id="nds-digitalStamp-verify-text" class="nds-link nds-primary"&gt;How you know?&lt;/span&gt;
   &lt;/button&gt;
   &lt;div class="nds-topbar-info"&gt;
-    &lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="mobile tablet"&gt;&lt;/span&gt;
-    &lt;span id="nds-realTimeClock" class="nds-text-icon" data-hidden="mobile"&gt;&lt;/span&gt;
-    &lt;span id="nds-cityName" class="nds-text-icon" data-hidden="mobile tablet"
+    &lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"&gt;&lt;/span&gt;
+    &lt;span id="nds-realTimeClock" class="nds-text-icon" data-hidden="sm"&gt;&lt;/span&gt;
+    &lt;span id="nds-cityName" class="nds-text-icon" data-hidden="sm md"
         data-city="الرياض" data-city-en="Riyadh"&gt;&lt;/span&gt;
-    &lt;span id="nds-weatherInfo" class="nds-text-icon" data-hidden="mobile"
+    &lt;span id="nds-weatherInfo" class="nds-text-icon" data-hidden="sm"
         data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
     &lt;button class="nds-btn nds-subtle nds-theme-toggle-wrap" data-theme-toggle aria-label="Toggle dark mode"&gt;
       &lt;i class="nds-icon nds-hgi-moon-02" aria-hidden="true"&gt;&lt;/i&gt;
@@ -110,15 +110,15 @@ last_edit: "15/07/2026 - 11:20 PM"
                                     <code class="lang-html code">
 &lt;!-- Hijri or Gregorian date (set via data-calendar);
      data-hidden picks where the widget hides (here: 960px and below) --&gt;
-&lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="mobile tablet"&gt;&lt;/span&gt;
+&lt;span id="nds-date" class="nds-text-icon" data-calendar="hijri" data-hidden="sm md"&gt;&lt;/span&gt;
 
 &lt;!-- Real-time clock (updates every second); hidden on mobile --&gt;
-&lt;span id="nds-realTimeClock" class="nds-text-icon" data-hidden="mobile"&gt;&lt;/span&gt;
+&lt;span id="nds-realTimeClock" class="nds-text-icon" data-hidden="sm"&gt;&lt;/span&gt;
 
 &lt;!-- City &amp; Weather (both required; city via data-city, coordinates on weatherInfo) --&gt;
-&lt;span id="nds-cityName" class="nds-text-icon" data-hidden="mobile tablet"
+&lt;span id="nds-cityName" class="nds-text-icon" data-hidden="sm md"
     data-city="الرياض" data-city-en="Riyadh"&gt;&lt;/span&gt;
-&lt;span id="nds-weatherInfo" class="nds-text-icon" data-hidden="mobile"
+&lt;span id="nds-weatherInfo" class="nds-text-icon" data-hidden="sm"
     data-latitude="24.7136" data-longitude="46.6753"&gt;&lt;/span&gt;
                                     </code>
                                 </div>

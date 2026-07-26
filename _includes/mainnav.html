@@ -87,7 +87,7 @@
                             <i class="nds-icon {{ item.icon }}" aria-hidden="true">{%- if badge_value and badge_value != 0 %}<span class="nds-badge">{{ badge_value }}</span>{%- endif %}</i>
                         {%- endif -%}
                         <span class="nds-label{%- if item.custom_class == 'lang' %} nds-lang-current{%- endif %}"
-                            {%- unless item.custom_class contains 'nds-CTA' %} data-hidden="mobile tablet sr"{%- endunless %}>{{ item.label }}</span>
+                            {%- unless item.custom_class contains 'nds-CTA' %} data-hidden="sm md sr"{%- endunless %}>{{ item.label }}</span>
                     {%- endcapture -%}
                     {%- assign action_class = item.button_style | default: 'nds-nav-link nds-btn nds-subtle nds-indicator' %}
                     {%- if item.type == 'modal' %}

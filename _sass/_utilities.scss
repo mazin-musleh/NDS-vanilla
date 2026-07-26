@@ -181,24 +181,25 @@
 // VISIBILITY UTILITIES
 // ==============================================
 
-// Band-exact responsive hiding: data-hidden="mobile|tablet|desktop" hides an
-// element ONLY inside that range (mobile ≤600, tablet 601-960, desktop 961-1280).
-// Combine tokens to span ranges: data-hidden="mobile tablet" hides up to 960px.
+// Band-exact responsive hiding: data-hidden="sm|md|lg" hides an element ONLY
+// inside that range (sm ≤600, md 601-960, lg 961-1280). The original
+// mobile/tablet/desktop names stay accepted as aliases for shipped markup.
+// Combine tokens to span ranges: data-hidden="sm md" hides up to 960px.
 // Add the sr token to keep the element in the accessibility tree while hidden
-// (visually-hidden instead of display:none) — e.g. data-hidden="mobile sr" on a
+// (visually-hidden instead of display:none) — e.g. data-hidden="sm sr" on a
 // button label that collapses to icon-only without losing its accessible name.
 // Deliberately unanchored — a global utility.
 @include mobile {
-  [data-hidden~="mobile"]:not([data-hidden~="sr"]) { display: none !important; }
-  [data-hidden~="mobile"][data-hidden~="sr"] { @include label-hidden; }
+  :is([data-hidden~="sm"], [data-hidden~="mobile"]):not([data-hidden~="sr"]) { display: none !important; }
+  :is([data-hidden~="sm"], [data-hidden~="mobile"])[data-hidden~="sr"] { @include label-hidden; }
 }
 @include tablet {
-  [data-hidden~="tablet"]:not([data-hidden~="sr"]) { display: none !important; }
-  [data-hidden~="tablet"][data-hidden~="sr"] { @include label-hidden; }
+  :is([data-hidden~="md"], [data-hidden~="tablet"]):not([data-hidden~="sr"]) { display: none !important; }
+  :is([data-hidden~="md"], [data-hidden~="tablet"])[data-hidden~="sr"] { @include label-hidden; }
 }
 @include desktop {
-  [data-hidden~="desktop"]:not([data-hidden~="sr"]) { display: none !important; }
-  [data-hidden~="desktop"][data-hidden~="sr"] { @include label-hidden; }
+  :is([data-hidden~="lg"], [data-hidden~="desktop"]):not([data-hidden~="sr"]) { display: none !important; }
+  :is([data-hidden~="lg"], [data-hidden~="desktop"])[data-hidden~="sr"] { @include label-hidden; }
 }
 
 // ==============================================

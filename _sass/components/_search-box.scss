@@ -33,7 +33,7 @@
         }
 
         // Search/filter labels collapse to icon-only on mobile via
-        // data-hidden="mobile sr" stamped in the markup (_utilities.scss).
+        // data-hidden="sm sr" stamped in the markup (_utilities.scss).
         @include mobile {
             gap: var(--spacing-md);
         }

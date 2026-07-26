@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.4.0"
-last_edit: "15/07/2026 - 11:03 PM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 09:02 PM"
 ---
 
 <!-- Native hidden attribute -->
@@ -73,7 +73,7 @@ last_edit: "15/07/2026 - 11:03 PM"
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Responsive Hiding with data-hidden</h2>
-            <p class="nds-section-description">Stamp <code class="nds-inline-code lang-html">data-hidden</code> on any element to hide it only inside a named viewport range: <code class="nds-inline-code lang-html">mobile</code> (600px and below), <code class="nds-inline-code lang-html">tablet</code> (601 to 960px), <code class="nds-inline-code lang-html">desktop</code> (961 to 1280px). Space-separate tokens to span ranges. Resize the window to watch each tag drop out of its own band</p>
+            <p class="nds-section-description">Stamp <code class="nds-inline-code lang-html">data-hidden</code> on any element to hide it only inside a named viewport range: <code class="nds-inline-code lang-html">sm</code> (600px and below), <code class="nds-inline-code lang-html">md</code> (601 to 960px), <code class="nds-inline-code lang-html">lg</code> (961 to 1280px). Space-separate tokens to span ranges. Resize the window to watch each tag drop out of its own band</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -83,10 +83,10 @@ last_edit: "15/07/2026 - 11:03 PM"
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); align-items: center;">
-                            <span class="nds-tag" data-status="error" data-hidden="mobile"><span class="nds-label">mobile</span></span>
-                            <span class="nds-tag" data-status="warning" data-hidden="tablet"><span class="nds-label">tablet</span></span>
-                            <span class="nds-tag" data-status="info" data-hidden="desktop"><span class="nds-label">desktop</span></span>
-                            <span class="nds-tag" data-status="neutral" data-hidden="mobile tablet"><span class="nds-label">mobile tablet</span></span>
+                            <span class="nds-tag" data-status="error" data-hidden="sm"><span class="nds-label">sm</span></span>
+                            <span class="nds-tag" data-status="warning" data-hidden="md"><span class="nds-label">md</span></span>
+                            <span class="nds-tag" data-status="info" data-hidden="lg"><span class="nds-label">lg</span></span>
+                            <span class="nds-tag" data-status="neutral" data-hidden="sm md"><span class="nds-label">sm md</span></span>
                             <span class="nds-tag" data-status="success"><span class="nds-label">always visible</span></span>
                         </div>
                     </div>
@@ -111,10 +111,10 @@ last_edit: "15/07/2026 - 11:03 PM"
                                         </button>
                                     </div>
                                     <code class="lang-html code">
-&lt;span class="nds-tag" data-status="error" data-hidden="mobile"&gt;&lt;span class="nds-label"&gt;mobile&lt;/span&gt;&lt;/span&gt;
-&lt;span class="nds-tag" data-status="warning" data-hidden="tablet"&gt;&lt;span class="nds-label"&gt;tablet&lt;/span&gt;&lt;/span&gt;
-&lt;span class="nds-tag" data-status="info" data-hidden="desktop"&gt;&lt;span class="nds-label"&gt;desktop&lt;/span&gt;&lt;/span&gt;
-&lt;span class="nds-tag" data-status="neutral" data-hidden="mobile tablet"&gt;&lt;span class="nds-label"&gt;mobile tablet&lt;/span&gt;&lt;/span&gt;
+&lt;span class="nds-tag" data-status="error" data-hidden="sm"&gt;&lt;span class="nds-label"&gt;sm&lt;/span&gt;&lt;/span&gt;
+&lt;span class="nds-tag" data-status="warning" data-hidden="md"&gt;&lt;span class="nds-label"&gt;md&lt;/span&gt;&lt;/span&gt;
+&lt;span class="nds-tag" data-status="info" data-hidden="lg"&gt;&lt;span class="nds-label"&gt;lg&lt;/span&gt;&lt;/span&gt;
+&lt;span class="nds-tag" data-status="neutral" data-hidden="sm md"&gt;&lt;span class="nds-label"&gt;sm md&lt;/span&gt;&lt;/span&gt;
 &lt;span class="nds-tag" data-status="success"&gt;&lt;span class="nds-label"&gt;always visible&lt;/span&gt;&lt;/span&gt;
                                     </code>
                                 </div>
@@ -144,7 +144,7 @@ last_edit: "15/07/2026 - 11:03 PM"
                         <div class="state-demo">
                             <button class="nds-btn nds-neutral" type="button">
                                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                <span class="nds-label" data-hidden="mobile sr">Search</span>
+                                <span class="nds-label" data-hidden="sm sr">Search</span>
                             </button>
                         </div>
                     </div>
@@ -171,7 +171,7 @@ last_edit: "15/07/2026 - 11:03 PM"
                                     <code class="lang-html code">
 &lt;button class="nds-btn nds-neutral" type="button"&gt;
   &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-  &lt;span class="nds-label" data-hidden="mobile sr"&gt;Search&lt;/span&gt;
+  &lt;span class="nds-label" data-hidden="sm sr"&gt;Search&lt;/span&gt;
 &lt;/button&gt;
                                     </code>
                                 </div>
@@ -204,14 +204,14 @@ last_edit: "15/07/2026 - 11:03 PM"
                         <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
                         <span class="nds-label">Band-Exact Breakpoints</span>
                     </span>
-                    <p class="nds-item-desc">Each data-hidden token hides an element only inside its own range, so a tablet-only gap never leaks into mobile.</p>
+                    <p class="nds-item-desc">Each data-hidden token hides an element only inside its own range, so a mid-width gap never leaks into small screens.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-puzzle"></i>
                         <span class="nds-label">Composable Ranges</span>
                     </span>
-                    <p class="nds-item-desc">Space-separate tokens to span ranges, like data-hidden="mobile tablet" for everything below the desktop breakpoint.</p>
+                    <p class="nds-item-desc">Space-separate tokens to span ranges, like data-hidden="sm md" for everything below the large breakpoint.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -239,9 +239,9 @@ last_edit: "15/07/2026 - 11:03 PM"
                     <li>Use the <code class="nds-inline-code lang-html">hidden</code> attribute for state your JS toggles (panels, menus, wizard steps). It wins over any display value, so no extra CSS is needed</li>
                     <li>Use <code class="nds-inline-code lang-html">data-hidden</code> for chrome that has no place at some widths (topbar widgets, secondary metadata) instead of writing one-off media queries</li>
                     <li>Think of the split as: <code class="nds-inline-code lang-html">hidden</code> is state ("not right now"), <code class="nds-inline-code lang-html">data-hidden</code> is viewport ("not at this width"). Both can sit on one element, and either condition hides it</li>
-                    <li>Combine tokens to span ranges: <code class="nds-inline-code lang-html">data-hidden="mobile tablet"</code> hides up to 960px, <code class="nds-inline-code lang-html">data-hidden="tablet desktop"</code> keeps an element for mobile and very wide screens only</li>
-                    <li><code class="nds-inline-code lang-html">data-hidden="desktop"</code> covers 961 to 1280px, so the element shows again on wider screens. There is no token for widths above 1280px</li>
-                    <li>The <code class="nds-inline-code lang-html">hidden</code> attribute and plain <code class="nds-inline-code lang-html">data-hidden</code> remove content from screen readers too. When assistive technology should still announce it, add the <code class="nds-inline-code lang-html">sr</code> token: <code class="nds-inline-code lang-html">data-hidden="mobile sr"</code></li>
+                    <li>Combine tokens to span ranges: <code class="nds-inline-code lang-html">data-hidden="sm md"</code> hides up to 960px, <code class="nds-inline-code lang-html">data-hidden="md lg"</code> keeps an element for the smallest and very wide screens only</li>
+                    <li><code class="nds-inline-code lang-html">data-hidden="lg"</code> covers 961 to 1280px, so the element shows again on wider screens. There is no token for widths above 1280px</li>
+                    <li>The <code class="nds-inline-code lang-html">hidden</code> attribute and plain <code class="nds-inline-code lang-html">data-hidden</code> remove content from screen readers too. When assistive technology should still announce it, add the <code class="nds-inline-code lang-html">sr</code> token: <code class="nds-inline-code lang-html">data-hidden="sm sr"</code></li>
                     <li>Hiding a label with <code class="nds-inline-code lang-html">sr</code> does not restyle the control: a button keeps its text padding rather than becoming a square icon button. Sizing stays the component's job</li>
                     <li>Do not hide primary actions on small screens. Collapse them into a <a class="nds-color" href="{{ 'components/dropmenu' | relative_url }}">Dropmenu</a> so the capability stays reachable</li>
                     <li>Hidden elements still download their images and iframes. Remove heavy content from the markup rather than hiding it</li>
@@ -254,7 +254,7 @@ last_edit: "15/07/2026 - 11:03 PM"
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">hidden</code></td><td>Native attribute, any element. Removes it from rendering and assistive technology, and wins over any display value</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-hidden</code></td><td>Band-exact responsive hiding. Tokens: <code class="nds-inline-code lang-html">mobile</code> (600px and below), <code class="nds-inline-code lang-html">tablet</code> (601 to 960px), <code class="nds-inline-code lang-html">desktop</code> (961 to 1280px). Space-separate to combine. Add <code class="nds-inline-code lang-html">sr</code> to hide visually but keep the element readable to screen readers</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-hidden</code></td><td>Band-exact responsive hiding. Tokens: <code class="nds-inline-code lang-html">sm</code> (600px and below), <code class="nds-inline-code lang-html">md</code> (601 to 960px), <code class="nds-inline-code lang-html">lg</code> (961 to 1280px). Space-separate to combine. Add <code class="nds-inline-code lang-html">sr</code> to hide visually but keep the element readable to screen readers</td></tr>
                     </tbody>
                 </table>
             </div>

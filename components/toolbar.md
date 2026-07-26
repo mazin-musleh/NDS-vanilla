@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.4.0"
-last_edit: "17/07/2026 - 12:30 AM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 09:20 PM"
 ---
 
 <!-- Toolbar -->
@@ -198,7 +198,7 @@ last_edit: "17/07/2026 - 12:30 AM"
                                         </div>
                                         <button class="nds-btn nds-primary nds-search-btn" type="button">
                                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <span class="nds-label" data-hidden="mobile sr">Search</span>
+                                            <span class="nds-label" data-hidden="sm sr">Search</span>
                                         </button>
                                     </div>
                                 </div>
@@ -296,7 +296,7 @@ last_edit: "17/07/2026 - 12:30 AM"
         &lt;/div&gt;
         &lt;button class="nds-btn nds-primary nds-search-btn" type="button"&gt;
           &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-          &lt;span class="nds-label" data-hidden="mobile sr"&gt;Search&lt;/span&gt;
+          &lt;span class="nds-label" data-hidden="sm sr"&gt;Search&lt;/span&gt;
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;

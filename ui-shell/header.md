@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "15/07/2026 - 11:27 PM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 09:20 PM"
 ---
 
 <!-- Header Structure -->
@@ -148,7 +148,7 @@ header
           &lt;li class="nds-nav-item"&gt;
             &lt;a href="/search" class="nds-nav-link nds-btn nds-subtle nds-indicator"&gt;
               &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-              &lt;span class="nds-label" data-hidden="mobile tablet sr"&gt;Search&lt;/span&gt;
+              &lt;span class="nds-label" data-hidden="sm md sr"&gt;Search&lt;/span&gt;
             &lt;/a&gt;
           &lt;/li&gt;
         &lt;/ul&gt;
@@ -492,7 +492,7 @@ header
                     <li>Do not place critical actions only inside dropdown menus. Users on mobile may not discover them. Promote key actions to the primary or secondary nav level.</li>
                     <li>Do not add more than one level of dropdown nesting. The component supports single-level dropdowns only.</li>
                     <li>Set the brand logo dimensions explicitly with <code class="nds-inline-code lang-html">width</code> and <code class="nds-inline-code lang-html">height</code> attributes to prevent layout shift during page load.</li>
-                    <li>Use <code class="nds-inline-code lang-html">nds-icon-only</code> on secondary nav items that should display as icon buttons at every width. For labels that should collapse only on smaller screens, stamp <code class="nds-inline-code lang-html">data-hidden="mobile tablet sr"</code> on the label as the markup above shows: the <code class="nds-inline-code lang-html">sr</code> token keeps the accessible name while the label is visually hidden. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility.</li>
+                    <li>Use <code class="nds-inline-code lang-html">nds-icon-only</code> on secondary nav items that should display as icon buttons at every width. For labels that should collapse only on smaller screens, stamp <code class="nds-inline-code lang-html">data-hidden="sm md sr"</code> on the label as the markup above shows: the <code class="nds-inline-code lang-html">sr</code> token keeps the accessible name while the label is visually hidden. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility.</li>
                     <li>Mark nav items that must remain visible at all breakpoints with <code class="nds-inline-code lang-html">nds-PAB</code>. These items automatically move to the minimal nav bar on small screens and return to their original position on wider viewports.</li>
                 </ul>
             </div>
@@ -523,7 +523,7 @@ header
                     <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-state="current"</code></td><td>nav-link</td><td>Marks the active page in the navigation</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-hidden="mobile tablet sr"</code></td><td>action-item label</td><td>Collapses the label to icon-only below 960px while screen readers keep the name. Omit on <code class="nds-inline-code lang-html">nds-CTA</code> items so their labels stay visible. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-hidden="sm md sr"</code></td><td>action-item label</td><td>Collapses the label to icon-only below 960px while screen readers keep the name. Omit on <code class="nds-inline-code lang-html">nds-CTA</code> items so their labels stay visible. See the <a class="nds-color" href="{{ 'utilities/hidden' | relative_url }}">Hidden</a> utility</td></tr>
                     </tbody>
                 </table>
             </div>

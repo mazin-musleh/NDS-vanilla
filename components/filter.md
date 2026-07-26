@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "16/07/2026 - 02:30 AM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 09:20 PM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -38,14 +38,14 @@ last_edit: "16/07/2026 - 02:30 AM"
                                         </div>
                                         <button class="nds-btn nds-primary nds-search-btn" type="button">
                                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <span class="nds-label" data-hidden="mobile sr">Search</span>
+                                            <span class="nds-label" data-hidden="sm sr">Search</span>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards">
                                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
-                                        <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -138,7 +138,7 @@ last_edit: "16/07/2026 - 02:30 AM"
       &lt;/div&gt;
       &lt;button class="nds-btn nds-primary nds-search-btn" type="button"&gt;
         &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;span class="nds-label" data-hidden="mobile sr"&gt;Search&lt;/span&gt;
+        &lt;span class="nds-label" data-hidden="sm sr"&gt;Search&lt;/span&gt;
       &lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -147,7 +147,7 @@ last_edit: "16/07/2026 - 02:30 AM"
   &lt;div class="nds-dropmenu nds-filter" data-filter-target="basicFilterCards"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-      &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+      &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
     &lt;div class="nds-dropmenu-menu" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
@@ -238,7 +238,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                             <div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
-                                    <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                    <span class="nds-label" data-hidden="sm sr">Filter</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                     <div class="nds-dropmenu-scroll">
@@ -334,7 +334,7 @@ last_edit: "16/07/2026 - 02:30 AM"
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="checkboxCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-    &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+    &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
   &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
@@ -437,7 +437,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                             <div class="nds-dropmenu nds-filter" data-filter-target="radioCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
-                                    <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                    <span class="nds-label" data-hidden="sm sr">Filter</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                     <div class="nds-dropmenu-scroll">
@@ -533,7 +533,7 @@ last_edit: "16/07/2026 - 02:30 AM"
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="radioCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-    &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+    &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
   &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
@@ -635,7 +635,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                             <div class="nds-dropmenu nds-filter" data-filter-target="switchCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
-                                    <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                    <span class="nds-label" data-hidden="sm sr">Filter</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" style="min-width: 260px;" hidden>
                                     <div class="nds-dropmenu-scroll">
@@ -743,7 +743,7 @@ last_edit: "16/07/2026 - 02:30 AM"
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="switchCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-    &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+    &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
   &lt;div class="nds-dropmenu-menu" style="min-width: 260px;" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
@@ -851,7 +851,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                 <div class="nds-dropmenu nds-filter" data-filter-target="sliderCards">
                                     <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
-                                        <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -906,7 +906,7 @@ last_edit: "16/07/2026 - 02:30 AM"
   &lt;div class="nds-dropmenu nds-filter" data-filter-target="sliderCards"&gt;
     &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-      &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+      &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
     &lt;div class="nds-dropmenu-menu" style="min-width: 300px;" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
@@ -975,7 +975,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                                 <div class="nds-dropmenu nds-filter" data-filter-target="accordionFilterCards">
                                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
-                                        <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -1066,7 +1066,7 @@ last_edit: "16/07/2026 - 02:30 AM"
   &lt;div class="nds-dropmenu nds-filter" data-filter-target="accordionFilterCards"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-      &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+      &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
     &lt;div class="nds-dropmenu-menu" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
@@ -1177,14 +1177,14 @@ last_edit: "16/07/2026 - 02:30 AM"
                                         </div>
                                         <button class="nds-btn nds-primary nds-search-btn" type="button">
                                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                                            <span class="nds-label" data-hidden="mobile sr">Search</span>
+                                            <span class="nds-label" data-hidden="sm sr">Search</span>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards">
                                     <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                         <i class="hgi hgi-stroke hgi-filter"></i>
-                                        <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                        <span class="nds-label" data-hidden="sm sr">Filter</span>
                                     </button>
                                     <div class="nds-dropmenu-menu" style="min-width: 300px;" hidden>
                                         <div class="nds-dropmenu-scroll">
@@ -1268,7 +1268,7 @@ last_edit: "16/07/2026 - 02:30 AM"
       &lt;/div&gt;
       &lt;button class="nds-btn nds-primary nds-search-btn" type="button"&gt;
         &lt;i class="nds-icon nds-hgi-search-01" aria-hidden="true"&gt;&lt;/i&gt;
-        &lt;span class="nds-label" data-hidden="mobile sr"&gt;Search&lt;/span&gt;
+        &lt;span class="nds-label" data-hidden="sm sr"&gt;Search&lt;/span&gt;
       &lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -1277,7 +1277,7 @@ last_edit: "16/07/2026 - 02:30 AM"
   &lt;div class="nds-dropmenu nds-filter" data-filter-target="barFilterCards"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-      &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+      &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
     &lt;div class="nds-dropmenu-menu" style="min-width: 300px;" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
@@ -1366,7 +1366,7 @@ last_edit: "16/07/2026 - 02:30 AM"
                             <div class="nds-dropmenu nds-filter" data-filter-target="staticCards">
                                 <button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger">
                                     <i class="hgi hgi-stroke hgi-filter"></i>
-                                    <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                    <span class="nds-label" data-hidden="sm sr">Filter</span>
                                 </button>
                                 <div class="nds-dropmenu-menu" hidden>
                                     <div class="nds-dropmenu-scroll">
@@ -1481,7 +1481,7 @@ last_edit: "16/07/2026 - 02:30 AM"
 &lt;div class="nds-dropmenu nds-filter" data-filter-target="staticCards"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-    &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+    &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
   &lt;div class="nds-dropmenu-menu" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
@@ -1588,7 +1588,7 @@ last_edit: "16/07/2026 - 02:30 AM"
   data-filter-target="results"&gt;
   &lt;button class="nds-btn nds-neutral nds-filter-btn nds-dropmenu-trigger"&gt;
     &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-    &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+    &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
   &lt;/button&gt;
   &lt;div class="nds-dropmenu-menu" hidden&gt;
     &lt;div class="nds-dropmenu-scroll"&gt;
@@ -1764,7 +1764,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
       &lt;/div&gt;
       &lt;button class="nds-btn nds-primary nds-search-btn"
         type="submit"&gt;
-        &lt;span class="nds-label" data-hidden="mobile sr"&gt;Search&lt;/span&gt;
+        &lt;span class="nds-label" data-hidden="sm sr"&gt;Search&lt;/span&gt;
       &lt;/button&gt;
 
       &lt;!-- Filter anchor (pure marker, not the form) --&gt;

@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "25/07/2026 - 07:45 PM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 09:20 PM"
 ---
 
 <!-- Basic Table Section -->
@@ -1382,7 +1382,7 @@ last_edit: "25/07/2026 - 07:45 PM"
                         <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal>
                             <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
                                 <i class="hgi hgi-stroke hgi-filter"></i>
-                                <span class="nds-label" data-hidden="mobile sr">Filter</span>
+                                <span class="nds-label" data-hidden="sm sr">Filter</span>
                             </button>
                             <div class="nds-dropmenu-menu" hidden>
                                 <div class="nds-dropmenu-scroll">
@@ -1496,7 +1496,7 @@ last_edit: "25/07/2026 - 07:45 PM"
   &lt;div class="nds-dropmenu"&gt;
     &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
       &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-      &lt;span class="nds-label" data-hidden="mobile sr"&gt;Filter&lt;/span&gt;
+      &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
     &lt;/button&gt;
     &lt;div class="nds-dropmenu-menu" hidden&gt;
       &lt;div class="nds-dropmenu-scroll"&gt;
