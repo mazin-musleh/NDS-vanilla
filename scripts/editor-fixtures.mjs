@@ -507,6 +507,84 @@ p.MsoListParagraph {margin-left:36.0pt; mso-add-space:auto;}
             ['contains', 'aria-label="Close alert"'],
         ],
     },
+    // ── Paste into a NON-EMPTY document ────────────────────────────────────
+    // _onPaste short-circuits an empty document straight to innerHTML, so every
+    // fixture above exercises that clean path. These drive the real insert
+    // instead, where execCommand('insertHTML') used to merge the fragment's
+    // first element into the caret's block and strip a component's identity.
+    {
+        name: 'paste-into-nonempty-multipart-card',
+        paste: true,
+        pasteInto: '<p>قبل</p><p>بعد</p>',
+        html: '<div class="nds-card"><p class="nds-card-title">العنوان</p><p class="nds-card-desc">الوصف</p></div>',
+        expect: [
+            ['contains', 'class="nds-card"'],
+            ['contains', 'class="nds-card-title"'],
+            ['contains', 'class="nds-card-desc"'],
+            ['contains', 'العنوان'],
+            ['contains', '<p>بعد</p>'],
+            ['not', '<strong>'],   // the hoisted-title signature
+        ],
+    },
+    {
+        name: 'paste-into-nonempty-single-part-card',
+        paste: true,
+        pasteInto: '<p>قبل</p><p>بعد</p>',
+        html: '<div class="nds-card"><p class="nds-card-desc">جزء واحد</p></div>',
+        expect: [
+            ['contains', 'class="nds-card"'],
+            ['contains', 'class="nds-card-desc"'],
+            ['contains', '<p>بعد</p>'],
+        ],
+    },
+    {
+        name: 'paste-into-nonempty-inline-atom',
+        paste: true,
+        pasteInto: '<p>قبل</p><p>بعد</p>',
+        html: '<span class="nds-tag">وسم</span>',
+        expect: [
+            ['contains', 'class="nds-tag"'],
+            ['contains', 'وسم'],
+        ],
+    },
+    {
+        name: 'paste-into-nonempty-table',
+        paste: true,
+        pasteInto: '<p>قبل</p><p>بعد</p>',
+        html: '<table class="nds-table"><tbody><tr><td>أ</td><td>ب</td></tr></tbody></table>',
+        expect: [
+            ['contains', 'class="nds-table"'],
+            ['contains', '<td>أ</td>'],
+            ['contains', '<p>بعد</p>'],   // the caret's block must survive intact
+        ],
+    },
+    {
+        // Caret MID-block: the split path. The head keeps its text, the tail
+        // continues after the component — with no blank line stranded between.
+        name: 'paste-into-nonempty-midblock-splits-cleanly',
+        paste: true,
+        pasteInto: '<p>قبل</p><p>بعد</p>',
+        pasteAt: 'mid',
+        html: '<div class="nds-card"><p class="nds-card-title">العنوان</p></div>',
+        expect: [
+            ['contains', 'class="nds-card"'],
+            ['contains', 'class="nds-card-title"'],
+            ['contains', '<p>بعد</p>'],   // the untouched second block survives
+            ['not', '<p><br></p>'],       // no stray blank line at the split
+            ['not', '<strong>'],
+        ],
+    },
+    {
+        name: 'paste-into-nonempty-plain-blocks-still-merge',
+        paste: true,
+        pasteInto: '<p>قبل</p><p>بعد</p>',
+        html: '<p>واحد</p><p>اثنان</p>',
+        expect: [
+            ['contains', 'اثنان'],
+            ['not', '<p>واحد</p>'],   // merged into the caret's paragraph, not standalone
+            ['not', 'nds-'],
+        ],
+    },
 ];
 
 const browser = await puppeteer.launch({
@@ -559,14 +637,29 @@ try {
             return out;
         }, f.html);
         if (!f.paste) return page.evaluate((html) => NDS.Editor._sanitize(html), f.html);
-        return page.evaluate(({ html, plainOnly }) => {
+        return page.evaluate(({ html, plainOnly, seed, at }) => {
             const source = document.getElementById('story');
             const editable = source.closest('.nds-form-control').querySelector('.nds-editor-editable');
-            editable.innerHTML = '<p><br></p>';
+            // pasteInto seeds a NON-EMPTY document and drops the caret at the end
+            // of its last text — the branch that skips _onPaste's empty-document
+            // shortcut and goes through the real insert path.
+            editable.innerHTML = seed || '<p><br></p>';
             editable.focus();
             const r = document.createRange();
-            r.selectNodeContents(editable);
-            r.collapse(false);
+            if (seed) {
+                const w = document.createTreeWalker(editable, NodeFilter.SHOW_TEXT);
+                const texts = [];
+                let cur;
+                while ((cur = w.nextNode())) if (cur.textContent.trim()) texts.push(cur);
+                // 'mid' splits the FIRST block (drives the block-split path);
+                // the default lands at the end of the last text.
+                const n = at === 'mid' ? texts[0] : texts[texts.length - 1];
+                r.setStart(n, at === 'mid' ? 1 : n.textContent.length);
+                r.collapse(true);
+            } else {
+                r.selectNodeContents(editable);
+                r.collapse(false);
+            }
             const sel = getSelection();
             sel.removeAllRanges();
             sel.addRange(r);
@@ -575,7 +668,7 @@ try {
             dt.setData('text/plain', plainOnly ? html : 'plain-fallback');
             editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
             return source.value;
-        }, { html: f.html, plainOnly: !!f.plainOnly });
+        }, { html: f.html, plainOnly: !!f.plainOnly, seed: f.pasteInto || null, at: f.pasteAt || 'end' });
     }
 
     let failures = 0;
@@ -940,7 +1033,39 @@ try {
         const outsideSelectionSafe = removeBtn.disabled
             && removeMenu.querySelectorAll('[data-editor-remove-level]').length === 0;
 
-        return { cardIntact, boundaryStops, innerEdgeBlocked, innerEditFree, alertStopsFromAfter, alertStopsFromBefore, partStartBlocked, partEndBlocked, partEditFree, crossPartSelectionBlocked, samePartSelectionFree, fullPartSelectionFree, wholeShellDragFree, wordSelectionFree, enterKeptPart, removeDisabledOutside, removeEnabledInside, nestedLevels, innerLevelRemoved, removeConfirmGate, removeLevelNamed, removeDeletesShell, removeUndoRestores, removalHistorySafe, removalChainRestore, removalRedoWorks, outsideSelectionSafe };
+        // Paste over a shell-clipping selection: replacing it would cut the
+        // same boundary delete and cut stop at, so the paste must not land.
+        editable.innerHTML = '<div class="nds-alert"><p class="nds-alert-title">عنوان</p><p class="nds-alert-description">وصف</p></div>';
+        root.ndsEditor._syncSource();
+        const pasteOver = (startNode, startOff, endNode, endOff, html) => {
+            const pr = document.createRange();
+            pr.setStart(startNode, startOff);
+            pr.setEnd(endNode, endOff);
+            const ps = getSelection();
+            ps.removeAllRanges();
+            ps.addRange(pr);
+            const dt = new DataTransfer();
+            dt.setData('text/html', html);
+            editable.focus();
+            editable.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+        };
+        const valueBeforePaste = root.ndsEditor.source.value;
+        pasteOver(editable.querySelector('.nds-alert-title').firstChild, 1,
+                  editable.querySelector('.nds-alert-description').firstChild, 2, '<p>جديد</p>');
+        const clipPasteBlocked = root.ndsEditor.source.value === valueBeforePaste
+            && !editable.textContent.includes('جديد')
+            && !!editable.querySelector('.nds-alert-title');
+        // A blocked paste is silent otherwise — the notice is the only signal.
+        const clipPasteNotified = !!root.querySelector('.nds-form-footer .nds-feedback');
+
+        // Same-part selection still pastes normally — the guard is a boundary
+        // rule, not a blanket block inside components.
+        const descText = editable.querySelector('.nds-alert-description').firstChild;
+        pasteOver(descText, 0, descText, 2, 'بديل');
+        const inPartPasteFree = editable.textContent.includes('بديل')
+            && !!editable.querySelector('.nds-alert-description');
+
+        return { cardIntact, boundaryStops, innerEdgeBlocked, innerEditFree, alertStopsFromAfter, alertStopsFromBefore, partStartBlocked, partEndBlocked, partEditFree, crossPartSelectionBlocked, samePartSelectionFree, fullPartSelectionFree, wholeShellDragFree, wordSelectionFree, enterKeptPart, removeDisabledOutside, removeEnabledInside, nestedLevels, innerLevelRemoved, removeConfirmGate, removeLevelNamed, removeDeletesShell, removeUndoRestores, removalHistorySafe, removalChainRestore, removalRedoWorks, outsideSelectionSafe, clipPasteBlocked, clipPasteNotified, inPartPasteFree };
     });
     const shellProblems = Object.entries(shellOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
     if (shellProblems.length) {

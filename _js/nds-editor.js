@@ -71,6 +71,9 @@
     const URL_SCHEMES = /^(?:https?|mailto|tel):/i;
     const SRC_SCHEMES = /^(?:https?:|data:image\/)/i;
     const cleanUrl = (u) => u.replace(/^[\u0000-\u0020]+|[\u0000-\u0020]+$/g, '').replace(/[\t\n\r]/g, '');
+    // Local fork of the NDS.safeUrl name — answers a boolean and keeps a
+    // relative URL exactly as authored, where core returns an absolutized
+    // href; the doc-example canon above depends on that. Do not swap.
     const safeUrl = (u) => URL_SCHEMES.test(u) || !HAS_SCHEME.test(u);
     const safeSrc = (u) => SRC_SCHEMES.test(u) || !HAS_SCHEME.test(u);
 
@@ -90,6 +93,10 @@
     const NDS_CLASS = /^(?:nds-[\w-]+|hgi(?:-[\w-]+)?)$/;
     // Region roots that may legitimately sit inline inside a <p>.
     const INLINE_REGION_TAGS = new Set(['SPAN', 'BUTTON', 'A', 'I']);
+    // Content that flows inline at the caret. Everything else is a block: it
+    // needs its own line and cannot nest inside a <p>.
+    const isInlineNode = (el) =>
+        INLINE_TAGS.has(el.tagName) || el.tagName === 'IMG' || INLINE_REGION_TAGS.has(el.tagName);
     // A table interpretMarkup stamped nds-table on is foreign content wearing an
     // NDS class, not markup an author claimed as NDS — so it gets table structure
     // plus the plain vocabulary, never NDS_TAGS' IMG/BUTTON/DIV (which the generic
@@ -623,6 +630,7 @@
         invalidImageUrl: { en: 'Enter a valid image URL', ar: 'أدخل رابط صورة صالحًا' },
         invalidUrl:      { en: 'Enter a valid URL', ar: 'أدخل رابطًا صالحًا' },
         pasteBlocked:    { en: 'Pasting images is not available — use the image dialog', ar: 'لصق الصور غير متاح — استخدم نافذة إدراج الصورة' },
+        pasteClipsShell: { en: 'Selection crosses a component — adjust it before pasting', ar: 'التحديد يتجاوز حدود مكون — عدّل التحديد قبل اللصق' },
         alt:      { en: 'Alt text', ar: 'النص البديل' },
         width:    { en: 'Width (px)', ar: 'العرض (بكسل)' },
         height:   { en: 'Height (px)', ar: 'الارتفاع (بكسل)' },
@@ -642,7 +650,7 @@
     function cmdButtonHtml(cmd, extraClass = '') {
         const c = TOOLBAR_CMDS[cmd];
         const label = uiLabel(c);
-        const icon = typeof c.icon === 'string' ? c.icon : (NDS.isRTL ? c.icon.rtl : c.icon.ltr);
+        const icon = c.icon;
         // inlineIcon: paint from the mask-based UI-icon sheet (.nds-icon) rather
         // than the HGI font — for glyphs not (yet) in the font, e.g. pilcrow.
         const iconHtml = c.inlineIcon
@@ -815,33 +823,57 @@
             // when hydration didn't change the value (sync early-returned).
             if (this._histIdx < 0) this._pushHistory(false);
 
-            // preventDefault on mousedown keeps the editable's selection when a
-            // toolbar button is clicked. The link command preps here too —
-            // NDS.Dropmenu's trigger click stopPropagations, so the toolbar click
-            // delegate below never fires for it.
-            if (this.toolbar) {
-                this.toolbar.addEventListener('mousedown', (e) => {
-                    const cmdBtn = e.target.closest('[data-cmd]');
-                    if (!cmdBtn) return;
-                    e.preventDefault();
-                    if (cmdBtn.dataset.cmd === 'link') this._prepLinkMenu();
-                    else if (cmdBtn.dataset.cmd === 'image') this._prepImageMenu();
-                    else if (cmdBtn.dataset.cmd === 'remove') this._prepRemoveMenu();
+            this._bindToolbar(signal);
+            this._bindEditable(signal);
+            this._bindFieldState(signal);
+            // Popover wiring — each menu's listeners sit with the rest of its
+            // own _prep/_confirm/_cancel triad rather than inline here.
+            this._bindPopoverFields(signal);
+            this._bindLinkMenu(signal);
+            this._bindImageMenu(signal);
+            this._bindRemoveMenu(signal);
+
+            // Server-shipped data-state="disabled|readonly" applies at init;
+            // later toggles arrive through the NDS.State hooks above.
+            this._applyAccessState();
+            // Settle caret-gated button states (remove starts disabled) and
+            // the image upload affordance (URL-only unless embed/endpoint).
+            this._updateToolbarState();
+            this._syncImageUploadVisibility();
+
+            this.root.dispatchEvent(new CustomEvent('nds:editor:ready', { detail: { instance: this }, bubbles: true }));
+        }
+
+        // preventDefault on mousedown keeps the editable's selection when a
+        // toolbar button is clicked. The link command preps here too —
+        // NDS.Dropmenu's trigger click stopPropagations, so the toolbar click
+        // delegate below never fires for it.
+        _bindToolbar(signal) {
+            if (!this.toolbar) return;
+            this.toolbar.addEventListener('mousedown', (e) => {
+                const cmdBtn = e.target.closest('[data-cmd]');
+                if (!cmdBtn) return;
+                e.preventDefault();
+                if (cmdBtn.dataset.cmd === 'link') this._prepLinkMenu();
+                else if (cmdBtn.dataset.cmd === 'image') this._prepImageMenu();
+                else if (cmdBtn.dataset.cmd === 'remove') this._prepRemoveMenu();
+            }, { signal });
+
+            // Keyboard activation opens the popovers without a mousedown —
+            // prep on the trigger's keydown so the content is never stale.
+            this.toolbar.querySelectorAll('[data-cmd="link"], [data-cmd="image"], [data-cmd="remove"]').forEach(btn => {
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key !== 'Enter' && e.key !== ' ') return;
+                    if (btn.dataset.cmd === 'link') this._prepLinkMenu();
+                    else if (btn.dataset.cmd === 'image') this._prepImageMenu();
+                    else this._prepRemoveMenu();
                 }, { signal });
+            });
 
-                // Keyboard activation opens the popovers without a mousedown —
-                // prep on the trigger's keydown so the content is never stale.
-                this.toolbar.querySelectorAll('[data-cmd="link"], [data-cmd="image"], [data-cmd="remove"]').forEach(btn => {
-                    btn.addEventListener('keydown', (e) => {
-                        if (e.key !== 'Enter' && e.key !== ' ') return;
-                        if (btn.dataset.cmd === 'link') this._prepLinkMenu();
-                        else if (btn.dataset.cmd === 'image') this._prepImageMenu();
-                        else this._prepRemoveMenu();
-                    }, { signal });
-                });
+            this.toolbar.addEventListener('click', this._onToolbarClick.bind(this), { signal });
+        }
 
-                this.toolbar.addEventListener('click', this._onToolbarClick.bind(this), { signal });
-            }
+        _bindEditable(signal) {
             this.editable.addEventListener('input', this._onInput.bind(this), { signal });
             // Route native history gestures (context-menu undo) into the
             // editor history; where the event isn't cancelable the mutation
@@ -852,11 +884,7 @@
                 this._historyStep(e.inputType === 'historyUndo' ? -1 : 1);
             }, { signal });
             this.editable.addEventListener('paste', this._onPaste.bind(this), { signal });
-            // Ctrl+X with a shell-clipping selection is the same leak as Delete.
-            this.editable.addEventListener('cut', (e) => {
-                const sel = window.getSelection();
-                if (sel.rangeCount && this._selectionClipsShell(sel.getRangeAt(0))) e.preventDefault();
-            }, { signal });
+            this.editable.addEventListener('cut', this._onCut.bind(this), { signal });
             this.editable.addEventListener('keydown', this._onKeydown.bind(this), { signal });
             document.addEventListener('selectionchange', this._scheduleToolbarSync.bind(this), { signal });
 
@@ -892,14 +920,16 @@
                 const last = this.editable.lastElementChild;
                 if (!last || e.clientY > last.getBoundingClientRect().bottom) this._placeCaretAtEnd();
             }, { signal });
+        }
 
-            // Mirror NDS.Forms interactive states on the container — forms only
-            // delegates to input/textarea/select, so the contenteditable is
-            // skipped. Tracked with focusin/focusout on the ROOT: the source
-            // textarea and the link popover's URL input are separate focus
-            // targets inside the editor, so an editable-only focus/blur pair
-            // drops the field's focus state (and fires a premature change
-            // event) the moment the user moves to one of them.
+        // Mirror NDS.Forms interactive states on the container — forms only
+        // delegates to input/textarea/select, so the contenteditable is
+        // skipped. Tracked with focusin/focusout on the ROOT: the source
+        // textarea and the link popover's URL input are separate focus
+        // targets inside the editor, so an editable-only focus/blur pair
+        // drops the field's focus state (and fires a premature change
+        // event) the moment the user moves to one of them.
+        _bindFieldState(signal) {
             this.root.addEventListener('focusin', () => {
                 if (this._focusWithin) return;
                 this._focusWithin = true;
@@ -926,8 +956,11 @@
                 if (!this.root.classList.contains('is-source')) this.editable.focus();
             }, { signal });
             this.source.addEventListener('keydown', this._onSourceKeydown.bind(this), { signal });
+        }
 
-            // Typing in a popover field clears its inline validation error.
+        // Typing in a popover field clears its inline validation error. Shared
+        // by the link and image menus — both gate their primary on it.
+        _bindPopoverFields(signal) {
             this.root.querySelectorAll('[data-editor-link-dropmenu] .nds-dropmenu-menu, [data-editor-image-dropmenu] .nds-dropmenu-menu').forEach(menu => {
                 menu.addEventListener('input', (e) => {
                     const field = e.target.closest('.nds-form-container');
@@ -938,101 +971,93 @@
                     if (primary) primary.disabled = false;
                 }, { signal });
             });
+        }
 
+        _bindLinkMenu(signal) {
             const linkMenu = this.root.querySelector('[data-editor-link-dropmenu] .nds-dropmenu-menu');
-            if (linkMenu) {
-                linkMenu.addEventListener('click', (e) => {
-                    if (e.target.closest('[data-editor-link-confirm]')) this._confirmLink();
-                    else if (e.target.closest('[data-editor-link-unlink]')) this._unlink();
-                    else if (e.target.closest('[data-editor-link-cancel]')) this._cancelLink();
+            if (!linkMenu) return;
+            linkMenu.addEventListener('click', (e) => {
+                if (e.target.closest('[data-editor-link-confirm]')) this._confirmLink();
+                else if (e.target.closest('[data-editor-link-unlink]')) this._unlink();
+                else if (e.target.closest('[data-editor-link-cancel]')) this._cancelLink();
+            }, { signal });
+            // Enter in either text field confirms.
+            linkMenu.querySelectorAll('[data-editor-link-text], [data-editor-link-url]').forEach(inp => {
+                inp.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); this._confirmLink(); }
                 }, { signal });
-                // Enter in either text field confirms.
-                linkMenu.querySelectorAll('[data-editor-link-text], [data-editor-link-url]').forEach(inp => {
-                    inp.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter') { e.preventDefault(); this._confirmLink(); }
-                    }, { signal });
-                });
-            }
+            });
+        }
 
+        _bindImageMenu(signal) {
             const imageMenu = this.root.querySelector('[data-editor-image-dropmenu] .nds-dropmenu-menu');
-            if (imageMenu) {
-                imageMenu.addEventListener('click', (e) => {
-                    if (e.target.closest('[data-editor-image-confirm]')) this._confirmImage();
-                    else if (e.target.closest('[data-editor-image-cancel]')) this._cancelImage();
+            if (!imageMenu) return;
+            imageMenu.addEventListener('click', (e) => {
+                if (e.target.closest('[data-editor-image-confirm]')) this._confirmImage();
+                else if (e.target.closest('[data-editor-image-cancel]')) this._cancelImage();
+            }, { signal });
+            const uploadHost = imageMenu.querySelector('[data-editor-image-upload]');
+            if (uploadHost) {
+                // Generated after the loader's sweep — init is idempotent. Soft
+                // dependency — the host stays a plain URL field if NDS.Upload
+                // isn't bundled.
+                NDS.Upload?.init?.();
+                // Chosen file → URL field (alt seeds from the file name).
+                // Consumers configure the popover's upload container
+                // through the editor's setImageUpload() (uploadUrl,
+                // autoUpload, maxFileSize, allowedTypes…). uploadUrl:
+                // 'embed' is a reserved sentinel — files embed as
+                // data:image URLs; any other URL POSTs and the URL arrives
+                // via nds:upload:success.
+                uploadHost.addEventListener('nds:upload:selected', (e) => {
+                    const file = e.detail.files[0];
+                    if (!file) return;
+                    const altInput = imageMenu.querySelector('[data-editor-image-alt]');
+                    if (altInput && !altInput.value) altInput.value = file.name.replace(/\.[^.]+$/, '');
+                    // Server mode short-circuits (nds:upload:success drives
+                    // the URL); embed mode falls through to the FileReader.
+                    const url = uploadHost.ndsUpload?.getConfig?.().uploadUrl;
+                    if (url && url !== 'embed') return;
+                    const fr = new FileReader();
+                    fr.onload = () => {
+                        const urlInput = imageMenu.querySelector('[data-editor-image-url]');
+                        if (urlInput) urlInput.value = fr.result;
+                        // Staged locally IS this flow's success ('complete'
+                        // is the status the chip renders the check for).
+                        uploadHost.ndsUpload?.setFileStatus?.(e.detail.fileData?.[0]?.id, 'complete');
+                    };
+                    fr.readAsDataURL(file);
                 }, { signal });
-                const uploadHost = imageMenu.querySelector('[data-editor-image-upload]');
-                if (uploadHost) {
-                    // Generated after the loader's sweep — init is idempotent. Soft
-                    // dependency — the host stays a plain URL field if NDS.Upload
-                    // isn't bundled.
-                    NDS.Upload?.init?.();
-                    // Chosen file → URL field (alt seeds from the file name).
-                    // Consumers configure the popover's upload container
-                    // through the editor's setImageUpload() (uploadUrl,
-                    // autoUpload, maxFileSize, allowedTypes…). uploadUrl:
-                    // 'embed' is a reserved sentinel — files embed as
-                    // data:image URLs; any other URL POSTs and the URL arrives
-                    // via nds:upload:success.
-                    uploadHost.addEventListener('nds:upload:selected', (e) => {
-                        const file = e.detail.files[0];
-                        if (!file) return;
-                        const altInput = imageMenu.querySelector('[data-editor-image-alt]');
-                        if (altInput && !altInput.value) altInput.value = file.name.replace(/\.[^.]+$/, '');
-                        // Server mode short-circuits (nds:upload:success drives
-                        // the URL); embed mode falls through to the FileReader.
-                        const url = uploadHost.ndsUpload?.getConfig?.().uploadUrl;
-                        if (url && url !== 'embed') return;
-                        const fr = new FileReader();
-                        fr.onload = () => {
-                            const urlInput = imageMenu.querySelector('[data-editor-image-url]');
-                            if (urlInput) urlInput.value = fr.result;
-                            // Staged locally IS this flow's success ('complete'
-                            // is the status the chip renders the check for).
-                            uploadHost.ndsUpload?.setFileStatus?.(e.detail.fileData?.[0]?.id, 'complete');
-                        };
-                        fr.readAsDataURL(file);
-                    }, { signal });
-                    // Server mode: JSON {url: "..."} or a bare URL string body.
-                    uploadHost.addEventListener('nds:upload:success', (e) => {
-                        let url = '';
-                        try { url = JSON.parse(e.detail.response)?.url || ''; }
-                        catch { url = String(e.detail.response || '').trim(); }
-                        const urlInput = imageMenu.querySelector('[data-editor-image-url]');
-                        url = cleanUrl(url);
-                        if (urlInput && url && safeSrc(url)) urlInput.value = url;
-                    }, { signal });
-                    // Removing the chip invalidates an embedded data: URL.
-                    uploadHost.addEventListener('nds:upload:removed', () => {
-                        const urlInput = imageMenu.querySelector('[data-editor-image-url]');
-                        if (urlInput && urlInput.value.startsWith('data:')) urlInput.value = 'https://';
-                    }, { signal });
-                }
-                imageMenu.querySelectorAll('[data-editor-image-url], [data-editor-image-alt], [data-editor-image-width], [data-editor-image-height]').forEach(inp => {
-                    inp.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter') { e.preventDefault(); this._confirmImage(); }
-                    }, { signal });
-                });
+                // Server mode: JSON {url: "..."} or a bare URL string body.
+                uploadHost.addEventListener('nds:upload:success', (e) => {
+                    let url = '';
+                    try { url = JSON.parse(e.detail.response)?.url || ''; }
+                    catch { url = String(e.detail.response || '').trim(); }
+                    const urlInput = imageMenu.querySelector('[data-editor-image-url]');
+                    url = cleanUrl(url);
+                    if (urlInput && url && safeSrc(url)) urlInput.value = url;
+                }, { signal });
+                // Removing the chip invalidates an embedded data: URL.
+                uploadHost.addEventListener('nds:upload:removed', () => {
+                    const urlInput = imageMenu.querySelector('[data-editor-image-url]');
+                    if (urlInput && urlInput.value.startsWith('data:')) urlInput.value = 'https://';
+                }, { signal });
             }
+            imageMenu.querySelectorAll('[data-editor-image-url], [data-editor-image-alt], [data-editor-image-width], [data-editor-image-height]').forEach(inp => {
+                inp.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); this._confirmImage(); }
+                }, { signal });
+            });
+        }
 
+        _bindRemoveMenu(signal) {
             const removeMenu = this.root.querySelector('[data-editor-remove-dropmenu] .nds-dropmenu-menu');
-            if (removeMenu) {
-                removeMenu.addEventListener('click', (e) => {
-                    const level = e.target.closest('[data-editor-remove-level]');
-                    if (level) this._confirmRemove(parseInt(level.dataset.editorRemoveLevel, 10));
-                    else if (e.target.closest('[data-editor-remove-cancel]')) this._cancelRemove();
-                }, { signal });
-            }
-
-
-            // Server-shipped data-state="disabled|readonly" applies at init;
-            // later toggles arrive through the NDS.State hooks above.
-            this._applyAccessState();
-            // Settle caret-gated button states (remove starts disabled) and
-            // the image upload affordance (URL-only unless embed/endpoint).
-            this._updateToolbarState();
-            this._syncImageUploadVisibility();
-
-            this.root.dispatchEvent(new CustomEvent('nds:editor:ready', { detail: { instance: this }, bubbles: true }));
+            if (!removeMenu) return;
+            removeMenu.addEventListener('click', (e) => {
+                const level = e.target.closest('[data-editor-remove-level]');
+                if (level) this._confirmRemove(parseInt(level.dataset.editorRemoveLevel, 10));
+                else if (e.target.closest('[data-editor-remove-cancel]')) this._cancelRemove();
+            }, { signal });
         }
 
         // Disabled: inert surface, nothing submits (native disabled-field
@@ -1152,8 +1177,8 @@
         }
 
         _applyCommand(cmd) {
-            // ponytail: execCommand for writes — deprecated but universally supported, native
-            // undo integration, browser-handled RTL/bidi. Replace per-command only if a UA misbehaves.
+            // ponytail: execCommand for writes — deprecated but universally
+            // supported, with browser-handled RTL/bidi. Replace per-command only if a UA misbehaves.
             switch (cmd) {
                 case 'bold':      document.execCommand('bold');          break;
                 case 'italic':    document.execCommand('italic');        break;
@@ -1343,8 +1368,41 @@
             }
         }
 
+        // Ctrl+X mirrors the Delete guards: a shell-clipping selection is the
+        // same leak, and a whole-component cut mangles the shell the same way —
+        // so that one writes the clipboard itself (the flavors the browser
+        // would have written) and then removes the component outright.
+        // Clipboard first: a removal with no clipboard write is data loss, so
+        // bail to native if the write surface is missing.
+        _onCut(e) {
+            const sel = window.getSelection();
+            if (!sel.rangeCount) return;
+            const range = sel.getRangeAt(0);
+            if (this._selectionClipsShell(range)) { e.preventDefault(); return; }
+            const whole = this._wholeRegionSelection(range);
+            if (!whole || !e.clipboardData) return;
+            e.preventDefault();
+            // Through sanitize, so the copy is canonical and editing-only
+            // stamps (data-editor-selected) never ride to the clipboard.
+            e.clipboardData.setData('text/html', sanitizeHtml(whole.outerHTML));
+            e.clipboardData.setData('text/plain', whole.textContent.replace(/\s+/g, ' ').trim());
+            this._removeRegion(whole);
+            this._syncSource();
+            this._updateToolbarState();
+        }
+
         _onPaste(e) {
             e.preventDefault();
+            // Replacing a shell-clipping selection cuts through the very
+            // component boundary the delete and cut guards stop at. Unlike a
+            // blocked delete — where the surviving content IS the feedback — a
+            // paste that silently does nothing reads as a broken editor, so say
+            // why.
+            const sel = window.getSelection();
+            if (sel.rangeCount && this._selectionClipsShell(sel.getRangeAt(0))) {
+                this._notice(uiLabel(TOOLBAR_STRINGS.pasteClipsShell));
+                return;
+            }
             const html = e.clipboardData.getData('text/html');
             const text = e.clipboardData.getData('text/plain');
             let insert;
@@ -1402,15 +1460,15 @@
             // trailing whitespace is trimmed so Chrome doesn't wrap it into a
             // junk paragraph.
             const last = new DOMParser().parseFromString(insert, 'text/html').body.lastElementChild;
-            if (last && !FLOW_EXIT_TAGS.test(last.tagName) && !INLINE_TAGS.has(last.tagName)) {
+            if (last && !FLOW_EXIT_TAGS.test(last.tagName) && !isInlineNode(last)) {
                 insert = insert.replace(/\s+$/, '') + '<p><br></p>';
             }
             if (isEffectivelyEmpty(this.editable)) {
                 // Empty document: set the content directly — Chrome's
                 // insertHTML insists on splitting the placeholder into a
                 // blank first line around block inserts.
-                // ponytail: this one paste isn't a native undo entry;
-                // recovery in an empty doc is select-all + delete.
+                // ponytail: bypasses execCommand, so this paste makes no native
+                // undo entry — the editor history covers it (_syncSource snapshots).
                 const probe = new DOMParser().parseFromString(insert, 'text/html').body;
                 const inlineOnly = [...probe.children].every(c => INLINE_TAGS.has(c.tagName));
                 this.editable.innerHTML = inlineOnly ? `<p>${insert}</p>` : insert;
@@ -1425,21 +1483,87 @@
                 this._updateToolbarState();
                 return;
             }
-            // ponytail: execCommand('insertHTML') keeps the native undo stack; range fallback below.
-            if (!document.execCommand('insertHTML', false, insert)) {
-                const sel = window.getSelection();
-                if (!sel.rangeCount) return;
-                const range = sel.getRangeAt(0);
-                range.deleteContents();
-                const tmp = document.createElement('div');
-                tmp.innerHTML = insert;
-                const frag = document.createDocumentFragment();
-                while (tmp.firstChild) frag.appendChild(tmp.firstChild);
-                range.insertNode(frag);
-            }
+            if (!this._insertPasted(insert)) return;
             this._refreshLinks();
             this._syncSource();
             this._updateToolbarState();
+        }
+
+        // Place pasted markup at the caret. Plain content rides
+        // execCommand('insertHTML') so a paste continues the current paragraph
+        // the way every editor does. Markup carrying an NDS region cannot use
+        // that path: it merges the fragment's FIRST element into the caret's
+        // block and re-expresses it as an inline style span, which strips the
+        // component's classes — a single-part card or an inline atom is
+        // destroyed outright. Those insert structurally instead: inline runs at
+        // the caret, blocks between blocks, never nested inside a <p>.
+        // Undo is unaffected: every undo path already routes through the
+        // editor's own history (_onKeydown's Ctrl+Z, beforeinput's historyUndo).
+        _insertPasted(html) {
+            const sel = window.getSelection();
+            if (!sel.rangeCount) return false;
+            const probe = new DOMParser().parseFromString(html, 'text/html').body;
+            if (!probe.querySelector('[class*="nds-"]')
+                && document.execCommand('insertHTML', false, html)) return true;
+
+            const range = sel.getRangeAt(0);
+            // Never mutate outside the editing host — a stray selection would
+            // otherwise delete page content and climb past the editable below.
+            if (!this.editable.contains(range.startContainer)) return false;
+            range.deleteContents();
+            const blocky = Array.from(probe.children).some(c => !isInlineNode(c));
+            const frag = document.createDocumentFragment();
+            while (probe.firstChild) frag.appendChild(probe.firstChild);
+            const lastNode = frag.lastChild;
+            if (!lastNode) return false;
+
+            // The caret's own top-level element — the split point for block
+            // content (null when the caret sits loose at the editable root).
+            const start = range.startContainer;
+            let top = null;
+            for (let el = start.nodeType === Node.ELEMENT_NODE ? start : start.parentElement;
+                el && el !== this.editable; el = el.parentElement) top = el;
+
+            const carries = (n) => n.textContent.trim() || n.querySelector('img, [class*="nds-"]');
+            let landing = null; // block the caret should end up inside
+            if (!blocky || !top) {
+                range.insertNode(frag);
+            } else if (!/^(?:P|H[1-4])$/.test(top.tagName)) {
+                // Not a simple text block (a list, a table, a component shell) —
+                // land after it whole rather than splitting something structural.
+                top.after(frag);
+            } else {
+                // Split the caret's block so the pasted blocks sit between the
+                // halves instead of nesting inside a <p>.
+                const tail = range.cloneRange();
+                tail.setEnd(top, top.childNodes.length);
+                const tailContent = tail.extractContents();
+                top.after(frag);
+                if (carries(tailContent)) {
+                    const tailBlock = document.createElement(top.tagName.toLowerCase());
+                    tailBlock.appendChild(tailContent);
+                    lastNode.after(tailBlock);
+                    // The payload's trailing blank paragraph only exists to give
+                    // the caret somewhere to land; the tail block is that, so
+                    // keeping it would just leave an empty line mid-document.
+                    if (lastNode.tagName === 'P' && !carries(lastNode)) lastNode.remove();
+                    landing = tailBlock;
+                }
+                if (!carries(top)) top.remove();
+            }
+            // A structural insert can leave the payload's own inline tail loose
+            // at the root; the hydrate path's wrapper is the same fix.
+            this._normalizeLooseBlocks();
+            // Caret inside the block that continues the text, not stranded
+            // between two blocks.
+            const r = document.createRange();
+            if (landing) r.setStart(landing, 0);
+            else if (lastNode.nodeType === Node.ELEMENT_NODE && !carries(lastNode)) r.selectNodeContents(lastNode);
+            else r.setStartAfter(lastNode);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+            return true;
         }
 
         // ---------- Selection helpers ----------
@@ -1535,7 +1659,16 @@
         // ends at the NEXT element's offset 0), so boundary judgments key on
         // the text actually selected.
         _rangeTextEndpoints(range) {
-            const walker = document.createTreeWalker(this.editable, NodeFilter.SHOW_TEXT);
+            // Walk the range's own subtree, not the whole editable — a node
+            // that intersects the range always sits inside its common
+            // ancestor, so the document's length stops driving the cost.
+            // The editable is the ceiling: a drag can escape the editing host,
+            // and rooting above it would let outside text answer as an
+            // endpoint (the old root filtered those out by construction).
+            const cac = range.commonAncestorContainer;
+            const inner = (cac.nodeType === Node.ELEMENT_NODE ? cac : cac.parentElement) || this.editable;
+            const scope = this.editable.contains(inner) ? inner : this.editable;
+            const walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT);
             let first = null, last = null;
             for (let n = walker.nextNode(); n; n = walker.nextNode()) {
                 if (!range.intersectsNode(n)) continue;
@@ -1817,20 +1950,39 @@
             }
             if (!this._regionRootOf(range.startContainer)) return false;
             e.preventDefault();
-            // ponytail: insertLineBreak rides the native undo stack; Shift+
-            // Enter lands here too and behaves identically.
+            // ponytail: insertLineBreak over a hand-rolled <br> + caret move;
+            // Shift+Enter lands here too and behaves identically.
             document.execCommand('insertLineBreak');
             this._syncSource();
             this._updateToolbarState();
             return true;
         }
 
+        // The component a selection covers EXACTLY — the shape the
+        // click-select handler makes, and the one a user makes by selecting a
+        // component to delete it. Resolved from the range's own boundary, not
+        // from text endpoints: a textless shell (icon-only button) has none.
+        // Exact boundaries, not containment — a selection reaching past the
+        // shell keeps native delete, which merges the surrounding blocks
+        // correctly; removing only the shell would silently spare the rest.
+        _wholeRegionSelection(range) {
+            const start = range.startContainer;
+            const node = start.nodeType === Node.ELEMENT_NODE
+                ? (start.childNodes[range.startOffset] || start) : start;
+            const region = this._regionRootOf(node);
+            if (!region) return null;
+            const r = document.createRange();
+            r.selectNode(region);
+            return range.compareBoundaryPoints(Range.START_TO_START, r) === 0
+                && range.compareBoundaryPoints(Range.END_TO_END, r) === 0 ? region : null;
+        }
+
         // Atomic-shell deletes: a Backspace/Delete that would cross a shell
         // boundary — from either side — simply STOPS there. Removing a
-        // component is always explicit: select it, then delete (native, whole,
-        // clean). Text editing inside the shell stays free.
-        // ponytail: collapsed-caret guard only — a drag-selection clipping
-        // half a shell still degrades through sanitize on the next sync.
+        // component is explicit: select it whole, then delete — routed through
+        // _removeRegion, because native delete does NOT remove a selected
+        // component (Chrome empties the shell and merges the following block
+        // into it). Text editing inside the shell stays free and native.
         _guardRegionDelete(e) {
             const sel = window.getSelection();
             if (!sel.rangeCount) return false;
@@ -1839,9 +1991,19 @@
                 // Selection deletes are legit fully inside one part (text
                 // edit) or fully outside shells (contained shells go whole);
                 // endpoints in different parts/shells cut through a boundary.
-                const clips = this._selectionClipsShell(range);
-                if (clips) e.preventDefault();
-                return clips;
+                if (this._selectionClipsShell(range)) {
+                    e.preventDefault();
+                    return true;
+                }
+                const whole = this._wholeRegionSelection(range);
+                if (whole) {
+                    e.preventDefault();
+                    this._removeRegion(whole);
+                    this._syncSource();
+                    this._updateToolbarState();
+                    return true;
+                }
+                return false;
             }
             const back = e.key === 'Backspace';
 
@@ -1855,25 +2017,32 @@
             return blocked;
         }
 
-        // Physical text-align (left/right/center/justify) inline on every block
-        // the selection touches. Re-clicking the active value clears it back to
-        // natural (direction-following) — mirrors the dir toggle, and replaces
-        // the old logical "start" reset button. Native justify* commands are
-        // avoided (they write physical left/right unpredictably); this is a
-        // direct DOM write. ponytail: alignment ops don't join the native undo
-        // stack.
-        _applyAlignment(value) {
+        // Every block the selection touches — the unit both the alignment and
+        // direction commands write to. Falls back to the caret's own block
+        // when the selection spans none (a collapsed caret inside a <p>).
+        _blocksInSelection() {
             const sel = window.getSelection();
-            if (!sel.rangeCount) return;
+            if (!sel.rangeCount) return [];
             const range = sel.getRangeAt(0);
-            let blocks = [];
+            const blocks = [];
             for (const el of this.editable.querySelectorAll('p, h1, h2, h3, h4, li')) {
                 if (range.intersectsNode(el)) blocks.push(el);
             }
             if (!blocks.length) {
                 const block = this._getBlockContext();
-                if (block) blocks = [block];
+                if (block) blocks.push(block);
             }
+            return blocks;
+        }
+
+        // Physical text-align (left/right/center/justify) inline on every block
+        // the selection touches. Re-clicking the active value clears it back to
+        // natural (direction-following) — mirrors the dir toggle, and replaces
+        // the old logical "start" reset button. Native justify* commands are
+        // avoided (they write physical left/right unpredictably); this is a
+        // direct DOM write.
+        _applyAlignment(value) {
+            const blocks = this._blocksInSelection();
             const clear = blocks.length && blocks.every(b => b.style.textAlign === value);
             for (const b of blocks) {
                 if (clear) b.style.removeProperty('text-align');
@@ -1889,17 +2058,7 @@
         // attribute), so the two coexist. ponytail: direct DOM write — no
         // execCommand path writes `dir`.
         _applyDirection(value) {
-            const sel = window.getSelection();
-            if (!sel.rangeCount) return;
-            const range = sel.getRangeAt(0);
-            let blocks = [];
-            for (const el of this.editable.querySelectorAll('p, h1, h2, h3, h4, li')) {
-                if (range.intersectsNode(el)) blocks.push(el);
-            }
-            if (!blocks.length) {
-                const block = this._getBlockContext();
-                if (block) blocks = [block];
-            }
+            const blocks = this._blocksInSelection();
             const clear = blocks.length && blocks.every(b => b.getAttribute('dir') === value);
             for (const b of blocks) {
                 if (clear) b.removeAttribute('dir');
@@ -2279,7 +2438,7 @@
         }
 
         // Inline <img> at the caret — popover confirm and pasted clipboard
-        // image files both land here. execCommand keeps the native undo stack.
+        // image files both land here.
         _insertImage(src, alt, width, height) {
             this.editable.focus();
             document.execCommand('insertHTML', false,
@@ -2290,9 +2449,8 @@
         }
 
         // A fresh line at the end (or the existing trailing empty paragraph),
-        // caret in it. New lines go through execCommand so the native undo
-        // history stays intact — and since trailing empty paragraphs never
-        // reach the form value, caret-escape clicks don't dirty the field.
+        // caret in it. Trailing empty paragraphs never reach the form value, so
+        // caret-escape clicks don't dirty the field.
         _placeCaretAtEnd() {
             const last = this.editable.lastElementChild;
             const sel = window.getSelection();
@@ -2402,8 +2560,7 @@
             };
             for (const n of Array.from(this.editable.childNodes)) {
                 const isText = n.nodeType === Node.TEXT_NODE && n.textContent.trim();
-                const isInline = n.nodeType === Node.ELEMENT_NODE
-                    && (INLINE_TAGS.has(n.tagName) || n.tagName === 'IMG' || INLINE_REGION_TAGS.has(n.tagName));
+                const isInline = n.nodeType === Node.ELEMENT_NODE && isInlineNode(n);
                 if (isText || isInline) (group ||= []).push(n);
                 else flush();
             }
