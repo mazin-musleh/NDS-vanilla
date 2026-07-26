@@ -138,7 +138,10 @@
 // stays on the floor, a bottom sheet's top stays at the header. --_panel-top is
 // the live header offset (JS-tracked for sheets too), so the cap follows the
 // topbar as it scrolls in and out. The body scrolls when content exceeds the cap.
+// A sheet rounds only the two corners facing the page, at the modal/card radius.
 .nds-panel:is([data-panel-side="top"], [data-panel-side="bottom"]) {
+    --_panel-radius: var(--panel-radius, var(--radius-lg));
+
     inset-inline: 0;
     width: auto;
     max-height: min(var(--_panel-height), calc(100svh - var(--_panel-top)));
@@ -147,12 +150,14 @@
 .nds-panel[data-panel-side="top"] {
     top: var(--_panel-top);
     bottom: auto;
+    border-radius: 0 0 var(--_panel-radius) var(--_panel-radius);
     @include panel-slide(translateY(-100%));
 }
 
 .nds-panel[data-panel-side="bottom"] {
     bottom: 0;
     top: auto;
+    border-radius: var(--_panel-radius) var(--_panel-radius) 0 0;
     // Upward-cast shadow for a sheet rising from the floor (matches the cookie popup).
     box-shadow: var(--shadow-md-top);
     @include panel-slide(translateY(100%));
@@ -187,6 +192,15 @@
     gap: var(--spacing-xl);
     padding: var(--_panel-padding);
     border-block-end: 1px solid var(--divider-color);
+
+    // Tighter header where room is scarce.
+    @include mobile {
+        gap: var(--spacing-lg);
+
+        > .nds-btn[data-panel-close] {
+            --btn-size: 32px;
+        }
+    }
 }
 
 // CANONICAL header structure, mirroring .nds-card-text: the title (and an
@@ -245,6 +259,10 @@
     gap: var(--spacing-xl);
     padding: var(--_panel-padding);
     border-block-start: 1px solid var(--divider-color);
+
+    @include mobile {
+        gap: var(--spacing-lg);
+    }
 }
 
 // A .nds-scroll-more used in place of the body claims the same remaining height.

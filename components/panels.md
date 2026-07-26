@@ -5,8 +5,8 @@ hero_title: Panels - National Design System
 hero_description: A content-agnostic surface that slides in from any edge of the viewport, for settings, filters, details, or any secondary content you want to reveal on demand without leaving the page.
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
-updated: "1.5.0"
-last_edit: "25/07/2026 - 09:45 PM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 09:40 PM"
 lang: en
 direction: ltr
 ---
@@ -395,7 +395,7 @@ direction: ltr
                         <tr><td><code class="nds-inline-code lang-html">--panel-top</code></td><td>sticky header bottom</td><td>Block-start offset. Set it to override the automatic header tracking with a fixed value</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--panel-padding</code></td><td><code class="nds-inline-code lang-html">--spacing-lg</code></td><td>Padding of the header, body, and footer</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--panel-gap</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Gap between the panel's header, body and footer</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--panel-radius</code></td><td><code class="nds-inline-code lang-html">0</code></td><td>Corner radius of the panel surface</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--panel-radius</code></td><td><code class="nds-inline-code lang-html">0</code>, <code class="nds-inline-code lang-html">--radius-lg</code> for sheets</td><td>Corner radius of the panel surface. Top and bottom sheets round the two corners facing the page at the modal radius</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--panel-z</code></td><td><code class="nds-inline-code lang-html">999</code></td><td>Stacking order of the panel</td></tr>
                     </tbody>
                 </table>
