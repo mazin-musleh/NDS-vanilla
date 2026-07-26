@@ -1805,6 +1805,8 @@
                 includeAllOption,
                 allLabel,
                 labelMap: this.filterLabels[filterName] || {},
+                // Row-level search opt-in gated on the parent dropmenu opting in.
+                searchable: isInDropmenu && !!container.closest('.nds-dropmenu[data-search]'),
             };
 
             values.forEach((value, index) => {
@@ -1958,7 +1960,7 @@
         // switch input for `value`. `index` drives the id and "All"-option
         // detection; `ctx` carries the shared per-group settings.
         _buildFilterInput(value, index, ctx) {
-            const { inputType, groupName, filterName, variant, includeAllOption, allLabel, labelMap } = ctx;
+            const { inputType, groupName, filterName, variant, includeAllOption, allLabel, labelMap, searchable } = ctx;
             const id = `${groupName}-${index}`;
             const isAllOption = includeAllOption && index === 0;
 
@@ -1968,6 +1970,7 @@
                 : inputType === 'radio'
                     ? 'nds-form-container nds-radio-container'
                     : 'nds-form-container nds-check-container';
+            if (searchable) formContainer.setAttribute('data-search-item', '');
 
             const formHeader = document.createElement('div');
             formHeader.className = 'nds-form-header';

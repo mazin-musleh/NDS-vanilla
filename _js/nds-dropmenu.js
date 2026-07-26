@@ -222,6 +222,9 @@
             // rather than re-querying (which can mis-hit a nested menu's box, and
             // would miss entirely while the menu is portaled to <body>).
             const searchBox = this.menu.firstElementChild;
+            // Wire the .nds-clear button — forms init ran before this injection,
+            // so the injected .nds-form-control needs its own pass. Soft-dep.
+            NDS.Forms?.initializeContainer(searchBox);
 
             // Empty state — reuses .nds-empty-placeholder for the visual grammar
             // (shared with NDS.Empty via _empty.scss) and carries

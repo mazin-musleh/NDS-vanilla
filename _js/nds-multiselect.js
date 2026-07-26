@@ -175,6 +175,9 @@
 
             const container = document.createElement('div');
             container.className = 'nds-form-container nds-check-container';
+            if (this.dropmenu.hasAttribute('data-search')) {
+                container.setAttribute('data-search-item', '');
+            }
 
             const header = document.createElement('div');
             header.className = 'nds-form-header';
