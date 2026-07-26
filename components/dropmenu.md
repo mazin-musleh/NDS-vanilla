@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "23/07/2026 - 10:47 AM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 04:57 PM"
 ---
 
 <!-- Standard Dropmenu -->
@@ -1352,6 +1352,8 @@ document.querySelector('.nds-dropmenu').addEventListener('nds:dropmenu:prepare',
 //   Enter/Space: toggle menu
 //   ArrowDown: open and focus first item
 //   ArrowUp: open and focus last item
+//   All three prefer the item marked data-state="active" (the menu's
+//   current value, e.g. pagination's current page) when one exists
 //
 // Inside menu:
 //   ArrowDown/Up: navigate items

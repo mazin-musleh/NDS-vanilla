@@ -556,26 +556,40 @@
         // KEYBOARD HANDLERS
         // ==============================================
 
-        handleTriggerKeydown(e) {
-            const elements = this.getFocusableElements();
+        // The item representing the menu's current value — a row a component
+        // stamped data-state active (pagination's current page, sort's active
+        // option). Keyboard-open lands focus there instead of the list edge.
+        getCurrentItem() {
+            return this.menu.querySelector('.nds-dropmenu-item[data-state~="active"]:not(:disabled):not([hidden])');
+        }
 
+        handleTriggerKeydown(e) {
+            // Focusables are enumerated AFTER toggle()/open() — lazily-populated
+            // menus (pagination's ellipsis, data-delay consumers) have no items
+            // until open() has run.
             switch (e.key) {
                 case 'Enter':
-                case ' ':
+                case ' ': {
                     e.preventDefault();
                     this.toggle();
-                    if (this.isOpen && elements.length) elements[0].focus();
+                    const elements = this.getFocusableElements();
+                    if (this.isOpen && elements.length) (this.getCurrentItem() || elements[0]).focus();
                     break;
-                case 'ArrowDown':
+                }
+                case 'ArrowDown': {
                     e.preventDefault();
                     this.open();
-                    if (elements.length) elements[0].focus();
+                    const elements = this.getFocusableElements();
+                    if (elements.length) (this.getCurrentItem() || elements[0]).focus();
                     break;
-                case 'ArrowUp':
+                }
+                case 'ArrowUp': {
                     e.preventDefault();
                     this.open();
-                    if (elements.length) elements[elements.length - 1].focus();
+                    const elements = this.getFocusableElements();
+                    if (elements.length) (this.getCurrentItem() || elements[elements.length - 1]).focus();
                     break;
+                }
             }
         }
 

@@ -132,6 +132,12 @@
   }
 }
 
+// Jump-to-page input (JS-injected for large pickers) — centered to match the
+// page rows; anchored on the menu-content class, so it holds in every render mode.
+.nds-pagination-jump input {
+  text-align: center;
+}
+
 // ==============================================
 // DISABLED STATE
 // ==============================================
@@ -189,6 +195,13 @@
 }
 
 .nds-pagination-ellipsis .nds-dropmenu-trigger[data-state~="active"] {
+  // Release the ellipsis' compact fixed width while it shows the current page
+  // number — wide numbers (e.g. 2000) size naturally instead of clipping.
+  // `initial` un-sets the generic .nds-ellipsis zero-padding override, so the
+  // btn-base default padding comes back without duplicating its value.
+  width: auto;
+  min-width: var(--btn-size);
+  --btn-padding: initial;
 
   >.nds-label {
     display: block;
@@ -198,7 +211,7 @@
     display: none;
   }
 
-  &::after {
+  &:not(.nds-loading,[data-state~="loading"])::after {
     position: absolute;
     transform: translateY(calc((var(--btn-size) / 2) - 2px));
   }

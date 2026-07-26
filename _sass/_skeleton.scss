@@ -218,11 +218,11 @@ html:not([data-nds-loaded]) :where(.nds-form-control,
      the full-content widths, with no un-hide reflow (see lockTableColumns
      in _js/nds-pagination.js). collapse on a non-table element behaves like
      visibility:hidden (keeps space), so it must stay table-row-scoped. */
-.nds-paged-content:not([data-paged-initialized]) .nds-page-item:not(tr):nth-child(n + 7) {
+.nds-paged-content:not([data-paged-initialized]) .nds-page-item:not(tr):nth-child(n + 6) {
     display: none;
 }
 
-.nds-paged-content:not([data-paged-initialized]) tr.nds-page-item:nth-child(n + 7) {
+.nds-paged-content:not([data-paged-initialized]) tr.nds-page-item:nth-child(n + 6) {
     visibility: collapse;
 }
 

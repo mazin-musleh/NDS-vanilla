@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "22/07/2026 - 03:19 PM"
+updated: "1.5.x"
+last_edit: "26/07/2026 - 05:48 PM"
 ---
 
 <!-- Choosing a mode -->
@@ -261,12 +261,89 @@ last_edit: "22/07/2026 - 03:19 PM"
     </div>
 </section>
 
+<!-- Large Page Counts -->
+<section id="paginationLargeRange" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Large Page Counts</h2>
+            <p class="nds-section-description">Totals in the hundreds or thousands need no special handling: the page dropdown opens centered on the current page, renders pages on demand as you scroll, and offers a jump field, so type a page number and press Enter to go straight there</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+                <div class="nds-demo-card">
+                    <div class="demo-header">
+                        <div class="demo-action">
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger">
+                                    <span class="nds-label">Default</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-pagination", "paginationLargeSize"]'>
+                                            <span class="nds-label">Default</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-sm", ".nds-pagination", "paginationLargeSize"]'>
+                                            <span class="nds-label">Small</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-md", ".nds-pagination", "paginationLargeSize"]'>
+                                            <span class="nds-label">Medium</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                                <span class="nds-label">Remove bg</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="demo-container">
+                        <div class="state-demo">
+                            <nav class="nds-pagination" data-total-pages="2000" data-active-page="1000" aria-label="Pagination"></nav>
+                        </div>
+                    </div>
+                    <div class="demo-code">
+                        <div class="nds-tabs nds-code nds-divided">
+                            <div class="nds-tab-list-container nds-scroll-more">
+                                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                                    <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                        aria-controls="panel-pagination-largerange-1" id="tab-pagination-largerange-1">
+                                        <span class="nds-tab-label">HTML</span>
+                                    </button>
+                                </nav>
+                                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="nds-tab-content">
+                                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-pagination-largerange-1"
+                                    aria-labelledby="tab-pagination-largerange-1">
+                                    <div class="nds-code-action">
+                                        <button type="button" class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                            <i class="nds-icon nds-hgi-copy-01"></i>
+                                        </button>
+                                    </div>
+                                    <code class="lang-html code">
+&lt;nav class="nds-pagination" data-total-pages="2000" data-active-page="1000" aria-label="Pagination"&gt;&lt;/nav&gt;
+                                    </code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Automatic Ellipsis -->
 <section id="paginationEllipsis" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Automatic Ellipsis Collapse</h2>
-            <p class="nds-section-description">When page count exceeds five, middle pages collapse into a dropdown for compact navigation. Write the full list of pages flat and the component folds them on its own, re-folding as pages are added or removed</p>
+            <p class="nds-section-description">When page count exceeds five, middle pages collapse into a dropdown for compact navigation. Write the full list of pages flat and the component folds them on its own, re-folding as pages are added or removed. Very large ranges stay fast: the dropdown opens centered on the current page, renders pages on demand as you scroll, and adds a jump-to-page field</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -1056,6 +1133,13 @@ last_edit: "22/07/2026 - 03:19 PM"
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-flash"></i>
+                        <span class="nds-label">Instant Large Pickers</span>
+                    </span>
+                    <p class="nds-item-desc">The page dropdown opens centered on the current page and renders pages on demand as you scroll, so thousands of pages open as fast as ten. Ranges past 30 pages add a jump field: type a number and press Enter to go straight there.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Content Pagination</span>
                     </span>
@@ -1074,6 +1158,13 @@ last_edit: "22/07/2026 - 03:19 PM"
                         <span class="nds-label">Responsive Adaptation</span>
                     </span>
                     <p class="nds-item-desc">Buttons shrink on mobile viewports and content pagination watches for <code class="nds-inline-code lang-html">--per-page</code> changes on resize, rebuilding pages to match the new layout.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-link-01"></i>
+                        <span class="nds-label">URL State Sync</span>
+                    </span>
+                    <p class="nds-item-desc">Opt in with <code class="nds-inline-code lang-html">data-page-param</code> and the current page persists in the URL: reloads and shared links land on the same page, composing with filter and sort parameters.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -1108,7 +1199,7 @@ last_edit: "22/07/2026 - 03:19 PM"
                     <li>Bind a nav to its content by id — <code class="nds-inline-code lang-html">data-auto-pagination="gridId"</code> matching the wrapper's <code class="nds-inline-code lang-html">id</code> (the same convention as filter's <code class="nds-inline-code lang-html">data-filter-target</code>). Omit the value to bind the immediately-preceding wrapper instead</li>
                     <li>Keep <code class="nds-inline-code lang-html">nds-page-item</code> (your <strong>content</strong> items) distinct from <code class="nds-inline-code lang-html">nds-pagination-item</code> (the nav's <code class="nds-inline-code lang-html">&lt;li&gt;</code> controls) — similar names, opposite roles</li>
                     <li>For server or AJAX pagination, listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> (its <code class="nds-inline-code lang-js">detail.page</code> is the resolved page), load that page, then call <code class="nds-inline-code lang-js">NDS.Pagination.setPage()</code> to highlight it (calling it once the response lands also scrolls the content back into view, with no delay to guess). When a new query changes the total page count, call <code class="nds-inline-code lang-js">NDS.Pagination.setTotalPages()</code> to rebuild the controls (it keeps the current page; pass a page number to jump). NDS owns the nav UI, you own the data</li>
-                    <li>Attach your logic to the nav, not to individual page buttons: listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> or give each page a distinct <code class="nds-inline-code lang-html">&lt;a href&gt;</code>. Collapsing rebuilds the page buttons, so custom classes, <code class="nds-inline-code lang-html">data-*</code> attributes, <code class="nds-inline-code lang-html">href</code>, and inline <code class="nds-inline-code lang-html">onclick</code> survive, but a listener added with <code class="nds-inline-code lang-js">addEventListener</code> on a button does not</li>
+                    <li>Attach your logic to the nav, not to individual page buttons: listen for <code class="nds-inline-code lang-js">nds:pagination:change</code> or give each page a distinct <code class="nds-inline-code lang-html">&lt;a href&gt;</code>. Collapsing rebuilds the page buttons and dropdown pages render on demand, so custom classes, <code class="nds-inline-code lang-html">data-*</code> attributes, <code class="nds-inline-code lang-html">href</code>, and inline <code class="nds-inline-code lang-html">onclick</code> survive on author-written markup, but a listener added with <code class="nds-inline-code lang-js">addEventListener</code> on a button does not</li>
                     <li>For content pagination, adding or removing <code class="nds-inline-code lang-html">nds-page-item</code> elements re-paginates automatically and keeps the current page, no re-init needed, at any nesting (cards, list items, table rows). A wholesale content swap that injects a brand-new nav (e.g. a filter's AJAX HTML mode) still needs <code class="nds-inline-code lang-js">NDS.Pagination.reinit()</code>, or have the server return it already paginated</li>
                     <li>Don't paginate a continuously growing feed. Use <a class="nds-color" href="{{ 'components/scroll-more' | relative_url }}">Scroll More</a> for load-on-scroll content where the total count isn't fixed</li>
                     <li>Don't use pagination for a linear, must-finish-in-order flow like a form wizard. Reach for <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> instead</li>
@@ -1181,6 +1272,10 @@ last_edit: "22/07/2026 - 03:19 PM"
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-page-url="?page={page}"</code></td>
                             <td>Pair with <code class="nds-inline-code lang-html">data-total-pages</code> to render the controls as navigable <code class="nds-inline-code lang-html">&lt;a href&gt;</code> links instead of buttons: <code class="nds-inline-code lang-html">{page}</code> is replaced with each page number. Use for no-JS, full-reload server pagination (the nav re-renders on each navigation). Without it the controls are buttons you wire through <code class="nds-inline-code lang-js">nds:pagination:change</code></td>
+                        </tr>
+                        <tr>
+                            <td><code class="nds-inline-code lang-html">data-page-param</code></td>
+                            <td>Add to <code class="nds-inline-code lang-html">nds-pagination</code> to sync the current page with a URL query parameter, the same way filter and sort own theirs. Named <code class="nds-inline-code lang-html">page</code> by default; set a value like <code class="nds-inline-code lang-html">data-page-param="gpage"</code> to rename it when several navs share a page. Read once at init (clamped to the page count, applied without firing events); page changes write it back and page 1 removes it</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">data-state="active"</code></td>
