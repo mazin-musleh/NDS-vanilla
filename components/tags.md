@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.5.x"
+last_edit: "27/07/2026 - 10:00 AM"
 ---
 
 <!-- Variants -->
@@ -178,6 +178,10 @@ last_edit: "28/06/2026 - 01:27 PM"
                                         <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
                                             data-toggler='["data-status=error", ".nds-tag", "statusColor", "attr"]'>
                                             <span class="nds-label">Error</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["data-status=critical", ".nds-tag", "statusColor", "attr"]'>
+                                            <span class="nds-label">Critical</span>
                                         </button>
                                     </div>
                                 </div>
@@ -584,7 +588,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 <ul>
                     <li>Use tags for categorization, labels, and metadata that users need to scan quickly</li>
                     <li>Use status tags when the state needs a visual indicator beyond just color (the dot reinforces meaning for colorblind users)</li>
-                    <li>Choose color by meaning: <strong>neutral</strong> for general labels, <strong>success/error/warning/info</strong> for semantic status</li>
+                    <li>Choose color by meaning: <strong>neutral</strong> for general labels, <strong>success/error/warning/info</strong> for semantic status (<code class="nds-inline-code lang-html">data-status="critical"</code> is an alias for <code class="nds-inline-code lang-html">error</code>, reserved for system-level alerts)</li>
                 </ul>
             </div>
 

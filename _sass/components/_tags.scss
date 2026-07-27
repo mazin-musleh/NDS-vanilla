@@ -116,7 +116,7 @@
     --tag-icon: var(--tag-icon-warning);
   }
 
-  &:is(.nds-red:where(:not([data-status])), [data-status="error"]) {
+  &:is(.nds-red:where(:not([data-status])), [data-status="error"], [data-status="critical"]) {
     --tag-bg: var(--tag-background-error-light);
     --tag-text: var(--tag-text-error);
     --tag-border: var(--tag-border-error-light);
@@ -139,7 +139,7 @@
     &:is(.nds-green:where(:not([data-status])), [data-status="success"]) { --tag-bg: var(--tag-background-success); }
     &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) { --tag-bg: var(--tag-background-info); }
     &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) { --tag-bg: var(--tag-background-warning); }
-    &:is(.nds-red:where(:not([data-status])), [data-status="error"]) { --tag-bg: var(--tag-background-error); }
+    &:is(.nds-red:where(:not([data-status])), [data-status="error"], [data-status="critical"]) { --tag-bg: var(--tag-background-error); }
   }
 
   // Outline — per-status full-strength border (only value that differs).
@@ -148,7 +148,7 @@
     &:is(.nds-green:where(:not([data-status])), [data-status="success"]) { --tag-border: var(--tag-border-success); }
     &:is(.nds-blue:where(:not([data-status])), [data-status="info"]) { --tag-border: var(--tag-border-info); }
     &:is(.nds-yellow:where(:not([data-status])), [data-status="warning"]) { --tag-border: var(--tag-border-warning); }
-    &:is(.nds-red:where(:not([data-status])), [data-status="error"]) { --tag-border: var(--tag-border-error); }
+    &:is(.nds-red:where(:not([data-status])), [data-status="error"], [data-status="critical"]) { --tag-border: var(--tag-border-error); }
   }
 
   &.nds-oncolor {
