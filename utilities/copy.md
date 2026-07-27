@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.4.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.5.x"
+last_edit: "27/07/2026 - 10:00 AM"
 ---
 
 <!-- Literal Copy -->
@@ -386,7 +386,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                         <i class="hgi hgi-stroke hgi-tick-01"></i>
                         <span class="nds-label">Visible Success Feedback</span>
                     </span>
-                    <p class="nds-item-desc">The icon flips to a checkmark and the optional <code class="nds-inline-code lang-html">data-label</code> text swaps in for two seconds, then everything restores.</p>
+                    <p class="nds-item-desc">The icon flips to a checkmark and the optional <code class="nds-inline-code lang-html">data-label</code> text swaps in for two seconds, then everything restores. The button is inert during the flash (<code class="nds-inline-code lang-html">pointer-events: none</code> + <code class="nds-inline-code lang-html">aria-disabled="true"</code>) so a double-click can't re-trigger the copy mid-feedback.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -468,10 +468,10 @@ last_edit: "28/06/2026 - 01:27 PM"
 const ok = await NDS.Copy.writeText('hello world');
 
 // ── Trigger the success flash on a button ────────────
-// Sets data-status="success", swaps the icon to a
-// checkmark, swaps .nds-label to data-label, and
-// announces data-message via aria-live. Restores
-// after `duration` ms (default 2000).
+// Sets data-status="success" + aria-disabled, swaps
+// the icon to a checkmark, swaps .nds-label to
+// data-label, and announces data-message via aria-live.
+// Restores after `duration` ms (default 2000).
 NDS.Copy.flash(buttonEl, {
     duration: 2000,                    // Flash window in ms
     onRestore: () => closePopover()    // Optional callback after restore

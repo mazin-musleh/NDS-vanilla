@@ -109,10 +109,12 @@
         }
 
         NDS.Status.set(button, 'success');
+        button.setAttribute('aria-disabled', 'true');
         NDS.announce(messageText);
 
         setTimeout(() => {
             NDS.Status.clear(button);
+            button.removeAttribute('aria-disabled');
             if (icon) {
                 if (originalIconClass == null) icon.removeAttribute('class');
                 else icon.setAttribute('class', originalIconClass);
