@@ -129,7 +129,7 @@ Single-file `dry` runs every JSD rule **except JSD-05** — JSD-05 compares help
 
 ### JSA deep-read rules in full-tree mode
 
-Full-tree `architecture` runs only the greppable JSA rules (JSA-01, -02, -04, -05, -06, -13); the deep-read rules (JSA-03, -07 through -12, -14 through -17) are skipped and the report shows the JSA deep-read banner (Phase 4). Single-file `architecture` runs every JSA rule — the per-file deep reads (complexity, in-file duplication, mixed-concern structure, INP cost, CSS-subsumption) are where deep-reads earn their keep, and the single-file budget allows them. Full-tree `architecture` also computes the **deep-read triage** (Phase 3) so the skipped coverage converts into ranked single-file targets instead of a bare disclaimer.
+Full-tree `architecture` runs only the greppable JSA rules (JSA-01, -02, -04, -05, -06, -13, -18); the deep-read rules (JSA-03, -07 through -12, -14 through -17) are skipped and the report shows the JSA deep-read banner (Phase 4). Single-file `architecture` runs every JSA rule — the per-file deep reads (complexity, in-file duplication, mixed-concern structure, INP cost, CSS-subsumption) are where deep-reads earn their keep, and the single-file budget allows them. Full-tree `architecture` also computes the **deep-read triage** (Phase 3) so the skipped coverage converts into ranked single-file targets instead of a bare disclaimer.
 
 ### Excluded files
 
@@ -194,7 +194,7 @@ The detection rules live in sibling files, one per rule group. Read the file(s) 
 | JSP | `RULES-JSP.md` | performance — listener/observer pooling, scroll/resize throttling, forced-layout-at-init | 11 |
 | JSD | `RULES-JSD.md` | DRY/KISS — cross-file dedup, core promotion (JSD-05), persona conformance (JSD-15 → `PERSONA.md`), init-sentinel ordering | 19 |
 | JSS | `RULES-JSS.md` | client-side security sinks — innerHTML XSS, eval, tabnabbing, postMessage origin, untrusted URLs | 6 |
-| JSA | `RULES-JSA.md` | architecture — unbounded caches, scheduling choice, complexity, in-file DRY, INP cost, CSS-subsumption, comment hygiene, index-space correctness | 17 |
+| JSA | `RULES-JSA.md` | architecture — unbounded caches, scheduling choice, complexity, in-file DRY, INP cost, CSS-subsumption, comment hygiene, index-space and nested-instance correctness | 18 |
 
 Severity (HIGH / MEDIUM / LOW) drives the order fixes are applied in Phase 5: HIGH (correctness and performance) first, then MEDIUM, then LOW.
 
