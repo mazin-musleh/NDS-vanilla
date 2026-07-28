@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.1.0"
-updated: "1.4.0"
-last_edit: "17/07/2026 - 12:17 AM"
+updated: "1.5.x"
+last_edit: "29/07/2026 - 01:32 AM"
 ---
 
 <!-- Table Export -->
@@ -571,7 +571,7 @@ last_edit: "17/07/2026 - 12:17 AM"
                         <i class="hgi hgi-stroke hgi-file-management"></i>
                         <span class="nds-label">Pagination Aware</span>
                     </span>
-                    <p class="nds-item-desc">Paginated tables export every page, not just the visible one. The library walks through hidden rows inside <code class="nds-inline-code lang-html">.nds-paged-content</code> so the file always matches the full dataset.</p>
+                    <p class="nds-item-desc">Paginated tables export every page, not just the visible one. The library walks through hidden rows inside <code class="nds-inline-code lang-html">.nds-paged-content</code> so the file always matches the full dataset. A table's own rows only: detail rows (<code class="nds-inline-code lang-html">nds-sub</code>) and any table nested inside one are skipped, so an expanded row never leaks its inner table into the file.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">

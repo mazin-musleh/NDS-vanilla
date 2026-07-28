@@ -72,6 +72,21 @@
         return v > 0 ? v : 5;
     }
 
+    // THE paged-item set for a container: the .nds-page-item elements it owns,
+    // minus anything a filter removed. Every scheduling, counting and records
+    // path reads through here, so a sixth caller can't re-derive it differently.
+    // Container shape decides breadth, mirroring nds-filter.js resolveItems: a
+    // grid or list may legally nest its items under a wrapper, but a <tbody>
+    // owns only its direct <tr> children — a sub-row's nested paged table has
+    // its own .nds-paged-content and must not be paged by this nav.
+    function _pagedItems(content) {
+        const items = Array.from(content.querySelectorAll('.nds-page-item'))
+            .filter(item => !item.hasAttribute('data-filtered'));
+        if (content.tagName !== 'TBODY') return items;
+        return items.filter(el =>
+            el.parentElement === content && !el.classList.contains('nds-sub'));
+    }
+
     // Page number from a clickable page element: prefer the `.nds-label`
     // text, fall back to the element's own text (prev/next, bare anchors).
     function pageNumberOf(el) {
@@ -338,7 +353,6 @@
                     container.setAttribute('data-nds-pagination-initialized', 'true');
                 }
 
-                // Initialize button states after pagination is ready
                 initializePaginationStates(container);
 
                 // Wire the per-nav click handler. Auto-paginations are wired
@@ -371,11 +385,7 @@
     // window only — callers needing the true page span use _lazyRange /
     // the always-visible 1,2,3,N strip buttons.
     function getPaginationDropmenuItems(pagination) {
-        const items = [];
-        pagination.querySelectorAll('.nds-dropmenu-menu').forEach(menu => {
-            items.push(...menu.querySelectorAll('.nds-dropmenu-item'));
-        });
-        return items;
+        return Array.from(pagination.querySelectorAll('.nds-dropmenu-menu .nds-dropmenu-item'));
     }
 
     // All clickable page elements (in-list buttons + dropmenu items).
@@ -465,7 +475,6 @@
     function initializePaginationStates(paginationNav) {
         const pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
 
-        // Get all page elements and numbers
         const allPageElements = getAllPageElements(pagination);
         if (allPageElements.length === 0) return;
 
@@ -491,7 +500,11 @@
         const first = items[0];
         if (!first || first.tagName !== 'TR') return;
         const table = first.closest('table');
-        const headers = table && table.querySelectorAll('thead th');
+        // Own header row only. A sub-row's nested <table> has its own thead whose
+        // cells sit inside a hidden row and measure 0 — and since the outer
+        // widths are non-zero, the all-zero guard below wouldn't catch it, so
+        // every nested column got pinned to 0px.
+        const headers = table && table.querySelectorAll(':scope > thead th');
         if (!headers || !headers.length) return;
         const widths = [];
         for (let i = 0; i < headers.length; i++) widths.push(headers[i].getBoundingClientRect().width);
@@ -528,7 +541,17 @@
                 if (ref && NDS.resolveEl(ref) === contentContainer) return nav;
             }
         }
-        return contentContainer.parentElement?.querySelector('.nds-pagination[data-auto-pagination]') || null;
+        // Adjacency fallback: a descendant search from the shared parent, so for a
+        // <tbody> it reaches inside every cell. A nav must share the container's
+        // sub-row context — one parked in a sub-row drives that row's own nested
+        // paged table, and a nested container's nav lives in the same sub as it.
+        const parent = contentContainer.parentElement;
+        if (!parent) return null;
+        const ownSub = contentContainer.closest('tr.nds-sub');
+        for (const nav of parent.querySelectorAll('.nds-pagination[data-auto-pagination]')) {
+            if (nav.closest('tr.nds-sub') === ownSub) return nav;
+        }
+        return null;
     }
 
     // Per-page picker: any nds-dropmenu carrying `data-per-page-target="<id>"`
@@ -582,8 +605,7 @@
         // before Pagination in nds-loader.js so applyUrlParams() has already
         // stamped data-filtered by the time we get here; on plain pages this
         // filter is a no-op (no items carry the attribute).
-        const items = Array.from(contentContainer.querySelectorAll('.nds-page-item'))
-            .filter(item => !item.hasAttribute('data-filtered'));
+        const items = _pagedItems(contentContainer);
 
         // Build the paginated UI in final state — no all-items → paginated
         // flash. For a table, lockTableColumns first freezes column widths
@@ -1244,8 +1266,7 @@
         // change after init (Filter calls refresh; refresh replaces the list
         // + the OLD click closure with it, but THIS resize observer survives
         // unaltered) doesn't paginate over a stale snapshot.
-        const liveItems = () => Array.from(contentContainer.querySelectorAll('.nds-page-item'))
-            .filter(it => !it.hasAttribute('data-filtered'));
+        const liveItems = () => _pagedItems(contentContainer);
 
         const pagination = paginationNav.querySelector('.nds-pagination-list');
         if (pagination) wireAutoClicks(pagination, liveItems, perPage);
@@ -1289,7 +1310,6 @@
     function refreshAutoPagination(contentContainer, options = {}) {
         if (!contentContainer) return;
 
-        // Find the pagination nav associated with this content container
         const paginationNav = navForContent(contentContainer);
         if (!paginationNav) return;
 
@@ -1303,8 +1323,7 @@
         if (!paginationNav.hasAttribute('data-nds-auto-pagination-initialized')) return;
 
         // Get only visible (non-filtered) items
-        const visibleItems = Array.from(contentContainer.querySelectorAll('.nds-page-item'))
-            .filter(item => !item.hasAttribute('data-filtered'));
+        const visibleItems = _pagedItems(contentContainer);
 
         const perPage = contentContainer._ndsPerPage || readPerPage(contentContainer);
 
@@ -1332,8 +1351,7 @@
         // from the live items inside wireAutoClicks (same getItems closure).
         wireAutoClicks(
             paginationNav.querySelector('.nds-pagination-list'),
-            () => Array.from(contentContainer.querySelectorAll('.nds-page-item'))
-                .filter(item => !item.hasAttribute('data-filtered')),
+            () => _pagedItems(contentContainer),
             perPage
         );
 
@@ -1399,8 +1417,7 @@
         const list = nav.querySelector('.nds-pagination-list');
         if (!list) return;
         const perPage = content._ndsPerPage || readPerPage(content);
-        const items = Array.from(content.querySelectorAll('.nds-page-item'))
-            .filter(it => !it.hasAttribute('data-filtered'));
+        const items = _pagedItems(content);
         const totalPages = Math.max(1, Math.ceil(items.length / perPage));
         showPage(items, Math.min(getCurrentPage(list), totalPages), perPage);
     }

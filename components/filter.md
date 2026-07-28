@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "26/07/2026 - 09:20 PM"
+last_edit: "29/07/2026 - 01:32 AM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -2081,7 +2081,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-filter-items</code></td><td>Set on the target container (the element referenced by <code class="nds-inline-code lang-html">data-filter-target</code>) to specify which descendants are filterable. Canonical form is a bare class name, e.g. <code class="nds-inline-code lang-html">data-filter-items="search-result"</code>; a tag name (<code class="nds-inline-code lang-html">tr</code>) or any CSS selector (<code class="nds-inline-code lang-html">.nds-card</code>, <code class="nds-inline-code lang-html">[data-row]</code>) also works. Default: <code class="nds-inline-code lang-html">.nds-card</code>. Setting the attribute (even with the default value) also opts the container into the critical-CSS hold: the container stays hidden until the filter initializes and has applied any URL filter params — so a URL-filtered page never flashes the unfiltered list.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-items</code></td><td>Set on the target container (the element referenced by <code class="nds-inline-code lang-html">data-filter-target</code>) to specify which descendants are filterable. Canonical form is a bare class name, e.g. <code class="nds-inline-code lang-html">data-filter-items="search-result"</code>; a tag name (<code class="nds-inline-code lang-html">tr</code>) or any CSS selector (<code class="nds-inline-code lang-html">.nds-card</code>, <code class="nds-inline-code lang-html">[data-row]</code>) also works. Default: <code class="nds-inline-code lang-html">.nds-card</code>. On a <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> the match is narrowed to the rows that body owns, so <code class="nds-inline-code lang-html">data-filter-items="tr"</code> needs no guard against a nested table's rows or a <code class="nds-inline-code lang-html">nds-sub</code> detail row. Other containers keep the full descendant match, where a wrapper between the container and its items is normal. Setting the attribute (even with the default value) also opts the container into the critical-CSS hold: the container stays hidden until the filter initializes and has applied any URL filter params — so a URL-filtered page never flashes the unfiltered list.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-total-count</code></td><td>Set on the target container by server-side rendering or inside a <code class="nds-inline-code lang-js">nds:filterFormComplete</code> handler to provide a server-authoritative result count. When present, overrides the DOM-enumerated count written to <code class="nds-inline-code lang-html">[data-filter-count]</code> slots.</td></tr>
                     </tbody>
                 </table>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "26/07/2026 - 09:20 PM"
+last_edit: "28/07/2026 - 11:36 PM"
 ---
 
 <!-- Basic Table Section -->
@@ -1379,45 +1379,58 @@ last_edit: "26/07/2026 - 09:20 PM"
                 </div>
                 <div class="demo-container">
                     <div class="state-demo">
-                        <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal>
-                            <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
-                                <i class="hgi hgi-stroke hgi-filter"></i>
-                                <span class="nds-label" data-hidden="sm sr">Filter</span>
-                            </button>
-                            <div class="nds-dropmenu-menu" hidden>
-                                <div class="nds-dropmenu-scroll">
-                                    <div data-filter="system" data-filter-type="checkbox"
-                                        data-filter-legend="System"
-                                        data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
-                                        data-no-auto-close>
+                        <div id="tables_pagination_demo">
+                            <div class="nds-toolbar">
+                                <div class="nds-bar-row">
+                                    <div class="nds-bar-start">
+                                        <span class="nds-results-count" data-paged-target="paginatedTableBody">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> service(s)</span>
                                     </div>
-                                    <hr class="nds-divider">
-                                    <div data-filter="popularity" data-filter-type="radio"
-                                        data-filter-legend="Popularity"
-                                        data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
-                                        data-no-auto-close>
+                                    <div class="nds-bar-end">
+                                    <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal>
+                                        <button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger">
+                                            <i class="hgi hgi-stroke hgi-filter"></i>
+                                            <span class="nds-label" data-hidden="sm sr">Filter</span>
+                                        </button>
+                                        <div class="nds-dropmenu-menu" hidden>
+                                            <div class="nds-dropmenu-scroll">
+                                                <div data-filter="system" data-filter-type="checkbox"
+                                                    data-filter-legend="System"
+                                                    data-filter-values='{"Identity & Records":"Identity & Records","Transport & Vehicles":"Transport & Vehicles","Healthcare & Social":"Healthcare & Social","Business & Finance":"Business & Finance","Education & Justice":"Education & Justice"}'
+                                                    data-no-auto-close>
+                                                </div>
+                                                <hr class="nds-divider">
+                                                <div data-filter="popularity" data-filter-type="radio"
+                                                    data-filter-legend="Popularity"
+                                                    data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
+                                                    data-no-auto-close>
+                                                </div>
+                                            </div>
+                                            <div class="nds-dropmenu-footer">
+                                                <hr class="nds-divider">
+                                                <div class="nds-dropmenu-action">
+                                                    <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                                                        data-filter-action="clear" data-no-auto-close>
+                                                        <span class="nds-label">Reset</span>
+                                                    </button>
+                                                    <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                                                        data-filter-action="apply">
+                                                        <span class="nds-label">Filter</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
-                                <div class="nds-dropmenu-footer">
-                                    <hr class="nds-divider">
-                                    <div class="nds-dropmenu-action">
-                                        <button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-                                            data-filter-action="clear" data-no-auto-close>
-                                            <span class="nds-label">Reset</span>
-                                        </button>
-                                        <button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-                                            data-filter-action="apply">
-                                            <span class="nds-label">Filter</span>
-                                        </button>
+                                <div class="nds-bar-row">
+                                    <div class="nds-bar-start">
+                                        <div class="nds-filter-applied" data-filter-target="paginatedTableBody" hidden>
+                                            <span class="nds-label">Applied Filters:</span>
+                                            <div class="nds-chips"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="nds-filter-applied" data-filter-target="paginatedTableBody" hidden>
-                            <span class="nds-label">Applied Filters:</span>
-                            <div class="nds-chips"></div>
-                        </div>
-                        <div id="tables_pagination_demo">
                             <table class="nds-table nds-compact nds-sortable">
                                 <thead>
                                     <tr>
@@ -1491,49 +1504,59 @@ last_edit: "26/07/2026 - 09:20 PM"
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="lang-html code">
-&lt;!-- Filter bar above table --&gt;
-&lt;div class="nds-filter" data-filter-target="paginatedTableBody"&gt;
-  &lt;div class="nds-dropmenu"&gt;
-    &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
-      &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
-      &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
-    &lt;/button&gt;
-    &lt;div class="nds-dropmenu-menu" hidden&gt;
-      &lt;div class="nds-dropmenu-scroll"&gt;
-        &lt;div data-filter="system" data-filter-type="checkbox"
-          data-filter-legend="System"
-          data-filter-values='{"Identity &amp; Records":"Identity &amp; Records","Transport &amp; Vehicles":"Transport &amp; Vehicles","Healthcare &amp; Social":"Healthcare &amp; Social","Business &amp; Finance":"Business &amp; Finance","Education &amp; Justice":"Education &amp; Justice"}'
-          data-no-auto-close&gt;
-        &lt;/div&gt;
-        &lt;hr class="nds-divider"&gt;
-        &lt;div data-filter="popularity" data-filter-type="radio"
-          data-filter-legend="Popularity"
-          data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
-          data-no-auto-close&gt;
+&lt;div id="tables_pagination_demo"&gt;
+  &lt;div class="nds-toolbar"&gt;
+    &lt;div class="nds-bar-row"&gt;
+      &lt;div class="nds-bar-start"&gt;
+        &lt;span class="nds-results-count" data-paged-target="paginatedTableBody"&gt;Showing &lt;b data-paged-from&gt;0&lt;/b&gt;&amp;ndash;&lt;b data-paged-to&gt;0&lt;/b&gt; of &lt;b data-paged-count&gt;0&lt;/b&gt; service(s)&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class="nds-bar-end"&gt;
+      &lt;div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal&gt;
+        &lt;button class="nds-btn nds-neutral nds-menu-btn nds-filter-btn nds-dropmenu-trigger"&gt;
+          &lt;i class="hgi hgi-stroke hgi-filter"&gt;&lt;/i&gt;
+          &lt;span class="nds-label" data-hidden="sm sr"&gt;Filter&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;div class="nds-dropmenu-menu" hidden&gt;
+          &lt;div class="nds-dropmenu-scroll"&gt;
+            &lt;div data-filter="system" data-filter-type="checkbox"
+              data-filter-legend="System"
+              data-filter-values='{"Identity &amp; Records":"Identity &amp; Records","Transport &amp; Vehicles":"Transport &amp; Vehicles","Healthcare &amp; Social":"Healthcare &amp; Social","Business &amp; Finance":"Business &amp; Finance","Education &amp; Justice":"Education &amp; Justice"}'
+              data-no-auto-close&gt;
+            &lt;/div&gt;
+            &lt;hr class="nds-divider"&gt;
+            &lt;div data-filter="popularity" data-filter-type="radio"
+              data-filter-legend="Popularity"
+              data-filter-values='{"most_used":"Most Used","standard":"Standard"}'
+              data-no-auto-close&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="nds-dropmenu-footer"&gt;
+            &lt;hr class="nds-divider"&gt;
+            &lt;div class="nds-dropmenu-action"&gt;
+              &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
+                data-filter-action="clear" data-no-auto-close&gt;
+                &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
+              &lt;/button&gt;
+              &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
+                data-filter-action="apply"&gt;
+                &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
+              &lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-      &lt;div class="nds-dropmenu-footer"&gt;
-        &lt;hr class="nds-divider"&gt;
-        &lt;div class="nds-dropmenu-action"&gt;
-          &lt;button class="nds-btn nds-secondary nds-dropmenu-item" type="button"
-            data-filter-action="clear" data-no-auto-close&gt;
-            &lt;span class="nds-label"&gt;Reset&lt;/span&gt;
-          &lt;/button&gt;
-          &lt;button class="nds-btn nds-primary nds-dropmenu-item" type="button"
-            data-filter-action="apply"&gt;
-            &lt;span class="nds-label"&gt;Filter&lt;/span&gt;
-          &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="nds-bar-row"&gt;
+      &lt;div class="nds-bar-start"&gt;
+        &lt;div class="nds-filter-applied" data-filter-target="paginatedTableBody" hidden&gt;
+          &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
+          &lt;div class="nds-chips"&gt;&lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class="nds-filter-applied" hidden&gt;
-    &lt;span class="nds-label"&gt;Applied Filters:&lt;/span&gt;
-    &lt;div class="nds-chips"&gt;&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
 
-&lt;div id="tables_pagination_demo"&gt;
   &lt;table class="nds-table nds-compact nds-sortable"&gt;
     &lt;thead&gt;
       &lt;tr&gt;
@@ -1601,6 +1624,204 @@ last_edit: "26/07/2026 - 09:20 PM"
 &lt;!-- Auto-pagination nav bound to the content wrapper by id --&gt;
 &lt;nav class="nds-pagination" data-auto-pagination="paginatedTableBody" aria-label="Table pagination"&gt;&lt;/nav&gt;
                                 </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sub-Rows Section -->
+<section id="subRowTableOverview" class="nds-content-section nds-demo-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Expandable Sub-Rows</h2>
+            <p class="nds-section-description">A detail row that opens beneath its parent, holding anything from a paragraph to a nested table. Reach for this when a record has supporting data that does not deserve its own page</p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-showcase">
+            <div class="nds-demo-card">
+                <div class="demo-header">
+                    <div class="demo-label">Static sub-rows</div>
+                    <div class="demo-action">
+                        <button class="nds-btn nds-sm nds-subtle demo-toggle-btn"
+                            data-toggler='["nds-compact", ".nds-table", "tableSize"]'>
+                            <span class="nds-label">Compact</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="demo-container">
+                    <div class="state-demo">
+                        <table class="nds-table" id="subRowDemo">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Service</th>
+                                    <th>Amount</th>
+                                    <th class="actions-column">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>TXN-2026-001</td>
+                                    <td>Commercial registration</td>
+                                    <td>1,200</td>
+                                    <td class="actions-column">
+                                        <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-1" aria-expanded="false">
+                                            <span class="nds-label">Details</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr id="sub-row-1" class="nds-sub" hidden>
+                                    <td>
+                                        <table class="nds-table nds-compact">
+                                            <thead>
+                                                <tr>
+                                                    <th>Line item</th>
+                                                    <th>Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Processing fee</td>
+                                                    <td>25</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Service charge</td>
+                                                    <td>1,020</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>VAT (15%)</td>
+                                                    <td>155</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>TXN-2026-002</td>
+                                    <td>Work permit renewal</td>
+                                    <td>650</td>
+                                    <td class="actions-column">
+                                        <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-2" aria-expanded="true" data-state="open">
+                                            <span class="nds-label">Details</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr id="sub-row-2" class="nds-sub">
+                                    <td colspan="4">
+                                        <p>Opens on first paint. Leave <strong>hidden</strong> off the sub row and ship <strong>aria-expanded="true"</strong> plus <strong>data-state="open"</strong> on the toggle. Add <strong>colspan</strong> too: it is corrected at init either way, but a row that is already visible would reflow when that happens.</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>TXN-2026-003</td>
+                                    <td>Municipal licence</td>
+                                    <td>2,400</td>
+                                    <td class="actions-column">
+                                        <button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-3" aria-expanded="false">
+                                            <span class="nds-label">Details</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr id="sub-row-3" class="nds-sub" hidden>
+                                    <td>
+                                        <p>Opening one sub closes the others. Add <strong>data-state="always-open"</strong> to the table to let several stay open at once.</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided">
+                    <div class="nds-tab-list-container nds-scroll-more">
+                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                                aria-controls="panel-table-subrow-1" id="tab-table-subrow-1">
+                                <span class="nds-tab-label">HTML</span>
+                            </button>
+                        </nav>
+                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="nds-tab-content">
+                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-table-subrow-1"
+                            aria-labelledby="tab-table-subrow-1">
+                            <div class="nds-code-action">
+                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                    <i class="nds-icon nds-hgi-copy-01"></i>
+                                </button>
+                            </div>
+                            <div class="nds-expandable-content">
+                            <code class="lang-html code">
+&lt;table class="nds-table" id="subRowDemo"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Reference&lt;/th&gt;
+      &lt;th&gt;Service&lt;/th&gt;
+      &lt;th&gt;Amount&lt;/th&gt;
+      &lt;th class="actions-column"&gt;Actions&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TXN-2026-001&lt;/td&gt;
+      &lt;td&gt;Commercial registration&lt;/td&gt;
+      &lt;td&gt;1,200&lt;/td&gt;
+      &lt;td class="actions-column"&gt;
+        &lt;button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-1" aria-expanded="false"&gt;
+          &lt;span class="nds-label"&gt;Details&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr id="sub-row-1" class="nds-sub" hidden&gt;
+      &lt;td&gt;
+        &lt;table class="nds-table nds-compact"&gt;
+          &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th&gt;Line item&lt;/th&gt;
+              &lt;th&gt;Amount&lt;/th&gt;
+            &lt;/tr&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            &lt;tr&gt;
+              &lt;td&gt;Processing fee&lt;/td&gt;
+              &lt;td&gt;25&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;Service charge&lt;/td&gt;
+              &lt;td&gt;1,020&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td&gt;VAT (15%)&lt;/td&gt;
+              &lt;td&gt;155&lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TXN-2026-002&lt;/td&gt;
+      &lt;td&gt;Work permit renewal&lt;/td&gt;
+      &lt;td&gt;650&lt;/td&gt;
+      &lt;td class="actions-column"&gt;
+        &lt;button class="nds-btn nds-subtle nds-md nds-menu-btn" data-sub-toggle aria-controls="sub-row-2" aria-expanded="true" data-state="open"&gt;
+          &lt;span class="nds-label"&gt;Details&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr id="sub-row-2" class="nds-sub"&gt;
+      &lt;td colspan="4"&gt;
+        &lt;p&gt;Opens on first paint.&lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+                            </code>
                             </div>
                         </div>
                     </div>
@@ -1685,6 +1906,20 @@ last_edit: "26/07/2026 - 09:20 PM"
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-row-insert"></i>
+                        <span class="nds-label">Expandable Sub-Rows</span>
+                    </span>
+                    <p class="nds-item-desc">Put <code class="nds-inline-code lang-html">data-sub-toggle</code> anywhere in a row and a detail row opens beneath it, holding a nested table, a form, or plain content. Sorting carries each sub with its parent, filtering and pagination hide it alongside, and collapsing keeps the DOM so anything typed inside survives.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-cloud-download"></i>
+                        <span class="nds-label">Lazy Detail Loading</span>
+                    </span>
+                    <p class="nds-item-desc">A toggle with no detail row yet fires <code class="nds-inline-code lang-js">nds:table:sub-request</code> and spins while you fetch. Answer with <code class="nds-inline-code lang-js">setContent(html).open()</code> and the result is cached, so reopening never asks twice.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-download-01"></i>
                         <span class="nds-label">Row Export</span>
                     </span>
@@ -1714,6 +1949,8 @@ last_edit: "26/07/2026 - 09:20 PM"
                     <li>Apply <code class="nds-inline-code lang-html">nds-interactive</code> only when rows actually do something on click or hover (open a detail panel, link to a record, toggle selection). Leave it off for read-only data so the hover highlight does not suggest interactivity that is not there</li>
                     <li>Offer a <strong>column-visibility menu</strong> on wide tables so users can trim a horizontally-scrolling table to the columns they care about. Lock the identifier column with <code class="nds-inline-code lang-html">data-columns-lock</code> so a row can never lose its label, and give the table an <code class="nds-inline-code lang-html">id</code> so the choice survives a reload</li>
                     <li>Set <code class="nds-inline-code lang-html">--max-width</code> when placing a table in a narrow container or side panel to trigger the responsive scroll wrapper early</li>
+                    <li>Reach for <strong>sub-rows</strong> when a record has supporting detail that would bloat the table as extra columns: line items, attached files, an audit trail. If the detail is a full record in its own right, link to a page instead</li>
+                    <li>Load sub-row content <strong>lazily</strong> when it is expensive or rarely opened. Ship it inline when it is small and most users will expand it, since inline content needs no JavaScript at all</li>
                     <li>Use <strong>pagination</strong> for datasets over 15-20 rows. Showing too many rows slows rendering and makes scanning harder</li>
                     <li>Keep header labels short and descriptive. Avoid abbreviations that require explanation</li>
                     <li>Place the most important identifier column (name, ID, title) first. Put action buttons or status indicators in the last column</li>
@@ -1735,7 +1972,8 @@ last_edit: "26/07/2026 - 09:20 PM"
                         <tr><td><code class="nds-inline-code lang-html">nds-col-header</code></td><td>Flex container inside <code class="nds-inline-code lang-html">&lt;th&gt;</code> that holds the label and actions side by side</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-col-actions</code></td><td>Container for action buttons (sort, filter, etc.) inside a column header</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-sort-btn nds-icon-only</code></td><td>Sort button class inside column headers that triggers column sorting</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">nds-page-item</code></td><td>Applied to <code class="nds-inline-code lang-html">&lt;tr&gt;</code> elements for client-side pagination (used with <code class="nds-inline-code lang-html">nds-paged-content</code>)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-page-item</code></td><td>Applied to <code class="nds-inline-code lang-html">&lt;tr&gt;</code> elements for client-side pagination (used with <code class="nds-inline-code lang-html">nds-paged-content</code>). Put it on parent rows only, never on a <code class="nds-inline-code lang-html">nds-sub</code></td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-sub</code></td><td>Marks a <code class="nds-inline-code lang-html">&lt;tr&gt;</code> as a detail row belonging to the row directly above it. Place it immediately after its parent with a single <code class="nds-inline-code lang-html">&lt;td&gt;</code>, and add <code class="nds-inline-code lang-html">hidden</code> to start collapsed. One sub per parent row. <code class="nds-inline-code lang-html">colspan</code> is managed for you: it is re-derived from the parent's column count at init and again on every toggle, so a stale or missing value never leaves a detail row spanning the wrong width, and a table that gains or loses a column corrects itself. Author it anyway on a sub that starts open, since that row is already visible when init runs and would otherwise reflow</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">table-actions</code></td><td>Flex container for grouping action buttons within a cell</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">actions-column</code></td><td>Shrinks column to fit content width, preventing unnecessary whitespace</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">checkbox-column</code></td><td>Fallback for browsers without <code class="nds-inline-code lang-html">:has()</code> support. Apply to <code class="nds-inline-code lang-html">&lt;th&gt;</code> and <code class="nds-inline-code lang-html">&lt;td&gt;</code> containing checkboxes to fix column width</td></tr>
@@ -1759,6 +1997,9 @@ last_edit: "26/07/2026 - 09:20 PM"
                         <tr><td><code class="nds-inline-code lang-html">data-columns-target="id"</code></td><td>Set on a <code class="nds-inline-code lang-html">nds-dropmenu</code> to turn it into a column-visibility menu for the table with that id. The trigger's icon gains a <code class="nds-inline-code lang-html">.nds-badge</code> counting the hidden columns, and a "Reset" button sits under the checklist while any column is hidden</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-columns-list</code></td><td>Set on the <code class="nds-inline-code lang-html">&lt;fieldset&gt;</code> inside that menu. The checklist is generated into it from the table's <code class="nds-inline-code lang-html">&lt;thead&gt;</code>. Author your own rows to opt out of generation</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-columns-lock</code></td><td>Set on a <code class="nds-inline-code lang-html">&lt;th&gt;</code> to keep that column off the menu so it can never be hidden. The row-selection column is excluded automatically</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-sub-toggle</code></td><td>Set on any button inside a row to make it open and close that row's <code class="nds-inline-code lang-html">nds-sub</code>. Point <code class="nds-inline-code lang-html">aria-controls</code> at the sub row's id. Several toggles may drive one sub (a chevron in the row plus a collapse button inside the content) and they stay in sync. Add <code class="nds-inline-code lang-html">nds-menu-btn</code> for a chevron that rotates on its own</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-state="always-open"</code></td><td>Set on <code class="nds-inline-code lang-html">&lt;table&gt;</code> to let several sub-rows stay open at once. Without it, opening one closes the rest. Pre-rendered open rows are never normalized at load, so multiple open subs paint as authored until the first click</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-filter-items="tr"</code></td><td>Set on the <code class="nds-inline-code lang-html">&lt;tbody&gt;</code> to mark what <a class="nds-color" href="{{ 'components/filter' | relative_url }}">Filter</a> treats as an item. On a table it needs no guard against sub-rows: only the tbody's own rows count, so a nested table inside an expanded sub is left alone and detail rows are never filtered in their own right. Subs follow their parent through the cascade</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">id</code> (on <code class="nds-inline-code lang-html">&lt;table&gt;</code>)</td><td>A table with an id remembers its hidden columns across visits, stored under <code class="nds-inline-code lang-js">localStorage['nds-cols-{id}']</code>. The saved set is discarded if the table's column count changes, so a later deploy can add or drop a column without hiding the wrong one</td></tr>
                     </tbody>
                 </table>
@@ -1775,6 +2016,8 @@ last_edit: "26/07/2026 - 09:20 PM"
                         <tr><td><code class="nds-inline-code lang-html">--max-width</code></td><td>100%</td><td>Maximum width of the responsive scroll wrapper</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--min-width</code></td><td>auto-calculated</td><td>Minimum width of the table inside the wrapper. Prevents cells from shrinking below content width</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--mask-fade-distance</code></td><td>48px</td><td>Width of the gradient fade mask on scroll edges</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--table-sub-padding</code></td><td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td><td>Even inset inside a sub-row's cell. Separate from the cell padding knobs: a detail row holds a panel, not a line of text</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--table-sub-background</code></td><td><code class="nds-inline-code lang-html">var(--background-surface-sunken)</code></td><td>Background of a sub-row's cell, sunk behind the parent rows. Overriding this takes over both light and dark</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--per-page</code></td><td>10</td><td>Number of rows shown per page when using pagination (set on <code class="nds-inline-code lang-html">nds-paged-content</code>)</td></tr>
                     </tbody>
                 </table>
@@ -1856,6 +2099,52 @@ table.addEventListener('nds:table:columns', (e) =&gt; {
     e.detail.hidden;           // true when the column was hidden
     e.detail.table;            // The &lt;table&gt; element
     e.detail.restored;         // true when replayed from storage at init, not chosen by the user
+});
+
+// ── Sub-rows ─────────────────────────────────────────
+// row() returns a handle for one row. Pass the parent row or its sub:
+// a control inside the detail content uses the same call as the toggle above.
+const row = document.querySelector('#myTable tbody tr');
+
+NDS.Tables.row(row).sub.setContent('&lt;p&gt;Details&lt;/p&gt;');  // build or replace the content
+NDS.Tables.row(row).sub.open();     // show it (single-open unless data-state="always-open")
+NDS.Tables.row(row).sub.close();    // hide it
+NDS.Tables.row(row).sub.toggle();   // flip it
+NDS.Tables.row(row).sub.el;         // the &lt;tr class="nds-sub"&gt;, or null
+
+// Content and visibility are separate, and the DOM is never torn down:
+// values typed into a form inside a sub survive a collapse. setContent
+// returns the sub handle, so the lazy case reads as one line.
+
+// ── Lazy loading ─────────────────────────────────────
+// Clicking a toggle whose row has no sub yet fires sub-request and spins the
+// toggle. NDS never fetches: you do, then hand back the markup. detail.signal
+// aborts the request if the user cancels by clicking the spinning toggle.
+table.addEventListener('nds:table:sub-request', (e) =&gt; {
+    const { row, signal } = e.detail;
+    fetch(`/transactions/${row.dataset.id}/details`, { signal })
+        .then(res =&gt; res.text())
+        .then(html =&gt; NDS.Tables.row(row).sub.setContent(html).open())
+        .catch(err =&gt; {
+            // Aborted means the user cancelled: NDS already released the toggle.
+            // Any other failure must call close(), or the toggle keeps spinning.
+            if (err.name !== 'AbortError') NDS.Tables.row(row).sub.close();
+        });
+});
+
+// Fires when a sub-row opens. Late-init any widgets inside detail.sub
+table.addEventListener('nds:table:sub-open', (e) =&gt; {
+    e.detail.row;              // The parent &lt;tr&gt;
+    e.detail.sub;              // The &lt;tr class="nds-sub"&gt; now visible
+    e.detail.table;            // The &lt;table&gt; element
+    NDS.CustomSelect?.reinit(e.detail.sub);
+});
+
+// Fires when a sub-row closes
+table.addEventListener('nds:table:sub-close', (e) =&gt; {
+    e.detail.row;              // The parent &lt;tr&gt;
+    e.detail.sub;              // The &lt;tr class="nds-sub"&gt; now hidden
+    e.detail.table;            // The &lt;table&gt; element
 });
 </code>
                     </div>

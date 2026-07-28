@@ -57,9 +57,7 @@
             });
 
             // Get all filterable items (empty array if no target)
-            this.items = this.targetContainer
-                ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
-                : [];
+            this.items = this.resolveItems();
 
             // Filter criteria storage - dynamic structure.
             // Sort state lives inside the NDS.Sort instance (this.sort); read via this.sort.getState().
@@ -138,6 +136,20 @@
             this._deferredFilters = [];
 
             this.init();
+        }
+
+        // Items belong to the container itself, so the caller never has to write a
+        // defensive selector. For a <tbody> that means its own rows: a nested table
+        // inside an expanded sub-row has rows of its own that are never this table's
+        // items, and a detail row is part of its parent rather than an item in its
+        // own right. Non-table containers are untouched, where a wrapper between the
+        // container and its cards is normal.
+        resolveItems() {
+            if (!this.targetContainer) return [];
+            const items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()));
+            if (this.targetContainer.tagName !== 'TBODY') return items;
+            return items.filter(el =>
+                el.parentElement === this.targetContainer && !el.classList.contains('nds-sub'));
         }
 
         getItemSelector() {
@@ -431,7 +443,7 @@
                 const newContainer = targetInResponse.cloneNode(true);
                 this.targetContainer.replaceWith(newContainer);
                 this.targetContainer = newContainer;
-                this.items = Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()));
+                this.items = this.resolveItems();
                 this._cacheBuilt = false;
                 this._revealTargetContainer();
                 eventDetail.html = newContainer.innerHTML;
@@ -2489,9 +2501,7 @@
             this._targetRoots = this.resolveTargetRoots();
 
             // Update items list
-            this.items = this.targetContainer
-                ? Array.from(this.targetContainer.querySelectorAll(this.getItemSelector()))
-                : [];
+            this.items = this.resolveItems();
             this._cacheBuilt = false;
 
             // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)

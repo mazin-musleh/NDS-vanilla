@@ -37,9 +37,14 @@
 
     // ── adapters ────────────────────────────────────────────────────────
 
+    // Direct children and .cells throughout: a sub-row's nested <table> carries its
+    // own thead/tbody, and a descendant walk sweeps the inner table's headers and
+    // rows into the outer export. .cells (not .children / a th-filtered list) is
+    // what keeps a column's position equal to cellIndex — the space getCell's
+    // row.cells[col.index] and nds-tables.js's hide/show writes both address.
     const tableAdapter = {
         getColumns(source) {
-            const ths = source.querySelectorAll('thead th');
+            const ths = Array.from(source.querySelector(':scope > thead > tr')?.cells || []);
             const cols = [];
             ths.forEach((th, index) => {
                 if (th.hasAttribute('data-export-skip')) return;
@@ -54,21 +59,21 @@
         },
 
         getRows(source, scope) {
-            const tbody = source.querySelector('tbody');
+            const tbody = source.querySelector(':scope > tbody');
             if (!tbody) return [];
             // Paginated tables hide off-page rows via .nds-page-item + [hidden].
             // Export must see every page, so reach for the source list and ignore the hidden flag.
             const paged = tbody.closest('.nds-paged-content');
             const rows = (paged
-                ? Array.from(source.querySelectorAll('tbody tr.nds-page-item'))
-                : Array.from(tbody.children).filter(el => el.tagName === 'TR'))
-                .filter(row => !isRowFiltered(row));
+                ? Array.from(tbody.querySelectorAll(':scope > tr.nds-page-item'))
+                : Array.from(tbody.rows))
+                .filter(row => !row.classList.contains('nds-sub') && !isRowFiltered(row));
             if (scope === 'selected') return rows.filter(NDS.isRowSelected);
             return rows;
         },
 
         getCell(row, col) {
-            const td = row.children[col.index];
+            const td = row.cells[col.index];
             if (!td) return '';
             // data-sort-value is deliberately NOT consulted here — it's a
             // sort-comparison signal, not an export override. Authors who want
@@ -80,13 +85,6 @@
             const override = td.getAttribute('data-export-value');
             if (override !== null) return override;
             return NDS.Tables.getCellText(td);
-        },
-
-        anySelected(source) {
-            const tbody = source.querySelector('tbody');
-            if (!tbody) return false;
-            return Array.from(tbody.children).some(tr =>
-                tr.tagName === 'TR' && !isRowFiltered(tr) && NDS.isRowSelected(tr));
         }
     };
 
@@ -127,12 +125,6 @@
             const override = el.getAttribute('data-export-value');
             if (override !== null) return override;
             return el.textContent.trim();
-        },
-
-        anySelected(source) {
-            const sel = source.dataset.exportRows;
-            const rows = sel ? NDS.queryAll(source, sel) : Array.from(source.children);
-            return rows.some(row => !isRowFiltered(row) && NDS.isRowSelected(row));
         }
     };
 
@@ -152,8 +144,12 @@
         return source.matches('table, .nds-table') ? tableAdapter : genericAdapter;
     }
 
+    // Asks the same getRows the export itself will use, rather than a parallel
+    // "is anything selected" walk. A separate walk can see a selected row that
+    // getRows doesn't own (an unmarked <tr> in a paginated table), which flips
+    // the scope to 'selected' and then exports nothing.
     function inferScope(source, adapter) {
-        return adapter.anySelected(source) ? 'selected' : 'all';
+        return adapter.getRows(source, 'all').some(NDS.isRowSelected) ? 'selected' : 'all';
     }
 
     function collect(source, scope) {
@@ -410,11 +406,10 @@
     // Optional data-export-scope="all|selected" forces the scope; default is
     // 'auto' (selected if any, else all).
     //
-    // The listener is installed lazily — pages without any [data-export]
-    // button pay nothing. NDS bundles ship with `defer` (or at end-of-body),
-    // so the IIFE-time querySelector sees everything statically present;
-    // NDS.onDOMAdd covers buttons injected later (modals, dropmenus, dynamic
-    // toolbars).
+    // Nothing is installed until the loader detects a [data-export] button and
+    // loads this bundle, so pages without one pay nothing. The single delegated
+    // listener resolves its button per click, so buttons injected later (modals,
+    // dropmenus, dynamic toolbars) are covered with no re-arm.
     const VALID_FORMATS = { csv: 1, xls: 1, pdf: 1 };
     let _initDone = false;
 
@@ -434,19 +429,11 @@
         exportFrom(target, format, btn.dataset.exportScope || 'auto');
     }
 
-    function installClickListener() {
-        // Stable function reference — repeat adds (the onDOMAdd re-arm) dedupe
-        // natively per the addEventListener spec.
-        document.addEventListener('click', onExportClick);
-    }
-
-    // Loader-driven (registered on selector [data-export], extras bundle):
-    // install the delegated click handler + watch for buttons added later.
+    // Loader-driven (registered on selector [data-export], extras bundle).
     function init() {
         if (_initDone) return;
         _initDone = true;
-        installClickListener();
-        NDS.onDOMAdd('[data-export]', installClickListener);
+        document.addEventListener('click', onExportClick);
     }
 
     NDS.Export = {

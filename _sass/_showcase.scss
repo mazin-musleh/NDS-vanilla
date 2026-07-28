@@ -93,6 +93,14 @@
   justify-content: center;
   gap: var(--spacing-xl);
   align-items: center;
+
+  // Flex items default to min-width:auto and refuse to shrink below their
+  // content. A demo that nests a table one level down would size that item to
+  // the table, so .nds-table-wrapper never overflows and its scroll never
+  // engages. Only affects items that would otherwise overflow the card.
+  > * {
+    min-width: 0;
+  }
 }
 
 .nds-showcase {

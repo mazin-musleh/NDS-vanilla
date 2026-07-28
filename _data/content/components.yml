@@ -493,7 +493,7 @@
   description: "Data grids with sorting, pagination, and expandable rows"
   icon: '<i class="hgi hgi-stroke hgi-table-02"></i>'
   category: "Data"
-  tags: ["JS", "CSS"]
+  tags: ["JS", "CSS", "API"]
   url: "/components/tables.html"
   js: _js/nds-tables.js
   scss: _sass/components/_tables.scss

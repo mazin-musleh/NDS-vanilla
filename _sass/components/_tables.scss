@@ -17,6 +17,12 @@
     position: relative;
     width: 100%;
     max-width: var(--_max-width);
+    // A flex or grid item defaults to min-width:auto and refuses to shrink below
+    // its content, so the wrapper would size to its table and never overflow —
+    // the scroll would simply never engage. Only fixes the wrapper's own item
+    // box: an intermediate element between it and the flex container needs the
+    // same treatment from the consumer.
+    min-width: 0;
     overflow-x: auto;
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
@@ -68,6 +74,8 @@
 .nds-table {
     --_cell-padding-block: var(--table-cell-padding-block, var(--spacing-md));
     --_cell-padding-inline: var(--table-cell-padding-inline, var(--spacing-xl));
+    --_sub-padding: var(--table-sub-padding, var(--spacing-xl));
+    --_sub-background: var(--table-sub-background, var(--background-surface-sunken));
     width: 100%;
     background-color: var(--table-cell-border);
     border: 1px solid var(--table-cell-border);
@@ -142,18 +150,27 @@
 
     // ── Row states ──
 
-    tbody tr:nth-child(even) td {
+    // Striping counts parent rows only — a sub row sits between two parents and
+    // would otherwise flip the phase of every row below it. Child combinators
+    // keep the rule off a nested sub-table, which stripes from its own instance.
+    > tbody > tr:nth-child(even of :not(.nds-sub)) > td {
         background-color: var(--table-background-row);
     }
 
+    // One selector, not two: the old :nth-child(even):hover twin existed only to
+    // out-specify the stripe rule, which now carries its own `of` argument.
+    // :not(.nds-sub) keeps the row highlight off a sub — it's a panel, not a row,
+    // and this would otherwise out-rank the sub's own background.
     &.nds-interactive {
-        tbody tr:hover td,
-        tbody tr:nth-child(even):hover td {
+        tbody tr:not(.nds-sub):hover td {
             background-color: var(--table-background-header);
         }
     }
 
-    tbody tr[data-state~="selected"] {
+    // :not(.nds-sub) is here for specificity, not matching — a sub row is never
+    // selected. The `of` argument above lifts striping to (0,3,3), so without it
+    // the stripe would out-rank a selected row sitting on an even index.
+    tbody tr[data-state~="selected"]:not(.nds-sub) {
         td {
             background-color: var(--table-background-row-selected);
         }
@@ -161,6 +178,37 @@
 
     &.nds-interactive tbody tr[data-state~="selected"]:hover td {
         background-color: var(--table-background-hover-selected);
+    }
+
+    // ── Sub-rows ──
+
+    // Set on the cell, not the row: td paints --table-background-cell, which
+    // would cover a row-level background.
+    //
+    // Even inset via its own knob, not the cell's block/inline split — that
+    // split buys row density for a line of text, and a sub holds a panel.
+    // Deliberately not --_cell-padding-inline: same value today, different
+    // meaning, so column padding and panel inset don't move together.
+    tbody tr.nds-sub > td {
+        background-color: var(--_sub-background);
+        padding: var(--_sub-padding);
+    }
+
+    // A sub follows its parent, so when filter or the pager removes the parent
+    // the sub goes with it whatever its own open state — pure cascade, no JS.
+    // Adjacency is the pairing contract (one sub per row); nds-tables.js restores
+    // it after a sort reorder.
+    tr[data-filtered] + tr.nds-sub,
+    tr[hidden] + tr.nds-sub {
+        display: none;
+    }
+
+    // A sub-request in flight parks the toggle in loading, which _loading.scss
+    // makes pointer-events:none. Keep it clickable so a second click cancels
+    // instead of hitting a dead button — same reason, same fix as
+    // .nds-dropmenu-trigger[data-state~="loading"] in _dropmenu.scss.
+    [data-sub-toggle][data-state~="loading"] {
+        pointer-events: auto;
     }
 
     // ── Column header (label + actions) ──
