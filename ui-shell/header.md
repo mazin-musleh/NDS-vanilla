@@ -551,7 +551,7 @@ header
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Toggle Functions ─────────────────────────
 // Exposed on the NDS.Mainnav namespace for external scripts
 // and integrations. Bind to your own triggers as needed.

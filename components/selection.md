@@ -498,7 +498,7 @@ last_edit: "29/07/2026 - 04:31 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // Wire the document listener (loader does this automatically)
 NDS.Selection.init();
 

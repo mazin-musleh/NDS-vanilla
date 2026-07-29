@@ -400,7 +400,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // Re-scan and initialize new breadcrumbs
 NDS.Breadcrumb.init();
 

@@ -578,7 +578,7 @@ last_edit: "04/07/2026 - 04:46 AM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Set progress value (circle or bar) ──────────────
 const el = document.querySelector('.nds-progress-circle');
 NDS.Progress.setValue(el, 80);       // Sets data-value="80", fill animates to 80%

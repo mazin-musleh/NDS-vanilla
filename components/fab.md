@@ -575,7 +575,7 @@ NDS.Fab.register(fab, 'end');   // 'left' | 'right' | 'bottom' | 'start' | 'end'
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Register a FAB built at runtime ──────────────────
 // Routes by the element's own data-fab-pos (default auto)
 NDS.Fab.register(fabElement);

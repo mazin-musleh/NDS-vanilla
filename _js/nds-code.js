@@ -14,8 +14,13 @@
  * for embedded <style>/<script> bodies.
  *
  * Languages: HTML, CSS, JavaScript (+ CSS/JS embedded inside an HTML block).
- * Language is taken from a `lang-*`/`language-*` class when present; otherwise
- * it is sniffed from the content.
+ * Language is taken from a `lang-*`/`language-*` class when present; a class we
+ * don't lex renders plain, and only a block with no lang class at all is sniffed.
+ *
+ * Rides the extras bundle, so this lands AFTER the page reveal. It must stay
+ * geometry-neutral: the line-number gutter is reserved by _code.scss with no JS
+ * (see its `code` rule), and inline code is coloured entirely in CSS from its
+ * authored lang class. All this adds is token colour and the line digits.
  */
 
 (function() {
@@ -25,18 +30,13 @@
     // INITIALIZATION
     // ==============================================
 
+    // Every .code-example is a tab panel inside .nds-code, so one query covers both.
     function initializeCodeProcessing() {
-        document.querySelectorAll('.code-example code, .nds-code code').forEach(processCodeElement);
-        document.querySelectorAll('code.nds-inline-code').forEach(processInlineCodeElement);
+        document.querySelectorAll('.nds-code code').forEach(processCodeElement);
     }
 
     function processCodeElement(codeElement) {
-        if (codeElement.dataset.processed === 'true') return;
-
-        // Keep the server markup so reprocess (e.g. a theme switch) can restart.
-        if (!codeElement.dataset.originalContent) {
-            codeElement.dataset.originalContent = codeElement.innerHTML;
-        }
+        if (codeElement.dataset.ndsCodeProcessed === 'true') return;
 
         const source = getSourceText(codeElement);
         const lang = detectLanguage(codeElement, source);
@@ -44,38 +44,23 @@
         const lines = splitTokensIntoLines(tokens);
 
         if (lines.length === 0) {
-            codeElement.dataset.processed = 'true';
+            codeElement.dataset.ndsCodeProcessed = 'true';
             return;
         }
 
         let html = '';
         for (let i = 0; i < lines.length; i++) {
-            html += '<span class="code-line">' + renderTokens(lines[i]) + '</span>\n';
+            html += '<span class="nds-code-line">' + renderTokens(lines[i]) + '</span>\n';
         }
         codeElement.innerHTML = html.trim();
-
-        // line-numbers gutter only for multi-line blocks (CSS counter reads the class).
-        if (lines.length > 1) codeElement.classList.add('line-numbers');
-        codeElement.dataset.processed = 'true';
+        codeElement.dataset.ndsCodeProcessed = 'true';
     }
 
-    function processInlineCodeElement(codeElement) {
-        if (codeElement.dataset.processed === 'true') return;
-
-        const text = codeElement.textContent;
-        // Inline code is a single token — trust an explicit class, default to html.
-        const lang = languageFromClass(codeElement.className) || 'html';
-        const syntaxClass = lang === 'javascript' ? 'syntax-keyword' : 'syntax-attr';
-        codeElement.innerHTML = '<span class="' + syntaxClass + '">' + NDS.escapeHtml(text) + '</span>';
-        codeElement.dataset.processed = 'true';
-    }
-
+    // Re-lex in place. No source snapshot is kept: highlighting preserves
+    // textContent (bar the leading newline and trailing blanks getSourceText and
+    // splitTokensIntoLines already drop), so re-reading it is idempotent.
     function reprocessCodeElement(codeElement) {
-        if (codeElement.dataset.originalContent != null) {
-            codeElement.innerHTML = codeElement.dataset.originalContent;
-        }
-        codeElement.dataset.processed = 'false';
-        codeElement.classList.remove('line-numbers');
+        codeElement.dataset.ndsCodeProcessed = 'false';
         processCodeElement(codeElement);
     }
 
@@ -86,6 +71,14 @@
     // The authored corpus is entity-escaped (`&lt;…&gt;`), so textContent already
     // holds the decoded source with the author's indentation — no reparse needed.
     // Strip one leading newline (the <code> tag sits on its own line).
+    //
+    // ponytail: this strip (plus the trailing-blank pop in splitTokensIntoLines)
+    // makes the highlighted block SHORTER than the pre-highlight paint — ~100px on
+    // a long block, since `white-space: pre` renders whitespace we then discard.
+    // Harmless today: init rides extras and lands ~1s post-reveal, by which point
+    // the blocks are off-screen, so measured CLS is 0.0000-0.0055. The real fix is
+    // normalizing the authored whitespace (388 of 421 blocks open with a newline
+    // and/or close on an indented line) so both strips become no-ops.
     function getSourceText(codeElement) {
         const text = codeElement.textContent;
         return text.charCodeAt(0) === 10 ? text.slice(1) : text;
@@ -102,11 +95,13 @@
         return null;
     }
 
-    // Class wins (explicit override, back-compat); otherwise sniff the content so
-    // a block can omit the class entirely.
+    // Class wins (explicit override, back-compat); a class we don't lex renders
+    // plain rather than being guessed at; only a block with NO lang class at all
+    // falls through to content sniffing. Returns null for "plain, don't lex".
     function detectLanguage(codeElement, source) {
         const byClass = languageFromClass(codeElement.className);
         if (byClass) return byClass;
+        if (/\blang(?:uage)?-[\w-]+/.test(codeElement.className)) return null;
         const text = source != null ? source : codeElement.textContent;
         return sniffLanguage(text);
     }
@@ -139,7 +134,7 @@
         for (let i = 0; i < tokens.length; i++) {
             const t = tokens[i];
             const esc = NDS.escapeHtml(t.value);
-            html += t.type ? '<span class="syntax-' + t.type + '">' + esc + '</span>' : esc;
+            html += t.type ? '<span class="nds-syntax-' + t.type + '">' + esc + '</span>' : esc;
         }
         return html;
     }

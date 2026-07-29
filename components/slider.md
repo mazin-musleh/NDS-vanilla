@@ -576,7 +576,7 @@ last_edit: "30/06/2026 - 11:50 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialize all sliders on the page ───────────────
 // Called automatically on DOM ready by the loader.
 // Idempotent: re-entry is a no-op.

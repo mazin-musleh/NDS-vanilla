@@ -1292,7 +1292,7 @@ document.getElementById('my-lazy-dropmenu').addEventListener('nds:dropmenu:prepa
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Auto-initialization ────────────────────────────────────
 // Dropmenus initialize automatically on page load
 

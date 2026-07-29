@@ -822,7 +822,7 @@ last_edit: "29/07/2026 - 09:08 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Global API ──────────────────────────────────────
 NDS.Tabs.init();                // Re-scan page and initialize new .nds-tabs elements
 NDS.Tabs.reinit();              // Alias for init(), useful after dynamic content changes

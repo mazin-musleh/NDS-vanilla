@@ -531,7 +531,7 @@ direction: ltr
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialize (auto-runs on load) ─────────────────────
 // Call again after injecting taginput HTML dynamically.
 NDS.TagInput.init();

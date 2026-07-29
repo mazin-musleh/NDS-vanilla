@@ -1341,7 +1341,7 @@ last_edit: "26/07/2026 - 10:05 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialize ──────────────────────────────────────
 NDS.Drawer.init();                    // All drawers on the page
 NDS.Drawer.reinit();                  // Re-scan (same as init)

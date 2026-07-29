@@ -549,7 +549,7 @@ last_edit: "03/07/2026 - 02:01 AM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Instance methods (element.ndsRating) ────────────
 const el = document.querySelector('.nds-rating');
 

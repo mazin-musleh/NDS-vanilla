@@ -692,7 +692,7 @@ document.getElementById('editor-images-container')
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialization ───────────────────────────────────
 // Auto-initializes every .nds-editor on page load, adopting the field's textarea.
 NDS.Editor.init();                    // scan for new editors (also NDS.Editor.reinit())

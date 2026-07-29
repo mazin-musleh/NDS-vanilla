@@ -661,7 +661,7 @@ aside.nds-sidemenu
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialization ──────────────────────────────────
 // Auto-runs on page load via nds-loader when .nds-sidemenu exists.
 // Call manually after injecting a new sidemenu into the DOM:

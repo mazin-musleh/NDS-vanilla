@@ -838,7 +838,7 @@ last_edit: "25/07/2026 - 09:25 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Lifecycle ────────────────────────────────────────
 NDS.Accessibility.init();    // Idempotent. Re-init tears down listeners + remounts.
 NDS.Accessibility.open();    // Slides the panel in. Saves the opener for focus return.

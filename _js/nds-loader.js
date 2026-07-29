@@ -198,16 +198,17 @@
             init: () => NDS.Numbers?.init?.(),
         },
         {
-            // Critical: code paints from server markup at its real height (the page
-            // hide-gate covers FOUC); init then highlights + numbers in place, which
-            // is height-neutral, so it must settle before the reveal to avoid a
-            // visible plain->highlighted shift. Targets the three NDS code hooks
-            // (block, tabs-wrapped block, inline); avoids bare `code` so detection
+            // Documentation-only highlighter, so it rides extras and never gates the
+            // reveal — consumer sites render no code blocks and fetch nothing.
+            // Delegate-safe: _code.scss paints the box, reserves the line-number
+            // gutter and colours inline code with no JS at all, so a late init adds
+            // only token colour + line digits and can't shift layout.
+            // `.nds-code` alone is enough: every .code-example is a tab panel inside
+            // it, and inline code needs no JS. Avoids bare `code` so detection
             // doesn't sweep every <code> on docs pages.
             name: 'Code',
-            selector: '.code-example, .nds-code, code.nds-inline-code',
+            selector: '.nds-code',
             init: () => NDS.Code?.init?.(),
-            critical: true,
         },
         {
             name: 'Copy',

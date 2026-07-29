@@ -2190,7 +2190,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Get a filter instance ───────────────────────────
 const filter = NDS.Filter.getInstance('.nds-filter');
 const filter = NDS.Filter.getInstance(element);

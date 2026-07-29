@@ -404,7 +404,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
-                    <code class="lang-javascript line-numbers">
+                    <code class="lang-javascript">
 // Runs automatically on page load. No manual call needed.
 // After inserting links dynamically, call init() to process the new elements:
 NDS.Link.init();

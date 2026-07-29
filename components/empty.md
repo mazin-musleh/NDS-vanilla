@@ -541,7 +541,7 @@ li.remove();</code>
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialization ───────────────────────────────────
 // The loader calls this automatically at page load.
 // Call again if you add .nds-empty containers via innerHTML before

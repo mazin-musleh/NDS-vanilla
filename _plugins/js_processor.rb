@@ -55,7 +55,7 @@ class JSProcessor
       # otp (auto-advance/paste is first-interaction-critical on OTP/2FA pages).
       # They stay so they wire on the local idle pass, not after an injected
       # bundle. Reveal is gated on this bundle, so it's kept lean.
-      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-forms.js', 'nds-otp.js', 'nds-code.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-taginput.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
+      'nds-main.min.js' => ['nds-core.js', 'nds-theme.js', 'nds-mainnav.js', 'nds-fontLoading.js', 'nds-sidemenu.js', 'nds-drawer.js', 'nds-scroll-more.js', 'nds-cookies.js', 'nds-forms.js', 'nds-otp.js', 'nds-dropmenu.js', 'nds-customselect.js', 'nds-multiselect.js', 'nds-taginput.js', 'nds-backdrop.js', 'nds-feedback.js', 'nds-sideinfo.js', 'nds-toc.js', 'nds-empty.js', 'nds-cooldown-button.js', 'nds-link.js', 'nds-loader.js'],
       # Delegated — deferred components verified safe to load late. Injected by
       # nds-loader.js AFTER the critical pass (never a render-blocking defer tag), so
       # its download never gates the reveal. Components migrate in here over time
@@ -69,7 +69,10 @@ class JSProcessor
       # plain pages never download/parse them. May later be split into smaller
       # per-component bundles (add a bundle here; the loader picks it up from the
       # generated manifest).
-      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-tooltip.js', 'nds-export.js', 'nds-upload.js', 'nds-editor.js']
+      # nds-code.js is documentation-only — no consumer site renders code blocks,
+      # so it has no business in the reveal-gating bundle. Delegate-safe: _code.scss
+      # reserves the line-number gutter and colours inline code with no JS.
+      'nds-extras.min.js' => ['nds-date-picker.js', 'nds-chart.js', 'nds-autocomplete.js', 'nds-ipv.js', 'nds-tooltip.js', 'nds-export.js', 'nds-upload.js', 'nds-editor.js', 'nds-code.js']
       # NOTE: nds-accessibility.js is intentionally NOT bundled here — it
       # builds to its own assets/js/nds-accessibility.min.js (optional add-on,
       # loaded by a separate <script> gated on site.accessibility).

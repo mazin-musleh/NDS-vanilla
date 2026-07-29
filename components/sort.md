@@ -812,7 +812,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Create an instance ───────────────────────────────
 // Returns the NDSSort instance; re-creating on the same root returns the existing one.
 const sort = NDS.Sort.create(rootElement, {

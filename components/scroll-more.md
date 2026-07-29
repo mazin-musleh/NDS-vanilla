@@ -439,7 +439,7 @@ last_edit: "21/07/2026 - 09:08 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialize all instances on the page ─────────────
 // Called automatically on DOMContentLoaded; call again after
 // injecting new .nds-scroll-more markup.

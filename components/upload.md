@@ -330,7 +330,7 @@ last_edit: "19/07/2026 - 03:40 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Pattern 1: Bundle on submit (no data-upload-url) ──
 // Send the files WITH the form fields, in a single request.
 form.addEventListener('nds:formValid', (e) =&gt; {
@@ -438,7 +438,7 @@ uploadButton.addEventListener('click', () =&gt; {
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Static methods ──────────────────────────────────
 NDS.Upload.init();                             // Initialize all .nds-file-upload on page
 NDS.Upload.reinit();                           // Re-scan DOM after dynamic changes

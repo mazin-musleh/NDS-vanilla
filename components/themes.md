@@ -653,7 +653,7 @@ root.setAttribute('data-palette', '');
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Dark / light MODE ──────────────────────────────────────────
 NDS.Theme.get();              // 'light' | 'dark'  (reads the mode token)
 NDS.Theme.set('dark');        // no animation origin (center of screen)

@@ -320,7 +320,7 @@ last_edit: "29/07/2026 - 09:08 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Reach the instance ───────────────────────────────
 // Parked on the root element once initialized
 const switcher = document.querySelector('#switcher-standard-1').ndsTabs;

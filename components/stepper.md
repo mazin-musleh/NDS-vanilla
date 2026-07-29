@@ -803,7 +803,7 @@ NDS.Stepper.goTo('demo-stepper-responsive', 3);</code>
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Global convenience methods ──────────────────────
 NDS.Stepper.next('my-stepper');        // Advance to next step
 NDS.Stepper.previous('my-stepper');    // Go back one step

@@ -439,7 +439,7 @@ last_edit: "17/07/2026 - 06:24 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialize ───────────────────────────────────────
 // Called automatically on DOMContentLoaded for any
 // `.nds-tooltip` already in the DOM. Call again after

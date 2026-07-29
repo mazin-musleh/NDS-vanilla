@@ -45,28 +45,19 @@
     z-index: 2;
   }
 
-  pre {
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    border: none;
-    overflow-y: hidden;
-    overflow-x: auto;
-  }
-
   code {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
     font-size: var(--typo-text-sm-FS);
     line-height: var(--typo-text-sm-LH);
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-bold);
     direction: ltr;
     text-align: left;
-    // Paints from server markup at its real height — the escaped content
-    // renders as readable (unhighlighted) code text, and the page-level hide
-    // gate (.nds-content-layout, _skeleton.scss) already covers FOUC until the
-    // reveal. NDS.Code (critical) then highlights + numbers in place, which is
-    // height-neutral (line count preserved), so there's no reveal-time shift —
-    // no display:none -> full expansion to land post-reveal in skipped sections.
+    // Paints from server markup at its real height — the escaped content renders
+    // as readable (unhighlighted) code text, and the page-level hide gate
+    // (.nds-content-layout, _skeleton.scss) covers FOUC until the reveal.
+    // NDS.Code rides the extras bundle and lands AFTER the reveal, so the gutter
+    // below is reserved here in CSS: the late highlight only adds colour and
+    // digits, never geometry, so text can never shift under the reader.
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -74,58 +65,42 @@
     overflow-y: hidden;
     overflow-x: auto;
     margin: 0;
-    padding: var(--spacing-xl) 0;
     background: transparent;
     border: none;
+    counter-reset: line;
+    position: relative;
+    padding-block: var(--spacing-xl);
+    // Gutter width reserved unconditionally — digits sit in this padding
+    // (absolutely positioned) instead of being laid out inline.
+    padding-inline: calc(3em + 1rem) var(--spacing-2xl);
 
-    &.line-numbers {
-      counter-reset: line;
-      display: flex;
-      flex-direction: column;
-      padding-inline-end: var(--spacing-2xl);
-
-      .code-line {
-        display: block;
-        position: relative;
-
-        &::before {
-          counter-increment: line;
-          content: counter(line);
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 3em;
-          margin-right: 1rem;
-          color: var(--colors-neutral-500);
-          font-size: var(--typo-text-xs-FS);
-          user-select: none;
-          pointer-events: none;
-          position: relative;
-          z-index: 2;
-        }
-
-        &::after {
-          content: "";
-          display: block;
-          position: absolute;
-          top: calc(var(--spacing-xl) * -1);
-          left: 0;
-          width: 3em;
-          height: calc(100% + var(--spacing-7xl));
-          font-size: var(--typo-text-xs-FS);
-          background-color: var(--background-stripe);
-          border: none;
-          border-right: 1px solid var(--border-neutral-secondary);
-          user-select: none;
-          pointer-events: none;
-          z-index: 1;
-        }
-      }
+    // One stripe for the whole block, painted from server markup.
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      left: 0;
+      width: 3em;
+      background-color: var(--background-stripe);
+      border-right: 1px solid var(--border-neutral-secondary);
+      pointer-events: none;
     }
 
-    &:not(.line-numbers) {
-      .code-line:first-child {
-        margin-inline-start: var(--spacing-xl);
+    .nds-code-line {
+      display: block;
+      position: relative;
+
+      &::before {
+        counter-increment: line;
+        content: counter(line);
+        position: absolute;
+        left: calc((3em + 1rem) * -1); // reach back into the reserved padding
+        width: 3em;
+        text-align: center;
+        color: var(--colors-neutral-500);
+        font-size: var(--typo-text-xs-FS);
+        user-select: none;
+        pointer-events: none;
       }
     }
   }
@@ -133,66 +108,69 @@
 
 /* ========================================
    SYNTAX HIGHLIGHTING TOKENS
+
+   Six roles, one per genuinely distinct hue — the palette carries five usable
+   non-brand hues plus neutral, and brand primary/secondary are excluded so code
+   never recolours on a rebrand. Light values clear WCAG AA on white; the dark
+   block lifts each to a rung that clears AA on the dark surfaces
+   (--background-body neutral-900 / --background-card neutral-800).
+   These are knobs, not tokens, so their dark values live here.
    ======================================== */
+
+:is(.nds-code, .nds-inline-code) {
+  --_syntax-tag: var(--syntax-tag, var(--colors-red-600));
+  --_syntax-attr: var(--syntax-attr, var(--colors-yellow-700));
+  --_syntax-string: var(--syntax-string, var(--colors-green-700));
+  --_syntax-property: var(--syntax-property, var(--colors-blue-600));
+  --_syntax-keyword: var(--syntax-keyword, var(--colors-tertiary-500));
+  --_syntax-comment: var(--syntax-comment, var(--colors-neutral-500));
+
+  @include dark {
+    --_syntax-tag: var(--syntax-tag, var(--colors-red-400));
+    --_syntax-attr: var(--syntax-attr, var(--colors-yellow-400));
+    --_syntax-string: var(--syntax-string, var(--colors-green-400));
+    --_syntax-property: var(--syntax-property, var(--colors-blue-400));
+    --_syntax-keyword: var(--syntax-keyword, var(--colors-tertiary-300));
+    --_syntax-comment: var(--syntax-comment, var(--colors-neutral-400));
+  }
+}
 
 .nds-inline-code {
   font-weight: var(--font-weight-semibold);
+  // Coloured straight from the authored lang class — no JS pass. Mirrors the
+  // block mapping: JS reads as a keyword, everything else as an attribute name.
+  color: var(--_syntax-attr);
+
+  &:is(.lang-js, .lang-javascript, .language-js, .language-javascript) {
+    color: var(--_syntax-keyword);
+  }
 }
 
-:is(.nds-code, .nds-inline-code) {
-  --_syntax-red: var(--syntax-red, var(--colors-red-600));
-  --_syntax-orange: var(--syntax-orange, var(--colors-yellow-600));
-  --_syntax-green: var(--syntax-green, var(--colors-green-600));
-  --_syntax-blue: var(--syntax-blue, var(--colors-blue-600));
-  --_syntax-purple: var(--syntax-purple, var(--colors-tertiary-500));
-  --_syntax-cyan: var(--syntax-cyan, var(--colors-blue-500));
-  --_syntax-yellow: var(--syntax-yellow, var(--colors-yellow-600));
-  --_syntax-gray: var(--syntax-gray, var(--colors-neutral-500));
-  --_syntax-gray-dark: var(--syntax-gray-dark, var(--colors-neutral-600));
-}
+.nds-code {
+  :is(.nds-syntax-tag, .nds-syntax-selector) {
+    color: var(--_syntax-tag);
+  }
 
-/* ========================================
-   SYNTAX HIGHLIGHTING - Light Theme
-   ======================================== */
+  :is(.nds-syntax-attr, .nds-syntax-number) {
+    color: var(--_syntax-attr);
+  }
 
-:is(.syntax-tag, .syntax-selector) {
-  color: var(--_syntax-red);
-  font-weight: var(--font-weight-semibold);
-}
+  :is(.nds-syntax-value, .nds-syntax-string, .nds-syntax-template) {
+    color: var(--_syntax-string);
+  }
 
-:is(.syntax-attr, .syntax-number) {
-  color: var(--_syntax-orange);
-}
+  .nds-syntax-property {
+    color: var(--_syntax-property);
+  }
 
-:is(.syntax-value, .syntax-string, .syntax-template) {
-  color: var(--_syntax-green);
-}
+  :is(.nds-syntax-keyword, .nds-syntax-literal, .nds-syntax-builtin) {
+    color: var(--_syntax-keyword);
+  }
 
-:is(.syntax-property, .syntax-function, .syntax-method) {
-  color: var(--_syntax-blue);
-}
-
-:is(.syntax-keyword, .syntax-regex) {
-  color: var(--_syntax-purple);
-  font-weight: var(--font-weight-semibold);
-}
-
-:is(.syntax-literal, .syntax-operator) {
-  color: var(--_syntax-cyan);
-}
-
-:is(.syntax-builtin, .syntax-class) {
-  color: var(--_syntax-yellow);
-  font-weight: var(--font-weight-semibold);
-}
-
-.syntax-comment {
-  color: var(--_syntax-gray);
-  font-style: italic;
-}
-
-.syntax-parameter {
-  color: var(--_syntax-gray-dark);
+  .nds-syntax-comment {
+    color: var(--_syntax-comment);
+    font-style: italic;
+  }
 }
 
 

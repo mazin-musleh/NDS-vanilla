@@ -466,7 +466,7 @@ section.nds-content-section nds-demo-section.nds-sideinfo-section
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialize all sideinfo columns on the page ─────
 // Runs automatically once. Call reinit after DOM changes.
 NDS.Sideinfo.init();

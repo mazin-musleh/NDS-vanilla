@@ -980,7 +980,7 @@ NDS.Alert.create({
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Create an alert ──────────────────────────────────
 // Returns the created HTMLElement
 const alert = NDS.Alert.create({

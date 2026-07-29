@@ -383,7 +383,7 @@ last_edit: "30/07/2026 - 02:31 AM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialize manually ─────────────────────────────
 // Useful for content added after page load
 const container = document.querySelector('#myExpandable');

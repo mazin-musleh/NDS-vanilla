@@ -360,7 +360,7 @@ last_edit: "26/07/2026 - 09:20 PM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Widget Re-initialization ────────────────
 // Each module initializes automatically when its
 // element IDs are on the page. Call these after

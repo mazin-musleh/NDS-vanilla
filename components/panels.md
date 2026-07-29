@@ -411,7 +411,7 @@ direction: ltr
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Open / close / toggle ────────────────────────────
 // Accepts a panel element or its id string
 NDS.Panel.open('settings-panel');

@@ -460,7 +460,7 @@ last_edit: "27/07/2026 - 10:00 AM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Write text to the clipboard ──────────────────────
 // Returns a Promise that resolves to true on success.
 // Tries navigator.clipboard first, falls back to a

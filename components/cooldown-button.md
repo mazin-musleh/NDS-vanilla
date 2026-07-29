@@ -255,7 +255,7 @@ last_edit: "29/07/2026 - 02:47 AM"
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Auto-initialization ──────────────────────────────
 // Every .nds-cooldown on the page is wired on page load.
 // Elements added to the DOM later are wired automatically.

@@ -165,10 +165,8 @@
 
         // nds-code reads the source from textContent, so the raw markup must be
         // written as TEXT — innerHTML would parse the tags into real DOM and the
-        // highlighter's textContent read would then strip them. Clear the stale
-        // snapshot so reprocess re-captures the fresh (escaped) content.
+        // highlighter's textContent read would then strip them.
         codeElement.textContent = updatedContent;
-        delete codeElement.dataset.originalContent;
 
         // Reprocess using the nds-code API (re-highlights from textContent)
         NDS.Code.reprocessCodeElement(codeElement);
@@ -2284,7 +2282,6 @@
         hiddenCopy.textContent = result;
         // Write as TEXT, not innerHTML — see updateCodeFromHiddenCopy.
         codeElement.textContent = result;
-        delete codeElement.dataset.originalContent;
         NDS.Code.reprocessCodeElement(codeElement);
     }
 
@@ -2499,7 +2496,6 @@
         const child = tpl.querySelector('.nds-btn');
         if (child) updated = updated.replace(/(class=")nds-btn[^"]*(")/g, `$1${child.className}$2`);
 
-        delete code.dataset.originalContent;
         code.textContent = updated;
         NDS.Code.reprocessCodeElement(code);
     }

@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.2.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.5.x"
+last_edit: "30/07/2026 - 01:55 AM"
 ---
 
 <!-- Code Block Overview -->
@@ -101,7 +101,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
-                                <code class="lang-javascript line-numbers">
+                                <code class="lang-javascript">
 const alert = NDS.Alert.create({
     variant: 'success',
     title: 'Success',
@@ -150,7 +150,7 @@ NDS.Alert.create({
     &lt;/button&gt;
   &lt;/div&gt;
   &lt;div class="nds-expandable-content"&gt;
-    &lt;code class="lang-javascript line-numbers"&gt;
+    &lt;code class="lang-javascript"&gt;
       // Your code here
     &lt;/code&gt;
   &lt;/div&gt;
@@ -176,7 +176,7 @@ NDS.Alert.create({
                                 </button>
                             </div>
                             <div class="nds-expandable-content">
-                                <code class="lang-javascript line-numbers">
+                                <code class="lang-javascript">
 async function handleFormSubmit(form) {
     const alertContainer = document.getElementById('form-alerts');
 
@@ -244,7 +244,7 @@ async function handleFormSubmit(form) {
     &lt;/button&gt;
   &lt;/div&gt;
   &lt;div class="nds-expandable-content"&gt;
-      &lt;code class="lang-javascript line-numbers"&gt;
+      &lt;code class="lang-javascript"&gt;
     // Long code content here
     // Will collapse with "Show More" button
   &lt;/code&gt;
@@ -663,8 +663,8 @@ NDS.Alert.create({
                                 </tr>
                                 <tr>
                                     <td><code class="nds-inline-code lang-html">lang-css</code></td>
-                                    <td>CSS / SCSS</td>
-                                    <td>Stylesheet examples</td>
+                                    <td>CSS</td>
+                                    <td>Stylesheet examples. SCSS-only syntax (<code class="nds-inline-code lang-html">$vars</code>, <code class="nds-inline-code lang-html">@mixin</code>, <code class="nds-inline-code lang-html">//</code> comments) is not lexed</td>
                                 </tr>
                                 <tr>
                                     <td><code class="nds-inline-code lang-html">lang-javascript</code> or <code class="nds-inline-code lang-html">lang-js</code></td>
@@ -702,7 +702,7 @@ NDS.Alert.create({
                         <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Line Numbers</span>
                     </span>
-                    <p class="nds-item-desc">A CSS counter gutter is added automatically when a block has more than one line. Opt in manually by adding <code class="nds-inline-code lang-html">line-numbers</code> to the <code class="nds-inline-code lang-html">&lt;code&gt;</code> element.</p>
+                    <p class="nds-item-desc">Every block gets a CSS counter gutter — no class needed. The gutter is reserved in CSS so it paints before the highlighter loads, and the line digits drop into it without shifting your code.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -716,21 +716,21 @@ NDS.Alert.create({
                         <i class="hgi hgi-stroke hgi-tag-01"></i>
                         <span class="nds-label">Language Auto-detection</span>
                     </span>
-                    <p class="nds-item-desc">When no <code class="nds-inline-code lang-html">lang-*</code> class is set, the lexer sniffs the language from the content: leading <code class="nds-inline-code lang-html">&lt;</code> implies HTML, JS keywords imply JavaScript, selector or declaration patterns imply CSS.</p>
+                    <p class="nds-item-desc">When no <code class="nds-inline-code lang-html">lang-*</code> class is set, the lexer sniffs the language from the content: leading <code class="nds-inline-code lang-html">&lt;</code> implies HTML, JS keywords imply JavaScript, selector or declaration patterns imply CSS. A <code class="nds-inline-code lang-html">lang-*</code> class that names a language we don't lex renders as plain text — your label is never overridden by a guess.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-code"></i>
                         <span class="nds-label">Inline Code</span>
                     </span>
-                    <p class="nds-item-desc">Apply <code class="nds-inline-code lang-html">nds-inline-code</code> to a <code class="nds-inline-code lang-html">&lt;code&gt;</code> element for short inline references with <code class="nds-inline-code lang-html">nowrap</code> and syntax coloring.</p>
+                    <p class="nds-item-desc">Apply <code class="nds-inline-code lang-html">nds-inline-code</code> to a <code class="nds-inline-code lang-html">&lt;code&gt;</code> element for short inline references. Coloring comes straight from the <code class="nds-inline-code lang-html">lang-*</code> class in CSS, so inline code is correct at first paint with no JavaScript.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-colors"></i>
                         <span class="nds-label">Themeable Tokens</span>
                     </span>
-                    <p class="nds-item-desc">Nine <code class="nds-inline-code lang-html">--syntax-*</code> custom properties let you override every syntax color category at the page or component level.</p>
+                    <p class="nds-item-desc">Six role-named <code class="nds-inline-code lang-html">--syntax-*</code> custom properties let you override every syntax color at the page or component level. Each ships a light and a dark value that clears WCAG AA contrast.</p>
                 </div>
             </div>
         </div>
@@ -750,27 +750,23 @@ NDS.Alert.create({
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">data-processed</code></td><td><code class="nds-inline-code lang-html">code</code></td><td>Set to <code class="nds-inline-code lang-html">true</code> by JS after highlighting. Guards against double-processing. Set to <code class="nds-inline-code lang-html">false</code> by <code class="nds-inline-code lang-js">reprocessCodeElement</code> before re-highlighting.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-original-content</code></td><td><code class="nds-inline-code lang-html">code</code></td><td>Stores the pre-highlight innerHTML so <code class="nds-inline-code lang-js">reprocessCodeElement</code> can restore and re-highlight (for example, after a theme switch).</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-nds-code-processed</code></td><td><code class="nds-inline-code lang-html">code</code></td><td>Set to <code class="nds-inline-code lang-html">true</code> by JS after highlighting. Guards against double-processing. Set to <code class="nds-inline-code lang-html">false</code> by <code class="nds-inline-code lang-js">reprocessCodeElement</code> before re-highlighting.</td></tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="nds-block">
                 <h3 class="nds-block-title">CSS Custom Properties</h3>
-                <p>These properties apply to both <code class="nds-inline-code lang-html">.nds-code</code> and <code class="nds-inline-code lang-html">.nds-inline-code</code>. Set them on a parent element or <code class="nds-inline-code lang-html">:root</code> to re-theme all code on the page.</p>
+                <p>These properties apply to both <code class="nds-inline-code lang-html">.nds-code</code> and <code class="nds-inline-code lang-html">.nds-inline-code</code>. Set them on a parent element or <code class="nds-inline-code lang-html">:root</code> to re-theme all code on the page. Each is named for the role it colors, and setting one overrides both light and dark mode.</p>
                 <table class="nds-table nds-responsive">
-                    <thead><tr><th>Property</th><th>Default</th><th>Highlights</th></tr></thead>
+                    <thead><tr><th>Property</th><th>Light</th><th>Dark</th><th>Highlights</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-red</code></td><td><code class="nds-inline-code lang-html">--colors-red-600</code></td><td>Tags and CSS selectors</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-orange</code></td><td><code class="nds-inline-code lang-html">--colors-yellow-600</code></td><td>Attribute names and numbers</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-green</code></td><td><code class="nds-inline-code lang-html">--colors-green-600</code></td><td>Attribute values and strings</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-blue</code></td><td><code class="nds-inline-code lang-html">--colors-blue-600</code></td><td>CSS properties, JS functions and methods</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-purple</code></td><td><code class="nds-inline-code lang-html">--colors-tertiary-500</code></td><td>Keywords and regex</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-cyan</code></td><td><code class="nds-inline-code lang-html">--colors-blue-500</code></td><td>Literals and operators</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-yellow</code></td><td><code class="nds-inline-code lang-html">--colors-yellow-600</code></td><td>Built-in globals and class names</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-gray</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-500</code></td><td>Comments</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">--syntax-gray-dark</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-600</code></td><td>Parameters</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-tag</code></td><td><code class="nds-inline-code lang-html">--colors-red-600</code></td><td><code class="nds-inline-code lang-html">--colors-red-400</code></td><td>HTML tags and CSS selectors</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-attr</code></td><td><code class="nds-inline-code lang-html">--colors-yellow-700</code></td><td><code class="nds-inline-code lang-html">--colors-yellow-400</code></td><td>Attribute names and numbers</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-string</code></td><td><code class="nds-inline-code lang-html">--colors-green-700</code></td><td><code class="nds-inline-code lang-html">--colors-green-400</code></td><td>Attribute values, strings and template literals</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-property</code></td><td><code class="nds-inline-code lang-html">--colors-blue-600</code></td><td><code class="nds-inline-code lang-html">--colors-blue-400</code></td><td>CSS property names</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-keyword</code></td><td><code class="nds-inline-code lang-html">--colors-tertiary-500</code></td><td><code class="nds-inline-code lang-html">--colors-tertiary-300</code></td><td>Keywords, literals and built-in globals</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--syntax-comment</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-500</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-400</code></td><td>Comments</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -785,19 +781,22 @@ NDS.Alert.create({
                         </button>
                     </div>
                     <div class="nds-expandable-content">
-                        <code class="lang-javascript line-numbers">
+                        <code class="lang-javascript">
 // ── Initialize all code blocks on the page ───────────
-// Processes .code-example code, .nds-code code, and code.nds-inline-code
+// Processes every `.nds-code code`. Inline code needs no JS — it is
+// coloured in CSS from its lang-* class.
 NDS.Code.init();
 
 // ── Re-highlight a single element ────────────────────
-// Restores original content from data-original-content then re-highlights.
-// Use after a theme switch or dynamic content change.
+// Re-lexes in place from the element's text. Use after a dynamic
+// content change. Safe to call repeatedly.
 NDS.Code.reprocessCodeElement(codeEl);
 
 // ── Detect the language of a block ───────────────────
-// Returns 'html', 'css', or 'javascript'.
-// Reads the lang-* / language-* class first; falls back to content sniffing.
+// Returns 'html', 'css', 'javascript', or null when a lang-* class
+// names a language we don't lex (the block then renders as plain text).
+// Reads the lang-* / language-* class first; a block with no lang
+// class at all falls back to content sniffing.
 const lang = NDS.Code.detectLanguage(codeEl, sourceText);
                         </code>
                     </div>

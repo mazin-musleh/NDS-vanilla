@@ -225,7 +225,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
-                    <code class="lang-javascript line-numbers">
+                    <code class="lang-javascript">
 // ── Install the delegated click handler (idempotent) ──
 // Called automatically on load; only call it yourself after
 // injecting markup before the module has initialized.

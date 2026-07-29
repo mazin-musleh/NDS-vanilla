@@ -377,7 +377,7 @@ hideFeedback: true
                             <i class="nds-icon nds-hgi-copy-01"></i>
                         </button>
                     </div>
-                    <code class="lang-javascript line-numbers">
+                    <code class="lang-javascript">
 // Initialize every .nds-user-feedback on the page. Idempotent: already
 // initialized widgets are skipped, so it is safe to call repeatedly.
 NDS.UserFeedback.init();
