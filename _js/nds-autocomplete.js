@@ -75,6 +75,10 @@
             this.cache = null;
             this.results = [];
             this.activeIndex = -1;
+            // Cached NodeList of rendered items — keyboard nav reads this on
+            // every arrow keypress, so re-querying per keydown is waste.
+            // Refreshed at the end of renderResults, invalidated at its start.
+            this._items = null;
             // Two lifetimes: abortController spans the instance and releases every
             // listener; fetchAbortController is re-armed per request to cancel the
             // in-flight suggestion fetch when a newer keystroke supersedes it.
@@ -192,6 +196,18 @@
                 if (!this._keyHeld) return;
                 this._keyHeld = false;
                 this._onInput();
+            }, { signal });
+
+            // Delegated click for dropdown items — one listener for the instance
+            // lifetime instead of 20 fresh listeners per render (torn down by
+            // the next innerHTML='').
+            this.scroll.addEventListener('click', (e) => {
+                var btn = e.target.closest('.nds-dropmenu-item');
+                if (!btn || !this.scroll.contains(btn)) return;
+                e.preventDefault();
+                e.stopPropagation();
+                var index = parseInt(btn.getAttribute('data-index'), 10);
+                if (this.results[index]) this.selectItem(this.results[index]);
             }, { signal });
 
             // Clear button — extends existing forms clear behavior
@@ -331,6 +347,7 @@
         renderResults(data, query) {
             this.scroll.innerHTML = '';
             this.activeIndex = -1;
+            this._items = null;
 
             if (!data || data.length === 0) {
                 // Soft dependency — NDS.Empty ships in the main bundle; without
@@ -344,12 +361,18 @@
 
             // Limit displayed results to 20
             var limited = data.slice(0, 20);
+            // Compile the highlight regex once per render, not once per item.
+            var highlightRegex = query
+                ? new RegExp('(' + NDS.escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi')
+                : null;
+            var fragment = document.createDocumentFragment();
 
             limited.forEach((item, index) => {
                 var btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item';
                 btn.setAttribute('role', 'option');
+                btn.setAttribute('data-index', index);
                 NDS.aria.selected(btn, false);
                 btn.id = this.menuId + '-item-' + index;
 
@@ -360,29 +383,24 @@
                     labelSpan.innerHTML = this.customRender(item, query);
                 } else {
                     var text = String(item[this.nameField] || '');
-                    labelSpan.innerHTML = this.highlightMatch(text, query);
+                    labelSpan.innerHTML = this.highlightMatch(text, highlightRegex);
                 }
                 btn.appendChild(labelSpan);
 
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.selectItem(item);
-                });
-
-                this.scroll.appendChild(btn);
+                fragment.appendChild(btn);
             });
+
+            this.scroll.appendChild(fragment);
+            this._items = this.scroll.querySelectorAll('.nds-dropmenu-item');
 
             this.open();
         }
 
-        highlightMatch(text, query) {
-            if (!query) return NDS.escapeHtml(text);
-
+        // Regex is precompiled per render in renderResults — passing it in
+        // (instead of the raw query) means the hot path skips 20 regex compiles.
+        highlightMatch(text, regex) {
             var escaped = NDS.escapeHtml(text);
-            var escapedQuery = NDS.escapeHtml(query);
-            var regex = new RegExp('(' + escapedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-            return escaped.replace(regex, '<mark>$1</mark>');
+            return regex ? escaped.replace(regex, '<mark>$1</mark>') : escaped;
         }
 
         // ==============================================
@@ -450,7 +468,9 @@
 
         handleKeydown(e) {
             var isOpen = this.dropmenuInstance && this.dropmenuInstance.isOpen;
-            var items = this.menu.querySelectorAll('.nds-dropmenu-item');
+            // Cached from renderResults; falls back to a fresh query if the
+            // menu opened without a prior render (defensive, never seen in practice).
+            var items = this._items || this.menu.querySelectorAll('.nds-dropmenu-item');
             var itemCount = items.length;
 
             switch (e.key) {
