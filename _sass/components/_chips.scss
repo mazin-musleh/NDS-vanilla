@@ -65,6 +65,15 @@
     padding-inline: var(--spacing-xxs);
     text-align: start;
     max-width: 160px;
+
+    // Range/numeric chips embed .nds-number-format spans (inline-flex atoms
+    // that carry a ::after currency icon). text-overflow: ellipsis can't
+    // substitute "…" inside inline-flex flow, so a 160px cap clips glyphs
+    // mid-character instead of ellipsizing. Let the chip grow to its natural
+    // width; the wrapping .nds-chips container handles line breaks.
+    &:has(> .nds-number-format) {
+      max-width: none;
+    }
   }
 
   // ==============================================
