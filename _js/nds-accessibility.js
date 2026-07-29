@@ -1006,7 +1006,7 @@
         open, close, toggle,
         toggleMode, setVisualFilter, cycleSetting,
         reset,
-        get state() { return JSON.parse(JSON.stringify(state)); },
+        get state() { return structuredClone(state); },
     };
 })();
 

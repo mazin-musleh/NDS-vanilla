@@ -63,6 +63,9 @@
             this.lastFocused = null;
 
             // Tab focus trap — added on open, removed on close (mirrors nds-modal).
+            // Open-lifecycle, so it sits outside the AbortController below: close()
+            // already detaches it per cycle, and a signal would duplicate that
+            // bookkeeping without shortening the listener's life.
             this.trapFocus = NDS.trapFocus(() => this.el.overlay);
 
             // One controller for every instance-lifetime listener; destroy() detaches all.
