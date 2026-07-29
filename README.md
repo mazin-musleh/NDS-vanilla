@@ -126,6 +126,31 @@ ruby _plugins/js_processor.rb     # rebuild assets/js/*.min.js after any _js/ ch
 - **Port 4002 in use**: `bundle exec jekyll serve --port 4050`.
 - **Terser errors**: run `npm install` first so `node_modules/terser` exists.
 
+### Customizing `_config.yml` without merge conflicts
+
+If you forked NDS to re-brand it, leave `_config.yml` pristine and put your overrides in a second file — Jekyll merges configs left-to-right, so keys in the later file win:
+
+```yaml
+# _config.local.yml — your fork's brand overrides
+title: "Ministry of X Portal"
+brandName: "MOX"
+brandLogo: assets/img/mox-logo.svg
+brandNameColor: "#0a3d62"
+brandSlogan: "Digital Services"
+hero_image: assets/img/mox-hero.webp
+brand: mox
+og_image: assets/img/mox-cover.webp
+```
+
+Build with both:
+
+```bash
+bundle exec jekyll serve --config _config.yml,_config.local.yml
+bundle exec jekyll build --config _config.yml,_config.local.yml
+```
+
+**Commit `_config.local.yml` to your fork** — despite the name, it's your team's shared brand config, not a per-machine file. Every dev clone and CI job inherits it. Because upstream NDS doesn't ship this file, `git pull upstream main` never conflicts on it. And because you never modified `_config.yml`, upstream is free to bump `version`, add toggles, or change defaults — those merges land cleanly too.
+
 ## Contributing
 
 Issues are welcome for bugs, feature requests, and feedback. For small fixes (typos, broken links, obvious bugs), a PR is fine. For features or larger changes, please [open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose) first to discuss the approach. See [CONTRIBUTING.md](CONTRIBUTING.md).
