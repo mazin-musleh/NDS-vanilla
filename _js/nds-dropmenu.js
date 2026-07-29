@@ -860,30 +860,37 @@
             // Stored so open() can call this._cancelClose() to abort the
             // in-flight close if the user re-opens before the transition
             // finishes. Cleared at the end of the cleanup body.
-            this._cancelClose = NDS.onTransitionEnd(this.menu, () => {
-                removeState(this.dropmenu, 'open', 'opening', 'closing');
-                removeState(this.menu,     'open', 'opening', 'closing');
-                removeState(this.trigger, 'open');
-                this.dropmenu.removeAttribute('data-position-vertical');
-                this.menu.removeAttribute('data-position-vertical');
-                this.menu.style.cssText = '';
-                const scroll = this._ownFirst('.nds-dropmenu-scroll');
-                if (scroll) scroll.style.maxHeight = '';
-                NDS.aria.hidden(this.menu, true);
-                // Restore the menu to its original location so authored
-                // markup queries (e.g. `dropmenu.querySelector(...)`) still
-                // resolve while closed. No-op when the menu wasn't portaled
-                // (NDS.unportal returns early if there's no state).
-                if (this.shouldPortal) {
-                    NDS.unportal(this.menu);
-                    this.menu.removeAttribute('data-portal');
-                }
-                // Restore the intrinsic [hidden] state so the menu can't
-                // flash on the next paint if it re-enters the viewport.
-                this.menu.setAttribute('hidden', '');
-                this.emitEvent('nds:dropmenu:closed');
-                this._cancelClose = null;
-            });
+            this._cancelClose = NDS.onTransitionEnd(this.menu, () => this._finishClose());
+        }
+
+        /** Post-transition close cleanup. Split out of close() so destroy()
+         *  can run it synchronously instead of leaving it queued: a queued
+         *  run lands after teardown and would strip the state of whatever
+         *  instance owns the wrapper by then (a reinit sweep in that window
+         *  builds a new one). */
+        _finishClose() {
+            removeState(this.dropmenu, 'open', 'opening', 'closing');
+            removeState(this.menu,     'open', 'opening', 'closing');
+            removeState(this.trigger, 'open');
+            this.dropmenu.removeAttribute('data-position-vertical');
+            this.menu.removeAttribute('data-position-vertical');
+            this.menu.style.cssText = '';
+            const scroll = this._ownFirst('.nds-dropmenu-scroll');
+            if (scroll) scroll.style.maxHeight = '';
+            NDS.aria.hidden(this.menu, true);
+            // Restore the menu to its original location so authored
+            // markup queries (e.g. `dropmenu.querySelector(...)`) still
+            // resolve while closed. No-op when the menu wasn't portaled
+            // (NDS.unportal returns early if there's no state).
+            if (this.shouldPortal) {
+                NDS.unportal(this.menu);
+                this.menu.removeAttribute('data-portal');
+            }
+            // Restore the intrinsic [hidden] state so the menu can't
+            // flash on the next paint if it re-enters the viewport.
+            this.menu.setAttribute('hidden', '');
+            this.emitEvent('nds:dropmenu:closed');
+            this._cancelClose = null;
         }
 
         // ==============================================
@@ -1081,18 +1088,23 @@
             // would then attach a second instance on top.
             if (!this.abortController) return;
             // Cancel a pending delayed-open timer so it can't fire after teardown.
-            clearTimeout(this._delayTimer);
+            // Via the helper, not a bare clearTimeout: it also drops the `loading`
+            // state open() stamped on the trigger, which would otherwise stay
+            // stuck there after a destroy mid-delay.
+            this._cancelDelayedOpen();
             // Drain the open-lifecycle subscriptions before releasing the rest.
             // close() releases this._offScroll (NDS.onOutsideScroll) and
             // this._unsubResize (NDS.onResize) synchronously at the top of its
             // body — without this guard, destroy-while-open strands both pooled
             // subscribers for the page lifetime.
             if (this.isOpen) this.close();
-            // close() defers NDS.unportal to NDS.onTransitionEnd; calling it
-            // synchronously here restores the menu to its original parent now,
-            // so nothing reparents into a stale position afterwards. No-op when
-            // shouldPortal is false (unportal returns early).
-            if (this.shouldPortal) NDS.unportal(this.menu);
+            // close() queues its cleanup on NDS.onTransitionEnd. Cancel that
+            // and run it now: settling synchronously restores [hidden], the
+            // inline styles and the original parent before teardown returns,
+            // and a queued run would otherwise fire ~transitionSpeed later —
+            // stripping the state of whatever instance owns the wrapper by
+            // then. No-op when the menu was never opened.
+            if (this._cancelClose) { this._cancelClose(); this._finishClose(); }
             // One abort releases every listener this instance attached — and only
             // those. The former cloneNode/replaceWith swap also destroyed listeners
             // consumers had attached to the wrapper, and its clone inherited
