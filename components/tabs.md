@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "25/07/2026 - 07:45 PM"
+updated: "1.5.x"
+last_edit: "29/07/2026 - 09:08 PM"
 ---
 
 <!-- Standard Tabs -->
@@ -32,13 +32,30 @@ last_edit: "25/07/2026 - 07:45 PM"
                                 <span class="nds-label">Vertical</span>
                             </button>
                             <button class="nds-btn nds-subtle demo-toggle-btn"
-                                data-toggler='["nds-lg", ".nds-tabs", "tabSize"]'>
-                                <span class="nds-label">Large</span>
-                            </button>
-                            <button class="nds-btn nds-subtle demo-toggle-btn"
                                 data-toggler='["nds-divided", ".nds-tabs", "addDivider"]'>
                                 <span class="nds-label">Divider</span>
                             </button>
+                            <div class="nds-dropmenu demo-toggle-menu">
+                                <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Size: ">
+                                    <span class="nds-label">Size: Medium</span>
+                                </button>
+                                <div class="nds-dropmenu-menu" hidden>
+                                    <div class="nds-dropmenu-scroll">
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-sm", ".nds-tabs", "tabSize"]'>
+                                            <span class="nds-label">Small (32px)</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn" data-state="selected"
+                                            data-toggler='["", ".nds-tabs", "tabSize"]'>
+                                            <span class="nds-label">Medium (40px)</span>
+                                        </button>
+                                        <button class="nds-btn nds-subtle nds-dropmenu-item demo-toggle-btn"
+                                            data-toggler='["nds-lg", ".nds-tabs", "tabSize"]'>
+                                            <span class="nds-label">Large (48px)</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="nds-dropmenu demo-toggle-menu">
                                 <button class="nds-btn nds-secondary-outline nds-menu-btn nds-dropmenu-trigger" data-label-prefix="Card View: ">
                                     <span class="nds-label">Card View: None</span>
@@ -680,6 +697,7 @@ last_edit: "25/07/2026 - 07:45 PM"
                     <li>Use <strong>vertical tabs</strong> when the tab list is long or when labels need more space, such as multi-step configuration panels or category navigation</li>
                     <li>Do not use tabs for sequential workflows where the user must complete steps in order. Use a <a class="nds-color" href="{{ 'components/stepper' | relative_url }}">Stepper</a> instead</li>
                     <li>Do not use tabs for simple content that fits on one page without segmentation. Unnecessary tabs add interaction cost</li>
+                    <li>Do not use tabs for a small set of short, equal-weight views of the same data, such as a date range or a status filter. Use a <a class="nds-color" href="{{ 'components/content-switcher' | relative_url }}">Content Switcher</a>, which fills the current segment so the choice reads at a glance</li>
                     <li>Choose <strong>card view</strong> when tabs appear inside a content area that already has a background, to visually contain the tab group</li>
                     <li>Add the <strong>divider</strong> modifier when you need a clear visual boundary between the tab list and the panel content</li>
                     <li>Keep tab labels short (one to three words). Long labels cause excessive scrolling in horizontal layouts</li>
@@ -713,8 +731,12 @@ last_edit: "25/07/2026 - 07:45 PM"
                             <td>Centers the tab list horizontally within the container</td>
                         </tr>
                         <tr>
+                            <td><code class="nds-inline-code lang-html">nds-sm</code></td>
+                            <td>Drops the tab height to 32px and pins the label to the small type step. Tab sizing runs one rung above the button ladder: 32 / 40 / 48 against a button's 24 / 32 / 40</td>
+                        </tr>
+                        <tr>
                             <td><code class="nds-inline-code lang-html">nds-lg</code></td>
-                            <td>Increases tab button height for a larger touch target</td>
+                            <td>Raises the tab height to 48px for a larger touch target. The unmodified default is 40px, so no class is needed for the middle step</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">nds-card nds-stroke nds-shadow</code></td>
@@ -778,13 +800,13 @@ last_edit: "25/07/2026 - 07:45 PM"
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--tab-button-padding-block</code></td>
-                            <td><code class="nds-inline-code lang-html">var(--spacing-lg)</code></td>
-                            <td>Vertical padding inside each tab button</td>
+                            <td><code class="nds-inline-code lang-html">0</code></td>
+                            <td>Vertical padding inside each tab button. Zero by default so the tab stands exactly at its size step</td>
                         </tr>
                         <tr>
                             <td><code class="nds-inline-code lang-html">--tab-button-padding-inline</code></td>
-                            <td><code class="nds-inline-code lang-html">var(--spacing-xl)</code></td>
-                            <td>Horizontal padding inside each tab button</td>
+                            <td>the button's own padding</td>
+                            <td>Horizontal padding inside each tab button. Falls back to the button default, so it tracks the size step: 12px at <code class="nds-inline-code lang-html">nds-sm</code>, 16px default, 20px at <code class="nds-inline-code lang-html">nds-lg</code></td>
                         </tr>
                     </tbody>
                 </table>
@@ -792,7 +814,7 @@ last_edit: "25/07/2026 - 07:45 PM"
 
             <div class="nds-block">
                 <h3 class="nds-block-title">JavaScript API</h3>
-                <p>The <strong>NDS.Tabs</strong> API provides methods to create, switch, and query tab instances. Each initialized <code class="nds-inline-code lang-html">.nds-tabs</code> element stores its instance on the <code class="nds-inline-code lang-js">.ndsTabs</code> DOM property.</p>
+                <p>The <strong>NDS.Tabs</strong> API provides methods to create, switch, and query tab instances. Each initialized <code class="nds-inline-code lang-html">.nds-tabs</code> element stores its instance on the <code class="nds-inline-code lang-js">.ndsTabs</code> DOM property. The same controller drives the <a class="nds-color" href="{{ 'components/content-switcher' | relative_url }}">Content Switcher</a>, so everything below applies to a switcher instance too.</p>
                 <div class="nds-code nds-expandable">
                     <div class="nds-code-action">
                         <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">

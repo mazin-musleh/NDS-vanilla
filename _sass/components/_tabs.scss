@@ -28,6 +28,13 @@
   display: flex;
   flex-direction: column;
 
+  // Ignored in normal flow, where a block-level flex box already fills its
+  // container. It only bites when tabs is itself a flex item (a demo card's
+  // .state-demo, a flex page region), where it would otherwise shrink to
+  // content width. Preferred over a width: a width resolves against the
+  // parent's content box and ignores the element's own inline margins.
+  flex: 1;
+
   // ---- Divider ----
   // Base rail for horizontal tabs. `.nds-vertical.nds-divided` below overrides
   // the geometry (inset-inline-end / height / width) to render a full-height
@@ -154,7 +161,11 @@
 
 .nds-tab {
   gap: var(--tab-button-gap, var(--spacing-xs));
-  padding: var(--tab-button-padding-block, var(--spacing-lg)) var(--tab-button-padding-inline, var(--spacing-xl));
+  // Knobs fall back to the button's own padding, so a tab is exactly --btn-size
+  // tall and its inline padding tracks the size ladder. The old fixed 12/16
+  // pushed the box past --btn-size via min-height: fit-content, which made the
+  // ladder below cosmetic; 16px was already the 40px rung's value.
+  padding: var(--tab-button-padding-block, 0) var(--tab-button-padding-inline, var(--_btn-padding));
   color: var(--text-primary-paragraph);
   border: 0;
   white-space: nowrap;
@@ -163,6 +174,18 @@
   z-index: 2;
 
   @include btn-indicator('b');
+
+  // Tab-shaped chrome sits one rung above the button ladder: 32 / 40 / 48
+  // against the button's 24 / 32 / 40. .nds-md needs no rule — 40px is already
+  // the button default. Set on the tab, not the root: a root declaration would
+  // leak --btn-size into every button inside the panels.
+  .nds-tabs.nds-sm & {
+    --btn-size: 32px;
+    // Same reason as the button's own 32px rung: pin to text-sm so LH lands on
+    // the design system's 20, not the calc's 21.
+    --btn-FS: var(--typo-text-sm-FS);
+    --btn-LH: var(--typo-text-sm-LH);
+  }
 
   .nds-tabs.nds-lg & {
     --btn-size: 48px;
