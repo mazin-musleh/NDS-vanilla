@@ -1,0 +1,133 @@
+@use '../mixins' as *;
+
+// Content Switcher (DGA) — a segmented control: .nds-tabs wearing a button-group
+// skin. Behaviour (ARIA tablist, roving tabindex, RTL keys, panel swap, the
+// nds:tab:change event, the NDS.Tabs API) is inherited wholesale from nds-tabs.js;
+// the joining, corners and seams come from the btn-group-joined mixin. This file
+// only skins.
+//
+//   <div class="nds-tabs nds-content-switcher">
+//     <div class="nds-tab-list" role="tablist" aria-label="…">
+//       <button class="nds-btn nds-secondary nds-tab" role="tab" id="cs-t1"
+//               aria-controls="cs-p1" aria-selected="true" tabindex="0">
+//         <span class="nds-label">Item</span>
+//       </button>
+//     </div>
+//     <div class="nds-tab-content">
+//       <div class="nds-tab-panel" role="tabpanel" id="cs-p1" aria-labelledby="cs-t1" tabindex="0">…</div>
+//     </div>
+//   </div>
+//
+// Panels are required — nds-tabs.js refuses a tabs root with none. A panel-less
+// view toggle is a plain .nds-btn-group plus the consumer's own handler.
+.nds-content-switcher {
+
+  // The strip is short and fixed, so it skips .nds-tab-list-container /
+  // .nds-scroll-more — nds-tabs.js finds .nds-tab-list directly and guards every
+  // scroll-more read, and the container only exists to isolate the .nds-divided
+  // rail, which a switcher never draws.
+
+  // The strip is a joined button row, borrowed from .nds-btn-group rather than
+  // co-classed, so consumers write one class instead of two.
+  .nds-tab-list {
+    @include btn-group-joined;
+  }
+
+  // Tabs centers via a rule scoped under .nds-scroll-more, which a switcher has
+  // no reason to carry. The strip is already fit-content from the mixin, so auto
+  // inline margins are the whole job, and there is no overflow case to guard.
+  .nds-tab-list.nds-center {
+    margin-inline: auto;
+  }
+
+  // .nds-btn-group drops its radius a rung for small children via :has(), which
+  // root-level sizing never trips — mirror it so a 32px switcher matches a 32px
+  // button group.
+  &.nds-sm .nds-tab-list {
+    --btn-group-radius: var(--radius-sm);
+  }
+
+  // The seam between segments. .nds-btn-group's own version is variant-aware
+  // across both axes; a switcher is always horizontal and always secondary, so
+  // one rule covers it. Reads --btn-border, the knob the selected pair blanks.
+  .nds-tab+.nds-tab {
+    border-inline-start-color: var(--btn-border, var(--divider-color));
+  }
+
+  // Undo the .nds-tab declarations that fight the button skin. Padding needs no
+  // override — tabs already falls back to the button's own.
+  .nds-tab {
+    // .nds-tab zeroes the border; the group's seam needs the btn-base box back.
+    border: 1px solid transparent;
+    color: var(--_btn-color);
+
+    // The bottom indicator rail is the wrong affordance here — the fill is the state.
+    &::before {
+      content: none;
+    }
+
+    &[aria-selected="true"] .nds-label {
+      color: inherit;
+      filter: none;
+    }
+  }
+
+  // Current segment on a light surface: neutral fill, flat under interaction —
+  // it is already the choice, so reacting to a pointer would promise an action
+  // it doesn't have. The rungs are aimed back at --_btn-bg rather than left
+  // unset: .nds-secondary sets all four, and its values would otherwise stand.
+  .nds-tab[aria-selected="true"] {
+    --btn-bg: var(--button-background-neutral-default);
+    --btn-bg-hover: var(--button-background-neutral-default);
+    --btn-bg-active: var(--button-background-neutral-default);
+    --btn-color: var(--text-oncolor-primary);
+  }
+
+  // .nds-oncolor rides on the root, so the segments never match .nds-btn
+  // .nds-oncolor and miss the button's own oncolor wash. Re-state it here rather
+  // than invent a treatment: same alpha family the shared block hands every
+  // non-primary variant on a brand fill.
+  // Scoped to the segments, not the root: an inherited colour would reach panel
+  // content too, and anything there with its own surface (a card) would end up
+  // with oncolor text on a light fill.
+  &.nds-oncolor .nds-tab {
+    --btn-bg: var(--button-background-transparent-hovered);
+    --btn-bg-hover: var(--button-background-transparent-hovered);
+    --btn-bg-active: var(--button-background-transparent-pressed);
+    --btn-bg-selected: var(--button-background-transparent-selected);
+    --btn-bg-disabled: var(--button-background-disabled-oncolor);
+    --btn-indicator-active: var(--button-background-disabled-oncolor);
+    --btn-color: var(--text-oncolor-primary);
+  }
+
+  // The fill already separates the current segment from its neighbour, so the
+  // seam is dropped on both edges touching it.
+  .nds-tab:is([aria-selected="true"], [aria-selected="true"] + .nds-tab) {
+    --btn-border: transparent;
+  }
+}
+
+// Default text colour for an oncolor strip: the whole thing sits on a dark or
+// brand fill, so panel copy needs the oncolor ink too. Wrapped in :where() for
+// zero specificity, so a consumer overrides it with any selector at all.
+:where(.nds-content-switcher.nds-oncolor) {
+  color: var(--text-oncolor-primary);
+}
+
+// Current segment on a dark surface: brand fill. Two triggers, one treatment —
+// the theme's dark mode, and .nds-oncolor on a light-mode page. The primary
+// ladder carries no dark re-bind, so a single rule serves both.
+:is(:root[data-theme~="dark"] .nds-content-switcher, .nds-content-switcher.nds-oncolor) .nds-tab[aria-selected="true"] {
+  --btn-bg: var(--button-background-primary-default);
+  --btn-bg-hover: var(--button-background-primary-default);
+  --btn-bg-active: var(--button-background-primary-default);
+}
+
+@include high-contrast {
+
+  // Tabs marks the current tab with a 2px bottom border; in a joined strip that
+  // reads as a height shift, so even it out.
+  .nds-content-switcher .nds-tab[aria-selected="true"] {
+    border-block-end-width: 1px;
+  }
+}

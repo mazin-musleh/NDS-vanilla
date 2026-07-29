@@ -95,6 +95,15 @@
   js: _js/nds-code.js
   scss: _sass/components/_code.scss
 
+- title: "Content Switcher"
+  description: "Toggle between content sections within the same space on the screen"
+  icon: '<i class="hgi hgi-stroke hgi-exchange-01"></i>'
+  category: "UI"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/content-switcher.html"
+  js: _js/nds-tabs.js
+  scss: _sass/components/_content-switcher.scss
+
 - title: "Cooldown Button"
   description: "Click-disabled countdown button for resend, retry, and rate-limited actions"
   icon: '<i class="hgi hgi-stroke hgi-timer-02"></i>'
