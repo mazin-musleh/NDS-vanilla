@@ -54,6 +54,11 @@
   font-family: var(--nds-font-family);
   text-align: start;
   background-color: var(--_card-bg);
+  // A card brings its own surface, so it has to bring its own ink: on a colored
+  // ancestor (oncolor content switcher, brand footer) unstructured content would
+  // otherwise inherit that ancestor's text colour and vanish. The named parts
+  // set their own colour and are unaffected; this only catches loose content.
+  color: var(--_card-text);
   border: 1px solid transparent;
   border-radius: var(--_card-radius);
   padding: var(--_card-padding);

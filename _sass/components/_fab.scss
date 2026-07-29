@@ -70,17 +70,18 @@
     }
 }
 
-// Outline and subtle both rest on a transparent fill, which works inline but not
-// over scrolling content — page text reads straight through a floating one. They
-// take different surfaces so they stay apart when docked side by side: outline
-// on the raised secondary, subtle on the page's own. Both families re-bind for
-// dark, so one rule each covers both modes.
+// Every non-solid variant rests on a transparent fill somewhere: outline in both
+// modes, secondary once dark washes it to an alpha tint. That works inline but
+// not over scrolling content — page text reads straight through a floating one.
+// They take different surfaces so they stay apart when docked side by side:
+// secondary and outline on the raised secondary, subtle on the page's own. Both
+// families re-bind for dark, so one rule each covers both modes.
 //
 // Each has to outrank its dark re-bind in _buttons.scss, whose :where() prefix
 // costs nothing and leaves it at .nds-btn:not(…).nds-{variant}. Hence the
 // .nds-btn here: it matches that weight and wins on source order (this file is
 // @used after components/buttons — keep it that way).
-.nds-btn:is(.nds-fab, .nds-fab *).nds-secondary-outline {
+.nds-btn:is(.nds-fab, .nds-fab *):is(.nds-secondary, .nds-secondary-outline) {
     --btn-bg: var(--button-background-secondary-default);
     --btn-bg-disabled: var(--button-background-secondary-default);
 }
@@ -115,7 +116,7 @@
 // treatment — which would undo the opaque rest above the moment you hover. This
 // re-states the light routing, a no-op in light and the fix in dark: those rungs
 // re-bind for dark themselves, so the states stay opaque in both modes.
-.nds-btn:is(.nds-fab, .nds-fab *):is(.nds-secondary-outline, .nds-subtle) {
+.nds-btn:is(.nds-fab, .nds-fab *):is(.nds-secondary, .nds-secondary-outline, .nds-subtle) {
     --btn-bg-hover: var(--button-background-secondary-hovered);
     --btn-bg-active: var(--button-background-secondary-pressed);
     --btn-bg-selected: var(--button-background-secondary-selected);

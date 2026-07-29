@@ -261,6 +261,48 @@ $breakpoints-range: (
   box-shadow: inset 0 0 0 3px var(--colors-base-black) !important;
 }
 
+// Joins a row of buttons into one strip: corners collapse inward, adjacent
+// buttons share a single 1px seam, and the two outer ends carry the radius.
+// Shared by .nds-btn-group and the content switcher's tab list, so a switcher
+// needs no group class in its markup. Horizontal only — .nds-vertical stays
+// with .nds-btn-group, the sole consumer that stacks.
+@mixin btn-group-joined {
+  --btn-group-radius: var(--radius-md);
+  display: flex;
+  border-radius: var(--btn-group-radius);
+  gap: 0 !important;
+  width: fit-content;
+  flex-wrap: nowrap;
+
+  .nds-btn {
+    --btn-radius: 0;
+    position: relative;
+    z-index: 1;
+
+    &:not(:last-child) {
+      border-inline-end-width: 0;
+    }
+
+    &+.nds-btn {
+      border-inline-start-width: 1px;
+    }
+
+    &:first-child {
+      border-start-start-radius: var(--btn-group-radius);
+      border-end-start-radius: var(--btn-group-radius);
+    }
+
+    &:last-child {
+      border-start-end-radius: var(--btn-group-radius);
+      border-end-end-radius: var(--btn-group-radius);
+    }
+
+    &:is(:hover, :focus, .nds-active) {
+      z-index: 2;
+    }
+  }
+}
+
 // ==============================================
 // BUTTON INDICATOR MIXINS
 // ==============================================

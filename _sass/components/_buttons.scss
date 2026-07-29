@@ -345,16 +345,6 @@
       }
     }
 
-    // Dark secondary reads its OWN family, same as light — the oncolor wash
-    // above is for a button on a brand fill, and dark isn't that. Hence
-    // :not(.nds-oncolor): a secondary on a brand fill keeps the wash in dark
-    // too. Same weight as the rule it overrides, so it has to stay below it.
-    :where(:root[data-theme~="dark"]) &.nds-secondary:not(.nds-oncolor) {
-      --btn-bg: var(--button-background-secondary-default);
-      --btn-bg-hover: var(--button-background-secondary-hovered);
-      --btn-bg-active: var(--button-background-secondary-pressed);
-      --btn-bg-selected: var(--button-background-secondary-selected);
-    }
   }
 
   // ==============================================
@@ -764,43 +754,10 @@
 // ==============================================
 
 .nds-btn-group {
-  --btn-group-radius: var(--radius-md);
-  display: flex;
-  border-radius: var(--btn-group-radius);
-  gap: 0 !important;
-  width: fit-content;
-  flex-wrap: nowrap;
+  @include btn-group-joined;
 
   &:has(> .nds-md, > .nds-sm) {
     --btn-group-radius: var(--radius-sm);
-  }
-
-  .nds-btn {
-    --btn-radius: 0;
-    position: relative;
-    z-index: 1;
-
-    &:not(:last-child) {
-      border-inline-end-width: 0;
-    }
-
-    &+.nds-btn {
-      border-inline-start-width: 1px;
-    }
-
-    &:first-child {
-      border-start-start-radius: var(--btn-group-radius);
-      border-end-start-radius: var(--btn-group-radius);
-    }
-
-    &:last-child {
-      border-start-end-radius: var(--btn-group-radius);
-      border-end-end-radius: var(--btn-group-radius);
-    }
-
-    &:is(:hover, :focus, .nds-active) {
-      z-index: 2;
-    }
   }
 
   // Stack down instead of across. The seam moves from the inline axis to the
@@ -838,13 +795,15 @@
 // and outline, borrowing the same hover value, draws its seam in the secondary
 // FILL colour rather than an edge colour. Both draw a real border instead:
 // --btn-border where the variant has one (so outline's seam matches its own edge
-// in either mode), falling back to the neutral edge for solid secondary.
+// in either mode), falling back to the shared divider tint for solid secondary —
+// a 10% wash reads as an internal seam rather than an outer edge, and it stays
+// legible over the alpha fill secondary takes on a dark surface.
 .nds-btn-group:not(.nds-vertical) .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child) {
-  border-inline-start-color: var(--btn-border, var(--border-neutral-primary));
+  border-inline-start-color: var(--btn-border, var(--divider-color));
 }
 
 .nds-btn-group.nds-vertical .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child) {
-  border-block-start-color: var(--btn-border, var(--border-neutral-primary));
+  border-block-start-color: var(--btn-border, var(--divider-color));
 }
 
 // ==============================================
