@@ -33,16 +33,6 @@
                      || (_scriptBaseMatch && _scriptBaseMatch[1])
                      || '';
 
-    // ── Language & Direction (cached) ────────────────────────────────
-    // BCP 47: 'ar', 'ar-SA', 'ar-EG' → 'ar'  |  'en', 'en-US' → 'en'
-    // Usage: NDS.lang    → 'ar' | 'en' | ...
-    //        NDS.isArabic → true/false
-    //        NDS.isRTL   → true/false
-    //        NDS.langKey → 'ar' | 'en'   (bilingual selector — falls back to
-    //                                     'en' for any non-Arabic locale; use
-    //                                     for component `labels[NDS.langKey]`
-    //                                     lookups where the component carries
-    //                                     only `{ ar, en }` translations)
     // ── Breakpoints (matches _mixins.scss) ─────────────────────────
     // Usage: NDS.breakpoints.desktop → '(min-width: 960px)'
     //        window.matchMedia(NDS.breakpoints.mobile).matches
@@ -55,6 +45,16 @@
         'large-desktop': '(min-width: 1280px)'
     };
 
+    // ── Language & Direction (live) ──────────────────────────────────
+    // BCP 47: 'ar', 'ar-SA', 'ar-EG' → 'ar'  |  'en', 'en-US' → 'en'
+    // Usage: NDS.lang    → 'ar' | 'en' | ...
+    //        NDS.isArabic → true/false
+    //        NDS.isRTL   → true/false
+    //        NDS.langKey → 'ar' | 'en'   (bilingual selector — falls back to
+    //                                     'en' for any non-Arabic locale; use
+    //                                     for component `labels[NDS.langKey]`
+    //                                     lookups where the component carries
+    //                                     only `{ ar, en }` translations)
     // Live getters so runtime language/direction toggles (e.g. language switcher) stay correct.
     Object.defineProperty(NDS, 'lang', {
         get() { return (document.documentElement.lang || 'en').split('-')[0].toLowerCase(); }
@@ -510,8 +510,11 @@
                 for (let s = 0; s < attrSubs.length; s++) {
                     const hits = [];
                     changed.forEach((attrs, el) => {
-                        if (!el.matches(attrSubs[s].sel)) return;
-                        for (const a of attrs) { if (attrSubs[s].attrs.has(a)) { hits.push(el); break; } }
+                        // Attribute check before matches(): this observer sees every
+                        // attribute write on the page, and matches() is the expensive half.
+                        let watched = false;
+                        for (const a of attrs) { if (attrSubs[s].attrs.has(a)) { watched = true; break; } }
+                        if (watched && el.matches(attrSubs[s].sel)) hits.push(el);
                     });
                     if (hits.length) attrSubs[s].fn(hits);
                 }
@@ -1364,16 +1367,13 @@
             }
         }
 
-        function startListening() {
-            if (listening) return;
-            listening = true;
-            NDS.onResize(() => scan());
-        }
-
         function update(container) {
             scan(container);
             // Start resize listener on first call that finds grids
-            if (!listening && document.querySelector(SEL)) startListening();
+            if (!listening && document.querySelector(SEL)) {
+                listening = true;
+                NDS.onResize(() => scan());
+            }
         }
 
         // Defer initial scan to idle — the last-row class is cosmetic (removes
