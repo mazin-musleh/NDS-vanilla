@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "26/07/2026 - 04:57 PM"
+last_edit: "30/07/2026 - 01:45 AM"
 ---
 
 <!-- Standard Dropmenu -->
@@ -1319,7 +1319,7 @@ const instance = dropmenu.ndsDropmenu;
 instance.open();    // Open the menu
 instance.close();   // Close the menu
 instance.toggle();  // Toggle open/closed state
-instance.destroy(); // Remove listeners and replace the DOM node (external references will be invalidated)
+instance.destroy(); // Release listeners and undo init — the wrapper survives, so references stay valid
 
 // ── Events ─────────────────────────────────────────────────
 // Listen for state changes

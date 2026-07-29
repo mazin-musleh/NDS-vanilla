@@ -48,8 +48,8 @@
             this.menu = this._findOwnDescendant(dropmenuElement, '.nds-dropmenu-menu');
             this.isOpen = false;
 
-            if (!this.trigger || !this.menu) {
-                console.warn('NDS Dropmenu: Missing trigger or menu element');
+            if (!this.menu) {
+                console.warn('NDS Dropmenu: Missing menu element');
                 return;
             }
 
@@ -374,7 +374,6 @@
         setupSelectMode() {
             const name = this.dropmenu.getAttribute('data-select-name');
             if (!name) return;
-            this.isSelect = true;
             const { signal } = this.abortController;
 
             let hidden = this.dropmenu.querySelector('input[type="hidden"][data-nds-select-value]');
@@ -496,14 +495,14 @@
             // Portal-aware: while open the menu may live at <body> level, so
             // events from menu items don't bubble through .nds-dropmenu —
             // treat clicks inside the menu as inside.
-            this.handleOutsideClick = (e) => {
+            const handleOutsideClick = (e) => {
                 if (this.dropmenu.contains(e.target) || this.menu.contains(e.target)) return;
                 // Clicking away during a delayed first-open cancels it — otherwise
                 // the menu would still pop open once the timer fired.
                 if (this._cancelDelayedOpen()) return;
                 if (this.isOpen) this.close();
             };
-            document.addEventListener('click', this.handleOutsideClick, { capture: true, signal });
+            document.addEventListener('click', handleOutsideClick, { capture: true, signal });
 
             // Trigger + menu keyboard (skip if the consumer owns its own
             // keyboard navigation — date-picker uses 2D grid keys for the
@@ -789,10 +788,13 @@
                 // the px verbatim.
                 const wrapperWidth = this.dropmenu.getBoundingClientRect().width;
                 const mcs = getComputedStyle(this.menu);
-                for (const varName of ['--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width']) {
-                    const v = mcs.getPropertyValue(varName).trim();
-                    if (v && v.endsWith('%')) {
-                        this.menu.style.setProperty(varName, (wrapperWidth * parseFloat(v) / 100) + 'px');
+                const widthVars = ['--dropmenu-width', '--dropmenu-min-width', '--dropmenu-max-width'];
+                // Read all three before writing any: mcs is live, so a setProperty
+                // between reads makes the next getPropertyValue flush style again.
+                const widthVals = widthVars.map(v => mcs.getPropertyValue(v).trim());
+                for (let i = 0; i < widthVars.length; i++) {
+                    if (widthVals[i].endsWith('%')) {
+                        this.menu.style.setProperty(widthVars[i], (wrapperWidth * parseFloat(widthVals[i]) / 100) + 'px');
                     }
                 }
                 this.menu.setAttribute('data-portal', '');
