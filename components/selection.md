@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.4.0"
-last_edit: "17/07/2026 - 12:17 AM"
+updated: "1.5.x"
+last_edit: "29/07/2026 - 04:31 PM"
 ---
 
 <!-- Selection count on cards -->
@@ -28,7 +28,7 @@ last_edit: "17/07/2026 - 12:17 AM"
                         <div class="nds-toolbar">
                                 <div class="nds-bar-row">
                                     <div class="nds-bar-start">
-                                        <span class="nds-results-count" data-selection-target="selection_cards_demo">
+                                        <span class="nds-bar-text" data-selection-target="selection_cards_demo">
                                             <b data-selection-count>0</b> selected of <b data-selection-total>3</b> services
                                         </span>
                                     </div>
@@ -107,7 +107,7 @@ last_edit: "17/07/2026 - 12:17 AM"
 &lt;div class="nds-toolbar"&gt;
     &lt;div class="nds-bar-row"&gt;
         &lt;div class="nds-bar-start"&gt;
-            &lt;span class="nds-results-count" data-selection-target="selection_cards_demo"&gt;
+            &lt;span class="nds-bar-text" data-selection-target="selection_cards_demo"&gt;
                 &lt;b data-selection-count&gt;0&lt;/b&gt; selected of &lt;b data-selection-total&gt;3&lt;/b&gt; services
             &lt;/span&gt;
         &lt;/div&gt;
@@ -189,7 +189,7 @@ last_edit: "17/07/2026 - 12:17 AM"
                         <div class="nds-toolbar">
                                 <div class="nds-bar-row">
                                     <div class="nds-bar-start">
-                                        <span class="nds-results-count" data-paged-target="selection_table_demo" data-selection-target="selection_table_demo">
+                                        <span class="nds-bar-text" data-paged-target="selection_table_demo" data-selection-target="selection_table_demo">
                                             <span class="nds-records-view">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>4</b> of <b data-paged-count>6</b> requests</span>
                                             <span class="nds-selection-view" hidden><b data-selection-count>0</b> selected of <b data-paged-count>6</b> requests</span>
                                         </span>
@@ -308,7 +308,7 @@ last_edit: "17/07/2026 - 12:17 AM"
 &lt;div class="nds-toolbar"&gt;
     &lt;div class="nds-bar-row"&gt;
         &lt;div class="nds-bar-start"&gt;
-            &lt;span class="nds-results-count" data-paged-target="selection_table_demo" data-selection-target="selection_table_demo"&gt;
+            &lt;span class="nds-bar-text" data-paged-target="selection_table_demo" data-selection-target="selection_table_demo"&gt;
                 &lt;span class="nds-records-view"&gt;Showing &lt;b data-paged-from&gt;1&lt;/b&gt;&ndash;&lt;b data-paged-to&gt;4&lt;/b&gt; of &lt;b data-paged-count&gt;6&lt;/b&gt; requests&lt;/span&gt;
                 &lt;span class="nds-selection-view" hidden&gt;&lt;b data-selection-count&gt;0&lt;/b&gt; selected of &lt;b data-paged-count&gt;6&lt;/b&gt; requests&lt;/span&gt;
             &lt;/span&gt;
@@ -481,7 +481,7 @@ last_edit: "17/07/2026 - 12:17 AM"
                     <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-selection-target="id"</code></td><td>Makes the element a selection counter for the list with that id. Its <code class="nds-inline-code lang-html">[data-selection-count]</code> slots receive the count (with thousand separators), and it carries <code class="nds-inline-code lang-html">data-state="has-selection"</code> while the count is above zero</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-selection-count</code></td><td>Number slot inside the wrapper; any element works (<code class="nds-inline-code lang-html">&lt;b&gt;</code> renders medium emphasis inside <code class="nds-inline-code lang-html">nds-results-count</code>)</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-selection-count</code></td><td>Number slot inside the wrapper; any element works (<code class="nds-inline-code lang-html">&lt;b&gt;</code> renders medium emphasis inside <code class="nds-inline-code lang-html">nds-bar-text</code>)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-selection-total</code></td><td>Slot for the list's item count, so a standalone "x selected of y" works without <a class="nds-color" href="{{ 'components/pagination' | relative_url }}">Pagination</a>. Paged lists can use <code class="nds-inline-code lang-html">data-paged-count</code> instead (the filtered count)</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-state="selected"</code></td><td>Alternative selected marker on an item, for content without checkboxes. Tables stamp it on rows automatically</td></tr>
                     </tbody>

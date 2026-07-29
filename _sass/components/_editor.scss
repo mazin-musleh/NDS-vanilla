@@ -74,6 +74,13 @@
     align-items: flex-end;
   }
 
+  // The cluster fills the bar's height (height: stretch, _toolbar.scss), so the
+  // bar's align-items above stops at the cluster and the button centres inside
+  // it. Align the button itself to keep it on the editing surface's edge.
+  .nds-toolbar [data-source-toggle] {
+    align-self: end;
+  }
+
   // Pressed state for toolbar toggles — aria-pressed is standard ARIA; NDS buttons don't style it natively.
   .nds-toolbar .nds-btn[aria-pressed="true"] { background: var(--form-field-background-darker); }
 

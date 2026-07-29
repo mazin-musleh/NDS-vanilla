@@ -35,6 +35,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;   // start sits at the leading edge, end at the trailing one
     gap: var(--spacing-xl) var(--spacing-lg);   // row gap (wrapped items) / column gap
 
     // The standard .nds-search-box (its inner .nds-search-content holds the field +
@@ -59,13 +60,16 @@
     // Clusters — widget slots that lay their children out as one bar item.
     :is(.nds-bar-start, .nds-bar-end) {
         display: flex;
+        height: stretch;   // fill the bar's cross-axis despite its align-items:center
         align-items: center;
         gap: var(--spacing-md);
         flex-wrap: wrap;
     }
 
-    // Start keeps its natural leading spot; end is pushed to the end edge
-    // of whichever bar or row holds it.
+    // space-between places the clusters while they share a line; the auto margin
+    // holds end at the trailing edge once it wraps onto a line of its own, where
+    // space-between would leave a lone item at the leading edge instead.
+    // flex-end aligns the cluster's OWN children inside its box.
     .nds-bar-end {
         margin-inline-start: auto;
         justify-content: flex-end;
@@ -87,6 +91,21 @@
 .nds-bar-row {
     flex: 1 1 100%;
     min-width: 0;
+}
+
+// The bar's reporting voice — a record count, a selected-rows summary, a
+// "showing 1-6 of 48" window. Deliberately self-rooted, NOT nested under the
+// bar: pagination, selection and the search template use it standalone with no
+// toolbar around it. <b> slots read as medium emphasis, not full bold.
+// .nds-results-count is the original name and stays a permanent alias.
+:is(.nds-bar-text, .nds-results-count) {
+    display: block;   // span-rooted; block so standalone counters sit on their own line
+    align-self: end;  // sits on the bar's bottom edge next to taller controls; inert outside flex/grid
+    color: var(--text-secondary-paragraph);
+
+    b {
+        font-weight: var(--font-weight-medium);
+    }
 }
 
 // ==============================================

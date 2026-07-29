@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.5.x"
-last_edit: "26/07/2026 - 09:20 PM"
+last_edit: "29/07/2026 - 04:47 PM"
 ---
 
 <!-- Toolbar -->
@@ -27,7 +27,7 @@ last_edit: "26/07/2026 - 09:20 PM"
                     <div class="demo-container">
                         <div class="nds-toolbar">
                             <div class="nds-bar-start">
-                                <span class="nds-results-count">3 orders</span>
+                                <span class="nds-bar-text">3 orders</span>
                             </div>
                             <div class="nds-bar-end">
                                 <div class="nds-export nds-btn-group">
@@ -97,7 +97,7 @@ last_edit: "26/07/2026 - 09:20 PM"
                                     <code class="lang-html code">
 &lt;div class="nds-toolbar"&gt;
   &lt;div class="nds-bar-start"&gt;
-    &lt;span class="nds-results-count"&gt;3 orders&lt;/span&gt;
+    &lt;span class="nds-bar-text"&gt;3 orders&lt;/span&gt;
   &lt;/div&gt;
   &lt;div class="nds-bar-end"&gt;
     &lt;div class="nds-export nds-btn-group"&gt;
@@ -171,7 +171,7 @@ last_edit: "26/07/2026 - 09:20 PM"
                         <div class="nds-toolbar">
                             <div class="nds-bar-row">
                                 <div class="nds-bar-start">
-                                    <span class="nds-results-count" data-filter-target="toolbarRowsBody"><span data-filter-count>3</span> of 3 orders</span>
+                                    <span class="nds-bar-text" data-filter-target="toolbarRowsBody"><span data-filter-count>3</span> of 3 orders</span>
                                 </div>
                                 <div class="nds-bar-end">
                                     <div class="nds-export nds-btn-group">
@@ -265,7 +265,7 @@ last_edit: "26/07/2026 - 09:20 PM"
   &lt;!-- Row 1: counts lead, controls trail --&gt;
   &lt;div class="nds-bar-row"&gt;
     &lt;div class="nds-bar-start"&gt;
-      &lt;span class="nds-results-count" data-filter-target="toolbarRowsBody"&gt;&lt;span data-filter-count&gt;3&lt;/span&gt; of 3 orders&lt;/span&gt;
+      &lt;span class="nds-bar-text" data-filter-target="toolbarRowsBody"&gt;&lt;span data-filter-count&gt;3&lt;/span&gt; of 3 orders&lt;/span&gt;
     &lt;/div&gt;
     &lt;div class="nds-bar-end"&gt;
       &lt;div class="nds-export nds-btn-group"&gt;
@@ -437,6 +437,7 @@ last_edit: "26/07/2026 - 09:20 PM"
                         <tr><td><code class="nds-inline-code lang-html">nds-bar-row</code></td><td>Pins its children to a line of their own. Lays out identically to the bar, so clusters and search boxes work inside it</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-bar-start</code></td><td>Leading widget cluster. Groups its widgets so they space tighter than the bar's own gap</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">nds-bar-end</code></td><td>Trailing widget cluster. Pushed to the end edge of whichever bar or row holds it</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">nds-bar-text</code></td><td>Text item: a record count, a selection summary, a "showing 1&ndash;6 of 48" window. Sits on the bar's bottom edge, and works standalone outside a bar. A <code class="nds-inline-code lang-html">b</code> inside it reads as medium emphasis</td></tr>
                     </tbody>
                 </table>
             </div>

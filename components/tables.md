@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "29/07/2026 - 02:47 AM"
+last_edit: "29/07/2026 - 04:31 PM"
 ---
 
 <!-- Basic Table Section -->
@@ -1383,7 +1383,7 @@ last_edit: "29/07/2026 - 02:47 AM"
                             <div class="nds-toolbar">
                                 <div class="nds-bar-row">
                                     <div class="nds-bar-start">
-                                        <span class="nds-results-count" data-paged-target="paginatedTableBody">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> service(s)</span>
+                                        <span class="nds-bar-text" data-paged-target="paginatedTableBody">Showing <b data-paged-from>0</b>&ndash;<b data-paged-to>0</b> of <b data-paged-count>0</b> service(s)</span>
                                     </div>
                                     <div class="nds-bar-end">
                                     <div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal>
@@ -1508,7 +1508,7 @@ last_edit: "29/07/2026 - 02:47 AM"
   &lt;div class="nds-toolbar"&gt;
     &lt;div class="nds-bar-row"&gt;
       &lt;div class="nds-bar-start"&gt;
-        &lt;span class="nds-results-count" data-paged-target="paginatedTableBody"&gt;Showing &lt;b data-paged-from&gt;0&lt;/b&gt;&amp;ndash;&lt;b data-paged-to&gt;0&lt;/b&gt; of &lt;b data-paged-count&gt;0&lt;/b&gt; service(s)&lt;/span&gt;
+        &lt;span class="nds-bar-text" data-paged-target="paginatedTableBody"&gt;Showing &lt;b data-paged-from&gt;0&lt;/b&gt;&amp;ndash;&lt;b data-paged-to&gt;0&lt;/b&gt; of &lt;b data-paged-count&gt;0&lt;/b&gt; service(s)&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class="nds-bar-end"&gt;
       &lt;div class="nds-dropmenu nds-filter" data-filter-target="paginatedTableBody" data-portal&gt;

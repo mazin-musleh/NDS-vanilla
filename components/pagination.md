@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "29/07/2026 - 02:47 AM"
+last_edit: "29/07/2026 - 04:31 PM"
 ---
 
 <!-- Choosing a mode -->
@@ -929,7 +929,7 @@ last_edit: "29/07/2026 - 02:47 AM"
                     </div>
                     <div class="demo-container">
                         <div class="state-demo">
-                            <span class="nds-results-count" data-paged-target="pagination_records_demo">
+                            <span class="nds-bar-text" data-paged-target="pagination_records_demo">
                                 Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>4</b> of <b data-paged-count>9</b> items
                             </span>
                             <div id="pagination_records_demo" class="nds-paged-content nds-grid"
@@ -970,7 +970,7 @@ last_edit: "29/07/2026 - 02:47 AM"
                                     <code class="lang-html code">
 &lt;!-- Author the sentence; pagination stamps the numbers. Prerender the real
      initial values so the line is correct before JS loads. --&gt;
-&lt;span class="nds-results-count" data-paged-target="pagination_records_demo"&gt;
+&lt;span class="nds-bar-text" data-paged-target="pagination_records_demo"&gt;
     Showing &lt;b data-paged-from&gt;1&lt;/b&gt;&ndash;&lt;b data-paged-to&gt;4&lt;/b&gt; of &lt;b data-paged-count&gt;9&lt;/b&gt; items
 &lt;/span&gt;
 &lt;div id="pagination_records_demo" class="nds-paged-content nds-grid"
@@ -1031,7 +1031,7 @@ last_edit: "29/07/2026 - 02:47 AM"
                                     </div>
                                 </div>
                                 <div class="nds-bar-end">
-                                    <span class="nds-results-count" data-paged-target="pagination_perpage_demo">
+                                    <span class="nds-bar-text" data-paged-target="pagination_perpage_demo">
                                         Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>6</b> of <b data-paged-count>24</b> items
                                     </span>
                                 </div>
@@ -1088,7 +1088,7 @@ last_edit: "29/07/2026 - 02:47 AM"
         &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class="nds-bar-end"&gt;
-        &lt;span class="nds-results-count" data-paged-target="pagination_perpage_demo"&gt;
+        &lt;span class="nds-bar-text" data-paged-target="pagination_perpage_demo"&gt;
             Showing &lt;b data-paged-from&gt;1&lt;/b&gt;&ndash;&lt;b data-paged-to&gt;6&lt;/b&gt; of &lt;b data-paged-count&gt;24&lt;/b&gt; items
         &lt;/span&gt;
     &lt;/div&gt;
