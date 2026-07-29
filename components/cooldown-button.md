@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.1.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.5.x"
+last_edit: "29/07/2026 - 02:47 AM"
 ---
 
 <!-- Resend with Success Toast -->
@@ -295,7 +295,10 @@ btn.addEventListener('nds:cooldown:end', () =&gt; {
 // by a fake delay when the real one was shorter.
 btn.addEventListener('click', async () =&gt; {
     try {
-        await fetch('/api/resend', { method: 'POST' });
+        // NDS.request throws on a non-OK status, so a 500 reaches the catch
+        // below. Plain fetch resolves on one, running the full cooldown as
+        // though the resend had worked.
+        await NDS.request('/api/resend', { method: 'POST' });
         // success: let the cooldown run as configured
     } catch (err) {
         // on failure, abort so the user can retry immediately

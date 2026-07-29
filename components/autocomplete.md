@@ -7,7 +7,7 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
+updated: "1.5.x"
 last_edit: "15/07/2026 - 01:15 AM"
 ---
 
@@ -291,7 +291,7 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
   document.addEventListener('DOMContentLoaded', function() {
     var container = document.getElementById('autocomplete-demo');
     if (container && window.NDS && NDS.Forms) {
-      NDS.Forms.setStatus({ element: container, status: 'neutral', message: 'Try typing "request" or "طلب"', permanent: true });
+      NDS.Forms.setStatus({ element: container, status: 'neutral', message: 'Try typing "request"', permanent: true });
     }
   });
 </script>

@@ -239,14 +239,14 @@
         async _fetchEach(query) {
             if (this.fetchAbortController) this.fetchAbortController.abort();
             this.fetchAbortController = new AbortController();
+            var { signal } = this.fetchAbortController;
 
             this.setLoading(true);
 
             try {
                 var separator = this.url.includes('?') ? '&' : '?';
                 var fetchUrl = this.url + separator + this.queryParam + '=' + encodeURIComponent(query);
-                var response = await fetch(fetchUrl, { signal: this.fetchAbortController.signal });
-                var data = await this._readJsonLimited(response);
+                var data = (await NDS.request(fetchUrl, { signal, json: true })).data;
                 this.results = this._extractResults(data);
                 if (this.customFilter) this.results = this.customFilter(this.results, query) || [];
                 this.renderResults(this.results, query);
@@ -258,7 +258,10 @@
                     this.close();
                 }
             } finally {
-                this.setLoading(false);
+                // Only the current request clears loading. A superseding keystroke
+                // aborts this one, and its rejection settles AFTER the new request
+                // has already set loading — clearing here would kill a live spinner.
+                if (this.fetchAbortController?.signal === signal) this.setLoading(false);
             }
         }
 
@@ -268,10 +271,10 @@
             if (!this.cache) {
                 if (this.fetchAbortController) this.fetchAbortController.abort();
                 this.fetchAbortController = new AbortController();
+                var { signal } = this.fetchAbortController;
                 this.setLoading(true);
                 try {
-                    var response = await fetch(this.url, { signal: this.fetchAbortController.signal });
-                    var data = await this._readJsonLimited(response);
+                    var data = (await NDS.request(this.url, { signal, json: true })).data;
                     this.cache = this._extractResults(data);
                 } catch (error) {
                     if (error.name !== 'AbortError') {
@@ -279,10 +282,10 @@
                         this.cache = [];
                         this.close();
                     }
-                    this.setLoading(false);
                     return;
                 } finally {
-                    this.setLoading(false);
+                    // See _fetchEach — only the current request clears loading.
+                    if (this.fetchAbortController?.signal === signal) this.setLoading(false);
                 }
             }
 
@@ -298,31 +301,6 @@
             }
             this.renderResults(this.results, query);
             this.emitEvent('nds:autocomplete:fetch', { query: query, results: this.results });
-        }
-
-        // Read a fetch response as JSON with a 1MB size cap.
-        async _readJsonLimited(response) {
-            if (!response.ok) throw new Error('HTTP ' + response.status);
-            var MAX_SIZE = 1024 * 1024;
-            var contentLength = response.headers.get('Content-Length');
-            if (contentLength && parseInt(contentLength, 10) > MAX_SIZE) {
-                throw new Error('Response too large');
-            }
-            var text = '';
-            var reader = response.body.getReader();
-            var decoder = new TextDecoder();
-            var totalBytes = 0;
-            while (true) {
-                var chunk = await reader.read();
-                if (chunk.done) break;
-                totalBytes += chunk.value.length;
-                if (totalBytes > MAX_SIZE) {
-                    reader.cancel();
-                    throw new Error('Response too large');
-                }
-                text += decoder.decode(chunk.value, { stream: true });
-            }
-            return JSON.parse(text);
         }
 
         // Extract the array of results from a parsed JSON response, honoring

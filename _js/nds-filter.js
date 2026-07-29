@@ -320,6 +320,14 @@
          * AJAX filters reach this; it never runs at first paint.
          */
         handleAjaxSubmit() {
+            // Snapshot the applied state BEFORE updateUrlParams overwrites it. The
+            // URL is the component's own record of what is currently applied, and
+            // applyUrlParams() can rebuild criteria + controls + chips from it — so
+            // one string is the whole rollback. Taken here, after a reset() has
+            // already cleared the controls but before the URL is rewritten, so a
+            // failed Clear restores the filters it was about to drop.
+            const appliedUrl = window.location.search;
+
             // Update URL params and UI state
             this.updateUrlParams();
             this.updateFilterButtonBadge();
@@ -333,7 +341,12 @@
                 detail: {
                     criteria: this.criteria,
                     form: this.submissionForm,
-                    hiddenInputsContainer: this.hiddenInputsContainer
+                    hiddenInputsContainer: this.hiddenInputsContainer,
+                    // Chips, badge and URL are already committed above, so a
+                    // consumer who preventDefaults and then fails has no way back
+                    // to the state the displayed results represent. Same rollback
+                    // the built-in path runs — theirs to call from a .catch.
+                    rollback: () => this._rollbackApplied(appliedUrl)
                 },
                 cancelable: true
             });
@@ -345,13 +358,15 @@
             if (this.targetContainer) this.targetContainer.classList.add('nds-loading');
 
             const { url, options } = this._buildAjaxRequest();
-            fetch(url, options)
-                .then(response => this._parseAjaxResponse(response))
+            // 4MB — an HTML fragment is legitimately larger than a JSON payload,
+            // so the shared default is raised here rather than for everyone. A
+            // ceiling against a runaway response, not a target.
+            NDS.request(url, { ...options, maxBytes: 4194304 })
                 .then(({ isJson, data }) => {
                     const eventDetail = this._applyAjaxResponse({ isJson, data });
                     this._finishAjaxSubmit(eventDetail, isJson);
                 })
-                .catch(error => this._handleAjaxError(error));
+                .catch(error => this._handleAjaxError(error, appliedUrl));
         }
 
         /**
@@ -396,21 +411,6 @@
         }
 
         /**
-         * Validate response status and branch on Content-Type. Throws on
-         * non-OK so the catch handler routes through _handleAjaxError.
-         */
-        _parseAjaxResponse(response) {
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            const contentType = response.headers.get('Content-Type') || '';
-            const isJson = contentType.includes('application/json');
-            return isJson
-                ? response.json().then(data => ({ isJson: true, data }))
-                : response.text().then(data => ({ isJson: false, data }));
-        }
-
-        /**
          * Apply the parsed response to the DOM. JSON leaves rendering to the
          * consumer (via the complete event); HTML swaps the target container
          * with the response's matching #id subtree. Returns the eventDetail
@@ -448,15 +448,12 @@
                 this._revealTargetContainer();
                 eventDetail.html = newContainer.innerHTML;
             } else {
-                console.warn(`NDS Filter: target container #${this.targetId} not found in server response. Emptying target container.`);
-                this.targetContainer.innerHTML = '';
-                const id = this.targetContainer.id;
-                while (this.targetContainer.attributes.length > 0) {
-                    this.targetContainer.removeAttribute(this.targetContainer.attributes[0].name);
-                }
-                this.targetContainer.id = id;
-                this.targetContainer.setAttribute('hidden', '');
-                eventDetail.html = '';
+                // A 200 with no usable container is a server/config fault, not a
+                // result. Throwing routes it to _handleAjaxError, which settles the
+                // UI exactly like a timeout — the previous results stay on screen
+                // rather than being wiped for a response that carried nothing.
+                console.warn(`NDS Filter: response contained no #${this.targetId}. Leaving the target untouched.`);
+                throw new Error(`Response contained no #${this.targetId}`);
             }
 
             return eventDetail;
@@ -506,9 +503,11 @@
 
         /**
          * Settle UI state on AJAX failure. AbortError is silent — the newer
-         * request that aborted us owns the loading state.
+         * request that aborted us owns the loading state. A timeout is NOT
+         * silent: NDS.request aborts it with a TimeoutError, so it lands here
+         * and releases the UI instead of parking it in `submitting` forever.
          */
-        _handleAjaxError(error) {
+        _handleAjaxError(error, appliedUrl) {
             if (error.name === 'AbortError') return;
 
             console.error('NDS Filter: AJAX submission failed:', error);
@@ -517,18 +516,83 @@
                 this.targetContainer.classList.remove('nds-loading');
             }
 
+            if (appliedUrl !== undefined) this._rollbackApplied(appliedUrl);
+
             NDS.Status.set(this.filterContainer, 'error');
             NDS.State.clear(this.filterContainer);
             if (this._triggerBtn) { NDS.State.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
 
-            this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
+            // Cancelable so a consumer with its own error UI can suppress the
+            // toast — same opt-out idiom as nds:filterFormAjax.
+            const shouldToast = this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormError', {
                 detail: {
                     error: error.message,
                     form: this.filterContainer
-                }
+                },
+                cancelable: true
             }));
+            if (shouldToast) this._showAjaxErrorToast();
 
             setTimeout(() => NDS.Status.clear(this.filterContainer), 5000);
+        }
+
+        /**
+         * Put the applied-filter state back where it was before a failed submission.
+         * The results on screen never changed, so the chips, badge, controls and URL
+         * must not either — a failed Clear that still emptied the chips would claim
+         * no filters while filtered results are displayed.
+         *
+         * Restores from the snapshotted URL because applyUrlParams() is the same
+         * path that rebuilds this state on page load, so every control type it
+         * already handles (checkbox, radio, range) is covered for free. Clear first:
+         * applyUrlParams only sets what the params contain, it never unsets.
+         */
+        _rollbackApplied(appliedUrl) {
+            window.history.replaceState({}, '', appliedUrl
+                ? `${window.location.pathname}${appliedUrl}`
+                : window.location.pathname);
+
+            this._mirrorSearchInputs('');
+            this.criteria.search = '';
+            this._resetFilterInputs();
+            this.applyUrlParams();
+
+            // applyUrlParams re-renders these only when the URL had params; call
+            // them unconditionally so a rollback to "nothing applied" lands too.
+            // Both are pure renders, so the double call when params exist is free.
+            this.updateFilterButtonBadge();
+            this.updateAppliedChips();
+            this.updateApplyButtonLabel();
+        }
+
+        /**
+         * Announce an AJAX failure. Without this the only signal is a border tint
+         * on the search input, which reads as "nothing happened" — and since the
+         * results are deliberately left in place, nothing else on screen moves.
+         * The message stays generic: the actionable detail (a bad endpoint, a
+         * response missing the target) is a server fault the end user can't fix,
+         * so it goes to console.error above and no further.
+         */
+        _showAjaxErrorToast() {
+            const alertId = `nds-filter-ajax-error-${this.targetId}`;
+            // Soft dependency + id dedupe, both mirroring showNoResultsAlert: skip
+            // if NDS.Alert isn't bundled, and don't stack a duplicate id when a
+            // retry fails while the first toast is still up.
+            if (document.getElementById(alertId) || !NDS.Alert) return;
+
+            const isArabic = NDS.isArabic;
+            NDS.Alert.create({
+                display: 'toast',
+                variant: 'error',
+                title: isArabic ? 'تعذر تحديث النتائج' : 'Could not update results',
+                description: isArabic
+                    ? 'حدث خطأ أثناء تطبيق التصفية. النتائج المعروضة لم تتغير.'
+                    : 'Something went wrong applying the filter. The results shown are unchanged.',
+                id: alertId,
+                // Matches the 5s data-status auto-clear above so both failure
+                // signals leave together.
+                duration: 5000
+            });
         }
 
         /**

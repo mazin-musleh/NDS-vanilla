@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "29/07/2026 - 01:32 AM"
+last_edit: "29/07/2026 - 02:47 AM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -1626,9 +1626,8 @@ last_edit: "29/07/2026 - 01:32 AM"
                                     <code class="lang-javascript code">
 // Fetch values from API, then populate the filter
 NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
-    fetch('/api/systems')
-        .then(res =&gt; res.json())
-        .then(data =&gt; {
+    NDS.request('/api/systems', { json: true })
+        .then(({ data }) =&gt; {
             filter.populateFilter('system', data.map(d =&gt; d.Title));
         });
 });
@@ -1680,9 +1679,8 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
 
     beneficiaryInputs.forEach(radio =&gt; {
         radio.addEventListener('change', () =&gt; {
-            fetch('/api/systems?userIds=' + radio.value)
-                .then(res =&gt; res.json())
-                .then(data =&gt; {
+            NDS.request('/api/systems?userIds=' + radio.value, { json: true })
+                .then(({ data }) =&gt; {
                     filter.populateFilter(
                         'system',
                         data.map(d =&gt; d.Title)
@@ -1707,7 +1705,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">AJAX Form Submission</h2>
-            <p class="nds-section-description">Send filter criteria to a server endpoint via AJAX. HTML responses are auto-injected into the target container. JSON responses dispatch raw data via event for developer rendering.</p>
+            <p class="nds-section-description">Send filter criteria to a server endpoint via AJAX. HTML responses are auto-injected into the target container &mdash; the response must contain an element with the target's <code class="nds-inline-code lang-html">id</code>, or the submission is treated as a failure and the existing results are left in place. JSON responses dispatch raw data via event for developer rendering.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-showcase">
@@ -1873,7 +1871,7 @@ NDS.Filter.whenReady('#apiFilter', (filter) =&gt; {
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-block">
-                                <p>Use <code class="nds-inline-code lang-js">preventDefault()</code> on the <code class="nds-inline-code lang-js">nds:filterFormAjax</code> event to fully control the AJAX request and rendering. The filter component still handles UI updates (chips, count, URL params) before dispatching the event.</p>
+                                <p>Use <code class="nds-inline-code lang-js">preventDefault()</code> on the <code class="nds-inline-code lang-js">nds:filterFormAjax</code> event to fully control the AJAX request and rendering. The filter component still handles UI updates (chips, count, URL params) before dispatching the event — so if your request fails, call <code class="nds-inline-code lang-js">e.detail.rollback()</code> to put them back rather than leaving them describing results that were never rendered.</p>
                                 <p>All filter actions (apply, chip removal, reset, clear) fire through <code class="nds-inline-code lang-js">nds:filterFormAjax</code>, so you only need one event listener.</p>
                             </div>
                         </div>
@@ -1909,10 +1907,16 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
     const search = filterForm.querySelector('input[name="search"]');
     if (search &amp;&amp; search.value) params.q = search.value;
 
-    // Fetch from your API
-    fetch('/api/search', { method: 'POST', body: new URLSearchParams(params) })
-        .then(res =&gt; res.json())
-        .then(data =&gt; renderResults(data.Records));
+    // Chips, badge and URL params are already committed by the time this
+    // fires. If your request fails they describe results that were never
+    // rendered — detail.rollback() puts them back.
+    NDS.request('/api/search', {
+        method: 'POST',
+        body: new URLSearchParams(params),
+        json: true
+    })
+        .then(({ data }) =&gt; renderResults(data.Records))
+        .catch(() =&gt; e.detail.rollback());
 });
                                     </code>
                                 </div>
@@ -2172,6 +2176,8 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         <tr><td><code class="nds-inline-code lang-html">.nds-filter[data-status="error"]</code></td><td>Search inputs get <code class="nds-inline-code">border-color: var(--border-error)</code></td><td>Set on AJAX request failure. Auto-cleared after 5 seconds.</td></tr>
                     </tbody>
                 </table>
+                <p>Because a failed submission deliberately leaves the results untouched, the border tint is the only thing on screen that moves — so filter also raises an error toast via <a class="nds-color" href="{{ 'components/alert' | relative_url }}">Alert</a> (soft dependency: skipped if <code class="nds-inline-code lang-js">nds-alert.js</code> isn't bundled). Call <code class="nds-inline-code lang-js">preventDefault()</code> on <code class="nds-inline-code lang-js">nds:filterFormError</code> to suppress it.</p>
+                <p>A failure also rolls the applied state back to what the displayed results represent: chips, the filter-button badge, the dropmenu controls and the URL params all return to their pre-submission values. Without it a failed Clear would show no chips over results that are still filtered. The trade-off is that an unsaved selection made in the dropmenu is discarded along with the failed submission.</p>
             </div>
 
             <div class="nds-block">
@@ -2272,9 +2278,12 @@ filterEl.addEventListener('nds:filterFormSubmit', (e) =&gt; {
 });
 
 // nds:filterFormAjax - Before AJAX request (cancelable)
-// Call e.preventDefault() to handle the request yourself
+// Call e.preventDefault() to handle the request yourself.
+// rollback() restores chips, badge, controls and URL params to their
+// pre-submission values — call it if your own request fails, so they don't
+// describe results that were never rendered.
 filterEl.addEventListener('nds:filterFormAjax', (e) =&gt; {
-    const { criteria, form, hiddenInputsContainer } = e.detail;
+    const { criteria, form, hiddenInputsContainer, rollback } = e.detail;
 });
 
 // nds:filterFormComplete - AJAX response received
@@ -2282,9 +2291,16 @@ filterEl.addEventListener('nds:filterFormComplete', (e) =&gt; {
     const { success, isJson, data, html, form } = e.detail;
 });
 
-// nds:filterFormError - AJAX request failed
+// nds:filterFormError - AJAX request failed (cancelable)
+// Fires on a network error, a non-OK status, a timeout, or a response that
+// carries no #target element. The target container is never modified on
+// failure — whatever was on screen stays — and the applied state (chips,
+// badge, controls, URL params) is rolled back to match it, so a failed Clear
+// keeps the filters it was about to drop. Filter raises an error toast after
+// this event; preventDefault() suppresses it if you show your own.
 filterEl.addEventListener('nds:filterFormError', (e) =&gt; {
     const { error, form } = e.detail;
+    e.preventDefault();   // optional — skip the built-in toast
 });
 </code>
                     </div>

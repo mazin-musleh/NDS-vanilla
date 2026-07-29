@@ -636,6 +636,14 @@
   url: "/utilities/numbers.html"
   js: _js/nds-numbers.js
 
+- title: "Request"
+  description: "Fetch wrapper with a timeout, a response size cap, and errors you can branch on"
+  icon: '<i class="hgi hgi-stroke hgi-connect"></i>'
+  category: "Utilities"
+  tags: ["JS"]
+  url: "/utilities/request.html"
+  js: _js/nds-core.js
+
 - title: "Counter Animation"
   description: "Scroll-triggered animated counters that count up to a target value"
   icon: '<i class="hgi hgi-stroke hgi-chart-increase"></i>'

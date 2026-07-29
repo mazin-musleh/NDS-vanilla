@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "26/07/2026 - 05:48 PM"
+last_edit: "29/07/2026 - 02:47 AM"
 ---
 
 <!-- Choosing a mode -->
@@ -1357,9 +1357,13 @@ NDS.Pagination.scrollToContent(navElement);
 // Opting out lets you decide per page change, e.g. skip the scroll on a failed
 // request so the user keeps looking at the error instead of an empty grid.
 document.addEventListener('nds:pagination:change', async (e) => {
-  const res = await fetch(`/orders?page=${e.detail.page}`);
-  if (!res.ok) return showError();
-  renderRows(await res.json());
+  let data;
+  try {
+    ({ data } = await NDS.request(`/orders?page=${e.detail.page}`, { json: true }));
+  } catch {
+    return showError();
+  }
+  renderRows(data);
   NDS.Pagination.setPage(e.detail.pagination, e.detail.page);
   NDS.Pagination.scrollToContent(e.detail.pagination);
 });

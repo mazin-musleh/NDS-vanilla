@@ -5,8 +5,8 @@ hero_title: Text Fields - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "23/07/2026 - 02:12 PM"
+updated: "1.5.x"
+last_edit: "29/07/2026 - 02:47 AM"
 lang: en
 direction: ltr
 ---
@@ -1966,8 +1966,9 @@ NDS.State.remove(field, 'loading');
 async function checkAvailability(name) {
   NDS.State.add(field, 'loading');
   try {
-    var res = await fetch('/api/username?name=' + encodeURIComponent(name));
-    var { available } = await res.json();
+    var { data } = await NDS.request('/api/username?name=' + encodeURIComponent(name),
+                                     { json: true });
+    var available = data.available;
     NDS.Forms.setStatus({
       element: field,
       status: available ? 'success' : 'error',

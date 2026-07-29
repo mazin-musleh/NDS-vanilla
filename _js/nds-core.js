@@ -115,9 +115,12 @@
         async _fetchOne(component, lang) {
             const base = window.NDS_I18N_PATH || (ASSETS_BASE ? ASSETS_BASE + 'i18n/' : 'assets/i18n/');
             try {
-                const res = await fetch(base + component + '/' + lang + '.json', { cache: 'default' });
-                if (!res.ok) throw new Error(res.status);
-                return await res.json();
+                // json:true — a static host serving .json as text/plain must not
+                // silently hand back a string. cache:'default' rides through to fetch
+                // and is what dedupes repeat loads as i18n fans out across components.
+                const { data } = await NDS.request(base + component + '/' + lang + '.json',
+                                                   { cache: 'default', json: true });
+                return data;
             } catch (err) {
                 console.warn('[NDS.i18n] ' + component + '/' + lang + ' failed', err);
                 return null;
@@ -180,6 +183,67 @@
                 .map(s => typeof s === 'string' ? document.querySelector(s) : s)
                 .filter(Boolean);
         },
+    };
+
+    // ── Request ──────────────────────────────────────────────────────
+    // Shared fetch wrapper owning the response contract every fetching
+    // component used to answer differently: abort composition, ok-check,
+    // Content-Type branch, byte cap, timeout. It never touches loading
+    // state, response application, or request construction — those are
+    // per-component and unresolvable here.
+    // Usage: const { isJson, data } = await NDS.request(url, { signal, json: true })
+    // Distinguish failures without parsing message text:
+    //   error.status              → HTTP error (also carries .url)
+    //   error.name 'TimeoutError' → hit `timeout`
+    //   error.name 'AbortError'   → caller aborted via `signal`
+    //   neither                   → byte cap exceeded
+    // Adding an option? The name space is SHARED with fetch — anything
+    // destructured here is a name fetch can never use, and if fetch ever grows
+    // one we already claim, we swallow it silently. Only claim names the spec
+    // would never take (`retry`, `csrf` fine; `priority`, `keepalive`, `duplex`
+    // would have been landmines). `signal` is claimed deliberately: it is
+    // composed with the timeout rather than forwarded.
+    NDS.request = async (url, { signal, timeout = 15000, maxBytes = 1048576, json, ...init } = {}) => {
+        const res = await fetch(url, {
+            ...init,
+            // timeout:0 opts out. AbortSignal.timeout(0) would abort immediately,
+            // burning the obvious spelling for "no timeout".
+            signal: AbortSignal.any([signal, timeout && AbortSignal.timeout(timeout)].filter(Boolean))
+        });
+        if (!res.ok) {
+            throw Object.assign(new Error(`HTTP ${res.status}: ${res.statusText}`),
+                                { status: res.status, url });
+        }
+        // Callers that know their endpoint pass json:true — a wrong Content-Type
+        // must not silently downgrade a JSON response to a string.
+        const isJson = json ?? (res.headers.get('Content-Type') || '').includes('application/json');
+        const text = await readCapped(res, maxBytes);
+        return { isJson, data: isJson && text ? JSON.parse(text) : text };
+    };
+
+    // Read a response body as text, refusing anything over maxBytes. Streams so
+    // an oversized body is cancelled mid-flight rather than buffered whole — a
+    // Content-Length check alone can be omitted or lied about.
+    const readCapped = async (res, maxBytes) => {
+        if (!res.body) return '';   // 204 / HEAD
+        const declared = res.headers.get('Content-Length');
+        if (declared && parseInt(declared, 10) > maxBytes) throw new Error('Response too large');
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let text = '';
+        let totalBytes = 0;
+        while (true) {
+            const chunk = await reader.read();
+            if (chunk.done) break;
+            totalBytes += chunk.value.length;
+            if (totalBytes > maxBytes) {
+                reader.cancel();
+                throw new Error('Response too large');
+            }
+            text += decoder.decode(chunk.value, { stream: true });
+        }
+        return text;
     };
 
     // ── Debounce ─────────────────────────────────────────────────────

@@ -55,13 +55,10 @@
         }
 
         try {
-            const response = await fetch(
+            const { data } = await NDS.request(
                 `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true&timezone=auto`,
-                { signal: AbortSignal.timeout(10000) }
+                { timeout: 10000, json: true }
             );
-
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
 
             if (!data.current_weather) throw new Error('Invalid weather data');
 
@@ -158,14 +155,11 @@
         }
 
         try {
-            const response = await fetch(
+            const { data } = await NDS.request(
                 `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=${lang}&addressdetails=1`,
-                { signal: AbortSignal.timeout(8000) }
+                { timeout: 8000, json: true }
             );
 
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-            
             const city = data.address?.city || data.address?.town || data.address?.village ||
                         data.address?.state || data.display_name?.split(',')[0];
 

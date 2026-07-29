@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "28/07/2026 - 11:36 PM"
+last_edit: "29/07/2026 - 02:47 AM"
 ---
 
 <!-- Basic Table Section -->
@@ -2122,9 +2122,8 @@ NDS.Tables.row(row).sub.el;         // the &lt;tr class="nds-sub"&gt;, or null
 // aborts the request if the user cancels by clicking the spinning toggle.
 table.addEventListener('nds:table:sub-request', (e) =&gt; {
     const { row, signal } = e.detail;
-    fetch(`/transactions/${row.dataset.id}/details`, { signal })
-        .then(res =&gt; res.text())
-        .then(html =&gt; NDS.Tables.row(row).sub.setContent(html).open())
+    NDS.request(`/transactions/${row.dataset.id}/details`, { signal })
+        .then(({ data }) =&gt; NDS.Tables.row(row).sub.setContent(data).open())
         .catch(err =&gt; {
             // Aborted means the user cancelled: NDS already released the toggle.
             // Any other failure must call close(), or the toggle keeps spinning.
