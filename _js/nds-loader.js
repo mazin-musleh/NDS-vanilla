@@ -2,8 +2,11 @@
 (() => {
     'use strict';
 
-    // Component registry. Array order = init order (first runs first).
-    // To change initialization order, reorder this array.
+    // Component registry. Array order = init order WITHIN each tier — the
+    // partition (see initializeNDS) splits this list into critical / deferred /
+    // per-injected-bundle buckets that run in sequence: critical batches →
+    // deferred idle drain → each bundle's group on arrival. Reordering changes
+    // order only among same-tier components.
     //
     // Standard component API contract:
     //   Factory components (per-element):  init(), reinit(), create(el)
