@@ -40,6 +40,14 @@
         }
 
         checkContentHeight() {
+            // An unrendered panel (inactive tab, display:none) measures 0. That's
+            // "unmeasurable", not "fits" — taking the fits branch would strip the
+            // CSS clamp via inline max-height:none, so revealing the tab paints the
+            // content full-height until the next recheck clamps it back (a >1000px
+            // flash on tokens.html). Wait for a delivery with a real box instead;
+            // the CSS max-height keeps holding until then.
+            if (this.contentElement.scrollHeight === 0) return;
+
             // Get the max height from CSS custom property or use default
             const maxHeight = this.getMaxHeight();
             const actualHeight = this.contentElement.scrollHeight;
