@@ -193,10 +193,15 @@
     // per-component and unresolvable here.
     // Usage: const { isJson, data } = await NDS.request(url, { signal, json: true })
     // Distinguish failures without parsing message text:
-    //   error.status              → HTTP error (also carries .url)
+    //   error.status              → HTTP error (also carries .url and .body — best-effort
+    //                               body slice, first ~512 bytes, undefined if the read failed)
     //   error.name 'TimeoutError' → hit `timeout`
     //   error.name 'AbortError'   → caller aborted via `signal`
     //   neither                   → byte cap exceeded
+    // Best-effort widget that wants a fallback instead of a throw on non-2xx? Wrap
+    // it at the call site — no NDS option needed for a one-liner:
+    //   const optional = (url, opts) =>
+    //       NDS.request(url, opts).catch(err => err.status ? null : Promise.reject(err));
     // Adding an option? The name space is SHARED with fetch — anything
     // destructured here is a name fetch can never use, and if fetch ever grows
     // one we already claim, we swallow it silently. Only claim names the spec
@@ -211,8 +216,13 @@
             signal: AbortSignal.any([signal, timeout && AbortSignal.timeout(timeout)].filter(Boolean))
         });
         if (!res.ok) {
+            // Best-effort body slice so the thrown Error tells the operator what
+            // the server actually said (typical error page > 512 bytes; we truncate).
+            // A read failure here must not mask the HTTP error — swallow and move on.
+            let body;
+            try { body = await readCapped(res, 512, true); } catch {}
             throw Object.assign(new Error(`HTTP ${res.status}: ${res.statusText}`),
-                                { status: res.status, url });
+                                { status: res.status, url, body });
         }
         // Callers that know their endpoint pass json:true — a wrong Content-Type
         // must not silently downgrade a JSON response to a string.
@@ -224,10 +234,12 @@
     // Read a response body as text, refusing anything over maxBytes. Streams so
     // an oversized body is cancelled mid-flight rather than buffered whole — a
     // Content-Length check alone can be omitted or lied about.
-    const readCapped = async (res, maxBytes) => {
+    // truncate=true: don't throw on oversize — cancel and return what fits.
+    // Used by the error path where a slice is diagnostic, not the payload.
+    const readCapped = async (res, maxBytes, truncate) => {
         if (!res.body) return '';   // 204 / HEAD
         const declared = res.headers.get('Content-Length');
-        if (declared && parseInt(declared, 10) > maxBytes) throw new Error('Response too large');
+        if (declared && parseInt(declared, 10) > maxBytes && !truncate) throw new Error('Response too large');
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
@@ -239,6 +251,7 @@
             totalBytes += chunk.value.length;
             if (totalBytes > maxBytes) {
                 reader.cancel();
+                if (truncate) return (text + decoder.decode(chunk.value)).slice(0, maxBytes);
                 throw new Error('Response too large');
             }
             text += decoder.decode(chunk.value, { stream: true });

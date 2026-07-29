@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.5.x"
 updated: "1.5.x"
-last_edit: "29/07/2026 - 02:55 AM"
+last_edit: "29/07/2026 - 03:35 PM"
 ---
 
 <!-- Overview -->
@@ -67,6 +67,58 @@ last_edit: "29/07/2026 - 02:55 AM"
   </div>
 </section>
 
+<!-- Basic Example -->
+<section id="requestExample" class="nds-content-section nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Example</h2>
+      <p class="nds-section-description">The default shape: read JSON, render on success, branch on <code class="nds-inline-code lang-js">error.status</code> for known failure modes.</p>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-showcase">
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Read JSON from an endpoint</div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-request-basic-1" id="tab-request-basic-1">
+                    <span class="nds-tab-label">JS</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-request-basic-1"
+                  aria-labelledby="tab-request-basic-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <code class="lang-js code">
+try {
+  const { data } = await NDS.request('/api/services', { json: true });
+  renderServices(data);
+} catch (error) {
+  if (error.status === 404) return showEmptyState();
+  showError();
+}
+                  </code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Options -->
 <section id="requestOptions" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
@@ -106,7 +158,7 @@ last_edit: "29/07/2026 - 02:55 AM"
       <table class="nds-table nds-responsive">
         <thead><tr><th>Failure</th><th>How to detect it</th></tr></thead>
         <tbody>
-          <tr><td>Non-OK status</td><td><code class="nds-inline-code lang-js">error.status</code> holds the HTTP code, <code class="nds-inline-code lang-js">error.url</code> the request URL.</td></tr>
+          <tr><td>Non-OK status</td><td><code class="nds-inline-code lang-js">error.status</code> holds the HTTP code, <code class="nds-inline-code lang-js">error.url</code> the request URL, and <code class="nds-inline-code lang-js">error.body</code> a best-effort slice of the response body (first ~512 bytes, <code class="nds-inline-code lang-js">undefined</code> if the read failed). Surface it in the toast or log so the operator sees what the server actually said.</td></tr>
           <tr><td>Timeout reached</td><td><code class="nds-inline-code lang-js">error.name === 'TimeoutError'</code></td></tr>
           <tr><td>Aborted by your signal</td><td><code class="nds-inline-code lang-js">error.name === 'AbortError'</code>. Usually means a newer request replaced this one, so most callers stay silent here.</td></tr>
           <tr><td>Over <code class="nds-inline-code lang-js">maxBytes</code></td><td>Neither a status nor a recognised name is present.</td></tr>
@@ -121,49 +173,10 @@ last_edit: "29/07/2026 - 02:55 AM"
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Usage</h2>
-      <p class="nds-section-description">Three shapes cover almost every call: a plain read, a read that a later interaction can cancel, and a read whose failure has to leave the page consistent.</p>
+      <p class="nds-section-description">Two more shapes cover the rest: a read a later interaction can cancel, and a read whose failure has to leave the page consistent.</p>
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-
-        <div class="nds-demo-card">
-          <div class="demo-header">
-            <div class="demo-label">Read JSON from an endpoint</div>
-          </div>
-          <div class="demo-code">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-request-basic-1" id="tab-request-basic-1">
-                    <span class="nds-tab-label">JS</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example" role="tabpanel" id="panel-request-basic-1"
-                  aria-labelledby="tab-request-basic-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <code class="lang-js code">
-try {
-  const { data } = await NDS.request('/api/services', { json: true });
-  renderServices(data);
-} catch (error) {
-  if (error.status === 404) return showEmptyState();
-  showError();
-}
-                  </code>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="nds-demo-card">
           <div class="demo-header">
@@ -289,6 +302,7 @@ filterEl.addEventListener('nds:filterFormAjax', (e) =&gt; {
           <li>Branch on <code class="nds-inline-code lang-js">error.status</code> and <code class="nds-inline-code lang-js">error.name</code>, never on the message text. Messages change; those two do not.</li>
           <li>Guard whatever you release in a <code class="nds-inline-code lang-js">finally</code> block. When a superseding request has already taken over the loading state, clearing it there hides a spinner that is still needed.</li>
           <li>Do not use it for uploads that need progress events. Those require <code class="nds-inline-code lang-js">XMLHttpRequest</code>, which is what <a class="nds-color" href="{{ 'components/upload' | relative_url }}">Upload</a> uses.</li>
+          <li>Best-effort widget that wants a fallback instead of a throw on non-OK? A one-line wrapper at the call site is enough — no option needed here: <code class="nds-inline-code lang-js">const optional = (url, opts) =&gt; NDS.request(url, opts).catch(err =&gt; err.status ? null : Promise.reject(err));</code></li>
           <li>Do not wrap it in a retry helper without checking the request is safe to repeat. A filter or form submission may not be idempotent.</li>
           <li>Set <code class="nds-inline-code lang-js">timeout: 0</code> only for a connection meant to stay open. Every ordinary request is better off failing than hanging.</li>
         </ul>
@@ -337,7 +351,9 @@ NDS.request(url, options) → Promise&lt;{ isJson, data }&gt;
 //   data      object | string  parsed JSON, or raw text
 
 // rejects
-//   error.status              HTTP code on a non-OK response (error.url is set too)
+//   error.status              HTTP code on a non-OK response
+//                             (error.url and error.body — first ~512 bytes of the
+//                             response body, undefined if the read failed — set too)
 //   error.name 'TimeoutError' the timeout elapsed
 //   error.name 'AbortError'   your signal aborted, usually a superseding request
 //   neither                   the response exceeded maxBytes
