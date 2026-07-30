@@ -1,4 +1,5 @@
-{%- comment -%} BreadcrumbList JSON-LD mirroring the visible sub-hero breadcrumb from the same front matter (so they can't drift): pair → linked item, bare string → name only, absolute URLs. {%- endcomment -%}
+{%- comment -%} BreadcrumbList JSON-LD mirroring the visible sub-hero breadcrumb from the same front matter (so they can't drift): pair → linked item, bare string → name only, absolute URLs. Production-only: URLs point at the hosted origin (JEKYLL_ENV=production is only set by GitHub Pages). {%- endcomment -%}
+{%- if jekyll.environment == "production" -%}
 {%- assign home_text = 'الرئيسية' -%}{%- if page.lang == 'en' -%}{%- assign home_text = 'Home' -%}{%- endif %}
 {%- assign bc_root = page.breadcrumb_root | default: home_text %}
 {%- assign bc_root_url = page.breadcrumb_root_url | default: '/' %}
@@ -24,3 +25,4 @@
   ]
 }
 </script>
+{%- endif -%}

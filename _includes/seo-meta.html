@@ -1,4 +1,5 @@
-{%- comment -%} Canonical + Open Graph + Twitter Card meta. Title/description/image computed once and reused. Per-page overrides: og_image, og_type, noindex. {%- endcomment -%}
+{%- comment -%} Canonical + Open Graph + Twitter Card meta. Title/description/image computed once and reused. Per-page overrides: og_image, og_type, noindex. Production-only: URLs point at the hosted origin, so a local dev build or the release-template build omits them entirely (JEKYLL_ENV=production is set by GitHub Pages, not by `jekyll serve` or by `scripts/mkrelease.py`). {%- endcomment -%}
+{%- if jekyll.environment == "production" -%}
 {%- assign seo_title = page.title | default: site.title %}
 {%- comment -%} Per-page description from the curated catalog (matched by url across the content index data files) so doc pages get unique copy without per-file front matter. {%- endcomment -%}
 {%- assign _catalog = site.data.content.components | concat: site.data.content.examples | concat: site.data.content.templates %}
@@ -26,3 +27,4 @@
 <meta name="twitter:title" content="{{ seo_title | escape }}">
 <meta name="twitter:description" content="{{ seo_desc | escape }}">
 <meta name="twitter:image" content="{{ seo_image }}">
+{%- endif -%}

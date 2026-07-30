@@ -1,4 +1,5 @@
-{%- comment -%} Site-wide WebSite + Organization JSON-LD (entity context for search engines). Emitted on every page; shared @id dedupes the graph. {%- endcomment -%}
+{%- comment -%} Site-wide WebSite + Organization JSON-LD (entity context for search engines). Emitted on every page; shared @id dedupes the graph. Production-only: URLs point at the hosted origin, so local dev and the release-template build omit it (JEKYLL_ENV is only set to production by GitHub Pages). {%- endcomment -%}
+{%- if jekyll.environment == "production" -%}
 {%- assign home_url = '/' | absolute_url %}
 <script type="application/ld+json">
 {
@@ -24,3 +25,4 @@
   ]
 }
 </script>
+{%- endif -%}
