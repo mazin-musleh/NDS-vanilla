@@ -633,9 +633,10 @@ bundle_sizes:
                         <i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i>
                         <span class="nds-label">AI Integration</span>
                     </span>
-                    <p class="nds-item-desc">Configured for <a href="https://claude.ai/" target="_blank">Claude Code</a>
-                        AI assistant with custom skills for documentation, content creation, code review, and component
-                        auditing. The codebase is structured for effective AI-assisted development.</p>
+                    <p class="nds-item-desc">Ships agent instructions in the cross-tool AGENTS.md format, picked up by
+                        Claude Code, Cursor, Codex, and other AI assistants, with custom skills for documentation,
+                        content creation, code review, and component auditing. The codebase is structured for effective
+                        AI-assisted development.</p>
                 </div>
             </div>
         </div>

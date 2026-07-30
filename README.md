@@ -155,9 +155,9 @@ bundle exec jekyll build --config _config.yml,_config.local.yml
 
 Issues are welcome for bugs, feature requests, and feedback. For small fixes (typos, broken links, obvious bugs), a PR is fine. For features or larger changes, please [open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose) first to discuss the approach. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Using with Claude Code
+## Using with AI agents
 
-Project-specific skills under [.claude/skills/](.claude/skills/) help with documentation pages, JS and CSS audits, performance measurement, icon management, and font refreshes. Project conventions are in [CLAUDE.md](CLAUDE.md). No configuration required; Claude Code builds up permissions through normal approval prompts.
+Project conventions live in [AGENTS.md](AGENTS.md), the cross-tool instructions file read by Cursor, Codex, Aider, and most other coding agents; [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code users additionally get project-specific skills under [.claude/skills/](.claude/skills/) for documentation pages, JS and CSS audits, performance measurement, icon management, and font refreshes. No configuration required.
 
 ## Security
 
