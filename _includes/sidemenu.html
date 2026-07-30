@@ -34,8 +34,7 @@
                             <ul>
                                 {%- for grandchild in child.children %}
                                 <li{%- if page.url == grandchild.href %} data-state="active"{%- endif %}>
-                                    <a class="nds-btn nds-subtle nds-indicator"
-                                        href="{{ grandchild.href | relative_url }}">
+                                    <a class="nds-btn nds-subtle nds-indicator" href="{{ grandchild.href | relative_url }}">
                                         <span class="nds-label">{{ grandchild.label }}</span>
                                     </a>
                                 </li>
@@ -44,8 +43,7 @@
                         </li>
                         {%- else %}
                         <li{%- if page.url == child.href %} data-state="active"{%- endif %}>
-                            <a class="nds-btn nds-subtle nds-indicator"
-                                href="{{ child.href | relative_url }}">
+                            <a class="nds-btn nds-subtle nds-indicator" href="{{ child.href | relative_url }}">
                                 <span class="nds-label">{{ child.label }}</span>
                             </a>
                         </li>
@@ -55,8 +53,7 @@
                 </li>
                 {%- else %}
                 <li{%- if page.url == item.href %} data-state="active"{%- endif %}>
-                    <a class="nds-btn nds-subtle nds-indicator"
-                        href="{{ item.href | relative_url }}">
+                    <a class="nds-btn nds-subtle nds-indicator" href="{{ item.href | relative_url }}">
                         <span class="nds-label">{{ item.label }}</span>
                     </a>
                 </li>
