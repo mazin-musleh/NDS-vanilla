@@ -1,0 +1,3 @@
+# NDS Template
+
+@AGENTS.md
