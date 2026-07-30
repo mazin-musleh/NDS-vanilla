@@ -761,6 +761,16 @@
         if (on) NDS.State.add(btn, 'loading'); else NDS.State.remove(btn, 'loading');
     });
 
+    // Minimum spinner-visible time: a sub-fast fetch would flash the loading state.
+    // Only the initial-load path stamps _ndsLoadStart in open(); a refresh of an
+    // already-open sub reveals immediately. Cancel paths clear the clock so a
+    // second click aborts without waiting out the timer.
+    const SUB_MIN_VISIBLE_MS = 500;
+    const clearLoadClock = (tr) => {
+        if (tr._ndsRevealTimer) { clearTimeout(tr._ndsRevealTimer); tr._ndsRevealTimer = null; }
+        tr._ndsLoadStart = null;
+    };
+
     function emitSub(table, name, tr, sub, extra) {
         table.dispatchEvent(new CustomEvent('nds:table:' + name, {
             detail: { row: tr, sub, table, ...extra },
@@ -878,6 +888,7 @@
                 // just ignore its answer — pass it to fetch / NDS.request.
                 if (!el) {
                     tr._ndsSubAbort = new AbortController();
+                    tr._ndsLoadStart = performance.now();
                     setToggleLoading(tr, true);
                     emitSub(table, 'sub-request', tr, null, { signal: tr._ndsSubAbort.signal });
                     return sub;
@@ -889,10 +900,25 @@
                 // consumer who never threaded the signal through.
                 const pending = tr._ndsSubAbort;
                 tr._ndsSubAbort = null;
-                if (pending?.signal.aborted) return sub;
+                if (pending?.signal.aborted) { clearLoadClock(tr); return sub; }
 
-                closeOtherSubs(table, el);
-                setSubOpen(tr, el, true);
+                // Hold the reveal until the spinner has been visible long enough.
+                // setContent() just cleared loading synchronously; re-arm so the
+                // spinner keeps painting through the wait — no repaint happened
+                // between the two calls, so this is a state fixup, not a flicker.
+                const start = tr._ndsLoadStart;
+                clearLoadClock(tr);
+                const reveal = () => {
+                    tr._ndsRevealTimer = null;
+                    if (start) setToggleLoading(tr, false);   // only clear if we armed it (fetch path)
+                    closeOtherSubs(table, el);
+                    setSubOpen(tr, el, true);
+                };
+                const wait = start ? SUB_MIN_VISIBLE_MS - (performance.now() - start) : 0;
+                if (wait > 0) {
+                    setToggleLoading(tr, true);
+                    tr._ndsRevealTimer = setTimeout(reveal, wait);
+                } else reveal();
                 return sub;
             },
 
@@ -902,6 +928,7 @@
             // open() has consumed the controller, so closing a loaded sub is clean.
             close() {
                 tr._ndsSubAbort?.abort();
+                clearLoadClock(tr);
                 setToggleLoading(tr, false);
                 const el = subOf(tr);
                 if (el) setSubOpen(tr, el, false);
@@ -952,6 +979,7 @@
             // consumer does or forgets to do.
             if (NDS.State.has(btn, 'loading')) {
                 handle.el._ndsSubAbort?.abort();
+                clearLoadClock(handle.el);
                 setToggleLoading(handle.el, false);
                 return;
             }
