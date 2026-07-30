@@ -1,7 +1,14 @@
 - label: "Home"
   url: "/"
   href: "/"
-  
+
+- label: "Guides"
+  has_sub: true
+  children:
+    - label: "Get Started"
+      url: "/guides/get-started"
+      href: "/guides/get-started.html"
+
 - label: "DGA Templates"
   has_sub: true
   children:

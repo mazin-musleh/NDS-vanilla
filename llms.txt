@@ -19,9 +19,13 @@ Important notes:
 - **Markup is a contract.** Every component page below ships canonical, copy-ready HTML in a `lang-html` code block alongside live demos. Copy that markup verbatim — class names, element nesting, `data-*` attributes, and ARIA roles all matter. Do not infer or invent structure.
 - **RTL is the default.** Styles use CSS logical properties, so direction flips from a single `dir`/`lang` attribute — there is no separate RTL stylesheet.
 - **Composition.** Pages are built from sections and a responsive grid (see *Layout*). The *Document head* (under *UI shell*) lists the stylesheets and scripts every page must load.
-- **Theming.** Styling uses a 3-tier design-token system (color → semantic → component) as CSS custom properties. Light/dark mode and full re-branding work from a single `data-theme` attribute — OKLCH-seed palettes, predefined themes, or stylesheet themes — with no rebuild.
-- **Not government-only.** NDS is a general-purpose design system — any website can adopt it by re-theming to its own brand (generate a palette from a `data-theme` seed or override the 3-tier tokens) and swapping the logos. The *default* identity (tokens, colors, logos, and the DGA digital-stamp) is reserved for Saudi Arabia government entities, so non-government use must replace those before deploying — see the [README disclaimer]({{ site.repository_url }}#disclaimer).
+- **Theming.** Styling uses a 4-tier design-token system (palette → primitives → semantic → component) as CSS custom properties. Light/dark mode and full re-branding work from a single `data-theme` attribute — OKLCH-seed palettes, predefined themes, or stylesheet themes — with no rebuild.
+- **Not government-only.** NDS is a general-purpose design system — any website can adopt it by re-theming to its own brand (generate a palette from a `data-theme` seed or override the tokens) and swapping the logos. The *default* identity (tokens, colors, logos, and the DGA digital-stamp) is reserved for Saudi Arabia government entities, so non-government use must replace those before deploying — see the [README disclaimer]({{ site.repository_url }}#disclaimer).
 - **Tech tags** after each component show what it needs: `CSS` (style only), `JS` (requires the bundled script), `API`/`Data` (consumes data or a remote endpoint), `Add-on` (optional bundle).
+
+## Guides
+
+- [Get started]({{ "/guides/get-started.html" | absolute_url }}): Adopt NDS in an existing project — download the template, wire an AI agent with the copy-paste instructions block, and migrate page by page.
 {%- assign cats = "UI,Forms,Data,Plugins,Layout,UI Shell,Utilities" | split: "," -%}
 {%- assign labels = "UI components,Form components,Data components,Plugin components,Layout,UI shell,Utilities" | split: "," -%}
 {%- assign rawbase = site.repository_url | replace: "github.com", "raw.githubusercontent.com" | append: "/refs/heads/main" -%}

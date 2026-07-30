@@ -9,10 +9,9 @@ Output: dist/nds-vanilla-template-v<version>.zip, laid out as
     nds-vanilla-template-v<version>/
         CHANGELOG.md
         LICENSE
-        AGENTS.md          — scaffold-mode LLM guide (working INSIDE this folder)
-        CLAUDE.md          — Claude Code entry point, @-imports AGENTS.md
-        INTEGRATION.md     — reference-mode: copy-paste snippet for the consumer's own AGENTS.md/CLAUDE.md
-        _site/             — the built HTML template
+        README.md          — human signpost: read-only reference, start at the guide
+        _site/             — the built HTML template (incl. guides/get-started.html,
+                             the adoption guide with the copy-paste snippet)
         _source/
             _js/           — readable JS behind assets/js/*.min.js
             _sass/         — readable SCSS behind assets/css/*.min.css
@@ -31,6 +30,7 @@ dependency to write a zip.
 """
 
 import argparse
+import html
 import os
 import re
 import shutil
@@ -86,7 +86,8 @@ def stage(version):
     src = os.path.join(pkg, '_source')
     os.makedirs(src)
     for d in ('_js', '_sass'):
-        shutil.copytree(os.path.join(ROOT, d), os.path.join(src, d))
+        shutil.copytree(os.path.join(ROOT, d), os.path.join(src, d),
+                        ignore=shutil.ignore_patterns('*.bak'))
 
     # Catalogs the LLM checks BEFORE building a UI — 90+ components already
     # exist, don't recreate. The other _data/content/ files are mock demo
@@ -99,13 +100,10 @@ def stage(version):
     for f in ('CHANGELOG.md', 'LICENSE'):
         shutil.copy2(os.path.join(ROOT, f), pkg)
 
-    # Two audiences: AGENTS.md + CLAUDE.md serve an LLM working INSIDE this
-    # folder (scaffold mode). INTEGRATION.md serves the more common consumer
-    # who pastes its snippet into their OWN project's AGENTS.md/CLAUDE.md so
-    # their LLM knows to read this folder as a read-only reference.
-    template = os.path.join(ROOT, 'scripts', 'release-template')
-    for f in ('AGENTS.md', 'CLAUDE.md', 'INTEGRATION.md'):
-        shutil.copy2(os.path.join(template, f), pkg)
+    # README.md is a human signpost only — the LLM artifact is the
+    # instructions block inside the adoption guide, which ships as a normal
+    # doc page (_site/guides/get-started.html — source guides/).
+    shutil.copy2(os.path.join(ROOT, 'scripts', 'release-template', 'README.md'), pkg)
     return dist, pkg
 
 
@@ -145,17 +143,41 @@ def verify(out, version):
     # copy in stage() would silently ship an incomplete zip otherwise.
     for anchor in ('_source/_js/nds-core.js', '_source/_sass/_mixins.scss',
                    '_source/_data/content/components.yml',
-                   'AGENTS.md', 'INTEGRATION.md'):
+                   'README.md', '_site/guides/get-started.html'):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
 
-    integration = z.read(root + 'INTEGRATION.md').decode('utf8', 'ignore')
-    if '{{NDS_PATH}}' not in integration:
-        sys.exit('INTEGRATION.md is missing the {{NDS_PATH}} placeholder — snippet is broken.')
+    # The integration guide's checks run against its markdown SOURCE (the same
+    # content this build rendered into the zip's _site/guides/get-started.html —
+    # the source regexes stay clean of HTML escaping). Every path in its
+    # snippet hangs off the NDS_ROOT / NDS_ASSETS pair the consumer sets at
+    # the top of the block; lose a declaration and the block ships with
+    # unresolvable references — invisible until a consumer complains.
+    with open(os.path.join(ROOT, 'guides', 'get-started.md'), encoding='utf8') as f:
+        # Unescape first: the page authors the snippet entity-encoded
+        # (&lt;name&gt;), which would otherwise hide placeholder markers
+        # from the '<' filter below.
+        integration = html.unescape(f.read())
+    if '`NDS_ROOT` =' not in integration:
+        sys.exit('guides/get-started.md has no `NDS_ROOT` declaration — every path in the snippet resolves nowhere.')
+    if '`NDS_ASSETS` =' not in integration:
+        sys.exit('guides/get-started.md has no `NDS_ASSETS` declaration — the asset-copy and upgrade steps resolve nowhere.')
+    for marker in ('COPY START', 'COPY END'):
+        if marker not in integration:
+            sys.exit(f'guides/get-started.md is missing the {marker} marker — the snippet is unbounded.')
 
-    claude = z.read(root + 'CLAUDE.md').decode('utf8', 'ignore')
-    if '@AGENTS.md' not in claude:
-        sys.exit('CLAUDE.md is present but does not @-import AGENTS.md — content divergence.')
+    # Every literal path the guide and README reference must exist in the
+    # zip — a doc rename otherwise ships a prompt pointing the consumer's
+    # LLM at a dead path, and it invents instead (the exact failure the
+    # guide prevents). Placeholder/glob refs (<name>, *) are skipped.
+    readme = z.read(root + 'README.md').decode('utf8', 'ignore')
+    refs = re.findall(r'NDS_ROOT/([^\s`)\]]+)', integration)
+    refs += re.findall(r'`((?:_site|_source)/[^`]*)`', readme)
+    dead = sorted({p for p in refs if '<' not in p and '*' not in p
+                   and root + p not in names
+                   and root + p.rstrip('/') + '/' not in names})
+    if dead:
+        sys.exit(f'Guide references point at paths missing from the zip: {dead}')
 
     print(f'\n  {len([n for n in names if not n.endswith("/")])} files, '
           f'{os.path.getsize(out) / 1048576:.1f} MB')
