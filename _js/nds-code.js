@@ -13,7 +13,8 @@
  * span can never straddle a line, and lets the HTML lexer splice CSS/JS tokens
  * for embedded <style>/<script> bodies.
  *
- * Languages: HTML, CSS, JavaScript (+ CSS/JS embedded inside an HTML block).
+ * Languages: HTML, CSS, JavaScript (+ CSS/JS embedded inside an HTML block),
+ * Markdown.
  * Language is taken from a `lang-*`/`language-*` class when present; a class we
  * don't lex renders plain, and only a block with no lang class at all is sniffed.
  *
@@ -92,6 +93,7 @@
         if (/\blang(?:uage)?-html\b/.test(className)) return 'html';
         if (/\blang(?:uage)?-css\b/.test(className)) return 'css';
         if (/\blang(?:uage)?-(?:javascript|js)\b/.test(className)) return 'javascript';
+        if (/\blang(?:uage)?-(?:markdown|md)\b/.test(className)) return 'markdown';
         return null;
     }
 
@@ -122,6 +124,7 @@
         if (lang === 'html') return lexHtml(source);
         if (lang === 'css') return lexCss(source);
         if (lang === 'javascript') return lexJs(source);
+        if (lang === 'markdown') return lexMarkdown(source);
         return [{ type: null, value: source }];
     }
 
@@ -437,6 +440,32 @@
     }
 
     // ==============================================
+    // REGEX LEXER (shared by JavaScript and Markdown)
+    // ==============================================
+
+    // Scan a master regex left to right; each alternative is one capture group,
+    // and groupTypes[g] is the token type for group g. Gaps between matches are
+    // plain text, so the token values always round-trip to the source.
+    function lexByRegex(source, re, groupTypes) {
+        const tokens = [];
+        let last = 0;
+        let m;
+        re.lastIndex = 0;
+        while ((m = re.exec(source)) !== null) {
+            if (m.index > last) tokens.push({ type: null, value: source.slice(last, m.index) });
+            let type = null;
+            for (let g = 1; g < groupTypes.length; g++) {
+                if (m[g] !== undefined) { type = groupTypes[g]; break; }
+            }
+            tokens.push({ type: type, value: m[0] });
+            last = re.lastIndex;
+            if (m.index === re.lastIndex) re.lastIndex++; // zero-length guard
+        }
+        if (last < source.length) tokens.push({ type: null, value: source.slice(last) });
+        return tokens;
+    }
+
+    // ==============================================
     // JAVASCRIPT LEXER
     // ==============================================
 
@@ -460,22 +489,55 @@
     const JS_GROUP_TYPE = [null, 'comment', 'comment', 'template', 'string', 'number', 'keyword', 'literal', 'builtin'];
 
     function lexJs(source) {
+        return lexByRegex(source, JS_TOKEN_RE, JS_GROUP_TYPE);
+    }
+
+    // ==============================================
+    // MARKDOWN LEXER
+    // ==============================================
+
+    // Block constructs are line-anchored (`m` flag), inline ones are not. Earlier
+    // alternatives win at the same position, so a heading colours whole-line and
+    // inline code inside bold reads as bold. Types reuse the shared syntax
+    // palette — no markdown-specific CSS.
+    const MD_TOKEN_RE = new RegExp(
+        '(^```+[^\\n]*\\n[\\s\\S]*?^```+[ \\t]*$)' + // 1 fenced code block
+        '|(^#{1,6} [^\\n]*)' +                       // 2 heading
+        '|(^[ \\t]*>[ \\t]?)' +                      // 3 blockquote marker
+        '|(^[ \\t]*(?:[-*+]|\\d+[.)]) )' +           // 4 list marker
+        '|(!?\\[[^\\]\\n]*\\]\\([^)\\n]*\\))' +      // 5 link / image
+        '|(\\*\\*[^\\n]+?\\*\\*|__[^\\n]+?__)' +     // 6 bold
+        '|(`[^`\\n]+`)',                             // 7 inline code
+        'gm'
+    );
+
+    // 'fence' is a sentinel — lexMarkdown expands it, it never reaches render.
+    const MD_GROUP_TYPE = [null, 'fence', 'tag', 'attr', 'attr', 'property', 'keyword', 'string'];
+
+    function lexMarkdown(source) {
         const tokens = [];
-        let last = 0;
-        let m;
-        JS_TOKEN_RE.lastIndex = 0;
-        while ((m = JS_TOKEN_RE.exec(source)) !== null) {
-            if (m.index > last) tokens.push({ type: null, value: source.slice(last, m.index) });
-            let type = null;
-            for (let g = 1; g < JS_GROUP_TYPE.length; g++) {
-                if (m[g] !== undefined) { type = JS_GROUP_TYPE[g]; break; }
-            }
-            tokens.push({ type: type, value: m[0] });
-            last = JS_TOKEN_RE.lastIndex;
-            if (m.index === JS_TOKEN_RE.lastIndex) JS_TOKEN_RE.lastIndex++; // zero-length guard
+        const scanned = lexByRegex(source, MD_TOKEN_RE, MD_GROUP_TYPE);
+        for (let i = 0; i < scanned.length; i++) {
+            if (scanned[i].type === 'fence') pushFenceTokens(tokens, scanned[i].value);
+            else tokens.push(scanned[i]);
         }
-        if (last < source.length) tokens.push({ type: null, value: source.slice(last) });
         return tokens;
+    }
+
+    // ```lang … ``` — the fence lines stay code-coloured and the body is spliced
+    // from its own lexer, mirroring <style>/<script> bodies in the HTML lexer. An
+    // info string we don't lex (```bash) leaves the body a flat code run.
+    function pushFenceTokens(tokens, value) {
+        const m = /^(```+[^\n]*\n)([\s\S]*)(\n```+[ \t]*)$/.exec(value);
+        if (!m) {
+            tokens.push({ type: 'string', value: value });
+            return;
+        }
+        const lang = languageFromClass('lang-' + m[1].replace(/`/g, '').trim());
+        const body = lang ? lexByLanguage(lang, m[2]) : [{ type: 'string', value: m[2] }];
+        tokens.push({ type: 'string', value: m[1] });
+        for (let i = 0; i < body.length; i++) tokens.push(body[i]);
+        tokens.push({ type: 'string', value: m[3] });
     }
 
     // ==============================================

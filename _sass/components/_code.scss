@@ -58,14 +58,17 @@
     // NDS.Code rides the extras bundle and lands AFTER the reveal, so the gutter
     // below is reserved here in CSS: the late highlight only adds colour and
     // digits, never geometry, so text can never shift under the reader.
+    // Per-instance knob: a long block scrolls inside itself instead of pushing
+    // the rest of the page down.
+    --_code-max-height: var(--code-max-height, 60svh);
+
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     white-space: pre;
-    overflow-y: hidden;
-    overflow-x: auto;
+    max-height: var(--_code-max-height);
+    overflow: auto;
     margin: 0;
-    background: transparent;
     border: none;
     counter-reset: line;
     position: relative;
@@ -73,22 +76,49 @@
     // Gutter width reserved unconditionally — digits sit in this padding
     // (absolutely positioned) instead of being laid out inline.
     padding-inline: calc(3em + 1rem) var(--spacing-2xl);
+    // One stripe for the whole block, painted from server markup. A background
+    // (not a pseudo-element) because `code` is the scroll container: an abspos
+    // stripe is sized to the visible box, so it leaves the gutter unpainted past
+    // the first screenful. `local` puts the painting area on the SCROLLABLE area
+    // instead, so the stripe covers the full height and travels with the digits
+    // on horizontal scroll — the pseudo-element's behaviour, without the clamp.
+    background: linear-gradient(to right,
+      var(--background-stripe) 0 3em,
+      var(--border-neutral-secondary) 3em calc(3em + 1px),
+      transparent calc(3em + 1px));
+    background-attachment: local;
 
-    // One stripe for the whole block, painted from server markup.
-    &::before {
-      content: "";
-      position: absolute;
-      inset-block: 0;
-      left: 0;
-      width: 3em;
-      background-color: var(--background-stripe);
-      border-right: 1px solid var(--border-neutral-secondary);
-      pointer-events: none;
+    // Markdown carries prose, not code: 300-char lines are unreadable behind a
+    // horizontal scrollbar. Soft-wrap is presentation only — no break enters the
+    // source, so textContent and the copy button still yield the authored lines.
+    &:is(.lang-markdown, .lang-md, .language-markdown, .language-md) {
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+      // No gutter: a wrapped line spans several visual rows, so one digit beside
+      // four rows misreads. Markdown blocks are copied whole, never cited by line.
+      padding-inline: var(--spacing-2xl);
+      background: none;
+
+      .nds-code-line::before {
+        content: none;
+      }
+
+      // Wrap at the same readable measure as body prose.
+      .nds-code-line {
+        max-width: var(--paragraph-max-width);
+      }
     }
 
     .nds-code-line {
       display: block;
       position: relative;
+
+      // A blank source line is an empty flex item: no line box, zero height —
+      // the gap disappears and its digit stacks onto the next line's. A ZWSP
+      // gives it a strut without adding width.
+      &:empty::after {
+        content: "\200b";
+      }
 
       &::before {
         counter-increment: line;

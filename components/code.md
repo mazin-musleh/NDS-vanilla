@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "30/07/2026 - 01:55 AM"
+last_edit: "31/07/2026 - 01:34 AM"
 ---
 
 <!-- Code Block Overview -->
@@ -671,6 +671,11 @@ NDS.Alert.create({
                                     <td>JavaScript</td>
                                     <td>Script and API examples</td>
                                 </tr>
+                                <tr>
+                                    <td><code class="nds-inline-code lang-html">lang-markdown</code> or <code class="nds-inline-code lang-html">lang-md</code></td>
+                                    <td>Markdown</td>
+                                    <td>Docs and agent-instruction blocks. Headings, list and quote markers, links, bold, and inline code are coloured. A fenced block is lexed as its info-string language (<code class="nds-inline-code lang-html">```html</code>, <code class="nds-inline-code lang-html">```css</code>, <code class="nds-inline-code lang-html">```js</code>); any other info string renders the body as a flat code run. Prose-length lines soft-wrap instead of scrolling horizontally — the wrap is visual only, so copied text keeps the authored line breaks</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -695,14 +700,14 @@ NDS.Alert.create({
                         <i class="hgi hgi-stroke hgi-source-code"></i>
                         <span class="nds-label">Syntax Highlighting</span>
                     </span>
-                    <p class="nds-item-desc">HTML, CSS, and JavaScript are highlighted automatically. Embedded <code class="nds-inline-code lang-html">&lt;style&gt;</code> and <code class="nds-inline-code lang-html">&lt;script&gt;</code> bodies inside HTML blocks are highlighted in their respective languages.</p>
+                    <p class="nds-item-desc">HTML, CSS, JavaScript, and Markdown are highlighted automatically. Embedded <code class="nds-inline-code lang-html">&lt;style&gt;</code> and <code class="nds-inline-code lang-html">&lt;script&gt;</code> bodies inside HTML blocks are highlighted in their respective languages.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-layers-01"></i>
                         <span class="nds-label">Line Numbers</span>
                     </span>
-                    <p class="nds-item-desc">Every block gets a CSS counter gutter — no class needed. The gutter is reserved in CSS so it paints before the highlighter loads, and the line digits drop into it without shifting your code.</p>
+                    <p class="nds-item-desc">Every block gets a CSS counter gutter — no class needed. The gutter is reserved in CSS so it paints before the highlighter loads, and the line digits drop into it without shifting your code. Markdown blocks skip the gutter — their lines soft-wrap, so one digit would sit beside several visual rows.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -767,6 +772,7 @@ NDS.Alert.create({
                         <tr><td><code class="nds-inline-code lang-html">--syntax-property</code></td><td><code class="nds-inline-code lang-html">--colors-blue-600</code></td><td><code class="nds-inline-code lang-html">--colors-blue-400</code></td><td>CSS property names</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--syntax-keyword</code></td><td><code class="nds-inline-code lang-html">--colors-tertiary-500</code></td><td><code class="nds-inline-code lang-html">--colors-tertiary-300</code></td><td>Keywords, literals and built-in globals</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--syntax-comment</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-500</code></td><td><code class="nds-inline-code lang-html">--colors-neutral-400</code></td><td>Comments</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--code-max-height</code></td><td colspan="2"><code class="nds-inline-code lang-html">60svh</code></td><td>Height a block scrolls inside instead of growing the page</td></tr>
                     </tbody>
                 </table>
             </div>
