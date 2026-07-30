@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: 'en' }}" dir="{{ page.direction | default: 'ltr' }}">
 {% include head.html %}
-<body class="{{ page.body_class }}">
+<body{% if page.body_class %} class="{{ page.body_class }}"{% endif %}>
     <header>
         {% include topbar.html %}
         {% include mainnav.html %}
