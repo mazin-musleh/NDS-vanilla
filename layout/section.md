@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "14/07/2026 - 12:13 AM"
+updated: "1.5.x"
+last_edit: "31/07/2026 - 05:11 AM"
 ---
 
 <!-- Section Structure Overview -->
@@ -1225,6 +1225,16 @@ section.nds-content-section.nds-demo-section          (responsive padding for co
                     <li>Choose <strong>float action</strong> when the action is secondary and the title area has room. Choose <strong>standard action</strong> when the action buttons are prominent and should have their own row on mobile</li>
                     <li>Add <code class="nds-inline-code lang-html">nds-nowrap</code> to the action container only when the action is compact (a single small button) and should stay inline at all breakpoints</li>
                     <li>Use color themes sparingly. Reserve <code class="nds-inline-code lang-html">nds-primary</code> and <code class="nds-inline-code lang-html">nds-gradient-primary</code> for hero-level emphasis, and <code class="nds-inline-code lang-html">nds-brand</code> or <code class="nds-inline-code lang-html">nds-ghost</code> for subtle visual separation between adjacent sections</li>
+                </ul>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Content Spacing</h3>
+                <ul>
+                    <li>Flow content in a section body is spaced automatically. Paragraphs, lists, tables, and code blocks get a bottom margin, and list items get vertical padding: write plain <code class="nds-inline-code lang-html">&lt;p&gt;</code>, <code class="nds-inline-code lang-html">&lt;ul&gt;</code>, and <code class="nds-inline-code lang-html">&lt;ol&gt;</code> with no spacing classes</li>
+                    <li>The rhythm is direction-aware. Arabic fills more of the line box than Latin at the same size, so RTL gets one step more padding between list items than LTR</li>
+                    <li>Nested lists indent one step per level and read as a tighter cluster under their parent item. Nested <code class="nds-inline-code lang-html">&lt;ol&gt;</code> markers cycle <strong>1.</strong> &rarr; <strong>a.</strong> &rarr; <strong>i.</strong>, while an <code class="nds-inline-code lang-html">&lt;ol&gt;</code> inside a <code class="nds-inline-code lang-html">&lt;ul&gt;</code> stays decimal because it starts a new count</li>
+                    <li>Lists inside <code class="nds-inline-code lang-html">nav</code>, <code class="nds-inline-code lang-html">nds-scroll-more</code>, <code class="nds-inline-code lang-html">nds-drawer</code>, or a <code class="nds-inline-code lang-html">nds-drawer-list</code> item opt out, because those components space their own items. Do not wrap a prose list in one of these containers or it loses the automatic spacing</li>
                 </ul>
             </div>
 

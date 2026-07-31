@@ -152,14 +152,25 @@
         margin-block-end: 0;
     }
 
-    & :not(nav, .nds-scroll-more, .nds-drawer, .nds-drawer-list li)>:is(ul, ol) {
+    // Arabic fills ~21px of the 24px line box in IBM Plex Sans Arabic vs Latin's
+    // ~15px, so the same padding reads far tighter. RTL (the default) gets a step
+    // more; @include ltr tightens it back for Latin.
+    --_list-item-pad: var(--spacing-md);
+    --_sub-item-pad: var(--spacing-xs);
 
-        &.nds-divided li {
-            border-bottom: 1px solid var(--divider-color);
-        }
+    @include ltr {
+        --_list-item-pad: var(--spacing-xs);
+        --_sub-item-pad: var(--spacing-xxs);
+    }
 
-        li {
-            padding-block: var(--spacing-md);
+    // Prose rhythm for authored lists — a list owned by a component is excluded
+    // by its container, listed once here. The > alternative covers a list sitting
+    // directly in the body, which otherwise needs a wrapper to get any spacing.
+    >:is(ul, ol),
+    :not(nav, .nds-scroll-more, .nds-drawer, .nds-drawer-list li)>:is(ul, ol) {
+
+        >li {
+            padding-block: var(--_list-item-pad);
 
             &:first-child {
                 padding-block-start: 0;
@@ -167,7 +178,26 @@
 
             &:last-child {
                 padding-block-end: 0;
-                border-bottom: none;
+            }
+        }
+
+        // A sub-list is the last child of its item, so the margin rule below
+        // zeroes its end — without this it sits flush against its own text.
+        li>:is(ul, ol) {
+            margin-block-start: var(--_list-item-pad);
+
+            // Tighter than the top level — the sub-list reads as one cluster.
+            >li {
+                padding-block: var(--_sub-item-pad);
+            }
+        }
+
+        // Markers cycle by depth the way <ul> does natively: 1. → a. → i.
+        &:is(ol) ol {
+            list-style-type: lower-alpha;
+
+            ol {
+                list-style-type: lower-roman;
             }
         }
     }

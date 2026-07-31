@@ -89,20 +89,16 @@ p {
     text-wrap: pretty;
 }
 
+// One indent for every list, nested or not — wide enough for two-digit <ol> markers.
 :is(ul, ol) {
-    padding-inline-start: 20px;
+    padding-inline-start: var(--spacing-3xl);
     line-height: 1.5;
-}
-
-// Increase padding for lists when mixed with other content types
-:not(ul):not(ol)~:is(ul, ol) {
-    padding-inline-start: 40px;
 }
 
 // Override for nav (must come after to take precedence)
 nav :is(ul, ol) {
     list-style: none;
-    padding: 0 !important;
+    padding: 0;
     margin: 0;
 }
 

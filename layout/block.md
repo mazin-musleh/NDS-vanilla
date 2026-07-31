@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.1.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.5.x"
+last_edit: "31/07/2026 - 05:11 AM"
 ---
 
 <!-- Block Structure -->
@@ -67,7 +67,7 @@ section.nds-content-section nds-demo-section
                                 <div class="nds-section-body">
                                     <div class="nds-block">
                                         <h3 class="nds-block-title">Block Title</h3>
-                                        <p>First paragraph of content inside the block. Paragraphs, lists, and media get automatic styling when inside <code class="nds-inline-code lang-html">.nds-block</code>.</p>
+                                        <p>First paragraph of content inside the block. Paragraphs, lists, and media get their spacing from the surrounding <code class="nds-inline-code lang-html">.nds-section-body</code>, which a block sits inside.</p>
                                         <p>Second paragraph to demonstrate spacing between content elements.</p>
                                     </div>
                                     <div class="nds-block">
