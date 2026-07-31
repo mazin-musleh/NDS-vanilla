@@ -28,13 +28,13 @@ sidemenu_mode: false
             <article>
 
                 <h2 id="download" class="nds-section-title">1. Download the Template</h2>
-                <p class="nds-section-description">Plain HTML, CSS, and JS &mdash; no build step, no packages. The template is a versioned, read-only reference: you copy markup, tokens, and assets out of it, never edit it, and replace it wholesale on upgrade.</p>
+                <p class="nds-section-description">Plain HTML, CSS, and JS: no build step, no packages. It's a versioned, read-only reference: copy markup, tokens, and assets out of it, never edit it, and replace it wholesale on upgrade.</p>
 
                 <div class="nds-block">
                     <h3 id="get-the-zip" class="nds-block-title">Get the Zip</h3>
                     <ol>
                         <li>Download <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a>.</li>
-                        <li>Unzip it anywhere your project can reach: a sibling directory, a folder inside your repo, or a shared location. That path becomes <code class="nds-inline-code lang-html">NDS_ROOT</code> in step 2.</li>
+                        <li>Unzip it somewhere your AI agent can read from disk: a sibling directory (e.g. <code class="nds-inline-code lang-html">../nds-vanilla-template/</code>), a folder inside your repo, or a shared location. That path becomes <code class="nds-inline-code lang-html">NDS_ROOT</code> in step 2.</li>
                     </ol>
                 </div>
                 <div class="nds-block">
@@ -52,19 +52,21 @@ _source/       readable JS/SCSS source + machine-readable catalogs
 CHANGELOG.md   release history
                         </code>
                     </div>
+                    <p><code class="nds-inline-code lang-html">_site/</code> serves two roles: reference documentation (<code class="nds-inline-code lang-html">_site/components/*.html</code> and friends), and the source of the runtime assets you copy into your project (<code class="nds-inline-code lang-html">_site/assets/</code>).</p>
                 </div>
 
                 <h2 id="configure" class="nds-section-title">2. Configure Your AI Agent</h2>
-                <p class="nds-section-description">Standing context, not a prompt: your agent loads the block at the start of every session.</p>
+                <p class="nds-section-description">Set the context your agent reloads at the start of every session, so it already knows the rules before you ask it to do anything.</p>
+                <p>Not using one of the agents below? You can still follow this guide by hand: treat the instructions block as your own checklist, and its Reference index (near the bottom of the block) as your lookup table for markup, tokens, and events.</p>
 
                 <ol>
-                    <li>Append the block below to your agent's instructions file at the project root, creating it if it does not exist:
+                    <li>Append the block below to your agent's instructions file at the project root, creating it if it doesn't exist:
                         <ul>
                             <li>Claude Code &rarr; <code class="nds-inline-code lang-html">CLAUDE.md</code></li>
                             <li>Cursor / Codex / Aider &rarr; <code class="nds-inline-code lang-html">AGENTS.md</code></li>
                         </ul>
                     </li>
-                    <li>Set the two paths at the top of the block: <code class="nds-inline-code lang-html">NDS_ROOT</code> is the template folder you unzipped; <code class="nds-inline-code lang-html">NDS_ASSETS</code> is the public assets folder inside your project.</li>
+                    <li>Set the two paths at the top of the block: <code class="nds-inline-code lang-html">NDS_ROOT</code> is the template folder you unzipped in step 1. <code class="nds-inline-code lang-html">NDS_ASSETS</code> is wherever your project serves static files from: reuse a folder you already have (e.g. <code class="nds-inline-code lang-html">public/assets/</code>, <code class="nds-inline-code lang-html">wwwroot/</code>) or point at a new one; it doesn't need to exist yet, your agent creates it the first time it copies assets in.</li>
                 </ol>
 
                 <div class="nds-block">
@@ -235,10 +237,10 @@ Four tiers, one file each. Light block at top, `:root[data-theme~="dark"]` block
                 </div>
 
                 <h2 id="migrate" class="nds-section-title">3. Run the Migration</h2>
-                <p class="nds-section-description">Each AI session starts with no memory of the last. Session 1 creates <code class="nds-inline-code lang-html">NDS-MIGRATION.md</code>, a tracker at your project root listing every page, its NDS target, and its status; every later session reads and updates it. Paste one prompt per session, in order.</p>
+                <p class="nds-section-description">Each AI session starts with no memory of the last. Session 1 creates <code class="nds-inline-code lang-html">NDS-MIGRATION.md</code> at your project root, a tracker listing every page, its NDS target, and its status; every later session reads and updates it. Paste one prompt per session, in order: sessions 3+ map one-to-one to pages, so a multi-page site is a multi-day migration, not a single sitting.</p>
 
                 <div class="nds-block">
-                    <h3 id="session-1" class="nds-block-title">Session 1 &mdash; Planning</h3>
+                    <h3 id="session-1" class="nds-block-title">Session 1: Planning</h3>
                     <div class="nds-code">
                         <div class="nds-code-action">
                             <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
@@ -251,7 +253,7 @@ Inventory this project: pages, routes, layouts, shared partials, and legacy libr
                     </div>
                 </div>
                 <div class="nds-block">
-                    <h3 id="session-2" class="nds-block-title">Session 2 &mdash; Assets and Chrome</h3>
+                    <h3 id="session-2" class="nds-block-title">Session 2: Assets and Chrome</h3>
                     <div class="nds-code">
                         <div class="nds-code-action">
                             <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
@@ -262,10 +264,10 @@ Inventory this project: pages, routes, layouts, shared partials, and legacy libr
 Read NDS-MIGRATION.md. Copy the NDS assets into this project, then port the page chrome following the adoption order: head, master layout, topbar and navigation, footer, accessibility panel, sub-hero. Verify it renders in the browser, then update the tracker.
                         </code>
                     </div>
-                    <p>Before continuing, confirm the runtime loaded: open a ported page and check that <code class="nds-inline-code lang-html">window.NDS</code> is defined and the console shows no <code class="nds-inline-code lang-html">NDS</code>-prefixed warnings.</p>
+                    <p>Before continuing, confirm the runtime loaded: open your browser's dev tools console on a ported page and check that typing <code class="nds-inline-code lang-js">window.NDS</code> returns an object (not <code class="nds-inline-code lang-js">undefined</code>), with no <code class="nds-inline-code lang-html">NDS</code>-prefixed warnings logged. If <code class="nds-inline-code lang-js">window.NDS</code> is undefined, the script tag or its path is wrong: re-check the asset copy and the <code class="nds-inline-code lang-html">&lt;script&gt;</code> src before moving on.</p>
                 </div>
                 <div class="nds-block">
-                    <h3 id="session-3" class="nds-block-title">Session 3+ &mdash; One Page Each</h3>
+                    <h3 id="session-3" class="nds-block-title">Session 3+: One Page Each</h3>
                     <div class="nds-code">
                         <div class="nds-code-action">
                             <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
@@ -276,10 +278,11 @@ Read NDS-MIGRATION.md. Copy the NDS assets into this project, then port the page
 Read NDS-MIGRATION.md. Port the next unported page (or name one) following the migration workflow. Verify it in the browser before finishing, then update its status.
                         </code>
                     </div>
+                    <p>The migration is done when every row in <code class="nds-inline-code lang-html">NDS-MIGRATION.md</code> reads ported and verified. That's the point to revisit rule #6 with your dev: check whether any legacy library the tracker once depended on is now safe to remove.</p>
                 </div>
 
                 <h2 id="upgrade" class="nds-section-title">4. Upgrade</h2>
-                <p class="nds-section-description">You replace the template folder <code class="nds-inline-code lang-html">NDS_ROOT</code> with the new release. Your agent then copies its assets into your project, overwriting the ones your pages load, and updates any ported markup the release changed.</p>
+                <p class="nds-section-description">This isn't part of initial setup: come back to it whenever a new NDS release ships. Download and unzip it like step 1, then replace your old <code class="nds-inline-code lang-html">NDS_ROOT</code> folder with it. Your agent copies its assets into your project, overwriting the ones your pages load, and updates any ported markup the release changed.</p>
 
                 <p>If the new folder name carries the version, update the <code class="nds-inline-code lang-html">NDS_ROOT</code> line in your agent instructions to match before pasting the prompt.</p>
                 <div class="nds-code">
