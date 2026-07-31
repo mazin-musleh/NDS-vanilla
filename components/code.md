@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.5.x"
-last_edit: "31/07/2026 - 01:34 AM"
+last_edit: "31/07/2026 - 05:28 PM"
 ---
 
 <!-- Code Block Overview -->
@@ -676,6 +676,11 @@ NDS.Alert.create({
                                     <td>Markdown</td>
                                     <td>Docs and agent-instruction blocks. Headings, list and quote markers, links, bold, and inline code are coloured. A fenced block is lexed as its info-string language (<code class="nds-inline-code lang-html">```html</code>, <code class="nds-inline-code lang-html">```css</code>, <code class="nds-inline-code lang-html">```js</code>); any other info string renders the body as a flat code run. Prose-length lines soft-wrap instead of scrolling horizontally — the wrap is visual only, so copied text keeps the authored line breaks</td>
                                 </tr>
+                                <tr>
+                                    <td><code class="nds-inline-code lang-html">lang-prompt</code></td>
+                                    <td>AI prompt</td>
+                                    <td>Prompt text written to be pasted into a coding agent. Colours the parts the reader must check before sending: paths and filenames, <code class="nds-inline-code lang-html">SCREAMING_CASE</code> placeholders and markers, and quoted phrases. Wraps like Markdown</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -700,7 +705,7 @@ NDS.Alert.create({
                         <i class="hgi hgi-stroke hgi-source-code"></i>
                         <span class="nds-label">Syntax Highlighting</span>
                     </span>
-                    <p class="nds-item-desc">HTML, CSS, JavaScript, and Markdown are highlighted automatically. Embedded <code class="nds-inline-code lang-html">&lt;style&gt;</code> and <code class="nds-inline-code lang-html">&lt;script&gt;</code> bodies inside HTML blocks are highlighted in their respective languages.</p>
+                    <p class="nds-item-desc">HTML, CSS, JavaScript, Markdown, and agent prompts are highlighted automatically. Embedded <code class="nds-inline-code lang-html">&lt;style&gt;</code> and <code class="nds-inline-code lang-html">&lt;script&gt;</code> bodies inside HTML blocks are highlighted in their respective languages.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -711,10 +716,17 @@ NDS.Alert.create({
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-tag-01"></i>
+                        <span class="nds-label">Language Label</span>
+                    </span>
+                    <p class="nds-item-desc">Each block names its language with an <code class="nds-inline-code lang-html">nds-tag</code> in the top corner opposite the action bar, stamped from the authored <code class="nds-inline-code lang-html">lang-*</code> class — so it names languages the highlighter doesn't lex too (<code class="nds-inline-code lang-html">lang-bash</code>, <code class="nds-inline-code lang-html">lang-json</code>). Every block carries one: in a tabbed block the tag sits in each panel, and a block with no <code class="nds-inline-code lang-html">lang-*</code> class is named from the sniffed language.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-copy-01"></i>
                         <span class="nds-label">Copy Button</span>
                     </span>
-                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-copy</code> to any button inside <code class="nds-inline-code lang-html">.nds-code-action</code> to copy the block's source text. The button shows a brief "Copied" state on success.</p>
+                    <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-copy</code> to any button inside <code class="nds-inline-code lang-html">.nds-code-action</code> to copy the block's source text. The component sizes that button itself — <code class="nds-inline-code lang-html">nds-icon-only nds-md</code> is stamped at init, so no block needs the classes in its markup; a button carrying a visible label keeps its width. The button shows a brief "Copied" state on success.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -799,7 +811,8 @@ NDS.Code.init();
 NDS.Code.reprocessCodeElement(codeEl);
 
 // ── Detect the language of a block ───────────────────
-// Returns 'html', 'css', 'javascript', or null when a lang-* class
+// Returns 'html', 'css', 'javascript', 'markdown', 'prompt', or null
+// when a lang-* class
 // names a language we don't lex (the block then renders as plain text).
 // Reads the lang-* / language-* class first; a block with no lang
 // class at all falls back to content sniffing.

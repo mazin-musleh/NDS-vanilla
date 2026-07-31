@@ -34,6 +34,19 @@
     // Every .code-example is a tab panel inside .nds-code, so one query covers both.
     function initializeCodeProcessing() {
         document.querySelectorAll('.nds-code code').forEach(processCodeElement);
+        sizeActionButtons();
+    }
+
+    // The action bar's button is component chrome, not content: a 32px icon
+    // square. Stamped here rather than required in markup, so every block that
+    // already ships gets it. A button carrying a visible label is left alone —
+    // nds-icon-only would hide that label (and nds-copy's "Copied" swap with it).
+    function sizeActionButtons() {
+        document.querySelectorAll('.nds-code-action .nds-btn').forEach(function(button) {
+            if (!button.querySelector('.nds-label')) {
+                button.classList.add('nds-icon-only', 'nds-md');
+            }
+        });
     }
 
     function processCodeElement(codeElement) {
@@ -54,7 +67,50 @@
             html += '<span class="nds-code-line">' + renderTokens(lines[i]) + '</span>\n';
         }
         codeElement.innerHTML = html.trim();
+        labelLanguage(codeElement, lang);
         codeElement.dataset.ndsCodeProcessed = 'true';
+    }
+
+    // ==============================================
+    // LANGUAGE LABEL
+    // ==============================================
+
+    // Casing the class name can't give us.
+    const LANG_LABELS = {
+        html: 'HTML', css: 'CSS', scss: 'SCSS', js: 'JavaScript', javascript: 'JavaScript',
+        json: 'JSON', yaml: 'YAML', yml: 'YAML', md: 'Markdown', php: 'PHP', sql: 'SQL'
+    };
+
+    // Name the block from the class the author wrote, so the label can't drift
+    // from the highlighting — and so a language we don't lex (bash, json) still
+    // labels correctly. Absolutely positioned in the block's top corner, so the
+    // late-loading label costs no layout. Tabbed blocks already name their
+    // languages on the tabs, and a sniffed block is a guess we won't print.
+    function labelLanguage(codeElement, detected) {
+        const wrapper = codeElement.closest('.nds-code');
+        if (!wrapper) return;
+
+        // Inside tabs the panel is the anchor — the wrapper's top strip belongs
+        // to the tab list. Panels are positioned against .nds-tab-content, the
+        // same box the action bar uses, so both land on one strip.
+        const panel = codeElement.closest('.nds-tab-panel');
+        const host = panel || wrapper;
+        if (host.querySelector('.nds-code-lang')) return; // re-init stamps once
+
+        // The authored class names it; with no class, the sniffed language does.
+        const authored = /\blang(?:uage)?-([\w-]+)/.exec(codeElement.className);
+        const name = (authored ? authored[1] : detected).toLowerCase();
+        const labelText = LANG_LABELS[name] || name.charAt(0).toUpperCase() + name.slice(1);
+
+        // The lang class rides along: it is how the tag knows whether the block
+        // has a gutter to clear (see $prose-langs in _code.scss).
+        const tag = document.createElement('span');
+        tag.className = 'nds-tag nds-gray nds-xs nds-code-lang lang-' + name;
+        const text = document.createElement('span');
+        text.className = 'nds-label';
+        text.textContent = labelText;
+        tag.appendChild(text);
+        host.insertBefore(tag, host.firstChild);
     }
 
     // Re-lex in place. No source snapshot is kept: highlighting preserves
@@ -94,6 +150,7 @@
         if (/\blang(?:uage)?-css\b/.test(className)) return 'css';
         if (/\blang(?:uage)?-(?:javascript|js)\b/.test(className)) return 'javascript';
         if (/\blang(?:uage)?-(?:markdown|md)\b/.test(className)) return 'markdown';
+        if (/\blang(?:uage)?-prompt\b/.test(className)) return 'prompt';
         return null;
     }
 
@@ -125,6 +182,7 @@
         if (lang === 'css') return lexCss(source);
         if (lang === 'javascript') return lexJs(source);
         if (lang === 'markdown') return lexMarkdown(source);
+        if (lang === 'prompt') return lexPrompt(source);
         return [{ type: null, value: source }];
     }
 
@@ -538,6 +596,27 @@
         tokens.push({ type: 'string', value: m[1] });
         for (let i = 0; i < body.length; i++) tokens.push(body[i]);
         tokens.push({ type: 'string', value: m[3] });
+    }
+
+    // ==============================================
+    // PROMPT LEXER
+    // ==============================================
+
+    // An agent prompt is prose, so markdown lexing leaves it flat. What carries
+    // meaning here is what the reader must edit or verify before pasting: the
+    // paths, the placeholder names, and the phrases quoted from a doc.
+    const PROMPT_TOKEN_RE = new RegExp(
+        '("[^"\\n]*")' +                                        // 1 quoted phrase
+        '|(\\/?(?:[\\w.-]+\\/)+[\\w-]*(?:\\.\\w+)*' +           // 2 path …
+        '|\\b[\\w-]+\\.(?:md|html|js|css|json|ya?ml|scss|txt|zip)\\b)' + //   … or bare filename
+        '|(\\b[A-Z][A-Z0-9_]{2,}\\b)',                          // 3 placeholder / marker
+        'g'
+    );
+
+    const PROMPT_GROUP_TYPE = [null, 'string', 'property', 'attr'];
+
+    function lexPrompt(source) {
+        return lexByRegex(source, PROMPT_TOKEN_RE, PROMPT_GROUP_TYPE);
     }
 
     // ==============================================
