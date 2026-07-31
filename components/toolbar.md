@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.5.x"
-last_edit: "29/07/2026 - 04:47 PM"
+last_edit: "31/07/2026 - 05:32 AM"
 ---
 
 <!-- Toolbar -->
@@ -447,7 +447,7 @@ last_edit: "29/07/2026 - 04:47 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
-                        <tr><td><code class="nds-inline-code lang-html">--toolbar-margin-block</code></td><td><code class="nds-inline-code lang-html">0 var(--spacing-xl)</code></td><td>The bar's block margins, written as <code class="nds-inline-code lang-html">&lt;start&gt; &lt;end&gt;</code>. Set it on the bar or an ancestor to change either edge</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">--toolbar-margin-block</code></td><td><code class="nds-inline-code lang-html">0 var(--spacing-4xl)</code></td><td>The bar's block margins, written as <code class="nds-inline-code lang-html">&lt;start&gt; &lt;end&gt;</code>. Set it on the bar or an ancestor to change either edge</td></tr>
                     </tbody>
                 </table>
             </div>

@@ -81,7 +81,7 @@
     // Knob: the bar's block margins, "<start> <end>". A toolbar hugs its content
     // and clears nothing above it; set --toolbar-margin-block on the bar (or an
     // ancestor) to change either edge.
-    --_toolbar-margin-block: var(--toolbar-margin-block, 0 var(--spacing-xl));
+    --_toolbar-margin-block: var(--toolbar-margin-block, 0 var(--spacing-4xl));
 
     margin-block: var(--_toolbar-margin-block);
     width: 100%;
@@ -133,10 +133,4 @@
     > :is(.nds-bar-start, .nds-bar-end) > :not([hidden])
 )) {
     display: none;
-}
-
-// Transitional: preserves the legacy bar's wider bottom gap for markup that still
-// ships .nds-filter-bar. Stays top-level — nested it would read as a bar INSIDE a bar.
-.nds-filter-bar {
-    --toolbar-margin-block: 0 var(--spacing-4xl);
 }
