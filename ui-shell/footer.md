@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "02/07/2026 - 09:17 PM"
+updated: "1.5.x"
+last_edit: "01/08/2026 - 11:45 PM"
 ---
 
 <!-- Footer Structure -->
@@ -33,7 +33,7 @@ last_edit: "02/07/2026 - 09:17 PM"
                             </div>
                             <div class="nds-expandable-content">
                                 <code class="code">
-footer.nds-footer.nds-content-wrapper
+footer.nds-footer.nds-content-wrapper.nds-brand
 ├── nav.nds-footer-content
 │   ├── div.nds-footer-column (link column)
 │   │   ├── span.nds-footer-heading
@@ -102,7 +102,7 @@ footer.nds-footer.nds-content-wrapper
                                     </div>
                                     <div class="nds-expandable-content">
                                         <code class="lang-html code">
-&lt;footer class="nds-footer nds-content-wrapper" role="contentinfo" aria-label="Site Footer"&gt;
+&lt;footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer"&gt;
   &lt;nav class="nds-footer-content" aria-label="Footer navigation"&gt;
     &lt;!-- Link column --&gt;
     &lt;div class="nds-footer-column"&gt;
