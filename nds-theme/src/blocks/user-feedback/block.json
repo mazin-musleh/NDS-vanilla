@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nds/user-feedback",
+	"version": "0.1.0",
+	"title": "NDS User Feedback",
+	"category": "widgets",
+	"icon": "thumbs-up",
+	"description": "Thumbs up / down page feedback with a REST-backed tally, shown on singular content.",
+	"textdomain": "nds-theme",
+	"supports": {
+		"html": false,
+		"align": false,
+		"multiple": false
+	},
+	"render": "file:./render.php",
+	"blockHooks": {
+		"core/footer": "after"
+	}
+}

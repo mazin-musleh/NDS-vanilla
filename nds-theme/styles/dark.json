@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Dark",
+	"settings": {
+		"color": {
+			"palette": [
+				{ "name": "Neutral 25", "slug": "neutral-25", "color": "#0f1620" },
+				{ "name": "Neutral 50", "slug": "neutral-50", "color": "#111927" },
+				{ "name": "Neutral 100", "slug": "neutral-100", "color": "#18212f" },
+				{ "name": "Neutral 200", "slug": "neutral-200", "color": "#1f2a37" },
+				{ "name": "Neutral 300", "slug": "neutral-300", "color": "#2b3643" },
+				{ "name": "Neutral 400", "slug": "neutral-400", "color": "#384250" },
+				{ "name": "Neutral 500", "slug": "neutral-500", "color": "#6c727e" },
+				{ "name": "Neutral 600", "slug": "neutral-600", "color": "#9da4ae" },
+				{ "name": "Neutral 700", "slug": "neutral-700", "color": "#d2d6db" },
+				{ "name": "Neutral 750", "slug": "neutral-750", "color": "#e5e7eb" },
+				{ "name": "Neutral 800", "slug": "neutral-800", "color": "#f3f4f6" },
+				{ "name": "Neutral 850", "slug": "neutral-850", "color": "#f9fafb" },
+				{ "name": "Neutral 900", "slug": "neutral-900", "color": "#ffffff" },
+				{ "name": "Neutral 950", "slug": "neutral-950", "color": "#ffffff" }
+			]
+		}
+	},
+	"styles": {
+		"css": ":root { color-scheme: dark; }"
+	}
+}

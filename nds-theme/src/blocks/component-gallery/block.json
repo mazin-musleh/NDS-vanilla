@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nds/component-gallery",
+	"version": "0.1.0",
+	"title": "NDS Component Gallery",
+	"category": "design",
+	"icon": "grid-view",
+	"description": "Searchable, paginated directory of a post type (components, services, templates). Server-rendered first page; client-side search.",
+	"textdomain": "nds-theme",
+	"attributes": {
+		"postType": { "type": "string", "default": "nds_component" },
+		"perPage": { "type": "number", "default": 6 },
+		"showSearch": { "type": "boolean", "default": true },
+		"columns": { "type": "number", "default": 3 }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ]
+	},
+	"editorScript": "file:./edit.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

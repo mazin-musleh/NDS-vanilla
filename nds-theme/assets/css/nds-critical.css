@@ -1,0 +1,926 @@
+/*
+ * NDS critical CSS shell (Phase 0).
+ *
+ * Design tokens are the theme.json presets (--wp--preset--*). The --nds-*
+ * semantic variables below resolve to them, and the [data-theme="dark"]
+ * block re-resolves them so the topbar toggle works at runtime. The editor
+ * path (style variation) overrides the neutral presets instead; both routes
+ * converge on the same --nds-* values.
+ */
+
+:root {
+	/* Semantic surfaces (light). */
+	--nds-bg: var(--wp--preset--color--neutral-50);
+	--nds-surface: var(--wp--preset--color--base-white);
+	--nds-topbar-bg: var(--wp--preset--color--neutral-100);
+	--nds-footer-bg: var(--wp--preset--color--primary-900);
+	--nds-text: var(--wp--preset--color--neutral-900);
+	--nds-text-display: var(--wp--preset--color--neutral-800);
+	--nds-text-muted: var(--wp--preset--color--neutral-500);
+	--nds-border: var(--wp--preset--color--neutral-200);
+	--nds-primary: var(--wp--preset--color--primary-600);
+	--nds-primary-strong: var(--wp--preset--color--primary-900);
+	--nds-primary-950: var(--wp--preset--color--primary-950);
+	--nds-oncolor: var(--wp--preset--color--base-white);
+	--nds-radius-md: var(--wp--custom--nds--radius-md);
+	--nds-radius-lg: var(--wp--custom--nds--radius-lg);
+}
+
+:root[data-theme="dark"] {
+	--nds-bg: #111927;
+	--nds-surface: #1f2a37;
+	--nds-topbar-bg: #18212f;
+	--nds-footer-bg: #0c111b;
+	--nds-text: #f9fafb;
+	--nds-text-display: #ffffff;
+	--nds-text-muted: #9da4ae;
+	--nds-border: #2b3643;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+body {
+	background-color: var(--nds-bg);
+	color: var(--nds-text);
+}
+
+::selection {
+	background: var(--wp--preset--color--primary-100);
+}
+
+:focus-visible {
+	outline: 2px solid var(--nds-primary);
+	outline-offset: 2px;
+}
+
+/* ── Top bar ───────────────────────────────────────────────────────────── */
+.nds-topbar {
+	background: var(--nds-topbar-bg);
+	padding-inline: var(--wp--custom--nds--viewportPadding);
+	padding-block: var(--wp--preset--spacing--sm);
+	min-height: 40px;
+	font-size: var(--wp--preset--font-size--text-sm);
+}
+
+.nds-topbar .nds-digital-stamp-tab {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--wp--preset--spacing--sm);
+	background: none;
+	border: 0;
+	color: var(--nds-text);
+	cursor: pointer;
+	padding: 0;
+}
+
+.nds-topbar .nds-digital-stamp-lg {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 34ch;
+}
+
+.nds-topbar .nds-digital-stamp-sm {
+	display: none;
+}
+
+.nds-topbar-utilities {
+	gap: var(--wp--preset--spacing--lg);
+	color: var(--nds-text-muted);
+}
+
+.nds-theme-toggle {
+	background: none;
+	border: 0;
+	cursor: pointer;
+	font-size: var(--wp--preset--font-size--text-lg);
+	line-height: 1;
+	color: var(--nds-text);
+	padding: var(--wp--preset--spacing--xs);
+}
+
+/* ── Main navigation ───────────────────────────────────────────────────── */
+.nds-main-nav {
+	background: var(--nds-surface);
+	border-block-end: 1px solid var(--nds-border);
+	min-height: var(--wp--custom--nds--navHeight);
+}
+
+.nds-nav-container {
+	padding-inline: var(--wp--custom--nds--viewportPadding);
+}
+
+.nds-brand {
+	align-items: center;
+	gap: var(--wp--preset--spacing--md);
+}
+
+.nds-brand-logo img {
+	display: block;
+}
+
+.nds-brand-name {
+	font-weight: 700;
+	color: var(--nds-text-display);
+}
+
+.nds-nav-primary {
+	font-size: var(--wp--preset--font-size--text-md);
+}
+
+/* ── Hero (sub) ────────────────────────────────────────────────────────── */
+.nds-hero-section.nds-sub {
+	background: linear-gradient(135deg, var(--nds-primary-950) 0%, var(--nds-primary-strong) 100%);
+	color: var(--nds-oncolor);
+	padding-block: var(--wp--preset--spacing--5xl);
+}
+
+.nds-hero-section.nds-sub .nds-section-title,
+.nds-hero-section.nds-sub h1,
+.nds-hero-section.nds-sub h2 {
+	color: var(--nds-oncolor);
+}
+
+.nds-hero-section.nds-sub .nds-section-description {
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.nds-hero-section.nds-sub .wp-block-breadcrumbs,
+.nds-hero-section.nds-sub .wp-block-breadcrumbs a {
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.nds-hero-section.nds-sub .wp-block-breadcrumbs a:hover {
+	color: var(--nds-oncolor);
+}
+
+/* ── Sections ──────────────────────────────────────────────────────────── */
+.is-style-nds-section,
+.nds-hero-section {
+	padding-block: var(--wp--preset--spacing--5xl);
+}
+
+.is-style-nds-section-primary {
+	background: var(--nds-primary-strong);
+	color: var(--nds-oncolor);
+}
+
+.is-style-nds-section-primary .nds-section-title,
+.is-style-nds-section-primary h1,
+.is-style-nds-section-primary h2,
+.is-style-nds-section-primary h3 {
+	color: var(--nds-oncolor);
+}
+
+.is-style-nds-section-primary .nds-section-description {
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.is-style-nds-section-gradient {
+	background: linear-gradient(135deg, var(--nds-primary-950) 0%, var(--wp--preset--color--primary-600) 100%);
+	color: var(--nds-oncolor);
+}
+
+.is-style-nds-section-brand {
+	background: var(--wp--preset--color--primary-50);
+}
+
+.nds-section-title {
+	margin-block-start: 0;
+	letter-spacing: -0.02em;
+}
+
+.nds-section-description {
+	max-width: 60ch;
+	color: var(--nds-text-muted);
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+.is-style-nds-card {
+	background: var(--nds-surface);
+	border: 1px solid var(--nds-border);
+	border-radius: var(--nds-radius-lg);
+	padding: var(--wp--preset--spacing--2xl);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.1);
+}
+
+/* ── Alerts ────────────────────────────────────────────────────────────── */
+.is-style-nds-alert,
+.is-style-nds-alert-info,
+.is-style-nds-alert-success,
+.is-style-nds-alert-warning,
+.is-style-nds-alert-error {
+	border-radius: var(--nds-radius-md);
+	padding: var(--wp--preset--spacing--2xl);
+	border-inline-start: 4px solid var(--wp--preset--color--neutral-400);
+	background: var(--nds-surface);
+}
+
+.is-style-nds-alert-info {
+	border-inline-start-color: var(--wp--preset--color--blue-600);
+	background: var(--wp--preset--color--blue-50);
+}
+
+.is-style-nds-alert-success {
+	border-inline-start-color: var(--wp--preset--color--green-600);
+	background: var(--wp--preset--color--green-50);
+}
+
+.is-style-nds-alert-warning {
+	border-inline-start-color: var(--wp--preset--color--yellow-600);
+	background: var(--wp--preset--color--yellow-50);
+}
+
+.is-style-nds-alert-error {
+	border-inline-start-color: var(--wp--preset--color--red-600);
+	background: var(--wp--preset--color--red-50);
+}
+
+/* ── Buttons (variants on top of theme.json defaults) ──────────────────── */
+.is-style-nds-secondary .wp-block-button__link {
+	background: var(--wp--preset--color--primary-100);
+	color: var(--wp--preset--color--primary-700);
+}
+
+.is-style-nds-secondary-outline .wp-block-button__link {
+	background: transparent;
+	border: 1px solid var(--nds-primary);
+	color: var(--nds-primary);
+}
+
+.is-style-nds-subtle .wp-block-button__link {
+	background: transparent;
+	color: var(--nds-text);
+}
+
+.is-style-nds-danger .wp-block-button__link {
+	background: var(--wp--preset--color--red-600);
+}
+
+.is-style-nds-oncolor .wp-block-button__link {
+	background: transparent;
+	border: 1px solid rgba(255, 255, 255, 0.55);
+	color: var(--nds-oncolor);
+}
+
+/* ── Accordion, quote, divider, meta ───────────────────────────────────── */
+.is-style-nds-accordion {
+	border: 1px solid var(--nds-border);
+	border-radius: var(--nds-radius-md);
+	padding: var(--wp--preset--spacing--lg);
+	margin-block: var(--wp--preset--spacing--md);
+}
+
+.is-style-nds-accordion summary {
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.is-style-nds-quote {
+	position: relative;
+	border: 0;
+	padding-inline-start: var(--wp--preset--spacing--4xl);
+}
+
+.is-style-nds-quote::before {
+	content: "\201C";
+	position: absolute;
+	inset-inline-start: 0;
+	top: 0;
+	font-size: var(--wp--preset--font-size--display-xl);
+	line-height: 1;
+	color: var(--nds-primary);
+}
+
+.is-style-nds-divider-lg {
+	margin-block: var(--wp--preset--spacing--6xl);
+}
+
+.nds-post-meta {
+	gap: var(--wp--preset--spacing--lg);
+	color: var(--nds-text-muted);
+	font-size: var(--wp--preset--font-size--text-sm);
+}
+
+.nds-empty-state {
+	color: var(--nds-text-muted);
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.nds-footer {
+	background: var(--nds-footer-bg);
+	color: var(--nds-oncolor);
+	padding-block: var(--wp--preset--spacing--6xl) var(--wp--preset--spacing--4xl);
+	margin-block-start: var(--wp--preset--spacing--7xl);
+}
+
+.nds-footer a {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.nds-footer a:hover {
+	color: var(--nds-oncolor);
+}
+
+.nds-footer h1,
+.nds-footer h2,
+.nds-footer h3 {
+	color: var(--nds-oncolor);
+}
+
+.nds-footer .wp-block-separator {
+	border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Responsive visibility (data-hidden utility) ───────────────────────── */
+@media (max-width: 599px) {
+	[data-hidden~="sm"] {
+		display: none;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 960px) {
+	[data-hidden~="md"] {
+		display: none;
+	}
+}
+
+@media (min-width: 961px) and (max-width: 1280px) {
+	[data-hidden~="lg"] {
+		display: none;
+	}
+}
+
+/* ── Phase 1: widgets, stamp panel, FAB, a11y, cookie, feedback ─────────── */
+
+/* Honor the native hidden attribute everywhere. */
+[hidden] {
+	display: none !important;
+}
+
+/* Topbar widgets */
+.nds-text-icon {
+	font-size: var(--wp--preset--font-size--text-sm);
+	white-space: nowrap;
+}
+
+/* Digital stamp panel */
+.nds-digital-stamp-panel {
+	background: var(--nds-surface);
+	border-block-end: 1px solid var(--nds-border);
+	padding-inline: var(--wp--custom--nds--viewportPadding);
+	padding-block: var(--wp--preset--spacing--lg) var(--wp--preset--spacing--2xl);
+}
+
+.nds-digital-stamp-heading {
+	font-weight: 600;
+	margin-block: 0 0 var(--wp--preset--spacing--xs);
+}
+
+.nds-digital-stamp-detail {
+	color: var(--nds-text-muted);
+	font-size: var(--wp--preset--font-size--text-sm);
+	margin: 0;
+}
+
+/* Floating action button (accessibility) */
+.nds-fab {
+	position: fixed;
+	inset-inline-end: 24px;
+	bottom: 24px;
+	z-index: 90;
+	border-radius: 9999px;
+	min-width: 52px;
+	min-height: 52px;
+	box-shadow: 0 8px 8px -4px rgba(16, 24, 40, 0.08), 0 20px 24px -4px rgba(16, 24, 40, 0.08);
+}
+
+/* Accessibility panel */
+.nds-a11y-panel {
+	position: fixed;
+	inset-inline-end: 0;
+	top: 0;
+	bottom: 0;
+	width: min(360px, 90vw);
+	background: var(--nds-surface);
+	border-inline-start: 1px solid var(--nds-border);
+	box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
+	z-index: 95;
+	padding: var(--wp--preset--spacing--3xl);
+	overflow-y: auto;
+}
+
+.nds-a11y-panel-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-block-end: var(--wp--preset--spacing--2xl);
+}
+
+.nds-a11y-panel-title {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--text-lg);
+}
+
+.nds-a11y-tile {
+	margin-block-end: var(--wp--preset--spacing--2xl);
+}
+
+.nds-a11y-tile-label {
+	display: block;
+	font-weight: 600;
+	margin-block-end: var(--wp--preset--spacing--sm);
+}
+
+.nds-a11y-tile-row {
+	display: flex;
+	gap: var(--wp--preset--spacing--sm);
+}
+
+.nds-a11y-option[aria-pressed="true"] {
+	background: var(--wp--preset--color--primary-100);
+	color: var(--wp--preset--color--primary-700);
+}
+
+/* Cookie popup */
+.nds-cookie-popup {
+	position: fixed;
+	inset-inline-start: 16px;
+	bottom: 16px;
+	max-width: 420px;
+	background: var(--nds-surface);
+	border: 1px solid var(--nds-border);
+	border-radius: var(--nds-radius-lg);
+	box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.18);
+	padding: var(--wp--preset--spacing--2xl);
+	z-index: 90;
+}
+
+.nds-cookie-title {
+	font-weight: 700;
+	margin-block: 0 0 var(--wp--preset--spacing--sm);
+}
+
+.nds-cookie-text {
+	margin-block: 0 0 var(--wp--preset--spacing--lg);
+	font-size: var(--wp--preset--font-size--text-sm);
+	color: var(--nds-text-muted);
+}
+
+.nds-cookie-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--sm);
+}
+
+/* User feedback */
+.nds-user-feedback {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--md);
+	padding-block: var(--wp--preset--spacing--3xl) 0;
+	margin-block-start: var(--wp--preset--spacing--4xl);
+	border-block-start: 1px solid var(--nds-border);
+}
+
+.nds-feedback-question {
+	margin: 0;
+	font-weight: 600;
+}
+
+.nds-feedback-actions {
+	display: flex;
+	gap: var(--wp--preset--spacing--sm);
+}
+
+.nds-feedback-thanks {
+	margin: 0;
+	color: var(--wp--preset--color--green-700);
+	font-weight: 600;
+}
+
+/* ── Accessibility modes ──────────────────────────────────────────────── */
+
+/* User font scale: re-declare the theme.json preset sizes so the
+   --nds-user-font-scale knob scales every preset (same calc pattern the
+   source uses: calc(clamp(...) * var(--user-font-scale, 1))). */
+:root {
+	--nds-user-font-scale: 1;
+	--wp--preset--font-size--text-2xs: calc(clamp(8px, 0.83vw, 10px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--text-xs: calc(clamp(8px, 1.04vw, 12px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--text-sm: calc(clamp(10px, 1.25vw, 14px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--text-md: calc(clamp(12px, 1.46vw, 16px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--text-lg: calc(clamp(14px, 1.67vw, 18px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--text-xl: calc(clamp(16px, 1.875vw, 20px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--display-xs: calc(clamp(18px, 2vw, 24px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--display-sm: calc(clamp(20px, 2.5vw, 30px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--display-md: calc(clamp(24px, 3vw, 36px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--display-lg: calc(clamp(32px, 3.75vw, 48px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--display-xl: calc(clamp(40px, 5vw, 60px) * var(--nds-user-font-scale, 1));
+	--wp--preset--font-size--display-2xl: calc(clamp(48px, 6vw, 72px) * var(--nds-user-font-scale, 1));
+}
+
+/* OpenDyslexic (loaded only when the dyslexia mode is active). */
+@font-face {
+	font-family: "OpenDyslexic";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("../fonts/OpenDyslexic-Regular.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "OpenDyslexic";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("../fonts/OpenDyslexic-Bold.woff2") format("woff2");
+}
+
+html.nds-dyslexia {
+	--nds-font-brand: "OpenDyslexic", "IBM Plex Sans Arabic", sans-serif;
+}
+
+html.nds-dyslexia body {
+	font-family: var(--nds-font-brand) !important;
+}
+
+html.nds-high-contrast body {
+	filter: contrast(1.2);
+}
+
+html.nds-text-spacing body {
+	letter-spacing: 0.12em;
+	word-spacing: 0.16em;
+}
+
+html.nds-text-spacing p,
+html.nds-text-spacing li,
+html.nds-text-spacing dd {
+	line-height: 1.9;
+}
+
+/* ── Phase 2: custom blocks ─────────────────────────────────────────────── */
+
+/* Hero slider */
+.nds-hero-section.nds-hero-slider {
+	position: relative;
+	min-height: 520px;
+	color: var(--nds-oncolor);
+	overflow: hidden;
+}
+
+.nds-hero-slider .nds-swiper {
+	position: relative;
+	min-height: 520px;
+}
+
+.nds-hero-slider .nds-swiper-wrapper {
+	position: relative;
+	height: 100%;
+}
+
+.nds-hero-slide {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	align-items: center;
+}
+
+.nds-hero-slide[hidden] {
+	display: none;
+}
+
+.nds-hero-image-wrapper {
+	position: absolute;
+	inset: 0;
+}
+
+.nds-hero-image-wrapper::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: color-mix(in srgb, var(--nds-primary-950) calc(var(--overlay, 0.7) * 100%), transparent);
+}
+
+.nds-hero-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.nds-hero-content {
+	position: relative;
+	z-index: 1;
+	padding-inline: var(--wp--custom--nds--viewportPadding);
+	max-width: 720px;
+}
+
+.nds-hero-content .nds-section-title {
+	color: var(--nds-oncolor);
+}
+
+.nds-hero-content .nds-section-description {
+	color: rgba(255, 255, 255, 0.85);
+	max-width: 56ch;
+}
+
+.nds-swiper-navigation {
+	position: absolute;
+	inset-inline-end: var(--wp--custom--nds--viewportPadding);
+	bottom: var(--wp--preset--spacing--4xl);
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: var(--wp--preset--spacing--md);
+}
+
+.nds-swiper-buttons {
+	display: flex;
+	gap: var(--wp--preset--spacing--sm);
+}
+
+.nds-swiper-prev,
+.nds-swiper-next {
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 9999px;
+	min-width: 40px;
+	min-height: 40px;
+	font-size: var(--wp--preset--font-size--text-xl);
+	line-height: 1;
+	color: var(--nds-oncolor);
+	background: transparent;
+	cursor: pointer;
+}
+
+.nds-swiper-pagination {
+	display: flex;
+	gap: var(--wp--preset--spacing--sm);
+}
+
+.nds-swiper-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 9999px;
+	border: 0;
+	background: rgba(255, 255, 255, 0.4);
+	cursor: pointer;
+	padding: 0;
+}
+
+.nds-swiper-dot.is-active {
+	background: var(--nds-oncolor);
+}
+
+/* Generic swiper (card carousels) */
+.nds-swiper:not(.nds-hero) {
+	position: relative;
+}
+
+.nds-swiper:not(.nds-hero) .nds-swiper-wrapper {
+	display: flex;
+	gap: var(--wp--preset--spacing--2xl);
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	padding-block: var(--wp--preset--spacing--md);
+}
+
+.nds-swiper:not(.nds-hero) .nds-swiper-wrapper::-webkit-scrollbar {
+	display: none;
+}
+
+.nds-swiper:not(.nds-hero) .nds-swiper-wrapper > * {
+	flex: 0 0 calc((100% - 2 * var(--wp--preset--spacing--2xl)) / 3);
+	scroll-snap-align: start;
+}
+
+.nds-swiper:not(.nds-hero) .nds-swiper-navigation {
+	position: static;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+	margin-block-start: var(--wp--preset--spacing--lg);
+}
+
+.nds-swiper:not(.nds-hero) .nds-swiper-prev,
+.nds-swiper:not(.nds-hero) .nds-swiper-next {
+	border-color: var(--nds-border);
+	color: var(--nds-text);
+}
+
+.nds-swiper:not(.nds-hero) .nds-swiper-dot {
+	background: var(--nds-border);
+}
+
+.nds-swiper:not(.nds-hero) .nds-swiper-dot.is-active {
+	background: var(--nds-primary);
+}
+
+@media (min-width: 600px) and (max-width: 960px) {
+	.nds-swiper:not(.nds-hero) .nds-swiper-wrapper > * {
+		flex-basis: calc((100% - var(--wp--preset--spacing--2xl)) / 2);
+	}
+}
+
+@media (max-width: 599px) {
+	.nds-swiper:not(.nds-hero) .nds-swiper-wrapper > * {
+		flex-basis: 100%;
+	}
+}
+
+/* Tabs */
+.nds-tabs {
+	margin-block: var(--wp--preset--spacing--3xl);
+}
+
+.nds-tab-list {
+	display: flex;
+	gap: var(--wp--preset--spacing--xs);
+	border-block-end: 1px solid var(--nds-border);
+	overflow-x: auto;
+}
+
+.nds-tab {
+	background: none;
+	border: 0;
+	border-block-end: 2px solid transparent;
+	padding: var(--wp--preset--spacing--md) var(--wp--preset--spacing--lg);
+	font-weight: 600;
+	color: var(--nds-text-muted);
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.nds-tab[aria-selected="true"] {
+	color: var(--nds-primary);
+	border-block-end-color: var(--nds-primary);
+}
+
+.nds-tab-content {
+	padding-block-start: var(--wp--preset--spacing--2xl);
+}
+
+.nds-tab-panel[hidden] {
+	display: none;
+}
+
+/* Modal */
+.nds-modal-dialog {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--wp--preset--spacing--3xl);
+	background: rgba(16, 24, 40, 0.5);
+}
+
+.nds-modal-dialog[hidden] {
+	display: none;
+}
+
+.nds-modal-head {
+	position: relative;
+	width: min(640px, 100%);
+	max-height: 80vh;
+	overflow-y: auto;
+	background: var(--nds-surface);
+	border-radius: var(--nds-radius-lg);
+	padding: var(--wp--preset--spacing--2xl);
+}
+
+.nds-modal-title {
+	margin: 0;
+	padding-inline-end: var(--wp--preset--spacing--4xl);
+}
+
+.nds-modal-close {
+	position: absolute;
+	inset-inline-end: var(--wp--preset--spacing--md);
+	top: var(--wp--preset--spacing--md);
+}
+
+.nds-modal-body {
+	margin-block-start: var(--wp--preset--spacing--lg);
+}
+
+/* Component gallery */
+.nds-gallery-toolbar {
+	margin-block-end: var(--wp--preset--spacing--2xl);
+}
+
+.nds-gallery-search {
+	width: 100%;
+	max-width: 420px;
+	padding: var(--wp--preset--spacing--md) var(--wp--preset--spacing--lg);
+	border: 1px solid var(--nds-border);
+	border-radius: var(--nds-radius-md);
+	background: var(--nds-surface);
+	color: var(--nds-text);
+	font-size: var(--wp--preset--font-size--text-md);
+}
+
+.nds-gallery-search:focus-visible {
+	outline: 2px solid var(--nds-primary);
+	outline-offset: 2px;
+}
+
+.nds-gallery-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--wp--preset--spacing--2xl);
+}
+
+.nds-gallery-cols-2 .nds-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.nds-gallery-cols-4 .nds-gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.nds-gallery-item[hidden] {
+	display: none;
+}
+
+.nds-gallery-item-media img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+	border-radius: var(--nds-radius-md);
+}
+
+.nds-gallery-item-title {
+	margin-block: 0 0 var(--wp--preset--spacing--sm);
+	font-size: var(--wp--preset--font-size--text-lg);
+}
+
+.nds-gallery-item-desc {
+	color: var(--nds-text-muted);
+	font-size: var(--wp--preset--font-size--text-sm);
+	margin-block: 0 0 var(--wp--preset--spacing--md);
+}
+
+.nds-gallery-item-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--xs);
+	margin-block-end: var(--wp--preset--spacing--lg);
+}
+
+.nds-gallery-pagination {
+	margin-block-start: var(--wp--preset--spacing--3xl);
+}
+
+.nds-gallery-pagination .page-numbers {
+	display: inline-flex;
+	min-width: 36px;
+	min-height: 36px;
+	align-items: center;
+	justify-content: center;
+	margin-inline-end: var(--wp--preset--spacing--xs);
+	border: 1px solid var(--nds-border);
+	border-radius: var(--nds-radius-md);
+	color: var(--nds-text);
+	text-decoration: none;
+}
+
+.nds-gallery-pagination .page-numbers.current {
+	background: var(--nds-primary);
+	border-color: var(--nds-primary);
+	color: var(--nds-oncolor);
+}
+
+@media (max-width: 960px) {
+	.nds-gallery-grid,
+	.nds-gallery-cols-2 .nds-gallery-grid,
+	.nds-gallery-cols-3 .nds-gallery-grid,
+	.nds-gallery-cols-4 .nds-gallery-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 599px) {
+	.nds-gallery-grid,
+	.nds-gallery-cols-2 .nds-gallery-grid,
+	.nds-gallery-cols-3 .nds-gallery-grid,
+	.nds-gallery-cols-4 .nds-gallery-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Editor placeholders */
+.nds-hero-slider-editor,
+.nds-tabs-editor,
+.nds-modal-editor,
+.nds-gallery-editor,
+.nds-swiper-editor {
+	border: 1px dashed var(--nds-border);
+	border-radius: var(--nds-radius-md);
+	padding: var(--wp--preset--spacing--2xl);
+}
+
+.nds-block-note {
+	color: var(--nds-text-muted);
+	font-size: var(--wp--preset--font-size--text-sm);
+	margin-block: 0 0 var(--wp--preset--spacing--sm);
+}

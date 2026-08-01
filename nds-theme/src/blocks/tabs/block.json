@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nds/tabs",
+	"version": "0.1.0",
+	"title": "NDS Tabs",
+	"category": "design",
+	"icon": "table-row-after",
+	"description": "ARIA tabs: a tab list switching between nds/tab panels with keyboard navigation.",
+	"textdomain": "nds-theme",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./edit.js",
+	"viewScript": "file:./view.js"
+}

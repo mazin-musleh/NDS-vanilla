@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nds/hero-slider",
+	"version": "0.1.0",
+	"title": "NDS Hero Slider",
+	"category": "design",
+	"icon": "slides",
+	"description": "Full-width hero banner with image slides, overlay, content, and navigation. First slide is the LCP element.",
+	"textdomain": "nds-theme",
+	"attributes": {
+		"slides": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "full" ],
+		"multiple": false
+	},
+	"editorScript": "file:./edit.js",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

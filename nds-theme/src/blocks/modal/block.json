@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "nds/modal",
+	"version": "0.1.0",
+	"title": "NDS Modal",
+	"category": "design",
+	"icon": "external",
+	"description": "Trigger button + focus-trapped dialog. Inner blocks are the modal body.",
+	"textdomain": "nds-theme",
+	"attributes": {
+		"triggerText": { "type": "string", "default": "Open" },
+		"triggerStyle": { "type": "string", "default": "is-style-nds-primary" },
+		"modalTitle": { "type": "string", "default": "Dialog" }
+	},
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./edit.js",
+	"viewScript": "file:./view.js"
+}
