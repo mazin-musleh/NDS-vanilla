@@ -25,7 +25,7 @@ Important notes:
 
 ## Guides
 
-- [Get started]({{ "/guides/get-started.html" | absolute_url }}): Adopt NDS in an existing project — download the template, wire an AI agent with the copy-paste instructions block, and migrate page by page.
+- [AI integration]({{ "/guides/ai-integration.html" | absolute_url }}): Adopting NDS into an existing project with a coding agent — download the template release, append its instructions block to the project's `CLAUDE.md`/`AGENTS.md`, set the two paths it needs, then work session by session from that block.
 {%- assign cats = "UI,Forms,Data,Plugins,Layout,UI Shell,Utilities" | split: "," -%}
 {%- assign labels = "UI components,Form components,Data components,Plugin components,Layout,UI shell,Utilities" | split: "," -%}
 {%- assign rawbase = site.repository_url | replace: "github.com", "raw.githubusercontent.com" | append: "/refs/heads/main" -%}

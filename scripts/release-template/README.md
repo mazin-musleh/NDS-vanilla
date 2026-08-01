@@ -2,7 +2,7 @@
 
 A versioned, read-only build of the National Design System (Saudi Arabia). Keep this folder beside your project as a source reference — don't edit it, don't build inside it. Upgrades replace the whole folder.
 
-**Start here:** open the adoption guide at `_site/guides/get-started.html` (or hosted: https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html). It contains the agent-instructions block you paste into your project's `AGENTS.md` / `CLAUDE.md`, and the session playbook for migrating page by page.
+**Start here:** open the adoption guide at `_site/guides/ai-integration.html` (or hosted: https://mazin-musleh.github.io/NDS-vanilla/guides/ai-integration.html). It contains the agent-instructions block you paste into your project's `AGENTS.md` / `CLAUDE.md`, and the session playbook for building page by page.
 
 ## Layout
 
@@ -16,4 +16,4 @@ A versioned, read-only build of the National Design System (Saudi Arabia). Keep 
 - Copy what you need OUT of this folder into your project; never point production pages at files in here.
 - Never read or edit `*.min.js` / `*.min.css` — the readable source is in `_source/`.
 - Copy component markup verbatim from the doc pages; don't invent or adapt it from memory.
-- To upgrade: replace this folder with the new release (update your `NDS_ROOT` line if the folder name carries the version), then paste the upgrade prompt from the guide — your agent compares the bundle version banners, replaces the assets under `NDS_ASSETS`, and sweeps ported markup per the CHANGELOG's "Migrating from" sections.
+- To upgrade: replace this folder with the new release (update your `NDS_ROOT` line if the folder name carries the version), then paste the upgrade prompt from the guide — your agent compares the bundle version banners, replaces the assets under `NDS_ASSETS`, and sweeps your pages per the CHANGELOG's "Migrating from" sections.

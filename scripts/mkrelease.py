@@ -10,7 +10,7 @@ Output: dist/nds-vanilla-template-v<version>.zip, laid out as
         CHANGELOG.md
         LICENSE
         README.md          — human signpost: read-only reference, start at the guide
-        _site/             — the built HTML template (incl. guides/get-started.html,
+        _site/             — the built HTML template (incl. guides/ai-integration.html,
                              the adoption guide with the copy-paste snippet)
         _source/
             _js/           — readable JS behind assets/js/*.min.js
@@ -102,7 +102,7 @@ def stage(version):
 
     # README.md is a human signpost only — the LLM artifact is the
     # instructions block inside the adoption guide, which ships as a normal
-    # doc page (_site/guides/get-started.html — source guides/).
+    # doc page (_site/guides/ai-integration.html — source guides/).
     shutil.copy2(os.path.join(ROOT, 'scripts', 'release-template', 'README.md'), pkg)
     return dist, pkg
 
@@ -143,28 +143,28 @@ def verify(out, version):
     # copy in stage() would silently ship an incomplete zip otherwise.
     for anchor in ('_source/_js/nds-core.js', '_source/_sass/_mixins.scss',
                    '_source/_data/content/components.yml',
-                   'README.md', '_site/guides/get-started.html'):
+                   'README.md', '_site/guides/ai-integration.html'):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
 
     # The integration guide's checks run against its markdown SOURCE (the same
-    # content this build rendered into the zip's _site/guides/get-started.html —
+    # content this build rendered into the zip's _site/guides/ai-integration.html —
     # the source regexes stay clean of HTML escaping). Every path in its
     # snippet hangs off the NDS_ROOT / NDS_ASSETS pair the consumer sets at
     # the top of the block; lose a declaration and the block ships with
     # unresolvable references — invisible until a consumer complains.
-    with open(os.path.join(ROOT, 'guides', 'get-started.md'), encoding='utf8') as f:
+    with open(os.path.join(ROOT, 'guides', 'ai-integration.md'), encoding='utf8') as f:
         # Unescape first: the page authors the snippet entity-encoded
         # (&lt;name&gt;), which would otherwise hide placeholder markers
         # from the '<' filter below.
         integration = html.unescape(f.read())
     if '`NDS_ROOT` =' not in integration:
-        sys.exit('guides/get-started.md has no `NDS_ROOT` declaration — every path in the snippet resolves nowhere.')
+        sys.exit('guides/ai-integration.md has no `NDS_ROOT` declaration — every path in the snippet resolves nowhere.')
     if '`NDS_ASSETS` =' not in integration:
-        sys.exit('guides/get-started.md has no `NDS_ASSETS` declaration — the asset-copy and upgrade steps resolve nowhere.')
+        sys.exit('guides/ai-integration.md has no `NDS_ASSETS` declaration — the asset-copy and upgrade steps resolve nowhere.')
     for marker in ('COPY START', 'COPY END'):
         if marker not in integration:
-            sys.exit(f'guides/get-started.md is missing the {marker} marker — the snippet is unbounded.')
+            sys.exit(f'guides/ai-integration.md is missing the {marker} marker — the snippet is unbounded.')
 
     # Every literal path the guide and README reference must exist in the
     # zip — a doc rename otherwise ships a prompt pointing the consumer's
