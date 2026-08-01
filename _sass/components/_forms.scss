@@ -565,6 +565,10 @@ fieldset {
     display: flex;
     gap: var(--spacing-lg);
     margin-block-start: var(--actions-margin-top, var(--spacing-2xl));
+
+    &:first-child {
+        margin-block-start: 0;
+    }
 }
 
 .nds-form-group {

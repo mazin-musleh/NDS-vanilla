@@ -18,7 +18,7 @@ sidemenu_mode: false
         <div class="nds-info-content">
             <p class="nds-required-notice"><span class="nds-label">*Required information</span></p>
 
-            <form id="form-template" class="nds-form nds-flex nds-col" novalidate>
+            <form id="form-template" class="nds-form" novalidate>
 
                 <!-- ============================================================
                      STEP 1 — Identity Verification
