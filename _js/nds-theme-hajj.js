@@ -33,7 +33,7 @@
     var SWIPER_SEL = '.nds-hero-section .nds-swiper.nds-hero';
     var SLIDE_CLASS = 'nds-hajj';
 
-    // This script ships beside its assets (…/assets/events/Hajj/), so its own
+    // This script ships beside its assets (…/docs-assets/events/Hajj/), so its own
     // folder is the asset base. Captured at load — currentScript is null inside
     // the later hook calls.
     var SCRIPT = document.currentScript ||

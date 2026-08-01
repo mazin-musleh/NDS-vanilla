@@ -148,13 +148,15 @@ class BaseurlCleaner
     #    A url() inside a CSS custom property is resolved by the stylesheet that
     #    CONSUMES it (assets/css/nds-main.min.css), not by the HTML page that
     #    declares it — so the page-relative depth prefix is wrong here. The
-    #    consuming stylesheet always lives at assets/css/, so any asset under
-    #    assets/ is reachable as ../<rest> from there, INDEPENDENT of the page's
-    #    own depth. Rewrite the whole baseurl+assets/ segment to a single ../.
+    #    consuming stylesheet always lives at assets/css/, so the site root is
+    #    ../../ from there, INDEPENDENT of the page's own depth. Matches only our
+    #    own asset roots (assets/, docs-assets/): that assumption about the
+    #    consumer holds for NDS's files, not for an arbitrary top-level path, which
+    #    is left to rule 5's page-relative rewrite.
     #    Runs before rule 5 so the page-relative rule never sees these.
-    content.gsub!(%r{(--[\w-]+\s*:\s*url\(\s*['"]?)#{Regexp.escape(@baseurl)}/assets/}) do
+    content.gsub!(%r{(--[\w-]+\s*:\s*url\(\s*['"]?)#{Regexp.escape(@baseurl)}/((?:docs-)?assets/)}) do
       replacements += 1
-      "#{$1}../"
+      "#{$1}../../#{$2}"
     end
 
     # 5. Replace remaining CSS url() paths (inline <style> blocks, direct inline

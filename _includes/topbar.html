@@ -47,7 +47,7 @@
                     {% for group in site.data.themes %}
                     {% if group.label %}<div class="nds-divider nds-lg">{{ group.label }}</div>{% endif %}
                     {% for b in group.list %}
-                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="{{ b.value }}"{% if b.stylesheet %} data-theme-css="{{ b.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% if b.js %} data-theme-js="{{ b.js | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}"{% endif %}{% endif %}>
+                    <button class="nds-btn nds-subtle nds-dropmenu-item" data-theme-value="{{ b.value }}"{% if b.stylesheet %} data-theme-css="{{ b.css | relative_url }}?ver={{ site.asset_ver }}"{% if b.js %} data-theme-js="{{ b.js | relative_url }}?ver={{ site.asset_ver }}"{% endif %}{% endif %}>
                         <span class="nds-label">{{ b.label }}</span>
                     </button>
                     {% endfor %}

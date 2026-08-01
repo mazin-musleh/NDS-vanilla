@@ -38,7 +38,7 @@
     {%- assign _brands_flat = "" | split: "" -%}{%- for _g in site.data.themes -%}{%- assign _brands_flat = _brands_flat | concat: _g.list -%}{%- endfor %}
     {%- assign _brand = _brands_flat | where: 'value', site.brand | first %}
     {%- if _brand.css %}
-    <link id="nds-theme-stylesheet" rel="stylesheet" href="{{ _brand.css | prepend: 'assets/' | relative_url }}?ver={{ site.asset_ver }}">
+    <link id="nds-theme-stylesheet" rel="stylesheet" href="{{ _brand.css | relative_url }}?ver={{ site.asset_ver }}">
     {%- endif %}
     {%- endif %}
     <!-- Main CSS — deferred; onload triggers loadDeferredAssets (icons + HGI) so they never compete with the LCP window. -->
@@ -72,13 +72,14 @@
     </noscript>
     {%- endfor %}
     {%- endif %}
-    <!-- Favicon - low-priority fetch so it doesn't compete with critical assets -->
+    <!-- Favicon - low-priority fetch so it doesn't compete with critical assets.
+         Ships as a placeholder so a copied head renders; consumers swap the file. -->
     <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}" fetchpriority="low">
     {%- unless page.exclude_showcase == true %}
-    <link rel="preload" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
+    <link rel="preload" href="{{ 'docs-assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}" as="style" fetchpriority="low"
         onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="{{ 'assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}">
+        <link rel="stylesheet" href="{{ 'docs-assets/css/nds-showcase.min.css' | relative_url }}?ver={{ site.asset_ver }}">
     </noscript>
     {%- endunless %}
     {%- if site.perf_monitor %}

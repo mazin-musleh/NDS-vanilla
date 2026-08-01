@@ -9,7 +9,7 @@
 // Activate site-wide via `brand: hajj` (loads nds-theme-hajj.min.css render-
 // blocking, before first paint), or on demand via the theme switcher / the
 // one-tag event pack (nds-theme-hajj.js). Source for the build entry:
-// assets/events/Hajj/nds-theme-hajj.min.scss.
+// docs-assets/events/Hajj/nds-theme-hajj.min.scss.
 // ════════════════════════════════════════════════════════════════════════════
 
 // ── Brand palette — gold-brown primary (#946124). Derives the full primary ramp
@@ -54,7 +54,7 @@
 
 // ── Section decorations (DGA-coloured) — a bottom separator on every content
 //    section and a services graphic on even sections. SVGs resolve against this
-//    stylesheet's folder (assets/events/Hajj/). ──
+//    stylesheet's folder (docs-assets/events/Hajj/). ──
 .nds-content-layout:not(.nds-wSideMenu, .nds-cardView) .nds-main-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-green, .nds-gradient-primary, .nds-gradient-green, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
   &::before {
     content: "";

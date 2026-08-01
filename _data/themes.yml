@@ -13,24 +13,27 @@
 #                       e.g. _sass/themes/_<value>.scss); the switcher loads/unloads the
 #                       stylesheet (+ optional js) instead of toggling a token. Use this tier
 #                       for a single-theme site or a bespoke event skin.
+#
+# css/js are site-root-relative paths (head.html + topbar.html pass them through
+# `relative_url` unchanged), so a theme declares wherever it actually lives.
 
 - list:
     - value: foundation-day
       label: Foundation Day
       stylesheet: true
-      # Self-contained event folder (paths relative to assets/). Omit css/js to use the
-      # default assets/css|js/nds-theme-<value>.min.{css,js}.
+      # Self-contained event folder under docs-assets/ — the docs site ships the event
+      # skins, a consumer copying assets/ doesn't have to host them.
       # `js` is the EVENT PACK: a downstream site applies the whole theme by dropping
       # this one script tag (it injects its own css, token, and hero slide); here the
       # switcher loads the same file on demand. See events/foundation-day.md.
-      css: events/foundation_day/nds-theme-foundation-day.min.css
-      js: events/foundation_day/nds-theme-foundation-day.min.js
+      css: docs-assets/events/foundation_day/nds-theme-foundation-day.min.css
+      js: docs-assets/events/foundation_day/nds-theme-foundation-day.min.js
 
     - value: hajj
       label: Hajj
       stylesheet: true
-      css: events/Hajj/nds-theme-hajj.min.css
-      js: events/Hajj/nds-theme-hajj.min.js
+      css: docs-assets/events/Hajj/nds-theme-hajj.min.css
+      js: docs-assets/events/Hajj/nds-theme-hajj.min.js
 
 - label: Demo
   list:

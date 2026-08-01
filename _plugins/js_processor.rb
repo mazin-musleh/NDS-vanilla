@@ -37,11 +37,21 @@ class JSProcessor
   def initialize
     @source_dir = '_js'
     @output_dir = 'assets/js'
-    # Per-file output dir overrides (keyed by source basename) — e.g. an event
-    # brand's behaviour script ships in its self-contained event folder.
+    # Per-file output dir overrides (keyed by source basename). docs-assets/ holds
+    # everything only the documentation site loads, so a consumer copying assets/
+    # into their project never hosts it — the showcase demo layer and the event
+    # brands (each in its own self-contained folder).
+    #
+    # Only self-booting files may be overridden. nds-loader.js derives the asset
+    # dir from nds-main.min.js's own src and fetches every injected bundle as a
+    # SIBLING, so anything in @bundles must stay in @output_dir or it 404s at
+    # runtime. Safe here: showcase and the event packs are plain <script> tags
+    # (showcase from the layouts, event packs injected by nds-theme.js from the
+    # full path in _data/themes.yml), none of them loader-managed.
     @output_overrides = {
-      'nds-theme-foundation-day.js' => 'assets/events/foundation_day',
-      'nds-theme-hajj.js' => 'assets/events/Hajj',
+      'nds-showcase.js' => 'docs-assets/js',
+      'nds-theme-foundation-day.js' => 'docs-assets/events/foundation_day',
+      'nds-theme-hajj.js' => 'docs-assets/events/Hajj',
     }
     @bundles = {
       # Critical bundle — loaded via <script defer>. Carries core, the loader,

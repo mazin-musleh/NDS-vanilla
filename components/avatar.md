@@ -275,7 +275,7 @@ last_edit: "02/07/2026 - 10:40 PM"
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-avatar nds-lg">
-                                <img src="{{ 'assets/img/avatar1.webp' | relative_url }}" alt="User Avatar">
+                                <img src="{{ 'docs-assets/img/avatar1.webp' | relative_url }}" alt="User Avatar">
                             </div>
                         </div>
                     </div>
@@ -607,19 +607,19 @@ last_edit: "02/07/2026 - 10:40 PM"
                         <div class="state-demo">
                             <div class="nds-avatar-group nds-stacked nds-md">
                                 <div class="nds-avatar">
-                                    <img src="{{ 'assets/img/avatar1.webp' | relative_url }}" alt="User 1">
+                                    <img src="{{ 'docs-assets/img/avatar1.webp' | relative_url }}" alt="User 1">
                                 </div>
                                 <div class="nds-avatar">
-                                    <img src="{{ 'assets/img/avatar2.webp' | relative_url }}" alt="User 2">
+                                    <img src="{{ 'docs-assets/img/avatar2.webp' | relative_url }}" alt="User 2">
                                 </div>
                                 <div class="nds-avatar">
-                                    <img src="{{ 'assets/img/avatar3.webp' | relative_url }}" alt="User 3">
+                                    <img src="{{ 'docs-assets/img/avatar3.webp' | relative_url }}" alt="User 3">
                                 </div>
                                 <div class="nds-avatar">
-                                    <img src="{{ 'assets/img/avatar4.webp' | relative_url }}" alt="User 4">
+                                    <img src="{{ 'docs-assets/img/avatar4.webp' | relative_url }}" alt="User 4">
                                 </div>
                                 <div class="nds-avatar">
-                                    <img src="{{ 'assets/img/avatar5.webp' | relative_url }}" alt="User 5">
+                                    <img src="{{ 'docs-assets/img/avatar5.webp' | relative_url }}" alt="User 5">
                                 </div>
                                 <div class="nds-avatar nds-lg">
                                     <span class="nds-label">+99</span>

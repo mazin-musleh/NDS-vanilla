@@ -32,7 +32,7 @@
     var SWIPER_SEL = '.nds-hero-section .nds-swiper.nds-hero';
     var SLIDE_CLASS = 'nds-foundingDay';
 
-    // This script ships beside its assets (…/assets/events/foundation_day/), so its
+    // This script ships beside its assets (…/docs-assets/events/foundation_day/), so its
     // own folder is the asset base. Captured at load — currentScript is null inside
     // the later hook calls.
     var SCRIPT = document.currentScript ||

@@ -17,7 +17,7 @@ last_edit: "14/07/2026 - 04:13 PM"
         <div class="nds-section-body">
             <div class="nds-toolbar">
                 <div class="nds-form-container nds-search-box nds-demo-showcase" data-filter-target="services_list_content"
-                    data-url="{{ '/assets/data/services-autocomplete.json' | relative_url }}" data-name="Title"
+                    data-url="{{ '/docs-assets/data/services-autocomplete.json' | relative_url }}" data-name="Title"
                     data-query-param="q">
                     <div class="nds-search-content">
                         <div class="nds-form-control">

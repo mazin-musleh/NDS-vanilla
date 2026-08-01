@@ -60,6 +60,7 @@ last_edit: "18/07/2026 - 03:05 AM"
   &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-icons.min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
   &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/hgi-rounded-stroke-min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
 
+  &lt;!-- Placeholder icon — replace with your own. --&gt;
   &lt;link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg"&gt;
 
   &lt;!-- Inline scripts — theme guard (no light-to-dark flip) + loadDeferredAssets. Copy from the JavaScript tab. --&gt;

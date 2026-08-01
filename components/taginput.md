@@ -255,7 +255,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-form-container nds-taginput" data-taginput-name="services"
-                                data-url="{{ '/assets/data/services-autocomplete.json' | relative_url }}"
+                                data-url="{{ '/docs-assets/data/services-autocomplete.json' | relative_url }}"
                                 data-fetch="once" data-min-chars="2">
                                 <div class="nds-form-header">
                                     <label for="taginput-assist-input"><span class="nds-label">Services</span></label>
@@ -335,7 +335,7 @@ direction: ltr
                     <div class="demo-container">
                         <div class="state-demo">
                             <div class="nds-form-container nds-taginput" data-taginput-name="assignees"
-                                data-url="{{ '/assets/data/users-autocomplete.json' | relative_url }}"
+                                data-url="{{ '/docs-assets/data/users-autocomplete.json' | relative_url }}"
                                 data-name="Name" data-fetch="once" data-min-chars="2" data-strict
                                 data-empty-message="No matching people">
                                 <div class="nds-form-header">

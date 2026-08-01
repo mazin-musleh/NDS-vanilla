@@ -20,7 +20,7 @@
     <script defer src="{{ 'assets/js/nds-accessibility.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
     {%- endunless %}
     {%- unless page.exclude_showcase == true %}
-    <script defer src="{{ 'assets/js/nds-showcase.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
+    <script defer src="{{ 'docs-assets/js/nds-showcase.min.js' | relative_url }}?ver={{ site.asset_ver }}"></script>
     {%- endunless %}
     {%- if page.custom_js %}
     {%- for js_file in page.custom_js %}
