@@ -2,7 +2,7 @@
 layout: default
 ---
 {% include hero.html hero_type="sub" %}
-<div class="nds-content-layout {%- if page.sidemenu_mode != false %} nds-wSideMenu{%- endif %} {{ page.layout_class }}">
+<div class="nds-content-layout{%- if page.sidemenu_mode != false %} nds-wSideMenu{%- endif %}{%- if page.layout_class and page.layout_class != '' %} {{ page.layout_class }}{%- endif %}">
     {%- if page.sidemenu_mode != false %}
     {% include sidemenu.html %}
     {%- endif %}

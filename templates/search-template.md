@@ -7,7 +7,6 @@ breadcrumb:
 - ["DGA Templates", "/templates"]
 hero_title: "Search Results"
 hero_description: "Find services matching your query"
-layout_class:
 sidemenu_mode: false
 exclude_showcase: false
 ---

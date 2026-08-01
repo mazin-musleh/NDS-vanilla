@@ -7,7 +7,6 @@ breadcrumb:
 - ["Examples", "/examples"]
 hero_title: "Government Services"
 hero_description: "Browse all available government digital services"
-layout_class:
 sidemenu_mode: false
 exclude_showcase: false
 last_edit: "14/07/2026 - 04:13 PM"
