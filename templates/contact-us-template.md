@@ -488,7 +488,17 @@ sidemenu_mode: false
                         duration: 3000
                     });
                 }
-                form.reset();
+                // Not form.reset(): nothing in NDS listens for the native reset
+                // event, so it changes values behind the validation chrome's back.
+                // Clear per field and sync each through the Forms API instead.
+                Array.prototype.forEach.call(form.elements, function (el) {
+                    if (el.type === 'button' || el.type === 'submit') return;
+                    if (el.type === 'checkbox' || el.type === 'radio') el.checked = el.defaultChecked;
+                    else if (el.tagName === 'SELECT') el.selectedIndex = 0;
+                    else el.value = '';
+                    NDS.Forms.syncState(el);
+                    NDS.Forms.clearStatus(el);
+                });
             });
         }
 

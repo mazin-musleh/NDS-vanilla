@@ -277,6 +277,11 @@
     // what to render in its absence.
     function _destroyPaginationNav(nav) {
         if (!nav) return;
+        // Already torn down (explicit destroy() before the removal sweep) or
+        // never initialized — nothing to release.
+        if (!nav.ndsPagination
+            && !nav.hasAttribute('data-nds-pagination-initialized')
+            && !nav.hasAttribute('data-nds-auto-pagination-initialized')) return;
 
         if (nav._ndsClickAC) {
             nav._ndsClickAC.abort();
@@ -286,8 +291,10 @@
         // Auto path: the .nds-paged-content removal sweep also releases this,
         // but destroy() may run while the content is still in the DOM (consumer
         // tearing down a region without removing it). Releasing here avoids a
-        // resize callback firing into a torn-down nav.
-        const content = contentForNav(nav);
+        // resize callback firing into a torn-down nav. Quiet resolve: on the
+        // removal-sweep path the content may already be detached with the nav,
+        // and that miss is teardown, not misconfiguration.
+        const content = contentForNav(nav, true);
         if (content && content._offResize) {
             content._offResize();
             delete content._offResize;
@@ -518,12 +525,12 @@
     // The .nds-paged-content a nav controls. Explicit binding wins:
     // data-auto-pagination="gridId" (the content's id). With no value, falls back
     // to the legacy adjacency contract — the nav's immediately-preceding sibling.
-    function contentForNav(paginationNav) {
+    function contentForNav(paginationNav, quiet) {
         const ref = paginationNav.getAttribute('data-auto-pagination');
         if (ref) {
             const el = NDS.resolveEl(ref);
             if (el && el.classList.contains('nds-paged-content')) return el;
-            console.warn(`NDS Pagination: data-auto-pagination="${ref}" matched no .nds-paged-content element.`, paginationNav);
+            if (!quiet) console.warn(`NDS Pagination: data-auto-pagination="${ref}" matched no .nds-paged-content element.`, paginationNav);
             return null;
         }
         const sibling = paginationNav.previousElementSibling;

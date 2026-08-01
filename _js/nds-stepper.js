@@ -412,7 +412,10 @@
 
     NDS.Stepper = {
         init,
-        reinit:      _initInstances,
+        // init is idempotent end to end (stamp loop, _wireGlobals guard, and
+        // _initInstances all self-skip), and an injected stepper needs the stamp
+        // and the delegated [data-stepper-control] listener, not just an instance.
+        reinit:      init,
         create,
         get,
         getFallback,

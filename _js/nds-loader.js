@@ -615,7 +615,15 @@
                     if (real && !real.__ndsStub && typeof real[prop] === 'function') {
                         return real[prop](...args);
                     }
-                    console.warn(`[NDS] ${ns}.${String(prop)}() unavailable — bundle '${bundle}' missing`);
+                    // Two distinct failures: the bundle landed but the namespace has
+                    // no such method (caller error — name the real surface), vs the
+                    // bundle never arrived. The old single message blamed the bundle
+                    // for both, sending consumers down the wrong path.
+                    if (real && !real.__ndsStub) {
+                        console.warn(`[NDS] ${ns}.${String(prop)} is not a method of NDS.${ns} — its surface: ${Object.keys(real).join(', ')}`);
+                    } else {
+                        console.warn(`[NDS] ${ns}.${String(prop)}() unavailable — bundle '${bundle}' missing`);
+                    }
                 });
             },
         });
@@ -781,6 +789,51 @@
         }
 
         initCriticalBatch();
+        scheduleDebugAudits();
+    }
+
+    // ── Debug-build audits (CONFIG.enableLogging only) ─────────────────────
+    // Two silent-failure classes nothing else reports: an unregistered inline
+    // icon paints a solid box (no CSS rule → computed mask-image 'none'), and
+    // a promise-grammar container no component claimed stays skeleton-held
+    // forever. Console-only; production builds never schedule this.
+    // Runs 3s after the deferred icons CSS lands so injected bundles have
+    // initialized and mask rules are computable.
+    function runDebugAudits() {
+        document.querySelectorAll('[data-filter-items]:not([data-nds-filter-initialized])').forEach(el => {
+            if (el.closest('code, .code-example')) return;
+            console.warn('[NDS] audit: data-filter-items container never claimed by a filter — it stays skeleton-held. Remove the attribute or add the filter UI.', el);
+        });
+        document.querySelectorAll('.nds-paged-content:not([data-paged-initialized])').forEach(el => {
+            if (el.closest('code, .code-example')) return;
+            console.warn('[NDS] audit: .nds-paged-content has no pagination nav — it stays skeleton-held and its data-paged-* slots never stamp. Unpaged lists use a plain container + data-filter-count.', el);
+        });
+        document.querySelectorAll('.nds-icon[class*="nds-hgi-"]').forEach(el => {
+            if (el.closest('code, .code-example')) return;
+            // The glyph paints on ::before (mask: var(--nds-icon) …), so read the
+            // pseudo — the element itself never carries a mask.
+            const cs = getComputedStyle(el, '::before');
+            const masked = (cs.maskImage && cs.maskImage !== 'none')
+                || (cs.webkitMaskImage && cs.webkitMaskImage !== 'none');
+            if (!masked) {
+                const cls = [...el.classList].find(c => c.startsWith('nds-hgi-'));
+                console.warn(`[NDS] audit: inline icon "${cls}" is not in the registered set and paints as a solid box. Use the HGI font class: <i class="hgi hgi-stroke ${cls.replace('nds-', '')}">`, el);
+            }
+        });
+    }
+
+    function scheduleDebugAudits() {
+        if (!CONFIG.enableLogging) return;
+        // Icons CSS is loader-deferred; poll for its stamp (capped) rather than
+        // holding an observer open. Debug builds only, so the poll is free.
+        let tries = 0;
+        const timer = setInterval(() => {
+            const iconsReady = document.documentElement.hasAttribute('data-nds-icons-loaded');
+            if (iconsReady || ++tries > 20) {
+                clearInterval(timer);
+                setTimeout(runDebugAudits, 3000);
+            }
+        }, 500);
     }
 
     // Configuration options
@@ -818,6 +871,11 @@
         initialize: initializeNDS,
         components: COMPONENTS,
         config: CONFIG,
+        // On-demand run of the debug audits (unregistered inline icons,
+        // unclaimed filter/paged containers) — callable from any console or
+        // test harness regardless of the enableLogging flag, which only
+        // controls the automatic post-init sweep.
+        audit: runDebugAudits,
     };
 
     // Initialize when ready (if enabled). main runs as a defer script, so when
