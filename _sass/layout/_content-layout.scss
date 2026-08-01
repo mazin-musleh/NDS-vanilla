@@ -64,16 +64,20 @@ main {
         }
     }
 
-    /* ── Edge-to-edge ── */
+    /* ── Edge-to-edge ──
+       body.nds-full-width (_reset.scss) is the single switch: it sets
+       --nds-content-MaxWidth: 100% page-wide, which widens the chrome. These
+       rules take the layout's own gutters off to match, so the content area
+       goes edge-to-edge from the same class — no per-layout modifier. */
 
-    &.nds-toEdge {
-        --nds-content-MaxWidth: 100%;
-        --layout-gap: 0;
+    // cardView is exempt: its gutters and card gaps ARE the presentation, so
+    // full-width widens the page around it without flattening the cards.
+    body.nds-full-width &:not(.nds-cardView) {
         padding: 0;
-        height: 100%;
 
-        // keep: defaults are already 0, but modes are combinable (standard-page.md)
-        // and cardView sets these knobs — the reset defends toEdge+cardView combos.
+        // The knobs sit on .nds-main-content, so they beat cardView's
+        // root-level values by inheritance proximity — hence the exemption
+        // has to repeat here, not just on the padding above.
         &:is(.nds-wSideMenu, .nds-wSideInfo) .nds-main-content {
             --main-padding-block: 0;
             --main-padding-inline: 0;
@@ -196,9 +200,17 @@ main {
     }
 
     @include desktop(min) {
-        &.nds-wSideMenu:not(.nds-toEdge) {
+        &.nds-wSideMenu {
             margin-inline: auto;
             padding-inline: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-MaxWidth)) / 2));
+        }
+
+        // Edge-to-edge wins over the centring gutter above — higher specificity
+        // (0,3,1), so it holds regardless of source order. cardView keeps its
+        // own gutter, same exemption as the padding reset.
+        body.nds-full-width &.nds-wSideMenu:not(.nds-cardView) {
+            margin-inline: 0;
+            padding-inline: 0;
         }
     }
 

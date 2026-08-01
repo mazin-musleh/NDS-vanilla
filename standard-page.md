@@ -31,7 +31,7 @@ breadcrumb: [["Components", "/components"]]     # or mix linked + label: [["Pare
 
 # === Layout & Body ===
 # body_class: fullWidth
-# layout_class: nds-cardView  # nds-cardView | nds-middle | nds-toEdge (combinable)
+# layout_class: nds-cardView  # nds-cardView | nds-middle (combinable)
 
 # === Custom Assets ===
 # custom_css:
