@@ -7,7 +7,7 @@
  * table rows) until init stamps data-paged-initialized — so init landing
  * post-reveal inserts the list without shifting content. The state init sets:
  *   - HTML builders + the manual-collapse path (NDSPagination →
- *     reconcileCollapse): 5+ pages collapse to
+ *     reconcileCollapse): more than 5 pages collapse to
  *     [Prev] 1 2 3 [ellipsis] N [Next] so author-written full lists never
  *     paint then collapse (horizontal CLS).
  *   - Auto-pagination initial paint (setupAutoContainer → updateAutoPagination):
@@ -32,9 +32,9 @@
  *   - Shared NDS.onDOMRemove('.nds-pagination') sweep aborts the click AC
  *     and releases _offResize for navs torn down without an explicit destroy.
  *   - NDS.Pagination.destroy(nav) — explicit teardown for SPA consumers
+ *     (aborts the click AC, releases _offResize, clears the init stamps)
  *   - NDS.Pagination.updateRecords(listOrId, {from, to, count}) — stamp the
  *     records slots ("x of y") from server/manual pagination
- *     (aborts the click AC, releases _offResize, clears the init stamps).
  *
  * Display pattern: [Prev] 1 2 3 ... [Last] [Next]
  * - Always shows first 3 pages and last page
@@ -87,6 +87,22 @@
             el.parentElement === content && !el.classList.contains('nds-sub'));
     }
 
+    // THE page controls a nav owns. The ellipsis exclusion is load-bearing, not
+    // cosmetic: the trigger sits in an .nds-pagination-item too, and when it
+    // holds the active page its label IS a page number — without the exclusion
+    // a trigger click resolves to a page change (scroll jump + a no-op
+    // :change event). Today only Dropmenu's stopPropagation hides that, which
+    // the documented soft-dependency path (wireGeneratedPagination) doesn't get.
+    const _PAGE_ITEM_SEL = '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis)';
+    const _PAGE_CTRL_SEL = `${_PAGE_ITEM_SEL} button, ${_PAGE_ITEM_SEL} a`;
+
+    // The list element inside a nav, tolerating a bare .nds-pagination-list used
+    // as the root. Every path that stamps state or reads controls resolves the
+    // list through here, so the standalone-root contract lives in one place.
+    function _listOf(el) {
+        return el.querySelector('.nds-pagination-list') || el;
+    }
+
     // Page number from a clickable page element: prefer the `.nds-label`
     // text, fall back to the element's own text (prev/next, bare anchors).
     function pageNumberOf(el) {
@@ -103,7 +119,7 @@
     class NDSPagination {
         constructor(paginationNav) {
             this.paginationNav = paginationNav;
-            const list = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
+            const list = _listOf(paginationNav);
 
             // Silently skip empty pagination (likely auto-pagination that will be populated)
             if (!list.querySelector('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next)')) return;
@@ -145,7 +161,7 @@
             seen.add(num);
             model.push({ num, el, active: el.ariaCurrent === 'page' || NDS.State.has(el, 'active') });
         };
-        list.querySelectorAll('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next):not(.nds-pagination-ellipsis) a').forEach(push);
+        list.querySelectorAll(_PAGE_CTRL_SEL).forEach(push);
         getPaginationDropmenuItems(list).forEach(push);
         return model.sort((a, b) => a.num - b.num);
     }
@@ -398,10 +414,7 @@
     // All clickable page elements (in-list buttons + dropmenu items).
     // Excludes prev/next.
     function getAllPageElements(pagination) {
-        const inList = Array.from(pagination.querySelectorAll(
-            '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, ' +
-            '.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a'
-        ));
+        const inList = Array.from(pagination.querySelectorAll(_PAGE_CTRL_SEL));
         return [...inList, ...getPaginationDropmenuItems(pagination)];
     }
 
@@ -480,7 +493,7 @@
 
     // Initialize prev/next button states based on active page
     function initializePaginationStates(paginationNav) {
-        const pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
+        const pagination = _listOf(paginationNav);
 
         const allPageElements = getAllPageElements(pagination);
         if (allPageElements.length === 0) return;
@@ -878,7 +891,7 @@
     function _restoreUrlPage(nav) {
         const urlPage = _readPageParam(nav);
         if (!urlPage) return;
-        const pagination = nav.querySelector('.nds-pagination-list') || nav;
+        const pagination = _listOf(nav);
         const total = parseInt(nav.dataset.totalPages);
         const page = total > 0 ? Math.min(urlPage, total) : urlPage;
         if (!_pageExists(pagination, page)) return;
@@ -941,7 +954,7 @@
     // Runs synchronously inside the opened event — same task as open(), pre-paint.
     function _openLazyMenu(wrapper, scroll) {
         const nav = wrapper.closest('.nds-pagination');
-        const list = nav ? (nav.querySelector('.nds-pagination-list') || nav) : null;
+        const list = nav ? _listOf(nav) : null;
         const { from, to } = scroll._ndsRange;
         const active = list ? getCurrentPage(list) : from;
 
@@ -1236,7 +1249,7 @@
         if (newPagination._ndsAutoClickWired) return;
         newPagination._ndsAutoClickWired = true;
         newPagination.addEventListener('click', (e) => {
-            const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a, .nds-dropmenu-item');
+            const pageElement = e.target.closest(`${_PAGE_CTRL_SEL}, .nds-dropmenu-item`);
 
             if (pageElement) {
                 if (pageElement.tagName.toLowerCase() === 'a') e.preventDefault();
@@ -1457,9 +1470,9 @@
             // .nds-pagination-list. Reused below for getAllPageElements + the
             // apply step (which call setActivePage / updatePrevNextStates against
             // the list element).
-            const pagination = paginationNav.querySelector('.nds-pagination-list') || paginationNav;
+            const pagination = _listOf(paginationNav);
 
-            const pageElement = e.target.closest('.nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) button, .nds-pagination-item:not(.nds-pagination-prev):not(.nds-pagination-next) a');
+            const pageElement = e.target.closest(_PAGE_CTRL_SEL);
             const dropdownItem = e.target.closest('.nds-pagination-list .nds-dropmenu-item');
             const prevElement = e.target.closest('.nds-pagination-prev button, .nds-pagination-prev a');
             const nextElement = e.target.closest('.nds-pagination-next button, .nds-pagination-next a');
@@ -1539,7 +1552,7 @@
         refresh: refreshAutoPagination,
         destroy: _destroyPaginationNav,
         setPage: function(container, pageNumber) {
-            const pagination = container.querySelector('.nds-pagination-list') || container;
+            const pagination = _listOf(container);
             const { min, max } = pageBounds(getAllPageElements(pagination));
             if (!Number.isFinite(min)) return;
             setActivePage(pagination, pageNumber);
@@ -1550,7 +1563,7 @@
         // Manual scroll for consumers driving their own page changes. Ignores
         // data-pagination-no-scroll — the explicit call is the intent.
         scrollToContent: function(container) {
-            scrollToContent(container.querySelector('.nds-pagination-list') || container);
+            scrollToContent(_listOf(container));
         },
         // Server/manual pagination hook: push your own numbers through the same
         // [data-paged-target] slot grammar the auto path stamps.
