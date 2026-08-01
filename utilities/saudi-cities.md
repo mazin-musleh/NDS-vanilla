@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.2.0"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "01/08/2026 - 11:45 PM"
 ---
 
 <!-- Overview -->
@@ -16,7 +16,8 @@ last_edit: "28/06/2026 - 01:27 PM"
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
-      <p class="nds-section-description">A static JSON file at <code class="nds-inline-code lang-html">/docs-assets/data/saudi-cities.json</code> that any page can fetch. Designed as a drop-in source for the autocomplete component, but plain enough to feed into selects, maps, filters, or any other lookup UI.</p>
+      <p class="nds-section-description">A static JSON file that any page can fetch. Designed as a drop-in source for the autocomplete component, but plain enough to feed into selects, maps, filters, or any other lookup UI.</p>
+      <p class="nds-section-description">It ships at <code class="nds-inline-code lang-html">docs-assets/data/saudi-cities.json</code>, outside the runtime assets a project copies wholesale — so copy the file into your own assets folder and serve it from there. The examples below assume <code class="nds-inline-code lang-html">/assets/data/saudi-cities.json</code>.</p>
     </div>
     <div class="nds-section-body">
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
@@ -132,7 +133,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                   <div class="nds-expandable-content">
                     <code class="lang-html code">
 &lt;div class="nds-form-container"
-  data-url="/docs-assets/data/saudi-cities.json"
+  data-url="/assets/data/saudi-cities.json"
   data-name="Name" data-fetch="once" data-min-chars="1"&gt;
   &lt;div class="nds-form-header"&gt;
     &lt;label for="city"&gt;&lt;span class="nds-label"&gt;City&lt;/span&gt;&lt;/label&gt;
@@ -283,7 +284,7 @@ NDS.Autocomplete.create(el, {
                   </div>
                   <div class="nds-expandable-content">
                     <code class="lang-js code">
-const cities = await fetch('/docs-assets/data/saudi-cities.json').then(r =&gt; r.json());
+const cities = await fetch('/assets/data/saudi-cities.json').then(r =&gt; r.json());
 
 // Group by region
 const byRegion = cities.reduce((map, city) =&gt; {
