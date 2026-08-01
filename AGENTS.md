@@ -135,13 +135,13 @@ Every component/utility/layout doc page in `components/`, `layout/`, `utilities/
 
 ```yaml
 since: "1.0.0"                                    # version the doc first shipped (never changes)
-updated: "1.4.0"                                  # version of the most recent component change (source or doc)
+updated: "1.4.0"                                  # version of the most recent COMPONENT change (source/markup/API; not doc-only edits)
 last_edit: "15/07/2026 - 02:35 PM"  # timestamp of the most recent doc content edit (GMT+3)
 ```
 
 **When to update:**
 - `since` — set once at creation, never touched again.
-- `updated` — bump on ANY change to the component, source (SCSS/JS) or doc — not just public-API/markup/feature refactors. Value = current `version` in `_config.yml` (strip `-dev`).
+- `updated` — bump when the COMPONENT changes: its source (SCSS/JS), markup, or public API. A doc-only edit does NOT bump it (rewording, a new demo card, a corrected path in a sample); that moves `last_edit` alone. Value = current `version` in `_config.yml` (strip `-dev`).
 - `last_edit` — refresh ONLY when the doc's content changes (typo fix, new demo card, table row, wording tweak). A source fix that visibly changes what the doc page RENDERS (e.g. a demo now displaying correctly) counts as a content change — bump it. A version-tag-only bump (`updated`/`since`) does NOT — leave `last_edit` untouched, no sync needed. Format: `DD/MM/YYYY - HH:MM AM/PM` in GMT+3 (Asia/Riyadh). The environment's `date` command is unreliable for this — ask the user for the current time if unsure, or use `date -u '+%d/%m/%Y'` for the date and manually add 3 hours to the UTC time.
 
 **Reference implementation:** `components/multiselect.md`, `components/date-picker.md`.
