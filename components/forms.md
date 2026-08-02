@@ -5,8 +5,8 @@ hero_title: Text Fields - National Design System
 hero_description: Text, number, search, email, password, textarea, and select inputs with validation, status feedback, and interactive controls
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "29/07/2026 - 02:47 AM"
+updated: "1.6.x"
+last_edit: "03/08/2026 - 01:50 AM"
 lang: en
 direction: ltr
 ---
@@ -2323,6 +2323,16 @@ NDS.Forms.setIndeterminate(checkboxElement, true);
 // Set disabled or required state programmatically
 NDS.Forms.setState(el, 'disabled', true);
 NDS.Forms.setState(el, 'required', true);
+
+// ── Custom Select: programmatic value ───────────────
+// The same write sequence as a user pick: display label, hidden
+// .nds-select-value, selected markers, input/change events (field sync),
+// and the selectChange dispatch. Pass the .nds-form-control or the
+// .nds-select-input. setValue returns false when no option carries the
+// value — display and submit value are never desynced. Works before the
+// dropdown is first built and while its menu is open.
+NDS.CustomSelect.setValue(formControl, 'option1');
+NDS.CustomSelect.clear(formControl);
 
 // ── Form Validation ─────────────────────────────────
 // Validate entire form (returns { valid, invalidFields, errors })
