@@ -78,6 +78,13 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
     }
   }
 
+  // Match the prose-block background so a collapsed expandable's fade blends
+  // into the code surface instead of the page. Prose only — non-prose blocks
+  // paint the gutter gradient on `code` itself, so no wrapper bg is needed.
+  &:has(code:is(#{$prose-langs})) .nds-expandable-content {
+    background: var(--code-bg, var(--background-stripe));
+  }
+
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
     font-size: var(--typo-text-sm-FS);
@@ -133,7 +140,7 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
       // No gutter: a wrapped line spans several visual rows, so one digit beside
       // four rows misreads. Markdown blocks are copied whole, never cited by line.
       padding-inline: var(--spacing-2xl);
-      background: none;
+      background: var(--code-bg, var(--background-stripe));
 
       .nds-code-line::before {
         content: none;
