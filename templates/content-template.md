@@ -16,7 +16,7 @@ sidemenu_mode: false
 <section id="contentTemplate" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
-            <nav class="nds-toc" aria-label="Table of contents"
+            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 11"
                 data-toc-source="#contentTemplate article" data-toc-levels="h2, h3, h4">
                 <div class="nds-toc-head">
                     <span class="nds-label">On this page</span>

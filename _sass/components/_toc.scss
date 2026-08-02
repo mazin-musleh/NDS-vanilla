@@ -31,6 +31,28 @@
     margin: 0;
 }
 
+/* ── Loading / skeleton state ──
+   The tables/tabs/accordion contract: item labels bar out when the consumer
+   marks the TOC loading (.nds-loading / data-state="loading") and as the
+   default pre-init state (authored lists sit behind the critical-component
+   safeguard until the reveal, so that arm only shows if a list is revealed
+   early). */
+:is(.nds-toc:is(.nds-loading, [data-state='loading']),
+    .nds-toc:not([data-nds-toc-initialized])) .nds-drawer-list .nds-btn .nds-label {
+    @include skeleton-bar;
+}
+
+/* An auto-populate list is EMPTY until the JS critical pass fills it, and
+   that pass can land after main CSS reveals the content layout: on a
+   stacked (mobile) sideinfo the fill pushes the article down (CLS). Until
+   the init stamp lands, reserve the expected height — no shimmer; the crit
+   safeguard (_skeleton.scss) holds the region hidden meanwhile.
+   --toc-skeleton-rows: expected link count (36px ≈ one drawer row) — set
+   it to the page's real count for a shift-free load. */
+.nds-toc[data-toc-source]:not([data-nds-toc-initialized]) .nds-drawer-list {
+    min-height: calc(var(--toc-skeleton-rows, 6) * 36px);
+}
+
 /* Drawer tuned for TOC use */
 .nds-toc .nds-drawer {
     --drawer-indicator-width: 3px;

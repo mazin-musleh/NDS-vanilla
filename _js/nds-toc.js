@@ -22,7 +22,12 @@
                 })
                 .filter(Boolean);
 
-            if (!this.entries.length) return;
+            // Stamp even with no entries — the pre-init skeleton (_toc.scss)
+            // keys on the stamp and must release either way.
+            if (!this.entries.length) {
+                toc.setAttribute('data-nds-toc-initialized', 'true');
+                return;
+            }
 
             this.active = null;
             this.valid = true;

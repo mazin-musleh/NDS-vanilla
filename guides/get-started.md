@@ -20,7 +20,7 @@ sidemenu_mode: false
 <section id="getStartedGuide" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
-            <nav class="nds-toc" aria-label="Table of contents"
+            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 13"
                 data-toc-source="#getStartedGuide article" data-toc-levels="h2, h3">
                 <div class="nds-toc-head">
                     <span class="nds-label">On this page</span>

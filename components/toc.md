@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.6.x"
+last_edit: "02/08/2026 - 11:19 PM"
 ---
 
 <!-- Auto-Populated TOC -->
@@ -23,11 +23,17 @@ last_edit: "28/06/2026 - 01:27 PM"
                 <div class="nds-demo-card">
                     <div class="demo-header">
                         <div class="demo-label">Built from <code class="nds-inline-code lang-html">#tocSampleArticle</code> h2/h3/h4 headings</div>
+                        <div class="demo-action">
+                            <button class="nds-btn nds-subtle demo-toggle-btn"
+                                data-toggler='["nds-loading", ".nds-toc", "loadingState"]'>
+                                <span class="nds-label">Loading</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="display: flex; gap: var(--spacing-xl); align-items: flex-start; width: 100%;">
                             <nav class="nds-toc" aria-label="Table of contents"
-                                data-toc-source="#tocSampleArticle" style="width: 240px; flex-shrink: 0;">
+                                data-toc-source="#tocSampleArticle" style="width: 240px; flex-shrink: 0; --toc-skeleton-rows: 8;">
                                 <div class="nds-toc-head">
                                     <span class="nds-label">On this page</span>
                                     <h2 class="nds-toc-title nds-truncate">Page Title</h2>
@@ -78,7 +84,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                                     </div>
                                     <code class="lang-html code">
 &lt;nav class="nds-toc" aria-label="Table of contents"
-  data-toc-source="#articleRoot"&gt;
+  data-toc-source="#articleRoot" style="--toc-skeleton-rows: 8"&gt;
   &lt;div class="nds-toc-head"&gt;
     &lt;span class="nds-label"&gt;On this page&lt;/span&gt;
     &lt;h2 class="nds-toc-title nds-truncate"&gt;Page Title&lt;/h2&gt;
@@ -330,6 +336,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <li>Set <code class="nds-inline-code lang-html">data-toc-levels="h2,h3"</code> to skip h4s if the article uses them for inline emphasis rather than real sub-sections</li>
                     <li>Give every heading a stable, human-readable <code class="nds-inline-code lang-html">id</code>. The auto-slugifier is a fallback, not a substitute for author-chosen anchors</li>
                     <li>Author labels should match the heading text. Invent TOC-only names only when the heading is verbose and the rail cannot truncate cleanly</li>
+                    <li>Set <code class="nds-inline-code lang-css">--toc-skeleton-rows</code> on <code class="nds-inline-code lang-html">.nds-toc</code> to the page's link count — the still-empty list then reserves the exact height, so content below the TOC (the whole article on stacked mobile layouts) does not shift when the list fills in</li>
                 </ul>
             </div>
 
@@ -340,7 +347,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                     <tbody>
                         <tr><td><code class="nds-inline-code lang-html">data-toc-source</code></td><td>CSS selector for the container whose headings should populate the list. Omit for manual markup.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">data-toc-levels</code></td><td>Comma-separated heading tags to include (default: <code class="nds-inline-code lang-html">h2,h3,h4</code>). Use <code class="nds-inline-code lang-html">h2</code> for a flat TOC or <code class="nds-inline-code lang-html">h2,h3,h4,h5</code> for deeper docs.</td></tr>
-                        <tr><td><code class="nds-inline-code lang-html">data-nds-toc-initialized</code></td><td>Stamped <code class="nds-inline-code lang-html">true</code> by <code class="nds-inline-code lang-js">init()</code> after a TOC instance is created. Checked by <code class="nds-inline-code lang-js">reinit()</code> to prevent double-initialization. Removed by <code class="nds-inline-code lang-js">destroy()</code>.</td></tr>
+                        <tr><td><code class="nds-inline-code lang-html">data-nds-toc-initialized</code></td><td>Stamped <code class="nds-inline-code lang-html">true</code> after a TOC instance is created — also when the source yields no headings, so the height reservation always releases. Checked by <code class="nds-inline-code lang-js">reinit()</code> to prevent double-initialization. Removed by <code class="nds-inline-code lang-js">destroy()</code>.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -360,11 +367,17 @@ last_edit: "28/06/2026 - 01:27 PM"
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
                     <tbody>
+                        <tr><td><code class="nds-inline-code lang-html">--toc-skeleton-rows</code></td><td><code class="nds-inline-code lang-html">6</code></td><td>Expected link count for an auto-populated TOC. Until JS fills the list, the empty list reserves <code class="nds-inline-code lang-html">rows × 36px</code> so the content below does not shift when the list lands. Set it on <code class="nds-inline-code lang-html">.nds-toc</code> to the page's real link count for a shift-free load.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--drawer-lined-block</code></td><td><code class="nds-inline-code lang-html">0px</code></td><td>Block-axis inset of the lined rail on the drawer. Set to <code class="nds-inline-code lang-html">0px</code> by <code class="nds-inline-code lang-html">.nds-toc</code> so the rail extends flush to the top and bottom of each nested list.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--drawer-lined-width</code></td><td><code class="nds-inline-code lang-html">2px</code></td><td>Thickness of the lined rail. Set to <code class="nds-inline-code lang-html">2px</code> by <code class="nds-inline-code lang-html">.nds-toc</code> for a slimmer rail than the drawer default.</td></tr>
                         <tr><td><code class="nds-inline-code lang-html">--drawer-indicator-width</code></td><td><code class="nds-inline-code lang-html">3px</code></td><td>Width of the active-item side indicator. Set to <code class="nds-inline-code lang-html">3px</code> on <code class="nds-inline-code lang-html">.nds-toc .nds-drawer</code> for a bolder highlight than the base drawer default.</td></tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Loading and Skeleton State</h3>
+                <p>When explicitly set to loading (<code class="nds-inline-code lang-html">nds-loading</code> class or <code class="nds-inline-code lang-html">data-state="loading"</code>), item labels animate as skeleton bars — the same contract as tables, tabs, and accordion. Before JS initializes an auto-populated TOC, the still-empty list reserves its expected height, sized by <code class="nds-inline-code lang-css">--toc-skeleton-rows</code>, so the content below it does not shift when the list fills in.</p>
             </div>
 
             <div class="nds-block">
