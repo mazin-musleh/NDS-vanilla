@@ -4,29 +4,15 @@
 #   Color a status tag via the object form: { name: "Beta", style: "nds-yellow" }
 # Tags (kind):   Add-on (optional bundle, gated by a site.* flag)
 
-# Foundations
-- title: "Themes"
-  description: "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet theme"
-  icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
-  category: "Foundations"
-  tags: ["CSS", "JS"]
-  url: "/components/themes.html"
+- title: "Accessibility"
+  description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
+  icon: '<i class="hgi hgi-stroke hgi-accessibility"></i>'
+  category: "Add-ons"
+  tags: ["JS", "CSS", "Add-on"]
+  url: "/components/accessibility.html"
+  js: _js/nds-accessibility.js
+  scss: _sass/components/_accessibility.scss
 
-- title: "Tokens"
-  description: "Every CSS custom property in the system: palette, primitive scales, semantic meanings, and component dials to reference and override"
-  icon: '<i class="hgi hgi-stroke hgi-cube"></i>'
-  category: "Foundations"
-  tags: ["CSS"]
-  url: "/components/tokens.html"
-
-- title: "Icons"
-  description: "The HugeIcons Stroke Rounded font for content plus a curated inline SVG set for components and chrome, with sizing, color, and license guidance"
-  icon: '<i class="hgi hgi-stroke hgi-svg-01"></i>'
-  category: "Foundations"
-  tags: ["CSS"]
-  url: "/components/icons.html"
-
-# UI Components
 - title: "Accordion"
   description: "Expandable content panels with nested group support"
   icon: '<i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>'
@@ -45,6 +31,15 @@
   js: _js/nds-alert.js
   scss: _sass/components/_alert.scss
 
+- title: "Autocomplete"
+  description: "Type-ahead search with filtered suggestions"
+  icon: '<i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/autocomplete.html"
+  js: _js/nds-autocomplete.js
+  scss: _sass/components/_autocomplete.scss
+
 - title: "Avatar"
   description: "Profile images, initials, and group stacks"
   icon: '<i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>'
@@ -52,6 +47,14 @@
   tags: ["CSS"]
   url: "/components/avatar.html"
   scss: _sass/components/_avatar.scss
+
+- title: "Block"
+  description: "Titled content grouping primitive for sub-sections inside a section body"
+  icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/block.html"
+  scss: _sass/layout/_block.scss
 
 - title: "Breadcrumb"
   description: "Hierarchical path showing the current page location"
@@ -78,6 +81,23 @@
   url: "/components/cards.html"
   scss: _sass/components/_cards.scss
 
+- title: "Chart"
+  description: "Lightweight SVG charts: bar, line, pie, and donut"
+  icon: '<i class="hgi hgi-stroke hgi-chart"></i>'
+  category: "Data"
+  tags: ["JS", "CSS"]
+  url: "/components/chart.html"
+  js: _js/nds-chart.js
+  scss: _sass/components/_chart.scss
+
+- title: "Checkbox"
+  description: "Multi-select toggles for options and preferences"
+  icon: '<i class="hgi hgi-stroke hgi-checkmark-square-01"></i>'
+  category: "Forms"
+  tags: ["CSS"]
+  url: "/components/checkbox.html"
+  scss: _sass/components/_checkbox.scss
+
 - title: "Chips"
   description: "Compact labels for tags, filters, and selections"
   icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
@@ -85,6 +105,15 @@
   tags: ["CSS"]
   url: "/components/chips.html"
   scss: _sass/components/_chips.scss
+
+- title: "Clock"
+  description: "Real-time clock with Hijri/Gregorian date"
+  icon: '<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>'
+  category: "UI Shell"
+  tags: ["JS", "API"]
+  url: "/ui-shell/topbar.html#topbarWidgets"
+  js: _js/nds-timeDate.js
+  scss: _sass/components/_topbar.scss
 
 - title: "Code"
   description: "Formatted code blocks with syntax highlighting and copy"
@@ -95,6 +124,14 @@
   js: _js/nds-code.js
   scss: _sass/components/_code.scss
 
+- title: "Content Placeholder"
+  description: "Dashed stand-in marking a region a real component will replace"
+  icon: '<i class="hgi hgi-stroke hgi-puzzle"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/content-placeholder.html"
+  scss: _sass/_utilities.scss
+
 - title: "Content Switcher"
   description: "Toggle between content sections within the same space on the screen"
   icon: '<i class="hgi hgi-stroke hgi-exchange-01"></i>'
@@ -103,6 +140,15 @@
   url: "/components/content-switcher.html"
   js: _js/nds-tabs.js
   scss: _sass/components/_content-switcher.scss
+
+- title: "Cookies"
+  description: "Privacy-compliant cookie management banner"
+  icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
+  category: "Utilities"
+  tags: ["JS", "CSS"]
+  url: "/components/cookies.html"
+  js: _js/nds-cookies.js
+  scss: _sass/components/_cookie.scss
 
 - title: "Cooldown Button"
   description: "Click-disabled countdown button for resend, retry, and rate-limited actions"
@@ -113,6 +159,40 @@
   js: _js/nds-cooldown-button.js
   scss: _sass/components/_cooldown-button.scss
 
+- title: "Copy"
+  description: "One-click clipboard copy with checkmark feedback and screen reader announcement"
+  icon: '<i class="hgi hgi-stroke hgi-copy-01"></i>'
+  category: "Utilities"
+  tags: ["JS", "CSS"]
+  url: "/utilities/copy.html"
+  js: _js/nds-copy.js
+  scss: _sass/components/_copy.scss
+
+- title: "Counter Animation"
+  description: "Scroll-triggered animated counters that count up to a target value"
+  icon: '<i class="hgi hgi-stroke hgi-chart-increase"></i>'
+  category: "Utilities"
+  tags: ["JS"]
+  url: "/utilities/numbers.html#counterAnimation"
+  js: _js/nds-numbers.js
+
+- title: "Currency"
+  description: "SAR and international currency symbols appended automatically via data attribute"
+  icon: '<i class="hgi hgi-stroke hgi-coins-dollar"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/numbers.html#currencyFormat"
+  js: _js/nds-numbers.js
+
+- title: "Date Picker"
+  description: "Hijri/Gregorian calendar with dual date conversion"
+  icon: '<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/date-picker.html"
+  js: _js/nds-date-picker.js
+  scss: _sass/components/_date-picker.scss
+
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
   icon: '<i class="hgi hgi-stroke hgi-list-view"></i>'
@@ -120,6 +200,29 @@
   tags: ["CSS"]
   url: "/components/definition-list.html"
   scss: _sass/components/_definition-list.scss
+
+- title: "DGA Digital Stamp"
+  description: "Government authority verification panel"
+  icon: '<i class="hgi hgi-stroke hgi-shield-01"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS"]
+  url: "/ui-shell/topbar.html#dgaDigitalStamp"
+  js: _js/nds-digitalStamp.js
+  scss: _sass/components/_DGAdigitalStamp.scss
+
+- title: "Divider"
+  description: "Horizontal or vertical rule with optional centered label"
+  icon: '<i class="hgi hgi-stroke hgi-minus-sign"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/divider.html"
+
+- title: "Document Head"
+  description: "Critical CSS, deferred bundles, and the inline gate every page loads in its head"
+  icon: '<i class="hgi hgi-stroke hgi-html-5"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS"]
+  url: "/ui-shell/head.html"
 
 - title: "Drawer"
   description: "Collapsible navigation lists with accordion groups"
@@ -139,6 +242,15 @@
   js: _js/nds-dropmenu.js
   scss: _sass/components/_dropmenu.scss
 
+- title: "Editor"
+  description: "Rich text field that submits clean NDS markup, converting Word, Google Docs, and web pastes and inserting NDS components as blocks"
+  icon: '<i class="hgi hgi-stroke hgi-quill-write-02"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API", { name: "Beta", style: "nds-yellow" }]
+  url: "/components/editor.html"
+  js: _js/nds-editor.js
+  scss: _sass/components/_editor.scss
+
 - title: "Empty"
   description: "Parent-adaptive placeholder for containers with no content"
   icon: '<i class="hgi hgi-stroke hgi-desert"></i>'
@@ -147,6 +259,22 @@
   url: "/components/empty.html"
   js: _js/nds-empty.js
   scss: _sass/components/_empty.scss
+
+- title: "Expandable Content"
+  description: "Show more/less toggle for long content blocks"
+  icon: '<i class="hgi hgi-stroke hgi-arrow-expand-02"></i>'
+  category: "Utilities"
+  tags: ["JS", "CSS"]
+  url: "/utilities/expandable-content.html"
+
+- title: "Export"
+  description: "Declarative CSV, Excel, and PDF downloads from any table, card list, or marked-up container"
+  icon: '<i class="hgi hgi-stroke hgi-file-export"></i>'
+  category: "Data"
+  tags: ["JS", "CSS"]
+  url: "/components/export.html"
+  js: _js/nds-export.js
+  scss: _sass/components/_export.scss
 
 - title: "Featured Icons"
   description: "Decorative icon containers with shape and color options"
@@ -164,6 +292,32 @@
   url: "/components/feedback-icons.html"
   scss: _sass/components/_feedback-icons.scss
 
+- title: "File Upload"
+  description: "Drag-and-drop file input with preview and validation"
+  icon: '<i class="hgi hgi-stroke hgi-upload-04"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/upload.html"
+  js: _js/nds-upload.js
+  scss: _sass/components/_upload.scss
+
+- title: "Filter"
+  description: "Applied filters with search, URL sync, and remote data"
+  icon: '<i class="hgi hgi-stroke hgi-filter"></i>'
+  category: "Data"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/filter.html"
+  js: _js/nds-filter.js
+  scss: _sass/components/_filter.scss
+
+- title: "Flex"
+  description: "Quick alignment, direction, and wrapping with custom-property overrides"
+  icon: '<i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/flex.html"
+  scss: _sass/layout/_flex.scss
+
 - title: "Floating Action Button"
   description: "FAB that pins to a viewport corner and stacks with others"
   icon: '<i class="hgi hgi-stroke hgi-add-circle"></i>'
@@ -172,6 +326,52 @@
   url: "/components/fab.html"
   js: _js/nds-fab.js
   scss: _sass/components/_fab.scss
+
+- title: "Footer"
+  description: "Multi-column footer with light and green variants"
+  icon: '<i class="hgi hgi-stroke hgi-layout-bottom"></i>'
+  category: "UI Shell"
+  tags: ["CSS"]
+  url: "/ui-shell/footer.html"
+  scss: _sass/components/_footer.scss
+
+- title: "Grid"
+  description: "Responsive column system with flexible breakpoints"
+  icon: '<i class="hgi hgi-stroke hgi-grid"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/grid.html"
+  scss: _sass/_grid.scss
+
+- title: "Header"
+  description: "Top bar and primary navigation shell with mega menus and mobile drawer"
+  icon: '<i class="hgi hgi-stroke hgi-navigation-01"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS", "API"]
+  url: "/ui-shell/header.html"
+
+- title: "Hero"
+  description: "Full-width page banners with slider and call-to-action"
+  icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS"]
+  url: "/ui-shell/hero.html"
+  scss: _sass/components/_hero.scss
+
+- title: "Hidden"
+  description: "Visibility utilities: the hidden attribute honored everywhere and band-exact responsive hiding with data-hidden"
+  icon: '<i class="hgi hgi-stroke hgi-view-off-slash"></i>'
+  category: "Utilities"
+  tags: ["CSS"]
+  url: "/utilities/hidden.html"
+  scss: _sass/_utilities.scss
+
+- title: "Icons"
+  description: "The HugeIcons Stroke Rounded font for content plus a curated inline SVG set for components and chrome, with sizing, color, and license guidance"
+  icon: '<i class="hgi hgi-stroke hgi-svg-01"></i>'
+  category: "Foundations"
+  tags: ["CSS"]
+  url: "/components/icons.html"
 
 - title: "Image Popup Viewer"
   description: "IPV fullscreen image preview with zoom and navigation"
@@ -199,6 +399,14 @@
   url: "/components/loading.html"
   scss: _sass/components/_loading.scss
 
+- title: "Metric"
+  description: "Dashboard tile pairing a key statistic with an inline sparkline"
+  icon: '<i class="hgi hgi-stroke hgi-chart-line-data-01"></i>'
+  category: "Data"
+  tags: ["CSS"]
+  url: "/components/metric.html"
+  scss: _sass/components/_metric.scss
+
 - title: "Modal"
   description: "Focused dialog overlays for confirmations and forms"
   icon: '<i class="hgi hgi-stroke hgi-browser"></i>'
@@ -207,6 +415,41 @@
   url: "/components/modal.html"
   js: _js/nds-modal.js
   scss: _sass/components/_modal.scss
+
+- title: "Multiselect"
+  description: "Multi-option select over a native checkbox group: removable chips, JSON-populated options, staged or instant commit"
+  icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/multiselect.html"
+  js: _js/nds-multiselect.js
+  scss: _sass/components/_multiselect.scss
+
+- title: "Number Input"
+  description: "Numeric field with increment and decrement controls, min/max, and step"
+  icon: '<i class="hgi hgi-stroke hgi-calculator"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/forms.html#numberInput"
+  js: _js/nds-forms.js
+  scss: _sass/components/_forms.scss
+
+- title: "Numbers"
+  description: "Locale-aware thousand separators for any number on the page"
+  icon: '<i class="hgi hgi-stroke hgi-math"></i>'
+  category: "Utilities"
+  tags: ["JS"]
+  url: "/utilities/numbers.html"
+  js: _js/nds-numbers.js
+
+- title: "OTP Input"
+  description: "Segmented one-time password fields with auto-advance"
+  icon: '<i class="hgi hgi-stroke hgi-key-01"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/otp.html"
+  js: _js/nds-otp.js
+  scss: _sass/components/_otp.scss
 
 - title: "Pagination"
   description: "Page-by-page navigation for large data sets"
@@ -251,6 +494,14 @@
   url: "/components/quote.html"
   scss: _sass/components/_quote.scss
 
+- title: "Radio"
+  description: "Single-choice selection within a group"
+  icon: '<i class="hgi hgi-stroke hgi-radio"></i>'
+  category: "Forms"
+  tags: ["CSS"]
+  url: "/components/radio.html"
+  scss: _sass/components/_radio.scss
+
 - title: "Rating"
   description: "Star-based display and input for user ratings"
   icon: '<i class="hgi hgi-stroke hgi-star"></i>'
@@ -260,6 +511,21 @@
   js: _js/nds-rating.js
   scss: _sass/components/_rating.scss
 
+- title: "Request"
+  description: "Fetch wrapper with a timeout, a response size cap, and errors you can branch on"
+  icon: '<i class="hgi hgi-stroke hgi-connect"></i>'
+  category: "Utilities"
+  tags: ["JS"]
+  url: "/utilities/request.html"
+  js: _js/nds-core.js
+
+- title: "Saudi Cities"
+  description: "Bundled JSON dataset of 132 Saudi Arabian cities with bilingual names, drop-in for autocomplete and address flows"
+  icon: '<i class="hgi hgi-stroke hgi-globe-02"></i>'
+  category: "Utilities"
+  tags: ["Data"]
+  url: "/utilities/saudi-cities.html"
+
 - title: "Scroll More"
   description: "Overflow wrapper with edge mask-fade and sticky show-more button"
   icon: '<i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>'
@@ -268,6 +534,75 @@
   url: "/components/scroll-more.html"
   js: _js/nds-scroll-more.js
   scss: _sass/components/_scroll-more.scss
+
+- title: "Section"
+  description: "Page content sections with head, body, and action areas"
+  icon: '<i class="hgi hgi-stroke hgi-layout-03"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/section.html"
+  scss: _sass/layout/_section.scss
+
+- title: "Selection"
+  description: "Selected-items counter for tables, card grids, and checkbox lists, with a records-line swap while a selection is active"
+  icon: '<i class="hgi hgi-stroke hgi-check-list"></i>'
+  category: "Data"
+  tags: ["JS"]
+  url: "/components/selection.html"
+  js: _js/nds-selection.js
+
+- title: "Selects"
+  description: "Native dropdown menus for choosing from a list"
+  icon: '<i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/forms.html"
+  js: _js/nds-forms.js
+  scss: _sass/components/_forms.scss
+
+- title: "Share"
+  description: "Social share dropmenu for X, LinkedIn, WhatsApp, and copy link"
+  icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
+  category: "Utilities"
+  tags: ["JS", "CSS"]
+  url: "/utilities/share.html"
+  js: _js/nds-share.js
+  scss: _sass/components/_share.scss
+
+- title: "Side Info"
+  description: "Companion column for service details, progress, and in-page navigation"
+  icon: '<i class="hgi hgi-stroke hgi-layout-right"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS", "API"]
+  url: "/ui-shell/sideinfo.html"
+  js: _js/nds-sideinfo.js
+  scss: _sass/components/_sideinfo.scss
+
+- title: "Side Menu"
+  description: "Collapsible nested sidebar navigation"
+  icon: '<i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>'
+  category: "UI Shell"
+  tags: ["JS", "CSS"]
+  url: "/ui-shell/sidemenu.html"
+  js: _js/nds-sidemenu.js
+  scss: _sass/components/_sidemenu.scss
+
+- title: "Slider"
+  description: "Numeric range input with single-thumb and dual-thumb modes for picking a value or a min–max span"
+  icon: '<i class="hgi hgi-stroke hgi-arrow-left-right"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/slider.html"
+  js: _js/nds-slider.js
+  scss: _sass/components/_slider.scss
+
+- title: "Sort"
+  description: "DOM-reorder engine for lists, grids, and tables with type auto-detect and URL sync"
+  icon: '<i class="hgi hgi-stroke hgi-sorting-05"></i>'
+  category: "Data"
+  tags: ["JS", "API"]
+  url: "/components/sort.html"
+  js: _js/nds-sort.js
 
 - title: "Stepper"
   description: "Sequential step indicators for multi-stage workflows"
@@ -287,6 +622,23 @@
   js: _js/nds-swiper.js
   scss: _sass/components/_swiper.scss
 
+- title: "Switch"
+  description: "Binary on/off toggles for settings and preferences"
+  icon: '<i class="hgi hgi-stroke hgi-toggle-on"></i>'
+  category: "Forms"
+  tags: ["CSS"]
+  url: "/components/switch.html"
+  scss: _sass/components/_switch.scss
+
+- title: "Tables"
+  description: "Data grids with sorting, pagination, and expandable rows"
+  icon: '<i class="hgi hgi-stroke hgi-table-02"></i>'
+  category: "Data"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/tables.html"
+  js: _js/nds-tables.js
+  scss: _sass/components/_tables.scss
+
 - title: "Tabs"
   description: "Switchable content panels with horizontal tab navigation"
   icon: '<i class="hgi hgi-stroke hgi-browser"></i>'
@@ -296,6 +648,15 @@
   js: _js/nds-tabs.js
   scss: _sass/components/_tabs.scss
 
+- title: "Tag Input"
+  description: "Free-text tags committed as removable chips while typing, posted natively as an array"
+  icon: '<i class="hgi hgi-stroke hgi-tags"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS", "API"]
+  url: "/components/taginput.html"
+  js: _js/nds-taginput.js
+  scss: _sass/components/_taginput.scss
+
 - title: "Tags"
   description: "Small labels for categorization and metadata"
   icon: '<i class="hgi hgi-stroke hgi-tags"></i>'
@@ -303,6 +664,31 @@
   tags: ["CSS"]
   url: "/components/tags.html"
   scss: _sass/components/_tags.scss
+
+- title: "Text Inputs"
+  description: "Single-line fields with labels, icons, and validation"
+  icon: '<i class="hgi hgi-stroke hgi-text-font"></i>'
+  category: "Forms"
+  tags: ["JS", "CSS"]
+  url: "/components/forms.html"
+  js: _js/nds-forms.js
+  scss: _sass/components/_forms.scss
+
+- title: "Textareas"
+  description: "Resizable multi-line text fields"
+  icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
+  category: "Forms"
+  tags: ["CSS"]
+  url: "/components/forms.html#textareaInput"
+  js: _js/nds-forms.js
+  scss: _sass/components/_forms.scss
+
+- title: "Themes"
+  description: "Light and dark mode, plus brand theming: generate a full palette from OKLCH seed colours, or override the design tokens with a stylesheet theme"
+  icon: '<i class="hgi hgi-stroke hgi-paint-bucket"></i>'
+  category: "Foundations"
+  tags: ["CSS", "JS"]
+  url: "/components/themes.html"
 
 - title: "TOC"
   description: "Auto-populated in-page table of contents with active-section tracking"
@@ -312,6 +698,13 @@
   url: "/components/toc.html"
   js: _js/nds-toc.js
   scss: _sass/components/_toc.scss
+
+- title: "Tokens"
+  description: "Every CSS custom property in the system: palette, primitive scales, semantic meanings, and component dials to reference and override"
+  icon: '<i class="hgi hgi-stroke hgi-cube"></i>'
+  category: "Foundations"
+  tags: ["CSS"]
+  url: "/components/tokens.html"
 
 - title: "Toolbar"
   description: "Controls bar above a table, list, or grid: result counts and applied filters lead, export and actions trail"
@@ -330,129 +723,20 @@
   js: _js/nds-tooltip.js
   scss: _sass/components/_tooltip.scss
 
-# Form Components
-- title: "Text Inputs"
-  description: "Single-line fields with labels, icons, and validation"
-  icon: '<i class="hgi hgi-stroke hgi-text-font"></i>'
-  category: "Forms"
+- title: "Top Bar"
+  description: "Government branding bar with date, weather, and dark mode toggle"
+  icon: '<i class="hgi hgi-stroke hgi-layout-top"></i>'
+  category: "UI Shell"
   tags: ["JS", "CSS"]
-  url: "/components/forms.html"
-  js: _js/nds-forms.js
-  scss: _sass/components/_forms.scss
+  url: "/ui-shell/topbar.html"
+  scss: _sass/components/_topbar.scss
 
-- title: "Selects"
-  description: "Native dropdown menus for choosing from a list"
-  icon: '<i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS"]
-  url: "/components/forms.html"
-  js: _js/nds-forms.js
-  scss: _sass/components/_forms.scss
-
-- title: "Textareas"
-  description: "Resizable multi-line text fields"
-  icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
-  category: "Forms"
+- title: "Truncate Text"
+  description: "Line-clamped overflow with expand/collapse toggle"
+  icon: '<i class="hgi hgi-stroke hgi-text-wrap"></i>'
+  category: "Utilities"
   tags: ["CSS"]
-  url: "/components/forms.html#textareaInput"
-  js: _js/nds-forms.js
-  scss: _sass/components/_forms.scss
-
-- title: "Number Input"
-  description: "Numeric field with increment and decrement controls, min/max, and step"
-  icon: '<i class="hgi hgi-stroke hgi-calculator"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS"]
-  url: "/components/forms.html#numberInput"
-  js: _js/nds-forms.js
-  scss: _sass/components/_forms.scss
-
-- title: "Checkbox"
-  description: "Multi-select toggles for options and preferences"
-  icon: '<i class="hgi hgi-stroke hgi-checkmark-square-01"></i>'
-  category: "Forms"
-  tags: ["CSS"]
-  url: "/components/checkbox.html"
-  scss: _sass/components/_checkbox.scss
-
-- title: "Radio"
-  description: "Single-choice selection within a group"
-  icon: '<i class="hgi hgi-stroke hgi-radio"></i>'
-  category: "Forms"
-  tags: ["CSS"]
-  url: "/components/radio.html"
-  scss: _sass/components/_radio.scss
-
-- title: "Switch"
-  description: "Binary on/off toggles for settings and preferences"
-  icon: '<i class="hgi hgi-stroke hgi-toggle-on"></i>'
-  category: "Forms"
-  tags: ["CSS"]
-  url: "/components/switch.html"
-  scss: _sass/components/_switch.scss
-
-- title: "Slider"
-  description: "Numeric range input with single-thumb and dual-thumb modes for picking a value or a min–max span"
-  icon: '<i class="hgi hgi-stroke hgi-arrow-left-right"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS"]
-  url: "/components/slider.html"
-  js: _js/nds-slider.js
-  scss: _sass/components/_slider.scss
-
-- title: "OTP Input"
-  description: "Segmented one-time password fields with auto-advance"
-  icon: '<i class="hgi hgi-stroke hgi-key-01"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS"]
-  url: "/components/otp.html"
-  js: _js/nds-otp.js
-  scss: _sass/components/_otp.scss
-
-- title: "File Upload"
-  description: "Drag-and-drop file input with preview and validation"
-  icon: '<i class="hgi hgi-stroke hgi-upload-04"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS"]
-  url: "/components/upload.html"
-  js: _js/nds-upload.js
-  scss: _sass/components/_upload.scss
-
-- title: "Autocomplete"
-  description: "Type-ahead search with filtered suggestions"
-  icon: '<i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS"]
-  url: "/components/autocomplete.html"
-  js: _js/nds-autocomplete.js
-  scss: _sass/components/_autocomplete.scss
-
-- title: "Editor"
-  description: "Rich text field that submits clean NDS markup, converting Word, Google Docs, and web pastes and inserting NDS components as blocks"
-  icon: '<i class="hgi hgi-stroke hgi-quill-write-02"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS", "API", { name: "Beta", style: "nds-yellow" }]
-  url: "/components/editor.html"
-  js: _js/nds-editor.js
-  scss: _sass/components/_editor.scss
-
-- title: "Multiselect"
-  description: "Multi-option select over a native checkbox group: removable chips, JSON-populated options, staged or instant commit"
-  icon: '<i class="hgi hgi-stroke hgi-tag-01"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS", "API"]
-  url: "/components/multiselect.html"
-  js: _js/nds-multiselect.js
-  scss: _sass/components/_multiselect.scss
-
-- title: "Tag Input"
-  description: "Free-text tags committed as removable chips while typing, posted natively as an array"
-  icon: '<i class="hgi hgi-stroke hgi-tags"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS", "API"]
-  url: "/components/taginput.html"
-  js: _js/nds-taginput.js
-  scss: _sass/components/_taginput.scss
+  url: "/utilities/truncate-text.html"
 
 - title: "User Feedback"
   description: "Satisfaction surveys and inline rating forms"
@@ -463,15 +747,6 @@
   js: _js/nds-user-feedback.js
   scss: _sass/components/_user-feedback.scss
 
-- title: "Date Picker"
-  description: "Hijri/Gregorian calendar with dual date conversion"
-  icon: '<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>'
-  category: "Forms"
-  tags: ["JS", "CSS", "API"]
-  url: "/components/date-picker.html"
-  js: _js/nds-date-picker.js
-  scss: _sass/components/_date-picker.scss
-
 - title: "Voice Input"
   description: "Voice-to-text button that dictates into a text field, with Arabic/English auto-detection"
   icon: '<i class="nds-icon nds-hgi-mic-01" aria-hidden="true"></i>'
@@ -479,213 +754,6 @@
   tags: ["JS", "API"]
   url: "/components/voice-input.html"
   js: _js/nds-voice-input.js
-
-# Data Components
-- title: "Metric"
-  description: "Dashboard tile pairing a key statistic with an inline sparkline"
-  icon: '<i class="hgi hgi-stroke hgi-chart-line-data-01"></i>'
-  category: "Data"
-  tags: ["CSS"]
-  url: "/components/metric.html"
-  scss: _sass/components/_metric.scss
-
-- title: "Filter"
-  description: "Applied filters with search, URL sync, and remote data"
-  icon: '<i class="hgi hgi-stroke hgi-filter"></i>'
-  category: "Data"
-  tags: ["JS", "CSS", "API"]
-  url: "/components/filter.html"
-  js: _js/nds-filter.js
-  scss: _sass/components/_filter.scss
-
-- title: "Tables"
-  description: "Data grids with sorting, pagination, and expandable rows"
-  icon: '<i class="hgi hgi-stroke hgi-table-02"></i>'
-  category: "Data"
-  tags: ["JS", "CSS", "API"]
-  url: "/components/tables.html"
-  js: _js/nds-tables.js
-  scss: _sass/components/_tables.scss
-
-- title: "Selection"
-  description: "Selected-items counter for tables, card grids, and checkbox lists, with a records-line swap while a selection is active"
-  icon: '<i class="hgi hgi-stroke hgi-check-list"></i>'
-  category: "Data"
-  tags: ["JS"]
-  url: "/components/selection.html"
-  js: _js/nds-selection.js
-
-- title: "Sort"
-  description: "DOM-reorder engine for lists, grids, and tables with type auto-detect and URL sync"
-  icon: '<i class="hgi hgi-stroke hgi-sorting-05"></i>'
-  category: "Data"
-  tags: ["JS", "API"]
-  url: "/components/sort.html"
-  js: _js/nds-sort.js
-
-- title: "Chart"
-  description: "Lightweight SVG charts: bar, line, pie, and donut"
-  icon: '<i class="hgi hgi-stroke hgi-chart"></i>'
-  category: "Data"
-  tags: ["JS", "CSS"]
-  url: "/components/chart.html"
-  js: _js/nds-chart.js
-  scss: _sass/components/_chart.scss
-
-- title: "Export"
-  description: "Declarative CSV, Excel, and PDF downloads from any table, card list, or marked-up container"
-  icon: '<i class="hgi hgi-stroke hgi-file-export"></i>'
-  category: "Data"
-  tags: ["JS", "CSS"]
-  url: "/components/export.html"
-  js: _js/nds-export.js
-  scss: _sass/components/_export.scss
-
-# Layout Components
-- title: "Section"
-  description: "Page content sections with head, body, and action areas"
-  icon: '<i class="hgi hgi-stroke hgi-layout-03"></i>'
-  category: "Layout"
-  tags: ["CSS"]
-  url: "/layout/section.html"
-  scss: _sass/layout/_section.scss
-
-- title: "Grid"
-  description: "Responsive column system with flexible breakpoints"
-  icon: '<i class="hgi hgi-stroke hgi-grid"></i>'
-  category: "Layout"
-  tags: ["CSS"]
-  url: "/layout/grid.html"
-  scss: _sass/_grid.scss
-
-- title: "Block"
-  description: "Titled content grouping primitive for sub-sections inside a section body"
-  icon: '<i class="hgi hgi-stroke hgi-paragraph"></i>'
-  category: "Layout"
-  tags: ["CSS"]
-  url: "/layout/block.html"
-  scss: _sass/layout/_block.scss
-
-- title: "Flex"
-  description: "Quick alignment, direction, and wrapping with custom-property overrides"
-  icon: '<i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>'
-  category: "Layout"
-  tags: ["CSS"]
-  url: "/layout/flex.html"
-  scss: _sass/layout/_flex.scss
-
-# Utilities
-- title: "Cookies"
-  description: "Privacy-compliant cookie management banner"
-  icon: '<i class="hgi hgi-stroke hgi-cookie"></i>'
-  category: "Utilities"
-  tags: ["JS", "CSS"]
-  url: "/components/cookies.html"
-  js: _js/nds-cookies.js
-  scss: _sass/components/_cookie.scss
-
-- title: "Content Placeholder"
-  description: "Dashed stand-in marking a region a real component will replace"
-  icon: '<i class="hgi hgi-stroke hgi-puzzle"></i>'
-  category: "Utilities"
-  tags: ["CSS"]
-  url: "/utilities/content-placeholder.html"
-  scss: _sass/_utilities.scss
-
-- title: "Copy"
-  description: "One-click clipboard copy with checkmark feedback and screen reader announcement"
-  icon: '<i class="hgi hgi-stroke hgi-copy-01"></i>'
-  category: "Utilities"
-  tags: ["JS", "CSS"]
-  url: "/utilities/copy.html"
-  js: _js/nds-copy.js
-  scss: _sass/components/_copy.scss
-
-- title: "Truncate Text"
-  description: "Line-clamped overflow with expand/collapse toggle"
-  icon: '<i class="hgi hgi-stroke hgi-text-wrap"></i>'
-  category: "Utilities"
-  tags: ["CSS"]
-  url: "/utilities/truncate-text.html"
-
-- title: "Divider"
-  description: "Horizontal or vertical rule with optional centered label"
-  icon: '<i class="hgi hgi-stroke hgi-minus-sign"></i>'
-  category: "Utilities"
-  tags: ["CSS"]
-  url: "/utilities/divider.html"
-
-- title: "Expandable Content"
-  description: "Show more/less toggle for long content blocks"
-  icon: '<i class="hgi hgi-stroke hgi-arrow-expand-02"></i>'
-  category: "Utilities"
-  tags: ["JS", "CSS"]
-  url: "/utilities/expandable-content.html"
-
-- title: "Hidden"
-  description: "Visibility utilities: the hidden attribute honored everywhere and band-exact responsive hiding with data-hidden"
-  icon: '<i class="hgi hgi-stroke hgi-view-off-slash"></i>'
-  category: "Utilities"
-  tags: ["CSS"]
-  url: "/utilities/hidden.html"
-  scss: _sass/_utilities.scss
-
-- title: "Saudi Cities"
-  description: "Bundled JSON dataset of 132 Saudi Arabian cities with bilingual names, drop-in for autocomplete and address flows"
-  icon: '<i class="hgi hgi-stroke hgi-globe-02"></i>'
-  category: "Utilities"
-  tags: ["Data"]
-  url: "/utilities/saudi-cities.html"
-
-- title: "Numbers"
-  description: "Locale-aware thousand separators for any number on the page"
-  icon: '<i class="hgi hgi-stroke hgi-math"></i>'
-  category: "Utilities"
-  tags: ["JS"]
-  url: "/utilities/numbers.html"
-  js: _js/nds-numbers.js
-
-- title: "Request"
-  description: "Fetch wrapper with a timeout, a response size cap, and errors you can branch on"
-  icon: '<i class="hgi hgi-stroke hgi-connect"></i>'
-  category: "Utilities"
-  tags: ["JS"]
-  url: "/utilities/request.html"
-  js: _js/nds-core.js
-
-- title: "Counter Animation"
-  description: "Scroll-triggered animated counters that count up to a target value"
-  icon: '<i class="hgi hgi-stroke hgi-chart-increase"></i>'
-  category: "Utilities"
-  tags: ["JS"]
-  url: "/utilities/numbers.html#counterAnimation"
-  js: _js/nds-numbers.js
-
-- title: "Currency"
-  description: "SAR and international currency symbols appended automatically via data attribute"
-  icon: '<i class="hgi hgi-stroke hgi-coins-dollar"></i>'
-  category: "Utilities"
-  tags: ["CSS"]
-  url: "/utilities/numbers.html#currencyFormat"
-  js: _js/nds-numbers.js
-
-- title: "Share"
-  description: "Social share dropmenu for X, LinkedIn, WhatsApp, and copy link"
-  icon: '<i class="hgi hgi-stroke hgi-share-08"></i>'
-  category: "Utilities"
-  tags: ["JS", "CSS"]
-  url: "/utilities/share.html"
-  js: _js/nds-share.js
-  scss: _sass/components/_share.scss
-
-# UI Shell
-- title: "Top Bar"
-  description: "Government branding bar with date, weather, and dark mode toggle"
-  icon: '<i class="hgi hgi-stroke hgi-layout-top"></i>'
-  category: "UI Shell"
-  tags: ["JS", "CSS"]
-  url: "/ui-shell/topbar.html"
-  scss: _sass/components/_topbar.scss
 
 - title: "Weather Widget"
   description: "Live weather display from GPS coordinates"
@@ -695,80 +763,3 @@
   url: "/ui-shell/topbar.html#topbarWidgets"
   js: _js/nds-cityWeather.js
   scss: _sass/components/_topbar.scss
-
-- title: "Clock"
-  description: "Real-time clock with Hijri/Gregorian date"
-  icon: '<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>'
-  category: "UI Shell"
-  tags: ["JS", "API"]
-  url: "/ui-shell/topbar.html#topbarWidgets"
-  js: _js/nds-timeDate.js
-  scss: _sass/components/_topbar.scss
-
-- title: "Header"
-  description: "Top bar and primary navigation shell with mega menus and mobile drawer"
-  icon: '<i class="hgi hgi-stroke hgi-navigation-01"></i>'
-  category: "UI Shell"
-  tags: ["JS", "CSS", "API"]
-  url: "/ui-shell/header.html"
-
-- title: "Document Head"
-  description: "Critical CSS, deferred bundles, and the inline gate every page loads in its head"
-  icon: '<i class="hgi hgi-stroke hgi-html-5"></i>'
-  category: "UI Shell"
-  tags: ["JS", "CSS"]
-  url: "/ui-shell/head.html"
-
-- title: "Hero"
-  description: "Full-width page banners with slider and call-to-action"
-  icon: '<i class="hgi hgi-stroke hgi-image-02"></i>'
-  category: "UI Shell"
-  tags: ["JS", "CSS"]
-  url: "/ui-shell/hero.html"
-  scss: _sass/components/_hero.scss
-
-- title: "DGA Digital Stamp"
-  description: "Government authority verification panel"
-  icon: '<i class="hgi hgi-stroke hgi-shield-01"></i>'
-  category: "UI Shell"
-  tags: ["JS", "CSS"]
-  url: "/ui-shell/topbar.html#dgaDigitalStamp"
-  js: _js/nds-digitalStamp.js
-  scss: _sass/components/_DGAdigitalStamp.scss
-
-- title: "Side Menu"
-  description: "Collapsible nested sidebar navigation"
-  icon: '<i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>'
-  category: "UI Shell"
-  tags: ["JS", "CSS"]
-  url: "/ui-shell/sidemenu.html"
-  js: _js/nds-sidemenu.js
-  scss: _sass/components/_sidemenu.scss
-
-- title: "Side Info"
-  description: "Companion column for service details, progress, and in-page navigation"
-  icon: '<i class="hgi hgi-stroke hgi-layout-right"></i>'
-  category: "UI Shell"
-  tags: ["JS", "CSS", "API"]
-  url: "/ui-shell/sideinfo.html"
-  js: _js/nds-sideinfo.js
-  scss: _sass/components/_sideinfo.scss
-
-- title: "Footer"
-  description: "Multi-column footer with light and green variants"
-  icon: '<i class="hgi hgi-stroke hgi-layout-bottom"></i>'
-  category: "UI Shell"
-  tags: ["CSS"]
-  url: "/ui-shell/footer.html"
-  scss: _sass/components/_footer.scss
-
-# Add-ons
-- title: "Accessibility"
-  description: "Site-wide panel for accessibility presets, typography tuning, and visual filters"
-  icon: '<i class="hgi hgi-stroke hgi-accessibility"></i>'
-  category: "Add-ons"
-  tags: ["JS", "CSS", "Add-on"]
-  url: "/components/accessibility.html"
-  js: _js/nds-accessibility.js
-  scss: _sass/components/_accessibility.scss
-
