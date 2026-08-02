@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.5.x"
 updated: "1.5.x"
-last_edit: "02/08/2026 - 03:04 AM"
+last_edit: "02/08/2026 - 10:36 AM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -23,7 +23,7 @@ sidemenu_mode: false
                 data-toc-source="#getStartedGuide article" data-toc-levels="h2, h3">
                 <div class="nds-toc-head">
                     <span class="nds-label">On this page</span>
-                    <h2 class="nds-toc-title nds-truncate">Setup Steps</h2>
+                    <h2 class="nds-toc-title nds-truncate">Adoption Path</h2>
                 </div>
                 <div class="nds-drawer nds-lined">
                     <ul class="nds-drawer-list"></ul>
@@ -37,9 +37,16 @@ sidemenu_mode: false
                 <p class="nds-section-description">What the agent-driven workflow delivers, and how its instruction system was built.</p>
 
                 <p>The canonical way to build with NDS is through an AI coding agent. NDS ships everything an agent needs to do that work properly: canonical markup to copy, machine-readable catalogs to search, readable source behind every bundle, and an instruction block that encodes the rules of the system.</p>
-                <p>That block is not documentation adapted for machines. It was built by running complete, real-world migrations with AI agents and folding what each one surfaced back into the rules: where an agent hesitated, the instructions gained a default; where one went wrong, they gained a guardrail. The result is a workflow an agent executes end to end, inventorying the project, planning the work with you, building each page from canonical markup, and verifying what it built, while a plan file carries every decision and status across sessions.</p>
+                <p><strong>The instruction block</strong> was engineered from the components' internal logic outward: init lifecycles, event surfaces, state cascades, dependency graphs. It was then hardened by running real migrations with AI agents and encoding every point of failure they surfaced.</p>
+                <p><strong>It gives the agent:</strong></p>
+                <ul>
+                    <li>Seven hard rules covering markup, styling, libraries, and porting.</li>
+                    <li>A workflow to follow: inventory, plan, build, verify.</li>
+                    <li>A plan file (<code class="nds-inline-code lang-html">NDS-PLAN.md</code>) that records decisions, page status, and open questions across sessions.</li>
+                    <li>A source reference so canonical markup gets copied, not invented.</li>
+                </ul>
                 <div class="nds-block">
-                    <div class="nds-alert nds-card nds-color" data-status="warning" role="alert">
+                    <div class="nds-alert nds-card nds-color" data-status="info" role="alert">
                         <span class="nds-feedback nds-alert-icon nds-outline">
                             <span class="nds-feedback-icon">
                                 <i class="nds-icon" aria-hidden="true"></i>
@@ -56,7 +63,7 @@ sidemenu_mode: false
                 <p><strong>The system rests on two permanent inputs:</strong></p>
                 <ol>
                     <li><strong>The NDS template</strong>: stored locally as a read-only reference the agent copies from.</li>
-                    <li><strong>The NDS instructions</strong>: installed once in your agent's instruction file.</li>
+                    <li><strong>The NDS instructions</strong>: installed once in the agent's instruction file.</li>
                 </ol>
                 <p>Both are configured a single time. After that, development proceeds gate by gate by default, with progress tracked in an <code class="nds-inline-code lang-html">NDS-PLAN.md</code> file at the project root, so any session can continue where the last one stopped without relying on conversation history.</p>
 
@@ -82,7 +89,7 @@ sidemenu_mode: false
                     <h3 id="download" class="nds-block-title">Download &amp; Extraction</h3>
                     <ol>
                         <li><strong>Download</strong> <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from the <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a> page.</li>
-                        <li><strong>Extract</strong> the archive anywhere your agent can access: a sibling directory, a folder inside your repository, or a shared development location.</li>
+                        <li><strong>Extract</strong> the archive anywhere the agent can access: a sibling directory, a folder inside your repository, or a shared development location.</li>
                         <li><strong>Record</strong> this path. It becomes your <code class="nds-inline-code lang-html">NDS_ROOT</code>.</li>
                     </ol>
                 </div>
@@ -110,11 +117,11 @@ LICENSE         - License terms
                 </div>
 
                 <h2 id="rules" class="nds-section-title">2. Rules &amp; Instructions</h2>
-                <p class="nds-section-description">Your agent loads its instruction file at the beginning of every session. Install the NDS instructions once and they apply automatically to every future session.</p>
+                <p class="nds-section-description">The agent loads its instruction file at the beginning of every session. Install the NDS instructions once and they apply automatically to every future session.</p>
 
                 <div class="nds-block">
                     <h3 id="instructions-block" class="nds-block-title">Instruction Block</h3>
-                    <p>Copy the block below into your agent's instruction file at the project root; create the file if it does not exist, or append the block to the end of an existing one as its own section:</p>
+                    <p>Copy the block below into the agent's instruction file at the project root; create the file if it does not exist, or append the block to the end of an existing one as its own section:</p>
                     <ul>
                         <li><strong>Claude Code</strong>: <code class="nds-inline-code lang-html">CLAUDE.md</code></li>
                         <li><strong>Cursor / Codex</strong>: <code class="nds-inline-code lang-html">AGENTS.md</code></li>
@@ -341,7 +348,7 @@ Four tiers. Tiers 2–4 live in `tokens/`, one file each, with the light block a
                 </div>
                 <div class="nds-block">
                     <h3 id="paths" class="nds-block-title">Path Configuration</h3>
-                    <p>Set the two paths on the declaration lines at the top of the instruction block you just copied into your agent's file. <strong>Edit those two lines only</strong>; the <code class="nds-inline-code lang-html">/path/to/…</code> appearing further down the block is part of the agent's own instructions and stays as-is. Windows paths work with forward slashes (<code class="nds-inline-code lang-html">C:/projects/…</code>):</p>
+                    <p>Set the two paths on the declaration lines at the top of the instruction block you just copied into the agent's file. <strong>Edit those two lines only</strong>; the <code class="nds-inline-code lang-html">/path/to/…</code> appearing further down the block is part of the agent's own instructions and stays as-is. Windows paths work with forward slashes (<code class="nds-inline-code lang-html">C:/projects/…</code>):</p>
                     <table class="nds-table nds-responsive">
                         <thead><tr><th>Variable</th><th>Description</th></tr></thead>
                         <tbody>
@@ -349,37 +356,16 @@ Four tiers. Tiers 2–4 live in `tokens/`, one file each, with the light block a
                             <tr><td><code class="nds-inline-code lang-html">NDS_ASSETS</code></td><td>The directory where your application serves static assets (e.g. <code class="nds-inline-code lang-html">public/assets/</code>, <code class="nds-inline-code lang-html">wwwroot/</code>). If it does not exist, the agent creates it during the first asset copy.</td></tr>
                         </tbody>
                     </table>
-                    <p>After saving, start a new agent session: instruction files are loaded only when a session begins. The session that pasted the block is the exception; it should follow the block immediately, no restart needed.</p>
+                    <p>Save the file. Future sessions load it automatically at start; the current session already has the block in context from pasting it.</p>
                 </div>
-                <div class="nds-block">
-                    <div class="nds-alert nds-card" data-status="neutral" role="alert">
-                        <span class="nds-feedback nds-alert-icon nds-outline">
-                            <span class="nds-feedback-icon">
-                                <i class="nds-icon" aria-hidden="true"></i>
-                            </span>
-                        </span>
-                        <div class="nds-alert-content">
-                            <div class="nds-alert-text">
-                                <span class="nds-alert-title">Verification</span>
-                                <p class="nds-alert-description">In the new session, ask: <em>what is <code class="nds-inline-code lang-html">NDS_ROOT</code> set to?</em></p>
-                                <ul class="nds-alert-description">
-                                    <li><strong>Loaded correctly</strong>: the agent answers with the path immediately, without searching files.</li>
-                                    <li><strong>Not loaded</strong>: the agent begins scanning your repository. Check the instruction file location and restart the session.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <h2 id="sessions" class="nds-section-title">3. Build Flow</h2>
                 <p class="nds-section-description">AI sessions do not share memory: the planning prompt creates <code class="nds-inline-code lang-html">NDS-PLAN.md</code> at the project root, and every session after reads and updates it before changing anything. The plan, not a schedule of sessions, drives the work.</p>
 
                 <div class="nds-block">
                     <h3 id="planning" class="nds-block-title">Start: the Planning Prompt</h3>
                     <ul>
-                        <li><strong>Prerequisite</strong>: your application must already exist and serve, with working routes, a shared layout, and at least one rendering page. NDS provides the UI layer; it does not scaffold an application.</li>
-                        <li><strong>One process</strong>: building new pages and replacing an existing interface plan the same way.</li>
-                        <li><strong>Claude Code tip</strong>: this prompt runs well in plan mode. The agent inventories read-only, surfaces the project-wide decisions as structured questions, and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> only after you approve (a harmless reorder of the workflow's write-then-review: same gate, the file just lands post-approval).</li>
+                        <li><strong>Prerequisite</strong>: your application must already exist and render at least one page. NDS provides the UI layer; it does not scaffold an application.</li>
+                        <li><strong>Claude Code tip</strong>: this prompt runs well in <strong>plan mode</strong>. The agent inventories read-only, surfaces the project-wide decisions as structured questions, and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> only after you approve (a harmless reorder of the workflow's write-then-review: same gate, the file just lands post-approval).</li>
                     </ul>
                     <div class="nds-code">
                         <div class="nds-code-action">
@@ -399,9 +385,9 @@ Then stop for my review. Build nothing until I approve the plan. Raise only proj
                 </div>
                 <div class="nds-block">
                     <h3 id="agent-drives" class="nds-block-title">After Approval: the Agent Drives</h3>
-                    <p>No more prompts to paste. The plan is the itinerary and your replies are the throttle: the agent proposes, you approve, correct, or redirect. The pacing is one of the decisions the agent asks with the plan review, and there are two to pick from:</p>
+                    <p>No more prompts to paste. The plan is the itinerary and your replies are the throttle: the agent proposes, you approve, correct, or redirect. Pacing is one of the decisions raised at plan review, with two options:</p>
                     <ul>
-                        <li><strong>Gate by gate (default)</strong>: when a step completes, the agent proposes the next one from the plan's build order: assets, then chrome, then pages one at a time. A page gate runs a fixed loop: open with the questions parked in that page's plan row, build, verify in the browser, update the row's status, stop for your go.</li>
+                        <li><strong>Gate by gate (default)</strong>: when a step completes, the agent proposes the next one from the plan's build order: assets, then chrome, then pages one at a time. A page gate runs a fixed loop: open with the page-scoped questions parked in that page's plan row, build, verify in the browser, update the row's status, stop for your go.</li>
                         <li><strong>One continuous run</strong>: the agent answers its own questions from the guide's defaults (existing shape, data scale, hero rules), verifies each page as it builds, and delivers a single report at the end. Every decision made by default and every check it could not run is listed there, not buried.</li>
                     </ul>
                     <p><strong>Whichever pace, hold it to these:</strong></p>
@@ -425,7 +411,10 @@ Continue the NDS work: read NDS-PLAN.md and propose the next step.
                         </code>
                     </div>
                     <p>Implementation is complete when every entry in <code class="nds-inline-code lang-html">NDS-PLAN.md</code> is marked <code class="nds-inline-code lang-html">Built and Verified</code>. Rows left at <code class="nds-inline-code lang-html">Awaiting Verification</code> are yours to clear: either the agent had no browser and emitted a checklist, or it verified the page itself during a one-continuous run and your review of its report is the missing confirmation.</p>
-                    <p><strong>If you replaced an existing UI via parallel files:</strong> the legacy pages remain live and still need their libraries. Removing a legacy library is invasive and is your decision, not the agent's. The agent reports when no ported page depends on a library anymore, and you approve its removal (rules #6 and #7).</p>
+                </div>
+                <div class="nds-block">
+                    <h3 id="legacy-cleanup" class="nds-block-title">Retiring Legacy Libraries</h3>
+                    <p>If you replaced an existing UI via parallel files, the legacy pages remain live and still need their libraries. Removing a legacy library is invasive and is your decision, not the agent's. The agent reports when no ported page depends on a library anymore, and you approve its removal (rules #6 and #7).</p>
                 </div>
 
                 <h2 id="upgrade" class="nds-section-title">4. Upgrades &amp; Maintenance</h2>

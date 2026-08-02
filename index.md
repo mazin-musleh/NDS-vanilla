@@ -643,81 +643,17 @@ bundle_sizes:
     </div>
 </section>
 
-<!-- Open Source -->
+<!-- Get Started -->
 <section id="opensource" class="nds-content-section nds-brand">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Get Started</h2>
-            <p class="nds-section-description">MIT licensed and open to contributions.</p>
+            <p class="nds-section-description">Everything needed to adopt NDS: download the template, install the agent instructions, build the UI page by page, and stay current with upgrades.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col:3;--mid-col:1;--min-col:1;">
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-package"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Download</span>
-                            <p class="nds-card-description">Compiled HTML, CSS, and JavaScript ready to use.</p>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="https://github.com/mazin-musleh/NDS-vanilla/releases/latest" target="_blank"
-                                rel="noopener" class="nds-btn nds-primary nds-external">
-                                <span class="nds-label">Download Template</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-git-fork"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Fork or Clone</span>
-                            <p class="nds-card-description">Full source code with build system, templates, and tooling.
-                            </p>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" rel="noopener"
-                                class="nds-btn nds-secondary nds-external">
-                                <span class="nds-label">View Repository</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="nds-card nds-stroke">
-                    <div class="nds-card-header">
-                        <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
-                                <i class="hgi hgi-stroke hgi-git-pull-request"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="nds-card-content">
-                        <div class="nds-card-text">
-                            <span class="nds-card-title">Contribute</span>
-                            <p class="nds-card-description">Report issues, suggest improvements, or submit pull requests
-                                on GitHub.</p>
-                        </div>
-                        <div class="nds-card-actions">
-                            <a href="https://github.com/mazin-musleh/NDS-vanilla/issues" target="_blank" rel="noopener"
-                                class="nds-btn nds-secondary nds-external">
-                                <span class="nds-label">Open Issues</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <a href="{{ '/guides/get-started.html' | relative_url }}" class="nds-btn nds-primary">
+                <span class="nds-label">Start Here</span>
+            </a>
         </div>
     </div>
 </section>
