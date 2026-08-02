@@ -95,7 +95,9 @@
         // same box the action bar uses, so both land on one strip.
         const panel = codeElement.closest('.nds-tab-panel');
         const host = panel || wrapper;
-        if (host.querySelector('.nds-code-lang')) return; // re-init stamps once
+        // Re-init stamps once; an authored .nds-code-lang (e.g. inside a
+        // .nds-code-tags strip with extra badges) suppresses the stamp too.
+        if (host.querySelector('.nds-code-lang')) return;
 
         // The authored class names it; with no class, the sniffed language does.
         const authored = /\blang(?:uage)?-([\w-]+)/.exec(codeElement.className);

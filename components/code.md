@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.6.0"
-last_edit: "31/07/2026 - 05:28 PM"
+updated: "1.6.x"
+last_edit: "02/08/2026 - 11:35 PM"
 ---
 
 <!-- Code Block Overview -->
@@ -719,7 +719,7 @@ NDS.Alert.create({
                         <i class="hgi hgi-stroke hgi-tag-01"></i>
                         <span class="nds-label">Language Label</span>
                     </span>
-                    <p class="nds-item-desc">Each block names its language with an <code class="nds-inline-code lang-html">nds-tag</code> in the top corner opposite the action bar, stamped from the authored <code class="nds-inline-code lang-html">lang-*</code> class — so it names languages the highlighter doesn't lex too (<code class="nds-inline-code lang-html">lang-bash</code>, <code class="nds-inline-code lang-html">lang-json</code>). Every block carries one: in a tabbed block the tag sits in each panel, and a block with no <code class="nds-inline-code lang-html">lang-*</code> class is named from the sniffed language.</p>
+                    <p class="nds-item-desc">Each block names its language with an <code class="nds-inline-code lang-html">nds-tag</code> in the top corner opposite the action bar, stamped from the authored <code class="nds-inline-code lang-html">lang-*</code> class — so it names languages the highlighter doesn't lex too (<code class="nds-inline-code lang-html">lang-bash</code>, <code class="nds-inline-code lang-html">lang-json</code>). Every block carries one: in a tabbed block the tag sits in each panel, and a block with no <code class="nds-inline-code lang-html">lang-*</code> class is named from the sniffed language. To place extra badges beside it, author a <code class="nds-inline-code lang-html">.nds-code-tags</code> strip (see Usage Guidelines).</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -761,6 +761,28 @@ NDS.Alert.create({
             <h2 class="nds-section-title">Usage Guidelines</h2>
         </div>
         <div class="nds-section-body">
+
+            <div class="nds-block">
+                <h3 class="nds-block-title">Authored Tag Strip</h3>
+                <p>To place extra badges beside the language tag (a version tag, a status chip), author a <code class="nds-inline-code lang-html">.nds-code-tags</code> strip as a direct child of the block. The strip replaces the auto-stamped label — the authored <code class="nds-inline-code lang-html">.nds-code-lang</code> chip inside it suppresses the stamp — and it carries the block's <code class="nds-inline-code lang-html">lang-*</code> class so it clears the line-number gutter the same way the stamped tag would. Extra chips are ordinary <code class="nds-inline-code lang-html">nds-tag</code> elements.</p>
+                <div class="nds-code">
+                    <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                            <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                    </div>
+                    <code class="lang-html">
+&lt;div class="nds-code"&gt;
+  &lt;span class="nds-code-tags lang-html"&gt;
+    &lt;span class="nds-tag nds-gray nds-xs nds-code-lang lang-html"&gt;&lt;span class="nds-label"&gt;HTML&lt;/span&gt;&lt;/span&gt;
+    &lt;span class="nds-tag nds-green nds-xs"&gt;&lt;span class="nds-label"&gt;v3&lt;/span&gt;&lt;/span&gt;
+  &lt;/span&gt;
+  &lt;div class="nds-code-action"&gt;…&lt;/div&gt;
+  &lt;code class="lang-html"&gt;…&lt;/code&gt;
+&lt;/div&gt;
+                    </code>
+                </div>
+            </div>
 
             <div class="nds-block">
                 <h3 class="nds-block-title">Data Attributes</h3>

@@ -78,6 +78,32 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
     }
   }
 
+  // Authored tag strip: groups the language tag with extra badges (e.g. the
+  // get-started guide's instructions-version tag). The inner .nds-code-lang
+  // suppresses the JS stamp; the strip carries the block's lang-* class to
+  // make the same gutter decision the stamped tag would.
+  .nds-code-tags {
+    position: absolute;
+    top: 0;
+    left: var(--spacing-md);
+    z-index: 2;
+    margin-block: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    user-select: none;
+    pointer-events: none;
+
+    &:not(#{$prose-langs}) {
+      left: var(--_code-gutter);
+    }
+
+    .nds-code-lang {
+      position: static;
+      margin-block: 0;
+    }
+  }
+
   // Match the prose-block background so a collapsed expandable's fade blends
   // into the code surface instead of the page. Prose only — non-prose blocks
   // paint the gutter gradient on `code` itself, so no wrapper bg is needed.
