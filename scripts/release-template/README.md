@@ -2,7 +2,7 @@
 
 A versioned, read-only build of the National Design System (Saudi Arabia). Keep this folder beside your project as a source reference — don't edit it, don't build inside it. Upgrades replace the whole folder.
 
-**Start here:** open the adoption guide at `_site/guides/ai-integration.html` (or hosted: https://mazin-musleh.github.io/NDS-vanilla/guides/ai-integration.html). It contains the agent-instructions block you paste into your project's `AGENTS.md` / `CLAUDE.md`, and the session playbook for building page by page.
+**Start here:** open the adoption guide at `_site/guides/get-started.html` (or hosted: https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html). It contains the agent-instructions block you paste into your project's `AGENTS.md` / `CLAUDE.md`, and the session playbook for building page by page.
 
 ## Layout
 
