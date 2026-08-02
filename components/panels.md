@@ -5,7 +5,7 @@ hero_title: Panels - National Design System
 hero_description: A content-agnostic surface that slides in from any edge of the viewport, for settings, filters, details, or any secondary content you want to reveal on demand without leaving the page.
 breadcrumb: [["Components", "/components"]]
 since: "1.5.0"
-updated: "1.5.x"
+updated: "1.6.0"
 last_edit: "26/07/2026 - 09:40 PM"
 lang: en
 direction: ltr

@@ -36,7 +36,7 @@ Quick links:
 
 | Area | What you get |
 |---|---|
-| **Components** | 85+ UI components — buttons, forms, modals, charts, date pickers (Gregorian + Hijri), panels, navigation, and more. |
+| **Components** | 90+ UI components — buttons, forms, modals, charts, date pickers (Gregorian + Hijri), panels, navigation, and more. |
 | **Layout** | A section model and responsive grid for composing pages. |
 | **UI shell** | Header, footer, hero, side menu, top bar, and side-info — the page chrome. |
 | **Utilities** | Drop-in helpers: copy, share, number formatting, text truncation, dividers, and more. |

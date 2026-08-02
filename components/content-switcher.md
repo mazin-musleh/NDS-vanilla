@@ -6,8 +6,8 @@ hero_description: Content switcher allows users to toggle between different cont
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.5.x"
-updated: "1.5.x"
+since: "1.6.0"
+updated: "1.6.0"
 last_edit: "29/07/2026 - 09:08 PM"
 ---
 

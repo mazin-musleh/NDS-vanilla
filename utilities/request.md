@@ -6,8 +6,8 @@ hero_description: A fetch wrapper that applies a timeout, a response size cap, a
 breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
-since: "1.5.x"
-updated: "1.5.x"
+since: "1.6.0"
+updated: "1.6.0"
 last_edit: "29/07/2026 - 03:35 PM"
 ---
 

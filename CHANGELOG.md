@@ -6,6 +6,53 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-08-02
+
+### Added
+- **Content Switcher** — new component: DGA segmented control built on tabs. See the [Content Switcher doc page](https://mazin-musleh.github.io/NDS-vanilla/components/content-switcher.html).
+- **Get Started guide** — hosted adoption workflow with an agent instruction block, replacing the in-zip integration docs. See the [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html).
+- **NDS.request** — a fetch wrapper with a 15s default timeout, a response-size cap, and errors carrying `.status`, `.url`, and a capped `.body`. See the [Request doc page](https://mazin-musleh.github.io/NDS-vanilla/utilities/request.html).
+- Tables — expandable sub-rows.
+- Pagination — windowed lazy ellipsis picker, URL sync, and a jump-to-page field.
+- Pagination — `data-pagination-no-scroll` opts a nav out of the page-change scroll; `NDS.Pagination.scrollToContent()` runs it manually.
+- Tabs — `sm` size rung; `--btn-size` drives the real button height.
+- Code — prompt highlighting, markdown highlighting, language tag, roomier action bar, expandable/scrollable blocks, and a `--code-bg` knob for prose blocks.
+- Toolbar — `.nds-bar-text` as the canonical class for a bar's text item.
+- Tags — `data-status="critical"` alias for `error`.
+- Visibility — canonical `sm/md/lg` tokens for `data-hidden`.
+- Copy — the flash window is inert to keyboard and mouse.
+- Release zip — ships `_source/` (readable JS/SCSS + machine-readable catalogs) alongside the compiled `_site/`.
+
+### Changed
+- Assets — files consumed only by the doc site moved into `docs-assets/`; the consumer runtime stays under `assets/`.
+- Layout — edge-to-edge chrome and content driven from `body.nds-full-width`, no per-layout modifier.
+- Layout — prose list spacing, indent, and markers reworked for a cleaner rhythm.
+- Buttons — dark `secondary` keeps its alpha wash by default; solid dark is opt-in.
+- Panels — sheet corner radius and tighter mobile header.
+- Editor — image popover scroll capped at 70svh.
+- Drawer — `sm` size variant removed.
+- Toolbar — default bottom gap widened to `4xl`.
+- Autocomplete — regex hoisted, DOM writes batched, clicks delegated, items cached.
+- Backdrop — default `blur(2px)` fallback removed.
+- Code — the syntax highlighter moved off the critical path into the extras bundle.
+- Core — `onAttrChange` checks watched attrs before running `matches()`.
+
+### Fixed
+- Pagination — paged tables in background tabs initialize when the tab is activated.
+- Alert — card alert descriptions read in the primary paragraph color.
+- Dropmenu — close and delayed-open state settles during destroy; own-element walks scope to the instance; auto-populated rows opt into search and wire the clear button.
+- Editor — component delete, cut, and paste no longer corrupt the document.
+- Forms — the actions row's top margin is zero when it leads the form.
+- Expandable — the clamp is preserved on unmeasured panels.
+- Chips — numeric labels no longer clip mid-glyph.
+- Backdrop — stack ownership tracked so nested owners restore correctly on unstack.
+- Layout — trailing space dropped from `content-layout` class; empty body class attribute suppressed when unset.
+- JS lifecycle — pagination teardown, stepper reinit, and loader diagnostics + debug audits corrected.
+
+### Migrating from v1.5.0
+
+- Replace all runtime assets: copy `_site/assets/` from the release zip over `NDS_ASSETS/`. Every file carries the new version banner, so overwrite everything rather than cherry-picking the changed bundles.
+
 ## [1.5.0] - 2026-07-25
 
 ### Added

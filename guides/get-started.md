@@ -1,12 +1,13 @@
 ---
 layout: page
 title: Get Started
-since: "1.5.x"
-updated: "1.5.x"
-last_edit: "02/08/2026 - 10:36 AM"
+since: "1.6.0"
+updated: "1.6.0"
+last_edit: "02/08/2026 - 11:42 AM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
+hero_style: nds-flat
 hero_tags:
   - label: Beta
     style: nds-yellow
