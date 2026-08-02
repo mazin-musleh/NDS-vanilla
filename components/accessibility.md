@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.5.x"
-last_edit: "25/07/2026 - 09:25 PM"
+last_edit: "02/08/2026 - 09:52 AM"
 ---
 
 <!-- Trigger -->
@@ -26,11 +26,11 @@ last_edit: "25/07/2026 - 09:25 PM"
                     </div>
                     <div class="demo-container">
                         <div class="state-demo" style="display:flex; flex-direction:column; align-items:center; gap: var(--spacing-md); padding: var(--spacing-2xl);">
-                            <button class="nds-btn nds-primary nds-circle nds-accessibility-toggle"
+                            <button class="nds-btn nds-primary nds-circle nds-icon-only nds-accessibility-toggle"
                                     type="button"
                                     data-accessibility-demo-open
                                     aria-label="Open accessibility panel"
-                                    style="--btn-size: 56px;">
+                                    style="--btn-size: 56px; box-shadow: var(--shadow-lg);">
                                 <i class="nds-icon nds-hgi-accessibility" aria-hidden="true"></i>
                             </button>
                             <span class="nds-feedback nds-sm nds-outline" data-status="neutral">
