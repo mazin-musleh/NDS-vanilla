@@ -147,31 +147,52 @@ def verify(out, version):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
 
-    # The integration guide's checks run against its markdown SOURCE (the same
-    # content this build rendered into the zip's _site/guides/get-started.html —
-    # the source regexes stay clean of HTML escaping). Every path in its
-    # snippet hangs off the NDS_ROOT / NDS_ASSETS pair the consumer sets at
-    # the top of the block; lose a declaration and the block ships with
-    # unresolvable references — invisible until a consumer complains.
+    # The instruction block's checks run against its SOURCE include (clean,
+    # unescaped markdown — the guide renders it into the code element via
+    # `include | escape`). Every path in the block hangs off the NDS_ROOT /
+    # NDS_ASSETS pair the consumer sets at the top; lose a declaration and the
+    # block ships with unresolvable references — invisible until a consumer
+    # complains.
+    with open(os.path.join(ROOT, '_includes', 'nds-ai-instructions.md'), encoding='utf8') as f:
+        block = f.read()
     with open(os.path.join(ROOT, 'guides', 'get-started.md'), encoding='utf8') as f:
-        # Unescape first: the page authors the snippet entity-encoded
-        # (&lt;name&gt;), which would otherwise hide placeholder markers
-        # from the '<' filter below.
         integration = html.unescape(f.read())
-    if '`NDS_ROOT` =' not in integration:
-        sys.exit('guides/get-started.md has no `NDS_ROOT` declaration — every path in the snippet resolves nowhere.')
-    if '`NDS_ASSETS` =' not in integration:
-        sys.exit('guides/get-started.md has no `NDS_ASSETS` declaration — the asset-copy and upgrade steps resolve nowhere.')
+    if '`NDS_ROOT` =' not in block:
+        sys.exit('_includes/nds-ai-instructions.md has no `NDS_ROOT` declaration — every path in the block resolves nowhere.')
+    if '`NDS_ASSETS` =' not in block:
+        sys.exit('_includes/nds-ai-instructions.md has no `NDS_ASSETS` declaration — the asset-copy and upgrade steps resolve nowhere.')
+    if 'end NDS instructions' not in block:
+        sys.exit('_includes/nds-ai-instructions.md is missing the "end NDS instructions" marker — installed copies become unbounded for the upgrade refresh.')
+    if 'include nds-ai-instructions.md' not in integration:
+        sys.exit('guides/get-started.md no longer includes nds-ai-instructions.md — the block is not rendered.')
     for marker in ('COPY START', 'COPY END'):
         if marker not in integration:
             sys.exit(f'guides/get-started.md is missing the {marker} marker — the snippet is unbounded.')
+
+    # The block's version stamp (its own counter, decoupled from the release)
+    # is hand-written in two places so the include reads standalone online:
+    # the include's heading and the guide's green tag. Assert they match and
+    # that the built page carries the stamp — a drift or a dropped include
+    # breaks the upgrade workflow's block-refresh comparison (step 4 of
+    # "Upgrading NDS").
+    m = re.search(r'instructions v(\d+)', block)
+    if not m:
+        sys.exit('_includes/nds-ai-instructions.md heading has no "instructions v<N>" stamp.')
+    tag = re.search(r'nds-tag nds-green nds-xs"><span class="nds-label">v(\d+)<', integration)
+    if not tag or tag.group(1) != m.group(1):
+        sys.exit(f'Guide green tag ({tag.group(1) if tag else "missing"}) does not match the block heading '
+                 f'version (v{m.group(1)}) — bump both together.')
+    guide_html = z.read(root + '_site/guides/get-started.html').decode('utf8', 'ignore')
+    if f'instructions v{m.group(1)}' not in guide_html:
+        sys.exit(f'Built guide lacks "instructions v{m.group(1)}" in the block heading — '
+                 'the instructions-block version stamp is missing or stale.')
 
     # Every literal path the guide and README reference must exist in the
     # zip — a doc rename otherwise ships a prompt pointing the consumer's
     # LLM at a dead path, and it invents instead (the exact failure the
     # guide prevents). Placeholder/glob refs (<name>, *) are skipped.
     readme = z.read(root + 'README.md').decode('utf8', 'ignore')
-    refs = re.findall(r'NDS_ROOT/([^\s`)\]]+)', integration)
+    refs = re.findall(r'NDS_ROOT/([^\s`)\]]+)', block + integration)
     refs += re.findall(r'`((?:_site|_source)/[^`]*)`', readme)
     dead = sorted({p for p in refs if '<' not in p and '*' not in p
                    and root + p not in names
