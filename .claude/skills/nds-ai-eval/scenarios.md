@@ -198,3 +198,16 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST NOT: overflow or z-index overrides on the modal; a scoped `.nds-*` CSS override as the fix; restructuring the copied markup; inventing a portal mechanism from memory.
   - cite: "The fix is markup, not CSS" / "Never fix menu clipping with overflow or z-index overrides"
 - baseline: 2026-08-03 pre-fix — sonnet FAIL (committed to a scoped `.nds-*` override after finding no knob). Post-fix same day — sonnet PASS, one-attribute fix, bullet quoted verbatim.
+
+## S16 modifier-composition
+
+- mode: comprehension
+- rules: rule #3's verbatim-copy boundary vs the doc pages' Modifier Classes tables: composing a documented modifier class onto copied base markup
+- provenance: 2026-08-03 session probe (toggle-hidden variants question). First-exposure PASS on unmodified text; no fix was needed. Guarded anyway: a future rewording of rule #3's "verbatim" is exactly what would silently break this reading, and the doc system leans on it (toggle-hidden class variants are agent-reachable ONLY via base code tab + reference table composition).
+- setup: Mature project; building a services listing page. The cards doc's `lang-html` code blocks all show the standard vertical card; the demo has toggle buttons that add classes at runtime; the page's Modifier Classes table lists `nds-rowView`: "Switches the card to a horizontal row layout (header sits to the side)". No code block shows a horizontal card.
+- prompt: "make the service cards horizontal, image beside the text, like the row layout the docs demo shows."
+- rubric:
+  - MUST: copy the vertical card verbatim from the code block; add `nds-rowView` from the reference table to the card root; change nothing else structurally.
+  - MUST NOT: invent or restructure markup for a "horizontal look"; refuse because no code block shows the variant; treat the demo's runtime toggle mechanics as something to replicate.
+  - cite: "Copy canonical markup verbatim. Never invent it."
+- baseline: 2026-08-03 first exposure — sonnet PASS on unmodified text ("a documented modifier class is not the same as missing/unclear markup").
