@@ -609,7 +609,7 @@
     // paths, the placeholder names, and the phrases quoted from a doc.
     const PROMPT_TOKEN_RE = new RegExp(
         '("[^"\\n]*")' +                                        // 1 quoted phrase
-        '|(\\/?(?:[\\w.-]+\\/)+[\\w-]*(?:\\.\\w+)*' +           // 2 path …
+        '|((?:https?:\\/\\/)?\\/?(?:[\\w.-]+\\/)+[\\w-]*(?:\\.\\w+)*' + // 2 path (optional scheme) …
         '|\\b[\\w-]+\\.(?:md|html|js|css|json|ya?ml|scss|txt|zip)\\b)' + //   … or bare filename
         '|(\\b[A-Z][A-Z0-9_]{2,}\\b)',                          // 3 placeholder / marker
         'g'
