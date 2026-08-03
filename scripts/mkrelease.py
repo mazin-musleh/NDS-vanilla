@@ -178,7 +178,7 @@ def verify(out, version):
     m = re.search(r'instructions v(\d+)', block)
     if not m:
         sys.exit('_includes/nds-ai-instructions.md heading has no "instructions v<N>" stamp.')
-    tag = re.search(r'nds-tag nds-green nds-xs"><span class="nds-label">v(\d+)<', integration)
+    tag = re.search(r'nds-tag nds-green nds-xs"><span class="nds-label">IQ v(\d+)<', integration)
     if not tag or tag.group(1) != m.group(1):
         sys.exit(f'Guide green tag ({tag.group(1) if tag else "missing"}) does not match the block heading '
                  f'version (v{m.group(1)}) — bump both together.')

@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.6.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "03/08/2026 - 03:54 PM"
+last_edit: "03/08/2026 - 09:46 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -37,8 +37,8 @@ sidemenu_mode: false
                 <h2 id="overview" class="nds-section-title">Overview</h2>
                 <p class="nds-section-description">What the agent-driven workflow delivers, and how its instruction system was built.</p>
 
-                <p>The recommended way to build with NDS is through an AI coding agent. NDS ships everything an agent needs to do that work properly: canonical markup to copy, machine-readable catalogs to search, readable source behind every bundle, and an instructions block that encodes the rules of the system.</p>
-                <p><strong>The instructions block</strong> was engineered from the components' internal logic outward: init lifecycles, event surfaces, state cascades, dependency graphs. It was then hardened by running real migrations with AI agents, adding a rule for each failure they hit.</p>
+                <p>The recommended way to build with NDS is through an AI coding agent. NDS ships everything an agent needs to do that work properly: canonical markup to copy, machine-readable catalogs to search, readable source behind every bundle, and a set of instructions that encodes the rules of the system.</p>
+                <p><strong>The NDS IQ (Integration Quality) instructions</strong> were engineered from the components' internal logic outward: init lifecycles, event surfaces, state cascades, dependency graphs. They were then hardened by running real migrations with AI agents, adding a rule for each failure the agents hit.</p>
                 <p><strong>It gives the agent:</strong></p>
                 <ul>
                     <li>Seven hard rules covering markup, styling, libraries, and porting.</li>
@@ -64,7 +64,7 @@ sidemenu_mode: false
                 <p><strong>The system rests on two core inputs:</strong></p>
                 <ol>
                     <li><strong>The NDS template</strong>: stored locally as a read-only reference the agent copies from.</li>
-                    <li><strong>The NDS instructions</strong>: installed once in the agent's instruction file.</li>
+                    <li><strong>The NDS IQ instructions</strong>: installed once in the agent's instruction file.</li>
                 </ol>
                 <p>Both are configured a single time. After that, development proceeds gate by gate by default. Progress lives in an <code class="nds-inline-code lang-html">NDS-PLAN.md</code> file at the project root, so any session can pick up where the last one stopped.</p>
 
@@ -121,11 +121,11 @@ LICENSE         - License terms
                 </div>
 
                 <h2 id="rules" class="nds-section-title">2. Setup</h2>
-                <p class="nds-section-description">One prompt runs the whole setup: the agent installs the instructions block, asks for paths, then hands back the first plan for your review.</p>
+                <p class="nds-section-description">One prompt runs the whole setup: the agent installs the NDS IQ instructions, asks for paths, then hands back the first plan for your review.</p>
 
                 <div class="nds-block">
                     <h3 id="instructions-block" class="nds-block-title">Setup Prompt</h3>
-                    <p>Hand the agent the prompt below as its first turn. It fetches the instructions block and installs it verbatim into the agent's instruction file at the project root, creating the file if it doesn't exist, or appending to an existing one. The instructions block's own setup flow takes over from there.</p>
+                    <p>Hand the agent the prompt below as its first turn. It fetches the NDS IQ instructions and installs them verbatim into the agent's instruction file at the project root, creating the file if it doesn't exist, or appending to an existing one. NDS IQ's own setup flow takes over from there.</p>
                     <div class="nds-block">
                         <div class="nds-alert nds-card nds-inline" data-status="neutral" role="alert">
                             <span class="nds-feedback nds-alert-icon">
@@ -155,11 +155,11 @@ LICENSE         - License terms
 Apply the NDS UI to this project following these instructions: https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/nds-ai-instructions.md
                         </code>
                     </div>
-                    <p>The URL always tracks the latest published revision; on later sessions, the instructions block's own upgrade workflow handles any drift against your installed template.</p>
+                    <p>The URL always tracks the latest published revision; on later sessions, NDS IQ's own upgrade workflow handles any drift against your installed template.</p>
                 </div>
                 <div class="nds-block">
                     <h3 id="paths" class="nds-block-title">Paths</h3>
-                    <p>The instructions block ships with two paths declared at its top as placeholders. On first install the agent asks you for real values; provide what's below and it writes them into the declaration lines. Installing manually? Edit only those top two lines; any <code class="nds-inline-code lang-html">/path/to/…</code> further down is instructional and stays as-is.</p>
+                    <p>The NDS IQ instructions ship with two paths declared at the top as placeholders. On first install the agent asks you for real values; provide what's below and it writes them into the declaration lines. Installing manually? Edit only those top two lines; any <code class="nds-inline-code lang-html">/path/to/…</code> further down is instructional and stays as-is.</p>
                     <table class="nds-table nds-responsive">
                         <thead><tr><th>Variable</th><th>Description</th></tr></thead>
                         <tbody>
@@ -176,15 +176,15 @@ Apply the NDS UI to this project following these instructions: https://raw.githu
                 </div>
                 <div class="nds-block">
                     <h3 id="manual-install" class="nds-block-title">Manual Install (optional)</h3>
-                    <p>For a manual install, or to read what the agent installs, the full instructions block is below. <strong>Copy it exactly as written, all of it.</strong> A paraphrase reads correct but silently drops rules the build depends on later.</p>
+                    <p>For a manual install, or to read what the agent installs, the full NDS IQ instructions are below. <strong>Copy them exactly as written, all of them.</strong> A paraphrase reads correct but silently drops rules the build depends on later.</p>
 <!-- ═══════════════════════ COPY START ═══════════════════════ -->
             <div class="nds-code nds-expandable">
                 <span class="nds-code-tags lang-markdown">
                     <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>
-                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">v3</span></span>
+                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v4</span></span>
                 </span>
                 <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy instructions block">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy NDS IQ instructions">
                         <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                 </div>
@@ -263,7 +263,7 @@ Continue: read NDS-PLAN.md and propose the next step.
                 </div>
                 <div class="nds-block">
                     <h3 id="legacy-cleanup" class="nds-block-title">Retiring Legacy Libraries</h3>
-                    <p>If you replaced an existing UI via parallel files, the legacy pages remain live and still need their libraries. Removing a legacy library is invasive and is your decision, not the agent's. The agent reports when no ported page depends on a library anymore, and you approve its removal (the instructions block's rules #6 and #7).</p>
+                    <p>If you replaced an existing UI via parallel files, the legacy pages remain live and still need their libraries. Removing a legacy library is invasive and is your decision, not the agent's. The agent reports when no ported page depends on a library anymore, and you approve its removal (NDS IQ rules #6 and #7).</p>
                 </div>
 
                 <div class="nds-block">
@@ -273,7 +273,7 @@ Continue: read NDS-PLAN.md and propose the next step.
                 </div>
 
                 <h2 id="upgrade" class="nds-section-title">4. Upgrade</h2>
-                <p class="nds-section-description">When a new version of NDS is published, paste the prompt below. The agent handles the whole upgrade: downloads the release into <code class="nds-inline-code lang-html">NDS_ROOT</code>, then runs the upgrade workflow from the instructions block (version compare, runtime replace, changelog sweep, its own refresh) and reports every change.</p>
+                <p class="nds-section-description">When a new version of NDS is published, paste the prompt below. The agent handles the whole upgrade: downloads the release into <code class="nds-inline-code lang-html">NDS_ROOT</code>, then runs the upgrade workflow from the NDS IQ instructions (version compare, runtime replace, changelog sweep, its own refresh) and reports every change.</p>
 
                 <div class="nds-code">
                     <div class="nds-code-action">
