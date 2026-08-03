@@ -1,0 +1,5 @@
+# fixture catalog stub
+- title: Content Page
+  description: DGA-official content page with side menu and sections.
+  url: /templates/content.html
+  category: DGA

@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Services";
+}
+<!-- legacy fixture page: jQuery DataTables flavored -->
+<div class="container">
+    <h2>Services</h2>
+    <table id="servicesTable" class="table table-striped">
+        <thead><tr><th>Service</th><th>Agency</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr><td>License issuance</td><td>Municipality</td><td>Available</td></tr>
+            <tr><td>Registry renewal</td><td>Commerce</td><td>Available</td></tr>
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script>$(function () { $('#servicesTable').DataTable({ paging: true }); });</script>
+}

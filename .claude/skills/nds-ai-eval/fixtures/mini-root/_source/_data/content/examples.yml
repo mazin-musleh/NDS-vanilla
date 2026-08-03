@@ -1,0 +1,4 @@
+# fixture catalog stub
+- title: Service Listing
+  description: Filterable, paginated service catalog page.
+  url: /examples/service-listing.html

@@ -1,0 +1,13 @@
+# fixture catalog stub
+- title: Button
+  description: Primary action element with states and icon slot.
+  url: /components/button.html
+  tags: [action, form]
+- title: Table
+  description: Data table with sort, filter, pagination, export.
+  url: /components/table.html
+  tags: [data, list, sort, filter, pagination, export]
+- title: Autocomplete
+  description: Async searchable select input.
+  url: /components/autocomplete.html
+  tags: [form, search, select]
