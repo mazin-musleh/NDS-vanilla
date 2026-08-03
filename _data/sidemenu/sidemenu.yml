@@ -8,6 +8,9 @@
     - label: "Get Started"
       url: "/guides/get-started"
       href: "/guides/get-started.html"
+    - label: "NDS IQ"
+      url: "/guides/nds-iq"
+      href: "/guides/nds-iq.html"
 
 - label: "DGA Templates"
   has_sub: true

@@ -1,0 +1,111 @@
+---
+layout: page
+title: NDS IQ
+since: "1.6.x"
+updated: "1.6.x"
+last_edit: "03/08/2026 - 10:39 PM"
+lang: en
+direction: ltr
+hero_title: NDS IQ
+hero_style: nds-flat
+hero_tags:
+  - label: Beta
+    style: nds-yellow
+hero_description: "The instruction system that governs AI agents building with NDS: how it is engineered, tested, versioned, and kept current in your project."
+breadcrumb: ["Guides"]
+layout_class: nds-wSideInfo
+sidemenu_mode: false
+---
+
+<section id="ndsIqGuide" class="nds-content-section nds-sideinfo-section">
+    <div class="nds-section-body">
+        <aside class="nds-sideinfo nds-md nds-sticky nds-top" aria-label="On this page">
+            <nav class="nds-toc" aria-label="Table of contents" style="--toc-skeleton-rows: 10"
+                data-toc-source="#ndsIqGuide article" data-toc-levels="h2, h3">
+                <div class="nds-toc-head">
+                    <span class="nds-label">On this page</span>
+                    <h2 class="nds-toc-title nds-truncate">NDS IQ</h2>
+                </div>
+                <div class="nds-drawer nds-lined">
+                    <ul class="nds-drawer-list"></ul>
+                </div>
+            </nav>
+        </aside>
+        <div class="nds-info-content">
+            <article>
+
+                <h2 id="overview" class="nds-section-title">Overview</h2>
+                <p class="nds-section-description">What NDS IQ is and where it lives in a project.</p>
+
+                <p><strong>NDS IQ (Integration Quality)</strong> is the instruction system that governs AI agents building with NDS. It is a single block of rules <strong>installed once</strong> into a project's agent instruction file (<code class="nds-inline-code lang-html">CLAUDE.md</code> or <code class="nds-inline-code lang-html">AGENTS.md</code>), where it <strong>loads on every session</strong> and drives the whole lifecycle: installing the runtime, porting or building pages, verifying them in the browser, and upgrading. Two paths declared at its top configure everything it does.</p>
+                <p>Installation, the workflow, and the full rule text live in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>. This page explains the system itself: how it is built, tested, versioned, and kept current.</p>
+
+                <h2 id="how-built" class="nds-section-title">How It Is Built</h2>
+                <p class="nds-section-description">Three sources feed every rule: component internals, real migrations, and regression tests.</p>
+
+                <div class="nds-block">
+                    <h3 id="from-source" class="nds-block-title">From the Source Outward</h3>
+                    <p>The rules start where the components are defined: init lifecycles, event surfaces, state cascades, and the dependency graph between components. What an agent must never guess (markup structure, API shapes, attribute contracts) is written down as law; what it can safely derive is left to the agent.</p>
+                </div>
+                <div class="nds-block">
+                    <h3 id="hardened" class="nds-block-title">Hardened by Real Migrations</h3>
+                    <p>Revisions are driven by <strong>evidence, not speculation</strong>. NDS runs real adoption and migration projects with AI agents, and each failure an agent hits becomes a candidate rule. A finding earns its sentence only after verification against the source: reported gaps that turn out to be agent noise are dropped, not codified.</p>
+                </div>
+                <div class="nds-block">
+                    <h3 id="tested" class="nds-block-title">Tested per Revision</h3>
+                    <p>The block must not depend on a strong model to be read correctly. Before a revision publishes, a scenario suite replays real failure cases against fresh agents on the weakest model tier the block serves. A new rule goes through a <strong>fail, fix, pass loop</strong>: the failure is reproduced against the old text, the rule lands, and the same scenario must pass against the new text. Passing scenarios stay in the suite as regression tripwires for every later edit.</p>
+                </div>
+
+                <h2 id="governs" class="nds-section-title">What It Governs</h2>
+                <p class="nds-section-description">A map of the system. The letter of every rule lives in the Get Started guide.</p>
+
+                <p>Seven hard rules:</p>
+                <ol>
+                    <li><strong>Read-only template</strong>: nothing under the NDS reference folder is ever edited.</li>
+                    <li><strong>No minified reads</strong>: bundles are opaque; readable source ships beside them.</li>
+                    <li><strong>Canonical markup</strong>: component HTML is copied from the docs, never invented.</li>
+                    <li><strong>Sections and primitives</strong>: all page content composes from the NDS layout system.</li>
+                    <li><strong>Knobs and tokens first</strong>: styling goes through custom properties before any selector override.</li>
+                    <li><strong>No legacy libraries</strong>: NDS plus vanilla JS replaces the jQuery-era stack.</li>
+                    <li><strong>Approved porting strategy</strong>: replacing an existing UI starts with a plan the developer approves.</li>
+                </ol>
+                <p>Around the rules sits a <strong>workflow</strong> (inventory, plan, build, verify) and a <strong>plan file</strong> (<code class="nds-inline-code lang-html">NDS-PLAN.md</code>) that carries state between sessions, so any session can pick up where the last one stopped.</p>
+
+                <h2 id="revisions" class="nds-section-title">Revision History</h2>
+                <p class="nds-section-description">The block versions independently of the template: a plain integer, bumped once per published revision.</p>
+
+                <p>The current revision is stamped in the block's own heading (<code class="nds-inline-code lang-html">instructions v4</code>) and on the green chip beside the copyable block in the guide. An installed copy compares its stamp against the template's during upgrades to know when a refresh is due.</p>
+                <table class="nds-table nds-responsive">
+                    <thead><tr><th>Revision</th><th>Template</th><th>Highlights</th></tr></thead>
+                    <tbody>
+                        <tr><td>v1</td><td>1.6.0</td><td>Shipped with the 1.6.0 template, before the version stamp existed. An installed heading with no version reads as v1.</td></tr>
+                        <tr><td>v2</td><td>1.6.0</td><td>First stamped revision: porting strategy machinery, chrome coverage, plan discipline, the findings report file.</td></tr>
+                        <tr><td>v3</td><td>1.6.0</td><td>Conformance triage for pre-existing NDS work, plan lifecycle, the update check, dual block-refresh paths.</td></tr>
+                        <tr><td>v4</td><td>1.6.0</td><td>The NDS IQ name. Greenfield projects, the spike rule, JS wiring facts, the menu portal fact.</td></tr>
+                    </tbody>
+                </table>
+
+                <h2 id="staying-current" class="nds-section-title">Staying Current</h2>
+                <p class="nds-section-description">How a new revision reaches an installed project.</p>
+
+                <p>Two paths deliver updates:</p>
+                <ul>
+                    <li><strong>Template upgrade</strong>: the matching block revision rides along; the upgrade workflow replaces the installed block from the new template's guide.</li>
+                    <li><strong>Standalone refresh</strong>: on ask, the agent fetches the latest revision straight from the repository, even between template releases.</li>
+                </ul>
+                <p>Both paths swap the block from its heading through its end marker and re-apply the project's two declared paths, so a refresh <strong>never loses local configuration</strong>. The agent handles all of it; the upgrade prompt in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> is the whole interface.</p>
+
+                <h2 id="compatibility" class="nds-section-title">Compatibility</h2>
+                <p class="nds-section-description">Agent-agnostic by design, exercised end to end with Claude Code.</p>
+
+                <p>The rules assume a capable local coding agent with file access and a shell: nothing in them is specific to one vendor. Claude Code is the reference agent the system is built and tested with; other agents follow the same text. The Revision History table names the template release each revision is validated against.</p>
+
+                <h2 id="feeding-back" class="nds-section-title">Feeding the Next Revision</h2>
+                <p class="nds-section-description">Adoption findings close the loop that migrations open.</p>
+
+                <p>When adoption hits a real NDS gap (a missing method, a doc that misled, a reproducible bug), the agent records it in an optional <code class="nds-inline-code lang-html">NDS-REPORT.md</code> at the project root, written to contain <strong>nothing project-private</strong> so it stays safe to share. Sent to <a class="nds-color" href="https://github.com/mazin-musleh/NDS-vanilla/issues">GitHub Issues</a>, each verified finding becomes a rule or a fix in a later revision: the same loop that produced most of the rules on this page. Details under Reporting Findings in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
+
+            </article>
+        </div>
+    </div>
+</section>
