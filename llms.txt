@@ -24,11 +24,13 @@ Important notes:
 - **Tech tags** after each component show what it needs: `CSS` (style only), `JS` (requires the bundled script), `API`/`Data` (consumes data or a remote endpoint), `Add-on` (optional bundle).
 
 ## Guides
+{%- assign rawbase = site.repository_url | replace: "github.com", "raw.githubusercontent.com" | append: "/refs/heads/main" %}
 
 - [Get started]({{ "/guides/get-started.html" | absolute_url }}): Adopting NDS into an existing project with a coding agent — download the template release, append its instructions block to the project's `CLAUDE.md`/`AGENTS.md`, set the two paths it needs, then work session by session from that block.
+- [NDS IQ]({{ "/guides/nds-iq.html" | absolute_url }}): The instruction system itself — how it is built, tested, versioned, and kept current, with the full revision history.
+- [NDS IQ instructions block (raw)]({{ rawbase }}/_includes/nds-ai-instructions.md): The installable block, latest published revision — fetch and append verbatim to the project's agent instruction file to self-install, then follow its own setup flow.
 {%- assign cats = "UI,Forms,Data,Plugins,Layout,UI Shell,Utilities" | split: "," -%}
 {%- assign labels = "UI components,Form components,Data components,Plugin components,Layout,UI shell,Utilities" | split: "," -%}
-{%- assign rawbase = site.repository_url | replace: "github.com", "raw.githubusercontent.com" | append: "/refs/heads/main" -%}
 {%- for ci in (0..6) -%}
 {%- assign cat = cats[ci] -%}
 {%- assign items = site.data.content.components | where: "category", cat | sort: "title" -%}
