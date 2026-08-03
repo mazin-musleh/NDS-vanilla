@@ -156,14 +156,17 @@ address,
     font-style: normal;
 }
 
-*:focus:not(:focus-visible) {
-    outline: none;
-}
-
-*:focus-visible {
+:focus {
     outline: 2px solid var(--focus-outline);
     outline-offset: -2px;
     box-shadow: inset 0 0 0 3px var(--focus-inner);
+}
+
+// :where() keeps this at 0,1,0 so any component box-shadow overrides
+// naturally, without needing selector complexity to beat the reset.
+:focus:where(:not(:focus-visible)) {
+    outline: none;
+    box-shadow: none;
 }
 
 

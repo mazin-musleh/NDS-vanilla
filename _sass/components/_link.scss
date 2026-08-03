@@ -19,6 +19,13 @@
         color: var(--link-focused, var(--link-neutral-focused));
     }
 
+    // Padding gives the focus outline breathing room; negative margin
+    // cancels it so surrounding text doesn't shift.
+    &:focus-visible {
+        padding: 2px 4px;
+        margin: -2px -4px;
+    }
+
     &:hover {
         color: var(--link-hover, var(--link-neutral-hovered));
     }
