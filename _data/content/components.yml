@@ -486,6 +486,14 @@
   js: _js/nds-progress.js
   scss: _sass/components/_progress.scss
 
+- title: "Prose"
+  description: "Default styling for classless flowing content from editors and CMSs"
+  icon: '<i class="hgi hgi-stroke hgi-text-font"></i>'
+  category: "Layout"
+  tags: ["CSS"]
+  url: "/layout/prose.html"
+  scss: _sass/layout/_prose.scss
+
 - title: "Quote"
   description: "Semantic quotation block with optional title and author attribution"
   icon: '<i class="hgi hgi-stroke hgi-quote-up-square"></i>'

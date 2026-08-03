@@ -319,6 +319,9 @@
         - label: "Flex"
           url: "/layout/flex"
           href: "/layout/flex.html"
+        - label: "Prose"
+          url: "/layout/prose"
+          href: "/layout/prose.html"
     - label: "Utilities"
       is_group: true
       children:
