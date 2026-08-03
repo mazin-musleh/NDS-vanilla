@@ -500,9 +500,9 @@ bundle_sizes:
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
                         <i class="hgi hgi-stroke hgi-paint-brush-01"></i>
-                        <span class="nds-label">3-Tier Design Tokens</span>
+                        <span class="nds-label">4-Tier Design Tokens</span>
                     </span>
-                    <p class="nds-item-desc">Color tokens, semantic tokens, and component tokens, all defined as CSS
+                    <p class="nds-item-desc">Palette, primitives, semantic, and component tokens, all defined as CSS
                         custom properties. Each component exposes public properties for customization while keeping
                         internal styles private, no overrides needed.</p>
                 </div>
