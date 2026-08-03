@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.6.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "03/08/2026 - 01:04 PM"
+last_edit: "03/08/2026 - 03:54 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -181,7 +181,7 @@ Apply the NDS UI to this project following these instructions: https://raw.githu
             <div class="nds-code nds-expandable">
                 <span class="nds-code-tags lang-markdown">
                     <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>
-                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">v2</span></span>
+                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">v3</span></span>
                 </span>
                 <div class="nds-code-action">
                     <button class="nds-btn nds-subtle nds-copy" aria-label="Copy instructions block">
