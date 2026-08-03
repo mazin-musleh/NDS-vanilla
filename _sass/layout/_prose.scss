@@ -1,0 +1,62 @@
+@use '../mixins' as *;
+
+/* ── Prose: flowing-content defaults ──
+   One home for classless content styling. The GLOBAL half applies everywhere
+   and lives where its bundle needs it: the h1–h6 type ramp, list indent, and
+   img rules in `_reset.scss` (critical: they must paint pre-reveal), link
+   styling in `components/_link.scss`, bare <hr> via the divider in
+   `_base.scss`, bare <table> via the table component in
+   `components/_tables.scss`. This file adds what is only safe SCOPED —
+   paragraph and list rhythm, quotes, captions — the shapes text editors
+   and CMSs emit as classless markup.
+
+   Wrap rendered editor/CMS output in `.nds-prose` and it reads well with no
+   classes at all. Element rules sit at wrapper specificity via :where(), so
+   any NDS component dropped inside keeps its own look (a classed .nds-table
+   beats the plain-table rules below). The NDS editor's editing surface
+   shares `prose-flow` for preview parity. */
+
+@mixin prose-flow {
+    :where(p, ul, ol, blockquote, figure, table, pre) {
+        margin-block: var(--spacing-lg);
+    }
+
+    // Nested lists sit tight under their parent item
+    :where(li) > :where(ul, ol) {
+        margin-block: var(--spacing-xxs);
+    }
+
+    > :where(*:first-child) {
+        margin-block-start: 0;
+    }
+
+    > :where(*:last-child) {
+        margin-block-end: 0;
+    }
+}
+
+.nds-prose {
+    @include prose-flow;
+
+    // Flowing-citation tier; the featured pull-quote card is .nds-quote
+    // (components/_quote.scss) — same border token family by design
+    :where(blockquote) {
+        padding-inline-start: var(--spacing-xl);
+        border-inline-start: 3px solid var(--border-neutral-primary);
+        color: var(--text-secondary-paragraph);
+    }
+
+    :where(figcaption) {
+        font-size: var(--typo-text-sm-FS);
+        line-height: var(--typo-text-sm-LH);
+        color: var(--text-secondary-paragraph);
+        margin-block-start: var(--spacing-xs);
+    }
+
+    // The divider (which owns bare <hr>, _base.scss) gets editorial spacing
+    // here via its own knob — context sets the dial, the component keeps the look
+    :where(hr) {
+        --divider: var(--spacing-3xl);
+    }
+
+}

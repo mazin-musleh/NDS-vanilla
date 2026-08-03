@@ -71,7 +71,12 @@
 // BASE TABLE STYLES
 // ==============================================
 
-.nds-table {
+// Bare <table> rides the visual root at zero specificity (:where) — classless
+// CMS/editor output looks like the system table everywhere. The init-skeleton
+// rule below stays class-keyed on .nds-table, so bare tables (which tables JS
+// never wires) can never stick in the pre-init loading state.
+.nds-table,
+:where(table) {
     --_cell-padding-block: var(--table-cell-padding-block, var(--spacing-md));
     --_cell-padding-inline: var(--table-cell-padding-inline, var(--spacing-xl));
     --_sub-padding: var(--table-sub-padding, var(--spacing-xl));

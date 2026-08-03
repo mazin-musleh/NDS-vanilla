@@ -33,6 +33,9 @@
 // Section styles - visual tokens, color variants, meta, actions, 404, sideInfo
 @use 'layout/section';
 
+// Prose - scoped defaults for classless flowing content (editor/CMS output)
+@use 'layout/prose';
+
 // NOTE: Icon tokens + .nds-icon base are in assets/css/nds-icons.min.css
 // (loaded as a separate stylesheet via _includes/head.html).
 

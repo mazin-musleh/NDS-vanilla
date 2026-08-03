@@ -37,7 +37,10 @@ mark {
 
 // Unified divider: empty → single line; with content → text between flanking lines.
 // Uses logical props so it adapts automatically to writing-mode.
-.nds-divider {
+// Bare <hr> rides along at zero specificity (:where) — the system's horizontal
+// rule everywhere, classless CMS output included; any classed hr overrides.
+.nds-divider,
+:where(hr) {
     --_divider: var(--divider, var(--spacing-xs));
     --_divider-size: var(--divider-size, 1px);
 

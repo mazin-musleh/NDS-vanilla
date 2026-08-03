@@ -17,6 +17,12 @@
         flex-direction: column;
         flex: 1;
         min-width: 0;
+
+        // Stacked article sections (content template, guides): breathing room
+        // before every title after the first
+        article > .nds-section-title:not(:first-child) {
+            margin-top: var(--spacing-4xl);
+        }
     }
 
     .nds-sideinfo {
