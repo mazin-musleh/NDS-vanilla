@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.6.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "03/08/2026 - 11:53 AM"
+last_edit: "03/08/2026 - 01:04 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -11,7 +11,7 @@ hero_style: nds-flat
 hero_tags:
   - label: Beta
     style: nds-yellow
-hero_description: "Everything needed to adopt NDS in a project: download the template, install the agent instructions, build the UI page by page, and stay current with upgrades."
+hero_description: "A complete AI-driven workflow for installing NDS, building your UI page by page, and applying upgrades."
 breadcrumb: ["Guides"]
 layout_class: nds-wSideInfo
 sidemenu_mode: false
