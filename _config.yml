@@ -19,9 +19,16 @@
 # ============================================================================
 
 title: "NDS - Vanilla National Design System"
+description: "An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
+
 version: 1.6.x-dev   # build stamp: released line + .x-dev during development (never the guessed next number); finalized in the release commit, which also sweeps the 1.6.x since/updated doc stamps to the real number
 latest_release: 1.6.0  # last published release (tag + GitHub Release artifact)
-description: "An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
+
+# NDS IQ: the AI instruction system (block version is parsed from the include's
+# heading at build time, never declared here)
+nds_iq:
+  title: "NDS IQ"
+  description: "Integration Quality: the instruction system that governs AI agents building with NDS."
 
 baseurl: "/NDS-vanilla"
 url: "https://mazin-musleh.github.io"  # production origin (no trailing slash); used by sitemap.xml / robots.txt
