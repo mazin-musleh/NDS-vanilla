@@ -2,8 +2,8 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-updated: "1.6.x"
-last_edit: "03/08/2026 - 03:07 AM"
+updated: "1.6.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
+last_edit: "03/08/2026 - 03:19 AM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -220,7 +220,7 @@ Continue the NDS work: read NDS-PLAN.md and propose the next step.
 
                 <div class="nds-block">
                     <h3 id="findings-report" class="nds-block-title">Reporting Findings</h3>
-                    <p>The instructions let the agent keep an optional <code class="nds-inline-code lang-html">NDS-REPORT.md</code> at the project root, collecting what the adoption surfaced about NDS itself: a missing method or event, canonical markup contradicting a rule, a doc that misled, a reproducible component bug. Entries reference NDS versions and components with generic reproductions only — the file carries no project-private information, so it is safe to share as-is.</p>
+                    <p>The instructions let the agent keep an optional <code class="nds-inline-code lang-html">NDS-REPORT.md</code> at the project root, collecting what the adoption surfaced about NDS itself: a missing method or event, canonical markup contradicting a rule, a doc that misled, a reproducible component bug. Entries reference NDS versions and components with generic reproductions only; the file carries no project-private information, so it is safe to share as-is.</p>
                     <p>Review it and send it to <a class="nds-color" href="https://github.com/mazin-musleh/NDS-vanilla/issues">GitHub Issues</a>, or privately to the maintainer. Every report feeds the next revision of the system and these instructions.</p>
                 </div>
 
