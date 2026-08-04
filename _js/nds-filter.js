@@ -2236,6 +2236,9 @@
         }
 
         showNoResultsAlert() {
+            // Public entry point (form/AJAX modes call it directly) — no container
+            // to render into means no alert, not a crash on targetContainer.tagName.
+            if (!this.targetContainer) return;
             const alertId = `nds-filter-no-results-${this.targetId}`;
             // Soft dependency — filter skips no-results alert banner if NDS.Alert isn't bundled.
             if (document.getElementById(alertId) || !NDS.Alert) return;
