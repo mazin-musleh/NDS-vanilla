@@ -53,7 +53,11 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--spacing-lg);
+        gap: var(--spacing-4xl);
+
+        @include mobile {
+            gap: var(--spacing-lg);
+        }
     }
 
     /* Navigation Brand */
