@@ -3,7 +3,7 @@ layout: page
 title: NDS IQ
 since: "1.6.x"
 updated: "1.6.x"
-last_edit: "04/08/2026 - 12:34 AM"
+last_edit: "04/08/2026 - 08:44 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -74,7 +74,7 @@ sidemenu_mode: false
                 <h2 id="revisions">Revision History</h2>
                 <p>The block versions independently of the template: a plain integer, bumped once per published revision.</p>
 
-                <p>The current revision is stamped in the block's own heading (<code class="nds-inline-code lang-html">instructions v4</code>) and on the green chip beside the copyable block in the guide. An installed copy compares its stamp against the template's during upgrades to know when a refresh is due.</p>
+                <p>The current revision is stamped in the block's own heading (<code class="nds-inline-code lang-html">instructions v5</code>) and on the green chip beside the copyable block in the guide. An installed copy compares its stamp against the template's during upgrades to know when a refresh is due.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Revision</th><th>Template</th><th>Highlights</th></tr></thead>
                     <tbody>
@@ -82,6 +82,7 @@ sidemenu_mode: false
                         <tr><td>v2</td><td>1.6.0</td><td>First stamped revision: porting strategy machinery, chrome coverage, plan discipline, the findings report file.</td></tr>
                         <tr><td>v3</td><td>1.6.0</td><td>Conformance triage for pre-existing NDS work, plan lifecycle, the update check, dual block-refresh paths.</td></tr>
                         <tr><td>v4</td><td>1.6.0</td><td>The NDS IQ name. Greenfield projects, the spike rule, JS wiring facts, the menu portal fact.</td></tr>
+                        <tr><td>v5</td><td>1.6.0</td><td>From the first field report: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template floor, and hunting existing automation before falling back to a verification checklist.</td></tr>
                     </tbody>
                 </table>
 
@@ -98,7 +99,7 @@ sidemenu_mode: false
                 <h2 id="compatibility">Compatibility</h2>
                 <p>Agent-agnostic by design, exercised end to end with Claude Code.</p>
 
-                <p>The rules assume a capable local coding agent with file access and a shell: nothing in them is specific to one vendor. Claude Code is the reference agent the system is built and tested with; other agents follow the same text. The Revision History table names the template release each revision is validated against.</p>
+                <p>The rules assume a capable local coding agent with file access and a shell: nothing in them is specific to one vendor. Claude Code is the reference agent the system is built and tested with; other agents follow the same text. The Revision History table names the template release each revision is validated against. Template 1.6.0 is the floor: earlier releases ship no readable source in the zip, so on an older runtime the block mandates the upgrade before driving any NDS work.</p>
 
                 <h2 id="the-instructions">The Instructions</h2>
                 <p>The complete block, rendered from the same source the template ships. Installation flow lives in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>

@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.6.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "04/08/2026 - 12:34 AM"
+last_edit: "04/08/2026 - 10:16 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -93,8 +93,8 @@ sidemenu_mode: false
                     <h3 id="download">Download &amp; Extraction</h3>
                     <ol>
                         <li><strong>Download</strong> <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}.zip</code> from the <a class="nds-color" href="{{ site.repository_url }}/releases/latest">GitHub Releases</a> page.</li>
-                        <li><strong>Extract</strong> the archive into a gitignored <code class="nds-inline-code lang-html">.nds/</code> folder at the project root (the default), or anywhere the agent can access: a sibling directory or a shared development location.</li>
-                        <li><strong>Record</strong> this path. It becomes your <code class="nds-inline-code lang-html">NDS_ROOT</code>.</li>
+                        <li><strong>Extract</strong> the archive into a gitignored <code class="nds-inline-code lang-html">.nds/</code> folder at the project root. This is the canonical home: the instruction file records the path and is committed, so a project-relative folder works on every machine; a custom location (a sibling directory, a shared extract) works only where it exists and is the dev's explicit exception.</li>
+                        <li><strong>Record</strong> the template folder's path. The archive holds one top-level <code class="nds-inline-code lang-html">nds-vanilla-template-v{{ site.latest_release }}</code> folder; that folder, not the folder you extracted into, becomes your <code class="nds-inline-code lang-html">NDS_ROOT</code>.</li>
                     </ol>
                 </div>
                 <div class="nds-block">
@@ -125,7 +125,32 @@ LICENSE         - License terms
 
                 <div class="nds-block">
                     <h3 id="instructions-block">Setup Prompt</h3>
-                    <p>Hand the agent the prompt below as its first turn. It fetches the NDS IQ instructions and installs them verbatim into the agent's instruction file at the project root, creating the file if it doesn't exist, or appending to an existing one. NDS IQ's own setup flow takes over from there.</p>
+                    <p>Hand the agent the prompt below as its first turn. It downloads the raw NDS IQ instructions file and installs it verbatim into the agent's instruction file at the project root, creating the file if it doesn't exist, or appending to an existing one. NDS IQ's own setup flow takes over from there.</p>
+                    <div class="nds-code">
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <code class="lang-prompt">
+Download these instructions as a raw file (curl or equivalent, never a web-fetch tool, which re-renders what it fetches) and append them verbatim to this project's agent instructions file. Verify the installed copy's first line starts with `## Design system: NDS Vanilla` (both # intact) and its last line is `&lt;!-- end NDS instructions --&gt;`, then follow the installed instructions; their setup flow starts from whatever state this project is in (existing UI, fresh build, or prior NDS work): https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/nds-ai-instructions.md
+                        </code>
+                    </div>
+                    <div class="nds-block">
+                        <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
+                            <span class="nds-feedback nds-alert-icon">
+                                <span class="nds-feedback-icon">
+                                    <i class="nds-icon" aria-hidden="true"></i>
+                                </span>
+                            </span>
+                            <div class="nds-alert-content">
+                                <div class="nds-alert-text">
+                                    <span class="nds-alert-title">Fresh session only:</span>
+                                    <p class="nds-alert-description">Paste this as the first turn of a fresh session, never mid-task: an ongoing conversation's context competes with the setup and invites the agent to treat it as a one-off task and skip the install.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="nds-block">
                         <div class="nds-alert nds-card nds-inline" data-status="neutral" role="alert">
                             <span class="nds-feedback nds-alert-icon">
@@ -135,8 +160,8 @@ LICENSE         - License terms
                             </span>
                             <div class="nds-alert-content">
                                 <div class="nds-alert-text">
-                                    <span class="nds-alert-title">Claude Code tip:</span>
-                                    <p class="nds-alert-description">This first run works well in <strong>plan mode</strong>. The agent inventories read-only, surfaces the project-wide decisions as structured questions, and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> only after you approve.</p>
+                                    <span class="nds-alert-title">First-run tip:</span>
+                                    <p class="nds-alert-description">This first run works well in <strong>plan mode</strong>, or your agent's read-only planning equivalent. The agent inventories read-only, surfaces the project-wide decisions as structured questions, and writes <code class="nds-inline-code lang-html">NDS-PLAN.md</code> only after you approve.</p>
                                 </div>
                             </div>
                         </div>
@@ -145,16 +170,6 @@ LICENSE         - License terms
                         <li><strong>Claude Code</strong>: <code class="nds-inline-code lang-html">CLAUDE.md</code></li>
                         <li><strong>Cursor / Codex</strong>: <code class="nds-inline-code lang-html">AGENTS.md</code></li>
                     </ul>
-                    <div class="nds-code">
-                        <div class="nds-code-action">
-                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy prompt">
-                                <i class="nds-icon nds-hgi-copy-01"></i>
-                            </button>
-                        </div>
-                        <code class="lang-prompt">
-Apply the NDS UI to this project following these instructions: https://raw.githubusercontent.com/mazin-musleh/NDS-vanilla/refs/heads/main/_includes/nds-ai-instructions.md
-                        </code>
-                    </div>
                     <p>The URL always tracks the latest published revision; on later sessions, NDS IQ's own upgrade workflow handles any drift against your installed template.</p>
                 </div>
                 <div class="nds-block">
@@ -181,7 +196,7 @@ Apply the NDS UI to this project following these instructions: https://raw.githu
             <div class="nds-code nds-expandable">
                 <span class="nds-code-tags lang-markdown">
                     <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>
-                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v4</span></span>
+                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v5</span></span>
                 </span>
                 <div class="nds-code-action">
                     <button class="nds-btn nds-subtle nds-copy" aria-label="Copy NDS IQ instructions">

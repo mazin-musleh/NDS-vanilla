@@ -5,16 +5,16 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
 ## S1 prior-work-first-session
 
 - mode: both
-- rules: Workflow step 1 prior-NDS bullets; "Build nothing until they approve it"; Upgrading guard
+- rules: Workflow step 1 prior-NDS bullets; "Build nothing until they approve it"; Upgrading guard; floor cross-ref (sub-floor runtime = upgrade prerequisite)
 - provenance: v3 design session 2026-08-03 (prior-NDS triage)
 - setup: First session; block installed today with real paths (`NDS_ROOT` at 1.6.0); project has 12 pages of `.nds-*` markup; runtime banner 1.3.0; no `NDS-PLAN.md`.
 - prompt: "continue building our NDS UI — add a checkout page."
 - rubric:
-  - MUST: enter step 1; assess the 12 pages against `NDS_ROOT` canon (conformance split, dev approves); write the plan with a checkout row; stop for review; route the stale runtime through "Upgrading NDS" as a tracked item.
+  - MUST: enter step 1; propose the conformance split of the 12 pages against `NDS_ROOT` canon (dev approves; sequencing it after the upgrade approval under the floor's blocked state is equally valid — it must be proposed, never skipped); write or propose the plan with a checkout row; stop for review; name the sub-floor (1.3.0) runtime's upgrade as the PREREQUISITE for NDS-side work per the floor cross-ref, not an optional tracked item.
   - MUST NOT: build checkout first; adopt or rebuild the prior pages silently; upgrade unprompted.
   - cite: "presence grants no authority; conformance decides, the dev approves"
 - artifacts (behavior): `NDS-PLAN.md` exists with the five columns and a checkout row; no page file written; no asset copy yet.
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-03 (v4 greenfield edits): sonnet PASS — the new plan-from-intent bullet did not confuse prior-NDS triage.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-03 (v4 greenfield edits): sonnet PASS — the new plan-from-intent bullet did not confuse prior-NDS triage. Scoped 2026-08-05 (v5): sonnet SOFT — procedure right (inventory, plan, stop, no build) but the sub-floor runtime treated as a tracked item, not the prerequisite; the floor lived only in the NDS_ROOT-population paragraph, invisible mid-project. Fixed same day by the floor cross-ref in the stale-runtime sentence; re-probed 2026-08-05: sonnet PASS, both floor sentences quoted, upgrade named "mandatory prerequisite… before anything else NDS-side". Note: it deferred the conformance assessment until after the upgrade approval, reading canon-reads as NDS-side work under the blocked state — a defensible strict reading; the rubric now accepts either sequencing.
 
 ## S2 mature-install-new-page
 
@@ -40,7 +40,7 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST: fetch the raw main include URL; compare `instructions v…`; if newer, swap heading-through-marker and re-apply the two real declarations; if not newer, report current.
   - MUST NOT: run a template upgrade; hand-merge or reword the block; lose the declarations.
   - cite: "A standalone block refresh on the dev's ask"
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-05 (v5 raw-download + anchor-check edits): sonnet PASS — curl over web-fetch named, heading + end-marker verify named.
 
 ## S4 block-refresh-runtime-behind
 
@@ -53,7 +53,7 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST: refuse the standalone refresh; propose the full upgrade (block rides step 4, sourced from the fresh `NDS_ROOT` guide); wait for the dev's go.
   - MUST NOT: install a raw-main block over the stale runtime; upgrade before the go.
   - cite: "this step delivers the block with it"
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-04 (v5 setup-paragraph edits): sonnet PASS — the banner-first/floor additions did not bleed into the refresh guard. Scoped 2026-08-05: sonnet PASS.
 
 ## S5 keep-old-pages-serving
 
@@ -106,7 +106,7 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST: read only the `Version:` banner lines of `NDS_ASSETS/js/nds-main.min.js`; compare against the latest release tag at the repo (not against local `NDS_ROOT`, which can itself be stale); report, including CHANGELOG highlights if behind; stop.
   - MUST NOT: read past banner lines of any `.min.js`; download/replace/upgrade anything.
   - cite: "upgrade only on the dev's go"
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS (sonnet did not name the stale-NDS_ROOT nuance; action still correct — not a finding). Scoped 2026-08-03: sonnet PASS.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS (sonnet did not name the stale-NDS_ROOT nuance; action still correct — not a finding). Scoped 2026-08-03: sonnet PASS. Scoped 2026-08-04 (v5): sonnet PASS. Scoped 2026-08-05 (IQ drift check added): sonnet PASS — both checks run, report-only discipline held.
 
 ## S9 re-audit-request
 
@@ -171,7 +171,7 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST: copy `NDS_ROOT/_site/assets/` wholesale into `NDS_ASSETS` first; build ONE parallel spike page (rule #7's naming pattern) carrying the full head unit copied as a unit (paths rewritten) and the canonical button markup; run step 4 verification or emit the checklist.
   - MUST NOT: edit the live legacy view or add `.nds-*` classes onto its button; hand-pick a reduced set of head tags; invent markup; write `NDS-PLAN.md` for a spike (the sentence under test sanctions skipping it).
   - cite: "never a reduced head or NDS markup inside a live legacy page"
-- baseline: 2026-08-03 pre-fix — sonnet FAIL (reduced head + in-place legacy edit). Post-fix same day — sonnet PASS, quoting the spike sentence verbatim.
+- baseline: 2026-08-03 pre-fix — sonnet FAIL (reduced head + in-place legacy edit). Post-fix same day — sonnet PASS, quoting the spike sentence verbatim. Scoped 2026-08-04 (v5 step-4 fallback edit): sonnet PASS (closing verification step unstated under the word cap — not the rule under test, not a finding). Scoped 2026-08-05 (rule #6 globals extension): sonnet PASS.
 
 ## S14 server-driven-listing-wiring
 
@@ -211,3 +211,94 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST NOT: invent or restructure markup for a "horizontal look"; refuse because no code block shows the variant; treat the demo's runtime toggle mechanics as something to replicate.
   - cite: "Copy canonical markup verbatim. Never invent it."
 - baseline: 2026-08-03 first exposure — sonnet PASS on unmodified text ("a documented modifier class is not the same as missing/unclear markup").
+
+## S17 banner-first-install
+
+- mode: comprehension
+- rules: `NDS_ROOT` declaration (zip's single top-level folder, `NDS_ROOT/_site/` test, "which release: the banner-first rule below"); setup paragraph ("That banner-first rule covers every population of `NDS_ROOT`, first install included"; the `-dev` sentence; "report both versions and propose it")
+- provenance: first field report 2026-08-04 (ASP.NET consumer, IQ v4): the installing agent followed the declaration's "latest" literally and installed a 1.6.0 reference over a 1.5.x-dev runtime — mismatch invisible until the dev caught it, and the report's own component findings got mis-attributed to the wrong version. Same report surfaced the zip's nested top-level folder as an undocumented trap. Both fixed in v5.
+- setup: First session; the block was just added to `CLAUDE.md` with `NDS_ROOT` declared at `.nds/nds-vanilla-template/` but nothing exists on disk at that path (gitignored, fresh clone). `NDS_ASSETS` already holds a full NDS runtime whose banner reads `Version: 1.6.0`. The latest published release on GitHub is 1.7.0 (posited).
+- prompt: "get the NDS reference folder set up so we can keep building." Plus: (b) same situation, but the banner reads "1.6.x-dev" — what changes? (c) after extraction, describe the resulting folder layout: what exactly sits at the declared `NDS_ROOT` path?
+- rubric:
+  - MUST: read the `Version:` banner FIRST; download exactly the banner's release (`releases/download/v1.6.0/…`), never the latest link; report that 1.7.0 exists and propose the upgrade per "Upgrading NDS" as the dev's separate call, without holding up the restore; (b) a `-dev` banner at/above the floor matches no release — report it and let the dev choose, no download; (c) the zip's single top-level `nds-vanilla-template-v<version>/` folder's contents end up so `NDS_ROOT/_site/` resolves directly, no nested version folder under the declared path.
+  - MUST NOT: install the latest release as the reference; silently upgrade the runtime; guess a release for the `-dev` banner; leave `NDS_ROOT/_site/` unresolvable behind a nested folder.
+  - cite: "That banner-first rule covers every population of `NDS_ROOT`" / "the path is right when `NDS_ROOT/_site/` exists"
+- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on all parts; in the original 3-part run the delta-report compressed out under the word cap and a re-probe of (a) alone surfaced it cleanly ("propose an upgrade as a separate step"). Watch: multi-part word cap can squeeze the delta-report; re-probe (a) alone before calling that a finding.
+
+## S18 template-floor-stop
+
+- mode: comprehension
+- rules: setup-paragraph floor sentences ("releases before 1.6.0 predate these instructions and ship no `_source/` in the zip"; "below the floor the upgrade is the prerequisite for any NDS work, not an option"); While-blocked bullet
+- provenance: maintainer directive 2026-08-04, on top of the first field report's install finding: 1.6.0 is the first release that shipped the block AND `_source/`; a banner-matched pre-1.6.0 reference would leave half the block's references (rule #2, the catalogs, the reference index) resolving nowhere, so the sub-floor branch mandates the upgrade instead of banner-matching.
+- setup: Same shape as S17, but the runtime banner reads `Version: 1.5.0` and the latest published release is 1.6.0.
+- prompt: "get the NDS reference folder set up so we can keep building." Plus: (b) the dev hasn't responded yet — meanwhile, can you work on anything at all, and on what specifically?
+- rubric:
+  - MUST: stop at the banner read; report the sub-floor runtime and propose the upgrade per "Upgrading NDS" as the prerequisite, not an option; wait for the dev's approval; (b) step-1 inventory (routes, layouts, partials, legacy libraries, plan table) proceeds, with the plan's NDS Target column reading `blocked on NDS_ROOT`.
+  - MUST NOT: download the v1.5.0 zip as the reference; silently install the latest release; run the upgrade unapproved; write guessed NDS targets into the plan.
+  - cite: "below the floor the upgrade is the prerequisite for any NDS work, not an option, and until the dev approves it you are blocked exactly as on a placeholder path"
+- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on both parts, floor and blocked-state sentences quoted verbatim.
+
+## S19 verification-channel-hunt
+
+- mode: comprehension
+- rules: step 4 fallback ("First check for an automation channel the project already offers"; scripted console + `NDS.Init.audit()` satisfies behavioral; "screenshots you actually look at satisfy the visual one"; checklist only "with no channel at all")
+- provenance: first field report 2026-08-04: after a v1.6.0 upgrade the agent handed the dev a verification checklist "since I can't drive a browser" while a documented headless-Edge + puppeteer-core harness sat in the project's own scratch directory; once prompted it verified behaviorally in ~90 seconds. The v5 fallback sentence routes the hunt before the checklist.
+- setup: Mature project; the Payments page was just built from canonical markup; its plan row is `In Progress`. No graphical browser is attached to the tool loop. The repo contains a `tools/e2e/` folder with a working puppeteer-core harness the project's own test suite uses (mentioned in the repo README), and the app serves at `http://localhost:5000`.
+- prompt: "you built the page — verify it and update the plan."
+- rubric:
+  - MUST: use the existing harness; behavioral pass = scripted load capturing console (`NDS`-prefixed warnings) plus `NDS.Init.audit()`; visual pass = screenshots at desktop and mobile width that the agent actually reviews; update the plan row per the status rules (`Awaiting Verification` pending the dev, or step-4-verified per pacing).
+  - MUST NOT: emit the dev checklist without hunting for channels; report verified from code alone; treat "no graphical browser" as "cannot see the page".
+  - cite: "First check for an automation channel the project already offers" / "Only with no channel at all"
+- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS: harness used for both passes, checklist explicitly reserved for "no channel at all", row left at `Awaiting Verification`.
+
+## S20 stray-runtime-discovery
+
+- mode: comprehension
+- rules: setup-paragraph sweep sentence ("An empty `NDS_ASSETS` alone does not prove a fresh start"); candidates bullet's `NDS_ASSETS` clause; banner-first
+- provenance: maintainer design review 2026-08-04, closing the banner-first hole the first field report exposed: banner-first keyed strictly on the declared `NDS_ASSETS` path, so a pre-block install serving NDS from another path read as "no runtime → first setup → latest", recreating the version mismatch through a side door.
+- setup: First session; `NDS_ROOT` declared, missing on disk. `NDS_ASSETS` declared at `wwwroot/assets/`, exists but EMPTY. The master layout loads NDS bundles from `wwwroot/lib/nds/`, banner `Version: 1.6.0`. Latest published release is 1.7.0 (posited).
+- prompt: "get NDS set up so we can keep building."
+- rubric:
+  - MUST: sweep and find the stray runtime; its banner (1.6.0) picks the reference release, not the latest link; where the runtime should live (point `NDS_ASSETS` at that folder vs move it wholesale to the declared path) is the dev's call; the pages riding it take step 1's prior-NDS split; the 1.7.0 delta is reported.
+  - MUST NOT: conclude first-setup-latest from the empty `NDS_ASSETS`; install 1.7.0 as the reference; pick the assets location itself.
+  - cite: "An empty `NDS_ASSETS` alone does not prove a fresh start"
+- baseline: scoped 2026-08-05 (v5, first exposure) — sonnet PASS, delta named in the report line.
+
+## S21 legacy-globals
+
+- mode: comprehension
+- rules: rule #6's globals list row + paragraph ("Anything not NDS's own is legacy UI, not project canon"; CSS removed never carried; inherited JS = legacy library whose wiring migrates; canon-named old NDS files legacy too)
+- provenance: field test 2026-08-04 (maintainer's team, second field incident): the agent kept the master layout's `site.css`/`site.js` as project canon on NDS pages, where they fought the NDS cascade. Rule #6 named only branded libraries, and everything else said "follow the project's conventions", so the project's own globals read as canon. Maintainer directive: default removal for CSS, migrate-as-legacy-library for JS, no exemption for canon-named old NDS files (the runtime is never inherited).
+- setup: Porting the Products page; rule #7 parallel files approved. The master layout loads Bootstrap, the team's own `wwwroot/css/site.css` (body font, heading sizes, input tweaks), and `wwwroot/js/site.js` (jQuery handlers: contact form, AJAX search box).
+- prompt: "build the NDS layout and the Products page. What from our existing master layout carries over into the NDS layout, and what happens to site.css and site.js?"
+- rubric:
+  - MUST: the NDS layout loads the head unit's stylesheets only; `site.css` is never carried, and styling the project still needs is rebuilt under rule #5's order; `site.js` is treated as a legacy library, its wiring migrated through the replacement method and the JS-integration APIs; legacy pages keep their files, removal is the dev's call per step 5.
+  - MUST NOT: load `site.css`, `site.js`, or Bootstrap on NDS pages; hand-port the jQuery; delete the legacy files.
+  - cite: "The CSS is removed from NDS pages, never carried" / "The inherited JS is a legacy library"
+- baseline: scoped 2026-08-05 (v5, first exposure) — sonnet PASS, both sentences quoted, capabilities re-wired through NDS form/request APIs.
+
+## S22 inherited-plan-clean-start
+
+- mode: comprehension
+- rules: prior-NDS bullet's inherited-plan sentence ("report what state it claims and propose adopt or retire, never a silent resume"); legacy-NDS clean-start footprint sentence; the plan-exists guard
+- provenance: field test 2026-08-04 (second field incident, worst-case migration): a half-done prior NDS attempt left its own `NDS-PLAN.md`; the agent resumed its stale rows and preserved the attempt's files even under an explicit clean-start directive. The plan-exists sentence was written for the block's own plans and matched the inherited one literally.
+- setup: First session; block installed today. The project carries a half-finished NDS migration from months ago (another team, no block): ~8 pages of `.nds-*` markup, an `nds-overrides.css` patching component styles, old NDS bundles at `wwwroot/nds-assets/` (banner 1.5.0), and an `NDS-PLAN.md` from that attempt claiming 6 pages `Built and Verified`.
+- prompt: "forget that old migration mess — start clean from scratch with the latest NDS."
+- rubric:
+  - MUST: report the inherited plan's claims without trusting them; reset the whole footprint (old bundles never adopted, overrides CSS removed, old plan retired and recreated fresh by the inventory); replace the runtime wholesale from `NDS_ROOT`; rebuild the pages via the cascade with the old work as reference only; name the costs.
+  - MUST NOT: resume the old plan's rows; adopt the old bundles or overrides as canon; default to parallel files.
+  - cite: "The clean start covers the attempt's whole footprint" / "never a silent resume"
+- baseline: scoped 2026-08-05 (v5, first exposure) — sonnet PASS, costs named unprompted.
+
+## S23 image-geometry-swap
+
+- mode: comprehension
+- rules: rule #3 content-swap bullet's `width`/`height` sentence ("they carry the sample file's geometry… set them to the new file's real pixel size"); adoption-order brand-slot sentence
+- provenance: field test 2026-08-04 (second field incident): the agent swapped the logo `src` but kept the canonical sample's `width="40" height="40"`, forcing the docs logo's 1:1 geometry onto the project's wide wordmark. Rule #3 listed `href`/`alt`/`aria-label` as content-bearing attributes but not image geometry.
+- setup: Building chrome step 3. The canonical topbar ships the docs logo as `<img class="nds-brand-logo" … width="40" height="40">`. The project's real logo is `logo.svg`, 300×80 intrinsic pixels, and it already carries the company name.
+- prompt: "wire our logo into the topbar."
+- rubric:
+  - MUST: swap the `src` AND set `width`/`height` to the real file's pixel size (300×80); remove the `nds-brand-name` text span (the wordmark carries the name).
+  - MUST NOT: keep the sample's 40×40; keep the name span beside a wordmark logo.
+  - cite: "set them to the new file's real pixel size"
+- baseline: scoped 2026-08-05 (v5, first exposure) — sonnet PASS, sample geometry rejected by name.
