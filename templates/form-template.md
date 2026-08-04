@@ -331,7 +331,7 @@ sidemenu_mode: false
                     <div class="nds-card nds-stroke nds-center" style="--card-width: 100%;">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-dark nds-xl nds-success">
+                                <span class="nds-featured-icon nds-circle nds-dark nds-xl" data-status="success">
                                     <i class="hgi hgi-stroke hgi-checkmark-circle-02"></i>
                                 </span>
                             </div>
