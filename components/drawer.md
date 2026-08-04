@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.0"
-last_edit: "26/07/2026 - 10:05 PM"
+last_edit: "04/08/2026 - 04:02 PM"
 ---
 
 <!-- Nested Menu -->
@@ -1136,6 +1136,13 @@ last_edit: "26/07/2026 - 10:05 PM"
                         <span class="nds-label">Scroll Overflow</span>
                     </span>
                     <p class="nds-item-desc">Height-constrained mode with gradient fade and a show-more button that auto-detects overflow and flips at scroll end.</p>
+                </div>
+                <div class="nds-definition-item">
+                    <span class="nds-item-title">
+                        <i class="hgi hgi-stroke hgi-inbox"></i>
+                        <span class="nds-label">Empty State</span>
+                    </span>
+                    <p class="nds-item-desc">A drawer whose list can run out of items (notifications, search results, a filtered menu) takes <code class="nds-inline-code lang-html">nds-empty</code> on the <code class="nds-inline-code lang-html">&lt;ul class="nds-drawer-list"&gt;</code>: the <a href="{{ '/components/empty.html' | relative_url }}">Empty</a> component fills it with a placeholder while it holds no items and clears it as soon as one arrives. Set the wording and icon with <code class="nds-inline-code lang-html">data-empty-message</code> and <code class="nds-inline-code lang-html">data-empty-icon</code> on the same list.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "29/07/2026 - 04:31 PM"
+last_edit: "04/08/2026 - 04:02 PM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -1970,7 +1970,7 @@ filterForm.addEventListener('nds:filterFormAjax', (e) =&gt; {
                         <i class="hgi hgi-stroke hgi-link-circle-02"></i>
                         <span class="nds-label">Shareable URL State</span>
                     </span>
-                    <p class="nds-item-desc">Filter selections and search terms sync to URL query parameters automatically, producing bookmarkable and shareable links that restore the exact filter state.</p>
+                    <p class="nds-item-desc">Filter selections and search terms sync to URL query parameters automatically, producing bookmarkable and shareable links that restore the exact filter state. A multi-select group joins its values with commas (<code class="nds-inline-code lang-html">?department=Design,Finance</code>), so a checkbox or switch option whose own value contains a comma cannot round-trip. Radio groups hold one value at a time and never join, so their option values may contain commas freely — <code class="nds-inline-code lang-html">value="1,2,3"</code> for a single option standing in for a group of ids restores from the URL as written.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -2229,6 +2229,14 @@ filter.refresh();   // Re-resolve target container, re-scan items, regenerate au
 filter.applyFilters();  // Trigger filtering logic manually
 filter.submitForm();    // Submit the form (form submission mode only)
 filter.destroy();       // Show all items and remove initialization flag
+
+// ── No-results alert ────────────────────────────────
+// Client-side mode raises and dismisses this automatically. Form and AJAX modes
+// don't — the server owns the result set, so call these off your own response.
+// Both need data-filter-target: without it there is no container to render into
+// and the call is a silent no-op.
+filter.showNoResultsAlert();     // Warning alert + a Clear Filter button wired to reset()
+filter.dismissNoResultsAlert();  // Remove it when results come back
 
 // Re-apply URL params after dynamically adding filter inputs
 filter.reapplyUrlParamsForFilter('system');

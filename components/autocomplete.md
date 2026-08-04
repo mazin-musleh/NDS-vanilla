@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "15/07/2026 - 01:15 AM"
+last_edit: "04/08/2026 - 04:02 PM"
 ---
 
 <!-- Autocomplete Input -->
@@ -127,7 +127,7 @@ last_edit: "15/07/2026 - 01:15 AM"
             <i class="hgi hgi-stroke hgi-plug-socket"></i>
             <span class="nds-label">Auto-initialization</span>
           </span>
-          <p class="nds-item-desc">Initializes automatically on any input with <code class="nds-inline-code lang-html">autocomplete="on"</code> inside a container with <code class="nds-inline-code lang-html">data-url</code>. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Autocomplete.reinit()</code>.</p>
+          <p class="nds-item-desc">Initializes automatically on any input with <code class="nds-inline-code lang-html">autocomplete="on"</code> inside a container with <code class="nds-inline-code lang-html">data-url</code>. For dynamic content, call <code class="nds-inline-code lang-js">NDS.Autocomplete.reinit()</code>. The instance itself is built on the field's first focus, which covers every path a user takes but not a field that JS drives before anyone touches it: to write a value and fetch against a field that has never been focused, construct it first with <code class="nds-inline-code lang-js">NDS.Autocomplete.create(container)</code>.</p>
         </div>
         <div class="nds-definition-item">
           <span class="nds-item-title">
