@@ -678,8 +678,17 @@
         // comma-separated values in `rawValue` (URL-param sourced). Values are
         // length-capped via sanitizeFilterValue but keep their literal chars so
         // matching against trusted input.value succeeds (e.g. "Healthcare & Social").
+        //
+        // Only checkbox/switch groups hold several values, so only their param is
+        // a comma-joined list. A radio group carries one value or none — its param
+        // is whatever updateUrlParams wrote for the single checked input, matched
+        // whole. Splitting it broke options whose own value contains commas
+        // (value="1,2,3", one option standing for a group of ids). Comma-bearing
+        // values stay unsupported on checkbox/switch, where comma is the delimiter.
         _checkInputsForValues(filterData, rawValue) {
-            const values = rawValue.split(',').map(v => this.sanitizeFilterValue(v).trim());
+            const values = filterData.type === 'radio'
+                ? [this.sanitizeFilterValue(rawValue).trim()]
+                : rawValue.split(',').map(v => this.sanitizeFilterValue(v).trim());
             filterData.inputs.forEach(input => {
                 if (values.some(v => v.toLowerCase() === input.value.toLowerCase())) {
                     input.checked = true;
@@ -1069,6 +1078,7 @@
                     input.checked = false;
                 }
             });
+            this._recheckAllRadio(filterData);
 
             this.updateFilterCriteria(filterName);
             this.updateApplyButtonLabel();
@@ -1079,6 +1089,18 @@
             } else {
                 this.applyFilters();
             }
+        }
+
+        // A radio group must never sit with nothing checked: unchecking its
+        // chosen option restores the auto-prepended "All" (value=""), which
+        // updateFilterCriteria then reads as no filter. No-op for the other
+        // types — only radios get an All option, and only radios can't self-clear.
+        _recheckAllRadio(filterData) {
+            if (filterData.type !== 'radio') return;
+            // inputs is a NodeList (querySelectorAll) — wrap before .find,
+            // matching updateFilterCriteria's Array.from use.
+            const allInput = Array.from(filterData.inputs).find(i => i.value === '');
+            if (allInput) allInput.checked = true;
         }
 
         setupFilterElements() {
@@ -2399,12 +2421,7 @@
                 filterData.inputs.forEach(input => {
                     input.checked = false;
                 });
-                if (filterData.type === 'radio') {
-                    // filterData.inputs is a NodeList (querySelectorAll) — wrap
-                    // before .find, matching updateFilterCriteria's Array.from use.
-                    const allInput = Array.from(filterData.inputs).find(i => i.value === '');
-                    if (allInput) allInput.checked = true;
-                }
+                this._recheckAllRadio(filterData);
                 this.criteria.filters[filterName] = [];
             }
         }
