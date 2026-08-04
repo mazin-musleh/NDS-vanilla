@@ -160,12 +160,17 @@
 
             // Track held keys to prevent fetch spam (e.g. holding backspace)
             this._keyHeld = false;
+            // Set only while selectItem dispatches its own input event (below)
+            this._suppressFetch = false;
 
             const { signal } = this.abortController;
 
-            // Input typing — only process when 'typing' state is set by forms JS
+            // Input handler. The only input event that must NOT fetch is the one
+            // selectItem dispatches to sync forms after writing the picked value,
+            // and it flags that itself — every other input event fetches, whether
+            // the user typed it or the consumer dispatched it.
             this._onInput = () => {
-                if (!NDS.State.has(this.container, 'typing')) return;
+                if (this._suppressFetch) return;
                 if (this._keyHeld) return;
 
                 var value = this.input.value.trim();
@@ -430,10 +435,12 @@
             this.input.value = text;
             this.selectedItem = itemData;
 
-            // Remove 'typing' so _onInput handler skips the fetch
-            removeState(this.container, 'typing');
-            // Trigger input/change events so forms JS updates state
+            // Trigger input/change events so forms JS updates state. Fetching on
+            // the value we just picked would reopen the menu — suppress just this
+            // one dispatch (triggerEvents is synchronous, so the flag can't leak).
+            this._suppressFetch = true;
             NDS.triggerEvents(this.input);
+            this._suppressFetch = false;
 
             this.close();
             this.input.focus();
