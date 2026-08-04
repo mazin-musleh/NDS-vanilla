@@ -1097,9 +1097,14 @@
         // types — only radios get an All option, and only radios can't self-clear.
         _recheckAllRadio(filterData) {
             if (filterData.type !== 'radio') return;
-            // inputs is a NodeList (querySelectorAll) — wrap before .find,
+            // inputs is a NodeList (querySelectorAll) — wrap before .some/.find,
             // matching updateFilterCriteria's Array.from use.
-            const allInput = Array.from(filterData.inputs).find(i => i.value === '');
+            const inputs = Array.from(filterData.inputs);
+            // Only the empty group needs restoring: setFilterValues may have just
+            // checked a real option, and checking All would silently unselect it
+            // (same-name radios are mutually exclusive in the DOM).
+            if (inputs.some(input => input.checked)) return;
+            const allInput = inputs.find(input => input.value === '');
             if (allInput) allInput.checked = true;
         }
 
@@ -2622,6 +2627,9 @@
             filterData.inputs.forEach(input => {
                 input.checked = valuesLower.includes(input.value.toLowerCase());
             });
+            // setFilterValues(name, []) is the per-filter clear — a radio group
+            // lands back on "All" rather than empty, same as the chip and clear paths.
+            this._recheckAllRadio(filterData);
 
             this.updateFilterCriteria(filterName);
             this.updateApplyButtonLabel();
