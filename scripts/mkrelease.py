@@ -68,6 +68,41 @@ def read_version():
     sys.exit('No version: line in _config.yml')
 
 
+def sweep_issue_template(version):
+    """Prepend the current template + IQ versions to .github/ISSUE_TEMPLATE/iq-report.yml.
+
+    GitHub issue forms are static YAML (no Jekyll templating in .github/), so
+    the dropdown options need a per-release bump. Idempotent: skips if the
+    version is already the top option.
+    """
+    path = os.path.join(ROOT, '.github', 'ISSUE_TEMPLATE', 'iq-report.yml')
+    with open(path, encoding='utf8') as f:
+        text = f.read()
+
+    with open(os.path.join(ROOT, '_includes', 'nds-ai-instructions.md'), encoding='utf8') as f:
+        iq = re.search(r'instructions v(\d+)', f.read()).group(1)
+
+    def prepend(text, dropdown_id, value):
+        pat = re.compile(
+            r'(id:\s*' + re.escape(dropdown_id) + r'\b[\s\S]*?options:\n)((?:\s+- .*\n)+)')
+        m = pat.search(text)
+        if not m:
+            sys.exit(f'iq-report.yml: dropdown {dropdown_id} not found.')
+        first = m.group(2).splitlines()[0]
+        indent = re.match(r'(\s+)- ', first).group(1)
+        entry = f'{indent}- "{value}"\n'
+        if entry in m.group(2):
+            return text
+        return text[:m.end(1)] + entry + m.group(2) + text[m.end():]
+
+    new = prepend(text, 'template-version', version)
+    new = prepend(new, 'iq-version', f'v{iq}')
+    if new != text:
+        with open(path, 'w', encoding='utf8', newline='\n') as f:
+            f.write(new)
+        print(f'  swept .github/ISSUE_TEMPLATE/iq-report.yml (template {version}, IQ v{iq})')
+
+
 def stage(version):
     dist = os.path.join(ROOT, 'dist')
     pkg = os.path.join(dist, f'nds-vanilla-template-v{version}')
@@ -212,6 +247,8 @@ def main():
 
     version = read_version()
     print(f'\nPackaging v{version}\n')
+
+    sweep_issue_template(version)
 
     if not args.no_build:
         run('bundle exec jekyll build')

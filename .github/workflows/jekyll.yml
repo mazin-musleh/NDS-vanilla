@@ -10,7 +10,7 @@ on:
   # Runs on pushes targeting the default branch. The ignore list mirrors the
   # `exclude:` entries in _config.yml — files Jekyll never copies into _site,
   # so a push touching only these can't change what's deployed. Gemfile* and
-  # .github/ stay out of it: they change the build itself.
+  # .github/workflows/ stay out of it: they change the build itself.
   push:
     branches: ["main"]
     paths-ignore:
@@ -21,7 +21,14 @@ on:
       - 'SECURITY.md'
       - 'LICENSE'
       - 'CLAUDE.md'
+      - 'AGENTS.md'
       - '.claude/**'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE/**'
+      - '.github/pull_request_template.md'
+      - '.github/CODEOWNERS'
+      - '.github/FUNDING.yml'
+      - '.github/dependabot.yml'
       - 'scripts/**'
       - 'package.json'
       - 'package-lock.json'

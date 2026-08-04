@@ -3,6 +3,36 @@ description: Consumer findings from installing the NDS IQ instructions block. At
 title: "[IQ]: "
 labels: ["iq", "triage"]
 body:
+  - type: dropdown
+    id: template-version
+    attributes:
+      label: Template version
+      description: From the zip filename or your project's NDS bundle.
+      options:
+        - "1.6.0"
+        - "1.5.0"
+        - "1.4.1"
+        - "1.4.0"
+        - "1.3.0"
+        - "1.2.0"
+        - "1.1.0"
+        - "1.0.x"
+        - other / unknown
+    validations:
+      required: true
+  - type: dropdown
+    id: iq-version
+    attributes:
+      label: IQ version
+      description: From the `NDS IQ instructions vN` heading in your pasted block.
+      options:
+        - "v4"
+        - "v3"
+        - "v2"
+        - "v1"
+        - other / unknown
+    validations:
+      required: true
   - type: textarea
     id: report
     attributes:
