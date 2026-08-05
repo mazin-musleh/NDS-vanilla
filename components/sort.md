@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "06/08/2026 - 12:30 AM"
+last_edit: "06/08/2026 - 02:16 AM"
 ---
 
 <!-- Direct Mode -->
@@ -674,7 +674,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <i class="hgi hgi-stroke hgi-api"></i>
                         <span class="nds-label">Programmatic Control</span>
                     </span>
-                    <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">sort.apply(key, dir)</code>, <code class="nds-inline-code lang-js">sort.reset()</code>, <code class="nds-inline-code lang-js">sort.getState()</code>, and <code class="nds-inline-code lang-js">sort.destroy()</code> on the instance returned from <code class="nds-inline-code lang-js">create()</code>. Subscribe to <code class="nds-inline-code lang-js">nds:sort:change</code> on the root for every reorder.</p>
+                    <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">sort.apply(key, dir)</code>, <code class="nds-inline-code lang-js">sort.reset()</code>, <code class="nds-inline-code lang-js">sort.refresh()</code>, <code class="nds-inline-code lang-js">sort.getState()</code>, and <code class="nds-inline-code lang-js">sort.destroy()</code> on the instance returned from <code class="nds-inline-code lang-js">create()</code>. Items that arrive after <code class="nds-inline-code lang-js">create()</code> — an async list, an AJAX swap — miss the initial pass, so call <code class="nds-inline-code lang-js">sort.refresh()</code> once they land. Subscribe to <code class="nds-inline-code lang-js">nds:sort:change</code> on the root for every reorder.</p>
                 </div>
                 <div class="nds-definition-item">
                     <span class="nds-item-title">
@@ -845,6 +845,7 @@ const sort = NDS.Sort.create(rootElement, {
 sort.apply('price', 'desc');     // Sort programmatically
 sort.apply(null, null);          // Same as sort.reset()
 sort.reset();                    // Restore the DOM order captured at create()
+sort.refresh();                  // Re-apply the active sort to items added since
 sort.getState();                 // { key, dir } current state
 sort.destroy();                  // Abort every listener bound by this instance
 

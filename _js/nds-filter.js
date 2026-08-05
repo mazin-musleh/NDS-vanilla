@@ -448,6 +448,7 @@
                 this.targetContainer = newContainer;
                 this.items = this.resolveItems();
                 this._cacheBuilt = false;
+                this._resyncSort();
                 this._revealTargetContainer();
                 eventDetail.html = newContainer.innerHTML;
             } else {
@@ -472,6 +473,10 @@
             if (this.targetContainer.style.display === 'none') {
                 this.targetContainer.style.display = '';
             }
+            // A swapped-in container arrives without the init stamp, and the crit
+            // hold in _skeleton.scss keys on exactly that attribute — so a fresh
+            // result set would render visibility:hidden and never come back.
+            this.targetContainer.setAttribute('data-nds-filter-initialized', 'true');
         }
 
         /**
@@ -851,6 +856,18 @@
         // ==============================================
         // SORT (delegated to NDS.Sort)
         // ==============================================
+
+        // Re-root the sort engine when the container it was created on is no longer
+        // the live one — an AJAX response and refresh() both replace or re-resolve
+        // targetContainer, leaving the old instance driving a detached node while
+        // its triggers still fire. Both paths route here so only one has to remember.
+        _resyncSort() {
+            if (this.sort && this.sort.root !== this.targetContainer) {
+                this.sort.destroy();
+                this.sort = null;
+            }
+            if (!this.sort) this.setupSort();
+        }
 
         setupSort() {
             if (!this.targetContainer) return;
@@ -2602,6 +2619,7 @@
             // Update items list
             this.items = this.resolveItems();
             this._cacheBuilt = false;
+            this._resyncSort();
 
             // Regenerate auto-scanned filters only (skip data-filter-values — those have their own source)
             const filterElements = this.queryAll('[data-filter-type]');
@@ -2672,6 +2690,9 @@
         destroy() {
             this.abortController.abort();
             if (this.fetchAbortController) this.fetchAbortController.abort();
+            // Sort is created by this filter, so it dies with it — its trigger
+            // listeners live on surfaces that outlive the target container.
+            if (this.sort) { this.sort.destroy(); this.sort = null; }
             // Release pooled NDS.onDOMAdd subscribers registered per filter
             // element by setupManualFilter; without this, each filter instance
             // would leak one closure per filter element for the page lifetime.

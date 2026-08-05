@@ -263,6 +263,10 @@
                     compare(accessor(a, key), accessor(b, key), type, dir || 'asc')
                 );
             } else {
+                // Drop snapshot entries the container no longer holds. appendChild
+                // on a removed node re-attaches it, so restoring a stale snapshot
+                // would resurrect deleted rows — and hold them detached until then.
+                this._originalOrder = this._originalOrder.filter(el => container.contains(el));
                 ordered = [...this._originalOrder];
             }
 
@@ -283,6 +287,12 @@
         }
 
         reset() { this.apply(null, null); }
+
+        // Re-run the active sort against the items as they stand now. Items that
+        // arrive after create() — an async list, an AJAX swap — miss init()'s pass
+        // entirely: a URL-seeded sort settles its state with nothing to sort, and
+        // nothing re-applies it on its own. No-op when no sort is active.
+        refresh() { if (_hasKey(this.state.key)) this.apply(this.state.key, this.state.dir); }
 
         getState() { return { key: this.state.key, dir: this.state.dir }; }
 
