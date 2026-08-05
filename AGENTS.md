@@ -168,6 +168,17 @@ last_edit: "15/07/2026 - 02:35 PM"  # timestamp of the most recent doc content e
 
 Documentation pages under `components/`, `ui-shell/`, `layout/`, and `utilities/` are created, refined, and audited per `.claude/skills/nds-doc/SKILL.md` — Claude Code invokes it as `/nds-doc [name]`; other agents follow the SKILL.md workflow directly.
 
+## Plain-English Register
+
+**Consumer-facing prose is read by non-native speakers and by weak models — write it plain.** Applies to `guides/`, alert titles and descriptions, setup/upgrade steps, and `_includes/nds-ai-instructions.md`.
+
+- One instruction per sentence; active voice; imperative for steps.
+- Same word for the same thing every time — no synonyms for variety.
+- No `-ing` forms as nouns or adjectives ("Before you start", not "Before starting").
+- Sentences stay under ~25 words; split them, don't compress by dropping articles.
+
+Component doc pages keep their own register — this is not licence to flatten them. If the `ste100-writer` skill is installed it adds an approved-word check; the rules above stand without it.
+
 ## Git Commits
 
 - Do NOT add `Co-Authored-By` lines to commit messages
