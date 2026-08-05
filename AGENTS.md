@@ -170,14 +170,14 @@ Documentation pages under `components/`, `ui-shell/`, `layout/`, and `utilities/
 
 ## Plain-English Register
 
-**Consumer-facing prose is read by non-native speakers and by weak models — write it plain.** Applies to `guides/`, alert titles and descriptions, setup/upgrade steps, and `_includes/nds-ai-instructions.md`.
+**Every word NDS ships is read by non-native speakers and by weak models — write it plain.** Applies to all authored prose: component/layout/utility doc pages, `guides/`, alert titles and descriptions, demo and example copy, setup/upgrade steps, and `_includes/nds-ai-instructions.md`.
 
 - One instruction per sentence; active voice; imperative for steps.
 - Same word for the same thing every time — no synonyms for variety.
 - No `-ing` forms as nouns or adjectives ("Before you start", not "Before starting").
 - Sentences stay under ~25 words; split them, don't compress by dropping articles.
 
-Component doc pages keep their own register — this is not licence to flatten them. If the `ste100-writer` skill is installed it adds an approved-word check; the rules above stand without it.
+These are sentence mechanics, not a voice — each surface keeps its own register (doc pages stay plain technical book tone, per the doc skill). If the `ste100-writer` skill is installed it adds an approved-word check; the rules above stand without it.
 
 ## Git Commits
 
