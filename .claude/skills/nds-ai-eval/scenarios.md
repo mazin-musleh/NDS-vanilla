@@ -53,7 +53,7 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST: refuse the standalone refresh; propose the full upgrade (block rides step 4, sourced from the fresh `NDS_ROOT` guide); wait for the dev's go.
   - MUST NOT: install a raw-main block over the stale runtime; upgrade before the go.
   - cite: "this step delivers the block with it"
-- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-04 (v5 setup-paragraph edits): sonnet PASS — the banner-first/floor additions did not bleed into the refresh guard. Scoped 2026-08-05: sonnet PASS.
+- baseline: v3 — fable PASS, opus PASS, sonnet PASS. Scoped 2026-08-04 (v5 setup-paragraph edits): sonnet PASS — the banner-first/floor additions did not bleed into the refresh guard. Scoped 2026-08-05: sonnet PASS. Scoped 2026-08-05 (v6): sonnet PASS — routed through the 1.6.0 floor rather than the plain "runtime behind" guard, which is the stronger read; this setup now trips both, so the scenario tests them jointly.
 
 ## S5 keep-old-pages-serving
 
@@ -223,7 +223,7 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST: read the `Version:` banner FIRST; download exactly the banner's release (`releases/download/v1.6.0/…`), never the latest link; report that 1.7.0 exists and propose the upgrade per "Upgrading NDS" as the dev's separate call, without holding up the restore; (b) a `-dev` banner at/above the floor matches no release — report it and let the dev choose, no download; (c) the zip's single top-level `nds-vanilla-template-v<version>/` folder's contents end up so `NDS_ROOT/_site/` resolves directly, no nested version folder under the declared path.
   - MUST NOT: install the latest release as the reference; silently upgrade the runtime; guess a release for the `-dev` banner; leave `NDS_ROOT/_site/` unresolvable behind a nested folder.
   - cite: "That banner-first rule covers every population of `NDS_ROOT`" / "the path is right when `NDS_ROOT/_site/` exists"
-- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on all parts; in the original 3-part run the delta-report compressed out under the word cap and a re-probe of (a) alone surfaced it cleanly ("propose an upgrade as a separate step"). Watch: multi-part word cap can squeeze the delta-report; re-probe (a) alone before calling that a finding.
+- baseline: scoped 2026-08-04 (v5, first exposure) — sonnet PASS on all parts; in the original 3-part run the delta-report compressed out under the word cap and a re-probe of (a) alone surfaced it cleanly ("propose an upgrade as a separate step"). Watch: multi-part word cap can squeeze the delta-report; re-probe (a) alone before calling that a finding. Scoped 2026-08-05 (v6): sonnet PASS on all three parts, delta-report intact this time.
 
 ## S18 template-floor-stop
 
@@ -288,7 +288,7 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST: report the inherited plan's claims without trusting them; reset the whole footprint (old bundles never adopted, overrides CSS removed, old plan retired and recreated fresh by the inventory); replace the runtime wholesale from `NDS_ROOT`; rebuild the pages via the cascade with the old work as reference only; name the costs.
   - MUST NOT: resume the old plan's rows; adopt the old bundles or overrides as canon; default to parallel files.
   - cite: "The clean start covers the attempt's whole footprint" / "never a silent resume"
-- baseline: scoped 2026-08-05 (v5, first exposure) — sonnet PASS, costs named unprompted.
+- baseline: scoped 2026-08-05 (v5, first exposure) — sonnet PASS, costs named unprompted. Scoped 2026-08-05 (v6, footprint list gained the agent file): sonnet PASS, unchanged behavior.
 
 ## S23 image-geometry-swap
 
@@ -302,3 +302,16 @@ Seeded 2026-08-03 from the v3 three-model comprehension test (Fable, Opus, Sonne
   - MUST NOT: keep the sample's 40×40; keep the name span beside a wordmark logo.
   - cite: "set them to the new file's real pixel size"
 - baseline: scoped 2026-08-05 (v5, first exposure) — sonnet PASS, sample geometry rejected by name.
+
+## S24 stale-agent-file-rules
+
+- mode: comprehension
+- rules: conflict bullet's prior-NDS-guidance exception ("this block is the only NDS rule source... propose removing them with the plan, the dev's call"); clean-start footprint list ("stale NDS instructions in the agent file")
+- provenance: maintainer directive 2026-08-05 (the v6 rule). v5's conflict bullet said only "flag the conflict with the plan; don't silently obey either side", which for a prior attempt's OWN NDS rules leaves competing guidance sitting in the instruction file forever, flagged but never removed, while the block simultaneously claims to be the only NDS rule source. The footprint list named assets, override sheets, scripts, and the plan, but not the agent file. Scenario drafted during the v6 scoped run, which found the rule shipping with no coverage.
+- setup: First session; the block was installed into `CLAUDE.md` today with real paths. The SAME `CLAUDE.md` already carried, from a prior NDS attempt by another team months ago: a hand-written "## NDS conventions" section (rules like "always use `.nds-btn-primary` for buttons", "put page-specific CSS in `wwwroot/css/site.css`", "components get initialized in `site.js`"), plus leftover agent notes about that attempt's decisions. The project has ~8 pages of `.nds-*` markup from that attempt and old NDS bundles in `wwwroot/`.
+- prompt: "let's get our NDS work back on track — what's the plan?"
+- rubric:
+  - MUST: inventory the pages and old bundles AND the agent file's own NDS text; propose removing the hand-written section and the leftover notes as the attempt's footprint, the dev's call; assess each page against `NDS_ROOT` canon and propose the adopt/rebuild split rather than presuming either; replace the old bundles wholesale from `NDS_ROOT`; write a fresh `NDS-PLAN.md` and stop for review.
+  - MUST NOT: silently keep the hand-written conventions (obeying two NDS rule sources at once); silently strip them without proposing; presume all 8 pages need rebuilding, or that any are conformant, without checking each; adopt the old bundles as the runtime.
+  - cite: "this block is the only NDS rule source" / "propose removing them with the plan, the dev's call"
+- baseline: scoped 2026-08-05 (v6, first exposure) — sonnet PASS: both the hand-written section and the notes named as footprint, neither silently kept nor silently stripped, split proposed per page.

@@ -3,7 +3,7 @@ layout: page
 title: Get Started
 since: "1.6.0"
 updated: "1.6.0"   # the template release this guide's content is aligned with; bump to the dev line only when content drifts to describe unreleased template changes
-last_edit: "04/08/2026 - 10:16 PM"
+last_edit: "05/08/2026 - 09:48 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -196,7 +196,7 @@ Download these instructions as a raw file (curl or equivalent, never a web-fetch
             <div class="nds-code nds-expandable">
                 <span class="nds-code-tags lang-markdown">
                     <span class="nds-tag nds-gray nds-xs nds-code-lang lang-markdown"><span class="nds-label">Markdown</span></span>
-                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v5</span></span>
+                    <span class="nds-tag nds-green nds-xs"><span class="nds-label">IQ v6</span></span>
                 </span>
                 <div class="nds-code-action">
                     <button class="nds-btn nds-subtle nds-copy" aria-label="Copy NDS IQ instructions">

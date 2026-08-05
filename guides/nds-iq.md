@@ -3,7 +3,7 @@ layout: page
 title: NDS IQ
 since: "1.6.x"
 updated: "1.6.x"
-last_edit: "04/08/2026 - 08:44 PM"
+last_edit: "05/08/2026 - 09:48 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -74,7 +74,7 @@ sidemenu_mode: false
                 <h2 id="revisions">Revision History</h2>
                 <p>The block versions independently of the template: a plain integer, bumped once per published revision.</p>
 
-                <p>The current revision is stamped in the block's own heading (<code class="nds-inline-code lang-html">instructions v5</code>) and on the green chip beside the copyable block in the guide. An installed copy compares its stamp against the template's during upgrades to know when a refresh is due.</p>
+                <p>The current revision is stamped in the block's own heading (<code class="nds-inline-code lang-html">instructions v6</code>) and on the green chip beside the copyable block in the guide. An installed copy compares its stamp against the template's during upgrades to know when a refresh is due.</p>
                 <table class="nds-table nds-responsive">
                     <thead><tr><th>Revision</th><th>Template</th><th>Highlights</th></tr></thead>
                     <tbody>
@@ -82,7 +82,8 @@ sidemenu_mode: false
                         <tr><td>v2</td><td>1.6.0</td><td>First stamped revision: porting strategy machinery, chrome coverage, plan discipline, the findings report file.</td></tr>
                         <tr><td>v3</td><td>1.6.0</td><td>Conformance triage for pre-existing NDS work, plan lifecycle, the update check, dual block-refresh paths.</td></tr>
                         <tr><td>v4</td><td>1.6.0</td><td>The NDS IQ name. Greenfield projects, the spike rule, JS wiring facts, the menu portal fact.</td></tr>
-                        <tr><td>v5</td><td>1.6.0</td><td>From the first field report: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template floor, and hunting existing automation before falling back to a verification checklist.</td></tr>
+                        <tr><td>v5</td><td>1.6.0</td><td>From two field cycles: the zip's top-level folder, runtime-banner-first installs, the 1.6.0 template floor, hunting existing automation before falling back to a verification checklist, raw-file fetch discipline, the project's own globals as legacy UI, clean resets over inherited attempts, and image geometry on swapped assets.</td></tr>
+                        <tr><td>v6</td><td>1.6.0</td><td>Stale NDS instructions in the agent file join the prior attempt's footprint: a superseded block copy, hand-written conventions, leftover notes, all proposed for removal with the plan.</td></tr>
                     </tbody>
                 </table>
 
