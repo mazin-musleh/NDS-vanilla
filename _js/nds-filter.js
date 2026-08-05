@@ -21,7 +21,7 @@
  * - data-filter-variant="nds-primary" - Adds class to inputs
  *
  * Search Behavior:
- * - Inside dropmenu: requires Apply button click
+ * - Inside dropmenu: applies on the Apply button, or on Enter in the dropmenu search
  * - Outside dropmenu: applies on Enter key or search button click
  */
 
@@ -193,13 +193,16 @@
          *
          * Searches the small linked subtrees (this._targetRoots) rather than
          * sweeping the whole document, so cost scales with the filter's own UI
-         * regions, not the page.
+         * regions, not the page. NDS.queryAll rather than root.querySelectorAll:
+         * a filter dropmenu may carry data-portal, which moves its menu to
+         * <body> while open — every control inside it would otherwise drop out
+         * of every post-init re-resolve (refresh, sort triggers, count slot).
          */
         queryAll(selector) {
             const set = new Set();
             for (const root of this._targetRoots) {
                 if (root.matches(selector)) set.add(root);
-                root.querySelectorAll(selector).forEach(el => set.add(el));
+                NDS.queryAll(root, selector).forEach(el => set.add(el));
             }
 
             let matches = Array.from(set);
@@ -1002,6 +1005,15 @@
             }
         }
 
+        // Whether anything is filtering right now. One derivation for both
+        // readers — the count slot (which skips its scan when nothing filters)
+        // and applyFilters (which skips filtering entirely). If they disagree,
+        // the slot reports the unfiltered total beside a filtered grid.
+        _hasActiveCriteria() {
+            return !!(this.criteria.search && this.criteria.search.trim() !== '')
+                || Object.values(this.criteria.filters).some(arr => arr.length > 0);
+        }
+
         updateFilterCount() {
             // Query slot — quoted keyword; empty when no search
             if (this.searchQuerySlot) {
@@ -1026,9 +1038,7 @@
             // No active criteria → nothing is filtered out, so the visible count
             // is just the item total. Skip the per-item scan (it would only
             // ever return items.length here) — this is the common first-load case.
-            const hasCriteria = (this.criteria.search && this.criteria.search.trim() !== '')
-                || Object.values(this.criteria.filters).some(arr => arr.length > 0);
-            if (!hasCriteria) {
+            if (!this._hasActiveCriteria()) {
                 countSlot.textContent = this.items.length;
                 return;
             }
@@ -1379,9 +1389,6 @@
             this.applyFilters();
         }
 
-        /**
-         * Submit the form (only called from user actions, not programmatically)
-         */
         // Spin the current trigger button, first clearing any other trigger that
         // was left spinning by an overlapping submit — only one spins at a time.
         // Clear-then-add are adjacent here so the current button always ends up
@@ -1393,6 +1400,9 @@
             if (this._triggerBtn) NDS.State.add(this._triggerBtn, 'loading');
         }
 
+        /**
+         * Submit the form (only called from user actions, not programmatically)
+         */
         submitForm(triggerBtn) {
             if (!this.submissionForm) return;
             // Track which button triggered this submit so its spinner shows at
@@ -1753,21 +1763,24 @@
         // on [data-currency]) + thousand separators (NDS.Numbers) — not a string.
         _buildRangeChipLabel(filterName, encoded) {
             const fd = this.filterInputs[filterName];
-            const dash = encoded.indexOf('-');
+            // Same decoder the URL and matching paths use, so a negative floor
+            // ("-20-15") splits at the delimiter rather than the leading sign.
+            const pair = this._parseEncodedRange(encoded);
+            if (!pair) return null;  // chip falls back to the raw encoded value
             const frag = document.createDocumentFragment();
             // Single ("up to") shows just the cutoff with a ≤ prefix; dual shows lo – hi.
             if (fd && fd.single) {
                 const le = document.createElement('span');
                 le.textContent = '≤ ';
                 frag.appendChild(le);
-                frag.appendChild(this._buildRangeValueNode(encoded.slice(dash + 1), fd));
+                frag.appendChild(this._buildRangeValueNode(String(pair[1]), fd));
                 return frag;
             }
-            frag.appendChild(this._buildRangeValueNode(encoded.slice(0, dash), fd));
+            frag.appendChild(this._buildRangeValueNode(String(pair[0]), fd));
             const sep = document.createElement('span');
             sep.textContent = ' – ';
             frag.appendChild(sep);
-            frag.appendChild(this._buildRangeValueNode(encoded.slice(dash + 1), fd));
+            frag.appendChild(this._buildRangeValueNode(String(pair[1]), fd));
             return frag;
         }
 
@@ -1975,7 +1988,9 @@
         // Sync applied-count tags on filter-accordion headers with the current
         // criteria. Hidden at 0, shows the number of selected values otherwise.
         _updateAccordionCounts() {
-            const tags = this.filterContainer.querySelectorAll('[data-filter-count-for]');
+            // Portal-aware: the count tags sit inside the generated fieldsets,
+            // which travel with the menu when the dropmenu carries data-portal.
+            const tags = NDS.queryAll(this.filterContainer, '[data-filter-count-for]');
             tags.forEach(tag => {
                 const name = tag.getAttribute('data-filter-count-for');
                 const count = (this.criteria.filters[name] || []).length;
@@ -2175,13 +2190,8 @@
                 return;
             }
 
-            // Check if there are any active criteria
-            const hasSearch = this.criteria.search && this.criteria.search.trim() !== '';
-            const hasFilters = Object.values(this.criteria.filters).some(arr => arr.length > 0);
-            const hasCriteria = hasSearch || hasFilters;
-
             // If no criteria, show all items and update UI
-            if (!hasCriteria) {
+            if (!this._hasActiveCriteria()) {
                 // Un-hide every item — same as showItem() (used by reset()/destroy()).
                 this.items.forEach(item => this.showItem(item));
 
