@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "04/08/2026 - 04:02 PM"
+last_edit: "06/08/2026 - 02:38 AM"
 ---
 
 <!-- Basic Client-Side Filter -->
@@ -2244,7 +2244,8 @@ filter.reapplyUrlParamsForFilter('system');
 // ── Static methods ──────────────────────────────────
 NDS.Filter.init();                    // Initialize any new .nds-filter elements on page
 NDS.Filter.reinit();                  // Same as init()
-NDS.Filter.create(containerEl);       // Manually instantiate — returns an NDSFilter instance
+NDS.Filter.create(containerEl);       // Manually instantiate — registers like init() does;
+                                      // re-creating on the same element returns the existing instance
 
 // ── Events ──────────────────────────────────────────
 // nds:filter:ready - Filter initialized

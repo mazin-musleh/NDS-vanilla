@@ -2704,9 +2704,9 @@
             this._filterElementACs.clear();
             this.items.forEach(item => this.showItem(item));
             // Only release shared registry/backref state when THIS instance owns it.
-            // A raw NDS.Filter.create() duplicate on an already-registered target
-            // shares the representative element + targetId; destroying it must not
-            // clobber the registered instance's backref, init attribute, or map entry.
+            // A stale reference — destroyed, then re-inited on the same element —
+            // shares the representative and targetId with the live instance, so its
+            // destroy must not clobber that one's backref, stamps, or map entry.
             if (this.filterContainer.ndsFilter === this) {
                 // _targetRoots covers every stamped surface (incl. the
                 // representative); the target container is stamped separately.
@@ -2744,7 +2744,10 @@
         // otherwise pin a nested auto-fill hidden forever. The data-nds-loaded
         // pattern, per element; the representative's stamp doubles as the
         // public init marker.
-        (surfaces || [representative]).forEach(s => s.setAttribute('data-nds-filter-initialized', 'true'));
+        // _targetRoots, not the passed-in surfaces: it is the authoritative set in
+        // both paths — the loader's grouped surfaces, or the document scan a manual
+        // create() falls back to — so neither leaves a linked surface unstamped.
+        (instance._targetRoots || [representative]).forEach(s => s.setAttribute('data-nds-filter-initialized', 'true'));
         instance.targetContainer?.setAttribute('data-nds-filter-initialized', 'true');
         if (instance.targetId) {
             _instancesByTarget.set(instance.targetId, instance);
@@ -2789,7 +2792,18 @@
     NDS.Filter = {
         init: initializeFilters,
         reinit: reinitializeFilters,
-        create: (container) => new NDSFilter(container),
+        // Idempotent, and registers exactly like the loader path — matching
+        // NDS.Sort.create / NDS.DatePicker.create. Constructing bare skipped the
+        // init stamp (the crit hold then kept the target hidden), the backref,
+        // the target registry and the ready event, so getInstance/getByTarget/
+        // whenReady all missed an instance that was otherwise working.
+        create: (container) => {
+            if (!container) return null;
+            if (container.ndsFilter) return container.ndsFilter;
+            const id = container.getAttribute('data-filter-target');
+            if (id && _instancesByTarget.has(id)) return _instancesByTarget.get(id);
+            return createInstance(container);
+        },
 
         getInstance: (container) => {
             if (typeof container === 'string') {
