@@ -249,6 +249,11 @@
                 return;
             }
 
+            // Items that arrive after init (async content) missed init()'s snapshot,
+            // leaving it empty with no original order to restore. Take it on first
+            // use instead — the DOM is still in its authored order until we sort.
+            if (!this._originalOrder.length) this._originalOrder = [...items];
+
             let ordered;
             if (hasKey) {
                 const accessor = this.opts.accessor;
@@ -258,7 +263,7 @@
                     compare(accessor(a, key), accessor(b, key), type, dir || 'asc')
                 );
             } else {
-                ordered = this._originalOrder ? [...this._originalOrder] : [...items];
+                ordered = [...this._originalOrder];
             }
 
             // Preserves listeners and element state — appendChild on an attached node moves it.
