@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "28/06/2026 - 01:27 PM"
+last_edit: "06/08/2026 - 12:30 AM"
 ---
 
 <!-- Direct Mode -->
@@ -201,9 +201,13 @@ last_edit: "28/06/2026 - 01:27 PM"
                                             <i class="nds-icon nds-hgi-copy-01"></i>
                                         </button>
                                     </div>
-                                    <code class="lang-javascript code">NDS.Sort.create(document.getElementById('sortDirectRoot'), {
-    items: '#sortDirectItems &gt; .nds-card',
-    reorderIn: document.getElementById('sortDirectItems'),
+                                    <code class="lang-javascript code">// The cards live outside the root that holds the buttons, so `items` is a
+// getter rather than a selector string — a string is resolved inside the root.
+const items = document.getElementById('sortDirectItems');
+
+NDS.Sort.create(document.getElementById('sortDirectRoot'), {
+    items: function () { return items.querySelectorAll(':scope &gt; .nds-card'); },
+    reorderIn: items,
     triggers: '[data-sort]',
     mode: 'direct',
     a11y: 'pressed',
@@ -382,10 +386,13 @@ document.addEventListener('DOMContentLoaded', function () {
                                         </button>
                                     </div>
                                     <code class="lang-javascript code">const root = document.getElementById('sortCycleRoot');
+// The cards live outside the root that holds the buttons, so `items` is a
+// getter rather than a selector string — a string is resolved inside the root.
+const items = document.getElementById('sortCycleItems');
 
 NDS.Sort.create(root, {
-    items: '#sortCycleItems &gt; .nds-card',
-    reorderIn: document.getElementById('sortCycleItems'),
+    items: function () { return items.querySelectorAll(':scope &gt; .nds-card'); },
+    reorderIn: items,
     triggers: '.nds-sort-cycle-btn',
     mode: 'cycle',
     a11y: 'pressed',
@@ -816,7 +823,9 @@ document.addEventListener('DOMContentLoaded', function () {
 // ── Create an instance ───────────────────────────────
 // Returns the NDSSort instance; re-creating on the same root returns the existing one.
 const sort = NDS.Sort.create(rootElement, {
-    items: '#myList &gt; .row',      // selector, NodeList, Array, or () =&gt; NodeList
+    items: '.row',                // selector, NodeList, Array, or () =&gt; NodeList
+                                  // a selector string is resolved INSIDE rootElement;
+                                  // pass a getter for items that live outside it
     reorderIn: myListEl,          // optional; defaults to items[0].parentElement
     triggers: '.sort-btn',        // selector, NodeList, Array, or () =&gt; NodeList
     mode: 'direct',               // 'direct' | 'cycle'
