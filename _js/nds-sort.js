@@ -154,11 +154,26 @@
         _resolveLike(src, deep) {
             if (typeof src === 'function') return Array.from(src() || []);
             if (typeof src === 'string') {
-                return deep ? NDS.queryAll(this.root, src)
-                            : Array.from(this.root.querySelectorAll(src));
+                const found = deep ? NDS.queryAll(this.root, src)
+                                   : Array.from(this.root.querySelectorAll(src));
+                if (!found.length) this._warnOutOfScope(src);
+                return found;
             }
             if (src && typeof src.length === 'number') return Array.from(src);
             return [];
+        }
+
+        // A selector that matches elsewhere on the page but nothing inside the root
+        // is always a scoping mistake, never an intended empty state — so it is worth
+        // saying out loud. An empty list whose selector matches nowhere stays silent.
+        // Once per selector: _resolveTriggers runs on every render.
+        _warnOutOfScope(src) {
+            if (this._warnedSelectors && this._warnedSelectors.has(src)) return;
+            if (!document.querySelector(src)) return;
+            this._warnedSelectors = this._warnedSelectors || new Set();
+            this._warnedSelectors.add(src);
+            console.warn(`NDS Sort: "${src}" matches elements on the page but none inside the root — `
+                + 'a selector string resolves inside the root. Pass a function for elements outside it.', this.root);
         }
 
         _resolveItems() {
