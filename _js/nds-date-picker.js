@@ -438,8 +438,12 @@
             },
 
             addDaysToHijriDate: function(hijriDate, days) {
-                if (days === 0) return hijriDate;
-                
+                // Always a copy. Callers mutate the result — setHijriDatePart writes a
+                // property straight onto it — and the input can be the module-shared
+                // accurate-today reference, which handing back would corrupt for every
+                // picker on the page.
+                if (days === 0) return createHijriDate(hijriDate.day, hijriDate.month, hijriDate.year);
+
                 var result = createHijriDate(hijriDate.day, hijriDate.month, hijriDate.year);
                 result.day += days;
                 
@@ -488,17 +492,14 @@
                 var year = date.getFullYear();
                 var month = date.getMonth() + 1;
                 var day = date.getDate();
-                
                 if (month < 3) {
                     year--;
                     month += 12;
                 }
-                
                 var a = Math.floor(year / 100);
                 var b = 2 - a + Math.floor(a / 4);
-                
-                return Math.floor(365.25 * (year + 4716)) + 
-                       Math.floor(30.6001 * (month + 1)) + 
+                return Math.floor(365.25 * (year + 4716)) +
+                       Math.floor(30.6001 * (month + 1)) +
                        day + b - 1524.5;
             },
 
@@ -607,7 +608,6 @@
         };
 
         this.state = this.initializeState();
-        this.handlers = {};
         this.isDropdownCreated = false;
         // Scopes listeners bound to elements the instance does not own (the
         // consumer's formControl), so destroy() releases them in one abort.
@@ -669,22 +669,23 @@
                 self.dropmenuInstance.toggle();
             };
 
+            var signal = this.instanceAbortController.signal;
+
             // Bind to input click only (focus will trigger click anyway)
-            this.elements.input.addEventListener('click', ensureDropdownAndToggle);
+            this.elements.input.addEventListener('click', ensureDropdownAndToggle, { signal: signal });
 
             // Bind to toggle button if it exists
             if (this.elements.toggleBtn) {
-                this.elements.toggleBtn.addEventListener('click', ensureDropdownAndToggle);
+                this.elements.toggleBtn.addEventListener('click', ensureDropdownAndToggle, { signal: signal });
             }
-
-            this.handlers.ensureDropdownAndToggle = ensureDropdownAndToggle;
 
             // Fires for hand-typed edits AND picker commits (updateInput
             // dispatches 'change'). Attached on the input (target) so the
             // stamp lands before forms' document-level change delegation
             // reads validity.
-            this.handlers.inputChange = function () { self._validateInput(); };
-            this.elements.input.addEventListener('change', this.handlers.inputChange);
+            this.elements.input.addEventListener('change', function () {
+                self._validateInput();
+            }, { signal: signal });
         },
 
         // Adopt NDSDropmenu for the calendar's open/close/escape/outside-click
@@ -1153,9 +1154,11 @@
                     // API failed, fallback handled below
                 });
 
-                // Return math fallback for initial render
+                // Seed from the shared accurate reference when another picker has
+                // already fetched it; the math fallback is only for the first one.
                 var today = getSaudiDateObject();
-                this._cachedTodaysHijriDate = CalendarConfig.hijri.gregorianToHijri(today);
+                this._cachedTodaysHijriDate = _accurateTodaysHijriDate
+                    || CalendarConfig.hijri.gregorianToHijri(today);
             }
 
             return this._cachedTodaysHijriDate;
@@ -1205,6 +1208,10 @@
         // Helper to store accurate Hijri data and set global reference
         storeAccurateHijriData: function(hijriData) {
             if (hijriData && hijriData.day && hijriData.month && hijriData.year) {
+                // Conversions memoised against the previous reference are now wrong,
+                // so the memo is invalidated here — where its input changes — rather
+                // than on every close.
+                CalendarConfig.hijri._hijriCache = {};
                 this._cachedTodaysHijriDate = hijriData;
                 _accurateTodaysHijriDate = hijriData;
                 _accurateTodaysGregorianDate = getSaudiDateObject();
@@ -1233,17 +1240,11 @@
 
         // Cleanup on close - Clear all cache
         cleanup: function () {
-            // Remove event listeners for calendar-specific elements
-            var handlers = ['todayBtn', 'closeBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'gridKeydown'];
-            var elements = ['todayBtn', 'closeBtn', 'clearBtn', 'saveBtn', 'prevBtn', 'nextBtn', 'datesContainer'];
-
-            for (var i = 0; i < handlers.length; i++) {
-                if (this.handlers[handlers[i]] && this.elements[elements[i]]) {
-                    var ev = handlers[i] === 'gridKeydown' ? 'keydown' : 'click';
-                    this.elements[elements[i]].removeEventListener(ev, this.handlers[handlers[i]]);
-                    delete this.handlers[handlers[i]];
-                }
-            }
+            // One abort releases every calendar-panel listener. This replaced two
+            // hand-maintained parallel arrays walked by a shared counter: inserting a
+            // handler into one shifted the pairing for every entry after it, silently
+            // removing the wrong listener from the wrong element.
+            if (this.panelAbortController) this.panelAbortController.abort();
 
             // Close dropmenu instances — keep alive, reused on next calendar open
             if (this.monthDropmenuInstance && this.monthDropmenuInstance.isOpen) {
@@ -1263,11 +1264,12 @@
                 this.elements.dropdown.style.cssText = '';
             }
 
-            // Clear ALL Hijri cache
-            CalendarConfig.hijri._hijriCache = {};
+            // Instance cache only. The module-scoped accurate-today refs and the
+            // conversion memo are shared by every picker on the page, and this runs
+            // on each close — dropping them here made closing one picker downgrade
+            // any other open picker to the math fallback. They are refreshed where
+            // they actually change instead (storeAccurateHijriData).
             this._cachedTodaysHijriDate = null;
-            _accurateTodaysHijriDate = null;
-            _accurateTodaysGregorianDate = null;
 
             // Reset states
             this.resetState();
@@ -1336,6 +1338,11 @@
 
         // Bind calendar-specific events
         bindCalendarEvents: function () {
+            // Panel-lifetime controller: the calendar is rebuilt on every open, so
+            // abort any prior generation's listeners before binding this one's.
+            // cleanup() aborts it on close.
+            if (this.panelAbortController) this.panelAbortController.abort();
+            this.panelAbortController = new AbortController();
             this.bindNavigationEvents();
             this.bindDropdownEvents();
             this.bindActionEvents();
@@ -1345,18 +1352,18 @@
         bindNavigationEvents: function () {
             var self = this;
 
+            var signal = this.panelAbortController.signal;
+
             if (this.elements.prevBtn) {
-                this.handlers.prevBtn = function () {
+                this.elements.prevBtn.addEventListener('click', function () {
                     self.navigate(-1);
-                };
-                this.elements.prevBtn.addEventListener('click', this.handlers.prevBtn);
+                }, { signal: signal });
             }
 
             if (this.elements.nextBtn) {
-                this.handlers.nextBtn = function () {
+                this.elements.nextBtn.addEventListener('click', function () {
                     self.navigate(1);
-                };
-                this.elements.nextBtn.addEventListener('click', this.handlers.nextBtn);
+                }, { signal: signal });
             }
 
             // 2D keyboard navigation for the day grid (WAI-ARIA Date Picker
@@ -1368,10 +1375,9 @@
             // that Save synthesizes from. Their few cells stay plain tab-order
             // buttons.
             if (this.elements.datesContainer && this.state.mode === 'day') {
-                this.handlers.gridKeydown = function (e) {
+                this.elements.datesContainer.addEventListener('keydown', function (e) {
                     self.handleGridKeydown(e);
-                };
-                this.elements.datesContainer.addEventListener('keydown', this.handlers.gridKeydown);
+                }, { signal: signal });
             }
         },
 
@@ -1572,7 +1578,7 @@
                     // ran with an empty menu (width 0), so the inline width
                     // it wrote is wrong until we re-trigger positioning.
                     self.monthDropmenuInstance.applyPosition();
-                });
+                }, { signal: this.instanceAbortController.signal });
             }
 
             if (this.elements.yearDropmenu && !this.yearDropmenuInstance) {
@@ -1582,7 +1588,7 @@
                     self.renderYearOptions();
                     self.scrollToSelected(self.elements.yearDropdownMenu, '.nds-year-option');
                     self.yearDropmenuInstance.applyPosition();
-                });
+                }, { signal: this.instanceAbortController.signal });
             }
         },
 
@@ -1590,33 +1596,37 @@
         bindActionEvents: function () {
             var self = this;
 
+            var signal = this.panelAbortController.signal;
+
             if (this.elements.todayBtn) {
-                this.handlers.todayBtn = function () { self.selectToday(); };
-                this.elements.todayBtn.addEventListener('click', this.handlers.todayBtn);
+                this.elements.todayBtn.addEventListener('click', function () {
+                    self.selectToday();
+                }, { signal: signal });
             }
 
             if (this.elements.closeBtn) {
                 // Close = discard pending state and close the dropmenu. State
                 // resets on next open via parseInitialValue, so nothing to do
                 // here beyond closing — matches click-outside-to-cancel.
-                this.handlers.closeBtn = function () {
+                this.elements.closeBtn.addEventListener('click', function () {
                     if (self.dropmenuInstance && self.dropmenuInstance.isOpen) {
                         self.dropmenuInstance.close();
                     }
-                };
-                this.elements.closeBtn.addEventListener('click', this.handlers.closeBtn);
+                }, { signal: signal });
             }
 
             if (this.elements.clearBtn) {
                 // Clear = wipe committed value + pending state, then close.
                 // Opt-in via data-clearable on the container (auto-on for range).
-                this.handlers.clearBtn = function () { self.clearSelection(); };
-                this.elements.clearBtn.addEventListener('click', this.handlers.clearBtn);
+                this.elements.clearBtn.addEventListener('click', function () {
+                    self.clearSelection();
+                }, { signal: signal });
             }
 
             if (this.elements.saveBtn) {
-                this.handlers.saveBtn = function () { self.saveAndClose(); };
-                this.elements.saveBtn.addEventListener('click', this.handlers.saveBtn);
+                this.elements.saveBtn.addEventListener('click', function () {
+                    self.saveAndClose();
+                }, { signal: signal });
             }
         },
 
@@ -1809,7 +1819,12 @@
                 btn.type = 'button';
                 btn.className = 'nds-btn nds-subtle nds-date-cell';
                 btn.setAttribute('data-value', year);
-                btn.textContent = year;
+                // Same shape as the month/day cells: the text lives in a .nds-label
+                // span, which is what _date-picker.scss targets inside a cell.
+                var yearLabel = document.createElement('span');
+                yearLabel.className = 'nds-label';
+                yearLabel.textContent = year;
+                btn.appendChild(yearLabel);
 
                 if (year === selectedYear) {
                     NDS.State.add(btn, 'selected');
@@ -2476,17 +2491,6 @@
                 if (this.dropmenuInstance.isOpen) this.dropmenuInstance.close();
                 this.dropmenuInstance.destroy();
                 this.dropmenuInstance = null;
-            }
-
-            // Remove persistent event listeners
-            if (this.handlers.ensureDropdownAndToggle) {
-                this.elements.input.removeEventListener('click', this.handlers.ensureDropdownAndToggle);
-                if (this.elements.toggleBtn) {
-                    this.elements.toggleBtn.removeEventListener('click', this.handlers.ensureDropdownAndToggle);
-                }
-            }
-            if (this.handlers.inputChange) {
-                this.elements.input.removeEventListener('change', this.handlers.inputChange);
             }
 
             // Release the lang-attr subscriber registered in setupLanguageObserver.
