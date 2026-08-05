@@ -67,6 +67,19 @@
         return date;
     }
 
+    // The text of every cell / option button lives in a .nds-label span — that is
+    // what _date-picker.scss targets inside a cell, and it drifted once when the
+    // year grid set textContent on the button directly and fell out of the rule.
+    // Built imperatively so the value flows through .textContent and never reaches
+    // the HTML parser.
+    function appendCellLabel(btn, text, extraClass) {
+        var label = document.createElement('span');
+        label.className = extraClass ? 'nds-label ' + extraClass : 'nds-label';
+        label.textContent = text;
+        btn.appendChild(label);
+        return btn;
+    }
+
     // Accurate "today" reference (from NDS.TimeDate) shared by every picker
     // instance for Hijri↔Gregorian conversions. Module-scoped — no readers
     // outside this file.
@@ -1139,6 +1152,9 @@
             return this.isSameDay(date, this._renderToday || getSaudiDateObject());
         },
 
+        // Read-only for callers: the returned object may BE the module-shared
+        // accurate-today reference, so mutating it corrupts every picker on the
+        // page. Need a mutable copy? createHijriDate(d.day, d.month, d.year).
         getTodaysHijriDate: function () {
             // Simple cache for today's Hijri date - API handles date validation internally
             if (!this._cachedTodaysHijriDate) {
@@ -1775,10 +1791,7 @@
                 btn.type = 'button';
                 btn.className = 'nds-btn nds-subtle nds-date-cell';
                 btn.setAttribute('data-value', monthValue);
-                var monthLabel = document.createElement('span');
-                monthLabel.className = 'nds-label nds-truncate';
-                monthLabel.textContent = name;
-                btn.appendChild(monthLabel);
+                appendCellLabel(btn, name, 'nds-truncate');
 
                 if (monthValue === selectedMonth) {
                     NDS.State.add(btn, 'selected');
@@ -1819,12 +1832,7 @@
                 btn.type = 'button';
                 btn.className = 'nds-btn nds-subtle nds-date-cell';
                 btn.setAttribute('data-value', year);
-                // Same shape as the month/day cells: the text lives in a .nds-label
-                // span, which is what _date-picker.scss targets inside a cell.
-                var yearLabel = document.createElement('span');
-                yearLabel.className = 'nds-label';
-                yearLabel.textContent = year;
-                btn.appendChild(yearLabel);
+                appendCellLabel(btn, year);
 
                 if (year === selectedYear) {
                     NDS.State.add(btn, 'selected');
@@ -2025,10 +2033,7 @@
 
             // Day number display — built imperatively so the value flows through
             // .textContent (text-only) and never reaches the HTML parser.
-            var dayLabel = document.createElement('span');
-            dayLabel.className = 'nds-label';
-            dayLabel.textContent = this.getDisplayDayNumber(date);
-            btn.appendChild(dayLabel);
+            appendCellLabel(btn, this.getDisplayDayNumber(date));
 
             // Grid child is a slot wrapper: it paints the contiguous range
             // bar (slots tile with no column gap), the button keeps the circle.
@@ -2295,12 +2300,7 @@
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-month-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', index);
-                // Month label — built imperatively so the value flows through
-                // .textContent (text-only) and never reaches the HTML parser.
-                var monthLabel = document.createElement('span');
-                monthLabel.className = 'nds-label';
-                monthLabel.textContent = monthName;
-                btn.appendChild(monthLabel);
+                appendCellLabel(btn, monthName);
 
                 var isSelected = isHijri ?
                     (index + 1) === self.getCurrentMonth() : // For Hijri: compare (0-based index + 1) with 1-based month
@@ -2380,13 +2380,7 @@
                 btn.className = 'nds-btn nds-subtle nds-dropmenu-item nds-year-option';
                 btn.setAttribute('role', 'menuitem');
                 btn.setAttribute('data-value', year);
-                // Year label — built imperatively to match the month-option /
-                // date-cell shape elsewhere in this file. `year` is a loop
-                // counter (numeric); textContent is purely cosmetic consistency.
-                var yearLabel = document.createElement('span');
-                yearLabel.className = 'nds-label';
-                yearLabel.textContent = year;
-                btn.appendChild(yearLabel);
+                appendCellLabel(btn, year);
 
                 if (year === currentYear) {
                     NDS.State.add(btn, 'selected');
