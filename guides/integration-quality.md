@@ -105,7 +105,7 @@ sidemenu_mode: false
                 <h2 id="the-instructions">The Instructions</h2>
                 <p>The complete block, rendered from the same source the template ships. Installation flow lives in the <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a>.</p>
 
-{%- capture _instr %}{% include nds-ai-instructions.md %}{% endcapture %}
+{%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
 {%- assign _iq_parts = _instr | split: 'instructions v' %}
 {%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
                 <div class="nds-code nds-expandable">

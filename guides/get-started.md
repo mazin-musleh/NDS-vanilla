@@ -38,7 +38,7 @@ sidemenu_mode: false
                 <p>What the agent-driven workflow delivers, and how its instruction system was built.</p>
 
                 <p>The recommended way to build with NDS is through an AI coding agent. NDS ships everything an agent needs to do that work properly: canonical markup to copy, machine-readable catalogs to search, readable source behind every bundle, and a set of instructions that encodes the rules of the system.</p>
-                <p><strong>The <a class="nds-color" href="{{ 'guides/nds-iq' | relative_url }}">NDS IQ</a> (Integration Quality) instructions</strong> were engineered from the components' internal logic outward: init lifecycles, event surfaces, state cascades, dependency graphs. They were then hardened by running real migrations with AI agents, adding a rule for each failure the agents hit.</p>
+                <p><strong>The <a class="nds-color" href="{{ 'guides/integration-quality' | relative_url }}">NDS IQ</a> (Integration Quality) instructions</strong> were engineered from the components' internal logic outward: init lifecycles, event surfaces, state cascades, dependency graphs. They were then hardened by running real migrations with AI agents, adding a rule for each failure the agents hit.</p>
                 <p><strong>It gives the agent:</strong></p>
                 <ul>
                     <li>Seven hard rules covering markup, styling, libraries, and porting.</li>
@@ -205,7 +205,7 @@ Download these instructions as a raw file (curl or equivalent, never a web-fetch
                 </div>
                 <div class="nds-expandable-content">
                     <code class="lang-markdown">
-{%- capture _instr %}{% include nds-ai-instructions.md %}{% endcapture %}
+{%- capture _instr %}{% include NDS-IQ.md %}{% endcapture %}
 {{ _instr | strip | escape }}
                     </code>
                 </div>

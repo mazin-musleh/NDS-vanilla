@@ -27,10 +27,10 @@
             {%- endif %}
             {%- comment %} IQ revision: title/description from the site.nds_iq config group,
                 version parsed from the block's own heading so it can never desync {%- endcomment %}
-            {%- capture _iq_instr %}{% include nds-ai-instructions.md %}{% endcapture %}
+            {%- capture _iq_instr %}{% include NDS-IQ.md %}{% endcapture %}
             {%- assign _iq_parts = _iq_instr | split: 'instructions v' %}
             {%- assign _iq_v = _iq_parts[1] | split: ')' | first %}
-            <a href="{{ 'guides/nds-iq' | relative_url }}" class="nds-tag nds-green nds-xs nds-topbar-version nds-tooltip nds-term"
+            <a href="{{ 'guides/integration-quality' | relative_url }}" class="nds-tag nds-green nds-xs nds-topbar-version nds-tooltip nds-term"
                 data-tooltip-message="{{ site.nds_iq.description }}"
                 data-tooltip-hover="500">
                 <span class="nds-label">{{ site.nds_iq.title }} v{{ _iq_v }}</span>

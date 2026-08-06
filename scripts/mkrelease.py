@@ -79,7 +79,7 @@ def sweep_issue_template(version):
     with open(path, encoding='utf8') as f:
         text = f.read()
 
-    with open(os.path.join(ROOT, '_includes', 'nds-ai-instructions.md'), encoding='utf8') as f:
+    with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
         iq = re.search(r'instructions v(\d+)', f.read()).group(1)
 
     def prepend(text, dropdown_id, value):
@@ -200,18 +200,18 @@ def verify(out, version):
     # NDS_ASSETS pair the consumer sets at the top; lose a declaration and the
     # block ships with unresolvable references — invisible until a consumer
     # complains.
-    with open(os.path.join(ROOT, '_includes', 'nds-ai-instructions.md'), encoding='utf8') as f:
+    with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
         block = f.read()
     with open(os.path.join(ROOT, 'guides', 'get-started.md'), encoding='utf8') as f:
         integration = html.unescape(f.read())
     if '`NDS_ROOT` =' not in block:
-        sys.exit('_includes/nds-ai-instructions.md has no `NDS_ROOT` declaration — every path in the block resolves nowhere.')
+        sys.exit('_includes/NDS-IQ.md has no `NDS_ROOT` declaration — every path in the block resolves nowhere.')
     if '`NDS_ASSETS` =' not in block:
-        sys.exit('_includes/nds-ai-instructions.md has no `NDS_ASSETS` declaration — the asset-copy and upgrade steps resolve nowhere.')
+        sys.exit('_includes/NDS-IQ.md has no `NDS_ASSETS` declaration — the asset-copy and upgrade steps resolve nowhere.')
     if 'end NDS instructions' not in block:
-        sys.exit('_includes/nds-ai-instructions.md is missing the "end NDS instructions" marker — installed copies become unbounded for the upgrade refresh.')
-    if 'include nds-ai-instructions.md' not in integration:
-        sys.exit('guides/get-started.md no longer includes nds-ai-instructions.md — the block is not rendered.')
+        sys.exit('_includes/NDS-IQ.md is missing the "end NDS instructions" marker — installed copies become unbounded for the upgrade refresh.')
+    if 'include NDS-IQ.md' not in integration:
+        sys.exit('guides/get-started.md no longer includes NDS-IQ.md — the block is not rendered.')
     for marker in ('COPY START', 'COPY END'):
         if marker not in integration:
             sys.exit(f'guides/get-started.md is missing the {marker} marker — the snippet is unbounded.')
@@ -224,7 +224,7 @@ def verify(out, version):
     # "Upgrading NDS").
     m = re.search(r'instructions v(\d+)', block)
     if not m:
-        sys.exit('_includes/nds-ai-instructions.md heading has no "instructions v<N>" stamp.')
+        sys.exit('_includes/NDS-IQ.md heading has no "instructions v<N>" stamp.')
     tag = re.search(r'nds-tag nds-green nds-xs"><span class="nds-label">IQ v(\d+)<', integration)
     if not tag or tag.group(1) != m.group(1):
         sys.exit(f'Guide green tag ({tag.group(1) if tag else "missing"}) does not match the block heading '
