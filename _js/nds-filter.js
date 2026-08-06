@@ -37,6 +37,12 @@
  *     data-filter-target — there is no privileged container element.
  *   - data-filtered is written by the filter to hide an item; CSS owns the hiding. Count
  *     visible items by its absence, never by inline styles.
+ *   - nds:filter:change's criteria is NESTED: named filters live under criteria.filters,
+ *     the search string under criteria.search — criteria.<name> at the top level reads
+ *     undefined.
+ *   - Declare data-filter-items only where a live filter exists: a crit rule holds such a
+ *     container as skeleton until an instance stamps data-nds-filter-initialized, with no
+ *     console warning — NDS.Init.audit() is what reports an unclaimed one.
  */
 
 /**

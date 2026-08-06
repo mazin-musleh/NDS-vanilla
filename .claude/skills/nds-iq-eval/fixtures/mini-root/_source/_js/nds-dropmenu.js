@@ -19,5 +19,9 @@
  *   - Portaled menus leave the DOM ancestry: use from()/menuOf(), not closest().
  *   - nds:dropmenu:prepare is the lazy-content hook; opened fires after placement.
  *   - data-position-vertical is written by the component (a CSS hook), never set it yourself.
+ *   - Menus render in place by default: an ancestor with overflow or its own stacking
+ *     context (a modal, a scrolling table wrapper, a transformed card) clips the open menu
+ *     silently. The fix is data-portal on the wrapper — never overflow or z-index overrides;
+ *     sizing knobs stay on the wrapper and survive the move.
  */
 // fixture stub — the banner above is the surface under test; real logic lives in the template.

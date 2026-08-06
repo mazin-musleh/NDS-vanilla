@@ -30,6 +30,8 @@
  *     NDS.cache.get / .set (key, value, minutes)           localStorage with expiry
  *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
  *     NDS.announce(text)               say something in the shared live region
+ *     NDS.i18n.load(component, scopes) fetch + apply a component's string table (en
+ *                                      fallback; stamps data-i18n / data-i18n-attr in scope)
  *     NDS.triggerEvents(el)            dispatch input + change so forms and consumers sync
  *     NDS.badge(el, count) · NDS.buildChip(value, opts) · NDS.isRowSelected(row)
  * Events:

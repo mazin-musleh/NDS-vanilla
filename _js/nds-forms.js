@@ -39,6 +39,8 @@
  *   - Forms owns the submit listener on every .nds-form. data-ajax makes it preventDefault()
  *     after validation — the request is yours to send from nds:formValid.
  *   - validateForm() is called synchronously at submit; keep it in the main bundle.
+ *   - Never call form.reset(): nothing in NDS listens for the native reset event. Clear
+ *     per field and syncState() each.
  */
 
 // NDS Forms Controller - Form Control Logic
