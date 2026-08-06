@@ -1,3 +1,27 @@
+/* NDS.TagInput — public surface
+ * Rides: nds-autocomplete (a root with data-url shares the input; a picked suggestion commits
+ *        as a tag; soft — typing alone works without it)
+ *      · nds-forms (field status feedback for duplicate / max / strict rejections; soft)
+ * Methods:
+ *   NDS.TagInput.init() / .reinit()   scan + initialize .nds-taginput fields
+ *   NDS.TagInput.create(el)           instance one field — null when the markup is incomplete
+ *   NDS.TagInput.destroy(el)          tear one field down
+ *   instance.getValues()              the tags, in order
+ *   instance.addTag(value)            commit one tag (rejects duplicates and over-max)
+ *   instance.removeTag(value)         remove one tag
+ *   instance.clear()                  remove every tag
+ * Events (bubble from .nds-taginput):
+ *   nds:taginput:change   detail {name, values} — every add and every remove
+ * Hooks:
+ *   data-taginput-name · data-max-tags · data-strict · data-chip-class
+ *   data-taginput-value (stamped on each chip, for consumer and e2e selectors)
+ * Gotchas:
+ *   - The form carrier is one hidden input per tag, named "<data-taginput-name>[]".
+ *     Server-rendered ones seed the chips at init. No name → UI-only, nothing posts.
+ *   - data-strict needs data-url: typed text never commits, only picked suggestions and
+ *     addTag().
+ *   - Backspace on an empty input pops the last tag BACK INTO the input for editing.
+ */
 /**
  * NDS TagInput — free-text tags committed as removable chips while typing.
  * Enter or comma commits the typed text, Backspace on an empty input removes

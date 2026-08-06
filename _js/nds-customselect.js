@@ -1,3 +1,21 @@
+/* NDS.CustomSelect — public surface
+ * Rides: nds-dropmenu (open/close, keyboard nav, positioning, portal, outside-click)
+ * Methods:
+ *   NDS.CustomSelect.init() / .reinit()    arm the delegated listeners; paint pre-selected labels
+ *   NDS.CustomSelect.create(el)            build one select now — pass the input or its form-control
+ *   NDS.CustomSelect.setValue(el, value)   pick by option value; false when no option carries it
+ *   NDS.CustomSelect.clear(el)             back to placeholder
+ * Events (fire ON the .nds-form-control — this one does NOT bubble):
+ *   selectChange   detail {value, text} — every pick, by click or by setValue()/clear()
+ *                  (legacy unprefixed name)
+ * Hooks:
+ *   (none — the field is markup: one .nds-select-option per choice, .nds-select-value the
+ *    hidden input that submits, .nds-select-input the readonly display field)
+ * Gotchas:
+ *   - Read .nds-select-value for the value; the visible input is display-only and its label
+ *     is derived from the picked option.
+ *   - A select builds on its FIRST FOCUS, not at init — setValue()/clear() work before that.
+ */
 // NDS Custom Select — styled dropdown over a .nds-select-input
 //
 // Delegated + lazy (mirrors the voice-input pattern): init() installs two

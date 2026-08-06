@@ -1,3 +1,27 @@
+/* NDS.Autocomplete — public surface
+ * Rides: nds-dropmenu (menu shell, open/close, positioning, outside-click)
+ *      · nds-forms (loading chrome via data-state="loading", the field's clear button)
+ *      · nds-empty (the "no results" placeholder; soft — the menu just closes without it)
+ * Methods:
+ *   NDS.Autocomplete.init() / .reinit()      arm the delegated focusin builder
+ *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem}
+ * Events (bubble from the .nds-form-container):
+ *   nds:autocomplete:fetch    detail {query, results} — after every result set is rendered
+ *   nds:autocomplete:select   detail {item, text} — a suggestion was picked
+ *   nds:autocomplete:clear    detail {} — the field's clear button was used
+ * Hooks (all on the .nds-form-container):
+ *   data-url · data-name (result field to display, default "Title") · data-min-chars (3)
+ *   data-query-param (q) · data-results-path · data-fetch="each|once"
+ *   data-empty-message · data-empty-icon
+ * Gotchas:
+ *   - Activates on an input[autocomplete="on"] inside .nds-form-container[data-url], built
+ *     on the field's FIRST FOCUS.
+ *   - renderItem() output is inserted as HTML — you own the escaping. The default renderer
+ *     escapes and highlights the match.
+ *   - Only the first 20 results render; data-fetch="once" caches the list and filters it
+ *     in the browser.
+ *   - Inside a .nds-search-box, picking a suggestion clicks the .nds-search-btn.
+ */
 /**
  * NDS Autocomplete Component
  * Enhances form inputs with remote typeahead/autocomplete functionality

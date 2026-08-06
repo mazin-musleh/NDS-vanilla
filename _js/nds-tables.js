@@ -1,3 +1,49 @@
+/* NDS.Tables — public surface
+ * Rides: nds-sort (the sort engine — column cycling, reordering, aria-sort)
+ *      · nds-dropmenu (column-visibility menu; a sub-row toggle authored inside a menu item)
+ *      · nds-forms (the indeterminate select-all checkbox)
+ *      · nds-pagination (refreshed after a sort re-orders a paged table; soft)
+ *      · nds-export (a hidden column is stamped so exports match the view, and the column
+ *        menu falls back to the export label for a header with no text; soft)
+ * Methods:
+ *   NDS.Tables.init() / .reinit()               scan .nds-table and [data-columns-target] menus
+ *   NDS.Tables.recheckWidths()                  re-measure every table's responsive scroll state
+ *   NDS.Tables.create(table)                    sort + selection controls for one table
+ *   NDS.Tables.createResponsive(table)          the scroll wrapper only
+ *   NDS.Tables.createColumnToggle(root)         one [data-columns-target] menu
+ *   NDS.Tables.row(tr)                          per-row handle {el, sub}; the sub row itself
+ *                                               is accepted too
+ *   ↳ handle.sub.el                             the <tr class="nds-sub">, or null
+ *   ↳ handle.sub.setContent(htmlOrNode)         put YOUR markup in the sub (chainable)
+ *   ↳ handle.sub.open() / .close() / .toggle()  show / hide it (chainable)
+ *   NDS.Tables.setColumnHidden(table, i, bool)  hide or show a column by cell index
+ *   NDS.Tables.getCellText(cell)                the cell-text reader sort and export use
+ * Events (bubble from the <table>):
+ *   nds:table:sort         detail {columnIndex, direction, table, button}
+ *   nds:table:selection    detail {selectedCount, totalCount, selectedRows, selectedIndexes,
+ *                          table}
+ *   nds:table:columns      detail {table, index, hidden, restored} — restored:true is a saved
+ *                          hide replayed at init, not a user action
+ *   nds:table:sub-request  detail {row, sub, table, signal} — there is nothing to show yet.
+ *                          Fetch, then answer: NDS.Tables.row(row).sub.setContent(html).open().
+ *                          Pass detail.signal to fetch / NDS.request so a cancel drops it
+ *   nds:table:sub-open     detail {row, sub, table}
+ *   nds:table:sub-close    detail {row, sub, table}
+ * Hooks:
+ *   data-sub-toggle    the button that expands a row (anywhere in the row, or in its menu)
+ *   data-sort-value    on a <td>, when the rendered text would sort wrong
+ *   data-align         on a <th>: center | start | end
+ *   data-columns-target · data-columns-list · data-columns-lock (a column the menu can't hide)
+ * Gotchas:
+ *   - NDS never fetches sub-row content. Answer nds:table:sub-request, or the toggle spins
+ *     until a second click or your close().
+ *   - A sub row is <tr class="nds-sub"> placed DIRECTLY AFTER its parent row — adjacency is
+ *     the pairing, there is no id to keep in sync.
+ *   - Select-all and nds:table:selection follow the FILTERED view; rows hidden by pagination
+ *     still count, rows a filter removed do not.
+ *   - Columns are addressed by cell index, so colspan/rowspan header cells are not supported.
+ *   - Column hides persist in localStorage whenever the table has an id.
+ */
 /**
  * NDS Tables Component
  * Sortable table functionality with accessible column sorting

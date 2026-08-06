@@ -1,3 +1,21 @@
+/* NDS.VoiceInput — public surface
+ * Rides: nds-forms (the `listening` state on the field container; soft — a bare input just
+ *        gets its value set)
+ * Methods:
+ *   NDS.VoiceInput.init() / .reinit()   install the delegated click handler (idempotent)
+ *   NDS.VoiceInput.isSupported()        Web Speech API available? — gate your own UI on it
+ * Events:
+ *   (none — the transcript lands in the input, then `input` and `change` are dispatched)
+ * Hooks:
+ *   data-voice-target · data-target   id, name, or data-name of the input to dictate into.
+ *                                     With neither, the button's own .nds-form-control input.
+ * Gotchas:
+ *   - The button is never hidden on an unsupported browser; a click shows a message in the
+ *     field instead. Gate on isSupported() if you want it gone.
+ *   - Listening auto-stops after 30 seconds.
+ *   - Interim words are written into the input as they arrive; only the final result
+ *     dispatches input/change.
+ */
 // NDS Voice Input — voice-dictation for a text field.
 //
 // A delegated library, like NDS.Export: init() installs ONE document-level

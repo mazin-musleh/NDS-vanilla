@@ -83,9 +83,14 @@ const SCOPE = [
 ];
 
 // Event literals a file dispatches that its banner deliberately omits, keyed by file name.
-// Empty: legacy unprefixed events (selectChange, ratingChange) already fall outside the
-// nds:* gate in verifyFile.
+// Legacy unprefixed events (selectChange, ratingChange) already fall outside the nds:* gate
+// in verifyFile and need no entry.
 const EVENT_EXCEPTIONS = {};
+
+// A dispatched literal ending in ':' is a concatenation prefix, not an event name —
+// tables builds its sub-row events as 'nds:table:' + verb. It stands in for every banner
+// name starting with it, and needs at least one of them to exist.
+const isPrefix = (name) => name.endsWith(':');
 
 const SECTIONS = ['Rides', 'Methods', 'Events', 'Hooks', 'Gotchas'];
 const RESERVED = new Set(['null', 'true', 'false', 'undefined', 'return']);
@@ -199,10 +204,18 @@ function extractKeys(source, ns) {
     return keys;
 }
 
+// Listener registrations are consumed by the first alternative, so the names a file only
+// LISTENS for never count as dispatches. What is left: a name handed straight to
+// CustomEvent (this is what catches legacy unprefixed names), plus every `nds:*` literal
+// anywhere else — files reach the bus through too many wrappers to enumerate
+// (emitEvent, _dispatchEvent, dispatch(el, name), fire(el, name)) and accordion even
+// routes its pair through a variable, so matching the NAME beats listing the callers.
 function extractEvents(source) {
     const events = new Set();
-    for (const m of source.matchAll(/(?:new CustomEvent|emitEvent)\(\s*['"]([^'"]+)['"]/g)) {
-        events.add(m[1]);
+    const re = /(?:add|remove)EventListener\(\s*(['"])[^'"]*\1|(?:new CustomEvent|emitEvent)\(\s*(['"])([^'"]+)\2|(['"])(nds:[\w:.-]+)\4/g;
+    for (const m of source.matchAll(re)) {
+        const name = m[3] || m[5];
+        if (name) events.add(name);
     }
     return events;
 }
@@ -277,7 +290,12 @@ function verifyFile(file, ns, source) {
             } else {
                 const listed = new Set();
                 for (const m of methods.text.matchAll(new RegExp(`NDS\\.${ns}\\.([A-Za-z_$][\\w$]*)`, 'g'))) listed.add(m[1]);
-                for (const m of methods.text.matchAll(/\/\s*\.([A-Za-z_$][\w$]*)\s*\(/g)) listed.add(m[1]);
+                // "NDS.X.init() / .reinit()" shorthand — only on a line that names the
+                // namespace, so an instance line ("instance.open() / .close()") stays out.
+                for (const line of methods.text.split('\n')) {
+                    if (!line.includes(`NDS.${ns}.`)) continue;
+                    for (const m of line.matchAll(/\/\s*\.([A-Za-z_$][\w$]*)\s*\(/g)) listed.add(m[1]);
+                }
                 for (const name of listed) {
                     if (!keys.has(name)) issues.push(`banner method NDS.${ns}.${name} not found on surface`);
                 }
@@ -301,13 +319,16 @@ function verifyFile(file, ns, source) {
         const dispatched = extractEvents(source);
         const listed = bannerEventNames(events.text);
         const exceptions = EVENT_EXCEPTIONS[file] || [];
+        const prefixes = [...dispatched].filter(isPrefix);
         for (const name of listed) {
-            if (!dispatched.has(name)) issues.push(`banner event ${name} never dispatched in file`);
+            if (dispatched.has(name)) continue;
+            if (prefixes.some((p) => name.startsWith(p))) continue;
+            issues.push(`banner event ${name} never dispatched in file`);
         }
         for (const name of dispatched) {
-            if (name.startsWith('nds:') && !exceptions.includes(name) && !listed.has(name)) {
-                issues.push(`dispatched event ${name} missing from banner Events`);
-            }
+            if (!name.startsWith('nds:') || exceptions.includes(name) || listed.has(name)) continue;
+            if (isPrefix(name) && [...listed].some((l) => l.startsWith(name))) continue;
+            issues.push(`dispatched event ${name} missing from banner Events`);
         }
     }
 

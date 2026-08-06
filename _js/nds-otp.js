@@ -1,3 +1,23 @@
+/* NDS.OTP — public surface
+ * Rides: nds-forms (clears the field status as the user types; soft)
+ * Methods:
+ *   NDS.OTP.init()                  wire every .nds-otp-group, and self-arm for late ones
+ *   NDS.OTP.getValue(group)         the digits, joined
+ *   NDS.OTP.setValue(group, value)  fill the boxes (non-digits stripped)
+ *   NDS.OTP.clear(group)            empty the boxes, focus the first
+ * Events (bubble from the .nds-otp-group; every detail carries `value`):
+ *   nds:otpChange     detail {value, filled} — on every edit
+ *   nds:otpComplete   detail {value} — the moment every box holds a digit
+ *   nds:otpClear      detail {value} — from clear() only
+ * Hooks:
+ *   (none — the group is markup: the inputs inside .nds-otp-container, plus an optional
+ *    input[type="hidden"].nds-otp-value the component keeps in sync)
+ * Gotchas:
+ *   - setValue() writes the boxes and the hidden carrier but fires NO event.
+ *   - A multi-digit paste spreads across the boxes from the focused one.
+ *   - There is no reinit(): init() runs once and later .nds-otp-group nodes are picked up
+ *     by the shared DOM bus.
+ */
 // NDS OTP Input Controller
 // File: nds-otp.js
 

@@ -1,3 +1,50 @@
+/* NDS.Upload — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Upload.init() / .reinit()                scan + initialize .nds-file-upload
+ *   NDS.Upload.create(el, options)               instance one uploader; options override the
+ *                                                data-* config. Selector string accepted
+ *   NDS.Upload.getInstance(el)                   the existing instance, or null
+ *   NDS.Upload.whenReady(el, cb)                 run cb with the instance, now or on ready
+ *   instance.addFile(file, options)              stage a File — returns its id, null when full.
+ *                                                options {validate, status, progress, error}
+ *   instance.removeFile(id) / .clearAllFiles()   drop one / all (aborts any upload in flight)
+ *   instance.getFile(id) / .getAllFiles()        {file, id, status, progress, error}
+ *   instance.getFilesByStatus(status)            same shape, filtered
+ *   instance.startUpload(id)                     upload one, or every 'ready' file with no id
+ *   instance.retry(id) / .abort(id)              re-send an errored file / cancel a live one
+ *   instance.setFileStatus(id, status, options)  drive a row yourself (options {progress, error})
+ *   instance.setFileProgress(id, percent)        drive the progress ring yourself
+ *   instance.validateFile(file)                  [] when it passes, [messages] when it fails —
+ *                                                checks without staging anything
+ *   instance.getConfig()                         the resolved, frozen config
+ *   instance.setDisabled(bool) / .refreshUI() / .destroy()
+ * Events (bubble from the .nds-file-upload container):
+ *   nds:upload:ready             detail {instance}
+ *   nds:upload:selected          detail {files, allFiles, fileData} — files that passed checks
+ *   nds:upload:validationError   detail {errors:[{file, errors, fileData}]}
+ *   nds:upload:maxFilesReached   detail {maxFiles, currentCount}
+ *   nds:upload:beforeUpload      detail {fileData, formData, xhr} — CANCELABLE. Set headers on
+ *                                detail.xhr, or preventDefault() to send it yourself
+ *   nds:upload:progress          detail {fileData, progress}
+ *   nds:upload:success           detail {fileData, response}
+ *   nds:upload:error             detail {fileData, error, status, response}
+ *   nds:upload:removed           detail {fileData, fileId}
+ * Hooks:
+ *   data-upload-url · data-auto-upload · data-max-file-size (bytes) · data-max-files
+ *   data-allowed-types (extensions) · data-allowed-mime-types (image/* accepted)
+ *   data-file-id (stamped on each rendered row and its remove button)
+ * Gotchas:
+ *   - Options passed to create() WIN over the data-* attributes.
+ *   - data-allowed-types is mirrored onto the file input's `accept` — never hand-author it.
+ *   - Status flow is ready → uploading → processing → complete, or error. retry() only
+ *     accepts a file sitting at 'error'.
+ *   - There is no stall detection: a dead connection leaves a file at 'uploading' forever,
+ *     and retry() refuses it. Time out long uploads yourself and call abort(id).
+ *   - With no upload URL the component only stages files (it warns once).
+ *   - A row is cloned from .nds-file-item-template when you ship one; otherwise from the
+ *     component's own canonical markup.
+ */
 // NDS File Upload Component
 // File: nds-upload.js
 

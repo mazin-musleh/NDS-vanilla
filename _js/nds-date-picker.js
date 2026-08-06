@@ -1,3 +1,30 @@
+/* NDS.DatePicker — public surface
+ * Rides: nds-dropmenu (positioning, outside-click, portal — the input drives open/close)
+ *      · nds-forms (invalid-value status message under the field; soft)
+ * Methods:
+ *   NDS.DatePicker.init() / .reinit()          attach a calendar to every .nds-date-input
+ *   NDS.DatePicker.create(input, formControl)  build/return one instance — idempotent, null on
+ *                                              bad markup; formControl is optional
+ *   NDS.DatePicker.CalendarConfig              the gregorian + hijri engines
+ *                                              (parseDate / formatDate / conversion)
+ *   NDS.DatePicker.createHijriDate(d, m, y)    build the {day, month, year} hijri shape
+ *   NDS.DatePicker.DatePickerCalendar          the instance prototype (extension use)
+ * Events:
+ *   (none — a pick writes the input and dispatches a native `change`; listen on the input)
+ * Hooks:
+ *   on the .nds-form-container:  data-format (YYYY YY MM M DD D — also picks the calendar
+ *                                and the day/month/year mode) · data-clearable (automatic
+ *                                in range mode)
+ *   on the .nds-date-input:      data-min-date · data-max-date · data-lang
+ *                                data-year-before · data-year-after
+ *   written by the picker:       data-picker-mode (container) · data-converted-date (input)
+ * Gotchas:
+ *   - Range mode is the `dateRange` class on the container; its value reads "start - end".
+ *     Bounds are day-precision and use the picker's own format.
+ *   - Hijri and Gregorian: the picker stamps the OTHER calendar's value in
+ *     data-converted-date on the input.
+ *   - "Today" is Riyadh time (GMT+3), not the visitor's clock.
+ */
 (() => {
     'use strict';
 

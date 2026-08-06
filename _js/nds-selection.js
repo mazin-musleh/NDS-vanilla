@@ -1,3 +1,24 @@
+/* NDS.Selection — public surface
+ * Rides: nds-tables (selected rows carry the table's own state; soft — a plain list of
+ *        input.nds-check items counts on its own)
+ * Methods:
+ *   NDS.Selection.init()            wire the document listener (the loader calls this)
+ *   NDS.Selection.reinit()          recount every widget after the DOM changed
+ *   NDS.Selection.recount(listId)   recount one list's widgets
+ *   NDS.Selection.destroy()         detach the listener
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-selection-target   on the widget — the id of the list it counts
+ *   data-selection-count    slots the widget fills with the selected count
+ *   data-selection-total    slots the widget fills with the list's item count
+ * Gotchas:
+ *   - The count covers EVERY selected item in the list, including rows on other pages and
+ *     rows a filter currently hides — the bulk-action truth, matching what export sends.
+ *   - Ship .nds-selection-view with `hidden` so first paint is right before this bundle
+ *     lands; the component swaps it against .nds-records-view.
+ *   - data-state="has-selection" sits on the widget while anything is selected.
+ */
 /**
  * NDS Selection Count
  * Content-agnostic selected-items counter for records widgets.

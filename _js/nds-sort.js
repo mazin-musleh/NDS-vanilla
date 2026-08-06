@@ -1,3 +1,33 @@
+/* NDS.Sort — public surface
+ * Rides: nds-dropmenu (triggers authored inside a menu are still found while it is portaled
+ *        to <body>; soft)
+ * Methods:
+ *   NDS.Sort.create(root, options)      factory → instance (one per root, reused)
+ *   NDS.Sort.getInstance(rootOrSel)     the existing instance, or null
+ *   NDS.Sort.detectType(sampleValues)   'number' | 'date' | 'string'
+ *   NDS.Sort.parseValue(raw, type)      pure helper
+ *   NDS.Sort.compare(a, b, type, dir)   pure helper
+ *   instance.apply(key, dir)            sort now (null key resets to the authored order)
+ *   instance.reset()                    back to the authored order
+ *   instance.refresh()                  re-run the active sort over the items as they stand
+ *   instance.getState()                 {key, dir}
+ *   instance.destroy()
+ * Events (bubble from the root):
+ *   nds:sort:change   detail {key, dir, orderedItems, sort}
+ * Hooks:
+ *   data-sort        the key, on a trigger
+ *   data-sort-dir    the direction that trigger fixes (direct mode)
+ *   data-sort-<key>  the value to sort by, on each item (the default accessor)
+ * Gotchas:
+ *   - There is no init()/reinit(): sort has no auto-init selector. It is composed into
+ *     another widget with create() — filter and tables both do this.
+ *   - The options object IS the API: items, triggers, reorderIn, accessor, keyFrom,
+ *     mode ('direct' | 'cycle'), a11y ('pressed' | 'sort' | 'none'), a11yTarget, types,
+ *     initialState, urlSync, onChange.
+ *   - A selector string resolves INSIDE the root — pass a function for elements outside it.
+ *   - Sorting re-appends the nodes, so listeners and element state survive. Items that
+ *     arrive later need refresh().
+ */
 /**
  * NDS Sort Component
  * DOM-reorder sort for any collection of sibling elements. Consumed by Filter
