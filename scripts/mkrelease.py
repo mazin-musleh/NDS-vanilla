@@ -117,10 +117,13 @@ def stage(version):
                     ignore=lambda d, names: EXCLUDE if d == site else set())
 
     # Readable source behind the minified bundles: an LLM helping the consumer
-    # can't read *.min.js / *.min.css, so ship the sources it CAN read.
+    # can't read *.min.js / *.min.css, so ship the sources it CAN read. The doc
+    # .md sources ride along as the markup surface to copy from — chrome-free
+    # and ~4x cheaper to read than the built pages, code tabs and the modifier
+    # / data-attribute tables intact.
     src = os.path.join(pkg, '_source')
     os.makedirs(src)
-    for d in ('_js', '_sass'):
+    for d in ('_js', '_sass', 'components', 'utilities', 'layout', 'ui-shell'):
         shutil.copytree(os.path.join(ROOT, d), os.path.join(src, d),
                         ignore=shutil.ignore_patterns('*.bak'))
 
@@ -178,9 +181,18 @@ def verify(out, version):
     # copy in stage() would silently ship an incomplete zip otherwise.
     for anchor in ('_source/_js/nds-core.js', '_source/_sass/_mixins.scss',
                    '_source/_data/content/components.yml',
+                   '_source/components/multiselect.md',
                    'README.md', '_site/guides/get-started.html'):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
+
+    # Every in-scope _js/ file opens with its public-surface banner — that's
+    # what the consumer's LLM reads instead of grepping the source. A missing
+    # or drifted banner would ship silently.
+    banners = subprocess.run('node scripts/check-banners.mjs --all', cwd=ROOT,
+                             shell=True, capture_output=True, text=True)
+    if banners.returncode:
+        sys.exit('check-banners.mjs --all failed:\n' + banners.stdout + banners.stderr)
 
     # The instruction block's checks run against its SOURCE include (clean,
     # unescaped markdown — the guide renders it into the code element via
