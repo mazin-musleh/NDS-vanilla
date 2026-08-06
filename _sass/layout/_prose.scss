@@ -17,14 +17,40 @@
    shares `prose-flow` for preview parity. */
 
 @mixin prose-flow {
+    // Arabic fills ~21px of a 24px line box in IBM Plex Sans Arabic vs Latin's
+    // ~15px, so the same padding reads far tighter. RTL (default) gets a step
+    // more; @include ltr tightens it back for Latin.
+    --_list-item-pad: var(--spacing-md);
+    --_sub-item-pad: var(--spacing-xs);
+
+    @include ltr {
+        --_list-item-pad: var(--spacing-xs);
+        --_sub-item-pad: var(--spacing-xxs);
+    }
+
     :where(p, ul, ol, blockquote, figure, table, pre) {
         margin-block: var(--spacing-lg);
     }
 
-    // Nested lists sit tight under their parent item
-    :where(li) > :where(ul, ol) {
-        margin-block: var(--spacing-xxs);
+    :where(ul, ol) > li {
+        padding-block: var(--_list-item-pad);
+
+        &:first-child { padding-block-start: 0; }
+        &:last-child  { padding-block-end: 0; }
     }
+
+    // Sub-list sits at sibling-gap distance from its parent's text, then its
+    // own items take the tighter step; end margin zeroed so the parent's
+    // padding-block-end owns the space down to the next sibling.
+    :where(li) > :where(ul, ol) {
+        margin-block: var(--_list-item-pad) 0;
+
+        > li { padding-block: var(--_sub-item-pad); }
+    }
+
+    // Markers cycle by depth the way native <ul> does: 1. → a. → i.
+    :where(ol ol) { list-style-type: lower-alpha; }
+    :where(ol ol ol) { list-style-type: lower-roman; }
 
     > :where(*:first-child) {
         margin-block-start: 0;
