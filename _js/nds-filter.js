@@ -940,14 +940,7 @@
             const filterBtn = this._resolveFilterBtn();
             if (!filterBtn) return;
 
-            const count = this.getAppliedFilterCount();
-            NDS.badge(filterBtn, count);
-
-            if (count > 0) {
-                NDS.State.set(filterBtn, 'has-filters');
-            } else {
-                NDS.State.clear(filterBtn);
-            }
+            NDS.badge(filterBtn, this.getAppliedFilterCount());
         }
 
         updateAppliedChips() {
@@ -963,9 +956,11 @@
             const chipsContainer = appliedContainer.querySelector('.nds-chips');
             if (!chipsContainer) return;
 
-            // Find auto-fill container (optional): external first, then internal
+            // Find auto-fill container (optional): external first, then internal.
+            // Portal-aware: an auto-fill nested inside the menu leaves the
+            // wrapper's subtree while a data-portal dropmenu is open.
             const autoFillContainer = this.autoFillElement
-                || this.filterContainer.querySelector('.nds-auto-fill');
+                || NDS.querySelector(this.filterContainer, '.nds-auto-fill');
 
             chipsContainer.innerHTML = '';
 
@@ -1076,7 +1071,7 @@
         // accepts both.
         createFilterChip(type, value, onRemove, displayLabel) {
             return NDS.buildChip(displayLabel || value, {
-                chipClass: this.chipClass || 'nds-primary nds-lg',
+                chipClass: this.chipClass,
                 data: { filterType: type, filterValue: value },
                 onRemove,
             });
@@ -1088,12 +1083,7 @@
             this._mirrorSearchInputs('');
             if (this.searchInputs.dropmenu) this.updateApplyButtonLabel();
 
-            // In AJAX mode, resubmit form to get updated results
-            if (this.isAjaxMode) {
-                this.submitForm();
-            } else {
-                this.applyFilters();
-            }
+            this._commitCriteriaChange();
         }
 
         removeFilterValue(filterName, value) {
@@ -1110,12 +1100,7 @@
             this.updateFilterCriteria(filterName);
             this.updateApplyButtonLabel();
 
-            // In AJAX mode, resubmit form to get updated results
-            if (this.isAjaxMode) {
-                this.submitForm();
-            } else {
-                this.applyFilters();
-            }
+            this._commitCriteriaChange();
         }
 
         // A radio group must never sit with nothing checked: unchecking its
@@ -1142,6 +1127,7 @@
             const params = new URLSearchParams(window.location.search);
             const deferringMenus = this._classifyDeferringMenus(filterElements, params);
             filterElements.forEach(element => this._dispatchFilterElement(element, params, deferringMenus));
+            this._flushAccordionInit();
             this._autoDetectDirectSearch();
             this._wireDeferredFilterDropmenus();
         }
@@ -1273,6 +1259,7 @@
                 if (this.filterInputs[filterName]) return;
                 this.setupDynamicFilter(element, filterName, filterType, values || null);
             });
+            this._flushAccordionInit();
         }
 
         // ==============================================
@@ -1447,11 +1434,7 @@
 
         updateClearButtonVisibility(input, clearBtn) {
             if (!clearBtn) return;
-            if (input.value.trim()) {
-                clearBtn.hidden = false;
-            } else {
-                clearBtn.hidden = true;
-            }
+            clearBtn.hidden = !input.value.trim();
         }
 
         // Write `value` into whichever search inputs exist (direct + dropmenu) and
@@ -1521,9 +1504,6 @@
                 this.criteria.filters[filterName] = [];
             }
 
-            // Get custom name from data-filter-name attribute if present
-            const customName = element.getAttribute('data-filter-name');
-
             // Build value-to-label map (resolves display labels from associated <label> elements)
             const labels = {};
             inputs.forEach(input => {
@@ -1540,7 +1520,6 @@
                 inputs: inputs,
                 type: inputType,
                 element: element,
-                customName: customName,  // Store custom name if provided
                 labels: labels           // Store value-to-label map
             };
 
@@ -1818,8 +1797,7 @@
             if (!fd || fd.type !== 'range') return;
             this._setRangeValues(filterName, fd.min, fd.max);
             this.updateApplyButtonLabel();
-            if (this.isAjaxMode) this.submitForm();
-            else this.applyFilters();
+            this._commitCriteriaChange();
         }
 
         // ==============================================
@@ -1954,16 +1932,24 @@
         }
 
         // Wrap a generated fieldset in nds-accordion-item markup (header
-        // button + collapse + content + body) and schedule one accordion
-        // init per root — coalesces the eager per-group loop into a single
-        // NDS.Accordion.create pass that sees every button at once. If the
-        // fieldset already sits inside a .nds-accordion (author grouping),
-        // reuse that root; otherwise synthesize a per-group root.
+        // button + collapse + content + body). If the fieldset already sits
+        // inside a .nds-accordion (author grouping), reuse that root;
+        // otherwise synthesize a per-group root. Init is deferred to
+        // _flushAccordionInit so every group's button is in place first.
         _wrapAsAccordionItem(fieldset, legendText) {
             const legend = fieldset.querySelector(':scope > legend');
             const title = legendText || (legend ? legend.textContent : '');
             if (legend) legend.remove();
             fieldset.classList.remove('nds-dropmenu-group');
+
+            // Already wrapped — refresh()/populateFilter() replaced this group's
+            // inputs in place, so the header, collapse and count tag still hold.
+            // Building a second item here would nest it inside the old one's body.
+            // Keyed on our own marker rather than the parent's class: an author
+            // may legitimately place a filter placeholder inside their own
+            // .nds-accordion-body, and that one still needs its first wrap.
+            if (fieldset.hasAttribute('data-filter-wrapped')) return;
+            fieldset.setAttribute('data-filter-wrapped', '');
 
             const filterName = fieldset.getAttribute('data-filter') || '';
             const id = `nds-filter-acc-${NDS.uniqueId()}`;
@@ -1994,11 +1980,23 @@
             }
             item.querySelector('.nds-accordion-body').appendChild(fieldset);
 
-            // Hand off to accordion.js's own initializer — it wires listeners,
-            // stamps data-nds-accordion-initialized (clears the skeleton), and
-            // sets .ndsAccordion on the container. Skips already-inited roots,
-            // so multiple groups triggering this is cheap. Soft dependency —
-            // groups render expanded, uncollapsible, if NDS.Accordion isn't bundled.
+            this._accordionInitPending = true;
+        }
+
+        // Hand off to accordion.js's own initializer — it wires listeners,
+        // stamps data-nds-accordion-initialized (clears the skeleton), and sets
+        // .ndsAccordion on the container.
+        //
+        // Once per build pass, never per group: NDSAccordion snapshots its
+        // buttons at construction and the initializer skips a root that already
+        // has .ndsAccordion, so initializing after the first of several groups
+        // sharing one author-supplied .nds-accordion root (the documented
+        // multi-group shape) leaves every later group's header button unwired.
+        // Soft dependency — groups render expanded, uncollapsible, if
+        // NDS.Accordion isn't bundled.
+        _flushAccordionInit() {
+            if (!this._accordionInitPending) return;
+            this._accordionInitPending = false;
             NDS.Accordion?.reinit();
         }
 
@@ -2190,6 +2188,15 @@
         // FILTER APPLICATION
         // ==============================================
 
+        // How a criteria change gets committed. AJAX mode re-fetches from the
+        // server; every other mode filters the items already on the page. One
+        // definition so a new commit path can't pick the wrong half — the chip,
+        // clear and range-reset paths all route here.
+        _commitCriteriaChange() {
+            if (this.isAjaxMode) this.submitForm();
+            else this.applyFilters();
+        }
+
         applyFilters() {
             // Dismiss any feedback in filter container
             // Soft dependency — filter skips feedback dismissal if NDS.Feedback isn't bundled.
@@ -2231,6 +2238,10 @@
 
             let visibleCount = 0;
 
+            // Settles synchronously by design: the body is a write-only
+            // data-filtered toggle with no layout reads, and it paints the
+            // final filtered set. Chunking it across frames would show every
+            // item first and collapse to the matches after — do not defer.
             this.items.forEach(item => {
                 const isVisible = this.itemMatchesCriteria(item);
 
@@ -2474,12 +2485,7 @@
             this.updateApplyButtonLabel();
             this.dispatchClearEvent();
 
-            // In AJAX mode, resubmit to re-fetch results with cleared filters
-            if (this.isAjaxMode) {
-                this.submitForm();
-            } else {
-                this.applyFilters();
-            }
+            this._commitCriteriaChange();
         }
 
         clear() {
@@ -2636,6 +2642,7 @@
                 const actualEl = this.generateFilterInputs(element, filterName, filterType) || element;
                 this.setupManualFilter(actualEl, filterName);
             });
+            this._flushAccordionInit();
 
             // Reapply current filters
             this.applyFilters();
@@ -2668,8 +2675,11 @@
         }
 
         populateFilter(filterName, values, inputType = null) {
-            // Find the container element for this filter
-            const container = this.filterContainer.querySelector(`[data-filter="${filterName}"]`);
+            // Find the container element for this filter. Portal-aware: a
+            // data-portal dropmenu moves the whole menu — and every placeholder
+            // in it — to <body> while open, which is exactly when a cascading
+            // filter calls this from an nds:filter:change handler.
+            const container = NDS.querySelector(this.filterContainer, `[data-filter="${filterName}"]`);
             if (!container) return;
 
             // Determine input type from data attribute or parameter
@@ -2680,6 +2690,7 @@
 
             // Re-setup the filter listeners
             this.setupManualFilter(actualElement, filterName);
+            this._flushAccordionInit();
         }
 
         // Legacy API for backward compatibility
