@@ -43,6 +43,9 @@
  *   - Declare data-filter-items only where a live filter exists: a crit rule holds such a
  *     container as skeleton until an instance stamps data-nds-filter-initialized, with no
  *     console warning — NDS.Init.audit() is what reports an unclaimed one.
+ *   - Resetting is markup, not JS: a [data-filter-action="reset"] button inside the surface
+ *     clears every input and re-emits nds:filter:change. Hand-clearing fields + syncState
+ *     repaints only — it dispatches nothing.
  */
 
 /**

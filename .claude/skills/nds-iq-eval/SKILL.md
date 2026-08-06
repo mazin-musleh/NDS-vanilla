@@ -87,4 +87,4 @@ The fixtures are deliberately skeletal — stubs with just enough structure for 
 
 ## Scenario file
 
-`scenarios.md` — one `## S<n> <slug>` per scenario: `mode`, `rules` (file sentences under test), `provenance`, `setup`, `prompt`, `rubric` (MUST / MUST NOT / cite), optional `artifacts` (behavior mode), optional `baseline` (last known result per model). Rubrics never enter runner prompts. Cites tagged `[v7-cite]` are pending a re-quote against the final v7 file text (Track B plan, B2.3) — grade those on meaning, not exact wording, until resolved.
+`scenarios.md` — one `## S<n> <slug>` per scenario: `mode`, `rules` (file sentences under test), `provenance`, `setup`, `prompt`, `rubric` (MUST / MUST NOT / cite), optional `artifacts` (behavior mode), optional `baseline` (last known result per model). Rubrics never enter runner prompts.
