@@ -1,3 +1,22 @@
+/* NDS.CityWeather — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.CityWeather.init()            wire the city and weather widgets, if present
+ *   NDS.CityWeather.updateWeather()   re-fetch and re-render the weather
+ *   NDS.CityWeather.updateCity()      re-render the city name
+ * Events:
+ *   (none)
+ * Hooks:
+ *   ids, not attributes: #nds-cityName · #nds-weatherInfo
+ *   data-city · data-city-en   on #nds-cityName — the name per language
+ *   data-latitude · data-longitude   on #nds-weatherInfo; default Riyadh
+ * Gotchas:
+ *   - Weather comes from the public open-meteo API. No key, no account — and no data at
+ *     all when the request fails; the widget just stays as served.
+ *   - Both languages are cached together, so a language switch needs no new request.
+ *   - The cache holds primitives and the DOM is rebuilt from them — nothing stored ever
+ *     reaches the HTML parser.
+ */
 // City & Weather - Simplified with Core Functions
 (() => {
     'use strict';

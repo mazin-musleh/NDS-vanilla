@@ -1,3 +1,23 @@
+/* NDS.Ipv — public surface
+ * Rides: nds-backdrop (dims the page behind the overlay; soft)
+ * Methods:
+ *   NDS.Ipv.init() / .reinit()   build the viewer and collect the thumbnails
+ *   NDS.Ipv.create()             build it and return the instance (window.ndsIPV)
+ *   instance.open(thumb)         open the viewer on a thumbnail element
+ *   instance.close()
+ * Events:
+ *   (none)
+ * Hooks:
+ *   .nds-ipv-thumbnail   class on any image that should open in the viewer
+ *   data-ipv-full        the full-size URL for that thumbnail (falls back to data-src,
+ *                        then the img's own src)
+ * Gotchas:
+ *   - One viewer serves the whole page; the thumbnails form a single gallery you can page
+ *     through with the arrow controls.
+ *   - The overlay markup ships in the page (#ndsIpvPopupOverlay and its controls) — the
+ *     component wires it, it does not build it.
+ *   - The instance is a page singleton at window.ndsIPV.
+ */
 /**
  * NDS Image Popup Viewer (IPV)
  * View images in a popup overlay with zoom, pan, and pinch-to-zoom.

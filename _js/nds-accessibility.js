@@ -1,3 +1,32 @@
+/* NDS.Accessibility — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Accessibility.init()                  build and wire the panel
+ *   NDS.Accessibility.open() / .close() / .toggle()
+ *   NDS.Accessibility.toggleMode(id)          turn one mode on or off
+ *   NDS.Accessibility.setVisualFilter(id)     apply a colour-vision filter
+ *   NDS.Accessibility.cycleSetting(id)        step a graded setting to its next tier
+ *   NDS.Accessibility.reset()                 back to defaults (asks for confirmation)
+ *   NDS.Accessibility.state                   a deep CLONE of the saved state — read-only
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-accessibility-panel · data-accessibility-toggle · data-accessibility-action
+ *   data-a11y-mode · data-a11y-visual · data-a11y-setting · data-a11y-value
+ *   data-a11y-exclude-token   opt a subtree out of a mode's token overrides
+ *   data-armed                the panel gate (see below)
+ *   written on <html>: data-a11y — the token list of active modes
+ * Gotchas:
+ *   - Every mode is a CSS token override in _variables-a11y.scss. This file only manages
+ *     state, persistence, focus and the panel lifecycle — styling is never done here.
+ *   - It stays asleep until ARMED: the loader skips it unless the panel carries
+ *     data-armed, which lands when saved preferences exist or the user clicks the FAB. A
+ *     session with neither pays no init cost.
+ *   - Preferences live in localStorage under 'nds-a11y' and are re-applied before first
+ *     paint by the guard in head-inline-scripts.html.
+ *   - Panel text is loaded from assets/i18n/accessibility/{lang}.json, with English
+ *     defaults in place until it resolves.
+ */
 // NDS Accessibility — site-wide a11y panel (FAB + slide-in disclosure)
 //
 // Modes are CSS-only token overrides in _variables-a11y.scss; this JS

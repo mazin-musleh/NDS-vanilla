@@ -160,9 +160,18 @@ function keysFromBlock(lines, start) {
         }
         if (depth <= 0) break;
         if (depthAtStart !== 1) continue;
-        const m = line.match(/^\s*(?:async\s+)?(?:get\s+|set\s+)?([A-Za-z_$][\w$]*)\s*[:(]/)
-            || line.match(/^\s*([A-Za-z_$][\w$]*)\s*,?\s*$/);
-        if (m && !RESERVED.has(m[1])) keys.add(m[1]);
+        const m = line.match(/^\s*(?:async\s+)?(?:get\s+|set\s+)?([A-Za-z_$][\w$]*)\s*[:(]/);
+        if (m) {
+            if (!RESERVED.has(m[1])) keys.add(m[1]);
+            continue;
+        }
+        // Shorthand keys, one or several to a line: `reset,` or `open, close, toggle,`.
+        const shorthand = line.match(/^\s*([A-Za-z_$][\w$]*(?:\s*,\s*[A-Za-z_$][\w$]*)*)\s*,?\s*$/);
+        if (!shorthand) continue;
+        for (const name of shorthand[1].split(',')) {
+            const key = name.trim();
+            if (key && !RESERVED.has(key)) keys.add(key);
+        }
     }
     return keys;
 }

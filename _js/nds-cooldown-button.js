@@ -1,3 +1,30 @@
+/* NDS.CooldownButton — public surface
+ * Rides: nds-alert (the optional "sent" toast; soft — no toast without it)
+ * Methods:
+ *   NDS.CooldownButton.init()        wire every .nds-cooldown, now and later
+ *   NDS.CooldownButton.start(btn)    begin the cycle by hand
+ *   NDS.CooldownButton.reset(btn)    end it early and restore the button
+ * Events (bubble from the button):
+ *   nds:cooldown:loading     the loading phase begins
+ *   nds:cooldown:triggered   loading ends and the countdown starts — fire your request here
+ *   nds:cooldown:tick        detail {remaining} — once a second during the countdown
+ *   nds:cooldown:end         the countdown finished, or reset() was called
+ * Hooks (on the .nds-cooldown button):
+ *   data-cooldown           seconds — REQUIRED to opt in
+ *   data-cooldown-loading   seconds to hold the loading state first, default 0
+ *   data-cooldown-label     countdown text; {s} becomes the remaining seconds
+ *   data-resend-label       the label to restore from the second cycle on
+ *   data-sent-title · data-sent-message   either one fires a success toast when the
+ *                                         countdown starts
+ * Gotchas:
+ *   - data-cooldown and data-cooldown-loading are read ONCE, when the button is wired,
+ *     and cached. Editing them later has no effect. The label and toast attributes are
+ *     re-read every cycle.
+ *   - The button needs a <span class="nds-label"> for the countdown text to land in.
+ *   - It is language-agnostic: write the attribute text in the page's own language.
+ *   - For a toast with a different variant or position, leave the two toast attributes off
+ *     and call NDS.Alert.create() from nds:cooldown:triggered.
+ */
 /**
  * NDS Cooldown Button
  * Reusable button pattern: click → optional loading phase → live countdown → restore.

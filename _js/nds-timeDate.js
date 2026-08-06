@@ -1,3 +1,25 @@
+/* NDS.TimeDate — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.TimeDate.init()                     wire the date widget and the clock, if present
+ *   NDS.TimeDate.updateDate()               re-render the date now
+ *   NDS.TimeDate.updateClock()              re-render the clock now
+ *   NDS.TimeDate.getHijriDate(isArabic, structured)
+ *                                           → Promise. A formatted string, or
+ *                                           {day, month, year} when structured is true
+ * Events:
+ *   (none)
+ * Hooks:
+ *   ids, not attributes: #nds-date (the date line) · #nds-realTimeClock (the clock)
+ *   data-calendar   on #nds-date: hijri | gregorian. Default follows the page language
+ * Gotchas:
+ *   - Both widgets read Riyadh time (GMT+3), not the visitor's clock.
+ *   - getHijriDate() stays a Promise because the date picker chains on it, even though
+ *     the value is computed locally.
+ *   - The clock stops while the tab is hidden and catches up when it returns.
+ *   - The rendered date is cached for the day in localStorage, as primitives — the DOM is
+ *     rebuilt from them, never from stored HTML.
+ */
 // Time & Date - Simplified with Core Functions
 (() => {
     'use strict';

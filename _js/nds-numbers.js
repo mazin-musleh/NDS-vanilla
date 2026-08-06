@@ -1,3 +1,28 @@
+/* NDS.Numbers — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Numbers.init() / .reinit()        format every number and arm every counter
+ *   NDS.Numbers.format(el)                format one .nds-number-format element
+ *   NDS.Numbers.formatNumbers()           format all of them
+ *   NDS.Numbers.setupCounterAnimations()  re-arm the counters only
+ * Events:
+ *   (none)
+ * Hooks:
+ *   .nds-number-format   class on any element holding a number — its text gets locale
+ *                        digits and separators
+ *   .nds-counter-value   class on a counting element, plus:
+ *   data-target          the end value; a prefix or suffix in it is kept ("$75,000", "98.6%")
+ *   data-start           the start value, default 0
+ *   data-duration        milliseconds, default 1000
+ *   data-decimals        decimal places; derived from data-target when absent
+ *   written by the component: data-animated once a counter has finished
+ * Gotchas:
+ *   - format() is idempotent — separators are stripped before parsing, so a caller like
+ *     the slider can run it after every value write.
+ *   - It rewrites the TEXT NODE holding the number, so icons and other children survive.
+ *   - A counter runs when it scrolls into view, once. Reduced motion jumps to the target.
+ *     Remove data-animated to let it run again.
+ */
 // Numbers and Counter Formatting
 (() => {
     'use strict';

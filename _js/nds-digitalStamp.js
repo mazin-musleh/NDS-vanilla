@@ -1,3 +1,23 @@
+/* NDS.DigitalStamp — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.DigitalStamp.init()      wire the tab, outside-click and Escape
+ *   NDS.DigitalStamp.open()      expand the banner
+ *   NDS.DigitalStamp.close()     collapse it
+ *   NDS.DigitalStamp.toggle()
+ *   NDS.DigitalStamp.isOpen()    open and not closing?
+ * Events (bubble from the panel; legacy dashed names):
+ *   nds-digitalStamp-opened   detail (none)
+ *   nds-digitalStamp-closed   detail (none) — after the collapse animation
+ * Hooks:
+ *   (none — class and id markup: .nds-digitalStamp-tab is the trigger, #nds-digitalStamp
+ *    is the panel)
+ * Gotchas:
+ *   - One per page, resolved by id at init.
+ *   - It closes itself when a click lands outside the tab and panel, which is also what
+ *     closes it when the nav opens — the two need no cross-component call.
+ *   - A click during the close animation RE-OPENS it rather than doing nothing.
+ */
 /**
  * NDS Digital Stamp
  *

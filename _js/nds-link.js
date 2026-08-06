@@ -1,3 +1,20 @@
+/* NDS.Link — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Link.init()   tag every external <a> on the page — safe to call again
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-no-external   on a link or any ancestor — opt that subtree out of tagging
+ *   .nds-external      the class the component adds; add it yourself to FORCE the badge
+ *                      on a link it would otherwise skip
+ * Gotchas:
+ *   - "External" means a different hostname from the page. A tagged link gets the
+ *     .nds-external badge class plus target="_blank" and rel="noopener noreferrer".
+ *   - Icon-only and image-only links are skipped, because the trailing badge clashes.
+ *     An icon-only .nds-btn is skipped too.
+ *   - There is no reinit(): call init() again after you inject links.
+ */
 (function () {
     'use strict';
     if (typeof window === 'undefined') return;

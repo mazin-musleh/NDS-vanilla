@@ -1,3 +1,36 @@
+/* NDS.Export — public surface
+ * Rides: nds-tables (the table adapter reads the header and body through getCellText;
+ *        soft) · nds-pagination (a paged list still exports every page; soft)
+ *      · nds-filter (rows the filter removed are left out; soft)
+ * Methods:
+ *   NDS.Export.init()                            wire the delegated [data-export] click
+ *   NDS.Export.export(source, format, scope, opts)   collect and download.
+ *                                                source: Element or selector;
+ *                                                format: csv | xls | pdf;
+ *                                                scope: selected | all | auto;
+ *                                                opts {filename, title, dir}
+ *   NDS.Export.csv / .xls / .pdf (source, scope, opts)   the same, per format
+ *   NDS.Export.collect(source, scope)            → {columns, rows} without downloading
+ *   NDS.Export.toCSV(data) / .toXLSHtml(data, opts)   serialize a collect() result
+ *   NDS.Export.openPrint(data, opts)             open the print window (the PDF path)
+ *   NDS.Export.download(data, format, opts)      serialize and save
+ * Events:
+ *   (none)
+ * Hooks:
+ *   on the button:      data-export="csv|xls|pdf" · data-export-target (selector)
+ *                       data-export-name (filename) · data-export-scope
+ *   on any source:      data-export-rows (row selector — this is what picks the generic
+ *                       adapter over the table one)
+ *   on a cell or field: data-export-field (its key) · data-export-value (the exact value)
+ *   on a <th>:          data-export-label (column header override) · data-export-skip
+ * Gotchas:
+ *   - scope "auto" means: the selected rows if any row is selected, otherwise all of them.
+ *   - Rows hidden by PAGINATION are exported (every page); rows hidden by a FILTER are not.
+ *   - Cell value order: data-export-value, then data-sort-value (tables only), then the
+ *     cell's text.
+ *   - The row-selection checkbox column is detected and dropped automatically.
+ *   - "pdf" opens a print window — the user saves as PDF. No PDF file is generated.
+ */
 /**
  * NDS Export — source-agnostic CSV / Excel / PDF export.
  *

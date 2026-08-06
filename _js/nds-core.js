@@ -1,3 +1,53 @@
+/* NDS core utilities — public surface
+ * Rides: (none — every other file rides THIS one)
+ * Methods:
+ *   state + status
+ *     NDS.State.add / .remove / .set / .has / .get / .clear / .apply (el, ...tokens)
+ *                                     the data-state token list
+ *     NDS.State.onAdd / .onRemove (token, scope, fn)   react to a token; returns off()
+ *     NDS.Status.set / .get / .clear (el, status)      the data-status value
+ *     NDS.aria.expanded / .hidden / .pressed / .selected / .disabled / .label / .current
+ *              / .sort (el, value)     write an ARIA attribute (null removes it)
+ *   page facts (live getters, not snapshots)
+ *     NDS.lang · NDS.langKey · NDS.isArabic · NDS.isRTL · NDS.prefersReducedMotion
+ *     NDS.breakpoints                  the media-query strings the components share
+ *   pooled observers — each returns an off() function, and you must call it
+ *     NDS.onResize(fn) · NDS.onIntersect(el, fn, opts) · NDS.onElementResize(el, fn)
+ *     NDS.onDOMAdd(sel, fn) · NDS.onDOMRemove(sel, fn) · NDS.onChildrenChange(sel, fn)
+ *     NDS.onAttrChange(sel, attrs, fn) · NDS.onOutsideScroll(el, fn)
+ *   scheduling
+ *     NDS.debounce(fn, ms) · NDS.rafThrottle(fn) · NDS.onIdle(fn, timeout)
+ *     NDS.afterPaint(fn) · NDS.onTransitionEnd(el, fn, opts) → cancel()
+ *     NDS.transitionSpeed()            the token-sourced duration in ms
+ *   DOM, portal-aware
+ *     NDS.portal(el) / .unportal(el) / .needsPortal(el)
+ *     NDS.closest(el, sel) · NDS.queryAll(root, sel) · NDS.querySelector(root, sel)
+ *     NDS.resolveEl(idOrElOrSel) · NDS.flipPosition(trigger, menu) · NDS.placeFixed(el, t, l)
+ *     NDS.stickyHeaderBottom() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
+ *     NDS.gridLastRow(container) · NDS.trapFocus(getEl) · NDS.focusableSel
+ *   data + text
+ *     NDS.request(url, opts) → Promise<{data, response}>   the shared fetch wrapper
+ *     NDS.cache.get / .set (key, value, minutes)           localStorage with expiry
+ *     NDS.formatNumber(n, opts) · NDS.escapeHtml(s) · NDS.safeUrl(url) · NDS.uniqueId(prefix)
+ *     NDS.announce(text)               say something in the shared live region
+ *     NDS.triggerEvents(el)            dispatch input + change so forms and consumers sync
+ *     NDS.badge(el, count) · NDS.buildChip(value, opts) · NDS.isRowSelected(row)
+ * Events:
+ *   (none — core dispatches nothing of its own)
+ * Hooks:
+ *   data-state    the token list NDS.State owns — space separated, matched with ~=
+ *   data-status   the single value NDS.Status owns
+ * Gotchas:
+ *   - There is no init(). Core is a utility layer, loaded first and consumed by everyone.
+ *   - Every observer helper is POOLED — one observer per page, shared. Each call returns
+ *     an off() function; not calling it leaks a subscriber for the page's lifetime.
+ *   - Use NDS.closest / queryAll / querySelector instead of the DOM ones whenever a
+ *     dropmenu menu may be portaled to <body>: the plain walks stop at <body>.
+ *   - NDS.request is a fetch wrapper and nothing more — no XHR, no upload progress, no
+ *     retry, no cache layer and no interceptors.
+ *   - data-state is a LIST. Never write it with setAttribute; go through NDS.State so
+ *     other tokens survive and the onAdd/onRemove hooks fire.
+ */
 // NDS Core — shared namespace and utilities
 (() => {
     'use strict';

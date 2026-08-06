@@ -1,3 +1,32 @@
+/* NDS.Theme — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Theme.init()      sync the toggle UI, inject an active stylesheet theme, re-apply
+ *                         a saved custom palette, wire the delegated clicks
+ *   NDS.Theme.get()       the current data-theme string, e.g. "dark crimson"
+ *   NDS.Theme.set(value)  set it and persist
+ *   NDS.Theme.toggle()    flip light and dark, keeping the theme token
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-theme          on <html> — a TOKEN LIST: the mode token (dark; light is the
+ *                       default and writes nothing) plus an optional theme token
+ *   data-theme-toggle   on a mode toggle (#ndsThemeToggle also works)
+ *   data-theme-value    on a switcher option — the theme token it applies
+ *   data-theme-css · data-theme-js   on an option, for a theme that ships its own assets
+ *   data-seed-*         inline custom seeds on an option: primary, secondary, tertiary,
+ *                       tint, font, weight-regular, weight-medium, weight-semibold,
+ *                       weight-bold
+ *   data-palette        marks a custom inline-seed theme
+ * Gotchas:
+ *   - Match the mode with [data-theme~="dark"], never [data-theme="dark"] — the attribute
+ *     holds several tokens.
+ *   - The saved theme is stamped BEFORE first paint by the inline FOUC script, so a
+ *     predefined theme never flashes. A custom inline-seed palette is re-applied by
+ *     init(), which is after first paint — that one can flash.
+ *   - Two storage keys: nds-theme holds the whole data-theme string; nds-palette holds a
+ *     custom inline-seed theme only.
+ */
 // NDS Theme — dark/light MODE toggle + the theme SWITCHER (predefined seed tokens,
 // inline custom seeds, and stylesheet themes), with localStorage persistence.
 //
