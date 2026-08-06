@@ -331,10 +331,7 @@
             // failed Clear restores the filters it was about to drop.
             const appliedUrl = window.location.search;
 
-            // Update URL params and UI state
-            this.updateUrlParams();
-            this.updateFilterButtonBadge();
-            this.updateAppliedChips();
+            this._commitAppliedUi();
 
             // Unified change event (fires in all modes)
             this.dispatchFilterEvent();
@@ -493,9 +490,7 @@
             NDS.State.clear(this.filterContainer);
             if (this._triggerBtn) { NDS.State.remove(this._triggerBtn, 'loading'); this._triggerBtn = null; }
 
-            this.updateUrlParams();
-            this.updateFilterButtonBadge();
-            this.updateAppliedChips();
+            this._commitAppliedUi();
 
             this.filterContainer.dispatchEvent(new CustomEvent('nds:filterFormComplete', {
                 detail: eventDetail
@@ -1199,7 +1194,6 @@
         }
 
         // Auto-detect direct search input (anywhere linked to this filter).
-        // Merges what was previously two branches (inside filter, then external search-box).
         _autoDetectDirectSearch() {
             if (this.searchInputs.direct) return;
             const candidates = this.queryAll('input.nds-search-input, input[name="search"], input[type="search"]');
@@ -2188,6 +2182,14 @@
         // FILTER APPLICATION
         // ==============================================
 
+        // The "commit applied UI + URL" triple: six sites route through here so a
+        // path that omits one call can't silently desync the URL from the chips.
+        _commitAppliedUi() {
+            this.updateUrlParams();
+            this.updateFilterButtonBadge();
+            this.updateAppliedChips();
+        }
+
         // How a criteria change gets committed. AJAX mode re-fetches from the
         // server; every other mode filters the items already on the page. One
         // definition so a new commit path can't pick the wrong half — the chip,
@@ -2207,9 +2209,7 @@
             // In form mode, just update state (don't submit form programmatically)
             // Form submission only happens from explicit user actions via submitForm()
             if (this.isFormMode) {
-                this.updateUrlParams();
-                this.updateFilterButtonBadge();
-                this.updateAppliedChips();
+                this._commitAppliedUi();
                 this.dispatchFilterEvent();
                 return;
             }
@@ -2222,9 +2222,7 @@
                 // Dismiss no-results alert if exists
                 this.dismissNoResultsAlert();
 
-                this.updateUrlParams();
-                this.updateFilterButtonBadge();
-                this.updateAppliedChips();
+                this._commitAppliedUi();
                 this.updatePagination();
 
                 // Always dispatch change event, even when clearing all criteria
@@ -2256,9 +2254,7 @@
             this.dispatchFilterEvent(visibleCount);
             this.updatePagination();
             this.updateNoResultsAlert(visibleCount);
-            this.updateUrlParams();
-            this.updateFilterButtonBadge();
-            this.updateAppliedChips();
+            this._commitAppliedUi();
 
             this._clearLoadingDebounced();
         }
@@ -2530,10 +2526,8 @@
                 return;
             }
 
-            this.updateUrlParams();
+            this._commitAppliedUi();
             this.updatePagination();
-            this.updateFilterButtonBadge();
-            this.updateAppliedChips();
         }
 
         // ==============================================
@@ -2792,17 +2786,13 @@
         });
     }
 
-    function reinitializeFilters() {
-        initializeFilters();
-    }
-
     // ==============================================
     // GLOBAL API
     // ==============================================
 
     NDS.Filter = {
         init: initializeFilters,
-        reinit: reinitializeFilters,
+        reinit: initializeFilters,
         // Idempotent, and registers exactly like the loader path — matching
         // NDS.Sort.create / NDS.DatePicker.create. Constructing bare skipped the
         // init stamp (the crit hold then kept the target hidden), the backref,
