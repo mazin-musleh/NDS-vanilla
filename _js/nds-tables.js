@@ -3,8 +3,6 @@
  *      · nds-dropmenu (column-visibility menu; a sub-row toggle authored inside a menu item)
  *      · nds-forms (the indeterminate select-all checkbox)
  *      · nds-pagination (refreshed after a sort re-orders a paged table; soft)
- *      · nds-export (a hidden column is stamped so exports match the view, and the column
- *        menu falls back to the export label for a header with no text; soft)
  * Methods:
  *   NDS.Tables.init() / .reinit()               scan .nds-table and [data-columns-target] menus
  *   NDS.Tables.recheckWidths()                  re-measure every table's responsive scroll state
@@ -43,6 +41,8 @@
  *     still count, rows a filter removed do not.
  *   - Columns are addressed by cell index, so colspan/rowspan header cells are not supported.
  *   - Column hides persist in localStorage whenever the table has an id.
+ *   - Hiding a column stamps data-export-skip on its <th> so exports match the view, and a
+ *     header with no text falls back to its data-export-label for the menu entry.
  */
 /**
  * NDS Tables Component
