@@ -1,3 +1,33 @@
+/* NDS.Stepper — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Stepper.init() / .reinit()        stamp the steps, apply the responsive variant,
+ *                                         wire the delegated control listener
+ *   NDS.Stepper.create(el)                instance one stepper
+ *   NDS.Stepper.get(id)                   the instance for that stepper id
+ *   NDS.Stepper.next(id) / .previous(id)  move one step
+ *   NDS.Stepper.goTo(id, step)            move to a step number
+ *   NDS.Stepper.control(id, action, val)  the same entry point the buttons use
+ *                                         (action: next | previous | goto)
+ *   NDS.Stepper.setFallback(id, variant)  layout to use when no breakpoint class matches:
+ *                                         horizontal | vertical | radial
+ *   NDS.Stepper.getFallback(id)           read it back
+ * Events (bubble from the .nds-stepper):
+ *   nds:stepper:change   detail {currentStep, totalSteps, progressPercentage}
+ * Hooks:
+ *   data-current · data-total   on the .nds-stepper — live: write either and the display
+ *                               re-stamps itself
+ *   data-stepper-control        on a button: next | previous | goto
+ *   data-stepper-target         the stepper id that button drives
+ *   data-stepper-value          the step number for a goto
+ * Gotchas:
+ *   - Give the stepper an id. A control resolves its target from data-stepper-target, then
+ *     the closest .nds-stepper, then the first one on the page.
+ *   - Per-breakpoint layout comes from marker classes nds-{horizontal|vertical|radial}-{sm
+ *     |md|lg}; the component toggles the canonical nds-vertical / nds-radial to match.
+ *   - Radial mode HIDES every step but the current one in CSS, so the step stamping has to
+ *     land at first paint — this component is critical and ships in the main bundle.
+ */
 /**
  * NDS Stepper Component
  *

@@ -1,3 +1,29 @@
+/* NDS.Editor — public surface
+ * Rides: nds-forms (the adopted textarea stays a normal field — validation and field
+ *        chrome keep working) · nds-dropmenu (the link, image and remove popovers)
+ *      · nds-upload (the image popover's file field) · nds-tooltip (toolbar button labels)
+ *      · nds-link (link chrome refresh after an edit; soft)
+ * Methods:
+ *   NDS.Editor.init() / .reinit()   scan + initialize .nds-editor
+ *   NDS.Editor.create(el)           instance one editor — null when the markup is
+ *                                   incomplete; returns the live one if there is already one
+ *   NDS.Editor.destroy(el)          tear one down
+ * Events (bubble from the .nds-editor root):
+ *   nds:editor:ready   detail {instance} — after init finishes
+ * Hooks:
+ *   data-editor-toolbar   which commands the generated toolbar carries: space-separated
+ *                         tokens, "|" starts a new group, "source" renders at the end,
+ *                         "none" opts out. Leave it off for the full default set
+ * Gotchas:
+ *   - BETA: the API and the markup contract may still change.
+ *   - Author a STANDARD NDS textarea field and put .nds-editor on its container. Nothing
+ *     editor-specific is authored — the editing surface and the toolbar are generated.
+ *   - The adopted textarea is still the form carrier and holds the sanitized HTML. Read
+ *     and write THAT, not the contenteditable.
+ *   - readonly and disabled are derived from the textarea's native attributes.
+ *   - Pasted markup is reduced to the formatting vocabulary, but NDS component markup
+ *     (nds-* regions) survives with a filtered class and attribute set.
+ */
 /**
  * NDS Editor — rich-text editing surface (contenteditable) mirrored into a
  * textarea form field. Toolbar formatting (bold/italic/underline/strike,

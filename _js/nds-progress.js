@@ -1,3 +1,23 @@
+/* NDS.Progress — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Progress.init()                    wire every indicator and watch its attributes
+ *   NDS.Progress.setValue(el, value)       set the percentage (0–100)
+ *   NDS.Progress.setOutOf(el, num, max)    set the "out of" display and the matching value
+ *   NDS.Progress.initCircle(el)            paint one element from its attributes right now
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-value           the percentage, 0–100
+ *   data-num · data-max  the "out of" display (circle only) — both are needed
+ * Gotchas:
+ *   - The attributes ARE the API. setValue() and setOutOf() only write them; an observer
+ *     repaints. Writing the attribute yourself works just as well.
+ *   - data-num + data-max win over data-value.
+ *   - The value is applied when the indicator scrolls into view, so the fill animates where
+ *     it is seen. Reduced motion applies it immediately.
+ *   - Markup: .nds-progress-circle or .nds-progress-bar.
+ */
 /**
  * NDS Progress Component
  * Reads data-value, data-max, data-num from .nds-progress-circle and .nds-progress-bar

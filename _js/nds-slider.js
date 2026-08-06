@@ -1,3 +1,27 @@
+/* NDS.Slider — public surface
+ * Rides: nds-numbers (locale, thousand separators and the currency mark on the value
+ *        output; soft — the raw value shows without it)
+ * Methods:
+ *   NDS.Slider.init()          wire the delegated input listener; initialize every
+ *                              .nds-slider-container
+ *   NDS.Slider.reinit(el)      re-initialize one container, or all of them with no argument
+ *   NDS.Slider.create(el)      initialize one container
+ *   NDS.Slider.destroy(el)     release one container, or all of them with no argument
+ * Events:
+ *   (none — the native `input` event on the range input IS the signal; listen for that)
+ * Hooks:
+ *   (none to author — markup only: .nds-slider-container holding .nds-slider (or
+ *    .nds-slider-min and .nds-slider-max in range mode), a .nds-slider-track, and
+ *    .nds-slider-value (or -value-min / -value-max))
+ * Gotchas:
+ *   - The native <input type="range"> owns drag, keyboard, touch and screen-reader
+ *     behaviour. Read input.value; there is no custom event and no getValue().
+ *   - Range mode is the .nds-slider-range class on the container. The two thumbs are
+ *     clamped so they can never cross.
+ *   - Add .nds-number-format to the value element to opt into number formatting.
+ *   - The value's width is reserved for the widest possible value so the bar does not
+ *     jitter; .nds-stacked drops that reservation.
+ */
 /**
  * NDS Slider
  * Single or dual <input type="range"> with gradient fill + live value output.

@@ -1,3 +1,27 @@
+/* NDS.Swiper — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Swiper.init() / .reinit()   scan + initialize .nds-swiper
+ *   NDS.Swiper.create(el)           instance one swiper
+ *   instance.next() / .prev()       move by one page
+ *   instance.goTo(index)            move to a slide index
+ *   instance.destroy()
+ * Events:
+ *   (none)
+ * Hooks (bare attributes on the swiper container, not data-*):
+ *   slides-max · slides-mid · slides-min   slides per view at desktop / tablet / mobile,
+ *                                          default 1 each
+ *   peek                                   px of the next slide left showing
+ *   on a slide's <img>: data-src · data-srcset   lazy sources, written to src/srcset when
+ *                                                the slide nears the viewport
+ *   written by the component: --slides on the container, data-swiper-peek while peeking
+ * Gotchas:
+ *   - Positioning is CSS scroll-snap. JS only syncs the navigation, the pagination dots
+ *     and lazy loading — a swiper still scrolls with JS disabled.
+ *   - The markup is .nds-swiper-wrapper holding .nds-swiper-slide items, plus optional
+ *     .nds-swiper-navigation (with .nds-prev / .nds-next) and .nds-swiper-pagination.
+ *   - The instance lives on the element as el._ndsSwiper.
+ */
 /**
  * NDS Swiper Component - CSS Scroll-Snap First
  * Minimal foundation with native scroll behavior

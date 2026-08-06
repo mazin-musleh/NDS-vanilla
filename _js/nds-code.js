@@ -1,3 +1,23 @@
+/* NDS.Code — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Code.init()                          highlight every `.nds-code code` and size the
+ *                                            action-bar buttons
+ *   NDS.Code.reprocessCodeElement(codeEl)    re-highlight one block after you replaced its
+ *                                            text
+ *   NDS.Code.detectLanguage(codeEl, source)  the language it would use for that block
+ * Events:
+ *   (none)
+ * Hooks:
+ *   (none — the language comes from a `lang-*` or `language-*` class on the <code>)
+ * Gotchas:
+ *   - It lexes HTML, CSS, JavaScript (including CSS and JS embedded in an HTML block) and
+ *     Markdown. A language class it does not know renders as plain text.
+ *   - Only a block with NO language class at all is sniffed.
+ *   - There is no reinit(): a block is highlighted once. Call reprocessCodeElement() after
+ *     you change its content.
+ *   - The copy button in the action bar belongs to nds-copy (.nds-copy), not to this file.
+ */
 /**
  * National Design System - Code Processing JavaScript
  * Syntax highlighting + line numbers for documentation code blocks.

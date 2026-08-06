@@ -1,3 +1,28 @@
+/* NDS.Chart — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Chart.init() / .reinit()      scan .nds-chart and build the ones that declare a
+ *                                     type or a series
+ *   NDS.Chart.create(elOrSel, opts)   build one chart — replaces any chart already on the
+ *                                     element. Returns the instance
+ *   instance.update(newOpts)          MERGE new options in and re-render
+ *   instance.destroy()                empty the element and release its observers
+ * Events:
+ *   (none)
+ * Hooks (on the .nds-chart element):
+ *   data-chart-type     bar | line | pie | donut
+ *   data-chart-series   JSON, the same value as opts.series
+ *   data-chart-labels   JSON, the same value as opts.labels
+ *   data-chart-config   JSON, a whole options object (the three above win over it)
+ * Gotchas:
+ *   - Declarative and programmatic are one path: the data-* attributes are parsed into the
+ *     options object create() takes.
+ *   - Each type carries its own defaults (bar gaps, line smoothing and dots, donut size)
+ *     and your options are merged over them.
+ *   - Colours come from --chart-color-1…6 on the element and repeat past six. Pass
+ *     opts.colors to override.
+ *   - The instance lives on the element as el.ndsChart.
+ */
 /**
  * NDS Chart Component — Vanilla SVG Charts
  * Supports: bar, line, pie, donut

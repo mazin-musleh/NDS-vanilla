@@ -1,3 +1,27 @@
+/* NDS.Rating — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Rating.init() / .reinit()   scan + initialize .nds-rating
+ *   NDS.Rating.create(el)           instance one rating (returns the live one if there is
+ *                                   already one)
+ *   NDS.Rating.enableRating(el)     build it if needed, then take it out of disabled
+ *   instance.setValue(v)            set the rating (fires the event)
+ *   instance.getRating()            the current value
+ *   instance.setDisabled(bool) / .enable() / .isDisabled()
+ *   instance.destroy()
+ * Events (bubble from the .nds-rating; legacy unprefixed name):
+ *   ratingChange   detail {rating, element} — on every pick that changes the value
+ * Hooks:
+ *   data-rating   the current value on the root; the component writes the new value back
+ *                 here on every pick
+ *   written by the component: data-value on each .nds-rating-star (its 1-based position)
+ * Gotchas:
+ *   - Interactive mode is auto-detected: <button> stars on a root that is not disabled
+ *     gain data-state="interactive". Non-button stars stay display-only.
+ *   - A fractional data-rating of .3 or more paints a half star.
+ *   - Ratings added to or removed from the page are wired and torn down automatically.
+ *   - The instance lives on the element as el.ndsRating.
+ */
 /**
  * NDS Rating Component
  * Interactive star rating component with hover preview and keyboard navigation

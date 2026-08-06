@@ -1,3 +1,30 @@
+/* NDS.Copy — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Copy.init()                     delegate clicks on .nds-copy
+ *   NDS.Copy.bind(selector, opts)       delegate on your own selector; one listener per
+ *                                       selector, so calling it again replaces the old one.
+ *                                       opts {duration}
+ *   NDS.Copy.writeText(text)            → Promise<boolean>. Clipboard write only
+ *   NDS.Copy.flash(button, opts)        the success state on its own.
+ *                                       opts {duration, onRestore}
+ *   NDS.Copy.copyFrom(button, opts)     resolve the button's text, write it, flash on
+ *                                       success → Promise<boolean>
+ * Events:
+ *   (none)
+ * Hooks (on the button):
+ *   data-copy          the literal text to copy
+ *   data-copy-target   a selector — copies that element's textContent instead
+ *   data-label         label swap during the flash (needs a .nds-label inside)
+ *   data-message       what is announced; falls back to data-label, then "Copied"
+ * Gotchas:
+ *   - Text resolution stops at the first hit: data-copy, then data-copy-target, then the
+ *     <code> inside a surrounding .nds-code block.
+ *   - Outside a secure context it falls back to a hidden textarea and execCommand, so a
+ *     plain-HTTP dev address still copies.
+ *   - flash() holds data-status="success" and aria-disabled for 2 seconds by default, then
+ *     restores the icon and label and calls onRestore.
+ */
 /**
  * NDS Copy — shared clipboard utility with copy-button success state
  *

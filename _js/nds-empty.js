@@ -1,3 +1,22 @@
+/* NDS.Empty — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Empty.init()                fill every empty .nds-empty now, then keep watching
+ *   NDS.Empty.refresh(container)    re-evaluate one container by hand
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-empty-message   replace the localized default text
+ *   data-empty-icon      the value is written straight onto the placeholder's <i>
+ *                        className, so any icon system works
+ * Gotchas:
+ *   - Put .nds-empty on the CONTAINER. It works on a div, a ul/ol, a table or a tbody, and
+ *     builds a placeholder that fits that element.
+ *   - In a table only non-placeholder rows inside a tbody count as content — thead, tfoot
+ *     and caption do not.
+ *   - init() runs once. Added and removed children, and changes to the two attributes, are
+ *     picked up by the shared observers, so there is no reinit().
+ */
 /**
  * NDS Empty Component
  * Auto-fills empty containers with a localized "no content" placeholder.
