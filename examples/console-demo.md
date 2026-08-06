@@ -242,19 +242,27 @@ hideFeedback: true
                                 </div>
                             </div>
                         </div>
-                        <div class="nds-export nds-btn-group">
-                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                    data-export="csv" data-export-target="#consoleTransactions">
-                                <span class="nds-label">CSV</span>
+                        <div class="nds-dropmenu">
+                            <button type="button" class="nds-btn nds-secondary-outline nds-md nds-dropmenu-trigger">
+                                <i class="hgi hgi-stroke hgi-download-04" aria-hidden="true"></i>
+                                <span class="nds-label">Export</span>
                             </button>
-                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                    data-export="xls" data-export-target="#consoleTransactions">
-                                <span class="nds-label">Excel</span>
-                            </button>
-                            <button type="button" class="nds-btn nds-secondary-outline nds-md"
-                                    data-export="pdf" data-export-target="#consoleTransactions">
-                                <span class="nds-label">PDF</span>
-                            </button>
+                            <div class="nds-dropmenu-menu" hidden>
+                                <div class="nds-dropmenu-scroll">
+                                    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
+                                            data-export="csv" data-export-target="#consoleTransactions">
+                                        <span class="nds-label">CSV</span>
+                                    </button>
+                                    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
+                                            data-export="xls" data-export-target="#consoleTransactions">
+                                        <span class="nds-label">Excel</span>
+                                    </button>
+                                    <button type="button" class="nds-btn nds-subtle nds-dropmenu-item"
+                                            data-export="pdf" data-export-target="#consoleTransactions">
+                                        <span class="nds-label">PDF</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
