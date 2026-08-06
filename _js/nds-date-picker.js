@@ -1254,7 +1254,7 @@
             this.updateNavArrows();
         },
 
-        // Cleanup on close - Clear all cache
+        // Panel teardown on close — instance state only; module-shared refs stay live.
         cleanup: function () {
             // One abort releases every calendar-panel listener. This replaced two
             // hand-maintained parallel arrays walked by a shared counter: inserting a
