@@ -5,9 +5,9 @@
  *   NDS.Modal.open(idOrEl)      open a .nds-modal
  *   NDS.Modal.close()           close whatever is open — takes no argument
  *   NDS.Modal.isOpen()          is a modal open?
- * Events (bubble from the .nds-modal; legacy dashed names):
- *   nds-modal-opened   detail (none) — after the open state paints
- *   nds-modal-closed   detail (none) — after the close animation finishes, not on the click
+ * Events (bubble from the .nds-modal):
+ *   nds:modal:opened   detail (none) — after the open state paints
+ *   nds:modal:closed   detail (none) — after the close animation finishes, not on the click
  * Hooks:
  *   data-modal-target   on a trigger — the id of the modal to open
  *   data-modal-close    on any control that should close it (.nds-modal-close works too)
@@ -79,7 +79,7 @@
     // transition fires instead of jumping.
     NDS.afterPaint(() => {
       NDS.State.set(modal, 'open');
-      modal.dispatchEvent(new CustomEvent('nds-modal-opened', { bubbles: true }));
+      modal.dispatchEvent(new CustomEvent('nds:modal:opened', { bubbles: true }));
     });
 
     // Enable focus trap
@@ -115,7 +115,7 @@
       NDS.Backdrop.hide();
       modal.setAttribute('hidden', '');
       NDS.State.clear(modal);
-      modal.dispatchEvent(new CustomEvent('nds-modal-closed', { bubbles: true }));
+      modal.dispatchEvent(new CustomEvent('nds:modal:closed', { bubbles: true }));
     }, NDS.transitionSpeed() + 100);
 
     activeModal = null;

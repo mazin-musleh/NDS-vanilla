@@ -9,8 +9,8 @@
  *   instance.getRating()            the current value
  *   instance.setDisabled(bool) / .enable() / .isDisabled()
  *   instance.destroy()
- * Events (bubble from the .nds-rating; legacy unprefixed name):
- *   ratingChange   detail {rating, element} — on every pick that changes the value
+ * Events (bubble from the .nds-rating):
+ *   nds:rating:change   detail {rating, element} — on every pick that changes the value
  * Hooks:
  *   data-rating   the current value on the root; the component writes the new value back
  *                 here on every pick
@@ -97,7 +97,7 @@
       this.rating.dataset.rating = value;
       this.updateVisualState();
 
-      this.rating.dispatchEvent(new CustomEvent('ratingChange', {
+      this.rating.dispatchEvent(new CustomEvent('nds:rating:change', {
         detail: { rating: value, element: this.rating },
         bubbles: true
       }));

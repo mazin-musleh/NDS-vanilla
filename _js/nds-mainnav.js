@@ -972,7 +972,7 @@
         // close any dropdowns inside it via navbar.toggle(). Nothing-open is the
         // common case — behavior's guarded-direct stubs no-op then; when something
         // IS open the half is already installed.
-        document.addEventListener('nds-modal-opened', () => {
+        document.addEventListener('nds:modal:opened', () => {
             if (hasState(DOM.collapse, 'open')) toggleNavbar();
             else dropdown.closeAll();
         }, { signal });

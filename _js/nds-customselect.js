@@ -6,8 +6,8 @@
  *   NDS.CustomSelect.setValue(el, value)   pick by option value; false when no option carries it
  *   NDS.CustomSelect.clear(el)             back to placeholder
  * Events (fire ON the .nds-form-control — this one does NOT bubble):
- *   selectChange   detail {value, text} — every pick, by click or by setValue()/clear()
- *                  (legacy unprefixed name)
+ *   nds:customselect:change   detail {value, text} — every pick, by click or by
+ *                             setValue()/clear()
  * Hooks:
  *   (none — the field is markup: one .nds-select-option per choice, .nds-select-value the
  *    hidden input that submits, .nds-select-input the readonly display field)
@@ -41,9 +41,9 @@
     // is the source of truth (it submits); the visible `.nds-select-input` is a
     // readonly, non-submitting display surface, so its label is DERIVED from the
     // matching option's text — never hand-authored. Display-only: no dropmenu
-    // build. No-op once a label is present. Forms invokes this from its critical
-    // per-input init (it already iterates every select-input), so a pre-filled
-    // label paints at first paint rather than after a deferred build.
+    // build. No-op once a label is present. init() runs it over every
+    // select-input on the page, so a pre-filled label paints without waiting
+    // for the field's deferred build.
     function restoreDisplay(selectInput) {
         if (!selectInput || selectInput.value || !selectInput.closest) return;
         var formControl = selectInput.closest('.nds-form-control');
@@ -163,7 +163,7 @@
         NDS.triggerEvents(selectInput);
         if (hiddenInput) NDS.triggerEvents(hiddenInput);
 
-        formControl.dispatchEvent(new CustomEvent('selectChange', {
+        formControl.dispatchEvent(new CustomEvent('nds:customselect:change', {
             detail: { value: value, text: text }
         }));
         return true;
@@ -221,7 +221,7 @@
         },
         // Programmatic pick: the same write sequence as a user click (display
         // label, hidden value, selected markers, input/change events,
-        // selectChange). Returns false when no option carries the value —
+        // nds:customselect:change). Returns false when no option carries the value —
         // display and value are never desynced. Works before the dropmenu is
         // built and while it is portaled open.
         setValue: function (el, value) {

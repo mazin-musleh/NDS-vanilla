@@ -83,8 +83,7 @@ const SCOPE = [
 ];
 
 // Event literals a file dispatches that its banner deliberately omits, keyed by file name.
-// Legacy unprefixed events (selectChange, ratingChange) already fall outside the nds:* gate
-// in verifyFile and need no entry.
+// Every shipped event now carries the nds: prefix, so verifyFile's gate covers them all.
 const EVENT_EXCEPTIONS = {};
 
 // A dispatched literal ending in ':' is a concatenation prefix, not an event name —
@@ -216,8 +215,8 @@ function extractKeys(source, ns) {
 // Four clauses, one per shape that exists in _js/:
 //   1. listener registrations — consumed here so a name a file only LISTENS for is never
 //      mistaken for a dispatch;
-//   2. a name handed straight to CustomEvent — this is what catches the legacy unprefixed
-//      and dashed names (selectChange, nds-modal-opened);
+//   2. a name handed straight to CustomEvent — the common shape, and the one that would
+//      still catch an unprefixed or dashed name if one ever reappeared;
 //   3. an interpolated template — drawer builds `nds:drawer:${type}`; the captured stem
 //      ends in ':' and stands in as a prefix (see isPrefix);
 //   4. every other nds:* literal — files reach the bus through too many wrappers to

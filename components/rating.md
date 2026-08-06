@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "03/07/2026 - 02:01 AM"
+updated: "1.6.x"
+last_edit: "06/08/2026 - 11:13 PM"
 ---
 
 <!-- Display Rating -->
@@ -399,7 +399,7 @@ last_edit: "03/07/2026 - 02:01 AM"
                             <i class="hgi hgi-stroke hgi-api"></i>
                             <span class="nds-label">Programmatic Control</span>
                         </span>
-                        <p class="nds-item-desc">Get, set, disable, and enable ratings through the instance API. Listen for <code class="nds-inline-code lang-js">ratingChange</code> events to react to user selections.</p>
+                        <p class="nds-item-desc">Get, set, disable, and enable ratings through the instance API. Listen for <code class="nds-inline-code lang-js">nds:rating:change</code> events to react to user selections.</p>
                     </div>
                 </div>
             </div>
@@ -565,7 +565,7 @@ const el = document.querySelector('.nds-rating');
 el.ndsRating.getRating();              // Returns number (e.g. 3.5)
 
 // Set a new rating value (0 to star count)
-el.ndsRating.setValue(4);              // Updates visuals and fires ratingChange event
+el.ndsRating.setValue(4);              // Updates visuals and fires nds:rating:change event
 
 // Disable the rating (prevents clicks and keyboard)
 el.ndsRating.setDisabled(true);
@@ -580,7 +580,7 @@ el.ndsRating.isDisabled();             // Returns boolean
 // ── Events ──────────────────────────────────────────
 // Fires on the .nds-rating element when the value changes
 // Bubbles, so you can listen on a parent container
-document.addEventListener('ratingChange', (e) =&gt; {
+document.addEventListener('nds:rating:change', (e) =&gt; {
     e.detail.rating;    // New rating value (number)
     e.detail.element;   // The .nds-rating element
 });

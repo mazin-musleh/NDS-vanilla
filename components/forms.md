@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "06/08/2026 - 09:45 PM"
+last_edit: "06/08/2026 - 11:13 PM"
 lang: en
 direction: ltr
 ---
@@ -2373,7 +2373,7 @@ NDS.Forms.setState(el, 'required', true);
 // ── Custom Select: programmatic value ───────────────
 // The same write sequence as a user pick: display label, hidden
 // .nds-select-value, selected markers, input/change events (field sync),
-// and the selectChange dispatch. Pass the .nds-form-control or the
+// and the nds:customselect:change dispatch. Pass the .nds-form-control or the
 // .nds-select-input. setValue returns false when no option carries the
 // value — display and submit value are never desynced. Works before the
 // dropdown is first built and while its menu is open.
@@ -2411,7 +2411,7 @@ form.addEventListener('nds:formInvalid', function(e) {
 });
 
 // Select dropdown change event on .nds-form-control
-formControl.addEventListener('selectChange', function(e) {
+formControl.addEventListener('nds:customselect:change', function(e) {
 // e.detail: { value: 'option1', text: 'Option 1' }
 });
 

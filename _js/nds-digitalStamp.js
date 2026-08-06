@@ -6,9 +6,9 @@
  *   NDS.DigitalStamp.close()     collapse it
  *   NDS.DigitalStamp.toggle()
  *   NDS.DigitalStamp.isOpen()    open and not closing?
- * Events (bubble from the panel; legacy dashed names):
- *   nds-digitalStamp-opened   detail (none)
- *   nds-digitalStamp-closed   detail (none) — after the collapse animation
+ * Events (bubble from the panel):
+ *   nds:digitalStamp:opened   detail (none)
+ *   nds:digitalStamp:closed   detail (none) — after the collapse animation
  * Hooks:
  *   (none — class and id markup: .nds-digitalStamp-tab is the trigger, #nds-digitalStamp
  *    is the panel)
@@ -28,9 +28,6 @@
  * each surface's own outside-click handler (clicking the tab is "outside" the nav,
  * so the nav closes whatever it has open; clicking the hamburger is "outside" the
  * stamp, so the stamp closes), letting the two animate independently.
- *
- * Public API: NDS.DigitalStamp.{ init, open, close, toggle, isOpen }
- * Events (bubbling): nds-digitalStamp-opened, nds-digitalStamp-closed
  */
 (function () {
     'use strict';
@@ -66,7 +63,7 @@
 
         NDS.afterPaint(() => removeState(panel, 'opening'));
 
-        panel.dispatchEvent(new CustomEvent('nds-digitalStamp-opened', { bubbles: true }));
+        panel.dispatchEvent(new CustomEvent('nds:digitalStamp:opened', { bubbles: true }));
     }
 
     function close() {
@@ -82,7 +79,7 @@
             _cancelClose = null;
             clearState(panel);
             panel.setAttribute('hidden', '');
-            panel.dispatchEvent(new CustomEvent('nds-digitalStamp-closed', { bubbles: true }));
+            panel.dispatchEvent(new CustomEvent('nds:digitalStamp:closed', { bubbles: true }));
         });
     }
 

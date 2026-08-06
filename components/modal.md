@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.5.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.6.x"
+last_edit: "06/08/2026 - 11:13 PM"
 ---
 
 <!-- Modal Dialog -->
@@ -375,11 +375,11 @@ NDS.Modal.init();
 // Fired on the modal element, bubbles up to document
 const modal = document.getElementById('modal-id');
 
-modal.addEventListener('nds-modal-opened', (e) =&gt; {
+modal.addEventListener('nds:modal:opened', (e) =&gt; {
     // Modal is now visible
 });
 
-modal.addEventListener('nds-modal-closed', (e) =&gt; {
+modal.addEventListener('nds:modal:closed', (e) =&gt; {
     // Modal is now hidden, reset forms or clean up
     modal.querySelector('form')?.reset();
 });
