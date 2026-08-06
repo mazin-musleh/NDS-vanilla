@@ -19,33 +19,32 @@ last_edit: "18/07/2026 - 03:05 AM"
             <p class="nds-section-description">Put the assets and inline scripts in <code class="nds-inline-code lang-html">&lt;head&gt;</code>, and the main bundle just before <code class="nds-inline-code lang-html">&lt;/body&gt;</code>. The <code class="nds-inline-code lang-html">?ver=</code> query is a cache-busting stamp: change it whenever a bundle changes.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Page setup code">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-setup-html" id="tab-setup-html">
-                                <span class="nds-tab-label">HTML</span>
-                            </button>
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-js" id="tab-setup-js">
-                                <span class="nds-tab-label">JavaScript</span>
-                            </button>
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-gate" id="tab-setup-gate">
-                                <span class="nds-tab-label">Critical Gate</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tab-list-container nds-scroll-more">
+                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Page setup code">
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true" aria-controls="panel-setup-html" id="tab-setup-html">
+                            <span class="nds-tab-label">HTML</span>
                         </button>
-                    </div>
-                    <div class="nds-tab-content">
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-js" id="tab-setup-js">
+                            <span class="nds-tab-label">JavaScript</span>
+                        </button>
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-setup-gate" id="tab-setup-gate">
+                            <span class="nds-tab-label">Critical Gate</span>
+                        </button>
+                    </nav>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="nds-tab-content">
 
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-html" aria-labelledby="tab-setup-html">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-html code">
+                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-html" aria-labelledby="tab-setup-html">
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
+                            <code class="lang-html code">
 &lt;head&gt;
   &lt;meta charset="UTF-8"&gt;
   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
@@ -56,7 +55,7 @@ last_edit: "18/07/2026 - 03:05 AM"
 
   &lt;!-- Main CSS — deferred; loads the icon sheets once it applies. --&gt;
   &lt;link rel="preload" href="assets/css/nds-main.min.css?ver={{ site.latest_release }}" as="style"
-        onload="this.onload=null;this.rel='stylesheet';window.loadDeferredAssets?loadDeferredAssets():window.__ndsDeferredPending=true"&gt;
+    onload="this.onload=null;this.rel='stylesheet';window.loadDeferredAssets?loadDeferredAssets():window.__ndsDeferredPending=true"&gt;
   &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-main.min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
   &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/nds-icons.min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
   &lt;noscript&gt;&lt;link rel="stylesheet" href="assets/css/hgi-rounded-stroke-min.css?ver={{ site.latest_release }}"&gt;&lt;/noscript&gt;
@@ -70,26 +69,26 @@ last_edit: "18/07/2026 - 03:05 AM"
 
 &lt;!-- ...page content... then just before &lt;/body&gt;: --&gt;
 &lt;script defer src="assets/js/nds-main.min.js?ver={{ site.latest_release }}"&gt;&lt;/script&gt;
-                            </code>
-                            </div>
+                        </code>
                         </div>
+                    </div>
 
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-js" aria-labelledby="tab-setup-js" hidden>
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-javascript code">
+                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-js" aria-labelledby="tab-setup-js" hidden>
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
+                            <code class="lang-javascript code">
 // Apply the saved theme before first paint (no light-to-dark flip).
 (function () {
   var v = localStorage.getItem('nds-theme');
   if (v) {
-    var d = document.documentElement;
-    var t = ((d.getAttribute('data-theme') || '') + ' ' + v).split(/\s+/)
-      .filter(function (x, i, a) { return x &amp;&amp; a.indexOf(x) === i; });
-    d.setAttribute('data-theme', t.join(' '));
+var d = document.documentElement;
+var t = ((d.getAttribute('data-theme') || '') + ' ' + v).split(/\s+/)
+  .filter(function (x, i, a) { return x &amp;&amp; a.indexOf(x) === i; });
+d.setAttribute('data-theme', t.join(' '));
   }
 })();
 
@@ -107,18 +106,18 @@ function loadDeferredAssets() {
   document.head.appendChild(hgi);
 }
 if (window.__ndsDeferredPending) loadDeferredAssets();
-                            </code>
-                            </div>
+                        </code>
                         </div>
+                    </div>
 
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-gate" aria-labelledby="tab-setup-gate" hidden>
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-css code">
+                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-setup-gate" aria-labelledby="tab-setup-gate" hidden>
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
+                            <code class="lang-css code">
 /* Optional inline critical gate — paste into an inline &lt;style&gt; in &lt;head&gt;, */
 /* then load the critical CSS async (see the note under the tabs). */
 
@@ -147,11 +146,10 @@ i.hgi-stroke { opacity: 0; }
 :where(.nds-hero-image-wrapper) { position: absolute; inset: 0; }
 :where(.nds-hero-image) { width: 100%; height: 100%; object-fit: cover; display: block; }
 :where(.nds-hero-section :is(.nds-section-body, .nds-section-wrapper, .nds-breadcrumb-nav)) { visibility: hidden; }
-                            </code>
-                            </div>
+                        </code>
                         </div>
-
                     </div>
+
                 </div>
             </div>
             <div class="nds-block nds-prose">

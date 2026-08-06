@@ -322,64 +322,52 @@ filterEl.addEventListener('nds:filterFormAjax', (e) =&gt; {
     </div>
     <div class="nds-section-body">
 
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Best Practices</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <ul>
-              <li>Reach for it wherever you would call <code class="nds-inline-code lang-js">fetch</code> to read a response. The guards it adds are the ones every caller eventually needs and rarely writes.</li>
-              <li>Pass <code class="nds-inline-code lang-js">json: true</code> whenever you know the endpoint returns JSON. Static hosts and misconfigured servers label JSON as <code class="nds-inline-code lang-js">text/plain</code> often enough that trusting the header silently hands you a string.</li>
-              <li>Raise <code class="nds-inline-code lang-js">maxBytes</code> for HTML fragments. The default suits JSON payloads, and a full page of markup can legitimately exceed it.</li>
-              <li>Treat <code class="nds-inline-code lang-js">AbortError</code> as silent. It means a newer request replaced this one, so showing an error would report a failure the user did not experience.</li>
-              <li>Branch on <code class="nds-inline-code lang-js">error.status</code> and <code class="nds-inline-code lang-js">error.name</code>, never on the message text. Messages change; those two do not.</li>
-              <li>Guard whatever you release in a <code class="nds-inline-code lang-js">finally</code> block. When a superseding request has already taken over the loading state, clearing it there hides a spinner that is still needed.</li>
-              <li>Do not use it for uploads that need progress events. Those require <code class="nds-inline-code lang-js">XMLHttpRequest</code>, which is what <a class="nds-color" href="{{ 'components/upload' | relative_url }}">Upload</a> uses.</li>
-              <li>Best-effort widget that wants a fallback instead of a throw on non-OK? A one-line wrapper at the call site is enough — no option needed here: <code class="nds-inline-code lang-js">const optional = (url, opts) =&gt; NDS.request(url, opts).catch(err =&gt; err.status ? null : Promise.reject(err));</code></li>
-              <li>Do not wrap it in a retry helper without checking the request is safe to repeat. A filter or form submission may not be idempotent.</li>
-              <li>Set <code class="nds-inline-code lang-js">timeout: 0</code> only for a connection meant to stay open. Every ordinary request is better off failing than hanging.</li>
-            </ul>
-        </div>
+      <div class="nds-block nds-prose">
+        <h3 class="nds-block-title">Best Practices</h3>
+        <ul>
+          <li>Reach for it wherever you would call <code class="nds-inline-code lang-js">fetch</code> to read a response. The guards it adds are the ones every caller eventually needs and rarely writes.</li>
+          <li>Pass <code class="nds-inline-code lang-js">json: true</code> whenever you know the endpoint returns JSON. Static hosts and misconfigured servers label JSON as <code class="nds-inline-code lang-js">text/plain</code> often enough that trusting the header silently hands you a string.</li>
+          <li>Raise <code class="nds-inline-code lang-js">maxBytes</code> for HTML fragments. The default suits JSON payloads, and a full page of markup can legitimately exceed it.</li>
+          <li>Treat <code class="nds-inline-code lang-js">AbortError</code> as silent. It means a newer request replaced this one, so showing an error would report a failure the user did not experience.</li>
+          <li>Branch on <code class="nds-inline-code lang-js">error.status</code> and <code class="nds-inline-code lang-js">error.name</code>, never on the message text. Messages change; those two do not.</li>
+          <li>Guard whatever you release in a <code class="nds-inline-code lang-js">finally</code> block. When a superseding request has already taken over the loading state, clearing it there hides a spinner that is still needed.</li>
+          <li>Do not use it for uploads that need progress events. Those require <code class="nds-inline-code lang-js">XMLHttpRequest</code>, which is what <a class="nds-color" href="{{ 'components/upload' | relative_url }}">Upload</a> uses.</li>
+          <li>Best-effort widget that wants a fallback instead of a throw on non-OK? A one-line wrapper at the call site is enough — no option needed here: <code class="nds-inline-code lang-js">const optional = (url, opts) =&gt; NDS.request(url, opts).catch(err =&gt; err.status ? null : Promise.reject(err));</code></li>
+          <li>Do not wrap it in a retry helper without checking the request is safe to repeat. A filter or form submission may not be idempotent.</li>
+          <li>Set <code class="nds-inline-code lang-js">timeout: 0</code> only for a connection meant to stay open. Every ordinary request is better off failing than hanging.</li>
+        </ul>
       </div>
 
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">What it does not do</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <p>The helper owns the response contract and nothing else, which keeps it predictable across every component that calls it. It does not manage loading state, apply a response to the DOM, or build the request for you. It adds no retry, no caching, and no interceptors: pass <code class="nds-inline-code lang-js">cache: 'default'</code> through to <code class="nds-inline-code lang-js">fetch</code> and the browser HTTP cache handles repeat reads.</p>
-        </div>
+      <div class="nds-block nds-prose">
+        <h3 class="nds-block-title">What it does not do</h3>
+        <p>The helper owns the response contract and nothing else, which keeps it predictable across every component that calls it. It does not manage loading state, apply a response to the DOM, or build the request for you. It adds no retry, no caching, and no interceptors: pass <code class="nds-inline-code lang-js">cache: 'default'</code> through to <code class="nds-inline-code lang-js">fetch</code> and the browser HTTP cache handles repeat reads.</p>
       </div>
 
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">JavaScript API</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <p>Available on every page as part of the main bundle. No initialization required.</p>
-        </div>
-        <div class="nds-block">
-            <div class="nds-tabs nds-code nds-divided">
-              <div class="nds-tab-list-container nds-scroll-more">
-                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                    aria-controls="panel-request-api-1" id="tab-request-api-1">
-                    <span class="nds-tab-label">JS API</span>
-                  </button>
-                </nav>
-                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+      <div class="nds-block nds-prose">
+        <h3 class="nds-block-title">JavaScript API</h3>
+        <p>Available on every page as part of the main bundle. No initialization required.</p>
+      </div>
+      <div class="nds-tabs nds-code nds-divided">
+          <div class="nds-tab-list-container nds-scroll-more">
+            <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+              <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                aria-controls="panel-request-api-1" id="tab-request-api-1">
+                <span class="nds-tab-label">JS API</span>
+              </button>
+            </nav>
+            <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="nds-tab-content">
+            <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-api-1"
+              aria-labelledby="tab-request-api-1">
+              <div class="nds-code-action">
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
                 </button>
               </div>
-              <div class="nds-tab-content">
-                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-request-api-1"
-                  aria-labelledby="tab-request-api-1">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-js code">
+              <div class="nds-expandable-content">
+                <code class="lang-js code">
 NDS.request(url, options) → Promise&lt;{ isJson, data }&gt;
 
 // options
@@ -407,13 +395,11 @@ const { isJson, data } = await NDS.request('/api/search', {
   body: new FormData(form),
   maxBytes: 4194304
 });
-                </code>
-                  </div>
-                </div>
+            </code>
               </div>
             </div>
+          </div>
         </div>
-      </div>
 
     </div>
   </div>

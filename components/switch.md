@@ -374,86 +374,67 @@ last_edit: "28/06/2026 - 01:27 PM"
       <p class="nds-section-description">When and how to use switches effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">When to Use</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <ul>
-              <li>Instant on/off actions that take effect immediately without form submission</li>
-              <li>Settings pages, preference panels, and feature toggles</li>
-              <li>Use <a href="{{ 'components/checkbox' | relative_url }}" class="nds-color">checkboxes</a> when the change requires a submit action to apply</li>
-              <li>Use <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> when choosing between more than two mutually exclusive options</li>
-              <li>Always label clearly what state "on" represents</li>
-            </ul>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">When to Use</h3>
+        <ul>
+          <li>Instant on/off actions that take effect immediately without form submission</li>
+          <li>Settings pages, preference panels, and feature toggles</li>
+          <li>Use <a href="{{ 'components/checkbox' | relative_url }}" class="nds-color">checkboxes</a> when the change requires a submit action to apply</li>
+          <li>Use <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> when choosing between more than two mutually exclusive options</li>
+          <li>Always label clearly what state "on" represents</li>
+        </ul>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Modifier Classes</h3>
-        </div>
-        <div class="nds-block">
-            <table class="nds-table nds-responsive">
-              <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
-              <tbody>
-                <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Small size: 36x18px track, 12px thumb</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Large size: 56x28px track, 20px thumb</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td><code class="nds-inline-code lang-html">.nds-switch</code></td><td>Uses neutral color palette for the checked state instead of primary</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">.nds-switch-group</code></td><td>Lays out switches in a horizontal row instead of the default column</td></tr>
-              </tbody>
-            </table>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Modifier Classes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">nds-sm</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Small size: 36x18px track, 12px thumb</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-lg</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Large size: 56x28px track, 20px thumb</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-neutral</code></td><td><code class="nds-inline-code lang-html">.nds-switch</code></td><td>Uses neutral color palette for the checked state instead of primary</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">.nds-switch-group</code></td><td>Lays out switches in a horizontal row instead of the default column</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Data Attributes</h3>
-        </div>
-        <div class="nds-block">
-            <table class="nds-table nds-responsive">
-              <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
-              <tbody>
-                <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Disables the individual switch: sets not-allowed cursor and mutes track and thumb colors. Synced automatically from the input's <code class="nds-inline-code lang-html">disabled</code> attribute by the forms system</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-switch-group</code></td><td>Disables all switches in the group at once via CSS opacity and pointer-events</td></tr>
-              </tbody>
-            </table>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Data Attributes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-switch-container</code></td><td>Disables the individual switch: sets not-allowed cursor and mutes track and thumb colors. Synced automatically from the input's <code class="nds-inline-code lang-html">disabled</code> attribute by the forms system</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-switch-group</code></td><td>Disables all switches in the group at once via CSS opacity and pointer-events</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">CSS Custom Properties</h3>
-        </div>
-        <div class="nds-block">
-            <table class="nds-table nds-responsive">
-              <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-              <tbody>
-                <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td><code class="nds-inline-code lang-html">20px</code></td><td>Controls the label line-height and ripple baseline; set via size modifier classes</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--switch-width</code></td><td><code class="nds-inline-code lang-html">48px</code></td><td>Width of the switch track</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--switch-height</code></td><td><code class="nds-inline-code lang-html">24px</code></td><td>Height of the switch track</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--switch-thumb-size</code></td><td><code class="nds-inline-code lang-html">16px</code></td><td>Diameter of the thumb circle</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--switch-thumb-offset</code></td><td><code class="nds-inline-code lang-html">4px</code></td><td>Distance from the track edge to the thumb in unchecked and checked states</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--switch-track-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Track background color; overridden by checked state and disabled state</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--switch-track-border</code></td><td><code class="nds-inline-code lang-html">--switch-neutral-default</code></td><td>Track border color; overridden by checked state and disabled state</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--switch-thumb-bg</code></td><td><code class="nds-inline-code lang-html">--switch-neutral-default</code></td><td>Thumb background color; overridden by checked state and disabled state</td></tr>
-              </tbody>
-            </table>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">CSS Custom Properties</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td><code class="nds-inline-code lang-html">20px</code></td><td>Controls the label line-height and ripple baseline; set via size modifier classes</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-width</code></td><td><code class="nds-inline-code lang-html">48px</code></td><td>Width of the switch track</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-height</code></td><td><code class="nds-inline-code lang-html">24px</code></td><td>Height of the switch track</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-size</code></td><td><code class="nds-inline-code lang-html">16px</code></td><td>Diameter of the thumb circle</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-offset</code></td><td><code class="nds-inline-code lang-html">4px</code></td><td>Distance from the track edge to the thumb in unchecked and checked states</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-track-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Track background color; overridden by checked state and disabled state</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-track-border</code></td><td><code class="nds-inline-code lang-html">--switch-neutral-default</code></td><td>Track border color; overridden by checked state and disabled state</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--switch-thumb-bg</code></td><td><code class="nds-inline-code lang-html">--switch-neutral-default</code></td><td>Thumb background color; overridden by checked state and disabled state</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">JavaScript API</h3>
-        </div>
-        <div class="nds-block">
-            <div class="nds-code nds-expandable">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-javascript code">
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">JavaScript API</h3>
+        <div class="nds-code nds-expandable">
+              <div class="nds-code-action">
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
+                </button>
+              </div>
+              <div class="nds-expandable-content">
+                <code class="lang-javascript code">
 // Listen for switch state changes
 var switchEl = document.querySelector('.nds-switch');
 switchEl.addEventListener('switchChange', function(e) {
@@ -466,9 +447,8 @@ switchEl.addEventListener('switchChange', function(e) {
 var input = document.querySelector('.nds-switch-input');
 input.checked = !input.checked;
 input.dispatchEvent(new Event('change'));
-                </code>
-                  </div>
-            </div>
+            </code>
+      </div>
         </div>
       </div>
     </div>

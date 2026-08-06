@@ -2252,101 +2252,82 @@ NDS.Forms.clearStatus(container);</code>
       <p class="nds-section-description">When and how to use form inputs effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Best Practices</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <ul>
-              <li>Use form inputs for any data collection scenario: registration flows, search interfaces, settings pages, and inline editing. Every input type shares the same container structure, so switching between text, email, password, or select requires minimal markup changes.</li>
-              <li>Use <code class="nds-inline-code lang-html">nds-search-input</code> for search fields where voice input and automatic clear actions improve discoverability. The search variant includes a leading icon and optional microphone button out of the box.</li>
-              <li>Use the custom select dropdown (<code class="nds-inline-code lang-html">nds-select</code>) for styled option lists that match the design system — it ships with keyboard navigation and a hidden input so it submits with the form. For native mobile picker behavior, wrap a standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> in the same <code class="nds-inline-code lang-html">nds-form-container nds-select</code> shell as shown in the Native Select demo.</li>
-              <li>Do not use form inputs for binary choices or toggles. Use <a href="{{ 'components/switch' | relative_url }}" class="nds-color">switches</a> for instant on/off toggles, <a href="{{ 'components/checkbox' | relative_url }}" class="nds-color">checkboxes</a> for multiple selections, or <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> for single selection from a set.</li>
-              <li>Do not use plain text inputs for specialized data types. Use <a href="{{ 'components/date-picker' | relative_url }}" class="nds-color">date picker</a> for dates, <a href="{{ 'components/otp' | relative_url }}" class="nds-color">OTP input</a> for verification codes, and <a href="{{ 'components/autocomplete' | relative_url }}" class="nds-color">autocomplete</a> for search-as-you-type with remote data.</li>
-              <li>Choose <code class="nds-inline-code lang-html">nds-lg</code> (default) for standalone forms and primary data entry. Use <code class="nds-inline-code lang-html">nds-md</code> for compact layouts like table filters, inline editing, or sidebars where space is limited.</li>
-              <li>Add <code class="nds-inline-code lang-html">data-required</code> to the container rather than <code class="nds-inline-code lang-html">required</code> on the input. The system syncs the two automatically and adds the required indicator to the label.</li>
-              <li>Use permanent feedback (<code class="nds-inline-code lang-html">data-permanent</code>) for format hints and character requirements. These persist across validation cycles: they hide when an error appears and restore when the error clears.</li>
-              <li>Use prefix and suffix slots for units, currency symbols, or action buttons that contextualize the input. Prefix/suffix buttons support both subtle and solid styles, and can include icons or dropmenus for compound inputs.</li>
-              <li>For compound inputs (phone + country code, amount + currency, measurement + unit), use a prefix-slot dropmenu with <code class="nds-inline-code lang-html">data-select-name</code>. The dropmenu renders a hidden input that submits with the form and keeps the trigger label compact while the dropdown rows stay descriptive. See the Phone Number with Country Code demo for the full pattern.</li>
-              <li>Always include a <code class="nds-inline-code lang-html">data-feedback-target</code> element in the form footer, even if initially hidden. The validation system needs this target to inject error, success, and warning messages.</li>
-              <li>Set <code class="nds-inline-code lang-html">data-error-message</code> on the container to override default browser validation messages with context-specific text that guides the user toward correction.</li>
-            </ul>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Best Practices</h3>
+        <ul>
+          <li>Use form inputs for any data collection scenario: registration flows, search interfaces, settings pages, and inline editing. Every input type shares the same container structure, so switching between text, email, password, or select requires minimal markup changes.</li>
+          <li>Use <code class="nds-inline-code lang-html">nds-search-input</code> for search fields where voice input and automatic clear actions improve discoverability. The search variant includes a leading icon and optional microphone button out of the box.</li>
+          <li>Use the custom select dropdown (<code class="nds-inline-code lang-html">nds-select</code>) for styled option lists that match the design system — it ships with keyboard navigation and a hidden input so it submits with the form. For native mobile picker behavior, wrap a standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> in the same <code class="nds-inline-code lang-html">nds-form-container nds-select</code> shell as shown in the Native Select demo.</li>
+          <li>Do not use form inputs for binary choices or toggles. Use <a href="{{ 'components/switch' | relative_url }}" class="nds-color">switches</a> for instant on/off toggles, <a href="{{ 'components/checkbox' | relative_url }}" class="nds-color">checkboxes</a> for multiple selections, or <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> for single selection from a set.</li>
+          <li>Do not use plain text inputs for specialized data types. Use <a href="{{ 'components/date-picker' | relative_url }}" class="nds-color">date picker</a> for dates, <a href="{{ 'components/otp' | relative_url }}" class="nds-color">OTP input</a> for verification codes, and <a href="{{ 'components/autocomplete' | relative_url }}" class="nds-color">autocomplete</a> for search-as-you-type with remote data.</li>
+          <li>Choose <code class="nds-inline-code lang-html">nds-lg</code> (default) for standalone forms and primary data entry. Use <code class="nds-inline-code lang-html">nds-md</code> for compact layouts like table filters, inline editing, or sidebars where space is limited.</li>
+          <li>Add <code class="nds-inline-code lang-html">data-required</code> to the container rather than <code class="nds-inline-code lang-html">required</code> on the input. The system syncs the two automatically and adds the required indicator to the label.</li>
+          <li>Use permanent feedback (<code class="nds-inline-code lang-html">data-permanent</code>) for format hints and character requirements. These persist across validation cycles: they hide when an error appears and restore when the error clears.</li>
+          <li>Use prefix and suffix slots for units, currency symbols, or action buttons that contextualize the input. Prefix/suffix buttons support both subtle and solid styles, and can include icons or dropmenus for compound inputs.</li>
+          <li>For compound inputs (phone + country code, amount + currency, measurement + unit), use a prefix-slot dropmenu with <code class="nds-inline-code lang-html">data-select-name</code>. The dropmenu renders a hidden input that submits with the form and keeps the trigger label compact while the dropdown rows stay descriptive. See the Phone Number with Country Code demo for the full pattern.</li>
+          <li>Always include a <code class="nds-inline-code lang-html">data-feedback-target</code> element in the form footer, even if initially hidden. The validation system needs this target to inject error, success, and warning messages.</li>
+          <li>Set <code class="nds-inline-code lang-html">data-error-message</code> on the container to override default browser validation messages with context-specific text that guides the user toward correction.</li>
+        </ul>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Modifier Classes</h3>
-        </div>
-        <div class="nds-block">
-            <table class="nds-table nds-responsive">
-              <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
-              <tbody>
-                <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Medium size with reduced height (32px) and smaller font</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">nds-lighter</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the lighter surface token. Removes the input border so the fill alone defines the field boundary. Not applied to file upload containers.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">nds-darker</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the darker surface token. Same border behavior as <code class="nds-inline-code lang-html">nds-lighter</code>. Not applied to file upload containers.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">nds-form-group</code></td><td>Lays out checkbox, radio, or switch group items in a horizontal wrapping row instead of the default vertical column.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">nds-phone</code></td><td><code class="nds-inline-code lang-html">nds-input</code> (tel)</td><td>Set on a tel input that sits next to a country-code prefix slot. On every keystroke, strips non-digit characters and any leading zero so the value submitted is the local number ready to concatenate with the prefix. Length is still controlled by the input's <code class="nds-inline-code lang-html">maxlength</code>.</td></tr>
-              </tbody>
-            </table>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Modifier Classes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">nds-md</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Medium size with reduced height (32px) and smaller font</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-lighter</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the lighter surface token. Removes the input border so the fill alone defines the field boundary. Not applied to file upload containers.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-darker</code></td><td><code class="nds-inline-code lang-html">nds-form-container</code></td><td>Filled-background variant using the darker surface token. Same border behavior as <code class="nds-inline-code lang-html">nds-lighter</code>. Not applied to file upload containers.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-rowView</code></td><td><code class="nds-inline-code lang-html">nds-form-group</code></td><td>Lays out checkbox, radio, or switch group items in a horizontal wrapping row instead of the default vertical column.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">nds-phone</code></td><td><code class="nds-inline-code lang-html">nds-input</code> (tel)</td><td>Set on a tel input that sits next to a country-code prefix slot. On every keystroke, strips non-digit characters and any leading zero so the value submitted is the local number ready to concatenate with the prefix. Length is still controlled by the input's <code class="nds-inline-code lang-html">maxlength</code>.</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Data Attributes</h3>
-        </div>
-        <div class="nds-block">
-            <table class="nds-table nds-responsive">
-              <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
-              <tbody>
-                <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-container</code> to mark the field as required. Automatically syncs to the input's <code class="nds-inline-code lang-html">required</code> attribute and adds the asterisk indicator.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-container</code> to override the default browser validation message with custom text.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-permanent</code></td><td>Set on a feedback element inside the footer. Permanent feedback hides during validation errors and restores when cleared.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">min</code></td><td>Set on number inputs to define the minimum allowed value (default: 0).</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">max</code></td><td>Set on number inputs to define the maximum allowed value (default: 1000).</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">step</code></td><td>Set on number inputs to define the increment/decrement size (default: 1). Long press accelerates to 10x this value.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-select-name</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu</code> (including prefix/suffix dropmenus) to turn it into a value picker. Renders a hidden <code class="nds-inline-code lang-html">&lt;input&gt;</code> with this name; item clicks write the item's <code class="nds-inline-code lang-html">data-value</code> into it and update the trigger label.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-select-value</code></td><td>Set on a select-mode dropmenu to pre-select the item whose <code class="nds-inline-code lang-html">data-value</code> matches. Takes precedence over any pre-rendered <code class="nds-inline-code lang-html">data-state="selected"</code> item.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-required</code> (on dropmenu)</td><td>Set on a select-mode dropmenu to add <code class="nds-inline-code lang-html">required</code> to the hidden input, so native form submission blocks when nothing is picked.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-trigger-label</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu-item</code> to override the trigger label text when that item is chosen. Useful when the dropdown row is descriptive (<em>Saudi Arabia (+966)</em>) but the trigger slot needs something compact (<em>+966</em>).</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-min-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid unless at least this many checkboxes are checked. Also adds the required asterisk to the group label.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-max-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid when more than this many checkboxes are checked. Defaults to the total checkbox count when absent.</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-ajax</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form</code>. When present, the form's submit event is intercepted and <code class="nds-inline-code lang-html">preventDefault()</code> is called after validation passes, allowing you to handle submission via fetch or XHR without a page reload.</td></tr>
-              </tbody>
-            </table>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Data Attributes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-container</code> to mark the field as required. Automatically syncs to the input's <code class="nds-inline-code lang-html">required</code> attribute and adds the asterisk indicator.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-container</code> to override the default browser validation message with custom text.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-permanent</code></td><td>Set on a feedback element inside the footer. Permanent feedback hides during validation errors and restores when cleared.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">min</code></td><td>Set on number inputs to define the minimum allowed value (default: 0).</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">max</code></td><td>Set on number inputs to define the maximum allowed value (default: 1000).</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">step</code></td><td>Set on number inputs to define the increment/decrement size (default: 1). Long press accelerates to 10x this value.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-select-name</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu</code> (including prefix/suffix dropmenus) to turn it into a value picker. Renders a hidden <code class="nds-inline-code lang-html">&lt;input&gt;</code> with this name; item clicks write the item's <code class="nds-inline-code lang-html">data-value</code> into it and update the trigger label.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-select-value</code></td><td>Set on a select-mode dropmenu to pre-select the item whose <code class="nds-inline-code lang-html">data-value</code> matches. Takes precedence over any pre-rendered <code class="nds-inline-code lang-html">data-state="selected"</code> item.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-required</code> (on dropmenu)</td><td>Set on a select-mode dropmenu to add <code class="nds-inline-code lang-html">required</code> to the hidden input, so native form submission blocks when nothing is picked.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-trigger-label</code></td><td>Set on an <code class="nds-inline-code lang-html">nds-dropmenu-item</code> to override the trigger label text when that item is chosen. Useful when the dropdown row is descriptive (<em>Saudi Arabia (+966)</em>) but the trigger slot needs something compact (<em>+966</em>).</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-min-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid unless at least this many checkboxes are checked. Also adds the required asterisk to the group label.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-max-checked</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form-group</code> (checkbox groups). The group is invalid when more than this many checkboxes are checked. Defaults to the total checkbox count when absent.</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-ajax</code></td><td>Set on <code class="nds-inline-code lang-html">nds-form</code>. When present, the form's submit event is intercepted and <code class="nds-inline-code lang-html">preventDefault()</code> is called after validation passes, allowing you to handle submission via fetch or XHR without a page reload.</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">CSS Custom Properties</h3>
-        </div>
-        <div class="nds-block">
-            <table class="nds-table nds-responsive">
-              <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-              <tbody>
-                <tr><td><code class="nds-inline-code lang-html">--form-width</code></td><td>100%</td><td>Controls the width of the form container</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--input-size</code></td><td>40px</td><td>Height of the input field (32px for <code class="nds-inline-code lang-html">nds-md</code>)</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--input-radius</code></td><td>var(--radius-sm)</td><td>Border radius of the input field</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td>16px</td><td>Size (width and height) of the checkbox and radio control element. Size modifier classes set it to 20px (<code class="nds-inline-code lang-html">nds-md</code>) or 24px (<code class="nds-inline-code lang-html">nds-lg</code>). Set directly to use a custom size.</td></tr>
-              </tbody>
-            </table>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">CSS Custom Properties</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">--form-width</code></td><td>100%</td><td>Controls the width of the form container</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--input-size</code></td><td>40px</td><td>Height of the input field (32px for <code class="nds-inline-code lang-html">nds-md</code>)</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--input-radius</code></td><td>var(--radius-sm)</td><td>Border radius of the input field</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td>16px</td><td>Size (width and height) of the checkbox and radio control element. Size modifier classes set it to 20px (<code class="nds-inline-code lang-html">nds-md</code>) or 24px (<code class="nds-inline-code lang-html">nds-lg</code>). Set directly to use a custom size.</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">JavaScript API</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <p>The <strong>NDS.Forms</strong> API manages initialization, status feedback, state management, and form validation. For dynamically added form elements, call <code class="nds-inline-code lang-js">NDS.Forms.initializeContainer(element)</code> to initialize new inputs.</p>
-        </div>
-        <div class="nds-block">
-            <div class="nds-code nds-expandable">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-javascript code">
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">JavaScript API</h3>
+        <p>The <strong>NDS.Forms</strong> API manages initialization, status feedback, state management, and form validation. For dynamically added form elements, call <code class="nds-inline-code lang-js">NDS.Forms.initializeContainer(element)</code> to initialize new inputs.</p>
+    </div>
+    <div class="nds-block">
+        <div class="nds-code nds-expandable">
+              <div class="nds-code-action">
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
+                </button>
+              </div>
+              <div class="nds-expandable-content">
+                <code class="lang-javascript code">
 // ── Initialization ──────────────────────────────────
 // All forms auto-initialize on page load
 NDS.Forms.init();
@@ -2411,53 +2392,52 @@ NDS.Forms.validateOtpGroup(group);
 // ── Events ──────────────────────────────────────────
 // Status change on any .nds-form-container
 element.addEventListener('nds:statusChange', function(e) {
-    // e.detail: { status: 'error'|'success'|...|null, message: '...'|null }
+// e.detail: { status: 'error'|'success'|...|null, message: '...'|null }
 });
 
 // Form validation events on .nds-form elements
 form.addEventListener('nds:formValidate', function(e) {
-    // Fires after validation runs
-    // e.detail: { valid: true|false, invalidFields: [...], errors: [...] }
+// Fires after validation runs
+// e.detail: { valid: true|false, invalidFields: [...], errors: [...] }
 });
 
 form.addEventListener('nds:formValid', function(e) {
-    // Fires when form passes validation on submit
+// Fires when form passes validation on submit
 });
 
 form.addEventListener('nds:formInvalid', function(e) {
-    // Fires when form fails validation on submit
-    // e.detail: { invalidFields: [...], errors: [...] }
+// Fires when form fails validation on submit
+// e.detail: { invalidFields: [...], errors: [...] }
 });
 
 // Select dropdown change event on .nds-form-control
 formControl.addEventListener('selectChange', function(e) {
-    // e.detail: { value: 'option1', text: 'Option 1' }
+// e.detail: { value: 'option1', text: 'Option 1' }
 });
 
 // Switch toggle event on .nds-switch-element
 switchElement.addEventListener('switchChange', function(e) {
-    // e.detail: { checked: true|false, value: '...', input: switchInputElement }
+// e.detail: { checked: true|false, value: '...', input: switchInputElement }
 });
 
 // Checkbox indeterminate state change on the checkbox element
 checkbox.addEventListener('nds:indeterminateChange', function(e) {
-    // e.detail: { indeterminate: true|false }
+// e.detail: { indeterminate: true|false }
 });
 
 // ── Dropmenu select-mode (prefix/suffix pickers) ────
 // Any .nds-dropmenu with data-select-name captures the picked value into
 // a hidden input and fires these two events.
 dropmenu.addEventListener('nds:dropmenu:selected', function(e) {
-    // e.detail: { dropmenu, item, value }
+// e.detail: { dropmenu, item, value }
 });
 
 // Hidden input change — use this if you only care about the new value
 hiddenInput.addEventListener('change', function(e) {
-    // e.target.value holds the selected data-value
+// e.target.value holds the selected data-value
 });
-                </code>
-                  </div>
-            </div>
+            </code>
+      </div>
         </div>
       </div>
     </div>

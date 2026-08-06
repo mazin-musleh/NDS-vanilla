@@ -668,32 +668,33 @@ last_edit: "29/07/2026 - 01:32 AM"
             <div class="nds-block nds-prose">
                 <h3 class="nds-block-title">JavaScript API</h3>
                 <p>The library auto-binds to <code class="nds-inline-code lang-html">[data-export]</code> buttons via a single delegated listener. The <code class="nds-inline-code lang-js">NDS.Export</code> namespace is also available for triggering exports from custom scripts, building one-off formats, or accessing the normalized data.</p>
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                                aria-controls="panel-export-api-1" id="tab-export-api-1">
-                                <span class="nds-tab-label">JavaScript</span>
-                            </button>
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </div>
+            <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tab-list-container nds-scroll-more">
+                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                            aria-controls="panel-export-api-1" id="tab-export-api-1">
+                            <span class="nds-tab-label">JavaScript</span>
                         </button>
-                    </div>
-                    <div class="nds-tab-content">
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-export-api-1"
-                            aria-labelledby="tab-export-api-1">
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
+                    </nav>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="nds-tab-content">
+                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-export-api-1"
+                        aria-labelledby="tab-export-api-1">
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
 <code class="lang-javascript code">// Per-format shortcuts: preferred for most call sites
 NDS.Export.csv('#orders');                          // 'auto' scope, default filename
 NDS.Export.xls('#orders', 'all');                   // force the full set
 NDS.Export.pdf('#orders', 'selected', {             // explicit override + opts
-    filename: 'q2-orders.pdf',
-    title:    'Q2 Orders'
+filename: 'q2-orders.pdf',
+title:    'Q2 Orders'
 });
 
 // Generic entry point: useful when the format is dynamic
@@ -706,20 +707,19 @@ const data = NDS.Export.collect('#orders', 'all');
 // Pure formatters: transform the data manually, then download
 const csvString  = NDS.Export.toCSV(data);          // UTF-8 string with BOM
 const xlsHtmlStr = NDS.Export.toXLSHtml(data, {
-    dir: 'rtl'                                      // override the page's direction
+dir: 'rtl'                                      // override the page's direction
 });
 
 // Side-effecting helpers: used by the shortcuts above
 NDS.Export.openPrint(data, { title: 'Q2 Orders' }); // hidden iframe + native print
 NDS.Export.download(data, 'csv', {                  // route normalized data to a file
-    filename: 'snapshot.csv'
+filename: 'snapshot.csv'
 });
 
 // Trigger any format from a custom event
 document.querySelector('#exportNow').addEventListener('click', () => {
-    NDS.Export.csv('#orders');
+NDS.Export.csv('#orders');
 });</code>
-                            </div>
                         </div>
                     </div>
                 </div>

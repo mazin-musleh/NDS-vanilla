@@ -200,33 +200,26 @@ last_edit: "04/08/2026 - 04:02 PM"
       <p class="nds-section-description">When and how to use autocomplete inputs effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">When to Use</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <ul>
-              <li>Search fields that query a remote API for suggestions as the user types</li>
-              <li>Large datasets where showing all options in a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">select dropdown</a> is impractical</li>
-              <li>Service search, city lookup, product search, or any entity search</li>
-              <li>Set <code class="nds-inline-code lang-html">data-min-chars</code> to control when fetching begins (default: 3 characters)</li>
-              <li>For static option lists, use a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">select dropdown</a> instead</li>
-            </ul>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">When to Use</h3>
+        <ul>
+          <li>Search fields that query a remote API for suggestions as the user types</li>
+          <li>Large datasets where showing all options in a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">select dropdown</a> is impractical</li>
+          <li>Service search, city lookup, product search, or any entity search</li>
+          <li>Set <code class="nds-inline-code lang-html">data-min-chars</code> to control when fetching begins (default: 3 characters)</li>
+          <li>For static option lists, use a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">select dropdown</a> instead</li>
+        </ul>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">JavaScript API</h3>
-        </div>
-        <div class="nds-block">
-            <div class="nds-code nds-expandable">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-javascript code">
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">JavaScript API</h3>
+        <div class="nds-code nds-expandable">
+              <div class="nds-code-action">
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
+                </button>
+              </div>
+              <div class="nds-expandable-content">
+                <code class="lang-javascript code">
 // Auto-initializes on .nds-form-container[data-url] with autocomplete="on"
 // For dynamic content:
 NDS.Autocomplete.reinit();
@@ -258,44 +251,36 @@ container.addEventListener('nds:autocomplete:fetch', function(e) {
 container.addEventListener('nds:autocomplete:clear', function(e) {
   console.log('Input cleared');
 });
-                </code>
-                  </div>
-            </div>
+            </code>
+      </div>
         </div>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Configuration Attributes</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <ul>
-              <li><code class="nds-inline-code lang-html">data-url</code> on the container: API endpoint that returns JSON</li>
-              <li><code class="nds-inline-code lang-html">data-name</code>: JSON field name to display in results (default: "Title")</li>
-              <li><code class="nds-inline-code lang-html">data-min-chars</code>: minimum characters before fetching starts (default: 3)</li>
-              <li><code class="nds-inline-code lang-html">data-query-param</code>: query string parameter name sent to the API (default: "q")</li>
-              <li><code class="nds-inline-code lang-html">data-results-path</code>: dot notation path to the results array in the response (e.g. "response.items"). Without it, the component auto-detects flat arrays or objects with <code class="nds-inline-code lang-js">results</code> or <code class="nds-inline-code lang-js">data</code> keys</li>
-              <li><code class="nds-inline-code lang-html">data-fetch</code>: fetch mode, either <code class="nds-inline-code lang-js">"each"</code> (default) or <code class="nds-inline-code lang-js">"once"</code>. With <code class="nds-inline-code lang-js">"each"</code> the API is called on every keystroke and the server filters results. With <code class="nds-inline-code lang-js">"once"</code> the full list is fetched once on first input, cached, and filtered client-side on each keystroke. Use <code class="nds-inline-code lang-js">"once"</code> for small static datasets such as countries, currencies, or departments.</li>
-              <li><code class="nds-inline-code lang-html">data-empty-message</code>: custom text for the "no results" placeholder shown when a query matches nothing (default: localized "No results")</li>
-              <li><code class="nds-inline-code lang-html">data-empty-icon</code>: icon classes for the "no results" placeholder (default: <code class="nds-inline-code lang-html">nds-icon nds-hgi-search-01</code>)</li>
-            </ul>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Configuration Attributes</h3>
+        <ul>
+          <li><code class="nds-inline-code lang-html">data-url</code> on the container: API endpoint that returns JSON</li>
+          <li><code class="nds-inline-code lang-html">data-name</code>: JSON field name to display in results (default: "Title")</li>
+          <li><code class="nds-inline-code lang-html">data-min-chars</code>: minimum characters before fetching starts (default: 3)</li>
+          <li><code class="nds-inline-code lang-html">data-query-param</code>: query string parameter name sent to the API (default: "q")</li>
+          <li><code class="nds-inline-code lang-html">data-results-path</code>: dot notation path to the results array in the response (e.g. "response.items"). Without it, the component auto-detects flat arrays or objects with <code class="nds-inline-code lang-js">results</code> or <code class="nds-inline-code lang-js">data</code> keys</li>
+          <li><code class="nds-inline-code lang-html">data-fetch</code>: fetch mode, either <code class="nds-inline-code lang-js">"each"</code> (default) or <code class="nds-inline-code lang-js">"once"</code>. With <code class="nds-inline-code lang-js">"each"</code> the API is called on every keystroke and the server filters results. With <code class="nds-inline-code lang-js">"once"</code> the full list is fetched once on first input, cached, and filtered client-side on each keystroke. Use <code class="nds-inline-code lang-js">"once"</code> for small static datasets such as countries, currencies, or departments.</li>
+          <li><code class="nds-inline-code lang-html">data-empty-message</code>: custom text for the "no results" placeholder shown when a query matches nothing (default: localized "No results")</li>
+          <li><code class="nds-inline-code lang-html">data-empty-icon</code>: icon classes for the "no results" placeholder (default: <code class="nds-inline-code lang-html">nds-icon nds-hgi-search-01</code>)</li>
+        </ul>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">API Response Format</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <p>With the default <code class="nds-inline-code lang-js">data-fetch="each"</code> mode, the component sends a GET request per keystroke (e.g. <code class="nds-inline-code lang-html">/api/services?q=term</code>) and the server handles filtering. With <code class="nds-inline-code lang-js">data-fetch="once"</code>, the full URL is fetched once with no query parameter and filtering is done client-side. Both modes expect JSON in one of these formats:</p>
-        </div>
-        <div class="nds-block">
-            <div class="nds-code nds-expandable">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-javascript code">
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">API Response Format</h3>
+        <p>With the default <code class="nds-inline-code lang-js">data-fetch="each"</code> mode, the component sends a GET request per keystroke (e.g. <code class="nds-inline-code lang-html">/api/services?q=term</code>) and the server handles filtering. With <code class="nds-inline-code lang-js">data-fetch="once"</code>, the full URL is fetched once with no query parameter and filtering is done client-side. Both modes expect JSON in one of these formats:</p>
+    </div>
+    <div class="nds-block">
+        <div class="nds-code nds-expandable">
+              <div class="nds-code-action">
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
+                </button>
+              </div>
+              <div class="nds-expandable-content">
+                <code class="lang-javascript code">
 // Flat array
 [{ "Title": "Item one" }, { "Title": "Item two" }]
 
@@ -312,9 +297,8 @@ container.addEventListener('nds:autocomplete:clear', function(e) {
 
 // The component renders up to 20 results
 // Filtering: server-side with data-fetch="each" (default), client-side with data-fetch="once"
-                </code>
-                  </div>
-            </div>
+            </code>
+      </div>
         </div>
       </div>
     </div>

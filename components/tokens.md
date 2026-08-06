@@ -135,39 +135,37 @@ released build, or a dev cycle that left the tokens alone, matches its bundle an
             </p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
-                <div class="nds-tabs nds-code nds-divided">
-                    <div class="nds-tab-list-container nds-scroll-more">
-                        <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="{{ tier.label }} categories">
-                            {%- for cat in tier.categories %}
-                            <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                                aria-controls="panel-tokens-{{ tier.id }}-{{ cat.id }}" id="tab-tokens-{{ tier.id }}-{{ cat.id }}">
-                                <span class="nds-tab-label">{{ cat.label }}</span>
-                            </button>
-                            {%- endfor %}
-                        </nav>
-                        <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="nds-tab-content">
+            <div class="nds-tabs nds-code nds-divided">
+                <div class="nds-tab-list-container nds-scroll-more">
+                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="{{ tier.label }} categories">
                         {%- for cat in tier.categories %}
-                        <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tokens-{{ tier.id }}-{{ cat.id }}"
-                            aria-labelledby="tab-tokens-{{ tier.id }}-{{ cat.id }}"{% unless forloop.first %} hidden{% endunless %}>
-                            <div class="nds-code-action">
-                                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy {{ cat.label }} tokens">
-                                    <i class="nds-icon nds-hgi-copy-01"></i>
-                                </button>
-                            </div>
-                            <div class="nds-expandable-content">
-                                <code class="lang-css code">:root {
+                        <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                            aria-controls="panel-tokens-{{ tier.id }}-{{ cat.id }}" id="tab-tokens-{{ tier.id }}-{{ cat.id }}">
+                            <span class="nds-tab-label">{{ cat.label }}</span>
+                        </button>
+                        {%- endfor %}
+                    </nav>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="nds-tab-content">
+                    {%- for cat in tier.categories %}
+                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-tokens-{{ tier.id }}-{{ cat.id }}"
+                        aria-labelledby="tab-tokens-{{ tier.id }}-{{ cat.id }}"{% unless forloop.first %} hidden{% endunless %}>
+                        <div class="nds-code-action">
+                            <button class="nds-btn nds-subtle nds-copy" aria-label="Copy {{ cat.label }} tokens">
+                                <i class="nds-icon nds-hgi-copy-01"></i>
+                            </button>
+                        </div>
+                        <div class="nds-expandable-content">
+                            <code class="lang-css code">:root {
 {%- for t in cat.tokens %}
   {{ t.name | escape }}: {{ t.value | escape }};
 {%- endfor %}
 }</code>
-                            </div>
                         </div>
-                        {%- endfor %}
                     </div>
+                    {%- endfor %}
                 </div>
             </div>
         </div>

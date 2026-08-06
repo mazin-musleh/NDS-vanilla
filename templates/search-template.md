@@ -119,9 +119,7 @@ exclude_showcase: false
                 </div>
                 {% endfor %}
             </div>
-            <div class="nds-block">
-                <nav class="nds-pagination" data-auto-pagination="search_results_content" aria-label="Pagination"></nav>
-            </div>
+            <nav class="nds-pagination" data-auto-pagination="search_results_content" aria-label="Pagination"></nav>
         </div>
     </div>
 </section>

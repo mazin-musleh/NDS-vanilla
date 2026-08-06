@@ -416,34 +416,27 @@ last_edit: "28/06/2026 - 01:27 PM"
       <p class="nds-section-description">When and how to use checkboxes effectively</p>
     </div>
     <div class="nds-section-body">
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">When to Use</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <ul>
-              <li>Multiple selections from a list of options</li>
-              <li>Binary choices like accepting terms or toggling a setting</li>
-              <li>Use <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> when only one selection is allowed</li>
-              <li>Use <a href="{{ 'components/switch' | relative_url }}" class="nds-color">switches</a> for instant on/off actions without form submission</li>
-              <li>Keep groups to 7 or fewer options. For longer lists, consider a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">multi-select dropdown</a></li>
-              <li>Use indeterminate state for "select all" parent checkboxes that partially control child selections</li>
-            </ul>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">When to Use</h3>
+        <ul>
+          <li>Multiple selections from a list of options</li>
+          <li>Binary choices like accepting terms or toggling a setting</li>
+          <li>Use <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> when only one selection is allowed</li>
+          <li>Use <a href="{{ 'components/switch' | relative_url }}" class="nds-color">switches</a> for instant on/off actions without form submission</li>
+          <li>Keep groups to 7 or fewer options. For longer lists, consider a <a href="{{ 'components/forms' | relative_url }}" class="nds-color">multi-select dropdown</a></li>
+          <li>Use indeterminate state for "select all" parent checkboxes that partially control child selections</li>
+        </ul>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">JavaScript API</h3>
-        </div>
-        <div class="nds-block">
-            <div class="nds-code nds-expandable">
-                  <div class="nds-code-action">
-                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                      <i class="nds-icon nds-hgi-copy-01"></i>
-                    </button>
-                  </div>
-                  <div class="nds-expandable-content">
-                    <code class="lang-javascript code">
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">JavaScript API</h3>
+        <div class="nds-code nds-expandable">
+              <div class="nds-code-action">
+                <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                  <i class="nds-icon nds-hgi-copy-01"></i>
+                </button>
+              </div>
+              <div class="nds-expandable-content">
+                <code class="lang-javascript code">
 // Set indeterminate state on a checkbox
 var checkbox = document.querySelector('#my-checkbox');
 NDS.Forms.setIndeterminate(checkbox, true);
@@ -466,63 +459,50 @@ NDS.Forms.initCheckboxGroupValidation(group);
 
 // Clear validation status
 NDS.Forms.clearStatus(group);
-                </code>
-                  </div>
-            </div>
+            </code>
+      </div>
         </div>
       </div>
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Data Attributes</h3>
-        </div>
-        <div class="nds-block">
-            <table class="nds-table nds-responsive">
-              <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
-              <tbody>
-                <tr><td><code class="nds-inline-code lang-html">data-state~="indeterminate"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code></td><td>Stamped by <code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code> when the checkbox is indeterminate; removed when cleared</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code>, <code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Propagates disabled styling to all child inputs</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-state~="readonly"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code></td><td>Renders the checkbox tile as read-only: border only, no fill</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code>, <code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Marks a single checkbox or group as required on form submit</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-min-checked</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Minimum number of checkboxes that must be selected</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-max-checked</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Maximum number of checkboxes that may be selected</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Overrides the default validation error message shown below the group</td></tr>
-              </tbody>
-            </table>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Data Attributes</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Attribute</th><th>Element</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="indeterminate"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code></td><td>Stamped by <code class="nds-inline-code lang-js">NDS.Forms.setIndeterminate()</code> when the checkbox is indeterminate; removed when cleared</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="disabled"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code>, <code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Propagates disabled styling to all child inputs</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-state~="readonly"</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code></td><td>Renders the checkbox tile as read-only: border only, no fill</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-required</code></td><td><code class="nds-inline-code lang-html">.nds-form-container</code>, <code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Marks a single checkbox or group as required on form submit</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-min-checked</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Minimum number of checkboxes that must be selected</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-max-checked</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Maximum number of checkboxes that may be selected</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">data-error-message</code></td><td><code class="nds-inline-code lang-html">.nds-check-group</code></td><td>Overrides the default validation error message shown below the group</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">CSS Custom Properties</h3>
-        </div>
-        <div class="nds-block">
-            <table class="nds-table nds-responsive">
-              <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
-              <tbody>
-                <tr><td><code class="nds-inline-code lang-html">--checkbox-tile-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Fill color of the checkbox tile. Override inline to tint a single checkbox</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--checkbox-tile-border</code></td><td><code class="nds-inline-code lang-html">--controls-border</code></td><td>Box-shadow ring color around the tile</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--checkbox-glyph-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Color of the checkmark or dash glyph painted inside the tile</td></tr>
-                <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td><code class="nds-inline-code lang-html">16px</code></td><td>Size of the checkbox control. Set by size modifiers: <code class="nds-inline-code lang-html">nds-md</code> = 20px, <code class="nds-inline-code lang-html">nds-lg</code> = 24px. Override inline for a custom size</td></tr>
-              </tbody>
-            </table>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">CSS Custom Properties</h3>
+        <table class="nds-table nds-responsive">
+          <thead><tr><th>Property</th><th>Default</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code class="nds-inline-code lang-html">--checkbox-tile-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Fill color of the checkbox tile. Override inline to tint a single checkbox</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--checkbox-tile-border</code></td><td><code class="nds-inline-code lang-html">--controls-border</code></td><td>Box-shadow ring color around the tile</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--checkbox-glyph-bg</code></td><td><code class="nds-inline-code lang-html">--background-default</code></td><td>Color of the checkmark or dash glyph painted inside the tile</td></tr>
+            <tr><td><code class="nds-inline-code lang-html">--nds-input-size</code></td><td><code class="nds-inline-code lang-html">16px</code></td><td>Size of the checkbox control. Set by size modifiers: <code class="nds-inline-code lang-html">nds-md</code> = 20px, <code class="nds-inline-code lang-html">nds-lg</code> = 24px. Override inline for a custom size</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="nds-block">
-        <div class="nds-block">
-            <h3 class="nds-block-title">Validation Attributes</h3>
-        </div>
-        <div class="nds-block nds-prose">
-            <ul>
-              <li>Add <code class="nds-inline-code lang-html">data-required</code> to a single checkbox container to make it mandatory before form submission</li>
-              <li>Add <code class="nds-inline-code lang-html">data-required</code> to a group to require at least one selection</li>
-              <li>Use <code class="nds-inline-code lang-html">data-min-checked="2"</code> on a group to enforce a minimum number of selections</li>
-              <li>Use <code class="nds-inline-code lang-html">data-max-checked="4"</code> on a group to cap the maximum number of selections</li>
-              <li>Combine both for a range constraint (e.g. "select 2 to 4 options")</li>
-              <li>Add <code class="nds-inline-code lang-html">data-error-message</code> on the group to override the default validation message</li>
-              <li>Place a <code class="nds-inline-code lang-html">nds-form-footer</code> with <code class="nds-inline-code lang-html">data-feedback-target</code> inside the group for dynamic feedback placement</li>
-            </ul>
-        </div>
+      <div class="nds-block nds-prose">
+          <h3 class="nds-block-title">Validation Attributes</h3>
+        <ul>
+          <li>Add <code class="nds-inline-code lang-html">data-required</code> to a single checkbox container to make it mandatory before form submission</li>
+          <li>Add <code class="nds-inline-code lang-html">data-required</code> to a group to require at least one selection</li>
+          <li>Use <code class="nds-inline-code lang-html">data-min-checked="2"</code> on a group to enforce a minimum number of selections</li>
+          <li>Use <code class="nds-inline-code lang-html">data-max-checked="4"</code> on a group to cap the maximum number of selections</li>
+          <li>Combine both for a range constraint (e.g. "select 2 to 4 options")</li>
+          <li>Add <code class="nds-inline-code lang-html">data-error-message</code> on the group to override the default validation message</li>
+          <li>Place a <code class="nds-inline-code lang-html">nds-form-footer</code> with <code class="nds-inline-code lang-html">data-feedback-target</code> inside the group for dynamic feedback placement</li>
+        </ul>
       </div>
     </div>
   </div>

@@ -21,41 +21,33 @@ last_edit: "01/08/2026 - 11:45 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-definition-list nds-divided nds-grid" style="--max-col:2;--mid-col:1;--min-col:1;">
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-database"></i>
-                <span class="nds-label">132 cities</span>
-              </span>
-              <p class="nds-item-desc">Major cities and regional towns. Capital cities of each region, governorate seats, and well-known towns are included; very small villages are not.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-database"></i>
+            <span class="nds-label">132 cities</span>
+          </span>
+          <p class="nds-item-desc">Major cities and regional towns. Capital cities of each region, governorate seats, and well-known towns are included; very small villages are not.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-globe-02"></i>
-                <span class="nds-label">13 regions</span>
-              </span>
-              <p class="nds-item-desc">Covers all administrative regions of the Kingdom: Riyadh, Makkah, Madinah, Eastern Province, Asir, Tabuk, Hail, Northern Borders, Jazan, Najran, Al Bahah, Al Jouf, Al Qassim.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-globe-02"></i>
+            <span class="nds-label">13 regions</span>
+          </span>
+          <p class="nds-item-desc">Covers all administrative regions of the Kingdom: Riyadh, Makkah, Madinah, Eastern Province, Asir, Tabuk, Hail, Northern Borders, Jazan, Najran, Al Bahah, Al Jouf, Al Qassim.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-translate"></i>
-                <span class="nds-label">Bilingual</span>
-              </span>
-              <p class="nds-item-desc">Each entry carries both English (<code class="nds-inline-code lang-html">Name</code>) and Arabic (<code class="nds-inline-code lang-html">NameAr</code>) names. Switch which language drives display by changing <code class="nds-inline-code lang-html">data-name</code> on the consuming component.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-translate"></i>
+            <span class="nds-label">Bilingual</span>
+          </span>
+          <p class="nds-item-desc">Each entry carries both English (<code class="nds-inline-code lang-html">Name</code>) and Arabic (<code class="nds-inline-code lang-html">NameAr</code>) names. Switch which language drives display by changing <code class="nds-inline-code lang-html">data-name</code> on the consuming component.</p>
         </div>
-        <div class="nds-block">
-            <div class="nds-definition-item">
-              <span class="nds-item-title">
-                <i class="hgi hgi-stroke hgi-package"></i>
-                <span class="nds-label">No build step</span>
-              </span>
-              <p class="nds-item-desc">Static JSON served alongside the rest of the assets. Works with any consumer that can <code class="nds-inline-code lang-html">fetch()</code> a URL — no Jekyll dependency, no rebuild required.</p>
-            </div>
+        <div class="nds-definition-item">
+          <span class="nds-item-title">
+            <i class="hgi hgi-stroke hgi-package"></i>
+            <span class="nds-label">No build step</span>
+          </span>
+          <p class="nds-item-desc">Static JSON served alongside the rest of the assets. Works with any consumer that can <code class="nds-inline-code lang-html">fetch()</code> a URL — no Jekyll dependency, no rebuild required.</p>
         </div>
       </div>
     </div>
@@ -71,18 +63,14 @@ last_edit: "01/08/2026 - 11:45 PM"
     </div>
     <div class="nds-section-body">
       <table class="nds-table nds-responsive">
-        <div class="nds-block">
-            <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
-        </div>
-        <div class="nds-block">
-            <tbody>
-              <tr><td><code class="nds-inline-code lang-html">Id</code></td><td>integer</td><td>Stable numeric identifier. Use as a row key when caching or submitting.</td></tr>
-              <tr><td><code class="nds-inline-code lang-html">Region</code></td><td>string</td><td>Administrative region the city belongs to, in English.</td></tr>
-              <tr><td><code class="nds-inline-code lang-html">RegionAr</code></td><td>string</td><td>Administrative region the city belongs to, in Arabic.</td></tr>
-              <tr><td><code class="nds-inline-code lang-html">Name</code></td><td>string</td><td>City name in English (Latin transliteration).</td></tr>
-              <tr><td><code class="nds-inline-code lang-html">NameAr</code></td><td>string</td><td>City name in Arabic.</td></tr>
-            </tbody>
-        </div>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code class="nds-inline-code lang-html">Id</code></td><td>integer</td><td>Stable numeric identifier. Use as a row key when caching or submitting.</td></tr>
+          <tr><td><code class="nds-inline-code lang-html">Region</code></td><td>string</td><td>Administrative region the city belongs to, in English.</td></tr>
+          <tr><td><code class="nds-inline-code lang-html">RegionAr</code></td><td>string</td><td>Administrative region the city belongs to, in Arabic.</td></tr>
+          <tr><td><code class="nds-inline-code lang-html">Name</code></td><td>string</td><td>City name in English (Latin transliteration).</td></tr>
+          <tr><td><code class="nds-inline-code lang-html">NameAr</code></td><td>string</td><td>City name in Arabic.</td></tr>
+        </tbody>
       </table>
     </div>
   </div>
@@ -97,54 +85,53 @@ last_edit: "01/08/2026 - 11:45 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-label">Live demo — type a city name</div>
-              </div>
-              <div class="demo-container">
-                <div class="state-demo" style="max-width: 480px;">
-                  <div class="nds-form-container"
-                    data-url="{{ '/docs-assets/data/saudi-cities.json' | relative_url }}"
-                    data-name="Name" data-fetch="once" data-min-chars="1">
-                    <div class="nds-form-header">
-                      <label for="demo-saudiCity"><span class="nds-label">City</span></label>
-                    </div>
-                    <div class="nds-form-control">
-                      <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                      <input type="text" id="demo-saudiCity" autocomplete="on" placeholder="Type to search Saudi cities">
-                      <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                          <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
-                  </div>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Live demo — type a city name</div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo" style="max-width: 480px;">
+              <div class="nds-form-container"
+                data-url="{{ '/docs-assets/data/saudi-cities.json' | relative_url }}"
+                data-name="Name" data-fetch="once" data-min-chars="1">
+                <div class="nds-form-header">
+                  <label for="demo-saudiCity"><span class="nds-label">City</span></label>
                 </div>
-              </div>
-              <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                  <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                        aria-controls="panel-saudi-cities-1" id="tab-saudi-cities-1">
-                        <span class="nds-tab-label">HTML</span>
-                      </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <div class="nds-form-control">
+                  <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                  <input type="text" id="demo-saudiCity" autocomplete="on" placeholder="Type to search Saudi cities">
+                  <div class="nds-form-action">
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
-                  <div class="nds-tab-content">
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-saudi-cities-1"
-                      aria-labelledby="tab-saudi-cities-1">
-                      <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                          <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                      </div>
-                      <div class="nds-expandable-content">
-                        <code class="lang-html code">
+                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-saudi-cities-1" id="tab-saudi-cities-1">
+                    <span class="nds-tab-label">HTML</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-saudi-cities-1"
+                  aria-labelledby="tab-saudi-cities-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-html code">
 &lt;div class="nds-form-container"
   data-url="/assets/data/saudi-cities.json"
   data-name="Name" data-fetch="once" data-min-chars="1"&gt;
@@ -165,12 +152,11 @@ last_edit: "01/08/2026 - 11:45 PM"
   &lt;div class="nds-form-footer" data-feedback-target hidden&gt;&lt;/div&gt;
 &lt;/div&gt;
                     </code>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -186,54 +172,53 @@ last_edit: "01/08/2026 - 11:45 PM"
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-label">Live demo — type "Riy" or "الر"</div>
-              </div>
-              <div class="demo-container">
-                <div class="state-demo" style="max-width: 480px;">
-                  <div class="nds-form-container" id="demo-saudiCityBilingual"
-                    data-url="{{ '/docs-assets/data/saudi-cities.json' | relative_url }}"
-                    data-name="Name" data-fetch="once" data-min-chars="1">
-                    <div class="nds-form-header">
-                      <label for="demo-saudiCityBilingualInput"><span class="nds-label">City</span></label>
-                    </div>
-                    <div class="nds-form-control">
-                      <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
-                      <input type="text" id="demo-saudiCityBilingualInput" autocomplete="on" placeholder="ابحث / Type a city">
-                      <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
-                          <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="nds-form-footer" data-feedback-target hidden></div>
-                  </div>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Live demo — type "Riy" or "الر"</div>
+          </div>
+          <div class="demo-container">
+            <div class="state-demo" style="max-width: 480px;">
+              <div class="nds-form-container" id="demo-saudiCityBilingual"
+                data-url="{{ '/docs-assets/data/saudi-cities.json' | relative_url }}"
+                data-name="Name" data-fetch="once" data-min-chars="1">
+                <div class="nds-form-header">
+                  <label for="demo-saudiCityBilingualInput"><span class="nds-label">City</span></label>
                 </div>
-              </div>
-              <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                  <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                        aria-controls="panel-saudi-cities-bi-1" id="tab-saudi-cities-bi-1">
-                        <span class="nds-tab-label">JS</span>
-                      </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                <div class="nds-form-control">
+                  <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
+                  <input type="text" id="demo-saudiCityBilingualInput" autocomplete="on" placeholder="ابحث / Type a city">
+                  <div class="nds-form-action">
+                    <button class="nds-btn nds-subtle nds-clear" type="button" aria-label="Clear input" hidden>
+                      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
-                  <div class="nds-tab-content">
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-saudi-cities-bi-1"
-                      aria-labelledby="tab-saudi-cities-bi-1">
-                      <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                          <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                      </div>
-                      <div class="nds-expandable-content">
-                        <code class="lang-js code">
+                </div>
+                <div class="nds-form-footer" data-feedback-target hidden></div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-saudi-cities-bi-1" id="tab-saudi-cities-bi-1">
+                    <span class="nds-tab-label">JS</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-saudi-cities-bi-1"
+                  aria-labelledby="tab-saudi-cities-bi-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
+                    </button>
+                  </div>
+                  <div class="nds-expandable-content">
+                    <code class="lang-js code">
 const el = document.getElementById('city-container');
 const escape = (s) =&gt; String(s).replace(/[&amp;&lt;&gt;"']/g, c =&gt;
   ({'&amp;':'&amp;amp;','&lt;':'&amp;lt;','&gt;':'&amp;gt;','"':'&amp;quot;',"'":'&amp;#39;'}[c]));
@@ -253,12 +238,11 @@ NDS.Autocomplete.create(el, {
      &lt;/span&gt;`
 });
                     </code>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -274,33 +258,32 @@ NDS.Autocomplete.create(el, {
     </div>
     <div class="nds-section-body">
       <div class="nds-showcase">
-        <div class="nds-block">
-            <div class="nds-demo-card">
-              <div class="demo-header">
-                <div class="demo-label">Fetch + group by region</div>
+        <div class="nds-demo-card">
+          <div class="demo-header">
+            <div class="demo-label">Fetch + group by region</div>
+          </div>
+          <div class="demo-code">
+            <div class="nds-tabs nds-code nds-divided">
+              <div class="nds-tab-list-container nds-scroll-more">
+                <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                  <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                    aria-controls="panel-saudi-cities-fetch-1" id="tab-saudi-cities-fetch-1">
+                    <span class="nds-tab-label">JS</span>
+                  </button>
+                </nav>
+                <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                </button>
               </div>
-              <div class="demo-code">
-                <div class="nds-tabs nds-code nds-divided">
-                  <div class="nds-tab-list-container nds-scroll-more">
-                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
-                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
-                        aria-controls="panel-saudi-cities-fetch-1" id="tab-saudi-cities-fetch-1">
-                        <span class="nds-tab-label">JS</span>
-                      </button>
-                    </nav>
-                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+              <div class="nds-tab-content">
+                <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-saudi-cities-fetch-1"
+                  aria-labelledby="tab-saudi-cities-fetch-1">
+                  <div class="nds-code-action">
+                    <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                      <i class="nds-icon nds-hgi-copy-01"></i>
                     </button>
                   </div>
-                  <div class="nds-tab-content">
-                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-saudi-cities-fetch-1"
-                      aria-labelledby="tab-saudi-cities-fetch-1">
-                      <div class="nds-code-action">
-                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
-                          <i class="nds-icon nds-hgi-copy-01"></i>
-                        </button>
-                      </div>
-                      <div class="nds-expandable-content">
-                        <code class="lang-js code">
+                  <div class="nds-expandable-content">
+                    <code class="lang-js code">
 const cities = await fetch('/assets/data/saudi-cities.json').then(r =&gt; r.json());
 
 // Group by region
@@ -311,12 +294,11 @@ const byRegion = cities.reduce((map, city) =&gt; {
 
 // e.g. byRegion["Eastern Province"] → [Dammam, Al Khobar, Dhahran, ...]
                     </code>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -330,14 +312,12 @@ const byRegion = cities.reduce((map, city) =&gt; {
       <h2 class="nds-section-title">Notes</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-block">
-        <div class="nds-block nds-prose">
-            <ul>
-              <li>The dataset is editorial — it favors administrative seats and well-known towns over an exhaustive census of every village. Expect to extend it for use cases that need full coverage.</li>
-              <li>Latin transliterations follow common English-language conventions, not a strict standard. Searches may need to handle alternate spellings (e.g., <em>Mecca</em> vs <em>Makkah</em>) — wire that into your <code class="nds-inline-code lang-html">filter</code> callback rather than duplicating entries.</li>
-              <li>Total response size is well under the autocomplete component's 1 MB cap. Safe to load with <code class="nds-inline-code lang-html">data-fetch="once"</code> on any device.</li>
-            </ul>
-        </div>
+      <div class="nds-block nds-prose">
+        <ul>
+          <li>The dataset is editorial — it favors administrative seats and well-known towns over an exhaustive census of every village. Expect to extend it for use cases that need full coverage.</li>
+          <li>Latin transliterations follow common English-language conventions, not a strict standard. Searches may need to handle alternate spellings (e.g., <em>Mecca</em> vs <em>Makkah</em>) — wire that into your <code class="nds-inline-code lang-html">filter</code> callback rather than duplicating entries.</li>
+          <li>Total response size is well under the autocomplete component's 1 MB cap. Safe to load with <code class="nds-inline-code lang-html">data-fetch="once"</code> on any device.</li>
+        </ul>
       </div>
     </div>
   </div>
