@@ -17,6 +17,7 @@ Output: dist/nds-vanilla-template-v<version>.zip, laid out as
             _js/           — readable JS behind assets/js/*.min.js (banner tops)
             _sass/         — readable SCSS behind assets/css/*.min.css
             components/ utilities/ layout/ ui-shell/ — doc .md sources
+            templates/ examples/ — full-page + composition sources
             _data/content/ — component / template / example / icon catalogs
 
 The two post-build passes are what separate a template from the hosted site:
@@ -122,10 +123,13 @@ def stage(version):
     # can't read *.min.js / *.min.css, so ship the sources it CAN read. The doc
     # .md sources ride along as the markup surface to copy from — chrome-free
     # and ~4x cheaper to read than the built pages, code tabs and the modifier
-    # / data-attribute tables intact.
+    # / data-attribute tables intact. Template + example page sources ride
+    # along as the composition surface: full-page raw markup the cascade
+    # routes page-shape reads to.
     src = os.path.join(pkg, '_source')
     os.makedirs(src)
-    for d in ('_js', '_sass', 'components', 'utilities', 'layout', 'ui-shell'):
+    for d in ('_js', '_sass', 'components', 'utilities', 'layout', 'ui-shell',
+              'templates', 'examples'):
         shutil.copytree(os.path.join(ROOT, d), os.path.join(src, d),
                         ignore=shutil.ignore_patterns('*.bak'))
 
@@ -186,6 +190,8 @@ def verify(out, version):
     for anchor in ('_source/_js/nds-core.js', '_source/_sass/_mixins.scss',
                    '_source/_data/content/components.yml',
                    '_source/components/multiselect.md',
+                   '_source/templates/form-template.md',
+                   '_source/examples/console-demo.md',
                    'NDS-IQ.md', 'README.md', '_site/guides/get-started.html'):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
@@ -209,6 +215,9 @@ def verify(out, version):
     with open(os.path.join(ROOT, 'guides', 'get-started.md'), encoding='utf8') as f:
         integration = html.unescape(f.read())
 
+    if '{%' in block or '{{' in block:
+        sys.exit('_includes/NDS-IQ.md contains literal Liquid delimiters — it is a Jekyll '
+                 'include (topbar + guide render it), so the build parses them and dies.')
     m = re.search(r'instructions v(\d+)', block)
     if not m:
         sys.exit('_includes/NDS-IQ.md heading has no "instructions v<N>" stamp.')

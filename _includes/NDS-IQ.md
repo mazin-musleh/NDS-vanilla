@@ -30,7 +30,7 @@ More rules that hold while paths are unsettled:
 - **While blocked:** project-side work that needs no NDS path (the Workflow section's step 1 inventory, below) may proceed; nothing NDS-side may. Never write guessed NDS targets into `NDS-PLAN.md`; a blocked path leaves the plan's NDS Target column reading `blocked on NDS_ROOT` until you can read the real catalogs.
 - **Never adopt a likely folder yourself.** A plausible candidate (an old extract, a different version, a sibling project; for `NDS_ASSETS`, an existing assets folder already serving NDS) silently wires the whole project to the wrong template, or copies assets into the wrong place. Enumerating candidates for the dev to choose from is fine: read each one's `Version:` banner per rule #2. The choice stays the dev's.
 - **When the dev supplies or changes a path, update the anchor's two declaration lines in the same session. Not optional.** Chat answers don't survive the session; those two lines are what every future session reads.
-- **Older template, newer rules.** Raw main of this file stays valid for the latest published template. Against an older `NDS_ROOT` (1.6.0), two references degrade, each with a fallback: `_source/components/*.md` does not exist yet — read `_site/components/*.html` instead; `_source/_js/` files carry no banner — use the grep fallback in "JS wiring".
+- **Older template, newer rules.** Raw main of this file stays valid for the latest published template. Against an older `NDS_ROOT` (1.6.0), two references degrade, each with a fallback: the `_source` doc and page sources (`components/`, `templates/`, `examples/`) do not exist yet — read their `_site/*.html` twins instead; `_source/_js/` files carry no banner — use the grep fallback in "JS wiring".
 
 ## Seven hard rules
 
@@ -148,7 +148,7 @@ Why: `<html dir>` and body class shape how every component paints (RTL/LTR + dar
 
 Inside `.nds-content-layout > .nds-main-content` every NDS page is composed the same way: sections built from the primitives in rule #4. What varies is the wrapper around it: modifier classes (side-info vs side-menu layout, hero variant) and how much chrome the page carries. Most pages take the full chrome from the adoption order; standalone pages carry none (`NDS_ROOT/_site/examples/registration.html` has no topbar, header, or footer).
 
-Admin consoles, back-office, and internal tools run edge-to-edge from one class: `nds-full-width` on `<body>` widens the chrome and the content layout together, no per-layout modifier. They also move the hero INSIDE `.nds-main-content` so it sits beside the side menu instead of spanning above it; see `NDS_ROOT/_site/examples/console-demo.html`.
+Admin consoles, back-office, and internal tools run edge-to-edge from one class: `nds-full-width` on `<body>` widens the chrome and the content layout together, no per-layout modifier. They also move the hero INSIDE `.nds-main-content` so it sits beside the side menu instead of spanning above it; see `NDS_ROOT/_source/examples/console-demo.md`.
 
 So choosing a starting page is about matching content structure, not markup: adjust modifiers and swap content rather than rebuilding. **The porting principle: content, flow, and data structure follow the legacy app; NDS improves the UI/UX.** What NDS adds is interaction and presentation quality: sorting, filtering, export, result counts, validation chrome, responsive behavior. These are defaults to apply, not questions to ask the dev:
 
@@ -161,9 +161,11 @@ So choosing a starting page is about matching content structure, not markup: adj
 
 Prefer official over custom, in this order:
 
-1. **Match a DGA page template?** Use it as-is. `NDS_ROOT/_source/_data/content/templates.yml` catalogs DGA-official full-page templates (Service, Form, Contact, Content, Help & Support, About Entity, FAQ, e-Participation, and more, every entry tagged `DGA`). Copy the whole page from `NDS_ROOT/_site/templates/<name>.html`, swap only the placeholder content. Never re-compose your own version: the templates encode structural decisions (side-info placement, breadcrumb slots, hero variant, tab layout) a hand-composed page will get subtly wrong. This applies especially when the template is bigger than the page you need: trimming sections or steps is still swapping content; rebuilding the skeleton around kept fields is not.
-2. **No DGA match?** Check `NDS_ROOT/_source/_data/content/examples.yml` + `NDS_ROOT/_site/examples/*.html` for a closest-fit composition: dashboards, service listings, editorial hubs, patterns DGA doesn't cover.
+1. **Match a DGA page template?** Use it as-is. `NDS_ROOT/_source/_data/content/templates.yml` catalogs DGA-official full-page templates (Service, Form, Contact, Content, Help & Support, About Entity, FAQ, e-Participation, and more, every entry tagged `DGA`). Copy the whole page from `NDS_ROOT/_source/templates/<name>.md` (raw page markup; built twin at `NDS_ROOT/_site/templates/<name>.html`), swap only the placeholder content. Never re-compose your own version: the templates encode structural decisions (side-info placement, breadcrumb slots, hero variant, tab layout) a hand-composed page will get subtly wrong. This applies especially when the template is bigger than the page you need: trimming sections or steps is still swapping content; rebuilding the skeleton around kept fields is not.
+2. **No DGA match?** Check `NDS_ROOT/_source/_data/content/examples.yml` + `NDS_ROOT/_source/examples/*.md` for a closest-fit composition: dashboards, service listings, editorial hubs, patterns DGA doesn't cover.
 3. **Nothing matches?** Scaffold custom, but stay inside rule #4's structure. Study the DGA templates and examples for wiring patterns to reuse: how side-info wires to breadcrumbs, how forms space grouped fields, how `nds-block` sub-groups compose. Recognizable NDS structure beats invented structure.
+
+These page sources are the template's own Jekyll files: most are plain HTML, but demo lists sometimes loop over sample data with Liquid tags — `for`/`if` markers between curly braces and percent signs. Never copy a Liquid tag. Where they sit in the markup you need, copy from the built `_site` twin instead: there the loops are already rendered into real rows.
 
 One tier outranks all three once it exists: a page family's own built-and-verified archetype. When the first list page ships, its siblings copy that page and swap entity content; re-deriving each sibling from the cascade invites drift between pages that must stay identical.
 
@@ -175,7 +177,7 @@ Rule #6 names common libraries, but the method works for any:
 
 1. **Name the capability, not the library**: "async searchable select", "rich text editor", "sortable table fed by server data".
 2. **Search `NDS_ROOT/_source/_data/content/components.yml` for that capability** (titles, descriptions, tags). A close variant almost always exists even when no name matches.
-3. **No single-component match? It's likely a composition.** A data-grid plugin maps to table + filter + pagination + export working together. Check `examples.yml` and `NDS_ROOT/_site/examples/` for a composed pattern before concluding NDS lacks it.
+3. **No single-component match? It's likely a composition.** A data-grid plugin maps to table + filter + pagination + export working together. Check `examples.yml` and `NDS_ROOT/_source/examples/` for a composed pattern before concluding NDS lacks it.
 4. **Port options and callbacks through NDS events and methods** (JS wiring below); never wrap NDS to emulate the old library's API shape.
 5. **Truly no NDS coverage?** Build it vanilla inside rule #4's structure with rule #5's styling order; don't pull the legacy library back in for one widget.
 
@@ -233,7 +235,7 @@ When the dev asks for an upgrade, fetching the latest zip and replacing `NDS_ROO
 - `_site/components/*.html`: the built doc pages. The human surface, and the markup fallback on templates before 1.7.0.
 - `_site/ui-shell/*.html`: chrome docs. `head.html`, `header.html`, `topbar.html`, `footer.html`, `hero.html`, `sidemenu.html`, `sideinfo.html`.
 - `_source/layout/*.md` (built: `_site/layout/*.html`): layout primitive docs. `section`, `grid`, `flex`, `block`.
-- `_site/templates/*.html` + `_site/examples/*.html`: full-page templates + composed real-world pages.
+- `_source/templates/*.md` + `_source/examples/*.md`: full-page templates + composed real-world pages, raw markup (built twins in `_site/templates/` + `_site/examples/`).
 - `_source/_data/content/*.yml`: machine-readable catalogs. `components.yml`, `templates.yml`, `examples.yml`, `icons.yml`.
 - `_source/_js/nds-<name>.js`: readable component behavior source, opening with the public-surface banner ("JS wiring" section).
 - `_source/_sass/components/_<name>.scss`: readable component styling source.
