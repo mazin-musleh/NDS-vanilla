@@ -1,3 +1,28 @@
+/* NDS.Expandable — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Expandable.init() / .reinit()   scan + initialize .nds-expandable
+ *   NDS.Expandable.recheckHeights()     re-measure every initialized container — call this
+ *                                       after revealing one that was display:none
+ *   NDS.Expandable.create(container)    instance one container
+ *   instance.expandContent() / .collapseContent() / .toggleContent()
+ *   instance.recheckHeight()            re-measure this one
+ *   instance.getState()                 {isExpanded, hasButton, maxHeight, actualHeight}
+ *   instance.destroy()
+ * Events (bubble from the .nds-expandable):
+ *   nds:expandable:expanded    detail {container, content, button, isExpanded}
+ *   nds:expandable:collapsed   detail {container, content, button, isExpanded}
+ * Hooks:
+ *   (none — markup only: .nds-expandable wrapping .nds-expandable-content. Put
+ *    .nds-expand-all on an ancestor to make sibling containers expand together)
+ * Gotchas:
+ *   - The Show More / Show Less button is BUILT by the component. Do not author one.
+ *   - --max-height on the content sets the clamp (default 300px). It is read once and
+ *     cached, so changing it at runtime needs a recheckHeight().
+ *   - A container that is not rendered measures 0 and is left clamped until it becomes
+ *     visible. Tabs already calls recheckHeights() on panel activation.
+ *   - The instance lives on the root as el.ndsExpandable.
+ */
 /**
  * NDS Expandable Component
  * Expandable content containers with dynamic "Show More" button functionality

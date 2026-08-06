@@ -1,3 +1,22 @@
+/* NDS.Sidemenu — public surface
+ * Rides: nds-drawer (the menu tree inside it — expand/collapse and the responsive
+ *        open rules) · nds-backdrop (dims the page while it is open; soft)
+ * Methods:
+ *   NDS.Sidemenu.init()      wire the one sidemenu on the page (destroys the previous
+ *                            instance first, so it doubles as reinit)
+ *   NDS.Sidemenu.destroy()   close it and release every listener
+ * Events:
+ *   (none)
+ * Hooks:
+ *   (none — class-driven markup: .nds-sidemenu holding a .nds-sidemenu-toggle button and
+ *    a .nds-drawer. Add .nds-top for the top-sheet mode, and .nds-peek on the toggle to
+ *    let it retract until the pointer comes near)
+ * Gotchas:
+ *   - One sidemenu per page: init() takes the FIRST .nds-sidemenu it finds.
+ *   - There is no reinit(): call init() again and it re-wires from scratch.
+ *   - .nds-top scrolls past the hero and locks the page before it opens.
+ *   - A width change closes it.
+ */
 // Side Menu Navigation
 (() => {
     'use strict';

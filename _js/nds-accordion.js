@@ -1,3 +1,28 @@
+/* NDS.Accordion — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Accordion.init() / .reinit()   scan .nds-accordion; a live root adopts new items
+ *   NDS.Accordion.create(container)    instance one accordion — returns the live controller
+ *                                      when there already is one
+ *   instance.openItem(i) / .closeItem(i) / .toggleItem(i)
+ *   instance.closeAll()
+ *   instance.getOpenItems()            [{index, button, collapse, isOpen}]
+ *   instance.refresh()                 adopt items added to this root since construction
+ *   instance.destroy()
+ * Events (bubble from the .nds-accordion, AFTER the animation):
+ *   nds:accordion:shown    detail {index, button, collapse, accordion}
+ *   nds:accordion:hidden   detail {index, button, collapse, accordion}
+ * Hooks:
+ *   (none — the structure is markup: .nds-accordion-btn and .nds-accordion-collapse pairs
+ *    matched BY POSITION; aria-expanded on the button says which item is open)
+ * Gotchas:
+ *   - An item that starts open needs BOTH aria-expanded="true" on the button and
+ *     data-state="open" on the button and the collapse. This component ships in a
+ *     deferred bundle, so CSS has to paint the open item before the JS runs.
+ *   - data-state="always-open" on the container lets several items stay open at once.
+ *     Without it, opening one closes the rest.
+ *   - The instance lives on the root as el.ndsAccordion.
+ */
 /**
  * NDS Accordion Component
  * Collapsible accordion functionality with accessibility support

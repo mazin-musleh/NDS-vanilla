@@ -1,3 +1,25 @@
+/* NDS.ScrollMore — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.ScrollMore.init() / .reinit()      scan + initialize .nds-scroll-more
+ *   NDS.ScrollMore.create(wrapper)         initialize one wrapper
+ *   NDS.ScrollMore.checkOverflow(wrapper)  re-measure it now
+ *   NDS.ScrollMore.destroy(wrapper)        detach and un-stamp
+ * Events:
+ *   (none — read the state the component writes, below)
+ * Hooks:
+ *   (none to author — markup only: .nds-scroll-more wrapping .nds-scroll-more-content,
+ *    plus an optional .nds-show-more button)
+ *   written by the component, on the WRAPPER: data-axis="vertical|horizontal" and
+ *   data-state tokens has-more · at-start · at-end
+ * Gotchas:
+ *   - The axis is detected from the overflow; when both axes overflow, vertical wins.
+ *   - A .nds-divider is injected before the button, so .nds-divided works without you
+ *     authoring one.
+ *   - One click scrolls about one viewport minus one item; a click at the end loops back
+ *     to the start.
+ *   - --mask-fade-distance on the content sets the edge fade the step allows for.
+ */
 /**
  * NDS Scroll More Component
  * General-purpose wrapper: when content overflows (vertical or horizontal),

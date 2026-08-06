@@ -1,3 +1,26 @@
+/* NDS.Tabs — public surface
+ * Rides: nds-scroll-more (overflow detection, edge mask and the show-more button on the
+ *        tab list) · nds-expandable (heights are rechecked when a panel becomes visible)
+ * Methods:
+ *   NDS.Tabs.init() / .reinit()      scan + initialize .nds-tabs
+ *   NDS.Tabs.create(container)       instance one tab set
+ *   instance.switchTo(index)         activate a tab by index
+ *   instance.getActiveTabIndex()     the active index
+ *   instance.getActiveTab()          the active .nds-tab
+ *   instance.getActivePanel()        the active .nds-tab-panel
+ *   instance.destroy()
+ * Events (bubble from the .nds-tabs):
+ *   nds:tab:change   detail {tabIndex, tab, panel, previousTab, previousPanel}
+ * Hooks:
+ *   (none — the structure is markup: .nds-tab items in a .nds-tab-list, .nds-tab-panel
+ *    items in a .nds-tab-content, matched BY POSITION)
+ * Gotchas:
+ *   - Tab N drives panel N by ORDER, not by an id. Keep the two lists in the same order
+ *     and the same length.
+ *   - The active tab at init is the one with aria-selected="true", else the first.
+ *   - .nds-vertical on the root switches the arrow keys and turns off drag scrolling.
+ *   - The instance lives on the root as el.ndsTabs.
+ */
 /**
  * NDS Tabs Component
  * Accessible tab navigation with horizontal and vertical layouts

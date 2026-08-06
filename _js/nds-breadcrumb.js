@@ -1,3 +1,20 @@
+/* NDS.Breadcrumb — public surface
+ * Rides: nds-dropmenu (the overflow menu; soft — without it the extra levels stay as
+ *        plain markup)
+ * Methods:
+ *   NDS.Breadcrumb.init() / .reinit()   scan + initialize .nds-breadcrumb-nav
+ *   NDS.Breadcrumb.create(nav)          instance one breadcrumb
+ *   instance.destroy()                  drop the overflow menu
+ * Events:
+ *   (none)
+ * Hooks:
+ *   (none — markup only: a .nds-breadcrumb-nav wrapping the .nds-breadcrumb list)
+ * Gotchas:
+ *   - Collapse is automatic above 5 items and the threshold is not configurable: first
+ *     item, an overflow menu, then the last two.
+ *   - The hidden levels are COPIED into the menu as plain links (href + text). Anything
+ *     else inside those <li> elements does not travel.
+ */
 /**
  * NDS Breadcrumb Component
  * Automatically collapses breadcrumbs with 5+ levels into a dropdown menu

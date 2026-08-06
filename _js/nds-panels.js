@@ -1,3 +1,33 @@
+/* NDS.Panel — public surface
+ * Rides: nds-backdrop (only for a [data-panel-modal] panel — the dim layer, ESC and
+ *        click-outside dismiss; soft — a plain panel raises nothing)
+ * Methods:
+ *   NDS.Panel.init() / .reinit()   bind the delegated toggles; prepare every .nds-panel
+ *   NDS.Panel.create(panel)        prepare one panel
+ *   NDS.Panel.destroy(panel)       tear one down (closes it and releases the backdrop)
+ *   NDS.Panel.open(idOrEl)         open it — closes whatever is open first
+ *   NDS.Panel.close(idOrEl)        close it
+ *   NDS.Panel.toggle(idOrEl)       open or close it
+ *   NDS.Panel.isOpen(idOrEl)       open and not closing?
+ * Events (bubble from the .nds-panel, AFTER the slide finishes):
+ *   nds:panel:opened   detail {panel}
+ *   nds:panel:closed   detail {panel}
+ * Hooks:
+ *   data-panel-toggle   on any button anywhere — the id of the panel it opens
+ *   data-panel-close    on a control inside the panel; the first one also takes focus
+ *                       when the panel opens
+ *   data-panel-side     start | end (logical, flips with direction) · left | right | top
+ *                       | bottom (physical). Default: end
+ *   data-panel-modal    trap focus and raise the backdrop
+ *   data-panel-static   no ESC, no click-outside — it closes only through your own call
+ *                       or a [data-panel-close] control
+ * Gotchas:
+ *   - At most ONE panel is open on the page. Opening B closes A first and waits for A's
+ *     transition, so the two never cross.
+ *   - The panel needs an id or no toggle can target it (it warns at init).
+ *   - Knobs on the panel: --panel-width, --panel-height, --panel-top, --panel-padding,
+ *     --panel-gap, --panel-z, --panel-radius.
+ */
 /**
  * NDS Panel Component
  * Content-agnostic slide-in surface. JS owns open/close, focus and the

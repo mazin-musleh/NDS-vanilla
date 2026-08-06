@@ -1,3 +1,26 @@
+/* NDS.Mainnav — public surface
+ * Rides: nds-backdrop (dims the page behind an open drawer or dropdown; soft)
+ * Methods:
+ *   NDS.Mainnav.init()               wire the one nav on the page
+ *   NDS.Mainnav.toggleNavbar()       open or close the collapsed drawer
+ *   NDS.Mainnav.toggleDropdown(e)    open or close a nav dropdown — takes the click EVENT,
+ *                                    not an element; the .nds-dropdown is resolved from
+ *                                    event.target
+ * Events:
+ *   (none)
+ * Hooks:
+ *   (none — the nav is class-driven markup: .nds-main-nav holds .nds-nav-primary and
+ *    .nds-nav-actions, .nds-mainNav-toggler opens #ndsNavCollapse, and a
+ *    .nds-nav-item.nds-PAB stays reachable in minimal mode)
+ * Gotchas:
+ *   - One nav per page. The module caches its DOM references when the file loads, so a
+ *     nav swapped in later is not picked up.
+ *   - Minimal (mobile) mode starts under --nds-minimal-nav-bp, default 960px. Set that
+ *     custom property on :root to move it.
+ *   - A .nds-PAB item is MOVED into the minimal bar and moved back — do not reparent one
+ *     yourself at runtime.
+ *   - There is no reinit() and no destroy().
+ */
 // NDS Navigation Controller
 //
 // Mainnav inits in the deferred pass and owns first paint of the nav chrome.

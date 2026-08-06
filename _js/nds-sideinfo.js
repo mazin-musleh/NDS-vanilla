@@ -1,3 +1,21 @@
+/* NDS.Sideinfo — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Sideinfo.init() / .reinit()   scan + initialize .nds-sideinfo
+ *   NDS.Sideinfo.create(el)           instance one card
+ *   instance.destroy()
+ * Events:
+ *   (none)
+ * Hooks:
+ *   (none — class-driven: .nds-sideinfo on the card, plus .nds-sticky to opt into sticky.
+ *    The component writes --nds-sideinfo-top on the card for the hero alignment)
+ * Gotchas:
+ *   - Alignment to the hero only runs when the page has a .nds-hero-section.nds-aside and
+ *     the viewport is desktop-width. Otherwise the card just follows content start.
+ *   - .nds-sticky is REMOVED automatically while the card is taller than the viewport,
+ *     and restored when it fits again — do not treat the class as fixed.
+ *   - The instance lives on the element as el._ndsSideInfo.
+ */
 /**
  * NDS Side Info Component
  * Positions side info component based on hero section head position
