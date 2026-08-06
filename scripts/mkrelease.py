@@ -9,12 +9,14 @@ Output: dist/nds-vanilla-template-v<version>.zip, laid out as
     nds-vanilla-template-v<version>/
         CHANGELOG.md
         LICENSE
+        NDS-IQ.md          — the rules file, offline copy (canonical: raw main)
         README.md          — human signpost: read-only reference, start at the guide
         _site/             — the built HTML template (incl. guides/get-started.html,
-                             the adoption guide with the copy-paste snippet)
+                             the adoption guide)
         _source/
-            _js/           — readable JS behind assets/js/*.min.js
+            _js/           — readable JS behind assets/js/*.min.js (banner tops)
             _sass/         — readable SCSS behind assets/css/*.min.css
+            components/ utilities/ layout/ ui-shell/ — doc .md sources
             _data/content/ — component / template / example / icon catalogs
 
 The two post-build passes are what separate a template from the hosted site:
@@ -138,10 +140,12 @@ def stage(version):
     for f in ('CHANGELOG.md', 'LICENSE'):
         shutil.copy2(os.path.join(ROOT, f), pkg)
 
-    # README.md is a human signpost only — the LLM artifact is the
-    # instructions block inside the adoption guide, which ships as a normal
-    # doc page (_site/guides/get-started.html — source guides/).
+    # README.md is a human signpost only — the LLM artifact is NDS-IQ.md,
+    # shipped at the zip top level as the offline copy its own Install
+    # section promises (NDS_ROOT/NDS-IQ.md; canonical source is raw main).
     shutil.copy2(os.path.join(ROOT, 'scripts', 'release-template', 'README.md'), pkg)
+    shutil.copy2(os.path.join(ROOT, '_includes', 'NDS-IQ.md'),
+                 os.path.join(pkg, 'NDS-IQ.md'))
     return dist, pkg
 
 
@@ -182,7 +186,7 @@ def verify(out, version):
     for anchor in ('_source/_js/nds-core.js', '_source/_sass/_mixins.scss',
                    '_source/_data/content/components.yml',
                    '_source/components/multiselect.md',
-                   'README.md', '_site/guides/get-started.html'):
+                   'NDS-IQ.md', 'README.md', '_site/guides/get-started.html'):
         if root + anchor not in names:
             sys.exit(f'Missing from zip: {anchor}')
 
@@ -194,45 +198,53 @@ def verify(out, version):
     if banners.returncode:
         sys.exit('check-banners.mjs --all failed:\n' + banners.stdout + banners.stderr)
 
-    # The instruction block's checks run against its SOURCE include (clean,
-    # unescaped markdown — the guide renders it into the code element via
-    # `include | escape`). Every path in the block hangs off the NDS_ROOT /
-    # NDS_ASSETS pair the consumer sets at the top; lose a declaration and the
-    # block ships with unresolvable references — invisible until a consumer
-    # complains.
+    # The rules file's checks run against its SOURCE include (the guide
+    # renders the same include; raw main and the zip top level serve it
+    # byte-identical). The file is universal — no per-project values — so a
+    # refresh is a whole-file replace keyed on the heading stamps; lose a
+    # stamp or the in-file anchor canon and installs or migrations break
+    # silently.
     with open(os.path.join(ROOT, '_includes', 'NDS-IQ.md'), encoding='utf8') as f:
         block = f.read()
     with open(os.path.join(ROOT, 'guides', 'get-started.md'), encoding='utf8') as f:
         integration = html.unescape(f.read())
-    if '`NDS_ROOT` =' not in block:
-        sys.exit('_includes/NDS-IQ.md has no `NDS_ROOT` declaration — every path in the block resolves nowhere.')
-    if '`NDS_ASSETS` =' not in block:
-        sys.exit('_includes/NDS-IQ.md has no `NDS_ASSETS` declaration — the asset-copy and upgrade steps resolve nowhere.')
-    if 'end NDS instructions' not in block:
-        sys.exit('_includes/NDS-IQ.md is missing the "end NDS instructions" marker — installed copies become unbounded for the upgrade refresh.')
-    if 'include NDS-IQ.md' not in integration:
-        sys.exit('guides/get-started.md no longer includes NDS-IQ.md — the block is not rendered.')
-    for marker in ('COPY START', 'COPY END'):
-        if marker not in integration:
-            sys.exit(f'guides/get-started.md is missing the {marker} marker — the snippet is unbounded.')
 
-    # The block's version stamp (its own counter, decoupled from the release)
-    # is hand-written in two places so the include reads standalone online:
-    # the include's heading and the guide's green tag. Assert they match and
-    # that the built page carries the stamp — a drift or a dropped include
-    # breaks the upgrade workflow's block-refresh comparison (step 4 of
-    # "Upgrading NDS").
     m = re.search(r'instructions v(\d+)', block)
     if not m:
         sys.exit('_includes/NDS-IQ.md heading has no "instructions v<N>" stamp.')
-    tag = re.search(r'nds-tag nds-green nds-xs"><span class="nds-label">IQ v(\d+)<', integration)
-    if not tag or tag.group(1) != m.group(1):
-        sys.exit(f'Guide green tag ({tag.group(1) if tag else "missing"}) does not match the block heading '
-                 f'version (v{m.group(1)}) — bump both together.')
+    paired = re.search(r'Written for template (\d+\.\d+\.\d+)\.', block)
+    if not paired or paired.group(1) != version:
+        sys.exit(f'_includes/NDS-IQ.md pairing stamp ({paired.group(1) if paired else "missing"}) '
+                 f'does not match the release ({version}) — update the "Written for template" line.')
+
+    # The canonical anchor text lives INSIDE the file (Install section);
+    # the setup prompt and the v5/v6 migration both point installs at it.
+    for canon in ('- `NDS_ROOT` = `/path/to/nds-vanilla-template/`',
+                  '- `NDS_ASSETS` = `/path/to/your-project/public/assets/`',
+                  'top to bottom, once per session'):
+        if canon not in block:
+            sys.exit(f'_includes/NDS-IQ.md anchor canon lost its line: {canon!r}')
+
+    # The old raw path serves the v6-compatible migration bridge: a v5/v6
+    # install's own refresh step must accept its heading, land declarations
+    # in it, and find the end marker — or old installs never self-migrate.
+    with open(os.path.join(ROOT, '_includes', 'nds-ai-instructions.md'), encoding='utf8') as f:
+        pointer = f.read()
+    if not pointer.startswith('## Design system: NDS Vanilla (NDS IQ instructions v'):
+        sys.exit('Pointer file lost its v6-exact heading — old installs will not self-migrate.')
+    pv = re.search(r'instructions v(\d+)', pointer)
+    if not pv or pv.group(1) != m.group(1):
+        sys.exit(f'Pointer file version (v{pv.group(1) if pv else "?"}) does not match the include '
+                 f'(v{m.group(1)}) — bump both together.')
+    if 'end NDS instructions' not in pointer:
+        sys.exit('Pointer file is missing the "end NDS instructions" marker — v6\'s post-swap check fails.')
+
+    if 'include NDS-IQ.md' not in integration:
+        sys.exit('guides/get-started.md no longer includes NDS-IQ.md — the rules file is not rendered.')
     guide_html = z.read(root + '_site/guides/get-started.html').decode('utf8', 'ignore')
     if f'instructions v{m.group(1)}' not in guide_html:
-        sys.exit(f'Built guide lacks "instructions v{m.group(1)}" in the block heading — '
-                 'the instructions-block version stamp is missing or stale.')
+        sys.exit(f'Built guide lacks "instructions v{m.group(1)}" — the rendered version stamp '
+                 'is missing or stale.')
 
     # Every literal path the guide and README reference must exist in the
     # zip — a doc rename otherwise ships a prompt pointing the consumer's
