@@ -15,7 +15,7 @@
  *   nds:filter:clear       detail {filter}
  *   nds:filterFormSubmit   detail {criteria, form} — cancelable, before a normal form submit
  *   nds:filterFormAjax     detail {criteria, form, hiddenInputsContainer, rollback} — cancelable;
- *                          preventDefault() to send the request yourself, and call
+ *                          preventDefault() to send the request yourself (via NDS.request), and call
  *                          detail.rollback() if it fails (chips, badge and URL are already
  *                          committed by then)
  *   nds:filterFormComplete detail {success, form, isJson, data?} — after a successful AJAX apply

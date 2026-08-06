@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "06/08/2026 - 11:13 PM"
+last_edit: "07/08/2026 - 12:38 AM"
 lang: en
 direction: ltr
 ---
@@ -1754,6 +1754,80 @@ direction: ltr
   </div>
 </section>
 
+<!-- Form Actions -->
+<section id="formActionsRow" class="nds-content-section nds-demo-section">
+  <div class="nds-section-wrapper">
+    <div class="nds-section-head">
+      <h2 class="nds-section-title">Form Actions</h2>
+      <p class="nds-section-description">The form-level action row for submit and navigation buttons. The row carries its own top margin and gap</p>
+    </div>
+    <div class="nds-section-body">
+      <div class="nds-showcase">
+        <div class="nds-block">
+            <div class="nds-demo-card" data-code-rebuild>
+              <div class="demo-header">
+                <div class="demo-action">
+                  <button class="nds-btn nds-subtle demo-toggle-btn"
+                    data-toggler='["nds-noBg", ".demo-container", "containerBg"]'>
+                    <span class="nds-label">Remove bg</span>
+                  </button>
+                </div>
+              </div>
+              <div class="demo-container">
+                <div class="state-demo">
+                  <div class="nds-form-actions">
+                    <button type="button" class="nds-btn nds-secondary-outline">
+                      <span class="nds-label">Back</span>
+                    </button>
+                    <button type="submit" class="nds-btn nds-primary">
+                      <span class="nds-label">Submit</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="demo-code">
+                <div class="nds-tabs nds-code nds-divided">
+                  <div class="nds-tab-list-container nds-scroll-more">
+                    <nav class="nds-tab-list nds-scroll-more-content" role="tablist" aria-label="Tab navigation">
+                      <button class="nds-btn nds-subtle nds-tab" type="button" role="tab" aria-selected="true"
+                        aria-controls="panel-form-actions-1" id="tab-form-actions-1">
+                        <span class="nds-tab-label">HTML</span>
+                      </button>
+                    </nav>
+                    <button class="nds-btn nds-subtle nds-tab nds-show-more" type="button" aria-label="Show more"><i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div class="nds-tab-content">
+                    <div class="nds-tab-panel code-example nds-expandable" role="tabpanel" id="panel-form-actions-1"
+                      aria-labelledby="tab-form-actions-1">
+                      <div class="nds-code-action">
+                        <button class="nds-btn nds-subtle nds-copy" aria-label="Copy code example">
+                          <i class="nds-icon nds-hgi-copy-01"></i>
+                        </button>
+                      </div>
+                      <div class="nds-expandable-content">
+                        <code class="lang-html code">
+&lt;div class="nds-form-actions"&gt;
+  &lt;button type="button" class="nds-btn nds-secondary-outline"&gt;
+    &lt;span class="nds-label"&gt;Back&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;button type="submit" class="nds-btn nds-primary"&gt;
+    &lt;span class="nds-label"&gt;Submit&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+                    </code>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Form Status API -->
 <section id="formStatusApi" class="nds-content-section nds-demo-section">
   <div class="nds-section-wrapper">
@@ -2257,6 +2331,7 @@ NDS.Forms.clearStatus(container);</code>
         <ul>
           <li>Use form inputs for any data collection scenario: registration flows, search interfaces, settings pages, and inline editing. Every input type shares the same container structure, so switching between text, email, password, or select requires minimal markup changes.</li>
           <li>Use <code class="nds-inline-code lang-html">nds-search-input</code> for search fields where voice input and automatic clear actions improve discoverability. The search variant includes a leading icon and optional microphone button out of the box.</li>
+          <li>Wrap a form's submit and navigation buttons in <code class="nds-inline-code lang-html">nds-form-actions</code>. The plural class is the form-level row and carries its own top margin. The singular <code class="nds-inline-code lang-html">nds-form-action</code> is the per-input slot inside <code class="nds-inline-code lang-html">nds-form-control</code>. Never use a section action slot for a form's buttons.</li>
           <li>Use the custom select dropdown (<code class="nds-inline-code lang-html">nds-select</code>) for styled option lists that match the design system — it ships with keyboard navigation and a hidden input so it submits with the form. For native mobile picker behavior, wrap a standard <code class="nds-inline-code lang-html">&lt;select&gt;</code> in the same <code class="nds-inline-code lang-html">nds-form-container nds-select</code> shell as shown in the Native Select demo.</li>
           <li>Do not use form inputs for binary choices or toggles. Use <a href="{{ 'components/switch' | relative_url }}" class="nds-color">switches</a> for instant on/off toggles, <a href="{{ 'components/checkbox' | relative_url }}" class="nds-color">checkboxes</a> for multiple selections, or <a href="{{ 'components/radio' | relative_url }}" class="nds-color">radio buttons</a> for single selection from a set.</li>
           <li>Do not use plain text inputs for specialized data types. Use <a href="{{ 'components/date-picker' | relative_url }}" class="nds-color">date picker</a> for dates, <a href="{{ 'components/otp' | relative_url }}" class="nds-color">OTP input</a> for verification codes, and <a href="{{ 'components/autocomplete' | relative_url }}" class="nds-color">autocomplete</a> for search-as-you-type with remote data.</li>
