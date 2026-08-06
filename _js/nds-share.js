@@ -1,3 +1,21 @@
+/* NDS.Share — public surface
+ * Rides: nds-copy (the copy-link action; soft — the other buttons work without it)
+ *      · nds-dropmenu (when the buttons sit in a menu; soft — an inline row works too)
+ * Methods:
+ *   NDS.Share.init()   delegate clicks on .nds-share — safe to call again
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-share-url     on the .nds-share wrapper; defaults to the page URL. A URL whose
+ *                      scheme is not http(s) is rejected and the page URL is used
+ *   data-share-title   on the wrapper; defaults to document.title
+ * Gotchas:
+ *   - Buttons are identified by CLASS, not by an attribute: .nds-share-x,
+ *     .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy.
+ *   - X, LinkedIn and WhatsApp open a 600×400 popup window.
+ *   - init() stamps .nds-share-menu on each share dropmenu, so styling survives the menu
+ *     portaling to <body>.
+ */
 /**
  * NDS Share — standalone share-page utility
  *

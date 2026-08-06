@@ -1,3 +1,25 @@
+/* NDS.Feedback — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Feedback.create(options)       build and insert one message — returns the element.
+ *                                      options {message, status, target, position, size,
+ *                                      style, showIcon, id, className, ariaLive, permanent,
+ *                                      onDismiss, onCreate}
+ *   NDS.Feedback.dismiss(elOrSel)      remove one message — true when it existed
+ *   NDS.Feedback.dismissAll(container) clear a container (a permanent one is only unhidden)
+ * Events (dispatched ON `document`, not on the message — listen there):
+ *   nds:feedbackCreate    detail {feedback, options}
+ *   nds:feedbackDismiss   detail {feedback}
+ * Hooks:
+ *   data-permanent   a message that survives the next one: it hides instead of being
+ *                    removed, and comes back when that newer message is dismissed
+ * Gotchas:
+ *   - There is no init(): this is a programmatic API, nothing scans for markup.
+ *   - Creating a message REPLACES the existing feedback in the same target.
+ *   - position is 'before' | 'after' | 'prepend' | 'append' (default 'append'); the first
+ *     two insert as siblings of the target, the last two inside it.
+ *   - role and aria-live are derived from status — error and warning announce assertively.
+ */
 /**
  * NDS Feedback Component
  * Programmatic feedback message creation API

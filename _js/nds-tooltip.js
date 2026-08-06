@@ -1,3 +1,29 @@
+/* NDS.Tooltip — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Tooltip.init() / .reinit()   scan + initialize .nds-tooltip
+ *   NDS.Tooltip.create(el)           instance one tooltip
+ *   instance.open() / .close()       show or hide the balloon
+ *   instance.destroy()               detach and un-stamp
+ * Events (bubble from the .nds-tooltip):
+ *   nds:tooltip:opened   detail {tooltip, trigger, balloon, isOpen}
+ *   nds:tooltip:closed   detail {tooltip, trigger, balloon, isOpen}
+ * Hooks:
+ *   data-tooltip-title · data-tooltip-message   build the balloon from attributes
+ *   data-tooltip-status                         chip status, default "help"
+ *   data-tooltip-hover                          opt in to hover; the value is the open
+ *                                               delay in ms (bare attribute = 120)
+ *   written by the component: data-position-vertical="top" on the root and the balloon
+ *                             when the balloon flips above the trigger
+ * Gotchas:
+ *   - Two ways to author it: write .nds-tooltip-trigger + .nds-tooltip-balloon yourself,
+ *     or give the root data-tooltip-title / data-tooltip-message and let the component
+ *     build the missing parts. Markup you wrote always wins.
+ *   - Only ONE tooltip is open at a time; opening one closes the other.
+ *   - While open the balloon is portaled to <body>, so a closest() walk from inside it
+ *     does not reach the tooltip root. It is put back on close.
+ *   - The instance lives on the root as el.ndsTooltip.
+ */
 /**
  * NDS Tooltip Component
  * Viewport-aware fixed-position tooltip. Click the trigger to toggle;

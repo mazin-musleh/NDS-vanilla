@@ -1,3 +1,23 @@
+/* NDS.UserFeedback — public surface
+ * Rides: nds-feedback (renders the success / error message) · nds-cookies (remembers a
+ *        submission per page) · nds-forms (validateForm when the widget sits in a form)
+ * Methods:
+ *   NDS.UserFeedback.init() / .reinit()   scan + initialize .nds-user-feedback
+ *   NDS.UserFeedback.create(el)           initialize one widget (idempotent)
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-success-message · data-error-message   override the built-in localized text
+ *   data-no-persist                             skip the cookie: never restore, never save
+ *   data-answer                                 on each answer button, its value; the
+ *                                               component copies the pick onto the root
+ * Gotchas:
+ *   - A page whose cookie says "submitted" renders straight to the success state and
+ *     wires no handlers at all. Use data-no-persist in demos.
+ *   - The cookie is essential/functional (`nds-feedback_<page path>`, 365 days) and needs
+ *     no consent.
+ *   - Submit validates the surrounding form first and stops when it fails.
+ */
 /**
  * NDS User Feedback Component
  * Handles user feedback interaction flow using data attributes

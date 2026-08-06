@@ -1,3 +1,28 @@
+/* NDS.Alert — public surface
+ * Rides: nds-copy (an action with copy / copyTarget becomes a copy button; soft)
+ * Methods:
+ *   NDS.Alert.init()               wire the close button on alerts already in the page
+ *   NDS.Alert.create(options)      build and insert one alert — returns the element.
+ *                                  options {variant, title, description, target, closable,
+ *                                  shadow, color, id, prepend, actions[], display, position,
+ *                                  duration}
+ *   NDS.Alert.dismiss(elOrSel)     remove one alert (toasts animate out first)
+ *   NDS.Alert.dismissAll(container) dismiss every alert inside a container
+ * Events:
+ *   (none — pass an onClick on an action, or watch the DOM)
+ * Hooks:
+ *   data-position   on a .nds-alert-placeholder you place yourself, so toasts for that
+ *                   position land in your container instead of an auto-created one
+ * Gotchas:
+ *   - display: 'toast' needs no target — the alert docks itself in the placeholder for
+ *     its position. Any other display needs a target to insert into.
+ *   - duration is 0 by default (no auto-dismiss). A running toast pauses on hover or
+ *     focus, and a CLICK pins the pause: it then stays until closed.
+ *   - title and description are escaped. An action's href is scheme-checked, and an
+ *     unsafe one downgrades the action to a plain button.
+ *   - An action is {label, variant, size, onClick, dismiss, href, target, copy, copyTarget}.
+ *     Set dismiss:true to close the alert after onClick.
+ */
 /**
  * NDS Alert Component
  * Programmatic alert creation API

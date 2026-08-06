@@ -1,3 +1,21 @@
+/* NDS.Modal — public surface
+ * Rides: nds-backdrop (the overlay layer, plus ESC and click-outside dismiss)
+ * Methods:
+ *   NDS.Modal.init()            wire the delegated trigger, close and ESC handlers
+ *   NDS.Modal.open(idOrEl)      open a .nds-modal
+ *   NDS.Modal.close()           close whatever is open — takes no argument
+ *   NDS.Modal.isOpen()          is a modal open?
+ * Events (bubble from the .nds-modal; legacy dashed names):
+ *   nds-modal-opened   detail (none) — after the open state paints
+ *   nds-modal-closed   detail (none) — after the close animation finishes, not on the click
+ * Hooks:
+ *   data-modal-target   on a trigger — the id of the modal to open
+ *   data-modal-close    on any control that should close it (.nds-modal-close works too)
+ * Gotchas:
+ *   - One modal at a time: open() closes the current one first.
+ *   - nds-backdrop.js must be in the bundle. Without it init() and open() log an error
+ *     and do nothing.
+ */
 /**
  * NDS Modal Component
  * Simple modal dialog with backdrop overlay using unified NDSBackdrop API

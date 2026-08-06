@@ -1,3 +1,25 @@
+/* NDS.Drawer — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Drawer.init() / .reinit()   scan + initialize .nds-drawer
+ *   NDS.Drawer.create(drawer)       initialize one drawer
+ *   NDS.Drawer.initDrawer(drawer)   the same function under its older name
+ *   NDS.Drawer.destroy(drawer)      detach its listeners and clear the init stamp
+ *   NDS.Drawer.toggle(button)       open or close the submenu that BUTTON owns
+ * Events (bubble from the .nds-drawer):
+ *   nds:drawer:shown    detail {item, drawer} — after the expand transition
+ *   nds:drawer:hidden   detail {item, drawer} — after the collapse transition
+ * Hooks:
+ *   data-open-on          which items start open. A breakpoint name from NDS.breakpoints,
+ *                         or `always` / `never`. On the drawer it is the default; on an
+ *                         <li> it overrides that default
+ *   data-always-open-on   at this breakpoint every submenu is open and the toggles stop
+ *                         responding (the drawer also gains data-state="always-open")
+ * Gotchas:
+ *   - Opening a submenu closes its siblings — one open branch per level.
+ *   - toggle() takes the BUTTON, not the <li>.
+ *   - An <li> marked data-state="active" opens every ancestor branch at init.
+ */
 /**
  * NDS Drawer Component
  * Handles expand/collapse of nested menus with responsive state control

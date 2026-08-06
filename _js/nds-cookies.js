@@ -1,3 +1,30 @@
+/* NDS.Cookies — public surface
+ * Rides: nds-alert (the confirmation toast after accept or decline)
+ * Methods:
+ *   NDS.Cookies.init()                wire the consent popup buttons; show the popup after
+ *                                     6 seconds when no choice has been made yet
+ *   NDS.Cookies.set(name, value, days) write a cookie — no consent check, so essential
+ *                                     values only
+ *   NDS.Cookies.get(name)             read one
+ *   NDS.Cookies.delete(name)          remove one
+ *   NDS.Cookies.getConsent()          'accepted' | 'declined' | null
+ *   NDS.Cookies.show()                open the consent popup now
+ * Events:
+ *   (none)
+ * Hooks:
+ *   ids, not attributes:  #ndsCookiesPopup · #ndsCookiesAcceptBtn · #ndsCookiesDeclineBtn
+ *                         · #ndsCookiesCloseBtn
+ *   data-accept-title · data-accept-message     on the accept button — toast text
+ *   data-decline-title · data-decline-message   on the decline button — toast text
+ *   data-ga-tracking-id                         on any element; adds an id to disable on
+ *                                               decline (window.GA_TRACKING_ID works too)
+ * Gotchas:
+ *   - Consent is applied when the FILE LOADS, before init() — analytics is already off on
+ *     a page whose stored choice is 'declined'.
+ *   - Declining sets window['ga-disable-<id>'] for every tracking id it finds and clears
+ *     _ga, _gid, _gat, _fbp and _fbc.
+ *   - Under file:// there are no cookies: values fall back to NDS.cache (localStorage).
+ */
 /**
  * NDS Cookie Management System
  *

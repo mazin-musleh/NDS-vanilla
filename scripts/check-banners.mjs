@@ -204,17 +204,22 @@ function extractKeys(source, ns) {
     return keys;
 }
 
-// Listener registrations are consumed by the first alternative, so the names a file only
-// LISTENS for never count as dispatches. What is left: a name handed straight to
-// CustomEvent (this is what catches legacy unprefixed names), plus every `nds:*` literal
-// anywhere else — files reach the bus through too many wrappers to enumerate
-// (emitEvent, _dispatchEvent, dispatch(el, name), fire(el, name)) and accordion even
-// routes its pair through a variable, so matching the NAME beats listing the callers.
+// Four clauses, one per shape that exists in _js/:
+//   1. listener registrations — consumed here so a name a file only LISTENS for is never
+//      mistaken for a dispatch;
+//   2. a name handed straight to CustomEvent — this is what catches the legacy unprefixed
+//      and dashed names (selectChange, nds-modal-opened);
+//   3. an interpolated template — drawer builds `nds:drawer:${type}`; the captured stem
+//      ends in ':' and stands in as a prefix (see isPrefix);
+//   4. every other nds:* literal — files reach the bus through too many wrappers to
+//      enumerate (emitEvent, _dispatchEvent, dispatch(el, name), fire(el, name)) and
+//      accordion routes its pair through a variable, so matching the NAME beats listing
+//      the callers.
 function extractEvents(source) {
     const events = new Set();
-    const re = /(?:add|remove)EventListener\(\s*(['"])[^'"]*\1|(?:new CustomEvent|emitEvent)\(\s*(['"])([^'"]+)\2|(['"])(nds:[\w:.-]+)\4/g;
+    const re = /(?:add|remove)EventListener\(\s*([`'"])[^`'"]*\1|(?:new CustomEvent|emitEvent)\(\s*(['"])([^'"]+)\2|`(nds:[\w:.-]*)\$\{|([`'"])(nds:[\w:.-]+)\5/g;
     for (const m of source.matchAll(re)) {
-        const name = m[3] || m[5];
+        const name = m[3] || m[4] || m[6];
         if (name) events.add(name);
     }
     return events;
@@ -257,7 +262,7 @@ function parseBanner(source) {
 function bannerEventNames(text) {
     const names = new Set();
     for (const line of text.split('\n')) {
-        const m = line.trim().match(/^(nds:[\w:.-]+|[a-z][\w$]*Change)\b/);
+        const m = line.trim().match(/^(nds:[\w:.-]+|nds-[\w-]+|[a-z][\w$]*Change)\b/);
         if (m) names.add(m[1]);
     }
     return names;
@@ -326,7 +331,7 @@ function verifyFile(file, ns, source) {
             issues.push(`banner event ${name} never dispatched in file`);
         }
         for (const name of dispatched) {
-            if (!name.startsWith('nds:') || exceptions.includes(name) || listed.has(name)) continue;
+            if (!/^nds[:-]/.test(name) || exceptions.includes(name) || listed.has(name)) continue;
             if (isPrefix(name) && [...listed].some((l) => l.startsWith(name))) continue;
             issues.push(`dispatched event ${name} missing from banner Events`);
         }

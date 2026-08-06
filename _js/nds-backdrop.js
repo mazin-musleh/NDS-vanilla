@@ -1,3 +1,26 @@
+/* NDS.Backdrop — public surface
+ * Rides: (none — base component)
+ * Methods:
+ *   NDS.Backdrop.show(config)   raise the shared overlay and become its owner. config
+ *                               {zIndex, onClick, onShow, onHide, preventScroll,
+ *                               escapeClose, clickToClose, replace}
+ *   NDS.Backdrop.hide()         release your turn — the previous owner takes the overlay
+ *                               back, or it tears down when you were the last
+ *   NDS.Backdrop.isActive()     is the overlay up?
+ * Events:
+ *   (none — pass onShow / onHide / onClick in the config instead)
+ * Hooks:
+ *   (none — there is nothing to author; the element is built on the first show())
+ * Gotchas:
+ *   - ONE overlay serves the whole page and show()/hide() form a STACK. Every show()
+ *     needs its own hide(), or the layer underneath never gets its config back.
+ *   - There is no init(): the component is not loader-registered. It builds its DOM on
+ *     the first show().
+ *   - config.replace swaps the CURRENT owner in place instead of stacking — for handing
+ *     the overlay between sibling flyouts with no flicker.
+ *   - preventScroll, escapeClose and clickToClose all default to true.
+ *   - onClick is what ESC and an outside click call: no handler means no dismiss.
+ */
 /**
  * NDS Backdrop API
  * Provides a single shared backdrop/overlay for all components

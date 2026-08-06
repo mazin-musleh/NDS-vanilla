@@ -1,3 +1,28 @@
+/* NDS.Fab — public surface
+ * Rides: nds-panels (an `auto` FAB docks at its toggled panel's edge, and a thumb slides
+ *        aside while that panel is open; soft — a FAB with no panel just docks)
+ * Methods:
+ *   NDS.Fab.init() / .reinit()          route every .nds-fab into its dock
+ *   NDS.Fab.register(fab, override)     route one FAB now — for a FAB another component
+ *                                       injected; override forces an edge
+ *   NDS.Fab.dock(pos)                   the dock element at that edge, created if missing
+ *   NDS.Fab.resolvePos(fab, override)   which edge this FAB resolves to
+ * Events:
+ *   (none)
+ * Hooks:
+ *   data-fab-pos        left | right | bottom (physical) · start | end (logical, flips with
+ *                       the page direction) · auto or absent (follow the toggled panel)
+ *   data-fab-order      stacking order inside a dock, default 0
+ *   data-fab-dock-pos   on a .nds-fab-dock you author yourself
+ *   written by the component: data-fab-riding on a thumb that moved aside for its panel,
+ *                             data-fab-tucked on <html> near the page bottom
+ * Gotchas:
+ *   - Ship a FAB with the `hidden` attribute. The router strips it once the FAB is docked,
+ *     so it never flashes at the spot you authored it.
+ *   - The OUTERMOST .nds-fab wins — a nested one is skipped, so a group is never emptied.
+ *   - The FAB carries the position; the docks are static edge slots. FABs resolving to the
+ *     same edge stack together.
+ */
 /**
  * NDS Fab — routes floating action buttons into fixed edge docks.
  *
