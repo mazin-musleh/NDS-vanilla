@@ -6,7 +6,7 @@ hero_description: Text, number, search, email, password, textarea, and select in
 breadcrumb: [["Components", "/components"]]
 since: "1.0.0"
 updated: "1.6.x"
-last_edit: "03/08/2026 - 01:50 AM"
+last_edit: "06/08/2026 - 09:45 PM"
 lang: en
 direction: ltr
 ---
@@ -2416,7 +2416,7 @@ formControl.addEventListener('selectChange', function(e) {
 });
 
 // Switch toggle event on .nds-switch-element
-switchElement.addEventListener('switchChange', function(e) {
+switchElement.addEventListener('nds:switchChange', function(e) {
 // e.detail: { checked: true|false, value: '...', input: switchInputElement }
 });
 

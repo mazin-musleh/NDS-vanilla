@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.3.0"
-last_edit: "28/06/2026 - 01:27 PM"
+updated: "1.6.x"
+last_edit: "06/08/2026 - 09:45 PM"
 ---
 
 <!-- Single Switch -->
@@ -349,7 +349,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 <i class="hgi hgi-stroke hgi-keyboard"></i>
                 <span class="nds-label">Keyboard Support</span>
               </span>
-              <p class="nds-item-desc">Space and Enter keys toggle the switch. Track click, label click, and keyboard all fire the <code class="nds-inline-code lang-js">switchChange</code> event.</p>
+              <p class="nds-item-desc">Space and Enter keys toggle the switch. Track click, label click, and keyboard all fire the <code class="nds-inline-code lang-js">nds:switchChange</code> event.</p>
             </div>
         </div>
         <div class="nds-block">
@@ -437,7 +437,7 @@ last_edit: "28/06/2026 - 01:27 PM"
                 <code class="lang-javascript code">
 // Listen for switch state changes
 var switchEl = document.querySelector('.nds-switch');
-switchEl.addEventListener('switchChange', function(e) {
+switchEl.addEventListener('nds:switchChange', function(e) {
   console.log('Checked:', e.detail.checked);
   console.log('Value:', e.detail.value);
   console.log('Input:', e.detail.input);

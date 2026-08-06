@@ -83,8 +83,8 @@ const SCOPE = [
 ];
 
 // Event literals a file dispatches that its banner deliberately omits, keyed by file name.
-// Empty: legacy unprefixed events (selectChange, ratingChange, switchChange until its nds:
-// rename) already fall outside the nds:* gate in verifyFile.
+// Empty: legacy unprefixed events (selectChange, ratingChange) already fall outside the
+// nds:* gate in verifyFile.
 const EVENT_EXCEPTIONS = {};
 
 const SECTIONS = ['Rides', 'Methods', 'Events', 'Hooks', 'Gotchas'];

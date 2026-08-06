@@ -980,7 +980,7 @@
                     switchInput.checked = !switchInput.checked;
                     Utils.triggerEvents(switchInput);
                     FieldSync.update(switchInput, formControl);
-                    switchElement.dispatchEvent(new CustomEvent('switchChange', {
+                    switchElement.dispatchEvent(new CustomEvent('nds:switchChange', {
                         detail: { checked: switchInput.checked, value: switchInput.value, input: switchInput },
                         bubbles: true
                     }));
